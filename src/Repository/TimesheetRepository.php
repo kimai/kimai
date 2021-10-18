@@ -101,7 +101,7 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * @param Timesheet $timesheet
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function delete(Timesheet $timesheet)
@@ -173,7 +173,7 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * @param Timesheet $timesheet
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function save(Timesheet $timesheet)
@@ -212,7 +212,7 @@ class TimesheetRepository extends EntityRepository
      * @param bool $flush
      * @return bool
      * @throws RepositoryException
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function stopRecording(Timesheet $entry, bool $flush = true)
@@ -725,7 +725,7 @@ class TimesheetRepository extends EntityRepository
      * @param bool $flush
      * @return int
      * @throws RepositoryException
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function stopActiveEntries(User $user, int $hardLimit, bool $flush = true)

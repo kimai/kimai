@@ -106,7 +106,7 @@ services:
     # store and retrieve sessions in and from database
     App\Security\SessionHandler:
         arguments:
-            - !service { class: PDO, factory: ['@database_connection', 'getWrappedConnection'] }
+            - '%env(DATABASE_URL)%'
 
     # ================================================================================
     # THEME

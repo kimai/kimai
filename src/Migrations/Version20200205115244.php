@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace DoctrineMigrations;
 
 use App\Doctrine\AbstractMigration;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
@@ -42,14 +43,14 @@ final class Version20200205115244 extends AbstractMigration
             $rules = $this->connection->prepare(
                 'SELECT id, fixed_rate, hourly_rate FROM ' . $tableName . ' WHERE fixed_rate IS NOT NULL OR hourly_rate IS NOT NULL'
             );
-            $rules->execute();
+            $result = $rules->executeQuery();
 
-            foreach ($rules->fetchAll() as $rateRule) {
+            foreach ($result->fetchAllAssociative() as $rateRule) {
                 $isFixed = $rateRule['fixed_rate'] !== null;
                 $rate = $rateRule['fixed_rate'] ?? $rateRule['hourly_rate'];
                 $params = ['user_id' => null, $fieldName => $rateRule['id'], 'rate' => $rate, 'fixed' => $isFixed];
 
-                $this->connection->insert($targetTable, $params, ['fixed' => \PDO::PARAM_BOOL]);
+                $this->connection->insert($targetTable, $params, ['fixed' => ParameterType::BOOLEAN]);
             }
         }
 

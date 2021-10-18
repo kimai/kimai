@@ -611,7 +611,7 @@ final class KimaiImporterCommand extends Command
             ->from($connection->quoteIdentifier($this->dbPrefix . 'configuration'))
             ->where($qb->expr()->eq($optionColumn, ':option'))
             ->setParameter('option', 'version')
-            ->execute()
+            ->executeQuery()
             ->fetchOne();
 
         if (1 == version_compare($requiredVersion, $version)) {
@@ -628,7 +628,7 @@ final class KimaiImporterCommand extends Command
             ->from($connection->quoteIdentifier($this->dbPrefix . 'configuration'))
             ->where($qb->expr()->eq($optionColumn, ':option'))
             ->setParameter('option', 'revision')
-            ->execute()
+            ->executeQuery()
             ->fetchOne();
 
         if (1 == version_compare($requiredRevision, $revision)) {
@@ -662,7 +662,7 @@ final class KimaiImporterCommand extends Command
             $tables[] = $this->dbPrefix . $table;
         }
 
-        if (!$connection->getSchemaManager()->tablesExist($tables)) {
+        if (!$connection->createSchemaManager()->tablesExist($tables)) {
             $io->error(
                 'Import cannot be started, missing tables. Required are: ' . implode(', ', $tables)
             );

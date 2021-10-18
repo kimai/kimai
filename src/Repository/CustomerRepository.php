@@ -22,8 +22,9 @@ use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\CustomerQuery;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\QueryBuilder;
@@ -232,7 +233,7 @@ class CustomerRepository extends EntityRepository
         $mainQuery = $qb->expr()->andX();
 
         $mainQuery->add($qb->expr()->eq('c.visible', ':visible'));
-        $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
+        $qb->setParameter('visible', true, ParameterType::BOOLEAN);
 
         $permissions = $this->getPermissionCriteria($qb, $query->getUser(), $query->getTeams());
         if ($permissions->count() > 0) {
@@ -283,10 +284,10 @@ class CustomerRepository extends EntityRepository
 
         if ($query->isShowVisible()) {
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
-            $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
+            $qb->setParameter('visible', true, ParameterType::BOOLEAN);
         } elseif ($query->isShowHidden()) {
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
-            $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
+            $qb->setParameter('visible', false, ParameterType::BOOLEAN);
         }
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
@@ -378,7 +379,7 @@ class CustomerRepository extends EntityRepository
     /**
      * @param Customer $delete
      * @param Customer|null $replace
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      */
     public function deleteCustomer(Customer $delete, ?Customer $replace = null)
     {
