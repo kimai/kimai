@@ -48,8 +48,8 @@ class QuickEntryControllerTest extends ControllerBaseTest
                 $columns[] = $childNode;
             }
         }
-        // project + activity + 7 days (duration)
-        self::assertCount(9, $columns);
+        // project + activity + 7 days (duration) + row totals
+        self::assertCount(10, $columns);
 
         $this->assertPageActions($client, [
             'back' => $this->createUrl('/timesheet/'),
@@ -91,8 +91,8 @@ class QuickEntryControllerTest extends ControllerBaseTest
                 $columns[] = $childNode;
             }
         }
-        // project + activity + 7 days (duration)
-        self::assertCount(9, $columns);
+        // project + activity + 7 days (duration) + row totals
+        self::assertCount(10, $columns);
 
         $this->assertPageActions($client, [
             'back' => $this->createUrl('/timesheet/'),
