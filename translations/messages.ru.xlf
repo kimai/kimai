@@ -820,11 +820,11 @@
       </trans-unit>
       <trans-unit id="label.tags">
         <source>label.tags</source>
-        <target>Тэги</target>
+        <target>Теги</target>
       </trans-unit>
       <trans-unit id="label.tag">
         <source>label.tag</source>
-        <target>Тэг</target>
+        <target>Теги</target>
       </trans-unit>
       <trans-unit id="error.no_comments_found">
         <source>error.no_comments_found</source>
@@ -832,7 +832,7 @@
       </trans-unit>
       <trans-unit id="menu.tags">
         <source>menu.tags</source>
-        <target>Тэги</target>
+        <target>Теги</target>
       </trans-unit>
       <trans-unit id="menu.system_configuration">
         <source>menu.system_configuration</source>
