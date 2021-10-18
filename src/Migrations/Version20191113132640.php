@@ -39,6 +39,8 @@ final class Version20191113132640 extends AbstractMigration
             $timesheetTags->removeForeignKey('FK_732EECA9BAD26311');
         }
         $timesheetTags->addForeignKeyConstraint('kimai2_tags', ['tag_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_732EECA9BAD26311');
+
+        $this->addSql('#prevent empty warning - no SQL to execute');
     }
 
     public function down(Schema $schema): void
