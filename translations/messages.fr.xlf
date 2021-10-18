@@ -1248,6 +1248,14 @@
         <source>default_value_new</source>
         <target>Valeurs par défaut pour les nouvelles entrées</target>
       </trans-unit>
+      <trans-unit id="action.add">
+        <source>action.add</source>
+        <target>Ajouter</target>
+      </trans-unit>
+      <trans-unit id="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target>Heures de travail hebdomadaires</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
