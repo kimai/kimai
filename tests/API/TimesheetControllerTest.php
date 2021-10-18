@@ -527,7 +527,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'begin' => ($dateTime->createDateTime('- 7 hours'))->format('Y-m-d\TH:m:0'),
             'end' => ($dateTime->createDateTime())->format('Y-m-d\TH:m:0'),
             'description' => 'foo',
-            'exported' => true,
+            'billable' => false,
         ];
         $this->request($client, '/api/timesheets/' . $timesheets[0]->getId(), 'PATCH', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -537,7 +537,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         $this->assertNotEmpty($result['id']);
         $this->assertEquals(25200, $result['duration']);
-        $this->assertEquals(1, $result['exported']);
+        $this->assertEquals('foo', $result['description']);
+        $this->assertFalse($result['billable']);
     }
 
     public function testPatchActionWithInvalidUser()

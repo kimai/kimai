@@ -35,6 +35,7 @@ class TimesheetsSubscriber extends AbstractActionsSubscriber
 
         if ($this->isGranted('create_own_timesheet')) {
             $event->addCreate($this->path('timesheet_create'));
+            $event->addAction('quick_entry', ['url' => $this->path('quick_entry'), 'class' => 'create-ts', 'icon' => 'weekly-times']);
         }
 
         $event->addHelp($this->documentationLink('timesheet.html'));

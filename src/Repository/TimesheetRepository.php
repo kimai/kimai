@@ -1052,7 +1052,7 @@ class TimesheetRepository extends EntityRepository
      * @param User|null $user
      * @param DateTime|null $startFrom
      * @param int $limit
-     * @return array|mixed
+     * @return Timesheet[]
      * @throws \Doctrine\ORM\Query\QueryException
      */
     public function getRecentActivities(User $user = null, DateTime $startFrom = null, int $limit = 10)

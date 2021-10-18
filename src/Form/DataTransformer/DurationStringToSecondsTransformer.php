@@ -65,7 +65,15 @@ class DurationStringToSecondsTransformer implements DataTransformerInterface
         }
 
         try {
-            return $this->formatter->parseDurationString($formatToInt);
+            $seconds = $this->formatter->parseDurationString($formatToInt);
+
+            // DateTime throws if a duration with too many seconds is passed and an amount of so
+            // many seconds is likely not required in a time-tracking application ;-)
+            if ($seconds > 315360000000000) {
+                throw new TransformationFailedException('Maximum duration exceeded.');
+            }
+
+            return $seconds;
         } catch (\Exception $e) {
             throw new TransformationFailedException($e->getMessage());
         }

@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
+ * @covers \App\Validator\Constraints\TimesheetOverlapping
  * @covers \App\Validator\Constraints\TimesheetOverlappingValidator
  */
 class TimesheetOverlappingValidatorTest extends ConstraintValidatorTestCase
