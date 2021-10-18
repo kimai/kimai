@@ -99,6 +99,15 @@ table.dataTable {
             }
         }
     }
+    th.weekend,
+    td.weekend {
+        background-color: #f9f9f9;
+    }
+    /* order is important, "today” should overwrite "weekend" therefor later in the file */
+    th.today,
+    td.today {
+        background-color: $highlight-today;
+    }
 }
 
 /* Quick entry form */
@@ -118,9 +127,4 @@ table.table-hover {
             }
         }
     }
-}
-
-table th.today,
-table td.today {
-    background-color: $highlight-today!important;
 }
