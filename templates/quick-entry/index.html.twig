@@ -33,6 +33,7 @@
                             {{ week.day|format_date('short') }}
                         </th>
                         {% endfor %}
+                        <th class="summary">{{ 'label.duration'|trans }}</th>
                     </tr>
                 </thead>
                 <tbody id="ts-collection" data-index="{{ form.rows.children|length }}">
@@ -41,10 +42,11 @@
                 <tfoot>
                     <tr class="summary">
                         <td>{{ 'stats.durationTotal'|trans }}</td>
-                        <td class="text-center" id="qe-totals-week"></td>
+                        <td></td>
                         {% for id, week in days %}
                             <td class="text-center" id="qe-totals-day-{{ loop.index0 }}"></td>
                         {% endfor %}
+                        <td class="text-center" id="qe-totals-week"></td>
                     </tr>
                 </tfoot>
             </table>
@@ -73,6 +75,16 @@
                     fullTotals += total;
                 }
                 document.getElementById('qe-totals-week').innerText = DATES.formatSeconds(fullTotals);
+
+                const allRows = document.getElementsByClassName('qe-entry-week-row');
+                for (let qeWeekRow of allRows) {
+                    let qeWeekRowFields = qeWeekRow.getElementsByClassName('duration-input');
+                    let totalsRow = 0;
+                    for (let durationInput of qeWeekRowFields) {
+                        totalsRow += DATES.getSecondsFromDurationString(durationInput.value);
+                    }
+                    qeWeekRow.getElementsByClassName('qe-totals-row')[0].innerText = DATES.formatSeconds(totalsRow);
+                }
             };
             recalculateTotals();
 

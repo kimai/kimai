@@ -9,7 +9,7 @@
 {% endblock form_label %}
 
 {% block quick_entry_week_row %}
-    <tr{% with {attr: row_attr|merge({class: (row_attr.class|default('') ~ ' form-group' ~ (not valid ? ' has-error'))|trim})} %}{{ block('attributes') }}{% endwith %}>
+    <tr{% with {attr: row_attr|merge({class: (row_attr.class|default('') ~ ' form-group qe-entry-week-row' ~ (not valid ? ' has-error'))|trim})} %}{{ block('attributes') }}{% endwith %}>
         <td>
             {{ form_row(form.project) }}
         </td>
@@ -21,6 +21,7 @@
                 {{ form_row(timesheet) }}
             </td>
         {% endfor %}
+        <td class="text-nowrap text-center total qe-totals-row"></td>
     </tr>
 {% endblock %}
 

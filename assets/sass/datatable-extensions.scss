@@ -108,6 +108,10 @@ table.dataTable {
     td.today {
         background-color: $highlight-today;
     }
+    th.total,
+    td.total {
+        font-weight: bold;
+    }
 }
 
 /* Quick entry form */
