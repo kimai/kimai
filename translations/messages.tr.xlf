@@ -1251,6 +1251,14 @@
         <source>default_value_new</source>
         <target>Yeni kayıtlar için öntanımlı değerler</target>
       </trans-unit>
+      <trans-unit id="action.add">
+        <source>action.add</source>
+        <target>Ekle</target>
+      </trans-unit>
+      <trans-unit id="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target>Haftalık çalışma saatleri</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
