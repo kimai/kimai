@@ -1172,7 +1172,7 @@
         <target>每小时收费</target>
       </trans-unit>
       <trans-unit id="error.too_many_entries">
-        <source>error.too_many_entries</source>
+        <source>The request could not be processed. Too many results were found.</source>
         <target>无法处理请求，找到太多结果。</target>
       </trans-unit>
       <trans-unit id="resetting.check_email">
