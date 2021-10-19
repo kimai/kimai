@@ -1184,6 +1184,14 @@
         <source>default_value_new</source>
         <target>ערכי ברירת מחדל לרשומות חדשות</target>
       </trans-unit>
+      <trans-unit id="action.add">
+        <source>action.add</source>
+        <target>הוספה</target>
+      </trans-unit>
+      <trans-unit id="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target>שעות עבודה שבועיות</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
