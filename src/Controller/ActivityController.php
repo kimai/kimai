@@ -29,7 +29,6 @@ use App\Form\Toolbar\ActivityToolbarForm;
 use App\Form\Type\ActivityType;
 use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
-use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\TeamRepository;
 use Exception;
@@ -314,6 +313,13 @@ final class ActivityController extends AbstractController
     {
         $stats = $statisticService->getActivityStatistics($activity);
 
+        $options = [
+            'projects' => $activity->getProject(),
+            'query_builder_for_user' => true,
+            'ignore_activity' => $activity,
+            'required' => false,
+        ];
+
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
                     'data-form-event' => 'kimai.activityDelete',
@@ -321,17 +327,7 @@ final class ActivityController extends AbstractController
                     'data-msg-error' => 'action.delete.error',
                 ]
             ])
-            ->add('activity', ActivityType::class, [
-                'label' => 'label.activity',
-                'query_builder' => function (ActivityRepository $repo) use ($activity) {
-                    $query = new ActivityFormTypeQuery();
-                    $query->addProject($activity->getProject());
-                    $query->setActivityToIgnore($activity);
-
-                    return $repo->getQueryBuilderForFormType($query);
-                },
-                'required' => false,
-            ])
+            ->add('activity', ActivityType::class, $options)
             ->setAction($this->generateUrl('admin_activity_delete', ['id' => $activity->getId()]))
             ->setMethod('POST')
             ->getForm();

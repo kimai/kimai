@@ -68,13 +68,23 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
             $apiData['route_params'] = [];
         }
 
-        $formPrefix = $form->getParent()->getName();
-        if (!empty($formPrefix)) {
-            $formPrefix .= '_';
+        $formPrefixes = [];
+        $parent = $form->getParent();
+        do {
+            $formPrefixes[] = $parent->getName();
+        } while (($parent = $parent->getParent()) !== null);
+
+        $formPrefix = implode('_', array_reverse($formPrefixes));
+
+        $formField = $formPrefix;
+        if (!empty($formField)) {
+            $formField .= '_';
         }
+        $formField .= $apiData['select'];
 
         $view->vars['attr'] = array_merge($view->vars['attr'], [
-            'data-related-select' => $formPrefix . $apiData['select'],
+            'data-form-prefix' => $formPrefix,
+            'data-related-select' => $formField,
             'data-api-url' => $this->router->generate($apiData['route'], $apiData['route_params']),
         ]);
 

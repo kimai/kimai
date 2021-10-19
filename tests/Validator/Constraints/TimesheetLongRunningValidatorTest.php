@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
+ * @covers \App\Validator\Constraints\TimesheetLongRunning
  * @covers \App\Validator\Constraints\TimesheetLongRunningValidator
  */
 class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
@@ -73,6 +74,33 @@ class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
+    public function testLongRunningTriggersOverMaximum()
+    {
+        $timesheet = new Timesheet();
+        $timesheet->setBegin(new \DateTime());
+        $timesheet->setEnd(new \DateTime());
+        $timesheet->setDuration(31536001);
+
+        $this->validator->validate($timesheet, new TimesheetLongRunning());
+
+        $this->buildViolation('Maximum duration exceeded.')
+            ->atPath('property.path.duration')
+            ->setCode(TimesheetLongRunning::MAXIMUM)
+            ->assertRaised();
+    }
+
+    public function testLongRunningDoesNotTriggerOnMaximum()
+    {
+        $timesheet = new Timesheet();
+        $timesheet->setBegin(new \DateTime());
+        $timesheet->setEnd(new \DateTime());
+        $timesheet->setDuration(31536000);
+
+        $this->validator->validate($timesheet, new TimesheetLongRunning());
+
+        $this->assertNoViolation();
+    }
+
     public function testLongRunningNotTriggersIfConfiguredToZero()
     {
         $this->validator = $this->createMyValidator(0);
@@ -113,5 +141,11 @@ class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate($timesheet, new TimesheetLongRunning());
         $this->assertNoViolation();
+    }
+
+    public function testGetTargets()
+    {
+        $constraint = new TimesheetLongRunning();
+        self::assertEquals('class', $constraint->getTargets());
     }
 }

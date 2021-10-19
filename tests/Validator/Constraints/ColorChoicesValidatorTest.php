@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
+ * @covers \App\Validator\Constraints\ColorChoices
  * @covers \App\Validator\Constraints\ColorChoicesValidator
  */
 class ColorChoicesValidatorTest extends ConstraintValidatorTestCase
