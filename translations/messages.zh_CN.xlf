@@ -1215,6 +1215,10 @@
         <source>stats.percentUsedLeft_month</source>
         <target>%percent%% 已使用（%left% 本月仍空余）</target>
       </trans-unit>
+      <trans-unit id="action.add">
+        <source>action.add</source>
+        <target>添加</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
