@@ -14,6 +14,34 @@
         <source>You must select at least one user or team.</source>
         <target>عليك على الاقل اختيار عضو او فريق.</target>
       </trans-unit>
+      <trans-unit id="The username is already used.">
+        <source>The username is already used.</source>
+        <target>اسم المستخدم مستخدم بالفعل.</target>
+      </trans-unit>
+      <trans-unit id="The email is already used.">
+        <source>The email is already used.</source>
+        <target>البريد الإلكتروني مستخدم بالفعل.</target>
+      </trans-unit>
+      <trans-unit id="The given value is not a valid time.">
+        <source>The given value is not a valid time.</source>
+        <target>القيمة المحددة ليست وقتًا صالحًا.</target>
+      </trans-unit>
+      <trans-unit id="This invoice document cannot be used, please rename the file and upload it again.">
+        <source>This invoice document cannot be used, please rename the file and upload it again.</source>
+        <target>لا يمكن استخدام مستند الفاتورة هذا، يرجى إعادة تسمية الملف وتحميله مرة أخرى.</target>
+      </trans-unit>
+      <trans-unit id="At least one team leader must be assigned to the team.">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target>يجب تعيين قائد فريق واحد على الأقل للفريق.</target>
+      </trans-unit>
+      <trans-unit id="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target>كلمات المرور التي تم إدخالها غير متطابقة.</target>
+      </trans-unit>
+      <trans-unit id="This period is locked, please choose a later date.">
+        <source>This period is locked, please choose a later date.</source>
+        <target>هذه الفترة مقفلة، يرجى اختيار تاريخ لاحق.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
