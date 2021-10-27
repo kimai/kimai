@@ -1188,6 +1188,14 @@
         <source>default_value_new</source>
         <target>Valori implicite pentru noile intrări</target>
       </trans-unit>
+      <trans-unit id="action.add">
+        <source>action.add</source>
+        <target>Adăugați</target>
+      </trans-unit>
+      <trans-unit id="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target>Ore de lucru săptămânale</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
