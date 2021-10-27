@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Emit repository_dispatch
-        uses: mvasigh/dispatch-action@main
+        uses: mvasigh/dispatch-action@1.1.6
         with:
           token: ${{ secrets.DOCKER_ACCESS_TOKEN }}
           repo: kimai2
