@@ -1,0 +1,18 @@
+name: 'Docker Build'
+on: push
+#on:
+#  release:
+#    types: [released]
+
+jobs:
+  build:
+    name: Dispatch release event to tobybatch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Emit repository_dispatch
+        uses: mvasigh/dispatch-action@main
+        with:
+          token: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          repo: kimai2
+          owner: tobybatch
+          event_type: kimai_release
