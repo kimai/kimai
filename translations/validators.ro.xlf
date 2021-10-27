@@ -413,6 +413,18 @@
         <source>An equal username is already used.</source>
         <target>Un nume de utilizator egal este deja utilizat.</target>
       </trans-unit>
+      <trans-unit id="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target>Această foaie de pontaj este deja exportată.</target>
+      </trans-unit>
+      <trans-unit id="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target>Trebuie să fie selectat un proiect.</target>
+      </trans-unit>
+      <trans-unit id="An activity needs to be selected.">
+        <source>An activity needs to be selected.</source>
+        <target>Trebuie să se selecteze o activitate.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
