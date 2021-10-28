@@ -6,10 +6,6 @@
         <source>title</source>
         <target>إعدادات</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>قم بتغيير التكوينات العالمية لمتتبع الوقت الخاص بك</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>الجداول الزمنية</target>
@@ -17,14 +13,6 @@
       <trans-unit id="invoice">
         <source>invoice</source>
         <target>الفواتير</target>
-      </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>إنشاء العميل — القيم الافتراضية</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>المستخدم — القيم الافتراضية</target>
       </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>

@@ -6,10 +6,6 @@
         <source>title</source>
         <target>Einstellungen</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Globale Einstellungen ihrer Zeiterfassung ändern</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Zeiterfassung</target>
@@ -17,14 +13,6 @@
       <trans-unit id="invoice">
         <source>invoice</source>
         <target>Rechnungen</target>
-      </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>Kunden anlegen - Standard Werte</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Benutzer - Standard Werte</target>
       </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>

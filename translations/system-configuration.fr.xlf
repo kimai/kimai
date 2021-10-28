@@ -6,17 +6,9 @@
         <source>title</source>
         <target>Paramètres</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Modifiez la configuration générale de votre service de suivi du temps</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Fiche de temps</target>
-      </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>Créer un client : Valeurs par défaut</target>
       </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
@@ -213,10 +205,6 @@
       <trans-unit id="label.theme.tags_create">
         <source>label.theme.tags_create</source>
         <target>Mots-clés : Utiliser la recherche avec auto-complétion et autoriser la création de mots-clés</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Utilisateur : Valeurs par défaut</target>
       </trans-unit>
       <trans-unit id="invoice">
         <source>invoice</source>

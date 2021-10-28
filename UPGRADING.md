@@ -24,9 +24,11 @@ Updating the database might take quite a while, depending on the amount of times
 
 **LDAP & SAML**
 
-- SAML users need to activate SAML by setting the new `kimai.saml.activate: true` config key
+Please verify your config with the [LDAP](https://www.kimai.org/documentation/ldap.html) and [SAML](https://www.kimai.org/documentation/saml.html) documentation, especially:
+
+- SAML users: activate it by setting the `kimai.saml.activate: true` config key
+- LDAP users: activate it by setting the `kimai.ldap.activate: true` config key
 - LDAP and SAML users need to remove the complete `security` section from their `local.yaml`
-- Please verify your config with the [LDAP](https://www.kimai.org/documentation/ldap.html) and [SAML](https://www.kimai.org/documentation/saml.html) documentation
 
 **DEVELOPER**  
 

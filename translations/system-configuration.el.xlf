@@ -6,10 +6,6 @@
         <source>title</source>
         <target>Ρυθμίσεις</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Αλλαγή καθολικών ρυθμίσεων των λειτουργιών παρακολούθησης ώρας</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Δελτίο ωρών απασχόλησης</target>
@@ -17,14 +13,6 @@
       <trans-unit id="invoice">
         <source>invoice</source>
         <target>Τιμολόγια</target>
-      </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>Δημιουργία πελάτη - προεπιλεγμένες τιμές</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Χρήστης - προεπιλεγμένες τιμές</target>
       </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>

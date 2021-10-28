@@ -6,21 +6,9 @@
         <source>title</source>
         <target>Ustawienia</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Ustawienia globalne serwisu rejestrowania</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Ewidencje</target>
-      </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>Utwórz ustawienia domyślne dla klientów</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Ustawienia domyślne dla użytkowników</target>
       </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>

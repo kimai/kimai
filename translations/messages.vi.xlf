@@ -945,10 +945,6 @@
         <source>export.title</source>
         <target>Xuất</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Xuất dữ liệu bảng chấm công sang các định dạng khác nhau</target>
-      </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
         <target>Lọc dữ liệu để xuất</target>
@@ -1046,6 +1042,46 @@
       <trans-unit id="label.globalsOnly">
         <source>label.globalsOnly</source>
         <target>Chỉ toàn cầu</target>
+      </trans-unit>
+      <trans-unit id="menu.reporting">
+        <source>menu.reporting</source>
+        <target>Báo cáo</target>
+      </trans-unit>
+      <trans-unit id="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>Một thư tín đã được gửi. Thư chứa một đường dẫn bạn cần phải nhấn để đặt lại mật khẩu. Ghi chú: Bạn chỉ có thể yêu cầu một mật khẩu mới trong vòng %tokenLifetime% giờ. Nếu bạn không thấy thư hãy kiểm tra mục thư rác hoặc thử lại một lần nữa.</target>
+      </trans-unit>
+      <trans-unit id="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Một thư đã được gửi đến %email%. Thư chứa một đường dẫn kích hoạt bạn cần phải nhấn để kích hoạt tài khoản.</target>
+      </trans-unit>
+      <trans-unit id="modal.dirty">
+        <source>modal.dirty</source>
+        <target>Văn bản đã thay đổi. Vui lòng nhấn " Lưu'" để lưu thay đổi hoặc "Đóng" để hủy.</target>
+      </trans-unit>
+      <trans-unit id="sum.total">
+        <source>sum.total</source>
+        <target>Tổng cộng</target>
+      </trans-unit>
+      <trans-unit id="file">
+        <source>file</source>
+        <target state="needs-translation">Tệp</target>
+      </trans-unit>
+      <trans-unit id="label.desc">
+        <source>label.desc</source>
+        <target>Giảm dần</target>
+      </trans-unit>
+      <trans-unit id="label.asc">
+        <source>label.asc</source>
+        <target>Tăng dần</target>
+      </trans-unit>
+      <trans-unit id="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Xóa tìm kiếm yêu thích</target>
+      </trans-unit>
+      <trans-unit id="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Thuật ngữ tìm kiếm.</target>
       </trans-unit>
     </body>
   </file>

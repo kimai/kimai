@@ -6,21 +6,9 @@
                 <source>title</source>
                 <target>Indstillinger</target>
             </trans-unit>
-            <trans-unit id="subtitle">
-                <source>subtitle</source>
-                <target>Skift globale konfigureringer for din tidstracker</target>
-            </trans-unit>
             <trans-unit id="timesheet">
                 <source>timesheet</source>
                 <target>Timeseddel</target>
-            </trans-unit>
-            <trans-unit id="form_customer">
-                <source>form_customer</source>
-                <target>Opret standardværdier for kunder</target>
-            </trans-unit>
-            <trans-unit id="form_user">
-                <source>form_user</source>
-                <target>Standardværdier for brugere</target>
             </trans-unit>
             <trans-unit id="theme">
                 <source>theme</source>

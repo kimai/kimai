@@ -27,7 +27,10 @@ final class Version20210802174320 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $teams = $schema->getTable('kimai2_teams');
-        $teams->removeForeignKey('FK_3BEDDC7F8F7DE5D7');
+        // @see https://github.com/kevinpapst/kimai2/issues/2706
+        if ($teams->hasForeignKey('FK_3BEDDC7F8F7DE5D7')) {
+            $teams->removeForeignKey('FK_3BEDDC7F8F7DE5D7');
+        }
         $teams->dropColumn('teamlead_id');
     }
 

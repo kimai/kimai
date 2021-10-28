@@ -7,7 +7,7 @@
             -->
       <trans-unit id="time_tracking">
         <source>time_tracking</source>
-        <target>Time Tracking</target>
+        <target>تتبع الوقت</target>
       </trans-unit>
       <trans-unit id="yes">
         <source>yes</source>
@@ -772,7 +772,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>لم يتم تكوين أي رسوم حتى الآن.</target>
+        <target>لم يتم تكوين أي معدلات حتى الآن.</target>
       </trans-unit>
       <trans-unit id="attachments">
         <source>attachments</source>
@@ -865,6 +865,30 @@
       <trans-unit id="action.save_all">
         <source>action.save_all</source>
         <target>احفظ الكل</target>
+      </trans-unit>
+      <trans-unit id="status.paid">
+        <source>status.paid</source>
+        <target>مدفوع</target>
+      </trans-unit>
+      <trans-unit id="status.pending">
+        <source>status.pending</source>
+        <target>قيد الانتظار</target>
+      </trans-unit>
+      <trans-unit id="status.new">
+        <source>status.new</source>
+        <target>جديد</target>
+      </trans-unit>
+      <trans-unit id="active.entries">
+        <source>active.entries</source>
+        <target>قياسات المدة الزمنية النشطة</target>
+      </trans-unit>
+      <trans-unit id="export.mark_all">
+        <source>export.mark_all</source>
+        <target>وضع علامة على جميع السجلات المعروضة كمسح؟</target>
+      </trans-unit>
+      <trans-unit id="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>حفظ الإعداد ات كمفضلة البحث</target>
       </trans-unit>
     </body>
   </file>

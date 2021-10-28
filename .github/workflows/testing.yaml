@@ -51,7 +51,7 @@ jobs:
                 run: vendor/bin/phpstan analyse tests -c tests/phpstan.neon --level=5 --no-progress --error-format=checkstyle | cs2pr
 
             -   name: Lint codebase
-                run: composer kimai:code-lint
+                run: composer linting
 
             -   name: Install LDAP package
                 run: composer require laminas/laminas-ldap

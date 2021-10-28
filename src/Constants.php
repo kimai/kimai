@@ -17,15 +17,15 @@ class Constants
     /**
      * The current release version
      */
-    public const VERSION = '1.15';
+    public const VERSION = '1.15.6';
     /**
      * The current release: major * 10000 + minor * 100 + patch
      */
-    public const VERSION_ID = 11500;
+    public const VERSION_ID = 11506;
     /**
      * The current release status, either "stable" or "dev"
      */
-    public const STATUS = 'dev';
+    public const STATUS = 'stable';
     /**
      * The software name
      */
@@ -43,7 +43,7 @@ class Constants
      */
     public const HOMEPAGE = 'https://www.kimai.org';
     /**
-     * Application wide default locale.
+     * Application wide default locale
      */
     public const DEFAULT_LOCALE = 'en';
     /**

@@ -199,18 +199,18 @@ class LocaleHelperTest extends TestCase
         $sut = $this->getSut('de');
         $this->assertEquals('2,62', $sut->durationDecimal($record->getDuration()));
         $this->assertEquals('6.328,89', $sut->durationDecimal(22784012));
-        $this->assertEquals('1', $sut->durationDecimal(3600));
+        $this->assertEquals('1,00', $sut->durationDecimal(3600));
         $this->assertEquals('1,01', $sut->durationDecimal(3630));
         $this->assertEquals('1,02', $sut->durationDecimal(3661));
-        $this->assertEquals('1,1', $sut->durationDecimal(3960));
+        $this->assertEquals('1,10', $sut->durationDecimal(3960));
 
         // test negative duration
         $sut = $this->getSut('en');
-        $this->assertEquals('0', $sut->durationDecimal(-1));
+        $this->assertEquals('0.00', $sut->durationDecimal(-1));
 
         // test zero duration
         $sut = $this->getSut('en');
-        $this->assertEquals('0', $sut->durationDecimal(0));
+        $this->assertEquals('0.00', $sut->durationDecimal(0));
         $this->assertEquals('6,328.89', $sut->durationDecimal(22784012));
     }
 

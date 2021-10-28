@@ -6,21 +6,9 @@
         <source>title</source>
         <target>Configurações</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Alterar as configurações globais do seu rastreador de tempo</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Horário</target>
-      </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>Criar cliente - Valores padrões</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Usuário - Valores padrões</target>
       </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
@@ -224,7 +212,7 @@
       </trans-unit>
       <trans-unit id="help.theme.color_choices">
         <source>help.theme.color_choices</source>
-        <target>Lista separada por vírgulas com os códigos das cores HTML. Os nomes das cores podem ser definidos através do prefixo do código da cor com um nome e o | delimitador, por exemplo: Branco|#ffffffff,Preto|#000000.</target>
+        <target>Lista separada por vírgulas com os códigos das cores HTML. Os nomes das cores podem ser definidos através do prefixo do código da cor com um nome e o delimitador |, por exemplo: Branco|#ffffffff,Preto|#000000.</target>
       </trans-unit>
       <trans-unit id="label.theme.color_choices">
         <source>label.theme.color_choices</source>
@@ -244,7 +232,7 @@
       </trans-unit>
       <trans-unit id="label.timesheet.time_increment">
         <source>label.timesheet.time_increment</source>
-        <target>Seleção de minutos para De &amp; Para</target>
+        <target>Seleção de minutos para De e Para</target>
       </trans-unit>
       <trans-unit id="label.timesheet.duration_increment">
         <source>label.timesheet.duration_increment</source>
@@ -308,7 +296,7 @@
       </trans-unit>
       <trans-unit id="label.calendar.dragdrop_amount">
         <source>label.calendar.dragdrop_amount</source>
-        <target>Quantidade das entradas para arrastar&amp;largar (0 = desativado)</target>
+        <target>Quantidade das entradas para arrastar e largar (0 = desativado)</target>
       </trans-unit>
       <trans-unit id="label.theme.random_colors">
         <source>label.theme.random_colors</source>

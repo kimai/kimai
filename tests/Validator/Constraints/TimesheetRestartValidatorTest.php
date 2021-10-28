@@ -24,6 +24,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
+ * @covers \App\Validator\Constraints\TimesheetRestart
  * @covers \App\Validator\Constraints\TimesheetRestartValidator
  */
 class TimesheetRestartValidatorTest extends ConstraintValidatorTestCase

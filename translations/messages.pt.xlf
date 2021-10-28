@@ -23,7 +23,7 @@
       </trans-unit>
       <trans-unit id="This is a mandatory field">
         <source>This is a mandatory field</source>
-        <target>Mandatório</target>
+        <target>Obrigatório</target>
       </trans-unit>
       <trans-unit id="create">
         <source>create</source>
@@ -31,15 +31,15 @@
       </trans-unit>
       <trans-unit id="confirm.delete">
         <source>confirm.delete</source>
-        <target>Você realmente quer deletar?</target>
+        <target>Quer mesmo eliminar?</target>
       </trans-unit>
       <trans-unit id="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>Esses dados também serão apagados! Alternativamente, pode selecionar um registo para qual todos os dados serão transferidos:</target>
+        <target>Estes dados também serão eliminados! Alternativamente, pode selecionar um registo para qual todos os dados serão transferidos:</target>
       </trans-unit>
       <trans-unit id="delete.not_in_use">
         <source>delete.not_in_use</source>
-        <target>Esse registo pode ser apagado com segurança.</target>
+        <target>Este registo pode ser eliminado com segurança.</target>
       </trans-unit>
       <trans-unit id="cancel">
         <source>cancel</source>
@@ -66,7 +66,7 @@
       </trans-unit>
       <trans-unit id="label.user_profile">
         <source>label.user_profile</source>
-        <target>Meu Perfil</target>
+        <target>Meu perfil</target>
       </trans-unit>
       <trans-unit id="label.api_token">
         <source>label.api_token</source>
@@ -81,7 +81,7 @@
             -->
       <trans-unit id="menu.homepage">
         <source>menu.homepage</source>
-        <target>Dashboard</target>
+        <target>Painel principal</target>
       </trans-unit>
       <trans-unit id="menu.admin">
         <source>menu.admin</source>
@@ -109,7 +109,7 @@
       </trans-unit>
       <trans-unit id="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
-        <target>Quadro de Horários</target>
+        <target>Quadro de horários</target>
       </trans-unit>
       <trans-unit id="menu.admin_customer">
         <source>menu.admin_customer</source>
@@ -125,7 +125,7 @@
       </trans-unit>
       <trans-unit id="menu.admin_user">
         <source>menu.admin_user</source>
-        <target>Utilizador</target>
+        <target>Utilizadores</target>
       </trans-unit>
       <trans-unit id="menu.plugin">
         <source>menu.plugin</source>
@@ -137,14 +137,14 @@
       </trans-unit>
       <trans-unit id="menu.tags">
         <source>menu.tags</source>
-        <target>Tags</target>
+        <target>Etiquetas</target>
       </trans-unit>
       <!--
               Error templates
             -->
       <trans-unit id="error.no_entries_found">
         <source>error.no_entries_found</source>
-        <target>Nenhuma entrada encontrada baseada nos seus filtros selecionados.</target>
+        <target>Não foi encontrada nenhuma entrada baseada nos seus filtros selecionados.</target>
       </trans-unit>
       <!--
               General labels
@@ -195,7 +195,7 @@
       </trans-unit>
       <trans-unit id="label.budget">
         <source>label.budget</source>
-        <target>Despesas</target>
+        <target>Orçamento</target>
       </trans-unit>
       <trans-unit id="label.timeBudget">
         <source>label.timeBudget</source>
@@ -211,11 +211,11 @@
       </trans-unit>
       <trans-unit id="label.tag">
         <source>label.tag</source>
-        <target>Tags</target>
+        <target>Etiquetas</target>
       </trans-unit>
       <trans-unit id="label.tags">
         <source>label.tags</source>
-        <target>Tags</target>
+        <target>Etiquetas</target>
       </trans-unit>
       <trans-unit id="label.hourlyRate">
         <source>label.hourlyRate</source>
@@ -239,7 +239,7 @@
       </trans-unit>
       <trans-unit id="label.language">
         <source>label.language</source>
-        <target>Linguagem</target>
+        <target>Idioma</target>
       </trans-unit>
       <trans-unit id="label.customer">
         <source>label.customer</source>
@@ -247,7 +247,7 @@
       </trans-unit>
       <trans-unit id="label.email">
         <source>label.email</source>
-        <target>E-mail</target>
+        <target>Email</target>
       </trans-unit>
       <trans-unit id="label.create_more">
         <source>label.create_more</source>
@@ -266,11 +266,11 @@
       </trans-unit>
       <trans-unit id="action.delete">
         <source>action.delete</source>
-        <target>Deletar</target>
+        <target>Eliminar</target>
       </trans-unit>
       <trans-unit id="action.save">
         <source>action.save</source>
-        <target>Salvar</target>
+        <target>Guardar</target>
       </trans-unit>
       <trans-unit id="action.back">
         <source>action.back</source>
@@ -285,11 +285,11 @@
             -->
       <trans-unit id="dashboard.title">
         <source>dashboard.title</source>
-        <target>Dashboard</target>
+        <target>Painel principal</target>
       </trans-unit>
       <trans-unit id="dashboard.subtitle">
         <source>dashboard.subtitle</source>
-        <target>Bem vindo!</target>
+        <target>Bem-vindo(a)!</target>
       </trans-unit>
       <trans-unit id="dashboard.all">
         <source>dashboard.all</source>
@@ -300,7 +300,7 @@
             -->
       <trans-unit id="more.info.link">
         <source>more.info.link</source>
-        <target>Mais Informações</target>
+        <target>Mais informações</target>
       </trans-unit>
       <trans-unit id="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
@@ -311,11 +311,11 @@
             -->
       <trans-unit id="timesheet.title">
         <source>timesheet.title</source>
-        <target>Meus Tempos</target>
+        <target>Meus tempos</target>
       </trans-unit>
       <trans-unit id="timesheet.edit">
         <source>timesheet.edit</source>
-        <target>Editar Gravação</target>
+        <target>Editar entrada</target>
       </trans-unit>
       <trans-unit id="label.begin">
         <source>label.begin</source>
@@ -335,7 +335,7 @@
       </trans-unit>
       <trans-unit id="modal.columns.description">
         <source>modal.columns.description</source>
-        <target>Ao gravar, as colunas desmarcadas serão ocultadas e essa configuração será armazenada num cookie do navegador. Se apagar os seus cookies, as configurações serão invertidas.</target>
+        <target>Ao guardar, as colunas desmarcadas serão ocultadas e essa configuração será armazenada num cookie do navegador. Se eliminar os seus cookies, as configurações serão revertidas.</target>
       </trans-unit>
       <trans-unit id="label.fixedRate">
         <source>label.fixedRate</source>
@@ -350,7 +350,7 @@
             -->
       <trans-unit id="profile.title">
         <source>profile.title</source>
-        <target>Perfil do Utilizador</target>
+        <target>Perfil do utilizador</target>
       </trans-unit>
       <trans-unit id="profile.about_me">
         <source>profile.about_me</source>
@@ -358,7 +358,7 @@
       </trans-unit>
       <trans-unit id="profile.first_entry">
         <source>profile.first_entry</source>
-        <target>Trabalhando desde</target>
+        <target>A trabalhar desde</target>
       </trans-unit>
       <trans-unit id="profile.settings">
         <source>profile.settings</source>
@@ -382,7 +382,7 @@
       </trans-unit>
       <trans-unit id="label.theme.collapsed_sidebar">
         <source>label.theme.collapsed_sidebar</source>
-        <target>Alterna o estado da barra lateral esquerda no carregamento da página (abrir ou recolher)</target>
+        <target>Minimiza a barra lateral esquerda</target>
       </trans-unit>
       <trans-unit id="label.calendar.initial_view">
         <source>label.calendar.initial_view</source>
@@ -390,7 +390,7 @@
       </trans-unit>
       <trans-unit id="label.login.initial_view">
         <source>label.login.initial_view</source>
-        <target>Visualização inicial após o login</target>
+        <target>Visualização inicial após iniciar sessão</target>
       </trans-unit>
       <!-- Options for user-preference label.calendar.initial_view -->
       <trans-unit id="month">
@@ -421,7 +421,7 @@
             -->
       <trans-unit id="admin_timesheet.title">
         <source>admin_timesheet.title</source>
-        <target>Quadro de Horários</target>
+        <target>Quadro de horários</target>
       </trans-unit>
       <!--
               Admin: Projects
@@ -450,7 +450,7 @@
       </trans-unit>
       <trans-unit id="label.company">
         <source>label.company</source>
-        <target>Nome da Empresa</target>
+        <target>Nome da empresa</target>
       </trans-unit>
       <trans-unit id="label.vat">
         <source>label.vat</source>
@@ -458,7 +458,7 @@
       </trans-unit>
       <trans-unit id="label.contact">
         <source>label.contact</source>
-        <target>Contato</target>
+        <target>Contacto</target>
       </trans-unit>
       <trans-unit id="label.address">
         <source>label.address</source>
@@ -478,11 +478,11 @@
       </trans-unit>
       <trans-unit id="label.mobile">
         <source>label.mobile</source>
-        <target>Telemovel</target>
+        <target>Telemóvel</target>
       </trans-unit>
       <trans-unit id="label.homepage">
         <source>label.homepage</source>
-        <target>Pagina inicial</target>
+        <target>Página inicial</target>
       </trans-unit>
       <trans-unit id="label.timezone">
         <source>label.timezone</source>
@@ -535,7 +535,7 @@
             -->
       <trans-unit id="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
-        <target>Administrador do Sistema</target>
+        <target>Administrador do sistema</target>
       </trans-unit>
       <trans-unit id="ROLE_ADMIN">
         <source>ROLE_ADMIN</source>
@@ -543,7 +543,7 @@
       </trans-unit>
       <trans-unit id="ROLE_TEAMLEAD">
         <source>ROLE_TEAMLEAD</source>
-        <target>Líder da equipe</target>
+        <target>Líder da equipa</target>
       </trans-unit>
       <trans-unit id="ROLE_USER">
         <source>ROLE_USER</source>
@@ -574,7 +574,7 @@
       </trans-unit>
       <trans-unit id="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
-        <target>Seu horário de trabalho</target>
+        <target>Minhas horas de trabalho</target>
       </trans-unit>
       <trans-unit id="stats.amountToday">
         <source>stats.amountToday</source>
@@ -602,7 +602,7 @@
       </trans-unit>
       <trans-unit id="stats.userActiveWeek">
         <source>stats.userActiveWeek</source>
-        <target>Utilizadores ativos nessa semana</target>
+        <target>Utilizadores ativos nesta semana</target>
       </trans-unit>
       <trans-unit id="stats.userActiveMonth">
         <source>stats.userActiveMonth</source>
@@ -614,7 +614,7 @@
       </trans-unit>
       <trans-unit id="stats.userActiveTotal">
         <source>stats.userActiveTotal</source>
-        <target>Utilizadores ativos total</target>
+        <target>Total de utilizadores ativos</target>
       </trans-unit>
       <trans-unit id="stats.activeRecordings">
         <source>stats.activeRecordings</source>
@@ -693,7 +693,7 @@
       </trans-unit>
       <trans-unit id="invoice.number">
         <source>invoice.number</source>
-        <target>Número da Fatura</target>
+        <target>Número da fatura</target>
       </trans-unit>
       <trans-unit id="invoice.subtotal">
         <source>invoice.subtotal</source>
@@ -709,7 +709,7 @@
       </trans-unit>
       <trans-unit id="invoice.service_date">
         <source>invoice.service_date</source>
-        <target>Data de serviço</target>
+        <target>Data do serviço</target>
       </trans-unit>
       <trans-unit id="label.amount">
         <source>label.amount</source>
@@ -717,7 +717,7 @@
       </trans-unit>
       <trans-unit id="label.total_rate">
         <source>label.total_rate</source>
-        <target>Preço Total</target>
+        <target>Preço total</target>
       </trans-unit>
       <trans-unit id="label.unit_price">
         <source>label.unit_price</source>
@@ -729,15 +729,15 @@
       </trans-unit>
       <trans-unit id="invoice.signature_user">
         <source>invoice.signature_user</source>
-        <target>Confirmação: Data / Nome do Consultor / Assinatura</target>
+        <target>Confirmação: Data / Nome do consultor / Assinatura</target>
       </trans-unit>
       <trans-unit id="invoice.signature_customer">
         <source>invoice.signature_customer</source>
-        <target>Confirmação: Data / Nome do Cliente / Assinatura</target>
+        <target>Confirmação: Data / Nome do cliente / Assinatura</target>
       </trans-unit>
       <trans-unit id="invoice.total_working_time">
         <source>invoice.total_working_time</source>
-        <target>Duração Total</target>
+        <target>Duração total</target>
       </trans-unit>
       <trans-unit id="label.orderNumber">
         <source>label.orderNumber</source>
@@ -745,11 +745,11 @@
       </trans-unit>
       <trans-unit id="label.invoice_tax_number">
         <source>label.invoice_tax_number</source>
-        <target>VAT no. (Imposto Britânico):</target>
+        <target>Nº do IVA:</target>
       </trans-unit>
       <trans-unit id="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
-        <target>Conta Bancária</target>
+        <target>Conta bancária</target>
       </trans-unit>
       <!--
               Export
@@ -758,17 +758,13 @@
         <source>export.title</source>
         <target>Exportar</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Exportar dados do quadro de horários para vários formatos</target>
-      </trans-unit>
       <trans-unit id="export.period">
         <source>export.period</source>
         <target>Período</target>
       </trans-unit>
       <trans-unit id="export.document_title">
         <source>export.document_title</source>
-        <target>Lista de despesas</target>
+        <target>Exportação de quadro de horários</target>
       </trans-unit>
       <trans-unit id="export.full_list">
         <source>export.full_list</source>
@@ -784,14 +780,14 @@
       </trans-unit>
       <trans-unit id="export.date_copyright">
         <source>export.date_copyright</source>
-        <target>Criado %date% com %kimai%</target>
+        <target>Criado em %date% com %kimai%</target>
       </trans-unit>
       <!--
              Navbar - recent entries and activities
             -->
       <trans-unit id="active.entries">
         <source>active.entries</source>
-        <target>Suas medições de tempo ativo</target>
+        <target>As suas medições de tempo ativas</target>
       </trans-unit>
       <trans-unit id="timesheet.all">
         <source>timesheet.all</source>
@@ -803,11 +799,11 @@
       </trans-unit>
       <trans-unit id="recent.activities.format">
         <source>recent.activities.format</source>
-        <target>%activity% no %project% para %customer%</target>
+        <target>%activity% em %project% para %customer%</target>
       </trans-unit>
       <trans-unit id="timesheet.start">
         <source>timesheet.start</source>
-        <target>Criar registo de tempo</target>
+        <target>Criar novo registo de tempo</target>
       </trans-unit>
       <!--
               TOOLBARS
@@ -826,7 +822,7 @@
       </trans-unit>
       <trans-unit id="entryState.exported">
         <source>entryState.exported</source>
-        <target>Desmarcado</target>
+        <target>Resolvido</target>
       </trans-unit>
       <trans-unit id="entryState.not_exported">
         <source>entryState.not_exported</source>
@@ -838,7 +834,7 @@
       </trans-unit>
       <trans-unit id="entryState.running">
         <source>entryState.running</source>
-        <target>Ativos</target>
+        <target>Ativo</target>
       </trans-unit>
       <trans-unit id="entryState.stopped">
         <source>entryState.stopped</source>
@@ -846,19 +842,19 @@
       </trans-unit>
       <trans-unit id="export.clear_all">
         <source>export.clear_all</source>
-        <target>Marcar todos os registos mostrados como aberto?</target>
+        <target>Marcar todos os registos mostrados como abertos?</target>
       </trans-unit>
       <trans-unit id="export.mark_all">
         <source>export.mark_all</source>
-        <target>Marcar todos os registos mostrados como resolvido?</target>
+        <target>Marcar todos os registos mostrados como resolvidos?</target>
       </trans-unit>
       <trans-unit id="label.globalsOnly">
         <source>label.globalsOnly</source>
-        <target>Somente global</target>
+        <target>Apenas global</target>
       </trans-unit>
       <trans-unit id="help.batch_meta_fields">
         <source>help.batch_meta_fields</source>
-        <target>Os campos que devem ser actualizados devem ser primeiro activados clicando na caixa de verificação associada.</target>
+        <target>Os campos que devem ser atualizados devem ser primeiro ativados clicando na caixa de verificação associada.</target>
       </trans-unit>
       <trans-unit id="label.batch_meta_fields">
         <source>label.batch_meta_fields</source>
@@ -886,7 +882,7 @@
       </trans-unit>
       <trans-unit id="label.decimalDuration">
         <source>label.decimalDuration</source>
-        <target>Duração de exibição como número decimal</target>
+        <target>Duração da visualização como número decimal</target>
       </trans-unit>
       <trans-unit id="label.orderDate">
         <source>label.orderDate</source>
@@ -898,11 +894,11 @@
       </trans-unit>
       <trans-unit id="button.preview_print">
         <source>button.preview_print</source>
-        <target>Previsão de impressão</target>
+        <target>Pré-visualização de impressão</target>
       </trans-unit>
       <trans-unit id="button.preview">
         <source>button.preview</source>
-        <target>pre-visualização</target>
+        <target>Pré-visualização</target>
       </trans-unit>
       <trans-unit id="invoice.filter">
         <source>invoice.filter</source>
@@ -914,19 +910,19 @@
       </trans-unit>
       <trans-unit id="stats.percentUsed">
         <source>stats.percentUsed</source>
-        <target>%percent%%usado</target>
+        <target>%percent%% usado</target>
       </trans-unit>
       <trans-unit id="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
-        <target>Ano inteiro %year%</target>
+        <target>Ano %year% inteiro</target>
       </trans-unit>
       <trans-unit id="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
-        <target>%month%%year%</target>
+        <target>%month% %year%</target>
       </trans-unit>
       <trans-unit id="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
-        <target>Semana de calendario %week%</target>
+        <target>Semana %week% do calendário</target>
       </trans-unit>
       <trans-unit id="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
@@ -934,23 +930,23 @@
       </trans-unit>
       <trans-unit id="Allowed character: A-Z and _">
         <source>Allowed character: A-Z and _</source>
-        <target>Carácter permitido: A-Z e _</target>
+        <target>Caracteres permitidos: A-Z e _</target>
       </trans-unit>
       <trans-unit id="user_role.title">
         <source>user_role.title</source>
-        <target>Função de usuario</target>
+        <target>Função do utilizador</target>
       </trans-unit>
       <trans-unit id="user_permissions.title">
         <source>user_permissions.title</source>
-        <target>Permissões de usuario</target>
+        <target>Permissões do utilizador</target>
       </trans-unit>
       <trans-unit id="label.project_end">
         <source>label.project_end</source>
-        <target>Fim de projeto</target>
+        <target>Fim do projeto</target>
       </trans-unit>
       <trans-unit id="label.project_start">
         <source>label.project_start</source>
-        <target>Inicio de projeto</target>
+        <target>Início do projeto</target>
       </trans-unit>
       <trans-unit id="label.timesheet.export_decimal">
         <source>label.timesheet.export_decimal</source>
@@ -958,7 +954,7 @@
       </trans-unit>
       <trans-unit id="label.lastLogin">
         <source>label.lastLogin</source>
-        <target>Ultimo login</target>
+        <target>Última sessão</target>
       </trans-unit>
       <trans-unit id="profile.teams">
         <source>profile.teams</source>
@@ -966,11 +962,11 @@
       </trans-unit>
       <trans-unit id="label.appendTags">
         <source>label.appendTags</source>
-        <target>Anexar tags</target>
+        <target>Anexar etiquetas</target>
       </trans-unit>
       <trans-unit id="label.replaceTags">
         <source>label.replaceTags</source>
-        <target>Substituir tags</target>
+        <target>Substituir etiquetas</target>
       </trans-unit>
       <trans-unit id="help.fixedRate">
         <source>help.fixedRate</source>
@@ -978,7 +974,7 @@
       </trans-unit>
       <trans-unit id="label.plus_more">
         <source>label.plus_more</source>
-        <target>+%count%mais</target>
+        <target>mais +%count%</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>
@@ -986,7 +982,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>Projetos de quipa &amp; orçamentos</target>
+        <target>Meus projetos</target>
       </trans-unit>
       <trans-unit id="label.my_teams">
         <source>label.my_teams</source>
@@ -1006,7 +1002,7 @@
       </trans-unit>
       <trans-unit id="label.teamlead">
         <source>label.teamlead</source>
-        <target>Liderança de equipe</target>
+        <target>Liderança da equipa</target>
       </trans-unit>
       <trans-unit id="label.team">
         <source>label.team</source>
@@ -1026,15 +1022,15 @@
       </trans-unit>
       <trans-unit id="help.rate">
         <source>help.rate</source>
-        <target>Tarifa horária a cobrar</target>
+        <target>Taxa horária a cobrar</target>
       </trans-unit>
       <trans-unit id="label.theme.layout">
         <source>label.theme.layout</source>
-        <target>Tema: layout</target>
+        <target>Tema: disposição</target>
       </trans-unit>
       <trans-unit id="error.no_comments_found">
         <source>error.no_comments_found</source>
-        <target>Ainda não foram publicados comentarios.</target>
+        <target>Ainda não foram publicados comentários.</target>
       </trans-unit>
       <trans-unit id="menu.doctor">
         <source>menu.doctor</source>
@@ -1050,7 +1046,7 @@
       </trans-unit>
       <trans-unit id="login_required">
         <source>login_required</source>
-        <target>Permissão em falta. Redireccionar para iniciar sessão?</target>
+        <target>Falta a permissão. Redirecionar para iniciar a sessão?</target>
       </trans-unit>
       <trans-unit id="rates.title">
         <source>rates.title</source>
@@ -1058,7 +1054,7 @@
       </trans-unit>
       <trans-unit id="rates.empty">
         <source>rates.empty</source>
-        <target>Nenhuma taxa horária foi configurada ainda.</target>
+        <target>Ainda não foi configurada nenhuma taxa horária.</target>
       </trans-unit>
       <trans-unit id="attachments">
         <source>attachments</source>
@@ -1066,7 +1062,7 @@
       </trans-unit>
       <trans-unit id="update_multiple">
         <source>update_multiple</source>
-        <target>%action%%count%entradas?</target>
+        <target>%action% %count% entradas?</target>
       </trans-unit>
       <trans-unit id="my.profile">
         <source>my.profile</source>
@@ -1074,19 +1070,19 @@
       </trans-unit>
       <trans-unit id="search">
         <source>search</source>
-        <target>Procurar</target>
+        <target>Pesquisar</target>
       </trans-unit>
       <trans-unit id="upload">
         <source>upload</source>
-        <target>Carregar</target>
+        <target>Enviar</target>
       </trans-unit>
       <trans-unit id="label.vat_id">
         <source>label.vat_id</source>
-        <target>IVA-ID</target>
+        <target>ID do IVA</target>
       </trans-unit>
       <trans-unit id="profile.registration_date">
         <source>profile.registration_date</source>
-        <target>Registrado em</target>
+        <target>Registado em</target>
       </trans-unit>
       <trans-unit id="label.last_record">
         <source>label.last_record</source>
@@ -1098,11 +1094,11 @@
       </trans-unit>
       <trans-unit id="calendar.drag_and_drop.delete">
         <source>calendar.drag_and_drop.delete</source>
-        <target>Se quiser apagar uma entrada, deve arrastá-la para o botão.</target>
+        <target>Se quiser eliminar uma entrada, tem de a arrastar para o botão.</target>
       </trans-unit>
       <trans-unit id="label.set_as_default">
         <source>label.set_as_default</source>
-        <target>Gravar configuração como favorito de pesquisa</target>
+        <target>Guardar configuração como favorito de pesquisa</target>
       </trans-unit>
       <trans-unit id="label.not_invoiced">
         <source>label.not_invoiced</source>
@@ -1122,7 +1118,7 @@
       </trans-unit>
       <trans-unit id="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target>Pulou pré-visualização das %rows% mais filas …</target>
+        <target>Saltou a pré-visualização de mais %rows% filas…</target>
       </trans-unit>
       <trans-unit id="invoice.payment_date">
         <source>invoice.payment_date</source>
@@ -1130,7 +1126,7 @@
       </trans-unit>
       <trans-unit id="label.tax_rate">
         <source>label.tax_rate</source>
-        <target>Taxa de imposto</target>
+        <target>Taxa do imposto</target>
       </trans-unit>
       <trans-unit id="theme.update_browser_title">
         <source>theme.update_browser_title</source>
@@ -1138,11 +1134,11 @@
       </trans-unit>
       <trans-unit id="action.save_all">
         <source>action.save_all</source>
-        <target>Salvar tudo</target>
+        <target>Guardar tudo</target>
       </trans-unit>
       <trans-unit id="modal.dirty">
         <source>modal.dirty</source>
-        <target>O formulário foi alterado. Por favor clique em "Salvar" para armazenar as alterações ou "Fechar" para cancelar.</target>
+        <target>O formulário foi alterado. Por favor clique em "Guardar" para armazenar as alterações ou "Fechar" para cancelar.</target>
       </trans-unit>
       <trans-unit id="sum.total">
         <source>sum.total</source>
@@ -1166,7 +1162,7 @@
       </trans-unit>
       <trans-unit id="label.remove_default">
         <source>label.remove_default</source>
-        <target>Deletar Configuração Padrão</target>
+        <target>Eliminar favorito de pesquisa</target>
       </trans-unit>
       <trans-unit id="label.searchTerm">
         <source>label.searchTerm</source>
@@ -1174,15 +1170,15 @@
       </trans-unit>
       <trans-unit id="stats.percentUsedLeft_month">
         <source>stats.percentUsedLeft_month</source>
-        <target>% percent %% usado (% left% ainda está aberto este mês)</target>
+        <target>%percent%% usado (%left% ainda estão abertos este mês)</target>
       </trans-unit>
       <trans-unit id="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>
-        <target>% percent %% usado este mês</target>
+        <target>%percent%% usado este mês</target>
       </trans-unit>
       <trans-unit id="stats.userActiveFinancialYear">
         <source>stats.userActiveFinancialYear</source>
-        <target>Usuários ativos este ano financeiro</target>
+        <target>Utilizadores ativos neste ano financeiro</target>
       </trans-unit>
       <trans-unit id="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
@@ -1194,11 +1190,11 @@
       </trans-unit>
       <trans-unit id="stats.workingTime">
         <source>stats.workingTime</source>
-        <target>Expediente de trabalho</target>
+        <target>Tempo de trabalho</target>
       </trans-unit>
       <trans-unit id="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
-        <target>Ano financeiro</target>
+        <target>Exercício financeiro</target>
       </trans-unit>
       <trans-unit id="stats.revenue">
         <source>stats.revenue</source>
@@ -1206,15 +1202,47 @@
       </trans-unit>
       <trans-unit id="error.too_many_entries">
         <source>error.too_many_entries</source>
-        <target>O pedido não pôde ser processado, muitos resultados foram encontrados.</target>
+        <target>Não foi possível processar o pedido. Foram encontrados demasiados resultados.</target>
       </trans-unit>
       <trans-unit id="resetting.check_email">
         <source>resetting.check_email</source>
-        <target>Um e-mail foi enviado. Ele contém um link que você deve clicar para redefinir sua senha. Nota: Você só pode solicitar uma nova senha uma vez dentro de %tokenLifetime% horas. Se você não receber um e-mail, verifique sua pasta de spam ou tente novamente.</target>
+        <target>Foi enviado um email. Ele contém uma hiperligação de ativação onde tem de clicar para ativar a sua conta. Nota: só pode solicitar uma nova palavra-passe a cada %tokenLifetime% horas. Se não receber um email, verifique a sua pasta de emails indesejados (spam) ou tente novamente.</target>
       </trans-unit>
       <trans-unit id="registration.check_email">
         <source>registration.check_email</source>
-        <target>Um e-mail foi enviado para %email%. Ele contém um link de ativação que você deve clicar para ativar sua conta.</target>
+        <target>Foi enviado um email para %email%. Ele contém uma hiperligação de ativação onde tem de clicar para ativar a sua conta.</target>
+      </trans-unit>
+      <trans-unit id="label.account_number">
+        <source>label.account_number</source>
+        <target>Número da equipa</target>
+      </trans-unit>
+      <trans-unit id="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target>Adicione um novo utilizador à equipa, selecionando-o a partir lista. Em seguida, pode decidir se o utilizador deve-sese tornar um líder da equipa.</target>
+      </trans-unit>
+      <trans-unit id="add_user.label">
+        <source>add_user.label</source>
+        <target>Adicionar utilizador</target>
+      </trans-unit>
+      <trans-unit id="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target>Atualmente existem %records% de registos de tempo, que somam até uma duração total de %duration%.</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType_month">
+        <source>label.budgetType_month</source>
+        <target>Mensal</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType">
+        <source>label.budgetType</source>
+        <target>Tipo de orçamento</target>
+      </trans-unit>
+      <trans-unit id="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target>A sua pesquisa leva a %count% resultados. Se a exportação falhar, tem de reduzir ainda mais a sua pesquisa.</target>
+      </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>Tipo</target>
       </trans-unit>
     </body>
   </file>

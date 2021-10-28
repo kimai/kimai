@@ -6,17 +6,9 @@
                 <source>title</source>
                 <target>設定</target>
             </trans-unit>
-            <trans-unit id="subtitle">
-                <source>subtitle</source>
-                <target>タイムトラッカーの共通設定を変更します。</target>
-            </trans-unit>
             <trans-unit id="timesheet">
                 <source>timesheet</source>
                 <target>タイムシート</target>
-            </trans-unit>
-            <trans-unit id="form_customer">
-                <source>form_customer</source>
-                <target>得意先を追加する時のデフォルト値</target>
             </trans-unit>
             <trans-unit id="theme">
                 <source>theme</source>
