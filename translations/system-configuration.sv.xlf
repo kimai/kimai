@@ -6,17 +6,9 @@
         <source>title</source>
         <target state="translated">Inställningar</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target state="translated">Ändra globala konfigurationer för din tidsredovisning</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target state="translated">Tidrapport</target>
-      </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target state="translated">Skapa kund - standardvärden</target>
       </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
@@ -262,13 +254,57 @@
         <source>label.theme.tags_create</source>
         <target>Taggar: använd automatisk komplettering vid sökning och tillåt skapande av taggar</target>
       </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Användare – standardvärden</target>
-      </trans-unit>
       <trans-unit id="invoice">
         <source>invoice</source>
         <target>Fakturor</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target>Antalet poster för dra &amp; släpp (0 = inaktiverat)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.long_running_duration">
+        <source>label.timesheet.rules.long_running_duration</source>
+        <target>Maximal varaktighet för en tidrapport i minuter innan sparandet avvisas (0 = avaktiverad)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.break_warning_duration">
+        <source>label.timesheet.rules.break_warning_duration</source>
+        <target>Maximal varaktighet för en tidrapport i minuter innan en "pausvarning" visas (0 = avaktiverad)</target>
+      </trans-unit>
+      <trans-unit id="label.saml_activate">
+        <source>label.saml_activate</source>
+        <target>SAML -inloggning</target>
+      </trans-unit>
+      <trans-unit id="label.ldap_activate">
+        <source>label.ldap_activate</source>
+        <target>LDAP-inloggning</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset_token_ttl">
+        <source>label.user_auth_password_reset_token_ttl</source>
+        <target>Glömt lösenord - sekunder innan en återställningslänk går ut</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_password_reset_retry_ttl">
+        <source>label.user_auth_password_reset_retry_ttl</source>
+        <target>Glömt lösenord - sekunder innan en användare kan begära nästa e-postmeddelande</target>
+      </trans-unit>
+      <trans-unit id="label.user_auth_login">
+        <source>label.user_auth_login</source>
+        <target>Inloggningsformulär</target>
+      </trans-unit>
+      <trans-unit id="authentication">
+        <source>authentication</source>
+        <target>Autentisering</target>
+      </trans-unit>
+      <trans-unit id="help.theme.color_choices">
+        <source>help.theme.color_choices</source>
+        <target>Kommaseparerad lista med HTML -färgkoder. Färgnamn kan ställas in genom att prefixa färgkoden med ett namn och | avgränsare, t.ex.: Vit|#ffffff, Svart|#000000.</target>
+      </trans-unit>
+      <trans-unit id="label.calendar.slot_duration">
+        <source>label.calendar.slot_duration</source>
+        <target>tidsintervall för vecka- och dagvy (format: tt: mm: ss)</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_grace_period">
+        <source>label.timesheet.rules.lockdown_grace_period</source>
+        <target>Avslutningsperiodens slut (PHP relativt datum till slutet av spärrperiod)</target>
       </trans-unit>
     </body>
   </file>

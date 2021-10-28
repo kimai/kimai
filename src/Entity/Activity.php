@@ -47,7 +47,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  *
- * @Exporter\Order({"id", "name", "project", "budget", "timeBudget", "color", "visible", "comment"})
+ * @Exporter\Order({"id", "name", "project", "budget", "timeBudget", "budgetType", "color", "visible", "comment"})
  * @Exporter\Expose("project", label="label.project", exp="object.getProject() === null ? null : object.getProject().getName()")
  */
 class Activity implements EntityWithMetaFields, EntityWithBudget

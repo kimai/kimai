@@ -25,18 +25,21 @@
             {% set totals = {'totals': 0} %}
             {% set columns = 2 %}
             <table class="table table-bordered table-hover dataTable">
-                <tr>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    {% for day in days.dateTimes %}
-                        <th class="text-center text-nowrap{% if day is weekend %} weekend{% endif %}">
-                            {{ day|day_name(true) }}<br>
-                            {{ day|format_date('short') }}
-                        </th>
-                        {% set columns = columns + 1 %}
-                        {% set totals = totals|merge({(day|report_date): 0}) %}
-                    {% endfor %}
-                </tr>
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                        {% for day in days.dateTimes %}
+                            <th class="text-center text-nowrap{% if day is weekend %} weekend{% endif %}{% if day is today %} today{% endif %}">
+                                {{ day|day_name(true) }}<br>
+                                {{ day|format_date('short') }}
+                            </th>
+                            {% set columns = columns + 1 %}
+                            {% set totals = totals|merge({(day|report_date): 0}) %}
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
                 {% set oldCustomer = null %}
                 {% for pid, project in rows|sort((a,b) => a.project.customer.id <=> b.project.customer.id) %}
                     {% if oldCustomer is null or oldCustomer != project.project.customer.id %}
@@ -52,7 +55,7 @@
                         </td>
                         <th class="text-nowrap text-center total">{{ project.duration|duration }}</th>
                         {% for day in project.days.days %}
-                            <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}">
+                            <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}{% if day.date is today %} today{% endif %}">
                                 {% if day.duration > 0 %}
                                     {% set totals = totals|merge({(day.date|report_date): (totals[day.date|report_date] + day.duration)}) %}
                                     <strong>{{ day.duration|duration }}</strong>
@@ -67,7 +70,7 @@
                             </td>
                             <th class="text-nowrap text-center total">{{ activity.duration|duration }}</th>
                             {% for day in activity.days.days %}
-                                <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}">
+                                <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}{% if day.date is today %} today{% endif %}">
                                     {% if day.duration > 0 %}
                                         {{ day.duration|duration }}
                                     {% endif %}
@@ -76,15 +79,18 @@
                         </tr>
                     {% endfor %}
                 {% endfor %}
-                <tr class="summary">
-                    <th></th>
-                    <th class="text-nowrap text-center total">{{ totals['totals']|duration }}</th>
-                    {% for day in days.dateTimes %}
-                        <th class="text-nowrap text-center day-total{% if day is weekend %} weekend{% endif %}">
-                            {{ totals[day|report_date]|duration }}
-                        </th>
-                    {% endfor %}
-                </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="summary">
+                        <td>{{ 'stats.durationTotal'|trans }}</td>
+                        <td class="text-nowrap text-center total">{{ totals['totals']|duration }}</td>
+                        {% for day in days.dateTimes %}
+                            <td class="text-nowrap text-center day-total{% if day is weekend %} weekend{% endif %}">
+                                {{ totals[day|report_date]|duration }}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                </tfoot>
             </table>
         {% endblock %}
     {% endembed %}

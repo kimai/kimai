@@ -28,11 +28,11 @@
       </trans-unit>
       <trans-unit id="special_thanks">
         <source>special_thanks</source>
-        <target>Ιδιαίτερες ευχαριστίες πηγαίνουν σε …</target>
+        <target>Ιδιαίτερες ευχαριστίες πηγαίνουν …</target>
       </trans-unit>
       <trans-unit id="library_authors">
         <source>library_authors</source>
-        <target>… στους συγγραφείς των παρακάτω βιβλιοθηκών-λογισμικού, το Kimai δεν θα ήταν πραγματοποιήσιμο χωρίς εσάς 👍</target>
+        <target>… στους συγγραφείς των παρακάτω βιβλιοθηκών-λογισμικού, δεν θα ήταν πραγματοποιήσιμο το Kimai χωρίς εσάς 👍</target>
       </trans-unit>
     </body>
   </file>

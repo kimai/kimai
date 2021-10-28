@@ -5,6 +5,7 @@
  * file that was distributed with this source code.
  */
 
+@import "variables";
 
 table.dataTable.table > tbody > tr > td {
     vertical-align: middle;
@@ -87,6 +88,37 @@ table.dataTable {
         }
         span.label-invisible {
             opacity: 0.8;
+        }
+    }
+    tfoot {
+        tr {
+            /* overwritten if used in tfoot, to switch the border from below to top */
+            &.summary td {
+                border-top: 1px solid #ccc;
+                border-bottom: 0;
+            }
+        }
+    }
+    th.weekend,
+    td.weekend {
+        background-color: #f9f9f9;
+    }
+    /* order is important, "today” should overwrite "weekend" therefor later in the file */
+    th.today,
+    td.today {
+        background-color: $highlight-today;
+    }
+    th.total,
+    td.total {
+        font-weight: bold;
+    }
+}
+
+/* Quick entry form */
+.form-dataTable {
+    table.dataTable {
+        .form-group {
+            margin-bottom: 0;
         }
     }
 }

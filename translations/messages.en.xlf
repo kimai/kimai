@@ -404,6 +404,10 @@
         <source>action.edit</source>
         <target>Edit</target>
       </trans-unit>
+      <trans-unit id="action.add">
+        <source>action.add</source>
+        <target>Add</target>
+      </trans-unit>
       <trans-unit id="action.delete">
         <source>action.delete</source>
         <target>Delete</target>
@@ -460,7 +464,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>Team projects &amp; budgets</target>
+        <target>My projects</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>
@@ -725,7 +729,7 @@
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
-        <target>Profile image</target>
+        <target>Profile image (URL)</target>
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
@@ -1090,10 +1094,6 @@
         <source>export.title</source>
         <target>Export</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Export timesheet data to various formats</target>
-      </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
         <target>Filter data for export</target>
@@ -1125,6 +1125,10 @@
       <trans-unit id="export.warn_result_amount">
         <source>export.warn_result_amount</source>
         <target>Your search leads to %count% results. If the export fails, you have to narrow down your search further.</target>
+      </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>Type</target>
       </trans-unit>
       <!--
              Navbar - recent entries and activities
@@ -1251,6 +1255,17 @@
       <trans-unit id="team.add_user.help">
         <source>team.add_user.help</source>
         <target>Add a new user to the team by selecting it from the list. Afterwards you can decide if the user should become a teamlead.</target>
+      </trans-unit>
+      <trans-unit id="default_value_new">
+        <source>default_value_new</source>
+        <target>Default values for new entries</target>
+      </trans-unit>
+      <!--
+          QUICK ENTRIES
+      -->
+      <trans-unit id="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target>Weekly working hours</target>
       </trans-unit>
     </body>
   </file>

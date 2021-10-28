@@ -7,8 +7,8 @@ As announced in the [README](README.md) I only support the latest available rele
 | Version | Supported          |
 | ------- | ------------------ |
 | master  | :white_check_mark: |
-| 1.14    | :white_check_mark: |
-| < 1.14  | :x:                |
+| 1.15    | :white_check_mark: |
+| < 1.15  | :x:                |
 
 ## Reporting a Vulnerability
 

@@ -80,6 +80,14 @@ final class LocaleFormatExtensions extends AbstractExtension
 
                 return ($day === 0 || $day === 6);
             }),
+            new TwigTest('today', function ($dateTime) {
+                if (!$dateTime instanceof \DateTime) {
+                    return false;
+                }
+                $compare = new \DateTime('now', $dateTime->getTimezone());
+
+                return $compare->format('Y-m-d') === $dateTime->format('Y-m-d');
+            }),
         ];
     }
 

@@ -130,8 +130,7 @@
                 {% if seeOwnRate %}
                     <tr>
                         <th>{{ 'stats.amountMonth'|trans }}</th>
-                        {# TODO which currency shall we use here? #}
-                        <td class="text-nowrap pull-right">{{ stats.amountThisMonth|money }}</td>
+                        <td class="text-nowrap pull-right">{{ stats.rateThisMonthBillable|money }}</td>
                     </tr>
                 {% endif %}
                 <tr>
@@ -141,8 +140,7 @@
                 {% if seeOwnRate %}
                     <tr>
                         <th>{{ 'stats.amountTotal'|trans }}</th>
-                        {# TODO which currency shall we use here? #}
-                        <td class="text-nowrap pull-right">{{ stats.amountTotal|money }}</td>
+                        <td class="text-nowrap pull-right">{{ stats.rateTotalBillable|money }}</td>
                     </tr>
                 {% endif %}
             </table>
@@ -185,7 +183,7 @@
                     {% if seeOwnRate %}
                         <div class="col-sm-{{ columnLength }} border-right">
                             <div class="description-block">
-                                <h5 class="description-header">{{ stats.amountThisMonth|money }}</h5>
+                                <h5 class="description-header">{{ stats.rateThisMonthBillable|money }}</h5>
                                 <span class="description-text">{{ 'stats.amountMonth'|trans }}</span>
                             </div>
                         </div>
@@ -199,7 +197,7 @@
                     {% if seeOwnRate %}
                         <div class="col-sm-{{ columnLength }} border-right">
                             <div class="description-block">
-                                <h5 class="description-header">{{ stats.amountTotal|money }}</h5>
+                                <h5 class="description-header">{{ stats.rateTotalBillable|money }}</h5>
                                 <span class="description-text">{{ 'stats.amountTotal'|trans }}</span>
                             </div>
                         </div>

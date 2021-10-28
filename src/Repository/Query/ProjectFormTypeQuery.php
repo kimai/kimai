@@ -15,6 +15,14 @@ use App\Entity\Project;
 final class ProjectFormTypeQuery extends BaseFormTypeQuery
 {
     /**
+     * @var \DateTime|null
+     */
+    private $projectStart;
+    /**
+     * @var \DateTime|null
+     */
+    private $projectEnd;
+    /**
      * @var Project|null
      */
     private $projectToIgnore;
@@ -22,8 +30,8 @@ final class ProjectFormTypeQuery extends BaseFormTypeQuery
     private $withCustomer = false;
 
     /**
-     * @param Project|int|null $project
-     * @param Customer|int|null $customer
+     * @param Project|int|null|array<int>|array<Project> $project
+     * @param Customer|int|null|array<int>|array<Customer> $customer
      */
     public function __construct($project = null, $customer = null)
     {
@@ -40,13 +48,25 @@ final class ProjectFormTypeQuery extends BaseFormTypeQuery
             }
             $this->setCustomers($customer);
         }
+
+        $this->projectStart = $this->projectEnd = new \DateTime();
     }
 
+    /**
+     * Whether customers should be joined
+     *
+     * @return bool
+     */
     public function withCustomer(): bool
     {
         return $this->withCustomer;
     }
 
+    /**
+     * Directly join the customer
+     *
+     * @param bool $withCustomer
+     */
     public function setWithCustomer(bool $withCustomer): void
     {
         $this->withCustomer = $withCustomer;
@@ -60,11 +80,9 @@ final class ProjectFormTypeQuery extends BaseFormTypeQuery
         return $this->projectToIgnore;
     }
 
-    public function setProjectToIgnore(Project $projectToIgnore): ProjectFormTypeQuery
+    public function setProjectToIgnore(Project $projectToIgnore): void
     {
         $this->projectToIgnore = $projectToIgnore;
-
-        return $this;
     }
 
     public function isIgnoreDate(): bool
@@ -72,10 +90,28 @@ final class ProjectFormTypeQuery extends BaseFormTypeQuery
         return $this->ignoreDate;
     }
 
-    public function setIgnoreDate(bool $ignoreDate): ProjectFormTypeQuery
+    public function setIgnoreDate(bool $ignoreDate): void
     {
         $this->ignoreDate = $ignoreDate;
+    }
 
-        return $this;
+    public function getProjectStart(): ?\DateTime
+    {
+        return $this->projectStart;
+    }
+
+    public function setProjectStart(?\DateTime $projectStart): void
+    {
+        $this->projectStart = $projectStart;
+    }
+
+    public function getProjectEnd(): ?\DateTime
+    {
+        return $this->projectEnd;
+    }
+
+    public function setProjectEnd(?\DateTime $projectEnd): void
+    {
+        $this->projectEnd = $projectEnd;
     }
 }

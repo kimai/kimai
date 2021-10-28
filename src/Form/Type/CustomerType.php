@@ -44,13 +44,21 @@ class CustomerType extends AbstractType
             'end_date_param' => '%end%',
             'ignore_date' => false,
             'project_visibility' => ProjectQuery::SHOW_VISIBLE,
+            // @var Customer|null
+            'ignore_customer' => null,
+            // @var Customer|Customer[]|null
+            'customers' => null,
         ]);
 
         $resolver->setDefault('query_builder', function (Options $options) {
             return function (CustomerRepository $repo) use ($options) {
-                $query = new CustomerFormTypeQuery();
+                $query = new CustomerFormTypeQuery($options['customers']);
                 if (true === $options['query_builder_for_user']) {
                     $query->setUser($options['user']);
+                }
+
+                if (null !== $options['ignore_customer']) {
+                    $query->setCustomerToIgnore($options['ignore_customer']);
                 }
 
                 return $repo->getQueryBuilderForFormType($query);

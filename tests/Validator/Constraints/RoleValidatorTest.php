@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
+ * @covers \App\Validator\Constraints\Role
  * @covers \App\Validator\Constraints\RoleValidator
  */
 class RoleValidatorTest extends ConstraintValidatorTestCase

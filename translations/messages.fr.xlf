@@ -758,10 +758,6 @@
         <source>export.title</source>
         <target>Export</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Exporter les fiches de temps en différents formats</target>
-      </trans-unit>
       <trans-unit id="export.period">
         <source>export.period</source>
         <target>Periode</target>
@@ -878,7 +874,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>Projets d’équipe &amp; budgets</target>
+        <target>Mes projets</target>
       </trans-unit>
       <trans-unit id="label.my_teams">
         <source>label.my_teams</source>
@@ -1243,6 +1239,10 @@
       <trans-unit id="export.warn_result_amount">
         <source>export.warn_result_amount</source>
         <target>Votre recherche aboutit à %count% de résultats. Si l'exportation échoue, vous devez affiner votre recherche.</target>
+      </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>Type</target>
       </trans-unit>
     </body>
   </file>

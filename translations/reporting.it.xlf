@@ -38,6 +38,10 @@
         <source>report_weekly_users</source>
         <target>Vista settimanale per tutti gli utenti</target>
       </trans-unit>
+      <trans-unit id="report_project_daterange">
+        <source>report_project_daterange</source>
+        <target>Rapporto mensile</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

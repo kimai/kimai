@@ -405,6 +405,14 @@
         <source>At least one team leader must be assigned to the team.</source>
         <target>Echipei trebuie să i se atribuie cel puțin un lider de echipă.</target>
       </trans-unit>
+      <trans-unit id="An equal email is already used.">
+        <source>An equal email is already used.</source>
+        <target>Un e-mail identic este deja utilizat.</target>
+      </trans-unit>
+      <trans-unit id="An equal username is already used.">
+        <source>An equal username is already used.</source>
+        <target>Un nume de utilizator egal este deja utilizat.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -22,19 +22,22 @@
             {% else %}
                 {% set totals = {} %}
                 <table class="table table-bordered table-hover dataTable">
-                    <tr>
-                        <th>&nbsp;</th>
-                        <th>&nbsp;</th>
-                        {% for month in stats.0.getDateTimes() %}
-                            <th class="text-center text-nowrap">
-                                <a href="{{ path('report_monthly_users', {'date': month|report_date}) }}">
-                                    {{ month|month_name }}<br>
-                                    {{ month|date_format('Y') }}
-                                </a>
-                            </th>
-                            {% set totals = totals|merge({(month|report_date): 0}) %}
-                        {% endfor %}
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                            {% for month in stats.0.getDateTimes() %}
+                                <th class="text-center text-nowrap">
+                                    <a href="{{ path('report_monthly_users', {'date': month|report_date}) }}">
+                                        {{ month|month_name }}<br>
+                                        {{ month|date_format('Y') }}
+                                    </a>
+                                </th>
+                                {% set totals = totals|merge({(month|report_date): 0}) %}
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
                     {% for userYear in stats|filter(row => row.user is not null) %}
                         {% set usersTotalDuration = 0 %}
                         <tr class="user">
@@ -61,15 +64,18 @@
                             {% endfor %}
                         </tr>
                     {% endfor %}
-                    <tr>
-                        <th>&nbsp;</th>
-                        <th>&nbsp;</th>
-                        {% for id, total in totals %}
-                            <th class="text-center text-nowrap">
-                                {{ total|duration }}
-                            </th>
-                        {% endfor %}
-                    </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="summary">
+                            <td>{{ 'stats.durationTotal'|trans }}</td>
+                            <td>&nbsp;</td>
+                            {% for id, total in totals %}
+                                <td class="text-center text-nowrap">
+                                    {{ total|duration }}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    </tfoot>
                 </table>
             {% endif %}
         {% endblock %}

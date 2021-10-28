@@ -71,6 +71,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
             ['00:00', 0],
             ['0', null],
             [null, null],
+            ['87600000000:00:00', 315360000000000],
         ];
     }
 
@@ -80,6 +81,8 @@ class DurationStringToSecondsTransformerTest extends TestCase
             ['xxx'],
             [':::'],
             ['0::0'],
+            ['87600000000:00:01'],
+            [315360000000001],
         ];
     }
 

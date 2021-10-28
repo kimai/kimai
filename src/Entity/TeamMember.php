@@ -51,7 +51,7 @@ class TeamMember
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default", "Entity", "User_Entity"})
-     * @SWG\Property(ref="#/definitions/TeamEntity")
+     * @SWG\Property(ref="#/definitions/Team")
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="members")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)

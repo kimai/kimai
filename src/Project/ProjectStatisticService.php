@@ -133,7 +133,9 @@ class ProjectStatisticService
         $qb = $this->repository->createQueryBuilder('p');
         $qb
             ->select('p')
+            ->leftJoin('p.customer', 'c')
             ->andWhere($qb->expr()->eq('p.visible', true))
+            ->andWhere($qb->expr()->eq('c.visible', true))
             ->andWhere(
                 $qb->expr()->andX(
                     $qb->expr()->orX(
@@ -192,7 +194,6 @@ class ProjectStatisticService
     public function getBudgetStatisticModel(Project $project, DateTime $today): ProjectBudgetStatisticModel
     {
         $stats = new ProjectBudgetStatisticModel($project);
-
         $stats->setStatisticTotal($this->getProjectStatistics($project));
 
         $begin = null;
@@ -205,9 +206,6 @@ class ProjectStatisticService
         }
 
         $stats->setStatistic($this->getProjectStatistics($project, $begin, $end));
-
-        $event = new ProjectBudgetStatisticEvent([$stats], $begin, $end);
-        $this->dispatcher->dispatch($event);
 
         return $stats;
     }

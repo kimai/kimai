@@ -6,17 +6,9 @@
         <source>title</source>
         <target>Nastavenia</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Zmena globálnych konfigurácií vášho sledovača času</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Pracovný výkaz</target>
-      </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>Vytvorte predvolené hodnoty zákazníka</target>
       </trans-unit>
       <trans-unit id="label.timesheet.markdown_content">
         <source>label.timesheet.markdown_content</source>
@@ -193,10 +185,6 @@
       <trans-unit id="theme">
         <source>theme</source>
         <target>Vzhľad</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Užívateľ-východzie nastavenia</target>
       </trans-unit>
       <trans-unit id="invoice">
         <source>invoice</source>

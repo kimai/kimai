@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Export\Annotation as Exporter;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -23,7 +24,7 @@ trait BudgetTrait
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity_Entity", "Project_Entity", "Customer_Entity"})
      *
-     * @ Exporter\Expose(label="label.budget")
+     * @Exporter\Expose(label="label.budget", type="float")
      *
      * @ORM\Column(name="budget", type="float", nullable=false)
      * @Assert\Range(min=0.00, max=900000000000.00)
@@ -38,7 +39,7 @@ trait BudgetTrait
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity_Entity", "Project_Entity", "Customer_Entity"})
      *
-     * @ Exporter\Expose(label="label.timeBudget", type="duration")
+     * @Exporter\Expose(label="label.timeBudget", type="duration")
      *
      * @ORM\Column(name="time_budget", type="integer", nullable=false)
      * @Assert\Range(min=0, max=2145600000)
@@ -55,7 +56,7 @@ trait BudgetTrait
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity_Entity", "Project_Entity", "Customer_Entity"})
      *
-     * @ Exporter\Expose(label="label.timeBudget", type="duration")
+     * @Exporter\Expose(label="label.budgetType")
      *
      * @ORM\Column(name="budget_type", type="string", length=10, nullable=true)
      */
@@ -97,6 +98,11 @@ trait BudgetTrait
             throw new \InvalidArgumentException('Unknown budget type: ' . $budgetType);
         }
         $this->budgetType = $budgetType;
+    }
+
+    public function setIsMonthlyBudget(): void
+    {
+        $this->setBudgetType('month');
     }
 
     public function getBudgetType(): ?string

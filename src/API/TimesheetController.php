@@ -590,7 +590,7 @@ class TimesheetController extends BaseApiController
      *      required=true,
      * )
      *
-     * @Rest\RequestParam(name="copy", requirements="all|tags|rates|meta|description", strict=true, nullable=true, description="Whether data should be copied to the new entry. Allowed values: all, tags, rates, description, meta (default: nothing is copied)")
+     * @Rest\RequestParam(name="copy", requirements="all|tags|rates|meta|description", strict=true, nullable=true, description="Whether data should be copied to the new entry. Allowed values: all, tags (deprecated), rates (deprecated), description (deprecated), meta (deprecated) (default: nothing is copied)")
      * @Rest\RequestParam(name="begin", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Changes the restart date to the given one (default: now)")
      *
      * @ApiSecurity(name="apiUser")
@@ -620,26 +620,24 @@ class TimesheetController extends BaseApiController
         ;
 
         if (null !== ($copy = $paramFetcher->get('copy'))) {
-            if (\in_array($copy, ['rates', 'all'])) {
-                $copyTimesheet->setHourlyRate($timesheet->getHourlyRate());
-                $copyTimesheet->setFixedRate($timesheet->getFixedRate());
+            if ($copy !== 'all') {
+                @trigger_error('Setting the "copy" attribute in "restart timesheet" API to something else then "all" is deprecated', E_USER_DEPRECATED);
             }
 
-            if (\in_array($copy, ['description', 'all'])) {
-                $copyTimesheet->setDescription($timesheet->getDescription());
+            $copyTimesheet
+                ->setHourlyRate($timesheet->getHourlyRate())
+                ->setFixedRate($timesheet->getFixedRate())
+                ->setDescription($timesheet->getDescription())
+                ->setBillable($timesheet->isBillable())
+                ;
+
+            foreach ($timesheet->getTags() as $tag) {
+                $copyTimesheet->addTag($tag);
             }
 
-            if (\in_array($copy, ['tags', 'all'])) {
-                foreach ($timesheet->getTags() as $tag) {
-                    $copyTimesheet->addTag($tag);
-                }
-            }
-
-            if (\in_array($copy, ['meta', 'all'])) {
-                foreach ($timesheet->getMetaFields() as $metaField) {
-                    $metaNew = clone $metaField;
-                    $copyTimesheet->setMetaField($metaNew);
-                }
+            foreach ($timesheet->getMetaFields() as $metaField) {
+                $metaNew = clone $metaField;
+                $copyTimesheet->setMetaField($metaNew);
             }
         }
 

@@ -54,8 +54,6 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/system-config/edit/timesheet');
 
-        $expectedForms = $this->getTestDataForms();
-
         $result = $client->getCrawler()->filter('section.content div.box.box-primary');
         $this->assertEquals(1, \count($result));
 
@@ -76,8 +74,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             ['form[name=system_configuration_form_invoice]', $this->createUrl('/admin/system-config/update/invoice')],
             ['form[name=system_configuration_form_authentication]', $this->createUrl('/admin/system-config/update/authentication')],
             ['form[name=system_configuration_form_rounding]', $this->createUrl('/admin/system-config/update/rounding')],
-            ['form[name=system_configuration_form_form_customer]', $this->createUrl('/admin/system-config/update/form_customer')],
-            ['form[name=system_configuration_form_form_user]', $this->createUrl('/admin/system-config/update/form_user')],
+            ['form[name=system_configuration_form_customer]', $this->createUrl('/admin/system-config/update/customer')],
+            ['form[name=system_configuration_form_user]', $this->createUrl('/admin/system-config/update/user')],
             ['form[name=system_configuration_form_theme]', $this->createUrl('/admin/system-config/update/theme')],
             ['form[name=system_configuration_form_calendar]', $this->createUrl('/admin/system-config/update/calendar')],
             ['form[name=system_configuration_form_branding]', $this->createUrl('/admin/system-config/update/branding')],
@@ -191,9 +189,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertEquals('DE', $configService->find('defaults.customer.country'));
         $this->assertEquals('EUR', $configService->find('defaults.customer.currency'));
 
-        $form = $client->getCrawler()->filter('form[name=system_configuration_form_form_customer]')->form();
+        $form = $client->getCrawler()->filter('form[name=system_configuration_form_customer]')->form();
         $client->submit($form, [
-            'system_configuration_form_form_customer' => [
+            'system_configuration_form_customer' => [
                 'configuration' => [
                     ['name' => 'defaults.customer.timezone', 'value' => 'Atlantic/Canary'],
                     ['name' => 'defaults.customer.country', 'value' => 'BB'],
@@ -223,9 +221,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertNull($configService->find('defaults.user.theme'));
         $this->assertEquals('en', $configService->find('defaults.user.language'));
 
-        $form = $client->getCrawler()->filter('form[name=system_configuration_form_form_user]')->form();
+        $form = $client->getCrawler()->filter('form[name=system_configuration_form_user]')->form();
         $client->submit($form, [
-            'system_configuration_form_form_user' => [
+            'system_configuration_form_user' => [
                 'configuration' => [
                     ['name' => 'defaults.user.timezone', 'value' => 'Pacific/Tahiti'],
                     ['name' => 'defaults.user.language', 'value' => 'ru'],
@@ -250,9 +248,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertFormHasValidationError(
             User::ROLE_SUPER_ADMIN,
             '/admin/system-config/',
-            'form[name=system_configuration_form_form_customer]',
+            'form[name=system_configuration_form_customer]',
             [
-                'system_configuration_form_form_customer' => [
+                'system_configuration_form_customer' => [
                     'configuration' => [
                         ['name' => 'defaults.customer.timezone', 'value' => 'XX'],
                         ['name' => 'defaults.customer.country', 'value' => 1],
@@ -261,9 +259,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 ]
             ],
             [
-                '#system_configuration_form_form_customer_configuration_0_value',
-                '#system_configuration_form_form_customer_configuration_1_value',
-                '#system_configuration_form_form_customer_configuration_2_value',
+                '#system_configuration_form_customer_configuration_0_value',
+                '#system_configuration_form_customer_configuration_1_value',
+                '#system_configuration_form_customer_configuration_2_value',
             ],
             true
         );
