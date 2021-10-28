@@ -1252,6 +1252,14 @@
         <source>default_value_new</source>
         <target>Standardne vrijednosti za nove unose</target>
       </trans-unit>
+      <trans-unit id="action.add">
+        <source>action.add</source>
+        <target>Dodaj</target>
+      </trans-unit>
+      <trans-unit id="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target>Tjedno radno vrijeme</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
