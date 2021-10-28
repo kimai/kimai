@@ -1,8 +1,7 @@
 name: 'Docker Build'
-on: push
-#on:
-#  release:
-#    types: [released]
+on:
+  release:
+    types: [released]
 
 jobs:
   build:
