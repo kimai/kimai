@@ -82,8 +82,22 @@ class QuickEntryWeekType extends AbstractType
 
             $event->getForm()->add('activity', ActivityType::class, $activityOptions);
         };
-
         $builder->addEventListener(FormEvents::PRE_SET_DATA, $activityFunction);
+
+        $activityPreSubmitFunction = function (FormEvent $event) use ($activityOptions) {
+            $data = $event->getData();
+
+            if (isset($data['project']) && !empty($data['project'])) {
+                $activityOptions['projects'] = [$data['project']];
+            }
+
+            if (isset($data['activity']) && !empty($data['activity'])) {
+                $activityOptions['activities'] = [$data['activity']];
+            }
+
+            $event->getForm()->add('activity', ActivityType::class, $activityOptions);
+        };
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, $activityPreSubmitFunction);
 
         $builder->add('timesheets', CollectionType::class, [
             'entry_type' => QuickEntryTimesheetType::class,
