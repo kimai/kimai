@@ -15,6 +15,7 @@ use App\Form\Type\WeekPickerType;
 use App\Model\QuickEntryWeek;
 use App\Validator\Constraints\QuickEntryModel;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -36,6 +37,26 @@ class QuickEntryForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addModelTransformer(new CallbackTransformer(
+            function ($value) {
+                // page is loaded, nothing to do
+                return $value;
+            },
+            function ($value) {
+                /** @var QuickEntryWeek $value */
+                foreach ($value->getRows() as $row) {
+                    $project = $row->getProject();
+                    $activity = $row->getActivity();
+                    foreach ($row->getTimesheets() as $timesheet) {
+                        $timesheet->setProject($project);
+                        $timesheet->setActivity($activity);
+                    }
+                }
+
+                return $value;
+            }
+        ));
+
         $startDate = new \DateTime();
         if ($builder->getData() !== null) {
             /** @var QuickEntryWeek $data */
