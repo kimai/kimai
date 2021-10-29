@@ -414,6 +414,9 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $fixture->setStartDate($dateTime->createDateTime());
         $fixture->setCallback(function (Timesheet $timesheet) {
             $timesheet->setDescription('Testing is fun!');
+            $begin = clone $timesheet->getBegin();
+            $begin->setTime(0, 0, 0);
+            $timesheet->setBegin($begin);
             $end = clone $timesheet->getBegin();
             $end->modify('+ 8 hours');
             $timesheet->setEnd($end);
