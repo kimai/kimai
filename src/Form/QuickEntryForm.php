@@ -42,8 +42,11 @@ class QuickEntryForm extends AbstractType
                 // page is loaded, nothing to do
                 return $value;
             },
-            function ($value) {
-                /** @var QuickEntryWeek $value */
+            function (?QuickEntryWeek $value) {
+                if ($value === null) {
+                    return null;
+                }
+
                 foreach ($value->getRows() as $row) {
                     $project = $row->getProject();
                     $activity = $row->getActivity();
