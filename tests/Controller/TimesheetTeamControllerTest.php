@@ -448,7 +448,6 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertEquals(2016, $timesheet->getRate());
         $this->assertEquals(127, $timesheet->getHourlyRate());
         $this->assertEquals(2016, $timesheet->getFixedRate());
-        $this->assertTrue($timesheet->getDuration() == 28800 || $timesheet->getDuration() == 28860); // 1 minute rounding might be applied
         $this->assertEquals(2016, $timesheet->getRate());
     }
 }
