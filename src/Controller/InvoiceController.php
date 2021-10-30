@@ -36,6 +36,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -253,10 +255,18 @@ final class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/delete/{id}", name="admin_invoice_delete", methods={"GET"})
+     * @Route(path="/delete/{id}/{token}", name="admin_invoice_delete", methods={"GET"})
      */
-    public function deleteInvoiceAction(Invoice $invoice): Response
+    public function deleteInvoiceAction(Invoice $invoice, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.delete', $token))) {
+            $this->flashError('action.delete.error');
+
+            return $this->redirectToRoute('admin_invoice_list');
+        }
+
+        $csrfTokenManager->refreshToken($token);
+
         try {
             $this->service->deleteInvoice($invoice);
             $this->flashSuccess('action.delete.success');

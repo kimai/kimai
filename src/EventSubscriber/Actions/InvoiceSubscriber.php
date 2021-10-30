@@ -37,6 +37,6 @@ class InvoiceSubscriber extends AbstractActionsSubscriber
         }
 
         $event->addAction('download', ['url' => $this->path('admin_invoice_download', ['id' => $invoice->getId()]), 'target' => '_blank']);
-        $event->addDelete($this->path('admin_invoice_delete', ['id' => $invoice->getId()]), false);
+        $event->addDelete($this->path('admin_invoice_delete', ['id' => $invoice->getId(), 'token' => $payload['token']]), false);
     }
 }
