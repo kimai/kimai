@@ -353,7 +353,8 @@ class InvoiceControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $this->request($client, '/invoice/delete/' . $id);
+        // this does not delete the invoice, because the token is wrong
+        $this->request($client, '/invoice/delete/' . $id . '/fghfkjhgkjhg');
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
