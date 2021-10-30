@@ -109,13 +109,6 @@ services:
             - !service { class: PDO, factory: ['@database_connection', 'getWrappedConnection'] }
 
     # ================================================================================
-    # THEME
-    # ================================================================================
-
-    KevinPapst\AdminLTEBundle\Helper\ContextHelper:
-        alias: admin_lte_theme.context_helper
-
-    # ================================================================================
     # TIMESHEET RECORD CALCULATOR
     # ================================================================================
 
