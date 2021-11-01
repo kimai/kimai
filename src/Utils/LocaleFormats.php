@@ -75,7 +75,7 @@ class LocaleFormats
     /**
      * Returns the format which is used by the form component to handle datetime values.
      *
-     * @deprecated since 1.15.2
+     * @deprecated since 1.16
      * @return string
      */
     public function getDateTimeTypeFormat(): string
