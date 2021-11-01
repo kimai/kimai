@@ -20,10 +20,6 @@ class QuickEntrySubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        if ($this->isGranted('view_own_timesheet')) {
-            $event->addBack($this->path('timesheet'));
-        }
-
         $event->addHelp($this->documentationLink('weekly-times.html'));
     }
 }
