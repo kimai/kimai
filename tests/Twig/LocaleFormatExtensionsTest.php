@@ -52,7 +52,7 @@ class LocaleFormatExtensionsTest extends TestCase
     public function testGetFilters()
     {
         $filters = [
-            'month_name', 'day_name', 'date_short', 'date_time', 'date_full', 'date_format', 'time', 'hour24',
+            'month_name', 'day_name', 'date_short', 'date_time', 'date_full', 'date_format', 'date_weekday', 'time', 'hour24',
             'duration', 'chart_duration', 'duration_decimal', 'money', 'currency', 'country', 'language', 'amount'
         ];
         $i = 0;
