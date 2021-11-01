@@ -68,13 +68,13 @@ class ProjectSubscriber extends AbstractActionsSubscriber
                     'class' => 'modal-ajax-form'
                 ]);
             }
+        }
 
-            if ($this->isGranted('edit', $project)) {
-                $event->addAction(
-                    'copy',
-                    ['url' => $this->path('admin_project_duplicate', ['id' => $project->getId()])]
-                );
-            }
+        if ($this->isGranted('edit', $project) && $this->isGranted('create_project')) {
+            $event->addAction(
+                'copy',
+                ['url' => $this->path('admin_project_duplicate', ['id' => $project->getId()])]
+            );
         }
 
         if (($event->isIndexView() || $event->isView('customer_details')) && $this->isGranted('delete', $project)) {
