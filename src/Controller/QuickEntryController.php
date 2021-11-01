@@ -25,7 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Controller used to enter times in weekly form.
  *
  * @Route(path="/quick_entry")
- * @Security("is_granted('view_own_timesheet')")
+ * @Security("is_granted('edit_own_timesheet')")
  */
 class QuickEntryController extends AbstractController
 {
@@ -42,7 +42,6 @@ class QuickEntryController extends AbstractController
 
     /**
      * @Route(path="/{begin}", name="quick_entry", methods={"GET", "POST"})
-     * @Security("is_granted('edit_own_timesheet')")
      */
     public function quickEntry(Request $request, ?string $begin = null)
     {

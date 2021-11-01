@@ -10,6 +10,7 @@
 namespace App\EventSubscriber;
 
 use App\Event\ConfigureMainMenuEvent;
+use App\Timesheet\TrackingModeService;
 use App\Twig\IconExtension;
 use App\Utils\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -21,10 +22,12 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 final class MenuSubscriber implements EventSubscriberInterface
 {
     private $security;
+    private $trackingModeService;
 
-    public function __construct(AuthorizationCheckerInterface $security)
+    public function __construct(AuthorizationCheckerInterface $security, TrackingModeService $trackingModeService)
     {
         $this->security = $security;
+        $this->trackingModeService = $trackingModeService;
     }
 
     public static function getSubscribedEvents(): array
@@ -52,9 +55,14 @@ final class MenuSubscriber implements EventSubscriberInterface
             $timesheets->setChildRoutes(['timesheet_export', 'timesheet_edit', 'timesheet_create', 'timesheet_multi_update']);
             $menu->addItem($timesheets);
 
-            $menu->addItem(
-                new MenuItemModel('quick_entry', 'quick_entry.title', 'quick_entry', [], $icons->icon('weekly-times'))
-            );
+            if ($auth->isGranted('edit_own_timesheet')) {
+                $mode = $this->trackingModeService->getActiveMode();
+                if ($mode->canEditDuration() || $mode->canEditEnd()) {
+                    $menu->addItem(
+                        new MenuItemModel('quick_entry', 'quick_entry.title', 'quick_entry', [], $icons->icon('weekly-times'))
+                    );
+                }
+            }
 
             $menu->addItem(
                 new MenuItemModel('calendar', 'calendar.title', 'calendar', [], $icons->icon('calendar'))
