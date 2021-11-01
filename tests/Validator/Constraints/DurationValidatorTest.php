@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
+ * @covers \App\Validator\Constraints\Duration
  * @covers \App\Validator\Constraints\DurationValidator
  */
 class DurationValidatorTest extends ConstraintValidatorTestCase

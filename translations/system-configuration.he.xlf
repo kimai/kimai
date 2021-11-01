@@ -9,10 +9,6 @@
         <source>title</source>
         <target>הגדרות</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>שנה הגדרות גלובליות</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>גיליון שעות</target>
@@ -20,14 +16,6 @@
       <trans-unit id="invoice">
         <source>invoice</source>
         <target>חשבוניות</target>
-      </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>צור ערכי ברירת מחדל ללקוח</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>ערכי ברירת מחדל למשתמש</target>
       </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>

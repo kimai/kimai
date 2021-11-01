@@ -954,10 +954,6 @@
         <source>export.full_list</source>
         <target>Полный перечень</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Экспортировать данные табеля учёта рабочего времени в различные форматы</target>
-      </trans-unit>
       <trans-unit id="export.document_title">
         <source>export.document_title</source>
         <target>Экспортировать табели учета рабочего времени</target>
@@ -1024,7 +1020,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>Командные проекты&amp; бюджеты</target>
+        <target>Мои проекты</target>
       </trans-unit>
       <trans-unit id="label.my_teams">
         <source>label.my_teams</source>
@@ -1233,6 +1229,10 @@
       <trans-unit id="stats.percentUsedLeft_month">
         <source>stats.percentUsedLeft_month</source>
         <target>%percent%% использовано (%left% доступно в этом месяце)</target>
+      </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>Тип</target>
       </trans-unit>
     </body>
   </file>

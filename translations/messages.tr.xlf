@@ -73,7 +73,7 @@
       </trans-unit>
       <trans-unit id="label.logout">
         <source>label.logout</source>
-        <target state="translated">Çıkış</target>
+        <target state="translated">Oturumu kapat</target>
       </trans-unit>
       <trans-unit id="label.user_profile">
         <source>label.user_profile</source>
@@ -89,7 +89,7 @@
       </trans-unit>
       <trans-unit id="login_required">
         <source>login_required</source>
-        <target state="translated">İzin gerekli. Giriş sayfasına git?</target>
+        <target state="translated">İzin gerekli. Oturum açma sayfasına gidilsin mi?</target>
       </trans-unit>
       <!--
               Menu / Navbar items
@@ -108,7 +108,7 @@
       </trans-unit>
       <trans-unit id="menu.logout">
         <source>menu.logout</source>
-        <target state="translated">Çıkış</target>
+        <target state="translated">Oturumu kapat</target>
       </trans-unit>
       <trans-unit id="menu.timesheet">
         <source>menu.timesheet</source>
@@ -347,7 +347,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target state="translated">Takım projeleri ve bütçeleri</target>
+        <target state="translated">Projelerim</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>
@@ -445,7 +445,7 @@
       </trans-unit>
       <trans-unit id="label.login.initial_view">
         <source>label.login.initial_view</source>
-        <target state="translated">Giriş sonrası ilk görünüm</target>
+        <target state="translated">Oturum açtıktan sonraki ilk görünüm</target>
       </trans-unit>
       <!-- Options for user-preference label.calendar.initial_view -->
       <trans-unit id="month">
@@ -832,10 +832,6 @@
       <trans-unit id="export.title">
         <source>export.title</source>
         <target state="translated">Dışa aktar</target>
-      </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target state="translated">Çizelgeyi farklı biçimlerde dışa aktar</target>
       </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
@@ -1246,6 +1242,10 @@
       <trans-unit id="export.warn_result_amount">
         <source>export.warn_result_amount</source>
         <target>Aramanız %count% sonuç veriyor. Dışa aktarma başarısız olursa, aramanızı daha da daraltmanız gerekir.</target>
+      </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>Tür</target>
       </trans-unit>
     </body>
   </file>

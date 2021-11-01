@@ -427,7 +427,7 @@ final class TimesheetFixtures implements TestFixture
         }
 
         if ($this->fixedRate) {
-            $entry->setFixedRate(rand(10, 100));
+            $entry->setFixedRate((float) rand(10, 100));
         }
 
         if ($this->hourlyRate) {

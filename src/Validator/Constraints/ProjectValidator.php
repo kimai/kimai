@@ -25,7 +25,7 @@ class ProjectValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!($constraint instanceof ProjectConstraint)) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Project');
+            throw new UnexpectedTypeException($constraint, ProjectConstraint::class);
         }
 
         if (!\is_object($value) || !($value instanceof Project)) {

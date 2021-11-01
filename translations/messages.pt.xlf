@@ -758,10 +758,6 @@
         <source>export.title</source>
         <target>Exportar</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Exportar dados do quadro de horários para vários formatos</target>
-      </trans-unit>
       <trans-unit id="export.period">
         <source>export.period</source>
         <target>Período</target>
@@ -986,7 +982,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>Projetos da equipa e orçamentos</target>
+        <target>Meus projetos</target>
       </trans-unit>
       <trans-unit id="label.my_teams">
         <source>label.my_teams</source>
@@ -1198,7 +1194,7 @@
       </trans-unit>
       <trans-unit id="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
-        <target>Ano financeiro</target>
+        <target>Exercício financeiro</target>
       </trans-unit>
       <trans-unit id="stats.revenue">
         <source>stats.revenue</source>
@@ -1243,6 +1239,10 @@
       <trans-unit id="export.warn_result_amount">
         <source>export.warn_result_amount</source>
         <target>A sua pesquisa leva a %count% resultados. Se a exportação falhar, tem de reduzir ainda mais a sua pesquisa.</target>
+      </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>Tipo</target>
       </trans-unit>
     </body>
   </file>

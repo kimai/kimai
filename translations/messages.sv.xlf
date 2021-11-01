@@ -757,10 +757,6 @@
         <source>export.title</source>
         <target state="translated">Exportera</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target state="translated">Exportera tidrapport till olika format</target>
-      </trans-unit>
       <trans-unit id="export.period">
         <source>export.period</source>
         <target>Period</target>
@@ -1117,7 +1113,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>Lagprojekt &amp; budget</target>
+        <target>Mina projekt</target>
       </trans-unit>
       <trans-unit id="resetting.check_email">
         <source>resetting.check_email</source>
@@ -1254,6 +1250,10 @@
       <trans-unit id="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>
         <target>%percent%% används den här månaden</target>
+      </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>Typ</target>
       </trans-unit>
     </body>
   </file>

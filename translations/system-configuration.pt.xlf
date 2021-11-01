@@ -6,21 +6,9 @@
         <source>title</source>
         <target>Configurações</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Alterar as configurações globais do seu rastreador de tempo</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Quadro de tempos</target>
-      </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>Criar cliente - valores padrão</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Utilizador - valores padrão</target>
       </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
@@ -296,7 +284,7 @@
       </trans-unit>
       <trans-unit id="label.company.financial_year">
         <source>label.company.financial_year</source>
-        <target>Ano fiscal</target>
+        <target>Exercício financeiro</target>
       </trans-unit>
       <trans-unit id="label.timesheet.rules.lockdown_period_timezone">
         <source>label.timesheet.rules.lockdown_period_timezone</source>

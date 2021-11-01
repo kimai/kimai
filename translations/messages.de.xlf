@@ -404,6 +404,10 @@
         <source>action.edit</source>
         <target>Bearbeiten</target>
       </trans-unit>
+      <trans-unit id="action.add">
+        <source>action.add</source>
+        <target>Hinzufügen</target>
+      </trans-unit>
       <trans-unit id="action.delete">
         <source>action.delete</source>
         <target>Löschen</target>
@@ -725,7 +729,7 @@
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
-        <target>Profilbild</target>
+        <target>Profilbild (URL)</target>
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
@@ -1081,7 +1085,7 @@
       </trans-unit>
       <trans-unit id="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target>Überspringe Vorschau von %rows% weiteren Zeilen …</target>
+        <target>Überspringe Vorschau von %rows% weiteren Zeilen …</target>
       </trans-unit>
       <!--
               Export
@@ -1089,10 +1093,6 @@
       <trans-unit id="export.title">
         <source>export.title</source>
         <target>Export</target>
-      </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Exportieren Sie aufgezeichnete Zeiten in verschiedene Zielformate</target>
       </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
@@ -1255,6 +1255,17 @@
       <trans-unit id="team.add_user.help">
         <source>team.add_user.help</source>
         <target>Durch Auswahl wird dem Team ein neuer Benutzer hinzugefügt. Sie können im Anschluss festlegen, ob der Benutzer ein Teamleiter sein soll.</target>
+      </trans-unit>
+      <trans-unit id="default_value_new">
+        <source>default_value_new</source>
+        <target>Standard Wert für neue Einträge</target>
+      </trans-unit>
+      <!--
+          QUICK ENTRIES
+      -->
+      <trans-unit id="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target>Wochen-Arbeitsstunden</target>
       </trans-unit>
       <trans-unit id="label.hours_24">
         <source>label.hours_24</source>

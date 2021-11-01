@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="hr" datatype="plaintext" original="flashmessages.en.xlf">
+    <body>
+      <trans-unit id="warning">
+        <source>warning</source>
+        <target>Upozorenje</target>
+      </trans-unit>
+      <trans-unit id="timesheet.stop.success">
+        <source>timesheet.stop.success</source>
+        <target>Snimanje vremena je prekinuto</target>
+      </trans-unit>
+      <trans-unit id="timesheet.stop.error">
+        <source>timesheet.stop.error</source>
+        <target>Snimanje vremena se nije moglo prekinuti</target>
+      </trans-unit>
+      <trans-unit id="timesheet.start.success">
+        <source>timesheet.start.success</source>
+        <target>Snimanja vremena je pokrenuto</target>
+      </trans-unit>
+      <trans-unit id="timesheet.start.error">
+        <source>timesheet.start.error</source>
+        <target>Snimanje vremena se nije moglo pokrenuti</target>
+      </trans-unit>
+      <trans-unit id="timesheet.start.exceeded_limit">
+        <source>timesheet.start.exceeded_limit</source>
+        <target>Dosegnut je maksimalni broj aktivnih snimanja vremena. Najprije prekini barem jedno mjerenje vremena.</target>
+      </trans-unit>
+      <trans-unit id="timesheet.locked.warning">
+        <source>timesheet.locked.warning</source>
+        <target>Uređuješ izvezeni zapis</target>
+      </trans-unit>
+      <trans-unit id="action.update.success">
+        <source>action.update.success</source>
+        <target>Promjene spremljene</target>
+      </trans-unit>
+      <trans-unit id="action.update.error">
+        <source>action.update.error</source>
+        <target>Promjene se nisu mogle spremiti: %reason%</target>
+      </trans-unit>
+      <trans-unit id="action.delete.success">
+        <source>action.delete.success</source>
+        <target>Unos je izbrisan</target>
+      </trans-unit>
+      <trans-unit id="action.delete.error">
+        <source>action.delete.error</source>
+        <target>Unos se nisu mogao izbrisati: %reason%</target>
+      </trans-unit>
+      <trans-unit id="invoice.first_template">
+        <source>invoice.first_template</source>
+        <target>Najprije stvori predložak računa</target>
+      </trans-unit>
+      <trans-unit id="action.upload.error">
+        <source>action.upload.error</source>
+        <target>Datoteka se nije mogla prenijeti ili spremiti: %reason%</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

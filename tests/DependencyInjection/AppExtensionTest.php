@@ -140,6 +140,9 @@ class AppExtensionTest extends TestCase
                 'templates/invoice/renderer/',
             ],
             'kimai.defaults' => [
+                'timesheet' => [
+                    'billable' => true,
+                ],
                 'customer' => [
                     'timezone' => null,
                     'country' => 'DE',

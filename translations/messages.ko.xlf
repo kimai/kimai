@@ -777,10 +777,6 @@
         <source>export.title</source>
         <target state="translated">내보내기</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target state="translated">타임시트 다양한 포맷으로 내보내기</target>
-      </trans-unit>
       <trans-unit id="export.period">
         <source>export.period</source>
         <target state="translated">기간</target>

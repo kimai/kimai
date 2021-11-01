@@ -66,13 +66,20 @@ class DateTimePickerType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['attr'] = array_merge($view->vars['attr'], [
+        $attr = array_merge($view->vars['attr'], [
             'data-datetimepicker' => 'on',
             'autocomplete' => 'off',
             'placeholder' => strtoupper($options['format']),
             'data-format' => $options['format_picker'],
-            'data-time-picker-increment' => $options['time_increment'],
         ]);
+
+        if ($options['time_increment'] !== null) {
+            if ($options['time_increment'] >= 1) {
+                $attr['data-time-picker-increment'] = $options['time_increment'];
+            }
+        }
+
+        $view->vars['attr'] = $attr;
     }
 
     /**

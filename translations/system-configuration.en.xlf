@@ -6,10 +6,6 @@
                 <source>title</source>
                 <target>Settings</target>
             </trans-unit>
-            <trans-unit id="subtitle">
-                <source>subtitle</source>
-                <target>Change global configurations of your time-tracker</target>
-            </trans-unit>
             <trans-unit id="timesheet">
                 <source>timesheet</source>
                 <target>Timesheet</target>
@@ -17,14 +13,6 @@
             <trans-unit id="invoice">
                 <source>invoice</source>
                 <target>Invoices</target>
-            </trans-unit>
-            <trans-unit id="form_customer">
-                <source>form_customer</source>
-                <target>Create customer—default values</target>
-            </trans-unit>
-            <trans-unit id="form_user">
-                <source>form_user</source>
-                <target>User—default values</target>
             </trans-unit>
             <trans-unit id="theme">
                 <source>theme</source>

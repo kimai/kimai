@@ -10,8 +10,8 @@
 namespace App\Tests\Event;
 
 use App\Event\ConfigureMainMenuEvent;
+use App\Utils\MenuItemModel;
 use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
-use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 

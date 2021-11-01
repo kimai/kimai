@@ -368,6 +368,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'name' => 'string',
                     'visible' => 'bool',
                     'color' => '@string',
+                    'number' => '@string',
                 ];
 
             // if a list of customers is loaded
@@ -377,6 +378,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'name' => 'string',
                     'visible' => 'boolean',
                     'color' => '@string',
+                    'number' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'currency' => 'string', // since 1.10

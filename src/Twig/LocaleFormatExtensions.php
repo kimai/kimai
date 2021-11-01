@@ -58,6 +58,7 @@ final class LocaleFormatExtensions extends AbstractExtension
             new TwigFilter('date_time', [$this, 'dateTime']),
             new TwigFilter('date_full', [$this, 'dateTimeFull']),
             new TwigFilter('date_format', [$this, 'dateFormat']),
+            new TwigFilter('date_weekday', [$this, 'dateWeekday']),
             new TwigFilter('time', [$this, 'time']),
             new TwigFilter('hour24', [$this, 'hour24']),
             new TwigFilter('duration', [$this, 'duration']),
@@ -81,6 +82,14 @@ final class LocaleFormatExtensions extends AbstractExtension
                 $day = (int) $dateTime->format('w');
 
                 return ($day === 0 || $day === 6);
+            }),
+            new TwigTest('today', function ($dateTime) {
+                if (!$dateTime instanceof \DateTime) {
+                    return false;
+                }
+                $compare = new \DateTime('now', $dateTime->getTimezone());
+
+                return $compare->format('Y-m-d') === $dateTime->format('Y-m-d');
             }),
         ];
     }
@@ -191,6 +200,11 @@ final class LocaleFormatExtensions extends AbstractExtension
     public function dateFormat($date, string $format)
     {
         return $this->getFormatter()->dateFormat($date, $format);
+    }
+
+    public function dateWeekday(DateTime $date): string
+    {
+        return $this->dayName($date, true) . ', ' . $this->getFormatter()->dateFormat($date, 'd');
     }
 
     /**

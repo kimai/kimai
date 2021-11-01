@@ -351,7 +351,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>团队项目 &amp; 预算</target>
+        <target>我的项目</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>
@@ -865,10 +865,6 @@
         <source>export.title</source>
         <target>输出</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>以多种格式输出时间表数据</target>
-      </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
         <target>过滤数据以输出</target>
@@ -1033,7 +1029,7 @@
       </trans-unit>
       <trans-unit id="label.last_record">
         <source>label.last_record</source>
-        <target state="needs-translation">最后的条目</target>
+        <target state="translated">上一条目</target>
       </trans-unit>
       <trans-unit id="label.account_number">
         <source>label.account_number</source>
@@ -1085,7 +1081,7 @@
       </trans-unit>
       <trans-unit id="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>
-        <target state="needs-translation">本月使用的%百分比%</target>
+        <target state="translated">本月已用 %percent%%</target>
       </trans-unit>
       <trans-unit id="stats.userActiveFinancialYear">
         <source>stats.userActiveFinancialYear</source>
@@ -1214,6 +1210,10 @@
       <trans-unit id="label.searchTerm">
         <source>label.searchTerm</source>
         <target>搜索词</target>
+      </trans-unit>
+      <trans-unit id="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% 已使用（%left% 本月仍空余）</target>
       </trans-unit>
     </body>
   </file>

@@ -6,21 +6,9 @@
         <source>title</source>
         <target>Impostazioni</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Cambia le impostazioni globali di tracciamento del tempo</target>
-      </trans-unit>
       <trans-unit id="timesheet">
         <source>timesheet</source>
         <target>Scheda attività</target>
-      </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>Creazione clienti - valori di default</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Valori utente di default</target>
       </trans-unit>
       <trans-unit id="theme">
         <source>theme</source>
@@ -196,11 +184,11 @@
       </trans-unit>
       <trans-unit id="label.saml_activate">
         <source>label.saml_activate</source>
-        <target>Login SAML</target>
+        <target>Accesso SAML</target>
       </trans-unit>
       <trans-unit id="label.ldap_activate">
         <source>label.ldap_activate</source>
-        <target>Login LDAP</target>
+        <target>Accesso LDAP</target>
       </trans-unit>
       <trans-unit id="label.user_auth_password_reset_token_ttl">
         <source>label.user_auth_password_reset_token_ttl</source>
@@ -208,7 +196,7 @@
       </trans-unit>
       <trans-unit id="label.user_auth_password_reset_retry_ttl">
         <source>label.user_auth_password_reset_retry_ttl</source>
-        <target>Password dimenticata - secondi prima che un utente possa chiedere una nuova e-mail</target>
+        <target>Password dimenticata — secondi prima che un utente possa chiedere una nuova e-mail</target>
       </trans-unit>
       <trans-unit id="label.user_auth_password_reset">
         <source>label.user_auth_password_reset</source>
@@ -220,7 +208,7 @@
       </trans-unit>
       <trans-unit id="label.user_auth_login">
         <source>label.user_auth_login</source>
-        <target>Form di login</target>
+        <target>Modulo di accesso</target>
       </trans-unit>
       <trans-unit id="authentication">
         <source>authentication</source>
@@ -236,7 +224,7 @@
       </trans-unit>
       <trans-unit id="off">
         <source>off</source>
-        <target>Off</target>
+        <target>Diattivato</target>
       </trans-unit>
       <trans-unit id="increment_rounding">
         <source>increment_rounding</source>
@@ -269,6 +257,18 @@
       <trans-unit id="label.theme.avatar_url">
         <source>label.theme.avatar_url</source>
         <target>Permetti l'utilizzo di URL come immagini degli avatar</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>Selezione dei minuti per Da e A</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>Selezione dei minuti per la durata</target>
+      </trans-unit>
+      <trans-unit id="label.timesheet.rules.lockdown_period_timezone">
+        <source>label.timesheet.rules.lockdown_period_timezone</source>
+        <target>Fuso orario (se vuoto, viene usato il fuso orario del rispettivo utente)</target>
       </trans-unit>
     </body>
   </file>

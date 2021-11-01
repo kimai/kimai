@@ -2,7 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    app_locales: ar|cs|da|de|de_AT|de_CH|el|en|eo|es|eu|fi|fo|fr|he|hu|it|ja|ko|nl|pl|pt|pt_BR|ro|ru|sk|sv|tr|vi|zh_CN
+    app_locales: ar|cs|da|de|de_AT|de_CH|el|en|eo|es|eu|fi|fo|fr|he|hr|hu|it|ja|ko|nl|pl|pt|pt_BR|ro|ru|sk|sv|tr|vi|zh_CN
 
 services:
     # default configuration for services in *this* file
@@ -65,6 +65,9 @@ services:
     App\Validator\Constraints\TimesheetValidator:
         arguments: [!tagged timesheet.validator]
 
+    App\Validator\Constraints\QuickEntryTimesheetValidator:
+        arguments: [!tagged timesheet.validator]
+
     App\Widget\WidgetService:
         arguments:
             $renderer: !tagged widget.renderer
@@ -104,13 +107,6 @@ services:
     App\Security\SessionHandler:
         arguments:
             - !service { class: PDO, factory: ['@database_connection', 'getWrappedConnection'] }
-
-    # ================================================================================
-    # THEME
-    # ================================================================================
-
-    KevinPapst\AdminLTEBundle\Helper\ContextHelper:
-        alias: admin_lte_theme.context_helper
 
     # ================================================================================
     # TIMESHEET RECORD CALCULATOR

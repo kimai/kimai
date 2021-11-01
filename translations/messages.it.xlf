@@ -403,7 +403,7 @@
       </trans-unit>
       <trans-unit id="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>Progetti del gruppo &amp; budgets</target>
+        <target>I miei progetti</target>
       </trans-unit>
       <trans-unit id="label.progress">
         <source>label.progress</source>
@@ -981,10 +981,6 @@
         <source>export.title</source>
         <target>Esporta</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Esporta schede attività in vari formati</target>
-      </trans-unit>
       <trans-unit id="export.filter">
         <source>export.filter</source>
         <target>Filtra dati da esportare</target>
@@ -1246,6 +1242,10 @@
       <trans-unit id="export.warn_result_amount">
         <source>export.warn_result_amount</source>
         <target>La tua ricerca porta a %count% risultati. Se l'esportazione fallisce, dovrai restringere ulteriormente la tua ricerca.</target>
+      </trans-unit>
+      <trans-unit id="label.type">
+        <source>label.type</source>
+        <target>Tipo</target>
       </trans-unit>
     </body>
   </file>
