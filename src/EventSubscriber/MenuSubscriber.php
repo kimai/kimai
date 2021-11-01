@@ -49,8 +49,12 @@ final class MenuSubscriber implements EventSubscriberInterface
 
         if ($auth->isGranted('view_own_timesheet')) {
             $timesheets = new MenuItemModel('timesheet', 'menu.timesheet', 'timesheet', [], $icons->icon('timesheet'));
-            $timesheets->setChildRoutes(['timesheet_export', 'timesheet_edit', 'timesheet_create', 'timesheet_multi_update', 'quick_entry']);
+            $timesheets->setChildRoutes(['timesheet_export', 'timesheet_edit', 'timesheet_create', 'timesheet_multi_update']);
             $menu->addItem($timesheets);
+
+            $menu->addItem(
+                new MenuItemModel('quick_entry', 'quick_entry.title', 'quick_entry', [], $icons->icon('weekly-times'))
+            );
 
             $menu->addItem(
                 new MenuItemModel('calendar', 'calendar.title', 'calendar', [], $icons->icon('calendar'))
