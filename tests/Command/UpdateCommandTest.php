@@ -34,7 +34,6 @@ class UpdateCommandTest extends KernelTestCase
         $container = self::$kernel->getContainer();
 
         $this->application->add(new UpdateCommand(
-            $container->getParameter('kernel.project_dir'),
             $container->get('doctrine')->getConnection()
         ));
 

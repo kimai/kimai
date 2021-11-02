@@ -566,10 +566,6 @@ final class ServiceInvoice
         });
 
         foreach ($customerEntries as $id => $settings) {
-            if (empty($settings['entries'])) {
-                continue;
-            }
-
             $customerQuery = clone $query;
             $customerQuery->setCustomers([$settings['customer']]);
             $model = $this->createModelWithoutEntries($customerQuery);

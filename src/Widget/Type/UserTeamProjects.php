@@ -59,7 +59,7 @@ class UserTeamProjects extends SimpleWidget implements AuthorizedWidget, UserWid
         foreach ($user->getTeams() as $team) {
             /** @var Project $project */
             foreach ($team->getProjects() as $project) {
-                if (!isset($projects[$project->getId()])) {
+                if (!isset($teamProjects[$project->getId()])) {
                     $teamProjects[$project->getId()] = $project;
                 }
             }
