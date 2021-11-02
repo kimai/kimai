@@ -14,7 +14,6 @@ use App\Event\ActivityBudgetStatisticEvent;
 use App\Event\ActivityStatisticEvent;
 use App\Model\ActivityBudgetStatisticModel;
 use App\Model\ActivityStatistic;
-use App\Repository\ActivityRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
 use DateTime;

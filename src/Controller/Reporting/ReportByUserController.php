@@ -19,7 +19,6 @@ use App\Reporting\WeekByUser;
 use App\Reporting\WeekByUserForm;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
-use App\Repository\TimesheetRepository;
 use App\Timesheet\TimesheetStatisticService;
 use DateTime;
 use Exception;

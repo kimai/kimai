@@ -64,7 +64,7 @@ class LdapAuthenticationProvider extends UserAuthenticationProvider
             // do not update the user here from LDAP, as we don't know if the user can be authenticated
         } catch (UsernameNotFoundException $notFound) {
             throw $notFound;
-        /* @phpstan-ignore-next-line */
+            /* @phpstan-ignore-next-line */
         } catch (\Exception $repositoryProblem) {
             $e = new AuthenticationServiceException($repositoryProblem->getMessage(), (int) $repositoryProblem->getCode(), $repositoryProblem);
             $e->setToken($token);

@@ -14,7 +14,6 @@ use App\Entity\Project;
 use App\Event\CustomerStatisticEvent;
 use App\Model\CustomerBudgetStatisticModel;
 use App\Model\CustomerStatistic;
-use App\Repository\CustomerRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
 use DateTime;
