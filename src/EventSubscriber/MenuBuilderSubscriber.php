@@ -11,8 +11,6 @@ namespace App\EventSubscriber;
 
 use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel;
-use App\Utils\MenuItemModel as KimaiMenuItemModel;
-use KevinPapst\TablerBundle\Event\MenuEvent;
 use KevinPapst\TablerBundle\Model\MenuItemInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -99,7 +97,7 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
                     $item->setIsActive(true);
                     continue;
                 }
-                if ($item instanceof KimaiMenuItemModel) {
+                if ($item instanceof MenuItemModel) {
                     if ($item->isChildRoute($route)) {
                         $item->setIsActive(true);
                         continue;

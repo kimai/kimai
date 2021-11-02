@@ -1273,7 +1273,7 @@
       -->
       <trans-unit id="quick_entry.title">
         <source>quick_entry.title</source>
-        <target>Wöchentliche Arbeitsstunden</target>
+        <target>Wochen-Arbeitsstunden</target>
       </trans-unit>
       <trans-unit id="pagination">
         <source>pagination</source>

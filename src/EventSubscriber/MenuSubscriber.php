@@ -10,6 +10,7 @@
 namespace App\EventSubscriber;
 
 use App\Event\ConfigureMainMenuEvent;
+use App\Timesheet\TrackingModeService;
 use App\Utils\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -20,10 +21,12 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 final class MenuSubscriber implements EventSubscriberInterface
 {
     private $security;
+    private $trackingModeService;
 
-    public function __construct(AuthorizationCheckerInterface $security)
+    public function __construct(AuthorizationCheckerInterface $security, TrackingModeService $trackingModeService)
     {
         $this->security = $security;
+        $this->trackingModeService = $trackingModeService;
     }
 
     public static function getSubscribedEvents(): array
@@ -48,18 +51,23 @@ final class MenuSubscriber implements EventSubscriberInterface
 
         if ($auth->isGranted('view_own_timesheet')) {
             $timesheets = new MenuItemModel('timesheet', 'menu.timesheet', 'timesheet', [], 'timesheet');
-            $timesheets->setChildRoutes(['timesheet_export', 'timesheet_edit', 'timesheet_create', 'timesheet_multi_update', 'quick_entry']);
+            $timesheets->setChildRoutes(['timesheet_export', 'timesheet_edit', 'timesheet_create', 'timesheet_multi_update']);
             $times->addChild($timesheets);
+
+            // FIXME which permission?
+            //if ($auth->isGranted('create_own_timesheet')) {
+            if ($auth->isGranted('edit_own_timesheet')) {
+                $mode = $this->trackingModeService->getActiveMode();
+                if ($mode->canEditDuration() || $mode->canEditEnd()) {
+                    $times->addChild(
+                        new MenuItemModel('quick_entry', 'quick_entry.title', 'quick_entry', [], $icons->icon('weekly-times'))
+                    );
+                }
+            }
 
             $times->addChild(
                 new MenuItemModel('calendar', 'calendar.title', 'calendar', [], 'calendar')
             );
-
-            if ($auth->isGranted('create_own_timesheet')) {
-                $times->addChild(
-                    new MenuItemModel('quick_entry', 'quick_entry.title', 'quick_entry', [], 'weekly-times')
-                );
-            }
         }
 
         $times->addChild(MenuItemModel::createDivider());

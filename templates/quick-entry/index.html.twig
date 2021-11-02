@@ -22,8 +22,7 @@
                         <th>{{ 'label.activity'|trans }}</th>
                         {% for id, week in days %}
                         <th class="text-center{% if week.day is weekend %} weekend{% endif %}{% if week.day is today %} today{% endif %}">
-                            {{ week.day|day_name(true) }}<br>
-                            {{ week.day|format_date('short') }}
+                            {{ week.day|date_weekday }}
                         </th>
                         {% endfor %}
                         <th class="summary">{{ 'label.duration'|trans }}</th>
