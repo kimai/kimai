@@ -36,18 +36,13 @@ final class InstallCommand extends Command
     public const ERROR_MIGRATIONS = 32;
 
     /**
-     * @var string
-     */
-    private $rootDir;
-    /**
      * @var Connection
      */
     private $connection;
 
-    public function __construct(string $projectDirectory, Connection $connection)
+    public function __construct(Connection $connection)
     {
         parent::__construct();
-        $this->rootDir = $projectDirectory;
         $this->connection = $connection;
     }
 

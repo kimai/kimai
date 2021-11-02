@@ -23,7 +23,6 @@ use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
-use App\Timesheet\TrackingModeService;
 use App\Utils\SearchTerm;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -67,10 +66,6 @@ class TimesheetController extends BaseApiController
      * @var TagRepository
      */
     private $tagRepository;
-    /**
-     * @var TrackingModeService
-     */
-    private $trackingModeService;
     /**
      * @var EventDispatcherInterface
      */
@@ -152,9 +147,7 @@ class TimesheetController extends BaseApiController
             if (!\is_array($customers)) {
                 $customers = explode(',', $customers);
             }
-            if (!empty($customers)) {
-                $query->setCustomers($customers);
-            }
+            $query->setCustomers($customers);
         }
 
         if (!empty($customer = $paramFetcher->get('customer'))) {
@@ -165,9 +158,7 @@ class TimesheetController extends BaseApiController
             if (!\is_array($projects)) {
                 $projects = explode(',', $projects);
             }
-            if (!empty($projects)) {
-                $query->setProjects($projects);
-            }
+            $query->setProjects($projects);
         }
 
         if (!empty($project = $paramFetcher->get('project'))) {
@@ -178,9 +169,7 @@ class TimesheetController extends BaseApiController
             if (!\is_array($activities)) {
                 $activities = explode(',', $activities);
             }
-            if (!empty($activities)) {
-                $query->setActivities($activities);
-            }
+            $query->setActivities($activities);
         }
 
         if (!empty($activity = $paramFetcher->get('activity'))) {

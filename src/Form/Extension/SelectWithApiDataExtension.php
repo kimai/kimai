@@ -76,11 +76,7 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
 
         $formPrefix = implode('_', array_reverse($formPrefixes));
 
-        $formField = $formPrefix;
-        if (!empty($formField)) {
-            $formField .= '_';
-        }
-        $formField .= $apiData['select'];
+        $formField = $formPrefix . '_' . $apiData['select'];
 
         $view->vars['attr'] = array_merge($view->vars['attr'], [
             'data-form-prefix' => $formPrefix,

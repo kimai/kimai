@@ -176,15 +176,13 @@ final class TeamController extends AbstractController
             $customerForm->handleRequest($request);
 
             if ($customerForm->isSubmitted() && $customerForm->isValid()) {
-                if ($customerForm->isValid()) {
-                    try {
-                        $this->repository->saveTeam($team);
-                        $this->flashSuccess('action.update.success');
+                try {
+                    $this->repository->saveTeam($team);
+                    $this->flashSuccess('action.update.success');
 
-                        return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
-                    } catch (\Exception $ex) {
-                        $this->flashUpdateException($ex);
-                    }
+                    return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
+                } catch (\Exception $ex) {
+                    $this->flashUpdateException($ex);
                 }
             }
 
@@ -194,15 +192,13 @@ final class TeamController extends AbstractController
             $projectForm->handleRequest($request);
 
             if ($projectForm->isSubmitted() && $projectForm->isValid()) {
-                if ($projectForm->isValid()) {
-                    try {
-                        $this->repository->saveTeam($team);
-                        $this->flashSuccess('action.update.success');
+                try {
+                    $this->repository->saveTeam($team);
+                    $this->flashSuccess('action.update.success');
 
-                        return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
-                    } catch (\Exception $ex) {
-                        $this->flashUpdateException($ex);
-                    }
+                    return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
+                } catch (\Exception $ex) {
+                    $this->flashUpdateException($ex);
                 }
             }
         }

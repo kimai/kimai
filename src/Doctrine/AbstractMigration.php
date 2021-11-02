@@ -50,22 +50,6 @@ abstract class AbstractMigration extends BaseAbstractMigration
     }
 
     /**
-     * @deprecated since 1.14 - will be removed with 2.0
-     */
-    protected function deactivateForeignKeysOnSqlite()
-    {
-        @trigger_error('deactivateForeignKeysOnSqlite() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-    }
-
-    /**
-     * @deprecated since 1.14 - will be removed with 2.0
-     */
-    private function activateForeignKeysOnSqlite()
-    {
-        @trigger_error('activateForeignKeysOnSqlite() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-    }
-
-    /**
      * @param Schema $schema
      * @throws Exception
      */
