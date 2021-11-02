@@ -2,29 +2,26 @@
 
 {% block report_title %}{{ report_title|trans({}, 'reporting') }}{% endblock %}
 
+{% block report_form %}
+    {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle'}}) }}
+    {% if form.user is defined %}
+        {{ form_row(form.user, {'label': false, 'row_attr': {'class': 'w-25 me-2'}}) }}
+    {% elseif app.user != user %}
+        {{ widgets.username(user) }}
+    {% endif %}
+    {{ form_row(form.date, {'label': false, 'row_attr': {'class': 'me-2'}}) }}
+    {{ form_end(form) }}
+{% endblock %}
+
 {% block report %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
-        {% block box_before %}
-            {{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
-        {% endblock %}
-        {% block box_after %}
-            {{ form_end(form) }}
-        {% endblock %}
-        {% block box_title %}
-            {% if form.user is defined %}
-                {{ form_row(form.user, {'label': false}) }}
-            {% else %}
-                {{ widgets.username(user) }}
-            {% endif %}
-            {{ form_widget(form.date) }}
-        {% endblock %}
-        {% block box_body_class %}{{ box_id }} table-responsive no-padding{% endblock %}
+        {% block box_body_class %}{{ box_id }} table-responsive p-0 m-0{% endblock %}
         {% block box_body %}
             {% set totals = {'totals': 0} %}
             {% set columns = 2 %}
-            <table class="table table-bordered table-hover dataTable">
+            <table class="table table-hover dataTable">
                 <thead>
                     <tr>
                         <th>&nbsp;</th>
@@ -53,7 +50,7 @@
                         <td class="text-nowrap">
                             <strong>{{ widgets.label_project(project.project) }}</strong>
                         </td>
-                        <th class="text-nowrap text-center total">{{ project.duration|duration }}</th>
+                        <td class="text-nowrap text-center total">{{ project.duration|duration }}</td>
                         {% for day in project.days.days %}
                             <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}{% if day.date is today %} today{% endif %}">
                                 {% if day.duration > 0 %}
@@ -68,7 +65,7 @@
                             <td class="text-nowrap">
                                 {{ widgets.label_activity(activity.activity) }}
                             </td>
-                            <th class="text-nowrap text-center total">{{ activity.duration|duration }}</th>
+                            <td class="text-nowrap text-center total">{{ activity.duration|duration }}</td>
                             {% for day in activity.days.days %}
                                 <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}{% if day.date is today %} today{% endif %}">
                                     {% if day.duration > 0 %}

@@ -19,7 +19,7 @@
             <td class="title">
                 {{ model.template.title }}
             </td>
-            <td class="date text-right">
+            <td class="date text-end">
                 {{ 'label.date'|trans }}: {{ model.invoiceDate|date_short }}
             </td>
         </tr>
@@ -95,9 +95,9 @@ mpdf-->
             <tr>
                 <th class="first"><strong>{{ 'label.date'|trans }}</strong></th>
                 <th><strong>{{ 'label.description'|trans }}</strong></th>
-                <th class="text-right"><strong>{{ 'label.unit_price'|trans }}</strong></th>
-                <th class="text-right"><strong>{{ 'label.amount'|trans }}</strong></th>
-                <th class="last text-right"><strong>{{ 'label.total_rate'|trans }}</strong></th>
+                <th class="text-end"><strong>{{ 'label.unit_price'|trans }}</strong></th>
+                <th class="text-end"><strong>{{ 'label.amount'|trans }}</strong></th>
+                <th class="last text-end"><strong>{{ 'label.total_rate'|trans }}</strong></th>
             </tr>
         </thead>
         <tbody>
@@ -118,30 +118,30 @@ mpdf-->
                         {% if entry.activity is not null %}{{ entry.activity.name }} / {% endif %}{{ entry.project.name }}
                     {% endif %}
                 </td>
-                <td nowrap class="text-nowrap text-right">{{ rate|money(currency) }}</td>
-                <td nowrap class="text-nowrap text-right">{{ duration }}</td>
-                <td nowrap class="last text-nowrap text-right">{{ entry.rate|money(currency) }}</td>
+                <td nowrap class="text-nowrap text-end">{{ rate|money(currency) }}</td>
+                <td nowrap class="text-nowrap text-end">{{ duration }}</td>
+                <td nowrap class="last text-nowrap text-end">{{ entry.rate|money(currency) }}</td>
             </tr>
         {% endfor %}
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="4" class="text-right">
+                <td colspan="4" class="text-end">
                     {{ 'invoice.subtotal'|trans }}
                 </td>
-                <td class="last text-right">{{ model.calculator.subtotal|money(currency) }}</td>
+                <td class="last text-end">{{ model.calculator.subtotal|money(currency) }}</td>
             </tr>
             <tr>
-                <td colspan="4" class="text-right">
+                <td colspan="4" class="text-end">
                     {{ 'invoice.tax'|trans }} ({{ model.calculator.vat }}%)
                 </td>
-                <td class="last text-right">{{ model.calculator.tax|money(currency) }}</td>
+                <td class="last text-end">{{ model.calculator.tax|money(currency) }}</td>
             </tr>
             <tr>
-                <td colspan="4" class="text-right text-nowrap">
+                <td colspan="4" class="text-end text-nowrap">
                     <strong>{{ 'invoice.total'|trans }}</strong>
                 </td>
-                <td class="last text-right">
+                <td class="last text-end">
                     <strong>{{ model.calculator.total|money(currency) }}</strong>
                 </td>
             </tr>

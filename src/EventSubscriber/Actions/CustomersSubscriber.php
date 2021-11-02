@@ -27,7 +27,6 @@ class CustomersSubscriber extends AbstractActionsSubscriber
         $query = $payload['query'];
 
         $event->addSearchToggle($query);
-        $event->addColumnToggle('#modal_customer_admin');
         $event->addQuickExport($this->path('customer_export'));
 
         if ($this->isGranted('create_customer')) {

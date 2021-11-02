@@ -19,6 +19,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use JMS\Serializer\Annotation as Serializer;
+use KevinPapst\TablerBundle\Model\UserInterface as ThemeUserInterface;
 use Swagger\Annotations as SWG;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
@@ -38,24 +39,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Constraints\User(groups={"UserCreate", "Registration", "Default"})
  *
  * @Serializer\ExclusionPolicy("all")
- * @Serializer\VirtualProperty(
- *      "LanguageAsString",
- *      exp="object.getLocale()",
- *      options={
- *          @Serializer\SerializedName("language"),
- *          @Serializer\Type(name="string"),
- *          @Serializer\Groups({"User_Entity"})
- *      }
- * )
- * @Serializer\VirtualProperty(
- *      "TimezoneAsString",
- *      exp="object.getTimezone()",
- *      options={
- *          @Serializer\SerializedName("timezone"),
- *          @Serializer\Type(name="string"),
- *          @Serializer\Groups({"User_Entity"})
- *      }
- * )
  *
  * @Exporter\Order({"id", "username", "alias", "title", "email", "last_login", "language", "timezone", "active", "registeredAt", "roles", "teams", "color", "accountNumber"})
  * @Exporter\Expose("email", label="label.email", exp="object.getEmail()")
@@ -67,7 +50,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams()", type="array")
  * @Exporter\Expose("active", label="label.active", exp="object.isEnabled()", type="boolean")
  */
-class User implements UserInterface, EquatableInterface, \Serializable
+class User implements UserInterface, EquatableInterface, \Serializable, ThemeUserInterface
 {
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
@@ -127,7 +110,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      * @var string
      *
      * @Serializer\Expose()
-     * @Serializer\Groups({"User_Entity"})
+     * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="label.title")
      *
@@ -430,11 +413,27 @@ class User implements UserInterface, EquatableInterface, \Serializable
         return null;
     }
 
+    /**
+     * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("language"),
+     * @Serializer\Groups({"User_Entity"})
+     * @SWG\Property(type="string")
+     *
+     * @return string
+     */
     public function getLocale(): string
     {
         return $this->getPreferenceValue(UserPreference::LOCALE, User::DEFAULT_LANGUAGE);
     }
 
+    /**
+     * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("timezone"),
+     * @Serializer\Groups({"User_Entity"})
+     * @SWG\Property(type="string")
+     *
+     * @return string
+     */
     public function getTimezone(): string
     {
         return $this->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get());
@@ -1049,6 +1048,14 @@ class User implements UserInterface, EquatableInterface, \Serializable
         return $this->getDisplayName();
     }
 
+    /**
+     * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("initials"),
+     * @Serializer\Groups({"Default"})
+     * @SWG\Property(type="string")
+     *
+     * @return string
+     */
     public function getInitials(): string
     {
         $length = 2;
@@ -1093,5 +1100,15 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function setAccountNumber(?string $accountNumber): void
     {
         $this->accountNumber = $accountNumber;
+    }
+
+    public function getIdentifier(): string
+    {
+        return $this->getUsername();
+    }
+
+    public function getName(): string
+    {
+        return $this->getDisplayName();
     }
 }

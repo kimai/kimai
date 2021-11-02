@@ -138,27 +138,27 @@ class PageActionsEvent extends ThemeEvent
             }
         }
 
-        $this->addAction('search', ['modal' => '#modal_search', 'label' => $label]);
+        $this->addAction('search', ['modal' => '#modal_search', 'label' => $label, 'title' => 'search']);
     }
 
     public function addQuickExport(string $url): void
     {
-        $this->addAction('download', ['url' => $url, 'class' => 'toolbar-action']);
+        $this->addAction('download', ['url' => $url, 'class' => 'toolbar-action', 'title' => 'export.title']);
     }
 
     public function addCreate(string $url, bool $modal = true): void
     {
-        $this->addAction('create', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' : '')]);
+        $this->addAction('create', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' : ''), 'title' => 'create']);
     }
 
     public function addHelp(string $url): void
     {
-        $this->addAction('help', ['url' => $url, 'target' => '_blank']);
+        $this->addAction('help', ['url' => $url, 'target' => '_blank', 'title' => 'help', 'translation_domain' => 'about']);
     }
 
-    public function addBack(string $url): void
+    public function addBack(string $url, string $title = 'back'): void
     {
-        $this->addAction('back', ['url' => $url, 'translation_domain' => 'actions']);
+        $this->addAction('back', ['url' => $url, 'translation_domain' => 'actions', 'title' => $title]);
     }
 
     public function addDelete(string $url, bool $remoteConfirm = true): void
@@ -173,7 +173,7 @@ class PageActionsEvent extends ThemeEvent
     public function addColumnToggle(string $modal): void
     {
         $modal = '#' . ltrim($modal, '#');
-        $this->addAction('visibility', ['modal' => $modal]);
+        $this->addAction('visibility', ['modal' => $modal, 'title' => 'modal.columns.title']);
     }
 
     public function countActions(?string $submenu = null): int

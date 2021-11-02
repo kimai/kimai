@@ -7,15 +7,15 @@
 
 {% set columns = {
     'date': {'class': 'alwaysVisible'},
-    'user': {'class': 'hidden-xs hidden-sm text-nowrap hidden', 'orderBy': false},
-    'customer': {'class': 'hidden-xs hidden-sm text-nowrap', 'orderBy': false},
-    'invoice_number': {'class': 'hidden-xs hidden-sm w-min', 'title': 'invoice.number'|trans, 'orderBy': false},
-    'due_date': {'class': 'hidden-xs w-min', 'title': 'invoice.due_days'|trans, 'orderBy': false},
-    'payment_date': {'class': 'hidden-xs hidden w-min', 'title': 'invoice.payment_date'|trans, 'orderBy': false},
+    'user': {'class': 'd-xs-none d-sm-none text-nowrap d-none', 'orderBy': false},
+    'customer': {'class': 'd-xs-none d-sm-none text-nowrap', 'orderBy': false},
+    'invoice_number': {'class': 'd-xs-none d-sm-none w-min', 'title': 'invoice.number'|trans, 'orderBy': false},
+    'due_date': {'class': 'd-xs-none w-min', 'title': 'invoice.due_days'|trans, 'orderBy': false},
+    'payment_date': {'class': 'd-xs-none d-none w-min', 'title': 'invoice.payment_date'|trans, 'orderBy': false},
     'status': {'class': 'alwaysVisible w-min', 'orderBy': false},
-    'subtotal': {'class': 'hidden-xs text-right w-min hidden', 'title': 'invoice.subtotal'|trans, 'orderBy': false},
-    'tax': {'class': 'hidden-xs text-right w-min hidden', 'title': 'invoice.tax'|trans},
-    'total_rate': {'class': 'hidden-xs text-right w-min'},
+    'subtotal': {'class': 'd-xs-none text-end w-min d-none', 'title': 'invoice.subtotal'|trans, 'orderBy': false},
+    'tax': {'class': 'd-xs-none text-end w-min d-none', 'title': 'invoice.tax'|trans},
+    'total_rate': {'class': 'd-xs-none text-end w-min'},
     'actions': {'class': 'actions alwaysVisible', 'orderBy': false},
 } %}
 

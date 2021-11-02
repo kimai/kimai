@@ -235,7 +235,7 @@ final class ProjectController extends AbstractController
 
     /**
      * @Route(path="/{id}/create_team", name="project_team_create", methods={"GET"})
-     * @Security("is_granted('create_team') and is_granted('edit', project)")
+     * @Security("is_granted('create_team') and is_granted('permissions', project)")
      */
     public function createDefaultTeamAction(Project $project, TeamRepository $teamRepository)
     {

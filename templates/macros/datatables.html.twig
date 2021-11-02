@@ -1,37 +1,37 @@
 
 {% macro data_table_column_modal(name, columns) %}
-<div class="modal fade" id="modal_{{ name }}" data-column-visibility="{{ name }}" tabindex="-1" role="dialog" aria-labelledby="data_table_modal_label">
+<div class="modal modal-blur fade" data-bs-backdrop="static" id="modal_{{ name }}" data-column-visibility="{{ name }}" tabindex="-1" role="dialog" aria-labelledby="data_table_modal_label">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'action.close'|trans }}"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="data_table_modal_label">{{ 'modal.columns.title'|trans }}</h4>
+                <h5 class="modal-title" id="data_table_modal_label">{{ 'modal.columns.title'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'action.close'|trans }}"></button>
             </div>
             <div class="modal-body">
-                <form name="{{ name }}_visibility">
+                <form name="{{ name }}_visibility" class="mb-3">
                     {%- for title, headerOptions in columns -%}
                         {% if not headerOptions is iterable %}
                             {% set headerOptions = {'class': headerOptions} %}
                         {% endif %}
-                        {% if headerOptions.title is defined %}
+                        {% if headerOptions.title is defined and headerOptions.title is not empty %}
                             {% set headerTitle = headerOptions.title %}
                         {% else %}
                             {% set headerTitle = ('label.' ~ title)|trans %}
                         {% endif %}
                         {% if 'alwaysVisible' not in headerOptions.class %}
-                            <div class="form-group">
-                                <input type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title, columns) %} checked="checked"{% endif %}>
-                                <label class="control-label" for="column_{{ title }}">{{ headerTitle }}</label>
-                            </div>
+                            <label class="form-check">
+                                <input class="form-check-input" type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title, columns) %} checked="checked"{% endif %}>
+                                <span class="form-check-label">{{ headerTitle }}</span>
+                            </label>
                         {% endif %}
                     {% endfor %}
                 </form>
                 <p>{{ 'modal.columns.description'|trans }}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary pull-left" data-type="save">{{ 'action.save'|trans }}</button>
-                <button type="button" class="btn btn-warning pull-left" data-type="reset">{{ 'action.delete'|trans }}</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'action.close'|trans }}</button>
+                <button type="button" class="btn btn-outline-danger me-auto" data-type="reset">{{ 'action.delete'|trans }}</button>
+                <button type="button" class="btn btn-primary" data-type="save">{{ 'action.save'|trans }}</button>
+                <button type="button" class="btn" data-bs-dismiss="modal">{{ 'action.close'|trans }}</button>
             </div>
         </div>
     </div>
@@ -51,15 +51,17 @@
     {% set reloadEvent = options.reload|default('') %}
     {% set translationDomain = options.translationDomain|default('messages') %}
     {% set translationPrefix = options.translationPrefix ?? 'label.' %}
-    {% set boxClass = options.boxClass ?? 'box box-'  ~ admin_lte_context.widget.type ~ ' data_table' %}
+    {% set boxClass = options.boxClass ?? 'card data_table' %}
+    {% set columnModal = options.columnConfig ?? true %}
 
     <div class="{{ boxClass }} datatable_{{ tableName }}">
-        <div class="box-body no-padding">
+        <div class="card-body p-0">
             <div class="dataTables_wrapper form-inline dt-bootstrap">
-                <table class="table {% if striped %}table-striped {% endif %}{% if bordered %}table-bordered {% endif %}table-hover dataTable" role="grid" data-reload-event="{{ reloadEvent }}">
-                    <thead>
+                <table class="table {% if striped %}table-striped {% endif %}{% if bordered %}table-bordered {% endif %}table-hover dataTable" role="grid" data-reload-event="kimai.reset_column_visibility {{ reloadEvent }}">
+                    <thead class="sticky-top">
                         <tr>
                         {%- for title, headerOptions in columns -%}
+                            {% set isActions = title is not empty and title == 'actions' %}
                             {% if not headerOptions is iterable %}
                                 {% set headerOptions = {'class': headerOptions} %}
                             {% endif %}
@@ -81,10 +83,18 @@
                             {% set headerTitle = '' %}
                             {% if headerOptions.title is defined %}
                                 {% set headerTitle = headerOptions.title %}
-                            {% elseif title is not empty and title != 'actions' %}
+                            {% elseif title is not empty and not isActions %}
                                 {% set headerTitle = (translationPrefix ~ title)|trans({}, translationDomain) %}
                             {% endif %}
+                            {% if isActions %}
+                                {% set headerClass = headerClass ~ ' text-center' %}
+                            {% endif %}
                             <th data-field="{{ title }}" {% if not headerOptions.orderBy is same as(false) %}data-order="{{ headerOptions.orderBy }}" {% endif %}class="{{ headerClass }}">
+                            {% if title is not empty and title == 'actions' and columnModal is not same as (false) %}
+                                <a class="link-secondary" href="#" data-bs-toggle="modal" data-bs-target="#modal_{{ tableName }}" data-toggle="tooltip" data-bs-placement="top" title="{{ 'modal.columns.title'|trans }}">
+                                    {{ icon('columns') }}
+                                </a>
+                            {% else %}
                                 {% if headerOptions.html_before is defined %}
                                     {{ headerOptions.html_before|raw }}
                                 {% endif %}
@@ -92,6 +102,7 @@
                                 {% if headerOptions.html_after is defined %}
                                     {{ headerOptions.html_after|raw }}
                                 {% endif %}
+                            {% endif %}
                             </th>
                         {%- endfor -%}
                         </tr>
@@ -114,26 +125,26 @@
             {% endif %}
         {% endif %}
         {% if 'alwaysVisible' in classes %}
-            {# as this column should always be visible, we remove every class that includes hidden #}
+            {# as this column should always be visible, we remove every class that includes 'none' #}
             {% for tmp in classes|split(' ') %}
-                {% if 'hidden' not in tmp %}
+                {% if '-none' not in tmp %}
                     {% set class = class ~ ' ' ~ tmp %}
                 {% endif %}
             {% endfor %}
         {% else %}
             {% if not is_visible_column(name, column, columns) %}
-                {% set classes = classes ~ ' hidden' %}
+                {% set classes = classes ~ ' d-none' %}
             {% elseif not is_datatable_configured(name) %}
-                {# needs to be a foreach, as classes like "hidden-xs" would match in: if 'hidden' in classes #}
+                {# needs to be a foreach, as classes like "d-xs-none" would match in: if 'none' in classes #}
                 {% for tmp in classes|split(' ') %}
-                    {% if 'hidden' == tmp %}
+                    {% if '-none' == tmp %}
                         {% set classes = classes|replace({(tmp): ''}) %}
                     {% endif %}
                 {% endfor %}
             {% else %}
-                {# needs to be a foreach, as classes like "hidden-xs" would match in: if 'hidden' in classes #}
+                {# needs to be a foreach, as classes like "d-xs-none" would match in: if 'none' in classes #}
                 {% for tmp in classes|split(' ') %}
-                    {% if 'hidden' in tmp %}
+                    {% if '-none' in tmp %}
                         {% set classes = classes|replace({(tmp): ''}) %}
                     {% endif %}
                 {% endfor %}
@@ -153,24 +164,36 @@
             </table>
         </div>
     </div>
-</div>
-{% if multi_update_form is not null %}
-<div id="multi_update_form" style="display: none">
-    {{ form_start(multi_update_form, {'attr': {'data-question': 'update_multiple'|trans}}) }}
-    <label class="col-sm-1 col-xs-2 control-label" for="multi_update_table_action">
-        <span class="pull-left"><i class="fas fa-level-up-alt fa-2x fa-rotate-90"></i></span>
-    </label>
-    <div class="col-sm-11 col-xs-10">
-        {{ form_widget(multi_update_form.action) }}
+    {% if (route is not empty and entries is not null) or multi_update_form is not null%}
+    <div class="card-footer d-flex align-items-center">
+        {% if multi_update_form is not null %}
+            <div id="multi_update_form" style="display: none" class="col">
+                {{ form_start(multi_update_form, {'attr': {'data-question': 'update_multiple'|trans}}) }}
+                    {% for formChild in multi_update_form.children %}
+                        {{ form_widget(formChild) }}
+                    {% endfor %}
+                {{ form_end(multi_update_form) }}
+            </div>
+        {% endif %}
+        {% if route is not empty and entries is not null %}
+            <div class="col multi_update_form_hide">
+                <p class="m-0 text-muted">
+                    {{ 'pagination'|trans({'%start%': entries.getCurrentPageOffsetStart(), '%end%': entries.getCurrentPageOffsetEnd(), '%total%': entries.getNbResults()}) }}
+                </p>
+            </div>
+            <div class="col-auto">
+                {% set options = { 'css_container_class': 'pagination m-0 ms-auto d-print-none' } %}
+                {% if route is iterable %}
+                    {% set options = options|merge(route) %}
+                {% else %}
+                    {% set options = options|merge({routeName: route}) %}
+                {% endif %}
+                {{ pagination(entries, options) }}
+            </div>
+        {% endif %}
     </div>
-    {{ form_end(multi_update_form) }}
+    {% endif %}
 </div>
-{% endif %}
-{% if route is not empty and entries is not null%}
-<div class="navigation text-center no-print">
-    {{ pagination(entries, { routeName: route, 'css_container_class': 'pagination' }) }}
-</div>
-{% endif %}
 {% endmacro %}
 
 {% macro datatable_meta_column(entry, field) %}
@@ -183,41 +206,9 @@
 {% endmacro %}
 
 {% macro datatable_multiupdate_all() %}
-    <input type="checkbox" id="multi_update_all" class="multiupdater">
+    <input type="checkbox" id="multi_update_all" class="multiupdater form-check-input m-0 align-middle">
 {% endmacro %}
 
 {% macro datatable_multiupdate_row(id) %}
-    <input type="checkbox" name="id" value="{{ id }}" class="multi_update_single multiupdater">
-{% endmacro %}
-
-{% macro data_table_header(name, columns, skipStripped, reloadEvent) %}
-    {% deprecated 'The macro "data_table_header()" is deprecated since 1.3 and will be removed with 2.0, use "datatable_header()" instead' %}
-    {{ _self.data_table_header_options(name, columns, {'skipStripped': skipStripped, 'reloadEvent': reloadEvent}) }}
-{% endmacro %}
-
-{% macro data_table_header_options(name, columns, options) %}
-    {% deprecated 'The macro "data_table_header_options()" is deprecated since 1.3 and will be removed with 2.0, use "datatable_header()" instead' %}
-    {% set skipStripped = options.skipStripped|default(true) %}
-    {% set reloadEvent = options.reloadEvent|default('') %}
-    {% set translationDomain = options.translationDomain|default('messages') %}
-    {# |default does not work here, as the prefix might be an empty string #}
-    {% set translationPrefix = 'label.' %}
-    {% if options.translationPrefix is defined %}
-        {% set translationPrefix = options.translationPrefix %}
-    {% endif %}
-
-<div class="box box-{{ admin_lte_context.widget.type }} data_table" id="datatable_{{ name }}">
-    <div class="box-body no-padding">
-        <div class="dataTables_wrapper form-inline dt-bootstrap">
-            <div class="row">
-                <div class="col-sm-12">
-                    <table class="table {% if not skipStripped %}table-striped {% endif %}table-hover dataTable" role="grid" data-reload-event="{{ reloadEvent }}">
-                        <thead>
-                        <tr>
-                            {%- for title, class in columns -%}
-                                <th data-field="{{ title }}" class="{{ _self.data_table_column_class(name, columns, title) }}">{% if title is not empty and title != 'actions' %}{{ (translationPrefix ~ title)|trans({}, translationDomain) }}{% endif %}</th>
-                            {%- endfor -%}
-                        </tr>
-                        </thead>
-                        <tbody>
+    <input type="checkbox" name="id" value="{{ id }}" class="multi_update_single multiupdater form-check-input m-0 align-middle">
 {% endmacro %}

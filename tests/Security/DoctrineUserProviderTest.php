@@ -12,7 +12,7 @@ namespace App\Tests\Security;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Security\DoctrineUserProvider;
-use KevinPapst\AdminLTEBundle\Model\UserInterface;
+use KevinPapst\TablerBundle\Model\UserInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;

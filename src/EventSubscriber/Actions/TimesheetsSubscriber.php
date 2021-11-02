@@ -27,15 +27,13 @@ class TimesheetsSubscriber extends AbstractActionsSubscriber
         $query = $payload['query'];
 
         $event->addSearchToggle($query);
-        $event->addColumnToggle('#modal_timesheet');
 
         if ($this->isGranted('export_own_timesheet')) {
-            $event->addAction('download', ['url' => $this->path('timesheet_export'), 'class' => 'toolbar-action modal-ajax-form']);
+            $event->addAction('download', ['url' => $this->path('timesheet_export'), 'class' => 'toolbar-action modal-ajax-form', 'title' => 'menu.export']);
         }
 
         if ($this->isGranted('create_own_timesheet')) {
             $event->addCreate($this->path('timesheet_create'));
-            $event->addAction('quick_entry', ['url' => $this->path('quick_entry'), 'class' => 'create-ts', 'icon' => 'weekly-times']);
         }
 
         $event->addHelp($this->documentationLink('timesheet.html'));

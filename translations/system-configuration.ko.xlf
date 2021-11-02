@@ -82,10 +82,6 @@
         <source>label.invoice.number_format</source>
         <target>인보이스 번호 포맷</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>간단한 검색</target>
-      </trans-unit>
       <trans-unit id="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
         <target>기본 시작 시간 (모든 시간 추적 모드에서 사용되지 않음)</target>

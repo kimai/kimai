@@ -28,7 +28,6 @@ class ProjectsSubscriber extends AbstractActionsSubscriber
 
         $event->addSearchToggle($query);
 
-        $event->addColumnToggle('#modal_project_admin');
         $event->addQuickExport($this->path('project_export'));
 
         if ($this->isGranted('create_project')) {

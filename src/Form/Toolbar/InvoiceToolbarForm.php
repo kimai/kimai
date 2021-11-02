@@ -9,20 +9,30 @@
 
 namespace App\Form\Toolbar;
 
+use App\Form\Type\InvoiceTemplateType;
+use App\Repository\Query\InvoiceQuery;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used for filtering timesheet entries for invoices.
  */
-class InvoiceToolbarForm extends InvoiceToolbarSimpleForm
+class InvoiceToolbarForm extends AbstractToolbarForm
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
+        $this->addTemplateChoice($builder);
+        $this->addDateRange($builder, ['timezone' => $options['timezone']]);
+        $this->addCustomerMultiChoice($builder, ['required' => false, 'start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true, 'placeholder' => ''], true);
+        $this->addProjectMultiChoice($builder, ['ignore_date' => true], false, true);
+        $builder->add('markAsExported', CheckboxType::class, [
+            'label' => 'label.mark_as_exported',
+            'required' => false,
+        ]);
         $this->addSearchTermInputField($builder);
         if ($options['include_user']) {
             $this->addUsersChoice($builder);
@@ -32,12 +42,24 @@ class InvoiceToolbarForm extends InvoiceToolbarSimpleForm
         $this->addExportStateChoice($builder);
     }
 
+    protected function addTemplateChoice(FormBuilderInterface $builder)
+    {
+        $builder->add('template', InvoiceTemplateType::class, [
+            'required' => true,
+            'placeholder' => null,
+        ]);
+    }
+
     /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
-        $resolver->setDefault('include_user', true);
+        $resolver->setDefaults([
+            'data_class' => InvoiceQuery::class,
+            'csrf_protection' => false,
+            'include_user' => true,
+            'timezone' => date_default_timezone_get(),
+        ]);
     }
 }

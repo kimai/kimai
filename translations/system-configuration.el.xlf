@@ -202,10 +202,6 @@
         <source>label.timesheet.default_begin</source>
         <target>Προεπιλεγμένη ώρα έναρξης (δεν χρησιμοποιείται σε όλες τις λειτουργίες καταγραφής ωρών)</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>Απλή αναζήτηση</target>
-      </trans-unit>
       <trans-unit id="label.invoice.number_format">
         <source>label.invoice.number_format</source>
         <target>Μορφή αριθμού τιμολογίου</target>

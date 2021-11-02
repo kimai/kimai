@@ -20,7 +20,7 @@
             </trans-unit>
             <trans-unit id="donate">
                 <source>donate</source>
-                <target>Támogasd a Kimai jövőjét</target>
+                <target>Támogasd</target>
             </trans-unit>
             <trans-unit id="published_under">
                 <source>published_under</source>

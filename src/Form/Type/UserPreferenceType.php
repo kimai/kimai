@@ -48,6 +48,8 @@ class UserPreferenceType extends AbstractType
 
                 // prevents unconfigured values from showing up in the form
                 if ($preference->getType() === null) {
+                    $event->getForm()->remove('name');
+
                     return;
                 }
 

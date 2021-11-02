@@ -28,7 +28,7 @@ final class SecurityController extends AbstractController
     }
 
     /**
-     * @Route(path="/login", name="fos_user_security_login", methods={"GET", "POST"})
+     * @Route(path="/login", name="login", methods={"GET", "POST"})
      */
     public function loginAction(Request $request): Response
     {
@@ -67,7 +67,7 @@ final class SecurityController extends AbstractController
     }
 
     /**
-     * @Route(path="/login_check", name="fos_user_security_check", methods={"POST"})
+     * @Route(path="/login_check", name="security_check", methods={"POST"})
      */
     public function checkAction()
     {
@@ -75,7 +75,7 @@ final class SecurityController extends AbstractController
     }
 
     /**
-     * @Route(path="/logout", name="fos_user_security_logout", methods={"GET", "POST"})
+     * @Route(path="/logout", name="logout", methods={"GET", "POST"})
      */
     public function logoutAction()
     {

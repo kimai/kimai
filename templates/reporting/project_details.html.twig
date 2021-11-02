@@ -35,7 +35,7 @@
             });
         });
 
-        jQuery('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        jQuery('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
             renderChart(e.target.dataset.chart);
         });
 
@@ -56,32 +56,21 @@
     </script>
 {% endblock %}
 
+{% block report_form %}
+    {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': tableId}}) }}
+    {{ form_row(form.project, {'row_attr': {'class': 'w-25 me-2'}}) }}
+    {{ form_end(form) }}
+{% endblock %}
+
 {% block report %}
     {% set hasData = project is not null and project_view is not null %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-        {% import "macros/widgets.html.twig" as widgets %}
-        {% block box_before %}
-            {{ form_start(form, {'attr': {'class': 'form-inline form-reporting', 'id': tableId}}) }}
-        {% endblock %}
-        {% block box_after %}
-            {{ form_end(form) }}
-        {% endblock %}
-        {% block box_title %}
-            {{ form_widget(form) }}
-        {% endblock %}
-        {% block box_body %}{% endblock %}
-        {% block box_body_class %}hidden{% endblock %}
-    {% endembed %}
-
     {% if not hasData %}
         {{ widgets.nothing_found() }}
-    {% endif %}
-
-    {% if hasData %}
+    {% else %}
         {{ _self.project_details(project, project_view, project_details, view_revenue_tab, view_revenue_user, see_users) }}
-        {% set currency = project.customer.currency %}
 
+        {% set currency = project.customer.currency %}
         {%- for yearStat in project_details.years|reverse %}
             {% set year = yearStat.year %}
             {{ _self.duration_stat(year, year, year, month_names(), yearStat, project_details.getYearActivities(year), project_details.userYears(year), currency, view_revenue_tab, see_users) }}
@@ -105,19 +94,29 @@
         {% set rates = rates|merge([{'label': rate|money(currency), 'value': rate}]) %}
     {% endfor -%}
 
-    <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs pull-right">
-            {% if see_users %}
-            <li><a data-chart="{{ chartPrefix }}User" href="#user-chart-{{ id}}" data-toggle="tab">{{ 'label.user'|trans }}</a></li>
-            {% endif %}
-            <li><a data-chart="{{ chartPrefix }}Activity" href="#activity-chart-{{ id}}" data-toggle="tab">{{ 'label.activity'|trans }}</a></li>
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3 class="card-title">
+                {{ title }}
+            </h3>
+            <div class="card-actions">
+                {{ widgets.badge_counter(yearStat.duration|duration) }}
+                {% if view_revenue_tab %}
+                    {{ widgets.badge_counter(yearStat.rate|money(currency)) }}
+                {% endif %}
+            </div>
+        </div>
+        <ul class="nav nav-tabs" data-bs-toggle="tabs">
+            <li class="nav-item"><a class="nav-link active" data-chart="{{ chartPrefix }}Duration" href="#time-chart-{{ id }}" data-bs-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
             {% if view_revenue_tab %}
-                <li><a data-chart="{{ chartPrefix }}Rate" href="#revenue-chart-{{ id }}" data-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
+                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Rate" href="#revenue-chart-{{ id }}" data-bs-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
             {% endif %}
-            <li class="active"><a data-chart="{{ chartPrefix }}Duration" href="#time-chart-{{ id }}" data-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
-            <li class="pull-left header">{{ title }} {{ widgets.label(yearStat.duration|duration, 'gray') }} {{ widgets.label(yearStat.rate|money(currency), 'gray') }}</small></li>
+            {% if see_users %}
+            <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}User" href="#user-chart-{{ id}}" data-bs-toggle="tab">{{ 'label.user'|trans }}</a></li>
+            {% endif %}
+            <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Activity" href="#activity-chart-{{ id}}" data-bs-toggle="tab">{{ 'label.activity'|trans }}</a></li>
         </ul>
-        <div class="tab-content no-padding">
+        <div class="tab-content mt-2 p-2">
             <div class="chart tab-pane active" id="time-chart-{{ id }}">
                 <div class="row">
                     <div class="col-xs-12">
@@ -224,11 +223,11 @@
                     {% endif %}
                     <tr>
                         <td>{{ widgets.label_activity(stat.activity, {'inherit': false, 'random': true}) }}</td>
-                        <td class="text-nowrap text-right">{{ stat.duration|duration }}</td>
+                        <td class="text-nowrap text-end">{{ stat.duration|duration }}</td>
                         {% if view_revenue_tab %}
-                        <td class="text-nowrap text-right">{{ stat.rate|money(currency) }}</td>
+                        <td class="text-nowrap text-end">{{ stat.rate|money(currency) }}</td>
                         {% endif %}
-                        <td class="text-nowrap text-right">{{ percentage|number_format(1) }} %</td>
+                        <td class="text-nowrap text-end">{{ percentage|number_format(1) }} %</td>
                     </tr>
                 {% endfor %}
             </table>
@@ -263,26 +262,34 @@
         {% set durations = durations|merge([{'label': year.duration|duration, 'value': year.duration|chart_duration}]) %}
     {% endfor -%}
 
-    <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs pull-right">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3 class="card-title">
+                {{ widgets.label_project(project, {'inherit': false}) }}
+            </h3>
+            <div class="card-actions">
+                {{ widgets.badge_counter(project_view.durationTotal|duration) }}
+                {% if view_revenue_tab %}
+                    {{ widgets.badge_counter(project_view.rateTotal|money(currency)) }}
+                {% endif %}
+            </div>
+        </div>
+        <ul class="nav nav-tabs" data-bs-toggle="tabs">
+            <li class="nav-item"><a class="nav-link active" href="#details-chart" data-bs-toggle="tab">{{ 'report_project_details'|trans({}, 'reporting') }}</a></li>
             {% if see_users and project_details.userStats|length > 0 %}
-            <li><a data-chart="{{ chartPrefix }}User" href="#user-chart" data-toggle="tab">{{ 'label.user'|trans }}</a></li>
+                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}User" href="#user-chart" data-bs-toggle="tab">{{ 'label.user'|trans }}</a></li>
             {% endif %}
             {% if activities is not empty %}
-            <li><a data-chart="{{ chartPrefix }}Activity" href="#activity-chart" data-toggle="tab">{{ 'label.activity'|trans }}</a></li>
+                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Activity" href="#activity-chart" data-bs-toggle="tab">{{ 'label.activity'|trans }}</a></li>
             {% endif %}
             {% if view_revenue_tab and project_view.rateTotal > 0 %}
-            <li><a data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
+                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-bs-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
             {% endif %}
             {% if project_view.durationTotal > 0 %}
-            <li><a data-chart="{{ chartPrefix }}Duration" href="#time-chart" data-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
+                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Duration" href="#time-chart" data-bs-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
             {% endif %}
-            <li class="active"><a href="#details-chart" data-toggle="tab">{{ 'report_project_details'|trans({}, 'reporting') }}</a></li>
-            <li class="pull-left header hidden-xs">
-                {{ widgets.label_project(project, {'inherit': false}) }}
-            </li>
         </ul>
-        <div class="tab-content no-padding">
+        <div class="tab-content mt-2 p-2">
             <div class="chart tab-pane active" id="details-chart">
                 <div class="row">
                     <div class="col-xs-12 col-md-6">
@@ -427,24 +434,24 @@
                                     <td>
                                         {{ widgets.label_dot(user.displayName, user.color) }}
                                     </th>
-                                    <td class="text-nowrap text-right">
+                                    <td class="text-nowrap text-end">
                                         {{ userStat.duration|duration }}
                                     </td>
                                     {% if view_revenue_user %}
-                                    <td class="text-nowrap text-right">
+                                    <td class="text-nowrap text-end">
                                         {{ userStat.rate|money(currency) }}
                                     </td>
                                     {% endif %}
-                                    <td class="text-nowrap text-right">
+                                    <td class="text-nowrap text-end">
                                         {{ percentage|number_format(1) }} %
                                     </td>
                                 </tr>
                             {% endfor %}
                                 <tr>
                                     <td></td>
-                                    <th class="text-nowrap text-right total">{{ totalDuration|duration }}</th>
+                                    <th class="text-nowrap text-end total">{{ totalDuration|duration }}</th>
                                     {% if view_revenue_user %}
-                                    <th class="text-nowrap text-right total">{{ rateTotal|money(currency) }}</th>
+                                    <th class="text-nowrap text-end total">{{ rateTotal|money(currency) }}</th>
                                     {% endif %}
                                     <td></td>
                                 </tr>

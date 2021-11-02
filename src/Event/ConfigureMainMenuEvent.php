@@ -9,8 +9,7 @@
 
 namespace App\Event;
 
-use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
-use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
+use App\Utils\MenuItemModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\EventDispatcher\Event;
 
@@ -19,70 +18,35 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class ConfigureMainMenuEvent extends Event
 {
-    /**
-     * @deprecated since 1.4, will be removed with 2.0
-     */
-    public const CONFIGURE = ConfigureMainMenuEvent::class;
-
-    /**
-     * @var Request
-     */
     private $request;
-    /**
-     * @var SidebarMenuEvent
-     */
-    private $event;
-    /**
-     * @var MenuItemModel
-     */
+    private $menu;
     private $admin;
-    /**
-     * @var MenuItemModel
-     */
     private $system;
 
-    /**
-     * @param Request $request
-     * @param SidebarMenuEvent $event
-     * @param MenuItemModel $admin
-     * @param MenuItemModel $system
-     */
-    public function __construct(Request $request, SidebarMenuEvent $event, MenuItemModel $admin, MenuItemModel $system)
+    public function __construct(Request $request, MenuItemModel $mainMenu, MenuItemModel $admin, MenuItemModel $system)
     {
         $this->request = $request;
-        $this->event = $event;
+        $this->menu = $mainMenu;
         $this->admin = $admin;
         $this->system = $system;
     }
 
-    /**
-     * @return Request
-     */
-    public function getRequest()
+    public function getRequest(): Request
     {
         return $this->request;
     }
 
-    /**
-     * @return SidebarMenuEvent
-     */
-    public function getMenu()
+    public function getMenu(): MenuItemModel
     {
-        return $this->event;
+        return $this->menu;
     }
 
-    /**
-     * @return MenuItemModel
-     */
-    public function getAdminMenu()
+    public function getAdminMenu(): MenuItemModel
     {
         return $this->admin;
     }
 
-    /**
-     * @return MenuItemModel
-     */
-    public function getSystemMenu()
+    public function getSystemMenu(): MenuItemModel
     {
         return $this->system;
     }

@@ -37,12 +37,12 @@ security:
             provider: chain_provider
 
             form_login:
-                check_path: fos_user_security_check
-                login_path: fos_user_security_login
+                check_path: security_check
+                login_path: login
                 csrf_token_generator: security.csrf.token_manager
 
             logout:
-                path: fos_user_security_logout
+                path: logout
                 target: homepage
 
     access_decision_manager:

@@ -238,10 +238,6 @@
         <source>label.invoice.number_format</source>
         <target>Formato numero fattura</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>Ricerca semplice</target>
-      </trans-unit>
       <trans-unit id="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
         <target>Orario di inizio predefinito (non usato in tutte le modalità di tracciamento del tempo)</target>

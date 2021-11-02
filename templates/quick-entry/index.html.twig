@@ -5,7 +5,7 @@
 {% block page_actions %}{{ actions.quickEntries('index') }}{% endblock %}
 
 {% block main %}
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_attributes %}id="quick_entry_box"{% endblock %}
         {% block box_before %}{{ form_start(form, {attr: {class: 'form-dataTable'}}) }}{% endblock %}
@@ -13,14 +13,7 @@
         {% block box_title %}
             {{ form_widget(form.date) }}
         {% endblock %}
-        {% block box_body_class %}no-padding{% endblock %}
-        {% block box_footer %}
-            <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
-            <button type="button" class="btn btn-success add-item-link" data-collection-prototype="{{ form.rows.vars.id }}" data-collection-holder="ts-collection">
-                <i class="{{ 'create'|icon }}"></i>
-                {{ 'action.add'|trans }}
-            </button>
-        {% endblock %}
+        {% block box_body_class %}p-0{% endblock %}
         {% block box_body %}
             <table class="table dataTable">
                 <thead>
@@ -50,6 +43,13 @@
                     </tr>
                 </tfoot>
             </table>
+        {% endblock %}
+        {% block box_footer %}
+            <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
+            <button type="button" class="btn btn-success add-item-link" data-collection-prototype="{{ form.rows.vars.id }}" data-collection-holder="ts-collection">
+                {{ icon('create') }}
+                {{ 'action.add'|trans }}
+            </button>
         {% endblock %}
     {% endembed %}
 {% endblock %}
@@ -124,4 +124,12 @@
             document.querySelectorAll('.add-item-link').forEach(btn => btn.addEventListener("click", addFormToCollection));
         });
     </script>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        #quick_entry_form {
+            display: none;
+        }
+    </style>
 {% endblock %}

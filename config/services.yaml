@@ -112,8 +112,8 @@ services:
     # THEME
     # ================================================================================
 
-    KevinPapst\AdminLTEBundle\Helper\ContextHelper:
-        alias: admin_lte_theme.context_helper
+    #KevinPapst\TablerBundle\Helper\ContextHelper:
+    #    alias: tabler_bundle.context_helper
 
     # ================================================================================
     # TIMESHEET RECORD CALCULATOR

@@ -10,8 +10,8 @@
 namespace App\Tests\Event;
 
 use App\Event\ConfigureMainMenuEvent;
-use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
-use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
+use App\Utils\MenuItemModel;
+use KevinPapst\TablerBundle\Event\MenuEvent;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,7 +23,7 @@ class ConfigureMainMenuEventTest extends TestCase
     public function testGetterAndSetter()
     {
         $request = new Request();
-        $event = new SidebarMenuEvent();
+        $event = new MenuEvent();
         $admin = new MenuItemModel('admin', 'admin', 'admin');
         $system = new MenuItemModel('system', 'system', 'system');
         $sut = new ConfigureMainMenuEvent($request, $event, $admin, $system);

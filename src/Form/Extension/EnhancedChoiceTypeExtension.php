@@ -59,7 +59,7 @@ final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
         }
 
         if (false === $options['search']) {
-            $extendedOptions['data-minimum-results-for-search'] = 'Infinity';
+            $extendedOptions['data-disable-search'] = 1;
         }
 
         $view->vars['attr'] = array_merge($view->vars['attr'], $extendedOptions);

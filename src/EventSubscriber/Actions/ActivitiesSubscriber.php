@@ -27,7 +27,6 @@ class ActivitiesSubscriber extends AbstractActionsSubscriber
         $query = $payload['query'];
 
         $event->addSearchToggle($query);
-        $event->addColumnToggle('#modal_activity_admin');
         $event->addQuickExport($this->path('activity_export'));
 
         if ($this->isGranted('create_activity')) {

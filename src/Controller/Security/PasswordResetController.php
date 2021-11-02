@@ -47,7 +47,7 @@ final class PasswordResetController extends AbstractController
     /**
      * Request reset user password: show form.
      *
-     * @Route(path="/request", name="fos_user_resetting_request", methods={"GET"})
+     * @Route(path="/request", name="resetting_request", methods={"GET"})
      */
     public function requestAction(): Response
     {
@@ -61,7 +61,7 @@ final class PasswordResetController extends AbstractController
     /**
      * Request reset user password: submit form and send email.
      *
-     * @Route(path="/send-email", name="fos_user_resetting_send_email", methods={"POST"})
+     * @Route(path="/send-email", name="resetting_send_email", methods={"POST"})
      */
     public function sendEmailAction(Request $request): Response
     {
@@ -94,13 +94,13 @@ final class PasswordResetController extends AbstractController
             $this->userService->updateUser($user);
         }
 
-        return $this->redirectToRoute('fos_user_resetting_check_email', ['username' => $username]);
+        return $this->redirectToRoute('resetting_check_email', ['username' => $username]);
     }
 
     /**
      * Tell the user to check his email provider.
      *
-     * @Route(path="/check-email", name="fos_user_resetting_check_email", methods={"GET"})
+     * @Route(path="/check-email", name="resetting_check_email", methods={"GET"})
      */
     public function checkEmailAction(Request $request): Response
     {
@@ -112,7 +112,7 @@ final class PasswordResetController extends AbstractController
 
         if (empty($username)) {
             // the user does not come from the sendEmail action
-            return $this->redirectToRoute('fos_user_resetting_request');
+            return $this->redirectToRoute('resetting_request');
         }
 
         return $this->render('security/password-reset/check_email.html.twig', [
@@ -123,7 +123,7 @@ final class PasswordResetController extends AbstractController
     /**
      * Reset user password.
      *
-     * @Route(path="/reset/{token}", name="fos_user_resetting_reset", methods={"GET", "POST"})
+     * @Route(path="/reset/{token}", name="resetting_reset", methods={"GET", "POST"})
      */
     public function resetAction(Request $request, LoginManager $loginManager, ?string $token): Response
     {
@@ -134,11 +134,11 @@ final class PasswordResetController extends AbstractController
         $user = $this->userService->findUserByConfirmationToken($token);
 
         if (null === $user) {
-            return $this->redirectToRoute('fos_user_security_login');
+            return $this->redirectToRoute('login');
         }
 
         if (!$user->isPasswordRequestNonExpired($this->configuration->getPasswordResetTokenLifetime())) {
-            return $this->redirectToRoute('fos_user_resetting_request');
+            return $this->redirectToRoute('resetting_request');
         }
 
         $form = $this->createResetForm();
@@ -169,7 +169,7 @@ final class PasswordResetController extends AbstractController
     {
         $options = ['validation_groups' => ['ResetPassword', 'Default']];
 
-        return $this->createFormBuilder()->create('fos_user_resetting_form', PasswordResetForm::class, $options)->getForm();
+        return $this->createFormBuilder()->create('resetting_form', PasswordResetForm::class, $options)->getForm();
     }
 
     private function generateResettingEmailMessage(User $user): Email
@@ -177,7 +177,7 @@ final class PasswordResetController extends AbstractController
         $username = $user->getDisplayName();
         $language = $user->getLanguage();
 
-        $url = $this->generateUrl('fos_user_resetting_reset', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->generateUrl('resetting_reset', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         return (new TemplatedEmail())
             ->to(new Address($user->getEmail()))

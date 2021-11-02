@@ -10,7 +10,7 @@
  */
 
 import KimaiPlugin from "../KimaiPlugin";
-import jQuery from "jquery";
+import TomSelect from 'tom-select';
 
 export default class KimaiFormSelect extends KimaiPlugin {
 
@@ -24,139 +24,125 @@ export default class KimaiFormSelect extends KimaiPlugin {
     }
 
     init() {
-        // selects the original value inside select2 dropdowns, as the "reset" event (the updated option)
-        // is not automatically catched by select2
-        jQuery('body').on('reset', 'form', function(event) {
-            setTimeout(function() {
-                jQuery(event.target).find(this.selector).trigger('change');
-            }, 10);
-        });
-
         const self = this;
-
-        // Function to match the name of the parent and not only the names of the children
-        // Based on the original matcher function of Select2: https://github.com/select2/select2/blob/5765090318c4d382ae56463cfa25ba8ca7bdd495/src/js/select2/defaults.js#L272
-        // More information: https://select2.org/searching | https://github.com/select2/docs/blob/develop/pages/11.searching/docs.md
-        this.matcher = function (params, data) {
-            // Always return the object if there is nothing to compare
-            if (jQuery.trim(params.term) === '') {
-                return data;
-            }
-
-            // Check whether options has children
-            let hasChildren = data.children && data.children.length > 0;
-
-            // Split search param by space to search for all terms and convert all to uppercase
-            let terms = params.term.toUpperCase().split(' ');
-            let original = data.text.toUpperCase();
-
-            // Always return the parent option including its children, when the name matches one of the params
-            // Check if the text contains all or at least one of the terms
-            let foundAll = true;
-            let foundOne = false;
-            let missingTerms = [];
-            terms.forEach(function(item, index) {
-                if (original.indexOf(item) > -1) {
-                    foundOne = true;
-                } else {
-                    foundAll = false;
-                    missingTerms.push(item);
-                }
-            });
-
-            // If the option element contains all terms, return it
-            if (foundAll) {
-                return data;
-            }
-
-            // Do a recursive check for options with children
-            if (hasChildren) {
-                // If the parent already contains one or more search terms, proceed only with the missing ones
-                // First: Clone the original params object...
-                let newParams = jQuery.extend(true, {}, params);
-                if (foundOne) {
-                    newParams.term = missingTerms.join(' ');
-                } else {
-                    newParams.term = params.term;
-                }
-
-                // Clone the data object if there are children
-                // This is required as we modify the object to remove any non-matches
-                let match = jQuery.extend(true, {}, data);
-
-                // Check each child of the option
-                for (let c = data.children.length - 1; c >= 0; c--) {
-                    let child = data.children[c];
-
-                    let matches = self.matcher(newParams, child);
-
-                    // If there wasn't a match, remove the object in the array
-                    if (matches === null) {
-                        match.children.splice(c, 1);
+        // selects the original value inside dropdowns, as the "reset" event (the updated option)
+        // is not automatically catched by the JS element
+        document.addEventListener('reset', (event) => {
+            if (event.target.tagName.toUpperCase() === 'FORM') {
+                setTimeout(function() {
+                    const fields = event.target.querySelectorAll(self.selector);
+                    for (let field of fields) {
+                        if (field.tagName.toUpperCase() === 'SELECT') {
+                            field.dispatchEvent(new Event('data-reloaded'));
+                        }
                     }
-                }
-
-                // If any children matched, return the new object
-                if (match.children.length > 0) {
-                    return match;
-                }
+                }, 10);
             }
-
-            // If the option or its children do not contain the term, don't return anything
-            return null;
-        }
+        });
     }
 
     activateSelectPickerByElement(node, container) {
-        let options = {};
-        if (container !== undefined) {
-            options = {
-                dropdownParent: jQuery(container),
-            };
+        let plugins = ['change_listener'];
+
+        const isMultiple = node.multiple !== undefined && node.multiple === true;
+
+        /*
+        const isOrdering = false;
+        if (isOrdering) {
+            plugins.push('caret_position');
+            plugins.push('drag_drop');
+        }
+        */
+
+        if (isMultiple) {
+            plugins.push('remove_button');
         }
 
-        options = {...options, ...{
-            language: this.getConfiguration('locale').replace('_', '-'),
-            theme: "bootstrap",
-            matcher: this.matcher
-        }};
+        let options = {
+            lockOptgroupOrder: true,
+            allowEmptyOption: true,
+            persist: false,
+            create: false,
+            plugins: plugins,
+        };
+
+        if (node.dataset.disableSearch !== undefined) {
+            options = {...options, ...{
+                controlInput: null,
+            }};
+        }
 
         if (node.dataset['renderer'] !== undefined && node.dataset['renderer'] === 'color') {
-            const templateResultFunc = function (state) {
-                return jQuery('<span><span style="background-color:'+state.id+'; width: 20px; height: 20px; display: inline-block; margin-right: 10px;">&nbsp;</span>' + state.text + '</span>');
-            };
-
-            const colorOptions = {...options, ...{
-                templateSelection: templateResultFunc,
-                templateResult: templateResultFunc
+            options = {...options, ...{
+                render: {
+                    option: function(data, escape) {
+                        return '<div class="list-group-item border-0 p-1 ps-2"><span style="background-color:' + data.value + '; width: 20px; height: 20px; display: inline-block; margin-right: 10px;">&nbsp;</span>' + escape(data.text) + '</div>';
+                    },
+                    item: function(data, escape) {
+                        return '<div><span style="background-color:' + data.value + '; width: 20px; height: 20px; display: inline-block; margin-right: 10px;">&nbsp;</span>' + escape(data.text) + '</div>';
+                    }
+                }
             }};
-
-            jQuery(node).select2(colorOptions);
         } else {
-            jQuery(node).select2(options);
+            options = {...options, ...{
+                render: {
+                    // the empty entry would collapse and only show as a tiny 5px line if there is no content inside
+                    option: function(data, escape) {
+                        let text = data.text;
+                        if (text === null || text.trim() === '') {
+                            text = '&nbsp;';
+                        } else {
+                            text = escape(text);
+                        }
+                        return '<div>' + text + '</div>';
+                    },
+                }
+            }};
         }
-    }
 
-    activateSelectPicker(selector, container) {
-        const self = this;
-        jQuery(selector + ' ' + this.selector).each(function(i, el) {
-            self.activateSelectPickerByElement(el, container);
+        const select = new TomSelect(node, options);
+        node.addEventListener('data-reloaded', (event) => {
+            select.clear(true);
+            select.clearOptionGroups();
+            select.clearOptions();
+            select.sync();
+            select.setValue(event.detail);
+            select.refreshItems();
+            select.refreshOptions(false);
+        });
+
+        node.addEventListener('goodbye', () => {
+            select.destroy();
         });
     }
 
+    activateSelectPicker(selector, container) {
+        const fields = document.querySelectorAll(selector + ' ' + this.selector);
+        for (let field of fields) {
+            this.activateSelectPickerByElement(field, container);
+        }
+    }
+
     destroySelectPicker(selector) {
-        jQuery(selector + ' ' + this.selector).select2('destroy');
+        const node = document.querySelector(selector);
+        node.dispatchEvent(new Event('goodbye'));
     }
 
     updateOptions(selectIdentifier, data) {
-        let select = jQuery(selectIdentifier);
-        let emptyOption = jQuery(selectIdentifier + ' option[value=""]');
-        const selectedValue = select.val();
+        let emptyOption = null;
+        const node = document.querySelector(selectIdentifier);
+        const selectedValue = node.value;
 
-        select.find('option').remove().end().find('optgroup').remove().end();
+        for (let i = 0; i < node.options.length; i++) {
+            if (node.options[i].value === '') {
+                emptyOption = node.options[i];
+            }
+        }
 
-        if (emptyOption.length !== 0) {
-            select.append(this._createOption(emptyOption.text(), ''));
+        node.options.length = 0;
+
+        if (emptyOption !== null) {
+            node.appendChild(this._createOption(emptyOption.text, ''));
         }
 
         let emptyOpts = [];
@@ -177,19 +163,15 @@ export default class KimaiFormSelect extends KimaiPlugin {
             options.push(optGroup);
         }
 
-        select.append(options);
-        select.append(emptyOpts);
+        options.forEach(child => node.appendChild(child));
+        emptyOpts.forEach(child => node.appendChild(child));
 
         // if available, re-select the previous selected option (mostly usable for global activities)
-        select.val(selectedValue);
-
+        node.value = selectedValue;
+        // this will update the attached javascript component
+        node.dispatchEvent(new CustomEvent('data-reloaded', {detail: selectedValue}));
         // if we don't trigger the change, the other selects won't reset
-        select.trigger('change');
-
-        // if select2 is active, this will tell the select to refresh
-        if (select.hasClass('selectpicker')) {
-            select.trigger('change.select2');
-        }
+        node.dispatchEvent(new Event('change'));
     }
 
     /**

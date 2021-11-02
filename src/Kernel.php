@@ -127,6 +127,7 @@ class Kernel extends BaseKernel
 
     private function getBundleDirectories(): array
     {
+        //return[]; // FIXME remove me
         $pluginsDir = $this->getProjectDir() . '/var/plugins';
         if (!file_exists($pluginsDir)) {
             return [];

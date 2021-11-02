@@ -48,7 +48,7 @@ class SelfRegistrationController extends AbstractController
     }
 
     /**
-     * @Route(path="/", name="fos_user_registration_register", methods={"GET", "POST"})
+     * @Route(path="/", name="registration_register", methods={"GET", "POST"})
      */
     public function registerAction(Request $request): Response
     {
@@ -101,14 +101,14 @@ class SelfRegistrationController extends AbstractController
         $email = $request->getSession()->get('fos_user_send_confirmation_email/email');
 
         if (empty($email)) {
-            return $this->redirectToRoute('fos_user_registration_register');
+            return $this->redirectToRoute('registration_register');
         }
 
         $request->getSession()->remove('fos_user_send_confirmation_email/email');
         $user = $this->userService->findUserByEmail($email);
 
         if (null === $user) {
-            return $this->redirectToRoute('fos_user_security_login');
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('security/self-registration/check_email.html.twig', [
@@ -119,7 +119,7 @@ class SelfRegistrationController extends AbstractController
     /**
      * Receive the confirmation token from user email provider, login the user.
      *
-     * @Route(path="/confirm/{token}", name="fos_user_registration_confirm", methods={"GET"})
+     * @Route(path="/confirm/{token}", name="registration_confirm", methods={"GET"})
      */
     public function confirmAction(LoginManager $loginManager, ?string $token): Response
     {
@@ -130,7 +130,7 @@ class SelfRegistrationController extends AbstractController
         $user = $this->userService->findUserByConfirmationToken($token);
 
         if (null === $user) {
-            return $this->redirectToRoute('fos_user_security_login');
+            return $this->redirectToRoute('login');
         }
 
         $user->setConfirmationToken(null);
@@ -138,7 +138,7 @@ class SelfRegistrationController extends AbstractController
 
         $this->userService->updateUser($user);
 
-        $response = $this->redirectToRoute('fos_user_registration_confirmed');
+        $response = $this->redirectToRoute('registration_confirmed');
         $loginManager->logInUser($user, $response);
 
         return $response;
@@ -147,7 +147,7 @@ class SelfRegistrationController extends AbstractController
     /**
      * Tell the user his account is now confirmed.
      *
-     * @Route(path="/confirmed", name="fos_user_registration_confirmed", methods={"GET"})
+     * @Route(path="/confirmed", name="registration_confirmed", methods={"GET"})
      */
     public function confirmedAction(Request $request): Response
     {
@@ -194,7 +194,7 @@ class SelfRegistrationController extends AbstractController
         $username = $user->getDisplayName();
         $language = $user->getLanguage();
 
-        $url = $this->generateUrl('fos_user_registration_confirm', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->generateUrl('registration_confirm', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         return (new TemplatedEmail())
             ->to(new Address($user->getEmail()))

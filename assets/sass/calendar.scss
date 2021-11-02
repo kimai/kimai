@@ -7,35 +7,6 @@
     }
 }
 
-/* Drag and Drop events with styling */
-.external-events {
-    .external-event {
-        vertical-align: middle;
-        padding: 0 !important;
-        display: inline-block;
-        position: relative;
-        width: 100%;
-    }
-
-    .subtitle {
-        padding: 0 7px 4px 7px;
-        display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        font-size: 0.7em;
-    }
-
-    .title {
-        padding: 3px 7px 0;
-        display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-}
-
-
 .fc-bootstrap3 {
     .table-bordered > tbody > tr > td,
     .table-bordered > thead > tr > td,

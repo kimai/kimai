@@ -159,8 +159,8 @@
             "ref": "fe60ce509ef04a3f40da96e3979bc8d9b13b2372"
         }
     },
-    "kevinpapst/adminlte-bundle": {
-        "version": "0.3"
+    "kevinpapst/tabler-bundle": {
+        "version": "dev-initial"
     },
     "laminas/laminas-code": {
         "version": "3.4.1"

@@ -106,10 +106,6 @@
         <source>label.invoice.number_format</source>
         <target>Formát čísla faktur</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>Jednoduché hledání</target>
-      </trans-unit>
       <trans-unit id="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
         <target>Výchozí čas začátku (není použito ve všech módech sledování času)</target>

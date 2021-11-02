@@ -226,10 +226,6 @@
         <source>label.timesheet.default_begin</source>
         <target>Standardno vrijeme početka (ne koristi se u svim modusima evidentiranja vremena)</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>Jednostavna pretraga</target>
-      </trans-unit>
       <trans-unit id="label.invoice.number_format">
         <source>label.invoice.number_format</source>
         <target>Format broja računa</target>

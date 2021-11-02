@@ -128,10 +128,6 @@
         <source>menu.timesheet</source>
         <target>השעות שלי</target>
       </trans-unit>
-      <trans-unit id="menu.invoice">
-        <source>menu.invoice</source>
-        <target>חשבוניות</target>
-      </trans-unit>
       <trans-unit id="menu.export">
         <source>menu.export</source>
         <target>ייצוא נתונים</target>
@@ -355,10 +351,6 @@
       <trans-unit id="dashboard.all">
         <source>dashboard.all</source>
         <target>כל המשתמשים</target>
-      </trans-unit>
-      <trans-unit id="more.info.link">
-        <source>more.info.link</source>
-        <target>מידע נוסף</target>
       </trans-unit>
       <trans-unit id="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>

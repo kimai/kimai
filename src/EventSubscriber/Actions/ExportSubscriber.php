@@ -22,10 +22,6 @@ class ExportSubscriber extends AbstractActionsSubscriber
     {
         $event->addColumnToggle('#modal_export');
 
-        if ($event->isView('preview')) {
-            $event->addAction('off', ['id' => 'export-toggle-button']);
-        }
-
         $event->addHelp($this->documentationLink('export.html'));
     }
 }

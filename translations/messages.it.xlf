@@ -134,10 +134,6 @@
         <source>menu.timesheet</source>
         <target>Registrazioni</target>
       </trans-unit>
-      <trans-unit id="menu.invoice">
-        <source>menu.invoice</source>
-        <target>Fatture</target>
-      </trans-unit>
       <trans-unit id="menu.export">
         <source>menu.export</source>
         <target>Esporta</target>
@@ -389,10 +385,6 @@
       <!--
               Widgets
             -->
-      <trans-unit id="more.info.link">
-        <source>more.info.link</source>
-        <target>Più info</target>
-      </trans-unit>
       <trans-unit id="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
         <target>Mostra menù</target>

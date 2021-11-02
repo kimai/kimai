@@ -6,7 +6,7 @@
 {% set data = data.data %}
 
 <div class="chart">
-    <canvas id="{{ chart_id }}" style="height: {{ config('theme.chart.height') }}px;"></canvas>
+    <canvas id="{{ chart_id }}" style="height: {{ config('theme.chart.height') }}px; width: 100%;"></canvas>
 </div>
 
 <script type="text/javascript">
@@ -72,7 +72,7 @@
                 },
                 options: {
                     maintainAspectRatio: true,
-                    responsive: true,
+                    responsive: false,
                     legend: false,
                     barPercentage: 0.5,
                     categoryPercentage: 0.9,

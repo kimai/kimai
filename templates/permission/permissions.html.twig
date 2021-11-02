@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/toolbar.html.twig" as toolbar %}
 {% import "permission/actions.html.twig" as actions %}
 
 {% set columns = {
@@ -12,7 +11,7 @@
     {% set options = {'class': 'alwaysVisible text-center'} %}
     {% if canEditPermissions and role.name not in system_roles|keys %}
         {% set widget %}
-        &nbsp;<a href="{{ path('admin_user_role_delete', {'id': role.id, 'csrfToken': token}) }}" class="confirmation-link" data-question="confirm.delete">{{ widgets.icon('trash') }}</a>
+            &nbsp;<a href="{{ path('admin_user_role_delete', {'id': role.id, 'csrfToken': token}) }}" class="confirmation-link" data-question="confirm.delete">{{ icon('trash') }}</a>
         {% endset %}
         {% set options = options|merge({'html_after': widget}) %}
     {% endif %}
@@ -78,7 +77,7 @@
                 }
 
                 let linkElement = jQuery(target);
-                linkElement.html('<i class="fas fa-spinner fa-pulse"></i>');
+                linkElement.html('{{ icon('spinner') }}');
 
                 let isActive = linkElement.hasClass('permOn');
                 let url = linkElement.data('href').replace(/__VALUE__/, isActive ? '0' : '1').replace(/__TOKEN__/, PERM_TOKEN);

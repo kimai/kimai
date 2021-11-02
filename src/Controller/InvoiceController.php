@@ -9,7 +9,6 @@
 
 namespace App\Controller;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
@@ -21,7 +20,6 @@ use App\Form\InvoicePaymentDateForm;
 use App\Form\InvoiceTemplateForm;
 use App\Form\Toolbar\InvoiceArchiveForm;
 use App\Form\Toolbar\InvoiceToolbarForm;
-use App\Form\Toolbar\InvoiceToolbarSimpleForm;
 use App\Invoice\ServiceInvoice;
 use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
@@ -75,7 +73,7 @@ final class InvoiceController extends AbstractController
      * @Route(path="/", name="invoice", methods={"GET", "POST"})
      * @Security("is_granted('view_invoice')")
      */
-    public function indexAction(Request $request, SystemConfiguration $configuration): Response
+    public function indexAction(Request $request): Response
     {
         if (!$this->templateRepository->hasTemplate()) {
             if ($this->isGranted('manage_invoice_template')) {
@@ -85,7 +83,7 @@ final class InvoiceController extends AbstractController
         }
 
         $query = $this->getDefaultQuery();
-        $form = $this->getToolbarForm($query, $configuration->find('invoice.simple_form'));
+        $form = $this->getToolbarForm($query);
         if ($this->handleSearch($form, $request)) {
             return $this->redirectToRoute('invoice');
         }
@@ -131,14 +129,14 @@ final class InvoiceController extends AbstractController
      * @Route(path="/preview/{customer}/{template}", name="invoice_preview", methods={"GET"})
      * @Security("is_granted('view_invoice')")
      */
-    public function previewAction(Customer $customer, InvoiceTemplate $template, Request $request, SystemConfiguration $configuration): Response
+    public function previewAction(Customer $customer, InvoiceTemplate $template, Request $request): Response
     {
         if (!$this->templateRepository->hasTemplate()) {
             return $this->redirectToRoute('invoice');
         }
 
         $query = $this->getDefaultQuery();
-        $form = $this->getToolbarForm($query, $configuration->find('invoice.simple_form'));
+        $form = $this->getToolbarForm($query);
         $form->submit($request->query->all(), false);
 
         if ($form->isValid() && $this->isGranted('create_invoice')) {
@@ -161,14 +159,14 @@ final class InvoiceController extends AbstractController
      * @Route(path="/save-invoice/{customer}/{template}", name="invoice_create", methods={"GET"})
      * @Security("is_granted('view_invoice')")
      */
-    public function createInvoiceAction(Customer $customer, InvoiceTemplate $template, Request $request, SystemConfiguration $configuration): Response
+    public function createInvoiceAction(Customer $customer, InvoiceTemplate $template, Request $request): Response
     {
         if (!$this->templateRepository->hasTemplate()) {
             return $this->redirectToRoute('invoice');
         }
 
         $query = $this->getDefaultQuery();
-        $form = $this->getToolbarForm($query, $configuration->find('invoice.simple_form'));
+        $form = $this->getToolbarForm($query);
         $form->submit($request->query->all(), false);
 
         if ($form->isValid() && $this->isGranted('create_invoice')) {
@@ -479,11 +477,9 @@ final class InvoiceController extends AbstractController
         ]);
     }
 
-    private function getToolbarForm(InvoiceQuery $query, bool $simple): FormInterface
+    private function getToolbarForm(InvoiceQuery $query): FormInterface
     {
-        $form = $simple ? InvoiceToolbarSimpleForm::class : InvoiceToolbarForm::class;
-
-        return $this->createForm($form, $query, [
+        return $this->createForm(InvoiceToolbarForm::class, $query, [
             'action' => $this->generateUrl('invoice', []),
             'method' => 'GET',
             'include_user' => $this->isGranted('view_other_timesheet'),

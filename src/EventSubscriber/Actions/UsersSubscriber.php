@@ -28,10 +28,6 @@ class UsersSubscriber extends AbstractActionsSubscriber
 
         $event->addSearchToggle($query);
 
-        if ($event->isIndexView()) {
-            $event->addColumnToggle('#modal_user_admin');
-        }
-
         $event->addQuickExport($this->path('user_export'));
 
         if ($this->isGranted('create_user')) {

@@ -79,10 +79,6 @@
         <source>menu.timesheet</source>
         <target>Учет времени</target>
       </trans-unit>
-      <trans-unit id="menu.invoice">
-        <source>menu.invoice</source>
-        <target>Счета</target>
-      </trans-unit>
       <trans-unit id="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>Время работы сотрудников</target>
@@ -250,10 +246,6 @@
       <!--
               Widgets
             -->
-      <trans-unit id="more.info.link">
-        <source>more.info.link</source>
-        <target>Подробнее</target>
-      </trans-unit>
       <trans-unit id="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
         <target>Отобразить меню</target>

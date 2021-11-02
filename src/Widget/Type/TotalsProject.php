@@ -30,7 +30,7 @@ final class TotalsProject extends SimpleWidget implements UserWidget, Authorized
         return array_merge([
             'route' => 'admin_project',
             'icon' => 'project',
-            'color' => 'primary',
+            'color' => 'red',
             'dataType' => 'int',
         ], parent::getOptions($options));
     }

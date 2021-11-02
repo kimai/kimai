@@ -2,29 +2,27 @@
 
 {% block report_title %}{{ report_title|trans({}, 'reporting') }}{% endblock %}
 
+{% block report_form %}
+    {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle'}}) }}
+    {{ form_row(form.date, {'label': false, 'row_attr': {'class': 'me-2'}}) }}
+    {{ form_end(form) }}
+{% endblock %}
+
 {% block report %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
-        {% block box_before %}
-            {{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
-        {% endblock %}
-        {% block box_after %}
-            {{ form_end(form) }}
-        {% endblock %}
-        {% block box_title %}
-            {{ form_widget(form.date) }}
-        {% endblock %}
-        {% block box_body_class %}{{ box_id }} table-responsive {% if hasData %}no-padding{% endif %}{% endblock %}
+        {% block box_body_class %}{{ box_id }} table-responsive {% if hasData %}p-0{% endif %} m-0{% endblock %}
         {% block box_body %}
             {% if not hasData %}
                 {{ widgets.nothing_found() }}
             {% else %}
                 {% set absoluteTotals = 0 %}
                 {% set totals = {} %}
-                <table class="table table-bordered table-hover dataTable">
+                <table class="table table-hover dataTable">
                     <thead>
                         <tr>
+                            <th class="alwaysVisible w-min"></th>
                             <th>&nbsp;</th>
                             <th>&nbsp;</th>
                             {% for day in stats.0.getDateTimes() %}
@@ -40,8 +38,11 @@
                     {% for userDay in stats %}
                         {% set usersTotalDuration = 0 %}
                         <tr class="user">
+                            <td class="w-min text-nowrap">
+                                {{ widgets.user_avatar(userDay.user) }}
+                            </td>
                             <td class="text-nowrap">
-                                {{ widgets.label_dot(userDay.user.displayName, userDay.user.color) }}
+                                {{ widgets.username(userDay.user) }}
                             </td>
                             {% for day in userDay.days %}
                                 {% if day.totalDuration > 0 %}
@@ -50,9 +51,9 @@
                                 {% endif %}
                                 {% set totals = totals|merge({(day.date|report_date): (totals[day.date|report_date] + day.totalDuration)}) %}
                             {% endfor %}
-                            <th class="text-nowrap text-center total">
+                            <td class="text-nowrap text-center total">
                                 <a href="{{ path(subReportRoute, {'date': subReportDate|report_date, 'user': userDay.user.id}) }}">{{ usersTotalDuration|duration }}</a>
-                            </th>
+                            </td>
                             {% for day in userDay.days %}
                                 <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}{% if day.date is today %} today{% endif %}">
                                     {% if day.totalDuration > 0 %}
@@ -65,7 +66,7 @@
                     </tbody>
                     <tfoot>
                         <tr class="summary">
-                            <td>{{ 'stats.durationTotal'|trans }}</td>
+                            <td colspan="2">{{ 'stats.durationTotal'|trans }}</td>
                             <td class="text-center text-nowrap">
                                 {{ absoluteTotals|duration }}
                             </td>

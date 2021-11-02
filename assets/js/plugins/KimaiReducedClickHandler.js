@@ -23,7 +23,7 @@ export default class KimaiReducedClickHandler extends KimaiPlugin {
 
             // handles the "click" on table rows or list elements
             let target = event.target;
-            if (event.currentTarget.matches('tr') || event.currentTarget.matches('li')) {
+            if (event.currentTarget.matches('tr') || event.currentTarget.matches('li') || event.currentTarget.matches('div.list-group-item')) {
                 while (target !== null && !target.matches('body')) {
                     // when an element within the row is clicked, that can trigger stuff itself, we don't want the event to be processed
                     // don't act if a link, button or form element was clicked

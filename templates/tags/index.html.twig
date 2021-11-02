@@ -31,7 +31,7 @@
         {% set tableName = 'admin_tags' %}
         {% set manageAllowed = is_granted('manage_tag') %}
 
-        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.tagUpdate'}) }}
+        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.tagUpdate', 'columnConfig': false}) }}
         {% for tag in tags %}
             {% set type = '' %}
             {% if tag.amount == 0 %}

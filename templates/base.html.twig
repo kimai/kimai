@@ -1,13 +1,18 @@
-{% extends '@AdminLTE/layout/default-layout.html.twig' %}
+{% extends '@theme/layout/default-layout.html.twig' %}
 
 {% block body_start %}
     data-title="{{- get_title()|e('html_attr') -}}"
-{% endblock %}
+{%- endblock -%}
 
 {% block page_title %}{{- get_title() -}}{% endblock %}
+{% block page_stats %}
+    {% if block('page_stats_small') is defined %}
+    <div class="text-muted mt-1">{{ block('page_stats_small') }}</div>
+    {% endif %}
+{% endblock %}
 
 {% block after_body_start %}
-    {% embed 'embeds/modal.html.twig' %}
+    {% embed '@theme/embeds/modal.html.twig' %}
         {% block modal_id %}remote_form_modal{% endblock %}
         {% block modal_title %}{% endblock %}
         {% block modal_body %}{% endblock %}
@@ -43,7 +48,7 @@
 {% block page_content_before %}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_BEFORE')) %}
     {{ event.content|raw }}
-    <div class="no-print">
+    <div class="d-print-none hidden-no-space">
         {% block main_before %}{% endblock %}
     </div>
 {% endblock %}
@@ -87,192 +92,30 @@
 {% endblock %}
 
 {% block footer %}
-    <!-- Page rendered on {{ 'now'|date_full }} -->
-{% endblock %}
-
-{#
-{% block navbar_toggle %}
-    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">{{ 'Toggle navigation'|trans({}, 'AdminLTEBundle')  }}</span>
-    </a>
-    {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('view_own_timesheet') %}
-        <div class="navbar-custom-menu" style="float:left">
-            <ul class="nav navbar-nav">
-            {% if app.user.preferenceValue('login.initial_view') == 'calendar' %}
-                <li class="pull-left visible-xs-inline-block">
-                    <a href="{{ path('calendar') }}" class="ddt-small">
-                        <i class="{{ 'calendar'|icon }} fa-2x"></i>
-                    </a>
-                </li>
-            {% else %}
-                <li class="pull-left visible-xs-inline-block">
-                    <a href="{{ path('timesheet') }}" class="ddt-small">
-                        <i class="{{ 'timesheet'|icon }} fa-2x"></i>
-                    </a>
-                </li>
-            {% endif %}
-            </ul>
-        </div>
+    {% if app.request.attributes.get('_route') == 'dashboard' %}
+        {{ parent() }}
     {% endif %}
 {% endblock %}
-#}
 
 {% block navbar_start %}
     {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {% block navbar_extensions %}{% endblock %}
         {% if is_granted('create_own_timesheet') %}
-            {% set active_timesheets = active_timesheets(app.user) %}
-            {% set hasActiveRecords = active_timesheets is not empty %}
-            {% if not hasActiveRecords %}
-                {# fake entry, because at least one html template node is needed #}
-                {% set active_timesheets = [{'id': '000', 'begin': null, 'activity': {'name': ''}, 'project': {'name': '', 'customer': {'name': ''}}}] %}
-            {% endif %}
-            {% set active_limit = kimai_config.timesheetActiveEntriesHardLimit %}
-            <li class="messages-menu {% if active_limit > 1 and hasActiveRecords %}dropdown{% endif %}" data-api="{{ path('active_timesheet') }}" data-href="{{ path('stop_timesheet', {'id' : '000'}) }}" data-icon="{{ 'stop-small'|icon }}" style="{% if not hasActiveRecords %}display:none{% endif %}">
-                {% if active_limit == 1 %}
-                    {% set entry = active_timesheets[0] %}
-                    <div class="ddt-small ticktac-single ticktac-running">
-                        <div class="ticktac-stop">
-                            <a data-replacer="url" class="api-link" href="{{ path('stop_timesheet', {'id' : entry.id}) }}" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success">
-                                <i class="{{ 'stop-small'|icon }} fa-2x"></i><span data-replacer="duration" data-title="true" data-since="{{ entry.begin is null ? '' : entry.begin|date_format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</span>
-                            </a>
-                        </div>
-                    </div>
-                {% else %}
-                    <a href="#" class="dropdown-toggle ddt-small ticktac" data-toggle="dropdown">
-                        <i class="{{ 'start'|icon }} fa-2x"></i>
-                        <span data-warning="{{ active_limit }}" class="label label-warning">{% if hasActiveRecords %}{{ active_timesheets|length }}{% endif %}</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="header">
-                            {{ 'active.entries'|trans }}
-                        </li>
-                        <li>
-                            <ul class="menu">
-                                {% for entry in active_timesheets %}
-                                    <li data-template="active-record">
-                                        <a data-replacer="url" href="{{ path('stop_timesheet', {'id' : entry.id}) }}" class="api-link" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success">
-                                            <div class="pull-left">
-                                                <i class="{{ 'stop-small'|icon }} fa-2x"></i>
-                                            </div>
-                                            <h4>
-                                                <span data-replacer="activity">{{ entry.activity.name }}</span>
-                                                <small>
-                                                    <span data-replacer="duration" data-title="true" data-since="{{ entry.begin is null ? '' : entry.begin|date_format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</span>
-                                                </small>
-                                            </h4>
-                                            <p><span data-replacer="project">{{ entry.project.name }}</span> (<span data-replacer="customer">{{ entry.project.customer.name }}</span>)</p>
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                        <li class="footer"><a href="{{ path('timesheet_create') }}" class="modal-ajax-form">{{ 'timesheet.start'|trans }}</a></li>
-                    </ul>
-                {% endif %}
-            </li>
-            <li class="messages-menu-empty" style="{% if hasActiveRecords %}display:none{% endif %}">
-                {% if active_limit == 1 %}
-                    <div class="ddt-small ticktac-single ticktac-stopped">
-                        <a href="{{ path('timesheet_create') }}" class="modal-ajax-form ticktac-start">
-                            <i class="{{ 'start'|icon }} fa-2x"></i>
-                            <span>{{ 0|duration }}</span>
-                        </a>
-                    </div>
-                {% else %}
-                    <a href="{{ path('timesheet_create') }}" class="ddt-small ticktac-start modal-ajax-form">
-                        <i class="{{ 'start'|icon }} fa-2x"></i>
-                    </a>
-                {% endif %}
-            </li>
+            {% include '@theme/ticktack.html.twig' %}
         {% endif %}
+        {% include '@Tabler/recent-activities.html.twig' %}
     {% endif %}
 {% endblock %}
 
-
-{# these blocks and the hook-in logic by the AdminTheme could be re-used by Kimai or an extension at some point #}
-{#
-{% block navbar_messages %}{% endblock %}
-{% block navbar_notifications %}{% endblock %}
-{% block navbar_tasks %}{% endblock %}
-{% block navbar_end %}{% endblock %}
-#}
-
-{# deactivated blocks, as Kimai does not ship the sidebar for UX reasons #}
-{% block sidebar_user %}{% endblock %}
-{% block sidebar_search %}{% endblock %}
-
-{% block navbar_user %}
-    {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        {% include 'navbar/recent-activities.html.twig' %}
-    {% endif %}
-    {% import "macros/widgets.html.twig" as widgets %}
-    <li class="dropdown user-menu">
-        <a href="#" class="dropdown-toggle ddt-small" data-toggle="dropdown">
-            {{ widgets.user_avatar(app.user, false) }}
-        </a>
-        <ul class="dropdown-menu">
-            {% if app.user is not null %}
-                {% if is_granted('view', app.user) %}
-                <li>
-                    <a href="{{ path('user_profile', {'username' : app.user.username}) }}">
-                        <h4 class="control-sidebar-subheading">
-                            <i class="{{ 'user'|icon }}"></i>
-                            {{ 'my.profile'|trans }}
-                        </h4>
-                    </a>
-                </li>
-                {% endif %}
-                {% if is_granted('edit', app.user) %}
-                <li>
-                    <a href="{{ path('user_profile_edit', {'username' : app.user.username}) }}">
-                        <h4 class="control-sidebar-subheading">
-                            <i class="{{ 'profile'|icon }}"></i>
-                            {{ 'action.edit'|trans }}
-                        </h4>
-                    </a>
-                </li>
-                {% endif %}
-                {% if is_granted('preferences', app.user) %}
-                <li>
-                    <a href="{{ path('user_profile_preferences', {'username' : app.user.username})  }}">
-                        <h4 class="control-sidebar-subheading">
-                            <i class="{{ 'settings'|icon }}"></i>
-                            {{ 'profile.preferences'|trans }}
-                        </h4>
-                    </a>
-                </li>
-                {% endif %}
-                <li>
-                    <a href="{{ path('fos_user_security_logout') }}">
-                        <h4 class="control-sidebar-subheading">
-                            <i class="{{ 'logout'|icon }}"></i>
-                            {{ 'menu.logout'|trans }}
-                        </h4>
-                    </a>
-                </li>
-            {% endif %}
-            {% if config('theme.show_about') %}
-            <li class="divider"></li>
-            <li>
-                <a href="{{ path('about') }}">
-                    <h4 class="control-sidebar-subheading">
-                        <i class="{{ 'about'|icon }}"></i>
-                        {{ 'about.title'|trans({}, 'about') }}
-                    </h4>
-                </a>
-            </li>
-            {% endif %}
-        </ul>
-    </li>
-{% endblock %}
+{# deactivated blocks from the original theme #}
+{% block navbar_search %}{% endblock %}
 
 {% block breadcrumb %}
     {% block page_actions %}{% endblock %}
 {% endblock %}
 
 {% block stylesheets %}
-    {# we do not call parent() as we use a custom built for the frontend assets and don't want the default <stylesheet> #}
+    {{ parent() }}
     {{ encore_entry_link_tags('app') }}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::STYLESHEET')) %}
     {{ event.content|raw }}
@@ -293,7 +136,7 @@
             var loader = new KimaiWebLoader(
                 {
                     formatDuration: '{{ get_format_duration() }}',
-                    login: '{{ path('fos_user_security_login') }}',
+                    login: '{{ path('login') }}',
                     locale: '{{ app.request.locale }}',
                     first_dow_iso: {{ iso_day_by_name(app.user.firstDayOfWeek) }},
                     twentyFourHours: {{ 'true'|hour24('false') }},

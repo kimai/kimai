@@ -1,4 +1,4 @@
-@media (max-width: $screen-sm-max) {
+@include media-breakpoint-down(sm) {
     .main-header .logo {
         display: none;
     }

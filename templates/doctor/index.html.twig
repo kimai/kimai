@@ -17,7 +17,7 @@
         {% endif %}
     {% endfor %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' with permissionOpts %}
+    {% embed '@theme/embeds/card.html.twig' with permissionOpts %}
         {% block box_title %}File permissions{% endblock %}
         {% block box_body %}
             <p>
@@ -48,7 +48,7 @@
         {% endif %}
     {% endfor %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' with extensionOpts %}
+    {% embed '@theme/embeds/card.html.twig' with extensionOpts %}
         {% block box_title %}Required PHP extensions{% endblock %}
         {% block box_body %}
             <p>
@@ -76,11 +76,12 @@
     {% if logSize > 52428800 %}
         {% set logOpts = {boxtype: 'danger'} %}
     {% endif %}
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' with logOpts %}
+    {% embed '@theme/embeds/card.html.twig' with logOpts %}
+        {% import "macros/widgets.html.twig" as widgets %}
         {% block box_title %}Logfile (max. {{ logLines }} last lines){% endblock %}
         {% block box_tools %}
             {% if log_delete %}
-                <a class="btn-box-tool confirmation-link" href="{{ path('doctor_flush_log') }}" data-question="confirm.delete"><i class="{{ 'delete'|icon }}"></i></a>
+                {{ widgets.card_tool_button('delete', {'class': 'confirmation-link', 'title': 'action.delete', 'url': path('doctor_flush_log'), 'attr': {'data-question': 'confirm.delete'}}) }}
             {% endif %}
         {% endblock %}
         {% block box_body %}
@@ -103,38 +104,38 @@
         {% endblock %}
     {% endembed %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {collapsed: true} %}
+    {% embed '@theme/embeds/card.html.twig' with {collapsed: true} %}
         {% block box_title %}Composer packages{% endblock %}
-        {% block box_body_class %}no-padding{% endblock %}
+        {% block box_body_class %}p-0{% endblock %}
         {% block box_body %}
             <table class="table table-hover">
                 {% for name, value in composer %}
                     <tr>
-                        <th style="width:15%">{{ name }}</th>
-                        <td>{{ value }}</td>
+                        <th class="text-nowrap w-min">{{ name }}</th>
+                        <td class="text-break">{{ value }}</td>
                     </tr>
                 {% endfor %}
             </table>
         {% endblock %}
     {% endembed %}
     
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {collapsed: true} %}
+    {% embed '@theme/embeds/card.html.twig' with {collapsed: true} %}
         {% block box_title %}PHP{% endblock %}
-        {% block box_body_class %}no-padding{% endblock %}
+        {% block box_body_class %}p-0{% endblock %}
         {% block box_body %}
             <table class="table table-hover">
                 <tr>
-                    <th style="width:15%">Version</th>
+                    <th class="text-nowrap w-min">Version</th>
                     <td>{{ constant('PHP_VERSION') }}</td>
                 </tr>
                 <tr>
-                    <th style="width:15%;max-width:25%">Modules</th>
-                    <td>{{ modules|join(', ') }}</td>
+                    <th class="text-nowrap w-min">Modules</th>
+                    <td class="text-break">{{ modules|join(', ') }}</td>
                 </tr>
                 {% for name, value in settings %}
                     <tr>
-                        <th style="width:15%">{{ name }}</th>
-                        <td>
+                        <th class="text-nowrap w-min">{{ name }}</th>
+                        <td class="text-break">
                             {% if value is empty %}
                                 <i>unknown</i>
                             {% else %}
@@ -147,15 +148,15 @@
         {% endblock %}
     {% endembed %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {collapsed: true} %}
+    {% embed '@theme/embeds/card.html.twig' with {collapsed: true} %}
         {% block box_title %}Server{% endblock %}
-        {% block box_body_class %}no-padding{% endblock %}
+        {% block box_body_class %}p-0{% endblock %}
         {% block box_body %}
             <table class="table table-hover">
                 {% for name, value in info %}
                     <tr>
-                        <th style="width:15%">{{ name }}</th>
-                        <td>{{ value|raw }}</td>
+                        <th class="text-nowrap w-min">{{ name }}</th>
+                        <td class="text-break">{{ value|raw }}</td>
                     </tr>
                 {% endfor %}
             </table>

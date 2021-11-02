@@ -9,9 +9,9 @@
  * [KIMAI] KimaiDatatableColumnView: manages the visibility of data-table columns in cookies
  */
 
-import Cookies from 'js-cookie';
-import jQuery from 'jquery';
 import KimaiPlugin from "../KimaiPlugin";
+import KimaiCookies from "../widgets/KimaiCookies";
+import { Modal } from 'bootstrap';
 
 export default class KimaiDatatableColumnView extends KimaiPlugin {
 
@@ -43,7 +43,7 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
             self.resetVisibility();
         });
         for (let checkbox of this.modal.querySelectorAll('form input[type=checkbox]')) {
-            checkbox.addEventListener('click', function () {
+            checkbox.addEventListener('change', function () {
                 self.changeVisibility(checkbox.getAttribute('name'), checkbox.checked);
             });
         }
@@ -55,19 +55,15 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
         for (let checkbox of form.querySelectorAll('input[type=checkbox]')) {
             settings[checkbox.getAttribute('name')] = checkbox.checked;
         }
-        Cookies.set(form.getAttribute('name'), JSON.stringify(settings), {expires: 365, SameSite: 'Strict'});
-        jQuery(this.modal).modal('toggle');
+        KimaiCookies.set(form.getAttribute('name'), JSON.stringify(settings), {expires: 365, SameSite: 'Strict'});
+        Modal.getInstance(this.modal).hide();
     }
 
     resetVisibility() {
         const form = this.modal.getElementsByTagName('form')[0];
-        Cookies.remove(form.getAttribute('name'));
-        for (let checkbox of form.querySelectorAll('input[type=checkbox]')) {
-            if (!checkbox.checked) {
-                checkbox.click();
-            }
-        }
-        jQuery(this.modal).modal('toggle');
+        KimaiCookies.remove(form.getAttribute('name'));
+        this.getPlugin('event').trigger('kimai.reset_column_visibility', {'datatable': this.id})
+        Modal.getInstance(this.modal).hide();
     }
 
     changeVisibility(columnName, checked) {
@@ -90,19 +86,43 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
             }
 
             if (!foundColumn) {
+                console.log('Could not find column: ' + columnName);
                 return;
             }
+
+            let targetClasses = null;
 
             for (let rowElement of table.getElementsByTagName('tr')) {
                 if (rowElement.children[column] === undefined) {
                     continue;
                 }
 
-                if (checked) {
-                    rowElement.children[column].classList.remove('hidden');
-                } else {
-                    rowElement.children[column].classList.add('hidden');
+
+                if (targetClasses === null) {
+                    let removeClass = '-none';
+                    let addClass = 'd-table-cell';
+
+                    if (!checked) {
+                        removeClass = '-table-cell';
+                        addClass = 'd-none';
+                    }
+
+                    const list = rowElement.children[column].classList;
+                    targetClasses = '';
+                    list.forEach(
+                        function (name, index, listObj) {
+                            if (name.indexOf(removeClass) === -1) {
+                                targetClasses += ' ' + name;
+                            }
+                        }
+                    );
+
+                    if (targetClasses.indexOf(addClass) === -1) {
+                        targetClasses += ' ' + addClass;
+                    }
                 }
+
+                rowElement.children[column].className = targetClasses;
             }
         }
     }

@@ -206,10 +206,6 @@
         <source>label.timesheet.default_begin</source>
         <target>وقت البدء الافتراضي (غير مستخدم في جميع أوضاع تعقب الوقت)</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>بحث بسيط</target>
-      </trans-unit>
       <trans-unit id="label.invoice.number_format">
         <source>label.invoice.number_format</source>
         <target>تنسيق رقم الفاتورة</target>

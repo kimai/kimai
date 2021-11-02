@@ -42,7 +42,7 @@ class EntityMetaDefinitionType extends AbstractType
                     return;
                 }
 
-                $attr = ['data-name' => $definition->getName()];
+                $attr = ['data-name' => $definition->getName(), 'class' => ''];
                 $options = $definition->getOptions();
 
                 if (\array_key_exists('attr', $options)) {
@@ -55,6 +55,7 @@ class EntityMetaDefinitionType extends AbstractType
                     'constraints' => $definition->getConstraints(),
                     'required' => $definition->isRequired(),
                     'attr' => $attr,
+                    'row_attr' => ['class' => 'p-0'],
                 ], $options));
             }
         );

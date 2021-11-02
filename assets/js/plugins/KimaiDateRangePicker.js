@@ -34,7 +34,6 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
             let separator = jQuery(this).data('separator');
             let rangesList = {};
 
-            rangesList[TRANSLATE.get('today')] = [moment(), moment()];
             rangesList[TRANSLATE.get('yesterday')] = [moment().subtract(1, 'days'), moment().subtract(1, 'days')];
             rangesList[TRANSLATE.get('thisWeek')] = [moment().startOf('isoWeek'), moment().endOf('isoWeek')];
             rangesList[TRANSLATE.get('lastWeek')] = [moment().subtract(1, 'week').startOf('isoWeek'), moment().subtract(1, 'week').endOf('isoWeek')];

@@ -113,9 +113,9 @@ export default class KimaiToolbar extends KimaiPlugin {
      */
     _registerSortableTables(formSelector, EVENT) {
         jQuery('body').on('click', 'th.sortable', function(event){
-            var $header = jQuery(event.target);
-            var order = 'DESC';
-            var orderBy = $header.data('order');
+            let $header = jQuery(event.target);
+            let order = 'DESC';
+            let orderBy = $header.data('order');
             if ($header.hasClass('sorting_desc')) {
                 order = 'ASC';
             }
@@ -137,7 +137,7 @@ export default class KimaiToolbar extends KimaiPlugin {
      * @private
      */
     _registerPagination(formSelector, EVENT) {
-        jQuery('body').on('click', 'div.navigation ul.pagination li a', function(event) {
+        jQuery('body').on('click', 'ul.pagination li a', function(event) {
             let pager = jQuery(formSelector + " input#page");
             if (pager.length === 0) {
                 return;

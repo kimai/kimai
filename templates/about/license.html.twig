@@ -1,40 +1,136 @@
-{% extends 'about/layout.html.twig' %}
+{% extends 'base.html.twig' %}
+{% import "about/actions.html.twig" as actions %}
+{% import "macros/widgets.html.twig" as macros %}
 
-{% block about %}
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-        {% block box_title %}{{ 'published_under'|trans({'%kimai%': constant('App\\Constants::SOFTWARE')}, 'about') }}{% endblock %}
-        {% block box_body %}
-            <pre>
-                {{ license }}
-            </pre>
-        {% endblock %}
-        {% block box_footer %}
-            <a class="btn btn-default" href="https://choosealicense.com/licenses/mit/" target="_blank">choosealicense.com</a>
-            <a class="btn btn-default" href="https://en.wikipedia.org/wiki/MIT_License" target="_blank">wikipedia.org</a>
-        {% endblock %}
-    {% endembed %}
+{% block page_title %}{{ 'about.title'|trans({}, 'about') }}{% endblock %}
+{% block page_actions %}{{ actions.about('index') }}{% endblock %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-        {% block box_title %}{{ 'special_thanks'|trans({}, 'about') }}{% endblock %}
-        {% block box_body %}
-            <p>{{ 'library_authors'|trans({}, 'about') }}</p>
-            <ul>
-                <li>AdminLTE: <a href="https://adminlte.io" target="_blank">https://adminlte.io</a></li>
-                <li>Bootstrap: <a href="https://getbootstrap.com" target="_blank">https://getbootstrap.com</a></li>
-                <li>chart.js: <a href="https://www.chartjs.org" target="_blank">https://www.chartjs.org</a></li>
-                <li>DateRangePicker: <a href="http://www.daterangepicker.com/" target="_blank">http://www.daterangepicker.com/</a></li>
-                <li>Doctrine: <a href="https://www.doctrine-project.org" target="_blank">https://www.doctrine-project.org</a></li>
-                <li>FontAwesome: <a href="https://fontawesome.com" target="_blank">https://fontawesome.com</a></li>
-                <li>FullCalendar: <a href="https://fullcalendar.io" target="_blank">https://fullcalendar.io</a></li>
-                <li>jQuery: <a href="https://jquery.com" target="_blank">https://jquery.com</a></li>
-                <li>jQuery UI: <a href="https://jqueryui.com" target="_blank">http://jqueryui.com</a></li>
-                <li>MomentJS: <a href="https://momentjs.com" target="_blank">https://momentjs.com</a></li>
-                <li>PHPOffice: <a href="https://github.com/PHPOffice" target="_blank">https://github.com/PHPOffice</a></li>
-                <li>Select2: <a href="https://select2.org/" target="_blank">https://select2.org/</a></li>
-                <li>SweetAlert 2: <a href="https://sweetalert2.github.io" target="_blank">https://sweetalert2.github.io</a></li>
-                <li>Symfony: <a href="https://symfony.com" target="_blank">https://symfony.com</a></li>
-                <li>…   </li>
-            </ul>
-        {% endblock %}
-    {% endembed %}
+{% block main %}
+    <div class="row row-cards mb-3">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body p-4 text-center">
+
+                    <img src="{{ asset('apple-touch-icon.png') }}" class="avatar avatar-2xl mb-3 avatar-rounded" alt="{{ constant('App\\Constants::SOFTWARE') }}">
+
+                    <h3 class="m-0 mb-1"><a href="{{ constant('App\\Constants::HOMEPAGE') }}" target="_blank">{{ constant('App\\Constants::SOFTWARE') }}</a></h3>
+                    <div class="text-muted">{{ constant('App\\Constants::VERSION') }}
+                        {{ constant('App\\Constants::STATUS') }}
+
+                    </div>
+                    <div class="mt-3">
+                        {% import '@theme/components/badge.html.twig' as badge %}
+                        {{ badge.badge(constant('App\\Constants::NAME'), 'bg-purple-lt') }}
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <a href="{{ ''|docu_link }}" target="_blank" class="card-btn">
+                        <i class="me-2 text-muted {{ 'help'|icon }}"></i>
+                        {{ 'help'|trans({}, 'about') }}
+                    </a>
+                    <a href="{{ constant('App\\Constants::GITHUB') }}" target="_blank" class="card-btn">
+                        <i class="me-2 text-muted {{ 'fab fa-github'|icon }}"></i>
+                        {{ 'support'|trans({}, 'about') }}
+                    </a>
+                </div>
+                <div class="d-flex">
+                    <a href="{{ constant('App\\Constants::HOMEPAGE') }}" target="_blank" class="card-btn">
+                        <i class="me-2 text-muted {{ 'home'|icon }}"></i>
+                        {{ 'website'|trans({}, 'about') }}
+                    </a>
+                    <a href="{{ constant('App\\Constants::HOMEPAGE') }}/donate/" target="_blank" class="card-btn">
+                        <i class="me-2 text-muted {{ 'fas fa-hand-holding-heart'|icon }}"></i>
+                        {{ 'donate'|trans({}, 'about') }}
+                    </a>
+                </div>
+                <div class="card-footer">
+                    Made with ♥ by <a href="https://www.kevinpapst.de/">Kevin Papst</a> and <a href="{{ constant('App\\Constants::GITHUB') }}graphs/contributors" target="_blank">great contributors</a>.
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            {% embed '@theme/embeds/card.html.twig' %}
+                {% block box_title %}Credits{% endblock %}
+                {% block box_body %}
+                    <p>
+                        The following amazing software libraries were used when creating Kimai. It wouldn't be possible without them.
+                        My biggest thanks go out to the authors 👍
+                    </p>
+                    <ul>
+                        <li>Tabler: <a href="https://tabler.io" target="_blank">https://tabler.io</a></li>
+                        <li>Bootstrap: <a href="https://getbootstrap.com" target="_blank">https://getbootstrap.com</a></li>
+                        <li>chart.js: <a href="https://www.chartjs.org" target="_blank">https://www.chartjs.org</a></li>
+                        <li>DateRangePicker: <a href="http://www.daterangepicker.com/" target="_blank">http://www.daterangepicker.com/</a></li>
+                        <li>Doctrine: <a href="https://www.doctrine-project.org" target="_blank">https://www.doctrine-project.org</a></li>
+                        <li>FontAwesome: <a href="https://fontawesome.com" target="_blank">https://fontawesome.com</a></li>
+                        <li>FullCalendar: <a href="https://fullcalendar.io" target="_blank">https://fullcalendar.io</a></li>
+                        <li>jQuery: <a href="https://jquery.com" target="_blank">https://jquery.com</a></li>
+                        <li>jQuery UI: <a href="https://jqueryui.com" target="_blank">http://jqueryui.com</a></li>
+                        <li>MomentJS: <a href="https://momentjs.com" target="_blank">https://momentjs.com</a></li>
+                        <li>PHPOffice: <a href="https://github.com/PHPOffice" target="_blank">https://github.com/PHPOffice</a></li>
+                        <li>Tom Select: <a href="https://tom-select.js.org/" target="_blank">https://tom-select.js.org/</a></li>
+                        <li>SweetAlert 2: <a href="https://sweetalert2.github.io" target="_blank">https://sweetalert2.github.io</a></li>
+                        <li>Symfony: <a href="https://symfony.com" target="_blank">https://symfony.com</a></li>
+                    </ul>
+                {% endblock %}
+                {% block box_footer %}
+                    I apologize to everyone that I forgot to mention. Please go ahead and send in a PR to fix that!
+                {% endblock %}
+            {% endembed %}
+        </div>
+    </div>
+    <div class="row row-cards mb-3">
+        <div class="col-lg-8">
+            <div class="card card-lg">
+                <div class="card-body">
+                    <div class="markdown">
+                        <p>A license grants you a non-exclusive and non-transferable right to use and incorporate the item in your personal or commercial projects.</p>
+                        <h3>License</h3>
+                        {{ license|md2html|replace({'<br />': ''})|raw }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="me-3">
+                            <i class="fa-2x fas fa-balance-scale"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted">{{ constant('\\App\\Constants::SOFTWARE') }} is licensed under the</small>
+                            <h3 class="lh-1">MIT License</h3>
+                        </div>
+                    </div>
+                    <div class="text-muted mb-3">
+                        A short and simple permissive license with conditions only requiring preservation of copyright and
+                        license notices. Licensed works, modifications, and larger works may be distributed under different terms
+                        and without source code.
+                    </div>
+                    <h4>Permissions</h4>
+                    <ul class="list-unstyled space-y-1">
+                        <li><i class="{{ 'success'|icon }} text-green"></i> Commercial use</li>
+                        <li><i class="{{ 'success'|icon }} text-green"></i> Modification</li>
+                        <li><i class="{{ 'success'|icon }} text-green"></i> Distribution</li>
+                        <li><i class="{{ 'success'|icon }} text-green"></i> Private use</li>
+                    </ul>
+                    <h4>Limitations</h4>
+                    <ul class="list-unstyled space-y-1">
+                        <li><i class="{{ 'failure'|icon }} text-red"></i> Liability</li>
+                        <li><i class="{{ 'failure'|icon }} text-red"></i> Warranty</li>
+                    </ul>
+                    <h4>Conditions</h4>
+                    <ul class="list-unstyled space-y-1">
+                        <li><i class="{{ 'details'|icon }} text-blue"></i> License and copyright notice</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    This is not legal advice. Learn more about this licenses at
+                    <a href="https://choosealicense.com/licenses/mit/" target="_blank">choosealicense.com</a> and
+                    <a href="https://en.wikipedia.org/wiki/MIT_License" target="_blank">wikipedia</a>.
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

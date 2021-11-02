@@ -35,8 +35,6 @@ export default class KimaiDatatable extends KimaiPlugin {
         const attributes = dataTable.dataset;
         const events = attributes['reloadEvent'];
 
-        this.fixDropdowns();
-
         if (events === undefined) {
             return;
         }
@@ -53,14 +51,12 @@ export default class KimaiDatatable extends KimaiPlugin {
     }
 
     reloadDatatable() {
-        const self = this;
         const contentArea = this.contentArea;
         const durations = this.getContainer().getPlugin('timesheet-duration');
         const toolbarSelector = this.getContainer().getPlugin('toolbar').getSelector();
         
         const form = jQuery(toolbarSelector);
-        let loading = '<div class="overlay"><i class="fas fa-sync fa-spin"></i></div>';
-        jQuery(contentArea).append(loading);
+        document.dispatchEvent(new CustomEvent('kimai.reloadContent', {detail: this.contentArea}));
 
         // remove the empty fields to prevent errors
         let formData = jQuery(toolbarSelector + ' :input')
@@ -78,28 +74,10 @@ export default class KimaiDatatable extends KimaiPlugin {
                     jQuery(html).find(contentArea)
                 );
                 durations.updateRecords();
-                self.fixDropdowns();
+                document.dispatchEvent(new Event('kimai.reloadedContent'));
             },
             error: function(xhr, err) {
                 form.submit();
-            }
-        });
-
-    }
-
-    /**
-     * show dropdown menu upwards, if it is outside the visible viewport
-     */
-    fixDropdowns() {
-        const docHeight = jQuery(document).height();
-        jQuery(this.selector + ' [data-toggle=dropdown]').each(function() {
-            const parent = jQuery(this).parent();
-            const menu = parent.find('.dropdown-menu');
-
-            if (parent && menu) {
-                if ((parent.offset().top + parent.outerHeight() + menu.outerHeight()) > docHeight) {
-                    parent.addClass('dropup').removeClass('dropdown');
-                }
             }
         });
     }

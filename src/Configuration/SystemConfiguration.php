@@ -71,6 +71,11 @@ class SystemConfiguration implements SystemBundleConfiguration
         return (string) $this->find('saml.title');
     }
 
+    public function getSamlProvider(): ?string
+    {
+        return $this->find('saml.provider');
+    }
+
     public function getSamlAttributeMapping(): array
     {
         return (array) $this->find('saml.mapping');
@@ -366,6 +371,16 @@ class SystemConfiguration implements SystemBundleConfiguration
     }
 
     // ========== Theme configurations ==========
+
+    public function isShowAbout(): bool
+    {
+        return (bool) $this->find('theme.show_about');
+    }
+
+    public function getThemeBundle(): string
+    {
+        return 'Tabler';
+    }
 
     public function isThemeColorsLimited(): bool
     {

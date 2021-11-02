@@ -26,12 +26,7 @@ class InvoiceArchiveSubscriber extends AbstractActionsSubscriber
         /** @var InvoiceArchiveQuery $query */
         $query = $payload['query'];
 
-        if ($this->isGranted('view_invoice')) {
-            $event->addBack($this->path('invoice'));
-        }
-
         $event->addSearchToggle($query);
-        $event->addColumnToggle('#modal_invoices');
         $event->addQuickExport($this->path('invoice_export'));
         $event->addHelp($this->documentationLink('invoices.html'));
     }

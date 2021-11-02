@@ -25,14 +25,10 @@ export default class KimaiMultiUpdateTable extends KimaiPlugin {
             .on('change', '.multi_update_single', function(event) {
                 self.toggleForm();
             })
-            .on('change', '#multi_update_table_action', function(event) {
-                const selectedItem = jQuery('#multi_update_table_action option:selected');
-                const selectedVal = selectedItem.val();
+            .on('click', '.multi_update_table_action', function(event) {
+                const selectedItem = jQuery(this);
+                const selectedVal = selectedItem.data('href');
 
-                if (selectedVal === '') {
-                    return;
-                }
-                
                 const form = jQuery('#multi_update_form form');
                 const selectedText = selectedItem.text();
                 const ids = self.getSelectedIds();
@@ -64,9 +60,11 @@ export default class KimaiMultiUpdateTable extends KimaiPlugin {
         jQuery('#multi_update_table_entities').val(ids.join(','));
 
         if (ids.length > 0) {
+            jQuery('.multi_update_form_hide').hide();
             jQuery('#multi_update_form').show();
         } else {
             jQuery('#multi_update_form').hide();
+            jQuery('.multi_update_form_hide').show();
         }
     }
     

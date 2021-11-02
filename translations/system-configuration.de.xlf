@@ -222,10 +222,6 @@
         <source>label.timesheet.default_begin</source>
         <target>Standard Startzeit (wird nicht in jedem Zeiterfassungs Modus verwendet)</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>Einfache Suche</target>
-      </trans-unit>
       <trans-unit id="label.invoice.number_format">
         <source>label.invoice.number_format</source>
         <target>Rechnungsnummer Format</target>

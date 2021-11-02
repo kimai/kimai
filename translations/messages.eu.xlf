@@ -119,10 +119,6 @@
         <source>menu.timesheet</source>
         <target>Nire orduak</target>
       </trans-unit>
-      <trans-unit id="menu.invoice">
-        <source>menu.invoice</source>
-        <target>Fakturak</target>
-      </trans-unit>
       <trans-unit id="menu.export">
         <source>menu.export</source>
         <target>Exportatu</target>
@@ -342,10 +338,6 @@
       <!--
               Widgets
             -->
-      <trans-unit id="more.info.link">
-        <source>more.info.link</source>
-        <target>Informazio gehiago</target>
-      </trans-unit>
       <trans-unit id="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
         <target>Menua erakutsi</target>

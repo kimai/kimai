@@ -8,19 +8,19 @@
 {% block main %}
     {% set can_edit = is_granted('edit', project) %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% import "customer/actions.html.twig" as customerActions %}
         {% block box_attributes %}id="project_details_box"{% endblock %}
         {% block box_tools %}
             {% if can_edit %}
-                <a class="modal-ajax-form open-edit btn btn-default btn-sm" data-href="{{ path('admin_project_edit', {'id': project.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>
+                {{ widgets.card_tool_button('edit', {'class': 'modal-ajax-form open-edit', 'title': 'action.edit', 'url': path('admin_project_edit', {'id': project.id})}) }}
             {% endif %}
         {% endblock %}
         {% block box_title %}
             {{ widgets.label_name(project.name, project.color) }}
         {% endblock %}
-        {% block box_body_class %}no-padding{% endblock %}
+        {% block box_body_class %}p-0{% endblock %}
         {% block box_body %}
             {% if project.comment is not empty %}
                 <div class="comment">

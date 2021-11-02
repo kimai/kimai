@@ -27,15 +27,14 @@ class TimesheetsTeamSubscriber extends AbstractActionsSubscriber
         $query = $payload['query'];
 
         $event->addSearchToggle($query);
-        $event->addColumnToggle('#modal_timesheet_admin');
 
         if ($this->isGranted('export_other_timesheet')) {
-            $event->addAction('download', ['url' => $this->path('admin_timesheet_export'), 'class' => 'toolbar-action modal-ajax-form']);
+            $event->addAction('download', ['url' => $this->path('admin_timesheet_export'), 'class' => 'toolbar-action modal-ajax-form', 'title' => 'menu.export']);
         }
 
         if ($this->isGranted('create_other_timesheet')) {
-            $event->addActionToSubmenu('create', 'single', ['title' => 'create', 'url' => $this->path('admin_timesheet_create'), 'class' => 'create-ts modal-ajax-form']);
-            $event->addActionToSubmenu('create', 'multi-user', ['title' => 'create-timesheet-multiuser', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet_create_multiuser'), 'class' => 'create-ts-mu modal-ajax-form']);
+            $event->addAction('create', ['title' => 'create', 'url' => $this->path('admin_timesheet_create'), 'class' => 'create-ts modal-ajax-form']);
+            $event->addAction('multi-user', ['title' => 'create-timesheet-multiuser', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet_create_multiuser'), 'class' => 'create-ts-mu modal-ajax-form', 'icon' => 'fas fa-user-plus']);
         }
 
         $event->addHelp($this->documentationLink('timesheet.html'));

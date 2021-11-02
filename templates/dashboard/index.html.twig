@@ -21,9 +21,11 @@
     {% if widgets is empty %}
         {{ widgets.nothing_found() }}
     {% else %}
+        <div class="row row-cards">
         {% for row in widgets %}
             {{ render_widget(row) }}
         {% endfor %}
+        </div>
     {% endif %}
 
 {% endblock %}

@@ -10,10 +10,10 @@
 namespace App\EventSubscriber;
 
 use App\Event\ConfigureMainMenuEvent;
+use App\Utils\MenuItemModel;
 use App\Utils\MenuItemModel as KimaiMenuItemModel;
-use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
-use KevinPapst\AdminLTEBundle\Model\MenuItemInterface;
-use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
+use KevinPapst\TablerBundle\Event\MenuEvent;
+use KevinPapst\TablerBundle\Model\MenuItemInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -45,28 +45,19 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            SidebarMenuEvent::class => ['onSetupNavbar', 100],
+            MenuEvent::class => ['onSetupNavbar', 100],
         ];
     }
 
-    /**
-     * Generate the main menu.
-     *
-     * @param SidebarMenuEvent $event
-     */
-    public function onSetupNavbar(SidebarMenuEvent $event)
+    public function onSetupNavbar(MenuEvent $event): void
     {
         $request = $event->getRequest();
 
-        $event->addItem(
-            new MenuItemModel('dashboard', 'menu.homepage', 'dashboard', [], 'fas fa-tachometer-alt')
-        );
-
         $menuEvent = new ConfigureMainMenuEvent(
             $request,
-            $event,
-            new MenuItemModel('admin', 'menu.admin', ''),
-            new MenuItemModel('system', 'menu.system', '')
+            new MenuItemModel('main', 'menu.root'),
+            new MenuItemModel('admin', 'menu.admin', '', [], 'administration'),
+            new MenuItemModel('system', 'menu.system', '', [], 'configuration')
         );
 
         // error pages don't have a user and will fail when is_granted() is called
@@ -74,18 +65,18 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
             $this->eventDispatcher->dispatch($menuEvent);
         }
 
-        if ($menuEvent->getAdminMenu()->hasChildren()) {
-            $event->addItem(new MenuItemModel('admin', 'menu.admin', ''));
-            foreach ($menuEvent->getAdminMenu()->getChildren() as $child) {
-                $event->addItem($child);
+        foreach ($menuEvent->getMenu()->getChildren() as $child) {
+            if ($child->getRoute() === null && !$child->hasChildren()) {
+                continue;
             }
+            $event->addItem($child);
         }
 
+        if ($menuEvent->getAdminMenu()->hasChildren()) {
+            $event->addItem($menuEvent->getAdminMenu());
+        }
         if ($menuEvent->getSystemMenu()->hasChildren()) {
-            $event->addItem(new MenuItemModel('system', 'menu.system', ''));
-            foreach ($menuEvent->getSystemMenu()->getChildren() as $child) {
-                $event->addItem($child);
-            }
+            $event->addItem($menuEvent->getSystemMenu());
         }
 
         $this->activateByRoute(

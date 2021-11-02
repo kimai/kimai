@@ -78,10 +78,6 @@
         <source>label.invoice.number_format</source>
         <target>Format du numéro de facture</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>Recherche simple</target>
-      </trans-unit>
       <trans-unit id="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
         <target>Heure de début par défaut (non utilisé dans tous les modes de suivi du temps)</target>

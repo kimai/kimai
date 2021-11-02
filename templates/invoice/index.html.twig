@@ -1,23 +1,22 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
-{% import "macros/toolbar.html.twig" as toolbar %}
 {% import "invoice/actions.html.twig" as actions %}
 
 {% set columns = {
     'date': {'class': 'alwaysVisible w-min', 'orderBy': false},
-    'project': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
-    'description': {'class': 'hidden-xs hidden-sm hidden', 'orderBy': false},
-    'user': {'class': 'hidden-xs hidden-sm w-min', 'orderBy': false},
-    'unit_price': {'class': 'hidden-xs text-right w-min', 'orderBy': false},
-    'amount': {'class': 'text-right w-min', 'orderBy': false},
-    'duration': {'class': 'hidden-xs text-right w-min', 'orderBy': false},
-    'total_rate': {'class': 'text-right alwaysVisible w-min', 'orderBy': false},
+    'project': {'class': 'd-xs-none d-sm-none', 'orderBy': false},
+    'description': {'class': 'd-xs-none d-sm-none d-none', 'orderBy': false},
+    'user': {'class': 'd-xs-none d-sm-none w-min', 'orderBy': false},
+    'unit_price': {'class': 'd-xs-none text-end w-min', 'orderBy': false},
+    'amount': {'class': 'text-end w-min', 'orderBy': false},
+    'duration': {'class': 'd-xs-none text-end w-min', 'orderBy': false},
+    'total_rate': {'class': 'text-end alwaysVisible w-min', 'orderBy': false},
 } %}
 
 {% set tableName = 'invoice' %}
 
-{% block page_title %}{{ 'invoice.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'invoice_form.title'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.invoices('index') }}{% endblock %}
 
 {% block main_before %}
@@ -27,9 +26,9 @@
 {% block main %}
 
     {% if is_granted('create_invoice') %}
-        {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% embed '@theme/embeds/card.html.twig' %}
             {% import "macros/search.html.twig" as search %}
-            {% form_theme form '@AdminLTE/layout/form-theme-horizontal.html.twig' %}
+            {% form_theme form '@theme/layout/form-theme-horizontal.html.twig' %}
             {% block box_title %}{{ 'invoice.filter'|trans }}{% endblock %}
             {% block box_before %}{{ form_start(form) }}{% endblock %}
             {% block box_body %}
@@ -77,13 +76,12 @@
     {% endif %}
 
     {% if models|length > 0 %}
-        {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% embed '@theme/embeds/card.html.twig' %}
             {% import "macros/widgets.html.twig" as widgets %}
-            {% import '@AdminLTE/Macros/buttons.html.twig' as button %}
             {% block box_title %}
                 {{ 'button.preview'|trans }}: {{ 'invoice.title'|trans }}
             {% endblock %}
-            {% block box_body_class %}no-padding{% endblock %}
+            {% block box_body_class %}p-0{% endblock %}
             {% block box_footer %}
                 <a href="#" onclick="return saveAllInvoices(this);" class="btn btn-success" id="create_all_invoices">
                     {{ 'action.save_all'|trans }}
@@ -94,9 +92,9 @@
                     <thead>
                         <tr>
                             <th>{{ 'label.customer'|trans }}</th>
-                            <th class="w-min text-center actions"></th>
-                            <th class="w-min text-right hidden-xs">{{ 'label.duration'|trans }}</th>
-                            <th class="w-min text-right hidden-xs">{{ 'label.total_rate'|trans }}</th>
+                            <th class="w-min text-end d-xs-none">{{ 'label.duration'|trans }}</th>
+                            <th class="w-min text-end d-xs-none">{{ 'label.total_rate'|trans }}</th>
+                            <th class="w-min text-center actions alwaysVisible"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -105,18 +103,17 @@
                             {% set currency = model.currency %}
                             <tr>
                                 <td>
-                                    {{ widgets.label_customer(model.customer) }}
+                                    <a class="link-dark" href="#invoice_preview_details_{{ model.customer.id }}" data-toggle="tooltip" title="{{ 'timesheet.all'|trans }}">{{ widgets.label_customer(model.customer) }}</a>
                                 </td>
-                                <td class="w-min text-center">
-                                    {{ widgets.action_button('show', {'url': '#invoice_preview_details_' ~ model.customer.id, 'title': 'timesheet.all'|trans, 'class': 'btn btn-sm hidden-xs hidden-sm'}, 'link') }}
-                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'class': 'btn btn-sm', 'attr': {'data-href': path('invoice_preview', {'customer': model.customer.id, 'template': model.template.id})}}) }}
-                                    {{ widgets.action_button('save', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'class': 'btn btn-sm', 'attr': {'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id})}}, 'success') }}
-                                </td>
-                                <td class="w-min text-right hidden-xs">
+                                <td class="w-min text-end d-xs-none">
                                     {{ model.calculator.timeWorked|duration(isDecimal) }}
                                 </td>
-                                <td class="w-min text-right hidden-xs">
+                                <td class="w-min text-end d-xs-none">
                                     <span title="{{ 'label.vat'|trans }}: {{ model.calculator.tax|money(currency) }}" data-toggle="tooltip">{{ model.calculator.total|money(currency) }}</span>
+                                </td>
+                                <td class="w-min text-center actions alwaysVisible">
+                                    {{ widgets.action_button('print', {'icon': 'print', 'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'attr': {'data-href': path('invoice_preview', {'customer': model.customer.id, 'template': model.template.id})}}, 'secondary') }}
+                                    {{ widgets.action_button('save', {'icon': 'invoice', 'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'attr': {'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id})}}, 'success') }}
                                 </td>
                             </tr>
                         {% endfor %}
@@ -133,15 +130,18 @@
                 {% set entries = model.calculator.entries %}
                 {% set currency = model.currency %}
 
-                {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+                {% embed '@theme/embeds/card.html.twig' %}
                     {% import "macros/widgets.html.twig" as widgets %}
                     {% import "macros/datatables.html.twig" as tables %}
-                    {% block box_title %}
-                        <span id="invoice_preview_details_{{ customer.id }}">{{ widgets.label_customer(customer) }}</span>
-                        {{ widgets.label(model.calculator.timeWorked|duration, 'gray') }}
-                        {{ widgets.label(model.calculator.total|money(currency), 'gray') }}
+                    {% block box_attributes %}id="invoice_preview_details_{{ customer.id }}"{% endblock %}
+                    {% block box_tools %}
+                        {{ widgets.badge_counter(model.calculator.timeWorked|duration) }}
+                        {{ widgets.badge_counter(model.calculator.total|money(currency)) }}
                     {% endblock %}
-                    {% block box_body_class %}invoice-preview-box no-padding{% endblock %}
+                    {% block box_title %}
+                        {{ widgets.label_customer(customer) }}
+                    {% endblock %}
+                    {% block box_body_class %}invoice-preview-box p-0{% endblock %}
                     {% block box_body %}
                         {{ tables.datatable_header(tableName, columns, model.query, {'boxClass': ''}) }}
                         {% set itemsAmount = entries|length %}

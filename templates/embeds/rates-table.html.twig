@@ -1,13 +1,13 @@
-{% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'id': id, 'entity': entity, 'create_url': create_url, 'delete_route': delete_route, 'currency': currency} %}
+{% embed '@theme/embeds/card.html.twig' with {'id': id, 'entity': entity, 'create_url': create_url, 'delete_route': delete_route, 'currency': currency} %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% block box_attributes %}id="{{ id }}"{% endblock %}
     {% block box_title %}
         {{ 'label.hourlyRate'|trans }}
     {% endblock %}
     {% block box_tools %}
-        <a class="modal-ajax-form open-edit btn btn-default btn-sm" data-href="{{ create_url }}" data-toggle="tooltip" data-placement="top" title="{{ 'create'|trans }}"><i class="{{ 'create'|icon }}"></i></a>
+        {{ widgets.card_tool_button('create', {'class': 'modal-ajax-form open-edit', 'title': 'create', 'url': create_url}) }}
     {% endblock %}
-    {% block box_body_class %}no-padding{% endblock %}
+    {% block box_body_class %}{% if rates is not empty %}p-0{% endif %}{% endblock %}
     {% block box_body %}
         {% if rates is empty %}
             <div class="comment">{{ 'rates.empty'|trans }}</div>
@@ -50,7 +50,7 @@
                             {{ widgets.label_boolean(rate.fixed) }}
                         </td>
                         <td class="actions">
-                            <a href="{{ path(delete_route, {'id': entity.id, 'rateId': rate.id}) }}" class="btn btn-default btn-xs api-link" data-question="confirm.delete" data-event="kimai.rateUpdate kimai.rateDelete" data-method="DELETE" data-msg-error="action.delete.error" data-msg-success="action.delete.success"><i class="{{ 'delete'|icon }}"></i></a>
+                            <a href="{{ path(delete_route, {'id': entity.id, 'rateId': rate.id}) }}" class="btn btn-icon api-link" data-question="confirm.delete" data-event="kimai.rateUpdate kimai.rateDelete" data-method="DELETE" data-msg-error="action.delete.error" data-msg-success="action.delete.success">{{ icon('delete') }}</a>
                         </td>
                     </tr>
                 {% endfor %}

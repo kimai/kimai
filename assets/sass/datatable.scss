@@ -5,46 +5,7 @@
  * file that was distributed with this source code.
  */
 
-/* Loading indicator: overwritten from AdminLTE for positioning and supporting fas classes */
-.box .overlay > .fas,
-section.content .overlay > .fas,
-.overlay-wrapper .overlay > .fas {
-    position: absolute;
-    top: 50vh;
-    left: 50vw;
-    margin-left: -15px;
-    margin-top: -15px;
-    color: #000;
-    font-size: 30px;
-}
-
-.box > .overlay,
-.overlay-wrapper > .overlay,
-section.content > .overlay,
-.box > .loading-img,
-.overlay-wrapper > .loading-img {
-    position: fixed; /* see #1330 */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-.box .overlay,
-section.content .overlay,
-.overlay-wrapper .overlay {
-    z-index: 50;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: $box-border-radius;
-}
-.box .overlay.dark,
-section.content .overlay.dark,
-.overlay-wrapper .overlay.dark {
-    background: rgba(0, 0, 0, 0.5);
-}
-
-/*
-dataTables.bootstrap.css
-*/
+/* Taken from dataTables.bootstrap.css */
 div.dataTables_length label {
     font-weight: normal;
     text-align: left;
@@ -170,13 +131,13 @@ table.dataTable th:active {
 
 
 /* Condensed */
-table.dataTable.table-condensed thead > tr > th {
+table.dataTable.table-sm thead > tr > th {
     padding-right: 20px;
 }
 
-table.dataTable.table-condensed thead .sorting:before,
-table.dataTable.table-condensed thead .sorting_asc:before,
-table.dataTable.table-condensed thead .sorting_desc:before {
+table.dataTable.table-sm thead .sorting:before,
+table.dataTable.table-sm thead .sorting_asc:before,
+table.dataTable.table-sm thead .sorting_desc:before {
     top: 6px;
     right: 6px;
 }

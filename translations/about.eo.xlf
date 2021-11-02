@@ -20,7 +20,7 @@
             </trans-unit>
             <trans-unit id="donate">
                 <source>donate</source>
-                <target>Donacu por la estonteco de Kimai</target>
+                <target>Donacu</target>
             </trans-unit>
             <trans-unit id="published_under">
                 <source>published_under</source>

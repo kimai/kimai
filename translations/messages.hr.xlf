@@ -175,10 +175,6 @@
         <source>menu.timesheet</source>
         <target>Moja vremena</target>
       </trans-unit>
-      <trans-unit id="menu.invoice">
-        <source>menu.invoice</source>
-        <target>Računi</target>
-      </trans-unit>
       <trans-unit id="menu.export">
         <source>menu.export</source>
         <target>Izvoz</target>
@@ -438,10 +434,6 @@
       <!--
               Widgets
             -->
-      <trans-unit id="more.info.link">
-        <source>more.info.link</source>
-        <target>Daljnje informacije</target>
-      </trans-unit>
       <trans-unit id="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
         <target>Pokaži izbornik</target>

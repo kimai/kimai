@@ -186,10 +186,6 @@
         <source>label.invoice.number_format</source>
         <target>Formatul numărului facturii</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>Căutare simplă</target>
-      </trans-unit>
       <trans-unit id="label.timesheet.rules.lockdown_grace_period">
         <source>label.timesheet.rules.lockdown_grace_period</source>
         <target>Perioadă de blocare (Perioadă PHP relativă)</target>

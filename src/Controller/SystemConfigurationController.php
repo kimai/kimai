@@ -460,12 +460,6 @@ final class SystemConfigurationController extends AbstractController
                         ->setRequired(true)
                         ->setType(TextType::class)
                         ->setTranslationDomain('system-configuration'),
-                    (new Configuration())
-                        ->setName('invoice.simple_form')
-                        ->setLabel('simple_form')
-                        ->setRequired(false)
-                        ->setType(YesNoType::class)
-                        ->setTranslationDomain('system-configuration'),
                 ]),
             $authentication,
             (new SystemConfigurationModel())

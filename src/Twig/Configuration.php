@@ -39,6 +39,11 @@ final class Configuration extends AbstractExtension
             return $this->cache[$name];
         }
 
+        switch ($name) {
+            case 'chart-class':
+                return ''; // 'chart';
+        }
+
         $value = $this->configuration->find($name);
         $this->cache[$name] = $value;
 

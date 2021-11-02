@@ -167,10 +167,6 @@
         <source>menu.timesheet</source>
         <target>Οι ώρες μου</target>
       </trans-unit>
-      <trans-unit id="menu.invoice">
-        <source>menu.invoice</source>
-        <target>Τιμολόγια</target>
-      </trans-unit>
       <trans-unit id="menu.export">
         <source>menu.export</source>
         <target>Εξαγωγή</target>
@@ -426,10 +422,6 @@
       <!--
               Widgets
             -->
-      <trans-unit id="more.info.link">
-        <source>more.info.link</source>
-        <target>Περισσότερες πληροφορίες</target>
-      </trans-unit>
       <trans-unit id="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
         <target>Εμφάνιση μενού</target>

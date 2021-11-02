@@ -30,7 +30,7 @@ final class TotalsUser extends SimpleWidget implements UserWidget, AuthorizedWid
         return array_merge([
             'route' => 'admin_user',
             'icon' => 'user',
-            'color' => 'primary',
+            'color' => 'red',
             'dataType' => 'int',
         ], parent::getOptions($options));
     }

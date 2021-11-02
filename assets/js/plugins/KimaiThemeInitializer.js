@@ -9,6 +9,7 @@
  * [KIMAI] KimaiThemeInitializer: initialize theme functionality
  */
 
+import { Tooltip, Toast } from 'bootstrap';
 import jQuery from 'jquery';
 import KimaiPlugin from '../KimaiPlugin';
 
@@ -17,16 +18,54 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
     init() {
         this.registerGlobalAjaxErrorHandler();
         this.registerAutomaticAlertRemove('div.alert-success', 5000);
-        // activate the dropdown functionality
-        jQuery('.dropdown-toggle').dropdown();
-        // activate the tooltip functionality
-        jQuery('[data-toggle="tooltip"]').tooltip();
+
+        // the tooltip do not use data-bs-toggle="tooltip" so they can be mixed with data-toggle="modal"
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new Tooltip(tooltipTriggerEl);
+        });
+
         // activate all form plugins
-        this.getContainer().getPlugin('form').activateForm('.content-wrapper form', 'body');
+        this.getContainer().getPlugin('form').activateForm('div.page-wrapper form', 'body');
         this.getContainer().getPlugin('form').activateForm('form.searchform', 'body');
 
         this.registerModalAutofocus('#modal_search');
         this.registerModalAutofocus('#remote_form_modal');
+        this.registerOverlayListener('kimai.reloadContent', 'kimai.reloadedContent');
+    }
+
+    /**
+     * Registers an event listener, that will is capabale of displaying and hiding overlays upon notification
+     *
+     * @param {string} eventNameShow
+     * @param {string} eventNameHide
+     */
+    registerOverlayListener(eventNameShow, eventNameHide) {
+        this.overlay = null;
+        const self = this;
+
+        document.addEventListener(eventNameShow, function(event) {
+            // do not allow more than one loading screen at a time
+            if (self.overlay !== null) {
+                return;
+            }
+
+            // at which element we append the loading screen
+            let container = 'body';
+            if (event.detail !== undefined && event.detail !== null) {
+                container = event.detail;
+            }
+
+            self.overlay = jQuery('<div class="overlay"><div class="fas fa-sync fa-spin"></div></div>');
+            jQuery(container).append(self.overlay);
+        });
+
+        document.addEventListener(eventNameHide, function(event) {
+            if (self.overlay !== null) {
+                jQuery(self.overlay).remove();
+                self.overlay = null;
+            }
+        });
     }
 
     /**
@@ -75,7 +114,7 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
      * auto hide success messages, as they are just meant as user feedback and not as a permanent information
      *
      * @param {string} selector
-     * @param {integer} interval
+     * @param {number} interval
      */
     registerAutomaticAlertRemove(selector, interval) {
         const self = this;

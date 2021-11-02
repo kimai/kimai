@@ -185,10 +185,6 @@
         <source>label.timesheet.default_begin</source>
         <target>זמן התחלה ברירת מחדל (לא בשימוש בכל מצבי הפעולה)</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>חיפוש פשוט</target>
-      </trans-unit>
       <trans-unit id="label.invoice.number_format">
         <source>label.invoice.number_format</source>
         <target>פורמט מספר חשבונית</target>

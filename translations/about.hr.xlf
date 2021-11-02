@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="donate">
         <source>donate</source>
-        <target>Doniraj za budućnost Kimaija</target>
+        <target>Doniraj</target>
       </trans-unit>
       <trans-unit id="published_under">
         <source>published_under</source>

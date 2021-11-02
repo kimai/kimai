@@ -8,7 +8,7 @@
 {% block main %}
     {% set can_edit = is_granted('edit', customer) %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_attributes %}id="customer_details_box"{% endblock %}
         {% block box_title %}
@@ -17,13 +17,13 @@
         {% endblock %}
         {% block box_tools %}
             {% if can_edit %}
-                <a class="modal-ajax-form open-edit btn btn-default btn-sm" data-href="{{ path('admin_customer_edit', {'id': customer.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'action.edit'|trans }}"><i class="{{ 'edit'|icon }}"></i></a>
+                {{ widgets.card_tool_button('edit', {'class': 'modal-ajax-form open-edit', 'title': 'action.edit', 'url': path('admin_customer_edit', {'id': customer.id})}) }}
             {% endif %}
         {% endblock %}
-        {% block box_body_class %}no-padding{% endblock %}
+        {% block box_body_class %}p-0{% endblock %}
         {% block box_body %}
             {% if customer.comment is not empty %}
-                <div class="comment">
+                <div class="comment p-3">
                     {{ customer.comment|comment2html(true) }}
                 </div>
             {% endif %}

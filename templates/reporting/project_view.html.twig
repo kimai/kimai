@@ -5,18 +5,18 @@
 
 {% set availableColumns = {
     'name':             {'class': 'alwaysVisible'},
-    'timeBudget':       {'class': 'hidden-xs', 'title': 'label.timeBudget'|trans},
-    'budget':           {'class': 'hidden-xs', 'title': 'label.budget'|trans},
+    'timeBudget':       {'class': 'd-xs-none', 'title': 'label.timeBudget'|trans},
+    'budget':           {'class': 'd-xs-none', 'title': 'label.budget'|trans},
     'lastRecord':       {'class': 'text-center hw-min', 'title': 'label.last_record'|trans, 'columnClass': 'w-min'},
-    'today':            {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationToday'|trans},
-    'week':             {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationWeek'|trans},
-    'month':            {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationMonth'|trans},
+    'today':            {'class': 'd-none d-md-none d-sm-none d-xs-none text-center hw-min', 'title': 'stats.durationToday'|trans},
+    'week':             {'class': 'd-none d-md-none d-sm-none d-xs-none text-center hw-min', 'title': 'stats.durationWeek'|trans},
+    'month':            {'class': 'd-none d-md-none d-sm-none d-xs-none text-center hw-min', 'title': 'stats.durationMonth'|trans},
     'durationTotal':    {'class': 'text-center hw-min', 'title': 'stats.durationTotal'|trans, 'columnClass': 'w-min'},
-    'exported':         {'class': 'hidden-sm hidden-xs hidden text-center hw-min', 'title': 'label.not_exported'|trans, 'columnClass': 'w-min'},
-    'invoiced':         {'class': 'hidden-sm hidden-xs hidden text-center hw-min', 'title': 'label.not_invoiced'|trans, 'columnClass': 'w-min'},
-    'projectStart':     {'class': 'hidden-md hidden-sm hidden-xs hidden text-center w-min', 'title': 'label.project_start'|trans},
-    'projectEnd':       {'class': 'hidden-md hidden-sm hidden-xs hidden text-center w-min', 'title': 'label.project_end'|trans},
-    'comment':          {'class': 'hidden-md hidden-sm hidden-xs hidden', 'title': 'label.comment'|trans},
+    'exported':         {'class': 'd-sm-none d-xs-none d-none text-center hw-min', 'title': 'label.not_exported'|trans, 'columnClass': 'w-min'},
+    'invoiced':         {'class': 'd-sm-none d-xs-none d-none text-center hw-min', 'title': 'label.not_invoiced'|trans, 'columnClass': 'w-min'},
+    'projectStart':     {'class': 'd-md-none d-sm-none d-xs-none d-none text-center w-min', 'title': 'label.project_start'|trans},
+    'projectEnd':       {'class': 'd-md-none d-sm-none d-xs-none d-none text-center w-min', 'title': 'label.project_end'|trans},
+    'comment':          {'class': 'd-md-none d-sm-none d-xs-none d-none', 'title': 'label.comment'|trans},
     'actions':          {'class': 'actions alwaysVisible'},
 } %}
 {% set tableName = tableName|default('project_view_reporting') %}
@@ -32,33 +32,40 @@
     {{ tables.data_table_column_modal(tableName, columns) }}
 {% endblock %}
 
+{% block report_form %}
+    {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': 'project-view-form'}}) }}
+        {# project overview #}
+        {% if form.customer is defined %}
+            {{ form_row(form.customer, {'row_attr': {'class': 'w-25 me-2'}}) }}
+        {% endif %}
+        {% if form.includeNoBudget is defined %}
+            {{ form_row(form.includeNoBudget, {'row_attr': {'class': 'me-2'}}) }}
+        {% endif %}
+        {% if form.includeNoWork is defined %}
+            {{ form_row(form.includeNoWork, {'row_attr': {'class': 'me-2'}}) }}
+        {% endif %}
+        {# inactive projects #}
+        {% if form.lastChange is defined %}
+            {{ form_row(form.lastChange, {'row_attr': {'class': ''}}) }}
+        {% endif %}
+    {{ form_end(form) }}
+{% endblock %}
+
 {% block report %}
 
     {% set hasData = entries|length > 0 %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/progressbar.html.twig" as progress %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% import "macros/datatables.html.twig" as tables %}
         {% import "project/actions.html.twig" as projectActions %}
-        {% block box_body_class %}{{ tableName }}-box {% if hasData %}no-padding{% endif %}{% endblock %}
-        {% block box_before %}
-            {{ form_start(form, {'attr': {'class': 'form-inline form-reporting', 'id': 'project-view-form'}}) }}
-        {% endblock %}
-        {% block box_after %}
-            {{ form_end(form) }}
-        {% endblock %}
-        {% block box_tools %}
-            {{ widgets.action_button('visibility', {'modal': ('#modal_' ~ tableName), 'class': 'btn-sm'}) }}
-        {% endblock %}
-        {% block box_title %}
-            {{ form_widget(form) }}
-        {% endblock %}
+        {% block box_body_class %}{{ tableName }}-box {% if hasData %}p-0{% endif %}{% endblock %}
         {% block box_body %}
             {% if not hasData %}
                 {{ widgets.nothing_found() }}
             {% else %}
-                {{ tables.datatable_header(tableName, columns, null, {'bordered': true, 'boxClass': ''}) }}
+                {{ tables.datatable_header(tableName, columns, null, {'boxClass': ''}) }}
 
                 {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
                     <tr class="summary">

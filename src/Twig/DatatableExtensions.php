@@ -101,18 +101,25 @@ class DatatableExtensions extends AbstractExtension
         return true;
     }
 
-    private function checkInColumDefinition(array $columns, string $column)
+    private function checkInColumDefinition(array $columns, string $column): bool
     {
         if (\array_key_exists($column, $columns)) {
             $tmp = $columns[$column];
             if (\is_array($tmp)) {
                 $tmp = $tmp['class'];
             }
-            foreach (explode(' ', $tmp) as $class) {
-                if ($class === 'hidden') {
-                    return false;
-                }
+
+            $result = true;
+
+            if (stripos($tmp, 'd-none') !== false) {
+                $result = false;
             }
+
+            if (stripos($tmp, '-table-cell') !== false) {
+                $result = true;
+            }
+
+            return $result;
         }
 
         return true;

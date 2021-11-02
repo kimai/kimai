@@ -32,7 +32,7 @@ class InitialViewType extends AbstractType
         'quick_entry' => 'quick_entry.title',
         'my_profile' => 'profile.title',
         'admin_timesheet' => 'menu.admin_timesheet',
-        'invoice' => 'menu.invoice',
+        'invoice' => 'invoice.title',
         'admin_user' => 'menu.admin_user',
         'admin_customer' => 'menu.admin_customer',
         'admin_project' => 'menu.admin_project',

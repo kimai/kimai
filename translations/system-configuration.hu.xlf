@@ -126,10 +126,6 @@
         <source>label.calendar.slot_duration</source>
         <target>Bejegyzés hossza heti és napi nézetben (formátum: hh:mm:ss)</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>Egyszerű keresés</target>
-      </trans-unit>
       <trans-unit id="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
         <target>Alapértelmezett kezdési idő (nem használja minden időmérő mód)</target>

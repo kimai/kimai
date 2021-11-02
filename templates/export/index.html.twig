@@ -1,19 +1,18 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/toolbar.html.twig" as toolbar %}
 {% import "macros/datatables.html.twig" as tables %}
 
 {% set columns = {
     'date': {'class': 'alwaysVisible text-nowrap', 'orderBy': false},
-    'user': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
-    'project': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
-    'activity': {'class': 'hidden-xs hidden-sm hidden-md', 'orderBy': false},
-    'description': {'class': 'hidden-xs hidden-sm hidden-md timesheet-description', 'orderBy': false},
-    'unit_price': {'class': 'text-right hidden hidden-xs text-nowrap', 'orderBy': false},
-    'duration': {'class': 'text-right text-nowrap', 'orderBy': false},
-    'rate_internal': {'class': 'text-right hidden text-nowrap', 'orderBy': false},
-    'total_rate': {'class': 'text-right text-nowrap', 'orderBy': false},
-    'exported': {'class': 'alwaysVisible', 'orderBy': false},
+    'user': {'class': 'd-xs-none d-sm-none', 'orderBy': false},
+    'project': {'class': 'd-xs-none d-sm-none', 'orderBy': false},
+    'activity': {'class': 'd-xs-none d-sm-none d-md-none', 'orderBy': false},
+    'description': {'class': 'd-xs-none d-sm-none d-md-none timesheet-description', 'orderBy': false},
+    'unit_price': {'class': 'text-end d-none d-xs-none text-nowrap', 'orderBy': false},
+    'duration': {'class': 'text-end text-nowrap', 'orderBy': false},
+    'rate_internal': {'class': 'text-end d-none text-nowrap', 'orderBy': false},
+    'total_rate': {'class': 'text-end text-nowrap', 'orderBy': false},
+    'actions': {'class': 'actions alwaysVisible', 'orderBy': false, 'title': 'label.exported'|trans},
 } %}
 
 {% set tableName = 'export' %}
@@ -30,9 +29,9 @@
 
 {% block main %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/search.html.twig" as search %}
-        {% form_theme form '@AdminLTE/layout/form-theme-horizontal.html.twig' %}
+        {% form_theme form '@theme/layout/form-theme-horizontal.html.twig' %}
         {% block box_title %}{{ 'export.filter'|trans }}{% endblock %}
         {% block box_before %}{{ form_start(form) }}{% endblock %}
         {% block box_body %}
@@ -63,12 +62,12 @@
         {% if entries is empty %}
             {{ widgets.nothing_found() }}
         {% else %}
-            {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+            {% embed '@theme/embeds/card.html.twig' %}
                 {% import "macros/widgets.html.twig" as widgets %}
                 {% block box_title %}
                     {{ 'button.preview'|trans }}: {{ 'export.title'|trans }}
                 {% endblock %}
-                {% block box_body_class %}no-padding{% endblock %}
+                {% block box_body_class %}p-0{% endblock %}
                 {% block box_footer %}
                     {% set buttons = {} %}
                     {% for button in renderer %}
@@ -80,26 +79,34 @@
                         {% set group = group|merge([button]) %}
                         {% set buttons = buttons|merge({(title): group}) %}
                     {% endfor %}
-                    <div class="btn-group" id="export-buttons" role="group">
-                        {% for group in buttons %}
-                            {% set button = group.0 %}
-                            {% if group|length == 1 %}
-                                <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
-                                    {{ ('button.' ~ button.title)|trans }}
-                                </button>
-                            {% elseif group|length > 1 %}
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        {{ ('button.' ~ button.title)|trans }} <span class="caret"></span>
+                    <div class="d-flex">
+                        <div class="btn-group me-auto dropup" id="export-buttons" role="group">
+                            {% for group in buttons %}
+                                {% set button = group.0 %}
+                                {% if group|length == 1 %}
+                                    <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
+                                        {{ ('button.' ~ button.title)|trans }}
                                     </button>
-                                    <ul class="dropdown-menu">
-                                        {% for button in group %}
-                                            <li><a href="#" class="startExportBtn" data-type="{{ button.id }}">{{ (button.id)|trans({}, 'export') }}</a></li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
+                                {% elseif group|length > 1 %}
+                                    <div class="btn-group dropup">
+                                        <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {{ ('button.' ~ button.title)|trans }}
+                                        </button>
+                                        <div class="dropdown-menu dropup">
+                                            {% for button in group %}
+                                                <a href="#" class="dropdown-item startExportBtn" data-type="{{ button.id }}">{{ (button.id)|trans({}, 'export') }}</a>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% if preview_show %}
+                            <button id="export-toggle-button" class="btn ms-auto">
+                                {{ icon('off') }}
+                                {{ 'label.mark_as_exported'|trans }}
+                            </button>
+                        {% endif %}
                     </div>
                 {% endblock %}
                 {% block box_body %}
@@ -107,9 +114,9 @@
                         <thead>
                         <tr>
                             <th>{{ 'label.customer'|trans }}</th>
-                            <th class="w-min text-right hidden-xs">{{ 'label.duration'|trans }}</th>
-                            {# <th class="w-min text-right hidden-xs">{{ 'label.internalRate'|trans }}</th> #}
-                            <th class="w-min text-right">{{ 'label.total_rate'|trans }}</th>
+                            <th class="w-min text-end d-xs-none">{{ 'label.duration'|trans }}</th>
+                            {# <th class="w-min text-end d-xs-none">{{ 'label.internalRate'|trans }}</th> #}
+                            <th class="w-min text-end">{{ 'label.total_rate'|trans }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -119,15 +126,15 @@
                                 <td>
                                     {{ widgets.label_customer(row.customer) }}
                                 </td>
-                                <td class="w-min text-right hidden-xs">
+                                <td class="w-min text-end d-xs-none">
                                     {{ row.duration|duration(decimal) }}
                                 </td>
                                 {#
-                                <td class="w-min text-right hidden-xs">
+                                <td class="w-min text-end d-xs-none">
                                     {{ row.internalRate|money(currency) }}
                                 </td>
                                 #}
-                                <td class="w-min text-right">
+                                <td class="w-min text-end">
                                     {{ row.rate|money(currency) }}
                                 </td>
                             </tr>
@@ -142,7 +149,7 @@
                 {% set entries = entries|slice(0, preview_limit) %}
             {% endif %}
 
-            {{ tables.datatable_header(tableName, columns, query, {}) }}
+            {{ tables.datatable_header(tableName, columns, query, {columnConfig: false}) }}
             {% for entry in entries %}
                 {% set currency = entry.project.customer.currency %}
                 {% if entry.fixedRate is not null %}
@@ -182,15 +189,15 @@
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }}">
                         {{ entry.rate|money(currency) }}
                     </td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'exported') }}">
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
                     {% if is_granted('edit_export', entry) %}
                         {% if entry.exported %}
-                            <button type="button" class="btn btn-default exportBtn active" data-toggle="button" aria-pressed="true" autocomplete="off"
+                            <button type="button" class="btn btn-outline-secondary exportBtn active" data-toggle="button" aria-pressed="true"
                                     data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
                             {{ 'entryState.exported'|trans }}
                             </button>
                         {% else %}
-                            <button type="button" class="btn btn-default exportBtn" data-toggle="button" aria-pressed="false" autocomplete="off"
+                            <button type="button" class="btn btn-light exportBtn" data-toggle="button" aria-pressed="false"
                                     data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
                             {{ 'entryState.not_exported'|trans }}
                             </button>

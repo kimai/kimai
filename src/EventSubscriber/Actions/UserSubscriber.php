@@ -31,43 +31,28 @@ class UserSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('view', $user)) {
-            $event->addAction('profile-stats', ['icon' => 'avatar', 'url' => $this->path('user_profile', ['username' => $user->getUsername()]), 'translation_domain' => 'actions']);
+            $event->addAction('profile-stats', ['icon' => 'avatar', 'url' => $this->path('user_profile', ['username' => $user->getUsername()]), 'translation_domain' => 'actions', 'title' => 'profile-stats']);
             $event->addDivider();
         }
 
         if ($this->isGranted('edit', $user)) {
-            $event->addActionToSubmenu('edit', 'edit', ['url' => $this->path('user_profile_edit', ['username' => $user->getUsername()]), 'title' => 'edit', 'translation_domain' => 'actions']);
-        }
-        if ($this->isGranted('preferences', $user)) {
-            $event->addActionToSubmenu('edit', 'settings', ['url' => $this->path('user_profile_preferences', ['username' => $user->getUsername()]), 'title' => 'settings', 'translation_domain' => 'actions']);
-        }
-        if ($this->isGranted('password', $user)) {
-            $event->addActionToSubmenu('edit', 'password', ['url' => $this->path('user_profile_password', ['username' => $user->getUsername()]), 'title' => 'profile.password']);
-        }
-        if ($this->isGranted('api-token', $user)) {
-            $event->addActionToSubmenu('edit', 'api-token', ['url' => $this->path('user_profile_api_token', ['username' => $user->getUsername()]), 'title' => 'profile.api-token']);
-        }
-        if ($this->isGranted('teams', $user)) {
-            $event->addActionToSubmenu('edit', 'teams', ['url' => $this->path('user_profile_teams', ['username' => $user->getUsername()]), 'title' => 'profile.teams']);
-        }
-        if ($this->isGranted('roles', $user)) {
-            $event->addActionToSubmenu('edit', 'roles', ['url' => $this->path('user_profile_roles', ['username' => $user->getUsername()]), 'title' => 'profile.roles']);
+            $event->addAction('edit', ['url' => $this->path('user_profile_edit', ['username' => $user->getUsername()]), 'title' => 'edit', 'translation_domain' => 'actions']);
         }
 
-        if ($event->hasSubmenu('edit')) {
-            $event->addDivider();
+        if ($this->isGranted('preferences', $user)) {
+            $event->addAction('settings', ['url' => $this->path('user_profile_preferences', ['username' => $user->getUsername()]), 'icon' => 'settings', 'title' => 'settings', 'translation_domain' => 'actions']);
         }
 
         $viewOther = $this->isGranted('view_other_timesheet');
         if ($this->isGranted('view_reporting')) {
             // also found in App\Controller\Reporting\ReportByUserController
             if (($viewOther && $this->isGranted('view_other_reporting')) || ($event->getUser()->getId() === $user->getId())) {
-                $event->addAction('menu.reporting', ['url' => $this->path('report_user_month', ['user' => $user->getId()]), 'icon' => 'reporting']);
+                $event->addAction('reporting', ['url' => $this->path('report_user_month', ['user' => $user->getId()]), 'icon' => 'reporting', 'title' => 'menu.reporting']);
             }
         }
 
         if ($viewOther && $user->isEnabled()) {
-            $event->addAction('timesheet', ['url' => $this->path('admin_timesheet', ['users[]' => $user->getId()])]);
+            $event->addAction('timesheet', ['url' => $this->path('admin_timesheet', ['users[]' => $user->getId()]), 'title' => 'timesheet', 'translation_domain' => 'actions']);
         }
 
         if ($event->isIndexView() && $this->isGranted('delete', $user)) {

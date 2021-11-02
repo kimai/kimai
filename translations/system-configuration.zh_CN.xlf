@@ -218,10 +218,6 @@
         <source>label.invoice.number_format</source>
         <target>发票号码格式</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>简单搜索</target>
-      </trans-unit>
       <trans-unit id="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
         <target>默认开始时间（并非在所有时间追踪模式中使用）</target>

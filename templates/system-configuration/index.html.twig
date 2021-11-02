@@ -13,10 +13,13 @@
         {% if title == section.model.section %}
             {% set title = ('label.' ~ section.model.section)|trans %}
         {% endif %}
-        {{ include(formEditTemplate, {
-            'title': title,
-            'form': section.form,
-        }) }}
+        {% embed formEditTemplate with {'title': title, 'form': section.form} %}
+            {% block form_body %}
+                {% for pref in form.children.configuration %}
+                    {{ form_widget(pref) }}
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
     {% endfor %}
 
 {% endblock %}

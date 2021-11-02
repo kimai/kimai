@@ -86,10 +86,6 @@
         <source>label.invoice.number_format</source>
         <target>Fatura numarası biçimi</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>Basit arama</target>
-      </trans-unit>
       <trans-unit id="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
         <target>Öntanımlı başlangıç zamanı (tüm zaman izleme modlarında kullanılmaz)</target>

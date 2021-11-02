@@ -9,13 +9,6 @@
 
 table.dataTable.table > tbody > tr > td {
     vertical-align: middle;
-    .img-circle {
-        max-width: 30px;
-        margin-right: 0;
-        &.teamlead {
-            box-shadow: 0 0 5px 3px $gray-lte;
-        }
-    }
 }
 
 span.label-color,
@@ -25,17 +18,9 @@ span.label-user,
 span.label-activity,
 span.label-project,
 span.label-customer {
-    display: inline-block;
-    .name {
-        white-space: nowrap;
-        .name-inner {
-            white-space: normal;
-        }
-    }
-    .dot {
-        font-size: 9px;
-        margin-right: 3px;
-        color: $gray-lte;
+    .badge {
+        position: relative;
+        top: -5px;
     }
 }
 
@@ -45,17 +30,17 @@ table.dataTable {
         width: 40px;
     }
     tr {
-        /* summary row - provided in the users own timesheet table */
+        /* summary row - used in many tables to show rows with summarized values like durations or money */
         &.summary td {
             font-weight: bold;
-            border-bottom: 1px solid #ccc;
-            background-color: #eaeaea;
+            border: 0;
+            background-color: var(--tblr-table-striped-bg);
         }
         th.multiCheckbox {
             width: 15px;
         }
         &.overlapping {
-            border-top: 2px dotted red;
+            border-top: 2px solid rgba(214,57,57,.1);
         }
         &.exported {
             opacity: 0.7;
@@ -88,15 +73,6 @@ table.dataTable {
         }
         span.label-invisible {
             opacity: 0.8;
-        }
-    }
-    tfoot {
-        tr {
-            /* overwritten if used in tfoot, to switch the border from below to top */
-            &.summary td {
-                border-top: 1px solid #ccc;
-                border-bottom: 0;
-            }
         }
     }
     th.weekend,

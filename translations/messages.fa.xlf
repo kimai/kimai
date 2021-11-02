@@ -159,10 +159,6 @@
         <source>label.toggle_dropdown</source>
         <target>نمایش منو</target>
       </trans-unit>
-      <trans-unit id="more.info.link">
-        <source>more.info.link</source>
-        <target>اطلاعات بیشتر</target>
-      </trans-unit>
       <trans-unit id="dashboard.all">
         <source>dashboard.all</source>
         <target>تمام کاربران</target>
@@ -398,10 +394,6 @@
       <trans-unit id="menu.export">
         <source>menu.export</source>
         <target>خروجی گرفتن</target>
-      </trans-unit>
-      <trans-unit id="menu.invoice">
-        <source>menu.invoice</source>
-        <target>فاکتورها</target>
       </trans-unit>
       <trans-unit id="menu.timesheet">
         <source>menu.timesheet</source>

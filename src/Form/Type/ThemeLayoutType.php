@@ -26,8 +26,8 @@ class ThemeLayoutType extends AbstractType
         $resolver->setDefaults([
             'required' => true,
             'choices' => [
-                'fixed' => 'fixed',
-                'boxed' => 'boxed',
+                'layout.fluid' => 'default',
+                'layout.boxed' => 'boxed',
             ],
             'search' => false,
         ]);

@@ -2,28 +2,26 @@
 
 {% block report_title %}{{ report_title|trans({}, 'reporting') }}{% endblock %}
 
+{% block report_form %}
+    {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle'}}) }}
+    {{ form_row(form.date, {'label': false, 'row_attr': {'class': 'me-2'}}) }}
+    {{ form_end(form) }}
+{% endblock %}
+
 {% block report %}
 
-    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
-        {% block box_before %}
-            {{ form_start(form, {'attr': {'class': 'form-inline form-reporting'}}) }}
-        {% endblock %}
-        {% block box_after %}
-            {{ form_end(form) }}
-        {% endblock %}
-        {% block box_title %}
-            {{ form_widget(form.date) }}
-        {% endblock %}
-        {% block box_body_class %}{{ box_id }} table-responsive {% if hasData %}no-padding{% endif %}{% endblock %}
+        {% block box_body_class %}{{ box_id }} table-responsive {% if hasData %}p-0{% endif %} m-0{% endblock %}
         {% block box_body %}
             {% if not hasData %}
                 {{ widgets.nothing_found() }}
             {% else %}
                 {% set totals = {} %}
-                <table class="table table-bordered table-hover dataTable">
-                    <thead>
+                <table class="table table-hover dataTable">
+                    <thead class="sticky-top">
                         <tr>
+                            <th class="w-min"></th>
                             <th>&nbsp;</th>
                             <th>&nbsp;</th>
                             {% for month in stats.0.getDateTimes() %}
@@ -41,17 +39,20 @@
                     {% for userYear in stats|filter(row => row.user is not null) %}
                         {% set usersTotalDuration = 0 %}
                         <tr class="user">
+                            <td class="w-min text-nowrap">
+                                {{ widgets.user_avatar(userYear.user) }}
+                            </td>
                             <td class="text-nowrap">
-                                {{ widgets.label_dot(userYear.user.displayName, userYear.user.color) }}
+                                {{ widgets.username(userYear.user) }}
                             </td>
                                 {% for mid, month in userYear.months %}
                                     {% if month.totalDuration > 0 %}
                                         {% set usersTotalDuration = usersTotalDuration + month.totalDuration %}
                                     {% endif %}
                                 {% endfor %}
-                            <th class="text-nowrap text-center total">
+                            <td class="text-nowrap text-center total">
                                 {{ usersTotalDuration|duration }}
-                            </th>
+                            </td>
                             {% for mid, month in userYear.getMonths() %}
                                 <td class="text-nowrap text-center day-total">
                                     {% if month.totalDuration > 0 %}
@@ -67,8 +68,15 @@
                     </tbody>
                     <tfoot>
                         <tr class="summary">
-                            <td>{{ 'stats.durationTotal'|trans }}</td>
-                            <td>&nbsp;</td>
+                            <td colspan="2">{{ 'stats.durationTotal'|trans }}</td>
+                            <td class="text-center">
+                                {% set allTotals = 0 %}
+                                {% for id, total in totals %}
+                                    {% set allTotals = allTotals + total %}
+                                {% endfor %}
+                                {{ allTotals|duration }}
+                            </td>
+                            </td>
                             {% for id, total in totals %}
                                 <td class="text-center text-nowrap">
                                     {{ total|duration }}

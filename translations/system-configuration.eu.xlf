@@ -106,10 +106,6 @@
         <source>label.invoice.number_format</source>
         <target>Faktura zenbakien formatua</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>Bilaketa erraza</target>
-      </trans-unit>
       <trans-unit id="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
         <target>Hasierako denbora lehenetsia (ez da erabiltzen denbora-jarraipena egiteko modu guztietan)</target>

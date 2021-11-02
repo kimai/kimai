@@ -1,15 +1,16 @@
-{% extends "@AdminLTE/layout/form-theme.html.twig" %}
+{% extends '@theme/layout/form-theme.html.twig' %}
 
 {# Adds the help icon, including a link to the documentation #}
 {% block form_label %}
     {% if form.vars.docu_chapter is defined and form.vars.docu_chapter is not empty %}
-        <a href="{{ form.vars.docu_chapter|docu_link }}" target="_blank"><i class="{{ 'help'|icon }}"></i></a>
+        <a class="ps-2 float-end" href="{{ form.vars.docu_chapter|docu_link }}" target="_blank"><i class="fa-1x text-secondary {{ 'docu_chapter'|icon }} fa-1x"></i></a>
+        {% set label_attr = label_attr|merge({class: 'float-start'}) %}
     {% endif %}
     {{ parent() }}
-{% endblock form_label %}
+{% endblock %}
 
 {% block quick_entry_week_row %}
-    <tr{% with {attr: row_attr|merge({class: (row_attr.class|default('') ~ ' form-group qe-entry-week-row' ~ (not valid ? ' has-error'))|trim})} %}{{ block('attributes') }}{% endwith %}>
+    <tr{% with {attr: row_attr|merge({class: (row_attr.class|default('') ~ ' form-group qe-entry-week-row' ~ (not valid ? ' is-invalid'))|trim})} %}{{ block('attributes') }}{% endwith %}>
         <td>
             {{ form_row(form.project) }}
         </td>
@@ -18,7 +19,7 @@
         </td>
         {% for timesheet in form.timesheets %}
             <td class="text-center{% if timesheet.vars.data.begin is weekend %} weekend{% endif %}{% if timesheet.vars.data.begin is today %} today{% endif %}">
-                {{ form_row(timesheet) }}
+                {{ form_widget(timesheet) }}
             </td>
         {% endfor %}
         <td class="text-nowrap text-center total qe-totals-row"></td>
@@ -26,34 +27,72 @@
 {% endblock %}
 
 {% block _team_edit_form_members_entry_user_widget %}
-    {#  this will convert the select box into a hidden field, which are exchangable from an HTML perspective #}
+    {#  this will convert the select box into a hidden field, which are exchangeable from an HTML perspective #}
     {%- set type = 'hidden' -%}
     {{ block('form_widget_simple') }}
 {% endblock %}
 
+{% block _team_edit_form_members_entry_teamlead_widget %}
+    {% set attr = attr|merge({'class' : 'form-selectgroup-input '}) %}
+    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+{% endblock %}
+
+{% block _team_edit_form_members_widget %}
+    <p>{{ 'team.configure_teamlead.help'|trans }}</p>
+    {{ form_widget(form, {row_attr: {class: 'mb-1'}}) }}
+{% endblock %}
+
+{% block team_member_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
 {% block team_member_widget %}
-    <div class="row">
-        <div class="col-xs-7">
-            <div class="checkbox">
-            <button class="btn btn-default btn-xs" onclick="jQuery(this).parent().parent().parent().remove();return false;"><i class="{{ 'trash'|icon }}"></i></button>
-            {% if form.vars.data is not null and form.vars.data.user is not null %}
-                {{ form.vars.data.user.displayName }}
-            {% else %}
-                __USERNAME__
-            {% endif %}
-            </div>
-            {{ form_widget(form.user) }}
-            {{ form_errors(form.user) }}
-        </div>
-        <div class="col-xs-5">
-            {{ form_widget(form.teamlead) }}
+    {% import 'macros/widgets.html.twig' as widgets%}
+    <div class="row mb-1">
+        <div class="col-xs-12">
+            <label class="form-selectgroup-item flex-fill">
+                {{ form_widget(form.teamlead) }}
+                <div class="form-selectgroup-label d-flex align-items-center p-3">
+                    <div class="me-3">
+                        <span class="form-selectgroup-check"></span>
+                    </div>
+                    <div class="form-selectgroup-label-content d-flex align-items-center me-2">
+                        {% if form.vars.data is not null and form.vars.data.user is not null %}
+                            {{ widgets.user_avatar(form.vars.data.user) }}
+                        {% else %}
+                            {{ widgets.avatar('__INITIALS__', '__COLOR__', '__DISPLAY__') }}
+                        {% endif %}
+                    </div>
+                    <div class="form-selectgroup-label-content d-flex align-items-center">
+                        <div class="text-start">
+                            <div class="font-weight-medium">
+                                {% if form.vars.data is not null and form.vars.data.user is not null %}
+                                    {{ form.vars.data.user.displayName }}
+                                {% else %}
+                                    __DISPLAY__
+                                {% endif %}
+                                {{ form_widget(form.user) }}
+                                {{ form_errors(form.user) }}
+                            </div>
+                            {% if form.vars.data is not null and form.vars.data.user is not null %}
+                                <div class="text-muted">{{- form.vars.data.user.title -}}</div>
+                            {% else %}
+                                <div class="text-muted">__TITLE__</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="ms-auto">
+                        <button class="btn btn-icon" onclick="jQuery(this).parent().parent().parent().remove();return false;">{{ icon('trash') }}</button>
+                    </div>
+                </div>
+            </label>
         </div>
     </div>
 {% endblock team_member_widget %}
 
 {% block daterange_widget %}
     <div class="input-group">
-        <div class="input-group-addon">
+        <div class="input-group-text">
             <i class="far fa-calendar-alt"></i>
         </div>
 
@@ -67,15 +106,11 @@
     {% if (form.vars.duration_presets is defined and form.vars.duration_presets is not empty) and (form.vars.disabled is same as (false)) %}
     <div class="input-group">
         {{ block('form_widget_simple') }}
-        <div class="input-group-btn">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
-            <ul class="dropdown-menu dropdown-menu-right pre-scrollable">
-                {% for value in form.vars.duration_presets %}
-                    <li class="text-center">
-                        <a href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ value }}').trigger('change');return false;">{{ value }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
+        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+        <div class="dropdown-menu dropdown-menu-right pre-scrollable">
+            {% for value in form.vars.duration_presets %}
+                <a class="dropdown-item" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ value }}').trigger('change');return false;">{{ value }}</a>
+            {% endfor %}
         </div>
     </div>
     {% else %}
@@ -85,8 +120,8 @@
 
 {% block datetime_widget -%}
     <div class="input-group">
-        <div class="input-group-addon">
-            <a href="#" onclick="if (!jQuery('#{{ id }}').is(':disabled')) { jQuery('#{{ id }}').val(moment().format('{{ attr['data-format'] }}')).change(); }return false;"><i class="{{ 'calendar'|icon }}"></i></a>
+        <div class="input-group-text">
+            <a href="#" onclick="if (!jQuery('#{{ id }}').is(':disabled')) { jQuery('#{{ id }}').val(moment().format('{{ attr['data-format'] }}')).change(); }return false;">{{ icon('calendar') }}</a>
         </div>
         {{ block('form_widget_simple') }}
     </div>
@@ -94,8 +129,8 @@
 
 {% block date_widget -%}
     <div class="input-group">
-        <div class="input-group-addon">
-            <a href="#" onclick="if (!jQuery('#{{ id }}').is(':disabled')) { jQuery('#{{ id }}').val(moment().format('{{ attr['data-format'] }}')).change(); }return false;"><i class="{{ 'calendar'|icon }}"></i></a>
+        <div class="input-group-text">
+            <a href="#" onclick="if (!jQuery('#{{ id }}').is(':disabled')) { jQuery('#{{ id }}').val(moment().format('{{ attr['data-format'] }}')).change(); }return false;">{{ icon('calendar') }}</a>
         </div>
         {{ block('form_widget_simple') }}
     </div>
@@ -104,7 +139,7 @@
 {% block text_widget -%}
     {% if icon is not empty %}
     <div class="input-group">
-        <div class="input-group-addon">
+        <div class="input-group-text">
             <i class="{{ icon|icon }}"></i>
         </div>
         {{ block('form_widget_simple') }}
@@ -116,10 +151,10 @@
 
 {% block yearpicker_widget -%}
     <div class="btn-group">
-        <a class="btn btn-default btn-left" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ previousYear|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ previousYear|date_short }}">
-            <i class="{{ 'left'|icon }}"></i>
+        <a class="btn btn-left btn-icon" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ previousYear|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ previousYear|date_short }}">
+            {{ icon('left') }}
         </a>
-        <a class="btn btn-default" href="#" onclick="return false;">
+        <a class="btn" href="#" onclick="return false;">
             <span id="{{ form.vars.id }}_month_name">
                 {% if show_range %}
                     {{ year|date_short }} &ndash; {{ nextYear|date_short }}
@@ -128,8 +163,8 @@
                 {% endif %}
             </span>
         </a>
-        <a class="btn btn-default btn-right" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ nextYear|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ nextYear|date_short }}">
-            <i class="{{ 'right'|icon }}"></i>
+        <a class="btn btn-right btn-icon" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ nextYear|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ nextYear|date_short }}">
+            {{ icon('right') }}
         </a>
     </div>
     {{ block('hidden_widget') }}
@@ -137,29 +172,29 @@
 
 {% block monthpicker_widget -%}
     <div class="btn-group">
-        <a class="btn btn-default btn-left" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ previousMonth|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ previousMonth|month_name(true) }}">
-            <i class="{{ 'left'|icon }}"></i>
+        <a class="btn btn-left btn-icon" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ previousMonth|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ previousMonth|month_name(true) }}">
+            {{ icon('left') }}
         </a>
-        <a class="btn btn-default" href="#" onclick="return false;">
+        <a class="btn" href="#" onclick="return false;">
             <span id="{{ form.vars.id }}_month_name">{{ month|month_name(true) }}</span>
         </a>
-        <a class="btn btn-default btn-right" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ nextMonth|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ nextMonth|month_name(true) }}">
-            <i class="{{ 'right'|icon }}"></i>
+        <a class="btn btn-right btn-icon" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ nextMonth|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ nextMonth|month_name(true) }}">
+            {{ icon('right') }}
         </a>
     </div>
     {{ block('hidden_widget') }}
 {%- endblock monthpicker_widget %}
 
 {% block weekpicker_widget -%}
-    <div class="btn-group week-picker-btn-group">
-        <a class="btn btn-default btn-left" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ previousWeek|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': previousWeek|date_format('W')}) }}">
-            <i class="{{ 'left'|icon }}"></i>
+    <div class="btn-group week-picker-btn-group {{ attr.class ?? '' }}">
+        <a class="btn btn-left btn-icon" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ previousWeek|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': previousWeek|date_format('W')}) }}">
+            {{ icon('left') }}
         </a>
-        <a class="btn btn-default" href="#" onclick="return false;">
+        <a class="btn" href="#" onclick="return false;">
             <span id="{{ form.vars.id }}_week_number">{{ 'stats.workingTimeWeek'|trans({'%week%': week|date_format('W')}) }}</span>
         </a>
-        <a class="btn btn-default btn-right" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ nextWeek|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': nextWeek|date_format('W')}) }}">
-            <i class="{{ 'right'|icon }}"></i>
+        <a class="btn btn-right btn-icon" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ nextWeek|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': nextWeek|date_format('W')}) }}">
+            {{ icon('right') }}
         </a>
     </div>
     {{ block('hidden_widget') }}

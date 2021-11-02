@@ -11,7 +11,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\User;
 use App\Entity\UserPreference;
-use KevinPapst\AdminLTEBundle\Helper\ContextHelper;
+use KevinPapst\TablerBundle\Helper\ContextHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -64,29 +64,23 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
         if (!($user instanceof User)) {
             return;
         }
-
+        //$this->helper->setIsRightToLeft(true);
         /** @var UserPreference $ref */
         foreach ($user->getPreferences() as $ref) {
             $name = $ref->getName();
             switch ($name) {
                 case UserPreference::SKIN:
-                    if (!empty($ref->getValue())) {
-                        $this->helper->setOption('skin', 'skin-' . $ref->getValue());
-                    }
+                    $this->helper->setIsDarkMode($ref->getValue() === 'dark');
                     break;
 
                 case 'theme.layout':
-                    if ($ref->getValue() === 'boxed') {
-                        $this->helper->setOption('boxed_layout', true);
-                        $this->helper->setOption('fixed_layout', false);
-                    } elseif ($ref->getValue() === 'fixed') {
-                        $this->helper->setOption('boxed_layout', false);
-                        $this->helper->setOption('fixed_layout', true);
-                    }
+                    $value = ($ref->getValue() === 'boxed');
+                    $this->helper->setIsBoxedLayout($value);
+                    $this->helper->setIsCondensedUserMenu($value);
                     break;
 
                 case 'theme.collapsed_sidebar':
-                    $this->helper->setOption('collapsed_sidebar', $ref->getValue());
+                    $this->helper->setIsCondensedNavbar($ref->getValue());
                     break;
             }
         }

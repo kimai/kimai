@@ -95,9 +95,11 @@ abstract class TimesheetAbstractController extends AbstractController
 
         $this->prepareQuery($query);
 
-        $pager = $this->repository->getPagerfantaForQuery($query);
+        $result = $this->repository->getTimesheetResult($query);
+        $pager = $result->getPagerfanta();
 
         return $this->render($renderTemplate, [
+            'stats' => $result->getStatistic(), // FIXME remove me
             'entries' => $pager,
             'page' => $query->getPage(),
             'query' => $query,

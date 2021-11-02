@@ -12,20 +12,24 @@
     <div class="row">
         {% set hasDragAndDrop = (config.dragDropAmount > 0 and dragAndDrop is not empty and (dragAndDrop|filter(s => s.entries|length > 0)|length > 0)) %}
         {% if hasDragAndDrop %}
-        <div class="hidden-xs col-sm-5 col-md-4 col-lg-3 no-print">
+        <div class="d-xs-none col-sm-5 col-md-4 col-lg-3 d-print-none">
             {% for source in dragAndDrop|filter(s => s.entries|length > 0) %}
-                {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+                {% embed '@theme/embeds/card.html.twig' %}
                     {% block box_title %}{{ source.title|trans }}{% endblock %}
-                    {% block box_body_class %}drag-and-drop-source{% endblock %}
+                    {% block box_body_class %}drag-and-drop-source p-0{% endblock %}
                     {% block box_body %}
-                        <div class="external-events" data-method="{{ source.method }}" data-route="{{ path(source.route, source.routeParams) }}" data-route-replacer="{{ source.routeReplacer|json_encode|e('html_attr') }}">
+                        <div class="list-group list-group-flush external-events" data-method="{{ source.method }}" data-route="{{ path(source.route, source.routeParams) }}" data-route-replacer="{{ source.routeReplacer|json_encode|e('html_attr') }}">
                             {% for entry in source.entries|slice(0, config.dragDropAmount) %}
-                                <div draggable="true" style="background-color: {{ entry.color }}; color: {{ entry.color|font_contrast }}" class="external-event ui-draggable ui-draggable-handle" data-entry="{{ entry.data|json_encode|e('html_attr') }}"{% if entry.project is not null %} data-toggle="tooltip" title="{{ entry.project.customer.name }}"{% endif %}>
-                                    {% if source.blockInclude is not null and entry.blockName is not null and block(entry.blockName, source.blockInclude) is defined %}
-                                        {{ block(entry.blockName, source.blockInclude) }}
-                                    {% else %}
-                                        <span class="title">{{ entry.title }}</span>
-                                    {% endif %}
+                                <div draggable="true" class="p-1 ps-2 list-group-item external-event ui-draggable ui-draggable-handle" data-entry="{{ entry.data|json_encode|e('html_attr') }}"{% if entry.project is not null %} data-toggle="tooltip" title="{{ entry.project.customer.name }}"{% endif %}>
+                                    <div class="row align-items-center">
+                                        <div class="col text-truncate">
+                                            {% if source.blockInclude is not null and entry.blockName is not null and block(entry.blockName, source.blockInclude) is defined %}
+                                                {{ block(entry.blockName, source.blockInclude) }}
+                                            {% else %}
+                                                <span class="d-block text-muted text-truncate mt-n1">{{ entry.title }}</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
                                 </div>
                             {% endfor %}
                         </div>
@@ -36,8 +40,8 @@
         {% endif %}
 
         <div class="col-xs-12 {% if hasDragAndDrop %}col-sm-7 col-md-8 col-lg-9 col-print-12{% endif %}">
-            {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-                {% block box_body_class %}no-padding{% endblock %}
+            {% embed '@theme/embeds/card.html.twig' %}
+                {% block box_body_class %}p-3{% endblock %}
                 {% block box_body %}
                     <div id="timesheet_calendar"></div>
                 {% endblock %}
@@ -69,20 +73,7 @@
         {# https://gomakethings.com/dynamically-changing-the-text-color-based-on-background-color-contrast-with-vanilla-js/ #}
         function calculateFontContrastColor(hexcolor)
         {
-            if (hexcolor.slice(0, 1) === '#') {
-                hexcolor = hexcolor.slice(1);
-            }
-
-            if (hexcolor.length === 3) {
-                hexcolor = hexcolor.split('').map(function (hex) { return hex + hex; }).join('');
-            }
-
-            let r = parseInt(hexcolor.substr(0,2),16);
-            let g = parseInt(hexcolor.substr(2,2),16);
-            let b = parseInt(hexcolor.substr(4,2),16);
-            let yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-
-            return (yiq >= 128) ? '#000000' : '#ffffff';
+            return KimaiColor.calculateContrastColor(hexcolor);
         }
 
         function convertApiTimesheetToCalendar(apiItem)
@@ -199,7 +190,7 @@
             let API = kimai.getPlugin('api');
             let DATES = kimai.getPlugin('date');
             jQuery('{{ calendarSelector }}').fullCalendar({
-                themeSystem: 'bootstrap3',
+                themeSystem: 'bootstrap4',
                 defaultView: '{{ app.user.getPreferenceValue('calendar.initial_view') }}',
                 {% if google is not null %}
                 googleCalendarApiKey: '{{ google.apiKey }}',
@@ -477,7 +468,8 @@
                 {% endif %}
             });
             var trashBtn = jQuery('.fc-deleteButton-button');
-            trashBtn.html('<span class="text-danger"><i class="{{ 'trash'|icon }} text-danger"></i> ' + trashBtn.text() + '</span>');
+            trashBtn.addClass('btn-outline-danger');
+            trashBtn.html('{{ icon('trash') }} ' + trashBtn.text());
         });
     </script>
 {% endblock %}

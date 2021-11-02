@@ -102,10 +102,6 @@
         <source>menu.timesheet</source>
         <target state="translated">나의 근무시간</target>
       </trans-unit>
-      <trans-unit id="menu.invoice">
-        <source>menu.invoice</source>
-        <target state="translated">청구서</target>
-      </trans-unit>
       <trans-unit id="menu.export">
         <source>menu.export</source>
         <target state="translated">내보내기</target>
@@ -313,10 +309,6 @@
       <!--
               Widgets
             -->
-      <trans-unit id="more.info.link">
-        <source>more.info.link</source>
-        <target state="translated">더보기</target>
-      </trans-unit>
       <trans-unit id="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
         <target state="translated">메뉴보기</target>

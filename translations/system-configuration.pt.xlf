@@ -82,10 +82,6 @@
         <source>label.invoice.number_format</source>
         <target>Formato do número de fatura</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>Pesquisa simples</target>
-      </trans-unit>
       <trans-unit id="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
         <target>Tempo de início padrão (não usado em todos os modos de rastreamento de tempo)</target>

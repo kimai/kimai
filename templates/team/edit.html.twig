@@ -11,14 +11,15 @@
         {% include 'team/member-form.html.twig' %}
     </div>
     <div class="col-md-6">
-        {% if not customerForm is null %}
+
+        {% if customerForm is defined and customerForm is not null %}
             {{ include('default/_form.html.twig', {
                 'title': 'teams.customer_access'|trans({}, 'teams'),
                 'form': customerForm,
             }) }}
         {% endif %}
 
-        {% if not projectForm is null %}
+        {% if projectForm is defined and projectForm is not null %}
             {{ include('default/_form.html.twig', {
                 'title': 'teams.project_access'|trans({}, 'teams'),
                 'form': projectForm,

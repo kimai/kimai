@@ -1,0 +1,65 @@
+@include dark-mode {
+    .form-check-input {
+        border-color: $input-border-color;
+    }
+
+    /* selectpicker.scss / Tom Select */
+    .ts-wrapper.form-select .ts-control,
+    .ts-wrapper.form-select.single.input-active .ts-control {
+        color: $dark-mode-text;
+    }
+    .ts-dropdown {
+        background-color: $dark-mode-lighten;
+        color: $dark-mode-text;
+    }
+    .ts-control {
+        > input {
+            min-width: unset;
+            color: $dark-mode-text;
+        }
+        .item {
+            background-color: $dark;
+            color: $dark-mode-text;
+        }
+    }
+    .optgroup-header {
+        background-color: $dropdown-dark-bg;
+        color: $dark-mode-text;
+    }
+
+    form .card-body fieldset {
+        &:hover {
+            background-color: $dark-mode-weekend;
+        }
+    }
+
+    /* datatable-extensions.scss */
+    table.dataTable {
+        th.today, td.today {
+            background-color: $dark-mode-today;
+            color: $dark-mode-text;
+        }
+        th.weekend, td.weekend {
+            background-color: $dark-mode-weekend;
+            color: $dark-mode-text;
+        }
+        tr {
+            &.summary td {
+                background-color: $dark-mode-darken;
+            }
+        }
+    }
+
+    .page-actions {
+        border: 1px solid darken($input-border-color, 25%);
+        border-radius: $border-radius;
+    }
+
+    .overlay {
+        background: rgba(0, 0, 0, 0.5);
+        > .fas {
+            color: $dark-mode-text;
+        }
+    }
+
+}

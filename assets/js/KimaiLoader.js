@@ -64,14 +64,13 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiSelectDataAPI('select[data-related-select]'));
         kimai.registerPlugin(new KimaiAlternativeLinks('.alternative-link'));
         kimai.registerPlugin(new KimaiAjaxModalForm('.modal-ajax-form'));
-        kimai.registerPlugin(new KimaiRecentActivities('li.notifications-menu'));
-        kimai.registerPlugin(new KimaiActiveRecords('li.messages-menu', 'li.messages-menu-empty'));
+        kimai.registerPlugin(new KimaiRecentActivities('.notifications-menu'));
+        kimai.registerPlugin(new KimaiActiveRecords('.messages-menu', '.messages-menu-empty'));
         kimai.registerPlugin(new KimaiAPILink('api-link'));
         kimai.registerPlugin(new KimaiAutocomplete('.js-autocomplete'));
         kimai.registerPlugin(new KimaiForm());
         kimai.registerPlugin(new KimaiThemeInitializer());
         kimai.registerPlugin(new KimaiMultiUpdateTable());
-        //kimai.registerPlugin(new KimaiPauseRecord('li.messages-menu ul.menu li'));
 
         // notify all listeners that Kimai plugins can now be registered
         kimai.getPlugin('event').trigger('kimai.pluginRegister', {'kimai': kimai});

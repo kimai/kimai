@@ -3,13 +3,12 @@
 {% set widgetId = options.id %}
 
 {% if projectStats|length > 0 %}
-<div class="row">
     <div class="col-md-12">
-        {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% embed '@theme/embeds/card.html.twig' %}
             {% import "macros/widgets.html.twig" as widgets %}
             {% import "macros/progressbar.html.twig" as progress %}
             {% block box_attributes %}id="{{ widgetId }}"{% endblock %}
-            {% block box_body_class %}no-padding box-body-scrollable{% endblock %}
+            {% block box_body_class %}p-0 box-body-scrollable{% endblock %}
             {% block box_title %}
                 {% if not title is empty %}{{ title|trans }}{% endif %}
             {% endblock %}
@@ -38,5 +37,4 @@
             {% endblock %}
         {% endembed %}
     </div>
-</div>
 {% endif %}

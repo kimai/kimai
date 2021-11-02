@@ -273,28 +273,6 @@ class AppExtensionTest extends TestCase
         }
     }
 
-    public function testAdditionalAuthenticationRoutes()
-    {
-        $minConfig = $this->getMinConfig();
-        $adminLte = [
-            'adminlte_registration' => 'foo',
-            'adminlte_password_reset' => 'bar',
-        ];
-
-        $container = $this->getContainer();
-        $container->setParameter('admin_lte_theme.routes', $adminLte);
-
-        $this->extension->load($minConfig, $container);
-
-        $this->assertEquals(
-            [
-                'adminlte_registration' => 'foo',
-                'adminlte_password_reset' => 'bar',
-            ],
-            $container->getParameter('admin_lte_theme.routes')
-        );
-    }
-
     /**
      * @expectedDeprecation Configuration "kimai.timesheet.duration_only" is deprecated, please remove it
      * @group legacy

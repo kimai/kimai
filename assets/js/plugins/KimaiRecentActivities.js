@@ -29,10 +29,10 @@ export default class KimaiRecentActivities extends KimaiPlugin {
             return;
         }
 
-        const dropdown = menu.querySelector('ul.dropdown-menu');
+        const dropdown = menu.querySelector('.dropdown-menu');
 
         this.attributes = dropdown.dataset;
-        this.itemList = dropdown.querySelector('li > ul.menu');
+        this.itemList = dropdown.querySelector('.menu');
 
         const self = this;
         const handle = function() { self.reloadRecentActivities(); };
@@ -61,20 +61,36 @@ export default class KimaiRecentActivities extends KimaiPlugin {
             return;
         }
 
+        const isList = this.itemList.nodeName.toUpperCase() === 'UL';
+        const itemClass = (this.attributes['itemClass'] !== undefined ? this.attributes['itemClass'] : '');
+
         let htmlToInsert = '';
 
         for (let timesheet of entries) {
-            let label = this.attributes['template']
+            const label = this.attributes['template']
                 .replace('%customer%', timesheet.project.customer.name)
                 .replace('%project%', timesheet.project.name)
-                .replace('%activity%', timesheet.activity.name);
+                .replace('%activity%', timesheet.activity.name)
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+            ;
 
-            htmlToInsert +=
-                `<li>` +
-                    `<a href="${ this.attributes['href'].replace('000', timesheet.id) }" data-event="kimai.timesheetStart kimai.timesheetUpdate" class="api-link" data-method="PATCH" data-msg-error="timesheet.start.error" data-msg-success="timesheet.start.success">` +
-                        `<i class="${ this.attributes['icon'] }"></i> ${ label }` +
-                    `</a>` +
-                `</li>`;
+            const option = document.createElement('option');
+            option.innerText = label;
+            const sanitizedLabel = option.innerText;
+
+            const icon = this.attributes['icon'] !== undefined ? `<i class="${ this.attributes['icon'] }"></i>` : '';
+
+            const linkToInsert =
+                `<a href="${ this.attributes['href'].replace('000', timesheet.id) }" data-event="kimai.timesheetStart kimai.timesheetUpdate" class="api-link ${itemClass}" data-method="PATCH" data-msg-error="timesheet.start.error" data-msg-success="timesheet.start.success">` +
+                    `${ icon } ${ sanitizedLabel }` +
+                `</a>`;
+
+            if (isList) {
+                htmlToInsert += `<li>` + linkToInsert + `</li>`;
+            } else {
+                htmlToInsert += linkToInsert;
+            }
         }
 
         this.itemList.innerHTML = htmlToInsert;

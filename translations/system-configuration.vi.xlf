@@ -182,10 +182,6 @@
                 <source>label.timesheet.default_begin</source>
                 <target>Thời gian bắt đầu mặc định (không được sử dụng trong tất cả các chế độ định thời gian)</target>
             </trans-unit>
-            <trans-unit id="label.simple_form">
-                <source>label.simple_form</source>
-                <target>Tìm kiếm đơn giản</target>
-            </trans-unit>
             <trans-unit id="label.invoice.number_format">
                 <source>label.invoice.number_format</source>
                 <target>Định dạng số hóa đơn</target>

@@ -198,10 +198,6 @@
         <source>label.timesheet.default_begin</source>
         <target>Standaard starttijd (wordt niet in alle tijdsregistratiemodus gebruikt)</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>Eenvoudige zoekopdracht</target>
-      </trans-unit>
       <trans-unit id="label.invoice.number_format">
         <source>label.invoice.number_format</source>
         <target>Formaat factuurnummer</target>

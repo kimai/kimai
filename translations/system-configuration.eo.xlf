@@ -182,10 +182,6 @@
         <source>label.timesheet.default_begin</source>
         <target>Defaŭlta komenca tempo (ne uzita en ĉiuj temporegistraj reĝimoj)</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>Simpla serĉo</target>
-      </trans-unit>
       <trans-unit id="label.invoice.number_format">
         <source>label.invoice.number_format</source>
         <target>Formo de faktura numero</target>

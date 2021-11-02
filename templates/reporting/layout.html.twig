@@ -4,11 +4,19 @@
 {% block page_title %}{{ 'menu.reporting'|trans }}{% endblock %}
 {% block page_subtitle %}{% block report_title %}{% endblock %}{% endblock %}
 {% block page_actions %}
-    {% set event = actions(app.user, 'reporting', 'index') %}
+    {% set event = actions(app.user, 'reporting', 'report') %}
     {{ widgets.page_actions(event.actions) }}
 {% endblock %}
 
 {% block main %}
+    {% if block('report_form') is defined %}
+    <div class="card mb-3">
+        <div class="card-body">
+            {{ block('report_form') }}
+        </div>
+    </div>
+    {% endif %}
+
     <div class="row">
         <div class="col-md-12" id="reporting-content">
             {% block report %}{% endblock %}

@@ -1,4 +1,4 @@
-{% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'boxtype': 'danger'} %}
+{% embed '@theme/embeds/card.html.twig' with {'boxtype': 'danger'} %}
     {% block box_before %}
         {{ form_start(form) }}
     {% endblock %}
@@ -9,7 +9,7 @@
         {% block form_body %}
             {% if used is same as (false) %}
                 {{ 'delete.not_in_use'|trans }}
-                <div class="hidden">
+                <div class="d-none">
                     {{ form_widget(form) }}
                 </div>
             {% else %}

@@ -1,4 +1,5 @@
 {% block dd_timesheet %}
-    {% import "calendar/widgets.html.twig" as widgets %}
-    {{ widgets.dd_event(entry.title, entry.project ? entry.project.customer.name : null, entry.project ? entry.project.name : null, null) }}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% import "calendar/widgets.html.twig" as calendar %}
+    {{ calendar.dd_event(widgets.label_color(entry.title, entry.color), entry.project ? widgets.label_customer(entry.project.customer) : null, entry.project ? widgets.label_project(entry.project) : null, null) }}
 {% endblock %}

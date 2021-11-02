@@ -14,6 +14,7 @@
 
 import jQuery from 'jquery';
 import KimaiReducedClickHandler from "./KimaiReducedClickHandler";
+import { Modal } from 'bootstrap';
 
 export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
 
@@ -30,33 +31,44 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
         const self = this;
         this.isDirty = false;
 
-        this.modal = jQuery('#remote_form_modal');
-        this.modal
-            .on('hide.bs.modal', function (e) {
-                if (self.isDirty) {
-                    if (jQuery('#remote_form_modal .modal-body .remote_modal_is_dirty_warning').length === 0) {
-                        const msg = self.getContainer().getTranslation().get('modal.dirty');
-                        jQuery('#remote_form_modal .modal-body').prepend('<p class="'+(self.modal.hasClass('modal-danger') ? 'well well-sm ' : '') + 'text-danger small remote_modal_is_dirty_warning">' + msg + '</p>');
-                    }
-                    e.preventDefault();
-                    return;
+        this.modalSelector = '#remote_form_modal';
+        const modalElement = this._getModalElement();
+
+        const enforceModalFocusFn = Modal.prototype._enforceFocus;
+        Modal.prototype._enforceFocus = function () {};
+
+        modalElement.addEventListener('hide.bs.modal', function (e) {
+            if (self.isDirty) {
+                if (jQuery('#remote_form_modal .modal-body .remote_modal_is_dirty_warning').length === 0) {
+                    const msg = self.getContainer().getTranslation().get('modal.dirty');
+                    jQuery('#remote_form_modal .modal-body').prepend('<p class="text-danger small remote_modal_is_dirty_warning">' + msg + '</p>');
                 }
-                jQuery(self._getFormIdentifier()).off('change', self._isDirtyHandler);
-                self.isDirty = false;
-                self.getContainer().getPlugin('event').trigger('modal-hide');
-            })
-            .on('hidden.bs.modal', function () {
-                // kill all references, so GC can kick in
-                self.getContainer().getPlugin('form').destroyForm(self._getFormIdentifier());
-                jQuery('#remote_form_modal .modal-body').replaceWith('');
-            })
-            .on('show.bs.modal', function () {
-                self.getContainer().getPlugin('event').trigger('modal-show');
-            });
+                e.preventDefault();
+                return;
+            }
+            jQuery(self._getFormIdentifier()).off('change', self._isDirtyHandler);
+            self.isDirty = false;
+            self.getContainer().getPlugin('event').trigger('modal-hide');
+        });
+
+        modalElement.addEventListener('hidden.bs.modal', function () {
+            Modal.prototype._enforceFocus = enforceModalFocusFn;
+            // kill all references, so GC can kick in
+            self.getContainer().getPlugin('form').destroyForm(self._getFormIdentifier());
+            jQuery('#remote_form_modal .modal-body').replaceWith('');
+        });
+
+        modalElement.addEventListener('show.bs.modal', function () {
+            self.getContainer().getPlugin('event').trigger('modal-show');
+        });
 
         this._addClickHandler(this.selector, function(href) {
             self.openUrlInModal(href);
         });
+    }
+
+    _getModal() {
+        return Modal.getOrCreateInstance(this._getModalElement())
     }
 
     openUrlInModal(url, errorHandler) {
@@ -89,6 +101,10 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
         return '#remote_form_modal .modal-content form';
     }
 
+    _getModalElement() {
+        return document.getElementById(this.modalSelector.replace('#', ''));
+    }
+
     _openFormInModal(html) {
         const self = this;
 
@@ -98,24 +114,13 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
         // messages to show above the form
         let flashMessageIdentifier = 'div.alert';
         let form = jQuery(formIdentifier);
-        let remoteModal = this.modal;
+        let remoteModal = jQuery(this.modalSelector);
 
         // will be (re-)activated later
         form.off('submit');
 
         // load new form from given content
         if (jQuery(html).find('#form_modal .modal-content').length > 0) {
-            // Support changing modal importance/types
-            remoteModal.on('hidden.bs.modal', function () {
-                if (remoteModal.hasClass('modal-danger')) {
-                    remoteModal.removeClass('modal-danger');
-                }
-            });
-
-            if (jQuery(html).find('#form_modal').hasClass('modal-danger')) {
-                remoteModal.addClass('modal-danger');
-            }
-
             // Support changing modal sizes
             let modalDialog = remoteModal.find('.modal-dialog');
             let largeModal = jQuery(html).find('.modal-dialog').hasClass('modal-lg');
@@ -130,8 +135,9 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
                 jQuery(html).find('#form_modal .modal-content')
             );
 
-            jQuery('#remote_form_modal [data-dismiss=modal]').on('click', function() {
+            jQuery('#remote_form_modal [data-bs-dismiss=modal]').on('click', function() {
                 self.isDirty = false;
+                self._getModal().hide();
             });
 
             // activate new loaded widgets
@@ -147,22 +153,23 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
         // -----------------------------------------------------------------------
         // a fix for firefox focus problems with datepicker in modal
         // see https://github.com/kevinpapst/kimai2/issues/618
-        let enforceModalFocusFn = jQuery.fn.modal.Constructor.prototype.enforceFocus;
-        jQuery.fn.modal.Constructor.prototype.enforceFocus = function() {};
+        /*
+        let enforceModalFocusFn = jQuery.fn.modal.Constructor.prototype._enforceFocus;
         remoteModal.on('hidden.bs.modal', function () {
-            jQuery.fn.modal.Constructor.prototype.enforceFocus = enforceModalFocusFn;
+            jQuery.fn.modal.Constructor.prototype._enforceFocus = enforceModalFocusFn;
         });
+        jQuery.fn.modal.Constructor.prototype._enforceFocus = function() {};
+        */
         // -----------------------------------------------------------------------
 
-        remoteModal.modal('show');
+        this._getModal().show();
 
         // the new form that was loaded via ajax
         form = jQuery(formIdentifier);
 
-        this._isDirtyHandler = function(e) {
+        form.on('change', function(e) {
             self.isDirty = true;
-        }
-        form.on('change', this._isDirtyHandler);
+        });
 
         // click handler for modal save button, to send forms via ajax
         form.on('submit', function(event) {
@@ -186,7 +193,7 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
                 data: form.serialize(),
                 success: function(html) {
                     btn.button('reset');
-                    let hasFieldError = jQuery(html).find('#form_modal .modal-content .has-error').length > 0;
+                    let hasFieldError = jQuery(html).find('#form_modal .modal-content .is-invalid').length > 0;
                     let hasFormError = jQuery(html).find('#form_modal .modal-content ul.list-unstyled li.text-danger').length > 0;
                     let hasFlashError = jQuery(html).find(flashErrorIdentifier).length > 0;
 

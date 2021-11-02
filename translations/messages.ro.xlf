@@ -128,10 +128,6 @@
         <source>menu.timesheet</source>
         <target>Pontajul meu</target>
       </trans-unit>
-      <trans-unit id="menu.invoice">
-        <source>menu.invoice</source>
-        <target>Facturi</target>
-      </trans-unit>
       <trans-unit id="menu.export">
         <source>menu.export</source>
         <target>Export</target>
@@ -339,10 +335,6 @@
       <trans-unit id="dashboard.all">
         <source>dashboard.all</source>
         <target>Toți utilizatorii</target>
-      </trans-unit>
-      <trans-unit id="more.info.link">
-        <source>more.info.link</source>
-        <target>Mai multe informații</target>
       </trans-unit>
       <trans-unit id="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>

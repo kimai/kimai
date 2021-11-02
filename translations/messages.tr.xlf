@@ -114,10 +114,6 @@
         <source>menu.timesheet</source>
         <target state="translated">Çizelgem</target>
       </trans-unit>
-      <trans-unit id="menu.invoice">
-        <source>menu.invoice</source>
-        <target state="translated">Faturalar</target>
-      </trans-unit>
       <trans-unit id="menu.export">
         <source>menu.export</source>
         <target state="translated">Dışarı aktar</target>
@@ -333,10 +329,6 @@
       <!--
               Widgets
             -->
-      <trans-unit id="more.info.link">
-        <source>more.info.link</source>
-        <target state="translated">Daha fazla</target>
-      </trans-unit>
       <trans-unit id="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
         <target state="translated">Menüyü göster</target>

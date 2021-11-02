@@ -3,23 +3,23 @@
 {% endif %}
 {% set _back = back is defined and back is not same as (false) ? back : false %}
 {% set _reset = reset is defined and reset is same as (false) ? false : true %}
-<div class="box box-primary">
+<div class="card mb-3">
     {% block form_before %}{% endblock %}
     {{ form_start(form, formStartOptions|default({})) }}
-    <div class="box-header with-border">
-        <h3 class="box-title">
-            {{ title }}
+    <div class="card-header">
+        <h3 class="card-title">
             {% if form.vars.docu_chapter is defined and form.vars.docu_chapter is not empty %}
-                <a href="{{ form.vars.docu_chapter|docu_link }}" target="_blank"><i class="{{ 'help'|icon }}"></i></a>
+                <a class="btn btn-icon btn-outline-secondary me-2" href="{{ form.vars.docu_chapter|docu_link }}" target="_blank">{{ icon('docu_chapter') }}</a>
             {% endif %}
+            {{ title }}
         </h3>
     </div>
-    <div class="box-body">
+    <div class="card-body">
         {% block form_body %}
             {{ form_widget(form) }}
         {% endblock %}
     </div>
-    <div class="box-footer">
+    <div class="card-footer">
         {% block submit_button %}
             <input type="submit" data-loading-text="{{ (submit_button|default('action.save'))|trans }}…" value="{{ (submit_button|default('action.save'))|trans }}" class="btn btn-primary" />
         {% endblock %}

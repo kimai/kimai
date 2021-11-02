@@ -15,24 +15,28 @@ export default class KimaiPaginatedBoxWidget {
 
     constructor(boxId) {
         this.selector = boxId;
-        this.overlay = jQuery('<div class="overlay"><div class="fas fa-sync fa-spin"></div></div>');
-        this.widget = jQuery(this.selector);
-        this.href = this.widget.data('href');
-        this.events = this.widget.data('reload').split(' ');
-
+        const widget = document.querySelector(this.selector);
+        this.href = widget.dataset['href'];
         const self = this;
 
-        const reloadPage = function (event) {
-            const page = jQuery(self.selector + ' .box-tools').data('page');
-            const url = self._buildUrl(page);
-            self.loadPage(url);
-        };
+        if (widget.dataset['reload'] !== undefined) {
+            this.events = widget.dataset['reload'].split(' ');
+            const reloadPage = function (event) {
+                let url = null;
+                if (document.querySelector(self.selector).dataset['reloadHref'] !== undefined) {
+                    url = document.querySelector(self.selector).dataset['reloadHref'];
+                } else {
+                    url = jQuery(self.selector + ' ul.pagination li.active a').attr('href');
+                }
+                self.loadPage(url);
+            };
 
-        for (const eventName of this.events) {
-            document.addEventListener(eventName, reloadPage);
+            for (const eventName of this.events) {
+                document.addEventListener(eventName, reloadPage);
+            }
         }
 
-        this.widget.on('click', '.box-tools ul.pagination a', function (event) {
+        jQuery('body').on('click', this.selector + ' a.pagination-link', function (event) {
             event.preventDefault();
             self.loadPage(jQuery(event.currentTarget).attr('href'));
         });
@@ -42,56 +46,34 @@ export default class KimaiPaginatedBoxWidget {
         return new KimaiPaginatedBoxWidget(elementId);
     }
     
-    _showOverlay() {
-        this.widget.append(this.overlay);
-    }
-    
-    _hideOverlay() {
-        jQuery(this.overlay).remove();
-    }
-    
     loadPage(url) {
-        const self = this;
         const selector = this.selector;
-        
-        self._showOverlay();
+
+        // this event will render a spinning loader
+        document.dispatchEvent(new CustomEvent('kimai.reloadContent', {detail: this.selector}));
+        // and this event will hide it afterwards
+        const hideOverlay = function() {
+            document.dispatchEvent(new Event('kimai.reloadedContent'));
+        }
 
         jQuery.ajax({
             url: url,
             data: {},
             success: function (response) {
                 const html = jQuery(response);
-                jQuery(selector + ' .box-tools').replaceWith(html.find('.box-tools'));
-                jQuery(selector + ' .box-body').replaceWith(html.find('.box-body'));
-                jQuery(selector + ' .box-title').replaceWith(html.find('.box-title'));
-                if (jQuery(selector + ' .box-footer').length > 0) {
-                    jQuery(selector + ' .box-footer').replaceWith(html.find('.box-footer'));
-                }
-                jQuery(selector + ' .box-body [data-toggle="tooltip"]').tooltip();
-                self.widget.removeData('error-retry');
-                self._hideOverlay();
+                // previously the parts .card-header .card-body .card-title .card-footer were replaced
+                // but the layout allows eg. ".list-group .list-group-flush" instead of .card-body
+                // so we directly replace the entire HTML
+                jQuery(selector).replaceWith(html);
+                jQuery(selector + ' [data-toggle="tooltip"]').tooltip();
+                hideOverlay();
             },
             dataType: 'html',
             error: function(jqXHR, textStatus, errorThrown) {
-                if (jqXHR.status !== undefined && jqXHR.status === 500) {
-                    if (self.widget.data('error-retry') !== undefined) {
-                        // TODO show error message ?
-                        return;
-                    }
-                    const page = jQuery(selector + ' .box-tools').data('page');
-                    if (page > 1) {
-                        self.widget.data('error-retry', 1);
-                        var url = self._buildUrl(page - 1);
-                        self.loadPage(url);
-                    }
-                }
-                self._hideOverlay();
+                // this is not yet a plugin, so the alert is not available here
+                // self.getPlugin('alert').error('Failed loading selected page');
+                hideOverlay();
             }
         });        
     }
-    
-    _buildUrl(page) {
-        return this.href.replace('1', page);
-    }
-    
 }

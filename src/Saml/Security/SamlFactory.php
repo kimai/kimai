@@ -21,7 +21,7 @@ final class SamlFactory extends AbstractFactory
     public function __construct()
     {
         $this->addOption('check_path', 'saml_acs');
-        $this->addOption('failure_path', 'fos_user_security_login');
+        $this->addOption('failure_path', 'login');
         $this->addOption('success_handler', SamlAuthenticationSuccessHandler::class);
         $this->defaultFailureHandlerOptions['login_path'] = 'saml_login';
     }

@@ -1,6 +1,5 @@
-<div class="row">
     <div class="col-md-12">
-        {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% embed '@theme/embeds/card.html.twig' %}
             {% block box_title %}
                 {% if not title is empty %}{{ title|trans }}{% endif %}
             {% endblock %}
@@ -36,4 +35,3 @@
             {% endblock %}
         {% endembed %}
     </div>
-</div>

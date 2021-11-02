@@ -142,10 +142,6 @@
         <source>label.invoice.number_format</source>
         <target>Формат номера счёта</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>Простой поиск</target>
-      </trans-unit>
       <trans-unit id="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
         <target>Время запуска по умолчанию (не используется во всех режимах составления расписания)</target>

@@ -86,10 +86,6 @@
         <source>label.invoice.number_format</source>
         <target>Formato de números de factura</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
-        <source>label.simple_form</source>
-        <target>Búsqueda sencilla</target>
-      </trans-unit>
       <trans-unit id="Sunday">
         <source>Sunday</source>
         <target>Domingo</target>

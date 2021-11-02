@@ -198,10 +198,6 @@
                 <source>label.timesheet.default_begin</source>
                 <target state="translated">Oletus aloitusaika (ei käytetä kaikissa aikataulun seurantatiloissa)</target>
             </trans-unit>
-            <trans-unit id="label.simple_form">
-                <source>label.simple_form</source>
-                <target state="translated">Yksinkertainen haku</target>
-            </trans-unit>
             <trans-unit id="label.invoice.number_format">
                 <source>label.invoice.number_format</source>
                 <target state="translated">Laskun numeromuotoilu</target>

@@ -14,9 +14,6 @@ import jQuery from "jquery";
 export default class KimaiReloadPageWidget {
 
     constructor(events, fullReload) {
-        this.overlay = jQuery('<div class="overlay-wrapper"><div class="overlay"><div class="fas fa-sync fa-spin"></div></div></div>');
-        this.widget = jQuery('div.content-wrapper');
-
         const self = this;
 
         const reloadPage = function (event) {
@@ -40,11 +37,11 @@ export default class KimaiReloadPageWidget {
     }
     
     _showOverlay() {
-        this.widget.append(this.overlay);
+        document.dispatchEvent(new CustomEvent('kimai.reloadContent', {detail: 'div.page-wrapper'}));
     }
-    
+
     _hideOverlay() {
-        jQuery(this.overlay).remove();
+        document.dispatchEvent(new Event('kimai.reloadedContent'));
     }
     
     loadPage(url) {

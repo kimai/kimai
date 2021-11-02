@@ -579,7 +579,7 @@
       </trans-unit>
       <trans-unit id="label.theme.collapsed_sidebar">
         <source>label.theme.collapsed_sidebar</source>
-        <target>Minimiert die linke Navigationsleiste</target>
+        <target>Minimiert die Navigationsleiste</target>
       </trans-unit>
       <trans-unit id="profile.preferences">
         <source>profile.preferences</source>
@@ -688,10 +688,6 @@
       <trans-unit id="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
         <target>Menü anzeigen</target>
-      </trans-unit>
-      <trans-unit id="more.info.link">
-        <source>more.info.link</source>
-        <target>Mehr Infos</target>
       </trans-unit>
       <trans-unit id="dashboard.all">
         <source>dashboard.all</source>
@@ -924,10 +920,6 @@
       <trans-unit id="menu.export">
         <source>menu.export</source>
         <target>Export</target>
-      </trans-unit>
-      <trans-unit id="menu.invoice">
-        <source>menu.invoice</source>
-        <target>Rechnungen</target>
       </trans-unit>
       <trans-unit id="menu.timesheet">
         <source>menu.timesheet</source>

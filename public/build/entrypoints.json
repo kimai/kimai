@@ -3,10 +3,10 @@
     "app": {
       "js": [
         "build/runtime.b8e7bb04.js",
-        "build/app.da44b7f8.js"
+        "build/app.fea3e163.js"
       ],
       "css": [
-        "build/app.d2b280dd.css"
+        "build/app.3e6f6969.css"
       ]
     },
     "invoice": {
@@ -15,7 +15,7 @@
         "build/invoice.19f36eca.js"
       ],
       "css": [
-        "build/invoice.ff32661a.css"
+        "build/invoice.e245ede5.css"
       ]
     },
     "invoice-pdf": {

@@ -8,7 +8,6 @@
     
     {% set rawWidth = 12 / width %}
     {% set columnWidth = rawWidth|round(0, 'floor') %}
-    <div class="row">
         {% for widget in widgets %}
             {% set columnSize = columnWidth %}
             {% if width == 5 and (loop.first or loop.last) %}
@@ -18,5 +17,4 @@
                 {{ render_widget(widget) }}
             </div>
         {% endfor %}
-    </div>
 {% endif %}

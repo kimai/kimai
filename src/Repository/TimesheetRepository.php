@@ -854,7 +854,7 @@ class TimesheetRepository extends EntityRepository
     {
         $qb = $this->getQueryBuilderForQuery($query);
 
-        return new TimesheetResult($qb);
+        return new TimesheetResult($query, $qb);
     }
 
     /**

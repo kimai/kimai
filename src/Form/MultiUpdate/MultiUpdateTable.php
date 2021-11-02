@@ -13,7 +13,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -49,12 +49,19 @@ class MultiUpdateTable extends AbstractType
             )
         );
 
-        $builder->add('action', ChoiceType::class, [
-            'mapped' => false,
-            'required' => false,
-            'choices' => $dto->getActions(),
-            'search' => false,
-        ]);
+        $i = 0;
+        foreach ($dto->getActions() as $key => $value) {
+            if (empty($key) || empty($value)) {
+                continue;
+            }
+            $builder->add('action_' . $i++, ButtonType::class, [
+                'label' => $key,
+                'attr' => [
+                    'data-href' => $value,
+                    'class' => 'multi_update_table_action' . (stripos($key, 'delete') !== false ? ' btn-danger' : ''),
+                ],
+            ]);
+        }
     }
 
     /**

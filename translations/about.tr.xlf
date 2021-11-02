@@ -20,7 +20,7 @@
             </trans-unit>
             <trans-unit id="donate">
                 <source>donate</source>
-                <target state="translated">Kimai'nin geleceği için bağışta bulunun</target>
+                <target state="translated">Bağış yapmak</target>
             </trans-unit>
             <trans-unit id="published_under">
                 <source>published_under</source>

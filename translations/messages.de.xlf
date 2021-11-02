@@ -72,6 +72,10 @@
         <source>label.remove_default</source>
         <target>Suchfavorit löschen</target>
       </trans-unit>
+      <trans-unit id="label.remove_filter">
+        <source>label.remove_filter</source>
+        <target>Suchfilter zurücksetzen</target>
+      </trans-unit>
       <trans-unit id="label.asc">
         <source>label.asc</source>
         <target>Aufsteigend</target>
@@ -182,10 +186,6 @@
       <trans-unit id="menu.timesheet">
         <source>menu.timesheet</source>
         <target>Meine Zeiten</target>
-      </trans-unit>
-      <trans-unit id="menu.invoice">
-        <source>menu.invoice</source>
-        <target>Rechnungen</target>
       </trans-unit>
       <trans-unit id="menu.export">
         <source>menu.export</source>
@@ -450,10 +450,6 @@
       <!--
               Widgets
             -->
-      <trans-unit id="more.info.link">
-        <source>more.info.link</source>
-        <target>Mehr Infos</target>
-      </trans-unit>
       <trans-unit id="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
         <target>Menü anzeigen</target>
@@ -570,7 +566,7 @@
       </trans-unit>
       <trans-unit id="label.theme.collapsed_sidebar">
         <source>label.theme.collapsed_sidebar</source>
-        <target>Minimiert die linke Navigationsleiste</target>
+        <target>Minimiert die Navigationsleiste</target>
       </trans-unit>
       <trans-unit id="label.calendar.initial_view">
         <source>label.calendar.initial_view</source>
@@ -931,9 +927,17 @@
         <source>admin_invoice_template.title</source>
         <target>Rechnungsvorlagen</target>
       </trans-unit>
+      <trans-unit id="invoice_document.title">
+        <source>invoice_document.title</source>
+        <target>Rechnungsdokument</target>
+      </trans-unit>
       <trans-unit id="invoice.title">
         <source>invoice.title</source>
         <target>Rechnungen</target>
+      </trans-unit>
+      <trans-unit id="invoice_form.title">
+        <source>invoice_form.title</source>
+        <target>Rechnung erstellen</target>
       </trans-unit>
       <trans-unit id="invoice.filter">
         <source>invoice.filter</source>
@@ -1256,6 +1260,10 @@
         <source>team.add_user.help</source>
         <target>Durch Auswahl wird dem Team ein neuer Benutzer hinzugefügt. Sie können im Anschluss festlegen, ob der Benutzer ein Teamleiter sein soll.</target>
       </trans-unit>
+      <trans-unit id="team.configure_teamlead.help">
+        <source>team.configure_teamlead.help</source>
+        <target>Die selektierten bzw. hervorgehobenen Benutzer sind Teamleiter.</target>
+      </trans-unit>
       <trans-unit id="default_value_new">
         <source>default_value_new</source>
         <target>Standard Wert für neue Einträge</target>
@@ -1266,6 +1274,38 @@
       <trans-unit id="quick_entry.title">
         <source>quick_entry.title</source>
         <target>Wöchentliche Arbeitsstunden</target>
+      </trans-unit>
+      <trans-unit id="pagination">
+        <source>pagination</source>
+        <target>Zeige die Einträge %start% bis %end% von insgesamt %total% an.</target>
+      </trans-unit>
+      <trans-unit id="skin.light">
+        <source>skin.light</source>
+        <target>Helle Farben</target>
+      </trans-unit>
+      <trans-unit id="skin.dark">
+        <source>skin.dark</source>
+        <target>Dunkle Farben</target>
+      </trans-unit>
+      <trans-unit id="layout.boxed">
+        <source>layout.boxed</source>
+        <target>Zentrierte Darstellung</target>
+      </trans-unit>
+      <trans-unit id="layout.fluid">
+        <source>layout.fluid</source>
+        <target>Volle Bildschirmbreite</target>
+      </trans-unit>
+      <trans-unit id="api_password.intro">
+        <source>api_password.intro</source>
+        <target>Das API Passwort dient zur Kommunikation zwischen Kimai und von Ihnen genutzten Apps.</target>
+      </trans-unit>
+      <trans-unit id="api_password.missing_title">
+        <source>api_password.missing_title</source>
+        <target>API kann nicht genutzt werden</target>
+      </trans-unit>
+      <trans-unit id="api_password.missing_description">
+        <source>api_password.missing_description</source>
+        <target>Sie haben noch kein API Passwort hinterlegt. Aus Sicherheitsgründen ist die Nutzung der API bis zur Hinterlegung eines Passworts für Sie nicht nutzbar.</target>
       </trans-unit>
     </body>
   </file>

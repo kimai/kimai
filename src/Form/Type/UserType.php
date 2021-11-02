@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\VisibilityInterface;
 use App\Repository\UserRepository;
+use App\Utils\Theme;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\Options;
@@ -23,6 +24,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserType extends AbstractType
 {
+    private $theme;
+
+    public function __construct(Theme $theme)
+    {
+        $this->theme = $theme;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -33,6 +41,17 @@ class UserType extends AbstractType
             'label' => 'label.user',
             'choice_label' => function (User $user) {
                 return $user->getDisplayName();
+            },
+            'choice_attr' => function (User $user) {
+                return [
+                    'data-color' => $this->theme->getUserColor($user),
+                    'data-title' => $user->getTitle(),
+                    'data-username' => $user->getUsername(),
+                    'data-alias' => $user->getAlias(),
+                    'data-initials' => $user->getInitials(),
+                    'data-accountNumber' => $user->getAccountNumber(),
+                    'data-display' => $user->getDisplayName(),
+                ];
             },
             'choice_translation_domain' => false,
             // whether disabled users should be included in the result list
@@ -47,6 +66,9 @@ class UserType extends AbstractType
             'documentation' => [
                 'type' => 'integer',
                 'description' => 'User ID',
+            ],
+            'attr' => [
+                'data-select-attributes' => 'color,title,username,initials,accountNumber,alias'
             ],
         ]);
 

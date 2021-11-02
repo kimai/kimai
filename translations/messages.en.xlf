@@ -72,6 +72,10 @@
         <source>label.remove_default</source>
         <target>Delete search favourite</target>
       </trans-unit>
+      <trans-unit id="label.remove_filter">
+        <source>label.remove_filter</source>
+        <target>Reset search filter</target>
+      </trans-unit>
       <trans-unit id="label.asc">
         <source>label.asc</source>
         <target>Ascending</target>
@@ -182,10 +186,6 @@
       <trans-unit id="menu.timesheet">
         <source>menu.timesheet</source>
         <target>My times</target>
-      </trans-unit>
-      <trans-unit id="menu.invoice">
-        <source>menu.invoice</source>
-        <target>Invoices</target>
       </trans-unit>
       <trans-unit id="menu.export">
         <source>menu.export</source>
@@ -450,10 +450,6 @@
       <!--
               Widgets
             -->
-      <trans-unit id="more.info.link">
-        <source>more.info.link</source>
-        <target>More info</target>
-      </trans-unit>
       <trans-unit id="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
         <target>Show menu</target>
@@ -570,7 +566,7 @@
       </trans-unit>
       <trans-unit id="label.theme.collapsed_sidebar">
         <source>label.theme.collapsed_sidebar</source>
-        <target>Minimize the left sidebar</target>
+        <target>Minimize the navigation bar</target>
       </trans-unit>
       <trans-unit id="label.calendar.initial_view">
         <source>label.calendar.initial_view</source>
@@ -931,9 +927,17 @@
         <source>admin_invoice_template.title</source>
         <target>Invoice template</target>
       </trans-unit>
+      <trans-unit id="invoice_document.title">
+        <source>invoice_document.title</source>
+        <target>Invoice document</target>
+      </trans-unit>
       <trans-unit id="invoice.title">
         <source>invoice.title</source>
         <target>Invoices</target>
+      </trans-unit>
+      <trans-unit id="invoice_form.title">
+        <source>invoice_form.title</source>
+        <target>Create invoice</target>
       </trans-unit>
       <trans-unit id="invoice.filter">
         <source>invoice.filter</source>
@@ -1256,6 +1260,10 @@
         <source>team.add_user.help</source>
         <target>Add a new user to the team by selecting it from the list. Afterwards you can decide if the user should become a teamlead.</target>
       </trans-unit>
+      <trans-unit id="team.configure_teamlead.help">
+        <source>team.configure_teamlead.help</source>
+        <target>The selected / highlighted users are team leaders.</target>
+      </trans-unit>
       <trans-unit id="default_value_new">
         <source>default_value_new</source>
         <target>Default values for new entries</target>
@@ -1266,6 +1274,38 @@
       <trans-unit id="quick_entry.title">
         <source>quick_entry.title</source>
         <target>Weekly working hours</target>
+      </trans-unit>
+      <trans-unit id="pagination">
+        <source>pagination</source>
+        <target>Show entries %start% to %end% from %total%.</target>
+      </trans-unit>
+      <trans-unit id="skin.light">
+        <source>skin.light</source>
+        <target>Bright colors</target>
+      </trans-unit>
+      <trans-unit id="skin.dark">
+        <source>skin.dark</source>
+        <target>Dark colors</target>
+      </trans-unit>
+      <trans-unit id="layout.boxed">
+        <source>layout.boxed</source>
+        <target>Centered layout</target>
+      </trans-unit>
+      <trans-unit id="layout.fluid">
+        <source>layout.fluid</source>
+        <target>Full screen width</target>
+      </trans-unit>
+      <trans-unit id="api_password.intro">
+        <source>api_password.intro</source>
+        <target>The API password is used for communication between Kimai and your apps</target>
+      </trans-unit>
+      <trans-unit id="api_password.missing_title">
+        <source>api_password.missing_title</source>
+        <target>API cannot be used</target>
+      </trans-unit>
+      <trans-unit id="api_password.missing_description">
+        <source>api_password.missing_description</source>
+        <target>You have not yet entered an API password. For security reasons, you cannot use the API until you have saved a password.</target>
       </trans-unit>
     </body>
   </file>

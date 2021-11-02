@@ -9,8 +9,9 @@
 
 namespace App\Twig;
 
+use App\Configuration\SystemConfiguration;
+use App\Utils\PaginationView;
 use Pagerfanta\Pagerfanta;
-use Pagerfanta\View\TwitterBootstrap3View;
 use Pagerfanta\View\ViewInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyPath;
@@ -24,14 +25,13 @@ class PaginationExtension extends AbstractExtension
      * @var ViewInterface
      */
     private $view;
-    /**
-     * @var UrlGeneratorInterface
-     */
     private $router;
+    private $configuration;
 
-    public function __construct(UrlGeneratorInterface $router)
+    public function __construct(UrlGeneratorInterface $router, SystemConfiguration $configuration)
     {
         $this->router = $router;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -40,7 +40,6 @@ class PaginationExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('pagerfanta', [$this, 'renderPagerfanta'], ['is_safe' => ['html']]),
             new TwigFunction('pagination', [$this, 'renderPagination'], ['is_safe' => ['html']]),
         ];
     }
@@ -48,35 +47,15 @@ class PaginationExtension extends AbstractExtension
     private function getView(): ViewInterface
     {
         if (null === $this->view) {
-            $this->view = new TwitterBootstrap3View();
+            $this->view = new PaginationView();
         }
 
         return $this->view;
     }
 
-    /**
-     * @deprecated since 1.8
-     */
-    public function renderPagerfanta(Pagerfanta $pagerfanta, $viewName = null, array $options = [])
-    {
-        @trigger_error('Twig function pagerfanta() is deprecated and will be removed with 2.0, use pagination() instead', E_USER_DEPRECATED);
-
-        if (\is_array($viewName)) {
-            $options = $viewName;
-        }
-
-        return $this->renderPagination($pagerfanta, $options);
-    }
-
     public function renderPagination(Pagerfanta $pagerfanta, array $options = [])
     {
         $routeGenerator = $this->createRouteGenerator($options);
-
-        $options['proximity'] = 1;
-        //$options['prev_message'] = '←';
-        //$options['next_message'] = '→';
-        $options['prev_message'] = '<i class="fas fa-chevron-left"></i>';
-        $options['next_message'] = '<i class="fas fa-chevron-right"></i>';
 
         return $this->getView()->render($pagerfanta, $routeGenerator, $options);
     }

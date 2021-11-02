@@ -18,7 +18,7 @@ final class ActiveUsersYear extends CounterYear
     {
         parent::__construct($repository, $systemConfiguration);
         $this->setId('activeUsersYear');
-        $this->setOption('icon', 'user');
+        $this->setOption('icon', 'users');
         $this->setOption('color', 'yellow');
         $this->setTitle('stats.userActiveYear');
     }
