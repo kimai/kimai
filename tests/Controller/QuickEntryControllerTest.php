@@ -52,7 +52,6 @@ class QuickEntryControllerTest extends ControllerBaseTest
         self::assertCount(10, $columns);
 
         $this->assertPageActions($client, [
-            'back' => $this->createUrl('/timesheet/'),
             'help' => 'https://www.kimai.org/documentation/weekly-times.html'
         ]);
     }
@@ -95,7 +94,6 @@ class QuickEntryControllerTest extends ControllerBaseTest
         self::assertCount(10, $columns);
 
         $this->assertPageActions($client, [
-            'back' => $this->createUrl('/timesheet/'),
             'help' => 'https://www.kimai.org/documentation/weekly-times.html'
         ]);
     }
