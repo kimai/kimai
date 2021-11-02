@@ -28,13 +28,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class CustomerStatisticService
 {
-    private $repository;
     private $timesheetRepository;
     private $dispatcher;
 
-    public function __construct(CustomerRepository $customerRepository, TimesheetRepository $timesheetRepository, EventDispatcherInterface $dispatcher)
+    public function __construct(TimesheetRepository $timesheetRepository, EventDispatcherInterface $dispatcher)
     {
-        $this->repository = $customerRepository;
         $this->timesheetRepository = $timesheetRepository;
         $this->dispatcher = $dispatcher;
     }

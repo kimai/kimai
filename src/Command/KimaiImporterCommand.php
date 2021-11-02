@@ -118,24 +118,12 @@ final class KimaiImporterCommand extends Command
      */
     private $customers = [];
     /**
-     * Instance specific mappings of customer IDs to cache IDs
-     *
-     * @var string[]
-     */
-    private $customerIds = [];
-    /**
      * Old Project ID => new Project()
      * Global across all instances.
      *
      * @var Project[]
      */
     private $projects = [];
-    /**
-     * Instance specific mappings of project IDs to cache IDs
-     *
-     * @var string[]
-     */
-    private $projectIds = [];
     /**
      * id => [projectId => Activity]
      * @var array<Activity[]>
@@ -151,13 +139,6 @@ final class KimaiImporterCommand extends Command
      * @var array
      */
     private $oldActivities = [];
-    /**
-     * If true, unknown Activities will be created globally.
-     * Default behavior: create project specific activities
-     *
-     * @var bool
-     */
-    private $unknownAsGlobal = false;
 
     private $options = [];
 
@@ -316,8 +297,6 @@ final class KimaiImporterCommand extends Command
 
             $this->teamIds = [];
             $this->userIds = [];
-            $this->customerIds = [];
-            $this->projectIds = [];
             $this->oldActivities = [];
 
             if (!$options['merge-customer']) {
@@ -986,7 +965,6 @@ final class KimaiImporterCommand extends Command
 
     private function setCustomerCache(array $oldCustomer, Customer $customer): void
     {
-        //$this->customerIds[$this->dbPrefix . $oldCustomer['customerID']] = $oldCustomer['customerID'];
         $this->customers[$oldCustomer['customerID']] = $customer;
     }
 

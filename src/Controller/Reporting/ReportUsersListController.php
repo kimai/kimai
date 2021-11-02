@@ -35,12 +35,10 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 final class ReportUsersListController extends AbstractController
 {
-    private $timesheetRepository;
     private $userRepository;
 
-    public function __construct(TimesheetRepository $timesheetRepository, UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->timesheetRepository = $timesheetRepository;
         $this->userRepository = $userRepository;
     }
 

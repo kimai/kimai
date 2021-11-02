@@ -39,15 +39,10 @@ class TimesheetEditForm extends AbstractType
      * @var CustomerRepository
      */
     private $customers;
-    /**
-     * @var ProjectRepository
-     */
-    private $projects;
 
-    public function __construct(CustomerRepository $customer, ProjectRepository $project)
+    public function __construct(CustomerRepository $customer)
     {
         $this->customers = $customer;
-        $this->projects = $project;
     }
 
     /**

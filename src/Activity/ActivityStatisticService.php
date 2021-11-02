@@ -27,13 +27,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class ActivityStatisticService
 {
-    private $activityRepository;
     private $timesheetRepository;
     private $dispatcher;
 
-    public function __construct(ActivityRepository $activityRepository, TimesheetRepository $timesheetRepository, EventDispatcherInterface $dispatcher)
+    public function __construct(TimesheetRepository $timesheetRepository, EventDispatcherInterface $dispatcher)
     {
-        $this->activityRepository = $activityRepository;
         $this->timesheetRepository = $timesheetRepository;
         $this->dispatcher = $dispatcher;
     }
