@@ -12,6 +12,7 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -25,7 +26,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  *
  * @codeCoverageIgnore
  */
-class UserFixtures extends Fixture
+class UserFixtures extends Fixture implements FixtureGroupInterface
 {
     public const DEFAULT_PASSWORD = 'kitten';
     public const DEFAULT_API_TOKEN = 'api_kitten';
@@ -52,6 +53,11 @@ class UserFixtures extends Fixture
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
+    }
+
+    public static function getGroups(): array
+    {
+        return ['user'];
     }
 
     /**
