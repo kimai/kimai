@@ -643,7 +643,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('timezone')->defaultNull()->end()
                         ->scalarNode('language')->defaultValue(User::DEFAULT_LANGUAGE)->end()
-                        ->scalarNode('theme')->defaultNull()->end()
+                        ->scalarNode('theme')->defaultValue('default')->end()
                         ->scalarNode('currency')->defaultValue(Customer::DEFAULT_CURRENCY)->end()
                     ->end()
                 ->end()
