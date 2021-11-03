@@ -14,7 +14,6 @@ Encore
     .addEntry('invoice-pdf', './assets/invoice-pdf.js')
     .addEntry('chart', './assets/chart.js')
     .addEntry('calendar', './assets/calendar.js')
-    .copyFiles({ from: './assets/images', to: 'images/[path][name].[ext]' })
 
     .splitEntryChunks()
     .configureSplitChunks(function(splitChunks) {

@@ -244,7 +244,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
                 self::USERNAME_SUPER_ADMIN,
                 'susan_super@example.com',
                 User::ROLE_SUPER_ADMIN,
-                '/build/images/default_avatar.png',
+                '/touch-icon-192x192.png',
                 true,
                 'Europe/Berlin',
             ]
