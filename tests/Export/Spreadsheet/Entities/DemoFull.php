@@ -29,6 +29,7 @@ class DemoFull
     protected $protectedProperty = false;
     /**
      * @Exporter\Expose(label="label.Private-Property", type="integer")
+     * @phpstan-ignore-next-line
      */
     private $privateProperty = 123;
 
@@ -63,6 +64,7 @@ class DemoFull
 
     /**
      * @Exporter\Expose(name="fake-method", label="label.Private-Method", type="boolean")
+     * @phpstan-ignore-next-line
      */
     private function privateMethod(): bool
     {

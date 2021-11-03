@@ -151,7 +151,7 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
 
             // for customer
             case 'cc':
-                $partialResult = $this->repository->getCounterForAllTime($this->model->getCustomer()) + $increaseBy;
+                $partialResult = $this->repository->getCounterForCustomerAllTime($this->model->getCustomer()) + $increaseBy;
                 break;
 
             case 'ccy':
@@ -166,9 +166,34 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
                 $partialResult = $this->repository->getCounterForDay($invoiceDate, $this->model->getCustomer()) + $increaseBy;
                 break;
 
+            // for user
+            case 'cu':
+                $partialResult = $this->repository->getCounterForUserAllTime($this->model->getUser()) + $increaseBy;
+                break;
+
+            case 'cuy':
+                $partialResult = $this->repository->getCounterForYear($invoiceDate, null, $this->model->getUser()) + $increaseBy;
+                break;
+
+            case 'cum':
+                $partialResult = $this->repository->getCounterForMonth($invoiceDate, null, $this->model->getUser()) + $increaseBy;
+                break;
+
+            case 'cud':
+                $partialResult = $this->repository->getCounterForDay($invoiceDate, null, $this->model->getUser()) + $increaseBy;
+                break;
+
+            case 'ustaff':
+                $partialResult = $this->model->getUser() !== null ? $this->model->getUser()->getAccountNumber() : '';
+                break;
+
+            case 'uid':
+                $partialResult = $this->model->getUser() !== null ? (string) $this->model->getUser()->getId() : '';
+                break;
+
             // across all invoices
             case 'c':
-                $partialResult = $this->repository->getCounterForAllTime() + $increaseBy;
+                $partialResult = $this->repository->getCounterForCustomerAllTime() + $increaseBy;
                 break;
 
             case 'cy':
@@ -184,11 +209,11 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
                 break;
 
             case 'cname':
-                $partialResult = $this->model->getCustomer()->getName();
+                $partialResult = $this->model->getCustomer() !== null ? $this->model->getCustomer()->getName() : '';
                 break;
 
             case 'cnumber':
-                $partialResult = $this->model->getCustomer()->getNumber();
+                $partialResult = $this->model->getCustomer() !== null ? $this->model->getCustomer()->getNumber() : '';
                 break;
 
             default:

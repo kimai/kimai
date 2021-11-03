@@ -8,7 +8,7 @@ parameters:
     tmpDir: %rootDir%/../../../var/cache/phpstan
     ignoreErrors:
         - '#Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required.#'
-    excludes_analyse:
+    excludePaths:
         - %rootDir%/../../../src/Ldap/LdapDriver.php
     treatPhpDocTypesAsCertain: false
     inferPrivatePropertyTypeFromConstructor: true
