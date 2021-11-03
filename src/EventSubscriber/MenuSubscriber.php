@@ -60,7 +60,7 @@ final class MenuSubscriber implements EventSubscriberInterface
                 $mode = $this->trackingModeService->getActiveMode();
                 if ($mode->canEditDuration() || $mode->canEditEnd()) {
                     $times->addChild(
-                        new MenuItemModel('quick_entry', 'quick_entry.title', 'quick_entry', [], $icons->icon('weekly-times'))
+                        new MenuItemModel('quick_entry', 'quick_entry.title', 'quick_entry', [], 'weekly-times')
                     );
                 }
             }

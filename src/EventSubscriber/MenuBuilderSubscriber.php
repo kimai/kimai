@@ -11,6 +11,7 @@ namespace App\EventSubscriber;
 
 use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel;
+use KevinPapst\TablerBundle\Event\MenuEvent;
 use KevinPapst\TablerBundle\Model\MenuItemInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
