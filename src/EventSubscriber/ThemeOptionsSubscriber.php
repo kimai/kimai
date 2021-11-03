@@ -11,6 +11,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\User;
 use App\Entity\UserPreference;
+use App\Form\Type\SkinType;
 use KevinPapst\AdminLTEBundle\Helper\ContextHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
@@ -70,7 +71,7 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
             $name = $ref->getName();
             switch ($name) {
                 case UserPreference::SKIN:
-                    if (!empty($ref->getValue())) {
+                    if (!empty($ref->getValue()) && in_array($ref->getValue(), SkinType::THEMES)) {
                         $this->helper->setOption('skin', 'skin-' . $ref->getValue());
                     }
                     break;
@@ -79,7 +80,7 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
                     if ($ref->getValue() === 'boxed') {
                         $this->helper->setOption('boxed_layout', true);
                         $this->helper->setOption('fixed_layout', false);
-                    } elseif ($ref->getValue() === 'fixed') {
+                    } else {
                         $this->helper->setOption('boxed_layout', false);
                         $this->helper->setOption('fixed_layout', true);
                     }
