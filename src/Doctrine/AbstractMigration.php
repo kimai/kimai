@@ -113,4 +113,9 @@ abstract class AbstractMigration extends BaseAbstractMigration
 
         $this->addSql('DROP INDEX ' . $indexName . ' ON ' . $tableName);
     }
+
+    protected function preventEmptyMigrationWarning(): void
+    {
+        $this->addSql('#prevent empty warning - no SQL to execute');
+    }
 }
