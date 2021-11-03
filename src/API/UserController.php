@@ -14,7 +14,6 @@ namespace App\API;
 use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Event\PrepareUserEvent;
-use App\Event\UserPreferenceEvent;
 use App\Form\API\UserApiCreateForm;
 use App\Form\API\UserApiEditForm;
 use App\Repository\Query\UserQuery;
@@ -115,7 +114,6 @@ final class UserController extends BaseApiController
         }
 
         $data = $this->repository->getUsersForQuery($query);
-
         $view = new View($data, 200);
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 

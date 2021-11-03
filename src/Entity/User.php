@@ -387,9 +387,10 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function getVisiblePreferences(): array
     {
         $skip = [UserPreference::TIMEZONE, UserPreference::LOCALE, UserPreference::SKIN];
+
         $all = [];
         foreach ($this->preferences as $preference) {
-            if ($preference->isEnabled() && !in_array($preference->getName(), $skip)) {
+            if ($preference->isEnabled() && !\in_array($preference->getName(), $skip)) {
                 $all[] = $preference;
             }
         }
