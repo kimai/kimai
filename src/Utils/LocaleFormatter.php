@@ -239,9 +239,10 @@ final class LocaleFormatter
 
     /**
      * @param DateTime|string $date
+     * @param bool $stripMidnight
      * @return bool|false|string
      */
-    public function dateTimeFull($date)
+    public function dateTimeFull($date, bool $stripMidnight = false)
     {
         if (null === $this->dateTimeTypeFormat) {
             $this->dateTimeTypeFormat = $this->localeFormats->getDateTimeTypeFormat();
@@ -255,13 +256,19 @@ final class LocaleFormatter
             }
         }
 
+        $format = $this->dateTimeTypeFormat;
+
+        if ($stripMidnight && $date->format('H') == '00' && $date->format('i') == '00') {
+            $format = $this->localeFormats->getDateTypeFormat();
+        }
+
         $formatter = new IntlDateFormatter(
             $this->locale,
             IntlDateFormatter::MEDIUM,
             IntlDateFormatter::MEDIUM,
             date_default_timezone_get(),
             IntlDateFormatter::GREGORIAN,
-            $this->dateTimeTypeFormat
+            $format
         );
 
         return $formatter->format($date);
