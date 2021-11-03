@@ -68,7 +68,7 @@ class PaginationExtensionTest extends TestCase
 
         $values = array_fill(0, 151, 'blub');
         $pagerfanta = new Pagerfanta(new ArrayAdapter($values));
-        $result = $sut->renderPagerfanta($pagerfanta, 'twitter_bootstrap3_translated', [
+        $result = $sut->renderPagination($pagerfanta, [
             'css_container_class' => 'pagination pagination-sm inline',
             'routeName' => 'project_activities',
             'routeParams' => ['id' => 137]
@@ -85,7 +85,7 @@ class PaginationExtensionTest extends TestCase
 
         $values = array_fill(0, 151, 'blub');
         $pagerfanta = new Pagerfanta(new ArrayAdapter($values));
-        $result = $sut->renderPagerfanta($pagerfanta, [
+        $result = $sut->renderPagination($pagerfanta, [
             'css_container_class' => 'pagination pagination-sm inline',
             'routeName' => 'project_activities',
             'routeParams' => ['id' => 137]

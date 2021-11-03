@@ -14,7 +14,6 @@ use KevinPapst\TablerBundle\Helper\Constants as ThemeConstants;
 use KevinPapst\TablerBundle\Model\NotificationModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * FIXME not used currently
@@ -23,11 +22,9 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class NotificationsSubscriber implements EventSubscriberInterface
 {
     private $urlGenerator;
-    private $auth;
 
-    public function __construct(AuthorizationCheckerInterface $auth, UrlGeneratorInterface $urlGenerator)
+    public function __construct(UrlGeneratorInterface $urlGenerator)
     {
-        $this->auth = $auth;
         $this->urlGenerator = $urlGenerator;
     }
 

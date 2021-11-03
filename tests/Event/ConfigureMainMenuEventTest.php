@@ -11,7 +11,6 @@ namespace App\Tests\Event;
 
 use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel;
-use KevinPapst\TablerBundle\Event\MenuEvent;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,13 +22,13 @@ class ConfigureMainMenuEventTest extends TestCase
     public function testGetterAndSetter()
     {
         $request = new Request();
-        $event = new MenuEvent();
+        $menu = new MenuItemModel('main', 'menu.root');
         $admin = new MenuItemModel('admin', 'admin', 'admin');
         $system = new MenuItemModel('system', 'system', 'system');
-        $sut = new ConfigureMainMenuEvent($request, $event, $admin, $system);
+        $sut = new ConfigureMainMenuEvent($request, $menu, $admin, $system);
 
         self::assertSame($request, $sut->getRequest());
-        self::assertSame($event, $sut->getMenu());
+        self::assertSame($menu, $sut->getMenu());
         self::assertSame($admin, $sut->getAdminMenu());
         self::assertSame($system, $sut->getSystemMenu());
     }

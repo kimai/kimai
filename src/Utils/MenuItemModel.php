@@ -255,7 +255,7 @@ class MenuItemModel implements MenuItemInterface
 
     public static function createDivider(): MenuItemModel
     {
-        $model = new MenuItemModel('divider_' . static::$dividerId++, '');
+        $model = new MenuItemModel('divider_' . self::$dividerId++, '');
         $model->setDivider(true);
 
         return $model;

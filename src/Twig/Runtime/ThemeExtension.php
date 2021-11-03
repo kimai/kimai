@@ -28,10 +28,6 @@ final class ThemeExtension implements RuntimeExtensionInterface
     private $translator;
     private $configuration;
     private $theme;
-    /**
-     * @var bool
-     */
-    private $randomColors;
 
     public function __construct(EventDispatcherInterface $dispatcher, TranslatorInterface $translator, SystemConfiguration $configuration, Theme $theme)
     {

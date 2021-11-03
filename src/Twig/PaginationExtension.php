@@ -9,7 +9,6 @@
 
 namespace App\Twig;
 
-use App\Configuration\SystemConfiguration;
 use App\Utils\PaginationView;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
@@ -26,12 +25,10 @@ class PaginationExtension extends AbstractExtension
      */
     private $view;
     private $router;
-    private $configuration;
 
-    public function __construct(UrlGeneratorInterface $router, SystemConfiguration $configuration)
+    public function __construct(UrlGeneratorInterface $router)
     {
         $this->router = $router;
-        $this->configuration = $configuration;
     }
 
     /**

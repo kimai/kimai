@@ -15,6 +15,7 @@ use App\Entity\User;
 use App\Event\ThemeEvent;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Twig\Runtime\ThemeExtension;
+use App\Utils\Theme;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -67,8 +68,9 @@ class ThemeEventExtensionTest extends TestCase
         ];
         $loader = new TestConfigLoader($configs);
         $configuration = new SystemConfiguration($loader, $this->getDefaultSettings());
+        $theme = new Theme($configuration);
 
-        return new ThemeExtension($dispatcher, $translator, $configuration);
+        return new ThemeExtension($dispatcher, $translator, $configuration, $theme);
     }
 
     protected function getEnvironment(): Environment
@@ -170,16 +172,5 @@ class ThemeEventExtensionTest extends TestCase
         $this->assertEquals('sdfsdf | MyCompany – foo', $sut->generateTitle('sdfsdf | '));
         $this->assertEquals('<b>MyCompany</b> ... foo', $sut->generateTitle('<b>', '</b> ... '));
         $this->assertEquals('MyCompany | foo', $sut->generateTitle(null, ' | '));
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testThemeConfig()
-    {
-        $sut = $this->getSut(false);
-        self::assertEquals(3, $sut->getThemeConfig('active_warning'));
-        self::assertEquals('green', $sut->getThemeConfig('box_color'));
-        self::assertFalse($sut->getThemeConfig('auto_reload_datatable'));
     }
 }
