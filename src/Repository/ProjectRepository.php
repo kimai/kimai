@@ -22,9 +22,10 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\ProjectQuery;
 use DateTime;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\QueryBuilder;
@@ -275,10 +276,10 @@ class ProjectRepository extends EntityRepository
         $mainQuery = $qb->expr()->andX();
 
         $mainQuery->add($qb->expr()->eq('p.visible', ':visible'));
-        $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
+        $qb->setParameter('visible', true, ParameterType::BOOLEAN);
 
         $mainQuery->add($qb->expr()->eq('c.visible', ':customer_visible'));
-        $qb->setParameter('customer_visible', true, \PDO::PARAM_BOOL);
+        $qb->setParameter('customer_visible', true, ParameterType::BOOLEAN);
 
         if (!$query->isIgnoreDate()) {
             $andx = $this->addProjectStartAndEndDate($qb, $query->getProjectStart(), $query->getProjectEnd());
@@ -351,12 +352,12 @@ class ProjectRepository extends EntityRepository
             ;
 
             if ($query->isShowVisible()) {
-                $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
+                $qb->setParameter('visible', true, ParameterType::BOOLEAN);
             } elseif ($query->isShowHidden()) {
-                $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
+                $qb->setParameter('visible', false, ParameterType::BOOLEAN);
             }
 
-            $qb->setParameter('customer_visible', true, \PDO::PARAM_BOOL);
+            $qb->setParameter('customer_visible', true, ParameterType::BOOLEAN);
         }
 
         if ($query->hasCustomers()) {
@@ -497,7 +498,7 @@ class ProjectRepository extends EntityRepository
     /**
      * @param Project $delete
      * @param Project|null $replace
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      */
     public function deleteProject(Project $delete, ?Project $replace = null)
     {

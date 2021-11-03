@@ -20,8 +20,9 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
@@ -151,7 +152,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
 
         if ($query->isShowVisible()) {
             $or->add($qb->expr()->eq('u.enabled', ':enabled'));
-            $qb->setParameter('enabled', true, \PDO::PARAM_BOOL);
+            $qb->setParameter('enabled', true, ParameterType::BOOLEAN);
         }
 
         $includeAlways = $query->getUsersAlwaysIncluded();
@@ -285,10 +286,10 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
 
         if ($query->isShowVisible()) {
             $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'));
-            $qb->setParameter('enabled', true, \PDO::PARAM_BOOL);
+            $qb->setParameter('enabled', true, ParameterType::BOOLEAN);
         } elseif ($query->isShowHidden()) {
             $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'));
-            $qb->setParameter('enabled', false, \PDO::PARAM_BOOL);
+            $qb->setParameter('enabled', false, ParameterType::BOOLEAN);
         }
 
         if ($query->getRole() !== null) {

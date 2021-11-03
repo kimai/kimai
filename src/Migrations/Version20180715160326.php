@@ -32,7 +32,7 @@ final class Version20180715160326 extends AbstractMigration
 
     /**
      * @param Schema $schema
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      * @throws \Doctrine\DBAL\Schema\SchemaException
      */
     public function up(Schema $schema): void
@@ -67,7 +67,7 @@ final class Version20180715160326 extends AbstractMigration
 
     /**
      * @param Schema $schema
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      * @throws \Doctrine\DBAL\Schema\SchemaException
      */
     public function down(Schema $schema): void

@@ -12,7 +12,7 @@ namespace App\Repository;
 use App\Entity\Project;
 use App\Entity\ProjectRate;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<ProjectRate>

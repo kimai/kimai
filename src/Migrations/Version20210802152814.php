@@ -27,13 +27,14 @@ final class Version20210802152814 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $fetch = $this->connection->prepare('SELECT id, start_time, timezone FROM kimai2_timesheet WHERE date_tz IS NULL');
+        $result = $fetch->executeQuery();
 
         $timezones = [];
         foreach (\DateTimeZone::listIdentifiers() as $tz) {
             $timezones[$tz] = new \DateTimeZone($tz);
         }
 
-        foreach ($fetch->executeQuery()->iterateAssociative() as $row) {
+        foreach ($result->iterateAssociative() as $row) {
             if (!isset($timezones[$row['timezone']])) {
                 $timezones[$row['timezone']] = new \DateTimeZone($row['timezone']);
             }
@@ -42,7 +43,7 @@ final class Version20210802152814 extends AbstractMigration
             $this->addSql('UPDATE kimai2_timesheet SET date_tz = ? WHERE id = ?', [$date->format('Y-m-d'), $row['id']]);
         }
 
-        $fetch->free();
+        $result->free();
     }
 
     public function down(Schema $schema): void

@@ -12,7 +12,7 @@ namespace App\Repository;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<ActivityRate>

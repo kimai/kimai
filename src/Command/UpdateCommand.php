@@ -77,13 +77,13 @@ final class UpdateCommand extends Command
                 );
             }
 
-            if (!$this->connection->getSchemaManager()->tablesExist(['kimai2_users', 'kimai2_timesheet'])) {
+            if (!$this->connection->createSchemaManager()->tablesExist(['kimai2_users', 'kimai2_timesheet'])) {
                 $io->error('Tables missing. Did you run the installer already?');
 
                 return self::ERROR_DATABASE;
             }
 
-            if (!$this->connection->getSchemaManager()->tablesExist(['migration_versions'])) {
+            if (!$this->connection->createSchemaManager()->tablesExist(['migration_versions'])) {
                 $io->error('Unknown migration status, aborting database update');
 
                 return self::ERROR_DATABASE;

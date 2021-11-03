@@ -20,9 +20,10 @@ use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\QueryBuilder;
@@ -258,7 +259,7 @@ class ActivityRepository extends EntityRepository
         $mainQuery = $qb->expr()->andX();
 
         $mainQuery->add($qb->expr()->eq('a.visible', ':visible'));
-        $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
+        $qb->setParameter('visible', true, ParameterType::BOOLEAN);
 
         if (!$query->isGlobalsOnly()) {
             $qb
@@ -277,7 +278,7 @@ class ActivityRepository extends EntityRepository
                 )
             );
 
-            $qb->setParameter('is_visible', true, \PDO::PARAM_BOOL);
+            $qb->setParameter('is_visible', true, ParameterType::BOOLEAN);
         }
 
         if ($query->isGlobalsOnly()) {
@@ -360,13 +361,13 @@ class ActivityRepository extends EntityRepository
                         )
                     )
                 );
-                $qb->setParameter('is_visible', true, \PDO::PARAM_BOOL);
+                $qb->setParameter('is_visible', true, ParameterType::BOOLEAN);
             }
 
             if ($query->isShowVisible()) {
-                $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
+                $qb->setParameter('visible', true, ParameterType::BOOLEAN);
             } elseif ($query->isShowHidden()) {
-                $qb->setParameter('visible', false, \PDO::PARAM_BOOL);
+                $qb->setParameter('visible', false, ParameterType::BOOLEAN);
             }
         }
 
@@ -474,7 +475,7 @@ class ActivityRepository extends EntityRepository
     /**
      * @param Activity $delete
      * @param Activity|null $replace
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      */
     public function deleteActivity(Activity $delete, ?Activity $replace = null)
     {

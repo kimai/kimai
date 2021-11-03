@@ -12,7 +12,7 @@ namespace App\Repository;
 use App\Entity\Bookmark;
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<Bookmark>

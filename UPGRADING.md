@@ -8,6 +8,14 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [1.16](https://github.com/kevinpapst/kimai2/releases/tag/1.16)
+
+If you are using MariaDB, it must be at least version 10.1, older versions are not supported any longer.
+
+**DEVELOPER**  
+
+- Upgraded to Doctrine DBAL 3, see [docs](https://github.com/doctrine/dbal/blob/3.1.x/UPGRADE.md) - you might have to update your bundle 
+
 ## [1.15](https://github.com/kevinpapst/kimai2/releases/tag/1.15)
 
 **Many database changes: don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
