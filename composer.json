@@ -20,7 +20,6 @@
         "ext-zip": "*",
         "beberlei/doctrineextensions": "^1.2",
         "composer/package-versions-deprecated": "^1.8",
-        "doctrine/dbal": "^2.1",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
