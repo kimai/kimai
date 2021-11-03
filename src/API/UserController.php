@@ -13,6 +13,8 @@ namespace App\API;
 
 use App\Configuration\SystemConfiguration;
 use App\Entity\User;
+use App\Event\PrepareUserEvent;
+use App\Event\UserPreferenceEvent;
 use App\Form\API\UserApiCreateForm;
 use App\Form\API\UserApiEditForm;
 use App\Repository\Query\UserQuery;
@@ -26,6 +28,7 @@ use HandcraftedInTheAlps\RestRoutingBundle\Controller\Annotations\RouteResource;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -112,6 +115,7 @@ final class UserController extends BaseApiController
         }
 
         $data = $this->repository->getUsersForQuery($query);
+
         $view = new View($data, 200);
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
@@ -137,7 +141,7 @@ final class UserController extends BaseApiController
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
-    public function getAction(int $id): Response
+    public function getAction(int $id, EventDispatcherInterface $dispatcher): Response
     {
         $user = $this->repository->find($id);
 
@@ -148,6 +152,10 @@ final class UserController extends BaseApiController
         if (!$this->isGranted('view', $user)) {
             throw new AccessDeniedHttpException('You are not allowed to view this profile');
         }
+
+        // we need to prepare the user preferences, which is done via an EventSubscriber
+        $event = new PrepareUserEvent($user);
+        $dispatcher->dispatch($event);
 
         $view = new View($user, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
