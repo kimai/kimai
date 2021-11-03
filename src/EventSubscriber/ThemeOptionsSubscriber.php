@@ -71,7 +71,7 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
             $name = $ref->getName();
             switch ($name) {
                 case UserPreference::SKIN:
-                    if (!empty($ref->getValue()) && in_array($ref->getValue(), SkinType::THEMES)) {
+                    if (!empty($ref->getValue()) && \in_array($ref->getValue(), SkinType::THEMES)) {
                         $this->helper->setOption('skin', 'skin-' . $ref->getValue());
                     }
                     break;
