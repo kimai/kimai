@@ -11,6 +11,7 @@ namespace App\Tests\Invoice\NumberGenerator;
 
 use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
+use App\Entity\User;
 use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\ConfigurableNumberGenerator;
 use App\Repository\InvoiceRepository;
@@ -32,7 +33,11 @@ class ConfigurableNumberGeneratorTest extends TestCase
         $repository = $this->createMock(InvoiceRepository::class);
         $repository
             ->expects($this->any())
-            ->method('getCounterForAllTime')
+            ->method('getCounterForCustomerAllTime')
+            ->willReturn($counter);
+        $repository
+            ->expects($this->any())
+            ->method('getCounterForUserAllTime')
             ->willReturn($counter);
         $repository
             ->expects($this->any())
@@ -68,12 +73,20 @@ class ConfigurableNumberGeneratorTest extends TestCase
             ['{cy}', '2', $invoiceDate],
             ['{cm}', '2', $invoiceDate],
             ['{cd}', '2', $invoiceDate],
+            // customer
             ['{cc}', '2', $invoiceDate],
             ['{ccy}', '2', $invoiceDate],
             ['{ccm}', '2', $invoiceDate],
             ['{ccd}', '2', $invoiceDate],
             ['{cname}', 'Acme company', $invoiceDate],
             ['{cnumber}', '0815', $invoiceDate],
+            // user
+            ['{cu}', '2', $invoiceDate],
+            ['{cuy}', '2', $invoiceDate],
+            ['{cum}', '2', $invoiceDate],
+            ['{cud}', '2', $invoiceDate],
+            ['{ustaff}', '0815', $invoiceDate],
+            ['{uid}', '13', $invoiceDate],
             // number formatting (not testing the lower case versions, as the tests might break depending on the date)
             ['{date,10}', '0000' . $invoiceDate->format('ymd'), $invoiceDate],
             ['{Y,6}', '00' . $invoiceDate->format('Y'), $invoiceDate],
@@ -108,6 +121,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
             ['{Y}{cy}{m}', $invoiceDate->format('Y') . '2' . $invoiceDate->format('n'), $invoiceDate],
             ['{Y}-{cy}/{m}', $invoiceDate->format('Y') . '-2/' . $invoiceDate->format('n'), $invoiceDate],
             ['{Y}-{cy}/{m}', $invoiceDate->format('Y') . '-2/' . $invoiceDate->format('n'), $invoiceDate],
+            ['{ustaff}|{cuy}_{Y}-{cy}/{m}', '0815|2_' . $invoiceDate->format('Y') . '-2/' . $invoiceDate->format('n'), $invoiceDate],
             ['{Y,5}/{cy,5}', '0' . $invoiceDate->format('Y') . '/00002', $invoiceDate],
             // with decrementing counter
             ['{c-1,2}', '00', $invoiceDate],
@@ -137,10 +151,15 @@ class ConfigurableNumberGeneratorTest extends TestCase
         $customer->setName('Acme company');
         $customer->setNumber('0815');
 
+        $user = $this->createMock(User::class);
+        $user->method('getId')->willReturn(13);
+        $user->method('getAccountNumber')->willReturn('0815');
+
         $sut = $this->getSut($format, $counter);
         $model = new InvoiceModel(new DebugFormatter());
         $model->setInvoiceDate($invoiceDate);
         $model->setCustomer($customer);
+        $model->setUser($user);
         $sut->setModel($model);
 
         $this->assertEquals($expectedInvoiceNumber, $sut->getInvoiceNumber());
