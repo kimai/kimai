@@ -27,7 +27,6 @@ class UserTeamsType extends AbstractType
     {
         $builder
             ->add('teams', TeamType::class, [
-                'label' => 'label.team',
                 'multiple' => true,
                 'expanded' => true,
             ])

@@ -354,10 +354,10 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration())
                         ->setName('timesheet.time_increment')
                         ->setType(MinuteIncrementType::class)
-                        ->setOptions(['deactivate' => false])
+                        ->setOptions(['deactivate' => false, 'max_one_hour' => true])
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new GreaterThanOrEqual(['value' => 1])
+                            new Range(['min' => 1, 'max' => 60])
                         ]),
                     (new Configuration())
                         ->setName('timesheet.duration_increment')
@@ -382,6 +382,10 @@ final class SystemConfigurationController extends AbstractController
                         ->setConstraints([
                             new GreaterThanOrEqual(['value' => 0])
                         ]),
+                    (new Configuration())
+                        ->setName('defaults.timesheet.billable')
+                        ->setType(YesNoType::class)
+                        ->setOptions(['help' => 'default_value_new', 'label' => 'label.billable']),
                 ]),
             (new SystemConfigurationModel())
                 ->setSection(SystemConfigurationModel::SECTION_LOCKDOWN)

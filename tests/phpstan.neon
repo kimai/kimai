@@ -7,6 +7,6 @@ parameters:
     tmpDir: %rootDir%/../../../var/cache/phpstan
     ignoreErrors:
         - '#Call to static method PHPUnit\\Framework\\Assert::assertSame\(\) with App\\Entity\\[a-zA-Z0-9]+ and null will always evaluate to false.#'
-    excludes_analyse:
+    excludePaths:
         - %rootDir%/../../../tests/Ldap/LdapDriverTest.php
     inferPrivatePropertyTypeFromConstructor: true

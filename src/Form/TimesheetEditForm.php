@@ -21,7 +21,6 @@ use App\Form\Type\TagsType;
 use App\Form\Type\UserType;
 use App\Form\Type\YesNoType;
 use App\Repository\CustomerRepository;
-use App\Repository\ProjectRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -39,15 +38,10 @@ class TimesheetEditForm extends AbstractType
      * @var CustomerRepository
      */
     private $customers;
-    /**
-     * @var ProjectRepository
-     */
-    private $projects;
 
-    public function __construct(CustomerRepository $customer, ProjectRepository $project)
+    public function __construct(CustomerRepository $customer)
     {
         $this->customers = $customer;
-        $this->projects = $project;
     }
 
     /**

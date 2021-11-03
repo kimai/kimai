@@ -14,7 +14,6 @@ use App\Entity\Project;
 use App\Event\CustomerStatisticEvent;
 use App\Model\CustomerBudgetStatisticModel;
 use App\Model\CustomerStatistic;
-use App\Repository\CustomerRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
 use DateTime;
@@ -28,13 +27,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class CustomerStatisticService
 {
-    private $repository;
     private $timesheetRepository;
     private $dispatcher;
 
-    public function __construct(CustomerRepository $customerRepository, TimesheetRepository $timesheetRepository, EventDispatcherInterface $dispatcher)
+    public function __construct(TimesheetRepository $timesheetRepository, EventDispatcherInterface $dispatcher)
     {
-        $this->repository = $customerRepository;
         $this->timesheetRepository = $timesheetRepository;
         $this->dispatcher = $dispatcher;
     }

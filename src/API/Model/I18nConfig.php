@@ -26,6 +26,7 @@ final class I18nConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
     private $formDateTime = '';
     /**
@@ -36,6 +37,7 @@ final class I18nConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
     private $formDate = '';
     /**
@@ -46,6 +48,7 @@ final class I18nConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
     private $dateTime = '';
     /**
@@ -56,6 +59,7 @@ final class I18nConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
     private $date = '';
     /**
@@ -66,6 +70,7 @@ final class I18nConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
     private $time = '';
     /**
@@ -76,6 +81,7 @@ final class I18nConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
     private $duration = '';
     /**
@@ -86,6 +92,7 @@ final class I18nConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="boolean")
+     * @phpstan-ignore-next-line
      */
     private $is24hours = true;
     /**
@@ -96,6 +103,7 @@ final class I18nConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="DateTime")
+     * @phpstan-ignore-next-line
      */
     private $now;
 

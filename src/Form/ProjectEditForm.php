@@ -13,8 +13,6 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\Type\CustomerType;
 use App\Form\Type\DateTimePickerType;
-use App\Repository\CustomerRepository;
-use App\Repository\Query\CustomerFormTypeQuery;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -90,12 +88,8 @@ class ProjectEditForm extends AbstractType
             ]))
             ->add('customer', CustomerType::class, [
                 'placeholder' => (null === $id && null === $customer) ? '' : false,
-                'query_builder' => function (CustomerRepository $repo) use ($builder, $customer) {
-                    $query = new CustomerFormTypeQuery($customer);
-                    $query->setUser($builder->getOption('user'));
-
-                    return $repo->getQueryBuilderForFormType($query);
-                },
+                'customers' => $customer,
+                'query_builder_for_user' => true,
             ]);
 
         $this->addCommonFields($builder, $options);

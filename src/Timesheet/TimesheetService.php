@@ -110,6 +110,8 @@ final class TimesheetService
         $mode = $this->trackingModeService->getActiveMode();
         $mode->create($timesheet, $request);
 
+        $timesheet->setBillable($this->configuration->getTimesheetDefaultBillable());
+
         return $timesheet;
     }
 

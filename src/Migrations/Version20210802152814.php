@@ -43,11 +43,15 @@ final class Version20210802152814 extends AbstractMigration
         }
 
         $fetch->free();
+
+        $this->preventEmptyMigrationWarning();
     }
 
     public function down(Schema $schema): void
     {
         $timesheet = $schema->getTable('kimai2_timesheet');
         $timesheet->changeColumn('date_tz', ['notnull' => false]);
+
+        $this->preventEmptyMigrationWarning();
     }
 }

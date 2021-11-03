@@ -20,7 +20,6 @@ use App\Reporting\WeeklyUserListForm;
 use App\Reporting\YearlyUserList;
 use App\Reporting\YearlyUserListForm;
 use App\Repository\Query\UserQuery;
-use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use App\Timesheet\TimesheetStatisticService;
 use Exception;
@@ -35,12 +34,10 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 final class ReportUsersListController extends AbstractController
 {
-    private $timesheetRepository;
     private $userRepository;
 
-    public function __construct(TimesheetRepository $timesheetRepository, UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->timesheetRepository = $timesheetRepository;
         $this->userRepository = $userRepository;
     }
 

@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
+ * @covers \App\Validator\Constraints\TimeFormat
  * @covers \App\Validator\Constraints\TimeFormatValidator
  */
 class TimeFormatValidatorTest extends ConstraintValidatorTestCase

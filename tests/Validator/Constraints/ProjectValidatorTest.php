@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
+ * @covers \App\Validator\Constraints\Project
  * @covers \App\Validator\Constraints\ProjectValidator
  */
 class ProjectValidatorTest extends ConstraintValidatorTestCase
@@ -47,5 +48,11 @@ class ProjectValidatorTest extends ConstraintValidatorTestCase
             ->atPath('property.path.end')
             ->setCode(ProjectConstraint::END_BEFORE_BEGIN_ERROR)
             ->assertRaised();
+    }
+
+    public function testGetTargets()
+    {
+        $constraint = new ProjectConstraint();
+        self::assertEquals('class', $constraint->getTargets());
     }
 }

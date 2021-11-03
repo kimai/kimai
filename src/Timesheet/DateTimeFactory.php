@@ -65,32 +65,43 @@ class DateTimeFactory
     public function getStartOfWeek(?DateTime $date = null): DateTime
     {
         if (null === $date) {
-            $from = $this->createDateTime('now');
+            $date = $this->createDateTime('now');
         } else {
-            $from = clone $date;
+            $date = clone $date;
         }
 
-        $year = $from->format('o');
-        $week = $from->format('W');
         $firstDay = 1;
 
         if ($this->startOnSunday) {
-            $from->modify('-1 week');
-            $year = $from->format('o');
-            $week = $from->format('W');
             $firstDay = 7;
+
+            // if today = sunday => increase week by one
+            if ($date->format('N') !== '7') {
+                $date->modify('-1 week');
+            }
         }
 
-        return $this->createWeekDateTime($year, $week, $firstDay, 0, 0, 0);
+        return $this->createWeekDateTime($date->format('o'), $date->format('W'), $firstDay, 0, 0, 0);
     }
 
     public function getEndOfWeek(?DateTime $date = null): DateTime
     {
         if (null === $date) {
             $date = $this->createDateTime();
+        } else {
+            $date = clone $date;
         }
 
-        $lastDay = $this->startOnSunday ? 6 : 7;
+        $lastDay = 7;
+
+        if ($this->startOnSunday) {
+            $lastDay = 6;
+
+            // only change when today is not sunday
+            if ($date->format('N') === '7') {
+                $date->modify('+1 week');
+            }
+        }
 
         return $this->createWeekDateTime($date->format('o'), $date->format('W'), $lastDay, 23, 59, 59);
     }

@@ -404,6 +404,10 @@
         <source>action.edit</source>
         <target>Edit</target>
       </trans-unit>
+      <trans-unit id="action.add">
+        <source>action.add</source>
+        <target>Add</target>
+      </trans-unit>
       <trans-unit id="action.delete">
         <source>action.delete</source>
         <target>Delete</target>
@@ -1255,6 +1259,13 @@
       <trans-unit id="default_value_new">
         <source>default_value_new</source>
         <target>Default values for new entries</target>
+      </trans-unit>
+      <!--
+          QUICK ENTRIES
+      -->
+      <trans-unit id="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target>Weekly working hours</target>
       </trans-unit>
     </body>
   </file>

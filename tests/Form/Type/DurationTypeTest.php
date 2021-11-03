@@ -98,4 +98,14 @@ class DurationTypeTest extends TypeTestCase
 
         self::assertArrayNotHasKey('duration_presets', $view->vars);
     }
+
+    public function testHasDurationInputClass()
+    {
+        $view = $this->factory->create(DurationType::class, 3600, [
+            'attr' => ['class' => 'testing']
+        ])->createView();
+
+        self::assertArrayHasKey('class', $view->vars['attr']);
+        self::assertStringContainsString('duration-input testing', $view->vars['attr']['class']);
+    }
 }
