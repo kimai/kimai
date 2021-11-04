@@ -1919,9 +1919,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001214:
-  version "1.0.30001219"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001219.tgz#5bfa5d0519f41f993618bd318f606a4c4c16156b"
-  integrity sha512-c0yixVG4v9KBc/tQ2rlbB3A/bgBFRvl8h8M4IeUbqCca4gsiCfvtaheUssbnux/Mb66Vjz7x8yYjDgYcNQOhyQ==
+  version "1.0.30001276"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001276.tgz"
+  integrity sha512-psUNoaG1ilknZPxi8HuhQWobuhLqtYSRUxplfVkEJdgZNB9TETVYGSBtv4YyfAdGvE6gn2eb0ztiXqHoWJcGnw==
 
 caseless@~0.12.0:
   version "0.12.0"
