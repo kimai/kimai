@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="el" datatype="plaintext" original="messages.en.xlf">
     <body>
@@ -1243,6 +1243,30 @@
       <trans-unit id="pnGDFmf" resname="label.type">
         <source>label.type</source>
         <target>Τύπος</target>
+      </trans-unit>
+      <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
+        <source>label.includeBudgetType_full</source>
+        <target>Εμφάνιση καταχωρήσεων με "κύκλου ζωής" προϋπολογισμών</target>
+      </trans-unit>
+      <trans-unit id="9Rhadz6" resname="label.budgetType_full">
+        <source>label.budgetType_full</source>
+        <target>Κύκλου ζωής</target>
+      </trans-unit>
+      <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
+        <source>label.includeBudgetType_month</source>
+        <target>Εμφάνιση καταχωρήσεων με "Μηνιαίο" προϋπολογισμό</target>
+      </trans-unit>
+      <trans-unit id="jdbtx6z" resname="action.add">
+        <source>action.add</source>
+        <target>Προσθήκη</target>
+      </trans-unit>
+      <trans-unit id="yNWIi5U" resname="default_value_new">
+        <source>default_value_new</source>
+        <target>Προεπιλεγμένες τιμές για νέες καταχωρήσεις</target>
+      </trans-unit>
+      <trans-unit id="f8oNzSP" resname="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target>Εβδομαδιαίες ώρες εργασίας</target>
       </trans-unit>
     </body>
   </file>
