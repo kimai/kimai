@@ -1256,6 +1256,18 @@
         <source>quick_entry.title</source>
         <target>Heures de travail hebdomadaires</target>
       </trans-unit>
+      <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
+        <source>label.includeBudgetType_month</source>
+        <target>Afficher les entrées avec un budget « mensuel »</target>
+      </trans-unit>
+      <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
+        <source>label.includeBudgetType_full</source>
+        <target>Afficher les entrées avec le budget « cycle de vie »</target>
+      </trans-unit>
+      <trans-unit id="9Rhadz6" resname="label.budgetType_full">
+        <source>label.budgetType_full</source>
+        <target>Cycle de vie</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
