@@ -28,8 +28,11 @@ class ProjectDateRangeQueryTest extends TestCase
         self::assertEquals($date->getTimestamp(), $sut->getMonth()->getTimestamp());
         self::assertSame($user, $sut->getUser());
         self::assertNull($sut->getCustomer());
-        self::assertFalse($sut->isIncludeNoWork());
+        self::assertTrue($sut->isIncludeNoWork());
+
+        self::assertEquals('month', $sut->getBudgetType());
         self::assertFalse($sut->isIncludeNoBudget());
+        self::assertTrue($sut->isBudgetTypeMonthly());
     }
 
     public function testSetterGetter()
@@ -41,12 +44,20 @@ class ProjectDateRangeQueryTest extends TestCase
 
         $sut->setMonth($date);
         $sut->setCustomer($customer);
-        $sut->setIncludeNoBudget(true);
-        $sut->setIncludeNoWork(true);
+        $sut->setIncludeNoWork(false);
 
         self::assertEquals($date->getTimestamp(), $sut->getMonth()->getTimestamp());
         self::assertSame($customer, $sut->getCustomer());
-        self::assertTrue($sut->isIncludeNoWork());
+        self::assertFalse($sut->isIncludeNoWork());
+
+        $sut->setBudgetType('none');
+        self::assertEquals('none', $sut->getBudgetType());
         self::assertTrue($sut->isIncludeNoBudget());
+        self::assertFalse($sut->isBudgetTypeMonthly());
+
+        $sut->setBudgetType('full');
+        self::assertEquals('full', $sut->getBudgetType());
+        self::assertFalse($sut->isBudgetTypeMonthly());
+        self::assertFalse($sut->isIncludeNoBudget());
     }
 }

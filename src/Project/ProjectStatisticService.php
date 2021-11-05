@@ -170,8 +170,10 @@ class ProjectStatisticService
             );
         } else {
             $qb->andWhere(
-                $qb->expr()->gt('p.budget', 0.0),
-                $qb->expr()->gt('p.timeBudget', 0)
+                $qb->expr()->orX(
+                    $qb->expr()->gt('p.budget', 0.0),
+                    $qb->expr()->gt('p.timeBudget', 0)
+                )
             );
             if ($query->isBudgetTypeMonthly()) {
                 $qb->andWhere(
