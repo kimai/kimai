@@ -1216,6 +1216,14 @@
         <source>label.includeNoBudget</source>
         <target>Show entries without budget</target>
       </trans-unit>
+      <trans-unit id="label.includeBudgetType_month">
+        <source>label.includeBudgetType_month</source>
+        <target>Show entries with "monthly" budget</target>
+      </trans-unit>
+      <trans-unit id="label.includeBudgetType_full">
+        <source>label.includeBudgetType_full</source>
+        <target>Show entries with "life cycle" budget</target>
+      </trans-unit>
       <trans-unit id="label.not_exported">
         <source>label.not_exported</source>
         <target>Not exported</target>
@@ -1243,6 +1251,10 @@
       <trans-unit id="label.budgetType_month">
         <source>label.budgetType_month</source>
         <target>Monthly</target>
+      </trans-unit>
+      <trans-unit id="label.budgetType_full">
+        <source>label.budgetType_full</source>
+        <target>Life cycle</target>
       </trans-unit>
       <trans-unit id="delete_warning.short_stats">
         <source>delete_warning.short_stats</source>

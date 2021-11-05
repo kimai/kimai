@@ -13,3 +13,43 @@ form.form-narrow {
         margin: 0 0 5px 0;
     }
 }
+
+/* bootstrap3 hack because the filter look plain ugly without it (see report: project month) */
+.checkbox-menu li label {
+    display: block;
+    padding: 5px 15px 5px 10px !important;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+    margin:0;
+    transition: background-color .4s ease;
+}
+.checkbox-menu li div.checkbox {
+    display: block;
+    width: 100%;
+}
+.checkbox-menu li div.radio {
+    display: block;
+    width: 100%;
+}
+.checkbox-menu li input {
+    margin: 0 5px !important;
+    position: relative;
+}
+
+.checkbox-menu li.active label {
+    background-color: #cbcbff;
+    font-weight:bold;
+}
+
+.checkbox-menu li label:hover,
+.checkbox-menu li label:focus {
+    background-color: #f5f5f5;
+}
+
+.checkbox-menu li.active label:hover,
+.checkbox-menu li.active label:focus {
+    background-color: #b8b8ff;
+}
