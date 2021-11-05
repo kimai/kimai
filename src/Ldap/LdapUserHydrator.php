@@ -75,7 +75,11 @@ class LdapUserHydrator
         }
 
         // fill them after hydrating account, so they can't be overwritten
-        $user->setPassword('');
+        if ($user->getPassword() !== null && $user->getPassword() !== '') {
+            // this should prevent, that LDAP users change their password in Kimai
+            // and then use it to login, instead of utilizing the LDAP bind process
+            $user->setPassword('');
+        }
         $user->setAuth(User::AUTH_LDAP);
 
         $user->setPreferenceValue('ldap.dn', $ldapEntry['dn']);

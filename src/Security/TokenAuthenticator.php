@@ -159,6 +159,15 @@ class TokenAuthenticator extends AbstractGuardAuthenticator implements PasswordA
         return false;
     }
 
+    /**
+     * This method belongs to the PasswordAuthenticatedInterface and takes care of rehashing passwords,
+     * which were created with an old algorithm.
+     *
+     * See https://symfonycasts.com/screencast/symfony5-upgrade/migrate-password-hashing
+     *
+     * @param mixed $credentials
+     * @return string|null
+     */
     public function getPassword($credentials): ?string
     {
         if (!\is_array($credentials) || !\array_key_exists('token', $credentials) || empty($credentials['token'])) {
