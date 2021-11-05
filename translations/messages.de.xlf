@@ -1270,7 +1270,7 @@
       </trans-unit>
       <trans-unit id="default_value_new">
         <source>default_value_new</source>
-        <target>Standardwerte für neue Einträge</target>
+        <target>Standardwert für neue Einträge</target>
       </trans-unit>
       <!--
           QUICK ENTRIES

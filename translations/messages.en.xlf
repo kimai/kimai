@@ -247,7 +247,7 @@
         <target>There were no comments posted yet.</target>
       </trans-unit>
       <trans-unit id="error.too_many_entries">
-        <source>The request could not be processed. Too many results were found.</source>
+        <source>error.too_many_entries</source>
         <target>The request could not be processed. Too many results were found.</target>
       </trans-unit>
       <!--

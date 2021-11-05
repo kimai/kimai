@@ -1201,7 +1201,7 @@
         <target>Receitas</target>
       </trans-unit>
       <trans-unit id="error.too_many_entries">
-        <source>The request could not be processed. Too many results were found.</source>
+        <source>error.too_many_entries</source>
         <target>Não foi possível processar o pedido. Foram encontrados demasiados resultados.</target>
       </trans-unit>
       <trans-unit id="resetting.check_email">
