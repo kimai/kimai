@@ -1,44 +1,44 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ar" datatype="plaintext" original="validators.en.xlf">
     <body>
-      <trans-unit id="This value is not a valid role.">
+      <trans-unit id="IkNxbBI" resname="This value is not a valid role.">
         <source>This value is not a valid role.</source>
         <target>هذه القيمة ليست صالحة.</target>
       </trans-unit>
-      <trans-unit id="End date must not be earlier then start date.">
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
         <source>End date must not be earlier then start date.</source>
         <target>يجب ألا يكون تاريخ الانتهاء سابقًا لتاريخ البدء.</target>
       </trans-unit>
-      <trans-unit id="You must select at least one user or team.">
+      <trans-unit id="1V6BsD_" resname="You must select at least one user or team.">
         <source>You must select at least one user or team.</source>
         <target>عليك على الاقل اختيار عضو او فريق.</target>
       </trans-unit>
-      <trans-unit id="The username is already used.">
+      <trans-unit id="S14XECA" resname="The username is already used.">
         <source>The username is already used.</source>
         <target>اسم المستخدم مستخدم بالفعل.</target>
       </trans-unit>
-      <trans-unit id="The email is already used.">
+      <trans-unit id="6u6oCwB" resname="The email is already used.">
         <source>The email is already used.</source>
         <target>البريد الإلكتروني مستخدم بالفعل.</target>
       </trans-unit>
-      <trans-unit id="The given value is not a valid time.">
+      <trans-unit id="VJSZSD0" resname="The given value is not a valid time.">
         <source>The given value is not a valid time.</source>
         <target>القيمة المحددة ليست وقتًا صالحًا.</target>
       </trans-unit>
-      <trans-unit id="This invoice document cannot be used, please rename the file and upload it again.">
+      <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again.">
         <source>This invoice document cannot be used, please rename the file and upload it again.</source>
         <target>لا يمكن استخدام مستند الفاتورة هذا، يرجى إعادة تسمية الملف وتحميله مرة أخرى.</target>
       </trans-unit>
-      <trans-unit id="At least one team leader must be assigned to the team.">
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
         <source>At least one team leader must be assigned to the team.</source>
         <target>يجب تعيين قائد فريق واحد على الأقل للفريق.</target>
       </trans-unit>
-      <trans-unit id="The entered passwords don't match.">
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match.">
         <source>The entered passwords don't match.</source>
         <target>كلمات المرور التي تم إدخالها غير متطابقة.</target>
       </trans-unit>
-      <trans-unit id="This period is locked, please choose a later date.">
+      <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date.">
         <source>This period is locked, please choose a later date.</source>
         <target>هذه الفترة مقفلة، يرجى اختيار تاريخ لاحق.</target>
       </trans-unit>

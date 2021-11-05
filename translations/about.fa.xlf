@@ -1,24 +1,24 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fa" datatype="plaintext" original="about.en.xlf">
     <body>
-      <trans-unit id="about.title">
+      <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
         <target>درباره ی کیمیایْ</target>
       </trans-unit>
-      <trans-unit id="support">
+      <trans-unit id="oYYDCG5" resname="support">
         <source>support</source>
         <target>پشتیبانی</target>
       </trans-unit>
-      <trans-unit id="website">
+      <trans-unit id="dHqPOYO" resname="website">
         <source>website</source>
         <target>خانه</target>
       </trans-unit>
-      <trans-unit id="help">
+      <trans-unit id="EGpYQvx" resname="help">
         <source>help</source>
         <target>مستندات</target>
       </trans-unit>
-      <trans-unit id="special_thanks">
+      <trans-unit id="A0nWoXZ" resname="special_thanks">
         <source>special_thanks</source>
         <target>سپاس ویژه از…</target>
       </trans-unit>
