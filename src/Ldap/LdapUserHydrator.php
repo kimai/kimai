@@ -38,7 +38,6 @@ class LdapUserHydrator
     {
         $user = new User();
         $user->setEnabled(true);
-        $user->setPassword('');
 
         return $user;
     }
@@ -77,6 +76,9 @@ class LdapUserHydrator
 
         // fill them after hydrating account, so they can't be overwritten
         // by the mapping attributes
+        if ($user->getId() === null) {
+            $user->setPassword('');
+        }
         $user->setAuth(User::AUTH_LDAP);
         $user->setPreferenceValue('ldap.dn', $ldapEntry['dn']);
     }

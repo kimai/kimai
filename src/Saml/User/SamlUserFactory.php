@@ -75,6 +75,9 @@ final class SamlUserFactory
 
         // fill them after hydrating account, so they can't be overwritten
         // by the mapping attributes
+        if ($user->getId() === null) {
+            $user->setPassword('');
+        }
         $user->setUsername($token->getUsername());
         $user->setAuth(User::AUTH_SAML);
     }
