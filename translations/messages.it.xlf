@@ -1255,6 +1255,22 @@
         <source>action.add</source>
         <target>Aggiungi</target>
       </trans-unit>
+      <trans-unit id="9Rhadz6" resname="label.budgetType_full">
+        <source>label.budgetType_full</source>
+        <target>Ciclo di vita</target>
+      </trans-unit>
+      <trans-unit id="f8oNzSP" resname="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target>Orario di lavoro settimanale</target>
+      </trans-unit>
+      <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
+        <source>label.includeBudgetType_month</source>
+        <target>Mostra le voci con budget «mensile»</target>
+      </trans-unit>
+      <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
+        <source>label.includeBudgetType_full</source>
+        <target>Mostra le voci con «ciclo di vita» bilancio</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
