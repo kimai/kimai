@@ -1,103 +1,100 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="he" datatype="plaintext" original="actions.en.xlf">
-    <header>
-      <tool tool-id="symfony" tool-name="Symfony"/>
-    </header>
     <body>
-      <trans-unit id="stop">
+      <trans-unit id="bEXLcqN" resname="stop">
         <source>stop</source>
         <target>עצור</target>
       </trans-unit>
-      <trans-unit id="back">
+      <trans-unit id="PEgjRvN" resname="back">
         <source>back</source>
         <target>חזור</target>
       </trans-unit>
-      <trans-unit id="edit">
+      <trans-unit id="JiEhxTc" resname="edit">
         <source>edit</source>
         <target>ערוך</target>
       </trans-unit>
-      <trans-unit id="trash">
+      <trans-unit id="4G2jBDS" resname="trash">
         <source>trash</source>
         <target>מחק</target>
       </trans-unit>
-      <trans-unit id="report">
+      <trans-unit id="hF6RgxM" resname="report">
         <source>report</source>
         <target>דו''ח</target>
       </trans-unit>
-      <trans-unit id="repeat">
+      <trans-unit id="JeK2sQZ" resname="repeat">
         <source>repeat</source>
         <target>התחל שוב</target>
       </trans-unit>
-      <trans-unit id="profile-stats">
+      <trans-unit id="J0sRBY_" resname="profile-stats">
         <source>profile-stats</source>
         <target>פרופיל</target>
       </trans-unit>
-      <trans-unit id="settings">
+      <trans-unit id="zeD7Dew" resname="settings">
         <source>settings</source>
         <target>העדפות</target>
       </trans-unit>
-      <trans-unit id="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
         <target>גיליון שעות</target>
       </trans-unit>
-      <trans-unit id="customer">
+      <trans-unit id="tsRYY4d" resname="customer">
         <source>customer</source>
         <target>סנן לקוחות</target>
       </trans-unit>
-      <trans-unit id="project">
+      <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
         <target>סנן פרויקטים</target>
       </trans-unit>
-      <trans-unit id="activity">
+      <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
         <target>סנן פעילויות</target>
       </trans-unit>
-      <trans-unit id="copy">
+      <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target>צור עותק</target>
       </trans-unit>
-      <trans-unit id="home">
+      <trans-unit id="TqFAWIF" resname="home">
         <source>home</source>
         <target>דף הבית</target>
       </trans-unit>
-      <trans-unit id="create-project">
+      <trans-unit id="PBlIO2x" resname="create-project">
         <source>create-project</source>
         <target>צור פרוייקט</target>
       </trans-unit>
-      <trans-unit id="create-activity">
+      <trans-unit id="UbouFOs" resname="create-activity">
         <source>create-activity</source>
         <target>צור פעילות</target>
       </trans-unit>
-      <trans-unit id="create-timesheet">
+      <trans-unit id="QR1nvcR" resname="create-timesheet">
         <source>create-timesheet</source>
         <target>צור גיליון שעות</target>
       </trans-unit>
-      <trans-unit id="permissions">
+      <trans-unit id="T_PN1AT" resname="permissions">
         <source>permissions</source>
         <target>הרשאות צוות</target>
       </trans-unit>
-      <trans-unit id="details">
+      <trans-unit id="Qf.Yt2r" resname="details">
         <source>details</source>
         <target>פרטים</target>
       </trans-unit>
-      <trans-unit id="download">
+      <trans-unit id="aP9j_4L" resname="download">
         <source>download</source>
         <target>הורד</target>
       </trans-unit>
-      <trans-unit id="invoice.pending">
+      <trans-unit id="hHIeqOW" resname="invoice.pending">
         <source>invoice.pending</source>
         <target>ממתין לתשלום</target>
       </trans-unit>
-      <trans-unit id="invoice.paid">
+      <trans-unit id="9M4b2ZN" resname="invoice.paid">
         <source>invoice.paid</source>
         <target>חשבונית שולמה</target>
       </trans-unit>
-      <trans-unit id="create-timesheet-multiuser">
+      <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser">
         <source>create-timesheet-multiuser</source>
         <target>למגוון משתמשים</target>
       </trans-unit>
-      <trans-unit id="filter">
+      <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>
         <target>סינון נתונים</target>
       </trans-unit>

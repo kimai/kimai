@@ -1,44 +1,44 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="cs" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="button_copy_url_to_browser">
+      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
         <target>V případě, že nefunguje tlačítko, zkopírujte prosím &amp; následující adresu URL do vašeho prohlížeče: %url%</target>
       </trans-unit>
-      <trans-unit id="automated_email_dont_answer">
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target>Toto je automaticky generovaný e-mail. Prosím neodpovídejte, e-mail příjemce není sledován.</target>
       </trans-unit>
-      <trans-unit id="registration.subject">
+      <trans-unit id="pjr3FDv" resname="registration.subject">
         <source>registration.subject</source>
         <target>Aktivujte váš účet</target>
       </trans-unit>
-      <trans-unit id="registration.title">
+      <trans-unit id="QtcznHC" resname="registration.title">
         <source>registration.title</source>
         <target>Vítej %username%</target>
       </trans-unit>
-      <trans-unit id="registration.button">
+      <trans-unit id="YMLel3P" resname="registration.button">
         <source>registration.button</source>
         <target>Aktivujte váš účet</target>
       </trans-unit>
-      <trans-unit id="registration.intro">
+      <trans-unit id="IkjnHoP" resname="registration.intro">
         <source>registration.intro</source>
         <target>Zaregistrovali jste se do Kimai time-tracker s e-mailovou adresou %email%. Nyní je potřeba váš účet aktivovat v několika nejbližších hodinách, jinak odkaz expiruje.</target>
       </trans-unit>
-      <trans-unit id="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>
         <target>Reset hesla</target>
       </trans-unit>
-      <trans-unit id="reset.title">
+      <trans-unit id="G2mhn_2" resname="reset.title">
         <source>reset.title</source>
         <target>Tohle se může stát…</target>
       </trans-unit>
-      <trans-unit id="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button">
         <source>reset.button</source>
         <target>Reset hesla</target>
       </trans-unit>
-      <trans-unit id="reset.intro">
+      <trans-unit id="rhkMAep" resname="reset.intro">
         <source>reset.intro</source>
         <target>… takže jste zapomněli heslo? Nevadí, Kimai vám pomůže s vytvořením nového:</target>
       </trans-unit>

@@ -1,1236 +1,1236 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ru" datatype="plaintext" original="messages.en.xlf">
     <body>
       <!--
               Global template keys
             -->
-      <trans-unit id="time_tracking">
+      <trans-unit id="N7mikjJ" resname="time_tracking">
         <source>time_tracking</source>
         <target>Учет времени</target>
       </trans-unit>
-      <trans-unit id="yes">
+      <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
         <target>Да</target>
       </trans-unit>
-      <trans-unit id="no">
+      <trans-unit id="k5Apjz_" resname="no">
         <source>no</source>
         <target>Нет</target>
       </trans-unit>
-      <trans-unit id="both">
+      <trans-unit id=".3dyBTq" resname="both">
         <source>both</source>
         <target>Оба</target>
       </trans-unit>
-      <trans-unit id="This is a mandatory field">
+      <trans-unit id="KLIuHvt" resname="This is a mandatory field">
         <source>This is a mandatory field</source>
         <target>Обязательное поле</target>
       </trans-unit>
-      <trans-unit id="create">
+      <trans-unit id="_ohHsMM" resname="create">
         <source>create</source>
         <target>Создать</target>
       </trans-unit>
-      <trans-unit id="confirm.delete">
+      <trans-unit id="DYHuW58" resname="confirm.delete">
         <source>confirm.delete</source>
         <target>Вы действительно хотите удалить?</target>
       </trans-unit>
       <!--
               Login / Security
             -->
-      <trans-unit id="label.password">
+      <trans-unit id="9pvowqn" resname="label.password">
         <source>label.password</source>
         <target>Пароль</target>
       </trans-unit>
-      <trans-unit id="label.password_repeat">
+      <trans-unit id="WxAnbP0" resname="label.password_repeat">
         <source>label.password_repeat</source>
         <target>Повторить пароль</target>
       </trans-unit>
-      <trans-unit id="label.logout">
+      <trans-unit id="II4DGnv" resname="label.logout">
         <source>label.logout</source>
         <target>Выйти</target>
       </trans-unit>
-      <trans-unit id="label.user_profile">
+      <trans-unit id="hFFZGp_" resname="label.user_profile">
         <source>label.user_profile</source>
         <target>Мой Профиль</target>
       </trans-unit>
-      <trans-unit id="label.api_token">
+      <trans-unit id="gXZR.hV" resname="label.api_token">
         <source>label.api_token</source>
         <target>API Пароль</target>
       </trans-unit>
-      <trans-unit id="label.api_token_repeat">
+      <trans-unit id="s_X2xpI" resname="label.api_token_repeat">
         <source>label.api_token_repeat</source>
         <target>API Пароль повторить</target>
       </trans-unit>
       <!--
               Menu / Navbar items
             -->
-      <trans-unit id="menu.homepage">
+      <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Панель управления</target>
       </trans-unit>
-      <trans-unit id="menu.admin">
+      <trans-unit id="wvvYSw_" resname="menu.admin">
         <source>menu.admin</source>
         <target>Администрирование</target>
       </trans-unit>
-      <trans-unit id="menu.logout">
+      <trans-unit id="wBTFKFR" resname="menu.logout">
         <source>menu.logout</source>
         <target>Выйти</target>
       </trans-unit>
-      <trans-unit id="menu.timesheet">
+      <trans-unit id="C0W7_BT" resname="menu.timesheet">
         <source>menu.timesheet</source>
         <target>Учет времени</target>
       </trans-unit>
-      <trans-unit id="menu.invoice">
+      <trans-unit id="Ci9W8.K" resname="menu.invoice">
         <source>menu.invoice</source>
         <target>Счета</target>
       </trans-unit>
-      <trans-unit id="menu.admin_timesheet">
+      <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>Время работы сотрудников</target>
       </trans-unit>
-      <trans-unit id="menu.admin_customer">
+      <trans-unit id="Y_jAD36" resname="menu.admin_customer">
         <source>menu.admin_customer</source>
         <target>Клиенты</target>
       </trans-unit>
-      <trans-unit id="menu.admin_project">
+      <trans-unit id="oDLp9t3" resname="menu.admin_project">
         <source>menu.admin_project</source>
         <target>Проекты</target>
       </trans-unit>
-      <trans-unit id="menu.admin_activity">
+      <trans-unit id="wriHFwl" resname="menu.admin_activity">
         <source>menu.admin_activity</source>
         <target>Активность</target>
       </trans-unit>
-      <trans-unit id="menu.admin_user">
+      <trans-unit id="oZo1BnZ" resname="menu.admin_user">
         <source>menu.admin_user</source>
         <target>Пользователи</target>
       </trans-unit>
       <!--
               Error templates
             -->
-      <trans-unit id="error.no_entries_found">
+      <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>По выбранному фильтру записи не найдены.</target>
       </trans-unit>
       <!--
               General labels
             -->
-      <trans-unit id="label.date">
+      <trans-unit id="H1qEi4d" resname="label.date">
         <source>label.date</source>
         <target>Дата</target>
       </trans-unit>
-      <trans-unit id="label.starttime">
+      <trans-unit id="eJPDE76" resname="label.starttime">
         <source>label.starttime</source>
         <target>Начало</target>
       </trans-unit>
-      <trans-unit id="label.endtime">
+      <trans-unit id="uZlpDFh" resname="label.endtime">
         <source>label.endtime</source>
         <target>Окончание</target>
       </trans-unit>
-      <trans-unit id="label.duration">
+      <trans-unit id="cgpmY0I" resname="label.duration">
         <source>label.duration</source>
         <target>Продолжительность</target>
       </trans-unit>
-      <trans-unit id="label.user">
+      <trans-unit id="O2X4xZH" resname="label.user">
         <source>label.user</source>
         <target>Пользователь</target>
       </trans-unit>
-      <trans-unit id="label.username">
+      <trans-unit id="LDhDPrF" resname="label.username">
         <source>label.username</source>
         <target>Имя пользователя</target>
       </trans-unit>
-      <trans-unit id="label.description">
+      <trans-unit id="4cEApe1" resname="label.description">
         <source>label.description</source>
         <target>Описание</target>
       </trans-unit>
-      <trans-unit id="label.name">
+      <trans-unit id="ysOvPSq" resname="label.name">
         <source>label.name</source>
         <target>Имя</target>
       </trans-unit>
-      <trans-unit id="label.comment">
+      <trans-unit id="WqTho4C" resname="label.comment">
         <source>label.comment</source>
         <target>Комментарий</target>
       </trans-unit>
-      <trans-unit id="label.id">
+      <trans-unit id="txRonia" resname="label.id">
         <source>label.id</source>
         <target>ID</target>
       </trans-unit>
-      <trans-unit id="label.visible">
+      <trans-unit id="CYpZwBz" resname="label.visible">
         <source>label.visible</source>
         <target>Видимость</target>
       </trans-unit>
-      <trans-unit id="label.budget">
+      <trans-unit id="2ktNwkr" resname="label.budget">
         <source>label.budget</source>
         <target>Бюджет</target>
       </trans-unit>
-      <trans-unit id="label.activity">
+      <trans-unit id="l1wiL0h" resname="label.activity">
         <source>label.activity</source>
         <target>Активность</target>
       </trans-unit>
-      <trans-unit id="label.project">
+      <trans-unit id="KtnqJcg" resname="label.project">
         <source>label.project</source>
         <target>Проект</target>
       </trans-unit>
-      <trans-unit id="label.hourlyRate">
+      <trans-unit id="VAbtieW" resname="label.hourlyRate">
         <source>label.hourlyRate</source>
         <target>Почасовая оплата</target>
       </trans-unit>
-      <trans-unit id="label.hourly_rate">
+      <trans-unit id="IQ.tlua" resname="label.hourly_rate">
         <source>label.hourly_rate</source>
         <target>Почасовая оплата</target>
       </trans-unit>
-      <trans-unit id="label.skin">
+      <trans-unit id="dezCZWf" resname="label.skin">
         <source>label.skin</source>
         <target>Kimai-Theme</target>
       </trans-unit>
-      <trans-unit id="label.hours">
+      <trans-unit id="w8T34A6" resname="label.hours">
         <source>label.hours</source>
         <target>Часы</target>
       </trans-unit>
-      <trans-unit id="label.rate">
+      <trans-unit id="Ih3IFXj" resname="label.rate">
         <source>label.rate</source>
         <target>Заработная плата</target>
       </trans-unit>
-      <trans-unit id="label.language">
+      <trans-unit id="foM2o5T" resname="label.language">
         <source>label.language</source>
         <target>Язык</target>
       </trans-unit>
-      <trans-unit id="label.customer">
+      <trans-unit id="Z8a2kUf" resname="label.customer">
         <source>label.customer</source>
         <target>Клиент</target>
       </trans-unit>
-      <trans-unit id="label.email">
+      <trans-unit id="D2N6_cP" resname="label.email">
         <source>label.email</source>
         <target>Эл. почта</target>
       </trans-unit>
-      <trans-unit id="label.create_more">
+      <trans-unit id="hX.EQKy" resname="label.create_more">
         <source>label.create_more</source>
         <target>Cоздать новые записи</target>
       </trans-unit>
       <!--
               Buttons & Actions
             -->
-      <trans-unit id="label.actions">
+      <trans-unit id="zldXQq6" resname="label.actions">
         <source>label.actions</source>
         <target>Действия</target>
       </trans-unit>
-      <trans-unit id="action.edit">
+      <trans-unit id="ovKkXwU" resname="action.edit">
         <source>action.edit</source>
         <target>Редактировать</target>
       </trans-unit>
-      <trans-unit id="action.delete">
+      <trans-unit id="hTKWQ6g" resname="action.delete">
         <source>action.delete</source>
         <target>Удалить</target>
       </trans-unit>
-      <trans-unit id="action.save">
+      <trans-unit id="HLtdhYw" resname="action.save">
         <source>action.save</source>
         <target>Сохранить</target>
       </trans-unit>
-      <trans-unit id="action.back">
+      <trans-unit id="Eb7Ygpo" resname="action.back">
         <source>action.back</source>
         <target>Назад</target>
       </trans-unit>
-      <trans-unit id="action.close">
+      <trans-unit id="wCazS.X" resname="action.close">
         <source>action.close</source>
         <target>Закрыть</target>
       </trans-unit>
       <!--
               Dashboard
             -->
-      <trans-unit id="dashboard.title">
+      <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Панель управления</target>
       </trans-unit>
-      <trans-unit id="dashboard.subtitle">
+      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
         <source>dashboard.subtitle</source>
         <target>Добро пожаловать!</target>
       </trans-unit>
-      <trans-unit id="dashboard.all">
+      <trans-unit id="yEa1Yz3" resname="dashboard.all">
         <source>dashboard.all</source>
         <target>Все пользователи</target>
       </trans-unit>
       <!--
               Widgets
             -->
-      <trans-unit id="more.info.link">
+      <trans-unit id="giznf_R" resname="more.info.link">
         <source>more.info.link</source>
         <target>Подробнее</target>
       </trans-unit>
-      <trans-unit id="label.toggle_dropdown">
+      <trans-unit id="4iliLZT" resname="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
         <target>Отобразить меню</target>
       </trans-unit>
       <!--
               Timesheet
             -->
-      <trans-unit id="timesheet.title">
+      <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Учет времени</target>
       </trans-unit>
-      <trans-unit id="timesheet.edit">
+      <trans-unit id="dwEVXUR" resname="timesheet.edit">
         <source>timesheet.edit</source>
         <target>Редактировать запись</target>
       </trans-unit>
-      <trans-unit id="label.begin">
+      <trans-unit id="trDJK9W" resname="label.begin">
         <source>label.begin</source>
         <target>С</target>
       </trans-unit>
-      <trans-unit id="label.end">
+      <trans-unit id="R9typUt" resname="label.end">
         <source>label.end</source>
         <target>До</target>
       </trans-unit>
-      <trans-unit id="modal.columns.title">
+      <trans-unit id="UbnqJLn" resname="modal.columns.title">
         <source>modal.columns.title</source>
         <target>Изменить видимость столбцов</target>
       </trans-unit>
-      <trans-unit id="modal.columns.description">
+      <trans-unit id="EbfIoLp" resname="modal.columns.description">
         <source>modal.columns.description</source>
         <target>При сохранении не выбранные столбцы будут скрыты и данные установки будет сохранены в браузере „cookie“. При удалении cookies, Ваши установки изменятся.</target>
       </trans-unit>
       <!--
               User profile
             -->
-      <trans-unit id="profile.title">
+      <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Имя пользователя</target>
       </trans-unit>
-      <trans-unit id="profile.about_me">
+      <trans-unit id="HWKJZ0T" resname="profile.about_me">
         <source>profile.about_me</source>
         <target>Обо мне</target>
       </trans-unit>
-      <trans-unit id="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
         <source>profile.first_entry</source>
         <target>Первая запись</target>
       </trans-unit>
-      <trans-unit id="profile.settings">
+      <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
         <target>Профиль</target>
       </trans-unit>
-      <trans-unit id="profile.password">
+      <trans-unit id="A6TLLQa" resname="profile.password">
         <source>profile.password</source>
         <target>Пароль</target>
       </trans-unit>
-      <trans-unit id="profile.api-token">
+      <trans-unit id="Z34ZpjK" resname="profile.api-token">
         <source>profile.api-token</source>
         <target>API</target>
       </trans-unit>
-      <trans-unit id="profile.roles">
+      <trans-unit id="ygtTz8." resname="profile.roles">
         <source>profile.roles</source>
         <target>Роли / Задачи</target>
       </trans-unit>
-      <trans-unit id="profile.preferences">
+      <trans-unit id="MQKiG33" resname="profile.preferences">
         <source>profile.preferences</source>
         <target>Настройки</target>
       </trans-unit>
-      <trans-unit id="label.theme.collapsed_sidebar">
+      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
         <source>label.theme.collapsed_sidebar</source>
         <target>Управление статусом левой панели навигации (скрыта или открыта)</target>
       </trans-unit>
       <!--
               Admin: Timesheet
             -->
-      <trans-unit id="admin_timesheet.title">
+      <trans-unit id="bSDjzZL" resname="admin_timesheet.title">
         <source>admin_timesheet.title</source>
         <target>Учет рабочего времени сотрудников</target>
       </trans-unit>
       <!--
               Admin: Projects
             -->
-      <trans-unit id="admin_project.title">
+      <trans-unit id="DFjFRGe" resname="admin_project.title">
         <source>admin_project.title</source>
         <target>Проекты</target>
       </trans-unit>
       <!--
               Admin: Activity
             -->
-      <trans-unit id="admin_activity.title">
+      <trans-unit id="auu8q0u" resname="admin_activity.title">
         <source>admin_activity.title</source>
         <target>Деятельность</target>
       </trans-unit>
       <!--
               Admin: Customer
             -->
-      <trans-unit id="admin_customer.title">
+      <trans-unit id="2TvKX9Z" resname="admin_customer.title">
         <source>admin_customer.title</source>
         <target>Клиенты</target>
       </trans-unit>
-      <trans-unit id="label.number">
+      <trans-unit id="39AtPxQ" resname="label.number">
         <source>label.number</source>
         <target>Клиентский номер</target>
       </trans-unit>
-      <trans-unit id="label.company">
+      <trans-unit id="7jfRn_1" resname="label.company">
         <source>label.company</source>
         <target>Название компании</target>
       </trans-unit>
-      <trans-unit id="label.vat">
+      <trans-unit id="GOStgLi" resname="label.vat">
         <source>label.vat</source>
         <target>Налог НДС</target>
       </trans-unit>
-      <trans-unit id="label.contact">
+      <trans-unit id="0tkOMo1" resname="label.contact">
         <source>label.contact</source>
         <target>Контакт</target>
       </trans-unit>
-      <trans-unit id="label.address">
+      <trans-unit id="c9W5AO4" resname="label.address">
         <source>label.address</source>
         <target>Адрес</target>
       </trans-unit>
-      <trans-unit id="label.country">
+      <trans-unit id="k7MJQ82" resname="label.country">
         <source>label.country</source>
         <target>Страна</target>
       </trans-unit>
-      <trans-unit id="label.phone">
+      <trans-unit id="g03c_vw" resname="label.phone">
         <source>label.phone</source>
         <target>Телефон</target>
       </trans-unit>
-      <trans-unit id="label.fax">
+      <trans-unit id="eRyhERS" resname="label.fax">
         <source>label.fax</source>
         <target>Факс</target>
       </trans-unit>
-      <trans-unit id="label.mobile">
+      <trans-unit id="AawT9pW" resname="label.mobile">
         <source>label.mobile</source>
         <target>Мобильный телефон</target>
       </trans-unit>
-      <trans-unit id="label.homepage">
+      <trans-unit id="PS9IH_t" resname="label.homepage">
         <source>label.homepage</source>
         <target>Персональная страница</target>
       </trans-unit>
-      <trans-unit id="label.timezone">
+      <trans-unit id="dmtPdwq" resname="label.timezone">
         <source>label.timezone</source>
         <target>Часовой пояс</target>
       </trans-unit>
-      <trans-unit id="label.currency">
+      <trans-unit id="otd2FZd" resname="label.currency">
         <source>label.currency</source>
         <target>Валюта</target>
       </trans-unit>
       <!--
               Admin: User
             -->
-      <trans-unit id="admin_user.title">
+      <trans-unit id="t34EvnF" resname="admin_user.title">
         <source>admin_user.title</source>
         <target>Пользователь</target>
       </trans-unit>
-      <trans-unit id="label.alias">
+      <trans-unit id="TRDzmCV" resname="label.alias">
         <source>label.alias</source>
         <target>Имя</target>
       </trans-unit>
-      <trans-unit id="label.title">
+      <trans-unit id="UrRn8xj" resname="label.title">
         <source>label.title</source>
         <target>Заголовок</target>
       </trans-unit>
-      <trans-unit id="label.avatar">
+      <trans-unit id="nWMH_Nr" resname="label.avatar">
         <source>label.avatar</source>
         <target>Изображение профиля (URL)</target>
       </trans-unit>
-      <trans-unit id="label.active">
+      <trans-unit id="KtTP.Sh" resname="label.active">
         <source>label.active</source>
         <target>Активный профиль</target>
       </trans-unit>
-      <trans-unit id="label.roles">
+      <trans-unit id="iD6CNOO" resname="label.roles">
         <source>label.roles</source>
         <target>Позиция</target>
       </trans-unit>
       <!--
               ROLES
             -->
-      <trans-unit id="ROLE_SUPER_ADMIN">
+      <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>Системный администратор</target>
       </trans-unit>
-      <trans-unit id="ROLE_ADMIN">
+      <trans-unit id="718iPw6" resname="ROLE_ADMIN">
         <source>ROLE_ADMIN</source>
         <target>Администратор</target>
       </trans-unit>
-      <trans-unit id="ROLE_TEAMLEAD">
+      <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD">
         <source>ROLE_TEAMLEAD</source>
         <target>Руководитель группы</target>
       </trans-unit>
-      <trans-unit id="ROLE_USER">
+      <trans-unit id="rvO5ZXf" resname="ROLE_USER">
         <source>ROLE_USER</source>
         <target>Пользователь</target>
       </trans-unit>
       <!--
               Statistics data for Dashboard & Users profile
             -->
-      <trans-unit id="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>Отработано сегодня</target>
       </trans-unit>
-      <trans-unit id="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek">
         <source>stats.durationWeek</source>
         <target>Отработано за эту неделю</target>
       </trans-unit>
-      <trans-unit id="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
         <source>stats.durationMonth</source>
         <target>Отработано за этот месяц</target>
       </trans-unit>
-      <trans-unit id="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear">
         <source>stats.durationYear</source>
         <target>Отработано за этот год</target>
       </trans-unit>
-      <trans-unit id="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
         <source>stats.durationTotal</source>
         <target>Отработано всего</target>
       </trans-unit>
-      <trans-unit id="stats.amountToday">
+      <trans-unit id="023M9Ta" resname="stats.amountToday">
         <source>stats.amountToday</source>
         <target>Оборот за сегодня</target>
       </trans-unit>
-      <trans-unit id="stats.amountWeek">
+      <trans-unit id="xnJvYAE" resname="stats.amountWeek">
         <source>stats.amountWeek</source>
         <target>Оборот этой недели</target>
       </trans-unit>
-      <trans-unit id="stats.amountMonth">
+      <trans-unit id="ulr3reE" resname="stats.amountMonth">
         <source>stats.amountMonth</source>
         <target>Оборот этого месяца</target>
       </trans-unit>
-      <trans-unit id="stats.amountYear">
+      <trans-unit id="bQZyZaO" resname="stats.amountYear">
         <source>stats.amountYear</source>
         <target>Оборот этого года</target>
       </trans-unit>
-      <trans-unit id="stats.amountTotal">
+      <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target>Итоговый оборот</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveToday">
+      <trans-unit id="xyiadv3" resname="stats.userActiveToday">
         <source>stats.userActiveToday</source>
         <target>Активные пользователи сегодня</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveWeek">
+      <trans-unit id="knMHaeO" resname="stats.userActiveWeek">
         <source>stats.userActiveWeek</source>
         <target>Активные пользователи на этой неделе</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveMonth">
+      <trans-unit id="adzVDgb" resname="stats.userActiveMonth">
         <source>stats.userActiveMonth</source>
         <target>Активные пользователи в этом месяце</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveYear">
+      <trans-unit id="AswjFvh" resname="stats.userActiveYear">
         <source>stats.userActiveYear</source>
         <target>Активные пользователи за этот год</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveTotal">
+      <trans-unit id="dLTb1Po" resname="stats.userActiveTotal">
         <source>stats.userActiveTotal</source>
         <target>Всего активных пользователей</target>
       </trans-unit>
-      <trans-unit id="stats.activeRecordings">
+      <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
         <target>Активные временные записи</target>
       </trans-unit>
-      <trans-unit id="stats.userTotal">
+      <trans-unit id="t5eIWp8" resname="stats.userTotal">
         <source>stats.userTotal</source>
         <target>Количество пользователей</target>
       </trans-unit>
-      <trans-unit id="stats.activityTotal">
+      <trans-unit id="Bor.76M" resname="stats.activityTotal">
         <source>stats.activityTotal</source>
         <target>Объем деятельности</target>
       </trans-unit>
-      <trans-unit id="stats.projectTotal">
+      <trans-unit id="67uSaR3" resname="stats.projectTotal">
         <source>stats.projectTotal</source>
         <target>Количество проектов</target>
       </trans-unit>
-      <trans-unit id="stats.customerTotal">
+      <trans-unit id="tnD6aPj" resname="stats.customerTotal">
         <source>stats.customerTotal</source>
         <target>Количество клиентов</target>
       </trans-unit>
       <!--
               Invoice
             -->
-      <trans-unit id="admin_invoice_template.title">
+      <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Шаблоны счетов</target>
       </trans-unit>
-      <trans-unit id="invoice.title">
+      <trans-unit id="iERywrp" resname="invoice.title">
         <source>invoice.title</source>
         <target>Счета</target>
       </trans-unit>
-      <trans-unit id="button.print">
+      <trans-unit id="X70dwP8" resname="button.print">
         <source>button.print</source>
         <target>Печать</target>
       </trans-unit>
-      <trans-unit id="invoice_print">
+      <trans-unit id="zPcx3O_" resname="invoice_print">
         <source>invoice_print</source>
         <target>счет</target>
       </trans-unit>
-      <trans-unit id="label.template">
+      <trans-unit id="p0IprAw" resname="label.template">
         <source>label.template</source>
         <target>Шаблон</target>
       </trans-unit>
-      <trans-unit id="label.due_days">
+      <trans-unit id="zfIRxJh" resname="label.due_days">
         <source>label.due_days</source>
         <target>Оплатить в течение, дней</target>
       </trans-unit>
-      <trans-unit id="invoice.due_days">
+      <trans-unit id="rAJrxSK" resname="invoice.due_days">
         <source>invoice.due_days</source>
         <target>Оплатить до</target>
       </trans-unit>
-      <trans-unit id="invoice.from">
+      <trans-unit id="4XKFnWh" resname="invoice.from">
         <source>invoice.from</source>
         <target>Исполнитель</target>
       </trans-unit>
-      <trans-unit id="invoice.to">
+      <trans-unit id="hx7vsMA" resname="invoice.to">
         <source>invoice.to</source>
         <target>Заказчик</target>
       </trans-unit>
-      <trans-unit id="invoice.number">
+      <trans-unit id="x_W5sV4" resname="invoice.number">
         <source>invoice.number</source>
         <target>Номер счета</target>
       </trans-unit>
-      <trans-unit id="invoice.subtotal">
+      <trans-unit id="86KyrKO" resname="invoice.subtotal">
         <source>invoice.subtotal</source>
         <target>Всего, без учета НДС</target>
       </trans-unit>
-      <trans-unit id="invoice.tax">
+      <trans-unit id="EO57yXg" resname="invoice.tax">
         <source>invoice.tax</source>
         <target>НДС</target>
       </trans-unit>
-      <trans-unit id="invoice.total">
+      <trans-unit id="N68vyvo" resname="invoice.total">
         <source>invoice.total</source>
         <target>Итого</target>
       </trans-unit>
-      <trans-unit id="invoice.service_date">
+      <trans-unit id="TPzFWUs" resname="invoice.service_date">
         <source>invoice.service_date</source>
         <target>Дата выполненной работы</target>
       </trans-unit>
-      <trans-unit id="label.amount">
+      <trans-unit id="6x24VVR" resname="label.amount">
         <source>label.amount</source>
         <target>Количество</target>
       </trans-unit>
-      <trans-unit id="label.total_rate">
+      <trans-unit id="g7EpaPY" resname="label.total_rate">
         <source>label.total_rate</source>
         <target>Сумма</target>
       </trans-unit>
-      <trans-unit id="label.payment_terms">
+      <trans-unit id="77aZC3r" resname="label.payment_terms">
         <source>label.payment_terms</source>
         <target>Условия оплаты</target>
       </trans-unit>
-      <trans-unit id="invoice.signature_user">
+      <trans-unit id="9p2KQag" resname="invoice.signature_user">
         <source>invoice.signature_user</source>
         <target>Подтверждение: Дата / Имя консультанта / Подпись</target>
       </trans-unit>
-      <trans-unit id="invoice.signature_customer">
+      <trans-unit id="Q9ykNhO" resname="invoice.signature_customer">
         <source>invoice.signature_customer</source>
         <target>Подтверждение: Дата / Имя клиента / Подпись</target>
       </trans-unit>
-      <trans-unit id="label.orderNumber">
+      <trans-unit id="BS00SS7" resname="label.orderNumber">
         <source>label.orderNumber</source>
         <target>Номер заказа</target>
       </trans-unit>
       <!--
              Navbar - recent entries and activities
             -->
-      <trans-unit id="timesheet.all">
+      <trans-unit id="e7XS97t" resname="timesheet.all">
         <source>timesheet.all</source>
         <target>Отобразить все записи</target>
       </trans-unit>
-      <trans-unit id="recent.activities.format">
+      <trans-unit id="SLV47Uu" resname="recent.activities.format">
         <source>recent.activities.format</source>
         <target>%activity% в %project% для %customer%</target>
       </trans-unit>
-      <trans-unit id="timesheet.start">
+      <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>Начать новый хронометраж</target>
       </trans-unit>
       <!--
               TOOLBARS
             -->
-      <trans-unit id="label.pageSize">
+      <trans-unit id="MPimOps" resname="label.pageSize">
         <source>label.pageSize</source>
         <target>Количество</target>
       </trans-unit>
-      <trans-unit id="label.entryState">
+      <trans-unit id="KhyA_PW" resname="label.entryState">
         <source>label.entryState</source>
         <target>Записи</target>
       </trans-unit>
-      <trans-unit id="entryState.all">
+      <trans-unit id="do7fP0q" resname="entryState.all">
         <source>entryState.all</source>
         <target>Все</target>
       </trans-unit>
-      <trans-unit id="entryState.running">
+      <trans-unit id="xm7mqoK" resname="entryState.running">
         <source>entryState.running</source>
         <target>Текущие</target>
       </trans-unit>
-      <trans-unit id="entryState.stopped">
+      <trans-unit id="spHpd_I" resname="entryState.stopped">
         <source>entryState.stopped</source>
         <target>Завершенные</target>
       </trans-unit>
-      <trans-unit id="export.date_copyright">
+      <trans-unit id="vKY0tof" resname="export.date_copyright">
         <source>export.date_copyright</source>
         <target>Создано %date% с %kimai%</target>
       </trans-unit>
-      <trans-unit id="export.page_of">
+      <trans-unit id="ElDyzrx" resname="export.page_of">
         <source>export.page_of</source>
         <target>Страница %page% из %pages%</target>
       </trans-unit>
-      <trans-unit id="export.summary">
+      <trans-unit id="N778uJ6" resname="export.summary">
         <source>export.summary</source>
         <target>Тема</target>
       </trans-unit>
-      <trans-unit id="export.period">
+      <trans-unit id="vjmoQGo" resname="export.period">
         <source>export.period</source>
         <target>Период</target>
       </trans-unit>
-      <trans-unit id="export.title">
+      <trans-unit id="F6Jmro7" resname="export.title">
         <source>export.title</source>
         <target>Экспорт</target>
       </trans-unit>
-      <trans-unit id="status.paid">
+      <trans-unit id="PHJwR4w" resname="status.paid">
         <source>status.paid</source>
         <target>Оплачено</target>
       </trans-unit>
-      <trans-unit id="status.pending">
+      <trans-unit id="Uvo1CbP" resname="status.pending">
         <source>status.pending</source>
         <target>В ожидании</target>
       </trans-unit>
-      <trans-unit id="status.new">
+      <trans-unit id="X_NRsed" resname="status.new">
         <source>status.new</source>
         <target>Новый</target>
       </trans-unit>
-      <trans-unit id="label.status">
+      <trans-unit id="hzhzbqw" resname="label.status">
         <source>label.status</source>
         <target>Статус</target>
       </trans-unit>
-      <trans-unit id="label.orderDate">
+      <trans-unit id="as948k9" resname="label.orderDate">
         <source>label.orderDate</source>
         <target>Дата заказа</target>
       </trans-unit>
-      <trans-unit id="invoice.total_working_time">
+      <trans-unit id="c3d6p33" resname="invoice.total_working_time">
         <source>invoice.total_working_time</source>
         <target>Общая длительность</target>
       </trans-unit>
-      <trans-unit id="label.mark_as_exported">
+      <trans-unit id="7J7G3Vr" resname="label.mark_as_exported">
         <source>label.mark_as_exported</source>
         <target>Пометить как выгруженное</target>
       </trans-unit>
-      <trans-unit id="button.ods">
+      <trans-unit id="ulYFDIo" resname="button.ods">
         <source>button.ods</source>
         <target>ODS</target>
       </trans-unit>
-      <trans-unit id="button.pdf">
+      <trans-unit id="aAa5uRR" resname="button.pdf">
         <source>button.pdf</source>
         <target>PDF</target>
       </trans-unit>
-      <trans-unit id="button.xlsx">
+      <trans-unit id="vC2IsaP" resname="button.xlsx">
         <source>button.xlsx</source>
         <target>Excel</target>
       </trans-unit>
-      <trans-unit id="button.csv">
+      <trans-unit id="W_TXvSi" resname="button.csv">
         <source>button.csv</source>
         <target>CSV</target>
       </trans-unit>
-      <trans-unit id="button.preview_print">
+      <trans-unit id="IQ9DUOW" resname="button.preview_print">
         <source>button.preview_print</source>
         <target>Распечатать предпросмотр</target>
       </trans-unit>
-      <trans-unit id="button.preview">
+      <trans-unit id="7H7P1mE" resname="button.preview">
         <source>button.preview</source>
         <target>Предпросмотр</target>
       </trans-unit>
-      <trans-unit id="stats.percentUsedLeft">
+      <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
         <target>%percent%% использовано (%left% остаются открытыми)</target>
       </trans-unit>
-      <trans-unit id="stats.percentUsed">
+      <trans-unit id="unC5MXv" resname="stats.percentUsed">
         <source>stats.percentUsed</source>
         <target>%percent%% использовано</target>
       </trans-unit>
-      <trans-unit id="stats.yourWorkingHours">
+      <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
         <target>Мои отработанные часы</target>
       </trans-unit>
-      <trans-unit id="stats.workingTimeMonth">
+      <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
         <target>%month% %year%</target>
       </trans-unit>
-      <trans-unit id="stats.workingTimeToday">
+      <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
         <target>Сегодня, %day%</target>
       </trans-unit>
-      <trans-unit id="label.required_version">
+      <trans-unit id="8Rfa01v" resname="label.required_version">
         <source>label.required_version</source>
         <target>Совместим с</target>
       </trans-unit>
-      <trans-unit id="label.version">
+      <trans-unit id="d75KAlJ" resname="label.version">
         <source>label.version</source>
         <target>Версия</target>
       </trans-unit>
-      <trans-unit id="Allowed character: A-Z and _">
+      <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _">
         <source>Allowed character: A-Z and _</source>
         <target>Разрешены символы: A-Z и _</target>
       </trans-unit>
-      <trans-unit id="user_role.title">
+      <trans-unit id="G.GEdlk" resname="user_role.title">
         <source>user_role.title</source>
         <target>Роль пользователя</target>
       </trans-unit>
-      <trans-unit id="user_permissions.title">
+      <trans-unit id="ZlZ20pG" resname="user_permissions.title">
         <source>user_permissions.title</source>
         <target>Права пользователя</target>
       </trans-unit>
-      <trans-unit id="label.project_end">
+      <trans-unit id="4kQGReV" resname="label.project_end">
         <source>label.project_end</source>
         <target>Проект закончен</target>
       </trans-unit>
-      <trans-unit id="label.project_start">
+      <trans-unit id="yLOqEX_" resname="label.project_start">
         <source>label.project_start</source>
         <target>Проект начат</target>
       </trans-unit>
-      <trans-unit id="calendar.title">
+      <trans-unit id="HWiuMV6" resname="calendar.title">
         <source>calendar.title</source>
         <target>Календарь</target>
       </trans-unit>
-      <trans-unit id="agendaDay">
+      <trans-unit id="Q0Zip02" resname="agendaDay">
         <source>agendaDay</source>
         <target>День</target>
       </trans-unit>
-      <trans-unit id="agendaWeek">
+      <trans-unit id="Irm6dfx" resname="agendaWeek">
         <source>agendaWeek</source>
         <target>Неделя</target>
       </trans-unit>
-      <trans-unit id="month">
+      <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Месяц</target>
       </trans-unit>
-      <trans-unit id="label.lastLogin">
+      <trans-unit id="hO7mkmf" resname="label.lastLogin">
         <source>label.lastLogin</source>
         <target>Последний вход</target>
       </trans-unit>
-      <trans-unit id="profile.registration_date">
+      <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
         <target>Зарегистрирован</target>
       </trans-unit>
-      <trans-unit id="label.appendTags">
+      <trans-unit id="BxkmaKz" resname="label.appendTags">
         <source>label.appendTags</source>
         <target>Добавить тэги</target>
       </trans-unit>
-      <trans-unit id="label.replaceTags">
+      <trans-unit id="EoouxGX" resname="label.replaceTags">
         <source>label.replaceTags</source>
         <target>Заменить тэги</target>
       </trans-unit>
-      <trans-unit id="label.color">
+      <trans-unit id="YTSS_Q1" resname="label.color">
         <source>label.color</source>
         <target>Цвет</target>
       </trans-unit>
-      <trans-unit id="label.plus_more">
+      <trans-unit id="vTY9SUk" resname="label.plus_more">
         <source>label.plus_more</source>
         <target>+%count% еще</target>
       </trans-unit>
-      <trans-unit id="label.progress">
+      <trans-unit id="1PQHtXu" resname="label.progress">
         <source>label.progress</source>
         <target>Прогресс</target>
       </trans-unit>
-      <trans-unit id="action.reset">
+      <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
         <target>Сбросить</target>
       </trans-unit>
-      <trans-unit id="label.tags">
+      <trans-unit id="ijQyGRo" resname="label.tags">
         <source>label.tags</source>
         <target>Теги</target>
       </trans-unit>
-      <trans-unit id="label.tag">
+      <trans-unit id="VNCQ7YU" resname="label.tag">
         <source>label.tag</source>
         <target>Теги</target>
       </trans-unit>
-      <trans-unit id="error.no_comments_found">
+      <trans-unit id="hlu4iX5" resname="error.no_comments_found">
         <source>error.no_comments_found</source>
         <target>Комментариев еще нет.</target>
       </trans-unit>
-      <trans-unit id="menu.tags">
+      <trans-unit id="yo4f8Kh" resname="menu.tags">
         <source>menu.tags</source>
         <target>Теги</target>
       </trans-unit>
-      <trans-unit id="menu.system_configuration">
+      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
         <source>menu.system_configuration</source>
         <target>Настройки</target>
       </trans-unit>
-      <trans-unit id="menu.plugin">
+      <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>Дополнения</target>
       </trans-unit>
-      <trans-unit id="menu.export">
+      <trans-unit id="I.eil4u" resname="menu.export">
         <source>menu.export</source>
         <target>Экспорт</target>
       </trans-unit>
-      <trans-unit id="menu.system">
+      <trans-unit id="6OKwCUB" resname="menu.system">
         <source>menu.system</source>
         <target>Система</target>
       </trans-unit>
-      <trans-unit id="login_required">
+      <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Недостаточно прав. Перенаправить на страницу авторизации?</target>
       </trans-unit>
-      <trans-unit id="attachments">
+      <trans-unit id="OTDmccn" resname="attachments">
         <source>attachments</source>
         <target>Файлы</target>
       </trans-unit>
-      <trans-unit id="my.profile">
+      <trans-unit id="hBNESu6" resname="my.profile">
         <source>my.profile</source>
         <target>Мой профиль</target>
       </trans-unit>
-      <trans-unit id="search">
+      <trans-unit id="JBkykGe" resname="search">
         <source>search</source>
         <target>Поиск</target>
       </trans-unit>
-      <trans-unit id="upload">
+      <trans-unit id=".0CFrRV" resname="upload">
         <source>upload</source>
         <target>Загрузить</target>
       </trans-unit>
-      <trans-unit id="confirm">
+      <trans-unit id="PyZ8KrQ" resname="confirm">
         <source>confirm</source>
         <target>Подтвердить</target>
       </trans-unit>
-      <trans-unit id="cancel">
+      <trans-unit id="I3TZF5S" resname="cancel">
         <source>cancel</source>
         <target>Отмена</target>
       </trans-unit>
-      <trans-unit id="delete.not_in_use">
+      <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
         <target>Этот элемент можно безопасно удалить.</target>
       </trans-unit>
-      <trans-unit id="admin_entity.delete_confirm">
+      <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
         <target>Эти данные будут удалены! Вы можете выбрать запись, в которую будут перенесены все данные:</target>
       </trans-unit>
-      <trans-unit id="invoice.filter">
+      <trans-unit id="ov4OQOh" resname="invoice.filter">
         <source>invoice.filter</source>
         <target>Фильтровать данные счетов</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.daily_stats">
+      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
         <source>label.timesheet.daily_stats</source>
         <target>Показать дневную статистику в таблице</target>
       </trans-unit>
-      <trans-unit id="label.team">
+      <trans-unit id="Ss2xe99" resname="label.team">
         <source>label.team</source>
         <target>Команда</target>
       </trans-unit>
-      <trans-unit id="menu.doctor">
+      <trans-unit id="1kHI0gb" resname="menu.doctor">
         <source>menu.doctor</source>
         <target>Доктор</target>
       </trans-unit>
-      <trans-unit id="menu.admin_team">
+      <trans-unit id="pA.bYIk" resname="menu.admin_team">
         <source>menu.admin_team</source>
         <target>Команды</target>
       </trans-unit>
-      <trans-unit id="update_multiple">
+      <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
         <target>%action% %count% записи(ей)?</target>
       </trans-unit>
-      <trans-unit id="help.batch_meta_fields">
+      <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields">
         <source>help.batch_meta_fields</source>
         <target>Поля перед их обновлением должны быть сначала активированы нажатием на соответствующий флажок.</target>
       </trans-unit>
-      <trans-unit id="label.batch_meta_fields">
+      <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">
         <source>label.batch_meta_fields</source>
         <target>Дополнительные поля</target>
       </trans-unit>
-      <trans-unit id="label.globalsOnly">
+      <trans-unit id="S0vT92U" resname="label.globalsOnly">
         <source>label.globalsOnly</source>
         <target>Только глобальные</target>
       </trans-unit>
-      <trans-unit id="export.mark_all">
+      <trans-unit id="qtjPKUT" resname="export.mark_all">
         <source>export.mark_all</source>
         <target>Отметить все показанные записи как очищенные?</target>
       </trans-unit>
-      <trans-unit id="export.clear_all">
+      <trans-unit id="BhsaLxX" resname="export.clear_all">
         <source>export.clear_all</source>
         <target>Отметить все показанные записи как открытые?</target>
       </trans-unit>
-      <trans-unit id="entryState.not_exported">
+      <trans-unit id="ccCiXyR" resname="entryState.not_exported">
         <source>entryState.not_exported</source>
         <target>Открыто</target>
       </trans-unit>
-      <trans-unit id="entryState.exported">
+      <trans-unit id="_DDecAV" resname="entryState.exported">
         <source>entryState.exported</source>
         <target>Очищено</target>
       </trans-unit>
-      <trans-unit id="label.exported">
+      <trans-unit id="X3JM9wj" resname="label.exported">
         <source>label.exported</source>
         <target>Экспортировано</target>
       </trans-unit>
-      <trans-unit id="recent.activities">
+      <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
         <target>Перезапустить один из последних видов деятельности</target>
       </trans-unit>
-      <trans-unit id="active.entries">
+      <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Ваши измерения активного времени</target>
       </trans-unit>
-      <trans-unit id="export.full_list">
+      <trans-unit id="d5wyWRD" resname="export.full_list">
         <source>export.full_list</source>
         <target>Полный перечень</target>
       </trans-unit>
-      <trans-unit id="export.document_title">
+      <trans-unit id="3CQ7A2m" resname="export.document_title">
         <source>export.document_title</source>
         <target>Экспортировать табели учета рабочего времени</target>
       </trans-unit>
-      <trans-unit id="export.filter">
+      <trans-unit id="iwWaUoa" resname="export.filter">
         <source>export.filter</source>
         <target>Фильтровать данные для экспорта</target>
       </trans-unit>
-      <trans-unit id="label.decimalDuration">
+      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
         <source>label.decimalDuration</source>
         <target>Показывать длительность в виде десятичного числа</target>
       </trans-unit>
-      <trans-unit id="label.invoice_bank_account">
+      <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
         <target>Банковский счет</target>
       </trans-unit>
-      <trans-unit id="label.invoice_tax_number">
+      <trans-unit id="RRj6PYN" resname="label.invoice_tax_number">
         <source>label.invoice_tax_number</source>
         <target>ИНН:</target>
       </trans-unit>
-      <trans-unit id="label.unit_price">
+      <trans-unit id="MF3MdTu" resname="label.unit_price">
         <source>label.unit_price</source>
         <target>Цена</target>
       </trans-unit>
-      <trans-unit id="stats.workingTimeYear">
+      <trans-unit id="JnUFsNi" resname="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
         <target>Полный год %year%</target>
       </trans-unit>
-      <trans-unit id="stats.workingTimeWeek">
+      <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
         <target>Неделя календаря %week%</target>
       </trans-unit>
-      <trans-unit id="label.vat_id">
+      <trans-unit id="Dgmh_mv" resname="label.vat_id">
         <source>label.vat_id</source>
         <target>ИНН</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.export_decimal">
+      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
         <source>label.timesheet.export_decimal</source>
         <target>Использовать десятичную продолжительность при экспорте</target>
       </trans-unit>
-      <trans-unit id="label.login.initial_view">
+      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
         <source>label.login.initial_view</source>
         <target>Первоначальный вид после входа в систему</target>
       </trans-unit>
-      <trans-unit id="label.calendar.initial_view">
+      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
         <source>label.calendar.initial_view</source>
         <target>Первоначальный вид календаря</target>
       </trans-unit>
-      <trans-unit id="profile.teams">
+      <trans-unit id="DZ7XGML" resname="profile.teams">
         <source>profile.teams</source>
         <target>Команды</target>
       </trans-unit>
-      <trans-unit id="help.fixedRate">
+      <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>
         <target>Каждая временная запись получает одно и то же значение, независимо от ее продолжительности</target>
       </trans-unit>
-      <trans-unit id="label.fixedRate">
+      <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>фиксированная ставка</target>
       </trans-unit>
-      <trans-unit id="label.daterange">
+      <trans-unit id="egaNXjp" resname="label.daterange">
         <source>label.daterange</source>
         <target>Временной интервал</target>
       </trans-unit>
-      <trans-unit id="label.my_team_projects">
+      <trans-unit id="jTiYRIu" resname="label.my_team_projects">
         <source>label.my_team_projects</source>
         <target>Мои проекты</target>
       </trans-unit>
-      <trans-unit id="label.my_teams">
+      <trans-unit id="f3KMQJh" resname="label.my_teams">
         <source>label.my_teams</source>
         <target>Мои команды</target>
       </trans-unit>
-      <trans-unit id="label.billable">
+      <trans-unit id="vkHr9AP" resname="label.billable">
         <source>label.billable</source>
         <target>Платный</target>
       </trans-unit>
-      <trans-unit id="placeholder.type_message">
+      <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
         <target>Ввести сообщение…</target>
       </trans-unit>
-      <trans-unit id="label.teamlead">
+      <trans-unit id="Zpj9UB4" resname="label.teamlead">
         <source>label.teamlead</source>
         <target>руководство</target>
       </trans-unit>
-      <trans-unit id="label.recalculate_rates">
+      <trans-unit id="v72sA1c" resname="label.recalculate_rates">
         <source>label.recalculate_rates</source>
         <target>Пересчитать ставки</target>
       </trans-unit>
-      <trans-unit id="help.rate_internal">
+      <trans-unit id="uz4SmfP" resname="help.rate_internal">
         <source>help.rate_internal</source>
         <target>внутренние затраты (если не указаны, используется обычная ставка)</target>
       </trans-unit>
-      <trans-unit id="label.rate_internal">
+      <trans-unit id="QzvjNwg" resname="label.rate_internal">
         <source>label.rate_internal</source>
         <target>Внутренняя ставка</target>
       </trans-unit>
-      <trans-unit id="help.rate">
+      <trans-unit id="djL6LMC" resname="help.rate">
         <source>help.rate</source>
         <target>Почасовая ставка, подлежащая оплате</target>
       </trans-unit>
-      <trans-unit id="label.theme.layout">
+      <trans-unit id="42BRM3Q" resname="label.theme.layout">
         <source>label.theme.layout</source>
         <target>отображение: формат</target>
       </trans-unit>
-      <trans-unit id="label.timeBudget">
+      <trans-unit id="x8TrOec" resname="label.timeBudget">
         <source>label.timeBudget</source>
         <target>бюджет времени</target>
       </trans-unit>
-      <trans-unit id="menu.reporting">
+      <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
         <target>Отчет</target>
       </trans-unit>
-      <trans-unit id="rates.title">
+      <trans-unit id="mflwMcX" resname="rates.title">
         <source>rates.title</source>
         <target>Сборы</target>
       </trans-unit>
-      <trans-unit id="rates.empty">
+      <trans-unit id="0M_Gylq" resname="rates.empty">
         <source>rates.empty</source>
         <target>Почасовая оплата пока не настроена.</target>
       </trans-unit>
-      <trans-unit id="modal.dirty">
+      <trans-unit id="XP5zkiN" resname="modal.dirty">
         <source>modal.dirty</source>
         <target>Форма изменилась. Пожалуйста, нажмите на кнопку «Сохранить», чтобы сохранить изменения или «Закрыть» для отмены.</target>
       </trans-unit>
-      <trans-unit id="sum.total">
+      <trans-unit id="zFfl7jw" resname="sum.total">
         <source>sum.total</source>
         <target>Всего</target>
       </trans-unit>
-      <trans-unit id="label.last_record">
+      <trans-unit id="qDnURk7" resname="label.last_record">
         <source>label.last_record</source>
         <target>Последняя запись</target>
       </trans-unit>
-      <trans-unit id="label.last_record_before">
+      <trans-unit id="AJ6dwR." resname="label.last_record_before">
         <source>label.last_record_before</source>
         <target>Нет времени на бронирование с</target>
       </trans-unit>
-      <trans-unit id="label.not_invoiced">
+      <trans-unit id="csF1D35" resname="label.not_invoiced">
         <source>label.not_invoiced</source>
         <target>Не оплачено</target>
       </trans-unit>
-      <trans-unit id="label.not_exported">
+      <trans-unit id="3zn5T5e" resname="label.not_exported">
         <source>label.not_exported</source>
         <target>Не экспортировано</target>
       </trans-unit>
-      <trans-unit id="label.includeNoBudget">
+      <trans-unit id="B.Dbbob" resname="label.includeNoBudget">
         <source>label.includeNoBudget</source>
         <target>Показать записи без бюджета</target>
       </trans-unit>
-      <trans-unit id="label.includeNoWork">
+      <trans-unit id="z_YHoZn" resname="label.includeNoWork">
         <source>label.includeNoWork</source>
         <target>Показать записи без бронирований</target>
       </trans-unit>
-      <trans-unit id="preview.skipped_rows">
+      <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
         <target>Пропущен предварительный просмотр %rows% строк …</target>
       </trans-unit>
-      <trans-unit id="invoice.payment_date">
+      <trans-unit id="Xij3oQl" resname="invoice.payment_date">
         <source>invoice.payment_date</source>
         <target>Дата платежа</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveFinancialYear">
+      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
         <source>stats.userActiveFinancialYear</source>
         <target>Активных пользователей в этом финансовом году</target>
       </trans-unit>
-      <trans-unit id="stats.amountFinancialYear">
+      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
         <target>Выручка в этом финансовом году</target>
       </trans-unit>
-      <trans-unit id="stats.durationFinancialYear">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
         <source>stats.durationFinancialYear</source>
         <target>Часы работы в этом финансовом году</target>
       </trans-unit>
-      <trans-unit id="stats.workingTimeFinancialYear">
+      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
         <target>Финансовый год</target>
       </trans-unit>
-      <trans-unit id="action.save_all">
+      <trans-unit id="9hpJPiG" resname="action.save_all">
         <source>action.save_all</source>
         <target>Сохранить все</target>
       </trans-unit>
-      <trans-unit id="registration.check_email">
+      <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
         <target>Письмо отправлено на %email%. Чтобы активировать аккаунт, нажмите на ссылку в тексте письма.</target>
       </trans-unit>
-      <trans-unit id="resetting.check_email">
+      <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>resetting.check_email</source>
         <target>Письмо со ссылкой для сброса пароля отправлено. Примечание: Вы можете запросить сброс пароля не чаще, чем раз в %tokenLifetime% часов. Если Вы не получили письмо - проверьте СПАМ или попробуйте позже.</target>
       </trans-unit>
-      <trans-unit id="theme.update_browser_title">
+      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
         <source>theme.update_browser_title</source>
         <target>Обновить заголовок браузера</target>
       </trans-unit>
-      <trans-unit id="calendar.drag_and_drop.delete">
+      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
         <source>calendar.drag_and_drop.delete</source>
         <target>Для удаления записи, перетащите её на кнопку.</target>
       </trans-unit>
-      <trans-unit id="label.tax_rate">
+      <trans-unit id="YNGNfGn" resname="label.tax_rate">
         <source>label.tax_rate</source>
         <target>Ставка налога</target>
       </trans-unit>
-      <trans-unit id="label.searchTerm">
+      <trans-unit id="IolBPQD" resname="label.searchTerm">
         <source>label.searchTerm</source>
         <target>Поисковый запрос</target>
       </trans-unit>
-      <trans-unit id="label.remove_default">
+      <trans-unit id="NNKq04n" resname="label.remove_default">
         <source>label.remove_default</source>
         <target>Удалить избранный поиск</target>
       </trans-unit>
-      <trans-unit id="file">
+      <trans-unit id="O5w1jzb" resname="file">
         <source>file</source>
         <target>Файл</target>
       </trans-unit>
-      <trans-unit id="label.orderBy">
+      <trans-unit id="Z8Fxbvf" resname="label.orderBy">
         <source>label.orderBy</source>
         <target>Упорядочить по</target>
       </trans-unit>
-      <trans-unit id="label.desc">
+      <trans-unit id="0D_zaYd" resname="label.desc">
         <source>label.desc</source>
         <target>По убыванию</target>
       </trans-unit>
-      <trans-unit id="label.asc">
+      <trans-unit id="31x84Dt" resname="label.asc">
         <source>label.asc</source>
         <target>По возрастанию</target>
       </trans-unit>
-      <trans-unit id="label.account_number">
+      <trans-unit id="LXdqaTH" resname="label.account_number">
         <source>label.account_number</source>
         <target>Номер сотрудника</target>
       </trans-unit>
-      <trans-unit id="stats.revenue">
+      <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>
         <target>Доходы</target>
       </trans-unit>
-      <trans-unit id="stats.workingTime">
+      <trans-unit id="BXBFJP8" resname="stats.workingTime">
         <source>stats.workingTime</source>
         <target>Время работы</target>
       </trans-unit>
-      <trans-unit id="error.too_many_entries">
+      <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>
         <target>Запрос не может быть обработан, найдено слишком много результатов.</target>
       </trans-unit>
-      <trans-unit id="label.set_as_default">
+      <trans-unit id="BytPihM" resname="label.set_as_default">
         <source>label.set_as_default</source>
         <target>Сохранить настройки как избранные при поиске</target>
       </trans-unit>
-      <trans-unit id="add_user.label">
+      <trans-unit id="Zif614Q" resname="add_user.label">
         <source>add_user.label</source>
         <target>Добавить пользователя</target>
       </trans-unit>
-      <trans-unit id="label.budgetType">
+      <trans-unit id="PoF7hD8" resname="label.budgetType">
         <source>label.budgetType</source>
         <target>Тип бюджета</target>
       </trans-unit>
-      <trans-unit id="label.budgetType_month">
+      <trans-unit id="cHfLJtL" resname="label.budgetType_month">
         <source>label.budgetType_month</source>
         <target>Ежемесячный</target>
       </trans-unit>
-      <trans-unit id="team.add_user.help">
+      <trans-unit id="tp.gIrE" resname="team.add_user.help">
         <source>team.add_user.help</source>
         <target>Добавьте нового пользователя в группу, выбрав его из списка. После этого вы можете решить, должен ли пользователь стать лидером команды.</target>
       </trans-unit>
-      <trans-unit id="stats.percentUsed_month">
+      <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>
         <target>%percent%% использовано в этом месяце</target>
       </trans-unit>
-      <trans-unit id="delete_warning.short_stats">
+      <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
         <source>delete_warning.short_stats</source>
         <target>В настоящее время существует %records% записей учета времени, общая длительность которых составляет %duration%.</target>
       </trans-unit>
-      <trans-unit id="export.warn_result_amount">
+      <trans-unit id="W92QGbY" resname="export.warn_result_amount">
         <source>export.warn_result_amount</source>
         <target>%count% результатов в поиске. Если экспорт не удается, вам необходимо сузить область поиска.</target>
       </trans-unit>
-      <trans-unit id="stats.percentUsedLeft_month">
+      <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
         <source>stats.percentUsedLeft_month</source>
         <target>%percent%% использовано (%left% доступно в этом месяце)</target>
       </trans-unit>
-      <trans-unit id="label.type">
+      <trans-unit id="pnGDFmf" resname="label.type">
         <source>label.type</source>
         <target>Тип</target>
       </trans-unit>

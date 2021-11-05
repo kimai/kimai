@@ -1,44 +1,44 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="vi" datatype="plaintext" original="validators.en.xlf">
     <body>
-      <trans-unit id="This value is not a valid role.">
+      <trans-unit id="IkNxbBI" resname="This value is not a valid role.">
         <source>This value is not a valid role.</source>
         <target>Giá trị này không hợp lệ.</target>
       </trans-unit>
-      <trans-unit id="End date must not be earlier then start date.">
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
         <source>End date must not be earlier then start date.</source>
         <target>Ngày kết thúc không được sớm hơn ngày bắt đầu.</target>
       </trans-unit>
-      <trans-unit id="The begin date cannot be in the future.">
+      <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
         <target>Ngày bắt đầu không thể trong tương lai.</target>
       </trans-unit>
-      <trans-unit id="This invoice document cannot be used, please rename the file and upload it again.">
+      <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again.">
         <source>This invoice document cannot be used, please rename the file and upload it again.</source>
         <target>Tập hóa đơn này không thể sử dụng, vui lòng thay tên tệp và tải lên lại một lần nữa</target>
       </trans-unit>
-      <trans-unit id="You must select at least one user or team.">
+      <trans-unit id="1V6BsD_" resname="You must select at least one user or team.">
         <source>You must select at least one user or team.</source>
         <target>Bạn phải chọn ít nhất một người dùng hoặc nhóm.</target>
       </trans-unit>
-      <trans-unit id="An equal email is already used.">
+      <trans-unit id="INlaCgW" resname="An equal email is already used.">
         <source>An equal email is already used.</source>
         <target>Địa chỉ email tương tự đã được dùng.</target>
       </trans-unit>
-      <trans-unit id="An equal username is already used.">
+      <trans-unit id="ekO5eXI" resname="An equal username is already used.">
         <source>An equal username is already used.</source>
         <target>Một tên người dùng tương tự đã tồn tại.</target>
       </trans-unit>
-      <trans-unit id="The username is already used.">
+      <trans-unit id="S14XECA" resname="The username is already used.">
         <source>The username is already used.</source>
         <target>Tên đăng nhập đã tồn tại.</target>
       </trans-unit>
-      <trans-unit id="The email is already used.">
+      <trans-unit id="6u6oCwB" resname="The email is already used.">
         <source>The email is already used.</source>
         <target>Địa chỉ email đã được sử dụng.</target>
       </trans-unit>
-      <trans-unit id="The entered passwords don't match.">
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match.">
         <source>The entered passwords don't match.</source>
         <target>Mật khẩu đã nhập không trùng khớp.</target>
       </trans-unit>

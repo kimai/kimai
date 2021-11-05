@@ -1,56 +1,56 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="cs" datatype="plaintext" original="flashmessages.en.xlf">
     <body>
-      <trans-unit id="warning">
+      <trans-unit id="S9k1S7Z" resname="warning">
         <source>warning</source>
         <target>Varování</target>
       </trans-unit>
-      <trans-unit id="timesheet.stop.success">
+      <trans-unit id="WmrEP_5" resname="timesheet.stop.success">
         <source>timesheet.stop.success</source>
         <target>Záznam času zastaven</target>
       </trans-unit>
-      <trans-unit id="timesheet.stop.error">
+      <trans-unit id="NPBnpK_" resname="timesheet.stop.error">
         <source>timesheet.stop.error</source>
         <target>Záznam času nelez zastavit</target>
       </trans-unit>
-      <trans-unit id="timesheet.start.success">
+      <trans-unit id="CCUoZga" resname="timesheet.start.success">
         <source>timesheet.start.success</source>
         <target>Záznam času začalo</target>
       </trans-unit>
-      <trans-unit id="timesheet.start.error">
+      <trans-unit id="3w9tuox" resname="timesheet.start.error">
         <source>timesheet.start.error</source>
         <target>Záznam času nele začít</target>
       </trans-unit>
-      <trans-unit id="timesheet.start.exceeded_limit">
+      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
         <source>timesheet.start.exceeded_limit</source>
         <target>Bylo dosaženo limitu aktivních časových záznamů, nejprve prosím zastavte alespoň jednu aktivitu.</target>
       </trans-unit>
-      <trans-unit id="timesheet.locked.warning">
+      <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target>Upravujete exportovaný záznam</target>
       </trans-unit>
-      <trans-unit id="action.update.success">
+      <trans-unit id="72Ih8zO" resname="action.update.success">
         <source>action.update.success</source>
         <target>Změny uložené</target>
       </trans-unit>
-      <trans-unit id="action.update.error">
+      <trans-unit id="xeu1LSy" resname="action.update.error">
         <source>action.update.error</source>
         <target>Změny nelze uložit: %reason%</target>
       </trans-unit>
-      <trans-unit id="action.delete.success">
+      <trans-unit id="YV50HDB" resname="action.delete.success">
         <source>action.delete.success</source>
         <target>Záznam byl smazán</target>
       </trans-unit>
-      <trans-unit id="action.delete.error">
+      <trans-unit id="mW91Tmb" resname="action.delete.error">
         <source>action.delete.error</source>
         <target>Záznam nelze smazat: %reason%</target>
       </trans-unit>
-      <trans-unit id="invoice.first_template">
+      <trans-unit id="B_cz49z" resname="invoice.first_template">
         <source>invoice.first_template</source>
         <target>Než budete moci pokračovat, musíte si vytvořit první šablonu faktury</target>
       </trans-unit>
-      <trans-unit id="action.upload.error">
+      <trans-unit id="wejAEcR" resname="action.upload.error">
         <source>action.upload.error</source>
         <target>Soubor nemůže být nahrán nebo uložen z důvodu: %reason%</target>
       </trans-unit>
