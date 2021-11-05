@@ -564,7 +564,7 @@
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
-        <target state="translated">Profil resmi</target>
+        <target state="translated">Profil resmi (URL)</target>
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
@@ -1205,7 +1205,7 @@
       </trans-unit>
       <trans-unit id="error.too_many_entries">
         <source>error.too_many_entries</source>
-        <target>Çok fazla sonuç bulunduğundan dolayı istek işlenemedi.</target>
+        <target>İstek işlenemedi. Çok fazla sonuç bulundu.</target>
       </trans-unit>
       <trans-unit id="label.account_number">
         <source>label.account_number</source>
@@ -1246,6 +1246,18 @@
       <trans-unit id="label.type">
         <source>label.type</source>
         <target>Tür</target>
+      </trans-unit>
+      <trans-unit id="default_value_new">
+        <source>default_value_new</source>
+        <target>Yeni kayıtlar için öntanımlı değerler</target>
+      </trans-unit>
+      <trans-unit id="action.add">
+        <source>action.add</source>
+        <target>Ekle</target>
+      </trans-unit>
+      <trans-unit id="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target>Haftalık çalışma saatleri</target>
       </trans-unit>
     </body>
   </file>

@@ -580,7 +580,7 @@
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
-        <target>资料照片</target>
+        <target>资料照片（URL）</target>
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
@@ -1214,6 +1214,10 @@
       <trans-unit id="stats.percentUsedLeft_month">
         <source>stats.percentUsedLeft_month</source>
         <target>%percent%% 已使用（%left% 本月仍空余）</target>
+      </trans-unit>
+      <trans-unit id="action.add">
+        <source>action.add</source>
+        <target>添加</target>
       </trans-unit>
     </body>
   </file>

@@ -512,7 +512,7 @@
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
-        <target state="translated">Profilbild</target>
+        <target state="translated">Profilbild (URL)</target>
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
@@ -1254,6 +1254,10 @@
       <trans-unit id="label.type">
         <source>label.type</source>
         <target>Typ</target>
+      </trans-unit>
+      <trans-unit id="default_value_new">
+        <source>default_value_new</source>
+        <target>Standardvärden för nya poster</target>
       </trans-unit>
     </body>
   </file>

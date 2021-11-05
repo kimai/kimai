@@ -509,7 +509,7 @@
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
-        <target>Imagem de perfil</target>
+        <target>Imagem do perfil (URL)</target>
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
@@ -1243,6 +1243,18 @@
       <trans-unit id="label.type">
         <source>label.type</source>
         <target>Tipo</target>
+      </trans-unit>
+      <trans-unit id="action.add">
+        <source>action.add</source>
+        <target>Adicionar</target>
+      </trans-unit>
+      <trans-unit id="default_value_new">
+        <source>default_value_new</source>
+        <target>Valores predefinidos para as novas entradas</target>
+      </trans-unit>
+      <trans-unit id="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target>Horas de trabalhos semanais</target>
       </trans-unit>
     </body>
   </file>

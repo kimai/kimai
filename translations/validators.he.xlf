@@ -445,6 +445,18 @@
         <source>An equal username is already used.</source>
         <target>כבר קיים שם משתמש זהה.</target>
       </trans-unit>
+      <trans-unit id="An activity needs to be selected.">
+        <source>An activity needs to be selected.</source>
+        <target>יש לבחור בפעילות.</target>
+      </trans-unit>
+      <trans-unit id="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target>יש לבחור במיזם.</target>
+      </trans-unit>
+      <trans-unit id="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target>גיליון השעות כבר עבר ייצוא.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

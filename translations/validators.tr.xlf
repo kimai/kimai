@@ -66,6 +66,18 @@
         <source>An equal username is already used.</source>
         <target>Eşit bir kullanıcı adı zaten kullanılıyor.</target>
       </trans-unit>
+      <trans-unit id="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target>Bu zaman çizelgesi zaten dışa aktarıldı.</target>
+      </trans-unit>
+      <trans-unit id="An activity needs to be selected.">
+        <source>An activity needs to be selected.</source>
+        <target>Bir etkinliğin seçilmesi gerekiyor.</target>
+      </trans-unit>
+      <trans-unit id="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target>Bir projenin seçilmesi gerekiyor.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

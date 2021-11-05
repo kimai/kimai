@@ -66,6 +66,18 @@
         <source>At least one team leader must be assigned to the team.</source>
         <target>Tem de ser atribuído pelo menos um líder à equipa.</target>
       </trans-unit>
+      <trans-unit id="An activity needs to be selected.">
+        <source>An activity needs to be selected.</source>
+        <target>Tem de ser selecionada uma atividade.</target>
+      </trans-unit>
+      <trans-unit id="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target>Tem de ser selecionado um projeto.</target>
+      </trans-unit>
+      <trans-unit id="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target>Este quadro de horários já foi exportado.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

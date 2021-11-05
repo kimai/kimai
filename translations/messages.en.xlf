@@ -248,7 +248,7 @@
       </trans-unit>
       <trans-unit id="error.too_many_entries">
         <source>error.too_many_entries</source>
-        <target>Request could not be processed, too many results were found.</target>
+        <target>The request could not be processed. Too many results were found.</target>
       </trans-unit>
       <!--
               General labels
@@ -334,8 +334,8 @@
         <target>Display: colors</target>
       </trans-unit>
       <trans-unit id="label.theme.layout">
-        <source>label.theme.layout</source>
-        <target>Display: layout</target>
+        <source>Display: layout</source>
+        <target state="needs-translation">Display: layout</target>
       </trans-unit>
       <trans-unit id="label.hours">
         <source>label.hours</source>
@@ -1197,8 +1197,8 @@
         <target>Mark all shown records as cleared?</target>
       </trans-unit>
       <trans-unit id="label.globalsOnly">
-        <source>label.globalsOnly</source>
-        <target>Only global</target>
+        <source>Only global</source>
+        <target state="needs-translation">Only global</target>
       </trans-unit>
       <trans-unit id="label.batch_meta_fields">
         <source>label.batch_meta_fields</source>

@@ -509,7 +509,7 @@
       </trans-unit>
       <trans-unit id="label.avatar">
         <source>label.avatar</source>
-        <target>Photo de profil</target>
+        <target>Photo de profil (URL)</target>
       </trans-unit>
       <trans-unit id="label.active">
         <source>label.active</source>
@@ -1202,7 +1202,7 @@
       </trans-unit>
       <trans-unit id="error.too_many_entries">
         <source>error.too_many_entries</source>
-        <target>La demande n'a pas pu être traitée, trop de résultats ont été trouvés.</target>
+        <target>La demande n'a pas pu être traitée. Trop de résultats ont été trouvés.</target>
       </trans-unit>
       <trans-unit id="label.account_number">
         <source>label.account_number</source>
@@ -1243,6 +1243,18 @@
       <trans-unit id="label.type">
         <source>label.type</source>
         <target>Type</target>
+      </trans-unit>
+      <trans-unit id="default_value_new">
+        <source>default_value_new</source>
+        <target>Valeurs par défaut pour les nouvelles entrées</target>
+      </trans-unit>
+      <trans-unit id="action.add">
+        <source>action.add</source>
+        <target>Ajouter</target>
+      </trans-unit>
+      <trans-unit id="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target>Heures de travail hebdomadaires</target>
       </trans-unit>
     </body>
   </file>

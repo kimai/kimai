@@ -66,6 +66,18 @@
         <source>An equal username is already used.</source>
         <target>Un nom d'utilisateur identique est déjà utilisé.</target>
       </trans-unit>
+      <trans-unit id="An activity needs to be selected.">
+        <source>An activity needs to be selected.</source>
+        <target>Une activité doit être sélectionnée.</target>
+      </trans-unit>
+      <trans-unit id="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target>Cette feuille d'heures est déjà exportée.</target>
+      </trans-unit>
+      <trans-unit id="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target>Un projet doit être sélectionné.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
