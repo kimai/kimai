@@ -1259,6 +1259,18 @@
         <source>quick_entry.title</source>
         <target>Horas de trabalhos semanais</target>
       </trans-unit>
+      <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
+        <source>label.includeBudgetType_month</source>
+        <target>Mostre as entradas com orçamentos "mensais"</target>
+      </trans-unit>
+      <trans-unit id="9Rhadz6" resname="label.budgetType_full">
+        <source>label.budgetType_full</source>
+        <target>Ciclo de vida</target>
+      </trans-unit>
+      <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
+        <source>label.includeBudgetType_full</source>
+        <target>Mostre as entradas com orçamento com "ciclo de vida"</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
