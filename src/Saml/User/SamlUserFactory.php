@@ -28,6 +28,7 @@ final class SamlUserFactory
         $user = new User();
         $user->setEnabled(true);
         $user->setUsername($token->getUsername());
+        $user->setPassword('');
 
         $this->hydrateUser($user, $token);
 
@@ -73,12 +74,8 @@ final class SamlUserFactory
         }
 
         // fill them after hydrating account, so they can't be overwritten
+        // by the mapping attributes
         $user->setUsername($token->getUsername());
-        if ($user->getPassword() !== null && $user->getPassword() !== '') {
-            // this should prevent, that SAML users change their password in Kimai and then use
-            // it to login, instead of utilizing the regular SAML process
-            $user->setPassword('');
-        }
         $user->setAuth(User::AUTH_SAML);
     }
 
