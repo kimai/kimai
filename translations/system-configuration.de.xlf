@@ -7,8 +7,8 @@
         <target>Einstellungen</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
-        <target state="needs-translation">Zeiterfassung</target>
+        <source>Time tracking</source>
+        <target state="translated">Zeiterfassung</target>
       </trans-unit>
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
