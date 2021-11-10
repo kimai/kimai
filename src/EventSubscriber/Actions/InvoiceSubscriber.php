@@ -32,7 +32,7 @@ class InvoiceSubscriber extends AbstractActionsSubscriber
 
         if (!$invoice->isPending()) {
             $event->addAction('invoice.pending', ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'pending'])]);
-        } elseif ($invoice->isPending()) {
+        } else {
             $event->addAction('invoice.paid', ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'paid']), 'class' => 'modal-ajax-form']);
         }
 
