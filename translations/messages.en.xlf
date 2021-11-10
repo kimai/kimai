@@ -1083,6 +1083,10 @@
         <source>status.paid</source>
         <target>Paid</target>
       </trans-unit>
+      <trans-unit id="Z1s7pAw" resname="status.canceled">
+        <source>status.canceled</source>
+        <target>Canceled</target>
+      </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
         <target>Skipped preview of %rows% more rows …</target>

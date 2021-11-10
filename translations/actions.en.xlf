@@ -94,6 +94,10 @@
         <source>invoice.paid</source>
         <target>Invoice paid</target>
       </trans-unit>
+      <trans-unit id="7d1V9FU" resname="invoice.cancel">
+        <source>invoice.cancel</source>
+        <target>Cancel invoice</target>
+      </trans-unit>
       <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>
         <target>Filter data</target>
