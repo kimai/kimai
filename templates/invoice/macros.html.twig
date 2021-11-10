@@ -12,12 +12,16 @@
         {{ widgets.label('status.pending'|trans, 'warning') }}
     {% elseif invoice.paid %}
         {{ widgets.label('status.paid'|trans, 'success') }}
+    {% elseif invoice.canceled %}
+        {{ widgets.label('status.canceled'|trans, 'gray') }}
     {% endif %}
 {% endmacro %}
 
 {% macro invoice_due_date(invoice) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% if invoice.overdue and not invoice.paid %}
+    {% if invoice.canceled %}
+        {{ widgets.label('status.canceled'|trans, 'gray') }}
+    {% elseif invoice.overdue and not invoice.paid %}
         {{ widgets.label(invoice.dueDate|date_short, 'danger') }}
     {% else %}
         {{ widgets.label(invoice.dueDate|date_short, 'primary') }}
