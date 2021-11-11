@@ -1201,6 +1201,10 @@
         <source>label.budgetType_full</source>
         <target>מחזור חיים</target>
       </trans-unit>
+      <trans-unit id="Z1s7pAw" resname="status.canceled">
+        <source>status.canceled</source>
+        <target>בוטל</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
