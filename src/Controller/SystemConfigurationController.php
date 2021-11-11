@@ -516,18 +516,8 @@ final class SystemConfigurationController extends AbstractController
                 ->setSection(SystemConfigurationModel::SECTION_THEME)
                 ->setConfiguration([
                     (new Configuration())
-                        ->setName('theme.autocomplete_chars')
-                        ->setLabel('theme.autocomplete_chars')
-                        ->setType(IntegerType::class)
-                        ->setTranslationDomain('system-configuration'),
-                    (new Configuration())
                         ->setName('timesheet.markdown_content')
                         ->setLabel('theme.markdown_content')
-                        ->setType(CheckboxType::class)
-                        ->setTranslationDomain('system-configuration'),
-                    (new Configuration())
-                        ->setName('theme.tags_create')
-                        ->setLabel('theme.tags_create')
                         ->setType(CheckboxType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())

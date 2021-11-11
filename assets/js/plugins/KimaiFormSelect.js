@@ -61,10 +61,37 @@ export default class KimaiFormSelect extends KimaiPlugin {
         let options = {
             lockOptgroupOrder: true,
             allowEmptyOption: true,
-            persist: false,
-            create: false,
             plugins: plugins,
+            // if there are more than X entries, the other ones are hidden and can only be found
+            // by typing some characters to trigger the internal option search
+            maxOptions: 500,
         };
+
+        let render = {
+            option_create: function (data, escape) {
+                const tpl = node.dataset['transAddResult'] ?? 'Add %input% &hellip;';
+                const tplReplaced = tpl.replace('%input%', '<strong>' + escape(data.input) + '</strong>')
+                return '<div class="create">' + tplReplaced + '</div>';
+            },
+            no_results: function (data, escape) {
+                const tpl = node.dataset['transNoResult'] ?? 'No results found for "%input%"';
+                const tplReplaced = tpl.replace('%input%', '<strong>' + escape(data.input) + '</strong>')
+                return '<div class="no-results">' + tplReplaced + '</div>';
+            },
+        };
+
+
+        if (node.dataset['create'] !== undefined && node.dataset['create'] === 'true') {
+            options = {...options, ...{
+                persist: true,
+                create: true,
+            }};
+        } else {
+            options = {...options, ...{
+                persist: false,
+                create: false,
+            }};
+        }
 
         if (node.dataset.disableSearch !== undefined) {
             options = {...options, ...{
@@ -73,7 +100,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
         }
 
         if (node.dataset['renderer'] !== undefined && node.dataset['renderer'] === 'color') {
-            options = {...options, ...{
+            render = {...render, ...{
                 render: {
                     option: function(data, escape) {
                         return '<div class="list-group-item border-0 p-1 ps-2"><span style="background-color:' + data.value + '; width: 20px; height: 20px; display: inline-block; margin-right: 10px;">&nbsp;</span>' + escape(data.text) + '</div>';
@@ -84,7 +111,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
                 }
             }};
         } else {
-            options = {...options, ...{
+            render = {...render, ...{
                 render: {
                     // the empty entry would collapse and only show as a tiny 5px line if there is no content inside
                     option: function(data, escape) {
@@ -100,6 +127,10 @@ export default class KimaiFormSelect extends KimaiPlugin {
             }};
         }
 
+        options = {...options, ...{
+            render: render
+        }};
+
         const select = new TomSelect(node, options);
         node.addEventListener('data-reloaded', (event) => {
             select.clear(true);
@@ -109,10 +140,6 @@ export default class KimaiFormSelect extends KimaiPlugin {
             select.setValue(event.detail);
             select.refreshItems();
             select.refreshOptions(false);
-        });
-
-        node.addEventListener('goodbye', () => {
-            select.destroy();
         });
     }
 
@@ -125,7 +152,9 @@ export default class KimaiFormSelect extends KimaiPlugin {
 
     destroySelectPicker(selector) {
         const node = document.querySelector(selector);
-        node.dispatchEvent(new Event('goodbye'));
+        if (node.tomselect) {
+            node.tomselect.destroy();
+        }
     }
 
     updateOptions(selectIdentifier, data) {

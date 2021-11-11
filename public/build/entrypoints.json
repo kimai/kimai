@@ -2,16 +2,16 @@
   "entrypoints": {
     "app": {
       "js": [
-        "build/runtime.b8e7bb04.js",
-        "build/app.fea3e163.js"
+        "build/runtime.1f6c2a27.js",
+        "build/app.6b5dafca.js"
       ],
       "css": [
-        "build/app.3e6f6969.css"
+        "build/app.f85029ab.css"
       ]
     },
     "invoice": {
       "js": [
-        "build/runtime.b8e7bb04.js",
+        "build/runtime.1f6c2a27.js",
         "build/invoice.19f36eca.js"
       ],
       "css": [
@@ -20,7 +20,7 @@
     },
     "invoice-pdf": {
       "js": [
-        "build/runtime.b8e7bb04.js",
+        "build/runtime.1f6c2a27.js",
         "build/invoice-pdf.0ce1f3ce.js"
       ],
       "css": [
@@ -29,14 +29,14 @@
     },
     "chart": {
       "js": [
-        "build/runtime.b8e7bb04.js",
+        "build/runtime.1f6c2a27.js",
         "build/chart.e845e930.js"
       ]
     },
     "calendar": {
       "js": [
-        "build/runtime.b8e7bb04.js",
-        "build/calendar.52d75f80.js"
+        "build/runtime.1f6c2a27.js",
+        "build/calendar.aa81e950.js"
       ],
       "css": [
         "build/calendar.25e7e872.css"

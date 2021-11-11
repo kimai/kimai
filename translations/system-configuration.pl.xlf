@@ -50,10 +50,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Dozwolona maksymalna ilość jednoczesnych czynności (pomiarów)</target>
       </trans-unit>
-      <trans-unit id="label.theme.autocomplete_chars">
-        <source>label.theme.autocomplete_chars</source>
-        <target>Minimalna ilość liter do auto-uzupełniania</target>
-      </trans-unit>
       <trans-unit id="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>
         <target>Wyświetlaj nimery tygodnia</target>
@@ -201,10 +197,6 @@
       <trans-unit id="label.timesheet.rules.allow_overlapping_records">
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>Zezwalaj na nakładające się wpisy czasu</target>
-      </trans-unit>
-      <trans-unit id="label.theme.tags_create">
-        <source>label.theme.tags_create</source>
-        <target>Tagi: użyj automatycznego wyszukiwania i zezwól na tworzenie tagów</target>
       </trans-unit>
       <trans-unit id="increment_rounding">
         <source>increment_rounding</source>

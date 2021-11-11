@@ -1307,6 +1307,14 @@
         <source>api_password.missing_description</source>
         <target>Sie haben noch kein API Passwort hinterlegt. Aus Sicherheitsgründen ist die Nutzung der API bis zur Hinterlegung eines Passworts für Sie nicht nutzbar.</target>
       </trans-unit>
+      <trans-unit id="tags.no_results">
+        <source>tags.no_results</source>
+        <target>Kein Ergebnis gefunden für "%input%"</target>
+      </trans-unit>
+      <trans-unit id="tags.add_new">
+        <source>tags.add_new</source>
+        <target>Neues Stichwort "%input%" hinzufügen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

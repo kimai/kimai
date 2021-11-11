@@ -45,6 +45,3 @@ global.KimaiReloadPageWidget = require('./js/widgets/KimaiReloadPageWidget').def
 global.KimaiCookies = require('./js/widgets/KimaiCookies').default;
 global.KimaiColor = require('./js/widgets/KimaiColor').default;
 global.KimaiStorage = require('./js/widgets/KimaiStorage').default;
-
-// ------ Autocomplete for tags only ------
-require('jquery-ui/ui/widgets/autocomplete');

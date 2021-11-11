@@ -9,16 +9,30 @@
 
 namespace App\Form\Type;
 
-use App\Configuration\SystemConfiguration;
+use App\Repository\TagRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class TagsType extends AbstractType
 {
-    private $configuration;
+    private $auth;
+    private $repository;
 
-    public function __construct(SystemConfiguration $configuration)
+    public function __construct(AuthorizationCheckerInterface $auth, TagRepository $repository)
     {
-        $this->configuration = $configuration;
+        $this->auth = $auth;
+        $this->repository = $repository;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'allow_create' => $this->auth->isGranted('create_tag'),
+        ]);
     }
 
     /**
@@ -26,7 +40,7 @@ final class TagsType extends AbstractType
      */
     public function getParent()
     {
-        if ($this->configuration->isAllowTagCreation()) {
+        if ($this->repository->count([]) > TagRepository::MAX_AMOUNT_SELECT) {
             return TagsInputType::class;
         }
 

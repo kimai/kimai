@@ -26,10 +26,6 @@
                 <source>label.theme.markdown_content</source>
                 <target>Cho phép đánh dấu định dạng trong mô tả và nhận xét</target>
             </trans-unit>
-            <trans-unit id="label.theme.tags_create">
-                <source>label.theme.tags_create</source>
-                <target>Thẻ: sử dụng tìm kiếm tự động hoàn thành và cho phép tạo thẻ</target>
-            </trans-unit>
             <trans-unit id="label.timesheet.mode">
                 <source>label.timesheet.mode</source>
                 <target>Chế độ theo dõi thời gian</target>
@@ -57,10 +53,6 @@
             <trans-unit id="label.timesheet.active_entries.hard_limit">
                 <source>label.timesheet.active_entries.hard_limit</source>
                 <target>Số lượng cho phép của các mục thời gian chạy đồng thời</target>
-            </trans-unit>
-            <trans-unit id="label.theme.autocomplete_chars">
-                <source>label.theme.autocomplete_chars</source>
-                <target>Số lượng chữ cái tối thiểu để bắt đầu tự động hoàn thành</target>
             </trans-unit>
             <trans-unit id="label.calendar.week_numbers">
                 <source>label.calendar.week_numbers</source>

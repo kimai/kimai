@@ -178,10 +178,6 @@
         <source>label.calendar.slot_duration</source>
         <target>주간 - 일간 보기를 위한 슬롯 기간 (format: hh : mm : ss)</target>
       </trans-unit>
-      <trans-unit id="label.theme.autocomplete_chars">
-        <source>label.theme.autocomplete_chars</source>
-        <target>자동 완성을 시작할 최소 문자 수</target>
-      </trans-unit>
       <trans-unit id="label.timesheet.rules.lockdown_grace_period">
         <source>label.timesheet.rules.lockdown_grace_period</source>
         <target>잠금 유예 기간 종료 (잠금 기간 종료까지의 PHP 상대 날짜)</target>
@@ -197,10 +193,6 @@
       <trans-unit id="label.timesheet.rules.allow_overlapping_records">
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>겹치는 시간 항목 허용</target>
-      </trans-unit>
-      <trans-unit id="label.theme.tags_create">
-        <source>label.theme.tags_create</source>
-        <target>태그: 자동 완성 검색 사용 및 태그 생성 허용</target>
       </trans-unit>
       <trans-unit id="invoice">
         <source>invoice</source>

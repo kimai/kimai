@@ -198,10 +198,6 @@
         <source>label.calendar.slot_duration</source>
         <target>Délka slotu pro týdenní a denní zobrazení (formát: hh:mm:ss)</target>
       </trans-unit>
-      <trans-unit id="label.theme.autocomplete_chars">
-        <source>label.theme.autocomplete_chars</source>
-        <target>Minimální počet písmen k započetí automatického vyplňování</target>
-      </trans-unit>
       <trans-unit id="label.timesheet.rules.lockdown_grace_period">
         <source>label.timesheet.rules.lockdown_grace_period</source>
         <target>Uzamknutí konce ochranného období (PHP relativní datum konce uzamčeného období)</target>
@@ -217,10 +213,6 @@
       <trans-unit id="label.timesheet.rules.allow_overlapping_records">
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>Povolit překrývající se časové úseky</target>
-      </trans-unit>
-      <trans-unit id="label.theme.tags_create">
-        <source>label.theme.tags_create</source>
-        <target>Štítky: použít auto-dokončování hledání a povolit vytváření štítků</target>
       </trans-unit>
     </body>
   </file>

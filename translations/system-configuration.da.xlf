@@ -50,10 +50,6 @@
                 <source>label.timesheet.active_entries.hard_limit</source>
                 <target>Tilladt antal af samtidigt kørende tidsregistreringer</target>
             </trans-unit>
-            <trans-unit id="label.theme.autocomplete_chars">
-                <source>label.theme.autocomplete_chars</source>
-                <target>Minimum antal af bogstaver for at starte autofulførelse</target>
-            </trans-unit>
             <trans-unit id="label.calendar.week_numbers">
                 <source>label.calendar.week_numbers</source>
                 <target>Vis ugenumre</target>

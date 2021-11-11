@@ -24,6 +24,11 @@ use Pagerfanta\Pagerfanta;
 class TagRepository extends EntityRepository
 {
     /**
+     * See KimaiFormSelect.js (maxOptions) as well.
+     */
+    public const MAX_AMOUNT_SELECT = 500;
+
+    /**
      * @param Tag $tag
      * @throws ORMException
      * @throws \Doctrine\ORM\OptimisticLockException

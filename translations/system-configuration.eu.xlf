@@ -54,10 +54,6 @@
         <source>label.theme.select_type</source>
         <target>Formulariotako aukeraketa kutxa mota</target>
       </trans-unit>
-      <trans-unit id="label.theme.autocomplete_chars">
-        <source>label.theme.autocomplete_chars</source>
-        <target>Auto-osaketarko gutxieneko letra kopurua</target>
-      </trans-unit>
       <trans-unit id="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>
         <target>Aste zenbakia erakutsi</target>
@@ -217,10 +213,6 @@
       <trans-unit id="label.timesheet.rules.allow_overlapping_records">
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>Baimendu gainjarritako denbora-sarrerak</target>
-      </trans-unit>
-      <trans-unit id="label.theme.tags_create">
-        <source>label.theme.tags_create</source>
-        <target>Etiketak: erabili automatikoki osatutako bilaketa eta baimendu etiketak sortzea</target>
       </trans-unit>
       <trans-unit id="invoice">
         <source>invoice</source>

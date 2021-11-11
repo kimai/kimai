@@ -26,10 +26,6 @@
         <source>label.theme.markdown_content</source>
         <target>Разрешить markdown-форматирование в описаниях и комментариях</target>
       </trans-unit>
-      <trans-unit id="label.theme.tags_create">
-        <source>label.theme.tags_create</source>
-        <target>Тэги: использовать автозавершение поиска и разрешить создание тэга</target>
-      </trans-unit>
       <trans-unit id="label.timesheet.mode">
         <source>label.timesheet.mode</source>
         <target>Режим счетчика времени</target>
@@ -61,10 +57,6 @@
       <trans-unit id="label.timesheet.active_entries.hard_limit">
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Разрешенное количество одновременно запущенных таймеров</target>
-      </trans-unit>
-      <trans-unit id="label.theme.autocomplete_chars">
-        <source>label.theme.autocomplete_chars</source>
-        <target>Минимальное количество букв для старта автозавершения</target>
       </trans-unit>
       <trans-unit id="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>

@@ -178,10 +178,6 @@
         <source>label.calendar.slot_duration</source>
         <target>Duração da célula para a visualização da semana e do dia (formato: hh:mm:ss)</target>
       </trans-unit>
-      <trans-unit id="label.theme.autocomplete_chars">
-        <source>label.theme.autocomplete_chars</source>
-        <target>Quantidade mínima de letras para iniciar o preenchimento automático</target>
-      </trans-unit>
       <trans-unit id="label.timesheet.rules.lockdown_grace_period">
         <source>label.timesheet.rules.lockdown_grace_period</source>
         <target>Fim do período de carência de bloqueio (data PHP relativa ao fim do período de bloqueio)</target>
@@ -197,10 +193,6 @@
       <trans-unit id="label.timesheet.rules.allow_overlapping_records">
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>Permitir entradas de tempo sobrepostas</target>
-      </trans-unit>
-      <trans-unit id="label.theme.tags_create">
-        <source>label.theme.tags_create</source>
-        <target>Etiquetas: usar pesquisa com preenchimento automático e permitir a criação de etiquetas</target>
       </trans-unit>
       <trans-unit id="invoice">
         <source>invoice</source>

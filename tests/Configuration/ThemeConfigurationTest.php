@@ -49,7 +49,6 @@ class ThemeConfigurationTest extends TestCase
                 'company' => null,
                 'title' => null,
             ],
-            'tags_create' => true,
         ];
     }
 
@@ -59,7 +58,6 @@ class ThemeConfigurationTest extends TestCase
     public function testDeprecations()
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);
-        $this->assertTrue($sut->isAllowTagCreation());
         $this->assertNull($sut->getTitle());
     }
 }

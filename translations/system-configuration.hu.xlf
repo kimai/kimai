@@ -34,10 +34,6 @@
         <source>label.calendar.week_numbers</source>
         <target>Mutasd a hetek</target>
       </trans-unit>
-      <trans-unit id="label.theme.autocomplete_chars">
-        <source>label.theme.autocomplete_chars</source>
-        <target>A legkevesebb betű az automata-kiegészítő indításához</target>
-      </trans-unit>
       <trans-unit id="label.timesheet.rules.lockdown_grace_period">
         <source>label.timesheet.rules.lockdown_grace_period</source>
         <target>Lezárási kegyelmi időszak vége (PHP dátuma relatív a lezárási időszak végéhez)</target>
@@ -69,10 +65,6 @@
       <trans-unit id="label.timesheet.mode">
         <source>label.timesheet.mode</source>
         <target>Időmérő mód</target>
-      </trans-unit>
-      <trans-unit id="label.theme.tags_create">
-        <source>label.theme.tags_create</source>
-        <target>Címkék: használj automata kiegészítőt és engedélyezd a címke létrehozást</target>
       </trans-unit>
       <trans-unit id="label.theme.markdown_content">
         <source>label.theme.markdown_content</source>

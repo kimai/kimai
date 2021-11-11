@@ -26,10 +26,6 @@
                 <source>label.theme.markdown_content</source>
                 <target>Allow markdown-formattings in descriptions and comments</target>
             </trans-unit>
-            <trans-unit id="label.theme.tags_create">
-                <source>label.theme.tags_create</source>
-                <target>Tags: use auto-complete search and allow tag creation</target>
-            </trans-unit>
             <trans-unit id="label.theme.avatar_url">
                 <source>label.theme.avatar_url</source>
                 <target>Allow the use of URLs for avatar images</target>
@@ -93,10 +89,6 @@
             <trans-unit id="label.timesheet.active_entries.hard_limit">
                 <source>label.timesheet.active_entries.hard_limit</source>
                 <target>Permitted number of simultaneously running time entries</target>
-            </trans-unit>
-            <trans-unit id="label.theme.autocomplete_chars">
-                <source>label.theme.autocomplete_chars</source>
-                <target>Minimum number of letters to start auto-completion</target>
             </trans-unit>
             <trans-unit id="label.calendar.week_numbers">
                 <source>label.calendar.week_numbers</source>

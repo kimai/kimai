@@ -28,7 +28,7 @@ class TagsSubscriber extends AbstractActionsSubscriber
 
         $event->addSearchToggle($query);
 
-        if ($this->isGranted('manage_tag')) {
+        if ($this->isGranted('manage_tag') || $this->isGranted('create_tag')) {
             $event->addCreate($this->path('tags_create'));
         }
 

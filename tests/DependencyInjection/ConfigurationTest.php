@@ -378,8 +378,6 @@ class ConfigurationTest extends TestCase
                     'title' => null,
                     'translation' => null,
                 ],
-                'autocomplete_chars' => 3,
-                'tags_create' => true,
                 'calendar' => [
                     'background_color' => '#d2d6de'
                 ],

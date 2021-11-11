@@ -59,14 +59,6 @@ final class ThemeConfiguration implements \ArrayAccess
     /**
      * @deprecated since 1.15
      */
-    public function isAllowTagCreation(): bool
-    {
-        return (bool) $this->offsetGet('tags_create');
-    }
-
-    /**
-     * @deprecated since 1.15
-     */
     public function getTitle(): ?string
     {
         $title = $this->offsetGet('branding.title');

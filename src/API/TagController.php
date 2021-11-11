@@ -105,7 +105,7 @@ final class TagController extends BaseApiController
      */
     public function postAction(Request $request): Response
     {
-        if (!$this->isGranted('manage_tag')) {
+        if (!$this->isGranted('manage_tag') && !$this->isGranted('create_tag')) {
             throw new AccessDeniedHttpException('User cannot create tags');
         }
 

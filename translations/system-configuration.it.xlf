@@ -50,10 +50,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Numero di attività simultanee permesse</target>
       </trans-unit>
-      <trans-unit id="label.theme.autocomplete_chars">
-        <source>label.theme.autocomplete_chars</source>
-        <target>Numero minimo di caratteri per iniziare l'autocompletamento</target>
-      </trans-unit>
       <trans-unit id="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>
         <target>Visualizza numero della settimana</target>
@@ -173,10 +169,6 @@
       <trans-unit id="label.timesheet.rules.allow_overlapping_records">
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>Permetti la sovrapposizione di voci di tempo</target>
-      </trans-unit>
-      <trans-unit id="label.theme.tags_create">
-        <source>label.theme.tags_create</source>
-        <target>Etichette: utilizza la ricerca di completamento automatico e consenti la creazione di etichette</target>
       </trans-unit>
       <trans-unit id="invoice">
         <source>invoice</source>

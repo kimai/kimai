@@ -14,6 +14,8 @@ use App\Repository\Query\TagFormTypeQuery;
 use App\Repository\TagRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -31,6 +33,7 @@ class TagsSelectType extends AbstractType
             'multiple' => true,
             'class' => Tag::class,
             'label' => 'label.tag',
+            'allow_create' => false,
             'choice_label' => function (Tag $tag) {
                 return $tag->getName();
             },
@@ -44,6 +47,15 @@ class TagsSelectType extends AbstractType
                 return $repo->getQueryBuilderForFormType($query);
             };
         });
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        if ($options['allow_create']) {
+            $view->vars['attr'] = array_merge($view->vars['attr'], [
+                'data-create' => 'true',
+            ]);
+        }
     }
 
     /**

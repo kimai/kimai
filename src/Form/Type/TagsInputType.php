@@ -24,14 +24,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class TagsInputType extends AbstractType
 {
-    /**
-     * @var TagArrayToStringTransformer
-     */
     private $transformer;
-
-    /**
-     * @var UrlGeneratorInterface
-     */
     private $router;
 
     public function __construct(TagArrayToStringTransformer $transformer, UrlGeneratorInterface $router)
@@ -60,6 +53,7 @@ class TagsInputType extends AbstractType
                 'type' => 'string',
                 'description' => 'Comma separated list of tags',
             ],
+            'allow_create' => false,
             'label' => 'label.tag',
         ]);
     }
@@ -68,9 +62,16 @@ class TagsInputType extends AbstractType
     {
         $view->vars['attr'] = array_merge($view->vars['attr'], [
             'data-autocomplete-url' => $this->router->generate('get_tags'),
+            'data-minimum-character' => 3,
             'class' => 'js-autocomplete',
             'autocomplete' => 'off',
         ]);
+
+        if ($options['allow_create']) {
+            $view->vars['attr'] = array_merge($view->vars['attr'], [
+                'data-create' => 'true',
+            ]);
+        }
     }
 
     /**

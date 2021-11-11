@@ -174,10 +174,6 @@
         <source>label.calendar.slot_duration</source>
         <target>Durée de a vue en semaine et en jour (format : hh:mm:ss)</target>
       </trans-unit>
-      <trans-unit id="label.theme.autocomplete_chars">
-        <source>label.theme.autocomplete_chars</source>
-        <target>Nombre minimum de lettres pour commencer l'auto-complétion</target>
-      </trans-unit>
       <trans-unit id="label.timesheet.rules.lockdown_grace_period">
         <source>label.timesheet.rules.lockdown_grace_period</source>
         <target>Verrouiller la période de fin (Date relative a la période de fin PHP)</target>
@@ -197,10 +193,6 @@
       <trans-unit id="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target>[Durée] heure de début fixe configurable, seule la durée peut-être modifiée</target>
-      </trans-unit>
-      <trans-unit id="label.theme.tags_create">
-        <source>label.theme.tags_create</source>
-        <target>Mots-clés : Utiliser la recherche avec auto-complétion et autoriser la création de mots-clés</target>
       </trans-unit>
       <trans-unit id="invoice">
         <source>invoice</source>

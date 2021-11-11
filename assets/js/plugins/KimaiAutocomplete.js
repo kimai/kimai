@@ -5,8 +5,8 @@
  * file that was distributed with this source code.
  */
 
-import jQuery from 'jquery';
 import KimaiPlugin from "../KimaiPlugin";
+import TomSelect from 'tom-select';
 
 /**
  * Supporting auto-complete fields via API.
@@ -19,87 +19,66 @@ export default class KimaiAutocomplete extends KimaiPlugin {
         this.selector = selector;
     }
 
-    init() {
-        this.minChars = this.getConfiguration('autoComplete');
-    }
-
     getId() {
         return 'autocomplete';
     }
 
-    splitTagList(val) {
-        return val.split(/,\s*/);
-    }
-
-    extractLastTag(term) {
-        return this.splitTagList(term).pop();
-    }
-
     activateAutocomplete(selector) {
         const self = this;
-        
-        jQuery(selector + ' ' + this.selector).each(function(index) {
-            const currentField = jQuery(this);
-            const apiUrl = currentField.attr('data-autocomplete-url');
-            const API = self.getContainer().getPlugin('api');
+        const API = self.getContainer().getPlugin('api');
 
-            currentField
-                // don't navigate away from the field on tab when selecting an item
-                .on("keydown", function (event) {
-                    if (event.keyCode === jQuery.ui.keyCode.TAB &&
-                        jQuery(this).autocomplete("instance").menu.active) {
-                        event.preventDefault();
-                    }
-                })
-                .autocomplete({
-                        source: function (request, response) {
-                            const lastEntry = self.extractLastTag(request.term);
-                            API.get(apiUrl, {'name': lastEntry}, function(data){
-                                response(data);
-                            });
-                        },
-                        search: function () {
-                            // custom minLength
-                            var term = self.extractLastTag(this.value);
-                            if (term.length < self.minChars) {
-                                return false;
-                            }
-                        },
-                        focus: function () {
-                            // prevent value inserted on focus
-                            return false;
-                        },
-                        select: function (event, ui) {
-                            var terms = self.splitTagList(this.value);
+        const elementList = [].slice.call(document.querySelectorAll(selector + ' ' + this.selector));
+        elementList.map(function (node) {
+            const apiUrl = node.dataset['autocompleteUrl'];
+            let minChars = 3;
+            if (node.dataset['minimumCharacter'] !== undefined) {
+                minChars = parseInt(node.dataset['minimumCharacter']);
+            }
 
-                            // remove the current input
-                            terms.pop();
-
-                            // check if selected tag is already in list
-                            if (!terms.includes(ui.item.value)) {
-                                // add the selected item
-                                terms.push(ui.item.value);
-                            }
-                            // add placeholder to get the comma-and-space at the end
-                            terms.push("");
-
-                            this.value = terms.join(", ");
-
-                            $(this).trigger('change');
-
-                            return false;
-                        }
-                    }
-                )
-            ;
+            new TomSelect(node, {
+                // if there are more than 500, they need to be found by "tipping"
+                maxOptions: 500,
+                // the autocomplete is ONLY used, when the user can create tags
+                create: node.dataset['create'] !== undefined && node.dataset['create'] === 'true',
+                plugins: ['remove_button'],
+                shouldLoad: function(query) {
+                    return query.length >= minChars;
+                },
+                load: function(query, callback) {
+                    API.get(apiUrl, {'name': query}, function(data) {
+                        const results = [].slice.call(data).map(function(result) {
+                            return {text: result, value: result};
+                        });
+                        callback(results);
+                    }, function() {
+                        callback();
+                    });
+                },
+                render: {
+                    not_loading: function (data, escape) {
+                        // no default content
+                    },
+                    option_create: function (data, escape) {
+                        const tpl = node.dataset['transAddResult'] ?? 'Add %input% &hellip;';
+                        const tplReplaced = tpl.replace('%input%', '<strong>' + escape(data.input) + '</strong>')
+                        return '<div class="create">' + tplReplaced + '</div>';
+                    },
+                    no_results: function (data, escape) {
+                        const tpl = node.dataset['transNoResult'] ?? 'No results found for "%input%"';
+                        const tplReplaced = tpl.replace('%input%', '<strong>' + escape(data.input) + '</strong>')
+                        return '<div class="no-results">' + tplReplaced + '</div>';
+                    },
+                },
+            });
         });
     }
 
     destroyAutocomplete(selector) {
-        jQuery(selector + ' ' + this.selector).each(function(index) {
-            const currentField = jQuery(this);
-            currentField.autocomplete("destroy");
-            currentField.removeData('autocomplete');
+        const elementList = [].slice.call(document.querySelectorAll(selector + ' ' + this.selector));
+        elementList.map(function (node) {
+            if (node.tomselect) {
+                node.tomselect.destroy();
+            }
         });
     }
 
