@@ -49,5 +49,6 @@ final class Version20190706224211 extends AbstractMigration
     {
         // the columns above were created incorrect in migration Version20190617100845 for upgraded systems
         // that's why there are no equivalent changes in down()
+        $this->preventEmptyMigrationWarning();
     }
 }

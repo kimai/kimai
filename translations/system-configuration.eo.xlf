@@ -1,284 +1,284 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="eo" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="title">
+      <trans-unit id="qvIyBkY" resname="title">
         <source>title</source>
         <target>Agordoj</target>
       </trans-unit>
-      <trans-unit id="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
         <target>Temposlipo</target>
       </trans-unit>
-      <trans-unit id="invoice">
+      <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target>Fakturoj</target>
       </trans-unit>
-      <trans-unit id="theme">
+      <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
         <target>Etoso</target>
       </trans-unit>
-      <trans-unit id="calendar">
+      <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Kalendaro</target>
       </trans-unit>
-      <trans-unit id="label.theme.markdown_content">
+      <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
         <source>label.theme.markdown_content</source>
         <target>Permesi formatadom per Markdown en priskriboj kaj komentoj</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.mode">
+      <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
         <source>label.timesheet.mode</source>
         <target>Temporegistra reĝimo</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.mode_default">
+      <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
         <source>label.timesheet.mode_default</source>
         <target>[Defaŭlte] komenca kaj fina tempoj povas esti redaktitaj</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.mode_duration_only">
+      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
         <source>label.timesheet.mode_duration_only</source>
         <target>[Daŭro] anstataŭigas la finan tempon per enig-kampo por daŭro</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+      <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target>[Daŭro] agordebla fiksita komenca tempo, nur daŭro povas esti ŝanĝita</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.mode_punch">
+      <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
         <source>label.timesheet.mode_punch</source>
         <target>[Tempo-mezurado] uzanto povas komenci kaj fini registraĵojn, sed ne redakti tempojn aŭ daŭron</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.allow_future_times">
+      <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
         <source>label.timesheet.rules.allow_future_times</source>
         <target>Permesi tempajn registraĵojn en estonto</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.hard_limit">
+      <trans-unit id="oIueXaX" resname="label.timesheet.active_entries.hard_limit">
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Permesita nombro de samtempaj ŝaltitaj tempaj registraĵoj</target>
       </trans-unit>
-      <trans-unit id="label.calendar.week_numbers">
+      <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>
         <target>Montri semajnajn nombrojn</target>
       </trans-unit>
-      <trans-unit id="label.calendar.weekends">
+      <trans-unit id="NULxaYp" resname="label.calendar.weekends">
         <source>label.calendar.weekends</source>
         <target>Montri semajnfinojn</target>
       </trans-unit>
-      <trans-unit id="label.calendar.businessHours.begin">
+      <trans-unit id="AMCb58W" resname="label.calendar.businessHours.begin">
         <source>label.calendar.businessHours.begin</source>
         <target>Komenco de normalaj laborhoroj (estos emfazita)</target>
       </trans-unit>
-      <trans-unit id="label.calendar.businessHours.end">
+      <trans-unit id="3nfAkqy" resname="label.calendar.businessHours.end">
         <source>label.calendar.businessHours.end</source>
         <target>Fino de normalaj laborhoroj (estos emfazita)</target>
       </trans-unit>
-      <trans-unit id="label.calendar.visibleHours.begin">
+      <trans-unit id="Yl4Ztfv" resname="label.calendar.visibleHours.begin">
         <source>label.calendar.visibleHours.begin</source>
         <target>Komenco de videbla tempoperiodo</target>
       </trans-unit>
-      <trans-unit id="label.calendar.visibleHours.end">
+      <trans-unit id="UJGYdCt" resname="label.calendar.visibleHours.end">
         <source>label.calendar.visibleHours.end</source>
         <target>Fino de videbla tempoperiodo</target>
       </trans-unit>
-      <trans-unit id="label.calendar.slot_duration">
+      <trans-unit id="AlBuZhv" resname="label.calendar.slot_duration">
         <source>label.calendar.slot_duration</source>
         <target>Daŭro de tempo-bloko por semajna kaj taga vidoj (formo: hh:mm:ss)</target>
       </trans-unit>
-      <trans-unit id="branding">
+      <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>
         <target>Mia kompanio</target>
       </trans-unit>
-      <trans-unit id="label.theme.branding.logo">
+      <trans-unit id="m5dLCoB" resname="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
         <target>URL de emblemo (anstataŭigas la nomon de kompanio en ensaluta ekrano)</target>
       </trans-unit>
-      <trans-unit id="label.theme.branding.company">
+      <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
         <source>label.theme.branding.company</source>
         <target>Nomo de kompanio</target>
       </trans-unit>
-      <trans-unit id="label.theme.branding.mini">
+      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
         <source>label.theme.branding.mini</source>
         <target>Eta Emblemo (maletendita flankpanelo)</target>
       </trans-unit>
-      <trans-unit id="label.theme.branding.title">
+      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
         <source>label.theme.branding.title</source>
         <target>Retumila titolo</target>
       </trans-unit>
-      <trans-unit id="rounding">
+      <trans-unit id="Gdb5M4w" resname="rounding">
         <source>rounding</source>
         <target>Rondigo de tempo</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.begin">
+      <trans-unit id="0wyl4Bb" resname="label.timesheet.rounding.default.begin">
         <source>label.timesheet.rounding.default.begin</source>
         <target>Rondigo de komenca tempo en minutoj (0 = malaktivigita)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.end">
+      <trans-unit id="Jx6bTVr" resname="label.timesheet.rounding.default.end">
         <source>label.timesheet.rounding.default.end</source>
         <target>Rondigo de fina tempo en minutoj (0 = malaktivigita)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.duration">
+      <trans-unit id="Hnl7Jxt" resname="label.timesheet.rounding.default.duration">
         <source>label.timesheet.rounding.default.duration</source>
         <target>Rondigo de daŭro en minutoj (0 = malaktivigita)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.mode">
+      <trans-unit id="aenIpDV" resname="label.timesheet.rounding.default.mode">
         <source>label.timesheet.rounding.default.mode</source>
         <target>Rondiga reĝimo</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.days">
+      <trans-unit id="D1NSPl5" resname="label.timesheet.rounding.default.days">
         <source>label.timesheet.rounding.default.days</source>
         <target>Tagoj de la semajno kiam la rondigo estos aplikata</target>
       </trans-unit>
-      <trans-unit id="Monday">
+      <trans-unit id="agDfwdy" resname="Monday">
         <source>Monday</source>
         <target>Lundo</target>
       </trans-unit>
-      <trans-unit id="Tuesday">
+      <trans-unit id="fYrx3hJ" resname="Tuesday">
         <source>Tuesday</source>
         <target>Mardo</target>
       </trans-unit>
-      <trans-unit id="Wednesday">
+      <trans-unit id="wKbMgpz" resname="Wednesday">
         <source>Wednesday</source>
         <target>Merkredo</target>
       </trans-unit>
-      <trans-unit id="Thursday">
+      <trans-unit id=".CZiBi." resname="Thursday">
         <source>Thursday</source>
         <target>Ĵaŭdo</target>
       </trans-unit>
-      <trans-unit id="Friday">
+      <trans-unit id="4h8.Nyp" resname="Friday">
         <source>Friday</source>
         <target>Vendredo</target>
       </trans-unit>
-      <trans-unit id="Saturday">
+      <trans-unit id="2_Ncc2P" resname="Saturday">
         <source>Saturday</source>
         <target>Sabato</target>
       </trans-unit>
-      <trans-unit id="Sunday">
+      <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>
         <target>Dimanĉo</target>
       </trans-unit>
-      <trans-unit id="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil">
         <source>Ceil</source>
         <target>Supren: komenco, fino kaj daŭro estos rondigitaj supren</target>
       </trans-unit>
-      <trans-unit id="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest">
         <source>Closest</source>
         <target>Plej proksimen: matematika rondigo ĝis la plej proksima valoro</target>
       </trans-unit>
-      <trans-unit id="Default">
+      <trans-unit id="IbERy.5" resname="Default">
         <source>Default</source>
         <target>Defaŭlte: komenco estos rondigita suben, fino kaj daŭro supren</target>
       </trans-unit>
-      <trans-unit id="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor">
         <source>Floor</source>
         <target>Suben: komenco, fino kaj daŭro estos rondigitaj suben</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.default_begin">
+      <trans-unit id="DY_cM92" resname="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
         <target>Defaŭlta komenca tempo (ne uzita en ĉiuj temporegistraj reĝimoj)</target>
       </trans-unit>
-      <trans-unit id="label.invoice.number_format">
+      <trans-unit id="HrEBLUr" resname="label.invoice.number_format">
         <source>label.invoice.number_format</source>
         <target>Formo de faktura numero</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.allow_overlapping_records">
+      <trans-unit id=".NE5mGi" resname="label.timesheet.rules.allow_overlapping_records">
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>Permesi interkovrantajn tempelementojn</target>
       </trans-unit>
-      <trans-unit id="increment_rounding">
+      <trans-unit id="9C1qkmD" resname="increment_rounding">
         <source>increment_rounding</source>
         <target>Uzi agorditan valoron de la regulo de rondigo</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.lockdown_grace_period">
+      <trans-unit id="y2i0PU3" resname="label.timesheet.rules.lockdown_grace_period">
         <source>label.timesheet.rules.lockdown_grace_period</source>
         <target>Fino de ŝlosa prokrastoperiodo (dato relativa al fino de ŝlosota periodo laŭ PHP)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.lockdown_period_end">
+      <trans-unit id=".es2tyO" resname="label.timesheet.rules.lockdown_period_end">
         <source>label.timesheet.rules.lockdown_period_end</source>
         <target>Fino de ŝlosota periodo (dato relativa al nuno laŭ PHP)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.lockdown_period_start">
+      <trans-unit id="yVBJECt" resname="label.timesheet.rules.lockdown_period_start">
         <source>label.timesheet.rules.lockdown_period_start</source>
         <target>Komenco de ŝlosota periodo (dato relativa al nuno laŭ PHP)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.time_increment">
+      <trans-unit id="x3AfnWn" resname="label.timesheet.time_increment">
         <source>label.timesheet.time_increment</source>
         <target>Minuta elekto por De &amp; Al</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.duration_increment">
+      <trans-unit id="40i4Xlr" resname="label.timesheet.duration_increment">
         <source>label.timesheet.duration_increment</source>
         <target>Minuta elekto por Daŭro</target>
       </trans-unit>
-      <trans-unit id="off">
+      <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
         <target>Malŝaltita</target>
       </trans-unit>
-      <trans-unit id="first_weekday">
+      <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>
         <target>Unua tago de la semajno</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.allow_overbooking_budget">
+      <trans-unit id="VAAaL2t" resname="label.timesheet.rules.allow_overbooking_budget">
         <source>label.timesheet.rules.allow_overbooking_budget</source>
         <target>Permesi tromendadon de konservitaj buĝetoj</target>
       </trans-unit>
-      <trans-unit id="help.theme.color_choices">
+      <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
         <source>help.theme.color_choices</source>
         <target>Kome apartigita listo de HTML-kolorkodoj. Kolornomoj estas agordeblaj per antaŭmeto de la kolornomo kaj la apartigilo "|" antaŭ la kolorkodo, ekz.: Blanko|#ffffff,Nigro|#000000.</target>
       </trans-unit>
-      <trans-unit id="label.theme.color_choices">
+      <trans-unit id="scCc2Xm" resname="label.theme.color_choices">
         <source>label.theme.color_choices</source>
         <target>Permesataj koloroj</target>
       </trans-unit>
-      <trans-unit id="label.theme.colors_limited">
+      <trans-unit id="QHVk7AA" resname="label.theme.colors_limited">
         <source>label.theme.colors_limited</source>
         <target>Limigi elektojn pri koloroj</target>
       </trans-unit>
-      <trans-unit id="label.company.financial_year">
+      <trans-unit id=".CeyZwj" resname="label.company.financial_year">
         <source>label.company.financial_year</source>
         <target>Financjaro</target>
       </trans-unit>
-      <trans-unit id="label.user_auth_password_reset">
+      <trans-unit id="t2zKRp5" resname="label.user_auth_password_reset">
         <source>label.user_auth_password_reset</source>
         <target>Forgesis pasvorton</target>
       </trans-unit>
-      <trans-unit id="label.user_auth_registration">
+      <trans-unit id=".zZ_MeA" resname="label.user_auth_registration">
         <source>label.user_auth_registration</source>
         <target>Registrado de uzanto</target>
       </trans-unit>
-      <trans-unit id="label.user_auth_login">
+      <trans-unit id="CCXeSFj" resname="label.user_auth_login">
         <source>label.user_auth_login</source>
         <target>Ensaluta formularo</target>
       </trans-unit>
-      <trans-unit id="label.saml_activate">
+      <trans-unit id="A3HPT4p" resname="label.saml_activate">
         <source>label.saml_activate</source>
         <target>Ensaluto per SAML</target>
       </trans-unit>
-      <trans-unit id="label.ldap_activate">
+      <trans-unit id="71FjFMp" resname="label.ldap_activate">
         <source>label.ldap_activate</source>
         <target>Ensaluto per LDAP</target>
       </trans-unit>
-      <trans-unit id="authentication">
+      <trans-unit id="udkGKEU" resname="authentication">
         <source>authentication</source>
         <target>Aŭtentikigo</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.lockdown_period_timezone">
+      <trans-unit id="HeDzoVE" resname="label.timesheet.rules.lockdown_period_timezone">
         <source>label.timesheet.rules.lockdown_period_timezone</source>
         <target>Horzono (se malplena, horzono de la respondanta uzanto estas uzota)</target>
       </trans-unit>
-      <trans-unit id="label.user_auth_password_reset_token_ttl">
+      <trans-unit id="0Tj.NhS" resname="label.user_auth_password_reset_token_ttl">
         <source>label.user_auth_password_reset_token_ttl</source>
         <target>Forgesita pasvorto — validecodaŭro de pasvorto-restariga ligilo</target>
       </trans-unit>
-      <trans-unit id="label.user_auth_password_reset_retry_ttl">
+      <trans-unit id="ufoC1qF" resname="label.user_auth_password_reset_retry_ttl">
         <source>label.user_auth_password_reset_retry_ttl</source>
         <target>Forgesita pasvorto — nombro de sekundoj antaŭ ol uzanto povas peti novan retpoŝtan mesaĝon</target>
       </trans-unit>
-      <trans-unit id="lockdown_period">
+      <trans-unit id="tuPXa0S" resname="lockdown_period">
         <source>lockdown_period</source>
         <target>Forŝlosa periodo</target>
       </trans-unit>
-      <trans-unit id="label.theme.avatar_url">
+      <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
         <source>label.theme.avatar_url</source>
         <target>Permesi URL-ojn por profilbildoj</target>
       </trans-unit>
-      <trans-unit id="label.theme.random_colors">
+      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
         <source>label.theme.random_colors</source>
         <target>Uzi hazardajn kolorojn por objektoj sen asignita koloro</target>
       </trans-unit>

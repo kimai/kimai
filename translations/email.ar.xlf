@@ -1,20 +1,20 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ar" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="automated_email_dont_answer">
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target>هذا بريد آلي. رجاء لاترد، بريدك لن يقرء.</target>
       </trans-unit>
-      <trans-unit id="registration.subject">
+      <trans-unit id="pjr3FDv" resname="registration.subject">
         <source>registration.subject</source>
         <target>فعل حسابك</target>
       </trans-unit>
-      <trans-unit id="registration.title">
+      <trans-unit id="QtcznHC" resname="registration.title">
         <source>registration.title</source>
         <target>مرحبا %username%</target>
       </trans-unit>
-      <trans-unit id="registration.button">
+      <trans-unit id="YMLel3P" resname="registration.button">
         <source>registration.button</source>
         <target>فعل حسابك</target>
       </trans-unit>

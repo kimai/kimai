@@ -1,5 +1,10 @@
 @import '~tom-select/dist/scss/tom-select.bootstrap5';
 
+/* bootstrap thead.sticky-top has z-index 1020 and tomselect dropdowns often hide behind that */
+.ts-dropdown {
+    z-index: 1021;
+}
+
 .ts-control {
     > input {
         min-width: unset;
@@ -13,6 +18,7 @@
     .optgroup-header {
         background-color: #eee;
         color: #000;
+        font-weight: 600;
     }
     [data-selectable].option {
         padding-left: 20px;

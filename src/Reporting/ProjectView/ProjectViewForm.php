@@ -34,7 +34,6 @@ class ProjectViewForm extends AbstractType
     {
         $builder->add('customer', CustomerType::class, [
             'required' => false,
-            'label' => false,
             'width' => false,
         ]);
         $builder->add('includeNoBudget', CheckboxType::class, [

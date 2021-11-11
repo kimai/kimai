@@ -152,7 +152,7 @@ class ProjectStatisticService
             ->setParameter('end', $end, Types::DATETIME_MUTABLE)
         ;
 
-        if ($query->isOnlyWithRecords()) {
+        if (!$query->isIncludeNoWork()) {
             $qb2 = $this->repository->createQueryBuilder('t1');
             $qb2
                 ->select('1')
@@ -163,15 +163,28 @@ class ProjectStatisticService
             $qb->andWhere($qb->expr()->exists($qb2));
         }
 
-        if (!$query->isIncludeNoBudget()) {
-            $qb
-                ->andWhere(
-                    $qb->expr()->orX(
-                        $qb->expr()->gt('p.budget', 0.0),
-                        $qb->expr()->gt('p.timeBudget', 0)
-                    )
+        if ($query->isIncludeNoBudget()) {
+            $qb->andWhere(
+                $qb->expr()->eq('p.budget', 0.0),
+                $qb->expr()->eq('p.timeBudget', 0)
+            );
+        } else {
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->gt('p.budget', 0.0),
+                    $qb->expr()->gt('p.timeBudget', 0)
                 )
-            ;
+            );
+            if ($query->isBudgetTypeMonthly()) {
+                $qb->andWhere(
+                    $qb->expr()->eq('p.budgetType', ':typeMonth')
+                );
+                $qb->setParameter('typeMonth', 'month');
+            } else {
+                $qb->andWhere(
+                    $qb->expr()->isNull('p.budgetType')
+                );
+            }
         }
 
         if ($query->getCustomer() !== null) {

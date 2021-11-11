@@ -34,7 +34,34 @@
 
 {% block report_form %}
     {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': 'project-view-form'}}) }}
-        {# project overview #}
+        {% if form.customer is defined %}
+            {{ form_row(form.customer, {'label': false, 'placeholder': 'please_choose', 'row_attr': {'class': 'w-25 me-2'}}) }}
+        {% endif %}
+        {% if form.month is defined %}
+            {{ form_widget(form.month) }}
+        {% endif %}
+        {% if form.includeNoBudget is defined or form.includeNoWork is defined %}
+            <div class="btn-group">
+                <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ icon('filter') }}
+                </button>
+                <ul class="dropdown-menu checkbox-menu">
+                    {% if form.includeNoBudget is defined %}
+                        <li class="dropdown-item">
+                            {{ form_widget(form.includeNoBudget) }}
+                        </li>
+                    {% endif %}
+                    {% if form.includeNoWork is defined %}
+                        <li class="dropdown-item">
+                            {{ form_widget(form.includeNoWork) }}
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
+        {{ form_rest(form) }}
+
+        {# project overview # }
         {% if form.customer is defined %}
             {{ form_row(form.customer, {'row_attr': {'class': 'w-25 me-2'}}) }}
         {% endif %}
@@ -44,10 +71,11 @@
         {% if form.includeNoWork is defined %}
             {{ form_row(form.includeNoWork, {'row_attr': {'class': 'me-2'}}) }}
         {% endif %}
-        {# inactive projects #}
+        {# inactive projects # }
         {% if form.lastChange is defined %}
             {{ form_row(form.lastChange, {'row_attr': {'class': ''}}) }}
         {% endif %}
+        #}
     {{ form_end(form) }}
 {% endblock %}
 

@@ -250,15 +250,16 @@
     {% elseif '\\LanguageType' in type %}
         {{ value|language }}
     {% elseif '\\MoneyType' in type  %}
+        {% set classname = class_name(entity) %}
         {% if entity is null %}
             {{ value }}
-        {% elseif class_name(entity) == 'App\\Entity\\Timesheet' %}
+        {% elseif classname == 'App\\Entity\\Timesheet' %}
             {{ value|money(entity.project.customer.currency) }}
-        {% elseif class_name(entity) == 'App\\Entity\\Customer' %}
+        {% elseif classname == 'App\\Entity\\Customer' %}
             {{ value|money(entity.currency) }}
-        {% elseif class_name(entity) == 'App\\Entity\\Project' %}
+        {% elseif classname == 'App\\Entity\\Project' %}
             {{ value|money(entity.customer.currency) }}
-        {% elseif class_name(entity) == 'App\\Entity\\Activity' and entity.project is not null %}
+        {% elseif classname == 'App\\Entity\\Activity' and entity.project is not null %}
             {{ value|money(entity.project.customer.currency) }}
         {% else %}
             {{ value }}

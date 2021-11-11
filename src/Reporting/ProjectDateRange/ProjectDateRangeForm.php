@@ -13,6 +13,7 @@ use App\Form\Type\CustomerType;
 use App\Form\Type\MonthPickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -35,7 +36,6 @@ class ProjectDateRangeForm extends AbstractType
     {
         $builder->add('customer', CustomerType::class, [
             'required' => false,
-            'label' => false,
             'width' => false,
         ]);
 
@@ -45,9 +45,20 @@ class ProjectDateRangeForm extends AbstractType
             'model_timezone' => $options['timezone'],
         ]);
 
-        $builder->add('includeNoBudget', CheckboxType::class, [
+        $builder->add('includeNoWork', CheckboxType::class, [
             'required' => false,
-            'label' => 'label.includeNoBudget',
+            'label' => 'label.includeNoWork',
+        ]);
+
+        $builder->add('budgetType', ChoiceType::class, [
+            'required' => true,
+            'multiple' => false,
+            'expanded' => true,
+            'choices' => [
+                'label.includeNoBudget' => 'none',
+                'label.includeBudgetType_full' => 'full',
+                'label.includeBudgetType_month' => 'month',
+            ],
         ]);
     }
 

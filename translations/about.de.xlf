@@ -1,24 +1,24 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="about.en.xlf">
     <body>
-      <trans-unit id="about.title">
+      <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
         <target>Über Kimai</target>
       </trans-unit>
-      <trans-unit id="support">
+      <trans-unit id="oYYDCG5" resname="support">
         <source>support</source>
         <target>Forum</target>
       </trans-unit>
-      <trans-unit id="website" approved="yes">
+      <trans-unit id="dHqPOYO" approved="yes" resname="website">
         <source>website</source>
         <target>Homepage</target>
       </trans-unit>
-      <trans-unit id="help">
+      <trans-unit id="EGpYQvx" resname="help">
         <source>help</source>
         <target>Dokumentation</target>
       </trans-unit>
-      <trans-unit id="donate">
+      <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
         <target>Spende</target>
       </trans-unit>

@@ -34,7 +34,6 @@ class ProjectDetailsForm extends AbstractType
         $builder->add('project', ProjectType::class, [
             'ignore_date' => true,
             'required' => false,
-            'label' => false,
             'width' => false,
             'join_customer' => true,
         ]);

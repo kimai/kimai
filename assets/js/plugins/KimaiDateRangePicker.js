@@ -51,6 +51,7 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
                 autoUpdateInput: false,
                 autoApply: false,
                 linkedCalendars: true,
+                drops: 'down',
                 locale: {
                     separator: separator,
                     format: localeFormat,
@@ -67,7 +68,8 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
 
             jQuery(this).on('show.daterangepicker', function (ev, picker) {
                 if (picker.element.offset().top - jQuery(window).scrollTop() + picker.container.outerHeight() + 30 > jQuery(window).height()) {
-                    picker.drops = 'up';
+                    // "up" is not possible here, because the code is triggered on many mobile phones and the picker then appears out of window
+                    picker.drops = 'auto';
                     picker.move();
                 }
             });

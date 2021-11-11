@@ -1,1193 +1,1193 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="hu" datatype="plaintext" original="messages.en.xlf">
     <body>
       <!--
               Global template keys
             -->
-      <trans-unit id="time_tracking">
+      <trans-unit id="N7mikjJ" resname="time_tracking">
         <source>time_tracking</source>
         <target>Időrögzítő</target>
       </trans-unit>
-      <trans-unit id="yes">
+      <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
         <target>Igen</target>
       </trans-unit>
-      <trans-unit id="no">
+      <trans-unit id="k5Apjz_" resname="no">
         <source>no</source>
         <target>Nem</target>
       </trans-unit>
-      <trans-unit id="both">
+      <trans-unit id=".3dyBTq" resname="both">
         <source>both</source>
         <target>Mindkettő</target>
       </trans-unit>
-      <trans-unit id="This is a mandatory field">
+      <trans-unit id="KLIuHvt" resname="This is a mandatory field">
         <source>This is a mandatory field</source>
         <target>Kötelező</target>
       </trans-unit>
-      <trans-unit id="create">
+      <trans-unit id="_ohHsMM" resname="create">
         <source>create</source>
         <target>Létrehozás</target>
       </trans-unit>
-      <trans-unit id="confirm.delete">
+      <trans-unit id="DYHuW58" resname="confirm.delete">
         <source>confirm.delete</source>
         <target>Biztos vagy benne, hogy törölni szerenéd?</target>
       </trans-unit>
-      <trans-unit id="admin_entity.delete_confirm">
+      <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
         <target>
                     Ezek az adatok és törlésre kerülnek!
                     Esetleg válassz egy másik elemet, ahova ezek az adatok áthelyezésre kerülnek:
                 </target>
       </trans-unit>
-      <trans-unit id="delete.not_in_use">
+      <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
         <target>Ez az elem biztonságosan törölhető.</target>
       </trans-unit>
-      <trans-unit id="cancel">
+      <trans-unit id="I3TZF5S" resname="cancel">
         <source>cancel</source>
         <target>Mégse</target>
       </trans-unit>
-      <trans-unit id="confirm">
+      <trans-unit id="PyZ8KrQ" resname="confirm">
         <source>confirm</source>
         <target>Alkalmaz</target>
       </trans-unit>
       <!--
               Login / Security
             -->
-      <trans-unit id="label.password">
+      <trans-unit id="9pvowqn" resname="label.password">
         <source>label.password</source>
         <target>Jelszó</target>
       </trans-unit>
-      <trans-unit id="label.password_repeat">
+      <trans-unit id="WxAnbP0" resname="label.password_repeat">
         <source>label.password_repeat</source>
         <target>Jelsző ismétlése</target>
       </trans-unit>
-      <trans-unit id="label.logout">
+      <trans-unit id="II4DGnv" resname="label.logout">
         <source>label.logout</source>
         <target>Kijelentkezés</target>
       </trans-unit>
-      <trans-unit id="label.user_profile">
+      <trans-unit id="hFFZGp_" resname="label.user_profile">
         <source>label.user_profile</source>
         <target>Profilom</target>
       </trans-unit>
-      <trans-unit id="label.api_token">
+      <trans-unit id="gXZR.hV" resname="label.api_token">
         <source>label.api_token</source>
         <target>API jelszó</target>
       </trans-unit>
-      <trans-unit id="label.api_token_repeat">
+      <trans-unit id="s_X2xpI" resname="label.api_token_repeat">
         <source>label.api_token_repeat</source>
         <target>API jelszó ismétlese</target>
       </trans-unit>
       <!--
               Menu / Navbar items
             -->
-      <trans-unit id="menu.homepage">
+      <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Kezdőlap</target>
       </trans-unit>
-      <trans-unit id="menu.admin">
+      <trans-unit id="wvvYSw_" resname="menu.admin">
         <source>menu.admin</source>
         <target>Adminisztráció</target>
       </trans-unit>
-      <trans-unit id="menu.system">
+      <trans-unit id="6OKwCUB" resname="menu.system">
         <source>menu.system</source>
         <target>Rendszer</target>
       </trans-unit>
-      <trans-unit id="menu.logout">
+      <trans-unit id="wBTFKFR" resname="menu.logout">
         <source>menu.logout</source>
         <target>Kijelentkezés</target>
       </trans-unit>
-      <trans-unit id="menu.timesheet">
+      <trans-unit id="C0W7_BT" resname="menu.timesheet">
         <source>menu.timesheet</source>
         <target>Rögzített órák</target>
       </trans-unit>
-      <trans-unit id="menu.export">
+      <trans-unit id="I.eil4u" resname="menu.export">
         <source>menu.export</source>
         <target>Exportálás</target>
       </trans-unit>
-      <trans-unit id="menu.admin_timesheet">
+      <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>Rögzített órák</target>
       </trans-unit>
-      <trans-unit id="menu.admin_customer">
+      <trans-unit id="Y_jAD36" resname="menu.admin_customer">
         <source>menu.admin_customer</source>
         <target>Ügyfelek</target>
       </trans-unit>
-      <trans-unit id="menu.admin_project">
+      <trans-unit id="oDLp9t3" resname="menu.admin_project">
         <source>menu.admin_project</source>
         <target>Projektek</target>
       </trans-unit>
-      <trans-unit id="menu.admin_activity">
+      <trans-unit id="wriHFwl" resname="menu.admin_activity">
         <source>menu.admin_activity</source>
         <target>Tevékenységek</target>
       </trans-unit>
-      <trans-unit id="menu.admin_user">
+      <trans-unit id="oZo1BnZ" resname="menu.admin_user">
         <source>menu.admin_user</source>
         <target>Felhasználók</target>
       </trans-unit>
-      <trans-unit id="menu.plugin">
+      <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>Bővítmények</target>
       </trans-unit>
-      <trans-unit id="menu.system_configuration">
+      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
         <source>menu.system_configuration</source>
         <target>Rendszer beállítások</target>
       </trans-unit>
-      <trans-unit id="menu.tags">
+      <trans-unit id="yo4f8Kh" resname="menu.tags">
         <source>menu.tags</source>
         <target>Címkék</target>
       </trans-unit>
       <!--
               Error templates
             -->
-      <trans-unit id="error.no_entries_found">
+      <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>Nem található bejegyzés a kiválasztott szűrők alapján.</target>
       </trans-unit>
       <!--
               General labels
             -->
-      <trans-unit id="label.date">
+      <trans-unit id="H1qEi4d" resname="label.date">
         <source>label.date</source>
         <target>Dátum</target>
       </trans-unit>
-      <trans-unit id="label.starttime">
+      <trans-unit id="eJPDE76" resname="label.starttime">
         <source>label.starttime</source>
         <target>Kezdés</target>
       </trans-unit>
-      <trans-unit id="label.endtime">
+      <trans-unit id="uZlpDFh" resname="label.endtime">
         <source>label.endtime</source>
         <target>Befejezés</target>
       </trans-unit>
-      <trans-unit id="label.duration">
+      <trans-unit id="cgpmY0I" resname="label.duration">
         <source>label.duration</source>
         <target>Időtartam</target>
       </trans-unit>
-      <trans-unit id="label.user">
+      <trans-unit id="O2X4xZH" resname="label.user">
         <source>label.user</source>
         <target>Felhasználó</target>
       </trans-unit>
-      <trans-unit id="label.username">
+      <trans-unit id="LDhDPrF" resname="label.username">
         <source>label.username</source>
         <target>Felhasználónév</target>
       </trans-unit>
-      <trans-unit id="label.description">
+      <trans-unit id="4cEApe1" resname="label.description">
         <source>label.description</source>
         <target>Leírás</target>
       </trans-unit>
-      <trans-unit id="label.name">
+      <trans-unit id="ysOvPSq" resname="label.name">
         <source>label.name</source>
         <target>Név</target>
       </trans-unit>
-      <trans-unit id="label.comment">
+      <trans-unit id="WqTho4C" resname="label.comment">
         <source>label.comment</source>
         <target>Megjegyzés</target>
       </trans-unit>
-      <trans-unit id="label.id">
+      <trans-unit id="txRonia" resname="label.id">
         <source>label.id</source>
         <target>ID</target>
       </trans-unit>
-      <trans-unit id="label.visible">
+      <trans-unit id="CYpZwBz" resname="label.visible">
         <source>label.visible</source>
         <target>Látható</target>
       </trans-unit>
-      <trans-unit id="label.budget">
+      <trans-unit id="2ktNwkr" resname="label.budget">
         <source>label.budget</source>
         <target>Költségvetés</target>
       </trans-unit>
-      <trans-unit id="label.timeBudget">
+      <trans-unit id="x8TrOec" resname="label.timeBudget">
         <source>label.timeBudget</source>
         <target>Meghatározott időkeret</target>
       </trans-unit>
-      <trans-unit id="label.activity">
+      <trans-unit id="l1wiL0h" resname="label.activity">
         <source>label.activity</source>
         <target>Tevékenység</target>
       </trans-unit>
-      <trans-unit id="label.project">
+      <trans-unit id="KtnqJcg" resname="label.project">
         <source>label.project</source>
         <target>Projekt</target>
       </trans-unit>
-      <trans-unit id="label.tag">
+      <trans-unit id="VNCQ7YU" resname="label.tag">
         <source>label.tag</source>
         <target>Címkék</target>
       </trans-unit>
-      <trans-unit id="label.tags">
+      <trans-unit id="ijQyGRo" resname="label.tags">
         <source>label.tags</source>
         <target>Címkék</target>
       </trans-unit>
-      <trans-unit id="label.hourlyRate">
+      <trans-unit id="VAbtieW" resname="label.hourlyRate">
         <source>label.hourlyRate</source>
         <target>Órabér</target>
       </trans-unit>
-      <trans-unit id="label.hourly_rate">
+      <trans-unit id="IQ.tlua" resname="label.hourly_rate">
         <source>label.hourly_rate</source>
         <target>Órabér</target>
       </trans-unit>
-      <trans-unit id="label.skin">
+      <trans-unit id="dezCZWf" resname="label.skin">
         <source>label.skin</source>
         <target>Kimai téma</target>
       </trans-unit>
-      <trans-unit id="label.hours">
+      <trans-unit id="w8T34A6" resname="label.hours">
         <source>label.hours</source>
         <target>Órák</target>
       </trans-unit>
-      <trans-unit id="label.rate">
+      <trans-unit id="Ih3IFXj" resname="label.rate">
         <source>label.rate</source>
         <target>Bér</target>
       </trans-unit>
-      <trans-unit id="label.language">
+      <trans-unit id="foM2o5T" resname="label.language">
         <source>label.language</source>
         <target>Nyelv</target>
       </trans-unit>
-      <trans-unit id="label.customer">
+      <trans-unit id="Z8a2kUf" resname="label.customer">
         <source>label.customer</source>
         <target>Ügyfél</target>
       </trans-unit>
-      <trans-unit id="label.email">
+      <trans-unit id="D2N6_cP" resname="label.email">
         <source>label.email</source>
         <target>E-mail</target>
       </trans-unit>
-      <trans-unit id="label.create_more">
+      <trans-unit id="hX.EQKy" resname="label.create_more">
         <source>label.create_more</source>
         <target>Új bejegyzés hozzáadása</target>
       </trans-unit>
       <!--
               Buttons & Actions
             -->
-      <trans-unit id="label.actions">
+      <trans-unit id="zldXQq6" resname="label.actions">
         <source>label.actions</source>
         <target>Műveletek</target>
       </trans-unit>
-      <trans-unit id="action.edit">
+      <trans-unit id="ovKkXwU" resname="action.edit">
         <source>action.edit</source>
         <target>Szerkesztés</target>
       </trans-unit>
-      <trans-unit id="action.delete">
+      <trans-unit id="hTKWQ6g" resname="action.delete">
         <source>action.delete</source>
         <target>Törlés</target>
       </trans-unit>
-      <trans-unit id="action.save">
+      <trans-unit id="HLtdhYw" resname="action.save">
         <source>action.save</source>
         <target>Mentés</target>
       </trans-unit>
-      <trans-unit id="action.back">
+      <trans-unit id="Eb7Ygpo" resname="action.back">
         <source>action.back</source>
         <target>Vissza</target>
       </trans-unit>
-      <trans-unit id="action.close">
+      <trans-unit id="wCazS.X" resname="action.close">
         <source>action.close</source>
         <target>Bezárás</target>
       </trans-unit>
       <!--
               Dashboard
             -->
-      <trans-unit id="dashboard.title">
+      <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Kezdőlap</target>
       </trans-unit>
-      <trans-unit id="dashboard.subtitle">
+      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
         <source>dashboard.subtitle</source>
         <target>Üdv!</target>
       </trans-unit>
-      <trans-unit id="dashboard.all">
+      <trans-unit id="yEa1Yz3" resname="dashboard.all">
         <source>dashboard.all</source>
         <target>Minden felhasználó</target>
       </trans-unit>
       <!--
               Widgets
             -->
-      <trans-unit id="label.toggle_dropdown">
+      <trans-unit id="4iliLZT" resname="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
         <target>Menü megjelenítése</target>
       </trans-unit>
       <!--
               Timesheet
             -->
-      <trans-unit id="timesheet.title">
+      <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Rögzített órák</target>
       </trans-unit>
-      <trans-unit id="timesheet.edit">
+      <trans-unit id="dwEVXUR" resname="timesheet.edit">
         <source>timesheet.edit</source>
         <target>Bejegyzés szerkesztése</target>
       </trans-unit>
-      <trans-unit id="label.begin">
+      <trans-unit id="trDJK9W" resname="label.begin">
         <source>label.begin</source>
         <target>Kezdés</target>
       </trans-unit>
-      <trans-unit id="label.end">
+      <trans-unit id="R9typUt" resname="label.end">
         <source>label.end</source>
         <target>Befejezés</target>
       </trans-unit>
-      <trans-unit id="label.daterange">
+      <trans-unit id="egaNXjp" resname="label.daterange">
         <source>label.daterange</source>
         <target>Időtartam</target>
       </trans-unit>
-      <trans-unit id="modal.columns.title">
+      <trans-unit id="UbnqJLn" resname="modal.columns.title">
         <source>modal.columns.title</source>
         <target>Megjelenítendő oszlopok kiválasztása</target>
       </trans-unit>
-      <trans-unit id="modal.columns.description">
+      <trans-unit id="EbfIoLp" resname="modal.columns.description">
         <source>modal.columns.description</source>
         <target>A megjelenítendő oszlopok egy böngésző sütiben lesznek tárolva. Ha törlöd az oldalhoz tartozó sütiket, akkor ez a beállítás visszaáll az alapértelmezett értékre.</target>
       </trans-unit>
-      <trans-unit id="label.fixedRate">
+      <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Fix bér</target>
       </trans-unit>
-      <trans-unit id="label.color">
+      <trans-unit id="YTSS_Q1" resname="label.color">
         <source>label.color</source>
         <target>Szín</target>
       </trans-unit>
       <!--
               User profile
             -->
-      <trans-unit id="profile.title">
+      <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Felhasználói profil</target>
       </trans-unit>
-      <trans-unit id="profile.about_me">
+      <trans-unit id="HWKJZ0T" resname="profile.about_me">
         <source>profile.about_me</source>
         <target>Rólam</target>
       </trans-unit>
-      <trans-unit id="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
         <source>profile.first_entry</source>
         <target>Munka kezdete</target>
       </trans-unit>
-      <trans-unit id="profile.settings">
+      <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
         <target>Profil</target>
       </trans-unit>
-      <trans-unit id="profile.password">
+      <trans-unit id="A6TLLQa" resname="profile.password">
         <source>profile.password</source>
         <target>Jelszó</target>
       </trans-unit>
-      <trans-unit id="profile.api-token">
+      <trans-unit id="Z34ZpjK" resname="profile.api-token">
         <source>profile.api-token</source>
         <target>API</target>
       </trans-unit>
-      <trans-unit id="profile.roles">
+      <trans-unit id="ygtTz8." resname="profile.roles">
         <source>profile.roles</source>
         <target>Szerepkörök</target>
       </trans-unit>
-      <trans-unit id="profile.preferences">
+      <trans-unit id="MQKiG33" resname="profile.preferences">
         <source>profile.preferences</source>
         <target>Beállítások</target>
       </trans-unit>
-      <trans-unit id="label.theme.collapsed_sidebar">
+      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
         <source>label.theme.collapsed_sidebar</source>
         <target>A bal oldali oldalsáv automatikus elrejtése</target>
       </trans-unit>
-      <trans-unit id="label.calendar.initial_view">
+      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
         <source>label.calendar.initial_view</source>
         <target>Alapértelmezett naptár nézet</target>
       </trans-unit>
-      <trans-unit id="label.login.initial_view">
+      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
         <source>label.login.initial_view</source>
         <target>Bejelentkezés után megjelenített nézet</target>
       </trans-unit>
       <!-- Options for user-preference label.calendar.initial_view -->
-      <trans-unit id="month">
+      <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Hónap</target>
       </trans-unit>
-      <trans-unit id="agendaWeek">
+      <trans-unit id="Irm6dfx" resname="agendaWeek">
         <source>agendaWeek</source>
         <target>Hét</target>
       </trans-unit>
-      <trans-unit id="agendaDay">
+      <trans-unit id="Q0Zip02" resname="agendaDay">
         <source>agendaDay</source>
         <target>Nap</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.daily_stats">
+      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
         <source>label.timesheet.daily_stats</source>
         <target>Napi statisztika megjelenítése a rögzített óráknál</target>
       </trans-unit>
       <!--
               User timesheet calendar
             -->
-      <trans-unit id="calendar.title">
+      <trans-unit id="HWiuMV6" resname="calendar.title">
         <source>calendar.title</source>
         <target>Naptár</target>
       </trans-unit>
       <!--
               Admin: Timesheet
             -->
-      <trans-unit id="admin_timesheet.title">
+      <trans-unit id="bSDjzZL" resname="admin_timesheet.title">
         <source>admin_timesheet.title</source>
         <target>Rögzített órák</target>
       </trans-unit>
       <!--
               Admin: Projects
             -->
-      <trans-unit id="admin_project.title">
+      <trans-unit id="DFjFRGe" resname="admin_project.title">
         <source>admin_project.title</source>
         <target>Projektek</target>
       </trans-unit>
       <!--
               Admin: Activity
             -->
-      <trans-unit id="admin_activity.title">
+      <trans-unit id="auu8q0u" resname="admin_activity.title">
         <source>admin_activity.title</source>
         <target>Tevékenységek</target>
       </trans-unit>
       <!--
               Admin: Customer
             -->
-      <trans-unit id="admin_customer.title">
+      <trans-unit id="2TvKX9Z" resname="admin_customer.title">
         <source>admin_customer.title</source>
         <target>Ügyfél</target>
       </trans-unit>
-      <trans-unit id="label.number">
+      <trans-unit id="39AtPxQ" resname="label.number">
         <source>label.number</source>
         <target>Adószám</target>
       </trans-unit>
-      <trans-unit id="label.company">
+      <trans-unit id="7jfRn_1" resname="label.company">
         <source>label.company</source>
         <target>Cég neve</target>
       </trans-unit>
-      <trans-unit id="label.vat">
+      <trans-unit id="GOStgLi" resname="label.vat">
         <source>label.vat</source>
         <target>Áfa</target>
       </trans-unit>
-      <trans-unit id="label.contact">
+      <trans-unit id="0tkOMo1" resname="label.contact">
         <source>label.contact</source>
         <target>Kapcsolat</target>
       </trans-unit>
-      <trans-unit id="label.address">
+      <trans-unit id="c9W5AO4" resname="label.address">
         <source>label.address</source>
         <target>Cím</target>
       </trans-unit>
-      <trans-unit id="label.country">
+      <trans-unit id="k7MJQ82" resname="label.country">
         <source>label.country</source>
         <target>Ország</target>
       </trans-unit>
-      <trans-unit id="label.phone">
+      <trans-unit id="g03c_vw" resname="label.phone">
         <source>label.phone</source>
         <target>Telefonszám</target>
       </trans-unit>
-      <trans-unit id="label.fax">
+      <trans-unit id="eRyhERS" resname="label.fax">
         <source>label.fax</source>
         <target>Fax</target>
       </trans-unit>
-      <trans-unit id="label.mobile">
+      <trans-unit id="AawT9pW" resname="label.mobile">
         <source>label.mobile</source>
         <target>Mobil</target>
       </trans-unit>
-      <trans-unit id="label.homepage">
+      <trans-unit id="PS9IH_t" resname="label.homepage">
         <source>label.homepage</source>
         <target>Honlap</target>
       </trans-unit>
-      <trans-unit id="label.timezone">
+      <trans-unit id="dmtPdwq" resname="label.timezone">
         <source>label.timezone</source>
         <target>Időzóna</target>
       </trans-unit>
-      <trans-unit id="label.currency">
+      <trans-unit id="otd2FZd" resname="label.currency">
         <source>label.currency</source>
         <target>Pénznem</target>
       </trans-unit>
       <!--
               Admin: User
             -->
-      <trans-unit id="admin_user.title">
+      <trans-unit id="t34EvnF" resname="admin_user.title">
         <source>admin_user.title</source>
         <target>Felhasználó</target>
       </trans-unit>
-      <trans-unit id="label.alias">
+      <trans-unit id="TRDzmCV" resname="label.alias">
         <source>label.alias</source>
         <target>Név</target>
       </trans-unit>
-      <trans-unit id="label.title">
+      <trans-unit id="UrRn8xj" resname="label.title">
         <source>label.title</source>
         <target>Beosztás</target>
       </trans-unit>
-      <trans-unit id="label.avatar">
+      <trans-unit id="nWMH_Nr" resname="label.avatar">
         <source>label.avatar</source>
         <target>Profilkép</target>
       </trans-unit>
-      <trans-unit id="label.active">
+      <trans-unit id="KtTP.Sh" resname="label.active">
         <source>label.active</source>
         <target>Aktív</target>
       </trans-unit>
-      <trans-unit id="label.roles">
+      <trans-unit id="iD6CNOO" resname="label.roles">
         <source>label.roles</source>
         <target>Szerepkör</target>
       </trans-unit>
       <!--
               Admin: Plugins
             -->
-      <trans-unit id="label.version">
+      <trans-unit id="d75KAlJ" resname="label.version">
         <source>label.version</source>
         <target>Verzió</target>
       </trans-unit>
-      <trans-unit id="label.required_version">
+      <trans-unit id="8Rfa01v" resname="label.required_version">
         <source>label.required_version</source>
         <target>Támogatott verzió</target>
       </trans-unit>
       <!--
               ROLES
             -->
-      <trans-unit id="ROLE_SUPER_ADMIN">
+      <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>Rendszer adminisztrátor</target>
       </trans-unit>
-      <trans-unit id="ROLE_ADMIN">
+      <trans-unit id="718iPw6" resname="ROLE_ADMIN">
         <source>ROLE_ADMIN</source>
         <target>Adminisztrátor</target>
       </trans-unit>
-      <trans-unit id="ROLE_TEAMLEAD">
+      <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD">
         <source>ROLE_TEAMLEAD</source>
         <target>Vezető</target>
       </trans-unit>
-      <trans-unit id="ROLE_USER">
+      <trans-unit id="rvO5ZXf" resname="ROLE_USER">
         <source>ROLE_USER</source>
         <target>Felhasználó</target>
       </trans-unit>
       <!--
               Statistics data for Dashboard & Users profile
             -->
-      <trans-unit id="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>Mai munkaórák</target>
       </trans-unit>
-      <trans-unit id="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek">
         <source>stats.durationWeek</source>
         <target>Eheti munkaórák</target>
       </trans-unit>
-      <trans-unit id="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
         <source>stats.durationMonth</source>
         <target>E havi munkaórák</target>
       </trans-unit>
-      <trans-unit id="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear">
         <source>stats.durationYear</source>
         <target>Idei munkaórák</target>
       </trans-unit>
-      <trans-unit id="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
         <source>stats.durationTotal</source>
         <target>Összes munkaórák</target>
       </trans-unit>
-      <trans-unit id="stats.yourWorkingHours">
+      <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
         <target>Munkaóráid</target>
       </trans-unit>
-      <trans-unit id="stats.amountToday">
+      <trans-unit id="023M9Ta" resname="stats.amountToday">
         <source>stats.amountToday</source>
         <target>Mai bevétel</target>
       </trans-unit>
-      <trans-unit id="stats.amountWeek">
+      <trans-unit id="xnJvYAE" resname="stats.amountWeek">
         <source>stats.amountWeek</source>
         <target>Eheti bevétel</target>
       </trans-unit>
-      <trans-unit id="stats.amountMonth">
+      <trans-unit id="ulr3reE" resname="stats.amountMonth">
         <source>stats.amountMonth</source>
         <target>E havi bevvétel</target>
       </trans-unit>
-      <trans-unit id="stats.amountYear">
+      <trans-unit id="bQZyZaO" resname="stats.amountYear">
         <source>stats.amountYear</source>
         <target>Idei bevétel</target>
       </trans-unit>
-      <trans-unit id="stats.amountTotal">
+      <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target>Összes bevétel</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveToday">
+      <trans-unit id="xyiadv3" resname="stats.userActiveToday">
         <source>stats.userActiveToday</source>
         <target>Mai aktív felhasználók</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveWeek">
+      <trans-unit id="knMHaeO" resname="stats.userActiveWeek">
         <source>stats.userActiveWeek</source>
         <target>Eheti aktív felhasználók</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveMonth">
+      <trans-unit id="adzVDgb" resname="stats.userActiveMonth">
         <source>stats.userActiveMonth</source>
         <target>E havi aktív felhasználók</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveYear">
+      <trans-unit id="AswjFvh" resname="stats.userActiveYear">
         <source>stats.userActiveYear</source>
         <target>Idei aktív felhasználók</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveTotal">
+      <trans-unit id="dLTb1Po" resname="stats.userActiveTotal">
         <source>stats.userActiveTotal</source>
         <target>Összes aktjv felhasználó</target>
       </trans-unit>
-      <trans-unit id="stats.activeRecordings">
+      <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
         <target>Aktív rögzítések</target>
       </trans-unit>
-      <trans-unit id="stats.userTotal">
+      <trans-unit id="t5eIWp8" resname="stats.userTotal">
         <source>stats.userTotal</source>
         <target>Felhasználó</target>
       </trans-unit>
-      <trans-unit id="stats.activityTotal">
+      <trans-unit id="Bor.76M" resname="stats.activityTotal">
         <source>stats.activityTotal</source>
         <target>Tevékenység</target>
       </trans-unit>
-      <trans-unit id="stats.projectTotal">
+      <trans-unit id="67uSaR3" resname="stats.projectTotal">
         <source>stats.projectTotal</source>
         <target>Projekt</target>
       </trans-unit>
-      <trans-unit id="stats.customerTotal">
+      <trans-unit id="tnD6aPj" resname="stats.customerTotal">
         <source>stats.customerTotal</source>
         <target>Ügyfél</target>
       </trans-unit>
       <!--
               Invoice
             -->
-      <trans-unit id="admin_invoice_template.title">
+      <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Számla sablon</target>
       </trans-unit>
-      <trans-unit id="invoice.title">
+      <trans-unit id="iERywrp" resname="invoice.title">
         <source>invoice.title</source>
         <target>Számlák</target>
       </trans-unit>
-      <trans-unit id="button.print">
+      <trans-unit id="X70dwP8" resname="button.print">
         <source>button.print</source>
         <target>Nyomtatás</target>
       </trans-unit>
-      <trans-unit id="button.csv">
+      <trans-unit id="W_TXvSi" resname="button.csv">
         <source>button.csv</source>
         <target>CSV</target>
       </trans-unit>
-      <trans-unit id="button.xlsx">
+      <trans-unit id="vC2IsaP" resname="button.xlsx">
         <source>button.xlsx</source>
         <target>Excel</target>
       </trans-unit>
-      <trans-unit id="button.pdf">
+      <trans-unit id="aAa5uRR" resname="button.pdf">
         <source>button.pdf</source>
         <target>PDF</target>
       </trans-unit>
-      <trans-unit id="button.ods">
+      <trans-unit id="ulYFDIo" resname="button.ods">
         <source>button.ods</source>
         <target>ODS</target>
       </trans-unit>
-      <trans-unit id="invoice_print">
+      <trans-unit id="zPcx3O_" resname="invoice_print">
         <source>invoice_print</source>
         <target>Számla</target>
       </trans-unit>
-      <trans-unit id="label.template">
+      <trans-unit id="p0IprAw" resname="label.template">
         <source>label.template</source>
         <target>Sablon</target>
       </trans-unit>
-      <trans-unit id="label.due_days">
+      <trans-unit id="zfIRxJh" resname="label.due_days">
         <source>label.due_days</source>
         <target>Teljesítési idő</target>
       </trans-unit>
-      <trans-unit id="invoice.due_days">
+      <trans-unit id="rAJrxSK" resname="invoice.due_days">
         <source>invoice.due_days</source>
         <target>Fizetési határidő</target>
       </trans-unit>
-      <trans-unit id="invoice.from">
+      <trans-unit id="4XKFnWh" resname="invoice.from">
         <source>invoice.from</source>
         <target>Feladó</target>
       </trans-unit>
-      <trans-unit id="invoice.to">
+      <trans-unit id="hx7vsMA" resname="invoice.to">
         <source>invoice.to</source>
         <target>Címzett</target>
       </trans-unit>
-      <trans-unit id="invoice.number">
+      <trans-unit id="x_W5sV4" resname="invoice.number">
         <source>invoice.number</source>
         <target>Számla száma</target>
       </trans-unit>
-      <trans-unit id="invoice.subtotal">
+      <trans-unit id="86KyrKO" resname="invoice.subtotal">
         <source>invoice.subtotal</source>
         <target>Részösszeg</target>
       </trans-unit>
-      <trans-unit id="invoice.tax">
+      <trans-unit id="EO57yXg" resname="invoice.tax">
         <source>invoice.tax</source>
         <target>Áfa</target>
       </trans-unit>
-      <trans-unit id="invoice.total">
+      <trans-unit id="N68vyvo" resname="invoice.total">
         <source>invoice.total</source>
         <target>Végösszeg</target>
       </trans-unit>
-      <trans-unit id="invoice.service_date">
+      <trans-unit id="TPzFWUs" resname="invoice.service_date">
         <source>invoice.service_date</source>
         <target>Teljesítés időpontja</target>
       </trans-unit>
-      <trans-unit id="label.amount">
+      <trans-unit id="6x24VVR" resname="label.amount">
         <source>label.amount</source>
         <target>Mennyiség</target>
       </trans-unit>
-      <trans-unit id="label.total_rate">
+      <trans-unit id="g7EpaPY" resname="label.total_rate">
         <source>label.total_rate</source>
         <target>Teljes ár</target>
       </trans-unit>
-      <trans-unit id="label.unit_price">
+      <trans-unit id="MF3MdTu" resname="label.unit_price">
         <source>label.unit_price</source>
         <target>Egységár</target>
       </trans-unit>
-      <trans-unit id="label.payment_terms">
+      <trans-unit id="77aZC3r" resname="label.payment_terms">
         <source>label.payment_terms</source>
         <target>Fizetési feltételek</target>
       </trans-unit>
-      <trans-unit id="invoice.signature_user">
+      <trans-unit id="9p2KQag" resname="invoice.signature_user">
         <source>invoice.signature_user</source>
         <target>Dátum, Megbízott, Aláírás</target>
       </trans-unit>
-      <trans-unit id="invoice.signature_customer">
+      <trans-unit id="Q9ykNhO" resname="invoice.signature_customer">
         <source>invoice.signature_customer</source>
         <target>Dátum, Megbízó, Aláírás</target>
       </trans-unit>
-      <trans-unit id="invoice.total_working_time">
+      <trans-unit id="c3d6p33" resname="invoice.total_working_time">
         <source>invoice.total_working_time</source>
         <target>Teljes munkaidő</target>
       </trans-unit>
-      <trans-unit id="label.orderNumber">
+      <trans-unit id="BS00SS7" resname="label.orderNumber">
         <source>label.orderNumber</source>
         <target>Megbízás száma</target>
       </trans-unit>
-      <trans-unit id="label.invoice_tax_number">
+      <trans-unit id="RRj6PYN" resname="label.invoice_tax_number">
         <source>label.invoice_tax_number</source>
         <target>Adószám:</target>
       </trans-unit>
-      <trans-unit id="label.invoice_bank_account">
+      <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
         <target>Bankszámlaszám</target>
       </trans-unit>
       <!--
               Export
             -->
-      <trans-unit id="export.title">
+      <trans-unit id="F6Jmro7" resname="export.title">
         <source>export.title</source>
         <target>Exportálás</target>
       </trans-unit>
-      <trans-unit id="export.period">
+      <trans-unit id="vjmoQGo" resname="export.period">
         <source>export.period</source>
         <target>Exportált időszak</target>
       </trans-unit>
-      <trans-unit id="export.document_title">
+      <trans-unit id="3CQ7A2m" resname="export.document_title">
         <source>export.document_title</source>
         <target>Kiadások listája</target>
       </trans-unit>
-      <trans-unit id="export.full_list">
+      <trans-unit id="d5wyWRD" resname="export.full_list">
         <source>export.full_list</source>
         <target>Teljes lista</target>
       </trans-unit>
-      <trans-unit id="export.summary">
+      <trans-unit id="N778uJ6" resname="export.summary">
         <source>export.summary</source>
         <target>Összefoglaló</target>
       </trans-unit>
-      <trans-unit id="export.page_of">
+      <trans-unit id="ElDyzrx" resname="export.page_of">
         <source>export.page_of</source>
         <target>%page%/%pages%</target>
       </trans-unit>
-      <trans-unit id="export.date_copyright">
+      <trans-unit id="vKY0tof" resname="export.date_copyright">
         <source>export.date_copyright</source>
         <target>Készült: %date% A %kimai% segítségével</target>
       </trans-unit>
       <!--
              Navbar - recent entries and activities
             -->
-      <trans-unit id="active.entries">
+      <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Jelenleg futó rögzítéseid</target>
       </trans-unit>
-      <trans-unit id="timesheet.all">
+      <trans-unit id="e7XS97t" resname="timesheet.all">
         <source>timesheet.all</source>
         <target>Összes rögzítés megjelenítése</target>
       </trans-unit>
-      <trans-unit id="recent.activities">
+      <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
         <target>Egyik korábbi rögzítésed újraindítása</target>
       </trans-unit>
-      <trans-unit id="recent.activities.format">
+      <trans-unit id="SLV47Uu" resname="recent.activities.format">
         <source>recent.activities.format</source>
         <target>%activity% tevékenység %project% projekt %customer% ügyfél</target>
       </trans-unit>
-      <trans-unit id="timesheet.start">
+      <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>Új rögzítés indítása</target>
       </trans-unit>
       <!--
               TOOLBARS
             -->
-      <trans-unit id="label.pageSize">
+      <trans-unit id="MPimOps" resname="label.pageSize">
         <source>label.pageSize</source>
         <target>Oldalméret</target>
       </trans-unit>
-      <trans-unit id="label.entryState">
+      <trans-unit id="KhyA_PW" resname="label.entryState">
         <source>label.entryState</source>
         <target>Rögzítések</target>
       </trans-unit>
-      <trans-unit id="label.exported">
+      <trans-unit id="X3JM9wj" resname="label.exported">
         <source>label.exported</source>
         <target>Exportált</target>
       </trans-unit>
-      <trans-unit id="entryState.exported">
+      <trans-unit id="_DDecAV" resname="entryState.exported">
         <source>entryState.exported</source>
         <target>Lezárva</target>
       </trans-unit>
-      <trans-unit id="entryState.not_exported">
+      <trans-unit id="ccCiXyR" resname="entryState.not_exported">
         <source>entryState.not_exported</source>
         <target>Nyitott</target>
       </trans-unit>
-      <trans-unit id="entryState.all">
+      <trans-unit id="do7fP0q" resname="entryState.all">
         <source>entryState.all</source>
         <target>Összes</target>
       </trans-unit>
-      <trans-unit id="entryState.running">
+      <trans-unit id="xm7mqoK" resname="entryState.running">
         <source>entryState.running</source>
         <target>Folyamatban</target>
       </trans-unit>
-      <trans-unit id="entryState.stopped">
+      <trans-unit id="spHpd_I" resname="entryState.stopped">
         <source>entryState.stopped</source>
         <target>Megállítva</target>
       </trans-unit>
-      <trans-unit id="export.clear_all">
+      <trans-unit id="BhsaLxX" resname="export.clear_all">
         <source>export.clear_all</source>
         <target>Az összes megjelenített rögzítés megjelölése nyitottként?</target>
       </trans-unit>
-      <trans-unit id="export.mark_all">
+      <trans-unit id="qtjPKUT" resname="export.mark_all">
         <source>export.mark_all</source>
         <target>Az összes megjelenített rögzítés megjelölése lezártként?</target>
       </trans-unit>
-      <trans-unit id="label.globalsOnly">
+      <trans-unit id="S0vT92U" resname="label.globalsOnly">
         <source>label.globalsOnly</source>
         <target>Csak a globálisakat</target>
       </trans-unit>
-      <trans-unit id="rates.title">
+      <trans-unit id="mflwMcX" resname="rates.title">
         <source>rates.title</source>
         <target>Díjak</target>
       </trans-unit>
-      <trans-unit id="rates.empty">
+      <trans-unit id="0M_Gylq" resname="rates.empty">
         <source>rates.empty</source>
         <target>A díjakat még nem határozták meg.</target>
       </trans-unit>
-      <trans-unit id="attachments">
+      <trans-unit id="OTDmccn" resname="attachments">
         <source>attachments</source>
         <target>Fájlok</target>
       </trans-unit>
-      <trans-unit id="my.profile">
+      <trans-unit id="hBNESu6" resname="my.profile">
         <source>my.profile</source>
         <target>Profilom</target>
       </trans-unit>
-      <trans-unit id="search">
+      <trans-unit id="JBkykGe" resname="search">
         <source>search</source>
         <target>Keresés</target>
       </trans-unit>
-      <trans-unit id="upload">
+      <trans-unit id=".0CFrRV" resname="upload">
         <source>upload</source>
         <target>Feltöltés</target>
       </trans-unit>
-      <trans-unit id="label.plus_more">
+      <trans-unit id="vTY9SUk" resname="label.plus_more">
         <source>label.plus_more</source>
         <target>+%count% több</target>
       </trans-unit>
-      <trans-unit id="label.progress">
+      <trans-unit id="1PQHtXu" resname="label.progress">
         <source>label.progress</source>
         <target>Haladás</target>
       </trans-unit>
-      <trans-unit id="label.my_team_projects">
+      <trans-unit id="jTiYRIu" resname="label.my_team_projects">
         <source>label.my_team_projects</source>
         <target>Csoport projektjei &amp; költségvetése</target>
       </trans-unit>
-      <trans-unit id="label.my_teams">
+      <trans-unit id="f3KMQJh" resname="label.my_teams">
         <source>label.my_teams</source>
         <target>Csoportjaim</target>
       </trans-unit>
-      <trans-unit id="action.reset">
+      <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
         <target>Visszaállítás</target>
       </trans-unit>
-      <trans-unit id="label.billable">
+      <trans-unit id="vkHr9AP" resname="label.billable">
         <source>label.billable</source>
         <target>Számlázható</target>
       </trans-unit>
-      <trans-unit id="placeholder.type_message">
+      <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
         <target>Üzenet írása…</target>
       </trans-unit>
-      <trans-unit id="label.teamlead">
+      <trans-unit id="Zpj9UB4" resname="label.teamlead">
         <source>label.teamlead</source>
         <target>Csoportvezető</target>
       </trans-unit>
-      <trans-unit id="label.team">
+      <trans-unit id="Ss2xe99" resname="label.team">
         <source>label.team</source>
         <target>Csoport</target>
       </trans-unit>
-      <trans-unit id="label.recalculate_rates">
+      <trans-unit id="v72sA1c" resname="label.recalculate_rates">
         <source>label.recalculate_rates</source>
         <target>Bérek újraszámlálása</target>
       </trans-unit>
-      <trans-unit id="help.rate_internal">
+      <trans-unit id="uz4SmfP" resname="help.rate_internal">
         <source>help.rate_internal</source>
         <target>Belső kiadások (ha nincs beállítva, a normál bér lesz használva)</target>
       </trans-unit>
-      <trans-unit id="label.rate_internal">
+      <trans-unit id="QzvjNwg" resname="label.rate_internal">
         <source>label.rate_internal</source>
         <target>Belső bér</target>
       </trans-unit>
-      <trans-unit id="help.rate">
+      <trans-unit id="djL6LMC" resname="help.rate">
         <source>help.rate</source>
         <target>Óránként számolt bér</target>
       </trans-unit>
-      <trans-unit id="label.theme.layout">
+      <trans-unit id="42BRM3Q" resname="label.theme.layout">
         <source>label.theme.layout</source>
         <target>Megjelenítés: elrendezés</target>
       </trans-unit>
-      <trans-unit id="error.no_comments_found">
+      <trans-unit id="hlu4iX5" resname="error.no_comments_found">
         <source>error.no_comments_found</source>
         <target>Még nincsenek hozzászólások.</target>
       </trans-unit>
-      <trans-unit id="menu.doctor">
+      <trans-unit id="1kHI0gb" resname="menu.doctor">
         <source>menu.doctor</source>
         <target>Doktor</target>
       </trans-unit>
-      <trans-unit id="menu.admin_team">
+      <trans-unit id="pA.bYIk" resname="menu.admin_team">
         <source>menu.admin_team</source>
         <target>Csoportok</target>
       </trans-unit>
-      <trans-unit id="menu.reporting">
+      <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
         <target>Jelentések</target>
       </trans-unit>
-      <trans-unit id="login_required">
+      <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Hiányzó jogosultság. Átirányítás a kezdőlapra?</target>
       </trans-unit>
-      <trans-unit id="help.batch_meta_fields">
+      <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields">
         <source>help.batch_meta_fields</source>
         <target>A frissítésre váró mezőket először aktválni kell a hozzárendelt jelölő kockára klikkelve.</target>
       </trans-unit>
-      <trans-unit id="label.batch_meta_fields">
+      <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">
         <source>label.batch_meta_fields</source>
         <target>További mezők</target>
       </trans-unit>
-      <trans-unit id="export.filter">
+      <trans-unit id="iwWaUoa" resname="export.filter">
         <source>export.filter</source>
         <target>Adat szűrés exportáláshoz</target>
       </trans-unit>
-      <trans-unit id="status.paid">
+      <trans-unit id="PHJwR4w" resname="status.paid">
         <source>status.paid</source>
         <target>Fizetve</target>
       </trans-unit>
-      <trans-unit id="status.pending">
+      <trans-unit id="Uvo1CbP" resname="status.pending">
         <source>status.pending</source>
         <target>Függőben</target>
       </trans-unit>
-      <trans-unit id="status.new">
+      <trans-unit id="X_NRsed" resname="status.new">
         <source>status.new</source>
         <target>Új</target>
       </trans-unit>
-      <trans-unit id="label.status">
+      <trans-unit id="hzhzbqw" resname="label.status">
         <source>label.status</source>
         <target>Állapot</target>
       </trans-unit>
-      <trans-unit id="label.decimalDuration">
+      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
         <source>label.decimalDuration</source>
         <target>Mutasd a terjedelmet tizedes számmal</target>
       </trans-unit>
-      <trans-unit id="label.orderDate">
+      <trans-unit id="as948k9" resname="label.orderDate">
         <source>label.orderDate</source>
         <target>Rendelési dátum</target>
       </trans-unit>
-      <trans-unit id="label.mark_as_exported">
+      <trans-unit id="7J7G3Vr" resname="label.mark_as_exported">
         <source>label.mark_as_exported</source>
         <target>Megjelőlés exportáltként</target>
       </trans-unit>
-      <trans-unit id="button.preview_print">
+      <trans-unit id="IQ9DUOW" resname="button.preview_print">
         <source>button.preview_print</source>
         <target>Nyomtatási előnézet</target>
       </trans-unit>
-      <trans-unit id="button.preview">
+      <trans-unit id="7H7P1mE" resname="button.preview">
         <source>button.preview</source>
         <target>Előnézet</target>
       </trans-unit>
-      <trans-unit id="invoice.filter">
+      <trans-unit id="ov4OQOh" resname="invoice.filter">
         <source>invoice.filter</source>
         <target>Számla adat szűrő</target>
       </trans-unit>
-      <trans-unit id="stats.percentUsedLeft">
+      <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
         <target>%percent%% használatban (%left% még elérhető)</target>
       </trans-unit>
-      <trans-unit id="stats.percentUsed">
+      <trans-unit id="unC5MXv" resname="stats.percentUsed">
         <source>stats.percentUsed</source>
         <target>%percent%% használatban</target>
       </trans-unit>
-      <trans-unit id="stats.workingTimeYear">
+      <trans-unit id="JnUFsNi" resname="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
         <target>Teljes év %year%</target>
       </trans-unit>
-      <trans-unit id="stats.workingTimeMonth">
+      <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
         <target>%month% %year%</target>
       </trans-unit>
-      <trans-unit id="stats.workingTimeWeek">
+      <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
         <target>Naptári hét %week%</target>
       </trans-unit>
-      <trans-unit id="stats.workingTimeToday">
+      <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
         <target>Ma, %day%</target>
       </trans-unit>
-      <trans-unit id="Allowed character: A-Z and _">
+      <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _">
         <source>Allowed character: A-Z and _</source>
         <target>Mengedett karakterek: A-Z és _</target>
       </trans-unit>
-      <trans-unit id="user_role.title">
+      <trans-unit id="G.GEdlk" resname="user_role.title">
         <source>user_role.title</source>
         <target>Felhasználói szerep</target>
       </trans-unit>
-      <trans-unit id="user_permissions.title">
+      <trans-unit id="ZlZ20pG" resname="user_permissions.title">
         <source>user_permissions.title</source>
         <target>Felhasználói engedélyek</target>
       </trans-unit>
-      <trans-unit id="label.vat_id">
+      <trans-unit id="Dgmh_mv" resname="label.vat_id">
         <source>label.vat_id</source>
         <target>ÁFA-ID</target>
       </trans-unit>
-      <trans-unit id="label.project_start">
+      <trans-unit id="yLOqEX_" resname="label.project_start">
         <source>label.project_start</source>
         <target>Projekt kezdete</target>
       </trans-unit>
-      <trans-unit id="label.project_end">
+      <trans-unit id="4kQGReV" resname="label.project_end">
         <source>label.project_end</source>
         <target>Projekt vége</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.export_decimal">
+      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
         <source>label.timesheet.export_decimal</source>
         <target>Használj tizedes terjedelmet exportálásban</target>
       </trans-unit>
-      <trans-unit id="label.lastLogin">
+      <trans-unit id="hO7mkmf" resname="label.lastLogin">
         <source>label.lastLogin</source>
         <target>Utolsó bejelentkezés</target>
       </trans-unit>
-      <trans-unit id="profile.teams">
+      <trans-unit id="DZ7XGML" resname="profile.teams">
         <source>profile.teams</source>
         <target>Csapatok</target>
       </trans-unit>
-      <trans-unit id="profile.registration_date">
+      <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
         <target>Regisztrált ekkor</target>
       </trans-unit>
-      <trans-unit id="label.appendTags">
+      <trans-unit id="BxkmaKz" resname="label.appendTags">
         <source>label.appendTags</source>
         <target>Címkék megnyitása</target>
       </trans-unit>
-      <trans-unit id="label.replaceTags">
+      <trans-unit id="EoouxGX" resname="label.replaceTags">
         <source>label.replaceTags</source>
         <target>Címkék cseréje</target>
       </trans-unit>
-      <trans-unit id="help.fixedRate">
+      <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>
         <target>Minden alkalommal a felvétel ugyanazt az értéket kapja, függetlenül a terjedelmétől</target>
       </trans-unit>
-      <trans-unit id="update_multiple">
+      <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
         <target>%action% %count% bejegyzést?</target>
       </trans-unit>
-      <trans-unit id="sum.total">
+      <trans-unit id="zFfl7jw" resname="sum.total">
         <source>sum.total</source>
         <target>Összes</target>
       </trans-unit>
-      <trans-unit id="theme.update_browser_title">
+      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
         <source>theme.update_browser_title</source>
         <target>Böngésző cím frissítése</target>
       </trans-unit>
-      <trans-unit id="modal.dirty">
+      <trans-unit id="XP5zkiN" resname="modal.dirty">
         <source>modal.dirty</source>
         <target>Az űrlap megváltozott. A "Mentés" gombbal elmentheted a változtatásokat, a "Bezárás" gombbal elvetheted őket.</target>
       </trans-unit>
-      <trans-unit id="label.type">
+      <trans-unit id="pnGDFmf" resname="label.type">
         <source>label.type</source>
         <target>Típus</target>
       </trans-unit>
-      <trans-unit id="export.warn_result_amount">
+      <trans-unit id="W92QGbY" resname="export.warn_result_amount">
         <source>export.warn_result_amount</source>
         <target>A keresés eredménye %count% találat. Ha az exportálás sikertelen, a keresést tovább kell szűkíteni.</target>
       </trans-unit>
-      <trans-unit id="label.remove_default">
+      <trans-unit id="NNKq04n" resname="label.remove_default">
         <source>label.remove_default</source>
         <target>Kedvenc keresés törlése</target>
       </trans-unit>
-      <trans-unit id="label.asc">
+      <trans-unit id="31x84Dt" resname="label.asc">
         <source>label.asc</source>
         <target>Növekvő</target>
       </trans-unit>
-      <trans-unit id="label.orderBy">
+      <trans-unit id="Z8Fxbvf" resname="label.orderBy">
         <source>label.orderBy</source>
         <target>Rendezés</target>
       </trans-unit>
-      <trans-unit id="error.too_many_entries">
+      <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>
         <target>A kérés nem teljesíthető, túl sok találat.</target>
       </trans-unit>
-      <trans-unit id="file">
+      <trans-unit id="O5w1jzb" resname="file">
         <source>file</source>
         <target>Fájl</target>
       </trans-unit>
-      <trans-unit id="stats.amountFinancialYear">
+      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
         <target>Bevétel ebben a pénzügyi évben</target>
       </trans-unit>
-      <trans-unit id="stats.workingTimeFinancialYear">
+      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
         <target>Pénzügyi év</target>
       </trans-unit>
-      <trans-unit id="stats.durationFinancialYear">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
         <source>stats.durationFinancialYear</source>
         <target>Munkaórák ebben a pénzügyi évben</target>
       </trans-unit>
-      <trans-unit id="stats.percentUsedLeft_month">
+      <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
         <source>stats.percentUsedLeft_month</source>
         <target>%percent%% felhasználva (%left% még elérhető ebben a hónapban)</target>
       </trans-unit>
-      <trans-unit id="preview.skipped_rows">
+      <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
         <target>Előnézetből kihagyva %rows% további sor…</target>
       </trans-unit>
-      <trans-unit id="label.tax_rate">
+      <trans-unit id="YNGNfGn" resname="label.tax_rate">
         <source>label.tax_rate</source>
         <target>Áfa százalák</target>
       </trans-unit>
-      <trans-unit id="label.searchTerm">
+      <trans-unit id="IolBPQD" resname="label.searchTerm">
         <source>label.searchTerm</source>
         <target>Keresett szöveg</target>
       </trans-unit>
-      <trans-unit id="label.set_as_default">
+      <trans-unit id="BytPihM" resname="label.set_as_default">
         <source>label.set_as_default</source>
         <target>Beállítások mentése mint kedvenc keresés</target>
       </trans-unit>
-      <trans-unit id="label.desc">
+      <trans-unit id="0D_zaYd" resname="label.desc">
         <source>label.desc</source>
         <target>Csökkenő</target>
       </trans-unit>
-      <trans-unit id="registration.check_email">
+      <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
         <target>Egy üzenet lett küldve a %email% címre. Ebben az üzenetben található az aktivációs link, amire kattintva aktiválhatod a fiókodat.</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveFinancialYear">
+      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
         <source>stats.userActiveFinancialYear</source>
         <target>Aktív felhasználók ebben a pénzügyi évben</target>
       </trans-unit>
-      <trans-unit id="resetting.check_email">
+      <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>resetting.check_email</source>
         <target>E-mail üzenet elküldve. Ebben az üzenetben található a jelszó visszaállító link, amivel visszaállíthatod a jelszavadat. Megjegyzés: új jelszó csak egyszer kérhető minden %tokenLifetime% órában. Ha nem érkezett meg az e-mail, ellenőrizze a spam mappában is.</target>
       </trans-unit>
-      <trans-unit id="action.save_all">
+      <trans-unit id="9hpJPiG" resname="action.save_all">
         <source>action.save_all</source>
         <target>Összes mentése</target>
       </trans-unit>
-      <trans-unit id="stats.workingTime">
+      <trans-unit id="BXBFJP8" resname="stats.workingTime">
         <source>stats.workingTime</source>
         <target>Munkaidő</target>
       </trans-unit>
-      <trans-unit id="calendar.drag_and_drop.delete">
+      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
         <source>calendar.drag_and_drop.delete</source>
         <target>Egy bejegyzés törléséhez, húzd a gombra.</target>
       </trans-unit>
-      <trans-unit id="stats.revenue">
+      <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>
         <target>Bevétel</target>
       </trans-unit>
-      <trans-unit id="stats.percentUsed_month">
+      <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>
         <target>%percent%% felhasználva ebben a hónapban</target>
       </trans-unit>
-      <trans-unit id="invoice.payment_date">
+      <trans-unit id="Xij3oQl" resname="invoice.payment_date">
         <source>invoice.payment_date</source>
         <target>Fizetés dátuma</target>
       </trans-unit>
