@@ -1271,6 +1271,10 @@
         <source>label.includeBudgetType_full</source>
         <target>Mostre as entradas com orçamento com "ciclo de vida"</target>
       </trans-unit>
+      <trans-unit id="Z1s7pAw" resname="status.canceled">
+        <source>status.canceled</source>
+        <target>Cancelado</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
