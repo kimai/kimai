@@ -106,7 +106,7 @@
     {% if (form.vars.duration_presets is defined and form.vars.duration_presets is not empty) and (form.vars.disabled is same as (false)) %}
     <div class="input-group">
         {{ block('form_widget_simple') }}
-        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+        <button type="button" class="btn dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
         <div class="dropdown-menu dropdown-menu-right pre-scrollable">
             {% for value in form.vars.duration_presets %}
                 <a class="dropdown-item" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ value }}').trigger('change');return false;">{{ value }}</a>

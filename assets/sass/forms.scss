@@ -2,3 +2,8 @@
 .checkbox-menu.show {
     z-index: 1021;
 }
+
+/* make the dropdowns smaller in quick-entries form */
+#quick_entry_box .btn-duration-preset {
+    padding: 7px 6px 7px 3px;
+}
