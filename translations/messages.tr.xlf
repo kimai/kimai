@@ -1271,6 +1271,10 @@
         <source>label.includeBudgetType_month</source>
         <target>"Aylık" bütçeli kayıtları göster</target>
       </trans-unit>
+      <trans-unit id="Z1s7pAw" resname="status.canceled">
+        <source>status.canceled</source>
+        <target>İptal edildi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
