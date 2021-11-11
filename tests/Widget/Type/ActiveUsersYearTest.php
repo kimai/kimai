@@ -37,7 +37,7 @@ class ActiveUsersYearTest extends AbstractWidgetTypeTest
     {
         return [
             'dataType' => 'int',
-            'icon' => 'user',
+            'icon' => 'users',
             'color' => 'yellow',
         ];
     }

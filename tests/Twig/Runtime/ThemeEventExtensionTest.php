@@ -115,36 +115,36 @@ class ThemeEventExtensionTest extends TestCase
 
     public function getProgressbarColors()
     {
-        yield ['progress-bar-danger', 100, false];
-        yield ['progress-bar-danger', 91, false];
-        yield ['progress-bar-warning', 90, false];
-        yield ['progress-bar-warning', 80, false];
-        yield ['progress-bar-warning', 71, false];
-        yield ['progress-bar-success', 70, false];
-        yield ['progress-bar-success', 60, false];
-        yield ['progress-bar-success', 51, false];
-        yield ['progress-bar-primary', 50, false];
-        yield ['progress-bar-primary', 40, false];
-        yield ['progress-bar-primary', 31, false];
-        yield ['progress-bar-info', 30, false];
-        yield ['progress-bar-info', 20, false];
-        yield ['progress-bar-info', 10, false];
-        yield ['progress-bar-info', 0, false];
-        yield ['progress-bar-primary', 100, true];
-        yield ['progress-bar-primary', 91, true];
-        yield ['progress-bar-success', 90, true];
-        yield ['progress-bar-success', 80, true];
-        yield ['progress-bar-success', 71, true];
-        yield ['progress-bar-warning', 70, true];
-        yield ['progress-bar-warning', 60, true];
-        yield ['progress-bar-warning', 51, true];
-        yield ['progress-bar-danger', 50, true];
-        yield ['progress-bar-danger', 40, true];
-        yield ['progress-bar-danger', 31, true];
-        yield ['progress-bar-info', 30, true];
-        yield ['progress-bar-info', 20, true];
-        yield ['progress-bar-info', 10, true];
-        yield ['progress-bar-info', 0, true];
+        yield ['bg-red', 100, false];
+        yield ['bg-red', 91, false];
+        yield ['bg-warning', 90, false];
+        yield ['bg-warning', 80, false];
+        yield ['bg-warning', 71, false];
+        yield ['bg-green', 70, false];
+        yield ['bg-green', 60, false];
+        yield ['bg-green', 51, false];
+        yield ['bg-green', 50, false];
+        yield ['bg-green', 40, false];
+        yield ['bg-green', 31, false];
+        yield ['', 30, false];
+        yield ['', 20, false];
+        yield ['', 10, false];
+        yield ['', 0, false];
+        yield ['bg-green', 100, true];
+        yield ['bg-green', 91, true];
+        yield ['bg-green', 90, true];
+        yield ['bg-green', 80, true];
+        yield ['bg-green', 71, true];
+        yield ['bg-warning', 70, true];
+        yield ['bg-warning', 60, true];
+        yield ['bg-warning', 51, true];
+        yield ['bg-red', 50, true];
+        yield ['bg-red', 40, true];
+        yield ['bg-red', 31, true];
+        yield ['', 30, true];
+        yield ['', 20, true];
+        yield ['', 10, true];
+        yield ['', 0, true];
     }
 
     /**

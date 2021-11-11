@@ -43,7 +43,7 @@ class ReportByUserControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->importReportingFixture(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/reporting/week_by_user?user=4&date=12999119191');
-        self::assertStringContainsString('<div class="box-body user-week-reporting-box', $client->getResponse()->getContent());
+        self::assertStringContainsString('<div class=" card-body user-week-reporting-box', $client->getResponse()->getContent());
         $option = $client->getCrawler()->filterXPath("//select[@id='user']/option[@selected]");
         self::assertEquals(4, $option->attr('value'));
     }
@@ -53,7 +53,7 @@ class ReportByUserControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importReportingFixture(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/reporting/month_by_user?user=4&date=12999119191');
-        self::assertStringContainsString('<div class="box-body user-month-reporting-box', $client->getResponse()->getContent());
+        self::assertStringContainsString('<div class=" card-body user-month-reporting-box', $client->getResponse()->getContent());
         $select = $client->getCrawler()->filterXPath("//select[@id='user']");
         self::assertEquals(0, $select->count());
     }

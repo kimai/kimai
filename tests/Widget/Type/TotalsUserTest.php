@@ -53,7 +53,7 @@ class TotalsUserTest extends AbstractWidgetTypeTest
         return [
             'route' => 'admin_user',
             'icon' => 'user',
-            'color' => 'primary',
+            'color' => 'red',
             'dataType' => 'int',
             'user' => $this->user,
         ];

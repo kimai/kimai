@@ -53,7 +53,7 @@ class TotalsProjectTest extends AbstractWidgetTypeTest
         return [
             'route' => 'admin_project',
             'icon' => 'project',
-            'color' => 'primary',
+            'color' => 'red',
             'dataType' => 'int',
             'user' => $this->user,
         ];

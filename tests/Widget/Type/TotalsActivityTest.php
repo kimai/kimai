@@ -53,7 +53,7 @@ class TotalsActivityTest extends AbstractWidgetTypeTest
         return [
             'route' => 'admin_activity',
             'icon' => 'activity',
-            'color' => 'primary',
+            'color' => 'red',
             'dataType' => 'int',
             'user' => $this->user,
         ];

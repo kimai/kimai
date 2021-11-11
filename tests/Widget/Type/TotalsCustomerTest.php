@@ -53,7 +53,7 @@ class TotalsCustomerTest extends AbstractWidgetTypeTest
         return [
             'route' => 'admin_customer',
             'icon' => 'customer',
-            'color' => 'primary',
+            'color' => 'red',
             'dataType' => 'int',
             'user' => $this->user,
         ];
