@@ -12,7 +12,7 @@
     'duration': {'class': 'text-end text-nowrap', 'orderBy': false},
     'rate_internal': {'class': 'text-end d-none text-nowrap', 'orderBy': false},
     'total_rate': {'class': 'text-end text-nowrap', 'orderBy': false},
-    'actions': {'class': 'actions alwaysVisible', 'orderBy': false, 'title': 'label.exported'|trans},
+    'actions': {'class': 'actions alwaysVisible', 'orderBy': false},
 } %}
 
 {% set tableName = 'export' %}
@@ -161,7 +161,7 @@
                 {% set entries = entries|slice(0, preview_limit) %}
             {% endif %}
 
-            {{ tables.datatable_header(tableName, columns, query, {columnConfig: false}) }}
+            {{ tables.datatable_header(tableName, columns, query) }}
             {% for entry in entries %}
                 {% set currency = entry.project.customer.currency %}
                 {% if entry.fixedRate is not null %}
@@ -278,11 +278,9 @@
                     const previousAction = form.action;
                     const previousMethod = form.method;
                     const previousTarget = form.target;
-                    console.log(previousAction, previousMethod, previousTarget, form);
                     form.target = '_blank';
                     form.method = 'POST';
                     form.action = '{{ path('export_data') }}';
-                    console.log(document.getElementById("export-form"));
                     form.submit();
                     document.getElementById('renderer').value = '';
                     form.target = previousTarget;

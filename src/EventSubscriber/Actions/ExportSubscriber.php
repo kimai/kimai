@@ -20,8 +20,6 @@ class ExportSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        $event->addColumnToggle('#modal_export');
-
         $event->addHelp($this->documentationLink('export.html'));
     }
 }
