@@ -979,6 +979,10 @@
         <source>label.mark_as_exported</source>
         <target>Mark as exported</target>
       </trans-unit>
+      <trans-unit id="7J7G3Va" resname="label.mark_as_open">
+        <source>label.mark_as_open</source>
+        <target>Mark as open</target>
+      </trans-unit>
       <trans-unit id="p0IprAw" resname="label.template">
         <source>label.template</source>
         <target>Template</target>

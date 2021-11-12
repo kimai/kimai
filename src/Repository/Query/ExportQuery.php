@@ -47,8 +47,11 @@ class ExportQuery extends TimesheetQuery
         return $this->markAsExported;
     }
 
-    public function setMarkAsExported(bool $markAsExported): ExportQuery
+    public function setMarkAsExported(?bool $markAsExported): ExportQuery
     {
+        if ($markAsExported === null) {
+            $markAsExported = false;
+        }
         $this->markAsExported = $markAsExported;
 
         return $this;

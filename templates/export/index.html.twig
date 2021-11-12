@@ -16,6 +16,7 @@
 } %}
 
 {% set tableName = 'export' %}
+{% set showToggleButton = preview_show and form.exported.vars.value != constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') and entries is not empty %}
 
 {% block page_title %}{{ 'export.title'|trans }}{% endblock %}
 {% block page_actions %}
@@ -67,6 +68,7 @@
                 {% block box_title %}
                     {{ 'button.preview'|trans }}: {{ 'export.title'|trans }}
                 {% endblock %}
+                {% block box_attributes %}id="preview_export"{% endblock %}
                 {% block box_body_class %}p-0{% endblock %}
                 {% block box_footer %}
                     {% set buttons = {} %}
@@ -79,6 +81,12 @@
                         {% set group = group|merge([button]) %}
                         {% set buttons = buttons|merge({(title): group}) %}
                     {% endfor %}
+                    <div class="d-flex">
+                        <div class="form-check">
+                            <input type="checkbox" id="markAsExportedCheck" name="markAsExportedCheck" class="form-check-input" value="1" {% if form.markAsExported.vars.value == '1' %} checked="checked"{% endif %}>
+                            <label class="form-check-label" for="markAsExportedCheck">{{ 'label.mark_as_exported'|trans }}</label>
+                        </div>
+                    </div>
                     <div class="d-flex">
                         <div class="btn-group me-auto dropup" id="export-buttons" role="group">
                             {% for group in buttons %}
@@ -101,10 +109,14 @@
                                 {% endif %}
                             {% endfor %}
                         </div>
-                        {% if preview_show %}
-                            <button id="export-toggle-button" class="btn ms-auto">
+                        {% if showToggleButton %}
+                            <button id="export-toggle-button" class="btn ms-auto{% if form.exported.vars.value == '4' %} d-none{% endif %}">
                                 {{ icon('off') }}
                                 {{ 'label.mark_as_exported'|trans }}
+                            </button>
+                            <button id="open-toggle-button" class="btn ms-auto {% if form.exported.vars.value == '5' %} d-none{% endif %}">
+                                {{ icon('on') }}
+                                {{ 'label.mark_as_open'|trans }}
                             </button>
                         {% endif %}
                     </div>
@@ -226,118 +238,97 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-
-        function confirmToggleState(button)
+        function updateTimesheetExportState(node, id, exported)
         {
-            var ALERT = kimai.getPlugin('alert');
-            var message = '{{ 'export.clear_all'|trans }}';
-            var hasActive = true;
+            /** @type {KimaiAlert} */
+            const ALERT = kimai.getPlugin('alert');
+            /** @type {KimaiAPI} */
+            const API = kimai.getPlugin('api');
 
-            if (!jQuery('#export-toggle-button').hasClass('export-off')) {
-                message = '{{ 'export.mark_all'|trans }}';
-                hasActive = false;
-            }
-
-            ALERT.question(message, function(value) {
-                if (!value) {
-                    return;
-                }
-                var btn = jQuery(button);
-                var exportButtons = jQuery('.exportBtn');
-                // disabling does not yet work...
-                if (exportButtons.length > 0) {
-                    btn.addClass('disabled');
-                }
-
-                // ... as the clicks are asynchronous and the each comes back too early ...
-                exportButtons.each(function () {
-                    if (hasActive === jQuery(this).hasClass('active')) {
-                        jQuery(this).click();
-                    }
-                });
-
-                // ... so the button is re-enabled immediately - that should be fixed in a future update
-                btn.removeClass('disabled');
-                if (btn.hasClass('export-off')) {
-                    btn.removeClass('export-off');
-                    btn.html('<i class="fas fa-toggle-off"></i>');
-                } else {
-                    btn.addClass('export-off');
-                    btn.html('<i class="fas fa-toggle-on"></i>');
-                }
-            });
-        }
-
-        function updateTimesheetExportState(button, id, exported)
-        {
-            var ALERT = kimai.getPlugin('alert');
-
-            // FIXME use Kimai API plugin
-            $.ajax({
-                url: '{{ path('export_timesheet', {id: '-s-'}) }}'.replace('-s-', id),
-                headers: {
-                    'X-AUTH-SESSION': true,
-                    'Content-Type':'application/json'
-                },
-                method: 'PATCH',
-                success: function(data) {
-                    if (exported) {
-                        button.button('exported');
-                    } else {
-                        button.button('clean');
-                    }
-                    if (jQuery('select#exported').val() !== '{{ constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') }}') {
-                        button.closest('tr').hide('ease', function() {
-                            jQuery(this).remove();
-                            if(jQuery(this).closest('table').find('tbody tr:visible').length === 0) {
-                                jQuery('#export-buttons button').prop('disabled', true);
-                            }
-                        });
-                    }
-                }, error: function(jqXHR, textStatus, errorThrown) {
-                    var message = 'An error occured';
-                    if (jqXHR.responseJSON !== undefined) {
-                        message = jqXHR.responseJSON.message;
-                        if (jqXHR.responseJSON.errors !== undefined)
-                        {
-                            var errors = jqXHR.responseJSON.errors.errors;
-                            for (var i = 0; i < errors.length; i++) {
-                                message += ' / ' + errors[i];
-                            }
-                        }
-                    }
-                    ALERT.error('{{ 'action.update.error'|trans({}, 'flashmessages') }}', message);
-                    button.button('reset');
-                    if (exported) {
-                        button.removeClass('active');
-                    } else {
-                        button.addClass('active');
+            API.patch(
+                '{{ path('export_timesheet', {id: '-s-'}) }}'.replace('-s-', id),
+                {},
+                function(data) {
+                    const table = node.closest('table')
+                    const row = node.closest('tr');
+                    row.remove();
+                    const list = table.querySelectorAll('tbody tr');
+                    if(list.length === 0) {
+                        document.querySelector('form#export-form button.performSearch').click();
                     }
                 }
-            });
+            );
         }
 
         document.addEventListener('kimai.initialized', function() {
-            jQuery('body').on('click', '.exportBtn', function() {
-                var button = jQuery(this);
-                var id = button.attr('data-timesheet');
-                updateTimesheetExportState(button, id, !button.hasClass('active'));
-            });
+            document.addEventListener('click', function (event) {
+                const node = event.target;
+                if (node.matches('.exportBtn')) {
+                    if (node.dataset['timesheet'] !== undefined) {
+                        const id = node.dataset['timesheet'];
+                        updateTimesheetExportState(node, id, !node.classList.contains('active'));
+                    }
+                }
 
-            jQuery('#export-toggle-button').on('click', function () {
-                confirmToggleState(this);
-            });
-
-            jQuery('body').on('click', '#export-buttons .startExportBtn', function() {
-                jQuery('#renderer').val(jQuery(this).attr('data-type'));
-                var $form = jQuery("#export-form");
-                var prevAction = $form.attr('action');
-                var prevMethod = $form.attr('method');
-                $form.attr('target', '_blank').attr('method', 'POST').attr('action', '{{ path('export_data') }}');
-                $form.submit();
-                jQuery('#renderer').val('');
-                $form.removeAttr('target').attr('action', prevAction).attr('method', prevMethod);
-            });
+                {# Toggle the form, because by default it triggers the search #}
+                if (node.matches('#export-buttons .startExportBtn')) {
+                    document.getElementById('markAsExported').value = document.getElementById('markAsExportedCheck').checked ? 1 : 0;
+                    document.getElementById('renderer').value = node.dataset['type'];
+                    const form = document.getElementById("export-form");
+                    const previousAction = form.action;
+                    const previousMethod = form.method;
+                    const previousTarget = form.target;
+                    console.log(previousAction, previousMethod, previousTarget, form);
+                    form.target = '_blank';
+                    form.method = 'POST';
+                    form.action = '{{ path('export_data') }}';
+                    console.log(document.getElementById("export-form"));
+                    form.submit();
+                    document.getElementById('renderer').value = '';
+                    form.target = previousTarget;
+                    form.method = previousMethod;
+                    form.action = previousAction;
+                }
+            }, false);
         });
+
+        {% if showToggleButton %}
+            function confirmToggleState(doExport)
+            {
+                let ALERT = kimai.getPlugin('alert');
+                let message = '{{ 'export.clear_all'|trans }}';
+                let displayBtn = 'export-toggle-button';
+                let hideBtn = 'open-toggle-button';
+
+                if (doExport) {
+                    message = '{{ 'export.mark_all'|trans }}';
+                    displayBtn = 'open-toggle-button';
+                    hideBtn = 'export-toggle-button';
+                }
+
+                ALERT.question(message, function(value) {
+                    if (!value) {
+                        return;
+                    }
+
+                    [].slice.call(document.querySelectorAll('.exportBtn')).map(function (element) {
+                        element.click();
+                    });
+
+                    // ... so the button is re-enabled immediately - that should be fixed in a future update
+                    document.getElementById(displayBtn).classList.remove('d-none');
+                    document.getElementById(hideBtn).classList.add('d-none');
+                });
+            }
+
+            document.getElementById('export-toggle-button').addEventListener('click', function (event) {
+                confirmToggleState(true);
+            }, false);
+
+            document.getElementById('open-toggle-button').addEventListener('click', function (event) {
+                confirmToggleState(false);
+            }, false);
+        {% endif %}
+
     </script>
 {% endblock %}

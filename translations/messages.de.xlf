@@ -979,6 +979,10 @@
         <source>label.mark_as_exported</source>
         <target>Als exportiert markieren</target>
       </trans-unit>
+      <trans-unit id="7J7G3Va" resname="label.mark_as_open">
+        <source>label.mark_as_open</source>
+        <target>Als offen markieren</target>
+      </trans-unit>
       <trans-unit id="p0IprAw" resname="label.template">
         <source>label.template</source>
         <target>Vorlage</target>
