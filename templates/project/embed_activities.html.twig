@@ -17,7 +17,7 @@
                 </div>
             {%- endif -%}
         {% endblock %}
-        {% block box_body_class %}p-0{% endblock %}
+        {% block box_body_class %}{%- if activities|length > 0 -%}p-0{%- endif -%}{% endblock %}
         {% block box_body %}
             {% if activities|length == 0 %}
                 <div class="comment">{{ 'error.no_entries_found'|trans }}</div>
