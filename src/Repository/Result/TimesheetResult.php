@@ -9,6 +9,7 @@
 
 namespace App\Repository\Result;
 
+use App\Entity\Timesheet;
 use App\Repository\Loader\TimesheetLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Query\TimesheetQuery;
@@ -19,7 +20,8 @@ final class TimesheetResult
 {
     private $query;
     private $queryBuilder;
-    private $statistic;
+    private $statisticCache;
+    private $resultCache;
 
     /**
      * @internal
@@ -32,7 +34,7 @@ final class TimesheetResult
 
     public function getStatistic(): TimesheetResultStatistic
     {
-        if ($this->statistic === null) {
+        if ($this->statisticCache === null) {
             $qb = clone $this->queryBuilder;
             $qb
                 ->resetDQLPart('select')
@@ -42,10 +44,10 @@ final class TimesheetResult
 
             $result = $qb->getQuery()->getArrayResult()[0];
 
-            $this->statistic = new TimesheetResultStatistic($result['counter'], $result['duration']);
+            $this->statisticCache = new TimesheetResultStatistic($result['counter'], $result['duration']);
         }
 
-        return $this->statistic;
+        return $this->statisticCache;
     }
 
     public function toIterable(): iterable
@@ -55,15 +57,25 @@ final class TimesheetResult
         return $query->toIterable();
     }
 
+    /**
+     * @param bool $fullyHydrated
+     * @return array<Timesheet>
+     */
     public function getResults(bool $fullyHydrated = false): array
     {
-        $query = $this->queryBuilder->getQuery();
-        $results = $query->getResult();
+        // TODO if $fullyHydrated = false and then we call this again using deep nested objects in a second turn
+        // it might result in hundreds of lazy loading calls - improve caching
+        if ($this->resultCache === null) {
+            $query = $this->queryBuilder->getQuery();
+            $results = $query->getResult();
 
-        $loader = new TimesheetLoader($this->queryBuilder->getEntityManager(), $fullyHydrated);
-        $loader->loadResults($results);
+            $loader = new TimesheetLoader($this->queryBuilder->getEntityManager(), $fullyHydrated);
+            $loader->loadResults($results);
 
-        return $results;
+            $this->resultCache = $results;
+        }
+
+        return $this->resultCache;
     }
 
     public function getPagerfanta(bool $fullyHydrated = false): Pagerfanta
