@@ -1268,6 +1268,10 @@
         <source>label.budgetType_full</source>
         <target>Cycle de vie</target>
       </trans-unit>
+      <trans-unit id="Z1s7pAw" resname="status.canceled">
+        <source>status.canceled</source>
+        <target>Annulée</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
