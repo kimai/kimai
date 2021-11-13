@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Time tracking</source>
-        <target state="translated">Χρόνος παρακολούθησης απασχόλησης</target>
+        <target state="translated">Παρακολούθηση Χρόνου</target>
       </trans-unit>
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
         <source>label.timesheet.mode</source>
-        <target>Λειτουργία παρακολούθησης ωρών</target>
+        <target>Λειτουργία παρακολούθησης χρόνου</target>
       </trans-unit>
       <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
         <source>label.timesheet.mode_default</source>
@@ -200,7 +200,7 @@
       </trans-unit>
       <trans-unit id="DY_cM92" resname="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
-        <target>Προεπιλεγμένη ώρα έναρξης (δεν χρησιμοποιείται σε όλες τις λειτουργίες καταγραφής ωρών)</target>
+        <target>Προεπιλεγμένη ώρα έναρξης (δεν χρησιμοποιείται σε όλες τις λειτουργίες καταγραφής χρόνου)</target>
       </trans-unit>
       <trans-unit id="cRbnwyP" resname="label.simple_form">
         <source>label.simple_form</source>
