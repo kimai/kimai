@@ -1,44 +1,44 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fa" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="button_copy_url_to_browser">
+      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
         <target>اگر دکمه کار نکرد، لطفا آدرس زیر را در مروگر خود کپی و جایگذاری نمایید : %url%</target>
       </trans-unit>
-      <trans-unit id="automated_email_dont_answer">
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target>این یک ایمیلی است که به صورت اتوماتیک ساخته شده است. لطفا به آن پاسخ ندهید، این آدرس خوانده نمی شود.</target>
       </trans-unit>
-      <trans-unit id="registration.subject">
+      <trans-unit id="pjr3FDv" resname="registration.subject">
         <source>registration.subject</source>
         <target>حساب کاربری خود را فعال کنید</target>
       </trans-unit>
-      <trans-unit id="registration.title">
+      <trans-unit id="QtcznHC" resname="registration.title">
         <source>registration.title</source>
         <target>%username% خوش آمدید</target>
       </trans-unit>
-      <trans-unit id="registration.button">
+      <trans-unit id="YMLel3P" resname="registration.button">
         <source>registration.button</source>
         <target>حساب کاربری خود را فعال کنید</target>
       </trans-unit>
-      <trans-unit id="registration.intro">
+      <trans-unit id="IkjnHoP" resname="registration.intro">
         <source>registration.intro</source>
         <target>شما در رهگیر زمان kimai با ایمیل %email% ثبت نام کرده اید. اکنون باید ایمیل خود را در همین زمان، قبل از باطل شدن لینک فعال کنید.</target>
       </trans-unit>
-      <trans-unit id="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>
         <target>پسورد خود را ریست کنید</target>
       </trans-unit>
-      <trans-unit id="reset.title">
+      <trans-unit id="G2mhn_2" resname="reset.title">
         <source>reset.title</source>
         <target>آن می تواند اتفاق بیفتد …</target>
       </trans-unit>
-      <trans-unit id="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button">
         <source>reset.button</source>
         <target>پسورد خود را ریست کنید</target>
       </trans-unit>
-      <trans-unit id="reset.intro">
+      <trans-unit id="rhkMAep" resname="reset.intro">
         <source>reset.intro</source>
         <target>… خب شما پسورد خود را فراموش کرده اید؟ نگران نباشید : kimai به شما کمک خواهد کرد تا یکی جدید بسازید:</target>
       </trans-unit>

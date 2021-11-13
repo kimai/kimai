@@ -19,7 +19,6 @@ use App\Reporting\WeekByUser;
 use App\Reporting\WeekByUserForm;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
-use App\Repository\TimesheetRepository;
 use App\Timesheet\TimesheetStatisticService;
 use DateTime;
 use Exception;
@@ -35,14 +34,12 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 final class ReportByUserController extends AbstractController
 {
-    private $timesheetRepository;
     private $statisticService;
     private $projectRepository;
     private $activityRepository;
 
-    public function __construct(TimesheetRepository $timesheetRepository, TimesheetStatisticService $statisticService, ProjectRepository $projectRepository, ActivityRepository $activityRepository)
+    public function __construct(TimesheetStatisticService $statisticService, ProjectRepository $projectRepository, ActivityRepository $activityRepository)
     {
-        $this->timesheetRepository = $timesheetRepository;
         $this->statisticService = $statisticService;
         $this->projectRepository = $projectRepository;
         $this->activityRepository = $activityRepository;

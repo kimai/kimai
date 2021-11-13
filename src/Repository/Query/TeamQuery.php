@@ -24,6 +24,7 @@ class TeamQuery extends BaseQuery
     {
         $this->setDefaults([
             'orderBy' => 'name',
+            'users' => [],
         ]);
     }
 

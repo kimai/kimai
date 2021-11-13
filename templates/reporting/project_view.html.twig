@@ -52,7 +52,32 @@
             {{ widgets.action_button('visibility', {'modal': ('#modal_' ~ tableName), 'class': 'btn-sm'}) }}
         {% endblock %}
         {% block box_title %}
-            {{ form_widget(form) }}
+            {% if form.customer is defined %}
+                {{ form_widget(form.customer) }}
+            {% endif %}
+            {% if form.month is defined %}
+                {{ form_widget(form.month) }}
+            {% endif %}
+            {% if form.includeNoBudget is defined or form.includeNoWork is defined %}
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="{{ 'filter'|icon }}"></i> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu checkbox-menu">
+                    {% if form.includeNoBudget is defined %}
+                    <li>
+                        {{ form_widget(form.includeNoBudget) }}
+                    </li>
+                    {% endif %}
+                    {% if form.includeNoWork is defined %}
+                    <li>
+                        {{ form_widget(form.includeNoWork) }}
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+            {{ form_rest(form) }}
         {% endblock %}
         {% block box_body %}
             {% if not hasData %}

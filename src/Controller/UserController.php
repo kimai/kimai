@@ -126,7 +126,7 @@ final class UserController extends AbstractController
 
             $this->flashSuccess('action.update.success');
 
-            if ($editForm->get('create_more')->getData() !== true) {
+            if ($editForm->has('create_more') && $editForm->get('create_more')->getData() !== true) {
                 return $this->redirectToRoute('user_profile_edit', ['username' => $user->getUsername()]);
             }
 
@@ -241,6 +241,8 @@ final class UserController extends AbstractController
             'include_active_flag' => true,
             'include_preferences' => $this->isGranted('preferences', $user),
             'include_add_more' => true,
+            'include_teams' => $this->isGranted('teams_other_profile'),
+            'include_roles' => $this->isGranted('roles_other_profile'),
         ]);
     }
 }

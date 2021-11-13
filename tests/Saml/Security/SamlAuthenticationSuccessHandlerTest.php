@@ -20,8 +20,6 @@ use Symfony\Component\Security\Http\HttpUtils;
  */
 class SamlAuthenticationSuccessHandlerTest extends TestCase
 {
-    private $handler;
-
     public function testWithAlwaysUseDefaultTargetPath()
     {
         $httpUtils = new HttpUtils($this->getUrlGenerator());

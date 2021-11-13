@@ -123,9 +123,7 @@ class ProjectController extends BaseApiController
             if (!\is_array($customers)) {
                 $customers = explode(',', $customers);
             }
-            if (!empty($customers)) {
-                $query->setCustomers($customers);
-            }
+            $query->setCustomers($customers);
         }
 
         if (!empty($customer = $paramFetcher->get('customer'))) {

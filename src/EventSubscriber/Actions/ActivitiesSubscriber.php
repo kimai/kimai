@@ -10,6 +10,7 @@
 namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
+use App\Repository\Query\ActivityQuery;
 
 class ActivitiesSubscriber extends AbstractActionsSubscriber
 {
@@ -20,7 +21,12 @@ class ActivitiesSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        $event->addSearchToggle();
+        $payload = $event->getPayload();
+
+        /** @var ActivityQuery $query */
+        $query = $payload['query'];
+
+        $event->addSearchToggle($query);
         $event->addColumnToggle('#modal_activity_admin');
         $event->addQuickExport($this->path('activity_export'));
 

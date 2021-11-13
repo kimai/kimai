@@ -30,5 +30,6 @@ final class Version20190219200020 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
+        $this->preventEmptyMigrationWarning();
     }
 }

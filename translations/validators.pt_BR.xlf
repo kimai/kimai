@@ -1,62 +1,82 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="pt-BR" datatype="plaintext" original="validators.en.xlf">
     <body>
-      <trans-unit id="This value is not a valid role.">
+      <trans-unit id="IkNxbBI" resname="This value is not a valid role.">
         <source>This value is not a valid role.</source>
         <target>Este valor não é um papel válido.</target>
       </trans-unit>
-      <trans-unit id="End date must not be earlier then start date.">
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
         <source>End date must not be earlier then start date.</source>
         <target>A data de conclusão não pode ser anterior à data de início.</target>
       </trans-unit>
-      <trans-unit id="The given value is not a valid time.">
+      <trans-unit id="VJSZSD0" resname="The given value is not a valid time.">
         <source>The given value is not a valid time.</source>
         <target>O valor dado não é um tempo válido.</target>
       </trans-unit>
-      <trans-unit id="You already have an entry for this time.">
+      <trans-unit id="u2wjm2i" resname="You already have an entry for this time.">
         <source>You already have an entry for this time.</source>
         <target>Você já tem uma entrada para este tempo.</target>
       </trans-unit>
-      <trans-unit id="This period is locked, please choose a later date.">
+      <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date.">
         <source>This period is locked, please choose a later date.</source>
         <target>Este período está bloqueado, por favor escolha uma data posterior.</target>
       </trans-unit>
-      <trans-unit id="This invoice document cannot be used, please rename the file and upload it again.">
+      <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again.">
         <source>This invoice document cannot be used, please rename the file and upload it again.</source>
         <target>Este documento de fatura não pode ser usado, por favor renomeie o arquivo e carregue-o novamente.</target>
       </trans-unit>
-      <trans-unit id="You must select at least one user or team.">
+      <trans-unit id="1V6BsD_" resname="You must select at least one user or team.">
         <source>You must select at least one user or team.</source>
         <target>Você deve selecionar pelo menos um usuário ou equipe.</target>
       </trans-unit>
-      <trans-unit id="The begin date cannot be in the future.">
+      <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
         <target>A data de início não pode ser no futuro.</target>
       </trans-unit>
-      <trans-unit id="The budget is completely used.">
+      <trans-unit id="1oKCOa5" resname="The budget is completely used.">
         <source>The budget is completely used.</source>
         <target>O orçamento foi esgotado. Do %budget% disponível, do que foi %used% tem sido reservado até o momento, há %free% que ainda pode ser utilizado.</target>
       </trans-unit>
-      <trans-unit id="Maximum duration of {{ value }} hours exceeded.">
+      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
         <source>Maximum duration of {{ value }} hours exceeded.</source>
         <target>O máximo de {{ value }} hora(s) permitida(s).</target>
       </trans-unit>
-      <trans-unit id="The username is already used.">
+      <trans-unit id="S14XECA" resname="The username is already used.">
         <source>The username is already used.</source>
         <target>O nome de usuário já está em uso.</target>
       </trans-unit>
-      <trans-unit id="The email is already used.">
+      <trans-unit id="6u6oCwB" resname="The email is already used.">
         <source>The email is already used.</source>
         <target>O e-mail já está em uso.</target>
       </trans-unit>
-      <trans-unit id="The entered passwords don't match.">
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match.">
         <source>The entered passwords don't match.</source>
         <target>As senhas digitidas não batem.</target>
       </trans-unit>
-      <trans-unit id="At least one team leader must be assigned to the team.">
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
         <source>At least one team leader must be assigned to the team.</source>
         <target>Pelo menos um líder de equipe deve ser designado para a equipe.</target>
+      </trans-unit>
+      <trans-unit id="INlaCgW" resname="An equal email is already used.">
+        <source>An equal email is already used.</source>
+        <target>Já existe um e-mail igual em uso.</target>
+      </trans-unit>
+      <trans-unit id="ekO5eXI" resname="An equal username is already used.">
+        <source>An equal username is already used.</source>
+        <target>Já existe um nome de usuário igual em uso.</target>
+      </trans-unit>
+      <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
+        <source>An activity needs to be selected.</source>
+        <target>Uma atividade precisa ser selecionada.</target>
+      </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target>Um projeto precisa ser selecionado.</target>
+      </trans-unit>
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target>Este quadro de horários já foi exportado.</target>
       </trans-unit>
     </body>
   </file>

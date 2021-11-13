@@ -93,7 +93,7 @@ final class TeamController extends BaseApiController
      * @SWG\Response(
      *      response=200,
      *      description="Returns one team entity",
-     *      @SWG\Schema(ref="#/definitions/TeamEntity"),
+     *      @SWG\Schema(ref="#/definitions/Team"),
      * )
      *
      * @Security("is_granted('view_team')")
@@ -160,7 +160,7 @@ final class TeamController extends BaseApiController
      *      @SWG\Response(
      *          response=200,
      *          description="Returns the new created team",
-     *          @SWG\Schema(ref="#/definitions/TeamEntity"),
+     *          @SWG\Schema(ref="#/definitions/Team"),
      *      )
      * )
      * @SWG\Parameter(
@@ -205,7 +205,7 @@ final class TeamController extends BaseApiController
      *      @SWG\Response(
      *          response=200,
      *          description="Returns the updated team",
-     *          @SWG\Schema(ref="#/definitions/TeamEntity")
+     *          @SWG\Schema(ref="#/definitions/Team")
      *      )
      * )
      * @SWG\Parameter(
@@ -277,7 +277,7 @@ final class TeamController extends BaseApiController
      *  @SWG\Response(
      *      response=200,
      *      description="Adds a new user to a team.",
-     *      @SWG\Schema(ref="#/definitions/TeamEntity")
+     *      @SWG\Schema(ref="#/definitions/Team")
      *  )
      * )
      * @SWG\Parameter(
@@ -336,7 +336,7 @@ final class TeamController extends BaseApiController
      *      @SWG\Response(
      *          response=200,
      *          description="Removes a user from the team. The teamlead cannot be removed.",
-     *          @SWG\Schema(ref="#/definitions/TeamEntity")
+     *          @SWG\Schema(ref="#/definitions/Team")
      *      )
      * )
      * @SWG\Parameter(
@@ -399,7 +399,7 @@ final class TeamController extends BaseApiController
      *  @SWG\Response(
      *      response=200,
      *      description="Adds a new customer to a team.",
-     *      @SWG\Schema(ref="#/definitions/TeamEntity")
+     *      @SWG\Schema(ref="#/definitions/Team")
      *  )
      * )
      * @SWG\Parameter(
@@ -458,7 +458,7 @@ final class TeamController extends BaseApiController
      *      @SWG\Response(
      *          response=200,
      *          description="Removes a customer from the team.",
-     *          @SWG\Schema(ref="#/definitions/TeamEntity")
+     *          @SWG\Schema(ref="#/definitions/Team")
      *      )
      * )
      * @SWG\Parameter(
@@ -517,7 +517,7 @@ final class TeamController extends BaseApiController
      *  @SWG\Response(
      *      response=200,
      *      description="Adds a new project to a team.",
-     *      @SWG\Schema(ref="#/definitions/TeamEntity")
+     *      @SWG\Schema(ref="#/definitions/Team")
      *  )
      * )
      * @SWG\Parameter(
@@ -576,7 +576,7 @@ final class TeamController extends BaseApiController
      *      @SWG\Response(
      *          response=200,
      *          description="Removes a project from the team.",
-     *          @SWG\Schema(ref="#/definitions/TeamEntity")
+     *          @SWG\Schema(ref="#/definitions/Team")
      *      )
      * )
      * @SWG\Parameter(
@@ -635,7 +635,7 @@ final class TeamController extends BaseApiController
      *  @SWG\Response(
      *      response=200,
      *      description="Adds a new activity to a team.",
-     *      @SWG\Schema(ref="#/definitions/TeamEntity")
+     *      @SWG\Schema(ref="#/definitions/Team")
      *  )
      * )
      * @SWG\Parameter(
@@ -694,7 +694,7 @@ final class TeamController extends BaseApiController
      *      @SWG\Response(
      *          response=200,
      *          description="Removes a activity from the team.",
-     *          @SWG\Schema(ref="#/definitions/TeamEntity")
+     *          @SWG\Schema(ref="#/definitions/Team")
      *      )
      * )
      * @SWG\Parameter(

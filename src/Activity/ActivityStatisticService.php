@@ -14,7 +14,6 @@ use App\Event\ActivityBudgetStatisticEvent;
 use App\Event\ActivityStatisticEvent;
 use App\Model\ActivityBudgetStatisticModel;
 use App\Model\ActivityStatistic;
-use App\Repository\ActivityRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
 use DateTime;
@@ -27,13 +26,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class ActivityStatisticService
 {
-    private $activityRepository;
     private $timesheetRepository;
     private $dispatcher;
 
-    public function __construct(ActivityRepository $activityRepository, TimesheetRepository $timesheetRepository, EventDispatcherInterface $dispatcher)
+    public function __construct(TimesheetRepository $timesheetRepository, EventDispatcherInterface $dispatcher)
     {
-        $this->activityRepository = $activityRepository;
         $this->timesheetRepository = $timesheetRepository;
         $this->dispatcher = $dispatcher;
     }
@@ -70,9 +67,6 @@ class ActivityStatisticService
         }
 
         $stats->setStatistic($this->getActivityStatistics($activity, $begin, $end));
-
-        $event = new ActivityBudgetStatisticEvent([$stats], $begin, $end);
-        $this->dispatcher->dispatch($event);
 
         return $stats;
     }

@@ -10,6 +10,7 @@
 namespace App\Event;
 
 use App\Entity\User;
+use App\Repository\Query\BaseQuery;
 
 /**
  * This event is triggered once per side load.
@@ -126,9 +127,18 @@ class PageActionsEvent extends ThemeEvent
         $this->payload['actions'][$key] = null;
     }
 
-    public function addSearchToggle(): void
+    public function addSearchToggle(?BaseQuery $query = null): void
     {
-        $this->addAction('search', ['modal' => '#modal_search']);
+        $label = null;
+
+        if ($query !== null) {
+            $label = $query->countFilter();
+            if ($label < 1) {
+                $label = null;
+            }
+        }
+
+        $this->addAction('search', ['modal' => '#modal_search', 'label' => $label]);
     }
 
     public function addQuickExport(string $url): void

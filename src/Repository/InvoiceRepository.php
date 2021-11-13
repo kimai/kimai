@@ -54,7 +54,7 @@ class InvoiceRepository extends EntityRepository
         return $counter > 0;
     }
 
-    private function getCounterFor(\DateTime $start, \DateTime $end, ?Customer $customer = null): int
+    private function getCounterFor(\DateTime $start, \DateTime $end, ?Customer $customer = null, ?User $user = null): int
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('count(i.createdAt) as counter')
@@ -68,7 +68,14 @@ class InvoiceRepository extends EntityRepository
         if (null !== $customer) {
             $qb
                 ->andWhere($qb->expr()->eq('i.customer', ':customer'))
-                ->setParameter('customer', $customer)
+                ->setParameter('customer', $customer->getId())
+            ;
+        }
+
+        if (null !== $user) {
+            $qb
+                ->andWhere($qb->expr()->eq('i.user', ':user'))
+                ->setParameter('user', $user->getId())
             ;
         }
 
@@ -81,34 +88,43 @@ class InvoiceRepository extends EntityRepository
         return $result['counter'];
     }
 
-    public function getCounterForDay(\DateTime $date, ?Customer $customer = null): int
+    public function getCounterForDay(\DateTime $date, ?Customer $customer = null, ?User $user = null): int
     {
         $start = (clone $date)->setTime(0, 0, 0);
         $end = (clone $date)->setTime(23, 59, 59);
 
-        return $this->getCounterFor($start, $end, $customer);
+        return $this->getCounterFor($start, $end, $customer, $user);
     }
 
-    public function getCounterForMonth(\DateTime $date, ?Customer $customer = null): int
+    public function getCounterForMonth(\DateTime $date, ?Customer $customer = null, ?User $user = null): int
     {
         $start = (clone $date)->setDate((int) $date->format('Y'), (int) $date->format('n'), 1)->setTime(0, 0, 0);
         $end = (clone $date)->setDate((int) $date->format('Y'), (int) $date->format('n'), (int) $date->format('t'))->setTime(23, 59, 59);
 
-        return $this->getCounterFor($start, $end, $customer);
+        return $this->getCounterFor($start, $end, $customer, $user);
     }
 
-    public function getCounterForYear(\DateTime $date, ?Customer $customer = null): int
+    public function getCounterForYear(\DateTime $date, ?Customer $customer = null, ?User $user = null): int
     {
         $start = (clone $date)->setDate((int) $date->format('Y'), 1, 1)->setTime(0, 0, 0);
         $end = (clone $date)->setDate((int) $date->format('Y'), 12, 31)->setTime(23, 59, 59);
 
-        return $this->getCounterFor($start, $end, $customer);
+        return $this->getCounterFor($start, $end, $customer, $user);
     }
 
-    public function getCounterForAllTime(?Customer $customer = null): int
+    public function getCounterForCustomerAllTime(?Customer $customer = null): int
     {
         if (null !== $customer) {
-            return $this->count(['customer' => $customer]);
+            return $this->count(['customer' => $customer->getId()]);
+        }
+
+        return $this->count([]);
+    }
+
+    public function getCounterForUserAllTime(?User $user = null): int
+    {
+        if (null !== $user) {
+            return $this->count(['user' => $user->getId()]);
         }
 
         return $this->count([]);
@@ -185,11 +201,18 @@ class InvoiceRepository extends EntityRepository
             case 'date':
                 $orderBy = 'i.createdAt';
                 break;
-            case 'customer':
-                $orderBy = 'i.customer';
+            case 'number':
+                $orderBy = 'i.invoiceNumber';
                 break;
-            case 'total':
+            case 'payed':
+                $orderBy = 'i.paymentDate';
+                break;
+            case 'total_rate':
                 $orderBy = 'i.total';
+                break;
+            case 'tax':
+            case 'status':
+                $orderBy = 'i.' . $orderBy;
                 break;
         }
 

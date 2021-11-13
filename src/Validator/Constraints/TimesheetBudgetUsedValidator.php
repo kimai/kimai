@@ -76,6 +76,11 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             $duration = $timesheet->getEnd()->getTimestamp() - $timesheet->getBegin()->getTimestamp();
         }
 
+        // this validator needs a project to calculate the rates
+        if ($timesheet->getProject() === null) {
+            return;
+        }
+
         $timeRate = $this->rateService->calculate($timesheet);
         $rate = $timeRate->getRate();
 

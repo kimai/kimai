@@ -21,7 +21,6 @@ use App\Event\TimesheetRestartPreEvent;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingModeService;
-use App\Validator\ValidationException;
 use App\Validator\ValidationFailedException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -246,15 +245,15 @@ class TimesheetServiceTest extends TestCase
 
     public function testStoppedEntriesCannotBeStoppedAgain()
     {
+        $dateTime = new \DateTime('-2 hours');
         $timesheet = new Timesheet();
-        $timesheet->setEnd(new \DateTime());
+        $timesheet->setEnd($dateTime);
 
         $sut = $this->getSut();
 
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('Timesheet entry already stopped');
-
         $sut->stopTimesheet($timesheet);
+
+        self::assertSame($dateTime->getTimestamp(), $timesheet->getEnd()->getTimestamp());
     }
 
     public function testDeleteDispatchesEvent()

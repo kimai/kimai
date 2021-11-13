@@ -25,6 +25,7 @@ use App\Repository\Query\CustomerQuery;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
@@ -157,14 +158,24 @@ class CustomerRepository extends EntityRepository
 
     private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
     {
+        $permissions = $this->getPermissionCriteria($qb, $user, $teams);
+        if ($permissions->count() > 0) {
+            $qb->andWhere($permissions);
+        }
+    }
+
+    private function getPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): Andx
+    {
+        $andX = $qb->expr()->andX();
+
         // make sure that all queries without a user see all customers
         if (null === $user && empty($teams)) {
-            return;
+            return $andX;
         }
 
         // make sure that admins see all customers
         if (null !== $user && $user->canSeeAllData()) {
-            return;
+            return $andX;
         }
 
         if (null !== $user) {
@@ -172,22 +183,24 @@ class CustomerRepository extends EntityRepository
         }
 
         if (empty($teams)) {
-            $qb->andWhere('SIZE(c.teams) = 0');
+            $andX->add('SIZE(c.teams) = 0');
 
-            return;
+            return $andX;
         }
 
         $or = $qb->expr()->orX(
             'SIZE(c.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
-        $qb->andWhere($or);
+        $andX->add($or);
 
         $ids = array_values(array_unique(array_map(function (Team $team) {
             return $team->getId();
         }, $teams)));
 
         $qb->setParameter('teams', $ids);
+
+        return $andX;
     }
 
     /**
@@ -216,21 +229,33 @@ class CustomerRepository extends EntityRepository
             ->from(Customer::class, 'c')
             ->orderBy('c.name', 'ASC');
 
-        // TODO this where and the next if($query->hasCustomers()) should go into their own $qb->expr()->orX()
-        $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
+        $mainQuery = $qb->expr()->andX();
+
+        $mainQuery->add($qb->expr()->eq('c.visible', ':visible'));
         $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
 
+        $permissions = $this->getPermissionCriteria($qb, $query->getUser(), $query->getTeams());
+        if ($permissions->count() > 0) {
+            $mainQuery->add($permissions);
+        }
+
+        $outerQuery = $qb->expr()->orX();
+
         if ($query->hasCustomers()) {
-            $qb->orWhere($qb->expr()->in('c.id', ':customer'))
-                ->setParameter('customer', $query->getCustomers());
+            $outerQuery->add($qb->expr()->in('c.id', ':customer'));
+            $qb->setParameter('customer', $query->getCustomers());
         }
 
         if (null !== $query->getCustomerToIgnore()) {
-            $qb->andWhere($qb->expr()->neq('c.id', ':ignored'));
+            $mainQuery = $qb->expr()->andX(
+                $mainQuery,
+                $qb->expr()->neq('c.id', ':ignored')
+            );
             $qb->setParameter('ignored', $query->getCustomerToIgnore());
         }
 
-        $this->addPermissionCriteria($qb, $query->getUser(), $query->getTeams());
+        $outerQuery->add($mainQuery);
+        $qb->andWhere($outerQuery);
 
         return $qb;
     }

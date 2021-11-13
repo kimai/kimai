@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller\Reporting;
 
+use App\Entity\Project;
 use App\Entity\User;
 use App\Tests\Controller\ControllerBaseTest;
 use App\Tests\DataFixtures\ActivityFixtures;
@@ -39,6 +40,9 @@ class ProjectDateRangeControllerTest extends ControllerBaseTest
         $projects->setCustomers($customers);
         $projects->setAmount(2);
         $projects->setIsVisible(true);
+        $projects->setCallback(function (Project $project) {
+            $project->setIsMonthlyBudget();
+        });
         $this->importFixture($projects);
 
         $activities = new ActivityFixtures();

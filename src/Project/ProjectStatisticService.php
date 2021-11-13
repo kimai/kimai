@@ -133,7 +133,9 @@ class ProjectStatisticService
         $qb = $this->repository->createQueryBuilder('p');
         $qb
             ->select('p')
+            ->leftJoin('p.customer', 'c')
             ->andWhere($qb->expr()->eq('p.visible', true))
+            ->andWhere($qb->expr()->eq('c.visible', true))
             ->andWhere(
                 $qb->expr()->andX(
                     $qb->expr()->orX(
@@ -150,7 +152,7 @@ class ProjectStatisticService
             ->setParameter('end', $end, Types::DATETIME_MUTABLE)
         ;
 
-        if ($query->isOnlyWithRecords()) {
+        if (!$query->isIncludeNoWork()) {
             $qb2 = $this->repository->createQueryBuilder('t1');
             $qb2
                 ->select('1')
@@ -161,15 +163,28 @@ class ProjectStatisticService
             $qb->andWhere($qb->expr()->exists($qb2));
         }
 
-        if (!$query->isIncludeNoBudget()) {
-            $qb
-                ->andWhere(
-                    $qb->expr()->orX(
-                        $qb->expr()->gt('p.budget', 0.0),
-                        $qb->expr()->gt('p.timeBudget', 0)
-                    )
+        if ($query->isIncludeNoBudget()) {
+            $qb->andWhere(
+                $qb->expr()->eq('p.budget', 0.0),
+                $qb->expr()->eq('p.timeBudget', 0)
+            );
+        } else {
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->gt('p.budget', 0.0),
+                    $qb->expr()->gt('p.timeBudget', 0)
                 )
-            ;
+            );
+            if ($query->isBudgetTypeMonthly()) {
+                $qb->andWhere(
+                    $qb->expr()->eq('p.budgetType', ':typeMonth')
+                );
+                $qb->setParameter('typeMonth', 'month');
+            } else {
+                $qb->andWhere(
+                    $qb->expr()->isNull('p.budgetType')
+                );
+            }
         }
 
         if ($query->getCustomer() !== null) {
@@ -192,7 +207,6 @@ class ProjectStatisticService
     public function getBudgetStatisticModel(Project $project, DateTime $today): ProjectBudgetStatisticModel
     {
         $stats = new ProjectBudgetStatisticModel($project);
-
         $stats->setStatisticTotal($this->getProjectStatistics($project));
 
         $begin = null;
@@ -205,9 +219,6 @@ class ProjectStatisticService
         }
 
         $stats->setStatistic($this->getProjectStatistics($project, $begin, $end));
-
-        $event = new ProjectBudgetStatisticEvent([$stats], $begin, $end);
-        $this->dispatcher->dispatch($event);
 
         return $stats;
     }

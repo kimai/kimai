@@ -1,240 +1,228 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="cs" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="title">
+      <trans-unit id="qvIyBkY" resname="title">
         <source>title</source>
         <target>Nastavení</target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target>Změna globálního nastavení pro docházkový systém</target>
-      </trans-unit>
-      <trans-unit id="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
         <target>Pracovní výkaz</target>
       </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target>Vytvořit zákazníka—výchozí hodnota</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target>Uživatel—výchozí hodnota</target>
-      </trans-unit>
-      <trans-unit id="theme">
+      <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
         <target>Vzhled</target>
       </trans-unit>
-      <trans-unit id="calendar">
+      <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Kalendář</target>
       </trans-unit>
-      <trans-unit id="label.theme.markdown_content">
+      <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
         <source>label.theme.markdown_content</source>
         <target>Povolit formátování poznámek popisech a komentářích</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.mode">
+      <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
         <source>label.timesheet.mode</source>
         <target>Režim sledování času</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.mode_default">
+      <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
         <source>label.timesheet.mode_default</source>
         <target>[Výchozí] čas začátku a konce lze upravit</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.mode_duration_only">
+      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
         <source>label.timesheet.mode_duration_only</source>
         <target>[Doba trvání] nahradí čas ukončení vstupním polem trvání</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+      <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target>[Doba trvání] konfigurovatelný pevný čas spuštění, lze změnit pouze dobu trvání</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.mode_punch">
+      <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
         <source>label.timesheet.mode_punch</source>
         <target>[Time-clock] uživatel může spustit a zastavit záznamy, ale ne upravovat časy ani dobu trvání</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.allow_future_times">
+      <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
         <source>label.timesheet.rules.allow_future_times</source>
         <target>Povolit zadávání času v budoucnosti</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.hard_limit">
+      <trans-unit id="oIueXaX" resname="label.timesheet.active_entries.hard_limit">
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Povolený počet současně spuštěných položek v jednu dobu</target>
       </trans-unit>
-      <trans-unit id="label.calendar.week_numbers">
+      <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>
         <target>Zobrazit čísla týdnů</target>
       </trans-unit>
-      <trans-unit id="label.calendar.weekends">
+      <trans-unit id="NULxaYp" resname="label.calendar.weekends">
         <source>label.calendar.weekends</source>
         <target>Zobrazit víkendy</target>
       </trans-unit>
-      <trans-unit id="label.calendar.businessHours.begin">
+      <trans-unit id="AMCb58W" resname="label.calendar.businessHours.begin">
         <source>label.calendar.businessHours.begin</source>
         <target>Začátek běžné pracovní doby (bude zvýrazněn)</target>
       </trans-unit>
-      <trans-unit id="label.calendar.businessHours.end">
+      <trans-unit id="3nfAkqy" resname="label.calendar.businessHours.end">
         <source>label.calendar.businessHours.end</source>
         <target>Konec běžné pracovní doby (bude zvýrazněn)</target>
       </trans-unit>
-      <trans-unit id="label.calendar.visibleHours.begin">
+      <trans-unit id="Yl4Ztfv" resname="label.calendar.visibleHours.begin">
         <source>label.calendar.visibleHours.begin</source>
         <target>Začátek viditelného časového období</target>
       </trans-unit>
-      <trans-unit id="label.calendar.visibleHours.end">
+      <trans-unit id="UJGYdCt" resname="label.calendar.visibleHours.end">
         <source>label.calendar.visibleHours.end</source>
         <target>Konec viditelného časového období</target>
       </trans-unit>
-      <trans-unit id="label.theme.branding.company">
+      <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
         <source>label.theme.branding.company</source>
         <target>Firma</target>
       </trans-unit>
-      <trans-unit id="invoice">
+      <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target>Faktury</target>
       </trans-unit>
-      <trans-unit id="off">
+      <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
         <target>Konec</target>
       </trans-unit>
-      <trans-unit id="increment_rounding">
+      <trans-unit id="9C1qkmD" resname="increment_rounding">
         <source>increment_rounding</source>
         <target>Použít nastavenou hodnotu pravidla zaokrouhlování</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.time_increment">
+      <trans-unit id="x3AfnWn" resname="label.timesheet.time_increment">
         <source>label.timesheet.time_increment</source>
         <target>Výběr minut pro Od &amp; Do</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.duration_increment">
+      <trans-unit id="40i4Xlr" resname="label.timesheet.duration_increment">
         <source>label.timesheet.duration_increment</source>
         <target>Výběr minut pro trvání</target>
       </trans-unit>
-      <trans-unit id="first_weekday">
+      <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>
         <target>První den v týdnu</target>
       </trans-unit>
-      <trans-unit id="label.invoice.number_format">
+      <trans-unit id="HrEBLUr" resname="label.invoice.number_format">
         <source>label.invoice.number_format</source>
         <target>Formát čísla faktur</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
+      <trans-unit id="cRbnwyP" resname="label.simple_form">
         <source>label.simple_form</source>
         <target>Jednoduché hledání</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.default_begin">
+      <trans-unit id="DY_cM92" resname="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
         <target>Výchozí čas začátku (není použito ve všech módech sledování času)</target>
       </trans-unit>
-      <trans-unit id="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor">
         <source>Floor</source>
         <target>Podlaha: začátek, konec a trvání budou zaokrouhleny dolů</target>
       </trans-unit>
-      <trans-unit id="Default">
+      <trans-unit id="IbERy.5" resname="Default">
         <source>Default</source>
         <target>Standardní: začátek bude zaokrouhlen dolů, konec a trvání nahoru</target>
       </trans-unit>
-      <trans-unit id="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest">
         <source>Closest</source>
         <target>Nejbližší: matematické zaokrouhlování k nejbližší hodnotě</target>
       </trans-unit>
-      <trans-unit id="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil">
         <source>Ceil</source>
         <target>Strop: začátek, konec a trvání budou zaokrouhleny nahoru</target>
       </trans-unit>
-      <trans-unit id="Sunday">
+      <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>
         <target>Neděle</target>
       </trans-unit>
-      <trans-unit id="Saturday">
+      <trans-unit id="2_Ncc2P" resname="Saturday">
         <source>Saturday</source>
         <target>Sobota</target>
       </trans-unit>
-      <trans-unit id="Friday">
+      <trans-unit id="4h8.Nyp" resname="Friday">
         <source>Friday</source>
         <target>Pátek</target>
       </trans-unit>
-      <trans-unit id="Thursday">
+      <trans-unit id=".CZiBi." resname="Thursday">
         <source>Thursday</source>
         <target>Čtvrtek</target>
       </trans-unit>
-      <trans-unit id="Wednesday">
+      <trans-unit id="wKbMgpz" resname="Wednesday">
         <source>Wednesday</source>
         <target>Středa</target>
       </trans-unit>
-      <trans-unit id="Tuesday">
+      <trans-unit id="fYrx3hJ" resname="Tuesday">
         <source>Tuesday</source>
         <target>Úterý</target>
       </trans-unit>
-      <trans-unit id="Monday">
+      <trans-unit id="agDfwdy" resname="Monday">
         <source>Monday</source>
         <target>Pondělí</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.days">
+      <trans-unit id="D1NSPl5" resname="label.timesheet.rounding.default.days">
         <source>label.timesheet.rounding.default.days</source>
         <target>Dny v týdnu na které se vztahuje zaokrouhlování</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.mode">
+      <trans-unit id="aenIpDV" resname="label.timesheet.rounding.default.mode">
         <source>label.timesheet.rounding.default.mode</source>
         <target>Mód zaokrouhlování</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.duration">
+      <trans-unit id="Hnl7Jxt" resname="label.timesheet.rounding.default.duration">
         <source>label.timesheet.rounding.default.duration</source>
         <target>Zaokrouhlení trvání v minutách (0=deaktivováno)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.end">
+      <trans-unit id="Jx6bTVr" resname="label.timesheet.rounding.default.end">
         <source>label.timesheet.rounding.default.end</source>
         <target>Zaokrouhlení konce času v minutách (0=deaktivováno)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.begin">
+      <trans-unit id="0wyl4Bb" resname="label.timesheet.rounding.default.begin">
         <source>label.timesheet.rounding.default.begin</source>
         <target>Zaokrouhlení začátku času v minutách (0=deaktivováno)</target>
       </trans-unit>
-      <trans-unit id="rounding">
+      <trans-unit id="Gdb5M4w" resname="rounding">
         <source>rounding</source>
         <target>Zaokrouhlování času</target>
       </trans-unit>
-      <trans-unit id="label.theme.branding.title">
+      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
         <source>label.theme.branding.title</source>
         <target>Název prohlížeče</target>
       </trans-unit>
-      <trans-unit id="label.theme.branding.mini">
+      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
         <source>label.theme.branding.mini</source>
         <target>Mini logo (sbalený sidebar)</target>
       </trans-unit>
-      <trans-unit id="label.theme.branding.logo">
+      <trans-unit id="m5dLCoB" resname="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
         <target>Logo (adresa URL, nahradí firmu na přihlašovací stránce)</target>
       </trans-unit>
-      <trans-unit id="branding">
+      <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>
         <target>Značkování</target>
       </trans-unit>
-      <trans-unit id="label.calendar.slot_duration">
+      <trans-unit id="AlBuZhv" resname="label.calendar.slot_duration">
         <source>label.calendar.slot_duration</source>
         <target>Délka slotu pro týdenní a denní zobrazení (formát: hh:mm:ss)</target>
       </trans-unit>
-      <trans-unit id="label.theme.autocomplete_chars">
+      <trans-unit id="iZLna_g" resname="label.theme.autocomplete_chars">
         <source>label.theme.autocomplete_chars</source>
         <target>Minimální počet písmen k započetí automatického vyplňování</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.lockdown_grace_period">
+      <trans-unit id="y2i0PU3" resname="label.timesheet.rules.lockdown_grace_period">
         <source>label.timesheet.rules.lockdown_grace_period</source>
         <target>Uzamknutí konce ochranného období (PHP relativní datum konce uzamčeného období)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.lockdown_period_end">
+      <trans-unit id=".es2tyO" resname="label.timesheet.rules.lockdown_period_end">
         <source>label.timesheet.rules.lockdown_period_end</source>
         <target>Uzamknout konec období (PHP relativní datum je teď)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.lockdown_period_start">
+      <trans-unit id="yVBJECt" resname="label.timesheet.rules.lockdown_period_start">
         <source>label.timesheet.rules.lockdown_period_start</source>
         <target>Uzamknout start období (PHP relativní datum je teď)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.allow_overlapping_records">
+      <trans-unit id=".NE5mGi" resname="label.timesheet.rules.allow_overlapping_records">
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>Povolit překrývající se časové úseky</target>
       </trans-unit>
-      <trans-unit id="label.theme.tags_create">
+      <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
         <source>label.theme.tags_create</source>
         <target>Štítky: použít auto-dokončování hledání a povolit vytváření štítků</target>
       </trans-unit>

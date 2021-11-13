@@ -414,6 +414,9 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $fixture->setStartDate($dateTime->createDateTime());
         $fixture->setCallback(function (Timesheet $timesheet) {
             $timesheet->setDescription('Testing is fun!');
+            $begin = clone $timesheet->getBegin();
+            $begin->setTime(0, 0, 0);
+            $timesheet->setBegin($begin);
             $end = clone $timesheet->getBegin();
             $end->modify('+ 8 hours');
             $timesheet->setEnd($end);
@@ -445,7 +448,6 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertEquals(2016, $timesheet->getRate());
         $this->assertEquals(127, $timesheet->getHourlyRate());
         $this->assertEquals(2016, $timesheet->getFixedRate());
-        $this->assertTrue($timesheet->getDuration() == 28800 || $timesheet->getDuration() == 28860); // 1 minute rounding might be applied
         $this->assertEquals(2016, $timesheet->getRate());
     }
 }

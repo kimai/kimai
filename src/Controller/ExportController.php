@@ -134,11 +134,8 @@ class ExportController extends AbstractController
         $end = $this->getDateTimeFactory()->getEndOfMonth();
 
         $query = new ExportQuery();
-        $query->setOrder(ExportQuery::ORDER_ASC);
         $query->setBegin($begin);
         $query->setEnd($end);
-        $query->setState(ExportQuery::STATE_STOPPED);
-        $query->setExported(ExportQuery::STATE_NOT_EXPORTED);
         $query->setCurrentUser($this->getUser());
 
         return $query;
@@ -147,6 +144,7 @@ class ExportController extends AbstractController
     /**
      * @param ExportQuery $query
      * @return ExportItemInterface[]
+     * @throws TooManyItemsExportException
      */
     protected function getEntries(ExportQuery $query): array
     {

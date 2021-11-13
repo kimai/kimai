@@ -1,224 +1,212 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ko" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="title">
+      <trans-unit id="qvIyBkY" resname="title">
         <source>title</source>
         <target state="translated">설정 </target>
       </trans-unit>
-      <trans-unit id="subtitle">
-        <source>subtitle</source>
-        <target state="translated">타임 트래커의 글로벌 구성 변경</target>
-      </trans-unit>
-      <trans-unit id="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
         <target state="translated">타임시트</target>
       </trans-unit>
-      <trans-unit id="form_customer">
-        <source>form_customer</source>
-        <target state="translated">고객 생성—기본 값</target>
-      </trans-unit>
-      <trans-unit id="form_user">
-        <source>form_user</source>
-        <target state="translated">사용자—기본 값</target>
-      </trans-unit>
-      <trans-unit id="theme">
+      <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
         <target state="translated">테마</target>
       </trans-unit>
-      <trans-unit id="calendar">
+      <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target state="translated">캘린더</target>
       </trans-unit>
-      <trans-unit id="label.theme.markdown_content">
+      <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
         <source>label.theme.markdown_content</source>
         <target state="translated">설명 및 코멘트에서 마크 다운 형식화 허용</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.mode">
+      <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
         <source>label.timesheet.mode</source>
         <target state="translated">타임트래킹 모드 </target>
       </trans-unit>
-      <trans-unit id="label.timesheet.mode_default">
+      <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
         <source>label.timesheet.mode_default</source>
         <target state="translated">[초기값] 시작과 종료 시간을 편집 가능 </target>
       </trans-unit>
-      <trans-unit id="label.timesheet.mode_duration_only">
+      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
         <source>label.timesheet.mode_duration_only</source>
         <target state="translated">[지속시간] 종료시간을 지속 시간 입력 필드로 대체</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.mode_duration_fixed_begin">
+      <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target state="translated">[지속시간] 구성 가능한 고정 시작 시간. 지속된 시간만 변경할 수 있습니다</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.mode_punch">
+      <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
         <source>label.timesheet.mode_punch</source>
         <target state="translated">[시간-시계] 사용자는 기록을 시작 및 중지 할 수 있지만, 시간 또는 기간을 편집 할 수는 없음</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.allow_future_times">
+      <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
         <source>label.timesheet.rules.allow_future_times</source>
         <target state="translated">향후 시간 입력 허용</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.active_entries.hard_limit">
+      <trans-unit id="oIueXaX" resname="label.timesheet.active_entries.hard_limit">
         <source>label.timesheet.active_entries.hard_limit</source>
         <target state="translated">허용되는 동시 실행 시간 항목 수</target>
       </trans-unit>
-      <trans-unit id="label.calendar.week_numbers">
+      <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>
         <target state="translated">주수 디스프레이</target>
       </trans-unit>
-      <trans-unit id="label.calendar.weekends">
+      <trans-unit id="NULxaYp" resname="label.calendar.weekends">
         <source>label.calendar.weekends</source>
         <target state="translated">주간 디스플레이</target>
       </trans-unit>
-      <trans-unit id="label.calendar.businessHours.begin">
+      <trans-unit id="AMCb58W" resname="label.calendar.businessHours.begin">
         <source>label.calendar.businessHours.begin</source>
         <target state="translated">정상 근무 시간의 시작 (강조됨)</target>
       </trans-unit>
-      <trans-unit id="label.calendar.businessHours.end">
+      <trans-unit id="3nfAkqy" resname="label.calendar.businessHours.end">
         <source>label.calendar.businessHours.end</source>
         <target state="translated">정상 근무 시간의 종료 (강조됨)</target>
       </trans-unit>
-      <trans-unit id="label.calendar.visibleHours.begin">
+      <trans-unit id="Yl4Ztfv" resname="label.calendar.visibleHours.begin">
         <source>label.calendar.visibleHours.begin</source>
         <target state="translated">가시화 시간의 시작 범위 </target>
       </trans-unit>
-      <trans-unit id="label.calendar.visibleHours.end">
+      <trans-unit id="UJGYdCt" resname="label.calendar.visibleHours.end">
         <source>label.calendar.visibleHours.end</source>
         <target state="translated">가시화 시간의 종료 범위</target>
       </trans-unit>
-      <trans-unit id="first_weekday">
+      <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>
         <target>매주 첫날</target>
       </trans-unit>
-      <trans-unit id="label.invoice.number_format">
+      <trans-unit id="HrEBLUr" resname="label.invoice.number_format">
         <source>label.invoice.number_format</source>
         <target>인보이스 번호 포맷</target>
       </trans-unit>
-      <trans-unit id="label.simple_form">
+      <trans-unit id="cRbnwyP" resname="label.simple_form">
         <source>label.simple_form</source>
         <target>간단한 검색</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.default_begin">
+      <trans-unit id="DY_cM92" resname="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
         <target>기본 시작 시간 (모든 시간 추적 모드에서 사용되지 않음)</target>
       </trans-unit>
-      <trans-unit id="Default">
+      <trans-unit id="IbERy.5" resname="Default">
         <source>Default</source>
         <target>표준: 시작 시간은 내림, 종료 및 지속 시간은 올림</target>
       </trans-unit>
-      <trans-unit id="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest">
         <source>Closest</source>
         <target>근접값: 가장 가까운 수로 수학적인 반올림</target>
       </trans-unit>
-      <trans-unit id="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor">
         <source>Floor</source>
         <target>바닥 함수 : 시작, 종료 및 지속 시간 내림</target>
       </trans-unit>
-      <trans-unit id="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil">
         <source>Ceil</source>
         <target>천장 함수 : 시작, 종료 및 지속 시간 올림</target>
       </trans-unit>
-      <trans-unit id="Sunday">
+      <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>
         <target>일요일</target>
       </trans-unit>
-      <trans-unit id="Saturday">
+      <trans-unit id="2_Ncc2P" resname="Saturday">
         <source>Saturday</source>
         <target>토요일</target>
       </trans-unit>
-      <trans-unit id="Friday">
+      <trans-unit id="4h8.Nyp" resname="Friday">
         <source>Friday</source>
         <target>금요일</target>
       </trans-unit>
-      <trans-unit id="Thursday">
+      <trans-unit id=".CZiBi." resname="Thursday">
         <source>Thursday</source>
         <target>목요일</target>
       </trans-unit>
-      <trans-unit id="Wednesday">
+      <trans-unit id="wKbMgpz" resname="Wednesday">
         <source>Wednesday</source>
         <target>수요일</target>
       </trans-unit>
-      <trans-unit id="Tuesday">
+      <trans-unit id="fYrx3hJ" resname="Tuesday">
         <source>Tuesday</source>
         <target>화요일</target>
       </trans-unit>
-      <trans-unit id="Monday">
+      <trans-unit id="agDfwdy" resname="Monday">
         <source>Monday</source>
         <target>월요일</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.days">
+      <trans-unit id="D1NSPl5" resname="label.timesheet.rounding.default.days">
         <source>label.timesheet.rounding.default.days</source>
         <target>반올림이 적용될 요일</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.mode">
+      <trans-unit id="aenIpDV" resname="label.timesheet.rounding.default.mode">
         <source>label.timesheet.rounding.default.mode</source>
         <target>반올림 모드</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.duration">
+      <trans-unit id="Hnl7Jxt" resname="label.timesheet.rounding.default.duration">
         <source>label.timesheet.rounding.default.duration</source>
         <target>지속 시간의 분 단위 반올림 (0 = 비활성화)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.end">
+      <trans-unit id="Jx6bTVr" resname="label.timesheet.rounding.default.end">
         <source>label.timesheet.rounding.default.end</source>
         <target>종료 시간의 분 단위 반올림 (0 = 비활성화)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rounding.default.begin">
+      <trans-unit id="0wyl4Bb" resname="label.timesheet.rounding.default.begin">
         <source>label.timesheet.rounding.default.begin</source>
         <target>시작 시간의 분 단위 반올림 (0 = 비활성화)</target>
       </trans-unit>
-      <trans-unit id="rounding">
+      <trans-unit id="Gdb5M4w" resname="rounding">
         <source>rounding</source>
         <target>시간 반올림</target>
       </trans-unit>
-      <trans-unit id="label.theme.branding.title">
+      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
         <source>label.theme.branding.title</source>
         <target>브라우저 제목</target>
       </trans-unit>
-      <trans-unit id="label.theme.branding.mini">
+      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
         <source>label.theme.branding.mini</source>
         <target>미니 로고(접힌 사이드바)</target>
       </trans-unit>
-      <trans-unit id="label.theme.branding.company">
+      <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
         <source>label.theme.branding.company</source>
         <target>회사</target>
       </trans-unit>
-      <trans-unit id="label.theme.branding.logo">
+      <trans-unit id="m5dLCoB" resname="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
         <target>로고 (이미지 URL, 로그인 화면에서 회사 대체)</target>
       </trans-unit>
-      <trans-unit id="branding">
+      <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>
         <target>브랜딩</target>
       </trans-unit>
-      <trans-unit id="label.calendar.slot_duration">
+      <trans-unit id="AlBuZhv" resname="label.calendar.slot_duration">
         <source>label.calendar.slot_duration</source>
         <target>주간 - 일간 보기를 위한 슬롯 기간 (format: hh : mm : ss)</target>
       </trans-unit>
-      <trans-unit id="label.theme.autocomplete_chars">
+      <trans-unit id="iZLna_g" resname="label.theme.autocomplete_chars">
         <source>label.theme.autocomplete_chars</source>
         <target>자동 완성을 시작할 최소 문자 수</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.lockdown_grace_period">
+      <trans-unit id="y2i0PU3" resname="label.timesheet.rules.lockdown_grace_period">
         <source>label.timesheet.rules.lockdown_grace_period</source>
         <target>잠금 유예 기간 종료 (잠금 기간 종료까지의 PHP 상대 날짜)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.lockdown_period_end">
+      <trans-unit id=".es2tyO" resname="label.timesheet.rules.lockdown_period_end">
         <source>label.timesheet.rules.lockdown_period_end</source>
         <target>잠금 기간 종료 (현재까지의 PHP 상대 날짜)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.lockdown_period_start">
+      <trans-unit id="yVBJECt" resname="label.timesheet.rules.lockdown_period_start">
         <source>label.timesheet.rules.lockdown_period_start</source>
         <target>잠금 기간 시작 (현재까지의 PHP 상대 날짜)</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.rules.allow_overlapping_records">
+      <trans-unit id=".NE5mGi" resname="label.timesheet.rules.allow_overlapping_records">
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>겹치는 시간 항목 허용</target>
       </trans-unit>
-      <trans-unit id="label.theme.tags_create">
+      <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
         <source>label.theme.tags_create</source>
         <target>태그: 자동 완성 검색 사용 및 태그 생성 허용</target>
       </trans-unit>
-      <trans-unit id="invoice">
+      <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target>인보이스</target>
       </trans-unit>

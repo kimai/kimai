@@ -14,6 +14,7 @@ use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityFormTypeQuery;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -78,10 +79,30 @@ class ActivityType extends AbstractType
             'choice_label' => [$this, 'choiceLabel'],
             'group_by' => [$this, 'groupBy'],
             'choice_attr' => [$this, 'choiceAttr'],
-            'query_builder' => function (ActivityRepository $repo) {
-                return $repo->getQueryBuilderForFormType(new ActivityFormTypeQuery());
-            },
+            'query_builder_for_user' => true,
+            // @var Project|Project[]|int|int[]|null
+            'projects' => null,
+            // @var Activity|Activity[]|int|int[]|null
+            'activities' => null,
+            // @var Activity|null
+            'ignore_activity' => null,
         ]);
+
+        $resolver->setDefault('query_builder', function (Options $options) {
+            return function (ActivityRepository $repo) use ($options) {
+                $query = new ActivityFormTypeQuery($options['activities'], $options['projects']);
+
+                if (true === $options['query_builder_for_user']) {
+                    $query->setUser($options['user']);
+                }
+
+                if (null !== $options['ignore_activity']) {
+                    $query->setActivityToIgnore($options['ignore_activity']);
+                }
+
+                return $repo->getQueryBuilderForFormType($query);
+            };
+        });
     }
 
     /**

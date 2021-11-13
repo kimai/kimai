@@ -177,6 +177,15 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         return $this->get('session')->get($name);
     }
 
+    private function removeLastSearch(BaseQuery $query): void
+    {
+        $name = 'search_' . $this->getSearchName($query);
+
+        if ($this->get('session')->has($name)) {
+            $this->get('session')->remove($name);
+        }
+    }
+
     private function getSearchName(BaseQuery $query): string
     {
         return substr($query->getName(), 0, 50);
@@ -196,6 +205,13 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         $data = $form->getData();
         if (!($data instanceof BaseQuery)) {
             throw new \InvalidArgumentException('handleSearchForm() requires an instanceof BaseQuery as form data');
+        }
+
+        if ($request->query->has('resetSearchFilter')) {
+            $data->resetFilter();
+            $this->removeLastSearch($data);
+
+            return true;
         }
 
         $submitData = $request->query->all();
@@ -228,6 +244,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
                 $submitData = array_merge($sessionSearch, $submitData);
             } elseif ($bookmark !== null && !$request->query->has('setDefaultQuery')) {
                 $submitData = array_merge($bookmark->getContent(), $submitData);
+                $data->flagAsBookmarkSearch();
             }
         }
 
@@ -259,7 +276,9 @@ abstract class AbstractController extends BaseAbstractController implements Serv
             }
         }
 
-        $this->get('session')->set('search_' . $searchName, $params);
+        if ($request->query->has('performSearch')) {
+            $this->get('session')->set('search_' . $searchName, $params);
+        }
 
         // filter stuff, that does not belong in a bookmark
         $filter = ['page'];
@@ -270,6 +289,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         }
 
         if ($request->query->has('setDefaultQuery')) {
+            $this->removeLastSearch($data);
             if ($bookmark === null) {
                 $bookmark = new Bookmark();
                 $bookmark->setType(Bookmark::SEARCH_DEFAULT);

@@ -33,6 +33,8 @@ final class Version20210802174319 extends AbstractMigration
         }
 
         $fetch->free();
+
+        $this->preventEmptyMigrationWarning();
     }
 
     public function down(Schema $schema): void
@@ -48,5 +50,7 @@ final class Version20210802174319 extends AbstractMigration
         $teams = $schema->getTable('kimai2_teams');
         $teams->getColumn('teamlead_id')->setNotnull(true);
         $teams->addForeignKeyConstraint('kimai2_users', ['teamlead_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_3BEDDC7F8F7DE5D7');
+
+        $this->preventEmptyMigrationWarning();
     }
 }

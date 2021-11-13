@@ -165,6 +165,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $team->addProject($project);
         $team->addUser($this->getUserByRole(User::ROLE_TEAMLEAD));
         $em->persist($team);
+        $em->flush();
 
         $this->assertAccessIsGranted($client, '/api/customers/1');
         $result = json_decode($client->getResponse()->getContent(), true);

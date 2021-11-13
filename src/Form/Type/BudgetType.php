@@ -18,6 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class BudgetType extends AbstractType
 {
+    public const TYPE_MONTH = 'month';
+
     /**
      * {@inheritdoc}
      */
@@ -25,9 +27,12 @@ class BudgetType extends AbstractType
     {
         $resolver->setDefaults([
             'label' => 'label.budgetType',
+            // not yet translated in enough languages
+            //'placeholder' => 'label.budgetType_full',
             'required' => false,
+            'search' => false,
             'choices' => [
-                'label.budgetType_month' => 'month',
+                'label.budgetType_month' => self::TYPE_MONTH,
             ],
         ]);
     }

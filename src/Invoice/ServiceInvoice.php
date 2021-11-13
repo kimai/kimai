@@ -239,10 +239,6 @@ final class ServiceInvoice
 
     public function changeInvoiceStatus(Invoice $invoice, string $status)
     {
-        if (!\in_array($status, [Invoice::STATUS_NEW, Invoice::STATUS_PENDING, Invoice::STATUS_PAID])) {
-            throw new \InvalidArgumentException('Unknown invoice status');
-        }
-
         switch ($status) {
             case Invoice::STATUS_NEW:
                 $invoice->setIsNew();
@@ -255,6 +251,13 @@ final class ServiceInvoice
             case Invoice::STATUS_PAID:
                 $invoice->setIsPaid();
                 break;
+
+            case Invoice::STATUS_CANCELED:
+                $invoice->setIsCanceled();
+                break;
+
+            default:
+                throw new \InvalidArgumentException('Unknown invoice status');
         }
 
         $this->invoiceRepository->saveInvoice($invoice);
@@ -566,10 +569,6 @@ final class ServiceInvoice
         });
 
         foreach ($customerEntries as $id => $settings) {
-            if (empty($settings['entries'])) {
-                continue;
-            }
-
             $customerQuery = clone $query;
             $customerQuery->setCustomers([$settings['customer']]);
             $model = $this->createModelWithoutEntries($customerQuery);

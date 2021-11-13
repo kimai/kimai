@@ -6,7 +6,7 @@
 
 {% block page_title %}{{ 'teams.title'|trans({}, 'teams') }}{% endblock %}
 {% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
-{% block page_actions %}{{ actions.teams('index') }}{% endblock %}
+{% block page_actions %}{{ actions.teams('index', query) }}{% endblock %}
 
 {% block main %}
 

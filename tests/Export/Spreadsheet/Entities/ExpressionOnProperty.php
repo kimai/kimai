@@ -15,6 +15,7 @@ class ExpressionOnProperty
 {
     /**
      * @Exporter\Expose("accessor", label="label.accessor", exp="object.foo")
+     * @phpstan-ignore-next-line
      */
     private $foo;
 }

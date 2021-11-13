@@ -23,7 +23,6 @@ use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
-use App\Timesheet\TrackingModeService;
 use App\Utils\SearchTerm;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -67,10 +66,6 @@ class TimesheetController extends BaseApiController
      * @var TagRepository
      */
     private $tagRepository;
-    /**
-     * @var TrackingModeService
-     */
-    private $trackingModeService;
     /**
      * @var EventDispatcherInterface
      */
@@ -152,9 +147,7 @@ class TimesheetController extends BaseApiController
             if (!\is_array($customers)) {
                 $customers = explode(',', $customers);
             }
-            if (!empty($customers)) {
-                $query->setCustomers($customers);
-            }
+            $query->setCustomers($customers);
         }
 
         if (!empty($customer = $paramFetcher->get('customer'))) {
@@ -165,9 +158,7 @@ class TimesheetController extends BaseApiController
             if (!\is_array($projects)) {
                 $projects = explode(',', $projects);
             }
-            if (!empty($projects)) {
-                $query->setProjects($projects);
-            }
+            $query->setProjects($projects);
         }
 
         if (!empty($project = $paramFetcher->get('project'))) {
@@ -178,9 +169,7 @@ class TimesheetController extends BaseApiController
             if (!\is_array($activities)) {
                 $activities = explode(',', $activities);
             }
-            if (!empty($activities)) {
-                $query->setActivities($activities);
-            }
+            $query->setActivities($activities);
         }
 
         if (!empty($activity = $paramFetcher->get('activity'))) {
@@ -590,7 +579,7 @@ class TimesheetController extends BaseApiController
      *      required=true,
      * )
      *
-     * @Rest\RequestParam(name="copy", requirements="all|tags|rates|meta|description", strict=true, nullable=true, description="Whether data should be copied to the new entry. Allowed values: all, tags, rates, description, meta (default: nothing is copied)")
+     * @Rest\RequestParam(name="copy", requirements="all|tags|rates|meta|description", strict=true, nullable=true, description="Whether data should be copied to the new entry. Allowed values: all, tags (deprecated), rates (deprecated), description (deprecated), meta (deprecated) (default: nothing is copied)")
      * @Rest\RequestParam(name="begin", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Changes the restart date to the given one (default: now)")
      *
      * @ApiSecurity(name="apiUser")
@@ -620,26 +609,24 @@ class TimesheetController extends BaseApiController
         ;
 
         if (null !== ($copy = $paramFetcher->get('copy'))) {
-            if (\in_array($copy, ['rates', 'all'])) {
-                $copyTimesheet->setHourlyRate($timesheet->getHourlyRate());
-                $copyTimesheet->setFixedRate($timesheet->getFixedRate());
+            if ($copy !== 'all') {
+                @trigger_error('Setting the "copy" attribute in "restart timesheet" API to something else then "all" is deprecated', E_USER_DEPRECATED);
             }
 
-            if (\in_array($copy, ['description', 'all'])) {
-                $copyTimesheet->setDescription($timesheet->getDescription());
+            $copyTimesheet
+                ->setHourlyRate($timesheet->getHourlyRate())
+                ->setFixedRate($timesheet->getFixedRate())
+                ->setDescription($timesheet->getDescription())
+                ->setBillable($timesheet->isBillable())
+                ;
+
+            foreach ($timesheet->getTags() as $tag) {
+                $copyTimesheet->addTag($tag);
             }
 
-            if (\in_array($copy, ['tags', 'all'])) {
-                foreach ($timesheet->getTags() as $tag) {
-                    $copyTimesheet->addTag($tag);
-                }
-            }
-
-            if (\in_array($copy, ['meta', 'all'])) {
-                foreach ($timesheet->getMetaFields() as $metaField) {
-                    $metaNew = clone $metaField;
-                    $copyTimesheet->setMetaField($metaNew);
-                }
+            foreach ($timesheet->getMetaFields() as $metaField) {
+                $metaNew = clone $metaField;
+                $copyTimesheet->setMetaField($metaNew);
             }
         }
 

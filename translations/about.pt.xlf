@@ -1,38 +1,38 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="pt" datatype="plaintext" original="about.en.xlf">
     <body>
-      <trans-unit id="about.title">
+      <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
         <target>Sobre o Kimai</target>
       </trans-unit>
-      <trans-unit id="support">
+      <trans-unit id="oYYDCG5" resname="support">
         <source>support</source>
         <target>Suporte</target>
       </trans-unit>
-      <trans-unit id="website">
+      <trans-unit id="dHqPOYO" resname="website">
         <source>website</source>
-        <target>Homepage</target>
+        <target>Sítio web</target>
       </trans-unit>
-      <trans-unit id="help">
+      <trans-unit id="EGpYQvx" resname="help">
         <source>help</source>
         <target>Ajuda</target>
       </trans-unit>
-      <trans-unit id="donate">
+      <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
-        <target>Doe para o futuro do Kimai</target>
+        <target>Faça um donativo para o futuro do Kimai</target>
       </trans-unit>
-      <trans-unit id="published_under">
+      <trans-unit id="DwbowBh" resname="published_under">
         <source>published_under</source>
-        <target>%kimai% é publicado sobre</target>
+        <target>%kimai% é publicado sob</target>
       </trans-unit>
-      <trans-unit id="special_thanks">
+      <trans-unit id="A0nWoXZ" resname="special_thanks">
         <source>special_thanks</source>
-        <target>Agradecimentos especiais vão para …</target>
+        <target>Agradecimentos especiais aos…</target>
       </trans-unit>
-      <trans-unit id="library_authors">
+      <trans-unit id="L7cff3Q" resname="library_authors">
         <source>library_authors</source>
-        <target>… os autores das seguintes bibliotecas de software, Kimai não seria possível sem você 👍</target>
+        <target>…os autores das seguintes bibliotecas de software, o Kimai não seria possível sem vocês 👍</target>
       </trans-unit>
     </body>
   </file>

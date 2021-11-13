@@ -23,15 +23,15 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
     ];
 
     /**
-     * @var array
+     * @var array<Customer|int>
      */
     private $customers = [];
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     private $projectStart;
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     private $projectEnd;
 
@@ -39,6 +39,10 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
     {
         $this->setDefaults([
             'orderBy' => 'name',
+            'customers' => [],
+            'projectStart' => null,
+            'projectEnd' => null,
+            'visibility' => VisibilityInterface::SHOW_VISIBLE,
         ]);
     }
 

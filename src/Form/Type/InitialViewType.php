@@ -29,6 +29,7 @@ class InitialViewType extends AbstractType
         'dashboard' => 'menu.homepage',
         'timesheet' => 'menu.timesheet',
         'calendar' => 'calendar.title',
+        'quick_entry' => 'quick_entry.title',
         'my_profile' => 'profile.title',
         'admin_timesheet' => 'menu.admin_timesheet',
         'invoice' => 'menu.invoice',
@@ -49,6 +50,7 @@ class InitialViewType extends AbstractType
         'admin_customer' => 'view_customer',
         'admin_project' => 'view_project',
         'admin_activity' => 'view_activity',
+        'quick_entry' => 'view_own_timesheet',
     ];
 
     private $voter;

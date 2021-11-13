@@ -21,7 +21,7 @@ final class Version20210717211144 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Adds the account column to the user table';
     }
 
     public function up(Schema $schema): void

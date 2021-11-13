@@ -123,9 +123,7 @@ class ActivityController extends BaseApiController
             if (!\is_array($projects)) {
                 $projects = explode(',', $projects);
             }
-            if (!empty($projects)) {
-                $query->setProjects($projects);
-            }
+            $query->setProjects($projects);
         }
 
         if (!empty($project = $paramFetcher->get('project'))) {

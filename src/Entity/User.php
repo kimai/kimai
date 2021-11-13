@@ -173,6 +173,8 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     private $preferences;
     /**
+     * List of all team memberships.
+     *
      * @var TeamMember[]|ArrayCollection<TeamMember>
      *
      * @Serializer\Expose()
@@ -273,6 +275,8 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     private $passwordRequestedAt;
     /**
+     * List of all role names
+     *
      * @Serializer\Expose()
      * @Serializer\Groups({"User_Entity"})
      * @Serializer\Type("array<string>")
@@ -411,9 +415,9 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     public function getPreference(string $name): ?UserPreference
     {
-        // this code will be triggered, if a currently logged-in user will be deleted and the refreshed from the session
+        // this code will be triggered, if a currently logged-in user will be deleted and then refreshed from the session
         // via one of the UserProvider - e.g. see LdapUserProvider::refreshUser() which calls $user->getPreferenceValue()
-        if (empty($this->preferences)) {
+        if ($this->preferences === null) {
             return null;
         }
 
@@ -625,10 +629,12 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
+     * List of all teams, this user is part of
+     *
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("teams"),
      * @Serializer\Groups({"User_Entity"})
-     * @SWG\Property(ref="#/definitions/TeamEntity")
+     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Team"))
      *
      * @return Team[]
      */

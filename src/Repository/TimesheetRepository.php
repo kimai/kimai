@@ -245,7 +245,7 @@ class TimesheetRepository extends EntityRepository
      * @return int|mixed
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getStatistic(string $type, ?DateTime $begin, ?DateTime $end, ?User $user)
+    public function getStatistic(string $type, ?DateTime $begin, ?DateTime $end, ?User $user, ?bool $billable = null)
     {
         switch ($type) {
             case self::STATS_QUERY_ACTIVE:
@@ -262,6 +262,7 @@ class TimesheetRepository extends EntityRepository
                 break;
             case self::STATS_QUERY_RATE:
                 $what = 'COALESCE(SUM(t.rate), 0)';
+                $billable = true;
                 break;
             case self::STATS_QUERY_USER:
                 $what = 'COUNT(DISTINCT(t.user))';
@@ -273,7 +274,7 @@ class TimesheetRepository extends EntityRepository
                 throw new InvalidArgumentException('Invalid query type: ' . $type);
         }
 
-        return $this->queryTimeRange($what, $begin, $end, $user);
+        return $this->queryTimeRange($what, $begin, $end, $user, $billable);
     }
 
     /**
@@ -281,10 +282,11 @@ class TimesheetRepository extends EntityRepository
      * @param DateTime|null $begin
      * @param DateTime|null $end
      * @param User|null $user
+     * @param bool|null $billable
      * @return int|mixed
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    protected function queryTimeRange($select, ?DateTime $begin, ?DateTime $end, ?User $user)
+    protected function queryTimeRange($select, ?DateTime $begin, ?DateTime $end, ?User $user, ?bool $billable = null)
     {
         $selects = $select;
         if (!\is_array($select)) {
@@ -315,6 +317,11 @@ class TimesheetRepository extends EntityRepository
                 ->setParameter('user', $user);
         }
 
+        if (null !== $billable) {
+            $qb->andWhere('t.billable = :billable')
+                ->setParameter('billable', $billable);
+        }
+
         if (\is_array($select)) {
             return $qb->getQuery()->getOneOrNullResult();
         }
@@ -331,11 +338,20 @@ class TimesheetRepository extends EntityRepository
      */
     public function getUserStatistics(User $user, bool $bcSafe = true): TimesheetStatistic
     {
+        $stats = new TimesheetStatistic();
+
         $allTimeData = $this->queryTimeRange([
             'COALESCE(SUM(t.duration), 0) as duration',
             'COALESCE(SUM(t.rate), 0) as rate',
             'COUNT(t.id) as amount'
         ], null, null, $user);
+
+        $stats->setAmountTotal($allTimeData['rate']);
+        $stats->setDurationTotal($allTimeData['duration']);
+        $stats->setRecordsTotal($allTimeData['amount']);
+
+        $billableAllTime = $this->getStatistic(self::STATS_QUERY_RATE, null, null, $user, true);
+        $stats->setRateTotalBillable($billableAllTime);
 
         $timezone = new \DateTimeZone($user->getTimezone());
         $begin = new DateTime('first day of this month 00:00:00', $timezone);
@@ -343,19 +359,23 @@ class TimesheetRepository extends EntityRepository
 
         $monthData = $this->queryTimeRange(
             [
-            'COALESCE(SUM(t.rate), 0) as rate',
-            'COALESCE(SUM(t.duration), 0) as duration'
+                'COALESCE(SUM(t.rate), 0) as rate',
+                'COALESCE(SUM(t.duration), 0) as duration'
             ],
             $begin,
             $end,
             $user
         );
 
-        $stats = new TimesheetStatistic();
+        $stats->setAmountThisMonth($monthData['rate']);
+        $stats->setDurationThisMonth($monthData['duration']);
+
+        $billableMonth = $this->getStatistic(self::STATS_QUERY_RATE, $begin, $end, $user, true);
+        $stats->setRateThisMonthBillable($billableMonth);
 
         if ($bcSafe) {
             $firstEntry = $this->getEntityManager()
-                ->createQuery('SELECT MIN(t.begin) FROM ' . Timesheet::class . ' t WHERE t.user = :user AND 1=12')
+                ->createQuery('SELECT MIN(t.begin) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
                 ->setParameter('user', $user)
                 ->getSingleScalarResult();
 
@@ -371,12 +391,6 @@ class TimesheetRepository extends EntityRepository
                 $stats->setFirstEntry(new DateTime('now', $timezone));
             }
         }
-
-        $stats->setAmountTotal($allTimeData['rate']);
-        $stats->setDurationTotal($allTimeData['duration']);
-        $stats->setAmountThisMonth($monthData['rate']);
-        $stats->setDurationThisMonth($monthData['duration']);
-        $stats->setRecordsTotal($allTimeData['amount']);
 
         return $stats;
     }
@@ -1038,7 +1052,7 @@ class TimesheetRepository extends EntityRepository
      * @param User|null $user
      * @param DateTime|null $startFrom
      * @param int $limit
-     * @return array|mixed
+     * @return Timesheet[]
      * @throws \Doctrine\ORM\Query\QueryException
      */
     public function getRecentActivities(User $user = null, DateTime $startFrom = null, int $limit = 10)

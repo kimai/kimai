@@ -98,8 +98,13 @@ class TimesheetQueryTest extends BaseQueryTest
         self::assertFalse($sut->isRunning());
         self::assertFalse($sut->isStopped());
 
+        $this->assertStateWith($sut, TimesheetQuery::STATE_ALL);
+    }
+
+    protected function assertStateWith(TimesheetQuery $sut, int $defaultState)
+    {
         self::assertInstanceOf(TimesheetQuery::class, $sut->setState(PHP_INT_MAX));
-        self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getState());
+        self::assertEquals($defaultState, $sut->getState());
 
         $sut->setState(TimesheetQuery::STATE_STOPPED);
         self::assertEquals(TimesheetQuery::STATE_STOPPED, $sut->getState());
@@ -121,8 +126,13 @@ class TimesheetQueryTest extends BaseQueryTest
         self::assertFalse($sut->isExported());
         self::assertFalse($sut->isNotExported());
 
+        $this->assertExportedWith($sut, TimesheetQuery::STATE_ALL);
+    }
+
+    protected function assertExportedWith(TimesheetQuery $sut, int $defaultState)
+    {
         self::assertInstanceOf(TimesheetQuery::class, $sut->setExported(PHP_INT_MAX));
-        self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
+        self::assertEquals($defaultState, $sut->getExported());
 
         $sut->setExported(TimesheetQuery::STATE_EXPORTED);
         self::assertEquals(TimesheetQuery::STATE_EXPORTED, $sut->getExported());

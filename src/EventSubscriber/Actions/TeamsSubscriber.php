@@ -10,6 +10,7 @@
 namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
+use App\Repository\Query\TeamQuery;
 
 class TeamsSubscriber extends AbstractActionsSubscriber
 {
@@ -20,7 +21,12 @@ class TeamsSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        $event->addSearchToggle();
+        $payload = $event->getPayload();
+
+        /** @var TeamQuery $query */
+        $query = $payload['query'];
+
+        $event->addSearchToggle($query);
 
         if ($this->isGranted('create_team')) {
             $event->addCreate($this->path('admin_team_create'), false);

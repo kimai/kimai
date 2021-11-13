@@ -30,7 +30,6 @@ use App\Form\Type\CustomerType;
 use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
-use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\TeamRepository;
@@ -384,14 +383,8 @@ final class CustomerController extends AbstractController
                 ]
             ])
             ->add('customer', CustomerType::class, [
-                'label' => 'label.customer',
-                'query_builder' => function (CustomerRepository $repo) use ($customer) {
-                    $query = new CustomerFormTypeQuery();
-                    $query->setCustomerToIgnore($customer);
-                    $query->setUser($this->getUser());
-
-                    return $repo->getQueryBuilderForFormType($query);
-                },
+                'query_builder_for_user' => true,
+                'ignore_customer' => $customer,
                 'required' => false,
             ])
             ->setAction($this->generateUrl('admin_customer_delete', ['id' => $customer->getId()]))

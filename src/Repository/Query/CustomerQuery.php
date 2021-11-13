@@ -25,6 +25,7 @@ class CustomerQuery extends BaseQuery implements VisibilityInterface
     {
         $this->setDefaults([
             'orderBy' => 'name',
+            'visibility' => VisibilityInterface::SHOW_VISIBLE,
         ]);
     }
 }

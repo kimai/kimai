@@ -43,6 +43,11 @@
     <div class="btn-group">
         <button type="submit" name="performSearch" value="performSearch" class="btn btn-primary pull-left" data-type="submit">{{ 'search'|trans }}</button>
     </div>
+    {% if form.vars.data.countFilter() > 0 and not form.vars.data.isBookmarkSearch() %}
+        <div class="btn-group">
+            <button type="submit" id="resetSearchFilter" name="resetSearchFilter" class="btn btn-warning" title="{{ 'action.reset'|trans }}">{{ 'action.reset'|trans }}</button>
+        </div>
+    {% endif %}
     <div class="btn-group">
         {% if form.vars.data.bookmark %}
             <button type="submit" id="setDefaultQuery" name="setDefaultQuery" class="btn btn-default" title="{{ 'label.set_as_default'|trans }}"><i class="{{ 'bookmarked'|icon }}"></i></button>

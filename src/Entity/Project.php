@@ -48,7 +48,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  *
- * @Exporter\Order({"id", "name", "customer", "orderNumber", "orderDate", "start", "end", "budget", "timeBudget", "color", "visible", "teams", "comment"})
+ * @Exporter\Order({"id", "name", "customer", "orderNumber", "orderDate", "start", "end", "budget", "timeBudget", "budgetType", "color", "visible", "teams", "comment"})
  * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
  * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams().toArray()", type="array")
  */
@@ -111,8 +111,8 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * @Exporter\Expose(label="label.orderNumber")
      *
-     * @ORM\Column(name="order_number", type="text", length=20, nullable=true)
-     * @Assert\Length(max=20)
+     * @ORM\Column(name="order_number", type="text", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
     private $orderNumber;
     /**
@@ -472,6 +472,9 @@ class Project implements EntityWithMetaFields, EntityWithBudget
             return false;
         }
         if ($this->getCustomer() !== null && !$this->getCustomer()->isVisible()) {
+            return false;
+        }
+        if ($this->getStart() !== null && $dateTime < $this->getStart()) {
             return false;
         }
         if ($this->getEnd() !== null && $dateTime > $this->getEnd()) {
