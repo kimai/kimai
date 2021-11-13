@@ -1271,6 +1271,10 @@
         <source>label.includeBudgetType_full</source>
         <target>Mostra le voci con «ciclo di vita» bilancio</target>
       </trans-unit>
+      <trans-unit id="Z1s7pAw" resname="status.canceled">
+        <source>status.canceled</source>
+        <target>Annullata</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
