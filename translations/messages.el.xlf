@@ -181,7 +181,7 @@
       </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
-        <target>Δελτία απασχόλησης</target>
+        <target>Δελτία ωρών</target>
       </trans-unit>
       <trans-unit id="Y_jAD36" resname="menu.admin_customer">
         <source>menu.admin_customer</source>
@@ -189,7 +189,7 @@
       </trans-unit>
       <trans-unit id="oDLp9t3" resname="menu.admin_project">
         <source>menu.admin_project</source>
-        <target>Εργασίες</target>
+        <target>Έργα</target>
       </trans-unit>
       <trans-unit id="wriHFwl" resname="menu.admin_activity">
         <source>menu.admin_activity</source>
@@ -499,7 +499,7 @@
       </trans-unit>
       <trans-unit id="BxkmaKz" resname="label.appendTags">
         <source>label.appendTags</source>
-        <target>Προσθήκη ετικετών</target>
+        <target>Προσάρτηση ετικετών</target>
       </trans-unit>
       <!--
               User profile
@@ -601,14 +601,14 @@
             -->
       <trans-unit id="bSDjzZL" resname="admin_timesheet.title">
         <source>admin_timesheet.title</source>
-        <target>Δελτία απασχόλησης</target>
+        <target>Δελτία ωρών</target>
       </trans-unit>
       <!--
               Admin: Projects
             -->
       <trans-unit id="DFjFRGe" resname="admin_project.title">
         <source>admin_project.title</source>
-        <target>Εργασίες</target>
+        <target>Έργα</target>
       </trans-unit>
       <trans-unit id="yLOqEX_" resname="label.project_start">
         <source>label.project_start</source>
@@ -854,7 +854,7 @@
       </trans-unit>
       <trans-unit id="67uSaR3" resname="stats.projectTotal">
         <source>stats.projectTotal</source>
-        <target>Εργασίες</target>
+        <target>Έργα</target>
       </trans-unit>
       <trans-unit id="tnD6aPj" resname="stats.customerTotal">
         <source>stats.customerTotal</source>
