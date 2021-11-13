@@ -1268,6 +1268,10 @@
         <source>quick_entry.title</source>
         <target>Εβδομαδιαίες ώρες εργασίας</target>
       </trans-unit>
+      <trans-unit id="Z1s7pAw" resname="status.canceled">
+        <source>status.canceled</source>
+        <target>Ακυρώθηκε</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
