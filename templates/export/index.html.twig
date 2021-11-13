@@ -16,7 +16,12 @@
 } %}
 
 {% set tableName = 'export' %}
-{% set showToggleButton = preview_show and form.exported.vars.value != constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') and entries is not empty %}
+{% set showMarkAsExportedButton = false %}
+{% set showToggleButton = false %}
+{% if entries is not empty and is_granted('edit_export_other_timesheet') %}
+    {% set showMarkAsExportedButton = form.exported.vars.value != constant('App\\Repository\\Query\\TimesheetQuery::STATE_EXPORTED') %}
+    {% set showToggleButton = preview_show and form.exported.vars.value != constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') %}
+{% endif %}
 
 {% block page_title %}{{ 'export.title'|trans }}{% endblock %}
 {% block page_actions %}
@@ -81,12 +86,14 @@
                         {% set group = group|merge([button]) %}
                         {% set buttons = buttons|merge({(title): group}) %}
                     {% endfor %}
+                    {% if showMarkAsExportedButton %}
                     <div class="d-flex">
                         <div class="form-check">
                             <input type="checkbox" id="markAsExportedCheck" name="markAsExportedCheck" class="form-check-input" value="1" {% if form.markAsExported.vars.value == '1' %} checked="checked"{% endif %}>
                             <label class="form-check-label" for="markAsExportedCheck">{{ 'label.mark_as_exported'|trans }}</label>
                         </div>
                     </div>
+                    {% endif %}
                     <div class="d-flex">
                         <div class="btn-group me-auto dropup" id="export-buttons" role="group">
                             {% for group in buttons %}
@@ -253,7 +260,7 @@
                     const row = node.closest('tr');
                     row.remove();
                     const list = table.querySelectorAll('tbody tr');
-                    if(list.length === 0) {
+                    if (list.length === 0) {
                         document.querySelector('form#export-form button.performSearch').click();
                     }
                 }
@@ -272,7 +279,6 @@
 
                 {# Toggle the form, because by default it triggers the search #}
                 if (node.matches('#export-buttons .startExportBtn')) {
-                    document.getElementById('markAsExported').value = document.getElementById('markAsExportedCheck').checked ? 1 : 0;
                     document.getElementById('renderer').value = node.dataset['type'];
                     const form = document.getElementById("export-form");
                     const previousAction = form.action;
@@ -288,6 +294,12 @@
                     form.action = previousAction;
                 }
             }, false);
+
+            {% if showMarkAsExportedButton %}
+                document.getElementById('markAsExportedCheck').addEventListener('change', function(event) {
+                    document.getElementById('markAsExported').value = event.target.checked ? 1 : 0;
+                });
+            {% endif %}
         });
 
         {% if showToggleButton %}

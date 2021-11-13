@@ -99,12 +99,10 @@ final class ServiceExport
     {
         $items = [];
 
-        $event = new ExportItemsQueryEvent($query);
-        $this->eventDispatcher->dispatch($event);
-        $max = $event->getExportQuery()->getMaxResults();
+        $max = $this->getMaximumResults($query);
 
         foreach ($this->repositories as $repository) {
-            $items = array_merge($items, $repository->getExportItemsForQuery($event->getExportQuery()));
+            $items = array_merge($items, $repository->getExportItemsForQuery($query));
             if ($max !== null && \count($items) > $max) {
                 throw new TooManyItemsExportException(
                     sprintf('Limit reached! Expected max. %s items but got %s', $max, \count($items))
@@ -120,5 +118,13 @@ final class ServiceExport
         foreach ($this->repositories as $repository) {
             $repository->setExported($items);
         }
+    }
+
+    public function getMaximumResults(ExportQuery $query): ?int
+    {
+        $event = new ExportItemsQueryEvent($query);
+        $this->eventDispatcher->dispatch($event);
+
+        return $event->getExportQuery()->getMaxResults();
     }
 }

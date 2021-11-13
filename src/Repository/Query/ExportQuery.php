@@ -18,7 +18,7 @@ class ExportQuery extends TimesheetQuery
     /**
      * @var bool
      */
-    private $markAsExported = false;
+    private $markAsExported = true;
 
     public function __construct()
     {

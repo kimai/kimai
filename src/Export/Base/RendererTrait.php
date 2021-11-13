@@ -17,6 +17,8 @@ use App\Repository\Query\TimesheetQuery;
 trait RendererTrait
 {
     /**
+     * FIXME use statistic events to calculate budgets and do NOT iterate all results!
+     *
      * @param ExportItemInterface[] $exportItems
      * @return array
      */

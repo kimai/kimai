@@ -28,9 +28,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ExportController extends AbstractController
 {
-    /**
-     * @var ServiceExport
-     */
     private $export;
 
     public function __construct(ServiceExport $export)
@@ -120,8 +117,8 @@ class ExportController extends AbstractController
         $entries = $this->getEntries($query);
         $response = $renderer->render($entries, $query);
 
-        // TODO check entries if user is allowed to update export state - see https://github.com/kevinpapst/kimai2/issues/1473
-        if ($query->isMarkAsExported()) {
+        // see https://github.com/kevinpapst/kimai2/issues/1473
+        if ($query->isMarkAsExported() && $this->isGranted('edit_export_other_timesheet')) {
             $this->export->setExported($entries);
         }
 

@@ -26,7 +26,7 @@ use App\Event\CustomerMetaDisplayEvent;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Export\ExportRendererInterface;
-use App\Export\RendererInterface;
+use App\Export\TimesheetExportInterface;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\LocaleFormatExtensions;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -40,7 +40,7 @@ abstract class AbstractRendererTest extends KernelTestCase
 {
     /**
      * @param string $classname
-     * @return RendererInterface
+     * @return ExportRendererInterface|TimesheetExportInterface
      */
     protected function getAbstractRenderer(string $classname)
     {
