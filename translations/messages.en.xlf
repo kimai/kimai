@@ -1283,7 +1283,7 @@
         <source>quick_entry.title</source>
         <target>Weekly working hours</target>
       </trans-unit>
-      <trans-unit id="label.hours_24">
+      <trans-unit id="61p_ckr" resname="label.hours_24">
         <source>label.hours_24</source>
         <target>24 hours</target>
       </trans-unit>
