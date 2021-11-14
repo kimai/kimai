@@ -140,6 +140,7 @@ mpdf-->
         {% set totalInternalRate = 0 %}
         {% set totalRate = 0 %}
         {% for id, summary in summaries %}
+            <!-- CONTENT_PART -->
             {% set totalDuration = totalDuration + summary.duration %}
             {% set totalInternalRate = totalInternalRate + summary.rate_internal %}
             {% set totalRate = totalRate + summary.rate %}
@@ -274,6 +275,7 @@ mpdf-->
         </thead>
         <tbody>
         {% for entry in entries %}
+            <!-- CONTENT_PART -->
             {% set duration = duration + entry.duration %}
             {% if currency is same as(false) %}
                 {% set currency = entry.project.customer.currency %}
