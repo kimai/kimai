@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="el" datatype="plaintext" original="actions.en.xlf">
     <body>
@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
-        <target>Χρονοδιάγραμμα</target>
+        <target>Δελτία ωρών</target>
       </trans-unit>
       <trans-unit id="tsRYY4d" resname="customer">
         <source>customer</source>
@@ -97,6 +97,10 @@
       <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>
         <target>Φιλτράρισμα δεδομένων</target>
+      </trans-unit>
+      <trans-unit id="7d1V9FU" resname="invoice.cancel">
+        <source>invoice.cancel</source>
+        <target>Ακύρωση τιμολογίου</target>
       </trans-unit>
     </body>
   </file>

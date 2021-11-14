@@ -7,8 +7,8 @@
         <target state="translated">Ayarlar</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
-        <target state="translated">Zaman çizelgesi</target>
+        <source>Time tracking</source>
+        <target state="translated">Zaman izleme</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>

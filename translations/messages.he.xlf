@@ -1189,6 +1189,22 @@
         <source>quick_entry.title</source>
         <target>שעות עבודה שבועיות</target>
       </trans-unit>
+      <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
+        <source>label.includeBudgetType_full</source>
+        <target>הצגת רשומות עם תקציב „מחזור חיים”</target>
+      </trans-unit>
+      <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
+        <source>label.includeBudgetType_month</source>
+        <target>הצגת רשומות עם תקציב „חודשי”</target>
+      </trans-unit>
+      <trans-unit id="9Rhadz6" resname="label.budgetType_full">
+        <source>label.budgetType_full</source>
+        <target>מחזור חיים</target>
+      </trans-unit>
+      <trans-unit id="Z1s7pAw" resname="status.canceled">
+        <source>status.canceled</source>
+        <target>בוטל</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

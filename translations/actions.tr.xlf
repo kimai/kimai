@@ -36,15 +36,15 @@
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
-        <target state="translated">Zaman Çizelgesi</target>
+        <target state="translated">Çizelgeler</target>
       </trans-unit>
       <trans-unit id="tsRYY4d" resname="customer">
         <source>customer</source>
-        <target state="translated">Müşterileri Filtrele</target>
+        <target state="translated">Müşterileri filtrele</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target state="translated">Projeleri Filtrele</target>
+        <target state="translated">Projeleri filtrele</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -97,6 +97,10 @@
       <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>
         <target>Verileri filtrele</target>
+      </trans-unit>
+      <trans-unit id="7d1V9FU" resname="invoice.cancel">
+        <source>invoice.cancel</source>
+        <target>Faturayı iptal et</target>
       </trans-unit>
     </body>
   </file>

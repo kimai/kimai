@@ -7,8 +7,8 @@
         <target>Configurações</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
-        <target>Horário</target>
+        <source>Time tracking</source>
+        <target>Rastreamento de tempo</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
