@@ -33,7 +33,7 @@ class MPdfConverter implements HtmlToPdfConverter
         $fonts = new FontVariables();
         $allowed = [
             'mode', 'format', 'default_font_size', 'default_font', 'margin_left', 'margin_right', 'margin_top',
-            'margin_bottom', 'margin_header', 'margin_footer', 'orientation', 'simpleTables', 'packTableData'
+            'margin_bottom', 'margin_header', 'margin_footer', 'orientation'
         ];
 
         $filtered = array_filter($options, function ($key) use ($allowed, $configs, $fonts) {
@@ -65,8 +65,6 @@ class MPdfConverter implements HtmlToPdfConverter
             $this->sanitizeOptions($options),
             [
                 'tempDir' => $this->cacheDirectory, 'exposeVersion' => false,
-                // FIXME make these configurable - eg. one system setting "pdf compatibility mode"
-                //'simpleTables' => true, 'packTableData' => true
             ]
         );
 
@@ -78,18 +76,17 @@ class MPdfConverter implements HtmlToPdfConverter
             @ini_set('pcre.backtrack_limit', '1000000');
         }
 
+        // large amount of data take time
+        @ini_set('max_execution_time', '120');
+
         // reduce the size of content parts that are passed to MPDF, to prevent
         // https://mpdf.github.io/troubleshooting/known-issues.html#blank-pages-or-some-sections-missing
         $parts = explode('<pagebreak>', $html);
         for ($i = 0; $i < \count($parts); $i++) {
-            // TODO test me : gc_collect_cycles();
             if (stripos($parts[$i], '<!-- CONTENT_PART -->') !== false) {
                 $subParts = explode('<!-- CONTENT_PART -->', $parts[$i]);
                 $run = 0;
                 foreach ($subParts as $subPart) {
-                    if ($run++ % 1000 === 0) {
-                        gc_collect_cycles();
-                    }
                     $mpdf->WriteHTML($subPart);
                 }
             } else {
