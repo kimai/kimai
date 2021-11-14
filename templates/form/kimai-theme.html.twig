@@ -157,12 +157,10 @@
         </a>
         <a class="btn btn-default" href="#" onclick="return false;">
             <span id="{{ form.vars.id }}_week_number" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': week|date_format('W')}) }}">
+                {{ week|month_name(true) }}
                 {% if week|date_format('m') != nextWeek|date_format('m') %}
-                    {{ week|month_name(false) }}
                     &ndash;
                     {{ nextWeek|month_name(true) }}
-                {% else %}
-                    {{ week|month_name(true) }}
                 {% endif %}
             </span>
         </a>
