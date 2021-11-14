@@ -1089,7 +1089,7 @@
       </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target>Überspringe Vorschau von %rows% weiteren Zeilen …</target>
+        <target>Überspringe Vorschau von %rows% weiteren Zeilen …</target>
       </trans-unit>
       <!--
               Export
@@ -1282,6 +1282,10 @@
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
         <target>Wochen-Arbeitsstunden</target>
+      </trans-unit>
+      <trans-unit id="61p_ckr" resname="label.hours_24">
+        <source>label.hours_24</source>
+        <target>24 Stunden</target>
       </trans-unit>
     </body>
   </file>

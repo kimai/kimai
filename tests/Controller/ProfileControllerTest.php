@@ -430,7 +430,7 @@ class ProfileControllerTest extends ControllerBaseTest
                     2 => ['name' => UserPreference::TIMEZONE, 'value' => 'America/Creston'],
                     3 => ['name' => UserPreference::LOCALE, 'value' => 'ar'],
                     4 => ['name' => UserPreference::FIRST_WEEKDAY, 'value' => 'sunday'],
-                    5 => ['name' => UserPreference::SKIN, 'value' => 'blue'],
+                    6 => ['name' => UserPreference::SKIN, 'value' => 'blue'],
                 ]
             ]
         ]);
