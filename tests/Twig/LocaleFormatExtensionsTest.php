@@ -238,6 +238,9 @@ class LocaleFormatExtensionsTest extends TestCase
         $this->assertEquals('17-2019-08- 12:29', $sut->dateTimeFull($dateTime));
         $this->assertEquals('17-2019-08- 12:29', $sut->dateTimeFull('2019-08-17 12:29:47'));
 
+        $dateTime = new \DateTime('2019-08-17 00:00:00');
+        $this->assertEquals('17-2019-08-', $sut->dateTimeFull($dateTime, true));
+
         // next test checks the fallback for errors while converting the date
         /* @phpstan-ignore-next-line */
         $this->assertEquals(189.45, $sut->dateTimeFull(189.45));

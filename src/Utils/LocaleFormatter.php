@@ -58,10 +58,6 @@ final class LocaleFormatter
      * @var string
      */
     private $timeFormat = null;
-    /**
-     * @var bool
-     */
-    private $isTwentyFourHour = null;
 
     public function __construct(LanguageFormattings $formats, string $locale)
     {
