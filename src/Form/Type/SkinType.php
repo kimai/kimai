@@ -18,6 +18,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SkinType extends AbstractType
 {
+    public const THEMES = [
+        'blue' => 'blue',
+        'black' => 'black',
+        'green' => 'green',
+        'purple' => 'purple',
+        'red' => 'red',
+        'yellow' => 'yellow',
+        'blue-light' => 'blue-light',
+        'black-light' => 'black-light',
+        'green-light' => 'green-light',
+        'purple-light' => 'purple-light',
+        'red-light' => 'red-light',
+        'yellow-light' => 'yellow-light',
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -25,20 +40,7 @@ class SkinType extends AbstractType
     {
         $resolver->setDefaults([
             'required' => true,
-            'choices' => [
-                'blue' => 'blue',
-                'black' => 'black',
-                'green' => 'green',
-                'purple' => 'purple',
-                'red' => 'red',
-                'yellow' => 'yellow',
-                'blue-light' => 'blue-light',
-                'black-light' => 'black-light',
-                'green-light' => 'green-light',
-                'purple-light' => 'purple-light',
-                'red-light' => 'red-light',
-                'yellow-light' => 'yellow-light',
-            ]
+            'choices' => self::THEMES,
         ]);
     }
 

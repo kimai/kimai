@@ -1,39 +1,36 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="he" datatype="plaintext" original="about.en.xlf">
-    <header>
-      <tool tool-id="symfony" tool-name="Symfony"/>
-    </header>
     <body>
-      <trans-unit id="about.title">
+      <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
         <target>על אודות קימאי</target>
       </trans-unit>
-      <trans-unit id="support">
+      <trans-unit id="oYYDCG5" resname="support">
         <source>support</source>
         <target>תמיכה</target>
       </trans-unit>
-      <trans-unit id="website">
+      <trans-unit id="dHqPOYO" resname="website">
         <source>website</source>
         <target>דף הבית</target>
       </trans-unit>
-      <trans-unit id="help">
+      <trans-unit id="EGpYQvx" resname="help">
         <source>help</source>
         <target>תיעוד</target>
       </trans-unit>
-      <trans-unit id="donate">
+      <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
         <target>תרומה לעתיד של קימאי</target>
       </trans-unit>
-      <trans-unit id="published_under">
+      <trans-unit id="DwbowBh" resname="published_under">
         <source>published_under</source>
         <target>%kimai% מופץ בכפוף</target>
       </trans-unit>
-      <trans-unit id="special_thanks">
+      <trans-unit id="A0nWoXZ" resname="special_thanks">
         <source>special_thanks</source>
         <target>תודה מיוחדת מגיעה ל…</target>
       </trans-unit>
-      <trans-unit id="library_authors">
+      <trans-unit id="L7cff3Q" resname="library_authors">
         <source>library_authors</source>
         <target>… המפתחים של רכיבי התכנה האלה, קימאי לא הייתה קיימת בלעדיכם 👍</target>
       </trans-unit>

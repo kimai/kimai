@@ -37,6 +37,7 @@ class Invoice
 {
     public const STATUS_PENDING = 'pending';
     public const STATUS_PAID = 'paid';
+    public const STATUS_CANCELED = 'canceled';
     public const STATUS_NEW = 'new';
 
     /**
@@ -47,6 +48,7 @@ class Invoice
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @phpstan-ignore-next-line
      */
     private $id;
 
@@ -303,6 +305,16 @@ class Invoice
         $this->status = self::STATUS_PAID;
 
         return $this;
+    }
+
+    public function isCanceled(): bool
+    {
+        return $this->status === self::STATUS_CANCELED;
+    }
+
+    public function setIsCanceled(): void
+    {
+        $this->status = self::STATUS_CANCELED;
     }
 
     public function getDueDays(): int

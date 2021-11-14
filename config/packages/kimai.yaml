@@ -91,7 +91,7 @@ kimai:
             CUSTOMERS_TEAMLEAD: ['view_teamlead_customer','budget_teamlead_customer','comments_teamlead_customer','comments_create_teamlead_customer','details_teamlead_customer']
             INVOICE: ['view_invoice','create_invoice']
             INVOICE_ADMIN: ['manage_invoice_template']
-            TIMESHEET: ['view_own_timesheet','start_own_timesheet','stop_own_timesheet','create_own_timesheet','edit_own_timesheet','export_own_timesheet','delete_own_timesheet']
+            TIMESHEET: ['view_own_timesheet','start_own_timesheet','stop_own_timesheet','create_own_timesheet','edit_own_timesheet','export_own_timesheet','delete_own_timesheet','weekly_own_timesheet']
             TIMESHEET_OTHER: ['view_other_timesheet','start_other_timesheet','stop_other_timesheet','create_other_timesheet','edit_other_timesheet','export_other_timesheet','delete_other_timesheet']
             PROFILE: ['view_own_profile','edit_own_profile','password_own_profile','preferences_own_profile','api-token_own_profile']
             PROFILE_OTHER: ['view_other_profile','edit_other_profile','password_other_profile','roles_other_profile','preferences_other_profile','api-token_other_profile','teams_other_profile']

@@ -42,22 +42,6 @@ class TokenAuthenticatorTest extends TestCase
         self::assertFalse($sut->supports($request));
     }
 
-    public function testGetPassword()
-    {
-        $factory = $this->createMock(EncoderFactoryInterface::class);
-        $sut = new TokenAuthenticator($factory);
-
-        self::assertNull($sut->getPassword('asdfgh'));
-        self::assertNull($sut->getPassword(null));
-        self::assertNull($sut->getPassword([]));
-        self::assertNull($sut->getPassword(['password' => '1234567890']));
-        self::assertNull($sut->getPassword(['token' => null]));
-        self::assertNull($sut->getPassword(['token' => 0]));
-        self::assertNull($sut->getPassword(['token' => '']));
-        self::assertNull($sut->getPassword(['token' => false]));
-        self::assertEquals('foo-bar', $sut->getPassword(['token' => 'foo-bar']));
-    }
-
     public function testGetCredentials()
     {
         $factory = $this->createMock(EncoderFactoryInterface::class);

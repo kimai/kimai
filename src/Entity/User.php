@@ -415,9 +415,9 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     public function getPreference(string $name): ?UserPreference
     {
-        // this code will be triggered, if a currently logged-in user will be deleted and the refreshed from the session
+        // this code will be triggered, if a currently logged-in user will be deleted and then refreshed from the session
         // via one of the UserProvider - e.g. see LdapUserProvider::refreshUser() which calls $user->getPreferenceValue()
-        if (empty($this->preferences)) {
+        if ($this->preferences === null) {
             return null;
         }
 

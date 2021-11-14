@@ -1,36 +1,36 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ar" datatype="plaintext" original="teams.en.xlf">
     <body>
-      <trans-unit id="teams.title">
+      <trans-unit id="kgxAl_x" resname="teams.title">
         <source>teams.title</source>
         <target>الفريق</target>
       </trans-unit>
-      <trans-unit id="team.activity_visibility_inherited">
+      <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited">
         <source>team.activity_visibility_inherited</source>
         <target>النشاط له وصول محدود ، لأنه تم تعيين أذونات الفريق للمشروع / أو العميل.</target>
       </trans-unit>
-      <trans-unit id="team.create_default">
+      <trans-unit id="cZEIdcu" resname="team.create_default">
         <source>team.create_default</source>
         <target>إنشاء فريق جديد للحد من الوصول</target>
       </trans-unit>
-      <trans-unit id="team.project_visibility_inherited">
+      <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited">
         <source>team.project_visibility_inherited</source>
         <target>المشروع له وصول محدود ، لأنه تم تعيين أذونات الفريق للعميل.</target>
       </trans-unit>
-      <trans-unit id="team.visibility_restricted">
+      <trans-unit id="hlIIRjb" resname="team.visibility_restricted">
         <source>team.visibility_restricted</source>
         <target>مرئي فقط للفرق التالية وجميع المسؤولين.</target>
       </trans-unit>
-      <trans-unit id="team.visibility_global">
+      <trans-unit id=".yIcFDx" resname="team.visibility_global">
         <source>team.visibility_global</source>
         <target>مرئي للجميع ، حيث أنه لم يتم تعيين أي فريق بعد.</target>
       </trans-unit>
-      <trans-unit id="teams.customer_access">
+      <trans-unit id="QchGnbx" resname="teams.customer_access">
         <source>teams.customer_access</source>
         <target>منح حق الوصول للعملاء</target>
       </trans-unit>
-      <trans-unit id="teams.project_access">
+      <trans-unit id="A_4Fc7c" resname="teams.project_access">
         <source>teams.project_access</source>
         <target>منح الوصول إلى المشاريع</target>
       </trans-unit>

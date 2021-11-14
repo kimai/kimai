@@ -50,22 +50,6 @@ abstract class AbstractMigration extends BaseAbstractMigration
     }
 
     /**
-     * @deprecated since 1.14 - will be removed with 2.0
-     */
-    protected function deactivateForeignKeysOnSqlite()
-    {
-        @trigger_error('deactivateForeignKeysOnSqlite() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-    }
-
-    /**
-     * @deprecated since 1.14 - will be removed with 2.0
-     */
-    private function activateForeignKeysOnSqlite()
-    {
-        @trigger_error('activateForeignKeysOnSqlite() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-    }
-
-    /**
      * @param Schema $schema
      * @throws Exception
      */
@@ -128,5 +112,10 @@ abstract class AbstractMigration extends BaseAbstractMigration
         @trigger_error('addSqlDropIndex() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
 
         $this->addSql('DROP INDEX ' . $indexName . ' ON ' . $tableName);
+    }
+
+    protected function preventEmptyMigrationWarning(): void
+    {
+        $this->addSql('#prevent empty warning - no SQL to execute');
     }
 }

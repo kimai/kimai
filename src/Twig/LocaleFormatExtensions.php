@@ -166,11 +166,12 @@ final class LocaleFormatExtensions extends AbstractExtension
 
     /**
      * @param DateTime|string $date
+     * @param bool $stripMidnight
      * @return bool|false|string
      */
-    public function dateTimeFull($date)
+    public function dateTimeFull($date, bool $stripMidnight = false)
     {
-        return $this->getFormatter()->dateTimeFull($date, $this->getUserTimeFormat());
+        return $this->getFormatter()->dateTimeFull($date, $this->getUserTimeFormat(), $stripMidnight);
     }
 
     private function getUserTimeFormat(): string

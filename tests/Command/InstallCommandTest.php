@@ -31,7 +31,6 @@ class InstallCommandTest extends KernelTestCase
         $container = self::$kernel->getContainer();
 
         $this->application->add(new InstallCommand(
-            $container->getParameter('kernel.project_dir'),
             $container->get('doctrine')->getConnection()
         ));
     }
