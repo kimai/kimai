@@ -63,9 +63,7 @@ class MPdfConverter implements HtmlToPdfConverter
     {
         $options = array_merge(
             $this->sanitizeOptions($options),
-            [
-                'tempDir' => $this->cacheDirectory, 'exposeVersion' => false,
-            ]
+            ['tempDir' => $this->cacheDirectory, 'exposeVersion' => false]
         );
 
         $mpdf = new Mpdf($options);
