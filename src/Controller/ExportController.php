@@ -144,6 +144,7 @@ class ExportController extends AbstractController
     /**
      * @param ExportQuery $query
      * @return ExportItemInterface[]
+     * @throws TooManyItemsExportException
      */
     protected function getEntries(ExportQuery $query): array
     {

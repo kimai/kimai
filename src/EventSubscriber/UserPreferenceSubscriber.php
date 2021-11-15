@@ -113,6 +113,13 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setType(FirstWeekDayType::class),
 
             (new UserPreference())
+                ->setName(UserPreference::HOUR_24)
+                ->setValue(true)
+                ->setOrder(305)
+                ->setSection('locale')
+                ->setType(CheckboxType::class),
+
+            (new UserPreference())
                 ->setName(UserPreference::SKIN)
                 ->setValue($this->configuration->getUserDefaultTheme())
                 ->setOrder(400)

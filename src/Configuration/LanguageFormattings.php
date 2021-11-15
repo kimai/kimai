@@ -61,28 +61,6 @@ final class LanguageFormattings
     }
 
     /**
-     * Returns the format which is used by the form component to handle datetime values.
-     *
-     * @param string $locale
-     * @return string
-     */
-    public function getDateTimeTypeFormat(string $locale): string
-    {
-        return $this->getConfig('date_time_type', $locale);
-    }
-
-    /**
-     * Returns the format which is used by the Javascript component to handle datetime values.
-     *
-     * @param string $locale
-     * @return string
-     */
-    public function getDateTimePickerFormat(string $locale): string
-    {
-        return $this->momentFormatter->convert($this->getDateTimeTypeFormat($locale));
-    }
-
-    /**
      * Returns the locale specific date format, which should be used in combination with the twig filter "|date".
      *
      * @param string $locale
@@ -124,17 +102,6 @@ final class LanguageFormattings
     public function getDurationFormat(string $locale): string
     {
         return $this->getConfig('duration', $locale);
-    }
-
-    /**
-     * Returns whether this locale uses the 24 hour format.
-     *
-     * @param string $locale
-     * @return bool
-     */
-    public function isTwentyFourHours(string $locale): bool
-    {
-        return (bool) $this->getConfig('24_hours', $locale);
     }
 
     /**

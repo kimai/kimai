@@ -27,8 +27,8 @@ final class ProjectDateRangeQuery
      */
     private $customer;
 
-    private $includeNoBudget = false;
-    private $onlyWithRecords = false;
+    private $includeNoWork = true;
+    private $budgetType = 'month';
 
     public function __construct(\DateTime $month, User $user)
     {
@@ -38,22 +38,17 @@ final class ProjectDateRangeQuery
 
     public function isIncludeNoBudget(): bool
     {
-        return $this->includeNoBudget;
+        return $this->budgetType === 'none';
     }
 
-    public function setIncludeNoBudget(bool $includeNoBudget): void
+    public function isIncludeNoWork(): bool
     {
-        $this->includeNoBudget = $includeNoBudget;
+        return $this->includeNoWork;
     }
 
-    public function isOnlyWithRecords(): bool
+    public function setIncludeNoWork(bool $includeNoWork): void
     {
-        return $this->onlyWithRecords;
-    }
-
-    public function setOnlyWithRecords(bool $onlyWithRecords): void
-    {
-        $this->onlyWithRecords = $onlyWithRecords;
+        $this->includeNoWork = $includeNoWork;
     }
 
     public function getUser(): ?User
@@ -61,12 +56,12 @@ final class ProjectDateRangeQuery
         return $this->user;
     }
 
-    public function getMonth(): \DateTime
+    public function getMonth(): ?\DateTime
     {
         return $this->month;
     }
 
-    public function setMonth(\DateTime $month): void
+    public function setMonth(?\DateTime $month): void
     {
         $this->month = $month;
     }
@@ -79,5 +74,20 @@ final class ProjectDateRangeQuery
     public function setCustomer(?Customer $customer): void
     {
         $this->customer = $customer;
+    }
+
+    public function isBudgetTypeMonthly(): bool
+    {
+        return $this->budgetType === 'month';
+    }
+
+    public function getBudgetType(): ?string
+    {
+        return $this->budgetType;
+    }
+
+    public function setBudgetType(?string $budgetType): void
+    {
+        $this->budgetType = $budgetType;
     }
 }

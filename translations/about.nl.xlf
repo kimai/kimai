@@ -1,36 +1,36 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="nl" datatype="plaintext" original="about.en.xlf">
     <body>
-      <trans-unit id="about.title">
+      <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
         <target>Over Kimai</target>
       </trans-unit>
-      <trans-unit id="support">
+      <trans-unit id="oYYDCG5" resname="support">
         <source>support</source>
         <target>Ondersteuning</target>
       </trans-unit>
-      <trans-unit id="website">
+      <trans-unit id="dHqPOYO" resname="website">
         <source>website</source>
         <target>Website</target>
       </trans-unit>
-      <trans-unit id="help">
+      <trans-unit id="EGpYQvx" resname="help">
         <source>help</source>
         <target>Help</target>
       </trans-unit>
-      <trans-unit id="donate">
+      <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
         <target>Doneer aan Kimaï</target>
       </trans-unit>
-      <trans-unit id="published_under">
+      <trans-unit id="DwbowBh" resname="published_under">
         <source>published_under</source>
         <target>%kimai% wordt gepubliceerd onder</target>
       </trans-unit>
-      <trans-unit id="special_thanks">
+      <trans-unit id="A0nWoXZ" resname="special_thanks">
         <source>special_thanks</source>
         <target>Bijzondere dank gaat naar …</target>
       </trans-unit>
-      <trans-unit id="library_authors">
+      <trans-unit id="L7cff3Q" resname="library_authors">
         <source>library_authors</source>
         <target>… de auteurs van de volgende softwarebibliotheken, Kimai zou zonder jullie niet mogelijk zijn 👍</target>
       </trans-unit>

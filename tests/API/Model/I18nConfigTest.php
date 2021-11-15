@@ -26,7 +26,6 @@ class I18nConfigTest extends TestCase
         $this->assertInstanceOf(I18nConfig::class, $sut->setDate('bar'));
         $this->assertInstanceOf(I18nConfig::class, $sut->setDateTime('hello'));
         $this->assertInstanceOf(I18nConfig::class, $sut->setFormDate('world'));
-        $this->assertInstanceOf(I18nConfig::class, $sut->setFormDateTime('testing'));
         $this->assertInstanceOf(I18nConfig::class, $sut->setTime('fun'));
     }
 }

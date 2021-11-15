@@ -239,10 +239,6 @@ final class ServiceInvoice
 
     public function changeInvoiceStatus(Invoice $invoice, string $status)
     {
-        if (!\in_array($status, [Invoice::STATUS_NEW, Invoice::STATUS_PENDING, Invoice::STATUS_PAID])) {
-            throw new \InvalidArgumentException('Unknown invoice status');
-        }
-
         switch ($status) {
             case Invoice::STATUS_NEW:
                 $invoice->setIsNew();
@@ -255,6 +251,13 @@ final class ServiceInvoice
             case Invoice::STATUS_PAID:
                 $invoice->setIsPaid();
                 break;
+
+            case Invoice::STATUS_CANCELED:
+                $invoice->setIsCanceled();
+                break;
+
+            default:
+                throw new \InvalidArgumentException('Unknown invoice status');
         }
 
         $this->invoiceRepository->saveInvoice($invoice);
@@ -363,11 +366,11 @@ final class ServiceInvoice
             if ($renderer->supports($document)) {
                 $dispatcher->dispatch(new InvoicePreRenderEvent($model, $document, $renderer));
 
-                $response = $renderer->render($document, $model);
-
-                if ($model->getQuery()->isMarkAsExported()) {
-                    $this->markEntriesAsExported($model->getEntries());
+                if ($this->invoiceRepository->hasInvoice($model->getInvoiceNumber())) {
+                    throw new DuplicateInvoiceNumberException($model->getInvoiceNumber());
                 }
+
+                $response = $renderer->render($document, $model);
 
                 $event = new InvoicePostRenderEvent($model, $document, $renderer, $response);
                 $dispatcher->dispatch($event);
@@ -378,6 +381,10 @@ final class ServiceInvoice
                 $invoice->setModel($model);
                 $invoice->setFilename($invoiceFilename);
                 $this->invoiceRepository->saveInvoice($invoice);
+
+                if ($model->getQuery()->isMarkAsExported()) {
+                    $this->markEntriesAsExported($model->getEntries());
+                }
 
                 $dispatcher->dispatch(new InvoiceCreatedEvent($invoice));
 

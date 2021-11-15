@@ -80,7 +80,7 @@
         {% block box_title %}Logfile (max. {{ logLines }} last lines){% endblock %}
         {% block box_tools %}
             {% if log_delete %}
-                <a class="btn-box-tool confirmation-link" href="{{ path('doctor_flush_log') }}" data-question="confirm.delete"><i class="{{ 'delete'|icon }}"></i></a>
+                <a class="btn-box-tool confirmation-link" href="{{ path('doctor_flush_log', {'token': csrf_token('doctor.flush_log')}) }}" data-question="confirm.delete"><i class="{{ 'delete'|icon }}"></i></a>
             {% endif %}
         {% endblock %}
         {% block box_body %}

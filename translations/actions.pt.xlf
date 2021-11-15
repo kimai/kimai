@@ -1,102 +1,106 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="pt" datatype="plaintext" original="actions.en.xlf">
     <body>
-      <trans-unit id="stop">
+      <trans-unit id="bEXLcqN" resname="stop">
         <source>stop</source>
         <target>Parar</target>
       </trans-unit>
-      <trans-unit id="back">
+      <trans-unit id="PEgjRvN" resname="back">
         <source>back</source>
         <target>Voltar</target>
       </trans-unit>
-      <trans-unit id="edit">
+      <trans-unit id="JiEhxTc" resname="edit">
         <source>edit</source>
         <target>Editar</target>
       </trans-unit>
-      <trans-unit id="trash">
+      <trans-unit id="4G2jBDS" resname="trash">
         <source>trash</source>
         <target>Eliminar</target>
       </trans-unit>
-      <trans-unit id="report">
+      <trans-unit id="hF6RgxM" resname="report">
         <source>report</source>
         <target>Reportar</target>
       </trans-unit>
-      <trans-unit id="repeat">
+      <trans-unit id="JeK2sQZ" resname="repeat">
         <source>repeat</source>
         <target>Começar de novo</target>
       </trans-unit>
-      <trans-unit id="profile-stats">
+      <trans-unit id="J0sRBY_" resname="profile-stats">
         <source>profile-stats</source>
         <target>Perfil</target>
       </trans-unit>
-      <trans-unit id="settings">
+      <trans-unit id="zeD7Dew" resname="settings">
         <source>settings</source>
         <target>Preferências</target>
       </trans-unit>
-      <trans-unit id="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
         <target>Quadro de horários</target>
       </trans-unit>
-      <trans-unit id="customer">
+      <trans-unit id="tsRYY4d" resname="customer">
         <source>customer</source>
         <target>Filtrar clientes</target>
       </trans-unit>
-      <trans-unit id="project">
+      <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
         <target>Filtrar projetos</target>
       </trans-unit>
-      <trans-unit id="activity">
+      <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
         <target>Filtrar atividades</target>
       </trans-unit>
-      <trans-unit id="copy">
+      <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target>Criar cópia</target>
       </trans-unit>
-      <trans-unit id="home">
+      <trans-unit id="TqFAWIF" resname="home">
         <source>home</source>
         <target>Página inicial</target>
       </trans-unit>
-      <trans-unit id="create-project">
+      <trans-unit id="PBlIO2x" resname="create-project">
         <source>create-project</source>
         <target>Criar projeto</target>
       </trans-unit>
-      <trans-unit id="create-activity">
+      <trans-unit id="UbouFOs" resname="create-activity">
         <source>create-activity</source>
         <target>Criar atividade</target>
       </trans-unit>
-      <trans-unit id="create-timesheet">
+      <trans-unit id="QR1nvcR" resname="create-timesheet">
         <source>create-timesheet</source>
         <target>Criar quadro de horário</target>
       </trans-unit>
-      <trans-unit id="create-timesheet-multiuser">
+      <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser">
         <source>create-timesheet-multiuser</source>
         <target>Para vários utilizadores</target>
       </trans-unit>
-      <trans-unit id="permissions">
+      <trans-unit id="T_PN1AT" resname="permissions">
         <source>permissions</source>
         <target>Permissões da equipa</target>
       </trans-unit>
-      <trans-unit id="details">
+      <trans-unit id="Qf.Yt2r" resname="details">
         <source>details</source>
         <target>Mostrar</target>
       </trans-unit>
-      <trans-unit id="download">
+      <trans-unit id="aP9j_4L" resname="download">
         <source>download</source>
         <target>Descarregar</target>
       </trans-unit>
-      <trans-unit id="invoice.pending">
+      <trans-unit id="hHIeqOW" resname="invoice.pending">
         <source>invoice.pending</source>
         <target>A aguardar pagamento</target>
       </trans-unit>
-      <trans-unit id="invoice.paid">
+      <trans-unit id="9M4b2ZN" resname="invoice.paid">
         <source>invoice.paid</source>
         <target>Fatura paga</target>
       </trans-unit>
-      <trans-unit id="filter">
+      <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>
         <target>Filtrar por data</target>
+      </trans-unit>
+      <trans-unit id="7d1V9FU" resname="invoice.cancel">
+        <source>invoice.cancel</source>
+        <target>Cancelar fatura</target>
       </trans-unit>
     </body>
   </file>

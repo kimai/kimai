@@ -75,21 +75,12 @@ class LocaleFormats
     /**
      * Returns the format which is used by the form component to handle datetime values.
      *
+     * @deprecated since 1.16
      * @return string
      */
     public function getDateTimeTypeFormat(): string
     {
-        return $this->formats->getDateTimeTypeFormat($this->getLocale());
-    }
-
-    /**
-     * Returns the format which is used by the Javascript component to handle datetime values.
-     *
-     * @return string
-     */
-    public function getDateTimePickerFormat(): string
-    {
-        return $this->formats->getDateTimePickerFormat($this->getLocale());
+        return $this->formats->getDateTypeFormat($this->getLocale()) . ' HH:mm';
     }
 
     /**
@@ -130,15 +121,5 @@ class LocaleFormats
     public function getDurationFormat(): string
     {
         return $this->formats->getDurationFormat($this->getLocale());
-    }
-
-    /**
-     * Returns whether this locale uses the 24 hour format.
-     *
-     * @return bool
-     */
-    public function isTwentyFourHours(): bool
-    {
-        return $this->formats->isTwentyFourHours($this->getLocale());
     }
 }

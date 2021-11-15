@@ -55,7 +55,7 @@ final class MenuSubscriber implements EventSubscriberInterface
             $timesheets->setChildRoutes(['timesheet_export', 'timesheet_edit', 'timesheet_create', 'timesheet_multi_update']);
             $menu->addItem($timesheets);
 
-            if ($auth->isGranted('edit_own_timesheet')) {
+            if ($auth->isGranted('weekly_own_timesheet') && $auth->isGranted('edit_own_timesheet')) {
                 $mode = $this->trackingModeService->getActiveMode();
                 if ($mode->canEditDuration() || $mode->canEditEnd()) {
                     $menu->addItem(

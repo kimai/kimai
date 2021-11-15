@@ -10,10 +10,14 @@
 namespace App\Tests\Export\Renderer;
 
 use App\Activity\ActivityStatisticService;
+use App\Entity\User;
 use App\Export\Renderer\HtmlRenderer;
 use App\Project\ProjectStatisticService;
+use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Twig\Environment;
 
 /**
@@ -43,6 +47,16 @@ class HtmlRendererTest extends AbstractRendererTest
         $kernel = self::bootKernel();
         /** @var Environment $twig */
         $twig = $kernel->getContainer()->get('twig');
+
+        $token = $this->createMock(TokenInterface::class);
+        $token->expects($this->any())->method('getUser')->willReturn(new User());
+
+        $tokenStorage = new TokenStorage();
+        $tokenStorage->setToken($token);
+        /** @var AppVariable $app */
+        $app = $twig->getGlobals()['app'];
+        $twig->addGlobal('app', $app);
+        $app->setTokenStorage($tokenStorage);
         $stack = $kernel->getContainer()->get('request_stack');
         $request = new Request();
         $request->setLocale('en');

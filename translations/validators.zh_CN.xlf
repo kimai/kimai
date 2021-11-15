@@ -1,58 +1,82 @@
-﻿<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-CN" datatype="plaintext" original="validators.en.xlf">
     <body>
-      <trans-unit id="This value is not a valid role.">
+      <trans-unit id="IkNxbBI" resname="This value is not a valid role.">
         <source>This value is not a valid role.</source>
         <target>此值不是有效角色。</target>
       </trans-unit>
-      <trans-unit id="End date must not be earlier then start date.">
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
         <source>End date must not be earlier then start date.</source>
         <target>结束日期必须早于开始日期。</target>
       </trans-unit>
-      <trans-unit id="The begin date cannot be in the future.">
+      <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
         <target>开始日期不能是未来的某一日期。</target>
       </trans-unit>
-      <trans-unit id="Maximum duration of {{ value }} hours exceeded.">
+      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
         <source>Maximum duration of {{ value }} hours exceeded.</source>
         <target>允许的最大{{ 值 }}小时数。</target>
       </trans-unit>
-      <trans-unit id="The budget is completely used.">
+      <trans-unit id="1oKCOa5" resname="The budget is completely used.">
         <source>The budget is completely used.</source>
         <target>预算用完了。在可用的%budget%，%used%目前已被预订，%free%仍然可以使用。</target>
       </trans-unit>
-      <trans-unit id="The given value is not a valid time.">
+      <trans-unit id="VJSZSD0" resname="The given value is not a valid time.">
         <source>The given value is not a valid time.</source>
         <target>给定值不是有效时间。</target>
       </trans-unit>
-      <trans-unit id="You already have an entry for this time.">
+      <trans-unit id="u2wjm2i" resname="You already have an entry for this time.">
         <source>You already have an entry for this time.</source>
         <target>这次你已经有一个条目了。</target>
       </trans-unit>
-      <trans-unit id="This period is locked, please choose a later date.">
+      <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date.">
         <source>This period is locked, please choose a later date.</source>
         <target>此时间段已锁定，请选择一个更晚的日期。</target>
       </trans-unit>
-      <trans-unit id="This invoice document cannot be used, please rename the file and upload it again.">
+      <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again.">
         <source>This invoice document cannot be used, please rename the file and upload it again.</source>
         <target>此发票单据无法使用，请重命名文件并重新上传。</target>
       </trans-unit>
-      <trans-unit id="You must select at least one user or team.">
+      <trans-unit id="1V6BsD_" resname="You must select at least one user or team.">
         <source>You must select at least one user or team.</source>
         <target>您必须至少选择一个用户或团队。</target>
       </trans-unit>
-      <trans-unit id="The username is already used.">
+      <trans-unit id="S14XECA" resname="The username is already used.">
         <source>The username is already used.</source>
         <target>用户名已被使用。</target>
       </trans-unit>
-      <trans-unit id="The email is already used.">
+      <trans-unit id="6u6oCwB" resname="The email is already used.">
         <source>The email is already used.</source>
         <target>该电子邮件已被使用。</target>
       </trans-unit>
-      <trans-unit id="The entered passwords don't match.">
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match.">
         <source>The entered passwords don't match.</source>
         <target>输入的密码不匹配。</target>
+      </trans-unit>
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target>此工时表已导出。</target>
+      </trans-unit>
+      <trans-unit id="ekO5eXI" resname="An equal username is already used.">
+        <source>An equal username is already used.</source>
+        <target>已有人使用相同的用户名。</target>
+      </trans-unit>
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target>团队中必须至少有一名领队。</target>
+      </trans-unit>
+      <trans-unit id="INlaCgW" resname="An equal email is already used.">
+        <source>An equal email is already used.</source>
+        <target>已有人使用了相同的电子邮箱。</target>
+      </trans-unit>
+      <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
+        <source>An activity needs to be selected.</source>
+        <target>需要选中一个活动。</target>
+      </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target>需要选中一个项目。</target>
       </trans-unit>
     </body>
   </file>
