@@ -104,6 +104,7 @@
                 description: apiItem.description,
                 start: apiItem.begin,
                 end: apiItem.end,
+                duration: apiItem.duration,
                 activity: apiItem.activity.name,
                 project: apiItem.project.name,
                 customer: apiItem.project.customer.name,
@@ -353,6 +354,12 @@
                     if (view.name !== 'month' ) {
                         jQuery(".fc-dailytotal").text(DATES.formatSeconds(0)).data('seconds', 0).data('ids', '');
                     }
+
+                    {% if is_duration_mode %}
+                    if (view.name === 'month') {
+                        $el.find(".fc-time").replaceWith('<span class="fc-time fc-duration">' + DATES.formatSeconds(eventObj.duration) + '</span>');
+                    }
+                    {% endif %}
 
                     hidePopover();
                     $el.popover({

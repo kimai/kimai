@@ -39,6 +39,7 @@ class DurationFixedBeginModeTest extends TestCase
         self::assertTrue($sut->canEditDuration());
         self::assertFalse($sut->canUpdateTimesWithAPI());
         self::assertFalse($sut->canSeeBeginAndEndTimes());
+        self::assertTrue($sut->isDurationMode());
         self::assertEquals('duration_fixed_begin', $sut->getId());
     }
 

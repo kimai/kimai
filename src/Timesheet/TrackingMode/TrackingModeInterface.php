@@ -66,6 +66,13 @@ interface TrackingModeInterface
     public function canSeeBeginAndEndTimes(): bool;
 
     /**
+     * Whether the timetracking mode is duration based.
+     *
+     * @return bool
+     */
+    public function isDurationMode(): bool;
+
+    /**
      * Returns a unique identifier for this tracking mode.
      *
      * @return string

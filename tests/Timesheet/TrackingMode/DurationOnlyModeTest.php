@@ -42,6 +42,7 @@ class DurationOnlyModeTest extends AbstractTrackingModeTest
         self::assertTrue($sut->canEditDuration());
         self::assertTrue($sut->canUpdateTimesWithAPI());
         self::assertFalse($sut->canSeeBeginAndEndTimes());
+        self::assertTrue($sut->isDurationMode());
         self::assertEquals('duration_only', $sut->getId());
     }
 }

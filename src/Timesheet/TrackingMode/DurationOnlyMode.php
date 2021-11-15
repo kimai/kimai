@@ -56,6 +56,11 @@ final class DurationOnlyMode extends AbstractTrackingMode
         return false;
     }
 
+    public function isDurationMode(): bool
+    {
+        return true;
+    }
+
     public function create(Timesheet $timesheet, ?Request $request = null): void
     {
         if (null === $timesheet->getBegin()) {

@@ -62,6 +62,7 @@ class CalendarController extends AbstractController
             'can_edit_begin' => $mode->canEditBegin(),
             'can_edit_end' => $mode->canEditBegin(),
             'can_edit_duration' => $mode->canEditDuration(),
+            'is_duration_mode' => $mode->isDurationMode(),
         ]);
     }
 }

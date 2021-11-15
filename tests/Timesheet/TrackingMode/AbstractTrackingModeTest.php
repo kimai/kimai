@@ -161,7 +161,7 @@ abstract class AbstractTrackingModeTest extends TestCase
         self::assertEquals(12196, $timesheet->getDuration());
     }
 
-    public function testCreateUseFromToDatetimeOverwritesBeginEndTatesFromRequest()
+    public function testCreateUseFromToDatetimeOverwritesBeginEndDatesFromRequest()
     {
         $sut = $this->createSut();
 
@@ -213,6 +213,22 @@ abstract class AbstractTrackingModeTest extends TestCase
         $sut->create($timesheet, $request);
 
         self::assertEquals('2018-05-23 21:47:55', $timesheet->getBegin()->format('Y-m-d H:i:s'));
+        self::assertNull($timesheet->getEnd());
+        self::assertEquals(0, $timesheet->getDuration());
+    }
+
+    public function testCreateUsesDefaultStartTimeOnBeginFromRequest()
+    {
+        $sut = $this->createSut();
+
+        $timesheet = $this->createTimesheet();
+        $request = new Request([
+            'begin' => '2017-07-23',
+        ]);
+
+        $sut->create($timesheet, $request);
+
+        $this->assertDefaultBegin($timesheet);
         self::assertNull($timesheet->getEnd());
         self::assertEquals(0, $timesheet->getDuration());
     }

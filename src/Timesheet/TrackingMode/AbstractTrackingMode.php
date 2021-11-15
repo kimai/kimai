@@ -34,7 +34,15 @@ abstract class AbstractTrackingMode implements TrackingModeInterface
             return;
         }
 
-        $start = DateTime::createFromFormat('Y-m-d', $start, $this->getTimezone($entry));
+        $startFormat = 'Y-m-d';
+
+        // keep default begin time in duration timetracking modes
+        if ($this->isDurationMode()) {
+            $startFormat .= ' H:i:s';
+            $start .= ' ' . $entry->getBegin()->format('H:i:s');
+        }
+
+        $start = DateTime::createFromFormat($startFormat, $start, $this->getTimezone($entry));
         if (false === $start) {
             return;
         }

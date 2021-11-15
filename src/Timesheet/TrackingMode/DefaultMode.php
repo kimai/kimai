@@ -56,6 +56,11 @@ final class DefaultMode extends AbstractTrackingMode
         return true;
     }
 
+    public function isDurationMode(): bool
+    {
+        return false;
+    }
+
     public function create(Timesheet $timesheet, ?Request $request = null): void
     {
         parent::create($timesheet, $request);

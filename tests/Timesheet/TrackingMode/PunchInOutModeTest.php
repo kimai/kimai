@@ -29,6 +29,7 @@ class PunchInOutModeTest extends TestCase
         self::assertFalse($sut->canEditDuration());
         self::assertFalse($sut->canUpdateTimesWithAPI());
         self::assertTrue($sut->canSeeBeginAndEndTimes());
+        self::assertFalse($sut->isDurationMode());
         self::assertEquals('punch', $sut->getId());
     }
 
