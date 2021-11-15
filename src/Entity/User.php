@@ -386,7 +386,21 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function getVisiblePreferences(): array
     {
-        $skip = [UserPreference::TIMEZONE, UserPreference::LOCALE, UserPreference::SKIN];
+        // hide all internal preferences, which are either available in other fields
+        // or which are only used within the Kimai UI
+        $skip = [
+            UserPreference::TIMEZONE,
+            UserPreference::LOCALE,
+            UserPreference::SKIN,
+            'calendar.initial_view',
+            'login.initial_view',
+            'reporting.initial_view',
+            'theme.collapsed_sidebar',
+            'theme.layout',
+            'theme.update_browser_title',
+            'timesheet.daily_stats',
+            'timesheet.export_decimal',
+        ];
 
         $all = [];
         foreach ($this->preferences as $preference) {
