@@ -32,6 +32,7 @@ nelmio_api_doc:
             - { alias: UserCreateForm,              type: App\Form\API\UserApiCreateForm,           groups: [Default, Entity, User, User_Entity] }
             - { alias: UserEditForm,                type: App\Form\API\UserApiEditForm,             groups: [Default, Entity, User, User_Entity] }
             - { alias: User,                        type: App\Entity\User,                          groups: [Default] }
+            - { alias: UserPreference,              type: App\Entity\UserPreference,                groups: [Default, User_Entity] }
             - { alias: UserEntity,                  type: App\Entity\User,                          groups: [Default, Entity, User, User_Entity] }
             - { alias: UserCollection,              type: App\Entity\User,                          groups: [Default, Collection, User] }
             - { alias: TeamEditForm,                type: App\Form\API\TeamApiEditForm,             groups: [Default, Entity, Team, Team_Entity] }
