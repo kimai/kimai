@@ -58,21 +58,29 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
     {
         $format = $this->configuration->find('invoice.number_format');
         $invoiceDate = $this->model->getInvoiceDate();
-        $result = $format;
 
-        preg_match_all('/{[^}]*?}/', $format, $matches);
-        foreach ($matches[0] as $part) {
-            $partialResult = $this->parseReplacer($invoiceDate, $part);
-            $result = str_replace($part, $partialResult, $result);
-        }
+        $loops = 0;
+        $increaseBy = 0;
+
+        do {
+            $result = $format;
+
+            preg_match_all('/{[^}]*?}/', $format, $matches);
+
+            foreach ($matches[0] as $part) {
+                $partialResult = $this->parseReplacer($invoiceDate, $part, $increaseBy);
+                $result = str_replace($part, $partialResult, $result);
+            }
+
+            $increaseBy++;
+        } while ($this->repository->hasInvoice($result) && $loops++ < 99);
 
         return (string) $result;
     }
 
-    private function parseReplacer(\DateTime $invoiceDate, string $originalFormat): string
+    private function parseReplacer(\DateTime $invoiceDate, string $originalFormat, int $increaseBy): string
     {
         $formatterLength = null;
-        $increaseBy = 0;
         $formatPattern = str_replace(['{', '}'], '', $originalFormat);
 
         $parts = preg_split('/([+\-,])+/', $formatPattern, -1, PREG_SPLIT_DELIM_CAPTURE);

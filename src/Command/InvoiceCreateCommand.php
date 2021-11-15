@@ -63,6 +63,7 @@ class InvoiceCreateCommand extends Command
      * @var string|null
      */
     private $previewDirectory;
+    private $previewUniqueFile = false;
 
     public function __construct(
         ServiceInvoice $serviceInvoice,
@@ -104,6 +105,7 @@ class InvoiceCreateCommand extends Command
             ->addOption('search', null, InputOption::VALUE_OPTIONAL, 'Search term to filter invoice entries', null)
             ->addOption('exported', null, InputOption::VALUE_OPTIONAL, 'Exported filter for invoice entries (possible values: exported, all), by default only "not exported" items are fetched', null)
             ->addOption('preview', null, InputOption::VALUE_OPTIONAL, 'Absolute path for a rendered preview of the invoice, which will neither be saved nor the items be marked as exported.', null)
+            ->addOption('preview-unique', null, InputOption::VALUE_NONE, 'Adds a unique part to the filename of the generated invoice preview file, so there is no chance that they get overwritten on same project name.')
         ;
     }
 
@@ -225,6 +227,7 @@ class InvoiceCreateCommand extends Command
 
         $markAsExported = false;
         if ($input->getOption('preview') !== null) {
+            $this->previewUniqueFile = $input->getOption('preview-unique');
             $this->previewDirectory = rtrim($input->getOption('preview'), '/') . '/';
             if (!is_dir($this->previewDirectory) || !is_writable($this->previewDirectory)) {
                 $io->error('Invalid preview directory given');
@@ -350,8 +353,9 @@ class InvoiceCreateCommand extends Command
                     $filename = $filename[1];
                 }
             }
-            // depending on your setup, this might be a good idea
-            // $filename = uniqid() . $filename;
+            if ($this->previewUniqueFile) {
+                $filename = uniqid('invoice_') . $filename;
+            }
         }
 
         if ($response instanceof BinaryFileResponse) {
