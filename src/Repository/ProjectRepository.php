@@ -372,7 +372,9 @@ class ProjectRepository extends EntityRepository
         // begin > from and end < to
         // ... and more ...
         $times = $this->addProjectStartAndEndDate($qb, $query->getProjectStart(), $query->getProjectEnd());
-        $qb->andWhere($times);
+        if ($times->count() > 0) {
+            $qb->andWhere($times);
+        }
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser());
 
