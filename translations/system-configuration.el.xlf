@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="el" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
@@ -7,8 +7,8 @@
         <target>Ρυθμίσεις</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
-        <target>Δελτίο ωρών απασχόλησης</target>
+        <source>Time tracking</source>
+        <target state="translated">Παρακολούθηση Χρόνου</target>
       </trans-unit>
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
         <source>label.timesheet.mode</source>
-        <target>Λειτουργία παρακολούθησης ωρών</target>
+        <target>Λειτουργία παρακολούθησης χρόνου</target>
       </trans-unit>
       <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
         <source>label.timesheet.mode_default</source>
@@ -200,7 +200,7 @@
       </trans-unit>
       <trans-unit id="DY_cM92" resname="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
-        <target>Προεπιλεγμένη ώρα έναρξης (δεν χρησιμοποιείται σε όλες τις λειτουργίες καταγραφής ωρών)</target>
+        <target>Προεπιλεγμένη ώρα έναρξης (δεν χρησιμοποιείται σε όλες τις λειτουργίες καταγραφής χρόνου)</target>
       </trans-unit>
       <trans-unit id="cRbnwyP" resname="label.simple_form">
         <source>label.simple_form</source>

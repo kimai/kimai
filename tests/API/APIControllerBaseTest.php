@@ -283,6 +283,12 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                 ];
 
             // embedded meta data
+            case 'UserPreference':
+                return [
+                    'name' => 'string',
+                    'value' => '@string',
+                ];
+
             case 'CustomerMeta':
             case 'ProjectMeta':
             case 'ActivityMeta':
@@ -321,6 +327,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'timezone' => 'string',
                     'accountNumber' => '@string',
                     'memberships' => ['result' => 'array', 'type' => 'TeamMembership'],
+                    'preferences' => ['result' => 'array', 'type' => 'UserPreference'],
                 ];
 
             // if a team is embedded

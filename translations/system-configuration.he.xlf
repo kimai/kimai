@@ -7,8 +7,8 @@
         <target>הגדרות</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
-        <target>גיליון שעות</target>
+        <source>Time tracking</source>
+        <target>מעקב אחר שעות</target>
       </trans-unit>
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>

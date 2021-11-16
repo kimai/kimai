@@ -7,8 +7,8 @@
         <target>Setari</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
-        <target>Pontaj</target>
+        <source>Time tracking</source>
+        <target>Monitorizarea timpului</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
