@@ -176,19 +176,43 @@ class CustomerControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
+
+        $token = self::$container->get('security.csrf.token_manager')->getToken('customer.delete_comment');
+
         $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-msg');
         self::assertStringContainsString('Blah foo bar', $node->html());
         $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.confirmation-link');
-        self::assertStringEndsWith('/comment_delete', $node->attr('href'));
+        self::assertStringEndsWith('/comment_delete/' . $token, $node->attr('href'));
+
+        $comments = $this->getEntityManager()->getRepository(CustomerComment::class)->findAll();
+        $id = $comments[0]->getId();
+
+        $this->request($client, '/admin/customer/' . $id . '/comment_delete/' . $token);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-body');
+        self::assertStringContainsString('There were no comments posted yet', $node->html());
+    }
+
+    public function testDeleteCommentActionWithoutToken()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
+        $form = $client->getCrawler()->filter('form[name=customer_comment_form]')->form();
+        $client->submit($form, [
+            'customer_comment_form' => [
+                'message' => 'Blah foo bar',
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
 
         $comments = $this->getEntityManager()->getRepository(CustomerComment::class)->findAll();
         $id = $comments[0]->getId();
 
         $this->request($client, '/admin/customer/' . $id . '/comment_delete');
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-body');
-        self::assertStringContainsString('There were no comments posted yet', $node->html());
+
+        $this->assertRouteNotFound($client);
     }
 
     public function testPinCommentAction()
