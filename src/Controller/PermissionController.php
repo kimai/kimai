@@ -209,7 +209,7 @@ final class PermissionController extends AbstractController
     public function deleteRole(Role $role, string $csrfToken, UserRepository $userRepository, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$this->isCsrfTokenValid(self::TOKEN_NAME, $csrfToken)) {
-            $this->flashUpdateException(new \Exception('Invalid CSRF token'));
+            $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('admin_user_permissions');
         }

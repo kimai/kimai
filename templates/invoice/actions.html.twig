@@ -30,6 +30,6 @@
 
 {% macro invoice_template(template, view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'invoice_template', view, {'template': template}) %}
+    {% set event = actions(app.user, 'invoice_template', view, {'template': template, 'token': csrf_token('invoice.delete_template')}) %}
     {{ widgets.table_actions(event.actions) }}
 {% endmacro %}
