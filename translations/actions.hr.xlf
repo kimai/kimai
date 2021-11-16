@@ -98,7 +98,7 @@
         <source>filter</source>
         <target>Filtriraj podatke</target>
       </trans-unit>
-      <trans-unit id="7d1V9FU" resname="invoice.cancel">
+      <trans-unit id="SEyZupT" resname="invoice.cancel">
         <source>invoice.cancel</source>
         <target>Prekini račun</target>
       </trans-unit>

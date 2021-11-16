@@ -1276,7 +1276,7 @@
         <source>label.hours_24</source>
         <target>24 sata</target>
       </trans-unit>
-      <trans-unit id="Z1s7pAw" resname="status.canceled">
+      <trans-unit id="gT9W2pZ" resname="status.canceled">
         <source>status.canceled</source>
         <target>Prekinuti</target>
       </trans-unit>

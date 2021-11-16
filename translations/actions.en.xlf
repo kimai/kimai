@@ -94,7 +94,7 @@
         <source>invoice.paid</source>
         <target>Invoice paid</target>
       </trans-unit>
-      <trans-unit id="7d1V9FU" resname="invoice.cancel">
+      <trans-unit id="SEyZupT" resname="invoice.cancel">
         <source>invoice.cancel</source>
         <target>Cancel invoice</target>
       </trans-unit>

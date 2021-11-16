@@ -98,7 +98,7 @@
         <source>filter</source>
         <target>Filtrar por data</target>
       </trans-unit>
-      <trans-unit id="7d1V9FU" resname="invoice.cancel">
+      <trans-unit id="SEyZupT" resname="invoice.cancel">
         <source>invoice.cancel</source>
         <target>Cancelar fatura</target>
       </trans-unit>
