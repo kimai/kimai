@@ -1,4 +1,4 @@
-{% embed '@theme/embeds/card.html.twig' with {'form': form, 'comments': comments, 'route_pin': route_pin|default(null), 'route_delete': route_delete|default(null), 'delete_by_user': delete_by_user|default(false), 'csrf_delete': csrf_token(csrf_delete), 'csrf_pin': csrf_token(csrf_pin)} %}
+{% embed '@theme/embeds/card.html.twig' with {'form': form, 'comments': comments, 'route_pin': route_pin|default(null), 'route_delete': route_delete|default(null), 'delete_by_user': delete_by_user|default(false), 'csrf_delete': csrf_token(csrf_delete|default('comment.delete')), 'csrf_pin': csrf_token(csrf_pin|default('comment.pin'))} %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% block box_title %}{{ 'label.comment'|trans }}{% endblock %}
     {% block box_attributes %}id="comments_box"{% endblock %}

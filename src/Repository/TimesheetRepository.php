@@ -533,8 +533,8 @@ class TimesheetRepository extends EntityRepository
         $or->add($qb->expr()->between('t.end', ':begin', ':end'));
 
         $qb->select('t, p, a, c')
-                ->from(Timesheet::class, 't')
-                ->andWhere($qb->expr()->isNotNull('t.end'))
+            ->from(Timesheet::class, 't')
+            ->andWhere($qb->expr()->isNotNull('t.end'))
             ->andWhere($or)
             ->orderBy('t.begin', 'DESC')
             ->setParameter('begin', $begin)
