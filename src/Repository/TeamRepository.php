@@ -228,6 +228,8 @@ class TeamRepository extends EntityRepository
             $qb->setParameter('teamIds', array_unique($ids));
         }
 
-        $qb->andWhere($or);
+        if ($or->count() > 0) {
+            $qb->andWhere($or);
+        }
     }
 }
