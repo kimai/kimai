@@ -25,7 +25,7 @@ class Constants
     /**
      * The current release status, either "stable" or "dev"
      */
-    public const STATUS = 'dev';
+    public const STATUS = 'prod';
     /**
      * The software name
      */

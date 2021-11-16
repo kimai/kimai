@@ -120,32 +120,25 @@ class Kernel extends BaseKernel
             }
         } else {
             // ... or we load them dynamically from the plugins directory
-            foreach ($this->getBundleDirectories() as $bundleDir) {
-                $bundleName = $bundleDir->getRelativePathname();
-                $pluginClass = 'KimaiPlugin\\' . $bundleName . '\\' . $bundleName;
+            foreach ($this->getBundleClasses() as $pluginClass) {
                 yield new $pluginClass();
             }
         }
     }
 
-    private function getBundleDirectories(): array
+    private function getBundleClasses(): array
     {
         $pluginsDir = $this->getProjectDir() . '/var/plugins';
         if (!file_exists($pluginsDir)) {
             return [];
         }
 
-        $directories = [];
+        $plugins = [];
         $finder = new Finder();
         $finder->ignoreUnreadableDirs()->directories()->name('*Bundle');
         /** @var SplFileInfo $bundleDir */
         foreach ($finder->in($pluginsDir) as $bundleDir) {
             $bundleName = $bundleDir->getRelativePathname();
-
-            $bundleFilename = $bundleDir->getRealPath() . '/' . $bundleName . '.php';
-            if (!file_exists($bundleFilename)) {
-                continue;
-            }
 
             if (file_exists($bundleDir->getRealPath() . '/.disabled')) {
                 continue;
@@ -156,10 +149,10 @@ class Kernel extends BaseKernel
                 continue;
             }
 
-            $directories[] = $bundleDir;
+            $plugins[] = $pluginClass;
         }
 
-        return $directories;
+        return $plugins;
     }
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
@@ -223,7 +216,11 @@ class Kernel extends BaseKernel
 
         foreach ($this->bundles as $bundle) {
             if (strpos(\get_class($bundle), 'KimaiPlugin\\') !== false) {
-                $routes->import($bundle->getPath() . '/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
+                if (is_dir($bundle->getPath() . '/Resources/config/')) {
+                    $routes->import($bundle->getPath() . '/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
+                } elseif (is_dir($bundle->getPath() . '/config/')) {
+                    $routes->import($bundle->getPath() . '/config/routes' . self::CONFIG_EXTS, '/', 'glob');
+                }
             }
         }
     }

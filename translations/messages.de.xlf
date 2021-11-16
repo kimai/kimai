@@ -1083,7 +1083,7 @@
         <source>status.paid</source>
         <target>Bezahlt</target>
       </trans-unit>
-      <trans-unit id="Z1s7pAw" resname="status.canceled">
+      <trans-unit id="gT9W2pZ" resname="status.canceled">
         <source>status.canceled</source>
         <target>Storniert</target>
       </trans-unit>

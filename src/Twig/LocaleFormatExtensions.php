@@ -205,7 +205,7 @@ final class LocaleFormatExtensions extends AbstractExtension
 
     public function dateWeekday(DateTime $date): string
     {
-        return $this->dayName($date, true) . ', ' . $this->getFormatter()->dateFormat($date, 'd');
+        return $this->dayName($date, true) . ' ' . $this->getFormatter()->dateFormat($date, 'd');
     }
 
     /**

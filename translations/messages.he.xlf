@@ -1201,9 +1201,13 @@
         <source>label.budgetType_full</source>
         <target>מחזור חיים</target>
       </trans-unit>
-      <trans-unit id="Z1s7pAw" resname="status.canceled">
+      <trans-unit id="gT9W2pZ" resname="status.canceled">
         <source>status.canceled</source>
         <target>בוטל</target>
+      </trans-unit>
+      <trans-unit id="61p_ckr" resname="label.hours_24">
+        <source>label.hours_24</source>
+        <target>24 שעות</target>
       </trans-unit>
     </body>
   </file>
