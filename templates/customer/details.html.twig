@@ -139,7 +139,7 @@
     {% if comments is not null %}
         {% set options = {'form': commentForm, 'comments': comments} %}
         {% if can_edit %}
-            {% set options = options|merge({'route_pin': 'customer_comment_pin', 'route_delete': 'customer_comment_delete'}) %}
+            {% set options = options|merge({'route_pin': 'customer_comment_pin', 'route_delete': 'customer_comment_delete', 'csrf_delete': 'customer.delete_comment', 'csrf_pin': 'customer.pin_comment'}) %}
         {% endif %}
         {{ include('embeds/comments.html.twig', options) }}
     {% endif %}
