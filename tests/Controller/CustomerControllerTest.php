@@ -235,12 +235,14 @@ class CustomerControllerTest extends ControllerBaseTest
         $comments = $this->getEntityManager()->getRepository(CustomerComment::class)->findAll();
         $id = $comments[0]->getId();
 
-        $this->request($client, '/admin/customer/' . $id . '/comment_pin');
+        $token = self::$container->get('security.csrf.token_manager')->getToken('customer.pin_comment');
+
+        $this->request($client, '/admin/customer/' . $id . '/comment_pin/' . $token);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.btn.active');
         self::assertEquals(1, $node->count());
-        self::assertEquals($this->createUrl('/admin/customer/' . $id . '/comment_pin'), $node->attr('href'));
+        self::assertEquals($this->createUrl('/admin/customer/' . $id . '/comment_pin/' . $token), $node->attr('href'));
     }
 
     public function testCreateDefaultTeamAction()
