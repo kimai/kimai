@@ -1275,6 +1275,10 @@
         <source>status.canceled</source>
         <target>İptal edildi</target>
       </trans-unit>
+      <trans-unit id="61p_ckr" resname="label.hours_24">
+        <source>label.hours_24</source>
+        <target>24 saat</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

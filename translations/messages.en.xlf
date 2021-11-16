@@ -333,7 +333,7 @@
         <source>label.skin</source>
         <target>Display: colors</target>
       </trans-unit>
-      <trans-unit id="O40d_3K" resname="Display: layout">
+      <trans-unit id="O40d_3K" resname="theme.layout">
         <source>Display: layout</source>
         <target state="needs-translation">Display: layout</target>
       </trans-unit>
