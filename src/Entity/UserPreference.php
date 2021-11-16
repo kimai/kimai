@@ -11,6 +11,7 @@ namespace App\Entity;
 
 use App\Form\Type\YesNoType;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Validator\Constraint;
@@ -23,6 +24,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @ORM\UniqueConstraint(columns={"user_id", "name"})
  *      }
  * )
+ *
+ * @Serializer\ExclusionPolicy("all")
  */
 class UserPreference
 {
@@ -30,6 +33,7 @@ class UserPreference
     public const INTERNAL_RATE = 'internal_rate';
     public const SKIN = 'skin';
     public const LOCALE = 'language';
+    public const HOUR_24 = 'hours_24';
     public const TIMEZONE = 'timezone';
     public const FIRST_WEEKDAY = 'first_weekday';
 
@@ -52,6 +56,9 @@ class UserPreference
     /**
      * @var string
      *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
      * @Assert\NotNull()
      * @Assert\Length(min=2, max=50, allowEmptyString=false)
@@ -59,6 +66,9 @@ class UserPreference
     private $name;
     /**
      * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="value", type="string", length=255, nullable=true)
      */

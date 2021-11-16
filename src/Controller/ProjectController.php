@@ -43,6 +43,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * Controller used to manage projects.
@@ -179,12 +181,20 @@ final class ProjectController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/comment_delete", name="project_comment_delete", methods={"GET"})
+     * @Route(path="/{id}/comment_delete/{token}", name="project_comment_delete", methods={"GET"})
      * @Security("is_granted('edit', comment.getProject()) and is_granted('comments', comment.getProject())")
      */
-    public function deleteCommentAction(ProjectComment $comment)
+    public function deleteCommentAction(ProjectComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager)
     {
         $projectId = $comment->getProject()->getId();
+
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('project.delete_comment', $token))) {
+            $this->flashError('action.csrf.error');
+
+            return $this->redirectToRoute('project_details', ['id' => $projectId]);
+        }
+
+        $csrfTokenManager->refreshToken($token);
 
         try {
             $this->repository->deleteComment($comment);
@@ -218,11 +228,21 @@ final class ProjectController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/comment_pin", name="project_comment_pin", methods={"GET"})
+     * @Route(path="/{id}/comment_pin/{token}", name="project_comment_pin", methods={"GET"})
      * @Security("is_granted('edit', comment.getProject()) and is_granted('comments', comment.getProject())")
      */
-    public function pinCommentAction(ProjectComment $comment)
+    public function pinCommentAction(ProjectComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager)
     {
+        $projectId = $comment->getProject()->getId();
+
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('project.pin_comment', $token))) {
+            $this->flashError('action.csrf.error');
+
+            return $this->redirectToRoute('project_details', ['id' => $projectId]);
+        }
+
+        $csrfTokenManager->refreshToken($token);
+
         $comment->setPinned(!$comment->isPinned());
         try {
             $this->repository->saveComment($comment);
@@ -230,7 +250,7 @@ final class ProjectController extends AbstractController
             $this->flashUpdateException($ex);
         }
 
-        return $this->redirectToRoute('project_details', ['id' => $comment->getProject()->getId()]);
+        return $this->redirectToRoute('project_details', ['id' => $projectId]);
     }
 
     /**

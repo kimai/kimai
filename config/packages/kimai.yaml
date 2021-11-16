@@ -91,6 +91,7 @@ kimai:
             CUSTOMERS_TEAMLEAD: ['view_teamlead_customer','budget_teamlead_customer','comments_teamlead_customer','comments_create_teamlead_customer','details_teamlead_customer']
             INVOICE: ['view_invoice','create_invoice']
             INVOICE_ADMIN: ['manage_invoice_template']
+            INVOICE_ALL: ['delete_invoice']
             TIMESHEET: ['view_own_timesheet','start_own_timesheet','stop_own_timesheet','create_own_timesheet','edit_own_timesheet','export_own_timesheet','delete_own_timesheet','weekly_own_timesheet']
             TIMESHEET_OTHER: ['view_other_timesheet','start_other_timesheet','stop_other_timesheet','create_other_timesheet','edit_other_timesheet','export_other_timesheet','delete_other_timesheet']
             PROFILE: ['view_own_profile','edit_own_profile','password_own_profile','preferences_own_profile','api-token_own_profile']
@@ -120,7 +121,7 @@ kimai:
             ROLE_ADMIN: ['ROLE_ADMIN']
             ROLE_SUPER_ADMIN: ['ROLE_SUPER_ADMIN']
             # only here to register the (partially) unused permissions in the UI
-            ROLE_FAKE: ['CUSTOMERS_ALL_TEAMLEAD','CUSTOMERS_ALL_TEAM','PROJECTS_ALL_TEAMLEAD','PROJECTS_ALL_TEAM','ACTIVITIES_ALL_TEAMLEAD','ACTIVITIES_ALL_TEAM']
+            ROLE_FAKE: ['CUSTOMERS_ALL_TEAMLEAD','CUSTOMERS_ALL_TEAM','PROJECTS_ALL_TEAMLEAD','PROJECTS_ALL_TEAM','ACTIVITIES_ALL_TEAMLEAD','ACTIVITIES_ALL_TEAM','INVOICE_ALL']
         # add or remove single permissions
         roles:
             ROLE_USER: []
@@ -214,91 +215,74 @@ kimai:
 # --------------------------------------------------------------------------------
     languages:
         cs:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m H:i'
         da:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         de:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         de_AT:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         de_CH:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         el:  
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         en:
-            date_time_type: 'yyyy-MM-dd HH:mm'
             date_type: 'yyyy-MM-dd'
             date: 'Y-m-d'
             date_time: 'm-d H:i'
             duration: '%%h:%%m h'
         es:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         fi:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         fr:
-            date_time_type: 'dd/MM/yyyy HH:mm'
             date_type: 'dd/MM/yyyy'
             date: 'd/m/Y'
             date_time: 'd/m H:i'
             duration: '%%h h %%m'
         he:
-            date_time_type: 'dd/MM/yyyy HH:mm'
             date_type: 'dd/MM/yyyy'
             date: 'd/m/Y'
             date_time: 'd/m H:i'
             duration: '%%h:%%m'
         hu:
-            date_time_type: 'yyyy.MM.dd. HH:mm'
             date_type: 'yyyy.MM.dd.'
             date: 'Y.m.d.'
             date_time: 'm.d. H:i'
         it:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         nl:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
             duration: '%%hu%%m'
         pt_BR:
-            date_time_type: 'dd-MM-yyyy HH:mm'
             date_type: 'dd-MM-yyyy'
             date: 'd-m-Y'
             date_time: 'd-m H:i'
         ru:
-            date_time_type: 'dd.MM.yyyy HH:mm'
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
         sk:
-            date_time_type: 'dd. MM. yyyy HH:mm'
             date_type: 'dd. MM. yyyy'
             date: 'd. m. Y'
             date_time: 'd. m.  H:i'
@@ -306,7 +290,6 @@ kimai:
             duration: '%%h:%%m tim'
             date_time: 'd/m H:i'
         pl:
-            date_time_type: 'dd. MM. yyyy HH:mm'
             date_type: 'dd. MM. yyyy'
             date: 'd. m. Y'
             date_time: 'd. m.  H:i'

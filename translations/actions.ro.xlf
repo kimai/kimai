@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
-        <target>Pontaje</target>
+        <target>Fișe de pontaj</target>
       </trans-unit>
       <trans-unit id="tsRYY4d" resname="customer">
         <source>customer</source>

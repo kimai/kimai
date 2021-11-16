@@ -15,6 +15,8 @@ use PackageVersions\Versions;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @Route(path="/doctor")
@@ -56,11 +58,19 @@ class DoctorController extends AbstractController
     }
 
     /**
-     * @Route(path="/flush-log", name="doctor_flush_log", methods={"GET"})
+     * @Route(path="/flush-log/{token}", name="doctor_flush_log", methods={"GET"})
      * @Security("is_granted('system_configuration')")
      */
-    public function deleteLogfileAction(): Response
+    public function deleteLogfileAction(string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('doctor.flush_log', $token))) {
+            $this->flashError('action.csrf.error');
+
+            return $this->redirectToRoute('doctor');
+        }
+
+        $csrfTokenManager->refreshToken($token);
+
         $logfile = $this->getLogFilename();
 
         if (file_exists($logfile)) {

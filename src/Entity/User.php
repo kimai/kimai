@@ -357,6 +357,45 @@ class User implements UserInterface, EquatableInterface, \Serializable, ThemeUse
     }
 
     /**
+     * Read-only list of of all visible user preferences.
+     *
+     * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("preferences"),
+     * @Serializer\Groups({"User_Entity"})
+     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/UserPreference"))
+     *
+     * @internal only for API usage
+     * @return UserPreference[]
+     */
+    public function getVisiblePreferences(): array
+    {
+        // hide all internal preferences, which are either available in other fields
+        // or which are only used within the Kimai UI
+        $skip = [
+            UserPreference::TIMEZONE,
+            UserPreference::LOCALE,
+            UserPreference::SKIN,
+            'calendar.initial_view',
+            'login.initial_view',
+            'reporting.initial_view',
+            'theme.collapsed_sidebar',
+            'theme.layout',
+            'theme.update_browser_title',
+            'timesheet.daily_stats',
+            'timesheet.export_decimal',
+        ];
+
+        $all = [];
+        foreach ($this->preferences as $preference) {
+            if ($preference->isEnabled() && !\in_array($preference->getName(), $skip)) {
+                $all[] = $preference;
+            }
+        }
+
+        return $all;
+    }
+
+    /**
      * @return Collection<UserPreference>
      */
     public function getPreferences(): Collection
@@ -411,6 +450,20 @@ class User implements UserInterface, EquatableInterface, \Serializable, ThemeUse
         }
 
         return null;
+    }
+
+    public function getTimeFormat(): string
+    {
+        if ($this->is24Hour()) {
+            return 'H:i';
+        }
+
+        return 'h:i A';
+    }
+
+    public function is24Hour(): bool
+    {
+        return (bool) $this->getPreferenceValue(UserPreference::HOUR_24, true);
     }
 
     /**

@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
-        <target>Fiches de temps</target>
+        <target>Feuille d'heures</target>
       </trans-unit>
       <trans-unit id="tsRYY4d" resname="customer">
         <source>customer</source>
@@ -97,6 +97,10 @@
       <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>
         <target>Filtrer les données</target>
+      </trans-unit>
+      <trans-unit id="SEyZupT" resname="invoice.cancel">
+        <source>invoice.cancel</source>
+        <target>Annuler la facture</target>
       </trans-unit>
     </body>
   </file>

@@ -72,11 +72,11 @@
         <source>label.remove_default</source>
         <target>Suchfavorit löschen</target>
       </trans-unit>
-        <trans-unit id="label.remove_filter">
-            <source>label.remove_filter</source>
-            <target>Suchfilter zurücksetzen</target>
-        </trans-unit>
-        <trans-unit id="31x84Dt" resname="label.asc">
+      <trans-unit id="label.remove_filter">
+          <source>label.remove_filter</source>
+          <target>Suchfilter zurücksetzen</target>
+      </trans-unit>
+      <trans-unit id="31x84Dt" resname="label.asc">
         <source>label.asc</source>
         <target>Aufsteigend</target>
       </trans-unit>
@@ -1091,13 +1091,13 @@
         <source>status.paid</source>
         <target>Bezahlt</target>
       </trans-unit>
-      <trans-unit id="Z1s7pAw" resname="status.canceled">
+      <trans-unit id="gT9W2pZ" resname="status.canceled">
         <source>status.canceled</source>
         <target>Storniert</target>
       </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target>Überspringe Vorschau von %rows% weiteren Zeilen …</target>
+        <target>Überspringe Vorschau von %rows% weiteren Zeilen …</target>
       </trans-unit>
       <!--
               Export
@@ -1230,11 +1230,11 @@
       </trans-unit>
       <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
         <source>label.includeBudgetType_month</source>
-        <target>Einträge mit "Monats" Budget anzeigen</target>
+        <target>Einträge mit „Monats-Budget“ anzeigen</target>
       </trans-unit>
       <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
         <source>label.includeBudgetType_full</source>
-        <target>Einträge mit "Lebenszyklus" Budget anzeigen</target>
+        <target>Einträge mit „Lebenszyklus“-Budget anzeigen</target>
       </trans-unit>
       <trans-unit id="3zn5T5e" resname="label.not_exported">
         <source>label.not_exported</source>
@@ -1294,6 +1294,10 @@
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
         <target>Wochen-Arbeitsstunden</target>
+      </trans-unit>
+      <trans-unit id="61p_ckr" resname="label.hours_24">
+        <source>label.hours_24</source>
+        <target>24 Stunden</target>
       </trans-unit>
       <trans-unit id="pagination">
         <source>pagination</source>

@@ -81,7 +81,7 @@
         {% block box_title %}Logfile (max. {{ logLines }} last lines){% endblock %}
         {% block box_tools %}
             {% if log_delete %}
-                {{ widgets.card_tool_button('delete', {'class': 'confirmation-link', 'title': 'action.delete', 'url': path('doctor_flush_log'), 'attr': {'data-question': 'confirm.delete'}}) }}
+                {{ widgets.card_tool_button('delete', {'class': 'confirmation-link', 'title': 'action.delete', 'url': path('doctor_flush_log', {'token': csrf_token('doctor.flush_log')}), 'attr': {'data-question': 'confirm.delete'}}) }}
             {% endif %}
         {% endblock %}
         {% block box_body %}

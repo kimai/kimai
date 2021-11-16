@@ -395,7 +395,9 @@ class InvoiceControllerTest extends ControllerBaseTest
         $template = $this->importFixture($fixture);
         $id = $template[0]->getId();
 
-        $this->request($client, '/invoice/template/' . $id . '/delete');
+        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.delete_template');
+
+        $this->request($client, '/invoice/template/' . $id . '/delete/' . $token);
         $this->assertIsRedirect($client, '/invoice/template');
         $client->followRedirect();
 

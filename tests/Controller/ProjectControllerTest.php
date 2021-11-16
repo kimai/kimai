@@ -261,8 +261,10 @@ class ProjectControllerTest extends ControllerBaseTest
         $comments = $this->getEntityManager()->getRepository(ProjectComment::class)->findAll();
         $id = $comments[0]->getId();
 
-        self::assertEquals($this->createUrl('/admin/project/' . $id . '/comment_delete'), $node->attr('href'));
-        $this->request($client, '/admin/project/' . $id . '/comment_delete');
+        $token = self::$container->get('security.csrf.token_manager')->getToken('project.delete_comment');
+
+        self::assertEquals($this->createUrl('/admin/project/' . $id . '/comment_delete/' . $token), $node->attr('href'));
+        $this->request($client, '/admin/project/' . $id . '/comment_delete/' . $token);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.box#comments_box .box-body');
@@ -289,12 +291,14 @@ class ProjectControllerTest extends ControllerBaseTest
         $comments = $this->getEntityManager()->getRepository(ProjectComment::class)->findAll();
         $id = $comments[0]->getId();
 
-        $this->request($client, '/admin/project/' . $id . '/comment_pin');
+        $token = self::$container->get('security.csrf.token_manager')->getToken('project.pin_comment');
+
+        $this->request($client, '/admin/project/' . $id . '/comment_pin/' . $token);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.btn.active');
         self::assertEquals(1, $node->count());
-        self::assertEquals($this->createUrl('/admin/project/' . $id . '/comment_pin'), $node->attr('href'));
+        self::assertEquals($this->createUrl('/admin/project/' . $id . '/comment_pin/' . $token), $node->attr('href'));
     }
 
     public function testCreateDefaultTeamAction()

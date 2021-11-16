@@ -98,6 +98,10 @@
         <source>filter</source>
         <target>Filtre por data</target>
       </trans-unit>
+      <trans-unit id="SEyZupT" resname="invoice.cancel">
+        <source>invoice.cancel</source>
+        <target>Cancelar fatura</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

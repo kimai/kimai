@@ -235,6 +235,12 @@
 
         document.addEventListener('kimai.initialized', function() {
             KimaiReloadPageWidget.create('kimai.systemConfigUpdate', true);
+
+            {% if models|length > 0 %}
+            jQuery('body').on('change', '#{{ form.template.vars.id }}', function(event) {
+                document.getElementById('{{ form.vars.attr.id }}').submit();
+            });
+            {% endif %}
         });
 
     </script>

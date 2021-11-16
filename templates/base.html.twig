@@ -139,7 +139,7 @@
                     login: '{{ path('login') }}',
                     locale: '{{ app.request.locale }}',
                     first_dow_iso: {{ iso_day_by_name(app.user.firstDayOfWeek) }},
-                    twentyFourHours: {{ 'true'|hour24('false') }},
+                    twentyFourHours: {{ app.user.is24Hour() ? 'true' : 'false' }},
                     defaultColor: '{{ constant('App\\Constants::DEFAULT_COLOR') }}',
                     updateBrowserTitle: {% if app.user.preferenceValue('theme.update_browser_title') %}true{% else %}false{% endif %}
                 },

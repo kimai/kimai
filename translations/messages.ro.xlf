@@ -1185,6 +1185,18 @@
         <source>quick_entry.title</source>
         <target>Ore de lucru săptămânale</target>
       </trans-unit>
+      <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
+        <source>label.includeBudgetType_full</source>
+        <target>Afișați intrările cu mențiunea "ciclu de viață" buget</target>
+      </trans-unit>
+      <trans-unit id="9Rhadz6" resname="label.budgetType_full">
+        <source>label.budgetType_full</source>
+        <target>Ciclul de viață</target>
+      </trans-unit>
+      <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
+        <source>label.includeBudgetType_month</source>
+        <target>Afișați intrările cu buget "lunar"</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

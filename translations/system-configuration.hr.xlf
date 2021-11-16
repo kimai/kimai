@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="hr" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
@@ -10,9 +10,9 @@
         <source>subtitle</source>
         <target>Promijeni globalne konfiguracije evidentiranja vremena</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
-        <target>Vremenska tablica</target>
+      <trans-unit id="ycErWZK" resname="timesheet">
+        <source>Time tracking</source>
+        <target>Praćenje vremena</target>
       </trans-unit>
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>

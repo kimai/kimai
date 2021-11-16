@@ -258,7 +258,7 @@ final class InvoiceController extends AbstractController
     public function deleteInvoiceAction(Invoice $invoice, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.delete', $token))) {
-            $this->flashError('action.delete.error');
+            $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('admin_invoice_list');
         }
@@ -449,11 +449,19 @@ final class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/template/{id}/delete", name="admin_invoice_template_delete", methods={"GET", "POST"})
+     * @Route(path="/template/{id}/delete/{token}", name="admin_invoice_template_delete", methods={"GET", "POST"})
      * @Security("is_granted('manage_invoice_template')")
      */
-    public function deleteTemplate(InvoiceTemplate $template): Response
+    public function deleteTemplate(InvoiceTemplate $template, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.delete_template', $token))) {
+            $this->flashError('action.csrf.error');
+
+            return $this->redirectToRoute('admin_invoice_template');
+        }
+
+        $csrfTokenManager->refreshToken($token);
+
         try {
             $this->templateRepository->removeTemplate($template);
             $this->flashSuccess('action.delete.success');

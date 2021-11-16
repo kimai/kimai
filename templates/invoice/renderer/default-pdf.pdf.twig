@@ -102,6 +102,7 @@ mpdf-->
         </thead>
         <tbody>
         {% for id, entry in model.calculator.entries %}
+            <!-- CONTENT_PART -->
             {% set duration = entry.duration|duration(isDecimal) %}
             {% if entry.fixedRate %}
                 {% set rate = entry.fixedRate %}

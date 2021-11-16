@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
-        <target>גיליון שעות</target>
+        <target>גיליונות שעות</target>
       </trans-unit>
       <trans-unit id="tsRYY4d" resname="customer">
         <source>customer</source>
@@ -97,6 +97,10 @@
       <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>
         <target>סינון נתונים</target>
+      </trans-unit>
+      <trans-unit id="SEyZupT" resname="invoice.cancel">
+        <source>invoice.cancel</source>
+        <target>ביטול חשבונית</target>
       </trans-unit>
     </body>
   </file>

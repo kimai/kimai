@@ -305,7 +305,7 @@
                 |
                 <label for="begin-format">
                     {{ 'label.begin'|trans }}:
-                    {% set demo_date = create_date('2020-01-01 13:00:00') %}
+                    {% set demo_date = create_date('2020-01-01 11:00:00') %}
                     <select id="begin-format" name="begin-format">
                         <option value="plain">{{ demo_date|date_format('H:i') }}</option>
                         <option value="time">{{ demo_date|date_time }}</option>
