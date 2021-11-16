@@ -36,7 +36,7 @@ class InvoiceTemplateSubscriber extends AbstractActionsSubscriber
             }
             $event->addAction('edit', ['url' => $this->path('admin_invoice_template_edit', ['id' => $template->getId()]), 'class' => 'modal-ajax-form']);
             $event->addAction('copy', ['url' => $this->path('admin_invoice_template_copy', ['id' => $template->getId()])]);
-            $event->addDelete($this->path('admin_invoice_template_delete', ['id' => $template->getId()]), false);
+            $event->addDelete($this->path('admin_invoice_template_delete', ['id' => $template->getId(), 'token' => $payload['token']]), false);
         }
     }
 }

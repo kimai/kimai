@@ -64,7 +64,7 @@ class DoctorController extends AbstractController
     public function deleteLogfileAction(string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$csrfTokenManager->isTokenValid(new CsrfToken('doctor.flush_log', $token))) {
-            $this->flashError('action.delete.error');
+            $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('doctor');
         }
