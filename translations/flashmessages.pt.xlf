@@ -54,6 +54,10 @@
         <source>action.upload.error</source>
         <target>Não foi possível enviar ou guardar o ficheiro: %reason%</target>
       </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R">
+        <source>action.csrf.error</source>
+        <target>Não foi possível realizar a ação: token de segurança inválido.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
