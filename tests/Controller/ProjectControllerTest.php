@@ -216,7 +216,9 @@ class ProjectControllerTest extends ControllerBaseTest
         $em->persist($rate);
         $em->flush();
 
-        $this->request($client, '/admin/project/1/duplicate');
+        $token = self::$container->get('security.csrf.token_manager')->getToken('project.duplicate');
+
+        $this->request($client, '/admin/project/1/duplicate/' . $token);
         $this->assertIsRedirect($client, '/details');
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.box#project_rates_box');
