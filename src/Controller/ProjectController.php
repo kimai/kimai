@@ -428,6 +428,8 @@ final class ProjectController extends AbstractController
     {
         $newProject = $projectDuplicationService->duplicate($project, $project->getName() . ' [COPY]');
 
+        $this->flashSuccess('action.update.success');
+
         return $this->redirectToRoute('project_details', ['id' => $newProject->getId()]);
     }
 
