@@ -44,7 +44,7 @@ final class Version20210802152814 extends AbstractMigration
 
         $fetch->free();
 
-        $this->preventEmptyMigrationWarning();
+        $this->addSql('ALTER TABLE kimai2_timesheet ALTER date_tz DROP DEFAULT');
     }
 
     public function down(Schema $schema): void
