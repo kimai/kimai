@@ -421,11 +421,19 @@ final class ProjectController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/duplicate", name="admin_project_duplicate", methods={"GET", "POST"})
+     * @Route(path="/{id}/duplicate/{token}", name="admin_project_duplicate", methods={"GET", "POST"})
      * @Security("is_granted('edit', project)")
      */
-    public function duplicateAction(Project $project, Request $request, ProjectDuplicationService $projectDuplicationService)
+    public function duplicateAction(Project $project, string $token, ProjectDuplicationService $projectDuplicationService, CsrfTokenManagerInterface $csrfTokenManager)
     {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('project.duplicate', $token))) {
+            $this->flashError('action.csrf.error');
+
+            return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
+        }
+
+        $csrfTokenManager->refreshToken($token);
+
         $newProject = $projectDuplicationService->duplicate($project, $project->getName() . ' [COPY]');
 
         $this->flashSuccess('action.update.success');

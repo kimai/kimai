@@ -34,7 +34,7 @@ class TeamSubscriber extends AbstractActionsSubscriber
             $event->addAction('edit', ['url' => $this->path('admin_team_edit', ['id' => $team->getId()])]);
 
             if ($this->isGranted('create_team')) {
-                $event->addAction('copy', ['url' => $this->path('team_duplicate', ['id' => $team->getId()])]);
+                $event->addAction('copy', ['url' => $this->path('team_duplicate', ['id' => $team->getId(), 'token' => $payload['token']])]);
             }
         }
 

@@ -708,7 +708,9 @@ class TimesheetControllerTest extends ControllerBaseTest
         $ids = $this->importFixture($fixture);
         $newId = $ids[0]->getId();
 
-        $this->request($client, '/timesheet/' . $newId . '/duplicate');
+        $token = self::$container->get('security.csrf.token_manager')->getToken('timesheet.duplicate');
+
+        $this->request($client, '/timesheet/' . $newId . '/duplicate/' . $token);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();

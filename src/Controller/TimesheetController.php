@@ -21,6 +21,8 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @Route(path="/timesheet")
@@ -60,12 +62,20 @@ class TimesheetController extends TimesheetAbstractController
     }
 
     /**
-     * @Route(path="/{id}/duplicate", name="timesheet_duplicate", methods={"GET", "POST"})
+     * @Route(path="/{id}/duplicate/{token}", name="timesheet_duplicate", methods={"GET", "POST"})
      * @Security("is_granted('duplicate', entry)")
      */
-    public function duplicateAction(Timesheet $entry, Request $request): Response
+    public function duplicateAction(Timesheet $entry, Request $request, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
-        return $this->duplicate($entry, $request, 'timesheet/edit.html.twig');
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('timesheet.duplicate', $token))) {
+            $this->flashError('action.csrf.error');
+
+            return $this->redirectToRoute('timesheet');
+        }
+
+        $csrfTokenManager->refreshToken($token);
+
+        return $this->duplicate($entry, $request, 'timesheet/edit.html.twig', $token);
     }
 
     /**
@@ -100,8 +110,8 @@ class TimesheetController extends TimesheetAbstractController
         return $this->generateCreateForm($entry, TimesheetEditForm::class, $this->generateUrl('timesheet_create'));
     }
 
-    protected function getDuplicateForm(Timesheet $entry, Timesheet $original): FormInterface
+    protected function getDuplicateForm(Timesheet $entry, Timesheet $original, string $token): FormInterface
     {
-        return $this->generateCreateForm($entry, TimesheetEditForm::class, $this->generateUrl('timesheet_duplicate', ['id' => $original->getId()]));
+        return $this->generateCreateForm($entry, TimesheetEditForm::class, $this->generateUrl('timesheet_duplicate', ['id' => $original->getId(), 'token' => $token]));
     }
 }
