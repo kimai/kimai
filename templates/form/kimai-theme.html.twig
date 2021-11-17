@@ -158,10 +158,8 @@
         <a class="btn btn-default" href="#" onclick="return false;">
             <span id="{{ form.vars.id }}_week_number" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': week|date_format('W')}) }}">
                 {{ week|month_name(true) }}
-                {% if week|date_format('m') != nextWeek|date_format('m') %}
-                    &ndash;
-                    {{ nextWeek|month_name(true) }}
-                {% endif %}
+                &ndash;
+                {{ 'stats.workingTimeWeekShort'|trans({'%week%': week|date_format('W')}) }}
             </span>
         </a>
         <a class="btn btn-default btn-right" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ nextWeek|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': nextWeek|date_format('W')}) }}">
