@@ -29,6 +29,8 @@ final class Version20211008092010 extends AbstractMigration
         $projects = $schema->getTable('kimai2_projects');
         $column = $projects->getColumn('order_number');
         $column->setOptions(['length' => 50]);
+
+        $this->preventEmptyMigrationWarning();
     }
 
     public function down(Schema $schema): void
