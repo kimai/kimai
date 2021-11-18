@@ -94,7 +94,7 @@ final class TeamController extends AbstractController
             return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
         }
 
-        $csrfTokenManager->refreshToken($token);
+        $csrfTokenManager->refreshToken('team.duplicate');
 
         $newTeam = clone $team;
         $newTeam->setName($team->getName() . ' [COPY]');

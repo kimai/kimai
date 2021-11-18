@@ -172,7 +172,7 @@ final class CustomerController extends AbstractController
             return $this->redirectToRoute('customer_details', ['id' => $customerId]);
         }
 
-        $csrfTokenManager->refreshToken($token);
+        $csrfTokenManager->refreshToken('customer.delete_comment');
 
         try {
             $this->repository->deleteComment($comment);
@@ -219,7 +219,7 @@ final class CustomerController extends AbstractController
             return $this->redirectToRoute('customer_details', ['id' => $customerId]);
         }
 
-        $csrfTokenManager->refreshToken($token);
+        $csrfTokenManager->refreshToken('customer.pin_comment');
 
         $comment->setPinned(!$comment->isPinned());
         try {

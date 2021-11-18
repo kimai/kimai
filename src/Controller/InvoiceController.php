@@ -265,7 +265,7 @@ final class InvoiceController extends AbstractController
             return $this->redirectToRoute('admin_invoice_list');
         }
 
-        $csrfTokenManager->refreshToken($token);
+        $csrfTokenManager->refreshToken('invoice.delete');
 
         try {
             $this->service->deleteInvoice($invoice);
@@ -462,7 +462,7 @@ final class InvoiceController extends AbstractController
             return $this->redirectToRoute('admin_invoice_template');
         }
 
-        $csrfTokenManager->refreshToken($token);
+        $csrfTokenManager->refreshToken('invoice.delete_template');
 
         try {
             $this->templateRepository->removeTemplate($template);

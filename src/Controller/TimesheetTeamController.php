@@ -84,7 +84,7 @@ class TimesheetTeamController extends TimesheetAbstractController
             return $this->redirectToRoute('admin_timesheet');
         }
 
-        $csrfTokenManager->refreshToken($token);
+        $csrfTokenManager->refreshToken('admin_timesheet.duplicate');
 
         return $this->duplicate($entry, $request, 'timesheet-team/edit.html.twig', $token);
     }

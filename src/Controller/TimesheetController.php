@@ -73,7 +73,7 @@ class TimesheetController extends TimesheetAbstractController
             return $this->redirectToRoute('timesheet');
         }
 
-        $csrfTokenManager->refreshToken($token);
+        $csrfTokenManager->refreshToken('timesheet.duplicate');
 
         return $this->duplicate($entry, $request, 'timesheet/edit.html.twig', $token);
     }
