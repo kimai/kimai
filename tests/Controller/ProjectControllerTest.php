@@ -228,6 +228,25 @@ class ProjectControllerTest extends ControllerBaseTest
         self::assertStringContainsString('123.45', $node->text(null, true));
     }
 
+    public function testDuplicateActionWithInvalidCsrf()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+        $project = $em->find(Project::class, 1);
+        $project->setMetaField((new ProjectMeta())->setName('foo')->setValue('bar'));
+        $project->setEnd(new \DateTime());
+        $em->persist($project);
+        $activity = new Activity();
+        $activity->setName('blub');
+        $activity->setProject($project);
+        $activity->setMetaField((new ActivityMeta())->setName('blub')->setValue('blab'));
+        $em->persist($activity);
+        $em->flush();
+
+        $this->assertInvalidCsrfToken($client, '/admin/project/1/duplicate/rsetdzfukgli78t6r5uedtjfzkugl', $this->createUrl('/admin/project/1/details'));
+    }
+
     public function testAddCommentAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
