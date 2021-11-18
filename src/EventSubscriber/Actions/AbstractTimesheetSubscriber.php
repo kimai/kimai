@@ -39,7 +39,7 @@ abstract class AbstractTimesheetSubscriber extends AbstractActionsSubscriber
 
             if ($this->isGranted('duplicate', $timesheet)) {
                 $class = $event->isView('edit') ? '' : 'modal-ajax-form';
-                $event->addAction('copy', ['url' => $this->path($routeDuplicate, ['id' => $timesheet->getId(), 'token' => $payload['token']]), 'class' => $class]);
+                $event->addAction('copy', ['url' => $this->path($routeDuplicate, ['id' => $timesheet->getId()]), 'class' => $class]);
             }
 
             if ($event->countActions() > 0) {

@@ -6,7 +6,7 @@
 
 {% macro timesheet(timesheet, view, options) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'timesheet', view, {'timesheet': timesheet, 'token': csrf_token('timesheet.duplicate')}) %}
+    {% set event = actions(app.user, 'timesheet', view, {'timesheet': timesheet}) %}
     {% if view == 'index' or view == 'custom' %}
         {{ widgets.table_actions(event.actions) }}
     {% else %}
