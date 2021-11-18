@@ -28,8 +28,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Csrf\CsrfToken;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @Route(path="/team/timesheet")
@@ -73,20 +71,12 @@ class TimesheetTeamController extends TimesheetAbstractController
     }
 
     /**
-     * @Route(path="/{id}/duplicate/{token}", name="admin_timesheet_duplicate", methods={"GET", "POST"})
+     * @Route(path="/{id}/duplicate", name="admin_timesheet_duplicate", methods={"GET", "POST"})
      * @Security("is_granted('duplicate', entry)")
      */
-    public function duplicateAction(Timesheet $entry, Request $request, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
+    public function duplicateAction(Timesheet $entry, Request $request): Response
     {
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('admin_timesheet.duplicate', $token))) {
-            $this->flashError('action.csrf.error');
-
-            return $this->redirectToRoute('admin_timesheet');
-        }
-
-        $csrfTokenManager->refreshToken('admin_timesheet.duplicate');
-
-        return $this->duplicate($entry, $request, 'timesheet-team/edit.html.twig', $token);
+        return $this->duplicate($entry, $request, 'timesheet-team/edit.html.twig');
     }
 
     /**
@@ -205,9 +195,9 @@ class TimesheetTeamController extends TimesheetAbstractController
         return $this->generateCreateForm($entry, TimesheetAdminEditForm::class, $this->generateUrl('admin_timesheet_create'));
     }
 
-    protected function getDuplicateForm(Timesheet $entry, Timesheet $original, string $token): FormInterface
+    protected function getDuplicateForm(Timesheet $entry, Timesheet $original): FormInterface
     {
-        return $this->generateCreateForm($entry, TimesheetAdminEditForm::class, $this->generateUrl('admin_timesheet_duplicate', ['id' => $original->getId(), 'token' => $token]));
+        return $this->generateCreateForm($entry, TimesheetAdminEditForm::class, $this->generateUrl('admin_timesheet_duplicate', ['id' => $original->getId()]));
     }
 
     protected function getPermissionEditExport(): string
