@@ -452,4 +452,33 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertEquals(2016, $timesheet->getFixedRate());
         $this->assertEquals(2016, $timesheet->getRate());
     }
+
+    public function testDuplicateActionWithInvalidCsrf()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $dateTime = new DateTimeFactory(new \DateTimeZone('Europe/London'));
+
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(1);
+        $fixture->setAmountRunning(0);
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
+        $fixture->setStartDate($dateTime->createDateTime());
+        $fixture->setCallback(function (Timesheet $timesheet) {
+            $timesheet->setDescription('Testing is fun!');
+            $begin = clone $timesheet->getBegin();
+            $begin->setTime(0, 0, 0);
+            $timesheet->setBegin($begin);
+            $end = clone $timesheet->getBegin();
+            $end->modify('+ 8 hours');
+            $timesheet->setEnd($end);
+            $timesheet->setFixedRate(2016);
+            $timesheet->setHourlyRate(127);
+        });
+
+        /** @var Timesheet[] $ids */
+        $ids = $this->importFixture($fixture);
+        $newId = $ids[0]->getId();
+
+        $this->assertInvalidCsrfToken($client, '/team/timesheet/' . $newId . '/duplicate/dfghdfghdfghdfghdfgh', $this->createUrl('/team/timesheet/'));
+    }
 }
