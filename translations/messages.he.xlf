@@ -1209,6 +1209,10 @@
         <source>label.hours_24</source>
         <target>24 שעות</target>
       </trans-unit>
+      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
+        <source>stats.workingTimeWeekShort</source>
+        <target>שבוע %week%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
