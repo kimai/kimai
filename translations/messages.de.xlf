@@ -792,6 +792,10 @@
         <source>stats.workingTimeWeek</source>
         <target>Kalenderwoche %week%</target>
       </trans-unit>
+      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
+        <source>stats.workingTimeWeekShort</source>
+        <target>KW %week%</target>
+      </trans-unit>
       <trans-unit id="JIKNAYP" approved="yes" resname="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
         <target>%month% %year%</target>

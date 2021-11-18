@@ -425,4 +425,14 @@ abstract class ControllerBaseTest extends WebTestCase
         self::assertStringContainsString('attachment; filename=' . $prefix, $response->headers->get('Content-Disposition'));
         self::assertStringContainsString('.xlsx', $response->headers->get('Content-Disposition'));
     }
+
+    protected function assertInvalidCsrfToken(HttpKernelBrowser $client, string $url, string $expectedRedirect)
+    {
+        $this->request($client, $url);
+
+        $this->assertIsRedirect($client);
+        $this->assertRedirectUrl($client, $expectedRedirect);
+        $client->followRedirect();
+        $this->assertHasFlashError($client, 'The action could not be performed: invalid security token.');
+    }
 }

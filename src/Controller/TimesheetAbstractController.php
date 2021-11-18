@@ -211,14 +211,14 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    protected function duplicate(Timesheet $timesheet, Request $request, string $renderTemplate): Response
+    protected function duplicate(Timesheet $timesheet, Request $request, string $renderTemplate, string $token): Response
     {
         $copyTimesheet = clone $timesheet;
 
         $event = new TimesheetMetaDefinitionEvent($copyTimesheet);
         $this->dispatcher->dispatch($event);
 
-        $form = $this->getDuplicateForm($copyTimesheet, $timesheet);
+        $form = $this->getDuplicateForm($copyTimesheet, $timesheet, $token);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -612,7 +612,7 @@ abstract class TimesheetAbstractController extends AbstractController
         return $query;
     }
 
-    abstract protected function getDuplicateForm(Timesheet $entry, Timesheet $original): FormInterface;
+    abstract protected function getDuplicateForm(Timesheet $entry, Timesheet $original, string $token): FormInterface;
 
     abstract protected function getCreateForm(Timesheet $entry): FormInterface;
 }

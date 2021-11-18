@@ -34,4 +34,11 @@ class DoctorControllerTest extends ControllerBaseTest
         $result = $client->getCrawler()->filter('.content .box-header');
         self::assertCount(6, $result);
     }
+
+    public function testFlushLogWithInvalidCsrf()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $this->assertInvalidCsrfToken($client, '/doctor/flush-log/rsetdzfukgli78t6r5uedtjfzkugl', $this->createUrl('/doctor'));
+    }
 }

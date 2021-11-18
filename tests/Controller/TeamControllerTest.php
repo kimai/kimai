@@ -206,11 +206,20 @@ class TeamControllerTest extends ControllerBaseTest
     public function testDuplicateAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->request($client, '/admin/teams/1/duplicate');
+
+        $token = self::$container->get('security.csrf.token_manager')->getToken('team.duplicate');
+
+        $this->request($client, '/admin/teams/1/duplicate/' . $token);
         $this->assertIsRedirect($client, '/edit');
         $client->followRedirect();
         $node = $client->getCrawler()->filter('#team_edit_form_name');
         self::assertEquals(1, $node->count());
         self::assertEquals('Test team [COPY]', $node->attr('value'));
+    }
+
+    public function testDuplicateActionWithInvalidCsrf()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertInvalidCsrfToken($client, '/admin/teams/1/duplicate/rsetdzfukgli78t6r5uedtjfzkugl', $this->createUrl('/admin/teams/1/edit'));
     }
 }
