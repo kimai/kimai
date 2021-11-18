@@ -1279,6 +1279,10 @@
         <source>label.hours_24</source>
         <target>24 saat</target>
       </trans-unit>
+      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
+        <source>stats.workingTimeWeekShort</source>
+        <target>Hafta %week%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
