@@ -54,6 +54,10 @@
         <source>action.upload.error</source>
         <target>לא ניתן להעלות או לשמור את הקובץ: %reason%</target>
       </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R">
+        <source>action.csrf.error</source>
+        <target>אי אפשר לבצע את הפעולה: אסימון אבטחה שגוי.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
