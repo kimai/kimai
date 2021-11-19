@@ -69,7 +69,7 @@ class DoctorController extends AbstractController
             return $this->redirectToRoute('doctor');
         }
 
-        $csrfTokenManager->refreshToken($token);
+        $csrfTokenManager->refreshToken('doctor.flush_log');
 
         $logfile = $this->getLogFilename();
 

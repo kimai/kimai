@@ -10,6 +10,7 @@
 namespace App\Export\Base;
 
 use App\Export\ExportContext;
+use App\Export\ExportFilename;
 use App\Export\ExportItemInterface;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
@@ -94,8 +95,9 @@ class PDFRenderer
      */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
+        $filename = new ExportFilename($query);
         $context = new ExportContext();
-        $context->setOption('filename', 'kimai-export');
+        $context->setOption('filename', $filename->getFilename());
 
         $summary = $this->calculateSummary($timesheets);
         $content = $this->twig->render($this->getTemplate(), array_merge([
@@ -117,7 +119,8 @@ class PDFRenderer
 
         $filename = $context->getOption('filename');
         if (empty($filename)) {
-            $filename = 'kimai-export';
+            $filename = new ExportFilename($query);
+            $filename = $filename->getFilename();
         }
 
         $filename = FileHelper::convertToAsciiFilename($filename);

@@ -66,4 +66,11 @@ export default class KimaiPlugin {
         return this.getContainer().getPlugin(name);
     }
 
+    /**
+     * @param {string} title
+     * @returns {string}
+     */
+    escape(title) {
+        return this.getPlugin('escape').escapeForHtml(title);
+    };
 }

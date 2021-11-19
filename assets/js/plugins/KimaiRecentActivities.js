@@ -66,18 +66,18 @@ export default class KimaiRecentActivities extends KimaiPlugin {
 
         let htmlToInsert = '';
 
+        const escaper = this.getPlugin('escape');
+
         for (let timesheet of entries) {
             const label = this.attributes['template']
-                .replace('%customer%', timesheet.project.customer.name)
-                .replace('%project%', timesheet.project.name)
-                .replace('%activity%', timesheet.activity.name)
+                .replace('%customer%', escaper.escapeForHtml(timesheet.project.customer.name))
+                .replace('%project%', escaper.escapeForHtml(timesheet.project.name))
+                .replace('%activity%', escaper.escapeForHtml(timesheet.activity.name))
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')
             ;
 
-            const option = document.createElement('option');
-            option.innerText = label;
-            const sanitizedLabel = option.innerText;
+            const sanitizedLabel = escaper.escapeForHtml(label);
 
             const icon = this.attributes['icon'] !== undefined ? `<i class="${ this.attributes['icon'] }"></i>` : '';
 

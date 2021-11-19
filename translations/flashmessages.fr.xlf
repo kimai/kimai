@@ -54,6 +54,10 @@
         <source>action.upload.error</source>
         <target>Le fichier n'a pas pu être mis en ligne ou enregistré : %reason%</target>
       </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R">
+        <source>action.csrf.error</source>
+        <target>L'action n'a pas pu être effectuée : jeton de sécurité invalide.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

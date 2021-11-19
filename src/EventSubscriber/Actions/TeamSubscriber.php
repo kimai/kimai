@@ -30,12 +30,14 @@ class TeamSubscriber extends AbstractActionsSubscriber
             return;
         }
 
-        if ($this->isGranted('edit', $team) && !$event->isView('edit')) {
-            $event->addAction('edit', ['url' => $this->path('admin_team_edit', ['id' => $team->getId()]), 'title' => 'action.edit']);
-        }
+        if ($this->isGranted('edit', $team)) {
+            if ($this->isGranted('edit', $team) && !$event->isView('edit')) {
+                $event->addAction('edit', ['url' => $this->path('admin_team_edit', ['id' => $team->getId()]), 'title' => 'action.edit']);
+            }
 
-        if ($this->isGranted('create_team')) {
-            $event->addAction('copy', ['url' => $this->path('team_duplicate', ['id' => $team->getId()]), 'title' => 'copy', 'translation_domain' => 'actions']);
+            if ($this->isGranted('create_team')) {
+                $event->addAction('copy', ['url' => $this->path('team_duplicate', ['id' => $team->getId(), 'token' => $payload['token']]), 'title' => 'copy', 'translation_domain' => 'actions']);
+            }
         }
 
         if ($event->isIndexView() && $this->isGranted('delete', $team)) {

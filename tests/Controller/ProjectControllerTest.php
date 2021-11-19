@@ -216,7 +216,9 @@ class ProjectControllerTest extends ControllerBaseTest
         $em->persist($rate);
         $em->flush();
 
-        $this->request($client, '/admin/project/1/duplicate');
+        $token = self::$container->get('security.csrf.token_manager')->getToken('project.duplicate');
+
+        $this->request($client, '/admin/project/1/duplicate/' . $token);
         $this->assertIsRedirect($client, '/details');
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.box#project_rates_box');
@@ -224,6 +226,25 @@ class ProjectControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.box#project_rates_box table.dataTable tbody tr:not(.summary)');
         self::assertEquals(1, $node->count());
         self::assertStringContainsString('123.45', $node->text(null, true));
+    }
+
+    public function testDuplicateActionWithInvalidCsrf()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+        $project = $em->find(Project::class, 1);
+        $project->setMetaField((new ProjectMeta())->setName('foo')->setValue('bar'));
+        $project->setEnd(new \DateTime());
+        $em->persist($project);
+        $activity = new Activity();
+        $activity->setName('blub');
+        $activity->setProject($project);
+        $activity->setMetaField((new ActivityMeta())->setName('blub')->setValue('blab'));
+        $em->persist($activity);
+        $em->flush();
+
+        $this->assertInvalidCsrfToken($client, '/admin/project/1/duplicate/rsetdzfukgli78t6r5uedtjfzkugl', $this->createUrl('/admin/project/1/details'));
     }
 
     public function testAddCommentAction()
@@ -297,8 +318,10 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.btn.active');
+        $token2 = self::$container->get('security.csrf.token_manager')->getToken('project.pin_comment');
         self::assertEquals(1, $node->count());
-        self::assertEquals($this->createUrl('/admin/project/' . $id . '/comment_pin/' . $token), $node->attr('href'));
+        self::assertEquals($this->createUrl('/admin/project/' . $id . '/comment_pin/' . $token2), $node->attr('href'));
+        self::assertNotEquals($token, $token2);
     }
 
     public function testCreateDefaultTeamAction()

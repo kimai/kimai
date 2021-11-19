@@ -73,7 +73,7 @@ class ProjectSubscriber extends AbstractActionsSubscriber
         if ($this->isGranted('edit', $project) && $this->isGranted('create_project')) {
             $event->addAction(
                 'copy',
-                ['url' => $this->path('admin_project_duplicate', ['id' => $project->getId()])]
+                ['url' => $this->path('admin_project_duplicate', ['id' => $project->getId(), 'token' => $payload['token']])]
             );
         }
 

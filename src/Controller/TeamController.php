@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @Route(path="/admin/teams")
@@ -81,11 +83,19 @@ final class TeamController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/duplicate", name="team_duplicate", methods={"GET", "POST"})
+     * @Route(path="/{id}/duplicate/{token}", name="team_duplicate", methods={"GET", "POST"})
      * @Security("is_granted('edit', team) and is_granted('create_team')")
      */
-    public function duplicateTeam(Team $team, Request $request)
+    public function duplicateTeam(Team $team, string $token, CsrfTokenManagerInterface $csrfTokenManager)
     {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('team.duplicate', $token))) {
+            $this->flashError('action.csrf.error');
+
+            return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
+        }
+
+        $csrfTokenManager->refreshToken('team.duplicate');
+
         $newTeam = clone $team;
         $newTeam->setName($team->getName() . ' [COPY]');
 

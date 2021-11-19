@@ -96,6 +96,10 @@
  */
 
 /*!
+ * [KIMAI] KimaiEscape: sanitize strings
+ */
+
+/*!
  * [KIMAI] KimaiEvent: helper to trigger events
  */
 

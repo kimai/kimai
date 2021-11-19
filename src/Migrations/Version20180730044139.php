@@ -33,12 +33,8 @@ final class Version20180730044139 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $timesheet = 'kimai2_timesheet';
-        $user = 'kimai2_users';
-        $activity = 'kimai2_activities';
-
-        $this->addSql('ALTER TABLE ' . $timesheet . ' DROP FOREIGN KEY FK_4F60C6B18D93D649');
-        $this->addSql('ALTER TABLE ' . $timesheet . ' ADD CONSTRAINT FK_4F60C6B18D93D649 FOREIGN KEY (user) REFERENCES ' . $user . ' (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE kimai2_timesheet DROP FOREIGN KEY FK_4F60C6B18D93D649');
+        $this->addSql('ALTER TABLE kimai2_timesheet ADD CONSTRAINT FK_4F60C6B18D93D649 FOREIGN KEY (user) REFERENCES kimai2_users (id) ON DELETE CASCADE');
     }
 
     /**
@@ -47,10 +43,7 @@ final class Version20180730044139 extends AbstractMigration
      */
     public function down(Schema $schema): void
     {
-        $timesheet = 'kimai2_timesheet';
-        $user = 'kimai2_users';
-
-        $this->addSql('ALTER TABLE ' . $timesheet . ' DROP FOREIGN KEY FK_4F60C6B18D93D649');
-        $this->addSql('ALTER TABLE ' . $timesheet . ' ADD CONSTRAINT FK_4F60C6B18D93D649 FOREIGN KEY (user) REFERENCES ' . $user . ' (id)');
+        $this->addSql('ALTER TABLE kimai2_timesheet DROP FOREIGN KEY FK_4F60C6B18D93D649');
+        $this->addSql('ALTER TABLE kimai2_timesheet ADD CONSTRAINT FK_4F60C6B18D93D649 FOREIGN KEY (user) REFERENCES kimai2_users (id)');
     }
 }

@@ -16,6 +16,7 @@ use App\Event\MetaDisplayEventInterface;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
+use App\Export\ExportFilename;
 use App\Export\ExportItemInterface;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
@@ -753,9 +754,10 @@ abstract class AbstractSpreadsheetRenderer
     public function render(array $exportItems, TimesheetQuery $query): Response
     {
         $spreadsheet = $this->fromArrayToSpreadsheet($exportItems, $query);
-        $filename = $this->saveSpreadsheet($spreadsheet);
+        $file = $this->saveSpreadsheet($spreadsheet);
+        $filename = new ExportFilename($query);
 
-        return $this->getFileResponse($filename, 'kimai-export' . $this->getFileExtension());
+        return $this->getFileResponse($file, $filename->getFilename() . $this->getFileExtension());
     }
 
     /**

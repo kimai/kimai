@@ -6,7 +6,7 @@
 
 {% macro project(project, view, isTable) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'project', view, {'project': project}) %}
+    {% set event = actions(app.user, 'project', view, {'project': project, 'token': csrf_token('project.duplicate')}) %}
     {% if view == 'index' or view == 'custom' or isTable is not null %}
         {{ widgets.table_actions(event.actions) }}
     {% else %}
