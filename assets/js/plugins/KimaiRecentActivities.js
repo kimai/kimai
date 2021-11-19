@@ -73,17 +73,13 @@ export default class KimaiRecentActivities extends KimaiPlugin {
                 .replace('%customer%', escaper.escapeForHtml(timesheet.project.customer.name))
                 .replace('%project%', escaper.escapeForHtml(timesheet.project.name))
                 .replace('%activity%', escaper.escapeForHtml(timesheet.activity.name))
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
             ;
-
-            const sanitizedLabel = escaper.escapeForHtml(label);
 
             const icon = this.attributes['icon'] !== undefined ? `<i class="${ this.attributes['icon'] }"></i>` : '';
 
             const linkToInsert =
                 `<a href="${ this.attributes['href'].replace('000', timesheet.id) }" data-event="kimai.timesheetStart kimai.timesheetUpdate" class="api-link ${itemClass}" data-method="PATCH" data-msg-error="timesheet.start.error" data-msg-success="timesheet.start.success">` +
-                    `${ icon } ${ sanitizedLabel }` +
+                    `${ icon } ${ label }` +
                 `</a>`;
 
             if (isList) {
