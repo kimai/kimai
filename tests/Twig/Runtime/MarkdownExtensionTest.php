@@ -27,6 +27,10 @@ class MarkdownExtensionTest extends TestCase
         $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals('<p><em>test</em></p>', $sut->markdownToHtml('*test*'));
         $this->assertEquals('<p># foobar</p>', $sut->markdownToHtml('# foobar'));
+        $this->assertEquals(
+            '<p><a href="javascript%3Aalert(`XSS`)">XSS</a></p>',
+            $sut->markdownToHtml('[XSS](javascript:alert(`XSS`))')
+        );
     }
 
     public function testTimesheetContent()
@@ -46,6 +50,10 @@ class MarkdownExtensionTest extends TestCase
         $this->assertEquals(
             "<ul>\n<li>test</li>\n<li>foo</li>\n</ul>\n<p>foo <strong>bar</strong></p>",
             $sut->timesheetContent("- test\n- foo\n\nfoo __bar__")
+        );
+        $this->assertEquals(
+            '<p><a href="javascript%3Aalert(`XSS`)">XSS</a></p>',
+            $sut->timesheetContent('[XSS](javascript:alert(`XSS`))')
         );
     }
 
@@ -75,6 +83,10 @@ class MarkdownExtensionTest extends TestCase
         $this->assertEquals(
             "<ul>\n<li>test</li>\n<li>foo</li>\n</ul>\n<p>foo <strong>bar</strong></p>",
             $sut->commentContent("- test\n- foo\n\nfoo __bar__")
+        );
+        $this->assertEquals(
+            '<p><a href="javascript%3Aalert(`XSS`)">XSS</a></p>',
+            $sut->commentContent('[XSS](javascript:alert(`XSS`))')
         );
     }
 
