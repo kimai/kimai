@@ -126,6 +126,25 @@ final class MarkdownExtension implements RuntimeExtensionInterface
      */
     public function markdownToHtml(string $content): string
     {
+        $ALLOWED_URL_SCHEMES = array("ftp", "ftps", "http", "https", "mailto", "sftp", "ssh", "tel", "telnet", "tftp", "vnc");
+        
+        $pattern = '/([\[\s\S\]]*?)\(([\s\S]*?):([\[\s\S\]]*?)\)/';
+        # regex check
+        preg_match_all($pattern, $content, $matches, PREG_SET_ORDER);
+        if($matches) {
+            foreach ($matches as $match) {
+                // get value of group regex
+                $scheme = $match[2];
+            }
+            // scheme check
+            if(in_array($scheme, $ALLOWED_URL_SCHEMES)) {
+                $replacement = '$1($2:$3)';
+            } else {
+                $replacement = '$1($3)';
+            }
+            
+            $content = preg_replace($pattern, $replacement, $content);
+        }
         return $this->markdown->toHtml($content, false);
     }
 }
