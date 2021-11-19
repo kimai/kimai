@@ -61,7 +61,7 @@ final class MarkdownExtension implements RuntimeExtensionInterface
         }
 
         if ($this->isMarkdownEnabled()) {
-            $content = $this->markdown->toHtml($content, false);
+            $content = $this->markdown->toHtml($content);
         } elseif ($fullLength) {
             $content = '<p>' . nl2br($content) . '</p>';
         }
@@ -112,7 +112,7 @@ final class MarkdownExtension implements RuntimeExtensionInterface
         }
 
         if ($this->isMarkdownEnabled()) {
-            return $this->markdown->toHtml($content, false);
+            return $this->markdown->toHtml($content);
         }
 
         return nl2br($content);
@@ -126,6 +126,6 @@ final class MarkdownExtension implements RuntimeExtensionInterface
      */
     public function markdownToHtml(string $content): string
     {
-        return $this->markdown->toHtml($content, false);
+        return $this->markdown->toHtml($content);
     }
 }
