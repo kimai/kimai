@@ -128,7 +128,7 @@ final class MarkdownExtension implements RuntimeExtensionInterface
     {
         $ALLOWED_URL_SCHEMES = array("ftp", "ftps", "http", "https", "mailto", "sftp", "ssh", "tel", "telnet", "tftp", "vnc");
         
-        $pattern = '/([\[\s\S\]]*?)\(([\s\S]*?):([\[\s\S\]]*?)\)/';
+        $pattern = '/([\[\s\S\]]*?)\(([\s\S]*?):([\s\S]*?)\)/';
         # regex check
         preg_match_all($pattern, $content, $matches, PREG_SET_ORDER);
         if($matches) {
