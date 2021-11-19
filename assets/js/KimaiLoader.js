@@ -36,6 +36,7 @@ import KimaiDatePicker from "./plugins/KimaiDatePicker";
 import KimaiConfirmationLink from "./plugins/KimaiConfirmationLink";
 import KimaiMultiUpdateTable from "./plugins/KimaiMultiUpdateTable";
 import KimaiDateUtils from "./plugins/KimaiDateUtils";
+import KimaiEscape from "./plugins/KimaiEscape";
 
 export default class KimaiLoader {
 
@@ -48,6 +49,7 @@ export default class KimaiLoader {
             new KimaiTranslation(translations)
         );
 
+        kimai.registerPlugin(new KimaiEscape());
         kimai.registerPlugin(new KimaiEvent());
         kimai.registerPlugin(new KimaiAPI());
         kimai.registerPlugin(new KimaiAlert());
