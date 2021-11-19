@@ -58,8 +58,9 @@ class PdfRendererTest extends AbstractRendererTest
 
         $response = $this->render($sut);
 
+        $prefix = date('Ymd');
         $this->assertEquals('application/pdf', $response->headers->get('Content-Type'));
-        $this->assertEquals('attachment; filename=kimai-export.pdf', $response->headers->get('Content-Disposition'));
+        $this->assertEquals('attachment; filename=' . $prefix . '-Customer_Name-project_name.pdf', $response->headers->get('Content-Disposition'));
 
         $this->assertNotEmpty($response->getContent());
     }
