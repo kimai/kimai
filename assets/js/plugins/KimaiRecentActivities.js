@@ -65,9 +65,10 @@ export default class KimaiRecentActivities extends KimaiPlugin {
 
         for (let timesheet of entries) {
             let label = this.attributes['template']
-                .replace('%customer%', timesheet.project.customer.name)
-                .replace('%project%', timesheet.project.name)
-                .replace('%activity%', timesheet.activity.name);
+                .replace('%customer%', this.escape(timesheet.project.customer.name))
+                .replace('%project%', this.escape(timesheet.project.name))
+                .replace('%activity%', this.escape(timesheet.activity.name))
+            ;
 
             htmlToInsert +=
                 `<li>` +
