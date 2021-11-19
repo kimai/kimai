@@ -71,14 +71,6 @@ export default class KimaiPlugin {
      * @returns {string}
      */
     escape(title) {
-        const tagsToReplace = {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-        };
-
-        return title.replace(/[&<>]/g, function(tag) {
-            return tagsToReplace[tag] || tag;
-        });
+        return this.getPlugin('escape').escapeForHtml(title);
     };
 }
