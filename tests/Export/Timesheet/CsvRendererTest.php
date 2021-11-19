@@ -46,8 +46,9 @@ class CsvRendererTest extends AbstractRendererTest
         $response = $this->render($sut);
 
         $file = $response->getFile();
+        $prefix = date('Ymd');
         $this->assertEquals('text/csv', $response->headers->get('Content-Type'));
-        $this->assertEquals('attachment; filename=kimai-export.csv', $response->headers->get('Content-Disposition'));
+        $this->assertEquals('attachment; filename=' . $prefix . '-Customer_Name-project_name.csv', $response->headers->get('Content-Disposition'));
 
         $this->assertTrue(file_exists($file->getRealPath()));
         $content = file_get_contents($file->getRealPath());
