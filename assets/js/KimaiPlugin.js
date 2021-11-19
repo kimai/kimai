@@ -66,4 +66,19 @@ export default class KimaiPlugin {
         return this.getContainer().getPlugin(name);
     }
 
+    /**
+     * @param {string} title
+     * @returns {string}
+     */
+    escape(title) {
+        const tagsToReplace = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+        };
+
+        return title.replace(/[&<>]/g, function(tag) {
+            return tagsToReplace[tag] || tag;
+        });
+    };
 }
