@@ -207,7 +207,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         }
     }
 
-    public function testPrintAction()
+    public function testPreviewAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
@@ -233,9 +233,11 @@ class InvoiceControllerTest extends ControllerBaseTest
         $params = [
             'daterange' => $dateRange,
             'projects' => [1],
+            'template' => $id,
+            'customers[]' => 1
         ];
 
-        $action = '/invoice/preview/1/' . $id . '?' . http_build_query($params);
+        $action = '/invoice/preview/1?' . http_build_query($params);
         $this->request($client, $action);
         $this->assertTrue($client->getResponse()->isSuccessful());
         $node = $client->getCrawler()->filter('body');
@@ -243,7 +245,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertEquals('invoice_print', $node->getIterator()[0]->getAttribute('class'));
     }
 
-    public function testCreateActionAsAdminWithDownloadAndStatusChangeAndDelete()
+    public function testCreateActionAsAdminWithDownloadAndStatusChange()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -349,12 +351,6 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->request($client, '/invoice/change-status/' . $id . '/new');
-        $this->assertIsRedirect($client, '/invoice/show');
-        $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
-
-        // this does not delete the invoice, because the token is wrong
-        $this->request($client, '/invoice/delete/' . $id . '/fghfkjhgkjhg');
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());

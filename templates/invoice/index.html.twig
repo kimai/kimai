@@ -109,8 +109,8 @@
                                 </td>
                                 <td class="w-min text-center">
                                     {{ widgets.action_button('show', {'url': '#invoice_preview_details_' ~ model.customer.id, 'title': 'timesheet.all'|trans, 'class': 'btn btn-sm hidden-xs hidden-sm'}, 'link') }}
-                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'class': 'btn btn-sm', 'attr': {'data-href': path('invoice_preview', {'customer': model.customer.id, 'template': model.template.id})}}) }}
-                                    {{ widgets.action_button('save', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'class': 'btn btn-sm', 'attr': {'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id})}}, 'success') }}
+                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'class': 'btn btn-sm', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_preview', {'customer': model.customer.id})}}) }}
+                                    {{ widgets.action_button('save', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'class': 'btn btn-sm', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id})}}, 'success') }}
                                 </td>
                                 <td class="w-min text-right hidden-xs">
                                     {{ model.calculator.timeWorked|duration(isDecimal) }}
@@ -214,20 +214,20 @@
 
         function singleInvoice(link)
         {
-            let formPlugin = kimai.getPlugin('form');
-            let data = formPlugin.getFormData(document.getElementById('{{ formId }}'));
-            let uri = formPlugin.convertFormDataToQueryString(data);
-            let baseUrl = link.getAttribute('data-href');
-            link.href = baseUrl + '?' + uri;
+            const formPlugin = kimai.getPlugin('form');
+            const overwrites = {'customers[]': link.dataset['customer'], 'template': link.dataset['template']};
+            const uri = formPlugin.convertFormDataToQueryString(document.getElementById('{{ formId }}'), overwrites);
+
+            link.href = link.dataset['href'] + '?' + uri;
 
             return true;
         }
 
         function saveAllInvoices(link)
         {
-            let formPlugin = kimai.getPlugin('form');
-            let data = formPlugin.getFormData(document.getElementById('{{ formId }}'));
-            let uri = formPlugin.convertFormDataToQueryString(data);
+            const formPlugin = kimai.getPlugin('form');
+            const uri = formPlugin.convertFormDataToQueryString(document.getElementById('{{ formId }}'));
+
             link.href = '{{ path('invoice') }}?createInvoice=true&' + uri;
 
             return true;

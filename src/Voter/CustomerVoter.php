@@ -34,6 +34,7 @@ final class CustomerVoter extends Voter
         'comments',
         'comments_create',
         'details',
+        'access',
     ];
 
     private $permissionManager;
@@ -72,6 +73,22 @@ final class CustomerVoter extends Voter
         $user = $token->getUser();
 
         if (!$user instanceof User) {
+            return false;
+        }
+
+        // this is a virtual permission, only meant to be used by developer
+        // it checks if access to the given customer is potentially possible
+        if ($attribute === 'access') {
+            if ($subject->getTeams()->count() === 0) {
+                return true;
+            }
+
+            foreach ($subject->getTeams() as $team) {
+                if ($user->isInTeam($team)) {
+                    return true;
+                }
+            }
+
             return false;
         }
 
