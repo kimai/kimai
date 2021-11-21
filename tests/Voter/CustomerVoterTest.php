@@ -118,4 +118,50 @@ class CustomerVoterTest extends AbstractVoterTest
 
         $this->assertVote($user, $customer, 'edit', VoterInterface::ACCESS_GRANTED);
     }
+
+    public function testAccess()
+    {
+        // ALLOW: customer has no teams
+        $this->assertVote(new User(), new Customer(), 'access', VoterInterface::ACCESS_GRANTED);
+
+        // ALLOW: customer has no teams
+        $user = new User();
+        $user->addTeam(new Team());
+        $this->assertVote($user, new Customer(), 'access', VoterInterface::ACCESS_GRANTED);
+
+        // ALLOW: user and customer are in the same team (as teamlead)
+        $team = new Team();
+        $user = new User();
+        $team->addTeamlead($user);
+
+        $customer = new Customer();
+        $customer->addTeam($team);
+
+        $this->assertVote($user, $customer, 'access', VoterInterface::ACCESS_GRANTED);
+
+        // ALLOW: user and customer are in the same team (as member)
+        $team = new Team();
+        $user = new User();
+        $user->addTeam(new Team());
+        $user->addTeam($team);
+
+        $customer = new Customer();
+        $customer->addTeam($team);
+
+        $this->assertVote($user, $customer, 'access', VoterInterface::ACCESS_GRANTED);
+
+        // DENY: customer has a team, user not
+        $customer = new Customer();
+        $customer->addTeam(new Team());
+
+        $this->assertVote(new User(), $customer, 'access', VoterInterface::ACCESS_DENIED);
+
+        // DENY: user and customer has a team are not in the same team
+        $user = new User();
+        $user->addTeam(new Team());
+        $customer = new Customer();
+        $customer->addTeam(new Team());
+
+        $this->assertVote($user, $customer, 'access', VoterInterface::ACCESS_DENIED);
+    }
 }

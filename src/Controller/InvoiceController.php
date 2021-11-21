@@ -48,21 +48,9 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 final class InvoiceController extends AbstractController
 {
-    /**
-     * @var ServiceInvoice
-     */
     private $service;
-    /**
-     * @var InvoiceTemplateRepository
-     */
     private $templateRepository;
-    /**
-     * @var InvoiceRepository
-     */
     private $invoiceRepository;
-    /**
-     * @var EventDispatcherInterface
-     */
     private $dispatcher;
 
     public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $templateRepository, InvoiceRepository $invoiceRepository, EventDispatcherInterface $dispatcher)
@@ -130,10 +118,11 @@ final class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/preview/{customer}/{template}", name="invoice_preview", methods={"GET"})
-     * @Security("is_granted('view_invoice')")
+     * @Route(path="/preview/{customer}", name="invoice_preview", methods={"GET"})
+     * @Security("is_granted('access', customer)")
+     * @Security("is_granted('create_invoice')")
      */
-    public function previewAction(Customer $customer, InvoiceTemplate $template, Request $request, SystemConfiguration $configuration): Response
+    public function previewAction(Customer $customer, Request $request, SystemConfiguration $configuration): Response
     {
         if (!$this->templateRepository->hasTemplate()) {
             return $this->redirectToRoute('invoice');
@@ -143,10 +132,8 @@ final class InvoiceController extends AbstractController
         $form = $this->getToolbarForm($query, $configuration->find('invoice.simple_form'));
         $form->submit($request->query->all(), false);
 
-        if ($form->isValid() && $this->isGranted('create_invoice')) {
+        if ($form->isValid()) {
             try {
-                $query->setTemplate($template);
-                $query->setCustomers([$customer]);
                 $model = $this->service->createModel($query);
 
                 return $this->service->renderInvoiceWithModel($model, $this->dispatcher);
@@ -156,12 +143,15 @@ final class InvoiceController extends AbstractController
             }
         }
 
+        $this->flashFormError($form);
+
         return $this->redirectToRoute('invoice');
     }
 
     /**
      * @Route(path="/save-invoice/{customer}/{template}", name="invoice_create", methods={"GET"})
-     * @Security("is_granted('view_invoice')")
+     * @Security("is_granted('access', customer)")
+     * @Security("is_granted('create_invoice')")
      */
     public function createInvoiceAction(Customer $customer, InvoiceTemplate $template, Request $request, SystemConfiguration $configuration): Response
     {
@@ -173,62 +163,22 @@ final class InvoiceController extends AbstractController
         $form = $this->getToolbarForm($query, $configuration->find('invoice.simple_form'));
         $form->submit($request->query->all(), false);
 
-        if ($form->isValid() && $this->isGranted('create_invoice')) {
+        if ($form->isValid()) {
             $query->setTemplate($template);
             $query->setCustomers([$customer]);
 
             return $this->renderInvoice($query, $request);
         }
 
-        return $this->redirectToRoute('invoice');
-    }
-
-    private function getDefaultQuery(): InvoiceQuery
-    {
-        $factory = $this->getDateTimeFactory();
-        $begin = $factory->getStartOfMonth();
-        $end = $factory->getEndOfMonth();
-
-        $query = new InvoiceQuery();
-        $query->setBegin($begin);
-        $query->setEnd($end);
-        // limit access to data from teams
-        $query->setCurrentUser($this->getUser());
-
-        if (!$this->isGranted('view_other_timesheet')) {
-            // limit access to own data
-            $query->setUser($this->getUser());
-        }
-
-        return $query;
-    }
-
-    private function renderInvoice(InvoiceQuery $query, Request $request)
-    {
-        // use the current request locale as fallback, if no translation was configured
-        if (null !== $query->getTemplate() && null === $query->getTemplate()->getLanguage()) {
-            $query->getTemplate()->setLanguage($request->getLocale());
-        }
-
-        try {
-            $invoices = $this->service->createInvoices($query, $this->dispatcher);
-
-            $this->flashSuccess('action.update.success');
-
-            if (\count($invoices) === 1) {
-                return $this->redirectToRoute('admin_invoice_list', ['id' => $invoices[0]->getId()]);
-            }
-
-            return $this->redirectToRoute('admin_invoice_list');
-        } catch (Exception $ex) {
-            $this->flashUpdateException($ex);
-        }
+        $this->flashFormError($form);
 
         return $this->redirectToRoute('invoice');
     }
 
     /**
      * @Route(path="/change-status/{id}/{status}", name="admin_invoice_status", methods={"GET", "POST"})
+     * @Security("is_granted('access', invoice.getCustomer())")
+     * @Security("is_granted('create_invoice')")
      */
     public function changeStatusAction(Invoice $invoice, string $status, Request $request): Response
     {
@@ -256,6 +206,8 @@ final class InvoiceController extends AbstractController
 
     /**
      * @Route(path="/delete/{id}/{token}", name="admin_invoice_delete", methods={"GET"})
+     * @Security("is_granted('access', invoice.getCustomer())")
+     * @Security("is_granted('delete_invoice')")
      */
     public function deleteInvoiceAction(Invoice $invoice, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
@@ -279,6 +231,8 @@ final class InvoiceController extends AbstractController
 
     /**
      * @Route(path="/download/{id}", name="admin_invoice_download", methods={"GET"})
+     * @Security("is_granted('access', invoice.getCustomer())")
+     * @Security("is_granted('create_invoice')")
      */
     public function downloadAction(Invoice $invoice): Response
     {
@@ -295,6 +249,7 @@ final class InvoiceController extends AbstractController
 
     /**
      * @Route(path="/show/{page}", defaults={"page": 1}, requirements={"page": "[1-9]\d*"}, name="admin_invoice_list", methods={"GET"})
+     * @Security("is_granted('view_invoice')")
      */
     public function showInvoicesAction(Request $request, int $page): Response
     {
@@ -325,6 +280,7 @@ final class InvoiceController extends AbstractController
 
     /**
      * @Route(path="/export", name="invoice_export", methods={"GET"})
+     * @Security("is_granted('view_invoice')")
      */
     public function exportAction(Request $request, AnnotatedObjectExporter $exporter)
     {
@@ -472,6 +428,60 @@ final class InvoiceController extends AbstractController
         }
 
         return $this->redirectToRoute('admin_invoice_template');
+    }
+
+    private function getDefaultQuery(): InvoiceQuery
+    {
+        $factory = $this->getDateTimeFactory();
+        $begin = $factory->getStartOfMonth();
+        $end = $factory->getEndOfMonth();
+
+        $query = new InvoiceQuery();
+        $query->setBegin($begin);
+        $query->setEnd($end);
+        // limit access to data from teams
+        $query->setCurrentUser($this->getUser());
+
+        if (!$this->isGranted('view_other_timesheet')) {
+            // limit access to own data
+            $query->setUser($this->getUser());
+        }
+
+        return $query;
+    }
+
+    private function renderInvoice(InvoiceQuery $query, Request $request)
+    {
+        // use the current request locale as fallback, if no translation was configured
+        if (null !== $query->getTemplate() && null === $query->getTemplate()->getLanguage()) {
+            $query->getTemplate()->setLanguage($request->getLocale());
+        }
+
+        try {
+            $invoices = $this->service->createInvoices($query, $this->dispatcher);
+
+            $this->flashSuccess('action.update.success');
+
+            if (\count($invoices) === 1) {
+                return $this->redirectToRoute('admin_invoice_list', ['id' => $invoices[0]->getId()]);
+            }
+
+            return $this->redirectToRoute('admin_invoice_list');
+        } catch (Exception $ex) {
+            $this->flashUpdateException($ex);
+        }
+
+        return $this->redirectToRoute('invoice');
+    }
+
+    private function flashFormError(FormInterface $form): void
+    {
+        $err = '';
+        foreach ($form->getErrors(true, true) as $error) {
+            $err .= PHP_EOL . '[' . $error->getOrigin()->getName() . '] ' . $error->getMessage();
+        }
+
+        $this->flashError('action.update.error', ['%reason%' => $err]);
     }
 
     private function renderTemplateForm(InvoiceTemplate $template, Request $request): Response

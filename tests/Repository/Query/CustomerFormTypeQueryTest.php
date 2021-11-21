@@ -25,6 +25,9 @@ class CustomerFormTypeQueryTest extends BaseFormTypeQueryTest
         $this->assertBaseQuery($sut);
 
         $customer = new Customer();
+        self::assertFalse($sut->isAllowCustomerPreselect());
+        $sut->setAllowCustomerPreselect(true);
+        self::assertTrue($sut->isAllowCustomerPreselect());
         self::assertNull($sut->getCustomerToIgnore());
         self::assertInstanceOf(CustomerFormTypeQuery::class, $sut->setCustomerToIgnore($customer));
         self::assertSame($customer, $sut->getCustomerToIgnore());

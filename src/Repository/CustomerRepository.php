@@ -241,7 +241,8 @@ class CustomerRepository extends EntityRepository
 
         $outerQuery = $qb->expr()->orX();
 
-        if ($query->hasCustomers()) {
+        // this is a risk, as a user can manipulate the query and inject IDs that would be hidden otherwise
+        if ($query->isAllowCustomerPreselect() && $query->hasCustomers()) {
             $outerQuery->add($qb->expr()->in('c.id', ':customer'));
             $qb->setParameter('customer', $query->getCustomers());
         }
