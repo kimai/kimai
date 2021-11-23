@@ -13,6 +13,7 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
+use App\Event\InvoiceDocumentsEvent;
 use App\Export\Spreadsheet\AnnotatedObjectExporter;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
@@ -338,7 +339,33 @@ final class InvoiceController extends AbstractController
             $invoiceDir = $projectDirectory . DIRECTORY_SEPARATOR . $dir;
         }
 
+        $used = [];
+        foreach ($this->templateRepository->findAll() as $template) {
+            $used[$template->getRenderer()] = $template;
+        }
+
+        $event = new InvoiceDocumentsEvent($this->service->getDocuments(true));
+        $this->dispatcher->dispatch($event);
+
+        $documents = [];
+        foreach ($event->getInvoiceDocuments() as $document) {
+            $isUsed = \array_key_exists($document->getId(), $used);
+            $template = null;
+            if ($isUsed) {
+                $template = $used[$document->getId()];
+            }
+            $documents[] = [
+                'document' => $document,
+                'template' => $template,
+                'used' => $isUsed,
+            ];
+        }
+
         $canUpload = true;
+        if (\count($documents) >= $event->getMaximumAllowedDocuments()) {
+            $this->flashError(sprintf('Reached maximum amount of %s invoice documents. You cannot add more before deleting one.', $event->getMaximumAllowedDocuments()));
+            $canUpload = false;
+        }
 
         if (!file_exists($invoiceDir)) {
             @mkdir($invoiceDir, 0777);
@@ -369,7 +396,10 @@ final class InvoiceController extends AbstractController
                     'Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()',
                     $originalFilename
                 );
-                $newFilename = $safeFilename . '.' . $uploadedFile->guessExtension();
+
+                $extension = $uploadedFile->guessExtension();
+
+                $newFilename = substr($safeFilename, 0, 20) . '.' . $extension;
 
                 try {
                     $uploadedFile->move($invoiceDir, $newFilename);
@@ -383,10 +413,52 @@ final class InvoiceController extends AbstractController
         }
 
         return $this->render('invoice/document_upload.html.twig', [
+            'can_upload' => $canUpload,
             'form' => $form->createView(),
-            'documents' => $this->service->getDocuments(true),
+            'documents' => $documents,
             'baseDirectory' => $projectDirectory . DIRECTORY_SEPARATOR,
         ]);
+    }
+
+    /**
+     * @Route(path="/document/{id}/delete/{token}", name="invoice_document_delete", methods={"GET", "POST"})
+     * @Security("is_granted('manage_invoice_template')")
+     */
+    public function deleteDocument(string $id, string $token, CsrfTokenManagerInterface $csrfTokenManager, InvoiceDocumentRepository $documentRepository): Response
+    {
+        $document = $documentRepository->findByName($id);
+        if ($document === null) {
+            throw $this->createNotFoundException();
+        }
+
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.delete_document', $token))) {
+            $this->flashError('action.csrf.error');
+
+            return $this->redirectToRoute('admin_invoice_document_upload');
+        }
+
+        $csrfTokenManager->refreshToken('invoice.delete_document');
+
+        foreach ($documentRepository->findBuiltIn() as $document) {
+            if ($document->getId() === $id) {
+                throw new \Exception('Document is built-in and cannot be deleted');
+            }
+        }
+
+        foreach ($this->templateRepository->findAll() as $template) {
+            if ($template->getRenderer() === $id) {
+                throw new \Exception('Document is used and cannot be deleted');
+            }
+        }
+
+        try {
+            $documentRepository->remove($document);
+            $this->flashSuccess('action.delete.success');
+        } catch (Exception $ex) {
+            $this->flashDeleteException($ex);
+        }
+
+        return $this->redirectToRoute('admin_invoice_document_upload');
     }
 
     /**
