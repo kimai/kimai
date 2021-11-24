@@ -252,11 +252,11 @@
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>error.directory_missing</source>
-        <target>Das Verzeichnis "%dir%" existiert nicht und konnte auch nicht erstellt werden.</target>
+        <target>Das Verzeichnis „%dir%“ existiert nicht und konnte auch nicht erstellt werden.</target>
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
-        <target>Das Verzeichnis "%dir%" ist schreibgeschützt.</target>
+        <target>Das Verzeichnis „%dir%“ ist schreibgeschützt.</target>
       </trans-unit>
       <!--
               General labels
