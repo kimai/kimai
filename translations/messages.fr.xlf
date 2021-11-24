@@ -1280,6 +1280,22 @@
         <source>stats.workingTimeWeekShort</source>
         <target>Semaine %week%</target>
       </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>error.directory_missing</source>
+        <target>Le répertoire « %dir% » n'existe pas et n'a pas pu être créé.</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target>Le répertoire « %dir% » est protégé en écriture.</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+        <source>invoice_document.max_reached</source>
+        <target>La quantité maximale de %max% documents de facturation a été atteinte. Vous pouvez en ajouter après en avoir supprimé un.</target>
+      </trans-unit>
+      <trans-unit id="PCEFPeg" resname="updated_at">
+        <source>Updated at</source>
+        <target>Mis à jour le</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
