@@ -250,6 +250,14 @@
         <source>error.too_many_entries</source>
         <target>Die Anfrage konnte nicht verarbeitet werden. Es wurden zu viele Ergebnisse gefunden.</target>
       </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>error.directory_missing</source>
+        <target>Das Verzeichnis "%dir%" existiert nicht und konnte auch nicht erstellt werden.</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target>Das Verzeichnis "%dir%" ist schreibgeschützt.</target>
+      </trans-unit>
       <!--
               General labels
             -->
@@ -1290,6 +1298,14 @@
       <trans-unit id="61p_ckr" resname="label.hours_24">
         <source>label.hours_24</source>
         <target>24 Stunden</target>
+      </trans-unit>
+      <trans-unit id="PCEFPeg" resname="updated_at">
+        <source>Updated at</source>
+        <target>Aktualisiert am</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+        <source>invoice_document.max_reached</source>
+        <target>Maximale Anzahl von %max% Rechnungsdokumenten erreicht. Um weitere hinzufügen müssen Sie zunächst eins löschen.</target>
       </trans-unit>
     </body>
   </file>

@@ -250,6 +250,14 @@
         <source>error.too_many_entries</source>
         <target>The request could not be processed. Too many results were found.</target>
       </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>error.directory_missing</source>
+        <target>Directory "%dir%" is not existing and could not be created.</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target>Directory "%dir%" is write protected.</target>
+      </trans-unit>
       <!--
               General labels
             -->
@@ -1290,6 +1298,14 @@
       <trans-unit id="61p_ckr" resname="label.hours_24">
         <source>label.hours_24</source>
         <target>24 hours</target>
+      </trans-unit>
+      <trans-unit id="PCEFPeg" resname="updated_at">
+        <source>Updated at</source>
+        <target>Updated at</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+        <source>invoice_document.max_reached</source>
+        <target>Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
       </trans-unit>
     </body>
   </file>

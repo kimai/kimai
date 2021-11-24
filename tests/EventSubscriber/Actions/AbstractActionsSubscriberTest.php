@@ -9,13 +9,26 @@
 
 namespace App\Tests\EventSubscriber\Actions;
 
+use App\EventSubscriber\Actions\AbstractActionsSubscriber;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @covers \App\EventSubscriber\Actions\AbstractActionsSubscriber
  */
 abstract class AbstractActionsSubscriberTest extends TestCase
 {
+    protected function createSubscriber(string $className, ...$grants): AbstractActionsSubscriber
+    {
+        $auth = $this->createMock(AuthorizationCheckerInterface::class);
+        $auth->method('isGranted')->willReturnOnConsecutiveCalls(...$grants);
+        $router = $this->createMock(UrlGeneratorInterface::class);
+        $router->method('generate')->willReturnArgument(0);
+
+        return new $className($auth, $router);
+    }
+
     protected function assertGetSubscribedEvent(string $className, string $name)
     {
         $this->assertTrue(method_exists($className, 'getSubscribedEvents'));
