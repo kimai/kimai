@@ -1213,6 +1213,22 @@
         <source>stats.workingTimeWeekShort</source>
         <target>שבוע %week%</target>
       </trans-unit>
+      <trans-unit id="PCEFPeg" resname="updated_at">
+        <source>Updated at</source>
+        <target>עודכן בתאריך</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target>התיקייה „%dir%” מוגנת בפני כתיבה.</target>
+      </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>error.directory_missing</source>
+        <target>התיקייה „%dir%” לא קיימת ולא ניתן ליצור אותה.</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+        <source>invoice_document.max_reached</source>
+        <target>הגעת לכמות המרבית %max% של מסמכי חשבוניות. אפשר להוסיף עוד לאחר הסרת אחת מהן.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
