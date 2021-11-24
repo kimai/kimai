@@ -1280,6 +1280,22 @@
         <source>stats.workingTimeWeekShort</source>
         <target>Semana %week%</target>
       </trans-unit>
+      <trans-unit id="PCEFPeg" resname="updated_at">
+        <source>Updated at</source>
+        <target>Atualizado em</target>
+      </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>error.directory_missing</source>
+        <target>O diretório "%dir%" não existe e não pôde ser criado.</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+        <source>invoice_document.max_reached</source>
+        <target>Atingiu o valor máximo de %max% documentos de faturas. É possível adicionar mais após remover uma.</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target>O diretório "%dir%" está protegido contra gravação.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
