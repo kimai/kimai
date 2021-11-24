@@ -1275,6 +1275,30 @@
         <source>status.canceled</source>
         <target>Annullata</target>
       </trans-unit>
+      <trans-unit id="61p_ckr" resname="label.hours_24">
+        <source>label.hours_24</source>
+        <target>24 ore</target>
+      </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>error.directory_missing</source>
+        <target>La directory «%dir%» non esiste e non può essere creata.</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target>La directory «%dir%» è protetta da scrittura.</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+        <source>invoice_document.max_reached</source>
+        <target>La quantità massima di %max% documenti di fattura è stata raggiunta. Puoi aggiungerne altri dopo averne rimosso uno.</target>
+      </trans-unit>
+      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
+        <source>stats.workingTimeWeekShort</source>
+        <target>Settimana %week%</target>
+      </trans-unit>
+      <trans-unit id="PCEFPeg" resname="updated_at">
+        <source>Updated at</source>
+        <target>Aggiornato il</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
