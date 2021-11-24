@@ -50,6 +50,9 @@ final class InvoiceDocumentRepository
         return $this;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function remove(InvoiceDocument $invoiceDocument): void
     {
         @unlink($invoiceDocument->getFilename());
