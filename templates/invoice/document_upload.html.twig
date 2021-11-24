@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% import "invoice/actions.html.twig" as actions %}
+{% import "macros/widgets.html.twig" as widgets %}
 
 {% block page_title %}{{ 'label.invoice_renderer'|trans({}, 'invoice-renderer') }}{% endblock %}
 {% block page_actions %}{{ actions.invoice_upload('index') }}{% endblock %}
@@ -20,6 +21,8 @@
                 {{ form_widget(form) }}
             {% endblock %}
         {% endembed %}
+    {% elseif upload_error is not null %}
+        {{ widgets.callout('warning', upload_error|trans(error_replacer)) }}
     {% endif %}
 
     {% if documents|length > 0 %}

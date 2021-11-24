@@ -362,8 +362,10 @@ final class InvoiceController extends AbstractController
         }
 
         $canUpload = true;
+        $uploadError = null;
+
         if (\count($documents) >= $event->getMaximumAllowedDocuments()) {
-            $this->flashError(sprintf('Reached maximum amount of %s invoice documents. You cannot add more before deleting one.', $event->getMaximumAllowedDocuments()));
+            $uploadError = 'invoice_document.max_reached';
             $canUpload = false;
         }
 
@@ -372,10 +374,10 @@ final class InvoiceController extends AbstractController
         }
 
         if (!is_dir($invoiceDir)) {
-            $this->flashError(sprintf('Invoice directory "%s" is not existing and could not be created.', $dir));
+            $uploadError = 'error.directory_missing';
             $canUpload = false;
         } elseif (!is_writable($invoiceDir)) {
-            $this->flashError(sprintf('Invoice directory "%s" cannot be written.', $dir));
+            $uploadError = 'error.directory_protected';
             $canUpload = false;
         }
 
@@ -413,6 +415,8 @@ final class InvoiceController extends AbstractController
         }
 
         return $this->render('invoice/document_upload.html.twig', [
+            'error_replacer' => ['%max%' => $event->getMaximumAllowedDocuments(), '%dir%' => $dir],
+            'upload_error' => $uploadError,
             'can_upload' => $canUpload,
             'form' => $form->createView(),
             'documents' => $documents,
