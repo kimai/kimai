@@ -15,7 +15,6 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
-use App\Entity\TeamMember;
 use App\Entity\User;
 use App\Form\API\TeamApiEditForm;
 use App\Repository\ActivityRepository;
@@ -235,11 +234,13 @@ final class TeamController extends BaseApiController
             throw new NotFoundException();
         }
 
-        // cache the current memberlist
-        /** @var TeamMember[] $originalMembers */
-        $originalMembers = [];
-        foreach ($team->getMembers() as $member) {
-            $originalMembers[] = $member;
+        // Members are being updated, empty the team first.
+        if ($request->request->has('members')) {
+            foreach ($team->getMembers() as $member) {
+                $team->removeMember($member);
+                $this->repository->removeTeamMember($member);
+            }
+            $this->getDoctrine()->getManager()->flush();
         }
 
         $form = $this->createForm(TeamApiEditForm::class, $team);
@@ -252,14 +253,6 @@ final class TeamController extends BaseApiController
             $view->getContext()->setGroups(self::GROUPS_FORM);
 
             return $this->viewHandler->handle($view);
-        }
-
-        // and now remove the ones, which are not in the list any longer
-        foreach ($originalMembers as $member) {
-            if (!$team->hasMember($member)) {
-                $member->getUser()->removeMembership($member);
-                $this->repository->removeTeamMember($member);
-            }
         }
 
         $this->repository->saveTeam($team);
