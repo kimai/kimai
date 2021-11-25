@@ -54,6 +54,10 @@
         <source>action.upload.error</source>
         <target>Soubor nemůže být nahrán nebo uložen z důvodu: %reason%</target>
       </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R">
+        <source>action.csrf.error</source>
+        <target>Akci nelze provést: neplatný bezpečnostní token.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
