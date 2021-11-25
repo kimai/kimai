@@ -103,14 +103,20 @@
                 const collectionHolder = document.getElementById(e.currentTarget.dataset.collectionHolder);
                 const collectionPrototype = document.getElementById(e.currentTarget.dataset.collectionPrototype);
 
-                const node = document.createElement('tr');
-                node.innerHTML = collectionPrototype
+                const fakeNode = document.createElement('table');
+                fakeNode.innerHTML = collectionPrototype
                     .dataset
                     .prototype
                     .replace(
                         /__name__/g,
                         collectionHolder.dataset.index
                     );
+
+                let node = fakeNode.children[0];
+                if (node.nodeName.toUpperCase() === 'TBODY') {
+                    node = node.children[0];
+                }
+
                 collectionHolder.appendChild(node);
 
                 jQuery(node).find('.selectpicker').each(function(i, el) {
@@ -118,6 +124,7 @@
                 });
 
                 collectionHolder.dataset.index++;
+                recalculateTotals();
             };
 
             document.querySelectorAll('.add-item-link').forEach(btn => btn.addEventListener("click", addFormToCollection));
