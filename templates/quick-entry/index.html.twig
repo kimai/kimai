@@ -1,4 +1,4 @@
-{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 {% import "quick-entry/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'quick_entry.title'|trans }}{% endblock %}
@@ -8,7 +8,10 @@
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_attributes %}id="quick_entry_box"{% endblock %}
-        {% block box_before %}{{ form_start(form, {attr: {class: 'form-dataTable'}}) }}{% endblock %}
+        {% block box_before %}
+            {{ form_start(form, {attr: {class: 'form-dataTable'}}) }}
+            {{ form_widget(form._token) }}
+        {% endblock %}
         {% block box_after %}{{ form_end(form) }}{% endblock %}
         {% block box_title %}
             {{ form_widget(form.date) }}
@@ -36,7 +39,7 @@
                     </tr>
                 </thead>
                 <tbody id="ts-collection" data-index="{{ form.rows.children|length }}">
-                    {{ form(form) }}
+                    {{ form_widget(form.rows) }}
                 </tbody>
                 <tfoot>
                     <tr class="summary">
@@ -103,14 +106,20 @@
                 const collectionHolder = document.getElementById(e.currentTarget.dataset.collectionHolder);
                 const collectionPrototype = document.getElementById(e.currentTarget.dataset.collectionPrototype);
 
-                const node = document.createElement('tr');
-                node.innerHTML = collectionPrototype
+                const fakeNode = document.createElement('table');
+                fakeNode.innerHTML = collectionPrototype
                     .dataset
                     .prototype
                     .replace(
                         /__name__/g,
                         collectionHolder.dataset.index
                     );
+
+                let node = fakeNode.children[0];
+                if (node.nodeName.toUpperCase() === 'TBODY') {
+                    node = node.children[0];
+                }
+
                 collectionHolder.appendChild(node);
 
                 jQuery(node).find('.selectpicker').each(function(i, el) {
@@ -118,6 +127,7 @@
                 });
 
                 collectionHolder.dataset.index++;
+                recalculateTotals();
             };
 
             document.querySelectorAll('.add-item-link').forEach(btn => btn.addEventListener("click", addFormToCollection));
