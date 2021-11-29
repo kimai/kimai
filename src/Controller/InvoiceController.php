@@ -443,8 +443,8 @@ final class InvoiceController extends AbstractController
 
         $csrfTokenManager->refreshToken('invoice.delete_document');
 
-        foreach ($documentRepository->findBuiltIn() as $document) {
-            if ($document->getId() === $id) {
+        foreach ($documentRepository->findBuiltIn() as $doc) {
+            if ($doc->getId() === $id) {
                 throw new \Exception('Document is built-in and cannot be deleted');
             }
         }
