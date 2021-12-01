@@ -7,20 +7,20 @@
 {% set columns = {
     'avatar': {'class': 'alwaysVisible w-min', 'title': null, 'orderBy': false},
     'alias': {'class': 'alwaysVisible'},
-    'account_number': {'class': 'd-xs-none d-sm-none d-none'},
-    'title': {'class': 'd-xs-none d-sm-none d-none'},
-    'email': {'class': 'd-xs-none d-sm-none d-none', 'orderBy': false},
-    'lastLogin': {'class': 'd-xs-none d-sm-none d-none', 'orderBy': false},
-    'roles': {'class': 'd-sm-none', 'orderBy': false},
+    'account_number': {'class': 'd-none'},
+    'title': {'class': 'd-none'},
+    'email': {'class': 'd-none', 'orderBy': false},
+    'lastLogin': {'class': 'd-none', 'orderBy': false},
+    'roles': {'class': 'd-none', 'orderBy': false},
 } %}
 {% for pref in preferences %}
     {% set columns = columns|merge({
-        ('mf_' ~ pref.name): {'title': pref.label|trans, 'class': 'd-xs-none d-sm-none', 'orderBy': false}
+        ('mf_' ~ pref.name): {'title': pref.label|trans, 'class': 'd-none', 'orderBy': false}
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
-    'team': {'class': 'text-center d-xs-none w-min', 'orderBy': false},
-    'active': {'class': 'd-xs-none d-none w-min', 'orderBy': false},
+    'team': {'class': 'text-center w-min', 'orderBy': false},
+    'active': {'class': 'd-none w-min', 'orderBy': false},
     'actions': {'class': 'actions alwaysVisible'},
 }) %}
 
