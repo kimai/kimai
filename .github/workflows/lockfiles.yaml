@@ -10,8 +10,8 @@ jobs:
         name: Verify lock file integrity
         if: ${{ github.actor != 'kevinpapst' && github.actor != 'dependabot[bot]' }}
         steps:
-            -   name: Clone Kimai
-                uses: actions/checkout@v2
+            - name: Clone Kimai
+              uses: actions/checkout@v2
             - name: Prevent file change
               uses: xalvarez/prevent-file-change-action@v1
               with:
