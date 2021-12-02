@@ -63,13 +63,13 @@
                                     {% endif %}
                                 {% endfor %}
                             <th class="text-nowrap text-center total">
-                                {{ isDuration ? usersTotal|duration : usersTotal}}
+                                {{ isDuration ? usersTotal|duration : usersTotal|money}}
                             </th>
                             {% for mid, month in userYear.getMonths() %}
                                 <td class="text-nowrap text-center day-total">
                                     {% if attribute(month, totalFieldName) > 0 %}
                                         <a href="{{ path('report_user_month', {'date': create_date(month.date.format('Y') ~'-'~month.date.format('m')~'-01')|report_date, 'user': userYear.user.id}) }}" data-toggle="tooltip" title="{{ 'label.billable'|trans }}: {{ month.billableDuration|duration }}">
-                                            {{ isDuration ? attribute(month, totalFieldName)|duration : attribute(month, totalFieldName) }}
+                                            {{ isDuration ? attribute(month, totalFieldName)|duration : attribute(month, totalFieldName)|money }}
                                         </a>
                                         {% set totals = totals|merge({(month.date|report_date): (totals[month.date|report_date] + attribute(month, totalFieldName))}) %}
                                     {% endif %}
@@ -84,7 +84,7 @@
                             <td>&nbsp;</td>
                             {% for id, total in totals %}
                                 <td class="text-center text-nowrap">
-                                    {{ isDuration ? total|duration : total }}
+                                    {{ isDuration ? total|duration : total|money }}
                                 </td>
                             {% endfor %}
                         </tr>

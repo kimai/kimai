@@ -63,12 +63,12 @@
                                 {% set totals = totals|merge({(day.date|report_date): (totals[day.date|report_date] + attribute(day, totalFieldName))}) %}
                             {% endfor %}
                             <th class="text-nowrap text-center total">
-                                <a href="{{ path(subReportRoute, {'date': subReportDate|report_date, 'user': userDay.user.id}) }}">{{ isDuration ? usersTotal|duration : usersTotal }}</a>
+                                <a href="{{ path(subReportRoute, {'date': subReportDate|report_date, 'user': userDay.user.id}) }}">{{ isDuration ? usersTotal|duration : usersTotal|money }}</a>
                             </th>
                             {% for day in userDay.days %}
                                 <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}{% if day.date is today %} today{% endif %}">
                                     {% if attribute(day, totalFieldName) > 0 %}
-                                        {{ isDuration ? attribute(day, totalFieldName)|duration : attribute(day, totalFieldName) }}
+                                        {{ isDuration ? attribute(day, totalFieldName)|duration : attribute(day, totalFieldName)|money }}
                                     {% endif %}
                                 </td>
                             {% endfor %}
@@ -79,11 +79,11 @@
                         <tr class="summary">
                             <td>{{ 'stats.durationTotal'|trans }}</td>
                             <td class="text-center text-nowrap">
-                                {{ isDuration ? absoluteTotals|duration : absoluteTotals }}
+                                {{ isDuration ? absoluteTotals|duration : absoluteTotals|money }}
                             </td>
                             {% for id, columnTotal in totals %}
                                 <td class="text-center text-nowrap">
-                                    {{ isDuration ? columnTotal|duration : columnTotal }}
+                                    {{ isDuration ? columnTotal|duration : columnTotal|money }}
                                 </td>
                             {% endfor %}
                         </tr>

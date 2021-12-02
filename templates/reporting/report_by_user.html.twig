@@ -35,7 +35,6 @@
             {% set totals = {'totals': 0} %}
             {% set columns = 2 %}
             {% set fieldName = form.sumType.vars.value %}
-            {% set totalFieldName = 'total' ~ (fieldName | capitalize) %}
             {% set isDuration = (fieldName == 'duration') %}
             <table class="table table-bordered table-hover dataTable">
                 <thead>
@@ -65,12 +64,12 @@
                         <td class="text-nowrap">
                             <strong>{{ widgets.label_project(project.project) }}</strong>
                         </td>
-                        <th class="text-nowrap text-center total">{{ isDuration ? attribute(project, fieldName)|duration : attribute(project, fieldName) }}</th>
+                        <th class="text-nowrap text-center total">{{ isDuration ? attribute(project, fieldName)|duration : attribute(project, fieldName)|money }}</th>
                         {% for day in project.days.days %}
                             <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}{% if day.date is today %} today{% endif %}">
                                 {% if attribute(day, fieldName) > 0 %}
                                     {% set totals = totals|merge({(day.date|report_date): (totals[day.date|report_date] + attribute(day, fieldName))}) %}
-                                    <strong>{{ isDuration ? attribute(day, fieldName)|duration : attribute(day, fieldName)}}</strong>
+                                    <strong>{{ isDuration ? attribute(day, fieldName)|duration : attribute(day, fieldName)|money}}</strong>
                                 {% endif %}
                             </td>
                         {% endfor %}
@@ -80,11 +79,11 @@
                             <td class="text-nowrap">
                                 {{ widgets.label_activity(activity.activity) }}
                             </td>
-                            <th class="text-nowrap text-center total">{{ isDuration ? attribute(activity, fieldName)|duration : attribute(activity, fieldName) }}</th>
+                            <th class="text-nowrap text-center total">{{ isDuration ? attribute(activity, fieldName)|duration : attribute(activity, fieldName)|money }}</th>
                             {% for day in activity.days.days %}
                                 <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}{% if day.date is today %} today{% endif %}">
                                     {% if attribute(day, fieldName) > 0 %}
-                                        {{ isDuration ? attribute(day, fieldName)|duration : attribute(day, fieldName)}}
+                                        {{ isDuration ? attribute(day, fieldName)|duration : attribute(day, fieldName)|money}}
                                     {% endif %}
                                 </td>
                             {% endfor %}
@@ -95,10 +94,10 @@
                 <tfoot>
                     <tr class="summary">
                         <td>{{ 'stats.durationTotal'|trans }}</td>
-                        <td class="text-nowrap text-center total">{{ isDuration ? totals['totals']|duration : totals['totals'] }}</td>
+                        <td class="text-nowrap text-center total">{{ isDuration ? totals['totals']|duration : totals['totals']|money }}</td>
                         {% for day in days.dateTimes %}
                             <td class="text-nowrap text-center day-total{% if day is weekend %} weekend{% endif %}">
-                                {{ isDuration ? totals[day|report_date]|duration : totals[day|report_date]}}
+                                {{ isDuration ? totals[day|report_date]|duration : totals[day|report_date]|money}}
                             </td>
                         {% endfor %}
                     </tr>
