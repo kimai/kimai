@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\ActivityRate;
 use App\Entity\CustomerRate;
+use App\Entity\Invoice;
 use App\Entity\Project;
 use App\Entity\ProjectRate;
 use App\Entity\RateInterface;
@@ -848,6 +849,22 @@ class TimesheetRepository extends EntityRepository
         $qb = $this->getQueryBuilderForQuery($query);
 
         return $this->getHydratedResultsByQuery($qb, $fullyHydrated);
+    }
+
+    public function getTimesheetsByInvoice(Invoice $invoice, bool $fullyHydrated = false): iterable
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb
+            ->select('t')
+            ->from(Timesheet::class, 't')
+            ->andWhere($qb->expr()->eq('t.invoice', $invoice->getId()))
+        ;
+
+        $results = $qb->getQuery()->getResult();
+        $loader = new TimesheetLoader($qb->getEntityManager(), $fullyHydrated);
+        $loader->loadResults($results);
+
+        return $results;
     }
 
     public function getTimesheetResult(TimesheetQuery $query): TimesheetResult

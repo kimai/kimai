@@ -9,6 +9,7 @@
 
 namespace App\Invoice;
 
+use App\Entity\Invoice;
 use App\Repository\Query\InvoiceQuery;
 
 interface InvoiceItemRepositoryInterface
@@ -24,4 +25,17 @@ interface InvoiceItemRepositoryInterface
      * @return InvoiceItemInterface[]
      */
     public function getInvoiceItemsForQuery(InvoiceQuery $query): iterable;
+
+    /*
+     * @param Invoice $invoice
+     * @return InvoiceItemInterface[]
+     */
+    // public function getInvoiceItemsByInvoice(Invoice $invoice): iterable;
+
+    /*
+     * @param Invoice $invoice
+     * @param array $items
+     * @return void
+     */
+    // public function markItemsAsInvoiced(Invoice $invoice, array $items);
 }

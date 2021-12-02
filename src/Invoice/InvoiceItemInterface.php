@@ -10,6 +10,7 @@
 namespace App\Invoice;
 
 use App\Entity\Activity;
+use App\Entity\Invoice;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Entity\User;
@@ -31,10 +32,7 @@ interface InvoiceItemInterface
 
     // will be activated with 2.0
     // public function getInternalRate(): ?float;
-    /*
-    public function getInternalRate(): ?float;
-    public function setInvoice(Invoice $invoice): void;
-    */
+    // public function setInvoice(Invoice $invoice): void;
 
     public function getUser(): ?User;
 

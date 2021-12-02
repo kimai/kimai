@@ -9,6 +9,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Invoice;
 use App\Entity\Timesheet;
 use App\Invoice\InvoiceItemInterface;
 use App\Invoice\InvoiceItemRepositoryInterface;
@@ -33,6 +34,27 @@ final class TimesheetInvoiceItemRepository implements InvoiceItemRepositoryInter
     public function getInvoiceItemsForQuery(InvoiceQuery $query): iterable
     {
         return $this->repository->getTimesheetsForQuery($query, true);
+    }
+
+    /**
+     * @param Invoice $invoice
+     * @return InvoiceItemInterface[]
+     */
+    public function getInvoiceItemsByInvoice(Invoice $invoice): iterable
+    {
+        return $this->repository->getTimesheetsByInvoice($invoice, true);
+    }
+
+    /**
+     * @param Invoice $invoice
+     * @param array $items
+     * @return void
+     */
+    public function markItemsAsInvoiced(Invoice $invoice, array $items)
+    {
+        foreach ($items as $item) {
+            $item->setInvoice($invoice);
+        }
     }
 
     /**

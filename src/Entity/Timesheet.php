@@ -321,8 +321,11 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     /**
      * @var Invoice|null
      *
-     * @ ORM\ManyToOne(targetEntity="App\Entity\Invoice")
-     * @ ORM\JoinColumn(onDelete="SET NULL", nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Timesheet"})
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Invoice")
+     * @ORM\JoinColumn(onDelete="SET NULL", nullable=true)
      */
     private $invoice;
 

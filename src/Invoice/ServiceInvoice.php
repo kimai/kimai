@@ -370,6 +370,12 @@ final class ServiceInvoice
                 $invoice = new Invoice();
                 $invoice->setModel($model);
                 $invoice->setFilename($invoiceFilename);
+                foreach ($this->getInvoiceItemRepositories() as $repository) {
+                    if (!method_exists($repository, 'markItemsAsInvoiced')) {
+                        continue;
+                    }
+                    $repository->markItemsAsInvoiced($invoice, $model->getEntries());
+                }
                 $this->invoiceRepository->saveInvoice($invoice);
 
                 if ($model->getQuery()->isMarkAsExported()) {
