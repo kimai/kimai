@@ -317,17 +317,19 @@ class InvoiceControllerTest extends ControllerBaseTest
         self::assertInstanceOf(BinaryFileResponse::class, $response);
         self::assertFileExists($response->getFile());
 
-        $this->request($client, '/invoice/change-status/' . $id . '/pending');
+        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.status');
+
+        $this->request($client, '/invoice/change-status/' . $id . '/pending/' . $token->getValue());
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $this->request($client, '/invoice/change-status/' . $id . '/paid');
+        $this->request($client, '/invoice/change-status/' . $id . '/paid/' . $token->getValue());
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasValidationError(
             $client,
-            '/invoice/change-status/' . $id . '/paid',
+            '/invoice/change-status/' . $id . '/paid/' . $token->getValue(),
             'form[name=invoice_payment_date_form]',
             [
                 'invoice_payment_date_form' => [
@@ -350,7 +352,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $this->request($client, '/invoice/change-status/' . $id . '/new');
+        $this->request($client, '/invoice/change-status/' . $id . '/new/' . $token->getValue());
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());

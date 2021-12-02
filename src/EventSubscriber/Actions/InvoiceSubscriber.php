@@ -31,15 +31,15 @@ class InvoiceSubscriber extends AbstractActionsSubscriber
         }
 
         if (!$invoice->isPending()) {
-            $event->addAction('invoice.pending', ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'pending'])]);
+            $event->addAction('invoice.pending', ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'pending', 'token' => $payload['token']])]);
         } else {
-            $event->addAction('invoice.paid', ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'paid']), 'class' => 'modal-ajax-form']);
+            $event->addAction('invoice.paid', ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'paid', 'token' => $payload['token']]), 'class' => 'modal-ajax-form']);
         }
 
         $allowDelete = $this->isGranted('delete_invoice');
         if (!$invoice->isCanceled()) {
             $id = $allowDelete ? 'invoice.cancel' : 'trash';
-            $event->addAction($id, ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'canceled']), 'title' => 'invoice.cancel', 'translation_domain' => 'actions']);
+            $event->addAction($id, ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'canceled', 'token' => $payload['token']]), 'title' => 'invoice.cancel', 'translation_domain' => 'actions']);
         }
 
         $event->addDivider();
