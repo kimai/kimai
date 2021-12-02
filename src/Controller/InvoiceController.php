@@ -214,10 +214,10 @@ final class InvoiceController extends AbstractController
             return $this->redirectToRoute('admin_invoice_list');
         }
 
-        $csrfTokenManager->refreshToken('invoice.status');
+        $token = $csrfTokenManager->refreshToken('invoice.status');
 
         if ($status === Invoice::STATUS_PAID) {
-            $form = $this->createPaymentDateForm($invoice, $status, $token);
+            $form = $this->createPaymentDateForm($invoice, $status, $token->getValue());
             $form->handleRequest($request);
 
             if (!$form->isSubmitted() || !$form->isValid()) {

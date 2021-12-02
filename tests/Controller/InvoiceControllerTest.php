@@ -322,15 +322,16 @@ class InvoiceControllerTest extends ControllerBaseTest
         self::assertFileExists($response->getFile());
 
         $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.status');
-
         $this->request($client, '/invoice/change-status/' . $id . '/pending/' . $token->getValue());
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
+        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.status');
         $this->request($client, '/invoice/change-status/' . $id . '/paid/' . $token->getValue());
         $this->assertTrue($client->getResponse()->isSuccessful());
 
+        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.status');
         $this->assertHasValidationError(
             $client,
             '/invoice/change-status/' . $id . '/paid/' . $token->getValue(),
@@ -356,6 +357,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
+        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.status');
         $this->request($client, '/invoice/change-status/' . $id . '/new/' . $token->getValue());
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
