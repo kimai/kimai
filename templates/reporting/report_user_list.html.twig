@@ -63,7 +63,7 @@
                                 {% set totals = totals|merge({(day.date|report_date): (totals[day.date|report_date] + attribute(day, totalFieldName))}) %}
                             {% endfor %}
                             <th class="text-nowrap text-center total">
-                                <a href="{{ path(subReportRoute, {'date': subReportDate|report_date, 'user': userDay.user.id}) }}">{{ isDuration ? usersTotal|duration : usersTotal|money }}</a>
+                                <a href="{{ path(subReportRoute, {'date': subReportDate|report_date, 'user': userDay.user.id, 'sumType': form.sumType.vars.value}) }}">{{ isDuration ? usersTotal|duration : usersTotal|money }}</a>
                             </th>
                             {% for day in userDay.days %}
                                 <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}{% if day.date is today %} today{% endif %}">
