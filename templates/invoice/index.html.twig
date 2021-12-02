@@ -218,7 +218,7 @@
             const overwrites = {'customers[]': link.dataset['customer'], 'template': link.dataset['template']};
             const uri = formPlugin.convertFormDataToQueryString(document.getElementById('{{ formId }}'), overwrites);
 
-            link.href = link.dataset['href'] + '?' + uri;
+            link.href = link.dataset['href'] + '?token={{ csrf_token('invoice.create') }}&' + uri;
 
             return true;
         }
@@ -228,7 +228,7 @@
             const formPlugin = kimai.getPlugin('form');
             const uri = formPlugin.convertFormDataToQueryString(document.getElementById('{{ formId }}'));
 
-            link.href = '{{ path('invoice') }}?createInvoice=true&' + uri;
+            link.href = '{{ path('invoice') }}?token={{ csrf_token('invoice.create') }}&createInvoice=true&' + uri;
 
             return true;
         }

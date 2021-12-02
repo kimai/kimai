@@ -76,6 +76,13 @@ final class InvoiceController extends AbstractController
         }
 
         $query = $this->getDefaultQuery();
+
+        $token = null;
+        if ($request->query->has('token')) {
+            $token = $request->query->get('token');
+            $request->query->remove('token');
+        }
+
         $form = $this->getToolbarForm($query, $configuration->find('invoice.simple_form'));
         if ($this->handleSearch($form, $request)) {
             return $this->redirectToRoute('invoice');
@@ -87,6 +94,12 @@ final class InvoiceController extends AbstractController
 
         if ($form->isValid() && $this->isGranted('create_invoice')) {
             if ($request->query->has('createInvoice')) {
+                if (!$this->isCsrfTokenValid('invoice.create', $token)) {
+                    $this->flashError('action.csrf.error');
+
+                    return $this->redirectToRoute('invoice');
+                }
+
                 try {
                     return $this->renderInvoice($query, $request);
                 } catch (Exception $ex) {
@@ -160,6 +173,18 @@ final class InvoiceController extends AbstractController
             return $this->redirectToRoute('invoice');
         }
 
+        $token = null;
+        if ($request->query->has('token')) {
+            $token = $request->query->get('token');
+            $request->query->remove('token');
+        }
+
+        if (!$this->isCsrfTokenValid('invoice.create', $token)) {
+            $this->flashError('action.csrf.error');
+
+            return $this->redirectToRoute('invoice');
+        }
+
         $query = $this->getDefaultQuery();
         $form = $this->getToolbarForm($query, $configuration->find('invoice.simple_form'));
         $form->submit($request->query->all(), false);
@@ -177,14 +202,22 @@ final class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/change-status/{id}/{status}", name="admin_invoice_status", methods={"GET", "POST"})
+     * @Route(path="/change-status/{id}/{status}/{token}", name="admin_invoice_status", methods={"GET", "POST"})
      * @Security("is_granted('access', invoice.getCustomer())")
      * @Security("is_granted('create_invoice')")
      */
-    public function changeStatusAction(Invoice $invoice, string $status, Request $request): Response
+    public function changeStatusAction(Invoice $invoice, string $status, string $token, Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.status', $token))) {
+            $this->flashError('action.csrf.error');
+
+            return $this->redirectToRoute('admin_invoice_list');
+        }
+
+        $token = $csrfTokenManager->refreshToken('invoice.status');
+
         if ($status === Invoice::STATUS_PAID) {
-            $form = $this->createPaymentDateForm($invoice, $status);
+            $form = $this->createPaymentDateForm($invoice, $status, $token->getValue());
             $form->handleRequest($request);
 
             if (!$form->isSubmitted() || !$form->isValid()) {
@@ -212,13 +245,13 @@ final class InvoiceController extends AbstractController
      */
     public function deleteInvoiceAction(Invoice $invoice, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.delete', $token))) {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.status', $token))) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('admin_invoice_list');
         }
 
-        $csrfTokenManager->refreshToken('invoice.delete');
+        $csrfTokenManager->refreshToken('invoice.status');
 
         try {
             $this->service->deleteInvoice($invoice);
@@ -624,13 +657,13 @@ final class InvoiceController extends AbstractController
         ]);
     }
 
-    private function createPaymentDateForm(Invoice $invoice, string $status): FormInterface
+    private function createPaymentDateForm(Invoice $invoice, string $status, string $token): FormInterface
     {
         if (null === $invoice->getPaymentDate()) {
             $invoice->setPaymentDate($this->getDateTimeFactory()->createDateTime());
         }
 
-        $url = $this->generateUrl('admin_invoice_status', ['id' => $invoice->getId(), 'status' => $status]);
+        $url = $this->generateUrl('admin_invoice_status', ['id' => $invoice->getId(), 'status' => $status, 'token' => $token]);
 
         return $this->createForm(InvoicePaymentDateForm::class, $invoice, [
             'action' => $url,
