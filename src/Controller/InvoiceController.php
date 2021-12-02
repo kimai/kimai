@@ -76,6 +76,13 @@ final class InvoiceController extends AbstractController
         }
 
         $query = $this->getDefaultQuery();
+
+        $token = null;
+        if ($request->query->has('token')) {
+            $token = $request->query->get('token');
+            $request->query->remove('token');
+        }
+
         $form = $this->getToolbarForm($query, $configuration->find('invoice.simple_form'));
         if ($this->handleSearch($form, $request)) {
             return $this->redirectToRoute('invoice');
@@ -87,6 +94,12 @@ final class InvoiceController extends AbstractController
 
         if ($form->isValid() && $this->isGranted('create_invoice')) {
             if ($request->query->has('createInvoice')) {
+                if (!$this->isCsrfTokenValid('invoice.create', $token)) {
+                    $this->flashError('action.csrf.error');
+
+                    return $this->redirectToRoute('invoice');
+                }
+
                 try {
                     return $this->renderInvoice($query, $request);
                 } catch (Exception $ex) {
@@ -157,6 +170,18 @@ final class InvoiceController extends AbstractController
     public function createInvoiceAction(Customer $customer, InvoiceTemplate $template, Request $request, SystemConfiguration $configuration): Response
     {
         if (!$this->templateRepository->hasTemplate()) {
+            return $this->redirectToRoute('invoice');
+        }
+
+        $token = null;
+        if ($request->query->has('token')) {
+            $token = $request->query->get('token');
+            $request->query->remove('token');
+        }
+
+        if (!$this->isCsrfTokenValid('invoice.create', $token)) {
+            $this->flashError('action.csrf.error');
+
             return $this->redirectToRoute('invoice');
         }
 
