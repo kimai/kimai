@@ -190,7 +190,9 @@ class InvoiceControllerTest extends ControllerBaseTest
             'markAsExported' => 1,
         ];
 
-        $action = '/invoice/save-invoice/1/' . $template->getId() . '?' . http_build_query($urlParams);
+        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.create');
+
+        $action = '/invoice/save-invoice/1/' . $template->getId() . '?token=' . $token->getValue() . '&' . http_build_query($urlParams);
         $this->request($client, $action);
         $this->assertIsRedirect($client);
         $this->assertRedirectUrl($client, '/invoice/show?id=', false);
@@ -286,9 +288,11 @@ class InvoiceControllerTest extends ControllerBaseTest
         // but the datatable with all timesheets
         $this->assertDataTableRowCount($client, 'datatable_invoice', 20);
 
+        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.create');
+
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/?createInvoice=true'));
+        $node->setAttribute('action', $this->createUrl('/invoice/?createInvoice=true&token=' . $token->getValue()));
         $node->setAttribute('method', 'GET');
         $client->submit($form, [
             'template' => $template->getId(),
