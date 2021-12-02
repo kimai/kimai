@@ -50,25 +50,25 @@
                     </thead>
                     <tbody>
                     {% for userDay in stats %}
-                        {% set usersTotalDuration = 0 %}
+                        {% set usersTotal = 0 %}
                         <tr class="user">
                             <td class="text-nowrap">
                                 {{ widgets.label_dot(userDay.user.displayName, userDay.user.color) }}
                             </td>
                             {% for day in userDay.days %}
-                                {% if day.totalDuration > 0 %}
-                                    {% set usersTotalDuration = usersTotalDuration + attribute(day, totalFieldName) %}
+                                {% if attribute(day, totalFieldName) > 0 %}
+                                    {% set usersTotal = usersTotal + attribute(day, totalFieldName) %}
                                     {% set absoluteTotals = absoluteTotals + attribute(day, totalFieldName) %}
                                 {% endif %}
                                 {% set totals = totals|merge({(day.date|report_date): (totals[day.date|report_date] + attribute(day, totalFieldName))}) %}
                             {% endfor %}
                             <th class="text-nowrap text-center total">
-                                <a href="{{ path(subReportRoute, {'date': subReportDate|report_date, 'user': userDay.user.id}) }}">{{ isDuration ? usersTotalDuration|duration : usersTotalDuration }}</a>
+                                <a href="{{ path(subReportRoute, {'date': subReportDate|report_date, 'user': userDay.user.id}) }}">{{ isDuration ? usersTotal|duration : usersTotal }}</a>
                             </th>
                             {% for day in userDay.days %}
                                 <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}{% if day.date is today %} today{% endif %}">
                                     {% if attribute(day, totalFieldName) > 0 %}
-                                        {{ isDuration ? attribute(day, fieldName)|duration : attribute(day, fieldName) }}
+                                        {{ isDuration ? attribute(day, totalFieldName)|duration : attribute(day, totalFieldName) }}
                                     {% endif %}
                                 </td>
                             {% endfor %}

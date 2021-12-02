@@ -52,18 +52,18 @@
                     </thead>
                     <tbody>
                     {% for userYear in stats|filter(row => row.user is not null) %}
-                        {% set usersTotalDuration = 0 %}
+                        {% set usersTotal = 0 %}
                         <tr class="user">
                             <td class="text-nowrap">
                                 {{ widgets.label_dot(userYear.user.displayName, userYear.user.color) }}
                             </td>
                                 {% for mid, month in userYear.months %}
-                                    {% if month.totalDuration > 0 %}
-                                        {% set usersTotalDuration = usersTotalDuration + attribute(month, totalFieldName) %}
+                                    {% if attribute(month, totalFieldName) > 0 %}
+                                        {% set usersTotal = usersTotal + attribute(month, totalFieldName) %}
                                     {% endif %}
                                 {% endfor %}
                             <th class="text-nowrap text-center total">
-                                {{ isDuration ? usersTotalDuration|duration : usersTotalDuration}}
+                                {{ isDuration ? usersTotal|duration : usersTotal}}
                             </th>
                             {% for mid, month in userYear.getMonths() %}
                                 <td class="text-nowrap text-center day-total">
