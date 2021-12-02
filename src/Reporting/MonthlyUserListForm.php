@@ -12,6 +12,7 @@ namespace App\Reporting;
 use App\Form\Type\MonthPickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MonthlyUserListForm extends AbstractType
@@ -35,6 +36,16 @@ class MonthlyUserListForm extends AbstractType
             'model_timezone' => $options['timezone'],
             'view_timezone' => $options['timezone'],
             'start_date' => $options['start_date'],
+        ]);
+        $builder->add('sumType', ChoiceType::class, [
+            'required' => true,
+            'multiple' => false,
+            'expanded' => true,
+            'choices' => [
+                'label.duration' => 'duration',
+                'label.rate' => 'rate',
+                'label.rate_internal' => 'internalRate'
+            ],
         ]);
     }
 

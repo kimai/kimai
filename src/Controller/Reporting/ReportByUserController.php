@@ -199,15 +199,33 @@ final class ReportByUserController extends AbstractController
                 if (!isset($data[$projectId]['duration'])) {
                     $data[$projectId]['duration'] = 0;
                 }
+                if (!isset($data[$projectId]['rate'])) {
+                    $data[$projectId]['rate'] = 0;
+                }
+                if (!isset($data[$projectId]['internalRate'])) {
+                    $data[$projectId]['internalRate'] = 0;
+                }
                 if (!isset($data[$projectId]['activities'][$activityId]['duration'])) {
                     $data[$projectId]['activities'][$activityId]['duration'] = 0;
+                }
+                if (!isset($data[$projectId]['activities'][$activityId]['rate'])) {
+                    $data[$projectId]['activities'][$activityId]['rate'] = 0;
+                }
+                if (!isset($data[$projectId]['activities'][$activityId]['internalRate'])) {
+                    $data[$projectId]['activities'][$activityId]['internalRate'] = 0;
                 }
                 /** @var StatisticDate $day */
                 foreach ($activityValues['days']->getDays() as $day) {
                     $statDay = $dailyProjectStatistic->getDayByDateTime($day->getDate());
                     $statDay->setTotalDuration($statDay->getTotalDuration() + $day->getDuration());
+                    $statDay->setTotalRate($statDay->getTotalRate() + $day->getRate());
+                    $statDay->setTotalInternalRate($statDay->getTotalInternalRate() + $day->getInternalRate());
                     $data[$projectId]['duration'] = $data[$projectId]['duration'] + $day->getDuration();
+                    $data[$projectId]['rate'] = $data[$projectId]['rate'] + $day->getRate();
+                    $data[$projectId]['internalRate'] = $data[$projectId]['internalRate'] + $day->getInternalRate();
                     $data[$projectId]['activities'][$activityId]['duration'] = $data[$projectId]['activities'][$activityId]['duration'] + $day->getDuration();
+                    $data[$projectId]['activities'][$activityId]['rate'] = $data[$projectId]['activities'][$activityId]['rate'] + $day->getRate();
+                    $data[$projectId]['activities'][$activityId]['internalRate'] = $data[$projectId]['activities'][$activityId]['internalRate'] + $day->getInternalRate();
                 }
             }
             $data[$projectId]['days'] = $dailyProjectStatistic;

@@ -22,6 +22,11 @@ abstract class DateByUser
      */
     private $date;
 
+    /**
+     * @var string
+     */
+    private $sumType = 'duration';
+
     public function getUser(): ?User
     {
         return $this->user;
@@ -42,6 +47,18 @@ abstract class DateByUser
     public function setDate(\DateTime $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getSumType(): ?string
+    {
+        return $this->sumType;
+    }
+
+    public function setSumType(string $sumType): self
+    {
+        $this->sumType = $sumType;
 
         return $this;
     }

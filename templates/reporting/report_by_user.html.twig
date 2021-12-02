@@ -7,7 +7,7 @@
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_before %}
-            {{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
+            {{ form_start(form, {'attr': {'class': 'form-inline', 'id': 'by-user-form'}}) }}
         {% endblock %}
         {% block box_after %}
             {{ form_end(form) }}
@@ -19,11 +19,24 @@
                 {{ widgets.username(user) }}
             {% endif %}
             {{ form_widget(form.date) }}
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="{{ 'filter'|icon }}"></i> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu checkbox-menu">
+                    <li>
+                        {{ form_widget(form.sumType) }}
+                    </li>
+                </ul>
+            </div>
         {% endblock %}
         {% block box_body_class %}{{ box_id }} table-responsive no-padding{% endblock %}
         {% block box_body %}
             {% set totals = {'totals': 0} %}
             {% set columns = 2 %}
+            {% set fieldName = form.sumType.vars.value %}
+            {% set totalFieldName = 'total' ~ (fieldName | capitalize) %}
+            {% set isDuration = (fieldName == 'duration') %}
             <table class="table table-bordered table-hover dataTable">
                 <thead>
                     <tr>
@@ -47,17 +60,17 @@
                             <td colspan="{{ columns }}">{{ widgets.label_customer(project.project.customer) }}</td>
                         </tr>
                     {% endif %}
-                    {% set totals = totals|merge({'totals': (totals['totals'] + project.duration)}) %}
+                    {% set totals = totals|merge({'totals': (totals['totals'] + attribute(project, fieldName))}) %}
                     <tr class="project">
                         <td class="text-nowrap">
                             <strong>{{ widgets.label_project(project.project) }}</strong>
                         </td>
-                        <th class="text-nowrap text-center total">{{ project.duration|duration }}</th>
+                        <th class="text-nowrap text-center total">{{ isDuration ? attribute(project, fieldName)|duration : attribute(project, fieldName) }}</th>
                         {% for day in project.days.days %}
                             <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}{% if day.date is today %} today{% endif %}">
-                                {% if day.duration > 0 %}
-                                    {% set totals = totals|merge({(day.date|report_date): (totals[day.date|report_date] + day.duration)}) %}
-                                    <strong>{{ day.duration|duration }}</strong>
+                                {% if attribute(day, fieldName) > 0 %}
+                                    {% set totals = totals|merge({(day.date|report_date): (totals[day.date|report_date] + attribute(day, fieldName))}) %}
+                                    <strong>{{ isDuration ? attribute(day, fieldName)|duration : attribute(day, fieldName)}}</strong>
                                 {% endif %}
                             </td>
                         {% endfor %}
@@ -67,11 +80,11 @@
                             <td class="text-nowrap">
                                 {{ widgets.label_activity(activity.activity) }}
                             </td>
-                            <th class="text-nowrap text-center total">{{ activity.duration|duration }}</th>
+                            <th class="text-nowrap text-center total">{{ isDuration ? attribute(activity, fieldName)|duration : attribute(activity, fieldName) }}</th>
                             {% for day in activity.days.days %}
                                 <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}{% if day.date is today %} today{% endif %}">
-                                    {% if day.duration > 0 %}
-                                        {{ day.duration|duration }}
+                                    {% if attribute(day, fieldName) > 0 %}
+                                        {{ isDuration ? attribute(day, fieldName)|duration : attribute(day, fieldName)}}
                                     {% endif %}
                                 </td>
                             {% endfor %}
@@ -82,10 +95,10 @@
                 <tfoot>
                     <tr class="summary">
                         <td>{{ 'stats.durationTotal'|trans }}</td>
-                        <td class="text-nowrap text-center total">{{ totals['totals']|duration }}</td>
+                        <td class="text-nowrap text-center total">{{ isDuration ? totals['totals']|duration : totals['totals'] }}</td>
                         {% for day in days.dateTimes %}
                             <td class="text-nowrap text-center day-total{% if day is weekend %} weekend{% endif %}">
-                                {{ totals[day|report_date]|duration }}
+                                {{ isDuration ? totals[day|report_date]|duration : totals[day|report_date]}}
                             </td>
                         {% endfor %}
                     </tr>
@@ -100,13 +113,8 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
-            {% if form.user is defined %}
-            jQuery('#{{ form.user.vars.id }}').on('change', function(ev) {
-                jQuery(this).closest('form').submit();
-            });
-            {% endif %}
-            jQuery('#{{ form.date.vars.id }}').on('change', function(ev) {
-                jQuery(this).closest('form').submit();
+            jQuery('#by-user-form').on('change', function(ev) {
+                jQuery(this).submit();
             });
         });
     </script>

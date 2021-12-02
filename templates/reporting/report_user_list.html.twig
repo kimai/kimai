@@ -7,13 +7,23 @@
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_before %}
-            {{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
+            {{ form_start(form, {'attr': {'class': 'form-inline', 'id': 'user-list-form'}}) }}
         {% endblock %}
         {% block box_after %}
             {{ form_end(form) }}
         {% endblock %}
         {% block box_title %}
             {{ form_widget(form.date) }}
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="{{ 'filter'|icon }}"></i> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu checkbox-menu">
+                    <li>
+                        {{ form_widget(form.sumType) }}
+                    </li>
+                </ul>
+            </div>
         {% endblock %}
         {% block box_body_class %}{{ box_id }} table-responsive {% if hasData %}no-padding{% endif %}{% endblock %}
         {% block box_body %}
@@ -22,6 +32,9 @@
             {% else %}
                 {% set absoluteTotals = 0 %}
                 {% set totals = {} %}
+                {% set fieldName = form.sumType.vars.value %}
+                {% set totalFieldName = 'total' ~ (fieldName | capitalize) %}
+                {% set isDuration = (fieldName == 'duration') %}
                 <table class="table table-bordered table-hover dataTable">
                     <thead>
                         <tr>
@@ -44,18 +57,18 @@
                             </td>
                             {% for day in userDay.days %}
                                 {% if day.totalDuration > 0 %}
-                                    {% set usersTotalDuration = usersTotalDuration + day.totalDuration %}
-                                    {% set absoluteTotals = absoluteTotals + day.totalDuration %}
+                                    {% set usersTotalDuration = usersTotalDuration + attribute(day, totalFieldName) %}
+                                    {% set absoluteTotals = absoluteTotals + attribute(day, totalFieldName) %}
                                 {% endif %}
-                                {% set totals = totals|merge({(day.date|report_date): (totals[day.date|report_date] + day.totalDuration)}) %}
+                                {% set totals = totals|merge({(day.date|report_date): (totals[day.date|report_date] + attribute(day, totalFieldName))}) %}
                             {% endfor %}
                             <th class="text-nowrap text-center total">
-                                <a href="{{ path(subReportRoute, {'date': subReportDate|report_date, 'user': userDay.user.id}) }}">{{ usersTotalDuration|duration }}</a>
+                                <a href="{{ path(subReportRoute, {'date': subReportDate|report_date, 'user': userDay.user.id}) }}">{{ isDuration ? usersTotalDuration|duration : usersTotalDuration }}</a>
                             </th>
                             {% for day in userDay.days %}
                                 <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}{% if day.date is today %} today{% endif %}">
-                                    {% if day.totalDuration > 0 %}
-                                        {{ day.totalDuration|duration }}
+                                    {% if attribute(day, totalFieldName) > 0 %}
+                                        {{ isDuration ? attribute(day, fieldName)|duration : attribute(day, fieldName) }}
                                     {% endif %}
                                 </td>
                             {% endfor %}
@@ -66,11 +79,11 @@
                         <tr class="summary">
                             <td>{{ 'stats.durationTotal'|trans }}</td>
                             <td class="text-center text-nowrap">
-                                {{ absoluteTotals|duration }}
+                                {{ isDuration ? absoluteTotals|duration : absoluteTotals }}
                             </td>
-                            {% for id, duration in totals %}
+                            {% for id, columnTotal in totals %}
                                 <td class="text-center text-nowrap">
-                                    {{ duration|duration }}
+                                    {{ isDuration ? columnTotal|duration : columnTotal }}
                                 </td>
                             {% endfor %}
                         </tr>
@@ -86,8 +99,8 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
-            jQuery('#{{ form.date.vars.id }}').on('change', function(ev) {
-                jQuery(this).closest('form').submit();
+            jQuery('#user-list-form').on('change', function(ev) {
+                jQuery(this).submit();
             });
         });
     </script>

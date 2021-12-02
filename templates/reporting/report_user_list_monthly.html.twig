@@ -7,13 +7,23 @@
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_before %}
-            {{ form_start(form, {'attr': {'class': 'form-inline form-reporting'}}) }}
+            {{ form_start(form, {'attr': {'class': 'form-inline form-reporting', 'id': 'user-list-monthly-form'}}) }}
         {% endblock %}
         {% block box_after %}
             {{ form_end(form) }}
         {% endblock %}
         {% block box_title %}
             {{ form_widget(form.date) }}
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="{{ 'filter'|icon }}"></i> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu checkbox-menu">
+                    <li>
+                        {{ form_widget(form.sumType) }}
+                    </li>
+                </ul>
+            </div>
         {% endblock %}
         {% block box_body_class %}{{ box_id }} table-responsive {% if hasData %}no-padding{% endif %}{% endblock %}
         {% block box_body %}
@@ -21,6 +31,9 @@
                 {{ widgets.nothing_found() }}
             {% else %}
                 {% set totals = {} %}
+                {% set fieldName = form.sumType.vars.value %}
+                {% set totalFieldName = 'total' ~ (fieldName | capitalize) %}
+                {% set isDuration = (fieldName == 'duration') %}
                 <table class="table table-bordered table-hover dataTable">
                     <thead>
                         <tr>
@@ -46,19 +59,19 @@
                             </td>
                                 {% for mid, month in userYear.months %}
                                     {% if month.totalDuration > 0 %}
-                                        {% set usersTotalDuration = usersTotalDuration + month.totalDuration %}
+                                        {% set usersTotalDuration = usersTotalDuration + attribute(month, totalFieldName) %}
                                     {% endif %}
                                 {% endfor %}
                             <th class="text-nowrap text-center total">
-                                {{ usersTotalDuration|duration }}
+                                {{ isDuration ? usersTotalDuration|duration : usersTotalDuration}}
                             </th>
                             {% for mid, month in userYear.getMonths() %}
                                 <td class="text-nowrap text-center day-total">
-                                    {% if month.totalDuration > 0 %}
+                                    {% if attribute(month, totalFieldName) > 0 %}
                                         <a href="{{ path('report_user_month', {'date': create_date(month.date.format('Y') ~'-'~month.date.format('m')~'-01')|report_date, 'user': userYear.user.id}) }}" data-toggle="tooltip" title="{{ 'label.billable'|trans }}: {{ month.billableDuration|duration }}">
-                                            {{ month.totalDuration|duration }}
+                                            {{ isDuration ? attribute(month, totalFieldName)|duration : attribute(month, totalFieldName) }}
                                         </a>
-                                        {% set totals = totals|merge({(month.date|report_date): (totals[month.date|report_date] + month.totalDuration)}) %}
+                                        {% set totals = totals|merge({(month.date|report_date): (totals[month.date|report_date] + attribute(month, totalFieldName))}) %}
                                     {% endif %}
                                 </td>
                             {% endfor %}
@@ -71,7 +84,7 @@
                             <td>&nbsp;</td>
                             {% for id, total in totals %}
                                 <td class="text-center text-nowrap">
-                                    {{ total|duration }}
+                                    {{ isDuration ? total|duration : total }}
                                 </td>
                             {% endfor %}
                         </tr>
@@ -87,8 +100,8 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
-            jQuery('#{{ form.date.vars.id }}').on('change', function(ev) {
-                jQuery(this).closest('form').submit();
+            jQuery('#user-list-monthly-form').on('change', function(ev) {
+                jQuery(this).submit();
             });
         });
     </script>
