@@ -207,6 +207,17 @@ abstract class AbstractController extends BaseAbstractController implements Serv
             throw new \InvalidArgumentException('handleSearchForm() requires an instanceof BaseQuery as form data');
         }
 
+        $actions = ['resetSearchFilter', 'removeDefaultQuery', 'setDefaultQuery'];
+        foreach ($actions as $action) {
+            if ($request->query->has($action)) {
+                if (!$this->isCsrfTokenValid('search', $request->query->get('_token'))) {
+                    $this->flashError('action.csrf.error');
+
+                    return false;
+                }
+            }
+        }
+
         if ($request->query->has('resetSearchFilter')) {
             $data->resetFilter();
             $this->removeLastSearch($data);
