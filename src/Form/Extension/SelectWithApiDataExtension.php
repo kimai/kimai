@@ -78,7 +78,7 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
         $formField = $apiData['select'];
 
         // forms with prefix (like toolbar & search) would result in a wrong field name "_foo" instead of "foo"
-        if ($formPrefix !== null && $formPrefix !== '') {
+        if ($formPrefix !== '') {
             $formField = $formPrefix . '_' . $apiData['select'];
         }
 
