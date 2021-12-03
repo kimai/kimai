@@ -41,7 +41,7 @@
                             <th>&nbsp;</th>
                             {% for month in stats.0.getDateTimes() %}
                                 <th class="text-center text-nowrap">
-                                    <a href="{{ path('report_monthly_users', {'date': month|report_date}) }}">
+                                    <a href="{{ path('report_monthly_users', {'date': month|report_date, 'sumType': form.sumType.vars.value}) }}">
                                         {{ month|month_name }}<br>
                                         {{ month|date_format('Y') }}
                                     </a>
