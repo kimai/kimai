@@ -25,6 +25,7 @@ abstract class AbstractDateByUserTest extends TestCase
         $sut = $this->createSut();
         self::assertNull($sut->getDate());
         self::assertNull($sut->getUser());
+        self::assertNull($sut->getSumType());
     }
 
     public function testSetter()
@@ -32,12 +33,15 @@ abstract class AbstractDateByUserTest extends TestCase
         $date = new \DateTime('2019-05-27');
         $user = new User();
         $user->setAlias('sdfsdfdsdf');
+        $sumType = 'duration';
 
         $sut = $this->createSut();
         self::assertInstanceOf(DateByUser::class, $sut->setDate($date));
         self::assertInstanceOf(DateByUser::class, $sut->setUser($user));
+        self::assertInstanceOf(DateByUser::class, $sut->setSumType($sumType));
 
         self::assertSame($date, $sut->getDate());
         self::assertSame($user, $sut->getUser());
+        self::assertSame($sumType, $sut->getSumType());
     }
 }
