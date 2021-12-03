@@ -19,7 +19,7 @@ abstract class AbstractUserList
     /**
      * @var string
      */
-    private $sumType = 'duration';
+    private $sumType;
 
     public function getDate(): ?\DateTime
     {

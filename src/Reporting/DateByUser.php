@@ -25,7 +25,7 @@ abstract class DateByUser
     /**
      * @var string
      */
-    private $sumType = 'duration';
+    private $sumType;
 
     public function getUser(): ?User
     {

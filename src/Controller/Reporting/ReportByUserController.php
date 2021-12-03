@@ -71,6 +71,7 @@ final class ReportByUserController extends AbstractController
         $values = new MonthByUser();
         $values->setUser($currentUser);
         $values->setDate($dateTimeFactory->getStartOfMonth());
+        $values->setSumType('duration');
 
         $form = $this->createForm(MonthByUserForm::class, $values, [
             'include_user' => $canChangeUser,
@@ -137,6 +138,7 @@ final class ReportByUserController extends AbstractController
         $values = new WeekByUser();
         $values->setUser($currentUser);
         $values->setDate($dateTimeFactory->getStartOfWeek());
+        $values->setSumType('duration');
 
         $form = $this->createForm(WeekByUserForm::class, $values, [
             'include_user' => $canChangeUser,

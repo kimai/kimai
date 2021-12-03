@@ -64,6 +64,7 @@ final class ReportUsersListController extends AbstractController
 
         $values = new YearlyUserList();
         $values->setDate(clone $defaultDate);
+        $values->setSumType('duration');
 
         $form = $this->createForm(YearlyUserListForm::class, $values, [
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
@@ -120,6 +121,7 @@ final class ReportUsersListController extends AbstractController
 
         $values = new MonthlyUserList();
         $values->setDate($dateTimeFactory->getStartOfMonth());
+        $values->setSumType('duration');
 
         $form = $this->createForm(MonthlyUserListForm::class, $values, [
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
@@ -188,6 +190,7 @@ final class ReportUsersListController extends AbstractController
 
         $values = new WeeklyUserList();
         $values->setDate($dateTimeFactory->getStartOfWeek());
+        $values->setSumType('duration');
 
         $form = $this->createForm(WeeklyUserListForm::class, $values, [
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
