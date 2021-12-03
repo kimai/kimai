@@ -218,6 +218,8 @@ abstract class AbstractController extends BaseAbstractController implements Serv
             }
         }
 
+        $request->query->remove('_token');
+
         if ($request->query->has('resetSearchFilter')) {
             $data->resetFilter();
             $this->removeLastSearch($data);
