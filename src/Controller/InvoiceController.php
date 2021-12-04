@@ -66,7 +66,7 @@ final class InvoiceController extends AbstractController
      * @Route(path="/", name="invoice", methods={"GET", "POST"})
      * @Security("is_granted('view_invoice')")
      */
-    public function indexAction(Request $request, SystemConfiguration $configuration): Response
+    public function indexAction(Request $request, SystemConfiguration $configuration, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$this->templateRepository->hasTemplate()) {
             if ($this->isGranted('manage_invoice_template')) {
@@ -99,6 +99,8 @@ final class InvoiceController extends AbstractController
 
                     return $this->redirectToRoute('invoice');
                 }
+
+                $csrfTokenManager->refreshToken('invoice.create');
 
                 try {
                     return $this->renderInvoice($query, $request);
@@ -148,6 +150,7 @@ final class InvoiceController extends AbstractController
 
         if ($form->isValid()) {
             try {
+                $query->setCustomers([$customer]);
                 $model = $this->service->createModel($query);
 
                 return $this->service->renderInvoiceWithModel($model, $this->dispatcher);
@@ -167,7 +170,7 @@ final class InvoiceController extends AbstractController
      * @Security("is_granted('access', customer)")
      * @Security("is_granted('create_invoice')")
      */
-    public function createInvoiceAction(Customer $customer, InvoiceTemplate $template, Request $request, SystemConfiguration $configuration): Response
+    public function createInvoiceAction(Customer $customer, InvoiceTemplate $template, Request $request, SystemConfiguration $configuration, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$this->templateRepository->hasTemplate()) {
             return $this->redirectToRoute('invoice');
@@ -185,9 +188,13 @@ final class InvoiceController extends AbstractController
             return $this->redirectToRoute('invoice');
         }
 
+        $csrfTokenManager->refreshToken('invoice.create');
+
         $query = $this->getDefaultQuery();
         $form = $this->getToolbarForm($query, $configuration->find('invoice.simple_form'));
-        $form->submit($request->query->all(), false);
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('invoice');
+        }
 
         if ($form->isValid()) {
             $query->setTemplate($template);
