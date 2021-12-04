@@ -7,8 +7,8 @@
         <target>Nastavení</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
-        <target>Pracovní výkaz</target>
+        <source>Time tracking</source>
+        <target>Sledování času</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
@@ -225,6 +225,18 @@
       <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
         <source>label.theme.tags_create</source>
         <target>Štítky: použít auto-dokončování hledání a povolit vytváření štítků</target>
+      </trans-unit>
+      <trans-unit id="HeDzoVE" resname="label.timesheet.rules.lockdown_period_timezone">
+        <source>label.timesheet.rules.lockdown_period_timezone</source>
+        <target>Časové pásmo (pokud je prázdné, použije se časové pásmo příslušného uživatele)</target>
+      </trans-unit>
+      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
+        <source>label.theme.random_colors</source>
+        <target>Použijte náhodné barvy pro objekty bez přiřazené barvy</target>
+      </trans-unit>
+      <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
+        <source>label.theme.avatar_url</source>
+        <target>Povolit použití adres URL pro obrázky avatarů</target>
       </trans-unit>
     </body>
   </file>

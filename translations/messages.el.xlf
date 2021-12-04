@@ -1276,6 +1276,26 @@
         <source>label.hours_24</source>
         <target>24 ώρες</target>
       </trans-unit>
+      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
+        <source>stats.workingTimeWeekShort</source>
+        <target>Εμβδομάδα %week%</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target>Ο φάκελος "%dir% έχει προστασία εγγραφής.</target>
+      </trans-unit>
+      <trans-unit id="PCEFPeg" resname="updated_at">
+        <source>Updated at</source>
+        <target>Ενημερώθηκε την</target>
+      </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>error.directory_missing</source>
+        <target>Ο φάκελος "%dir%" δεν υπάρχει και δεν μπόρεσε να δημιουργηθεί.</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+        <source>invoice_document.max_reached</source>
+        <target>Επιτεύχθη τo μέγιστο όριο %max% των τιμολογίων. Μπορείτε να προσθέσετε περισότερρα εφόσον αφαιρέσεται κάποιο.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

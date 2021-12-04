@@ -1205,6 +1205,34 @@
         <source>label.includeBudgetType_month</source>
         <target>Afișați intrările cu buget "lunar"</target>
       </trans-unit>
+      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
+        <source>stats.workingTimeWeekShort</source>
+        <target>Săptămâna %week%</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target>Directorul "%dir%" este protejat la scriere.</target>
+      </trans-unit>
+      <trans-unit id="gT9W2pZ" resname="status.canceled">
+        <source>status.canceled</source>
+        <target>Anulat</target>
+      </trans-unit>
+      <trans-unit id="61p_ckr" resname="label.hours_24">
+        <source>label.hours_24</source>
+        <target>24 de ore</target>
+      </trans-unit>
+      <trans-unit id="PCEFPeg" resname="updated_at">
+        <source>Updated at</source>
+        <target>Actualizat la</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+        <source>invoice_document.max_reached</source>
+        <target>A fost atinsă cantitatea maximă de documente de facturare %max%. Puteți adăuga mai multe după ce ați eliminat unul.</target>
+      </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>error.directory_missing</source>
+        <target>Directorul "%dir%" nu există și nu a putut fi creat.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

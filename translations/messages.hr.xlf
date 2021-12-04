@@ -1280,6 +1280,26 @@
         <source>status.canceled</source>
         <target>Prekinuti</target>
       </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>error.directory_missing</source>
+        <target>Mapa „%dir%” ne postoji i nije je moguće stvoriti.</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target>Mapa „%dir%” je zaštićena od pisanja.</target>
+      </trans-unit>
+      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
+        <source>stats.workingTimeWeekShort</source>
+        <target>Tjedan %week%</target>
+      </trans-unit>
+      <trans-unit id="PCEFPeg" resname="updated_at">
+        <source>Updated at</source>
+        <target>Aktualizirano</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+        <source>invoice_document.max_reached</source>
+        <target>Dosegnut je maksimalni broj od %max% dokumenata za račune. Nakon uklanjanja možeš dodati još.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
