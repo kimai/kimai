@@ -983,10 +983,6 @@
         <source>admin_entity.delete_confirm</source>
         <target>Hesar dátur verða eisini strikaðar! Um hetta ikki ynskist, so kanst tú velja, at flyta dáturnar til eitt av fylgjandi møguleikum:</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>Ein teldupostur er sendur til %email%. Telduposturin inniheldur eina leinkju, ið tú skalt trýst á, fyri at endurseta títt loyniorð.</target>
-      </trans-unit>
       <trans-unit id="jdbtx6z" resname="action.add">
         <source>action.add</source>
         <target>Legg aftrat</target>
