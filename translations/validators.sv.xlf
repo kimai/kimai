@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sv" datatype="plaintext" original="validators.en.xlf">
     <body>
@@ -65,6 +65,18 @@
       <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
         <source>At least one team leader must be assigned to the team.</source>
         <target>Minst en teamledare måste tilldelas i teamet.</target>
+      </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target>Ett projekt måste väljas.</target>
+      </trans-unit>
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target>Den här tidsrapporten är redan exporterad.</target>
+      </trans-unit>
+      <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
+        <source>An activity needs to be selected.</source>
+        <target>En aktivitet måste väljas.</target>
       </trans-unit>
     </body>
   </file>
