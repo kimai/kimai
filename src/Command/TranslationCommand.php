@@ -10,7 +10,6 @@
 namespace App\Command;
 
 use App\Kernel;
-use App\Utils\FileHelper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -26,14 +25,12 @@ class TranslationCommand extends Command
 {
     private $projectDirectory;
     private $environment;
-    private $fileHelper;
 
-    public function __construct(string $projectDirectory, string $kernelEnvironment, FileHelper $fileHelper)
+    public function __construct(string $projectDirectory, string $kernelEnvironment)
     {
         parent::__construct();
         $this->projectDirectory = $projectDirectory;
         $this->environment = $kernelEnvironment;
-        $this->fileHelper = $fileHelper;
     }
 
     /**
