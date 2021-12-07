@@ -7,7 +7,7 @@
         <target>设置</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
+        <source>Time tracking</source>
         <target>时间表</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">

@@ -67,7 +67,7 @@ class UserSubscriber extends AbstractActionsSubscriber
         }
 
         if ($viewOther && $user->isEnabled()) {
-            $event->addAction('timesheet', ['url' => $this->path('admin_timesheet', ['users[]' => $user->getId()])]);
+            $event->addAction('timesheet.filter', ['url' => $this->path('admin_timesheet', ['users[]' => $user->getId()])]);
         }
 
         if ($event->isIndexView() && $this->isGranted('delete', $user)) {

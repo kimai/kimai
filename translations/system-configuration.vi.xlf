@@ -7,7 +7,7 @@
         <target>Cài đặt</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
+        <source>Time tracking</source>
         <target>Bảng chấm công</target>
       </trans-unit>
       <trans-unit id="Utbj3k_" resname="invoice">

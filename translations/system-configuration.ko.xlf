@@ -7,7 +7,7 @@
         <target state="translated">설정 </target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
+        <source>Time tracking</source>
         <target state="translated">타임시트</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">

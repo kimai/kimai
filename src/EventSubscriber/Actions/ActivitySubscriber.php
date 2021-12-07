@@ -54,7 +54,7 @@ class ActivitySubscriber extends AbstractActionsSubscriber
                 $parameters['customers[]'] = $activity->getProject()->getCustomer()->getId();
                 $parameters['projects[]'] = $activity->getProject()->getId();
             }
-            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', $parameters)]);
+            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', $parameters)]);
         }
 
         if ($event->hasSubmenu('filter')) {

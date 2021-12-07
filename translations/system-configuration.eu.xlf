@@ -7,7 +7,7 @@
         <target>Aukerak</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
+        <source>Time tracking</source>
         <target>Ordu taula</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
