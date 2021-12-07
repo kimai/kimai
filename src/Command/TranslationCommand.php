@@ -43,6 +43,7 @@ class TranslationCommand extends Command
             ->setDescription('Translation adjustments')
             ->addOption('resname', null, InputOption::VALUE_NONE, 'Fix the resname vs. id attribute')
             ->addOption('duplicates', null, InputOption::VALUE_NONE, 'Find duplicate translation keys')
+            ->addOption('delete-resname', null, InputOption::VALUE_REQUIRED, 'Deletes the translation by resname')
             ->addOption('extension', null, InputOption::VALUE_NONE, 'Find translation files with wrong extensions')
         ;
     }
@@ -60,6 +61,13 @@ class TranslationCommand extends Command
             'core' => $this->projectDirectory . '/translations',
             'plugins' => $this->projectDirectory . Kernel::PLUGIN_DIRECTORY . '/*/Resources/translations',
         ];
+
+        if ($input->getOption('delete-resname')) {
+            $files = glob($bases['core'] . '/*.xlf');
+            foreach ($files as $file) {
+                $this->removeKey($file, $input->getOption('delete-resname'));
+            }
+        }
 
         if ($input->getOption('resname')) {
             foreach ($bases as $id => $directory) {
@@ -123,6 +131,31 @@ class TranslationCommand extends Command
                 $unit['resname'] = $source;
             }
             $unit['id'] = strtr(substr(base64_encode(hash('sha256', $source, true)), 0, 7), '/+', '._');
+        }
+
+        $xmlDocument = new \DOMDocument('1.0');
+        $xmlDocument->preserveWhiteSpace = false;
+        $xmlDocument->formatOutput = true;
+        $xmlDocument->loadXML($xml->asXML());
+
+        file_put_contents($file, $xmlDocument->saveXML());
+    }
+
+    private function removeKey(string $file, string $key): void
+    {
+        $xml = simplexml_load_file($file);
+
+        /** @var \SimpleXMLElement $unit */
+        foreach ($xml->file->body->{'trans-unit'} as $unit) {
+            if (!isset($unit['resname'])) {
+                continue;
+            }
+
+            if ((string)$unit['resname'] === $key) {
+                $dom = dom_import_simplexml($unit);
+                $dom->parentNode->removeChild($dom);
+                break;
+            }
         }
 
         $xmlDocument = new \DOMDocument('1.0');
