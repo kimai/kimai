@@ -111,20 +111,20 @@
         <source>menu.admin_timesheet</source>
         <target>Quadro de horários</target>
       </trans-unit>
-      <trans-unit id="Y_jAD36" resname="menu.admin_customer">
-        <source>menu.admin_customer</source>
+      <trans-unit id="IeshU90" resname="customers">
+        <source>customers</source>
         <target>Clientes</target>
       </trans-unit>
-      <trans-unit id="oDLp9t3" resname="menu.admin_project">
-        <source>menu.admin_project</source>
+      <trans-unit id="JXfA9Ve" resname="projects">
+        <source>projects</source>
         <target>Projetos</target>
       </trans-unit>
-      <trans-unit id="wriHFwl" resname="menu.admin_activity">
-        <source>menu.admin_activity</source>
+      <trans-unit id="YkyVVAY" resname="activities">
+        <source>activities</source>
         <target>Atividades</target>
       </trans-unit>
-      <trans-unit id="oZo1BnZ" resname="menu.admin_user">
-        <source>menu.admin_user</source>
+      <trans-unit id="oZo1BnZ" resname="users">
+        <source>users</source>
         <target>Utilizadores</target>
       </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
@@ -135,8 +135,8 @@
         <source>menu.system_configuration</source>
         <target>Configurações</target>
       </trans-unit>
-      <trans-unit id="yo4f8Kh" resname="menu.tags">
-        <source>menu.tags</source>
+      <trans-unit id="l4wviUE" resname="tags">
+        <source>tags</source>
         <target>Etiquetas</target>
       </trans-unit>
       <!--
@@ -419,31 +419,9 @@
       <!--
               Admin: Timesheet
             -->
-      <trans-unit id="bSDjzZL" resname="admin_timesheet.title">
-        <source>admin_timesheet.title</source>
-        <target>Quadro de horários</target>
-      </trans-unit>
-      <!--
-              Admin: Projects
-            -->
-      <trans-unit id="DFjFRGe" resname="admin_project.title">
-        <source>admin_project.title</source>
-        <target>Projetos</target>
-      </trans-unit>
-      <!--
-              Admin: Activity
-            -->
-      <trans-unit id="auu8q0u" resname="admin_activity.title">
-        <source>admin_activity.title</source>
-        <target>Atividades</target>
-      </trans-unit>
       <!--
               Admin: Customer
             -->
-      <trans-unit id="2TvKX9Z" resname="admin_customer.title">
-        <source>admin_customer.title</source>
-        <target>Cliente</target>
-      </trans-unit>
       <trans-unit id="39AtPxQ" resname="label.number">
         <source>label.number</source>
         <target>Conta</target>
@@ -495,10 +473,6 @@
       <!--
               Admin: Users
             -->
-      <trans-unit id="t34EvnF" resname="admin_user.title">
-        <source>admin_user.title</source>
-        <target>Utilizador</target>
-      </trans-unit>
       <trans-unit id="TRDzmCV" resname="label.alias">
         <source>label.alias</source>
         <target>Nome</target>

@@ -317,10 +317,6 @@
         <source>calendar.title</source>
         <target>Kalender</target>
       </trans-unit>
-      <trans-unit id="DFjFRGe" resname="admin_project.title">
-        <source>admin_project.title</source>
-        <target>Prosjekter</target>
-      </trans-unit>
       <trans-unit id="yLOqEX_" resname="label.project_start">
         <source>label.project_start</source>
         <target>Prosjektstart</target>
@@ -330,19 +326,8 @@
         <target>Prosjektslutt</target>
       </trans-unit>
       <!--
-              Admin: Activity
-            -->
-      <trans-unit id="auu8q0u" resname="admin_activity.title">
-        <source>admin_activity.title</source>
-        <target>Aktiviteter</target>
-      </trans-unit>
-      <!--
               Admin: Customer
             -->
-      <trans-unit id="2TvKX9Z" resname="admin_customer.title">
-        <source>admin_customer.title</source>
-        <target>Kunde</target>
-      </trans-unit>
       <trans-unit id="39AtPxQ" resname="label.number">
         <source>label.number</source>
         <target>Konto</target>
@@ -390,10 +375,6 @@
       <!--
               Admin: Users
             -->
-      <trans-unit id="t34EvnF" resname="admin_user.title">
-        <source>admin_user.title</source>
-        <target>Bruker</target>
-      </trans-unit>
       <trans-unit id="TRDzmCV" resname="label.alias">
         <source>label.alias</source>
         <target>Navn</target>
@@ -563,20 +544,20 @@
         <source>menu.reporting</source>
         <target>Rapportering</target>
       </trans-unit>
-      <trans-unit id="Y_jAD36" resname="menu.admin_customer">
-        <source>menu.admin_customer</source>
+      <trans-unit id="IeshU90" resname="customers">
+        <source>customers</source>
         <target>Kunder</target>
       </trans-unit>
-      <trans-unit id="oDLp9t3" resname="menu.admin_project">
-        <source>menu.admin_project</source>
+      <trans-unit id="JXfA9Ve" resname="projects">
+        <source>projects</source>
         <target>Prosjekter</target>
       </trans-unit>
-      <trans-unit id="wriHFwl" resname="menu.admin_activity">
-        <source>menu.admin_activity</source>
+      <trans-unit id="YkyVVAY" resname="activities">
+        <source>activities</source>
         <target>Aktiviteter</target>
       </trans-unit>
-      <trans-unit id="oZo1BnZ" resname="menu.admin_user">
-        <source>menu.admin_user</source>
+      <trans-unit id="oZo1BnZ" resname="users">
+        <source>users</source>
         <target>Brukere</target>
       </trans-unit>
       <trans-unit id="pA.bYIk" resname="menu.admin_team">
@@ -794,10 +775,6 @@
       <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
         <source>label.timesheet.export_decimal</source>
         <target>Bruk desimalvarighet i eksport</target>
-      </trans-unit>
-      <trans-unit id="bSDjzZL" resname="admin_timesheet.title">
-        <source>admin_timesheet.title</source>
-        <target>Tidstabeller</target>
       </trans-unit>
       <trans-unit id="Dgmh_mv" resname="label.vat_id">
         <source>label.vat_id</source>
@@ -1119,8 +1096,8 @@
         <source>menu.doctor</source>
         <target>Doktor</target>
       </trans-unit>
-      <trans-unit id="yo4f8Kh" resname="menu.tags">
-        <source>menu.tags</source>
+      <trans-unit id="l4wviUE" resname="tags">
+        <source>tags</source>
         <target>Etiketter</target>
       </trans-unit>
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">

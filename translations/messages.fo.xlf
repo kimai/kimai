@@ -61,16 +61,16 @@
         <source>menu.export</source>
         <target>Útflyt</target>
       </trans-unit>
-      <trans-unit id="Y_jAD36" resname="menu.admin_customer">
-        <source>menu.admin_customer</source>
+      <trans-unit id="IeshU90" resname="customers">
+        <source>customers</source>
         <target>Kundar</target>
       </trans-unit>
-      <trans-unit id="oDLp9t3" resname="menu.admin_project">
-        <source>menu.admin_project</source>
+      <trans-unit id="JXfA9Ve" resname="projects">
+        <source>projects</source>
         <target>Verkætlanir</target>
       </trans-unit>
-      <trans-unit id="oZo1BnZ" resname="menu.admin_user">
-        <source>menu.admin_user</source>
+      <trans-unit id="oZo1BnZ" resname="users">
+        <source>users</source>
         <target>Brúkarar</target>
       </trans-unit>
       <trans-unit id="pA.bYIk" resname="menu.admin_team">
@@ -199,14 +199,6 @@
         <source>label.avatar</source>
         <target>Vanga mynd</target>
       </trans-unit>
-      <trans-unit id="2TvKX9Z" resname="admin_customer.title">
-        <source>admin_customer.title</source>
-        <target>Kundi</target>
-      </trans-unit>
-      <trans-unit id="bSDjzZL" resname="admin_timesheet.title">
-        <source>admin_timesheet.title</source>
-        <target>Arbeiðsseðlar</target>
-      </trans-unit>
       <trans-unit id="HWiuMV6" resname="calendar.title">
         <source>calendar.title</source>
         <target>Kalendari</target>
@@ -243,10 +235,6 @@
         <source>label.alias</source>
         <target>Navn</target>
       </trans-unit>
-      <trans-unit id="t34EvnF" resname="admin_user.title">
-        <source>admin_user.title</source>
-        <target>Brúkari</target>
-      </trans-unit>
       <trans-unit id="otd2FZd" resname="label.currency">
         <source>label.currency</source>
         <target>Gjaldoyra</target>
@@ -278,10 +266,6 @@
       <trans-unit id="39AtPxQ" resname="label.number">
         <source>label.number</source>
         <target>Konta</target>
-      </trans-unit>
-      <trans-unit id="DFjFRGe" resname="admin_project.title">
-        <source>admin_project.title</source>
-        <target>Verkætlanir</target>
       </trans-unit>
       <trans-unit id="Q0Zip02" resname="agendaDay">
         <source>agendaDay</source>
@@ -567,8 +551,8 @@
         <source>entryState.stopped</source>
         <target>Steðga</target>
       </trans-unit>
-      <trans-unit id="yo4f8Kh" resname="menu.tags">
-        <source>menu.tags</source>
+      <trans-unit id="l4wviUE" resname="tags">
+        <source>tags</source>
         <target>Frámerki</target>
       </trans-unit>
       <trans-unit id="mflwMcX" resname="rates.title">
@@ -727,12 +711,8 @@
         <source>stats.activityTotal</source>
         <target>Virksemi</target>
       </trans-unit>
-      <trans-unit id="auu8q0u" resname="admin_activity.title">
-        <source>admin_activity.title</source>
-        <target>Virksemi</target>
-      </trans-unit>
-      <trans-unit id="wriHFwl" resname="menu.admin_activity">
-        <source>menu.admin_activity</source>
+      <trans-unit id="YkyVVAY" resname="activities">
+        <source>activities</source>
         <target>Virksemi</target>
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">

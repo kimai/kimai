@@ -33,10 +33,10 @@ class InitialViewType extends AbstractType
         'my_profile' => 'profile.title',
         'admin_timesheet' => 'menu.admin_timesheet',
         'invoice' => 'menu.invoice',
-        'admin_user' => 'menu.admin_user',
-        'admin_customer' => 'menu.admin_customer',
-        'admin_project' => 'menu.admin_project',
-        'admin_activity' => 'menu.admin_activity',
+        'admin_user' => 'users',
+        'admin_customer' => 'customers',
+        'admin_project' => 'projects',
+        'admin_activity' => 'activities',
     ];
 
     private const ROUTE_PERMISSION = [

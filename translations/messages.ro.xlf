@@ -137,20 +137,20 @@
         <source>menu.admin_timesheet</source>
         <target>Pontaje</target>
       </trans-unit>
-      <trans-unit id="Y_jAD36" resname="menu.admin_customer">
-        <source>menu.admin_customer</source>
+      <trans-unit id="IeshU90" resname="customers">
+        <source>customers</source>
         <target>Clienți</target>
       </trans-unit>
-      <trans-unit id="oDLp9t3" resname="menu.admin_project">
-        <source>menu.admin_project</source>
+      <trans-unit id="JXfA9Ve" resname="projects">
+        <source>projects</source>
         <target>Proiecte</target>
       </trans-unit>
-      <trans-unit id="wriHFwl" resname="menu.admin_activity">
-        <source>menu.admin_activity</source>
+      <trans-unit id="YkyVVAY" resname="activities">
+        <source>activities</source>
         <target>Activități</target>
       </trans-unit>
-      <trans-unit id="oZo1BnZ" resname="menu.admin_user">
-        <source>menu.admin_user</source>
+      <trans-unit id="oZo1BnZ" resname="users">
+        <source>users</source>
         <target>Utilizatori</target>
       </trans-unit>
       <trans-unit id="pA.bYIk" resname="menu.admin_team">
@@ -165,8 +165,8 @@
         <source>menu.system_configuration</source>
         <target>Setări</target>
       </trans-unit>
-      <trans-unit id="yo4f8Kh" resname="menu.tags">
-        <source>menu.tags</source>
+      <trans-unit id="l4wviUE" resname="tags">
+        <source>tags</source>
         <target>Etichete</target>
       </trans-unit>
       <trans-unit id="1kHI0gb" resname="menu.doctor">
@@ -477,14 +477,6 @@
         <source>calendar.title</source>
         <target>Calendarul</target>
       </trans-unit>
-      <trans-unit id="bSDjzZL" resname="admin_timesheet.title">
-        <source>admin_timesheet.title</source>
-        <target>Pontaje</target>
-      </trans-unit>
-      <trans-unit id="DFjFRGe" resname="admin_project.title">
-        <source>admin_project.title</source>
-        <target>Proiecte</target>
-      </trans-unit>
       <trans-unit id="yLOqEX_" resname="label.project_start">
         <source>label.project_start</source>
         <target>Pornire proiect</target>
@@ -492,14 +484,6 @@
       <trans-unit id="4kQGReV" resname="label.project_end">
         <source>label.project_end</source>
         <target>Terminare proiect</target>
-      </trans-unit>
-      <trans-unit id="auu8q0u" resname="admin_activity.title">
-        <source>admin_activity.title</source>
-        <target>Activități</target>
-      </trans-unit>
-      <trans-unit id="2TvKX9Z" resname="admin_customer.title">
-        <source>admin_customer.title</source>
-        <target>Client</target>
       </trans-unit>
       <trans-unit id="39AtPxQ" resname="label.number">
         <source>label.number</source>
@@ -552,10 +536,6 @@
       <trans-unit id="otd2FZd" resname="label.currency">
         <source>label.currency</source>
         <target>Moneda</target>
-      </trans-unit>
-      <trans-unit id="t34EvnF" resname="admin_user.title">
-        <source>admin_user.title</source>
-        <target>Utilizator</target>
       </trans-unit>
       <trans-unit id="TRDzmCV" resname="label.alias">
         <source>label.alias</source>
