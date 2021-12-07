@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sv" datatype="plaintext" original="flashmessages.en.xlf">
     <body>
@@ -53,6 +53,10 @@
       <trans-unit id="wejAEcR" resname="action.upload.error">
         <source>action.upload.error</source>
         <target>Filen kunde inte laddas upp eller sparas: %reason%</target>
+      </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R">
+        <source>action.csrf.error</source>
+        <target>Den här åtgärden kunde inte utföras: säkerhetssymbolen är ogiltig.</target>
       </trans-unit>
     </body>
   </file>

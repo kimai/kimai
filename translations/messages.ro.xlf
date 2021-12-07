@@ -1127,7 +1127,7 @@
       </trans-unit>
       <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>
-        <target>%percentaj%%% folosit în această lună</target>
+        <target>%percent%%% folosit în această lună</target>
       </trans-unit>
       <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
         <source>stats.userActiveFinancialYear</source>
