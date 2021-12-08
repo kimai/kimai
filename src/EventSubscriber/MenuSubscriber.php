@@ -97,26 +97,26 @@ final class MenuSubscriber implements EventSubscriberInterface
         }
 
         if ($auth->isGranted('view_customer') || $auth->isGranted('view_teamlead_customer') || $auth->isGranted('view_team_customer')) {
-            $customers = new MenuItemModel('customer_admin', 'menu.admin_customer', 'admin_customer', [], $icons->icon('customer'));
+            $customers = new MenuItemModel('customer_admin', 'customers', 'admin_customer', [], $icons->icon('customer'));
             $customers->setChildRoutes(['admin_customer_create', 'admin_customer_permissions', 'customer_details', 'admin_customer_edit', 'admin_customer_delete']);
             $menu->addChild($customers);
         }
 
         if ($auth->isGranted('view_project') || $auth->isGranted('view_teamlead_project') || $auth->isGranted('view_team_project')) {
-            $projects = new MenuItemModel('project_admin', 'menu.admin_project', 'admin_project', [], $icons->icon('project'));
+            $projects = new MenuItemModel('project_admin', 'projects', 'admin_project', [], $icons->icon('project'));
             $projects->setChildRoutes(['admin_project_permissions', 'admin_project_create', 'project_details', 'admin_project_edit', 'admin_project_delete']);
             $menu->addChild($projects);
         }
 
         if ($auth->isGranted('view_activity') || $auth->isGranted('view_teamlead_activity') || $auth->isGranted('view_team_activity')) {
-            $activities = new MenuItemModel('activity_admin', 'menu.admin_activity', 'admin_activity', [], $icons->icon('activity'));
+            $activities = new MenuItemModel('activity_admin', 'activities', 'admin_activity', [], $icons->icon('activity'));
             $activities->setChildRoutes(['admin_activity_create', 'activity_details', 'admin_activity_edit', 'admin_activity_delete']);
             $menu->addChild($activities);
         }
 
         if ($auth->isGranted('view_tag')) {
             $menu->addChild(
-                new MenuItemModel('tags', 'menu.tags', 'tags', [], 'fas fa-tags')
+                new MenuItemModel('tags', 'tags', 'tags', [], 'fas fa-tags')
             );
         }
 
@@ -124,7 +124,7 @@ final class MenuSubscriber implements EventSubscriberInterface
         $menu = $event->getSystemMenu();
 
         if ($auth->isGranted('view_user')) {
-            $users = new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], $icons->icon('users'));
+            $users = new MenuItemModel('user_admin', 'users', 'admin_user', [], $icons->icon('users'));
             $users->setChildRoutes(['admin_user_create', 'admin_user_delete',  'user_profile', 'user_profile_edit', 'user_profile_password', 'user_profile_api_token', 'user_profile_roles', 'user_profile_teams', 'user_profile_preferences']);
             $menu->addChild($users);
         }

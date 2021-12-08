@@ -49,15 +49,15 @@ class CustomerSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('view_project') || $this->isGranted('view_teamlead_project') || $this->isGranted('view_team_project')) {
-            $event->addActionToSubmenu('filter', 'project', ['title' => 'project', 'translation_domain' => 'actions', 'url' => $this->path('admin_project', ['customers[]' => $customer->getId()])]);
+            $event->addActionToSubmenu('filter', 'project', ['title' => 'project.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_project', ['customers[]' => $customer->getId()])]);
         }
 
         if ($this->isGranted('view_activity')) {
-            $event->addActionToSubmenu('filter', 'activity', ['title' => 'activity', 'translation_domain' => 'actions', 'url' => $this->path('admin_activity', ['customers[]' => $customer->getId()])]);
+            $event->addActionToSubmenu('filter', 'activity', ['title' => 'activity.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_activity', ['customers[]' => $customer->getId()])]);
         }
 
         if ($this->isGranted('view_other_timesheet')) {
-            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', ['customers[]' => $customer->getId()])]);
+            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', ['customers[]' => $customer->getId()])]);
         }
 
         if ($event->hasSubmenu('filter')) {

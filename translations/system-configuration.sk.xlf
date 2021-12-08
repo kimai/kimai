@@ -6,8 +6,8 @@
         <source>title</source>
         <target>Nastavenia</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
+      <trans-unit id="ycErWZK" resname="timesheet">
+        <source>Time tracking</source>
         <target>Pracovný výkaz</target>
       </trans-unit>
       <trans-unit id="ddoIrUk" resname="label.timesheet.markdown_content">

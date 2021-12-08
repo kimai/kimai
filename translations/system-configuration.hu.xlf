@@ -6,8 +6,8 @@
         <source>title</source>
         <target>Rendszer beállítások</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
+      <trans-unit id="ycErWZK" resname="timesheet">
+        <source>Time tracking</source>
         <target>Rögzített órák</target>
       </trans-unit>
       <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">

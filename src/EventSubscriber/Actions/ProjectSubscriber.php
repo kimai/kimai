@@ -49,11 +49,11 @@ class ProjectSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('view_activity')) {
-            $event->addActionToSubmenu('filter', 'activity', ['title' => 'activity', 'translation_domain' => 'actions', 'url' => $this->path('admin_activity', ['customers[]' => $project->getCustomer()->getId(), 'projects[]' => $project->getId()])]);
+            $event->addActionToSubmenu('filter', 'activity', ['title' => 'activity.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_activity', ['customers[]' => $project->getCustomer()->getId(), 'projects[]' => $project->getId()])]);
         }
 
         if ($this->isGranted('view_other_timesheet')) {
-            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', ['customers[]' => $project->getCustomer()->getId(), 'projects[]' => $project->getId()])]);
+            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', ['customers[]' => $project->getCustomer()->getId(), 'projects[]' => $project->getId()])]);
         }
 
         if ($event->hasSubmenu('filter')) {

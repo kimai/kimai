@@ -355,8 +355,8 @@
         <source>menu.doctor</source>
         <target>دکتر</target>
       </trans-unit>
-      <trans-unit id="yo4f8Kh" resname="menu.tags">
-        <source>menu.tags</source>
+      <trans-unit id="l4wviUE" resname="tags">
+        <source>tags</source>
         <target>برچسب ها</target>
       </trans-unit>
       <trans-unit id="IXtkHRw" resname="menu.system_configuration">
@@ -371,20 +371,20 @@
         <source>menu.admin_team</source>
         <target>تیم ها</target>
       </trans-unit>
-      <trans-unit id="oZo1BnZ" resname="menu.admin_user">
-        <source>menu.admin_user</source>
+      <trans-unit id="fftM9nd" resname="users">
+        <source>users</source>
         <target>کاربران</target>
       </trans-unit>
-      <trans-unit id="wriHFwl" resname="menu.admin_activity">
-        <source>menu.admin_activity</source>
+      <trans-unit id="YkyVVAY" resname="activities">
+        <source>activities</source>
         <target>فعالیت ها</target>
       </trans-unit>
-      <trans-unit id="oDLp9t3" resname="menu.admin_project">
-        <source>menu.admin_project</source>
+      <trans-unit id="JXfA9Ve" resname="projects">
+        <source>projects</source>
         <target>پروژه ها</target>
       </trans-unit>
-      <trans-unit id="Y_jAD36" resname="menu.admin_customer">
-        <source>menu.admin_customer</source>
+      <trans-unit id="IeshU90" resname="customers">
+        <source>customers</source>
         <target>مشتریان</target>
       </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">

@@ -6,8 +6,8 @@
         <source>title</source>
         <target>Cài đặt</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
+      <trans-unit id="ycErWZK" resname="timesheet">
+        <source>Time tracking</source>
         <target>Bảng chấm công</target>
       </trans-unit>
       <trans-unit id="Utbj3k_" resname="invoice">

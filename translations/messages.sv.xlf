@@ -114,20 +114,20 @@
         <source>menu.admin_timesheet</source>
         <target state="translated">Tidsschema</target>
       </trans-unit>
-      <trans-unit id="Y_jAD36" resname="menu.admin_customer">
-        <source>menu.admin_customer</source>
+      <trans-unit id="IeshU90" resname="customers">
+        <source>customers</source>
         <target state="translated">Kund</target>
       </trans-unit>
-      <trans-unit id="oDLp9t3" resname="menu.admin_project">
-        <source>menu.admin_project</source>
+      <trans-unit id="JXfA9Ve" resname="projects">
+        <source>projects</source>
         <target state="translated">Projekt</target>
       </trans-unit>
-      <trans-unit id="wriHFwl" resname="menu.admin_activity">
-        <source>menu.admin_activity</source>
+      <trans-unit id="YkyVVAY" resname="activities">
+        <source>activities</source>
         <target state="translated">Aktiviteter</target>
       </trans-unit>
-      <trans-unit id="oZo1BnZ" resname="menu.admin_user">
-        <source>menu.admin_user</source>
+      <trans-unit id="fftM9nd" resname="users">
+        <source>users</source>
         <target state="translated">Användare</target>
       </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
@@ -422,31 +422,9 @@
       <!--
               Admin: Timesheet
             -->
-      <trans-unit id="bSDjzZL" resname="admin_timesheet.title">
-        <source>admin_timesheet.title</source>
-        <target state="translated">Tidrapporter</target>
-      </trans-unit>
-      <!--
-              Admin: Projects
-            -->
-      <trans-unit id="DFjFRGe" resname="admin_project.title">
-        <source>admin_project.title</source>
-        <target state="translated">Projekt</target>
-      </trans-unit>
-      <!--
-              Admin: Activity
-            -->
-      <trans-unit id="auu8q0u" resname="admin_activity.title">
-        <source>admin_activity.title</source>
-        <target state="translated">Aktiviteter</target>
-      </trans-unit>
       <!--
               Admin: Customer
             -->
-      <trans-unit id="2TvKX9Z" resname="admin_customer.title">
-        <source>admin_customer.title</source>
-        <target state="translated">Kunder</target>
-      </trans-unit>
       <trans-unit id="39AtPxQ" resname="label.number">
         <source>label.number</source>
         <target state="translated">Konto</target>
@@ -498,10 +476,6 @@
       <!--
               Admin: User
             -->
-      <trans-unit id="t34EvnF" resname="admin_user.title">
-        <source>admin_user.title</source>
-        <target state="translated">Användare</target>
-      </trans-unit>
       <trans-unit id="TRDzmCV" resname="label.alias">
         <source>label.alias</source>
         <target state="translated">Namn</target>
@@ -887,8 +861,8 @@
         <source>menu.doctor</source>
         <target>Doktor</target>
       </trans-unit>
-      <trans-unit id="yo4f8Kh" resname="menu.tags">
-        <source>menu.tags</source>
+      <trans-unit id="l4wviUE" resname="tags">
+        <source>tags</source>
         <target>Taggar</target>
       </trans-unit>
       <trans-unit id="pA.bYIk" resname="menu.admin_team">

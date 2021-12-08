@@ -6,8 +6,8 @@
         <source>title</source>
         <target>Indstillinger</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
+      <trans-unit id="ycErWZK" resname="timesheet">
+        <source>Time tracking</source>
         <target>Timeseddel</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
