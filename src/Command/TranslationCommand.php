@@ -151,7 +151,7 @@ class TranslationCommand extends Command
                 continue;
             }
 
-            if ((string)$unit['resname'] === $key) {
+            if ((string) $unit['resname'] === $key) {
                 $dom = dom_import_simplexml($unit);
                 $dom->parentNode->removeChild($dom);
                 break;
