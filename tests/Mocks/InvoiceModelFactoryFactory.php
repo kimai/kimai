@@ -19,11 +19,11 @@ class InvoiceModelFactoryFactory extends AbstractMockFactory
     public function create(): InvoiceModelFactory
     {
         /** @var CustomerStatisticService $customerStatistic */
-        $customerStatistic = $this->getMockBuilder(CustomerStatisticService::class)->getMock();
+        $customerStatistic = $this->getMockBuilder(CustomerStatisticService::class)->disableOriginalConstructor()->getMock();
         /** @var ProjectStatisticService $projectStatistic */
-        $projectStatistic = $this->getMockBuilder(ProjectStatisticService::class)->getMock();
+        $projectStatistic = $this->getMockBuilder(ProjectStatisticService::class)->disableOriginalConstructor()->getMock();
         /** @var ActivityStatisticService $activityStatistic */
-        $activityStatistic = $this->getMockBuilder(ActivityStatisticService::class)->getMock();
+        $activityStatistic = $this->getMockBuilder(ActivityStatisticService::class)->disableOriginalConstructor()->getMock();
 
         return new InvoiceModelFactory($customerStatistic, $projectStatistic, $activityStatistic);
     }
