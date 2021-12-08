@@ -877,7 +877,7 @@
         <source>menu.admin_team</source>
         <target>Teams</target>
       </trans-unit>
-      <trans-unit id="oZo1BnZ" resname="users">
+      <trans-unit id="fftM9nd" resname="users">
         <source>users</source>
         <target>Benutzer</target>
       </trans-unit>
