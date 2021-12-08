@@ -32,6 +32,10 @@ class InvoiceModelProjectHydrator implements InvoiceModelHydrator
         $values = [];
         $i = 0;
 
+        if (\count($model->getQuery()->getProjects()) === 1) {
+            $values['project'] = $model->getQuery()->getProjects()[0]->getName();
+        }
+
         foreach ($model->getQuery()->getProjects() as $project) {
             $prefix = '';
             if ($i > 0) {
@@ -60,18 +64,21 @@ class InvoiceModelProjectHydrator implements InvoiceModelHydrator
             $prefix . 'order_date' => null !== $project->getOrderDate() ? $formatter->getFormattedDateTime($project->getOrderDate()) : '',
         ];
 
-        $statistic = $this->projectStatistic->getBudgetStatisticModel($project, $model->getInvoiceDate());
+        $statistic = $this->projectStatistic->getBudgetStatisticModel($project, $model->getQuery()->getEnd());
         $currency = $model->getCurrency();
         $formatter = $model->getFormatter();
 
+        if ($model->getTemplate()->isDecimalDuration()) {
+            $budgetOpenDuration = $formatter->getFormattedDecimalDuration($statistic->getTimeBudgetOpen());
+        } else {
+            $budgetOpenDuration = $formatter->getFormattedDuration($statistic->getTimeBudgetOpen());
+        }
+
         $values = array_merge($values, [
-            $prefix . 'budget_open' => $statistic->getBudgetOpen(),
-            $prefix . 'budget_open_formatted' => $formatter->getFormattedMoney($statistic->getBudgetOpen(), $currency),
-            $prefix . 'budget_open_formatted_nc' => $formatter->getFormattedMoney($statistic->getBudgetOpen(), $currency, false),
-            $prefix . 'time_budget_open' => $statistic->getTimeBudgetOpen(),
-            $prefix . 'time_budget_open_formatted' => $formatter->getFormattedDuration($statistic->getTimeBudgetOpen()),
-            $prefix . 'time_budget_open_decimal' => $formatter->getFormattedDecimalDuration($statistic->getTimeBudgetOpen()),
-            $prefix . 'time_budget_open_minutes' => (int) ($statistic->getTimeBudgetOpen() / 60),
+            $prefix . 'budget_open' => $formatter->getFormattedMoney($statistic->getBudgetOpen(), $currency),
+            $prefix . 'budget_open_plain' => $statistic->getBudgetOpen(),
+            $prefix . 'time_budget_open' => $budgetOpenDuration,
+            $prefix . 'time_budget_open_plain' => $statistic->getTimeBudgetOpen(),
         ]);
 
         foreach ($project->getVisibleMetaFields() as $metaField) {

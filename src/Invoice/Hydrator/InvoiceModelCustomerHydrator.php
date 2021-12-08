@@ -47,18 +47,21 @@ class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             'customer.mobile' => $customer->getMobile(),
         ];
 
-        $statistic = $this->customerStatistic->getBudgetStatisticModel($customer, $model->getInvoiceDate());
+        $statistic = $this->customerStatistic->getBudgetStatisticModel($customer, $model->getQuery()->getEnd());
         $currency = $model->getCurrency();
         $formatter = $model->getFormatter();
 
+        if ($model->getTemplate()->isDecimalDuration()) {
+            $budgetOpenDuration = $formatter->getFormattedDecimalDuration($statistic->getTimeBudgetOpen());
+        } else {
+            $budgetOpenDuration = $formatter->getFormattedDuration($statistic->getTimeBudgetOpen());
+        }
+
         $values = array_merge($values, [
-            'customer.budget_open' => $statistic->getBudgetOpen(),
-            'customer.budget_open_formatted' => $formatter->getFormattedMoney($statistic->getBudgetOpen(), $currency),
-            'customer.budget_open_formatted_nc' => $formatter->getFormattedMoney($statistic->getBudgetOpen(), $currency, false),
-            'customer.time_budget_open' => $statistic->getTimeBudgetOpen(),
-            'customer.time_budget_open_formatted' => $formatter->getFormattedDuration($statistic->getTimeBudgetOpen()),
-            'customer.time_budget_open_decimal' => $formatter->getFormattedDecimalDuration($statistic->getTimeBudgetOpen()),
-            'customer.time_budget_open_minutes' => (int) ($statistic->getTimeBudgetOpen() / 60),
+            'customer.budget_open' => $formatter->getFormattedMoney($statistic->getBudgetOpen(), $currency),
+            'customer.budget_open_plain' => $statistic->getBudgetOpen(),
+            'customer.time_budget_open' => $budgetOpenDuration,
+            'customer.time_budget_open_plain' => $statistic->getTimeBudgetOpen(),
         ]);
 
         foreach ($customer->getMetaFields() as $metaField) {
