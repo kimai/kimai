@@ -42,10 +42,18 @@ class InvoiceModelActivityHydratorTest extends TestCase
             'activity.name',
             'activity.comment',
             'activity.meta.foo-activity',
+            'activity.budget_open',
+            'activity.budget_open_plain',
+            'activity.time_budget_open',
+            'activity.time_budget_open_plain',
             'activity.1.id',
             'activity.1.name',
             'activity.1.comment',
             'activity.1.meta.foo-activity',
+            'activity.1.budget_open',
+            'activity.1.budget_open_plain',
+            'activity.1.time_budget_open',
+            'activity.1.time_budget_open_plain',
         ];
 
         $givenKeys = array_keys($model);

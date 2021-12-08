@@ -53,6 +53,10 @@ class InvoiceModelCustomerHydratorTest extends TestCase
             'customer.phone',
             'customer.mobile',
             'customer.meta.foo-customer',
+            'customer.budget_open',
+            'customer.budget_open_plain',
+            'customer.time_budget_open',
+            'customer.time_budget_open_plain',
         ];
 
         $givenKeys = array_keys($model);

@@ -53,6 +53,7 @@ class InvoiceModelProjectHydrator implements InvoiceModelHydrator
         $prefix = 'project.' . $prefix;
 
         $formatter = $model->getFormatter();
+        $currency = $model->getCurrency();
 
         $values = [
             $prefix . 'id' => $project->getId(),
@@ -62,11 +63,15 @@ class InvoiceModelProjectHydrator implements InvoiceModelHydrator
             $prefix . 'start_date' => null !== $project->getStart() ? $formatter->getFormattedDateTime($project->getStart()) : '',
             $prefix . 'end_date' => null !== $project->getEnd() ? $formatter->getFormattedDateTime($project->getEnd()) : '',
             $prefix . 'order_date' => null !== $project->getOrderDate() ? $formatter->getFormattedDateTime($project->getOrderDate()) : '',
+            $prefix . 'budget_money' => $formatter->getFormattedMoney($project->getBudget(), $currency),
+            $prefix . 'budget_money_nc' => $formatter->getFormattedMoney($project->getBudget(), $currency, false),
+            $prefix . 'budget_money_plain' => $project->getBudget(),
+            $prefix . 'budget_time' => $project->getTimeBudget(),
+            $prefix . 'budget_time_decimal' => $formatter->getFormattedDecimalDuration($project->getTimeBudget()),
+            $prefix . 'budget_time_minutes' => (int) ($project->getTimeBudget() / 60),
         ];
 
         $statistic = $this->projectStatistic->getBudgetStatisticModel($project, $model->getQuery()->getEnd());
-        $currency = $model->getCurrency();
-        $formatter = $model->getFormatter();
 
         if ($model->getTemplate()->isDecimalDuration()) {
             $budgetOpenDuration = $formatter->getFormattedDecimalDuration($statistic->getTimeBudgetOpen());
