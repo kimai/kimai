@@ -17,6 +17,7 @@ use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\InvoiceTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @group integration
@@ -190,6 +191,7 @@ class InvoiceControllerTest extends ControllerBaseTest
             'markAsExported' => 1,
         ];
 
+        /** @var CsrfToken $token */
         $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.create');
 
         $action = '/invoice/save-invoice/1/' . $template->getId() . '?token=' . $token->getValue() . '&' . http_build_query($urlParams);
@@ -232,7 +234,11 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $dateRange = $begin->format('Y-m-d') . DateRangeType::DATE_SPACER . $end->format('Y-m-d');
 
+        /** @var CsrfToken $token */
+        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.preview');
+
         $params = [
+            'token' => $token->getValue(),
             'daterange' => $dateRange,
             'projects' => [1],
             'template' => $id,
