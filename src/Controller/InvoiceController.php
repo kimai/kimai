@@ -134,20 +134,14 @@ final class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/preview/{customer}", name="invoice_preview", methods={"GET"})
+     * @Route(path="/preview/{customer}/{token}", name="invoice_preview", methods={"GET"})
      * @Security("is_granted('access', customer)")
      * @Security("is_granted('create_invoice')")
      */
-    public function previewAction(Customer $customer, Request $request, SystemConfiguration $configuration): Response
+    public function previewAction(Customer $customer, string $token, Request $request, SystemConfiguration $configuration): Response
     {
         if (!$this->templateRepository->hasTemplate()) {
             return $this->redirectToRoute('invoice');
-        }
-
-        $token = null;
-        if ($request->query->has('token')) {
-            $token = $request->query->get('token');
-            $request->query->remove('token');
         }
 
         if (!$this->isCsrfTokenValid('invoice.preview', $token)) {
@@ -183,20 +177,14 @@ final class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/save-invoice/{customer}/{template}", name="invoice_create", methods={"GET"})
+     * @Route(path="/save-invoice/{customer}/{template}/{token}", name="invoice_create", methods={"GET"})
      * @Security("is_granted('access', customer)")
      * @Security("is_granted('create_invoice')")
      */
-    public function createInvoiceAction(Customer $customer, InvoiceTemplate $template, Request $request, SystemConfiguration $configuration, CsrfTokenManagerInterface $csrfTokenManager): Response
+    public function createInvoiceAction(Customer $customer, InvoiceTemplate $template, string $token, Request $request, SystemConfiguration $configuration, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$this->templateRepository->hasTemplate()) {
             return $this->redirectToRoute('invoice');
-        }
-
-        $token = null;
-        if ($request->query->has('token')) {
-            $token = $request->query->get('token');
-            $request->query->remove('token');
         }
 
         if (!$this->isCsrfTokenValid('invoice.create', $token)) {
