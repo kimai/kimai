@@ -144,9 +144,26 @@ final class InvoiceController extends AbstractController
             return $this->redirectToRoute('invoice');
         }
 
+        $token = null;
+        if ($request->query->has('token')) {
+            $token = $request->query->get('token');
+            $request->query->remove('token');
+        }
+
+        if (!$this->isCsrfTokenValid('invoice.preview', $token)) {
+            $this->flashError('action.csrf.error');
+
+            return $this->redirectToRoute('invoice');
+        }
+
+        // do not refresh token, preview is opening in new tabs and the listing page does not reload
+        // so the new token would not be loaded
+
         $query = $this->getDefaultQuery();
         $form = $this->getToolbarForm($query, $configuration->find('invoice.simple_form'));
-        $form->submit($request->query->all(), false);
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('invoice');
+        }
 
         if ($form->isValid()) {
             try {
