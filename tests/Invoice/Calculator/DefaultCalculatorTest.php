@@ -15,9 +15,9 @@ use App\Entity\InvoiceTemplate;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Invoice\Calculator\DefaultCalculator;
-use App\Invoice\InvoiceModel;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
+use App\Tests\Mocks\InvoiceModelFactoryFactory;
 
 /**
  * @covers \App\Invoice\Calculator\DefaultCalculator
@@ -63,7 +63,7 @@ class DefaultCalculatorTest extends AbstractCalculatorTest
 
         $entries = [$timesheet, $timesheet2, $timesheet3];
 
-        $model = new InvoiceModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->addEntries($entries);

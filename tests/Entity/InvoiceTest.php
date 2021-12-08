@@ -26,6 +26,7 @@ use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
+use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -158,7 +159,7 @@ class InvoiceTest extends TestCase
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
 
-        $model = new InvoiceModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->addEntries($entries);

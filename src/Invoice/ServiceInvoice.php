@@ -46,29 +46,19 @@ final class ServiceInvoice
      * @var array InvoiceItemRepositoryInterface[]
      */
     private $invoiceItemRepositories = [];
-    /**
-     * @var InvoiceDocumentRepository
-     */
     private $documents;
-    /**
-     * @var FileHelper
-     */
     private $fileHelper;
-    /**
-     * @var LanguageFormattings
-     */
     private $formatter;
-    /**
-     * @var InvoiceRepository
-     */
     private $invoiceRepository;
+    private $invoiceModelFactory;
 
-    public function __construct(InvoiceDocumentRepository $repository, FileHelper $fileHelper, InvoiceRepository $invoiceRepository, LanguageFormattings $formatter)
+    public function __construct(InvoiceDocumentRepository $repository, FileHelper $fileHelper, InvoiceRepository $invoiceRepository, LanguageFormattings $formatter, InvoiceModelFactory $invoiceModelFactory)
     {
         $this->documents = $repository;
         $this->fileHelper = $fileHelper;
         $this->invoiceRepository = $invoiceRepository;
         $this->formatter = $formatter;
+        $this->invoiceModelFactory = $invoiceModelFactory;
     }
 
     public function addNumberGenerator(NumberGeneratorInterface $generator): ServiceInvoice
@@ -469,7 +459,9 @@ final class ServiceInvoice
             @trigger_error('Using invoice templates without a language is is deprecated and trigger and will throw an exception with 2.0', E_USER_DEPRECATED);
         }
 
-        $model = new InvoiceModel(new DefaultInvoiceFormatter($this->formatter, $template->getLanguage()));
+        $formatter = new DefaultInvoiceFormatter($this->formatter, $template->getLanguage());
+
+        $model = $this->invoiceModelFactory->createModel($formatter);
         $model
             ->setTemplate($template)
             ->setInvoiceDate($this->getDateTimeFactory($query)->createDateTime())

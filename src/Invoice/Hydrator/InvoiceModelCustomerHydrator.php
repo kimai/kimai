@@ -9,11 +9,19 @@
 
 namespace App\Invoice\Hydrator;
 
+use App\Customer\CustomerStatisticService;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
 
 class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
 {
+    private $customerStatistic;
+
+    public function __construct(CustomerStatisticService $customerStatistic)
+    {
+        $this->customerStatistic = $customerStatistic;
+    }
+
     public function hydrate(InvoiceModel $model): array
     {
         $customer = $model->getCustomer();
@@ -21,9 +29,6 @@ class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
         if (null === $customer) {
             return [];
         }
-
-        $formatter = $model->getFormatter();
-        $currency = $model->getCurrency();
 
         $values = [
             'customer.id' => $customer->getId(),
@@ -40,11 +45,24 @@ class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             'customer.fax' => $customer->getFax(),
             'customer.phone' => $customer->getPhone(),
             'customer.mobile' => $customer->getMobile(),
-            // budget
-            // remaining budget?
-            // time-budget
-            // remaining time-budget?
         ];
+
+        $statistic = $this->customerStatistic->getBudgetStatisticModel($customer, $model->getQuery()->getEnd());
+        $currency = $model->getCurrency();
+        $formatter = $model->getFormatter();
+
+        if ($model->getTemplate()->isDecimalDuration()) {
+            $budgetOpenDuration = $formatter->getFormattedDecimalDuration($statistic->getTimeBudgetOpen());
+        } else {
+            $budgetOpenDuration = $formatter->getFormattedDuration($statistic->getTimeBudgetOpen());
+        }
+
+        $values = array_merge($values, [
+            'customer.budget_open' => $formatter->getFormattedMoney($statistic->getBudgetOpen(), $currency),
+            'customer.budget_open_plain' => $statistic->getBudgetOpen(),
+            'customer.time_budget_open' => $budgetOpenDuration,
+            'customer.time_budget_open_plain' => $statistic->getTimeBudgetOpen(),
+        ]);
 
         foreach ($customer->getMetaFields() as $metaField) {
             $values = array_merge($values, [
