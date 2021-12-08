@@ -74,7 +74,7 @@
                     <th>{{ 'label.user'|trans }}</th>
                     {% endif %}
                     <th>{{ 'label.activity'|trans }}</th>
-                    <th>{{ 'label.hours'|trans }}</th>
+                    <th class="text-right">{{ 'label.hours'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -91,7 +91,7 @@
                             {% if entry.activity is not null %}{{ entry.activity.name }} / {% endif %}{{ entry.project.name }}
                         {% endif %}
                     </td>
-                    <td class="text-nowrap">{{ entry.duration|duration(isDecimal) }}</td>
+                    <td class="text-right text-nowrap">{{ entry.duration|duration(isDecimal) }}</td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -102,7 +102,7 @@
                     <th></th>
                     {% endif %}
                     <th>{{ 'invoice.total_working_time'|trans }}</th>
-                    <th class="text-nowrap">{{ model.calculator.timeWorked|duration(isDecimal) }}</th>
+                    <th class="text-right text-nowrap">{{ model.calculator.timeWorked|duration(isDecimal) }}</th>
                 </tr>
                 </tfoot>
             </table>
