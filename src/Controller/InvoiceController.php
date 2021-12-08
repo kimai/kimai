@@ -205,8 +205,6 @@ final class InvoiceController extends AbstractController
             return $this->redirectToRoute('invoice');
         }
 
-        $csrfTokenManager->refreshToken('invoice.create');
-
         $query = $this->getDefaultQuery();
         $form = $this->getToolbarForm($query, $configuration->find('invoice.simple_form'));
         if ($this->handleSearch($form, $request)) {
