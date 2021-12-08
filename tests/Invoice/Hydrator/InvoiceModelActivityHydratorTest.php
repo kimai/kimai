@@ -9,6 +9,7 @@
 
 namespace App\Tests\Invoice\Hydrator;
 
+use App\Activity\ActivityStatisticService;
 use App\Invoice\Hydrator\InvoiceModelActivityHydrator;
 use App\Tests\Invoice\Renderer\RendererTestTrait;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +25,7 @@ class InvoiceModelActivityHydratorTest extends TestCase
     {
         $model = $this->getInvoiceModel();
 
-        $sut = new InvoiceModelActivityHydrator();
+        $sut = new InvoiceModelActivityHydrator($this->createMock(ActivityStatisticService::class));
 
         $result = $sut->hydrate($model);
         $this->assertModelStructure($result);

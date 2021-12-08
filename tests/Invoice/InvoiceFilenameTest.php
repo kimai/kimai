@@ -13,10 +13,10 @@ use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Project;
 use App\Invoice\InvoiceFilename;
-use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
+use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -29,7 +29,7 @@ class InvoiceFilenameTest extends TestCase
         $customer = new Customer();
         $template = new InvoiceTemplate();
 
-        $model = new InvoiceModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setNumberGenerator($this->getNumberGeneratorSut());
         $model->setTemplate($template);
         $model->setCustomer($customer);
