@@ -144,6 +144,9 @@
     "handcraftedinthealps/rest-routing-bundle": {
         "version": "1.0.0"
     },
+    "jeroendesloovere/vcard": {
+        "version": "v1.7.3"
+    },
     "jms/metadata": {
         "version": "1.6.0"
     },

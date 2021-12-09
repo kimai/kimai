@@ -33,6 +33,8 @@ use App\Repository\ProjectRepository;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\TeamRepository;
+use App\Utils\FileHelper;
+use JeroenDesloovere\VCard\VCard;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -40,6 +42,8 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Intl\Countries;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -343,6 +347,61 @@ final class CustomerController extends AbstractController
             'rates' => $rates,
             'now' => $now,
         ]);
+    }
+
+    /**
+     * @Route(path="/{id}/vcard", name="customer_vcard", methods={"GET"})
+     * @Security("is_granted('view', customer)")
+     */
+    public function downloadVCard(Customer $customer): Response
+    {
+        $vcard = new VCard();
+
+        $contact = $customer->getContact() ?? $customer->getName();
+        $contact = explode(' ', $contact);
+        $lastname = array_pop($contact);
+        $firstname = \count($contact) > 0 ? $contact[0] : $lastname;
+        $note = $customer->getComment();
+        if ($note !== null) {
+            $note .= PHP_EOL;
+        }
+
+        $vcard->addName($lastname, $firstname);
+        $vcard->addNote($note . $customer->getAddress());
+        $vcard->addAddress(null, null, null, null, null, null, Countries::getName($customer->getCountry()));
+
+        $vcard->addCompany($customer->getCompany() ?? $customer->getName());
+        $vcard->addEmail($customer->getEmail());
+
+        $hasPref = false;
+
+        if ($customer->getPhone() !== null) {
+            $hasPref = true;
+            $vcard->addPhoneNumber($customer->getPhone(), 'PREF;WORK');
+        }
+
+        if ($customer->getMobile() !== null) {
+            $type = $hasPref ? 'CELL' : 'PREF;CELL';
+            $vcard->addPhoneNumber($customer->getMobile(), $type);
+        }
+
+        if ($customer->getFax() !== null) {
+            $vcard->addPhoneNumber($customer->getFax(), 'FAX');
+        }
+
+        if ($customer->getHomepage() !== null) {
+            $vcard->addURL($customer->getHomepage(), 'WORK');
+        }
+
+        $response = new Response($vcard->getOutput());
+
+        $disposition = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            FileHelper::convertToAsciiFilename($customer->getName()) . '.vcf'
+        );
+        $response->headers->set('Content-Disposition', $disposition);
+
+        return $response;
     }
 
     /**

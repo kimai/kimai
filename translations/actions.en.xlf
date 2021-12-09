@@ -102,6 +102,10 @@
         <source>filter</source>
         <target>Filter data</target>
       </trans-unit>
+      <trans-unit id="vcard">
+        <source>vcard</source>
+        <target>Business card</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

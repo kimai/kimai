@@ -30,18 +30,24 @@ class CustomerSubscriber extends AbstractActionsSubscriber
             return;
         }
 
-        if (!$event->isView('customer_details') && $this->isGranted('view', $customer)) {
-            $event->addAction('details', ['url' => $this->path('customer_details', ['id' => $customer->getId()])]);
+        $canView = $this->isGranted('view', $customer);
+
+        if (!$event->isView('customer_details') && $canView) {
+            $event->addAction('details', ['title' => 'details', 'translation_domain' => 'actions', 'url' => $this->path('customer_details', ['id' => $customer->getId()])]);
         }
 
         if ($this->isGranted('edit', $customer)) {
             $class = $event->isView('edit') ? '' : 'modal-ajax-form';
-            $event->addAction('edit', ['url' => $this->path('admin_customer_edit', ['id' => $customer->getId()]), 'class' => $class]);
+            $event->addAction('edit', ['title' => 'edit', 'translation_domain' => 'actions', 'url' => $this->path('admin_customer_edit', ['id' => $customer->getId()]), 'class' => $class]);
         }
 
         if ($this->isGranted('permissions', $customer)) {
             $class = $event->isView('permissions') ? '' : 'modal-ajax-form';
-            $event->addAction('permissions', ['url' => $this->path('admin_customer_permissions', ['id' => $customer->getId()]), 'class' => $class]);
+            $event->addAction('permissions', ['title' => 'permissions', 'translation_domain' => 'actions', 'url' => $this->path('admin_customer_permissions', ['id' => $customer->getId()]), 'class' => $class]);
+        }
+
+        if ($canView) {
+            $event->addAction('vcard', ['title' => 'vcard', 'translation_domain' => 'actions', 'icon' => 'far fa-address-card', 'url' => $this->path('customer_vcard', ['id' => $customer->getId()])]);
         }
 
         if ($event->countActions() > 0) {

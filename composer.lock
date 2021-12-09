@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d1c07d3662a84d57c74e367b6bed104b",
+    "content-hash": "24f65e7dedcdc5fdb1dbb7aa90d88897",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2125,6 +2125,59 @@
                 "source": "https://github.com/handcraftedinthealps/RestRoutingBundle/tree/1.0.4"
             },
             "time": "2021-06-22T13:40:09+00:00"
+        },
+        {
+            "name": "jeroendesloovere/vcard",
+            "version": "v1.7.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jeroendesloovere/vcard.git",
+                "reference": "2b8b6190c613d368b8cb6552e59cf6e6e7d0aea9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jeroendesloovere/vcard/zipball/2b8b6190c613d368b8cb6552e59cf6e6e7d0aea9",
+                "reference": "2b8b6190c613d368b8cb6552e59cf6e6e7d0aea9",
+                "shasum": ""
+            },
+            "require": {
+                "behat/transliterator": "~1.0",
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.6.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JeroenDesloovere\\VCard\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeroen Desloovere",
+                    "email": "info@jeroendesloovere.be",
+                    "homepage": "http://jeroendesloovere.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This VCard PHP class can generate a vCard with some data. When using an iOS device it will export as a .ics file because iOS devices don't support the default .vcf files.",
+            "homepage": "https://github.com/jeroendesloovere/vcard",
+            "keywords": [
+                ".vcf",
+                "generator",
+                "php",
+                "vCard"
+            ],
+            "support": {
+                "issues": "https://github.com/jeroendesloovere/vcard/issues",
+                "source": "https://github.com/jeroendesloovere/vcard/tree/v1.7.3"
+            },
+            "time": "2021-11-24T20:21:20+00:00"
         },
         {
             "name": "jms/metadata",
