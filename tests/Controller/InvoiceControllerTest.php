@@ -194,7 +194,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         /** @var CsrfToken $token */
         $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.create');
 
-        $action = '/invoice/save-invoice/1/' . $template->getId() . '?token=' . $token->getValue() . '&' . http_build_query($urlParams);
+        $action = '/invoice/save-invoice/1/' . $template->getId() . '/' . $token->getValue() . '?' . http_build_query($urlParams);
         $this->request($client, $action);
         $this->assertIsRedirect($client);
         $this->assertRedirectUrl($client, '/invoice/show?id=', false);
@@ -234,18 +234,29 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $dateRange = $begin->format('Y-m-d') . DateRangeType::DATE_SPACER . $end->format('Y-m-d');
 
+        $form = $client->getCrawler()->filter('#invoice-print-form')->form();
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/invoice/'));
+        $node->setAttribute('method', 'GET');
+        $client->submit($form, [
+            'template' => $id,
+            'daterange' => $dateRange,
+            'customers' => [1],
+        ]);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
         /** @var CsrfToken $token */
         $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.preview');
 
         $params = [
-            'token' => $token->getValue(),
             'daterange' => $dateRange,
             'projects' => [1],
             'template' => $id,
             'customers[]' => 1
         ];
 
-        $action = '/invoice/preview/1?' . http_build_query($params);
+        $action = '/invoice/preview/1/' . $token->getValue() . '?' . http_build_query($params);
         $this->request($client, $action);
         $this->assertTrue($client->getResponse()->isSuccessful());
         $node = $client->getCrawler()->filter('body');
