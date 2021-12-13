@@ -1135,7 +1135,7 @@
       </trans-unit>
       <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
-        <target>Tuần theo lịch %tuần%</target>
+        <target>Tuần theo lịch %week%</target>
       </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime">
         <source>stats.workingTime</source>
