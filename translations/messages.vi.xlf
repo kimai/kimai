@@ -1123,7 +1123,7 @@
       </trans-unit>
       <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
-        <target>%tháng% %năm%</target>
+        <target>%month% %year%</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
