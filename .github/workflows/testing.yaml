@@ -35,8 +35,16 @@ jobs:
                     extensions: mbstring, xml, ctype, iconv, intl, mysql, zip, gd, ldap
                     tools: cs2pr:1.1.0
 
+            -   name: Cache Composer dependencies
+                uses: actions/cache@v2
+                with:
+                    path: /tmp/composer-cache
+                    key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+
             -   name: Install dependencies
-                uses: ramsey/composer-install@v1
+                uses: php-actions/composer@v6
+                with:
+                    php_version: 7.3
 
             -   name: Validate Composer
                 run: composer validate --strict
