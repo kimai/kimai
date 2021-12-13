@@ -1071,7 +1071,7 @@
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>error.directory_missing</source>
-        <target>Thư mục "% dir%" không tồn tại và không thể tạo được.</target>
+        <target>Thư mục "%dir%" không tồn tại và không thể tạo được.</target>
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
