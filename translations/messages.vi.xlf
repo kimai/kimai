@@ -1155,7 +1155,7 @@
       </trans-unit>
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
-        <target>Hôm nay, %ngày%</target>
+        <target>Hôm nay, %day%</target>
       </trans-unit>
     </body>
   </file>
