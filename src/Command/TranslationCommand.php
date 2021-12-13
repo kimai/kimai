@@ -264,8 +264,10 @@ class TranslationCommand extends Command
 
         $xml = simplexml_load_file($to);
 
-        $xml->file['target-language'] = $locale;
-        $xml->file['original'] = $domain . '.en.xlf';
+        /** @var \SimpleXMLElement $fileNode */
+        $fileNode = $xml->file;
+        $fileNode->attributes()->{'target-language'} = $locale;
+        $fileNode->attributes()->{'original'} = $domain . '.en.xlf';
 
         unset($xml->file->body);
 
