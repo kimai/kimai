@@ -1075,7 +1075,7 @@
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
-        <target>Thư mục "% dir%" chỉ có thể đọc không thể ghi.</target>
+        <target>Thư mục "%dir%" chỉ có thể đọc không thể ghi.</target>
       </trans-unit>
       <trans-unit id="v72sA1c" resname="label.recalculate_rates">
         <source>label.recalculate_rates</source>
