@@ -39,12 +39,12 @@ jobs:
                 uses: actions/cache@v2
                 with:
                     path: /tmp/composer-cache
-                    key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+                    key: ${{ runner.os }}-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
 
             -   name: Install dependencies
                 uses: php-actions/composer@v6
                 with:
-                    php_version: 7.3
+                    php_extensions: zip
 
             -   name: Validate Composer
                 run: composer validate --strict
