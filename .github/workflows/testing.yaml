@@ -45,7 +45,7 @@ jobs:
                 uses: php-actions/composer@v6
                 with:
                     php_version: 7.4
-                    php_extensions: mbstring xml ctype iconv intl zip gd ldap
+                    php_extensions: mbstring xml ctype iconv intl zip gd ldap xsl
 
             -   name: Validate Composer
                 run: composer validate --strict
