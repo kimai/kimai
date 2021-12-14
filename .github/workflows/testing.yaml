@@ -44,6 +44,7 @@ jobs:
             -   name: Install dependencies
                 uses: php-actions/composer@v6
                 with:
+                    php_version: 7.4
                     php_extensions: mbstring xml ctype iconv intl mysql zip gd ldap
 
             -   name: Validate Composer
