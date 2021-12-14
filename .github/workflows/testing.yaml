@@ -42,10 +42,7 @@ jobs:
                     key: ${{ runner.os }}-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
 
             -   name: Install dependencies
-                uses: php-actions/composer@v6
-                with:
-                    php_version: 7.4
-                    php_extensions: mbstring xml ctype iconv intl zip gd ldap xsl
+                run: composer install
 
             -   name: Validate Composer
                 run: composer validate --strict
