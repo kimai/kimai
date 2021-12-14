@@ -9,8 +9,10 @@ jobs:
         runs-on: ubuntu-latest
         name: Verify lock file integrity
         steps:
+
             - name: Clone Kimai
               uses: actions/checkout@v2
+
             - name: Prevent file change
               uses: xalvarez/prevent-file-change-action@v1
               with:
