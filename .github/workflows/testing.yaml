@@ -35,10 +35,14 @@ jobs:
                     extensions: mbstring, xml, ctype, iconv, intl, mysql, zip, gd, ldap
                     tools: cs2pr:1.1.0
 
+            -   name: Determine composer cache directory
+                id: composer-cache
+                run: "echo \"::set-output name=directory::$(composer config cache-dir)\""
+
             -   name: Cache Composer dependencies
                 uses: actions/cache@v2
                 with:
-                    path: /tmp/composer-cache
+                    path: "${{ steps.composer-cache.outputs.directory }}"
                     key: ${{ runner.os }}-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
 
             -   name: Install dependencies

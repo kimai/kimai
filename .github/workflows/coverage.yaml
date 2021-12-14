@@ -35,13 +35,13 @@ jobs:
                     extensions: mbstring, xml, ctype, iconv, intl, mysql, zip, gd, ldap
 
             -   name: Determine composer cache directory
-                id: determine-composer-cache-directory
+                id: composer-cache
                 run: "echo \"::set-output name=directory::$(composer config cache-dir)\""
 
             -   name: Cache Composer dependencies
                 uses: actions/cache@v2
                 with:
-                    path: "${{ steps.determine-composer-cache-directory.outputs.directory }}"
+                    path: "${{ steps.composer-cache.outputs.directory }}"
                     key: ${{ runner.os }}-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
 
             -   name: Install dependencies
