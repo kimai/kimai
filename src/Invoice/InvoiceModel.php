@@ -78,6 +78,9 @@ final class InvoiceModel
      */
     private $invoiceNumber;
 
+    /**
+     * @internal use InvoiceModelFactory
+     */
     public function __construct(InvoiceFormatter $formatter, CustomerStatisticService $customerStatistic, ProjectStatisticService $projectStatistic, ActivityStatisticService $activityStatistic)
     {
         $this->invoiceDate = new \DateTime();

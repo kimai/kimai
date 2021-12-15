@@ -15,6 +15,8 @@ use App\Invoice\InvoiceModelHydrator;
 
 class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
 {
+    use BudgetHydratorTrait;
+
     private $customerStatistic;
 
     public function __construct(CustomerStatisticService $customerStatistic)
@@ -48,21 +50,8 @@ class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
         ];
 
         $statistic = $this->customerStatistic->getBudgetStatisticModel($customer, $model->getQuery()->getEnd());
-        $currency = $model->getCurrency();
-        $formatter = $model->getFormatter();
 
-        if ($model->getTemplate()->isDecimalDuration()) {
-            $budgetOpenDuration = $formatter->getFormattedDecimalDuration($statistic->getTimeBudgetOpen());
-        } else {
-            $budgetOpenDuration = $formatter->getFormattedDuration($statistic->getTimeBudgetOpen());
-        }
-
-        $values = array_merge($values, [
-            'customer.budget_open' => $formatter->getFormattedMoney($statistic->getBudgetOpen(), $currency),
-            'customer.budget_open_plain' => $statistic->getBudgetOpen(),
-            'customer.time_budget_open' => $budgetOpenDuration,
-            'customer.time_budget_open_plain' => $statistic->getTimeBudgetOpen(),
-        ]);
+        $values = array_merge($values, $this->getBudgetValues('customer.', $statistic, $model));
 
         foreach ($customer->getMetaFields() as $metaField) {
             $values = array_merge($values, [

@@ -16,6 +16,8 @@ use App\Project\ProjectStatisticService;
 
 class InvoiceModelProjectHydrator implements InvoiceModelHydrator
 {
+    use BudgetHydratorTrait;
+
     private $projectStatistic;
 
     public function __construct(ProjectStatisticService $projectStatistic)
@@ -73,18 +75,7 @@ class InvoiceModelProjectHydrator implements InvoiceModelHydrator
 
         $statistic = $this->projectStatistic->getBudgetStatisticModel($project, $model->getQuery()->getEnd());
 
-        if ($model->getTemplate()->isDecimalDuration()) {
-            $budgetOpenDuration = $formatter->getFormattedDecimalDuration($statistic->getTimeBudgetOpen());
-        } else {
-            $budgetOpenDuration = $formatter->getFormattedDuration($statistic->getTimeBudgetOpen());
-        }
-
-        $values = array_merge($values, [
-            $prefix . 'budget_open' => $formatter->getFormattedMoney($statistic->getBudgetOpen(), $currency),
-            $prefix . 'budget_open_plain' => $statistic->getBudgetOpen(),
-            $prefix . 'time_budget_open' => $budgetOpenDuration,
-            $prefix . 'time_budget_open_plain' => $statistic->getTimeBudgetOpen(),
-        ]);
+        $values = array_merge($values, $this->getBudgetValues($prefix, $statistic, $model));
 
         foreach ($project->getVisibleMetaFields() as $metaField) {
             $values = array_merge($values, [
