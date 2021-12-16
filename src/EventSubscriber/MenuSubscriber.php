@@ -65,12 +65,12 @@ final class MenuSubscriber implements EventSubscriberInterface
             }
 
             $menu->addItem(
-                new MenuItemModel('calendar', 'calendar.title', 'calendar', [], $icons->icon('calendar'))
+                new MenuItemModel('calendar', 'calendar', 'calendar', [], $icons->icon('calendar'))
             );
         }
 
         if ($auth->isGranted('view_invoice')) {
-            $invoice = new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], $icons->icon('invoice'));
+            $invoice = new MenuItemModel('invoice', 'invoices', 'invoice', [], $icons->icon('invoice'));
             $invoice->setChildRoutes(['admin_invoice_template', 'admin_invoice_template_edit', 'admin_invoice_template_create', 'admin_invoice_template_copy', 'admin_invoice_list', 'admin_invoice_document_upload']);
             $menu->addItem($invoice);
         }

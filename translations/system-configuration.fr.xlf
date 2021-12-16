@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fr" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="qvIyBkY" resname="title">
-        <source>title</source>
-        <target>Paramètres</target>
-      </trans-unit>
       <trans-unit id="ycErWZK" resname="timesheet">
         <source>Time tracking</source>
         <target>Feuille d'heures</target>
@@ -13,10 +9,6 @@
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
         <target>Thème</target>
-      </trans-unit>
-      <trans-unit id="UVJ5Die" resname="calendar">
-        <source>calendar</source>
-        <target>Calendrier</target>
       </trans-unit>
       <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
         <source>label.theme.markdown_content</source>
@@ -205,10 +197,6 @@
       <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
         <source>label.theme.tags_create</source>
         <target>Mots-clés : Utiliser la recherche avec auto-complétion et autoriser la création de mots-clés</target>
-      </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target>Factures</target>
       </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>

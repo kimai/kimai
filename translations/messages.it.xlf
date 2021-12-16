@@ -134,10 +134,6 @@
         <source>menu.timesheet</source>
         <target>Registrazioni</target>
       </trans-unit>
-      <trans-unit id="Ci9W8.K" resname="menu.invoice">
-        <source>menu.invoice</source>
-        <target>Fatture</target>
-      </trans-unit>
       <trans-unit id="I.eil4u" resname="menu.export">
         <source>menu.export</source>
         <target>Esporta</target>
@@ -547,16 +543,10 @@
       <!--
               User timesheet calendar
             -->
-      <trans-unit id="HWiuMV6" resname="calendar.title">
-        <source>calendar.title</source>
+      <trans-unit id="UVJ5Die" resname="calendar">
+        <source>calendar</source>
         <target>Calendario</target>
       </trans-unit>
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Projects
-            -->
       <trans-unit id="yLOqEX_" resname="label.project_start">
         <source>label.project_start</source>
         <target>Inizio progetto</target>
@@ -565,9 +555,6 @@
         <source>label.project_end</source>
         <target>Fine progetto</target>
       </trans-unit>
-      <!--
-              Admin: Customer
-            -->
       <trans-unit id="39AtPxQ" resname="label.number">
         <source>label.number</source>
         <target>Account</target>
@@ -620,9 +607,6 @@
         <source>label.currency</source>
         <target>Valuta</target>
       </trans-unit>
-      <!--
-              Admin: User
-            -->
       <trans-unit id="TRDzmCV" resname="label.alias">
         <source>label.alias</source>
         <target>Nome</target>
@@ -655,9 +639,6 @@
         <source>Allowed character: A-Z and _</source>
         <target>Caratteri permessi: A-Z and _</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
       <trans-unit id="d75KAlJ" resname="label.version">
         <source>label.version</source>
         <target>Versione</target>
@@ -666,9 +647,6 @@
         <source>label.required_version</source>
         <target>Compatibile con</target>
       </trans-unit>
-      <!--
-              ROLES
-            -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>Amministratore di sistema</target>
@@ -685,9 +663,6 @@
         <source>ROLE_USER</source>
         <target>Utente</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
         <target>Oggi, %day%</target>
@@ -796,15 +771,12 @@
         <source>stats.percentUsedLeft</source>
         <target>%percent%% utilizzata (%left% ancora disponibili)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Template Fatture</target>
       </trans-unit>
-      <trans-unit id="iERywrp" resname="invoice.title">
-        <source>invoice.title</source>
+      <trans-unit id="SR2r1Cs" resname="invoices">
+        <source>invoices</source>
         <target>Fatture</target>
       </trans-unit>
       <trans-unit id="ov4OQOh" resname="invoice.filter">

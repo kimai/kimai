@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="tr" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="qvIyBkY" resname="title">
-        <source>title</source>
-        <target state="translated">Ayarlar</target>
-      </trans-unit>
       <trans-unit id="ycErWZK" resname="timesheet">
         <source>Time tracking</source>
         <target state="translated">Zaman izleme</target>
@@ -13,10 +9,6 @@
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
         <target state="translated">Tema</target>
-      </trans-unit>
-      <trans-unit id="UVJ5Die" resname="calendar">
-        <source>calendar</source>
-        <target state="translated">Takvim</target>
       </trans-unit>
       <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
         <source>label.theme.markdown_content</source>
@@ -205,10 +197,6 @@
       <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
         <source>label.theme.tags_create</source>
         <target>Etiketler: aramada otomatik tamamlama kullan ve etiket oluşturmaya izin ver</target>
-      </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target>Faturalar</target>
       </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>

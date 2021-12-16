@@ -79,10 +79,6 @@
         <source>menu.timesheet</source>
         <target>أوقاتي</target>
       </trans-unit>
-      <trans-unit id="Ci9W8.K" resname="menu.invoice">
-        <source>menu.invoice</source>
-        <target>الفواتير</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>الجداول الزمنية</target>
@@ -514,8 +510,8 @@
         <source>admin_invoice_template.title</source>
         <target>قالب الفاتورة</target>
       </trans-unit>
-      <trans-unit id="iERywrp" resname="invoice.title">
-        <source>invoice.title</source>
+      <trans-unit id="SR2r1Cs" resname="invoices">
+        <source>invoices</source>
         <target>الفواتير</target>
       </trans-unit>
       <trans-unit id="X70dwP8" resname="button.print">
