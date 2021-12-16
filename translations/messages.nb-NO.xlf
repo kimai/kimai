@@ -313,8 +313,8 @@
       <!--
               User timesheet calendar
             -->
-      <trans-unit id="HWiuMV6" resname="calendar.title">
-        <source>calendar.title</source>
+      <trans-unit id="UVJ5Die" resname="calendar">
+        <source>calendar</source>
         <target>Kalender</target>
       </trans-unit>
       <trans-unit id="yLOqEX_" resname="label.project_start">
@@ -531,10 +531,6 @@
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
         <target>En e-post har blitt sendt til %email%. Den inneholder en invitasjonslenke du må klikke for å aktivere kontoen din.</target>
-      </trans-unit>
-      <trans-unit id="Ci9W8.K" resname="menu.invoice">
-        <source>menu.invoice</source>
-        <target>Fakturaer</target>
       </trans-unit>
       <trans-unit id="I.eil4u" resname="menu.export">
         <source>menu.export</source>
@@ -1116,8 +1112,8 @@
         <source>error.too_many_entries</source>
         <target state="needs-translation">Forespørselen kunne ikke behandles. For mange resultater.</target>
       </trans-unit>
-      <trans-unit id="iERywrp" resname="invoice.title">
-        <source>invoice.title</source>
+      <trans-unit id="SR2r1Cs" resname="invoices">
+        <source>invoices</source>
         <target>Fakturaer</target>
       </trans-unit>
       <trans-unit id="zPcx3O_" resname="invoice_print">

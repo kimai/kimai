@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-CN" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="qvIyBkY" resname="title">
-        <source>title</source>
-        <target>设置</target>
-      </trans-unit>
       <trans-unit id="ycErWZK" resname="timesheet">
         <source>Time tracking</source>
         <target>时间表</target>
@@ -13,10 +9,6 @@
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
         <target>主题</target>
-      </trans-unit>
-      <trans-unit id="UVJ5Die" resname="calendar">
-        <source>calendar</source>
-        <target>日历</target>
       </trans-unit>
       <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
         <source>label.theme.markdown_content</source>
@@ -265,10 +257,6 @@
       <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
         <source>label.theme.tags_create</source>
         <target>标签:使用自动完成搜索并允许创建标签</target>
-      </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target>发票</target>
       </trans-unit>
     </body>
   </file>

@@ -28,11 +28,11 @@ class InitialViewType extends AbstractType
     private const ALLOWED_VIEWS = [
         'dashboard' => 'menu.homepage',
         'timesheet' => 'menu.timesheet',
-        'calendar' => 'calendar.title',
+        'calendar' => 'calendar',
         'quick_entry' => 'quick_entry.title',
         'my_profile' => 'profile.title',
         'admin_timesheet' => 'menu.admin_timesheet',
-        'invoice' => 'menu.invoice',
+        'invoice' => 'invoices',
         'admin_user' => 'users',
         'admin_customer' => 'customers',
         'admin_project' => 'projects',

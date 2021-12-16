@@ -459,7 +459,10 @@ class ConfigurationTest extends TestCase
             ],
             'company' => [
                 'financial_year' => null,
-            ]
+            ],
+            'quick_entry' => [
+                'recent_activities' => 5
+            ],
         ];
 
         $this->assertConfig($this->getMinConfig(), $fullDefaultConfig);

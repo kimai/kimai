@@ -17,7 +17,7 @@
 
 {% set tableName = 'invoice' %}
 
-{% block page_title %}{{ 'invoice.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'invoices'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.invoices('index') }}{% endblock %}
 
 {% block main_before %}
@@ -81,7 +81,7 @@
             {% import "macros/widgets.html.twig" as widgets %}
             {% import '@AdminLTE/Macros/buttons.html.twig' as button %}
             {% block box_title %}
-                {{ 'button.preview'|trans }}: {{ 'invoice.title'|trans }}
+                {{ 'button.preview'|trans }}: {{ 'invoices'|trans }}
             {% endblock %}
             {% block box_body_class %}no-padding{% endblock %}
             {% block box_footer %}

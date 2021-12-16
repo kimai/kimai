@@ -79,10 +79,6 @@
         <source>menu.timesheet</source>
         <target>Учет времени</target>
       </trans-unit>
-      <trans-unit id="Ci9W8.K" resname="menu.invoice">
-        <source>menu.invoice</source>
-        <target>Счета</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>Время работы сотрудников</target>
@@ -510,8 +506,8 @@
         <source>admin_invoice_template.title</source>
         <target>Шаблоны счетов</target>
       </trans-unit>
-      <trans-unit id="iERywrp" resname="invoice.title">
-        <source>invoice.title</source>
+      <trans-unit id="SR2r1Cs" resname="invoices">
+        <source>invoices</source>
         <target>Счета</target>
       </trans-unit>
       <trans-unit id="X70dwP8" resname="button.print">
@@ -744,8 +740,8 @@
         <source>label.project_start</source>
         <target>Проект начат</target>
       </trans-unit>
-      <trans-unit id="HWiuMV6" resname="calendar.title">
-        <source>calendar.title</source>
+      <trans-unit id="UVJ5Die" resname="calendar">
+        <source>calendar</source>
         <target>Календарь</target>
       </trans-unit>
       <trans-unit id="Q0Zip02" resname="agendaDay">

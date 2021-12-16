@@ -106,7 +106,8 @@ class QuickEntryController extends AbstractController
         ksort($rows);
 
         // attach recent activities
-        $timesheets = $this->repository->getRecentActivities($this->getUser(), null, 5);
+        $amount = $this->configuration->getQuickEntriesRecentAmount();
+        $timesheets = $this->repository->getRecentActivities($this->getUser(), null, $amount);
         foreach ($timesheets as $timesheet) {
             $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId();
             if (\array_key_exists($id, $rows)) {

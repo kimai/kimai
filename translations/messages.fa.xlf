@@ -399,10 +399,6 @@
         <source>menu.export</source>
         <target>خروجی گرفتن</target>
       </trans-unit>
-      <trans-unit id="Ci9W8.K" resname="menu.invoice">
-        <source>menu.invoice</source>
-        <target>فاکتورها</target>
-      </trans-unit>
       <trans-unit id="C0W7_BT" resname="menu.timesheet">
         <source>menu.timesheet</source>
         <target>زمان من</target>

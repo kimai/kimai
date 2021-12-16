@@ -134,10 +134,6 @@
         <source>menu.timesheet</source>
         <target state="translated">Omat työajat</target>
       </trans-unit>
-      <trans-unit id="Ci9W8.K" resname="menu.invoice">
-        <source>menu.invoice</source>
-        <target state="translated">Laskut</target>
-      </trans-unit>
       <trans-unit id="I.eil4u" resname="menu.export">
         <source>menu.export</source>
         <target state="translated">Vie</target>
@@ -547,8 +543,8 @@
       <!--
               User timesheet calendar
             -->
-      <trans-unit id="HWiuMV6" resname="calendar.title">
-        <source>calendar.title</source>
+      <trans-unit id="UVJ5Die" resname="calendar">
+        <source>calendar</source>
         <target state="translated">Kalenteri</target>
       </trans-unit>
       <!--
@@ -803,8 +799,8 @@
         <source>admin_invoice_template.title</source>
         <target state="translated">Lasku malli</target>
       </trans-unit>
-      <trans-unit id="iERywrp" resname="invoice.title">
-        <source>invoice.title</source>
+      <trans-unit id="SR2r1Cs" resname="invoices">
+        <source>invoices</source>
         <target state="translated">Laskut</target>
       </trans-unit>
       <trans-unit id="ov4OQOh" resname="invoice.filter">

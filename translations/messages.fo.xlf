@@ -53,10 +53,6 @@
         <source>menu.timesheet</source>
         <target>Mínar tíðir</target>
       </trans-unit>
-      <trans-unit id="Ci9W8.K" resname="menu.invoice">
-        <source>menu.invoice</source>
-        <target>Fakturar</target>
-      </trans-unit>
       <trans-unit id="I.eil4u" resname="menu.export">
         <source>menu.export</source>
         <target>Útflyt</target>
@@ -199,8 +195,8 @@
         <source>label.avatar</source>
         <target>Vanga mynd</target>
       </trans-unit>
-      <trans-unit id="HWiuMV6" resname="calendar.title">
-        <source>calendar.title</source>
+      <trans-unit id="UVJ5Die" resname="calendar">
+        <source>calendar</source>
         <target>Kalendari</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
@@ -467,8 +463,8 @@
         <source>admin_invoice_template.title</source>
         <target>Vørurokningar skapilón</target>
       </trans-unit>
-      <trans-unit id="iERywrp" resname="invoice.title">
-        <source>invoice.title</source>
+      <trans-unit id="SR2r1Cs" resname="invoices">
+        <source>invoices</source>
         <target>Vørurokningar</target>
       </trans-unit>
       <trans-unit id="7H7P1mE" resname="button.preview">
