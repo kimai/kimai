@@ -17,6 +17,7 @@
 } %}
 
 {% set tableName = 'export' %}
+{% set editExported = is_granted('edit_exported_timesheet') %}
 
 {% block page_title %}{{ 'export.title'|trans }}{% endblock %}
 {% block page_actions %}
@@ -185,10 +186,14 @@
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'exported') }}">
                     {% if is_granted('edit_export', entry) %}
                         {% if entry.exported %}
+                            {% if editExported %}
                             <button type="button" class="btn btn-default exportBtn active" data-toggle="button" aria-pressed="true" autocomplete="off"
                                     data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
                             {{ 'entryState.exported'|trans }}
                             </button>
+                            {% else %}
+                            {{ 'entryState.exported'|trans }}
+                            {% endif %}
                         {% else %}
                             <button type="button" class="btn btn-default exportBtn" data-toggle="button" aria-pressed="false" autocomplete="off"
                                     data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
@@ -274,12 +279,19 @@
                 },
                 method: 'PATCH',
                 success: function(data) {
+                    let isShowAll = jQuery('select#exported').val() === '{{ constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') }}';
                     if (exported) {
+                        {% if editExported %}
                         button.button('exported');
+                        {% else %}
+                        if (isShowAll) {
+                            button.replaceWith('{{ 'entryState.exported'|trans }}');
+                        }
+                        {% endif %}
                     } else {
                         button.button('clean');
                     }
-                    if (jQuery('select#exported').val() !== '{{ constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') }}') {
+                    if (!isShowAll) {
                         button.closest('tr').hide('ease', function() {
                             jQuery(this).remove();
                             if(jQuery(this).closest('table').find('tbody tr:visible').length === 0) {

@@ -36,7 +36,7 @@ class TimesheetExportedValidatorTest extends ConstraintValidatorTestCase
         $auth->method('isGranted')->willReturnCallback(
             function ($attributes, $subject = null) use ($allowEdit) {
                 switch ($attributes) {
-                    case 'edit_exported_timesheet':
+                    case 'edit_export':
                         return $allowEdit;
                 }
 
