@@ -294,6 +294,10 @@
         <source>label.theme.avatar_url</source>
         <target>Permitir o uso de URLs para as imagens do avatar</target>
       </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target>A quantidade das entradas tomadas a partir das semanas anteriores</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
