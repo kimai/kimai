@@ -7,7 +7,7 @@
             -->
       <trans-unit id="N7mikjJ" resname="time_tracking">
         <source>time_tracking</source>
-        <target state="needs-translation">Tidsregistrering</target>
+        <target state="translated">Tidsregistrering</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -822,7 +822,7 @@
       </trans-unit>
       <trans-unit id="RRj6PYN" resname="label.invoice_tax_number">
         <source>label.invoice_tax_number</source>
-        <target>VAT no.:</target>
+        <target>CVR nr:</target>
       </trans-unit>
       <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
@@ -979,7 +979,7 @@
       </trans-unit>
       <trans-unit id=".0CFrRV" resname="upload">
         <source>upload</source>
-        <target state="needs-translation">Upload</target>
+        <target state="translated">Upload</target>
       </trans-unit>
     </body>
   </file>
