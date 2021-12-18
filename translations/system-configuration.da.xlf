@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="da" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
       <trans-unit id="ycErWZK" resname="timesheet">
         <source>Time tracking</source>
-        <target>Timeseddel</target>
+        <target>Tidsregistrering</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
@@ -161,6 +161,22 @@
       <trans-unit id="0mjJxEk" resname="Floor">
         <source>Floor</source>
         <target>Floor: start, slut, og varighed rundes ned</target>
+      </trans-unit>
+      <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
+        <source>label.theme.avatar_url</source>
+        <target>Tillad brugen af URL'er for avatar billeder</target>
+      </trans-unit>
+      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
+        <source>label.theme.random_colors</source>
+        <target>Brug tilfældige farver for objekter uden tildelt farve</target>
+      </trans-unit>
+      <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
+        <source>label.theme.tags_create</source>
+        <target>Tags: brug auto-complete søg og tillad tag oprettelse</target>
+      </trans-unit>
+      <trans-unit id="Utbj3k_" resname="invoice">
+        <source>invoice</source>
+        <target>Fakturaer</target>
       </trans-unit>
     </body>
   </file>
