@@ -4,43 +4,43 @@
     <body>
       <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="pjr3FDv" resname="registration.subject">
         <source>registration.subject</source>
-        <target></target>
+        <target>Aktiver din konto</target>
       </trans-unit>
       <trans-unit id="QtcznHC" resname="registration.title">
         <source>registration.title</source>
-        <target></target>
+        <target>Velkommen %username%</target>
       </trans-unit>
       <trans-unit id="YMLel3P" resname="registration.button">
         <source>registration.button</source>
-        <target></target>
+        <target>Aktiver din konto</target>
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
         <source>registration.intro</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>
-        <target></target>
+        <target>Nulstil dit kodeord</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title">
         <source>reset.title</source>
-        <target></target>
+        <target>Det kan ske …</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button">
         <source>reset.button</source>
-        <target></target>
+        <target>Nulstil dit kodeord</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro">
         <source>reset.intro</source>
-        <target></target>
+        <target>... så du har glemt dit kodeord? Intet problem: Kimai hjælper dig med at oprette et nyt:</target>
       </trans-unit>
     </body>
   </file>
