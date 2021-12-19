@@ -495,7 +495,7 @@
       </trans-unit>
       <trans-unit id="GOStgLi" resname="label.vat">
         <source>label.vat</source>
-        <target>Skat</target>
+        <target>Moms</target>
       </trans-unit>
       <trans-unit id="Dgmh_mv" resname="label.vat_id">
         <source>label.vat_id</source>
