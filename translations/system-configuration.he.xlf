@@ -294,6 +294,10 @@
         <source>label.theme.avatar_url</source>
         <target>לאפשר להשתמש בכתובות לתמונות יצוגיות</target>
       </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target>מספר הרשומות שנלקחו מהשבועות הקודמים</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
