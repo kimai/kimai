@@ -673,6 +673,14 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         return $this->hourlyRate;
     }
 
+    public function resetRates(): void
+    {
+        $this->rate = 0.00;
+        $this->internalRate = null;
+        $this->hourlyRate = null;
+        $this->fixedRate = null;
+    }
+
     public function setHourlyRate(?float $hourlyRate): Timesheet
     {
         $this->hourlyRate = $hourlyRate;

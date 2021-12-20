@@ -22,6 +22,17 @@ interface CalculatorInterface
      * The methods return value will not be evaluated.
      *
      * @param Timesheet $record
+     * @deprecated since 1.17, will be changed with 2.0
      */
     public function calculate(Timesheet $record);
+
+    /**
+     * All necessary changes need to be applied on the given $record.
+     * The methods return value will not be evaluated.
+     *
+     * @param Timesheet $record
+     * @param array<string, array<mixed, mixed> $changeset
+     * @return void
+     */
+    //public function calculate(Timesheet $record, array $changeset): void;
 }

@@ -33,10 +33,7 @@ class TimesheetSubscriber implements EventSubscriber
         $this->calculator = $calculators;
     }
 
-    /**
-     * @return array
-     */
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             Events::onFlush,
@@ -55,6 +52,32 @@ class TimesheetSubscriber implements EventSubscriber
         foreach ($uow->getScheduledEntityUpdates() as $entity) {
             if (!($entity instanceof Timesheet)) {
                 continue;
+            }
+
+            // TODO make this behavior configurable with SystemConfiguration
+            $changes = $uow->getEntityChangeSet($entity);
+
+            // check if the rate was changed manually
+            $changedRate = false;
+            foreach (['hourlyRate', 'fixedRate', 'internalRate', 'rate'] as $field) {
+                if (array_key_exists($field, $changes)) {
+                    $changedRate = true;
+                    break;
+                }
+            }
+
+            // if no manual rate changed was applied:
+            // check if a field changed, that is relevant for the rate calculation: if one was changed =>
+            // reset all rates, because most users do not even see their rates and would not be able
+            // to fix or empty the rate, even if they knew that the changed project has another base rate
+            if (!$changedRate) {
+                foreach (['project', 'activity', 'user'] as $field) {
+                    if (array_key_exists($field, $changes)) {
+                        // TODO this is a problem for everyone using manual rates instead of calculated ones
+                        $entity->resetRates();
+                        break;
+                    }
+                }
             }
 
             $this->calculateFields($entity);
