@@ -240,7 +240,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      */
     private $fixedRate = null;
     /**
-     * @var float
+     * @var float|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Entity"})
