@@ -26,7 +26,7 @@ interface CalculatorInterface
      */
     public function calculate(Timesheet $record);
 
-    /**
+    /*
      * All necessary changes need to be applied on the given $record.
      * The methods return value will not be evaluated.
      *

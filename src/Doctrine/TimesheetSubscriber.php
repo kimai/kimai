@@ -60,7 +60,7 @@ class TimesheetSubscriber implements EventSubscriber
             // check if the rate was changed manually
             $changedRate = false;
             foreach (['hourlyRate', 'fixedRate', 'internalRate', 'rate'] as $field) {
-                if (array_key_exists($field, $changes)) {
+                if (\array_key_exists($field, $changes)) {
                     $changedRate = true;
                     break;
                 }
@@ -72,7 +72,7 @@ class TimesheetSubscriber implements EventSubscriber
             // to fix or empty the rate, even if they knew that the changed project has another base rate
             if (!$changedRate) {
                 foreach (['project', 'activity', 'user'] as $field) {
-                    if (array_key_exists($field, $changes)) {
+                    if (\array_key_exists($field, $changes)) {
                         // TODO this is a problem for everyone using manual rates instead of calculated ones
                         $entity->resetRates();
                         break;
