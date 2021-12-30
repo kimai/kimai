@@ -18,7 +18,7 @@ use App\Export\Spreadsheet\AnnotatedObjectExporter;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\InvoiceDocumentUploadForm;
-use App\Form\InvoicePaymentDateForm;
+use App\Form\InvoiceEditForm;
 use App\Form\InvoiceTemplateForm;
 use App\Form\Toolbar\InvoiceArchiveForm;
 use App\Form\Toolbar\InvoiceToolbarForm;
@@ -224,18 +224,19 @@ final class InvoiceController extends AbstractController
             return $this->redirectToRoute('admin_invoice_list');
         }
 
-        $token = $csrfTokenManager->refreshToken('invoice.status');
-
         if ($status === Invoice::STATUS_PAID) {
-            $form = $this->createPaymentDateForm($invoice, $status, $token->getValue());
+            if (null === $invoice->getPaymentDate()) {
+                $invoice->setPaymentDate($this->getDateTimeFactory()->createDateTime());
+                $invoice->setIsPaid();
+            }
+
+            $form = $this->createInvoiceEditForm($invoice);
             $form->handleRequest($request);
 
-            if (!$form->isSubmitted() || !$form->isValid()) {
-                return $this->render('invoice/payment_date_edit.html.twig', [
-                    'invoice' => $invoice,
-                    'form' => $form->createView()
-                ]);
-            }
+            return $this->render('invoice/invoice_edit.html.twig', [
+                'invoice' => $invoice,
+                'form' => $form->createView()
+            ]);
         }
 
         try {
@@ -246,6 +247,33 @@ final class InvoiceController extends AbstractController
         }
 
         return $this->redirectToRoute('admin_invoice_list');
+    }
+
+    /**
+     * @Route(path="/edit/{id}", name="admin_invoice_edit", methods={"GET", "POST"})
+     * @Security("is_granted('access', invoice.getCustomer())")
+     * @Security("is_granted('create_invoice')")
+     */
+    public function editAction(Invoice $invoice, Request $request): Response
+    {
+        $form = $this->createInvoiceEditForm($invoice);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->invoiceRepository->saveInvoice($invoice);
+                $this->flashSuccess('action.update.success');
+            } catch (Exception $ex) {
+                $this->flashUpdateException($ex);
+            }
+
+            return $this->redirectToRoute('admin_invoice_list');
+        }
+
+        return $this->render('invoice/invoice_edit.html.twig', [
+            'invoice' => $invoice,
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -605,7 +633,7 @@ final class InvoiceController extends AbstractController
 
     private function renderTemplateForm(InvoiceTemplate $template, Request $request): Response
     {
-        $editForm = $this->createEditForm($template);
+        $editForm = $this->createTemplateEditForm($template);
 
         $editForm->handleRequest($request);
 
@@ -653,7 +681,7 @@ final class InvoiceController extends AbstractController
         ]);
     }
 
-    private function createEditForm(InvoiceTemplate $template): FormInterface
+    private function createTemplateEditForm(InvoiceTemplate $template): FormInterface
     {
         if ($template->getId() === null) {
             $url = $this->generateUrl('admin_invoice_template_create');
@@ -667,16 +695,10 @@ final class InvoiceController extends AbstractController
         ]);
     }
 
-    private function createPaymentDateForm(Invoice $invoice, string $status, string $token): FormInterface
+    private function createInvoiceEditForm(Invoice $invoice): FormInterface
     {
-        if (null === $invoice->getPaymentDate()) {
-            $invoice->setPaymentDate($this->getDateTimeFactory()->createDateTime());
-        }
-
-        $url = $this->generateUrl('admin_invoice_status', ['id' => $invoice->getId(), 'status' => $status, 'token' => $token]);
-
-        return $this->createForm(InvoicePaymentDateForm::class, $invoice, [
-            'action' => $url,
+        return $this->createForm(InvoiceEditForm::class, $invoice, [
+            'action' => $this->generateUrl('admin_invoice_edit', ['id' => $invoice->getId()]),
             'method' => 'POST',
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
         ]);

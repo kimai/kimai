@@ -12,10 +12,12 @@ namespace App\Form;
 use App\Entity\Invoice;
 use App\Form\Type\DatePickerType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class InvoicePaymentDateForm extends AbstractType
+class InvoiceEditForm extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -28,9 +30,23 @@ class InvoicePaymentDateForm extends AbstractType
         ];
 
         $builder
+            ->add('comment', TextareaType::class, [
+                'label' => 'label.description',
+                'required' => false,
+            ])
+            ->add('status', ChoiceType::class, [
+                'choices' => [
+                    'status.new' => Invoice::STATUS_NEW,
+                    'status.pending' => Invoice::STATUS_PENDING,
+                    'status.paid' => Invoice::STATUS_PAID,
+                    'status.canceled' => Invoice::STATUS_CANCELED,
+                ],
+                'label' => 'label.status',
+                'required' => true,
+            ])
             ->add('paymentDate', DatePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'invoice.payment_date',
-                'required' => true,
+                'required' => false,
             ]));
     }
 

@@ -352,20 +352,20 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertHasValidationError(
             $client,
             '/invoice/change-status/' . $id . '/paid/' . $token->getValue(),
-            'form[name=invoice_payment_date_form]',
+            'form[name=invoice_edit_form]',
             [
-                'invoice_payment_date_form' => [
+                'invoice_edit_form' => [
                     'paymentDate' => 'invalid'
                 ]
             ],
-            ['#invoice_payment_date_form_paymentDate']
+            ['#invoice_edit_form_paymentDate']
         );
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form[name=invoice_payment_date_form]')->form();
+        $form = $client->getCrawler()->filter('form[name=invoice_edit_form]')->form();
         $client->submit($form, [
-            'invoice_payment_date_form' => [
+            'invoice_edit_form' => [
                 'paymentDate' => (new \DateTime())->format('Y-m-d')
             ]
         ]);
