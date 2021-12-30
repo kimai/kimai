@@ -233,7 +233,7 @@ final class InvoiceController extends AbstractController
             $form = $this->createInvoiceEditForm($invoice);
             $form->handleRequest($request);
 
-            return $this->render('invoice/payment_date_edit.html.twig', [
+            return $this->render('invoice/invoice_edit.html.twig', [
                 'invoice' => $invoice,
                 'form' => $form->createView()
             ]);
@@ -260,7 +260,6 @@ final class InvoiceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->flashError('Save invoice now');
             try {
                 $this->invoiceRepository->saveInvoice($invoice);
                 $this->flashSuccess('action.update.success');
@@ -271,7 +270,7 @@ final class InvoiceController extends AbstractController
             return $this->redirectToRoute('admin_invoice_list');
         }
 
-        return $this->render('invoice/payment_date_edit.html.twig', [
+        return $this->render('invoice/invoice_edit.html.twig', [
             'invoice' => $invoice,
             'form' => $form->createView()
         ]);
