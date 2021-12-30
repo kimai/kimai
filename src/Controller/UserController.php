@@ -136,7 +136,9 @@ final class UserController extends AbstractController
             $user->setTimezone($firstUser->getTimezone());
 
             $editForm = $this->getCreateUserForm($user);
-            $editForm->get('create_more')->setData(true);
+            if ($editForm->has('create_more')) {
+                $editForm->get('create_more')->setData(true);
+            }
         }
 
         return $this->render('user/create.html.twig', [
