@@ -54,6 +54,7 @@ class InvoiceTest extends TestCase
         self::assertFalse($sut->isPaid());
         self::assertFalse($sut->isOverdue());
         self::assertNull($sut->getPaymentDate());
+        self::assertNull($sut->getComment());
     }
 
     public function testSetInvalidStatus()
@@ -129,6 +130,9 @@ class InvoiceTest extends TestCase
         self::assertEquals(348.99, $sut->getTotal());
         self::assertNotNull($sut->getUser());
         self::assertEquals(19, $sut->getVat());
+
+        $sut->setComment('foo bar');
+        self::assertEquals('foo bar', $sut->getComment());
     }
 
     protected function getInvoiceModel(\DateTime $created): InvoiceModel
