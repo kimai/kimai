@@ -294,6 +294,10 @@
         <source>label.theme.avatar_url</source>
         <target>Permiteți utilizarea de URL-uri pentru imaginile avatarurilor</target>
       </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target>Numărul de înregistrări preluate din săptămânile anterioare</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -38,6 +38,10 @@
         <source>report_weekly_users</source>
         <target>Tygodniowy widok dla wszystkich użytkowników</target>
       </trans-unit>
+      <trans-unit id="BQAsynV" resname="report_project_daterange">
+        <source>report_project_daterange</source>
+        <target>Raport miesięczny</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

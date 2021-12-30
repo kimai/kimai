@@ -294,6 +294,10 @@
         <source>label.timesheet.rules.break_warning_duration</source>
         <target>Durata massima di una registrazione della scheda attività in minuti prima che venga visualizzato un «avviso di pausa» (0 = disattivato)</target>
       </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target>Numero di voci riprese dalle settimane precedenti</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

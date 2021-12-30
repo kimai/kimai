@@ -294,6 +294,10 @@
         <source>label.calendar.dragdrop_amount</source>
         <target>Količina unosa za povlačenje i ispuštanje (0 = deaktivirano)</target>
       </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target>Broj unosa preuzetih iz prethodnih tjedana</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

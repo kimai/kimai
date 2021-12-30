@@ -1132,6 +1132,66 @@
         <source>label.remove_default</source>
         <target>Verwijder favoriete zoekopdracht</target>
       </trans-unit>
+      <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>De aanvraag kan niet worden verwerkt. Er zijn te veel resultaten gevonden.</target>
+      </trans-unit>
+      <trans-unit id="pnGDFmf" resname="label.type">
+        <source>label.type</source>
+        <target>Type</target>
+      </trans-unit>
+      <trans-unit id="jdbtx6z" resname="action.add">
+        <source>action.add</source>
+        <target>Toevoegen</target>
+      </trans-unit>
+      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
+        <source>stats.workingTimeWeekShort</source>
+        <target>Week %week%</target>
+      </trans-unit>
+      <trans-unit id="pX_3dNm" resname="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Inkomsten</target>
+      </trans-unit>
+      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Inkomsten dit boekjaar</target>
+      </trans-unit>
+      <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>%percent%% gebruikt deze maand</target>
+      </trans-unit>
+      <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% gebruikt (%left% zijn nog open deze maand)</target>
+      </trans-unit>
+      <trans-unit id="gT9W2pZ" resname="status.canceled">
+        <source>status.canceled</source>
+        <target>Geannuleerd</target>
+      </trans-unit>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>Een email is verzonden. Deze bedraagt een link die je moet gebruiken op je wachtwoord te herzetten. Je kan enkel een nieuw wachtwoord aanvragen elke %tokenLifetime% uur. Kijk je spam folder na als je geen email aangekregen hebt of probeer opnieuw.</target>
+      </trans-unit>
+      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Boekjaar</target>
+      </trans-unit>
+      <trans-unit id="W92QGbY" resname="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target>Uw zoekoipdracht leidt tot %count% resultaten. Als de export faalt, dan moet je de zoekopdracht verder verfijnen.</target>
+      </trans-unit>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Werktijd</target>
+      </trans-unit>
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Werkuren dit boekjaar</target>
+      </trans-unit>
+      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Actieve gebruikers dit boekjaar</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
