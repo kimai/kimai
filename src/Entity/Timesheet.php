@@ -30,6 +30,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @ORM\Index(columns={"start_time"}),
  *          @ORM\Index(columns={"start_time","end_time"}),
  *          @ORM\Index(columns={"start_time","end_time","user"}),
+ *          @ORM\Index(columns={"date_tz","user"}),
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TimesheetRepository")
@@ -109,6 +110,16 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      */
     private $id;
     /**
+     * Reflects the date in the users timezone (not in UTC).
+     * This value is automatically set through the begin column and ONLY used in statistic queries.
+     *
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_tz", type="date", nullable=false)
+     * @Assert\NotNull()
+     */
+    private $date;
+    /**
      * @var DateTime
      *
      * @Serializer\Expose()
@@ -140,6 +151,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      * @internal for storing the timezone of "begin" and "end" date
      *
      * @ORM\Column(name="timezone", type="string", length=64, nullable=false)
+     * @Assert\Timezone
      */
     private $timezone;
     /**
@@ -166,8 +178,6 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      */
     private $user;
     /**
-     * Activity
-     *
      * @var Activity
      *
      * @Serializer\Expose()
@@ -180,8 +190,6 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      */
     private $activity;
     /**
-     * Project
-     *
      * @var Project
      *
      * @Serializer\Expose()
@@ -245,14 +253,17 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      * @var bool
      *
      * @Serializer\Expose()
-     * @Serializer\Groups({"Entity"})
+     * @Serializer\Groups({"Default"})
      *
-     * @ORM\Column(name="exported", type="boolean", nullable=false)
+     * @ORM\Column(name="exported", type="boolean", nullable=false, options={"default": false})
      * @Assert\NotNull()
      */
     private $exported = false;
     /**
      * @var bool
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="billable", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
@@ -367,6 +378,8 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     {
         $this->begin = $begin;
         $this->timezone = $begin->getTimezone()->getName();
+        // make sure that the original date is always kept in UTC
+        $this->date = new DateTime($begin->format('Y-m-d 00:00:00'), new DateTimeZone('UTC'));
 
         return $this;
     }
@@ -376,6 +389,11 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         $this->localizeDates();
 
         return $this->end;
+    }
+
+    public function isRunning(): bool
+    {
+        return $this->end === null;
     }
 
     /**
@@ -410,10 +428,16 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     /**
      * Do not rely on the results of this method for running records.
      *
+     * @param bool $calculate
      * @return int|null
      */
-    public function getDuration(): ?int
+    public function getDuration(bool $calculate = true): ?int
     {
+        // only auto calculate if manually set duration is null - the result is important for eg. validations
+        if ($calculate && $this->duration === null && $this->begin !== null && $this->end !== null) {
+            return $this->end->getTimestamp() - $this->begin->getTimestamp();
+        }
+
         return $this->duration;
     }
 
@@ -585,8 +609,8 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     }
 
     /**
-     * BE WARNED: this method should NOT be used.
-     * It was ONLY introduced for the command "kimai:import-v1".
+     * BE WARNED: this method should NOT be used from outside.
+     * It is reserved for some very rare use-cases.
      *
      * @internal
      * @param string $timezone
@@ -743,6 +767,13 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         /** @var TimesheetMeta $meta */
         foreach ($this->meta as $meta) {
             $timesheet->setMetaField(clone $meta);
+        }
+
+        $timesheet->tags = new ArrayCollection();
+
+        /** @var Tag $tag */
+        foreach ($this->tags as $tag) {
+            $timesheet->addTag($tag);
         }
 
         return $timesheet;

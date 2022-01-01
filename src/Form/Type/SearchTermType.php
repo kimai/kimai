@@ -33,7 +33,7 @@ class SearchTermType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'label' => 'search',
+            'label' => 'label.searchTerm',
             'required' => false,
             'constraints' => [
                 new Length(['min' => 3, 'allowEmptyString' => true])

@@ -11,6 +11,9 @@ namespace App\Repository\Query;
 
 use App\Entity\InvoiceTemplate;
 
+/**
+ * Find items (eg timesheets) for creating a new invoice.
+ */
 class InvoiceQuery extends TimesheetQuery
 {
     /**
@@ -25,7 +28,13 @@ class InvoiceQuery extends TimesheetQuery
     public function __construct()
     {
         parent::__construct();
-        $this->setBillable(true);
+        $this->setDefaults([
+            'order' => InvoiceQuery::ORDER_ASC,
+            'exported' => InvoiceQuery::STATE_NOT_EXPORTED,
+            'state' => self::STATE_STOPPED,
+            'billable' => true,
+            'markAsExported' => false,
+        ]);
     }
 
     public function getTemplate(): ?InvoiceTemplate

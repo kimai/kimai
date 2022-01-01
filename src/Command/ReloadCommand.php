@@ -68,7 +68,7 @@ final class ReloadCommand extends Command
 
         // many users execute the bin/console command from arbitrary locations
         $path = getcwd();
-        \chdir($this->getRootDirectory());
+        chdir($this->getRootDirectory());
 
         try {
             $command = $this->getApplication()->find('lint:yaml');
@@ -115,7 +115,8 @@ final class ReloadCommand extends Command
             $io->warning(
                 [
                     'Cache could not be rebuilt.',
-                    'Please run the cache commands manually:',
+                    'Please run these commands to rebuild the cache manually:',
+                    'rm -r var/cache/*' . PHP_EOL .
                     'bin/console cache:clear --env=' . $environment . PHP_EOL .
                     'bin/console cache:warmup --env=' . $environment
                 ]

@@ -9,6 +9,7 @@
 
 namespace App\Export\Base;
 
+use App\Activity\ActivityStatisticService;
 use App\Entity\MetaTableTypeInterface;
 use App\Event\ActivityMetaDisplayEvent;
 use App\Event\CustomerMetaDisplayEvent;
@@ -17,7 +18,7 @@ use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
 use App\Export\ExportItemInterface;
-use App\Repository\ProjectRepository;
+use App\Project\ProjectStatisticService;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -32,14 +33,9 @@ class HtmlRenderer
      * @var Environment
      */
     protected $twig;
-    /**
-     * @var EventDispatcherInterface
-     */
     protected $dispatcher;
-    /**
-     * @var ProjectRepository
-     */
-    private $projectRepository;
+    private $projectStatisticService;
+    private $activityStatisticService;
     /**
      * @var string
      */
@@ -49,11 +45,12 @@ class HtmlRenderer
      */
     private $template = 'default.html.twig';
 
-    public function __construct(Environment $twig, EventDispatcherInterface $dispatcher, ProjectRepository $projectRepository)
+    public function __construct(Environment $twig, EventDispatcherInterface $dispatcher, ProjectStatisticService $projectStatisticService, ActivityStatisticService $activityStatisticService)
     {
         $this->twig = $twig;
         $this->dispatcher = $dispatcher;
-        $this->projectRepository = $projectRepository;
+        $this->projectStatisticService = $projectStatisticService;
+        $this->activityStatisticService = $activityStatisticService;
     }
 
     /**
@@ -71,9 +68,9 @@ class HtmlRenderer
     {
         $decimal = false;
         if (null !== $query->getCurrentUser()) {
-            $decimal = (bool) $query->getCurrentUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
+            $decimal = $query->getCurrentUser()->isExportDecimal();
         } elseif (null !== $query->getUser()) {
-            $decimal = (bool) $query->getUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
+            $decimal = $query->getUser()->isExportDecimal();
         }
 
         return ['decimal' => $decimal];
@@ -107,7 +104,8 @@ class HtmlRenderer
             'entries' => $timesheets,
             'query' => $query,
             'summaries' => $summary,
-            'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectRepository),
+            'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectStatisticService),
+            'activity_budgets' => $this->calculateActivityBudget($timesheets, $query, $this->activityStatisticService),
             // @deprecated since 1.3, will be removed with 2.0
             'metaColumns' => $timesheetMetaFields,
             'timesheetMetaFields' => $timesheetMetaFields,

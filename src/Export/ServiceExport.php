@@ -9,7 +9,9 @@
 
 namespace App\Export;
 
+use App\Event\ExportItemsQueryEvent;
 use App\Repository\Query\ExportQuery;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class ServiceExport
 {
@@ -20,17 +22,24 @@ final class ServiceExport
     /**
      * @var TimesheetExportInterface[]
      */
-    private $exporter = [];
+    private $timesheetExporter = [];
     /**
      * @var ExportRepositoryInterface[]
      */
     private $repositories = [];
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
-    public function addRenderer(ExportRendererInterface $renderer): ServiceExport
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
+    public function addRenderer(ExportRendererInterface $renderer): void
     {
         $this->renderer[] = $renderer;
-
-        return $this;
     }
 
     /**
@@ -52,11 +61,9 @@ final class ServiceExport
         return null;
     }
 
-    public function addTimesheetExporter(TimesheetExportInterface $exporter): ServiceExport
+    public function addTimesheetExporter(TimesheetExportInterface $exporter): void
     {
-        $this->exporter[] = $exporter;
-
-        return $this;
+        $this->timesheetExporter[] = $exporter;
     }
 
     /**
@@ -64,12 +71,12 @@ final class ServiceExport
      */
     public function getTimesheetExporter(): array
     {
-        return $this->exporter;
+        return $this->timesheetExporter;
     }
 
     public function getTimesheetExporterById(string $id): ?TimesheetExportInterface
     {
-        foreach ($this->exporter as $exporter) {
+        foreach ($this->timesheetExporter as $exporter) {
             if ($exporter->getId() === $id) {
                 return $exporter;
             }
@@ -78,19 +85,31 @@ final class ServiceExport
         return null;
     }
 
-    public function addExportRepository(ExportRepositoryInterface $repository): ServiceExport
+    public function addExportRepository(ExportRepositoryInterface $repository): void
     {
         $this->repositories[] = $repository;
-
-        return $this;
     }
 
+    /**
+     * @param ExportQuery $query
+     * @return ExportItemInterface[]
+     * @throws TooManyItemsExportException
+     */
     public function getExportItems(ExportQuery $query)
     {
         $items = [];
 
+        $event = new ExportItemsQueryEvent($query);
+        $this->eventDispatcher->dispatch($event);
+        $max = $event->getExportQuery()->getMaxResults();
+
         foreach ($this->repositories as $repository) {
-            $items = array_merge($items, $repository->getExportItemsForQuery($query));
+            $items = array_merge($items, $repository->getExportItemsForQuery($event->getExportQuery()));
+            if ($max !== null && \count($items) > $max) {
+                throw new TooManyItemsExportException(
+                    sprintf('Limit reached! Expected max. %s items but got %s', $max, \count($items))
+                );
+            }
         }
 
         return $items;

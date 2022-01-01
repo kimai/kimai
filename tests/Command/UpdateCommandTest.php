@@ -34,7 +34,6 @@ class UpdateCommandTest extends KernelTestCase
         $container = self::$kernel->getContainer();
 
         $this->application->add(new UpdateCommand(
-            $container->getParameter('kernel.project_dir'),
             $container->get('doctrine')->getConnection()
         ));
 
@@ -54,11 +53,10 @@ class UpdateCommandTest extends KernelTestCase
 
         self::assertStringContainsString('Kimai updates running', $result);
         // make sure migrations run always
-        self::assertStringContainsString('Application Migrations', $result);
-        self::assertStringContainsString('No migrations to execute.', $result);
+        self::assertStringContainsString('[OK] Already at the latest version ("DoctrineMigrations\\', $result);
 
         self::assertStringContainsString(
-            sprintf('[OK] Congratulations! Successfully updated Kimai 2 to version %s (%s)', Constants::VERSION, Constants::STATUS),
+            sprintf('[OK] Congratulations! Successfully updated Kimai to version %s', Constants::VERSION),
             $result
         );
 

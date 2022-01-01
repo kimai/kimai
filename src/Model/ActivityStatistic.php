@@ -9,6 +9,59 @@
 
 namespace App\Model;
 
-class ActivityStatistic extends TimesheetCountedStatistic
+use App\Entity\Activity;
+use App\Model\Statistic\BudgetStatistic;
+
+class ActivityStatistic extends BudgetStatistic implements \JsonSerializable
 {
+    /**
+     * @var Activity
+     */
+    private $activity;
+
+    public function getActivity(): ?Activity
+    {
+        return $this->activity;
+    }
+
+    public function setActivity(Activity $activity): void
+    {
+        $this->activity = $activity;
+    }
+
+    /**
+     * Added for simpler re-use in frontend (charts).
+     *
+     * @return string|null
+     */
+    public function getColor(): ?string
+    {
+        if ($this->activity === null) {
+            return null;
+        }
+
+        return $this->activity->getColor();
+    }
+
+    /**
+     * Added for simpler re-use in frontend (charts).
+     *
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        if ($this->activity === null) {
+            return null;
+        }
+
+        return $this->activity->getName();
+    }
+
+    public function jsonSerialize()
+    {
+        return array_merge(parent::jsonSerialize(), [
+            'name' => $this->getName(),
+            'color' => $this->getColor(),
+        ]);
+    }
 }

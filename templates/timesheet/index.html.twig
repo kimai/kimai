@@ -9,7 +9,7 @@
 {% set allowMarkdown = true %}
 
 {% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.timesheets('index') }}{% endblock %}
+{% block page_actions %}{{ actions.timesheets('index', query) }}{% endblock %}
 
 {% block row_action %}
     {{- actions.timesheet(entry, 'index') -}}

@@ -48,6 +48,8 @@ final class CurrentUser
             return null;
         }
 
+        @trigger_error('CurrentUser is deprecated and will be removed with 2.0, use DI or at worst Symfony\Component\Security\Core\Security instead', E_USER_DEPRECATED);
+
         $this->user = $user;
 
         return $this->user;

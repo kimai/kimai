@@ -17,12 +17,11 @@ use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Collections\Collection;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Entity\Customer
  */
-class CustomerTest extends TestCase
+class CustomerTest extends AbstractEntityTest
 {
     public function testDefaultValues()
     {
@@ -49,13 +48,16 @@ class CustomerTest extends TestCase
 
         self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
-        self::assertEquals(0.0, $sut->getBudget());
-        self::assertEquals(0, $sut->getTimeBudget());
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
         self::assertEquals(0, $sut->getMetaFields()->count());
         self::assertNull($sut->getMetaField('foo'));
         self::assertInstanceOf(Collection::class, $sut->getTeams());
         self::assertEquals(0, $sut->getTeams()->count());
+    }
+
+    public function testBudgets()
+    {
+        $this->assertBudget(new Customer());
     }
 
     public function testSetterAndGetter()
@@ -72,11 +74,11 @@ class CustomerTest extends TestCase
         self::assertEquals('hello world', $sut->getComment());
 
         self::assertFalse($sut->hasColor());
-        self::assertInstanceOf(Customer::class, $sut->setColor('#fffccc'));
+        $sut->setColor('#fffccc');
         self::assertEquals('#fffccc', $sut->getColor());
         self::assertTrue($sut->hasColor());
 
-        self::assertInstanceOf(Customer::class, $sut->setColor(Constants::DEFAULT_COLOR));
+        $sut->setColor(Constants::DEFAULT_COLOR);
         self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
 
@@ -100,12 +102,6 @@ class CustomerTest extends TestCase
 
         self::assertInstanceOf(Customer::class, $sut->setHomepage('https://www.example.com'));
         self::assertEquals('https://www.example.com', $sut->getHomepage());
-
-        self::assertInstanceOf(Customer::class, $sut->setBudget(12345.67));
-        self::assertEquals(12345.67, $sut->getBudget());
-
-        self::assertInstanceOf(Customer::class, $sut->setTimeBudget(937321));
-        self::assertEquals(937321, $sut->getTimeBudget());
 
         self::assertInstanceOf(Customer::class, $sut->setVatId('ID 1234567890'));
         self::assertEquals('ID 1234567890', $sut->getVatId());
@@ -192,6 +188,9 @@ class CustomerTest extends TestCase
             ['label.country', 'string'],
             ['label.currency', 'string'],
             ['label.timezone', 'string'],
+            ['label.budget', 'float'],
+            ['label.timeBudget', 'duration'],
+            ['label.budgetType', 'string'],
             ['label.color', 'string'],
             ['label.visible', 'boolean'],
             ['label.comment', 'string'],
@@ -210,5 +209,36 @@ class CustomerTest extends TestCase
             self::assertEquals($item[0], $column->getLabel());
             self::assertEquals($item[1], $column->getType());
         }
+    }
+
+    public function testClone()
+    {
+        $sut = new Customer();
+        $sut->setName('mycustomer');
+        $sut->setVatId('DE-0123456789');
+        $sut->setTimeBudget(123456);
+        $sut->setBudget(1234.56);
+
+        $team = new Team();
+        $sut->addTeam($team);
+
+        $meta = new CustomerMeta();
+        $meta->setName('blabla');
+        $meta->setValue('1234567890');
+        $meta->setIsVisible(false);
+        $meta->setIsRequired(true);
+        $sut->setMetaField($meta);
+
+        $clone = clone $sut;
+
+        foreach ($sut->getMetaFields() as $metaField) {
+            $cloneMeta = $clone->getMetaField($metaField->getName());
+            self::assertEquals($cloneMeta->getValue(), $metaField->getValue());
+        }
+        self::assertEquals($clone->getBudget(), $sut->getBudget());
+        self::assertEquals($clone->getTimeBudget(), $sut->getTimeBudget());
+        self::assertEquals($clone->getColor(), $sut->getColor());
+        self::assertEquals('DE-0123456789', $clone->getVatId());
+        self::assertEquals('mycustomer', $clone->getName());
     }
 }

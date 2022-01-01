@@ -91,6 +91,10 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertUrlIsSecured('/api/activities');
     }
 
+    /**
+     * @return array<Project|Activity>
+     * @throws \Exception
+     */
     protected function loadActivityTestData(): array
     {
         $em = $this->getEntityManager();
@@ -111,8 +115,8 @@ class ActivityControllerTest extends APIControllerBaseTest
         $activity = (new Activity())->setName('second one')->setComment('2');
         $em->persist($activity);
 
-        $activity = (new Activity())->setName('third one')->setComment('3')->setProject($project);
-        $em->persist($activity);
+        $activity1 = (new Activity())->setName('third one')->setComment('3')->setProject($project);
+        $em->persist($activity1);
 
         $activity = (new Activity())->setName('fourth one')->setComment('4')->setProject($project2)->setVisible(false);
         $em->persist($activity);
@@ -131,7 +135,7 @@ class ActivityControllerTest extends APIControllerBaseTest
 
         $em->flush();
 
-        return [$project, $project2];
+        return [$project, $project2, $activity1];
     }
 
     /**
@@ -291,7 +295,6 @@ class ActivityControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'comment' => '',
-            'project' => 1,
             'visible' => true,
             'budget' => '999',
             'timeBudget' => '7200',
@@ -303,6 +306,29 @@ class ActivityControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('ActivityEntity', $result);
         $this->assertNotEmpty($result['id']);
+    }
+
+    public function testPatchActionWithNonGlobalActivity()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $imports = $this->loadActivityTestData();
+
+        $data = [
+            'name' => 'foo',
+            'comment' => '',
+            'visible' => true,
+            'project' => $imports[1]->getId(),
+            'budget' => '999',
+            'timeBudget' => '7200',
+        ];
+        $this->request($client, '/api/activities/' . $imports[2]->getId(), 'PATCH', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('ActivityEntity', $result);
+        $this->assertNotEmpty($result['id']);
+        $this->assertEquals($imports[1]->getId(), $result['project']);
     }
 
     public function testPatchActionWithInvalidUser()
@@ -332,15 +358,14 @@ class ActivityControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
-            'name' => 'foo',
-            'project' => 255,
-            'visible' => true
+            'name' => 'foofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoo',
+            'visible' => false
         ];
         $this->request($client, '/api/activities/1', 'PATCH', [], json_encode($data));
 
         $response = $client->getResponse();
         $this->assertEquals(400, $response->getStatusCode());
-        $this->assertApiCallValidationError($response, ['project']);
+        $this->assertApiCallValidationError($response, ['name']);
     }
 
     public function testMetaActionThrowsNotFound()

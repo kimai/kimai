@@ -27,12 +27,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @Serializer\ExclusionPolicy("all")
  *
- * @Exporter\Order({"id", "name", "company", "number", "vatId", "address", "contact","email", "phone", "mobile", "fax", "homepage", "country", "currency", "timezone", "budget", "timeBudget", "color", "visible", "teams", "comment"})
+ * @Exporter\Order({"id", "name", "company", "number", "vatId", "address", "contact","email", "phone", "mobile", "fax", "homepage", "country", "currency", "timezone", "budget", "timeBudget", "budgetType", "color", "visible", "teams", "comment"})
  * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams().toArray()", type="array")
  */
-class Customer implements EntityWithMetaFields
+class Customer implements EntityWithMetaFields, EntityWithBudget
 {
     public const DEFAULT_CURRENCY = 'EUR';
+
+    use BudgetTrait;
+    use ColorTrait;
 
     /**
      * @var int|null
@@ -64,7 +67,7 @@ class Customer implements EntityWithMetaFields
      * @var string
      *
      * @Serializer\Expose()
-     * @Serializer\Groups({"Customer_Entity"})
+     * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="label.number")
      *
@@ -251,38 +254,6 @@ class Customer implements EntityWithMetaFields
      * @Assert\Length(max=64)
      */
     private $timezone;
-
-    // keep the trait include exactly here, for placing the column at the correct position
-    use ColorTrait;
-
-    /**
-     * The total monetary budget, will be zero if not configured.
-     *
-     * @var float
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Customer_Entity"})
-     *
-     * @ Exporter\Expose(label="label.budget")
-     *
-     * @ORM\Column(name="budget", type="float", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $budget = 0.00;
-    /**
-     * The time budget in seconds, will be be zero if not configured.
-     *
-     * @var int
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Customer_Entity"})
-     *
-     * @ Exporter\Expose(label="label.timeBudget", type="duration")
-     *
-     * @ORM\Column(name="time_budget", type="integer", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $timeBudget = 0;
     /**
      * Meta fields
      *
@@ -526,30 +497,6 @@ class Customer implements EntityWithMetaFields
         return $this->timezone;
     }
 
-    public function setBudget(float $budget): Customer
-    {
-        $this->budget = $budget;
-
-        return $this;
-    }
-
-    public function getBudget(): float
-    {
-        return $this->budget;
-    }
-
-    public function setTimeBudget(int $seconds): Customer
-    {
-        $this->timeBudget = $seconds;
-
-        return $this;
-    }
-
-    public function getTimeBudget(): int
-    {
-        return $this->timeBudget;
-    }
-
     /**
      * @return Collection|MetaTableTypeInterface[]
      */
@@ -631,5 +578,28 @@ class Customer implements EntityWithMetaFields
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+        }
+
+        $currentTeams = $this->teams;
+        $this->teams = new ArrayCollection();
+        /** @var Team $team */
+        foreach ($currentTeams as $team) {
+            $this->addTeam($team);
+        }
+
+        $currentMeta = $this->meta;
+        $this->meta = new ArrayCollection();
+        /** @var ProjectMeta $meta */
+        foreach ($currentMeta as $meta) {
+            $newMeta = clone $meta;
+            $newMeta->setEntity($this);
+            $this->setMetaField($newMeta);
+        }
     }
 }

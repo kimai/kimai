@@ -23,6 +23,31 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
         jQuery('[data-toggle="tooltip"]').tooltip();
         // activate all form plugins
         this.getContainer().getPlugin('form').activateForm('.content-wrapper form', 'body');
+        this.getContainer().getPlugin('form').activateForm('form.searchform', 'body');
+
+        this.registerModalAutofocus('#modal_search');
+        this.registerModalAutofocus('#remote_form_modal');
+    }
+
+    /**
+     * workaround for autofocus attribute, as the modal "steals" it
+     *
+     * @param {string} selector
+     */
+    registerModalAutofocus(selector) {
+        let modal = jQuery(selector);
+        if (modal.length === 0) {
+            return;
+        }
+
+        modal.on('shown.bs.modal', function () {
+            let form = modal.find('form');
+            let formAutofocus = form.find('[autofocus]');
+            if (formAutofocus.length < 1) {
+                formAutofocus = form.find('input[type=text],textarea,select');
+            }
+            formAutofocus.filter(':not("[data-datetimepicker=on]")').filter(':visible:first').focus().delay(1000).focus();
+        });
     }
 
     /**

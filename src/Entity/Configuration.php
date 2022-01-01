@@ -30,6 +30,7 @@ class Configuration
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer")
+     * @phpstan-ignore-next-line
      */
     private $id;
 
@@ -45,7 +46,8 @@ class Configuration
     /**
      * @var string
      *
-     * @ORM\Column(name="value", type="string", length=255, nullable=true)
+     * @ORM\Column(name="value", type="string", length=1024, nullable=true)
+     * @Assert\Length(max=1024, allowEmptyString=true)
      */
     private $value;
 

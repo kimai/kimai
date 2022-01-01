@@ -29,7 +29,6 @@ trait MetaTableTypeTrait
      * @ORM\Column(name="id", type="integer")
      */
     private $id;
-
     /**
      * Name of the meta (custom) field
      *
@@ -43,7 +42,6 @@ trait MetaTableTypeTrait
      * @Assert\Length(min=2, max=50, allowEmptyString=false)
      */
     private $name;
-
     /**
      * Value of the meta (custom) field
      *
@@ -52,10 +50,10 @@ trait MetaTableTypeTrait
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @ORM\Column(name="value", type="string", length=255, nullable=true)
+     * @ORM\Column(name="value", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535, allowEmptyString=true)
      */
     private $value;
-
     /**
      * @var bool
      *

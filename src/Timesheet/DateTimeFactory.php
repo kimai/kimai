@@ -9,6 +9,7 @@
 
 namespace App\Timesheet;
 
+use App\Entity\User;
 use DateTime;
 use DateTimeZone;
 
@@ -18,16 +19,26 @@ class DateTimeFactory
      * @var DateTimeZone
      */
     private $timezone;
+    /**
+     * @var bool
+     */
+    private $startOnSunday;
 
-    public function __construct(?DateTimeZone $timezone = null)
+    public static function createByUser(User $user): self
+    {
+        return new DateTimeFactory(new \DateTimeZone($user->getTimezone()), $user->isFirstDayOfWeekSunday());
+    }
+
+    public function __construct(?DateTimeZone $timezone = null, bool $startOnSunday = false)
     {
         if (null === $timezone) {
             $timezone = new \DateTimeZone(date_default_timezone_get());
         }
         $this->setTimezone($timezone);
+        $this->startOnSunday = $startOnSunday;
     }
 
-    public function setTimezone(DateTimeZone $timezone)
+    protected function setTimezone(DateTimeZone $timezone)
     {
         $this->timezone = $timezone;
     }
@@ -37,9 +48,15 @@ class DateTimeFactory
         return $this->timezone;
     }
 
-    public function getStartOfMonth(): DateTime
+    public function getStartOfMonth(?DateTime $date = null): DateTime
     {
-        $date = $this->createDateTime('first day of this month');
+        if (null === $date) {
+            $date = $this->createDateTime();
+        } else {
+            $date = clone $date;
+        }
+
+        $date->modify('first day of this month');
         $date->setTime(0, 0, 0);
 
         return $date;
@@ -49,23 +66,54 @@ class DateTimeFactory
     {
         if (null === $date) {
             $date = $this->createDateTime('now');
+        } else {
+            $date = clone $date;
         }
 
-        return $this->createWeekDateTime($date->format('o'), $date->format('W'), 1, 0, 0, 0);
+        $firstDay = 1;
+
+        if ($this->startOnSunday) {
+            $firstDay = 7;
+
+            // if today = sunday => increase week by one
+            if ($date->format('N') !== '7') {
+                $date->modify('-1 week');
+            }
+        }
+
+        return $this->createWeekDateTime($date->format('o'), $date->format('W'), $firstDay, 0, 0, 0);
     }
 
     public function getEndOfWeek(?DateTime $date = null): DateTime
     {
         if (null === $date) {
-            $date = $this->createDateTime('now');
+            $date = $this->createDateTime();
+        } else {
+            $date = clone $date;
         }
 
-        return $this->createWeekDateTime($date->format('o'), $date->format('W'), 7, 23, 59, 59);
+        $lastDay = 7;
+
+        if ($this->startOnSunday) {
+            $lastDay = 6;
+
+            // only change when today is not sunday
+            if ($date->format('N') === '7') {
+                $date->modify('+1 week');
+            }
+        }
+
+        return $this->createWeekDateTime($date->format('o'), $date->format('W'), $lastDay, 23, 59, 59);
     }
 
-    public function getEndOfMonth(): DateTime
+    public function getEndOfMonth(?DateTime $date = null): DateTime
     {
-        $date = $this->createDateTime('last day of this month');
+        if (null === $date) {
+            $date = $this->createDateTime();
+        }
+
+        $date = clone $date;
+        $date = $date->modify('last day of this month');
         $date->setTime(23, 59, 59);
 
         return $date;
@@ -82,9 +130,7 @@ class DateTimeFactory
 
     public function createDateTime(string $datetime = 'now'): DateTime
     {
-        $date = new DateTime($datetime, $this->getTimezone());
-
-        return $date;
+        return new DateTime($datetime, $this->getTimezone());
     }
 
     /**
@@ -94,8 +140,47 @@ class DateTimeFactory
      */
     public function createDateTimeFromFormat(string $format, ?string $datetime = 'now')
     {
-        $date = DateTime::createFromFormat($format, $datetime, $this->getTimezone());
+        return DateTime::createFromFormat($format, $datetime, $this->getTimezone());
+    }
+
+    public function createStartOfYear(?DateTime $date = null): DateTime
+    {
+        if (null === $date) {
+            $date = $this->createDateTime();
+        } else {
+            $date = clone $date;
+        }
+
+        $date->modify('first day of january 00:00:00');
 
         return $date;
+    }
+
+    public function createStartOfFinancialYear(?string $financialYear = null): DateTime
+    {
+        $defaultDate = $this->createDateTime('01 january this year 00:00:00');
+
+        if (null === $financialYear) {
+            return $defaultDate;
+        }
+
+        $financialYear = $this->createDateTime($financialYear);
+        $financialYear->setDate((int) $defaultDate->format('Y'), (int) $financialYear->format('m'), (int) $financialYear->format('d'));
+
+        $now = $this->createDateTime('00:00:00');
+
+        if ($financialYear >= $now) {
+            $financialYear->modify('-1 year');
+        }
+
+        return $financialYear;
+    }
+
+    public function createEndOfFinancialYear(DateTime $financialYear): DateTime
+    {
+        $yearEnd = clone $financialYear;
+        $yearEnd->modify('+1 year')->modify('-1 day')->setTime(23, 59, 59);
+
+        return $yearEnd;
     }
 }

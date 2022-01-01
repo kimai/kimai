@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Configuration\SystemConfiguration;
+use App\Customer\CustomerStatisticService;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\CustomerRate;
@@ -29,7 +30,6 @@ use App\Form\Type\CustomerType;
 use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
-use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\TeamRepository;
@@ -41,6 +41,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * Controller used to manage customer in the admin part of the site.
@@ -76,11 +78,8 @@ final class CustomerController extends AbstractController
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
-
-        if (!$form->isValid()) {
-            $query->resetByFormError($form->getErrors());
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('admin_customer');
         }
 
         $entries = $this->repository->getPagerfantaForQuery($query);
@@ -90,6 +89,7 @@ final class CustomerController extends AbstractController
             'query' => $query,
             'toolbarForm' => $form->createView(),
             'metaColumns' => $this->findMetaColumns($query),
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -142,6 +142,10 @@ final class CustomerController extends AbstractController
                 $this->repository->saveCustomer($customer);
                 $this->flashSuccess('action.update.success');
 
+                if ($this->isGranted('view', $customer)) {
+                    return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
+                }
+
                 return $this->redirectToRoute('admin_customer');
             } catch (\Exception $ex) {
                 $this->flashUpdateException($ex);
@@ -155,12 +159,20 @@ final class CustomerController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/comment_delete", name="customer_comment_delete", methods={"GET"})
+     * @Route(path="/{id}/comment_delete/{token}", name="customer_comment_delete", methods={"GET"})
      * @Security("is_granted('edit', comment.getCustomer()) and is_granted('comments', comment.getCustomer())")
      */
-    public function deleteCommentAction(CustomerComment $comment)
+    public function deleteCommentAction(CustomerComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager)
     {
         $customerId = $comment->getCustomer()->getId();
+
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('customer.delete_comment', $token))) {
+            $this->flashError('action.csrf.error');
+
+            return $this->redirectToRoute('customer_details', ['id' => $customerId]);
+        }
+
+        $csrfTokenManager->refreshToken('customer.delete_comment');
 
         try {
             $this->repository->deleteComment($comment);
@@ -194,11 +206,21 @@ final class CustomerController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/comment_pin", name="customer_comment_pin", methods={"GET"})
+     * @Route(path="/{id}/comment_pin/{token}", name="customer_comment_pin", methods={"GET"})
      * @Security("is_granted('edit', comment.getCustomer()) and is_granted('comments', comment.getCustomer())")
      */
-    public function pinCommentAction(CustomerComment $comment)
+    public function pinCommentAction(CustomerComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager)
     {
+        $customerId = $comment->getCustomer()->getId();
+
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('customer.pin_comment', $token))) {
+            $this->flashError('action.csrf.error');
+
+            return $this->redirectToRoute('customer_details', ['id' => $customerId]);
+        }
+
+        $csrfTokenManager->refreshToken('customer.pin_comment');
+
         $comment->setPinned(!$comment->isPinned());
         try {
             $this->repository->saveComment($comment);
@@ -206,7 +228,7 @@ final class CustomerController extends AbstractController
             $this->flashUpdateException($ex);
         }
 
-        return $this->redirectToRoute('customer_details', ['id' => $comment->getCustomer()->getId()]);
+        return $this->redirectToRoute('customer_details', ['id' => $customerId]);
     }
 
     /**
@@ -224,7 +246,7 @@ final class CustomerController extends AbstractController
 
         $defaultTeam = new Team();
         $defaultTeam->setName($customer->getName());
-        $defaultTeam->setTeamLead($this->getUser());
+        $defaultTeam->addTeamlead($this->getUser());
         $defaultTeam->addCustomer($customer);
 
         try {
@@ -247,6 +269,9 @@ final class CustomerController extends AbstractController
         $query->setPage($page);
         $query->setPageSize(5);
         $query->addCustomer($customer);
+        $query->setShowBoth();
+        $query->addOrderGroup('visible', ProjectQuery::ORDER_DESC);
+        $query->addOrderGroup('name', ProjectQuery::ORDER_ASC);
 
         /* @var $entries Pagerfanta */
         $entries = $projectRepository->getPagerfantaForQuery($query);
@@ -255,6 +280,7 @@ final class CustomerController extends AbstractController
             'customer' => $customer,
             'projects' => $entries,
             'page' => $page,
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -262,7 +288,7 @@ final class CustomerController extends AbstractController
      * @Route(path="/{id}/details", name="customer_details", methods={"GET", "POST"})
      * @Security("is_granted('view', customer)")
      */
-    public function detailsAction(Customer $customer, TeamRepository $teamRepository, CustomerRateRepository $rateRepository)
+    public function detailsAction(Customer $customer, TeamRepository $teamRepository, CustomerRateRepository $rateRepository, CustomerStatisticService $statisticService)
     {
         $event = new CustomerMetaDefinitionEvent($customer);
         $this->dispatcher->dispatch($event);
@@ -276,6 +302,7 @@ final class CustomerController extends AbstractController
         $teams = null;
         $projects = null;
         $rates = [];
+        $now = $this->getDateTimeFactory()->createDateTime();
 
         if ($this->isGranted('edit', $customer)) {
             if ($this->isGranted('create_team')) {
@@ -289,7 +316,7 @@ final class CustomerController extends AbstractController
         }
 
         if ($this->isGranted('budget', $customer)) {
-            $stats = $this->repository->getCustomerStatistics($customer);
+            $stats = $statisticService->getBudgetStatisticModel($customer, $now);
         }
 
         if ($this->isGranted('comments', $customer)) {
@@ -312,8 +339,9 @@ final class CustomerController extends AbstractController
             'stats' => $stats,
             'team' => $defaultTeam,
             'teams' => $teams,
-            'now' => new \DateTime('now', $timezone),
-            'rates' => $rates
+            'customer_now' => new \DateTime('now', $timezone),
+            'rates' => $rates,
+            'now' => $now,
         ]);
     }
 
@@ -363,26 +391,20 @@ final class CustomerController extends AbstractController
      * @Route(path="/{id}/delete", name="admin_customer_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', customer)")
      */
-    public function deleteAction(Customer $customer, Request $request)
+    public function deleteAction(Customer $customer, Request $request, CustomerStatisticService $statisticService)
     {
-        $stats = $this->repository->getCustomerStatistics($customer);
+        $stats = $statisticService->getCustomerStatistics($customer);
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
-                    'data-form-event' => 'kimai.customerUpdate kimai.customerDelete',
+                    'data-form-event' => 'kimai.customerDelete',
                     'data-msg-success' => 'action.delete.success',
                     'data-msg-error' => 'action.delete.error',
                 ]
             ])
             ->add('customer', CustomerType::class, [
-                'label' => 'label.customer',
-                'query_builder' => function (CustomerRepository $repo) use ($customer) {
-                    $query = new CustomerFormTypeQuery();
-                    $query->setCustomerToIgnore($customer);
-                    $query->setUser($this->getUser());
-
-                    return $repo->getQueryBuilderForFormType($query);
-                },
+                'query_builder_for_user' => true,
+                'ignore_customer' => $customer,
                 'required' => false,
             ])
             ->setAction($this->generateUrl('admin_customer_delete', ['id' => $customer->getId()]))

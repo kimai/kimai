@@ -9,11 +9,21 @@
 
 namespace App\Invoice\Hydrator;
 
+use App\Customer\CustomerStatisticService;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
 
 class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
 {
+    use BudgetHydratorTrait;
+
+    private $customerStatistic;
+
+    public function __construct(CustomerStatisticService $customerStatistic)
+    {
+        $this->customerStatistic = $customerStatistic;
+    }
+
     public function hydrate(InvoiceModel $model): array
     {
         $customer = $model->getCustomer();
@@ -21,9 +31,6 @@ class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
         if (null === $customer) {
             return [];
         }
-
-        $formatter = $model->getFormatter();
-        $currency = $model->getCurrency();
 
         $values = [
             'customer.id' => $customer->getId(),
@@ -40,11 +47,11 @@ class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             'customer.fax' => $customer->getFax(),
             'customer.phone' => $customer->getPhone(),
             'customer.mobile' => $customer->getMobile(),
-            // budget
-            // remaining budget?
-            // time-budget
-            // remaining time-budget?
         ];
+
+        $statistic = $this->customerStatistic->getBudgetStatisticModel($customer, $model->getQuery()->getEnd());
+
+        $values = array_merge($values, $this->getBudgetValues('customer.', $statistic, $model));
 
         foreach ($customer->getMetaFields() as $metaField) {
             $values = array_merge($values, [

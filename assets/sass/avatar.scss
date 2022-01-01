@@ -1,0 +1,60 @@
+
+$avatar-base-size: 30;
+
+.avatar {
+    text-align: center;
+    background-color: #d2d6de;
+    border-radius: 50%;
+    display: inline-block;
+    height: ($avatar-base-size)+px;
+    width: ($avatar-base-size)+px;
+    vertical-align: middle;
+}
+
+.initials {
+    line-height: 1;
+    position: relative;
+    font-weight: bold;
+    font-size: ceil($avatar-base-size / 2 - 2)+px;
+    top: floor($avatar-base-size / 4 - 1)+px;
+}
+
+$avatarSizes: "xs" .75, "sm" 1.25, "md" 1.5, "lg" 2;
+
+@each $avatarSizeName, $avatarBaseSize in $avatarSizes {
+    .avatar-#{$avatarSizeName} {
+        width: ceil($avatar-base-size * $avatarBaseSize)+px;
+        height: ceil($avatar-base-size * $avatarBaseSize)+px;
+
+        .initials {
+            font-size: ceil($avatar-base-size * $avatarBaseSize / 2 - 2)+px;
+            top: ceil($avatar-base-size * $avatarBaseSize / 4 - 1)+px;
+        }
+    }
+}
+
+.widget-user-image {
+    border-radius: 50%;
+    border: 3px solid #fff;
+    .avatar {
+        width: ceil($avatar-base-size * 2.75)+px;
+        height: ceil($avatar-base-size * 2.75)+px;
+        .initials {
+            font-size: ceil($avatar-base-size * 2.75 / 2 - 2)+px;
+            top: ceil($avatar-base-size * 2.75 / 4 - 1)+px;
+        }
+    }
+}
+
+/* Detail tables like my teams (Dashboard) or */
+table.dataTable.table > tbody > tr > td {
+    &.avatars {
+        .avatar {
+            margin: 1px;
+        }
+    }
+}
+
+.avatar.teamlead {
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,.4),0 0px 3px 0 rgba(0,0,0,0.3);
+}

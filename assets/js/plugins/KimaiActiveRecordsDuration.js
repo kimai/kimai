@@ -9,15 +9,9 @@
  * [KIMAI] KimaiActiveRecordsDuration: activate the updates for all active timesheet records on this page
  */
 
-import moment from 'moment';
 import KimaiPlugin from '../KimaiPlugin';
 
 export default class KimaiActiveRecordsDuration extends KimaiPlugin {
-
-    constructor(selector) {
-        super();
-        this.selector = selector;
-    }
 
     getId() {
         return 'timesheet-duration';
@@ -39,7 +33,7 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
 
     updateRecords() {
         let durations = [];
-        const activeRecords = document.querySelectorAll(this.selector);
+        const activeRecords = document.querySelectorAll('[data-since]:not([data-since=""])');
 
         if (activeRecords.length === 0) {
             if (this.updateBrowserTitle) {
@@ -48,13 +42,16 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
             return;
         }
 
-        for(let record of activeRecords) {
-            const since = record.getAttribute('data-since');
-            const format = record.getAttribute('data-format');
-            const duration = this.formatDuration(since, format);
-            if (record.getAttribute('data-title') !== null && duration !== '?') {
+        const DATE = this.getPlugin('date');
+
+        for (let record of activeRecords) {
+            const since = record.dataset['since'];
+            const duration = DATE.formatDuration(since);
+            // only use the ones from the menu for the title
+            if (record.dataset['replacer'] !== undefined && record.dataset['title'] !== null && duration !== '?') {
                 durations.push(duration);
             }
+            // but update all on the page (running entries in list pages)
             record.textContent = duration;
         }
 
@@ -73,24 +70,5 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
             title += prefix + duration;
         }
         document.title = title;
-    }
-
-    formatDuration(since, format) {
-        const duration = moment.duration(moment(new Date()).diff(moment(since)));
-
-        let hours = parseInt(duration.asHours()).toString();
-        let minutes = duration.minutes();
-        let seconds = duration.seconds();
-
-        if (hours < 0 || minutes < 0 || seconds < 0) {
-            return '?';
-        }
-
-        // special case for hours, as they can overflow the 24h barrier - Kimai does not support days as duration unit
-        if (hours.length === 1) {
-            hours = '0' + hours;
-        }
-
-        return format.replace('%h', hours).replace('%m', ('0'+minutes).substr(-2)).replace('%s', ('0'+seconds).substr(-2));
     }
 }

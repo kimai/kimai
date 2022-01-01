@@ -17,8 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProjectTeamPermissionForm extends AbstractType
 {
-    use EntityFormTrait;
-
     /**
      * {@inheritdoc}
      */

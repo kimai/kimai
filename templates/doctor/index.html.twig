@@ -1,9 +1,12 @@
 {% extends 'base.html.twig' %}
-{% import "doctor/actions.html.twig" as actions %}
+{% import "macros/widgets.html.twig" as widgets %}
 
 {% block page_title %}{{ 'menu.doctor'|trans }}{% endblock %}
-{% block page_subtitle %}Environment: {{ environment }} &ndash; Version: {{ constant('App\\Constants::VERSION') }} {{ constant('App\\Constants::STATUS') }}{% endblock %}
-{% block page_actions %}{{ actions.doctor('index') }}{% endblock %}
+{% block page_subtitle %}{{ 'label.version'|trans }}: {{ constant('App\\Constants::VERSION') }} {{ constant('App\\Constants::STATUS') }} ({{ environment }}){% endblock %}
+{% block page_actions %}
+    {% set event = actions(app.user, 'doctor', 'index') %}
+    {{ widgets.page_actions(event.actions) }}
+{% endblock %}
 
 {% block main %}
 
@@ -77,7 +80,7 @@
         {% block box_title %}Logfile (max. {{ logLines }} last lines){% endblock %}
         {% block box_tools %}
             {% if log_delete %}
-                <a class="btn-box-tool confirmation-link" href="{{ path('doctor_flush_log') }}" data-question="confirm.delete"><i class="{{ 'delete'|icon }}"></i></a>
+                <a class="btn-box-tool confirmation-link" href="{{ path('doctor_flush_log', {'token': csrf_token('doctor.flush_log')}) }}" data-question="confirm.delete"><i class="{{ 'delete'|icon }}"></i></a>
             {% endif %}
         {% endblock %}
         {% block box_body %}
@@ -158,4 +161,5 @@
             </table>
         {% endblock %}
     {% endembed %}
+
 {% endblock %}

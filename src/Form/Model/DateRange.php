@@ -13,14 +13,14 @@ use DateTime;
 
 final class DateRange
 {
-    /**
-     * @var DateTime
-     */
+    private $resetTimes;
     private $begin;
-    /**
-     * @var DateTime
-     */
     private $end;
+
+    public function __construct(bool $resetTimes = true)
+    {
+        $this->resetTimes = $resetTimes;
+    }
 
     public function getBegin(): ?DateTime
     {
@@ -30,6 +30,9 @@ final class DateRange
     public function setBegin(DateTime $begin): DateRange
     {
         $this->begin = $begin;
+        if ($this->resetTimes) {
+            $this->begin->setTime(0, 0, 0);
+        }
 
         return $this;
     }
@@ -42,6 +45,9 @@ final class DateRange
     public function setEnd(DateTime $end): DateRange
     {
         $this->end = $end;
+        if ($this->resetTimes) {
+            $this->end->setTime(23, 59, 59);
+        }
 
         return $this;
     }

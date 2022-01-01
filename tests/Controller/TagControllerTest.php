@@ -55,7 +55,7 @@ class TagControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/tags/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'Support',
         ]);

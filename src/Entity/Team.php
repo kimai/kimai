@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,13 +28,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("name")
  *
  * @Serializer\ExclusionPolicy("all")
+ * @Constraints\Team
  */
 class Team
 {
     /**
-     * The internal ID
-     *
-     * @var int
+     * @var int|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
@@ -57,41 +57,23 @@ class Team
      */
     private $name;
     /**
-     * Teamlead
+     * All team member (including team leads)
      *
-     * The teamlead for this team
-     *
-     * @var User
+     * @var TeamMember[]|Collection<TeamMember>
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity"})
-     * @SWG\Property(ref="#/definitions/User")
+     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/TeamMember"))
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
-     * @Assert\NotNull()
+     * @ORM\OneToMany(targetEntity="App\Entity\TeamMember", mappedBy="team", fetch="LAZY", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @Assert\Count(min="1")
      */
-    private $teamlead;
+    private $members;
     /**
-     * Team member
+     * Customers assigned to the team
      *
-     * All team member, including the teamlead
-     *
-     * @var User[]|ArrayCollection
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Team_Entity"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/User"))
-     *
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="teams", fetch="EXTRA_LAZY")
-     */
-    private $users;
-    /**
-     * Customers
-     *
-     * All customers assigned to the team
-     *
-     * @var Customer[]|ArrayCollection
+     * @var Collection<Customer>
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity"})
@@ -101,11 +83,9 @@ class Team
      */
     private $customers;
     /**
-     * Projects
+     * Projects assigned to the team
      *
-     * All projects assigned to the team
-     *
-     * @var Project[]|ArrayCollection
+     * @var Collection<Project>
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity", "Expanded"})
@@ -115,11 +95,9 @@ class Team
      */
     private $projects;
     /**
-     * Activities
+     * Activities assigned to the team
      *
-     * All activities assigned to the team
-     *
-     * @var Activity[]|ArrayCollection
+     * @var Collection<Activity>
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity", "Expanded"})
@@ -129,9 +107,11 @@ class Team
      */
     private $activities;
 
+    use ColorTrait;
+
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+        $this->members = new ArrayCollection();
         $this->customers = new ArrayCollection();
         $this->projects = new ArrayCollection();
         $this->activities = new ArrayCollection();
@@ -154,55 +134,233 @@ class Team
         return $this->name;
     }
 
-    public function getTeamLead(): ?User
+    /**
+     * Indexed by ID to use it within collection type forms.
+     *
+     * @return TeamMember[]
+     */
+    public function getMembers(): iterable
     {
-        return $this->teamlead;
+        $all = [];
+        foreach ($this->members as $member) {
+            if ($member->getId() === null) {
+                $all[] = $member;
+            } else {
+                $all[$member->getId()] = $member;
+            }
+        }
+
+        return $all;
+    }
+
+    public function addMember(TeamMember $member): void
+    {
+        if ($this->members->contains($member)) {
+            return;
+        }
+
+        if ($member->getTeam() === null) {
+            $member->setTeam($this);
+        }
+
+        if ($member->getTeam() !== $this) {
+            throw new \InvalidArgumentException('Cannot set foreign team membership');
+        }
+
+        // when using the API an invalid user id does not trigger the validation first, but after calling this method :-(
+        if ($member->getUser() === null) {
+            return;
+        }
+
+        if (null !== ($existing = $this->findMember($member))) {
+            return;
+        }
+
+        $this->members->add($member);
+        $member->getUser()->addMembership($member);
+    }
+
+    public function hasMember(TeamMember $member): bool
+    {
+        return $this->members->contains($member);
+    }
+
+    private function findMember(TeamMember $member): ?TeamMember
+    {
+        foreach ($this->members as $oldMember) {
+            if ($oldMember->getUser() === $member->getUser() && $oldMember->getTeam() === $member->getTeam()) {
+                return $oldMember;
+            }
+        }
+
+        return null;
+    }
+
+    private function findMemberByUser(User $user): ?TeamMember
+    {
+        foreach ($this->members as $oldMember) {
+            if ($oldMember->getUser() === $user) {
+                return $oldMember;
+            }
+        }
+
+        return null;
+    }
+
+    public function removeMember(TeamMember $member): void
+    {
+        if (null === ($existingMember = $this->findMember($member))) {
+            return;
+        }
+
+        $this->members->removeElement($existingMember);
+        $existingMember->getUser()->removeMembership($existingMember);
+    }
+
+    /**
+     * BE AWARE: this property is deprecated and will be removed with 2.0 - teams can have multiple teamleads since 1.15!
+     *
+     * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("teamlead"),
+     * @Serializer\Groups({"Team_Entity"})
+     * @SWG\Property(ref="#/definitions/User")
+     *
+     * @deprecated since 1.15 - will be removed with 2.0
+     * @return User|null
+     */
+    public function getTeamlead(): ?User
+    {
+        foreach ($this->members as $member) {
+            if ($member->isTeamlead()) {
+                return $member->getUser();
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @return User[]
+     */
+    public function getTeamleads(): array
+    {
+        $leads = [];
+        foreach ($this->members as $member) {
+            if ($member->isTeamlead()) {
+                $leads[] = $member->getUser();
+            }
+        }
+
+        return $leads;
     }
 
     public function isTeamlead(User $user): bool
     {
-        return $this->teamlead === $user;
+        if (null !== ($member = $this->findMemberByUser($user))) {
+            return $member->isTeamlead();
+        }
+
+        return false;
     }
 
-    public function setTeamLead(User $teamlead): Team
+    /**
+     * @deprecated since 1.15 - will be removed with 2.0
+     * @param User $teamlead
+     */
+    public function setTeamlead(User $teamlead): void
     {
-        $this->teamlead = $teamlead;
-        $this->addUser($teamlead);
+        $this->addTeamlead($teamlead);
+    }
 
-        return $this;
+    public function addTeamlead(User $user): void
+    {
+        if (null !== ($member = $this->findMemberByUser($user))) {
+            $member->setTeamlead(true);
+
+            return;
+        }
+
+        $member = new TeamMember();
+        $member->setTeam($this);
+        $member->setUser($user);
+        $member->setTeamlead(true);
+
+        $this->addMember($member);
+    }
+
+    /**
+     * Removes the teamlead flag, but leaves the user within the team.
+     *
+     * @param User $user
+     */
+    public function demoteTeamlead(User $user): void
+    {
+        if (null !== ($member = $this->findMemberByUser($user))) {
+            $member->setTeamlead(false);
+
+            return;
+        }
     }
 
     public function hasUser(User $user): bool
     {
-        return $this->users->contains($user);
+        return (null !== ($member = $this->findMemberByUser($user)));
     }
 
-    public function addUser(User $user)
+    public function hasUsers(): bool
     {
-        if ($this->users->contains($user)) {
+        return !$this->members->isEmpty();
+    }
+
+    public function hasTeamleads(): bool
+    {
+        foreach ($this->members as $member) {
+            if ($member->isTeamlead()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function addUser(User $user): void
+    {
+        if (null !== ($member = $this->findMemberByUser($user))) {
             return;
         }
 
-        $this->users->add($user);
-        $user->addTeam($this);
+        $member = new TeamMember();
+        $member->setTeam($this);
+        $member->setUser($user);
+
+        $this->addMember($member);
     }
 
-    public function removeUser(User $user)
+    public function removeUser(User $user): void
     {
-        if (!$this->users->contains($user)) {
-            return;
+        if (null !== ($member = $this->findMemberByUser($user))) {
+            $this->removeMember($member);
         }
-
-        $this->users->removeElement($user);
-        $user->removeTeam($this);
     }
 
     /**
-     * @return Collection<User>
+     * Returns all users in the team, both teamlead and normal member.
+     *
+     * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("users"),
+     * @Serializer\Groups({"Team_Entity"})
+     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/User"))
+     *
+     * @return User[]
      */
-    public function getUsers(): iterable
+    public function getUsers(): array
     {
-        return $this->users;
+        $users = [];
+        foreach ($this->members as $member) {
+            $users[] = $member->getUser();
+        }
+
+        return $users;
     }
 
     public function hasCustomer(Customer $customer): bool
@@ -310,5 +468,38 @@ class Team
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function __clone()
+    {
+        if ($this->id !== null) {
+            $this->id = null;
+        }
+
+        $members = $this->members;
+        $this->members = new ArrayCollection();
+        foreach ($members as $member) {
+            $newMember = clone $member;
+            $newMember->setTeam($this);
+            $this->addMember($newMember);
+        }
+
+        $customers = $this->customers;
+        $this->customers = new ArrayCollection();
+        foreach ($customers as $customer) {
+            $this->addCustomer($customer);
+        }
+
+        $projects = $this->projects;
+        $this->projects = new ArrayCollection();
+        foreach ($projects as $project) {
+            $this->addProject($project);
+        }
+
+        $activities = $this->activities;
+        $this->activities = new ArrayCollection();
+        foreach ($activities as $activity) {
+            $this->addActivity($activity);
+        }
     }
 }

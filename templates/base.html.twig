@@ -4,6 +4,8 @@
     data-title="{{- get_title()|e('html_attr') -}}"
 {% endblock %}
 
+{% block page_title %}{{- get_title() -}}{% endblock %}
+
 {% block after_body_start %}
     {% embed 'embeds/modal.html.twig' %}
         {% block modal_id %}remote_form_modal{% endblock %}
@@ -11,29 +13,25 @@
         {% block modal_body %}{% endblock %}
         {% block modal_footer %}{% endblock %}
     {% endembed %}
+    {% block page_search %}{% endblock %}
 {% endblock %}
 
 {% block page_content_start %}
     {% if app.session and app.session.started and app.session.flashbag.peekAll|length > 0 %}
-        {% set close = adminlte_close_alert|default(true) %}
         {% set domain = 'flashmessages' %}
         <script type="text/javascript">
             document.addEventListener('kimai.initialized', function(options) {
                 var ALERT = options.detail.kimai.getPlugin('alert');
                 {% for type, messages in app.session.flashbag.all %}
                     {% for message in messages %}
-                        {% if type == 'fos_user_success' %}
-                            {% set type = 'success' %}
-                            {% set domain = 'FOSUserBundle' %}
-                        {% endif %}
                         {% if type == 'error' %}
-                            ALERT.error('{{ message|trans({}, domain) }}');
+                            ALERT.error('{{ message|trans({}, domain)|e('js') }}');
                         {% elseif type == 'warning' %}
-                            ALERT.warning('{{ message|trans({}, domain) }}');
+                            ALERT.warning('{{ message|trans({}, domain)|e('js') }}');
                         {% elseif type == 'success' %}
-                            ALERT.success('{{ message|trans({}, domain) }}');
+                            ALERT.success('{{ message|trans({}, domain)|e('js') }}');
                         {% else %}
-                            ALERT.info('{{ message|trans({}, domain) }}');
+                            ALERT.info('{{ message|trans({}, domain)|e('js') }}');
                         {% endif %}
                     {% endfor %}
                 {% endfor %}
@@ -45,7 +43,7 @@
 {% block page_content_before %}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_BEFORE')) %}
     {{ event.content|raw }}
-    <div class="toolbar-pad no-print">
+    <div class="no-print">
         {% block main_before %}{% endblock %}
     </div>
 {% endblock %}
@@ -71,16 +69,18 @@
 {% block page_subtitle %}{% endblock %}
 
 {% block logo_mini %}
-    {% if not kimai_context.branding.mini is empty %}
-        {{ kimai_context.branding.mini|raw }}
+    {% set mini = config('theme.branding.mini') %}
+    {% if mini is not empty %}
+        {{ mini|raw }}
     {% else %}
         <b>K</b>TT
     {% endif %}
 {% endblock %}
 
 {% block logo_large %}
-    {% if not kimai_context.branding.company is empty %}
-        {{ kimai_context.branding.company|raw }}
+    {% set company = config('theme.branding.company') %}
+    {% if company is not empty %}
+        {{ company|raw }}
     {% else %}
         <b>Kimai</b> - Time Tracking
     {% endif %}
@@ -90,83 +90,100 @@
     <!-- Page rendered on {{ 'now'|date_full }} -->
 {% endblock %}
 
-{% block navbar_start %}
-    {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        {% if is_granted('view_own_timesheet') %}
+{#
+{% block navbar_toggle %}
+    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">{{ 'Toggle navigation'|trans({}, 'AdminLTEBundle')  }}</span>
+    </a>
+    {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('view_own_timesheet') %}
+        <div class="navbar-custom-menu" style="float:left">
+            <ul class="nav navbar-nav">
             {% if app.user.preferenceValue('login.initial_view') == 'calendar' %}
-                <li class="visible-xs-inline-block">
-                    <a href="{{ path('calendar') }}" class="ddt-large">
+                <li class="pull-left visible-xs-inline-block">
+                    <a href="{{ path('calendar') }}" class="ddt-small">
                         <i class="{{ 'calendar'|icon }} fa-2x"></i>
                     </a>
                 </li>
             {% else %}
-                <li class="visible-xs-inline-block">
-                    <a href="{{ path('timesheet') }}" class="ddt-large">
+                <li class="pull-left visible-xs-inline-block">
+                    <a href="{{ path('timesheet') }}" class="ddt-small">
                         <i class="{{ 'timesheet'|icon }} fa-2x"></i>
                     </a>
                 </li>
             {% endif %}
-        {% endif %}
-        {% if is_granted('view_invoice') %}
-            <li class="visible-xs-inline-block">
-                <a href="{{ path('invoice') }}" class="ddt-large">
-                    <i class="{{ 'invoice'|icon }} fa-2x"></i>
-                </a>
-            </li>
-        {% endif %}
-        {% if is_granted('create_export') %}
-            <li class="visible-xs-inline-block">
-                <a href="{{ path('export') }}" class="ddt-large">
-                    <i class="{{ 'export'|icon }} fa-2x"></i>
-                </a>
-            </li>
-        {% endif %}
-        {% block navbar_extensions %}{% endblock %}
-        {% set active_timesheets = active_timesheets(app.user) %}
-        {% set soft_limit = theme_config('soft_limit') %}
-        <li class="dropdown messages-menu" style="{% if active_timesheets is empty %}display:none{% endif %}">
-            <a href="#" class="dropdown-toggle ddt-large ticktac" data-toggle="dropdown">
-                <i class="{{ 'start'|icon }} fa-2x"></i>
-                <span data-warning="{{ soft_limit }}" class="label label-{% if active_timesheets|length > soft_limit %}danger{% else %}warning{% endif %}">{% if active_timesheets|length > 0 %}{{ active_timesheets|length }}{% endif %}</span>
-            </a>
-            <ul class="dropdown-menu"
-                data-api="{{ path('active_timesheet') }}"
-                data-href="{{ path('stop_timesheet', {'id' : '000'}) }}"
-                data-icon="{{ 'stop-small'|icon }}"
-                data-format="{{ get_format_duration() }}">
-                <li class="header">
-                    {{ 'active.entries'|trans }}
-                </li>
-                <li>
-                    <ul class="menu">
-                        {% for entry in active_timesheets %}
-                            <li>
-                                <a href="{{ path('stop_timesheet', {'id' : entry.id}) }}" class="api-link" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success">
-                                    <div class="pull-left">
-                                        <i class="{{ 'stop-small'|icon }} fa-2x"></i>
-                                    </div>
-                                    <h4>
-                                        <span>{{ entry.activity.name }}</span>
-                                        <small>
-                                            <span data-title="true" data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}" data-format="{{ get_format_duration() }}">{{ entry|duration }}</span>
-                                        </small>
-                                    </h4>
-                                    <p>{{ entry.project.name }} ({{ entry.project.customer.name }})</p>
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </li>
-                {% if is_granted('create_own_timesheet') %}
-                    <li class="footer"><a href="{{ path('timesheet_create') }}" class="modal-ajax-form">{{ 'timesheet.start'|trans }}</a></li>
-                {% endif %}
             </ul>
-        </li>
+        </div>
+    {% endif %}
+{% endblock %}
+#}
+
+{% block navbar_start %}
+    {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        {% block navbar_extensions %}{% endblock %}
         {% if is_granted('create_own_timesheet') %}
-            <li class="messages-menu-empty" style="{% if active_timesheets is not empty %}display:none{% endif %}">
-                <a href="{{ path('timesheet_create') }}" class="ddt-large modal-ajax-form">
-                    <i class="{{ 'start'|icon }} fa-2x"></i>
-                </a>
+            {% set active_timesheets = active_timesheets(app.user) %}
+            {% set hasActiveRecords = active_timesheets is not empty %}
+            {% if not hasActiveRecords %}
+                {# fake entry, because at least one html template node is needed #}
+                {% set active_timesheets = [{'id': '000', 'begin': null, 'activity': {'name': ''}, 'project': {'name': '', 'customer': {'name': ''}}}] %}
+            {% endif %}
+            {% set active_limit = kimai_config.timesheetActiveEntriesHardLimit %}
+            <li class="messages-menu {% if active_limit > 1 and hasActiveRecords %}dropdown{% endif %}" data-api="{{ path('active_timesheet') }}" data-href="{{ path('stop_timesheet', {'id' : '000'}) }}" data-icon="{{ 'stop-small'|icon }}" style="{% if not hasActiveRecords %}display:none{% endif %}">
+                {% if active_limit == 1 %}
+                    {% set entry = active_timesheets[0] %}
+                    <div class="ddt-small ticktac-single ticktac-running">
+                        <div class="ticktac-stop">
+                            <a data-replacer="url" class="api-link" href="{{ path('stop_timesheet', {'id' : entry.id}) }}" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success">
+                                <i class="{{ 'stop-small'|icon }} fa-2x"></i><span data-replacer="duration" data-title="true" data-since="{{ entry.begin is null ? '' : entry.begin|date_format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</span>
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="#" class="dropdown-toggle ddt-small ticktac" data-toggle="dropdown">
+                        <i class="{{ 'start'|icon }} fa-2x"></i>
+                        <span data-warning="{{ active_limit }}" class="label label-warning">{% if hasActiveRecords %}{{ active_timesheets|length }}{% endif %}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">
+                            {{ 'active.entries'|trans }}
+                        </li>
+                        <li>
+                            <ul class="menu">
+                                {% for entry in active_timesheets %}
+                                    <li data-template="active-record">
+                                        <a data-replacer="url" href="{{ path('stop_timesheet', {'id' : entry.id}) }}" class="api-link" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success">
+                                            <div class="pull-left">
+                                                <i class="{{ 'stop-small'|icon }} fa-2x"></i>
+                                            </div>
+                                            <h4>
+                                                <span data-replacer="activity">{{ entry.activity.name }}</span>
+                                                <small>
+                                                    <span data-replacer="duration" data-title="true" data-since="{{ entry.begin is null ? '' : entry.begin|date_format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</span>
+                                                </small>
+                                            </h4>
+                                            <p><span data-replacer="project">{{ entry.project.name }}</span> (<span data-replacer="customer">{{ entry.project.customer.name }}</span>)</p>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        <li class="footer"><a href="{{ path('timesheet_create') }}" class="modal-ajax-form">{{ 'timesheet.start'|trans }}</a></li>
+                    </ul>
+                {% endif %}
+            </li>
+            <li class="messages-menu-empty" style="{% if hasActiveRecords %}display:none{% endif %}">
+                {% if active_limit == 1 %}
+                    <div class="ddt-small ticktac-single ticktac-stopped">
+                        <a href="{{ path('timesheet_create') }}" class="modal-ajax-form ticktac-start">
+                            <i class="{{ 'start'|icon }} fa-2x"></i>
+                            <span>{{ 0|duration }}</span>
+                        </a>
+                    </div>
+                {% else %}
+                    <a href="{{ path('timesheet_create') }}" class="ddt-small ticktac-start modal-ajax-form">
+                        <i class="{{ 'start'|icon }} fa-2x"></i>
+                    </a>
+                {% endif %}
             </li>
         {% endif %}
     {% endif %}
@@ -191,7 +208,7 @@
     {% endif %}
     {% import "macros/widgets.html.twig" as widgets %}
     <li class="dropdown user-menu">
-        <a href="#" class="dropdown-toggle ddt-large" data-toggle="dropdown">
+        <a href="#" class="dropdown-toggle ddt-small" data-toggle="dropdown">
             {{ widgets.user_avatar(app.user, false) }}
         </a>
         <ul class="dropdown-menu">
@@ -200,7 +217,7 @@
                 <li>
                     <a href="{{ path('user_profile', {'username' : app.user.username}) }}">
                         <h4 class="control-sidebar-subheading">
-                            <i class="{{ 'avatar'|icon }}"></i>
+                            <i class="{{ 'user'|icon }}"></i>
                             {{ 'my.profile'|trans }}
                         </h4>
                     </a>
@@ -235,7 +252,7 @@
                     </a>
                 </li>
             {% endif %}
-            {% if kimai_context.show_about %}
+            {% if config('theme.show_about') %}
             <li class="divider"></li>
             <li>
                 <a href="{{ path('about') }}">
@@ -251,7 +268,6 @@
 {% endblock %}
 
 {% block breadcrumb %}
-    {% block page_search %}{% endblock %}
     {% block page_actions %}{% endblock %}
 {% endblock %}
 
@@ -276,12 +292,12 @@
         window.addEventListener('load', function() {
             var loader = new KimaiWebLoader(
                 {
+                    formatDuration: '{{ get_format_duration() }}',
                     login: '{{ path('fos_user_security_login') }}',
                     locale: '{{ app.request.locale }}',
                     first_dow_iso: {{ iso_day_by_name(app.user.firstDayOfWeek) }},
-                    twentyFourHours: {{ 'true'|hour24('false') }},
-                    autoReloadDatatable: {% if theme_config('auto_reload_datatable') %}true{% else %}false{% endif %},
-                    autoComplete: {{ theme_config('autocomplete_chars') }},
+                    twentyFourHours: {{ app.user.is24Hour() ? 'true' : 'false' }},
+                    autoComplete: {{ kimai_config.themeAutocompleteCharacters }},
                     defaultColor: '{{ constant('App\\Constants::DEFAULT_COLOR') }}',
                     updateBrowserTitle: {% if app.user.preferenceValue('theme.update_browser_title') %}true{% else %}false{% endif %}
                 },

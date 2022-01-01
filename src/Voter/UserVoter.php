@@ -29,6 +29,7 @@ final class UserVoter extends Voter
         'preferences',
         'api-token',
         'hourly-rate',
+        'view_team_member',
     ];
 
     private $permissionManager;
@@ -68,6 +69,14 @@ final class UserVoter extends Voter
 
         if (!($user instanceof User)) {
             return false;
+        }
+
+        if ($attribute === 'view_team_member') {
+            if ($subject->getId() !== $user->getId()) {
+                return false;
+            }
+
+            return $this->permissionManager->hasRolePermission($user, 'view_team_member');
         }
 
         if ($attribute === 'delete') {

@@ -20,7 +20,7 @@ class TeamLoaderTest extends AbstractLoaderTest
 {
     public function testLoadResults()
     {
-        $em = $this->getEntityManagerMock(1);
+        $em = $this->getEntityManagerMock(2);
 
         $sut = new TeamLoader($em);
 

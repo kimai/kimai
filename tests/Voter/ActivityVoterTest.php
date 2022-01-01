@@ -90,7 +90,7 @@ class ActivityVoterTest extends AbstractVoterTest
         $team = new Team();
         $user = new User();
         $user->addRole(User::ROLE_TEAMLEAD);
-        $team->setTeamLead($user);
+        $team->addTeamlead($user);
 
         $activity = new Activity();
         $project = new Project();
@@ -129,7 +129,7 @@ class ActivityVoterTest extends AbstractVoterTest
         $team = new Team();
         $user = new User();
         $user->addRole(User::ROLE_USER);
-        $team->setTeamLead($user);
+        $team->addTeamlead($user);
 
         $activity = new Activity();
         $project = new Project();

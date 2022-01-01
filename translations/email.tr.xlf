@@ -1,46 +1,46 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="tr" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="button_copy_url_to_browser">
+      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
         <target>Düğme çalışmıyorsa, lütfen şu URL'yi kopyalayıp tarayıcınıza yapıştırın: %url%</target>
       </trans-unit>
-      <trans-unit id="automated_email_dont_answer">
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target>Bu otomatik olarak oluşturulmuş bir e-postadır. Lütfen yanıtlamayın, adres okunmayacaktır.</target>
       </trans-unit>
-      <trans-unit id="registration.subject">
+      <trans-unit id="pjr3FDv" resname="registration.subject">
         <source>registration.subject</source>
         <target>Hesabınızı etkinleştirin</target>
       </trans-unit>
-      <trans-unit id="registration.title">
+      <trans-unit id="QtcznHC" resname="registration.title">
         <source>registration.title</source>
         <target>Hoş geldin %username%</target>
       </trans-unit>
-      <trans-unit id="registration.button">
+      <trans-unit id="YMLel3P" resname="registration.button">
         <source>registration.button</source>
         <target>Hesabınızı etkinleştirin</target>
       </trans-unit>
-      <trans-unit id="registration.intro">
+      <trans-unit id="IkjnHoP" resname="registration.intro">
         <source>registration.intro</source>
-        <target>Kimai zaman izleyicisine %email% e-posta adresiyle kaydoldunuz. Şimdi, bağlantının süresi dolmadan birkaç saat içinde hesabınızı etkinleştirmeniz gerekiyor.</target>
+        <target>Kimai zaman izleyicisine %email% e-posta adresiyle kaydoldunuz. Lütfen bağlantının süresi dolmadan birkaç saat içinde hesabınızı etkinleştirin.</target>
       </trans-unit>
-      <trans-unit id="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>
         <target>Parolanızı sıfırlayın</target>
       </trans-unit>
-      <trans-unit id="reset.title">
+      <trans-unit id="G2mhn_2" resname="reset.title">
         <source>reset.title</source>
-        <target>Bu olabilir ...</target>
+        <target>Bu olabilir …</target>
       </trans-unit>
-      <trans-unit id="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button">
         <source>reset.button</source>
         <target>Parolanızı sıfırlayın</target>
       </trans-unit>
-      <trans-unit id="reset.intro">
+      <trans-unit id="rhkMAep" resname="reset.intro">
         <source>reset.intro</source>
-        <target>... parolanızı mı unuttunuz? Endişelenmeyin: Kimai, yeni bir tane oluşturmanıza yardımcı olacaktır:</target>
+        <target>… parolanızı mı unuttunuz? Endişelenmeyin: Kimai, yeni bir tane oluşturmanıza yardımcı olacaktır:</target>
       </trans-unit>
     </body>
   </file>

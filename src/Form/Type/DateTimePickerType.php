@@ -10,11 +10,15 @@
 namespace App\Form\Type;
 
 use App\API\BaseApiController;
+use App\Entity\User;
+use App\Utils\DateFormatConverter;
 use App\Utils\LocaleSettings;
+use App\Utils\MomentFormatConverter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -34,9 +38,6 @@ class DateTimePickerType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $dateTimePicker = $this->localeSettings->getDateTimePickerFormat();
-        $dateTimeFormat = $this->localeSettings->getDateTimeTypeFormat();
-
         $resolver->setDefaults([
             'documentation' => [
                 'type' => 'string',
@@ -46,8 +47,18 @@ class DateTimePickerType extends AbstractType
             'label' => 'label.begin',
             'widget' => 'single_text',
             'html5' => false,
-            'format' => $dateTimeFormat,
-            'format_picker' => $dateTimePicker,
+            'format' => function (Options $options) {
+                /** @var User $user */
+                $user = $options['user'];
+                $converter = new DateFormatConverter();
+
+                return $this->localeSettings->getDateTypeFormat() . ' ' . $converter->convert($user->getTimeFormat()); // PHP
+            },
+            'format_picker' => function (Options $options) {
+                $converter = new MomentFormatConverter();
+
+                return $converter->convert($options['format']); // JS
+            },
             'with_seconds' => false,
             'time_increment' => 1,
         ]);
@@ -55,13 +66,20 @@ class DateTimePickerType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['attr'] = array_merge($view->vars['attr'], [
+        $attr = array_merge($view->vars['attr'], [
             'data-datetimepicker' => 'on',
             'autocomplete' => 'off',
             'placeholder' => strtoupper($options['format']),
             'data-format' => $options['format_picker'],
-            'data-time-picker-increment' => $options['time_increment'],
         ]);
+
+        if ($options['time_increment'] !== null) {
+            if ($options['time_increment'] >= 1) {
+                $attr['data-time-picker-increment'] = $options['time_increment'];
+            }
+        }
+
+        $view->vars['attr'] = $attr;
     }
 
     /**

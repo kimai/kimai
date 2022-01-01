@@ -9,6 +9,7 @@
 
 namespace App\Repository\Query;
 
+use App\Entity\Bookmark;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Utils\SearchTerm;
@@ -23,6 +24,7 @@ class BaseQuery
     public const ORDER_DESC = 'DESC';
 
     public const DEFAULT_PAGESIZE = 50;
+    /** @deprecated since 1.14 */
     public const DEFAULT_PAGE = 1;
 
     /**
@@ -39,7 +41,7 @@ class BaseQuery
     public const RESULT_TYPE_QUERYBUILDER = 'QueryBuilder';
 
     private $defaults = [
-        'page' => self::DEFAULT_PAGE,
+        'page' => 1,
         'pageSize' => self::DEFAULT_PAGESIZE,
         'orderBy' => 'id',
         'order' => self::ORDER_ASC,
@@ -48,7 +50,7 @@ class BaseQuery
     /**
      * @var int
      */
-    private $page = self::DEFAULT_PAGE;
+    private $page = 1;
     /**
      * @var int
      */
@@ -61,6 +63,10 @@ class BaseQuery
      * @var string
      */
     private $order = self::ORDER_ASC;
+    /**
+     * @var array<string, string>
+     */
+    private $orderGroups = [];
     /**
      * @var string
      * @deprecated since 1.4, will be removed with 2.0
@@ -78,6 +84,18 @@ class BaseQuery
      * @var SearchTerm|null
      */
     private $searchTerm;
+    /**
+     * @var Bookmark|null
+     */
+    private $bookmark;
+    /**
+     * @var string|null
+     */
+    private $name;
+    /**
+     * @var bool
+     */
+    private $bookmarkSearch = false;
 
     /**
      * @param Team[] $teams
@@ -143,7 +161,9 @@ class BaseQuery
      */
     public function setPage($page)
     {
-        $this->page = (int) $page;
+        if ($page !== null && (int) $page > 0) {
+            $this->page = (int) $page;
+        }
 
         return $this;
     }
@@ -171,13 +191,7 @@ class BaseQuery
         return $this->orderBy;
     }
 
-    /**
-     * You need to validate carefully if this value is used from a user-input.
-     *
-     * @param string $orderBy
-     * @return self
-     */
-    public function setOrderBy($orderBy)
+    public function setOrderBy(string $orderBy): self
     {
         $this->orderBy = $orderBy;
 
@@ -189,17 +203,27 @@ class BaseQuery
         return $this->order;
     }
 
-    /**
-     * @param string $order
-     * @return self
-     */
-    public function setOrder($order)
+    public function setOrder(string $order): self
     {
         if (\in_array($order, [self::ORDER_ASC, self::ORDER_DESC])) {
             $this->order = $order;
         }
 
         return $this;
+    }
+
+    public function addOrderGroup(string $orderBy, string $order): void
+    {
+        $this->orderGroups[$orderBy] = $order;
+    }
+
+    public function getOrderGroups(): array
+    {
+        if (empty($this->orderGroups)) {
+            return [$this->orderBy => $this->order];
+        }
+
+        return $this->orderGroups;
     }
 
     /**
@@ -238,13 +262,44 @@ class BaseQuery
     {
         $method = 'set' . ucfirst($name);
         if (method_exists($this, $method)) {
-            $this->{$method}($value);
-        } elseif (property_exists($this, $name)) {
-            $this->$name = $value;
+            \call_user_func([$this, $method], $value);
+
+            return;
+        }
+
+        if (substr($name, -1) === 's') {
+            $method = 'add' . ucfirst(substr($name, 0, \strlen($name) - 1));
+            if (method_exists($this, $method) && \is_array($value)) {
+                foreach ($value as $v) {
+                    \call_user_func([$this, $method], $v);
+                }
+
+                return;
+            }
+        }
+
+        if (property_exists($this, $name)) {
+            $this->{$name} = $value;
+        }
+    }
+
+    protected function get($name)
+    {
+        $methods = ['get' . ucfirst($name), 'is' . ucfirst($name), 'has' . ucfirst($name)];
+        foreach ($methods as $method) {
+            if (method_exists($this, $method)) {
+                return \call_user_func([$this, $method]);
+            }
+        }
+
+        if (property_exists($this, $name)) {
+            return $this->{$name};
         }
     }
 
     /**
+     * You have to add ALL user facing form fields as default!
+     *
      * @param array $defaults
      * @return self
      */
@@ -274,6 +329,37 @@ class BaseQuery
         return $this;
     }
 
+    public function setBookmark(Bookmark $bookmark): void
+    {
+        $this->bookmark = $bookmark;
+    }
+
+    public function getBookmark(): ?Bookmark
+    {
+        return $this->bookmark;
+    }
+
+    public function hasBookmark(): bool
+    {
+        return null !== $this->bookmark;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getName(): string
+    {
+        if (null !== $this->name) {
+            return $this->name;
+        }
+
+        $shortClass = explode('\\', static::class);
+
+        return array_pop($shortClass);
+    }
+
     public function copyTo(BaseQuery $query): BaseQuery
     {
         $query->setDefaults($this->defaults);
@@ -295,5 +381,67 @@ class BaseQuery
         }
 
         return $query;
+    }
+
+    public function isDefaultFilter(string $filter): bool
+    {
+        if (!\array_key_exists($filter, $this->defaults)) {
+            return false;
+        }
+
+        $expectedValue = $this->defaults[$filter];
+
+        return $this->matchesFilter($filter, $expectedValue);
+    }
+
+    public function matchesFilter(string $filter, $expectedValue): bool
+    {
+        $currentValue = $this->get($filter);
+
+        if (\is_object($currentValue)) {
+            if ($currentValue != $expectedValue) {
+                return false;
+            }
+        } else {
+            if ($currentValue !== $expectedValue) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function countFilter(): int
+    {
+        $filter = 0;
+
+        foreach (array_keys($this->defaults) as $key) {
+            if ($key === 'page') {
+                continue;
+            }
+
+            if (!$this->isDefaultFilter($key)) {
+                $filter++;
+            }
+        }
+
+        return $filter;
+    }
+
+    public function resetFilter(): void
+    {
+        foreach ($this->defaults as $key => $value) {
+            $this->set($key, $value);
+        }
+    }
+
+    public function flagAsBookmarkSearch(): void
+    {
+        $this->bookmarkSearch = true;
+    }
+
+    public function isBookmarkSearch(): bool
+    {
+        return $this->bookmarkSearch;
     }
 }

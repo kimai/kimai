@@ -1,58 +1,62 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fr" datatype="plaintext" original="flashmessages.en.xlf">
     <body>
-      <trans-unit id="warning">
+      <trans-unit id="S9k1S7Z" resname="warning">
         <source>warning</source>
         <target>Avertissement</target>
       </trans-unit>
-      <trans-unit id="timesheet.stop.success">
+      <trans-unit id="WmrEP_5" resname="timesheet.stop.success">
         <source>timesheet.stop.success</source>
         <target>Le chronomètre a été arrêté</target>
       </trans-unit>
-      <trans-unit id="timesheet.stop.error">
+      <trans-unit id="NPBnpK_" resname="timesheet.stop.error">
         <source>timesheet.stop.error</source>
         <target>Le chronomètre ne peut pas être arrêté</target>
       </trans-unit>
-      <trans-unit id="timesheet.start.success">
+      <trans-unit id="CCUoZga" resname="timesheet.start.success">
         <source>timesheet.start.success</source>
         <target>Le chronométrage a commencé</target>
       </trans-unit>
-      <trans-unit id="timesheet.start.error">
+      <trans-unit id="3w9tuox" resname="timesheet.start.error">
         <source>timesheet.start.error</source>
         <target>Le chronométrage ne peut pas être lancé</target>
       </trans-unit>
-      <trans-unit id="timesheet.start.exceeded_limit">
+      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
         <source>timesheet.start.exceeded_limit</source>
         <target>La limite d'enregistrement du temps d'activité a été atteinte, veuillez arrêter au moins un enregistrement.</target>
       </trans-unit>
-      <trans-unit id="timesheet.locked.warning">
+      <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target>Vous modifiez un enregistrement que vous avez exporté</target>
       </trans-unit>
-      <trans-unit id="action.update.success">
+      <trans-unit id="72Ih8zO" resname="action.update.success">
         <source>action.update.success</source>
         <target>Modifications enregistrées</target>
       </trans-unit>
-      <trans-unit id="action.update.error">
+      <trans-unit id="xeu1LSy" resname="action.update.error">
         <source>action.update.error</source>
         <target>Les modifications n'ont pas pu êtres enregistrées : %reason%</target>
       </trans-unit>
-      <trans-unit id="action.delete.success">
+      <trans-unit id="YV50HDB" resname="action.delete.success">
         <source>action.delete.success</source>
         <target>L'entrée a été supprimée</target>
       </trans-unit>
-      <trans-unit id="action.delete.error">
+      <trans-unit id="mW91Tmb" resname="action.delete.error">
         <source>action.delete.error</source>
         <target>L'entrée n'a pas pu être supprimée : %reason%</target>
       </trans-unit>
-      <trans-unit id="invoice.first_template">
+      <trans-unit id="B_cz49z" resname="invoice.first_template">
         <source>invoice.first_template</source>
         <target>Vous devez créer votre premier modèle de facture avant de continuer</target>
       </trans-unit>
-      <trans-unit id="action.upload.error">
+      <trans-unit id="wejAEcR" resname="action.upload.error">
         <source>action.upload.error</source>
         <target>Le fichier n'a pas pu être mis en ligne ou enregistré : %reason%</target>
+      </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R">
+        <source>action.csrf.error</source>
+        <target>L'action n'a pas pu être effectuée : jeton de sécurité invalide.</target>
       </trans-unit>
     </body>
   </file>

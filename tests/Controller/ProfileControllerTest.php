@@ -34,9 +34,14 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $this->assertHasNoEntriesWithFilter($client);
         $this->assertHasProfileBox($client, 'John Doe');
         $this->assertHasAboutMeBox($client, UserFixtures::USERNAME_USER);
+
+        $content = $client->getResponse()->getContent();
+        $year = (new \DateTime())->format('Y');
+        $this->assertStringContainsString('<h3 class="box-title">' . $year . '</h3>', $content);
+        $this->assertStringContainsString('new Chart(', $content);
+        $this->assertStringContainsString('<canvas id="userProfileChart' . $year . '"', $content);
     }
 
     public function testIndexAction()
@@ -44,11 +49,9 @@ class ProfileControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $dates = [
-            new \DateTime('-10 days'),
-            new \DateTime('-1 year'),
+            new \DateTime('2018-06-13'),
+            new \DateTime('2021-10-20'),
         ];
-
-        $em = $this->getEntityManager();
 
         foreach ($dates as $start) {
             $fixture = new TimesheetFixtures();
@@ -65,7 +68,7 @@ class ProfileControllerTest extends ControllerBaseTest
         foreach ($dates as $start) {
             $year = $start->format('Y');
             $this->assertStringContainsString('<h3 class="box-title">' . $year . '</h3>', $content);
-            $this->assertStringContainsString('var userProfileChart' . $year . ' = new Chart(', $content);
+            $this->assertStringContainsString('<canvas id="userProfileChart' . $year . '"', $content);
         }
 
         $this->assertHasProfileBox($client, 'John Doe');
@@ -76,9 +79,9 @@ class ProfileControllerTest extends ControllerBaseTest
     {
         $profileBox = $client->getCrawler()->filter('div.box-user-profile');
         $this->assertEquals(1, $profileBox->count());
-        $profileAvatar = $profileBox->filter('img.img-circle');
+        $profileAvatar = $profileBox->filter('span.avatar');
         $this->assertEquals(1, $profileAvatar->count());
-        $alt = $profileAvatar->attr('alt');
+        $alt = $profileAvatar->attr('title');
 
         $this->assertEquals($username, $alt);
     }
@@ -120,14 +123,12 @@ class ProfileControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
 
-        $em = $this->getEntityManager();
         /** @var User $user */
         $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
         $this->assertEquals('John Doe', $user->getAlias());
         $this->assertEquals('Developer', $user->getTitle());
-        $this->assertEquals(UserFixtures::DEFAULT_AVATAR, $user->getAvatar());
         $this->assertEquals('john_user@example.com', $user->getEmail());
         $this->assertTrue($user->isEnabled());
 
@@ -136,7 +137,6 @@ class ProfileControllerTest extends ControllerBaseTest
             'user_edit' => [
                 'alias' => 'Johnny',
                 'title' => 'Code Monkey',
-                'avatar' => '/fake/image.jpg',
                 'email' => 'updated@example.com',
             ]
         ]);
@@ -147,13 +147,11 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertHasFlashSuccess($client);
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
         $this->assertEquals('Johnny', $user->getAlias());
         $this->assertEquals('Code Monkey', $user->getTitle());
-        $this->assertEquals('/fake/image.jpg', $user->getAvatar());
         $this->assertEquals('updated@example.com', $user->getEmail());
         $this->assertTrue($user->isEnabled());
     }
@@ -168,7 +166,6 @@ class ProfileControllerTest extends ControllerBaseTest
             'user_edit' => [
                 'alias' => 'Johnny',
                 'title' => 'Code Monkey',
-                'avatar' => '/fake/image.jpg',
                 'email' => 'updated@example.com',
                 'enabled' => false,
             ]
@@ -180,13 +177,11 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertHasFlashSuccess($client);
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
         $this->assertEquals('Johnny', $user->getAlias());
         $this->assertEquals('Code Monkey', $user->getTitle());
-        $this->assertEquals('/fake/image.jpg', $user->getAvatar());
         $this->assertEquals('updated@example.com', $user->getEmail());
         $this->assertFalse($user->isEnabled());
     }
@@ -196,7 +191,6 @@ class ProfileControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/password');
 
-        $em = $this->getEntityManager();
         /** @var User $user */
         $user = $this->getUserByRole(User::ROLE_USER);
 
@@ -223,7 +217,6 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertHasFlashSuccess($client);
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getPassword(), UserFixtures::DEFAULT_PASSWORD, $user->getSalt()));
@@ -253,7 +246,6 @@ class ProfileControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/api-token');
 
-        $em = $this->getEntityManager();
         /** @var User $user */
         $user = $this->getUserByRole(User::ROLE_USER);
         /** @var EncoderFactoryInterface $passwordEncoder */
@@ -279,7 +271,6 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertHasFlashSuccess($client);
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN, $user->getSalt()));
@@ -316,7 +307,6 @@ class ProfileControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/roles');
 
-        $em = $this->getEntityManager();
         /** @var User $user */
         $user = $this->getUserByRole(User::ROLE_USER);
 
@@ -336,7 +326,6 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertHasFlashSuccess($client);
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
 
         $this->assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'ROLE_USER'], $user->getRoles());
@@ -355,7 +344,6 @@ class ProfileControllerTest extends ControllerBaseTest
     public function testTeamsAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
-        $em = $this->getEntityManager();
 
         /** @var User $user */
         $user = $this->getUserByRole(User::ROLE_USER);
@@ -371,7 +359,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         /** @var User $user */
         $user = $this->getUserByRole(User::ROLE_USER);
-        $this->assertEquals([], $user->getTeams()->toArray());
+        $this->assertEquals([], $user->getTeams());
 
         $form = $client->getCrawler()->filter('form[name=user_teams]')->form();
         /** @var ChoiceFormField $team */
@@ -386,10 +374,9 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertHasFlashSuccess($client);
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $this->assertEquals(1, $user->getTeams()->count());
+        $this->assertCount(1, $user->getTeams());
     }
 
     public function getPreferencesTestData()
@@ -432,7 +419,7 @@ class ProfileControllerTest extends ControllerBaseTest
                     2 => ['name' => UserPreference::TIMEZONE, 'value' => 'America/Creston'],
                     3 => ['name' => UserPreference::LOCALE, 'value' => 'ar'],
                     4 => ['name' => UserPreference::FIRST_WEEKDAY, 'value' => 'sunday'],
-                    5 => ['name' => UserPreference::SKIN, 'value' => 'blue'],
+                    6 => ['name' => UserPreference::SKIN, 'value' => 'blue'],
                 ]
             ]
         ]);

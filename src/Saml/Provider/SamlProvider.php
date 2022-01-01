@@ -9,11 +9,12 @@
 
 namespace App\Saml\Provider;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Saml\SamlTokenFactory;
+use App\Saml\Token\SamlTokenInterface;
 use App\Saml\User\SamlUserFactory;
-use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlTokenInterface;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -22,29 +23,19 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 final class SamlProvider implements AuthenticationProviderInterface
 {
-    /**
-     * @var UserProviderInterface
-     */
     private $userProvider;
-    /**
-     * @var SamlUserFactory
-     */
     private $userFactory;
-    /**
-     * @var SamlTokenFactory
-     */
     private $tokenFactory;
-    /**
-     * @var UserRepository
-     */
     private $repository;
+    private $configuration;
 
-    public function __construct(UserRepository $repository, UserProviderInterface $userProvider, SamlTokenFactory $tokenFactory, SamlUserFactory $userFactory)
+    public function __construct(UserRepository $repository, UserProviderInterface $userProvider, SamlTokenFactory $tokenFactory, SamlUserFactory $userFactory, SystemConfiguration $configuration)
     {
         $this->repository = $repository;
         $this->userProvider = $userProvider;
         $this->tokenFactory = $tokenFactory;
         $this->userFactory = $userFactory;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -83,6 +74,10 @@ final class SamlProvider implements AuthenticationProviderInterface
 
     public function supports(TokenInterface $token)
     {
+        if (!$this->configuration->isSamlActive()) {
+            return false;
+        }
+
         return $token instanceof SamlTokenInterface;
     }
 }

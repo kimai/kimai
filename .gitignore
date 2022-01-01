@@ -1,7 +1,7 @@
 # ========== KIMAI ==========
 # some hosters require a htaccess to change the PHP version
 .htaccess
-
+.env-*
 .idea/
 .DS_Store
 
@@ -19,7 +19,7 @@ php.ini
 public/avatars/*.png
 
 templates/invoice/renderer/.~lock*
-translations/branding.en.xlf
+translations/branding.*.xlf
 
 /var/data/*
 !/var/data/.gitkeep
@@ -56,6 +56,7 @@ translations/branding.en.xlf
 ###> friendsofphp/php-cs-fixer ###
 .php_cs
 .php_cs.cache
+.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 
 ###> symfony/phpunit-bridge ###

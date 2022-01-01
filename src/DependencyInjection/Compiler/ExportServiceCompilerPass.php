@@ -56,6 +56,9 @@ class ExportServiceCompilerPass implements CompilerPassInterface
 
             foreach (glob($path . $exportPath . '/*.html.twig') as $htmlTpl) {
                 $tplName = basename($htmlTpl);
+                if (stripos($tplName, '-bundle') !== false) {
+                    continue;
+                }
 
                 $serviceId = 'exporter_renderer.' . str_replace('.', '_', $tplName);
 
@@ -70,6 +73,9 @@ class ExportServiceCompilerPass implements CompilerPassInterface
 
             foreach (glob($path . $exportPath . '/*.pdf.twig') as $pdfHtml) {
                 $tplName = basename($pdfHtml);
+                if (stripos($tplName, '-bundle') !== false) {
+                    continue;
+                }
 
                 $serviceId = 'exporter_renderer.' . str_replace('.', '_', $tplName);
 

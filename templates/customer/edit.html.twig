@@ -1,7 +1,7 @@
 {% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "customer/actions.html.twig" as actions %}
 
-{% block page_title %}{{ 'admin_customer.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'customers'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.customer(customer, 'edit') }}{% endblock %}
 
 {% block main %}
@@ -69,11 +69,14 @@
             </div>
             {% if form.budget is defined %}
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         {{ form_row(form.budget) }}
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         {{ form_row(form.timeBudget) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_row(form.budgetType) }}
                     </div>
                 </div>
             {% endif %}

@@ -11,7 +11,6 @@ namespace App\Repository;
 
 use App\Widget\Type\Counter;
 use App\Widget\Type\SimpleStatisticChart;
-use App\Widget\Type\YearChart;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 
@@ -174,16 +173,6 @@ class WidgetRepository
                 'color' => 'purple',
                 'type' => Counter::class,
             ],
-            'userDurationYear' => [
-                'title' => 'stats.durationYear',
-                'query' => TimesheetRepository::STATS_QUERY_DURATION,
-                'user' => true,
-                'begin' => '01 january this year 00:00:00',
-                'end' => '31 december this year 23:59:59',
-                'icon' => 'duration',
-                'color' => 'yellow',
-                'type' => Counter::class,
-            ],
             'userDurationTotal' => [
                 'title' => 'stats.durationTotal',
                 'query' => TimesheetRepository::STATS_QUERY_DURATION,
@@ -222,16 +211,6 @@ class WidgetRepository
                 'color' => 'purple',
                 'type' => Counter::class,
             ],
-            'userAmountYear' => [
-                'title' => 'stats.amountYear',
-                'query' => TimesheetRepository::STATS_QUERY_RATE,
-                'user' => true,
-                'begin' => '01 january this year 00:00:00',
-                'end' => '31 december this year 23:59:59',
-                'icon' => 'money',
-                'color' => 'yellow',
-                'type' => Counter::class,
-            ],
             'userAmountTotal' => [
                 'title' => 'stats.amountTotal',
                 'query' => TimesheetRepository::STATS_QUERY_RATE,
@@ -267,16 +246,6 @@ class WidgetRepository
                 'end' => 'last day of this month 23:59:59',
                 'icon' => 'duration',
                 'color' => 'purple',
-                'user' => false,
-                'type' => Counter::class,
-            ],
-            'durationYear' => [
-                'title' => 'stats.durationYear',
-                'query' => TimesheetRepository::STATS_QUERY_DURATION,
-                'begin' => '01 january this year 00:00:00',
-                'end' => '31 december this year 23:59:59',
-                'icon' => 'duration',
-                'color' => 'yellow',
                 'user' => false,
                 'type' => Counter::class,
             ],
@@ -318,16 +287,6 @@ class WidgetRepository
                 'user' => false,
                 'type' => Counter::class,
             ],
-            'amountYear' => [
-                'title' => 'stats.amountYear',
-                'query' => TimesheetRepository::STATS_QUERY_RATE,
-                'begin' => '01 january this year 00:00:00',
-                'end' => '31 december this year 23:59:59',
-                'icon' => 'money',
-                'color' => 'yellow',
-                'user' => false,
-                'type' => Counter::class,
-            ],
             'amountTotal' => [
                 'title' => 'stats.amountTotal',
                 'query' => TimesheetRepository::STATS_QUERY_RATE,
@@ -366,16 +325,6 @@ class WidgetRepository
                 'user' => false,
                 'type' => Counter::class,
             ],
-            'activeUsersYear' => [
-                'title' => 'stats.userActiveYear',
-                'query' => TimesheetRepository::STATS_QUERY_USER,
-                'begin' => '01 january this year 00:00:00',
-                'end' => '31 december this year 23:59:59',
-                'icon' => 'user',
-                'color' => 'yellow',
-                'user' => false,
-                'type' => Counter::class,
-            ],
             'activeUsersTotal' => [
                 'title' => 'stats.userActiveTotal',
                 'query' => TimesheetRepository::STATS_QUERY_USER,
@@ -391,46 +340,6 @@ class WidgetRepository
                 'color' => 'red',
                 'user' => false,
                 'type' => Counter::class,
-            ],
-            'userRecapThisYear' => [
-                'title' => 'stats.yourWorkingHours',
-                'query' => TimesheetRepository::STATS_QUERY_MONTHLY,
-                'user' => true,
-                'begin' => '01 january this year 00:00:00',
-                'end' => '31 december this year 23:59:59',
-                'color' => '',
-                'icon' => '',
-                'type' => YearChart::class,
-            ],
-            'userRecapLastYear' => [
-                'title' => 'stats.yourWorkingHours',
-                'query' => TimesheetRepository::STATS_QUERY_MONTHLY,
-                'user' => true,
-                'begin' => '01 january last year 00:00:00',
-                'end' => '31 december last year 23:59:59',
-                'color' => 'rgba(0,115,183,0.7)|#3b8bba',
-                'icon' => '',
-                'type' => YearChart::class,
-            ],
-            'userRecapTwoYears' => [
-                'title' => 'stats.yourWorkingHours',
-                'query' => TimesheetRepository::STATS_QUERY_MONTHLY,
-                'user' => true,
-                'begin' => '01 january last year 00:00:00',
-                'end' => '31 december this year 23:59:59',
-                'color' => 'rgba(0,115,183,0.6)|#3b8bba;rgba(233,233,233,0.8)|#ccc',
-                'icon' => '',
-                'type' => YearChart::class,
-            ],
-            'userRecapThreeYears' => [
-                'title' => 'stats.yourWorkingHours',
-                'query' => TimesheetRepository::STATS_QUERY_MONTHLY,
-                'user' => true,
-                'begin' => '2 years ago first day of january 00:00:00',
-                'end' => 'this year last day of december 23:59:59',
-                'color' => 'rgba(0,115,183,0.4)|#3b8bba;rgba(233,233,233,0.7)|#ccc;rgba(210,214,222,0.9)|#c1c7d1',
-                'icon' => '',
-                'type' => YearChart::class,
             ],
         ];
     }

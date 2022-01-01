@@ -21,9 +21,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class InvoiceDocumentUploadForm extends AbstractType
 {
-    /**
-     * @var InvoiceDocumentRepository
-     */
     private $repository;
 
     public function __construct(InvoiceDocumentRepository $repository)
@@ -36,6 +33,12 @@ class InvoiceDocumentUploadForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $mimetypes = [
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/vnd.oasis.opendocument.spreadsheet',
+        ];
+
         $builder
             ->add('document', FileType::class, [
                 'label' => 'label.invoice_renderer',
@@ -43,13 +46,12 @@ class InvoiceDocumentUploadForm extends AbstractType
                 'help' => 'help.upload',
                 'mapped' => false,
                 'required' => true,
+                'attr' => [
+                    'accept' => implode(',', $mimetypes)
+                ],
                 'constraints' => [
                     new File([
-                        'mimeTypes' => [
-                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                            'application/vnd.oasis.opendocument.spreadsheet',
-                        ],
+                        'mimeTypes' => $mimetypes,
                         'mimeTypesMessage' => 'This file type is not allowed',
                     ]),
                     new Callback([$this, 'validateDocument'])

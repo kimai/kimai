@@ -2,8 +2,8 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "project/actions.html.twig" as actions %}
 
-{% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.project(project, 'details') }}{% endblock %}
+{% block page_title %}{{ 'projects'|trans }}{% endblock %}
+{% block page_actions %}{{ actions.project(project, 'project_details') }}{% endblock %}
 
 {% block main %}
     {% set can_edit = is_granted('edit', project) %}
@@ -18,7 +18,7 @@
             {% endif %}
         {% endblock %}
         {% block box_title %}
-            {{ widgets.label_project(project) }}
+            {{ widgets.label_name(project.name, project.color) }}
         {% endblock %}
         {% block box_body_class %}no-padding{% endblock %}
         {% block box_body %}
@@ -29,14 +29,14 @@
             {% endif %}
             <table class="table table-hover dataTable">
                 {% if not project.visible %}
-                    <tr>
+                    <tr class="{{ widgets.class_project_row(project, now) }}">
                         <th>{{ 'label.visible'|trans }}</th>
                         <td colspan="3">
                             {{ widgets.label_boolean(project.visible) }}
                         </td>
                     </tr>
                 {% endif %}
-                <tr>
+                <tr {{ widgets.customer_row_attr(project.customer, now) }}>
                     <th>{{ 'label.customer'|trans }}</th>
                     <td>
                         {{ widgets.label_customer(project.customer) }}
@@ -49,42 +49,66 @@
                     </td>
                 </tr>
                 {% if is_granted('details', project) %}
+                    {% if project.orderNumber is not empty %}
                     <tr>
                         <th>{{ 'label.orderNumber'|trans }}</th>
                         <td colspan="3">
                             {{ project.orderNumber }}
                         </td>
                     </tr>
+                    {% endif %}
+                    {% if project.orderDate is not empty %}
                     <tr>
                         <th>{{ 'label.orderDate'|trans }}</th>
                         <td colspan="3">
-                            {% if project.orderDate is not empty %}
-                                {{ project.orderDate|date_full }}
-                            {% else %}
-                                &ndash;
-                            {% endif %}
+                            {{ project.orderDate|date_full(true) }}
                         </td>
                     </tr>
+                    {% endif %}
+                    {% if project.start is not empty %}
                     <tr>
                         <th>{{ 'label.project_start'|trans }}</th>
                         <td colspan="3">
-                            {% if project.start is not empty %}
-                                {{ project.start|date_full }}
-                            {% else %}
-                                &ndash;
-                            {% endif %}
+                            {{ project.start|date_full(true) }}
                         </td>
                     </tr>
+                    {% endif %}
+                    {% if project.end is not empty %}
                     <tr>
                         <th>{{ 'label.project_end'|trans }}</th>
                         <td colspan="3">
-                            {% if project.end is not empty %}
-                                {{ project.end|date_full }}
-                            {% else %}
-                                &ndash;
-                            {% endif %}
+                            {{ project.end|date_full(true) }}
                         </td>
                     </tr>
+                    {% endif %}
+                {% endif %}
+                {% if is_granted('budget', project) %}
+                    {% if project.hasBudget() %}
+                    <tr>
+                        <th>
+                            {{ 'label.budget'|trans }}
+                            {% if project.isMonthlyBudget() %}
+                                ({{ 'label.budgetType_month'|trans }})
+                            {% endif %}
+                        </th>
+                        <td colspan="3">
+                            {{ project.getBudget()|money(project.customer.currency) }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if project.hasTimeBudget() %}
+                    <tr>
+                        <th>
+                            {{ 'label.timeBudget'|trans }}
+                            {% if project.isMonthlyBudget() %}
+                                ({{ 'label.budgetType_month'|trans }})
+                            {% endif %}
+                        </th>
+                        <td colspan="3">
+                            {{ project.getTimeBudget()|duration }}
+                        </td>
+                    </tr>
+                    {% endif %}
                 {% endif %}
                 {% for metaField in project.visibleMetaFields|sort((a, b) => a.order <=> b.order) %}
                     <tr>
@@ -99,7 +123,7 @@
     {{ render(controller('App\\Controller\\ProjectController::activitiesAction', {'project': project.id, 'page': 1})) }}
 
     {% if stats is not null %}
-        {{ include('project/embed_budget.html.twig', {'project': project, 'stats': stats}) }}
+        {{ include('embeds/budgets.html.twig', {'entity': project, 'stats': stats, 'currency': project.customer.currency}) }}
     {% endif %}
 
     {% if can_edit %}
@@ -120,7 +144,7 @@
     {% if comments is not null %}
         {% set options = {'form': commentForm, 'comments': comments} %}
         {% if can_edit %}
-            {% set options = options|merge({'route_pin': 'project_comment_pin', 'route_delete': 'project_comment_delete'}) %}
+            {% set options = options|merge({'route_pin': 'project_comment_pin', 'route_delete': 'project_comment_delete', 'csrf_delete': 'project.delete_comment', 'csrf_pin': 'project.pin_comment'}) %}
         {% endif %}
         {{ include('embeds/comments.html.twig', options) }}
     {% endif %}

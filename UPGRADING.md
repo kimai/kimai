@@ -8,6 +8,55 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+
+## [1.16](https://github.com/kevinpapst/kimai2/releases/tag/1.16)
+
+**DEVELOPER**
+
+- Removed `formDateTime` field from API model `I18nConfig`
+
+## [1.15](https://github.com/kevinpapst/kimai2/releases/tag/1.15)
+
+**Many database changes: don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
+
+Updating the database might take quite a while, depending on the amount of timesheet entries and speed of your database server (~1 minute per 100k records).
+
+**ATTENTION**
+
+- This release bumps the minimum required [PHP version to 7.3](https://www.kimai.org/blog/2021/php8-support-php72-dropped/)
+- Self-registration is disabled by default
+- Self-registration now always requires email confirmation
+- All plugins that use own databases need to be updated as well
+- Removed the YearChart widget and the related configs named `userRecapThisYear`, `userRecapLastYear`, `userRecapTwoYears`, `userRecapThreeYears`
+
+**LDAP & SAML**
+
+Please verify your config with the [LDAP](https://www.kimai.org/documentation/ldap.html) and [SAML](https://www.kimai.org/documentation/saml.html) documentation, especially:
+
+- SAML users: activate it by setting the `kimai.saml.activate: true` config key
+- LDAP users: activate it by setting the `kimai.ldap.activate: true` config key
+- LDAP and SAML users need to remove the complete `security` section from their `local.yaml`
+
+**DEVELOPER**  
+
+PHP 8 compatibility forced to upgrade MANY libraries, including but not limited to:
+
+- Removed FOSUserBundle and hslavich/oneloginsaml
+- Doctrine Migrations, whose new major version forces plugin updates 
+- Gedmo v3 (which include BC breaks in definitions)
+- Doctrine DBAL and others, which required PHP 7.3 as well
+
+**API BC break**: Due to team structure changes, it was impossible to keep the (writing) API structure. Please adjust your code accordingly!
+
+## [1.14](https://github.com/kevinpapst/kimai2/releases/tag/1.14)
+
+**CRITICAL BC break**: SQLite support was removed. If you are using SQLite, you have to [read this blog post](https://www.kimai.org/blog/2021/sqlite-and-ftp-support-removed/) and migrate to MySQL/MariaDB first!
+
+**New database tables and fields: don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
+
+Permission changes:
+- `history_invoice` - removed permission entirely
+
 ## [1.13](https://github.com/kevinpapst/kimai2/releases/tag/1.13)
 
 - Deprecated `now` variable in export templates: create it yourself with `{% set now = create_date('now', app.user) %}`

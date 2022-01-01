@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "tags/actions.html.twig" as actions %}
 {% import "macros/datatables.html.twig" as tables %}
-{% import "macros/toolbar.html.twig" as toolbar %}
+{% import "macros/search.html.twig" as search %}
+{% import "tags/actions.html.twig" as actions %}
 
-{% block page_title %}{{ 'menu.tags'|trans }}{% endblock %}
-{% block page_search %}{{ toolbar.dropDownSearch(toolbarForm) }}{% endblock %}
-{% block page_actions %}{{ actions.tags('index') }}{% endblock %}
+{% block page_title %}{{ 'tags'|trans }}{% endblock %}
+{% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
+{% block page_actions %}{{ actions.tags('index', query) }}{% endblock %}
 
 {% block main %}
 
@@ -33,9 +33,9 @@
 
         {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.tagUpdate'}) }}
         {% for tag in tags %}
-            {% set type = 'primary' %}
+            {% set type = '' %}
             {% if tag.amount == 0 %}
-                {% set type = 'warning' %}
+                {% set type = 'bg-yellow' %}
             {% endif %}
 
             <tr{% if manageAllowed %} class="modal-ajax-form open-edit" data-href="{{ path('tags_edit', {'id': tag.id}) }}"{% endif %}>
@@ -45,9 +45,9 @@
                     </td>
                 {% endif %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
-                    {{ widgets.label_color_dot('tag', true, tag.name, null, tag.color|default('#00a65a')) }}
+                    {{ widgets.label_name(tag.name, tag.color) }}
                 </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }}">{{ widgets.label(tag.amount, type) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }}">{{ widgets.badge_counter(tag.amount, null, type) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
                     {{ actions.tag(tag, 'index') }}
                 </td>

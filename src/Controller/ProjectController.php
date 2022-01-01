@@ -30,11 +30,11 @@ use App\Form\Toolbar\ProjectToolbarForm;
 use App\Form\Type\ProjectType;
 use App\Project\ProjectDuplicationService;
 use App\Project\ProjectService;
+use App\Project\ProjectStatisticService;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
-use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\TeamRepository;
 use Pagerfanta\Pagerfanta;
@@ -43,6 +43,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * Controller used to manage projects.
@@ -88,14 +90,10 @@ final class ProjectController extends AbstractController
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
-
-        if (!$form->isValid()) {
-            $query->resetByFormError($form->getErrors());
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('admin_project');
         }
 
-        /* @var $entries Pagerfanta */
         $entries = $this->repository->getPagerfantaForQuery($query);
 
         return $this->render('project/index.html.twig', [
@@ -103,6 +101,7 @@ final class ProjectController extends AbstractController
             'query' => $query,
             'toolbarForm' => $form->createView(),
             'metaColumns' => $this->findMetaColumns($query),
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -135,6 +134,10 @@ final class ProjectController extends AbstractController
             try {
                 $this->projectService->updateProject($project);
                 $this->flashSuccess('action.update.success');
+
+                if ($this->isGranted('view', $project)) {
+                    return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
+                }
 
                 return $this->redirectToRoute('admin_project');
             } catch (\Exception $ex) {
@@ -178,12 +181,20 @@ final class ProjectController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/comment_delete", name="project_comment_delete", methods={"GET"})
+     * @Route(path="/{id}/comment_delete/{token}", name="project_comment_delete", methods={"GET"})
      * @Security("is_granted('edit', comment.getProject()) and is_granted('comments', comment.getProject())")
      */
-    public function deleteCommentAction(ProjectComment $comment)
+    public function deleteCommentAction(ProjectComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager)
     {
         $projectId = $comment->getProject()->getId();
+
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('project.delete_comment', $token))) {
+            $this->flashError('action.csrf.error');
+
+            return $this->redirectToRoute('project_details', ['id' => $projectId]);
+        }
+
+        $csrfTokenManager->refreshToken('project.delete_comment');
 
         try {
             $this->repository->deleteComment($comment);
@@ -217,11 +228,21 @@ final class ProjectController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/comment_pin", name="project_comment_pin", methods={"GET"})
+     * @Route(path="/{id}/comment_pin/{token}", name="project_comment_pin", methods={"GET"})
      * @Security("is_granted('edit', comment.getProject()) and is_granted('comments', comment.getProject())")
      */
-    public function pinCommentAction(ProjectComment $comment)
+    public function pinCommentAction(ProjectComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager)
     {
+        $projectId = $comment->getProject()->getId();
+
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('project.pin_comment', $token))) {
+            $this->flashError('action.csrf.error');
+
+            return $this->redirectToRoute('project_details', ['id' => $projectId]);
+        }
+
+        $csrfTokenManager->refreshToken('project.pin_comment');
+
         $comment->setPinned(!$comment->isPinned());
         try {
             $this->repository->saveComment($comment);
@@ -229,7 +250,7 @@ final class ProjectController extends AbstractController
             $this->flashUpdateException($ex);
         }
 
-        return $this->redirectToRoute('project_details', ['id' => $comment->getProject()->getId()]);
+        return $this->redirectToRoute('project_details', ['id' => $projectId]);
     }
 
     /**
@@ -247,7 +268,7 @@ final class ProjectController extends AbstractController
 
         $defaultTeam = new Team();
         $defaultTeam->setName($project->getName());
-        $defaultTeam->setTeamLead($this->getUser());
+        $defaultTeam->addTeamlead($this->getUser());
         $defaultTeam->addProject($project);
 
         try {
@@ -271,6 +292,9 @@ final class ProjectController extends AbstractController
         $query->setPageSize(5);
         $query->addProject($project);
         $query->setExcludeGlobals(true);
+        $query->setShowBoth();
+        $query->addOrderGroup('visible', ActivityQuery::ORDER_DESC);
+        $query->addOrderGroup('name', ActivityQuery::ORDER_ASC);
 
         /* @var $entries Pagerfanta */
         $entries = $activityRepository->getPagerfantaForQuery($query);
@@ -279,6 +303,7 @@ final class ProjectController extends AbstractController
             'project' => $project,
             'activities' => $entries,
             'page' => $page,
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -286,7 +311,7 @@ final class ProjectController extends AbstractController
      * @Route(path="/{id}/details", name="project_details", methods={"GET", "POST"})
      * @Security("is_granted('view', project)")
      */
-    public function detailsAction(Project $project, TeamRepository $teamRepository, ProjectRateRepository $rateRepository)
+    public function detailsAction(Project $project, TeamRepository $teamRepository, ProjectRateRepository $rateRepository, ProjectStatisticService $statisticService)
     {
         $event = new ProjectMetaDefinitionEvent($project);
         $this->dispatcher->dispatch($event);
@@ -298,6 +323,7 @@ final class ProjectController extends AbstractController
         $comments = null;
         $teams = null;
         $rates = [];
+        $now = $this->getDateTimeFactory()->createDateTime();
 
         if ($this->isGranted('edit', $project)) {
             if ($this->isGranted('create_team')) {
@@ -307,7 +333,7 @@ final class ProjectController extends AbstractController
         }
 
         if ($this->isGranted('budget', $project)) {
-            $stats = $this->repository->getProjectStatistics($project);
+            $stats = $statisticService->getBudgetStatisticModel($project, $now);
         }
 
         if ($this->isGranted('comments', $project)) {
@@ -330,7 +356,8 @@ final class ProjectController extends AbstractController
             'stats' => $stats,
             'team' => $defaultTeam,
             'teams' => $teams,
-            'rates' => $rates
+            'rates' => $rates,
+            'now' => $now,
         ]);
     }
 
@@ -394,12 +421,22 @@ final class ProjectController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/duplicate", name="admin_project_duplicate", methods={"GET", "POST"})
+     * @Route(path="/{id}/duplicate/{token}", name="admin_project_duplicate", methods={"GET", "POST"})
      * @Security("is_granted('edit', project)")
      */
-    public function duplicateAction(Project $project, Request $request, ProjectDuplicationService $projectDuplicationService)
+    public function duplicateAction(Project $project, string $token, ProjectDuplicationService $projectDuplicationService, CsrfTokenManagerInterface $csrfTokenManager)
     {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('project.duplicate', $token))) {
+            $this->flashError('action.csrf.error');
+
+            return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
+        }
+
+        $csrfTokenManager->refreshToken('project.duplicate');
+
         $newProject = $projectDuplicationService->duplicate($project, $project->getName() . ' [COPY]');
+
+        $this->flashSuccess('action.update.success');
 
         return $this->redirectToRoute('project_details', ['id' => $newProject->getId()]);
     }
@@ -408,27 +445,21 @@ final class ProjectController extends AbstractController
      * @Route(path="/{id}/delete", name="admin_project_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', project)")
      */
-    public function deleteAction(Project $project, Request $request)
+    public function deleteAction(Project $project, Request $request, ProjectStatisticService $statisticService)
     {
-        $stats = $this->repository->getProjectStatistics($project);
+        $stats = $statisticService->getProjectStatistics($project);
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
-                    'data-form-event' => 'kimai.projectUpdate kimai.projectDelete',
+                    'data-form-event' => 'kimai.projectDelete',
                     'data-msg-success' => 'action.delete.success',
                     'data-msg-error' => 'action.delete.error',
                 ]
             ])
             ->add('project', ProjectType::class, [
-                'label' => 'label.project',
-                'query_builder' => function (ProjectRepository $repo) use ($project) {
-                    $query = new ProjectFormTypeQuery();
-                    $query->addCustomer($project->getCustomer());
-                    $query->setProjectToIgnore($project);
-                    $query->setUser($this->getUser());
-
-                    return $repo->getQueryBuilderForFormType($query);
-                },
+                'ignore_project' => $project,
+                'customers' => $project->getCustomer(),
+                'query_builder_for_user' => true,
                 'required' => false,
             ])
             ->setAction($this->generateUrl('admin_project_delete', ['id' => $project->getId()]))

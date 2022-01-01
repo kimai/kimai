@@ -1,30 +1,33 @@
-{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 {% import "invoice/actions.html.twig" as actions %}
+{% import "macros/widgets.html.twig" as widgets %}
 
-{% block page_title %}{{ 'admin_invoice_template.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'label.invoice_renderer'|trans({}, 'invoice-renderer') }}{% endblock %}
 {% block page_actions %}{{ actions.invoice_upload('index') }}{% endblock %}
 
 {% block main %}
-    {% if form is not null %}
+    {% if can_upload and form is not null %}
         {% form_theme form '@AdminLTE/layout/form-theme-horizontal.html.twig' %}
-        {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
         {% set formOptions = {
             'title': 'upload'|trans,
             'form': form,
-            'back': path('admin_invoice_template')
+            'back': false,
+            'reset': false
         } %}
 
-        {% embed formEditTemplate with formOptions %}
+        {% embed 'default/_form.html.twig' with formOptions %}
             {% block form_body %}
                 {{ form_row(form.document) }}
                 {{ form_widget(form) }}
             {% endblock %}
         {% endembed %}
+    {% elseif upload_error is not null %}
+        {{ widgets.callout('warning', upload_error|trans(error_replacer)) }}
     {% endif %}
 
     {% if documents|length > 0 %}
         {% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'documents': documents} %}
-            {% import "project/actions.html.twig" as actions %}
+            {% import "invoice/actions.html.twig" as actions %}
             {% import "macros/widgets.html.twig" as widgets %}
             {% block box_title %}{{ 'label.invoice_renderer'|trans({}, 'invoice-renderer') }}{% endblock %}
             {% block box_attributes %}
@@ -33,12 +36,30 @@
             {% block box_body_class %}no-padding{% endblock %}
             {% block box_body %}
                 <table class="table table-hover dataTable">
-                    <tbody>
-                    {% for document in documents %}
+                    <thead>
                         <tr>
-                            <td style="width: 33%">{{ document.id }}</td>
-                            <td style="width: 33%">{{ document.lastChange|date }}</td>
+                            <th>{{ 'file'|trans }}</th>
+                            <th>{{ 'updated_at'|trans }}</th>
+                            <th>{{ 'label.template'|trans }}</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for config in documents %}
+                        {% set document = config.document %}
+                        <tr>
                             <td>{{ document.name }}</td>
+                            <td>{{ document.lastChange|date }}</td>
+                            <td>
+                                {% if config.template is not null %}
+                                    {{ config.template.name }}
+                                {% endif %}
+                            </td>
+                            <td class="actions">
+                                {% if not config.used %}
+                                    {{ actions.invoice_document(document, 'index') }}
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

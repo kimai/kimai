@@ -23,19 +23,21 @@ export default class KimaiFormSelect extends KimaiPlugin {
         return 'form-select';
     }
 
-    activateSelectPicker(selector, container) {
-        const elementSelector = this.selector;
-        let options = {};
-        if (container !== undefined) {
-            options = {
-                dropdownParent: $(container),
-            };
-        }
+    init() {
+        // selects the original value inside select2 dropdowns, as the "reset" event (the updated option)
+        // is not automatically catched by select2
+        jQuery('body').on('reset', 'form', function(event) {
+            setTimeout(function() {
+                jQuery(event.target).find(this.selector).trigger('change');
+            }, 10);
+        });
+
+        const self = this;
 
         // Function to match the name of the parent and not only the names of the children
         // Based on the original matcher function of Select2: https://github.com/select2/select2/blob/5765090318c4d382ae56463cfa25ba8ca7bdd495/src/js/select2/defaults.js#L272
         // More information: https://select2.org/searching | https://github.com/select2/docs/blob/develop/pages/11.searching/docs.md
-        function matcher(params, data) {
+        this.matcher = function (params, data) {
             // Always return the object if there is nothing to compare
             if (jQuery.trim(params.term) === '') {
                 return data;
@@ -86,7 +88,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
                 for (let c = data.children.length - 1; c >= 0; c--) {
                     let child = data.children[c];
 
-                    let matches = matcher(newParams, child);
+                    let matches = self.matcher(newParams, child);
 
                     // If there wasn't a match, remove the object in the array
                     if (matches === null) {
@@ -103,18 +105,42 @@ export default class KimaiFormSelect extends KimaiPlugin {
             // If the option or its children do not contain the term, don't return anything
             return null;
         }
+    }
+
+    activateSelectPickerByElement(node, container) {
+        let options = {};
+        if (container !== undefined) {
+            options = {
+                dropdownParent: jQuery(container),
+            };
+        }
 
         options = {...options, ...{
             language: this.getConfiguration('locale').replace('_', '-'),
             theme: "bootstrap",
-            matcher: matcher
+            matcher: this.matcher
         }};
-        jQuery(selector + ' ' + elementSelector).select2(options);
 
-        jQuery('body').on('reset', 'form', function(event){
-            setTimeout(function() {
-                jQuery(event.target).find(elementSelector).trigger('change');
-            }, 10);
+        if (node.dataset['renderer'] !== undefined && node.dataset['renderer'] === 'color') {
+            const templateResultFunc = function (state) {
+                return jQuery('<span><span style="background-color:'+state.id+'; width: 20px; height: 20px; display: inline-block; margin-right: 10px;">&nbsp;</span>' + state.text + '</span>');
+            };
+
+            const colorOptions = {...options, ...{
+                templateSelection: templateResultFunc,
+                templateResult: templateResultFunc
+            }};
+
+            jQuery(node).select2(colorOptions);
+        } else {
+            jQuery(node).select2(options);
+        }
+    }
+
+    activateSelectPicker(selector, container) {
+        const self = this;
+        jQuery(selector + ' ' + this.selector).each(function(i, el) {
+            self.activateSelectPickerByElement(el, container);
         });
     }
 

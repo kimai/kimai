@@ -1,0 +1,13 @@
+{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+
+{% block page_title %}{{ 'invoices'|trans }}{% endblock %}
+
+{% block main %}
+    {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+    {% set formOptions = {
+        'title': invoice.customer.name ~ ' – ' ~ invoice.createdAt|date_short~ ' – ' ~ invoice.total|money(invoice.customer.currency),
+        'form': form,
+        'back': path('admin_invoice_list')
+    } %}
+    {% embed formEditTemplate with formOptions %}{% endembed %}
+{% endblock %}

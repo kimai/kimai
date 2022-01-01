@@ -9,6 +9,7 @@
 
 namespace App\Tests\Repository\Query;
 
+use App\Entity\Team;
 use App\Repository\Query\UserQuery;
 use App\Repository\Query\VisibilityInterface;
 
@@ -23,6 +24,7 @@ class UserQueryTest extends BaseQueryTest
         $this->assertBaseQuery($sut, 'username');
         $this->assertInstanceOf(VisibilityInterface::class, $sut);
         $this->assertRole($sut);
+        $this->assertSearchTeam($sut);
 
         $this->assertResetByFormError(new UserQuery(), 'username');
     }
@@ -32,5 +34,15 @@ class UserQueryTest extends BaseQueryTest
         $this->assertNull($sut->getRole());
         $sut->setRole('ROLE_USER');
         $this->assertEquals('ROLE_USER', $sut->getRole());
+    }
+
+    protected function assertSearchTeam(UserQuery $sut)
+    {
+        $team = new Team();
+        $this->assertIsArray($sut->getSearchTeams());
+        $this->assertEmpty($sut->getSearchTeams());
+        $sut->setSearchTeams([$team, new Team()]);
+        $this->assertCount(2, $sut->getSearchTeams());
+        $this->assertSame($team, $sut->getSearchTeams()[0]);
     }
 }

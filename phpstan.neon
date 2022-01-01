@@ -2,21 +2,13 @@ includes:
     - vendor/phpstan/phpstan-symfony/extension.neon
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-symfony/rules.neon
+    - vendor/phpstan/phpstan/conf/bleedingEdge.neon
 
 parameters:
     tmpDir: %rootDir%/../../../var/cache/phpstan
     ignoreErrors:
-        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\).#'
-        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::integerNode\(\).#'
-        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::booleanNode\(\).#'
-        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::end\(\).#'
-        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::defaultValue\(\).#'
-        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::addDefaultsIfNotSet\(\).#'
-        - '#Access to an undefined property Faker\\Generator::\$stateAbbr.#'
-        - '#Access to an undefined property Faker\\Generator::\$catchPhrase.#'
-        - '#Access to an undefined property Faker\\Generator::\$bs.#'
         - '#Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required.#'
-    excludes_analyse:
+    excludePaths:
         - %rootDir%/../../../src/Ldap/LdapDriver.php
     treatPhpDocTypesAsCertain: false
     inferPrivatePropertyTypeFromConstructor: true

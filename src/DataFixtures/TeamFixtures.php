@@ -13,7 +13,6 @@ use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
@@ -26,20 +25,15 @@ use Faker\Factory;
  *
  * @codeCoverageIgnore
  */
-class TeamFixtures extends Fixture implements DependentFixtureInterface
+class TeamFixtures extends Fixture
 {
     public const AMOUNT_TEAMS = 10;
     public const MAX_USERS_PER_TEAM = 15;
     public const MAX_PROJECTS_PER_TEAM = 5;
 
-    /**
-     * @return class-string[]
-     */
-    public function getDependencies()
+    public static function getGroups(): array
     {
-        return [
-            UserFixtures::class,
-        ];
+        return ['users', 'team'];
     }
 
     /**
@@ -89,7 +83,7 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
             if (self::MAX_USERS_PER_TEAM < $maxUsers) {
                 $maxUsers = self::MAX_USERS_PER_TEAM;
             }
-            $userCount = mt_rand(0, $maxUsers);
+            $userCount = mt_rand(1, $maxUsers);
 
             $maxProjects = \count($allProjects) - 1;
             if (self::MAX_PROJECTS_PER_TEAM < $maxProjects) {
@@ -98,10 +92,8 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
             $projectCount = mt_rand(0, $maxProjects);
 
             $team = new Team();
-            $team
-                ->setName($faker->company . ' ' . $i)
-                ->setTeamLead($allUsers[array_rand($allUsers)])
-            ;
+            $team->setName($faker->company . ' ' . $i);
+            $team->addTeamlead($allUsers[array_rand($allUsers)]);
 
             if ($userCount > 0) {
                 $userKeys = array_rand($allUsers, $userCount);

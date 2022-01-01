@@ -32,7 +32,7 @@ final class TimesheetInvoiceItemRepository implements InvoiceItemRepositoryInter
      */
     public function getInvoiceItemsForQuery(InvoiceQuery $query): iterable
     {
-        return $this->repository->getTimesheetsForQuery($query);
+        return $this->repository->getTimesheetsForQuery($query, true);
     }
 
     /**

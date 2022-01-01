@@ -1,4 +1,4 @@
-{% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'form': form, 'comments': comments, 'route_pin': route_pin|default(null), 'route_delete': route_delete|default(null), 'delete_by_user': delete_by_user|default(false)} %}
+{% embed '@AdminLTE/Widgets/box-widget.html.twig' with {'form': form, 'comments': comments, 'route_pin': route_pin|default(null), 'route_delete': route_delete|default(null), 'delete_by_user': delete_by_user|default(false), 'csrf_delete': csrf_token(csrf_delete|default('comment.delete')), 'csrf_pin': csrf_token(csrf_pin|default('comment.pin'))} %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% block box_title %}{{ 'label.comment'|trans }}{% endblock %}
     {% block box_attributes %}id="comments_box"{% endblock %}
@@ -24,12 +24,12 @@
                         </span>
                         <span class="pull-right">
                         {% if route_pin is not null %}
-                            <a href="{{ path(route_pin, {'id': comment.id}) }}" class="btn btn-default btn-xs {% if comment.pinned %}active{% endif %}"><i class="{{ 'pin'|icon }}"></i></a>
+                            <a href="{{ path(route_pin, {'id': comment.id, 'token': csrf_pin}) }}" class="btn btn-default btn-xs {% if comment.pinned %}active{% endif %}"><i class="{{ 'pin'|icon }}"></i></a>
                         {% elseif comment.pinned %}
                             <i class="{{ 'pin'|icon }}"></i>
                         {% endif %}
                         {% if route_delete is not null and ((not delete_by_user) or (delete_by_user and comment.createdBy.id == app.user.id)) %}
-                            <a href="{{ path(route_delete, {'id': comment.id}) }}" class="confirmation-link btn btn-default btn-xs" data-question="confirm.delete"><i class="{{ 'delete'|icon }}"></i></a>
+                            <a href="{{ path(route_delete, {'id': comment.id, 'token': csrf_delete}) }}" class="confirmation-link btn btn-default btn-xs" data-question="confirm.delete"><i class="{{ 'delete'|icon }}"></i></a>
                         {% endif %}
                         </span>
                     </div>

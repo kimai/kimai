@@ -17,15 +17,19 @@ class Constants
     /**
      * The current release version
      */
-    public const VERSION = '1.13';
+    public const VERSION = '1.16.10';
+    /**
+     * The current release: major * 10000 + minor * 100 + patch
+     */
+    public const VERSION_ID = 11610;
     /**
      * The current release status, either "stable" or "dev"
      */
-    public const STATUS = 'stable';
+    public const STATUS = 'prod';
     /**
      * The software name
      */
-    public const SOFTWARE = 'Kimai 2';
+    public const SOFTWARE = 'Kimai';
     /**
      * The release name, will only change for new major version
      */
@@ -39,7 +43,7 @@ class Constants
      */
     public const HOMEPAGE = 'https://www.kimai.org';
     /**
-     * Application wide default locale.
+     * Application wide default locale
      */
     public const DEFAULT_LOCALE = 'en';
     /**

@@ -12,6 +12,7 @@ namespace App\Ldap;
 use App\Configuration\LdapConfiguration;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Provider\UserAuthenticationProvider;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Exception\AuthenticationServiceException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
@@ -25,18 +26,8 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class LdapAuthenticationProvider extends UserAuthenticationProvider
 {
-    /**
-     * @var UserProviderInterface
-     */
     private $userProvider;
-
-    /**
-     * @var LdapManager
-     */
     private $ldapManager;
-    /**
-     * @var LdapConfiguration
-     */
     private $config;
 
     public function __construct(UserCheckerInterface $userChecker, $providerKey, UserProviderInterface $userProvider, LdapManager $ldapManager, LdapConfiguration $config, $hideUserNotFoundExceptions = true)
@@ -48,6 +39,15 @@ class LdapAuthenticationProvider extends UserAuthenticationProvider
         $this->userProvider = $userProvider;
     }
 
+    public function supports(TokenInterface $token)
+    {
+        if (!$this->config->isActivated()) {
+            return false;
+        }
+
+        return parent::supports($token);
+    }
+
     protected function retrieveUser($username, UsernamePasswordToken $token)
     {
         $user = $token->getUser();
@@ -56,7 +56,7 @@ class LdapAuthenticationProvider extends UserAuthenticationProvider
         }
 
         try {
-            // this will always query the FOSUserBundle first...
+            // this will always query the internal database first...
             // only first-time logins from LDAP user (not yet existing in local user database)
             // will actually hit the LdapUserProvider
             $user = $this->userProvider->loadUserByUsername($username);
@@ -64,6 +64,7 @@ class LdapAuthenticationProvider extends UserAuthenticationProvider
             // do not update the user here from LDAP, as we don't know if the user can be authenticated
         } catch (UsernameNotFoundException $notFound) {
             throw $notFound;
+            /* @phpstan-ignore-next-line */
         } catch (\Exception $repositoryProblem) {
             $e = new AuthenticationServiceException($repositoryProblem->getMessage(), (int) $repositoryProblem->getCode(), $repositoryProblem);
             $e->setToken($token);

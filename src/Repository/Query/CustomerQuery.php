@@ -18,13 +18,14 @@ class CustomerQuery extends BaseQuery implements VisibilityInterface
 
     public const CUSTOMER_ORDER_ALLOWED = [
         'id', 'name', 'comment', 'country', 'number', 'homepage', 'email', 'mobile', 'fax',
-        'phone', 'currency', 'address', 'contact', 'company', 'vatId', 'visible'
+        'phone', 'currency', 'address', 'contact', 'company', 'vat_id', 'budget', 'timeBudget', 'visible'
     ];
 
     public function __construct()
     {
         $this->setDefaults([
             'orderBy' => 'name',
+            'visibility' => VisibilityInterface::SHOW_VISIBLE,
         ]);
     }
 }

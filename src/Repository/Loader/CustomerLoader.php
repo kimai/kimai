@@ -14,14 +14,13 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class CustomerLoader implements LoaderInterface
 {
-    /**
-     * @var CustomerIdLoader
-     */
-    private $loader;
+    private $entityManager;
+    private $fullyHydrated;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, bool $fullyHydrated = false)
     {
-        $this->loader = new CustomerIdLoader($entityManager);
+        $this->entityManager = $entityManager;
+        $this->fullyHydrated = $fullyHydrated;
     }
 
     /**
@@ -33,6 +32,7 @@ final class CustomerLoader implements LoaderInterface
             return $customer->getId();
         }, $customers);
 
-        $this->loader->loadResults($ids);
+        $loader = new CustomerIdLoader($this->entityManager, $this->fullyHydrated);
+        $loader->loadResults($ids);
     }
 }

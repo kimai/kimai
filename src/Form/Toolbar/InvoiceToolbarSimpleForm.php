@@ -12,7 +12,6 @@ namespace App\Form\Toolbar;
 use App\Form\Type\InvoiceTemplateType;
 use App\Repository\Query\InvoiceQuery;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -28,21 +27,11 @@ class InvoiceToolbarSimpleForm extends AbstractToolbarForm
     {
         $this->addTemplateChoice($builder);
         $this->addDateRange($builder, ['timezone' => $options['timezone']]);
-        $this->addCustomerChoice($builder, ['required' => true, 'start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true, 'placeholder' => ''], true);
-        $this->addProjectMultiChoice($builder, ['ignore_date' => true], false, true);
+        $this->addCustomerMultiChoice($builder, ['required' => false, 'start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true, 'placeholder' => ''], true);
+        $this->addProjectMultiChoice($builder, ['ignore_date' => true], true, true);
         $builder->add('markAsExported', CheckboxType::class, [
             'label' => 'label.mark_as_exported',
             'required' => false,
-        ]);
-        $builder->add('create', SubmitType::class, [
-            'label' => 'action.save',
-        ]);
-        $builder->add('print', SubmitType::class, [
-            'label' => 'button.preview_print',
-            'attr' => ['formtarget' => '_blank'],
-        ]);
-        $builder->add('preview', SubmitType::class, [
-            'label' => 'button.preview',
         ]);
     }
 

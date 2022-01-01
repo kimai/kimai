@@ -36,18 +36,13 @@ final class InstallCommand extends Command
     public const ERROR_MIGRATIONS = 32;
 
     /**
-     * @var string
-     */
-    private $rootDir;
-    /**
      * @var Connection
      */
     private $connection;
 
-    public function __construct(string $projectDirectory, Connection $connection)
+    public function __construct(Connection $connection)
     {
         parent::__construct();
-        $this->rootDir = $projectDirectory;
         $this->connection = $connection;
     }
 
@@ -105,7 +100,7 @@ final class InstallCommand extends Command
         }
 
         $io->success(
-            sprintf('Congratulations! Successfully installed %s version %s (%s)', Constants::SOFTWARE, Constants::VERSION, Constants::STATUS)
+            sprintf('Congratulations! Successfully installed %s version %s', Constants::SOFTWARE, Constants::VERSION)
         );
 
         return 0;

@@ -1,0 +1,60 @@
+<?php
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace App\Controller\Reporting;
+
+use App\Controller\AbstractController;
+use App\Form\Model\DateRange;
+use App\Project\ProjectStatisticService;
+use App\Reporting\ProjectDateRange\ProjectDateRangeForm;
+use App\Reporting\ProjectDateRange\ProjectDateRangeQuery;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+
+final class ProjectDateRangeController extends AbstractController
+{
+    /**
+     * @Route(path="/reporting/project_daterange", name="report_project_daterange", methods={"GET","POST"})
+     * @Security("is_granted('view_reporting') and is_granted('budget_project')")
+     */
+    public function __invoke(Request $request, ProjectStatisticService $service)
+    {
+        $dateFactory = $this->getDateTimeFactory();
+        $user = $this->getUser();
+
+        $query = new ProjectDaterangeQuery($dateFactory->getStartOfMonth(), $user);
+        $form = $this->createForm(ProjectDateRangeForm::class, $query, [
+            'timezone' => $user->getTimezone()
+        ]);
+        $form->handleRequest($request);
+
+        $dateRange = new DateRange(true);
+        $dateRange->setBegin($query->getMonth());
+        $dateRange->setEnd($dateFactory->getEndOfMonth($dateRange->getBegin()));
+
+        $projects = $service->findProjectsForDateRange($query, $dateRange);
+        $entries = $service->getBudgetStatisticModelForProjectsByDateRange($projects, $dateRange->getBegin(), $dateRange->getEnd(), $dateRange->getEnd());
+
+        $byCustomer = [];
+        foreach ($entries as $entry) {
+            $customer = $entry->getProject()->getCustomer();
+            if (!isset($byCustomer[$customer->getId()])) {
+                $byCustomer[$customer->getId()] = ['customer' => $customer, 'projects' => []];
+            }
+            $byCustomer[$customer->getId()]['projects'][] = $entry;
+        }
+
+        return $this->render('reporting/project_daterange.html.twig', [
+            'entries' => $byCustomer,
+            'form' => $form->createView(),
+            'queryEnd' => $dateRange->getEnd(),
+        ]);
+    }
+}

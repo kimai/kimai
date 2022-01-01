@@ -88,21 +88,41 @@
                 </div>
             </div>
             {% endif %}
+            {% if form.metaFields is defined and form.metaFields is not empty %}
+                {% for meta in form.metaFields|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
+                    {{ form_row(meta) }}
+                {% endfor %}
+            {% endif %}
+            {% if form.exported is defined or form.billable is defined %}
+                {% set ebLength = (form.exported is defined and form.billable is defined) ? 6 : 12 %}
+                <div class="row">
+                    {% if form.exported is defined %}
+                    <div class="col-md-{{ ebLength }}">
+                        {{ form_row(form.exported) }}
+                    </div>
+                    {% endif %}
+                    {% if form.billable is defined %}
+                    <div class="col-md-{{ ebLength }}">
+                        {{ form_row(form.billable) }}
+                    </div>
+                    {% endif %}
+                </div>
+            {% endif %}
             {{ form_widget(form) }}
         {% endblock %}
         {% block form_after %}
             {% if form.begin is defined and form.end is defined and form.duration is defined %}
                 {% set blockPrefix = form.vars.id %}
                 <script type="text/javascript">
-                    $('body').on('change', '#{{ blockPrefix }}_begin', function(ev) {
-                        changedBegin($(this).val());
+                    jQuery('body').on('change', '#{{ blockPrefix }}_begin', function(ev) {
+                        changedBegin(jQuery(this).val());
                     });
 
-                    $('body').on('change', '#{{ blockPrefix }}_end', function(ev) {
-                        changedEnd($(this).val());
+                    jQuery('body').on('change', '#{{ blockPrefix }}_end', function(ev) {
+                        changedEnd(jQuery(this).val());
                     });
 
-                    $('body').on('change', '#{{ blockPrefix }}_duration', function(ev) {
+                    jQuery('body').on('change', '#{{ blockPrefix }}_duration', function(ev) {
                         changedDuration();
                     });
 
@@ -228,6 +248,7 @@
                     {
                         if (durationMoment === null) {
                             getDurationField().value = '';
+                            return;
                         }
 
                         if (!durationMoment.isValid()) {
@@ -255,18 +276,28 @@
                             duration = parseFloat(duration) * 3600;
                             momentDuration = moment.duration('PT' + duration + 'S');
                         } else if (duration.indexOf('H') !== -1 || duration.indexOf('M') !== -1 || duration.indexOf('S') !== -1) {
+                            {# D for days does not work, because 'PT1H' but with days 'P1D' is used #}
                             momentDuration = moment.duration('PT' + duration);
+                        } else {
+                            let c = parseInt(duration);
+                            let d = parseInt(duration).toFixed();
+                            if (!isNaN(c) && duration === d) {
+                                duration = c * 3600;
+                                momentDuration = moment.duration('PT' + duration + 'S');
+                            }
                         }
 
                         return momentDuration;
                     }
-                    
+
                     function applyDateToField(field, momentObj, format)
                     {
                         field.value = momentObj.format(format);
                         if (jQuery(field).data('daterangepicker') !== undefined) {
                             jQuery(field).data('daterangepicker').setStartDate(momentObj);
                             jQuery(field).data('daterangepicker').setEndDate(momentObj);
+                            {# make sure that the project list is reloaded and the dates can be compared against the project end date #}
+                            jQuery('#{{ blockPrefix }}_customer').trigger('change');
                         }
                     }
                 </script>

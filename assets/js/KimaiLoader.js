@@ -36,6 +36,7 @@ import KimaiDatePicker from "./plugins/KimaiDatePicker";
 import KimaiConfirmationLink from "./plugins/KimaiConfirmationLink";
 import KimaiMultiUpdateTable from "./plugins/KimaiMultiUpdateTable";
 import KimaiDateUtils from "./plugins/KimaiDateUtils";
+import KimaiEscape from "./plugins/KimaiEscape";
 
 export default class KimaiLoader {
 
@@ -48,19 +49,20 @@ export default class KimaiLoader {
             new KimaiTranslation(translations)
         );
 
+        kimai.registerPlugin(new KimaiEscape());
         kimai.registerPlugin(new KimaiEvent());
         kimai.registerPlugin(new KimaiAPI());
         kimai.registerPlugin(new KimaiAlert());
         kimai.registerPlugin(new KimaiDateUtils());
         kimai.registerPlugin(new KimaiFormSelect('.selectpicker'));
         kimai.registerPlugin(new KimaiConfirmationLink('confirmation-link'));
-        kimai.registerPlugin(new KimaiActiveRecordsDuration('[data-since]'));
+        kimai.registerPlugin(new KimaiActiveRecordsDuration());
         kimai.registerPlugin(new KimaiDatatableColumnView('data-column-visibility'));
         kimai.registerPlugin(new KimaiDateRangePicker('input[data-daterangepickerenable="on"]'));
         kimai.registerPlugin(new KimaiDateTimePicker('input[data-datetimepicker="on"]'));
         kimai.registerPlugin(new KimaiDatePicker('input[data-datepickerenable="on"]'));
         kimai.registerPlugin(new KimaiDatatable('section.content', 'table.dataTable'));
-        kimai.registerPlugin(new KimaiToolbar('form.header-search', 'toolbar-action'));
+        kimai.registerPlugin(new KimaiToolbar('form.searchform', 'toolbar-action'));
         kimai.registerPlugin(new KimaiSelectDataAPI('select[data-related-select]'));
         kimai.registerPlugin(new KimaiAlternativeLinks('.alternative-link'));
         kimai.registerPlugin(new KimaiAjaxModalForm('.modal-ajax-form'));

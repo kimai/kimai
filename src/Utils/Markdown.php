@@ -33,7 +33,12 @@ final class Markdown
      */
     public function toHtml(string $text, bool $safe = true): string
     {
-        $this->parser->setSafeMode($safe);
+        if ($safe !== true) {
+            @trigger_error('Only safe mode is supported in Markdown since 1.16.3 to prevent XSS attacks. Parameter $safe will be removed with 2.0', E_USER_DEPRECATED);
+        }
+
+        $this->parser->setSafeMode(true);
+        $this->parser->setMarkupEscaped(true);
 
         return $this->parser->text($text);
     }

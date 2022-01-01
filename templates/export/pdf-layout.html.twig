@@ -84,12 +84,13 @@
     {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
     {% if not showUserColumn and query.user %}
         &ndash;
-        {{ 'label.user'|trans }}: {{ query.user.displayName }} 
+        {{ 'label.user'|trans }}: {{ query.user.displayName }}
     {% endif %}
     </td>
     <td align="right">
-    {% if kimai_context.branding.company is not empty %}
-        {{ kimai_context.branding.company|raw }} &ndash; {{ now|date_full }}
+    {% set company = config('theme.branding.company') %}
+    {% if company is not empty %}
+        {{ company|raw }} &ndash; {{ now|date_full }}
     {% else %}
         {{ 'export.date_copyright'|trans({'%date%': now|date_full, '%kimai%': '<a href="' ~ constant('App\\Constants::HOMEPAGE') ~ '">' ~ constant('App\\Constants::SOFTWARE') ~ '</a>'})|raw }}
     {% endif %}
@@ -139,6 +140,7 @@ mpdf-->
         {% set totalInternalRate = 0 %}
         {% set totalRate = 0 %}
         {% for id, summary in summaries %}
+            <!-- CONTENT_PART -->
             {% set totalDuration = totalDuration + summary.duration %}
             {% set totalInternalRate = totalInternalRate + summary.rate_internal %}
             {% set totalRate = totalRate + summary.rate %}
@@ -273,6 +275,7 @@ mpdf-->
         </thead>
         <tbody>
         {% for entry in entries %}
+            <!-- CONTENT_PART -->
             {% set duration = duration + entry.duration %}
             {% if currency is same as(false) %}
                 {% set currency = entry.project.customer.currency %}

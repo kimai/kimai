@@ -25,6 +25,7 @@ use App\Repository\Query\CustomerQuery;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 
@@ -39,7 +40,7 @@ class CustomerRepository extends EntityRepository
      * @param null $lockVersion
      * @return Customer|null
      */
-    public function find($id, $lockMode = null, $lockVersion = null)
+    public function find($id, $lockMode = null, $lockVersion = null): ?Customer
     {
         /** @var Customer|null $customer */
         $customer = parent::find($id, $lockMode, $lockVersion);
@@ -47,7 +48,7 @@ class CustomerRepository extends EntityRepository
             return null;
         }
 
-        $loader = new CustomerLoader($this->getEntityManager());
+        $loader = new CustomerLoader($this->getEntityManager(), true);
         $loader->loadResults([$customer]);
 
         return $customer;
@@ -56,22 +57,17 @@ class CustomerRepository extends EntityRepository
     /**
      * @param Customer $customer
      * @throws ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function saveCustomer(Customer $customer)
+    public function saveCustomer(Customer $customer): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($customer);
         $entityManager->flush();
     }
 
-    /**
-     * @param null|bool $visible
-     * @return int
-     */
-    public function countCustomer($visible = null)
+    public function countCustomer(bool $visible = false): int
     {
-        if (null !== $visible) {
+        if ($visible) {
             return $this->count(['visible' => (bool) $visible]);
         }
 
@@ -79,57 +75,82 @@ class CustomerRepository extends EntityRepository
     }
 
     /**
-     * Retrieves statistics for one customer.
+     * @deprecated since 1.15 use CustomerStatisticService::getCustomerStatistics() instead - will be removed with 2.0
+     * @codeCoverageIgnore
      *
      * @param Customer $customer
      * @return CustomerStatistic
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function getCustomerStatistics(Customer $customer)
+    public function getCustomerStatistics(Customer $customer): CustomerStatistic
     {
         $stats = new CustomerStatistic();
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb
-            ->addSelect('COUNT(t.id) as recordAmount')
-            ->addSelect('SUM(t.duration) as recordDuration')
-            ->addSelect('SUM(t.rate) as recordRate')
-            ->addSelect('SUM(t.internalRate) as recordInternalRate')
             ->from(Timesheet::class, 't')
             ->join(Project::class, 'p', Query\Expr\Join::WITH, 't.project = p.id')
+            ->addSelect('COUNT(t.id) as amount')
+            ->addSelect('t.billable as billable')
+            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
+            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
+            ->addSelect('COALESCE(SUM(t.internalRate), 0) as internal_rate')
             ->andWhere('p.customer = :customer')
+            ->setParameter('customer', $customer)
+            ->groupBy('billable')
         ;
-        $timesheetResult = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
 
-        if (isset($timesheetResult[0])) {
-            $stats->setRecordAmount($timesheetResult[0]['recordAmount']);
-            $stats->setRecordDuration($timesheetResult[0]['recordDuration']);
-            $stats->setRecordRate($timesheetResult[0]['recordRate']);
-            $stats->setRecordInternalRate($timesheetResult[0]['recordInternalRate']);
+        $timesheetResult = $qb->getQuery()->getResult();
+
+        if (null !== $timesheetResult) {
+            $amount = 0;
+            $duration = 0;
+            $rate = 0.00;
+            $rateInternal = 0.00;
+            foreach ($timesheetResult as $resultRow) {
+                $amount += $resultRow['amount'];
+                $duration += $resultRow['duration'];
+                $rate += $resultRow['rate'];
+                $rateInternal += $resultRow['internal_rate'];
+                if ($resultRow['billable']) {
+                    $stats->setDurationBillable($resultRow['duration']);
+                    $stats->setRateBillable($resultRow['rate']);
+                    $stats->setRecordAmountBillable($resultRow['amount']);
+                }
+            }
+            $stats->setCounter($amount);
+            $stats->setRecordDuration($duration);
+            $stats->setRecordRate($rate);
+            $stats->setRecordInternalRate($rateInternal);
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb
-            ->select('COUNT(a.id) as activityAmount')
+            ->select('COUNT(a.id) as amount')
             ->from(Activity::class, 'a')
             ->join(Project::class, 'p', Query\Expr\Join::WITH, 'a.project = p.id')
             ->andWhere('a.project = p.id')
             ->andWhere('p.customer = :customer')
+            ->setParameter('customer', $customer)
         ;
-        $activityResult = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
 
-        if (isset($activityResult[0])) {
-            $stats->setActivityAmount($activityResult[0]['activityAmount']);
+        $activityResult = $qb->getQuery()->getOneOrNullResult();
+
+        if (null !== $activityResult) {
+            $stats->setActivityAmount($activityResult['amount']);
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('COUNT(p.id) as projectAmount')
+        $qb->select('COUNT(p.id) as amount')
             ->from(Project::class, 'p')
             ->andWhere('p.customer = :customer')
+            ->setParameter('customer', $customer)
         ;
-        $projectResult = $qb->getQuery()->execute(['customer' => $customer], Query::HYDRATE_ARRAY);
 
-        if (isset($projectResult[0])) {
-            $stats->setProjectAmount($projectResult[0]['projectAmount']);
+        $projectResult = $qb->getQuery()->getOneOrNullResult();
+
+        if (null !== $projectResult) {
+            $stats->setProjectAmount($projectResult['amount']);
         }
 
         return $stats;
@@ -137,41 +158,54 @@ class CustomerRepository extends EntityRepository
 
     private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])
     {
+        $permissions = $this->getPermissionCriteria($qb, $user, $teams);
+        if ($permissions->count() > 0) {
+            $qb->andWhere($permissions);
+        }
+    }
+
+    private function getPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): Andx
+    {
+        $andX = $qb->expr()->andX();
+
         // make sure that all queries without a user see all customers
         if (null === $user && empty($teams)) {
-            return;
+            return $andX;
         }
 
         // make sure that admins see all customers
         if (null !== $user && $user->canSeeAllData()) {
-            return;
+            return $andX;
         }
 
         if (null !== $user) {
-            $teams = array_merge($teams, $user->getTeams()->toArray());
+            $teams = array_merge($teams, $user->getTeams());
         }
 
         if (empty($teams)) {
-            $qb->andWhere('SIZE(c.teams) = 0');
+            $andX->add('SIZE(c.teams) = 0');
 
-            return;
+            return $andX;
         }
 
         $or = $qb->expr()->orX(
             'SIZE(c.teams) = 0',
             $qb->expr()->isMemberOf(':teams', 'c.teams')
         );
-        $qb->andWhere($or);
+        $andX->add($or);
 
         $ids = array_values(array_unique(array_map(function (Team $team) {
             return $team->getId();
         }, $teams)));
 
         $qb->setParameter('teams', $ids);
+
+        return $andX;
     }
 
     /**
      * @deprecated since 1.1 - use getQueryBuilderForFormType() instead - will be removed with 2.0
+     * @codeCoverageIgnore
      */
     public function builderForEntityType($customer)
     {
@@ -195,21 +229,34 @@ class CustomerRepository extends EntityRepository
             ->from(Customer::class, 'c')
             ->orderBy('c.name', 'ASC');
 
-        // TODO this where and the next if($query->hasCustomers()) should go into their own $qb->expr()->orX()
-        $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));
+        $mainQuery = $qb->expr()->andX();
+
+        $mainQuery->add($qb->expr()->eq('c.visible', ':visible'));
         $qb->setParameter('visible', true, \PDO::PARAM_BOOL);
 
-        if ($query->hasCustomers()) {
-            $qb->orWhere($qb->expr()->in('c.id', ':customer'))
-                ->setParameter('customer', $query->getCustomers());
+        $permissions = $this->getPermissionCriteria($qb, $query->getUser(), $query->getTeams());
+        if ($permissions->count() > 0) {
+            $mainQuery->add($permissions);
+        }
+
+        $outerQuery = $qb->expr()->orX();
+
+        // this is a risk, as a user can manipulate the query and inject IDs that would be hidden otherwise
+        if ($query->isAllowCustomerPreselect() && $query->hasCustomers()) {
+            $outerQuery->add($qb->expr()->in('c.id', ':customer'));
+            $qb->setParameter('customer', $query->getCustomers());
         }
 
         if (null !== $query->getCustomerToIgnore()) {
-            $qb->andWhere($qb->expr()->neq('c.id', ':ignored'));
+            $mainQuery = $qb->expr()->andX(
+                $mainQuery,
+                $qb->expr()->neq('c.id', ':ignored')
+            );
             $qb->setParameter('ignored', $query->getCustomerToIgnore());
         }
 
-        $this->addPermissionCriteria($qb, $query->getUser(), $query->getTeams());
+        $outerQuery->add($mainQuery);
+        $qb->andWhere($outerQuery);
 
         return $qb;
     }
@@ -223,7 +270,17 @@ class CustomerRepository extends EntityRepository
             ->from(Customer::class, 'c')
         ;
 
-        $qb->orderBy('c.' . $query->getOrderBy(), $query->getOrder());
+        foreach ($query->getOrderGroups() as $orderBy => $order) {
+            switch ($orderBy) {
+                case 'vat_id':
+                    $orderBy = 'c.vatId';
+                    break;
+                default:
+                    $orderBy = 'c.' . $orderBy;
+                    break;
+            }
+            $qb->addOrderBy($orderBy, $order);
+        }
 
         if ($query->isShowVisible()) {
             $qb->andWhere($qb->expr()->eq('c.visible', ':visible'));

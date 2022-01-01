@@ -47,12 +47,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  *
- * @Exporter\Order({"id", "name", "project", "budget", "timeBudget", "color", "visible", "comment"})
+ * @Exporter\Order({"id", "name", "project", "budget", "timeBudget", "budgetType", "color", "visible", "comment"})
  * @Exporter\Expose("project", label="label.project", exp="object.getProject() === null ? null : object.getProject().getName()")
- * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams().toArray()", type="array")
  */
-class Activity implements EntityWithMetaFields
+class Activity implements EntityWithMetaFields, EntityWithBudget
 {
+    use BudgetTrait;
+    use ColorTrait;
+
     /**
      * Internal ID
      *
@@ -121,38 +123,6 @@ class Activity implements EntityWithMetaFields
      * @Assert\NotNull()
      */
     private $visible = true;
-
-    // keep the traits here, for placing the column at the "correct" position
-    use ColorTrait;
-
-    /**
-     * The total monetary budget, will be zero if unconfigured.
-     *
-     * @var float
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Activity_Entity"})
-     *
-     * @ Exporter\Expose(label="label.budget")
-     *
-     * @ORM\Column(name="budget", type="float", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $budget = 0.00;
-    /**
-     * The time budget in seconds, will be be zero if unconfigured.
-     *
-     * @var int
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Activity_Entity"})
-     *
-     * @ Exporter\Expose(label="label.timeBudget", type="duration")
-     *
-     * @ORM\Column(name="time_budget", type="integer", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $timeBudget = 0;
     /**
      * Meta fields
      *
@@ -257,30 +227,6 @@ class Activity implements EntityWithMetaFields
         return $this->visible;
     }
 
-    public function setBudget(float $budget): Activity
-    {
-        $this->budget = $budget;
-
-        return $this;
-    }
-
-    public function getBudget(): float
-    {
-        return $this->budget;
-    }
-
-    public function setTimeBudget(int $seconds): Activity
-    {
-        $this->timeBudget = $seconds;
-
-        return $this;
-    }
-
-    public function getTimeBudget(): int
-    {
-        return $this->timeBudget;
-    }
-
     /**
      * @return Collection|MetaTableTypeInterface[]
      */
@@ -368,7 +314,22 @@ class Activity implements EntityWithMetaFields
     {
         if ($this->id) {
             $this->id = null;
-            $this->meta = new ArrayCollection();
+        }
+
+        $currentTeams = $this->teams;
+        $this->teams = new ArrayCollection();
+        /** @var Team $team */
+        foreach ($currentTeams as $team) {
+            $this->addTeam($team);
+        }
+
+        $currentMeta = $this->meta;
+        $this->meta = new ArrayCollection();
+        /** @var ProjectMeta $meta */
+        foreach ($currentMeta as $meta) {
+            $newMeta = clone $meta;
+            $newMeta->setEntity($this);
+            $this->setMetaField($newMeta);
         }
     }
 }

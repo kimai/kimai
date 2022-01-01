@@ -48,12 +48,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  *
- * @Exporter\Order({"id", "name", "customer", "orderNumber", "orderDate", "start", "end", "budget", "timeBudget", "color", "visible", "teams", "comment"})
+ * @Exporter\Order({"id", "name", "customer", "orderNumber", "orderDate", "start", "end", "budget", "timeBudget", "budgetType", "color", "visible", "teams", "comment"})
  * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
  * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams().toArray()", type="array")
  */
-class Project implements EntityWithMetaFields
+class Project implements EntityWithMetaFields, EntityWithBudget
 {
+    use BudgetTrait;
+    use ColorTrait;
+
     /**
      * Internal ID
      *
@@ -108,8 +111,8 @@ class Project implements EntityWithMetaFields
      *
      * @Exporter\Expose(label="label.orderNumber")
      *
-     * @ORM\Column(name="order_number", type="text", length=20, nullable=true)
-     * @Assert\Length(max=20)
+     * @ORM\Column(name="order_number", type="text", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
     private $orderNumber;
     /**
@@ -192,38 +195,6 @@ class Project implements EntityWithMetaFields
      * @Assert\NotNull()
      */
     private $visible = true;
-
-    // keep the trait include exactly here, for placing the column at the correct position
-    use ColorTrait;
-
-    /**
-     * The total monetary budget, will be zero if not configured.
-     *
-     * @var float
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Project_Entity"})
-     *
-     * @ Exporter\Expose(label="label.budget")
-     *
-     * @ORM\Column(name="budget", type="float", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $budget = 0.00;
-    /**
-     * The time budget in seconds, will be be zero if not configured.
-     *
-     * @var int
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Project_Entity"})
-     *
-     * @ Exporter\Expose(label="label.timeBudget", type="duration")
-     *
-     * @ORM\Column(name="time_budget", type="integer", nullable=false)
-     * @Assert\NotNull()
-     */
-    private $timeBudget = 0;
     /**
      * Meta fields
      *
@@ -420,30 +391,6 @@ class Project implements EntityWithMetaFields
         return $this;
     }
 
-    public function setBudget(float $budget): Project
-    {
-        $this->budget = $budget;
-
-        return $this;
-    }
-
-    public function getBudget(): float
-    {
-        return $this->budget;
-    }
-
-    public function setTimeBudget(int $seconds): Project
-    {
-        $this->timeBudget = $seconds;
-
-        return $this;
-    }
-
-    public function getTimeBudget(): int
-    {
-        return $this->timeBudget;
-    }
-
     /**
      * @return Collection|MetaTableTypeInterface[]
      */
@@ -519,6 +466,24 @@ class Project implements EntityWithMetaFields
         return $this->teams;
     }
 
+    public function isVisibleAtDate(\DateTime $dateTime): bool
+    {
+        if (!$this->isVisible()) {
+            return false;
+        }
+        if ($this->getCustomer() !== null && !$this->getCustomer()->isVisible()) {
+            return false;
+        }
+        if ($this->getStart() !== null && $dateTime < $this->getStart()) {
+            return false;
+        }
+        if ($this->getEnd() !== null && $dateTime > $this->getEnd()) {
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * @return string
      */
@@ -531,8 +496,22 @@ class Project implements EntityWithMetaFields
     {
         if ($this->id) {
             $this->id = null;
-            $this->teams = new ArrayCollection();
-            $this->meta = new ArrayCollection();
+        }
+
+        $currentTeams = $this->teams;
+        $this->teams = new ArrayCollection();
+        /** @var Team $team */
+        foreach ($currentTeams as $team) {
+            $this->addTeam($team);
+        }
+
+        $currentMeta = $this->meta;
+        $this->meta = new ArrayCollection();
+        /** @var ProjectMeta $meta */
+        foreach ($currentMeta as $meta) {
+            $newMeta = clone $meta;
+            $newMeta->setEntity($this);
+            $this->setMetaField($newMeta);
         }
     }
 }

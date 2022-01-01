@@ -13,7 +13,7 @@ use App\Entity\User;
 
 class TeamQuery extends BaseQuery
 {
-    public const TEAM_ORDER_ALLOWED = ['id', 'name', 'teamlead'];
+    public const TEAM_ORDER_ALLOWED = ['id', 'name'];
 
     /**
      * @var User[]
@@ -24,6 +24,7 @@ class TeamQuery extends BaseQuery
     {
         $this->setDefaults([
             'orderBy' => 'name',
+            'users' => [],
         ]);
     }
 

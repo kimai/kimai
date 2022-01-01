@@ -1,30 +1,7 @@
-{% macro users(view) %}
+{% macro users(view, query) %}
     {% import "macros/widgets.html.twig" as widgets %}
-
-    {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}} %}
-
-    {% if view == 'index' %}
-        {% set actions = actions|merge({'visibility': '#modal_user_admin'}) %}
-    {% else %}
-        {% set actions = actions|merge({'back': path('admin_user')}) %}
-    {% endif %}
-
-    {% set actions = actions|merge({'download': {'url': path('user_export'), 'class': 'toolbar-action'}}) %}
-
-    {% if is_granted('create_user') %}
-        {% set actions = actions|merge({'create': {'url': path('admin_user_create')}}) %}
-    {% endif %}
-
-    {% if view == 'index' %}
-        {% set actions = actions|merge({'help': {'url': 'users.html'|docu_link, 'target': '_blank'}}) %}
-    {% elseif view == 'permissions' %}
-        {% set actions = actions|merge({'help': {'url': 'permissions.html'|docu_link, 'target': '_blank'}}) %}
-    {% endif %}
-
-    {% set actions = actions|merge({'help': {'url': 'users.html'|docu_link, 'target': '_blank'}}) %}
-
-    {% set event = trigger('actions.users', {'actions': actions, 'view': view}) %}
-    {{ widgets.page_actions(event.payload.actions) }}
+    {% set event = actions(app.user, 'users', view, {'query': query}) %}
+    {{ widgets.page_actions(event.actions) }}
 {% endmacro %}
 
 {% macro user_permissions(view) %}
@@ -35,7 +12,7 @@
 
 {% macro user(user, view, options) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'user', {'view': view, 'user': user}) %}
+    {% set event = actions(app.user, 'user', view, {'user': user}) %}
     {% if view == 'index' %}
         {{ widgets.table_actions(event.actions) }}
     {% else %}

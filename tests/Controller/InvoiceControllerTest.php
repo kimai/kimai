@@ -17,6 +17,7 @@ use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\InvoiceTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @group integration
@@ -73,7 +74,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $templates = $this->importFixture($fixture);
         $id = $templates[0]->getId();
 
-        $this->request($client, '/invoice/?customer=1&template=' . $id . '&preview=');
+        $this->request($client, '/invoice/?customers[]=1&template=' . $id);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertHasNoEntriesWithFilter($client);
@@ -168,12 +169,12 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/?preview='));
+        $node->setAttribute('action', $this->createUrl('/invoice/'));
         $node->setAttribute('method', 'GET');
         $client->submit($form, [
             'template' => $template->getId(),
             'daterange' => $dateRange,
-            'customer' => 1,
+            'customers' => [1],
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -181,25 +182,24 @@ class InvoiceControllerTest extends ControllerBaseTest
         // no warning should be displayed
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
         $this->assertEquals(0, $node->count());
-        // but the datatable with all timesheets + 1 row for the total
-        $this->assertDataTableRowCount($client, 'datatable_invoice', 21);
+        // but the datatable with all timesheets
+        $this->assertDataTableRowCount($client, 'datatable_invoice', 20);
 
-        $form = $client->getCrawler()->filter('#invoice-print-form')->form();
-        $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/?create='));
-        $node->setAttribute('method', 'GET');
-        $client->submit($form, [
-            'template' => $template->getId(),
+        $urlParams = [
             'daterange' => $dateRange,
-            'customer' => 1,
-            'projects' => [1],
+            'projects[]' => 1,
             'markAsExported' => 1,
-        ]);
+        ];
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $node = $client->getCrawler()->filter('body');
-        $this->assertEquals(1, $node->count());
-        $this->assertEquals('invoice_print', $node->getIterator()[0]->getAttribute('class'));
+        /** @var CsrfToken $token */
+        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.create');
+
+        $action = '/invoice/save-invoice/1/' . $template->getId() . '/' . $token->getValue() . '?' . http_build_query($urlParams);
+        $this->request($client, $action);
+        $this->assertIsRedirect($client);
+        $this->assertRedirectUrl($client, '/invoice/show?id=', false);
+        $client->followRedirect();
+        $this->assertDataTableRowCount($client, 'datatable_invoices', 1);
 
         $em = $this->getEntityManager();
         $em->clear();
@@ -211,7 +211,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         }
     }
 
-    public function testPrintAction()
+    public function testPreviewAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
@@ -236,40 +236,35 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/?preview='));
+        $node->setAttribute('action', $this->createUrl('/invoice/'));
         $node->setAttribute('method', 'GET');
         $client->submit($form, [
             'template' => $id,
             'daterange' => $dateRange,
-            'customer' => 1,
+            'customers' => [1],
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        // no warning should be displayed
-        $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
-        $this->assertEquals(0, $node->count());
-        // but the datatable with all timesheets + 1 row for the total
-        $this->assertDataTableRowCount($client, 'datatable_invoice', 21);
+        /** @var CsrfToken $token */
+        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.preview');
 
-        $form = $client->getCrawler()->filter('#invoice-print-form')->form();
-        $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/?print='));
-        $node->setAttribute('method', 'GET');
-        $client->submit($form, [
-            'template' => $id,
+        $params = [
             'daterange' => $dateRange,
-            'customer' => 1,
             'projects' => [1],
-        ]);
+            'template' => $id,
+            'customers[]' => 1
+        ];
 
+        $action = '/invoice/preview/1/' . $token->getValue() . '?' . http_build_query($params);
+        $this->request($client, $action);
         $this->assertTrue($client->getResponse()->isSuccessful());
         $node = $client->getCrawler()->filter('body');
         $this->assertEquals(1, $node->count());
         $this->assertEquals('invoice_print', $node->getIterator()[0]->getAttribute('class'));
     }
 
-    public function testCreateActionAsAdminWithDownloadAndStatusChangeAndDelete()
+    public function testCreateActionAsAdminWithDownloadAndStatusChange()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -299,7 +294,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'template' => $template->getId(),
             'daterange' => $dateRange,
-            'customer' => 1,
+            'customers' => [1],
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -307,17 +302,19 @@ class InvoiceControllerTest extends ControllerBaseTest
         // no warning should be displayed
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
         $this->assertEquals(0, $node->count());
-        // but the datatable with all timesheets + 1 row for the total
-        $this->assertDataTableRowCount($client, 'datatable_invoice', 21);
+        // but the datatable with all timesheets
+        $this->assertDataTableRowCount($client, 'datatable_invoice', 20);
+
+        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.create');
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/?create='));
+        $node->setAttribute('action', $this->createUrl('/invoice/?createInvoice=true&token=' . $token->getValue()));
         $node->setAttribute('method', 'GET');
         $client->submit($form, [
             'template' => $template->getId(),
             'daterange' => $dateRange,
-            'customer' => 1,
+            'customers' => [1],
             'projects' => [1],
             'markAsExported' => 1,
         ]);
@@ -341,22 +338,44 @@ class InvoiceControllerTest extends ControllerBaseTest
         self::assertInstanceOf(BinaryFileResponse::class, $response);
         self::assertFileExists($response->getFile());
 
-        $this->request($client, '/invoice/change-status/' . $id . '/pending');
+        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.status');
+        $this->request($client, '/invoice/change-status/' . $id . '/pending/' . $token->getValue());
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $this->request($client, '/invoice/change-status/' . $id . '/paid');
+        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.status');
+        $this->request($client, '/invoice/change-status/' . $id . '/paid/' . $token->getValue());
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.status');
+        $this->assertHasValidationError(
+            $client,
+            '/invoice/change-status/' . $id . '/paid/' . $token->getValue(),
+            'form[name=invoice_edit_form]',
+            [
+                'invoice_edit_form' => [
+                    'paymentDate' => 'invalid'
+                ]
+            ],
+            ['#invoice_edit_form_paymentDate']
+        );
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=invoice_edit_form]')->form();
+        $client->submit($form, [
+            'invoice_edit_form' => [
+                'paymentDate' => (new \DateTime())->format('Y-m-d')
+            ]
+        ]);
+
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $this->request($client, '/invoice/change-status/' . $id . '/new');
-        $this->assertIsRedirect($client, '/invoice/show');
-        $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
-
-        $this->request($client, '/invoice/delete/' . $id);
+        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.status');
+        $this->request($client, '/invoice/change-status/' . $id . '/new/' . $token->getValue());
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -397,7 +416,9 @@ class InvoiceControllerTest extends ControllerBaseTest
         $template = $this->importFixture($fixture);
         $id = $template[0]->getId();
 
-        $this->request($client, '/invoice/template/' . $id . '/delete');
+        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.delete_template');
+
+        $this->request($client, '/invoice/template/' . $id . '/delete/' . $token);
         $this->assertIsRedirect($client, '/invoice/template');
         $client->followRedirect();
 

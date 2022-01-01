@@ -61,12 +61,42 @@ final class MarkdownExtension implements RuntimeExtensionInterface
         }
 
         if ($this->isMarkdownEnabled()) {
-            $content = $this->markdown->toHtml($content, false);
+            $content = $this->markdown->toHtml($content);
         } elseif ($fullLength) {
             $content = '<p>' . nl2br($content) . '</p>';
         }
 
         return $content;
+    }
+
+    /**
+     * Transforms the entities comment (customer, project, activity ...) into a one-liner.
+     *
+     * @param string|null $content
+     * @param bool $fullLength
+     * @return string
+     */
+    public function commentOneLiner(?string $content, bool $fullLength = true): string
+    {
+        if (empty($content)) {
+            return '';
+        }
+
+        $addHellip = false;
+
+        if (!$fullLength && \strlen($content) > 52) {
+            $content = trim(substr($content, 0, 50));
+            $addHellip = true;
+        }
+
+        $content = explode(PHP_EOL, $content);
+        $result = $content[0];
+
+        if (\count($content) > 1 || $addHellip) {
+            $result .= ' &hellip;';
+        }
+
+        return $result;
     }
 
     /**
@@ -82,7 +112,7 @@ final class MarkdownExtension implements RuntimeExtensionInterface
         }
 
         if ($this->isMarkdownEnabled()) {
-            return $this->markdown->toHtml($content, false);
+            return $this->markdown->toHtml($content);
         }
 
         return nl2br($content);
@@ -96,6 +126,6 @@ final class MarkdownExtension implements RuntimeExtensionInterface
      */
     public function markdownToHtml(string $content): string
     {
-        return $this->markdown->toHtml($content, false);
+        return $this->markdown->toHtml($content);
     }
 }

@@ -1,20 +1,19 @@
 {% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 
-{% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'users'|trans }}{% endblock %}
 
 {% block main %}
 
     {% set inUse = (stats.recordsTotal > 0) %}
 
     {% set params = {
-        '%user%': widgets.username(user),
         '%records%': stats.recordsTotal,
         '%duration%': stats.durationTotal|duration
     } %}
 
     {{ include(app.request.xmlHttpRequest ? 'default/_form_delete_modal.html.twig' : 'default/_form_delete.html.twig', {
-        'message': ("admin_user.short_stats"|trans(params) ~ "admin_entity.delete_confirm"|trans),
+        'message': ("delete_warning.short_stats"|trans(params) ~ "admin_entity.delete_confirm"|trans),
         'form': form,
         'used': inUse,
         'back': path('admin_user')

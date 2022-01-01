@@ -13,10 +13,11 @@ use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Configuration;
 use App\Form\Model\SystemConfiguration;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<Configuration>
+ * @final
  */
 class ConfigurationRepository extends EntityRepository implements ConfigLoaderInterface
 {
@@ -26,14 +27,14 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
 
     public function clearCache()
     {
-        static::$cacheByPrefix = [];
-        static::$cacheAll = [];
-        static::$initialized = false;
+        self::$cacheByPrefix = [];
+        self::$cacheAll = [];
+        self::$initialized = false;
     }
 
     private function prefillCache()
     {
-        if (static::$initialized === true) {
+        if (self::$initialized === true) {
             return;
         }
 
@@ -41,13 +42,13 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
         $configs = $this->findAll();
         foreach ($configs as $config) {
             $key = substr($config->getName(), 0, strpos($config->getName(), '.'));
-            if (!\array_key_exists($key, static::$cacheByPrefix)) {
-                static::$cacheByPrefix[$key] = [];
+            if (!\array_key_exists($key, self::$cacheByPrefix)) {
+                self::$cacheByPrefix[$key] = [];
             }
-            static::$cacheByPrefix[$key][] = $config;
-            static::$cacheAll[] = $config;
+            self::$cacheByPrefix[$key][] = $config;
+            self::$cacheAll[] = $config;
         }
-        static::$initialized = true;
+        self::$initialized = true;
     }
 
     public function saveConfiguration(Configuration $configuration)
@@ -67,14 +68,14 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
         $this->prefillCache();
 
         if (null === $prefix) {
-            return static::$cacheAll;
+            return self::$cacheAll;
         }
 
-        if (!\array_key_exists($prefix, static::$cacheByPrefix)) {
+        if (!\array_key_exists($prefix, self::$cacheByPrefix)) {
             return [];
         }
 
-        return static::$cacheByPrefix[$prefix];
+        return self::$cacheByPrefix[$prefix];
     }
 
     public function saveSystemConfiguration(SystemConfiguration $model)

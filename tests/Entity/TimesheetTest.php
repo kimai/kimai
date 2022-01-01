@@ -172,4 +172,39 @@ class TimesheetTest extends TestCase
 
         $sut->setCategory('foo');
     }
+
+    public function testClone()
+    {
+        $sut = new Timesheet();
+        $sut->setExported(true);
+        $sut->setDescription('Invalid timesheet category "foo" given, expected one of: work, holiday, sickness, parental, overtime');
+
+        $meta = new TimesheetMeta();
+        $meta->setName('blabla');
+        $meta->setValue('1234567890');
+        $meta->setIsVisible(false);
+        $meta->setIsRequired(true);
+        $sut->setMetaField($meta);
+
+        $tag = new Tag();
+        $tag->setName('bar');
+        $sut->addTag($tag);
+        $tag = new Tag();
+        $tag->setName('foo');
+        $sut->addTag($tag);
+
+        $clone = clone $sut;
+
+        foreach ($sut->getMetaFields() as $metaField) {
+            $cloneMeta = $clone->getMetaField($metaField->getName());
+            self::assertEquals($cloneMeta->getValue(), $metaField->getValue());
+        }
+        self::assertEquals($clone->getTags(), $sut->getTags());
+        self::assertEquals($clone->getTags(), $sut->getTags());
+        self::assertEquals($clone->getTagsAsArray(), $sut->getTagsAsArray());
+        self::assertEquals(['bar', 'foo'], $sut->getTagsAsArray());
+        self::assertEquals($clone->getBegin(), $sut->getBegin());
+        self::assertEquals($clone->getEnd(), $sut->getEnd());
+        self::assertFalse($clone->isExported());
+    }
 }

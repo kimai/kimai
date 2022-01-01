@@ -13,7 +13,6 @@ use App\Entity\Customer;
 use App\Entity\Team;
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
 
 /**
  * Defines the sample data to load in during controller tests.
@@ -95,7 +94,6 @@ final class TeamFixtures implements TestFixture
     {
         $created = [];
 
-        $faker = Factory::create();
         $user = $this->getAllUsers($manager);
         $customer = $this->getAllCustomers($manager);
 
@@ -109,10 +107,8 @@ final class TeamFixtures implements TestFixture
             }
 
             $team = new Team();
-            $team
-                ->setName($faker->name)
-                ->setTeamLead($lead)
-            ;
+            $team->setName('Testing: ' . uniqid());
+            $team->addTeamlead($lead);
 
             if ($this->addUser) {
                 $userToAdd = null;

@@ -15,8 +15,10 @@ use App\Entity\User;
 use App\Twig\LocaleFormatExtensions;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Intl\Util\IntlTestHelper;
+use Symfony\Component\Security\Core\Security;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use Twig\TwigTest;
 
 /**
  * @covers \App\Twig\LocaleFormatExtensions
@@ -42,7 +44,11 @@ class LocaleFormatExtensionsTest extends TestCase
             $language = $dateSettings;
             $dateSettings = $locale;
         }
-        $sut = new LocaleFormatExtensions(new LanguageFormattings($dateSettings));
+
+        $security = $this->createMock(Security::class);
+        $security->expects($this->any())->method('getUser')->willReturn(new User());
+
+        $sut = new LocaleFormatExtensions(new LanguageFormattings($dateSettings), $security);
         $sut->setLocale($language);
 
         return $sut;
@@ -51,8 +57,8 @@ class LocaleFormatExtensionsTest extends TestCase
     public function testGetFilters()
     {
         $filters = [
-            'month_name', 'day_name', 'date_short', 'date_time', 'date_full', 'date_format', 'time', 'hour24',
-            'duration', 'duration_decimal', 'money', 'currency', 'country', 'language', 'amount'
+            'month_name', 'day_name', 'date_short', 'date_time', 'date_full', 'date_format', 'date_weekday', 'time', 'hour24',
+            'duration', 'chart_duration', 'duration_decimal', 'money', 'currency', 'country', 'language', 'amount'
         ];
         $i = 0;
 
@@ -68,7 +74,7 @@ class LocaleFormatExtensionsTest extends TestCase
 
     public function testGetFunctions()
     {
-        $functions = ['get_format_duration', 'create_date', 'locales'];
+        $functions = ['get_format_duration', 'create_date', 'locales', 'month_names'];
         $i = 0;
 
         $sut = $this->getSut('de', []);
@@ -79,6 +85,22 @@ class LocaleFormatExtensionsTest extends TestCase
         foreach ($twigFunctions as $filter) {
             $this->assertInstanceOf(TwigFunction::class, $filter);
             $this->assertEquals($functions[$i++], $filter->getName());
+        }
+    }
+
+    public function testGetTests()
+    {
+        $tests = ['weekend', 'today'];
+        $i = 0;
+
+        $sut = $this->getSut('de', []);
+        $twigTests = $sut->getTests();
+        $this->assertCount(\count($tests), $twigTests);
+
+        /** @var TwigTest $test */
+        foreach ($twigTests as $test) {
+            $this->assertInstanceOf(TwigTest::class, $test);
+            $this->assertEquals($tests[$i++], $test->getName());
         }
     }
 
@@ -203,31 +225,21 @@ class LocaleFormatExtensionsTest extends TestCase
         $this->assertEquals('17:53', $sut->time('2016-06-23 17:53'));
     }
 
-    public function testHour24()
-    {
-        $sut = $this->getSut('en', [
-            'en' => ['24_hours' => false],
-        ]);
-        $this->assertEquals('bar', $sut->hour24('foo', 'bar'));
-
-        $sut = $this->getSut('de', [
-            'de' => ['24_hours' => true],
-        ]);
-        $this->assertEquals('foo', $sut->hour24('foo', 'bar'));
-    }
-
     public function testDateTimeFull()
     {
         $sut = $this->getSut('en', [
-            'en' => ['date_time_type' => 'yyyy-MM-dd HH:mm:ss'],
+            'en' => ['date_type' => 'dd-yyyy-MM-'],
         ]);
 
         $dateTime = new \DateTime('2019-08-17 12:29:47', new \DateTimeZone(date_default_timezone_get()));
         $dateTime->setDate(2019, 8, 17);
         $dateTime->setTime(12, 29, 47);
 
-        $this->assertEquals('2019-08-17 12:29:47', $sut->dateTimeFull($dateTime));
-        $this->assertEquals('2019-08-17 12:29:47', $sut->dateTimeFull('2019-08-17 12:29:47'));
+        $this->assertEquals('17-2019-08- 12:29', $sut->dateTimeFull($dateTime));
+        $this->assertEquals('17-2019-08- 12:29', $sut->dateTimeFull('2019-08-17 12:29:47'));
+
+        $dateTime = new \DateTime('2019-08-17 00:00:00');
+        $this->assertEquals('17-2019-08-', $sut->dateTimeFull($dateTime, true));
 
         // next test checks the fallback for errors while converting the date
         /* @phpstan-ignore-next-line */
@@ -455,7 +467,16 @@ class LocaleFormatExtensionsTest extends TestCase
         $sut = $this->getSut($this->localeEn, 'en');
 
         $this->assertEquals('00:00 h', $sut->duration(null));
-        $this->assertEquals('0', $sut->duration(null, true));
+        $this->assertEquals('0.00', $sut->duration(null, true));
+    }
+
+    public function testDurationChart()
+    {
+        $sut = $this->getSut('en', $this->localeEn);
+        self::assertEquals(0.34, $sut->durationChart(1234));
+        self::assertEquals(3.43, $sut->durationChart(12345));
+        self::assertEquals(34.29, $sut->durationChart(123456));
+        self::assertEquals(342.94, $sut->durationChart(1234567));
     }
 
     public function testDurationDecimal()
@@ -474,15 +495,48 @@ class LocaleFormatExtensionsTest extends TestCase
 
         // test negative duration
         $sut = $this->getSut($this->localeEn, 'en');
-        $this->assertEquals('0', $sut->durationDecimal(-1));
+        $this->assertEquals('0.00', $sut->durationDecimal(-1));
 
         // test zero duration
         $sut = $this->getSut($this->localeEn, 'en');
-        $this->assertEquals('0', $sut->durationDecimal(0));
+        $this->assertEquals('0.00', $sut->durationDecimal(0));
 
         $sut = $this->getSut($this->localeEn, 'en');
 
-        $this->assertEquals('0', $sut->durationDecimal(null));
+        $this->assertEquals('0.00', $sut->durationDecimal(null));
+    }
+
+    private function getTest(string $name): TwigTest
+    {
+        $sut = $this->getSut('en', $this->localeEn);
+        foreach ($sut->getTests() as $test) {
+            if ($test->getName() === $name) {
+                return $test;
+            }
+        }
+
+        throw new \Exception('Unknown twig test: ' . $name);
+    }
+
+    public function testIsToday()
+    {
+        $test = $this->getTest('today');
+        self::assertTrue(\call_user_func($test->getCallable(), new \DateTime()));
+        self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('-1 day')));
+        self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('+1 day')));
+        self::assertFalse(\call_user_func($test->getCallable(), new \stdClass()));
+        self::assertFalse(\call_user_func($test->getCallable(), null));
+    }
+
+    public function testIsWeekend()
+    {
+        $test = $this->getTest('weekend');
+        self::assertTrue(\call_user_func($test->getCallable(), new \DateTime('first saturday this month')));
+        self::assertTrue(\call_user_func($test->getCallable(), new \DateTime('first sunday this month')));
+        self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('first monday this month')));
+        self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('first friday this month')));
+        self::assertFalse(\call_user_func($test->getCallable(), new \stdClass()));
+        self::assertFalse(\call_user_func($test->getCallable(), null));
     }
 
     protected function getTimesheet($seconds)

@@ -1,72 +1,15 @@
-{% macro customers(view) %}
+{% macro customers(view, query) %}
     {% import "macros/widgets.html.twig" as widgets %}
-
-    {% set actions = {
-        'search': {'class': 'search-toggle visible-xs-inline'},
-        'visibility': {'modal': '#modal_customer_admin'},
-        'download': {'url': path('customer_export'), 'class': 'toolbar-action'}
-    } %}
-
-    {% if is_granted('create_customer') %}
-        {% set actions = actions|merge({'create': {'url': path('admin_customer_create'), 'class': 'modal-ajax-form'}}) %}
-    {% endif %}
-
-    {% set actions = actions|merge({'help': {'url': 'customer.html'|docu_link, 'target': '_blank'}}) %}
-
-    {% set event = trigger('actions.customers', {'actions': actions, 'view': view}) %}
-    {{ widgets.page_actions(event.payload.actions) }}
+    {% set event = actions(app.user, 'customers', view, {'query': query}) %}
+    {{ widgets.page_actions(event.actions) }}
 {% endmacro %}
 
 {% macro customer(customer, view, options) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set actions = {} %}
-
-    {% if customer.id is not empty %}
-        {% if view != 'details' and is_granted('view', customer) %}
-            {% set actions = actions|merge({'details': path('customer_details', {'id': customer.id})}) %}
-        {% endif %}
-        {% if is_granted('edit', customer) %}
-            {% set class = '' %}
-            {% if view != 'edit' %}
-                {% set class = 'modal-ajax-form' %}
-            {% endif %}
-            {% set actions = actions|merge({'edit': {'url': path('admin_customer_edit', {'id': customer.id}), 'class': class}}) %}
-        {% endif %}
-        {% if is_granted('permissions', customer) %}
-            {% set class = '' %}
-            {% if view != 'permissions' %}
-                {% set class = 'modal-ajax-form' %}
-            {% endif %}
-            {% set actions = actions|merge({'permissions': {'url': path('admin_customer_permissions', {'id': customer.id}), 'class': class}}) %}
-        {% endif %}
-        {% if actions|length > 0 %}
-            {% set actions = actions|merge({'divider': null}) %}
-        {% endif %}
-        {% if is_granted('view_project') or is_granted('view_teamlead_project') or is_granted('view_team_project') %}
-            {% set actions = actions|merge({'project': path('admin_project', {'customers[]': customer.id})}) %}
-        {% endif %}
-        {% if is_granted('view_activity') %}
-            {% set actions = actions|merge({'activity': path('admin_activity', {'customers[]': customer.id})}) %}
-        {% endif %}
-        {% if is_granted('view_other_timesheet') %}
-            {% set actions = actions|merge({'timesheet': path('admin_timesheet', {'customers[]': customer.id})}) %}
-        {% endif %}
-        {% if customer.visible and is_granted('create_project') %}
-            {% set actions = actions|merge({'create-project': {'url': path('admin_project_create_with_customer', {'customer': customer.id}), 'class': 'modal-ajax-form'}}) %}
-        {% endif %}
-        {% if view == 'index' and is_granted('delete', customer) %}
-            {% set actions = actions|merge({'trash': {'url': path('admin_customer_delete', {'id': customer.id}), 'class': 'modal-ajax-form'}}) %}
-        {% endif %}
-    {% endif %}
-
-    {% if view != 'index' and view != 'custom' %}
-        {% set actions = actions|merge({'back': options.back|default(path('admin_customer'))}) %}
-    {% endif %}
-
-    {% set event = trigger('actions.customer', {'actions': actions, 'view': view, 'customer': customer}) %}
+    {% set event = actions(app.user, 'customer', view, {'customer': customer}) %}
     {% if view == 'index' or view == 'custom' %}
-        {{ widgets.table_actions(event.payload.actions) }}
+        {{ widgets.table_actions(event.actions) }}
     {% else %}
-        {{ widgets.entity_actions(event.payload.actions) }}
+        {{ widgets.page_actions(event.actions) }}
     {% endif %}
 {% endmacro %}

@@ -203,13 +203,13 @@ final class PermissionController extends AbstractController
     }
 
     /**
-     * @Route(path="/roles/{id}/delete/{token}", name="admin_user_role_delete", methods={"GET", "POST"})
+     * @Route(path="/roles/{id}/delete/{csrfToken}", name="admin_user_role_delete", methods={"GET", "POST"})
      * @Security("is_granted('role_permissions')")
      */
-    public function deleteRole(Role $role, string $token, UserRepository $userRepository, CsrfTokenManagerInterface $csrfTokenManager): Response
+    public function deleteRole(Role $role, string $csrfToken, UserRepository $userRepository, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
-        if (!$this->isCsrfTokenValid(self::TOKEN_NAME, $token)) {
-            $this->flashUpdateException(new \Exception('Invalid CSRF token'));
+        if (!$this->isCsrfTokenValid(self::TOKEN_NAME, $csrfToken)) {
+            $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('admin_user_permissions');
         }
@@ -235,12 +235,12 @@ final class PermissionController extends AbstractController
     }
 
     /**
-     * @Route(path="/roles/{id}/{name}/{value}/{token}", name="admin_user_permission_save", methods={"POST"})
+     * @Route(path="/roles/{id}/{name}/{value}/{csrfToken}", name="admin_user_permission_save", methods={"POST"})
      * @Security("is_granted('role_permissions')")
      */
-    public function savePermission(Role $role, string $name, bool $value, string $token, RolePermissionRepository $rolePermissionRepository, CsrfTokenManagerInterface $csrfTokenManager): Response
+    public function savePermission(Role $role, string $name, bool $value, string $csrfToken, RolePermissionRepository $rolePermissionRepository, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
-        if (!$this->isCsrfTokenValid(self::TOKEN_NAME, $token)) {
+        if (!$this->isCsrfTokenValid(self::TOKEN_NAME, $csrfToken)) {
             throw new BadRequestHttpException('Invalid CSRF token');
         }
 

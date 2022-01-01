@@ -10,9 +10,11 @@
 namespace App\Tests\Repository\Query;
 
 use App\Entity\Activity;
+use App\Entity\Bookmark;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
+use App\Form\Model\DateRange;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\ProjectQuery;
@@ -34,6 +36,7 @@ class BaseQueryTest extends TestCase
     {
         $this->assertBaseQuery(new BaseQuery());
         $this->assertResetByFormError(new BaseQuery());
+        $this->assertFilter(new BaseQuery());
     }
 
     /**
@@ -63,13 +66,14 @@ class BaseQueryTest extends TestCase
         self::assertNull($sut->getSearchTerm());
     }
 
-    protected function assertBaseQuery(BaseQuery $sut, $orderBy = 'id')
+    protected function assertBaseQuery(BaseQuery $sut, $orderBy = 'id', $order = BaseQuery::ORDER_ASC)
     {
         $this->assertPage($sut);
         $this->assertPageSize($sut);
         $this->assertOrderBy($sut, $orderBy);
-        $this->assertOrder($sut);
+        $this->assertOrder($sut, $order);
         $this->assertTeams($sut);
+        $this->assertBookmark($sut);
     }
 
     private function getFormBuilder(string $name)
@@ -118,9 +122,52 @@ class BaseQueryTest extends TestCase
         self::assertSame($team, $sut->getTeams()[0]);
     }
 
+    protected function assertFilter(BaseQuery $sut)
+    {
+        self::assertEquals(0, $sut->countFilter());
+        $sut->setSearchTerm(new SearchTerm('sdfsdf'));
+        self::assertEquals(1, $sut->countFilter());
+        $sut->setPageSize(22);
+        self::assertEquals(2, $sut->countFilter());
+        $sut->setPage(2);
+        self::assertEquals(2, $sut->countFilter());
+        $sut->setOrderBy('foo');
+        self::assertEquals(3, $sut->countFilter());
+        $sut->setOrder(BaseQuery::ORDER_DESC);
+        self::assertEquals(4, $sut->countFilter());
+        $sut->setOrder(BaseQuery::ORDER_ASC);
+        self::assertEquals(3, $sut->countFilter());
+        $sut->setOrder(BaseQuery::ORDER_DESC);
+        self::assertEquals(4, $sut->countFilter());
+
+        self::assertTrue($sut->matchesFilter('page', 2));
+        self::assertFalse($sut->isDefaultFilter('page'));
+
+        $sut->resetFilter();
+        self::assertEquals(0, $sut->countFilter());
+
+        self::assertEquals(1, $sut->getPage());
+        self::assertTrue($sut->matchesFilter('page', 1));
+        self::assertTrue($sut->isDefaultFilter('page'));
+        self::assertFalse($sut->isDefaultFilter('foo'));
+    }
+
+    protected function assertBookmark(BaseQuery $sut)
+    {
+        $bookmark = new Bookmark();
+        self::assertNull($sut->getBookmark());
+        self::assertFalse($sut->hasBookmark());
+        $sut->setBookmark($bookmark);
+        self::assertSame($bookmark, $sut->getBookmark());
+        self::assertTrue($sut->hasBookmark());
+        self::assertFalse($sut->isBookmarkSearch());
+        $sut->flagAsBookmarkSearch();
+        self::assertTrue($sut->isBookmarkSearch());
+    }
+
     protected function assertPage(BaseQuery $sut)
     {
-        self::assertEquals(BaseQuery::DEFAULT_PAGE, $sut->getPage());
+        self::assertEquals(1, $sut->getPage());
 
         $sut->setPage(42);
         self::assertEquals(42, $sut->getPage());
@@ -274,5 +321,30 @@ class BaseQueryTest extends TestCase
         $sut->setProjects([99]);
         $this->assertEquals(99, $sut->getProject());
         $this->assertEquals([99], $sut->getProjects());
+    }
+
+    protected function assertDateRangeTrait($sut)
+    {
+        self::assertNull($sut->getBegin());
+        self::assertNull($sut->getEnd());
+
+        $dateRange = new DateRange();
+        $sut->setDateRange($dateRange);
+
+        self::assertSame($dateRange, $sut->getDateRange());
+        self::assertNull($sut->getBegin());
+        self::assertNull($sut->getEnd());
+
+        $begin = new \DateTime('2013-11-23 13:45:07');
+        $end = new \DateTime('2014-01-01 23:45:11');
+        $dateRange->setBegin($begin);
+        $dateRange->setEnd($end);
+
+        self::assertSame($begin, $sut->getDateRange()->getBegin());
+        /* @phpstan-ignore-next-line */
+        self::assertSame($begin, $sut->getBegin());
+        self::assertSame($end, $sut->getDateRange()->getEnd());
+        /* @phpstan-ignore-next-line */
+        self::assertSame($end, $sut->getEnd());
     }
 }

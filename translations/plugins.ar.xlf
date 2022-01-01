@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ar" datatype="plaintext" original="plugins.en.xlf">
+    <body>
+      <trans-unit id="vFSLi54" resname="plugin.none_installed">
+        <source>plugin.none_installed</source>
+        <target>ليس لديك أي إضافات مثبتة حتى الآن.</target>
+      </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
+        <source>plugin.marketplace</source>
+        <target>متجر Kimai</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

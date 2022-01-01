@@ -16,10 +16,10 @@ use App\Entity\Project;
  */
 class ActivityQuery extends ProjectQuery
 {
-    public const ACTIVITY_ORDER_ALLOWED = ['id', 'name', 'comment', 'customer', 'project', 'visible'];
+    public const ACTIVITY_ORDER_ALLOWED = ['id', 'name', 'comment', 'customer', 'project', 'budget', 'timeBudget', 'visible'];
 
     /**
-     * @var Project[]|int[]
+     * @var array<Project|int>
      */
     private $projects = [];
     /**
@@ -36,6 +36,9 @@ class ActivityQuery extends ProjectQuery
         parent::__construct();
         $this->setDefaults([
             'orderBy' => 'name',
+            'projects' => [],
+            'globalsOnly' => false,
+            'excludeGlobals' => false,
         ]);
     }
 

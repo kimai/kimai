@@ -54,8 +54,6 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/system-config/edit/timesheet');
 
-        $expectedForms = $this->getTestDataForms();
-
         $result = $client->getCrawler()->filter('section.content div.box.box-primary');
         $this->assertEquals(1, \count($result));
 
@@ -72,10 +70,13 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
     {
         return [
             ['form[name=system_configuration_form_timesheet]', $this->createUrl('/admin/system-config/update/timesheet')],
+            ['form[name=system_configuration_form_quick_entry]', $this->createUrl('/admin/system-config/update/quick_entry')],
+            ['form[name=system_configuration_form_lockdown_period]', $this->createUrl('/admin/system-config/update/lockdown_period')],
             ['form[name=system_configuration_form_invoice]', $this->createUrl('/admin/system-config/update/invoice')],
+            ['form[name=system_configuration_form_authentication]', $this->createUrl('/admin/system-config/update/authentication')],
             ['form[name=system_configuration_form_rounding]', $this->createUrl('/admin/system-config/update/rounding')],
-            ['form[name=system_configuration_form_form_customer]', $this->createUrl('/admin/system-config/update/form_customer')],
-            ['form[name=system_configuration_form_form_user]', $this->createUrl('/admin/system-config/update/form_user')],
+            ['form[name=system_configuration_form_customer]', $this->createUrl('/admin/system-config/update/customer')],
+            ['form[name=system_configuration_form_user]', $this->createUrl('/admin/system-config/update/user')],
             ['form[name=system_configuration_form_theme]', $this->createUrl('/admin/system-config/update/theme')],
             ['form[name=system_configuration_form_calendar]', $this->createUrl('/admin/system-config/update/calendar')],
             ['form[name=system_configuration_form_branding]', $this->createUrl('/admin/system-config/update/branding')],
@@ -91,7 +92,6 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertEquals('default', $configService->find('timesheet.mode'));
         $this->assertTrue($configService->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(1, $configService->find('timesheet.active_entries.hard_limit'));
-        $this->assertEquals(1, $configService->find('timesheet.active_entries.soft_limit'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_timesheet]')->form();
         $client->submit($form, [
@@ -101,11 +101,8 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                     ['name' => 'timesheet.active_entries.default_begin', 'value' => '23:59'],
                     ['name' => 'timesheet.rules.allow_future_times', 'value' => false],
                     ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => false],
-                    ['name' => 'timesheet.rules.lockdown_period_start', 'value' => null],
-                    ['name' => 'timesheet.rules.lockdown_period_end', 'value' => null],
-                    ['name' => 'timesheet.rules.lockdown_grace_period', 'value' => null],
+                    ['name' => 'timesheet.rules.allow_overbooking_budget', 'value' => false],
                     ['name' => 'timesheet.active_entries.hard_limit', 'value' => 99],
-                    ['name' => 'timesheet.active_entries.soft_limit', 'value' => 77],
                 ]
             ]
         ]);
@@ -120,7 +117,41 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertFalse($configService->find('timesheet.rules.allow_future_times'));
         $this->assertFalse($configService->find('timesheet.rules.allow_overlapping_records'));
         $this->assertEquals(99, $configService->find('timesheet.active_entries.hard_limit'));
-        $this->assertEquals(77, $configService->find('timesheet.active_entries.soft_limit'));
+    }
+
+    public function testUpdateLockdownPeriodConfig()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/system-config/');
+
+        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
+        $this->assertNull($configService->find('timesheet.rules.lockdown_period_start'));
+        $this->assertNull($configService->find('timesheet.rules.lockdown_period_end'));
+        $this->assertNull($configService->find('timesheet.rules.lockdown_period_timezone'));
+        $this->assertNull($configService->find('timesheet.rules.lockdown_grace_period'));
+
+        $form = $client->getCrawler()->filter('form[name=system_configuration_form_lockdown_period]')->form();
+        $client->submit($form, [
+            'system_configuration_form_lockdown_period' => [
+                'configuration' => [
+                    ['name' => 'timesheet.rules.lockdown_period_start', 'value' => 'first day of last month 01:23:45'],
+                    ['name' => 'timesheet.rules.lockdown_period_end', 'value' => 'last day of last month 23:01:45'],
+                    ['name' => 'timesheet.rules.lockdown_period_timezone', 'value' => 'Africa/Bangui'],
+                    ['name' => 'timesheet.rules.lockdown_grace_period', 'value' => '+ 12 hours'],
+                ]
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/'));
+        $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertHasFlashSaveSuccess($client);
+
+        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
+        $this->assertEquals('first day of last month 01:23:45', $configService->find('timesheet.rules.lockdown_period_start'));
+        $this->assertEquals('last day of last month 23:01:45', $configService->find('timesheet.rules.lockdown_period_end'));
+        $this->assertEquals('Africa/Bangui', $configService->find('timesheet.rules.lockdown_period_timezone'));
+        $this->assertEquals('+ 12 hours', $configService->find('timesheet.rules.lockdown_grace_period'));
     }
 
     public function testUpdateTimesheetConfigValidation()
@@ -136,18 +167,14 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                         ['name' => 'timesheet.active_entries.default_begin', 'value' => '23:59'],
                         ['name' => 'timesheet.rules.allow_future_times', 'value' => 1],
                         ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => 1],
-                        ['name' => 'timesheet.rules.lockdown_period_start', 'value' => 'first day of last month'],
-                        ['name' => 'timesheet.rules.lockdown_period_end', 'value' => 'first day of last month'],
-                        ['name' => 'timesheet.rules.lockdown_grace_period', 'value' => '+10 days'],
+                        ['name' => 'timesheet.rules.allow_overbooking_budget', 'value' => 1],
                         ['name' => 'timesheet.active_entries.hard_limit', 'value' => -1],
-                        ['name' => 'timesheet.active_entries.soft_limit', 'value' => -1],
                     ]
                 ]
             ],
             [
                 '#system_configuration_form_timesheet_configuration_0_value', // mode
-                '#system_configuration_form_timesheet_configuration_7_value', // hard_limit
-                '#system_configuration_form_timesheet_configuration_8_value', // soft_limit
+                '#system_configuration_form_timesheet_configuration_5_value', // hard_limit
             ],
             true
         );
@@ -163,9 +190,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertEquals('DE', $configService->find('defaults.customer.country'));
         $this->assertEquals('EUR', $configService->find('defaults.customer.currency'));
 
-        $form = $client->getCrawler()->filter('form[name=system_configuration_form_form_customer]')->form();
+        $form = $client->getCrawler()->filter('form[name=system_configuration_form_customer]')->form();
         $client->submit($form, [
-            'system_configuration_form_form_customer' => [
+            'system_configuration_form_customer' => [
                 'configuration' => [
                     ['name' => 'defaults.customer.timezone', 'value' => 'Atlantic/Canary'],
                     ['name' => 'defaults.customer.country', 'value' => 'BB'],
@@ -195,9 +222,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertNull($configService->find('defaults.user.theme'));
         $this->assertEquals('en', $configService->find('defaults.user.language'));
 
-        $form = $client->getCrawler()->filter('form[name=system_configuration_form_form_user]')->form();
+        $form = $client->getCrawler()->filter('form[name=system_configuration_form_user]')->form();
         $client->submit($form, [
-            'system_configuration_form_form_user' => [
+            'system_configuration_form_user' => [
                 'configuration' => [
                     ['name' => 'defaults.user.timezone', 'value' => 'Pacific/Tahiti'],
                     ['name' => 'defaults.user.language', 'value' => 'ru'],
@@ -222,9 +249,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertFormHasValidationError(
             User::ROLE_SUPER_ADMIN,
             '/admin/system-config/',
-            'form[name=system_configuration_form_form_customer]',
+            'form[name=system_configuration_form_customer]',
             [
-                'system_configuration_form_form_customer' => [
+                'system_configuration_form_customer' => [
                     'configuration' => [
                         ['name' => 'defaults.customer.timezone', 'value' => 'XX'],
                         ['name' => 'defaults.customer.country', 'value' => 1],
@@ -233,9 +260,9 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 ]
             ],
             [
-                '#system_configuration_form_form_customer_configuration_0_value',
-                '#system_configuration_form_form_customer_configuration_1_value',
-                '#system_configuration_form_form_customer_configuration_2_value',
+                '#system_configuration_form_customer_configuration_0_value',
+                '#system_configuration_form_customer_configuration_1_value',
+                '#system_configuration_form_customer_configuration_2_value',
             ],
             true
         );

@@ -32,6 +32,10 @@ class TeamType extends AbstractType
             'choice_label' => function (Team $team) {
                 return $team->getName();
             },
+            'documentation' => [
+                'type' => 'integer',
+                'description' => 'Team ID',
+            ],
         ]);
 
         $resolver->setDefault('query_builder', function (Options $options) {
@@ -42,7 +46,7 @@ class TeamType extends AbstractType
                 $query->setCurrentUser($user);
 
                 if (!$options['teamlead_only']) {
-                    $query->setTeams($user->getTeams()->toArray());
+                    $query->setTeams($user->getTeams());
                 }
 
                 return $repo->getQueryBuilderForFormType($query);

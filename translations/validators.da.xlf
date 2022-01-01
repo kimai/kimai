@@ -1,19 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="da" datatype="plaintext" original="validators.en.xlf">
-        <body>
-            <trans-unit id="This value is not a valid role.">
-                <source>This value is not a valid role.</source>
-                <target>Denne værdi er ikke en gyldig rolle.</target>
-            </trans-unit>
-            <trans-unit id="End date must not be earlier then start date.">
-                <source>End date must not be earlier then start date.</source>
-                <target>Slutdato må ikke være før startdato.</target>
-            </trans-unit>
-            <trans-unit id="The begin date cannot be in the future.">
-                <source>The begin date cannot be in the future.</source>
-                <target>Startdato kan ikke være i fremtiden.</target>
-            </trans-unit>
-        </body>
-    </file>
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="da" datatype="plaintext" original="validators.en.xlf">
+    <body>
+      <trans-unit id="IkNxbBI" resname="This value is not a valid role.">
+        <source>This value is not a valid role.</source>
+        <target>Denne værdi er ikke en gyldig rolle.</target>
+      </trans-unit>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
+        <source>End date must not be earlier then start date.</source>
+        <target>Slutdato må ikke være før startdato.</target>
+      </trans-unit>
+      <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
+        <source>The begin date cannot be in the future.</source>
+        <target>Startdato kan ikke være i fremtiden.</target>
+      </trans-unit>
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target>Mindst en teamleder skal være tildelt holdet.</target>
+      </trans-unit>
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target>De indtastede kodeord er ikke ens.</target>
+      </trans-unit>
+      <trans-unit id="6u6oCwB" resname="The email is already used.">
+        <source>The email is already used.</source>
+        <target>E-mailadressen er allerede i brug.</target>
+      </trans-unit>
+      <trans-unit id="S14XECA" resname="The username is already used.">
+        <source>The username is already used.</source>
+        <target>Brugernavnet er allerede i brug.</target>
+      </trans-unit>
+      <trans-unit id="ekO5eXI" resname="An equal username is already used.">
+        <source>An equal username is already used.</source>
+        <target>Brugernavnet er allerede i brug.</target>
+      </trans-unit>
+      <trans-unit id="INlaCgW" resname="An equal email is already used.">
+        <source>An equal email is already used.</source>
+        <target>E-mailadressen er allerede i brug.</target>
+      </trans-unit>
+      <trans-unit id="1V6BsD_" resname="You must select at least one user or team.">
+        <source>You must select at least one user or team.</source>
+        <target>Du skal mindst vælge en bruger eller et hold.</target>
+      </trans-unit>
+      <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again.">
+        <source>This invoice document cannot be used, please rename the file and upload it again.</source>
+        <target>Denne faktura kan ikke bruges, venligst omdøb filen og upload den igen.</target>
+      </trans-unit>
+      <trans-unit id="u2wjm2i" resname="You already have an entry for this time.">
+        <source>You already have an entry for this time.</source>
+        <target>Du har allerede en registrering for dette tidspunkt.</target>
+      </trans-unit>
+      <trans-unit id="VJSZSD0" resname="The given value is not a valid time.">
+        <source>The given value is not a valid time.</source>
+        <target>Den indtastede værdi er ikke et gyldigt tidspunkt.</target>
+      </trans-unit>
+      <trans-unit id="1oKCOa5" resname="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target>Budgettet er brugt op. Af et budget på %budget% er %used% brugt indtil videre og %free% kan stadig bruges.</target>
+      </trans-unit>
+      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target>Maksimalt {{ value }} timer er tilladt.</target>
+      </trans-unit>
+      <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date.">
+        <source>This period is locked, please choose a later date.</source>
+        <target>Denne periode er låst, vælg venligst en senere dato.</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

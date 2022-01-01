@@ -26,6 +26,7 @@ final class TimesheetConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
     private $trackingMode = 'default';
     /**
@@ -36,6 +37,7 @@ final class TimesheetConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
     private $defaultBeginTime = 'now';
     /**
@@ -46,6 +48,7 @@ final class TimesheetConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="integer")
+     * @phpstan-ignore-next-line
      */
     private $activeEntriesHardLimit = 1;
     /**
@@ -56,6 +59,7 @@ final class TimesheetConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="integer")
+     * @phpstan-ignore-next-line
      */
     private $activeEntriesSoftLimit = 1;
     /**
@@ -66,6 +70,7 @@ final class TimesheetConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="boolean")
+     * @phpstan-ignore-next-line
      */
     private $isAllowFutureTimes = true;
     /**
@@ -76,6 +81,7 @@ final class TimesheetConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="boolean")
+     * @phpstan-ignore-next-line
      */
     private $isAllowOverlapping = true;
 

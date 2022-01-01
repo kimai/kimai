@@ -8,25 +8,21 @@
 {% block main %}
 <div class="row">
     <div class="col-md-6">
-        {{ include('default/_form.html.twig', {
-            'title': team.name|default('create'|trans),
-            'form': form,
-            'back': path('admin_team')
-        }) }}
+        {% include 'team/member-form.html.twig' %}
     </div>
     <div class="col-md-6">
         {% if not customerForm is null %}
-        {{ include('default/_form.html.twig', {
-            'title': 'teams.customer_access'|trans({}, 'teams'),
-            'form': customerForm,
-        }) }}
+            {{ include('default/_form.html.twig', {
+                'title': 'teams.customer_access'|trans({}, 'teams'),
+                'form': customerForm,
+            }) }}
         {% endif %}
-        
+
         {% if not projectForm is null %}
-        {{ include('default/_form.html.twig', {
-            'title': 'teams.project_access'|trans({}, 'teams'),
-            'form': projectForm,
-        }) }}
+            {{ include('default/_form.html.twig', {
+                'title': 'teams.project_access'|trans({}, 'teams'),
+                'form': projectForm,
+            }) }}
         {% endif %}
     </div>
 </div>

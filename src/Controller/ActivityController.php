@@ -9,6 +9,8 @@
 
 namespace App\Controller;
 
+use App\Activity\ActivityService;
+use App\Activity\ActivityStatisticService;
 use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
@@ -27,11 +29,9 @@ use App\Form\Toolbar\ActivityToolbarForm;
 use App\Form\Type\ActivityType;
 use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
-use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\TeamRepository;
 use Exception;
-use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -58,12 +58,17 @@ final class ActivityController extends AbstractController
      * @var EventDispatcherInterface
      */
     private $dispatcher;
+    /**
+     * @var ActivityService
+     */
+    private $activityService;
 
-    public function __construct(ActivityRepository $repository, SystemConfiguration $configuration, EventDispatcherInterface $dispatcher)
+    public function __construct(ActivityRepository $repository, SystemConfiguration $configuration, EventDispatcherInterface $dispatcher, ActivityService $activityService)
     {
         $this->repository = $repository;
         $this->configuration = $configuration;
         $this->dispatcher = $dispatcher;
+        $this->activityService = $activityService;
     }
 
     /**
@@ -77,14 +82,10 @@ final class ActivityController extends AbstractController
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
-
-        if (!$form->isValid()) {
-            $query->resetByFormError($form->getErrors());
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('admin_activity');
         }
 
-        /* @var $entries Pagerfanta */
         $entries = $this->repository->getPagerfantaForQuery($query);
 
         return $this->render('activity/index.html.twig', [
@@ -92,6 +93,8 @@ final class ActivityController extends AbstractController
             'query' => $query,
             'toolbarForm' => $form->createView(),
             'metaColumns' => $this->findMetaColumns($query),
+            'defaultCurrency' => $this->configuration->getCustomerDefaultCurrency(),
+            'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
 
@@ -111,7 +114,7 @@ final class ActivityController extends AbstractController
      * @Route(path="/{id}/details", name="activity_details", methods={"GET", "POST"})
      * @Security("is_granted('view', activity)")
      */
-    public function detailsAction(Activity $activity, TeamRepository $teamRepository, ActivityRateRepository $rateRepository)
+    public function detailsAction(Activity $activity, TeamRepository $teamRepository, ActivityRateRepository $rateRepository, ActivityStatisticService $statisticService)
     {
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
@@ -120,6 +123,7 @@ final class ActivityController extends AbstractController
         $rates = [];
         $teams = null;
         $defaultTeam = null;
+        $now = $this->getDateTimeFactory()->createDateTime();
 
         if ($this->isGranted('edit', $activity)) {
             if ($this->isGranted('create_team')) {
@@ -129,7 +133,7 @@ final class ActivityController extends AbstractController
         }
 
         if ($this->isGranted('budget', $activity)) {
-            $stats = $this->repository->getActivityStatistics($activity);
+            $stats = $statisticService->getBudgetStatisticModel($activity, $now);
         }
 
         if ($this->isGranted('permissions', $activity) || $this->isGranted('details', $activity) || $this->isGranted('view_team')) {
@@ -142,6 +146,7 @@ final class ActivityController extends AbstractController
             'rates' => $rates,
             'team' => $defaultTeam,
             'teams' => $teams,
+            'now' => $now,
         ]);
     }
 
@@ -185,10 +190,7 @@ final class ActivityController extends AbstractController
      */
     public function createAction(Request $request, ?Project $project = null)
     {
-        $activity = new Activity();
-        if (null !== $project) {
-            $activity->setProject($project);
-        }
+        $activity = $this->activityService->createNewActivity($project);
 
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
@@ -198,7 +200,7 @@ final class ActivityController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->repository->saveActivity($activity);
+                $this->activityService->saveNewActivity($activity);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('admin_activity');
@@ -228,8 +230,12 @@ final class ActivityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->repository->saveActivity($activity);
+                $this->activityService->updateActivity($activity);
                 $this->flashSuccess('action.update.success');
+
+                if ($this->isGranted('view', $activity)) {
+                    return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
+                }
 
                 return $this->redirectToRoute('admin_activity');
             } catch (Exception $ex) {
@@ -258,7 +264,7 @@ final class ActivityController extends AbstractController
 
         $defaultTeam = new Team();
         $defaultTeam->setName($activity->getName());
-        $defaultTeam->setTeamLead($this->getUser());
+        $defaultTeam->addTeamlead($this->getUser());
         $defaultTeam->addActivity($activity);
 
         try {
@@ -284,7 +290,7 @@ final class ActivityController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->repository->saveActivity($activity);
+                $this->activityService->updateActivity($activity);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
@@ -303,28 +309,25 @@ final class ActivityController extends AbstractController
      * @Route(path="/{id}/delete", name="admin_activity_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', activity)")
      */
-    public function deleteAction(Activity $activity, Request $request)
+    public function deleteAction(Activity $activity, Request $request, ActivityStatisticService $statisticService)
     {
-        $stats = $this->repository->getActivityStatistics($activity);
+        $stats = $statisticService->getActivityStatistics($activity);
+
+        $options = [
+            'projects' => $activity->getProject(),
+            'query_builder_for_user' => true,
+            'ignore_activity' => $activity,
+            'required' => false,
+        ];
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
-                    'data-form-event' => 'kimai.activityUpdate kimai.activityDelete',
+                    'data-form-event' => 'kimai.activityDelete',
                     'data-msg-success' => 'action.delete.success',
                     'data-msg-error' => 'action.delete.error',
                 ]
             ])
-            ->add('activity', ActivityType::class, [
-                'label' => 'label.activity',
-                'query_builder' => function (ActivityRepository $repo) use ($activity) {
-                    $query = new ActivityFormTypeQuery();
-                    $query->addProject($activity->getProject());
-                    $query->setActivityToIgnore($activity);
-
-                    return $repo->getQueryBuilderForFormType($query);
-                },
-                'required' => false,
-            ])
+            ->add('activity', ActivityType::class, $options)
             ->setAction($this->generateUrl('admin_activity_delete', ['id' => $activity->getId()]))
             ->setMethod('POST')
             ->getForm();
@@ -414,7 +417,6 @@ final class ActivityController extends AbstractController
             'action' => $url,
             'method' => 'POST',
             'currency' => $currency,
-            'customer' => true,
             'include_budget' => $this->isGranted('budget', $activity)
         ]);
     }

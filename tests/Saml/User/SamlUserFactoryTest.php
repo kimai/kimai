@@ -9,9 +9,12 @@
 
 namespace App\Tests\Saml\User;
 
+use App\Configuration\SamlConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
+use App\Saml\Token\SamlToken;
 use App\Saml\User\SamlUserFactory;
-use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlToken;
+use App\Tests\Configuration\TestConfigLoader;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,6 +22,15 @@ use PHPUnit\Framework\TestCase;
  */
 class SamlUserFactoryTest extends TestCase
 {
+    private function createUserFactory(array $saml): SamlUserFactory
+    {
+        $configuration = new SystemConfiguration(new TestConfigLoader([]), [
+            'saml' => $saml
+        ]);
+
+        return new SamlUserFactory(new SamlConfiguration($configuration));
+    }
+
     public function testCreateUserThrowsExceptionOnMissingAttribute()
     {
         $this->expectException(\RuntimeException::class);
@@ -42,7 +54,7 @@ class SamlUserFactoryTest extends TestCase
         $token = new SamlToken();
         $token->setAttributes($attributes);
 
-        $sut = new SamlUserFactory($mapping);
+        $sut = $this->createUserFactory($mapping);
         $user = $sut->createUser($token);
     }
 
@@ -68,7 +80,7 @@ class SamlUserFactoryTest extends TestCase
         $token = new SamlToken();
         $token->setAttributes($attributes);
 
-        $sut = new SamlUserFactory($mapping);
+        $sut = $this->createUserFactory($mapping);
         $user = $sut->createUser($token);
     }
 
@@ -95,7 +107,7 @@ class SamlUserFactoryTest extends TestCase
         $token = new SamlToken();
         $token->setAttributes($attributes);
 
-        $sut = new SamlUserFactory($mapping);
+        $sut = $this->createUserFactory($mapping);
         $user = $sut->createUser($token);
     }
 
@@ -132,7 +144,7 @@ class SamlUserFactoryTest extends TestCase
         $token->setUser('foo@example.com');
         $token->setAttributes($attributes);
 
-        $sut = new SamlUserFactory($mapping);
+        $sut = $this->createUserFactory($mapping);
         $user = $sut->createUser($token);
 
         self::assertInstanceOf(User::class, $user);
@@ -170,7 +182,7 @@ class SamlUserFactoryTest extends TestCase
         $token->setUser('foo@example.com');
         $token->setAttributes($attributes);
 
-        $sut = new SamlUserFactory($mapping);
+        $sut = $this->createUserFactory($mapping);
         $user = $sut->createUser($token);
 
         self::assertInstanceOf(User::class, $user);

@@ -15,6 +15,7 @@ use App\Entity\User;
 use App\Utils\LocaleFormats;
 use App\Utils\LocaleFormatter;
 use DateTime;
+use Symfony\Component\Security\Core\Security;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -22,10 +23,9 @@ use Twig\TwigTest;
 
 final class LocaleFormatExtensions extends AbstractExtension
 {
-    /**
-     * @var LanguageFormattings|null
-     */
     private $formats;
+    private $security;
+
     /**
      * @var LocaleFormats|null
      */
@@ -38,10 +38,12 @@ final class LocaleFormatExtensions extends AbstractExtension
      * @var string
      */
     private $locale;
+    private $userFormat;
 
-    public function __construct(LanguageFormattings $formats)
+    public function __construct(LanguageFormattings $formats, Security $security)
     {
         $this->formats = $formats;
+        $this->security = $security;
     }
 
     /**
@@ -56,9 +58,11 @@ final class LocaleFormatExtensions extends AbstractExtension
             new TwigFilter('date_time', [$this, 'dateTime']),
             new TwigFilter('date_full', [$this, 'dateTimeFull']),
             new TwigFilter('date_format', [$this, 'dateFormat']),
+            new TwigFilter('date_weekday', [$this, 'dateWeekday']),
             new TwigFilter('time', [$this, 'time']),
             new TwigFilter('hour24', [$this, 'hour24']),
             new TwigFilter('duration', [$this, 'duration']),
+            new TwigFilter('chart_duration', [$this, 'durationChart']),
             new TwigFilter('duration_decimal', [$this, 'durationDecimal']),
             new TwigFilter('money', [$this, 'money']),
             new TwigFilter('currency', [$this, 'currency']),
@@ -79,6 +83,14 @@ final class LocaleFormatExtensions extends AbstractExtension
 
                 return ($day === 0 || $day === 6);
             }),
+            new TwigTest('today', function ($dateTime) {
+                if (!$dateTime instanceof \DateTime) {
+                    return false;
+                }
+                $compare = new \DateTime('now', $dateTime->getTimezone());
+
+                return $compare->format('Y-m-d') === $dateTime->format('Y-m-d');
+            }),
         ];
     }
 
@@ -91,6 +103,7 @@ final class LocaleFormatExtensions extends AbstractExtension
             new TwigFunction('get_format_duration', [$this, 'getDurationFormat']),
             new TwigFunction('create_date', [$this, 'createDate']),
             new TwigFunction('locales', [$this, 'getLocales']),
+            new TwigFunction('month_names', [$this, 'getMonthNames']),
         ];
     }
 
@@ -153,11 +166,23 @@ final class LocaleFormatExtensions extends AbstractExtension
 
     /**
      * @param DateTime|string $date
+     * @param bool $stripMidnight
      * @return bool|false|string
      */
-    public function dateTimeFull($date)
+    public function dateTimeFull($date, bool $stripMidnight = false)
     {
-        return $this->getFormatter()->dateTimeFull($date);
+        return $this->getFormatter()->dateTimeFull($date, $this->getUserTimeFormat(), $stripMidnight);
+    }
+
+    private function getUserTimeFormat(): string
+    {
+        if ($this->userFormat === null) {
+            /** @var User|null $user */
+            $user = $this->security->getUser();
+            $this->userFormat = $user !== null ? $user->getTimeFormat() : 'H:i';
+        }
+
+        return $this->userFormat;
     }
 
     public function createDate(string $date, ?User $user = null): \DateTime
@@ -178,13 +203,37 @@ final class LocaleFormatExtensions extends AbstractExtension
         return $this->getFormatter()->dateFormat($date, $format);
     }
 
+    public function dateWeekday(DateTime $date): string
+    {
+        return $this->dayName($date, true) . ' ' . $this->getFormatter()->dateFormat($date, 'd');
+    }
+
     /**
      * @param DateTime|string $date
      * @return string
      */
     public function time($date)
     {
-        return $this->getFormatter()->time($date);
+        return $this->getFormatter()->time($date, $this->getUserTimeFormat());
+    }
+
+    /**
+     * @param string|null $year
+     * @return string[]
+     */
+    public function getMonthNames(?string $year = null): array
+    {
+        $withYear = true;
+        if ($year === null) {
+            $year = date('Y');
+            $withYear = false;
+        }
+        $months = [];
+        for ($i = 1; $i < 13; $i++) {
+            $months[] = $this->getFormatter()->monthName(new DateTime(sprintf('%s-%s-10', $year, ($i < 10 ? '0' . $i : (string) $i))), $withYear);
+        }
+
+        return $months;
     }
 
     public function monthName(\DateTime $dateTime, bool $withYear = false): string
@@ -204,7 +253,16 @@ final class LocaleFormatExtensions extends AbstractExtension
      */
     public function hour24($twentyFour, $twelveHour)
     {
-        return $this->getFormatter()->hour24($twentyFour, $twelveHour);
+        @trigger_error('Twig filter "hour24" is deprecated, use app.user.is24Hour() instead', E_USER_DEPRECATED);
+
+        /** @var User|null $user */
+        $user = $this->security->getUser();
+
+        if (null === $user) {
+            return true;
+        }
+
+        return $user->is24Hour();
     }
 
     public function getDurationFormat(): string
@@ -233,6 +291,11 @@ final class LocaleFormatExtensions extends AbstractExtension
     public function durationDecimal($duration)
     {
         return $this->getFormatter()->durationDecimal($duration);
+    }
+
+    public function durationChart($duration): string
+    {
+        return number_format(($duration / 3600), 2, '.', '');
     }
 
     /**

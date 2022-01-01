@@ -9,49 +9,34 @@
 
 namespace App\Doctrine;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration as BaseAbstractMigration;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Base class for all Doctrine migrations.
  *
  * @codeCoverageIgnore
  */
-abstract class AbstractMigration extends BaseAbstractMigration implements ContainerAwareInterface
+abstract class AbstractMigration extends BaseAbstractMigration
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
-     * @param ContainerInterface $container
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
-
-    /**
-     * @return ContainerInterface
-     */
-    public function getContainer()
-    {
-        return $this->container;
-    }
-
     /**
      * @param string $name
      * @return string
-     * @deprecated since 0.9 - will be removed with 2.0
      */
     protected function getTableName($name)
     {
+        @trigger_error('AbstractMigration::getTableName() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
+
         return 'kimai2_' . $name;
+    }
+
+    /**
+     * @see https://github.com/doctrine/migrations/issues/1104
+     */
+    public function isTransactional(): bool
+    {
+        return false;
     }
 
     /**
@@ -65,24 +50,8 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     }
 
     /**
-     * @deprecated since 1.14 - will be removed with 2.0
-     */
-    protected function deactivateForeignKeysOnSqlite()
-    {
-        @trigger_error('deactivateForeignKeysOnSqlite() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-    }
-
-    /**
-     * @deprecated since 1.14 - will be removed with 2.0
-     */
-    private function activateForeignKeysOnSqlite()
-    {
-        @trigger_error('activateForeignKeysOnSqlite() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-    }
-
-    /**
      * @param Schema $schema
-     * @throws DBALException
+     * @throws Exception
      */
     public function preUp(Schema $schema): void
     {
@@ -91,7 +60,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
 
     /**
      * @param Schema $schema
-     * @throws DBALException
+     * @throws Exception
      */
     public function preDown(Schema $schema): void
     {
@@ -101,7 +70,7 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
     /**
      * Abort the migration is the current platform is not supported.
      *
-     * @throws DBALException
+     * @throws Exception
      */
     protected function abortIfPlatformNotSupported()
     {
@@ -128,25 +97,11 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
 
     /**
      * @return string
-     * @throws DBALException
+     * @throws Exception
      */
     protected function getPlatform()
     {
         return $this->connection->getDatabasePlatform()->getName();
-    }
-
-    /**
-     * Call me like this:
-     * $schema = $this->getClassMetaData(User::class);
-     *
-     * @param string $entityName
-     * @return ClassMetadata
-     */
-    protected function getClassMetaData($entityName)
-    {
-        $em = $this->getContainer()->get('doctrine')->getManager();
-
-        return $em->getClassMetadata($entityName);
     }
 
     /**
@@ -157,5 +112,10 @@ abstract class AbstractMigration extends BaseAbstractMigration implements Contai
         @trigger_error('addSqlDropIndex() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
 
         $this->addSql('DROP INDEX ' . $indexName . ' ON ' . $tableName);
+    }
+
+    protected function preventEmptyMigrationWarning(): void
+    {
+        $this->addSql('#prevent empty warning - no SQL to execute');
     }
 }

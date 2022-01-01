@@ -45,9 +45,13 @@ final class TimesheetFixtures implements TestFixture
      */
     private $projects = [];
     /**
-     * @var string
+     * @var \DateTime
      */
-    private $startDate = '2018-04-01';
+    private $startDate;
+    /**
+     * @var \DateTime
+     */
+    private $fixedStartDate;
     /**
      * @var bool
      */
@@ -121,10 +125,17 @@ final class TimesheetFixtures implements TestFixture
      */
     public function setStartDate($date): TimesheetFixtures
     {
-        if ($date instanceof \DateTime) {
-            $date = $date->format('Y-m-d');
+        if (!($date instanceof \DateTime)) {
+            $date = new \DateTime($date);
         }
         $this->startDate = $date;
+
+        return $this;
+    }
+
+    public function setFixedStartDate(\DateTime $date): TimesheetFixtures
+    {
+        $this->fixedStartDate = $date;
 
         return $this;
     }
@@ -222,7 +233,11 @@ final class TimesheetFixtures implements TestFixture
         }
 
         $faker = Factory::create();
-        $user = $this->user;
+
+        $users = [$this->user];
+        if ($this->user === null) {
+            $users = $this->getAllUsers($manager);
+        }
 
         $tags = $this->getTagObjectList();
         foreach ($tags as $tag) {
@@ -231,7 +246,7 @@ final class TimesheetFixtures implements TestFixture
         $manager->flush();
 
         for ($i = 0; $i < $this->amount; $i++) {
-            $description = $faker->text;
+            $description = $faker->text();
             if ($this->allowEmptyDescriptions) {
                 if ($i % 3 == 0) {
                     $description = null;
@@ -240,6 +255,7 @@ final class TimesheetFixtures implements TestFixture
                 }
             }
 
+            $user = $users[array_rand($users)];
             $activity = $activities[array_rand($activities)];
             $project = $activity->getProject();
 
@@ -266,6 +282,7 @@ final class TimesheetFixtures implements TestFixture
         for ($i = 0; $i < $this->running; $i++) {
             $activity = $activities[array_rand($activities)];
             $project = $activity->getProject();
+            $user = $users[array_rand($users)];
 
             if (null === $project) {
                 $project = $projects[array_rand($projects)];
@@ -275,7 +292,7 @@ final class TimesheetFixtures implements TestFixture
                 $user,
                 $activity,
                 $project,
-                $faker->text,
+                $faker->text(),
                 $this->getDateTime($i),
                 $tags,
                 false
@@ -312,7 +329,15 @@ final class TimesheetFixtures implements TestFixture
 
     private function getDateTime(int $i): \DateTime
     {
-        $start = \DateTime::createFromFormat('Y-m-d', $this->startDate);
+        if ($this->fixedStartDate !== null) {
+            return $this->fixedStartDate;
+        }
+
+        if ($this->startDate === null) {
+            $this->startDate = new \DateTime('2018-04-01');
+        }
+
+        $start = clone $this->startDate;
         $start->modify("+ $i days");
         $start->modify('+ ' . rand(1, 172800) . ' seconds'); // up to 2 days
 
@@ -344,6 +369,22 @@ final class TimesheetFixtures implements TestFixture
         $all = [];
         /** @var Project[] $entries */
         $entries = $manager->getRepository(Project::class)->findAll();
+        foreach ($entries as $temp) {
+            $all[$temp->getId()] = $temp;
+        }
+
+        return $all;
+    }
+
+    /**
+     * @param ObjectManager $manager
+     * @return array<int|string, User>
+     */
+    private function getAllUsers(ObjectManager $manager): array
+    {
+        $all = [];
+        /** @var User[] $entries */
+        $entries = $manager->getRepository(User::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
         }
@@ -386,7 +427,7 @@ final class TimesheetFixtures implements TestFixture
         }
 
         if ($this->fixedRate) {
-            $entry->setFixedRate(rand(10, 100));
+            $entry->setFixedRate((float) rand(10, 100));
         }
 
         if ($this->hourlyRate) {

@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+{% import "quick-entry/actions.html.twig" as actions %}
+
+{% block page_title %}{{ 'quick_entry.title'|trans }}{% endblock %}
+{% block page_actions %}{{ actions.quickEntries('index') }}{% endblock %}
+
+{% block main %}
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% import "macros/widgets.html.twig" as widgets %}
+        {% block box_attributes %}id="quick_entry_box"{% endblock %}
+        {% block box_before %}
+            {{ form_start(form, {attr: {class: 'form-dataTable'}}) }}
+            {{ form_widget(form._token) }}
+        {% endblock %}
+        {% block box_after %}{{ form_end(form) }}{% endblock %}
+        {% block box_title %}
+            {{ form_widget(form.date) }}
+        {% endblock %}
+        {% block box_body_class %}no-padding{% endblock %}
+        {% block box_footer %}
+            <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
+            <button type="button" class="btn btn-success add-item-link" data-collection-prototype="{{ form.rows.vars.id }}" data-collection-holder="ts-collection">
+                <i class="{{ 'create'|icon }}"></i>
+                {{ 'action.add'|trans }}
+            </button>
+        {% endblock %}
+        {% block box_body %}
+            <table class="table dataTable">
+                <thead>
+                    <tr>
+                        <th>{{ 'label.project'|trans }}</th>
+                        <th>{{ 'label.activity'|trans }}</th>
+                        {% for id, week in days %}
+                        <th class="text-center{% if week.day is weekend %} weekend{% endif %}{% if week.day is today %} today{% endif %}">
+                            {{ week.day|date_weekday }}
+                        </th>
+                        {% endfor %}
+                        <th class="summary">{{ 'label.duration'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody id="ts-collection" data-index="{{ form.rows.children|length }}">
+                    {{ form_widget(form.rows) }}
+                </tbody>
+                <tfoot>
+                    <tr class="summary">
+                        <td>{{ 'stats.durationTotal'|trans }}</td>
+                        <td></td>
+                        {% for id, week in days %}
+                            <td class="text-center" id="qe-totals-day-{{ loop.index0 }}"></td>
+                        {% endfor %}
+                        <td class="text-center" id="qe-totals-week"></td>
+                    </tr>
+                </tfoot>
+            </table>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function(event) {
+            const kimai = event.detail.kimai;
+            const DATES = kimai.getPlugin('date');
+            const FORMS = kimai.getPlugin('form-select');
+
+            const recalculateTotals = function(e) {
+                const allFields = document.getElementsByClassName('duration-input');
+                let totalsPerDay = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0};
+                let fullTotals = 0;
+                for (let durationInput of allFields) {
+                    let id = durationInput.id.replace(/_duration/, '').substr(-1);
+                    totalsPerDay[id] += DATES.getSecondsFromDurationString(durationInput.value);
+                }
+                for (const [id, total] of Object.entries(totalsPerDay)) {
+                    document.getElementById('qe-totals-day-' + id).innerText = DATES.formatSeconds(total);
+                    fullTotals += total;
+                }
+                document.getElementById('qe-totals-week').innerText = DATES.formatSeconds(fullTotals);
+
+                const allRows = document.getElementsByClassName('qe-entry-week-row');
+                for (let qeWeekRow of allRows) {
+                    let qeWeekRowFields = qeWeekRow.getElementsByClassName('duration-input');
+                    let totalsRow = 0;
+                    for (let durationInput of qeWeekRowFields) {
+                        totalsRow += DATES.getSecondsFromDurationString(durationInput.value);
+                    }
+                    qeWeekRow.getElementsByClassName('qe-totals-row')[0].innerText = DATES.formatSeconds(totalsRow);
+                }
+            };
+            recalculateTotals();
+
+            {% if form.user is defined %}
+            jQuery('#{{ form.user.vars.id }}').on('change', function(ev) {
+                jQuery(this).closest('form').submit();
+            });
+            {% endif %}
+
+            jQuery('#{{ form.date.vars.id }}').on('change', function(ev) {
+                location.href = '{{ path('quick_entry', {'begin': '__BEGIN__'}) }}'.replace('__BEGIN__', jQuery(this).val());
+            });
+
+            jQuery('body').on('change', '.duration-input', recalculateTotals);
+
+            const addFormToCollection = function(e) {
+                const collectionHolder = document.getElementById(e.currentTarget.dataset.collectionHolder);
+                const collectionPrototype = document.getElementById(e.currentTarget.dataset.collectionPrototype);
+
+                const fakeNode = document.createElement('table');
+                fakeNode.innerHTML = collectionPrototype
+                    .dataset
+                    .prototype
+                    .replace(
+                        /__name__/g,
+                        collectionHolder.dataset.index
+                    );
+
+                let node = fakeNode.children[0];
+                if (node.nodeName.toUpperCase() === 'TBODY') {
+                    node = node.children[0];
+                }
+
+                collectionHolder.appendChild(node);
+
+                jQuery(node).find('.selectpicker').each(function(i, el) {
+                    FORMS.activateSelectPickerByElement(el, 'body');
+                });
+
+                collectionHolder.dataset.index++;
+                recalculateTotals();
+            };
+
+            document.querySelectorAll('.add-item-link').forEach(btn => btn.addEventListener("click", addFormToCollection));
+        });
+    </script>
+{% endblock %}

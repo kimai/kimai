@@ -66,7 +66,7 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/project/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
             'visibility' => 1,
@@ -108,7 +108,7 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/project/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/project/export'));
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
@@ -147,6 +147,8 @@ class ProjectControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.box#project_details_box');
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#activity_list_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#time_budget_box');
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#budget_box');
         self::assertEquals(1, $node->count());
@@ -195,7 +197,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $project->setEnd(new \DateTime());
         $em->persist($project);
         $team = new Team();
-        $team->setTeamLead($this->getUserByRole(User::ROLE_ADMIN));
+        $team->addTeamlead($this->getUserByRole(User::ROLE_ADMIN));
         $team->addProject($project);
         $team->setName('project 1');
         $em->persist($team);
@@ -212,8 +214,11 @@ class ProjectControllerTest extends ControllerBaseTest
         $rate->setActivity($activity);
         $rate->setRate(123.45);
         $em->persist($rate);
+        $em->flush();
 
-        $this->request($client, '/admin/project/1/duplicate');
+        $token = self::$container->get('security.csrf.token_manager')->getToken('project.duplicate');
+
+        $this->request($client, '/admin/project/1/duplicate/' . $token);
         $this->assertIsRedirect($client, '/details');
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.box#project_rates_box');
@@ -221,6 +226,25 @@ class ProjectControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.box#project_rates_box table.dataTable tbody tr:not(.summary)');
         self::assertEquals(1, $node->count());
         self::assertStringContainsString('123.45', $node->text(null, true));
+    }
+
+    public function testDuplicateActionWithInvalidCsrf()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+        $project = $em->find(Project::class, 1);
+        $project->setMetaField((new ProjectMeta())->setName('foo')->setValue('bar'));
+        $project->setEnd(new \DateTime());
+        $em->persist($project);
+        $activity = new Activity();
+        $activity->setName('blub');
+        $activity->setProject($project);
+        $activity->setMetaField((new ActivityMeta())->setName('blub')->setValue('blab'));
+        $em->persist($activity);
+        $em->flush();
+
+        $this->assertInvalidCsrfToken($client, '/admin/project/1/duplicate/rsetdzfukgli78t6r5uedtjfzkugl', $this->createUrl('/admin/project/1/details'));
     }
 
     public function testAddCommentAction()
@@ -258,8 +282,10 @@ class ProjectControllerTest extends ControllerBaseTest
         $comments = $this->getEntityManager()->getRepository(ProjectComment::class)->findAll();
         $id = $comments[0]->getId();
 
-        self::assertEquals($this->createUrl('/admin/project/' . $id . '/comment_delete'), $node->attr('href'));
-        $this->request($client, '/admin/project/' . $id . '/comment_delete');
+        $token = self::$container->get('security.csrf.token_manager')->getToken('project.delete_comment');
+
+        self::assertEquals($this->createUrl('/admin/project/' . $id . '/comment_delete/' . $token), $node->attr('href'));
+        $this->request($client, '/admin/project/' . $id . '/comment_delete/' . $token);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.box#comments_box .box-body');
@@ -286,12 +312,16 @@ class ProjectControllerTest extends ControllerBaseTest
         $comments = $this->getEntityManager()->getRepository(ProjectComment::class)->findAll();
         $id = $comments[0]->getId();
 
-        $this->request($client, '/admin/project/' . $id . '/comment_pin');
+        $token = self::$container->get('security.csrf.token_manager')->getToken('project.pin_comment');
+
+        $this->request($client, '/admin/project/' . $id . '/comment_pin/' . $token);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.btn.active');
+        $token2 = self::$container->get('security.csrf.token_manager')->getToken('project.pin_comment');
         self::assertEquals(1, $node->count());
-        self::assertEquals($this->createUrl('/admin/project/' . $id . '/comment_pin'), $node->attr('href'));
+        self::assertEquals($this->createUrl('/admin/project/' . $id . '/comment_pin/' . $token2), $node->attr('href'));
+        self::assertNotEquals($token, $token2);
     }
 
     public function testCreateDefaultTeamAction()
@@ -410,9 +440,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $team2->tick();
 
         $client->submit($form);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/'));
-        $client->followRedirect();
-        $this->assertHasDataTable($client);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
 
         /** @var Project $project */
         $project = $em->getRepository(Project::class)->find(1);

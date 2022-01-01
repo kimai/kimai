@@ -37,6 +37,7 @@ export default class KimaiDateTimePicker extends KimaiPlugin {
                 timePicker24Hour: is24hours,
                 showDropdowns: true,
                 autoUpdateInput: false,
+                drops: 'down',
                 locale: {
                     format: localeFormat,
                     firstDay: firstDow,
@@ -45,6 +46,14 @@ export default class KimaiDateTimePicker extends KimaiPlugin {
                     customRangeLabel: TRANSLATE.get('customRange'),
                     daysOfWeek: DATE_UTILS.getWeekDaysShort(),
                     monthNames: DATE_UTILS.getMonthNames(),
+                }
+            });
+
+            jQuery(this).on('show.daterangepicker', function (ev, picker) {
+                if (picker.element.offset().top - jQuery(window).scrollTop() + picker.container.outerHeight() + 30 > jQuery(window).height()) {
+                    // "up" is not possible here, because the code is triggered on many mobile phones and the picker then appears out of window
+                    picker.drops = 'auto';
+                    picker.move();
                 }
             });
 

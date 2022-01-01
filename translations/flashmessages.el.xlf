@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="el" datatype="plaintext" original="flashmessages.en.xlf">
+    <body>
+      <trans-unit id="S9k1S7Z" resname="warning">
+        <source>warning</source>
+        <target>Προειδοποίηση</target>
+      </trans-unit>
+      <trans-unit id="WmrEP_5" resname="timesheet.stop.success">
+        <source>timesheet.stop.success</source>
+        <target>Η καταγραφή ωραρίου σταμάτησε</target>
+      </trans-unit>
+      <trans-unit id="NPBnpK_" resname="timesheet.stop.error">
+        <source>timesheet.stop.error</source>
+        <target>Η καταγραφή ωραρίου δεν μπόρεσε να σταματήσει</target>
+      </trans-unit>
+      <trans-unit id="CCUoZga" resname="timesheet.start.success">
+        <source>timesheet.start.success</source>
+        <target>Η καταγραφή ωραρίου ξεκίνησε</target>
+      </trans-unit>
+      <trans-unit id="3w9tuox" resname="timesheet.start.error">
+        <source>timesheet.start.error</source>
+        <target>Η καταγραφή ωραρίου δεν μπόρεσε να ξεκινήσει</target>
+      </trans-unit>
+      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
+        <source>timesheet.start.exceeded_limit</source>
+        <target>Έχει συμπληρωθεί το όριο των ενεργών καταγραφών ωραρίου, παρακαλούμε σταματήστε τουλάχιστον μία εκτελούμενη μέτρηση ωραρίου.</target>
+      </trans-unit>
+      <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
+        <source>timesheet.locked.warning</source>
+        <target>Η εγγραφή που επεξεργάζεστε έχει ήδη εξαχθεί</target>
+      </trans-unit>
+      <trans-unit id="72Ih8zO" resname="action.update.success">
+        <source>action.update.success</source>
+        <target>Αποθηκευμένες αλλαγές</target>
+      </trans-unit>
+      <trans-unit id="xeu1LSy" resname="action.update.error">
+        <source>action.update.error</source>
+        <target>Δεν ήταν δυνατή η αποθήκευση των αλλαγών: %reason%</target>
+      </trans-unit>
+      <trans-unit id="YV50HDB" resname="action.delete.success">
+        <source>action.delete.success</source>
+        <target>Η καταχώριση διαγράφηκε</target>
+      </trans-unit>
+      <trans-unit id="mW91Tmb" resname="action.delete.error">
+        <source>action.delete.error</source>
+        <target>Η καταχώριση δεν ήταν δυνατό να διαγραφεί: %reason%</target>
+      </trans-unit>
+      <trans-unit id="B_cz49z" resname="invoice.first_template">
+        <source>invoice.first_template</source>
+        <target>Παρακαλούμε δημιουργήστε πρώτα ένα πρότυπο τιμολογίου</target>
+      </trans-unit>
+      <trans-unit id="wejAEcR" resname="action.upload.error">
+        <source>action.upload.error</source>
+        <target>Δεν ήταν δυνατή η μεταφόρτωση ή η αποθήκευση του αρχείου: %reason%</target>
+      </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R">
+        <source>action.csrf.error</source>
+        <target>Αυτή η ενέργεια δεν μπορεί να πραγματοποιηθεί: Μη έγκυρο τεκμήριο ασφάλειας.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

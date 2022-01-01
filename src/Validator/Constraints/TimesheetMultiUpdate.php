@@ -28,7 +28,7 @@ class TimesheetMultiUpdate extends Constraint
 
     protected static $errorNames = [
         self::MISSING_ACTIVITY_ERROR => 'You need to choose an activity, if the project should be changed.',
-        self::MISSING_PROJECT_ERROR => 'A timesheet must have a project.',
+        self::MISSING_PROJECT_ERROR => 'A project needs to be selected.',
         self::ACTIVITY_PROJECT_MISMATCH_ERROR => 'Project mismatch: chosen project does not match the activity project.',
         self::DISABLED_ACTIVITY_ERROR => 'Cannot start a disabled activity.',
         self::DISABLED_PROJECT_ERROR => 'Cannot start a disabled project.',

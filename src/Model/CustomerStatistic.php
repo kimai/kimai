@@ -9,51 +9,57 @@
 
 namespace App\Model;
 
-class CustomerStatistic extends TimesheetCountedStatistic
+use App\Model\Statistic\BudgetStatistic;
+
+class CustomerStatistic extends BudgetStatistic
 {
     /**
      * @var int
      */
-    protected $activityAmount = 0;
+    private $activityAmount = 0;
     /**
      * @var int
      */
-    protected $projectAmount = 0;
+    private $projectAmount = 0;
 
     /**
+     * @deprecated since 1.15 - will be removed with 2.0
      * @return int
      */
-    public function getActivityAmount()
+    public function getActivityAmount(): int
     {
         return $this->activityAmount;
     }
 
     /**
+     * @deprecated since 1.15 - will be removed with 2.0
      * @param int $activityAmount
      * @return $this
      */
-    public function setActivityAmount($activityAmount)
+    public function setActivityAmount(int $activityAmount): CustomerStatistic
     {
-        $this->activityAmount = (int) $activityAmount;
+        $this->activityAmount = $activityAmount;
 
         return $this;
     }
 
     /**
+     * @deprecated since 1.15 - will be removed with 2.0
      * @return int
      */
-    public function getProjectAmount()
+    public function getProjectAmount(): int
     {
         return $this->projectAmount;
     }
 
     /**
+     * @deprecated since 1.15 - will be removed with 2.0
      * @param int $projectAmount
      * @return $this
      */
-    public function setProjectAmount($projectAmount)
+    public function setProjectAmount(int $projectAmount): CustomerStatistic
     {
-        $this->projectAmount = (int) $projectAmount;
+        $this->projectAmount = $projectAmount;
 
         return $this;
     }

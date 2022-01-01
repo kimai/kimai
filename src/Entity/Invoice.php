@@ -9,8 +9,10 @@
 
 namespace App\Entity;
 
+use App\Export\Annotation as Exporter;
 use App\Invoice\InvoiceModel;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -21,33 +23,57 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @ORM\UniqueConstraint(columns={"invoice_filename"})
  *      }
  * )
+ * @ORM\Entity(repositoryClass="App\Repository\InvoiceRepository")
  * @UniqueEntity("invoiceNumber")
  * @UniqueEntity("invoiceFilename")
  *
- * @ORM\Entity(repositoryClass="App\Repository\InvoiceRepository")
+ * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "subtotal", "total", "tax", "currency", "vat", "dueDays", "dueDate", "paymentDate", "user", "invoiceFilename", "comment"})
+ * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
+ * @Exporter\Expose("customerNumber", label="label.number", exp="object.getCustomer() === null ? null : object.getCustomer().getNumber()")
+ * @Exporter\Expose("dueDate", label="invoice.due_days", type="datetime", exp="object.getDueDate() === null ? null : object.getDueDate()")
+ * @Exporter\Expose("user", label="label.username", type="string", exp="object.getUser() === null ? null : object.getUser().getDisplayName()")
+ * @Exporter\Expose("paymentDate", label="invoice.payment_date", type="date", exp="object.getPaymentDate() === null ? null : object.getPaymentDate()")
  */
 class Invoice
 {
     public const STATUS_PENDING = 'pending';
     public const STATUS_PAID = 'paid';
+    public const STATUS_CANCELED = 'canceled';
     public const STATUS_NEW = 'new';
 
     /**
      * @var int|null
      *
+     * @Exporter\Expose(label="label.id", type="integer")
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @phpstan-ignore-next-line
      */
     private $id;
 
     /**
      * @var string
      *
+     * @Exporter\Expose(label="invoice.number", type="string")
+     *
      * @ORM\Column(name="invoice_number", type="string", length=50, nullable=false)
      * @Assert\NotNull()
      */
     private $invoiceNumber;
+
+    /**
+     * @var string
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Customer_Entity"})
+     *
+     * @Exporter\Expose(label="label.comment")
+     *
+     * @ORM\Column(name="comment", type="text", nullable=true)
+     */
+    private $comment;
 
     /**
      * @var Customer|null
@@ -70,6 +96,8 @@ class Invoice
     /**
      * @var \DateTime
      *
+     * @Exporter\Expose(label="label.date", type="datetime")
+     *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      * @Assert\NotNull()
      */
@@ -85,6 +113,8 @@ class Invoice
     /**
      * @var float
      *
+     * @Exporter\Expose(label="label.total_rate", type="float")
+     *
      * @ORM\Column(name="total", type="float", nullable=false)
      * @Assert\NotNull()
      */
@@ -93,6 +123,8 @@ class Invoice
     /**
      * @var float
      *
+     * @Exporter\Expose(label="invoice.tax", type="float")
+     *
      * @ORM\Column(name="tax", type="float", nullable=false)
      * @Assert\NotNull()
      */
@@ -100,6 +132,8 @@ class Invoice
 
     /**
      * @var string
+     *
+     * @Exporter\Expose(label="label.currency", type="string")
      *
      * @ORM\Column(name="currency", type="string", length=3, nullable=false)
      * @Assert\NotNull()
@@ -110,6 +144,8 @@ class Invoice
     /**
      * @var int
      *
+     * @Exporter\Expose(label="label.due_days", type="integer")
+     *
      * @ORM\Column(name="due_days", type="integer", length=3, nullable=false)
      * @Assert\NotNull()
      * @Assert\Range(min = 0, max = 999)
@@ -118,6 +154,8 @@ class Invoice
 
     /**
      * @var float
+     *
+     * @Exporter\Expose(label="label.tax_rate", type="float")
      *
      * @ORM\Column(name="vat", type="float", nullable=false)
      * @Assert\NotNull()
@@ -128,6 +166,8 @@ class Invoice
     /**
      * @var string
      *
+     * @Exporter\Expose(label="label.status", type="string")
+     *
      * @ORM\Column(name="status", type="string", length=20, nullable=false)
      * @Assert\NotNull()
      */
@@ -135,6 +175,8 @@ class Invoice
 
     /**
      * @var string
+     *
+     * @Exporter\Expose(label="file", type="string")
      *
      * @ORM\Column(name="invoice_filename", type="string", length=150, nullable=false)
      * @Assert\NotNull()
@@ -146,6 +188,13 @@ class Invoice
      * @var bool
      */
     private $localized = false;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="payment_date", type="date", nullable=true)
+     */
+    private $paymentDate;
 
     public function getId(): ?int
     {
@@ -240,6 +289,7 @@ class Invoice
 
     public function setIsNew(): Invoice
     {
+        $this->setPaymentDate(null);
         $this->status = self::STATUS_NEW;
 
         return $this;
@@ -252,6 +302,7 @@ class Invoice
 
     public function setIsPending(): Invoice
     {
+        $this->setPaymentDate(null);
         $this->status = self::STATUS_PENDING;
 
         return $this;
@@ -267,6 +318,30 @@ class Invoice
         $this->status = self::STATUS_PAID;
 
         return $this;
+    }
+
+    public function isCanceled(): bool
+    {
+        return $this->status === self::STATUS_CANCELED;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): void
+    {
+        if (!\in_array($status, [self::STATUS_NEW, self::STATUS_PENDING, self::STATUS_PAID, self::STATUS_CANCELED])) {
+            throw new \InvalidArgumentException('Unknown invoice status');
+        }
+
+        $this->status = $status;
+    }
+
+    public function setIsCanceled(): void
+    {
+        $this->status = self::STATUS_CANCELED;
     }
 
     public function getDueDays(): int
@@ -292,5 +367,36 @@ class Invoice
     public function getInvoiceFilename(): ?string
     {
         return $this->invoiceFilename;
+    }
+
+    /**
+     * @Exporter\Expose(label="invoice.subtotal", type="float", name="subtotal")
+     * @return float|null
+     */
+    public function getSubtotal(): ?float
+    {
+        return $this->total - $this->tax;
+    }
+
+    public function getPaymentDate(): ?\DateTime
+    {
+        return $this->paymentDate;
+    }
+
+    public function setPaymentDate(?\DateTime $paymentDate): Invoice
+    {
+        $this->paymentDate = $paymentDate;
+
+        return $this;
+    }
+
+    public function setComment(?string $comment): void
+    {
+        $this->comment = $comment;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
     }
 }

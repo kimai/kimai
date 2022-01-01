@@ -67,16 +67,43 @@ class ProjectType extends AbstractType
             'activity_select' => 'activity',
             'activity_visibility' => ActivityQuery::SHOW_VISIBLE,
             'ignore_date' => false,
+            'join_customer' => false,
+            // @var Project|null
+            'ignore_project' => null,
+            // @var Customer|Customer[]|int|int[]|null
+            'customers' => null,
+            // @var Project|Project[]|int|int[]|null
+            'projects' => null,
+            // @var DateTime|null
+            'project_date_start' => null,
+            // @var DateTime|null
+            'project_date_end' => null,
         ]);
 
         $resolver->setDefault('query_builder', function (Options $options) {
             return function (ProjectRepository $repo) use ($options) {
-                $query = new ProjectFormTypeQuery();
+                $query = new ProjectFormTypeQuery($options['projects'], $options['customers']);
                 if (true === $options['query_builder_for_user']) {
                     $query->setUser($options['user']);
                 }
+
                 if (true === $options['ignore_date']) {
                     $query->setIgnoreDate(true);
+                } else {
+                    if ($options['project_date_start'] !== null) {
+                        $query->setProjectStart($options['project_date_start']);
+                    }
+                    if ($options['project_date_end'] !== null) {
+                        $query->setProjectEnd($options['project_date_end']);
+                    }
+                }
+
+                if (true === $options['join_customer']) {
+                    $query->setWithCustomer(true);
+                }
+
+                if (null !== $options['ignore_project']) {
+                    $query->setProjectToIgnore($options['ignore_project']);
                 }
 
                 return $repo->getQueryBuilderForFormType($query);

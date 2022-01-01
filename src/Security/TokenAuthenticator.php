@@ -26,14 +26,8 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     public const HEADER_TOKEN = 'X-AUTH-TOKEN';
     public const HEADER_JAVASCRIPT = 'X-AUTH-SESSION';
 
-    /**
-     * @var EncoderFactoryInterface
-     */
-    protected $encoderFactory;
+    private $encoderFactory;
 
-    /**
-     * @param EncoderFactoryInterface $encoderFactory
-     */
     public function __construct(EncoderFactoryInterface $encoderFactory)
     {
         $this->encoderFactory = $encoderFactory;

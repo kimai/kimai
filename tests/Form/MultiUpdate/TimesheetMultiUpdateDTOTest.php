@@ -32,6 +32,7 @@ class TimesheetMultiUpdateDTOTest extends TestCase
         self::assertNull($sut->getAction());
 
         self::assertNull($sut->isExported());
+        self::assertNull($sut->isBillable());
         self::assertNull($sut->getProject());
         self::assertNull($sut->getAction());
         self::assertNull($sut->getCustomer());
@@ -70,37 +71,44 @@ class TimesheetMultiUpdateDTOTest extends TestCase
         self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setEntities($entities));
         self::assertEquals($entities, $sut->getEntities());
 
-        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setExported(true));
+        self::assertNull($sut->isExported());
+        $sut->setExported(true);
         self::assertTrue($sut->isExported());
-        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setExported(false));
+        $sut->setExported(false);
         self::assertFalse($sut->isExported());
 
-        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setTags(['foo', '0815']));
+        self::assertNull($sut->isBillable());
+        $sut->setBillable(true);
+        self::assertTrue($sut->isBillable());
+        $sut->setExported(false);
+        self::assertFalse($sut->isExported());
+
+        $sut->setTags(['foo', '0815']);
         self::assertEquals(['foo', '0815'], $sut->getTags());
 
-        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setReplaceTags(true));
+        $sut->setReplaceTags(true);
         self::assertTrue($sut->isReplaceTags());
 
         $user = (new User())->setUsername('sdfsdfsd');
-        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setUser($user));
+        $sut->setUser($user);
         self::assertSame($user, $sut->getUser());
 
         $activity = (new Activity())->setName('sdfsdfsd');
-        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setActivity($activity));
+        $sut->setActivity($activity);
         self::assertSame($activity, $sut->getActivity());
 
         $project = (new Project())->setName('sdfsdfsd');
-        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setProject($project));
+        $sut->setProject($project);
         self::assertSame($project, $sut->getProject());
 
         $customer = (new Customer())->setName('sdfsdfsd');
-        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setCustomer($customer));
+        $sut->setCustomer($customer);
         self::assertSame($customer, $sut->getCustomer());
 
-        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setFixedRate(12.78));
+        $sut->setFixedRate(12.78);
         self::assertEquals(12.78, $sut->getFixedRate());
 
-        self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setHourlyRate(123.45));
+        $sut->setHourlyRate(123.45);
         self::assertEquals(123.45, $sut->getHourlyRate());
 
         self::assertInstanceOf(TimesheetMultiUpdateDTO::class, $sut->setUpdateMeta(['foo', 'bar']));

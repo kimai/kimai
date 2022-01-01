@@ -10,8 +10,9 @@
 namespace App\Export\Base;
 
 use App\Export\ExportContext;
+use App\Export\ExportFilename;
 use App\Export\ExportItemInterface;
-use App\Repository\ProjectRepository;
+use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
 use App\Utils\FileHelper;
 use App\Utils\HtmlToPdfConverter;
@@ -32,9 +33,9 @@ class PDFRenderer
      */
     private $converter;
     /**
-     * @var ProjectRepository
+     * @var ProjectStatisticService
      */
-    private $projectRepository;
+    private $projectStatisticService;
     /**
      * @var string
      */
@@ -48,11 +49,11 @@ class PDFRenderer
      */
     private $pdfOptions = [];
 
-    public function __construct(Environment $twig, HtmlToPdfConverter $converter, ProjectRepository $projectRepository)
+    public function __construct(Environment $twig, HtmlToPdfConverter $converter, ProjectStatisticService $projectRepository)
     {
         $this->twig = $twig;
         $this->converter = $converter;
-        $this->projectRepository = $projectRepository;
+        $this->projectStatisticService = $projectRepository;
     }
 
     protected function getTemplate(): string
@@ -64,9 +65,9 @@ class PDFRenderer
     {
         $decimal = false;
         if (null !== $query->getCurrentUser()) {
-            $decimal = (bool) $query->getCurrentUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
+            $decimal = $query->getCurrentUser()->isExportDecimal();
         } elseif (null !== $query->getUser()) {
-            $decimal = (bool) $query->getUser()->getPreferenceValue('timesheet.export_decimal', $decimal);
+            $decimal = $query->getUser()->isExportDecimal();
         }
 
         return ['decimal' => $decimal];
@@ -94,8 +95,9 @@ class PDFRenderer
      */
     public function render(array $timesheets, TimesheetQuery $query): Response
     {
+        $filename = new ExportFilename($query);
         $context = new ExportContext();
-        $context->setOption('filename', 'kimai-export');
+        $context->setOption('filename', $filename->getFilename());
 
         $summary = $this->calculateSummary($timesheets);
         $content = $this->twig->render($this->getTemplate(), array_merge([
@@ -104,7 +106,7 @@ class PDFRenderer
             // @deprecated since 1.13
             'now' => new \DateTime('now', new \DateTimeZone(date_default_timezone_get())),
             'summaries' => $summary,
-            'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectRepository),
+            'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectStatisticService),
             'decimal' => false,
             'pdfContext' => $context
         ], $this->getOptions($query)));
@@ -117,7 +119,8 @@ class PDFRenderer
 
         $filename = $context->getOption('filename');
         if (empty($filename)) {
-            $filename = 'kimai-export';
+            $filename = new ExportFilename($query);
+            $filename = $filename->getFilename();
         }
 
         $filename = FileHelper::convertToAsciiFilename($filename);

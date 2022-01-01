@@ -27,6 +27,7 @@ use App\Saml\Security\SamlFactory;
 use App\Timesheet\CalculatorInterface as TimesheetCalculator;
 use App\Timesheet\Rounding\RoundingInterface;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
+use App\Validator\Constraints\ProjectConstraint;
 use App\Validator\Constraints\TimesheetConstraint;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetRendererInterface;
@@ -44,6 +45,7 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
+    public const PLUGIN_DIRECTORY = '/var/plugins';
     public const CONFIG_EXTS = '.{php,xml,yaml,yml}';
 
     public const TAG_PLUGIN = 'kimai.plugin';
@@ -60,6 +62,7 @@ class Kernel extends BaseKernel
     public const TAG_TIMESHEET_EXPORTER = 'timesheet.exporter';
     public const TAG_TIMESHEET_TRACKING_MODE = 'timesheet.tracking_mode';
     public const TAG_TIMESHEET_ROUNDING_MODE = 'timesheet.rounding_mode';
+    public const TAG_PROJECT_VALIDATOR = 'project.validator';
 
     public function getCacheDir()
     {
@@ -87,6 +90,7 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(TrackingModeInterface::class)->addTag(self::TAG_TIMESHEET_TRACKING_MODE);
         $container->registerForAutoconfiguration(RoundingInterface::class)->addTag(self::TAG_TIMESHEET_ROUNDING_MODE);
         $container->registerForAutoconfiguration(TimesheetConstraint::class)->addTag(self::TAG_TIMESHEET_VALIDATOR);
+        $container->registerForAutoconfiguration(ProjectConstraint::class)->addTag(self::TAG_PROJECT_VALIDATOR);
 
         /** @var SecurityExtension $extension */
         $extension = $container->getExtension('security');
@@ -115,36 +119,27 @@ class Kernel extends BaseKernel
                     yield new $class();
                 }
             }
-
-            return;
-        }
-
-        // ... or we load them dynamically from the plugins directory
-        foreach ($this->getBundleDirectories() as $bundleDir) {
-            $bundleName = $bundleDir->getRelativePathname();
-            $pluginClass = 'KimaiPlugin\\' . $bundleName . '\\' . $bundleName;
-            yield new $pluginClass();
+        } else {
+            // ... or we load them dynamically from the plugins directory
+            foreach ($this->getBundleClasses() as $pluginClass) {
+                yield new $pluginClass();
+            }
         }
     }
 
-    private function getBundleDirectories(): array
+    private function getBundleClasses(): array
     {
-        $pluginsDir = $this->getProjectDir() . '/var/plugins';
+        $pluginsDir = $this->getProjectDir() . self::PLUGIN_DIRECTORY;
         if (!file_exists($pluginsDir)) {
             return [];
         }
 
-        $directories = [];
+        $plugins = [];
         $finder = new Finder();
         $finder->ignoreUnreadableDirs()->directories()->name('*Bundle');
         /** @var SplFileInfo $bundleDir */
         foreach ($finder->in($pluginsDir) as $bundleDir) {
             $bundleName = $bundleDir->getRelativePathname();
-
-            $bundleFilename = $bundleDir->getRealPath() . '/' . $bundleName . '.php';
-            if (!file_exists($bundleFilename)) {
-                continue;
-            }
 
             if (file_exists($bundleDir->getRealPath() . '/.disabled')) {
                 continue;
@@ -155,10 +150,10 @@ class Kernel extends BaseKernel
                 continue;
             }
 
-            $directories[] = $bundleDir;
+            $plugins[] = $pluginClass;
         }
 
-        return $directories;
+        return $plugins;
     }
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
@@ -207,10 +202,6 @@ class Kernel extends BaseKernel
     {
         $confDir = $this->getProjectDir() . '/config';
 
-        // some routes are based on app configs and will be imported manually
-        $this->configureFosUserRoutes($routes);
-        $this->configureSamlRoutes($routes);
-
         // load bundle specific route files
         if (is_dir($confDir . '/routes/')) {
             $routes->import($confDir . '/routes/*' . self::CONFIG_EXTS, '/', 'glob');
@@ -226,40 +217,12 @@ class Kernel extends BaseKernel
 
         foreach ($this->bundles as $bundle) {
             if (strpos(\get_class($bundle), 'KimaiPlugin\\') !== false) {
-                $routes->import($bundle->getPath() . '/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
+                if (is_dir($bundle->getPath() . '/Resources/config/')) {
+                    $routes->import($bundle->getPath() . '/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
+                } elseif (is_dir($bundle->getPath() . '/config/')) {
+                    $routes->import($bundle->getPath() . '/config/routes' . self::CONFIG_EXTS, '/', 'glob');
+                }
             }
         }
-    }
-
-    protected function configureFosUserRoutes(RouteCollectionBuilder $routes)
-    {
-        $features = $this->getContainer()->getParameter('kimai.fosuser');
-
-        // Expose the user registration feature
-        if ($features['registration']) {
-            $routes->import(
-                '@FOSUserBundle/Resources/config/routing/registration.xml',
-                '/{_locale}/register'
-            );
-        }
-
-        // Expose the users password-reset feature
-        if ($features['password_reset']) {
-            $routes->import(
-                '@FOSUserBundle/Resources/config/routing/resetting.xml',
-                '/{_locale}/resetting'
-            );
-        }
-    }
-
-    protected function configureSamlRoutes(RouteCollectionBuilder $routes)
-    {
-        $saml = $this->getContainer()->getParameter('kimai.saml');
-
-        if (!$saml['activate']) {
-            return;
-        }
-
-        $routes->import('../src/Saml/Controller/SamlController.php', '/auth', 'annotation');
     }
 }

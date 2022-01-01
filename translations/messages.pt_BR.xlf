@@ -1,1130 +1,1273 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="pt-BR" datatype="plaintext" original="messages.en.xlf">
     <body>
       <!--
               Global template keys
             -->
-      <trans-unit id="time_tracking">
+      <trans-unit id="N7mikjJ" resname="time_tracking">
         <source>time_tracking</source>
         <target>Acompanhamento de tempo</target>
       </trans-unit>
-      <trans-unit id="yes">
+      <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
         <target>Sim</target>
       </trans-unit>
-      <trans-unit id="no">
+      <trans-unit id="k5Apjz_" resname="no">
         <source>no</source>
         <target>Não</target>
       </trans-unit>
-      <trans-unit id="both">
+      <trans-unit id=".3dyBTq" resname="both">
         <source>both</source>
         <target>Ambos</target>
       </trans-unit>
-      <trans-unit id="This is a mandatory field">
+      <trans-unit id="KLIuHvt" resname="This is a mandatory field">
         <source>This is a mandatory field</source>
         <target>Obrigatório</target>
       </trans-unit>
-      <trans-unit id="create">
+      <trans-unit id="_ohHsMM" resname="create">
         <source>create</source>
         <target>Criar</target>
       </trans-unit>
-      <trans-unit id="confirm.delete">
+      <trans-unit id="DYHuW58" resname="confirm.delete">
         <source>confirm.delete</source>
         <target>Você realmente quer deletar?</target>
       </trans-unit>
-      <trans-unit id="admin_entity.delete_confirm">
+      <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
         <target>
                     Esses dados também serão excluídos!
                     Alternativamente, você pode selecionar um registro para qual todos os dados serão transferidos:
                 </target>
       </trans-unit>
-      <trans-unit id="delete.not_in_use">
+      <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
         <target>Esse registro pode ser excluído com segurança.</target>
       </trans-unit>
-      <trans-unit id="cancel">
+      <trans-unit id="I3TZF5S" resname="cancel">
         <source>cancel</source>
         <target>Cancelar</target>
       </trans-unit>
-      <trans-unit id="confirm">
+      <trans-unit id="PyZ8KrQ" resname="confirm">
         <source>confirm</source>
         <target>Confirmar</target>
       </trans-unit>
       <!--
               Login / Security
             -->
-      <trans-unit id="label.password">
+      <trans-unit id="9pvowqn" resname="label.password">
         <source>label.password</source>
         <target>Senha</target>
       </trans-unit>
-      <trans-unit id="label.password_repeat">
+      <trans-unit id="WxAnbP0" resname="label.password_repeat">
         <source>label.password_repeat</source>
         <target>Repita a Senha</target>
       </trans-unit>
-      <trans-unit id="label.logout">
+      <trans-unit id="II4DGnv" resname="label.logout">
         <source>label.logout</source>
         <target>Sair</target>
       </trans-unit>
-      <trans-unit id="label.user_profile">
+      <trans-unit id="hFFZGp_" resname="label.user_profile">
         <source>label.user_profile</source>
         <target>Meu Perfil</target>
       </trans-unit>
-      <trans-unit id="label.api_token">
+      <trans-unit id="gXZR.hV" resname="label.api_token">
         <source>label.api_token</source>
         <target>Senha API</target>
       </trans-unit>
-      <trans-unit id="label.api_token_repeat">
+      <trans-unit id="s_X2xpI" resname="label.api_token_repeat">
         <source>label.api_token_repeat</source>
         <target>Repita Senha da API</target>
       </trans-unit>
       <!--
               Menu / Navbar items
             -->
-      <trans-unit id="menu.homepage">
+      <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Painel</target>
       </trans-unit>
-      <trans-unit id="menu.admin">
+      <trans-unit id="wvvYSw_" resname="menu.admin">
         <source>menu.admin</source>
         <target>Administração</target>
       </trans-unit>
-      <trans-unit id="menu.system">
+      <trans-unit id="6OKwCUB" resname="menu.system">
         <source>menu.system</source>
         <target>Sistema</target>
       </trans-unit>
-      <trans-unit id="menu.logout">
+      <trans-unit id="wBTFKFR" resname="menu.logout">
         <source>menu.logout</source>
         <target>Sair</target>
       </trans-unit>
-      <trans-unit id="menu.timesheet">
+      <trans-unit id="C0W7_BT" resname="menu.timesheet">
         <source>menu.timesheet</source>
         <target>Meus tempos</target>
       </trans-unit>
-      <trans-unit id="menu.invoice">
-        <source>menu.invoice</source>
-        <target>Faturas</target>
-      </trans-unit>
-      <trans-unit id="menu.export">
+      <trans-unit id="I.eil4u" resname="menu.export">
         <source>menu.export</source>
         <target>Exportar</target>
       </trans-unit>
-      <trans-unit id="menu.admin_timesheet">
+      <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>Quadro de Horários</target>
       </trans-unit>
-      <trans-unit id="menu.admin_customer">
-        <source>menu.admin_customer</source>
+      <trans-unit id="IeshU90" resname="customers">
+        <source>customers</source>
         <target>Clientes</target>
       </trans-unit>
-      <trans-unit id="menu.admin_project">
-        <source>menu.admin_project</source>
+      <trans-unit id="JXfA9Ve" resname="projects">
+        <source>projects</source>
         <target>Projetos</target>
       </trans-unit>
-      <trans-unit id="menu.admin_activity">
-        <source>menu.admin_activity</source>
+      <trans-unit id="YkyVVAY" resname="activities">
+        <source>activities</source>
         <target>Atividades</target>
       </trans-unit>
-      <trans-unit id="menu.admin_user">
-        <source>menu.admin_user</source>
-        <target>Usuário</target>
+      <trans-unit id="fftM9nd" resname="users">
+        <source>users</source>
+        <target>Usuários</target>
       </trans-unit>
-      <trans-unit id="menu.plugin">
+      <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>Plugins</target>
       </trans-unit>
-      <trans-unit id="menu.system_configuration">
+      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
         <source>menu.system_configuration</source>
         <target>Configurações</target>
       </trans-unit>
-      <trans-unit id="menu.tags">
-        <source>menu.tags</source>
+      <trans-unit id="l4wviUE" resname="tags">
+        <source>tags</source>
         <target>Tags</target>
       </trans-unit>
       <!--
               Error templates
             -->
-      <trans-unit id="error.no_entries_found">
+      <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>Não foram encontradas entradas com base nos filtros selecionados.</target>
       </trans-unit>
       <!--
               General labels
             -->
-      <trans-unit id="label.date">
+      <trans-unit id="H1qEi4d" resname="label.date">
         <source>label.date</source>
         <target>Data</target>
       </trans-unit>
-      <trans-unit id="label.starttime">
+      <trans-unit id="eJPDE76" resname="label.starttime">
         <source>label.starttime</source>
         <target>Início</target>
       </trans-unit>
-      <trans-unit id="label.endtime">
+      <trans-unit id="uZlpDFh" resname="label.endtime">
         <source>label.endtime</source>
         <target>Fim</target>
       </trans-unit>
-      <trans-unit id="label.duration">
+      <trans-unit id="cgpmY0I" resname="label.duration">
         <source>label.duration</source>
         <target>Duração</target>
       </trans-unit>
-      <trans-unit id="label.user">
+      <trans-unit id="O2X4xZH" resname="label.user">
         <source>label.user</source>
         <target>Usuário</target>
       </trans-unit>
-      <trans-unit id="label.username">
+      <trans-unit id="LDhDPrF" resname="label.username">
         <source>label.username</source>
         <target>Nome de usuário</target>
       </trans-unit>
-      <trans-unit id="label.description">
+      <trans-unit id="4cEApe1" resname="label.description">
         <source>label.description</source>
         <target>Descrição</target>
       </trans-unit>
-      <trans-unit id="label.name">
+      <trans-unit id="ysOvPSq" resname="label.name">
         <source>label.name</source>
         <target>Nome</target>
       </trans-unit>
-      <trans-unit id="label.comment">
+      <trans-unit id="WqTho4C" resname="label.comment">
         <source>label.comment</source>
         <target>Comentário</target>
       </trans-unit>
-      <trans-unit id="label.id">
+      <trans-unit id="txRonia" resname="label.id">
         <source>label.id</source>
         <target>ID</target>
       </trans-unit>
-      <trans-unit id="label.visible">
+      <trans-unit id="CYpZwBz" resname="label.visible">
         <source>label.visible</source>
         <target>Visível</target>
       </trans-unit>
-      <trans-unit id="label.budget">
+      <trans-unit id="2ktNwkr" resname="label.budget">
         <source>label.budget</source>
         <target>Despesas</target>
       </trans-unit>
-      <trans-unit id="label.timeBudget">
+      <trans-unit id="x8TrOec" resname="label.timeBudget">
         <source>label.timeBudget</source>
         <target>Orçamento de tempo</target>
       </trans-unit>
-      <trans-unit id="label.activity">
+      <trans-unit id="l1wiL0h" resname="label.activity">
         <source>label.activity</source>
         <target>Atividade</target>
       </trans-unit>
-      <trans-unit id="label.project">
+      <trans-unit id="KtnqJcg" resname="label.project">
         <source>label.project</source>
         <target>Projeto</target>
       </trans-unit>
-      <trans-unit id="label.tag">
+      <trans-unit id="VNCQ7YU" resname="label.tag">
         <source>label.tag</source>
         <target>Tags</target>
       </trans-unit>
-      <trans-unit id="label.tags">
+      <trans-unit id="ijQyGRo" resname="label.tags">
         <source>label.tags</source>
         <target>Tags</target>
       </trans-unit>
-      <trans-unit id="label.hourlyRate">
+      <trans-unit id="VAbtieW" resname="label.hourlyRate">
         <source>label.hourlyRate</source>
         <target>Taxa horária</target>
       </trans-unit>
-      <trans-unit id="label.hourly_rate">
+      <trans-unit id="IQ.tlua" resname="label.hourly_rate">
         <source>label.hourly_rate</source>
         <target>Taxa horária</target>
       </trans-unit>
-      <trans-unit id="label.skin">
+      <trans-unit id="dezCZWf" resname="label.skin">
         <source>label.skin</source>
         <target>Tema Kimai</target>
       </trans-unit>
-      <trans-unit id="label.hours">
+      <trans-unit id="w8T34A6" resname="label.hours">
         <source>label.hours</source>
         <target>Horas</target>
       </trans-unit>
-      <trans-unit id="label.rate">
+      <trans-unit id="Ih3IFXj" resname="label.rate">
         <source>label.rate</source>
         <target>Taxa</target>
       </trans-unit>
-      <trans-unit id="label.language">
+      <trans-unit id="foM2o5T" resname="label.language">
         <source>label.language</source>
         <target>Linguagem</target>
       </trans-unit>
-      <trans-unit id="label.customer">
+      <trans-unit id="Z8a2kUf" resname="label.customer">
         <source>label.customer</source>
         <target>Cliente</target>
       </trans-unit>
-      <trans-unit id="label.email">
+      <trans-unit id="D2N6_cP" resname="label.email">
         <source>label.email</source>
         <target>E-mail</target>
       </trans-unit>
-      <trans-unit id="label.create_more">
+      <trans-unit id="hX.EQKy" resname="label.create_more">
         <source>label.create_more</source>
         <target>Criar outras entradas</target>
       </trans-unit>
       <!--
               Buttons & Actions
             -->
-      <trans-unit id="label.actions">
+      <trans-unit id="zldXQq6" resname="label.actions">
         <source>label.actions</source>
         <target>Ações</target>
       </trans-unit>
-      <trans-unit id="action.edit">
+      <trans-unit id="ovKkXwU" resname="action.edit">
         <source>action.edit</source>
         <target>Editar</target>
       </trans-unit>
-      <trans-unit id="action.delete">
+      <trans-unit id="hTKWQ6g" resname="action.delete">
         <source>action.delete</source>
         <target>Deletar</target>
       </trans-unit>
-      <trans-unit id="action.save">
+      <trans-unit id="HLtdhYw" resname="action.save">
         <source>action.save</source>
         <target>Salvar</target>
       </trans-unit>
-      <trans-unit id="action.back">
+      <trans-unit id="Eb7Ygpo" resname="action.back">
         <source>action.back</source>
         <target>Voltar</target>
       </trans-unit>
-      <trans-unit id="action.close">
+      <trans-unit id="wCazS.X" resname="action.close">
         <source>action.close</source>
         <target>Fechar</target>
       </trans-unit>
       <!--
               Dashboard
             -->
-      <trans-unit id="dashboard.title">
+      <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Dashboard</target>
       </trans-unit>
-      <trans-unit id="dashboard.subtitle">
+      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
         <source>dashboard.subtitle</source>
-        <target>Bem vindo!</target>
+        <target>Bem-vindo!</target>
       </trans-unit>
-      <trans-unit id="dashboard.all">
+      <trans-unit id="yEa1Yz3" resname="dashboard.all">
         <source>dashboard.all</source>
         <target>Todos usuários</target>
       </trans-unit>
       <!--
               Widgets
             -->
-      <trans-unit id="more.info.link">
+      <trans-unit id="giznf_R" resname="more.info.link">
         <source>more.info.link</source>
         <target>Mais Informações</target>
       </trans-unit>
-      <trans-unit id="label.toggle_dropdown">
+      <trans-unit id="4iliLZT" resname="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
         <target>Mostrar menu</target>
       </trans-unit>
       <!--
               Timesheet
             -->
-      <trans-unit id="timesheet.title">
+      <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Meus Tempos</target>
       </trans-unit>
-      <trans-unit id="timesheet.edit">
+      <trans-unit id="dwEVXUR" resname="timesheet.edit">
         <source>timesheet.edit</source>
         <target>Editar Gravação</target>
       </trans-unit>
-      <trans-unit id="label.begin">
+      <trans-unit id="trDJK9W" resname="label.begin">
         <source>label.begin</source>
         <target>De</target>
       </trans-unit>
-      <trans-unit id="label.end">
+      <trans-unit id="R9typUt" resname="label.end">
         <source>label.end</source>
         <target>Para</target>
       </trans-unit>
-      <trans-unit id="label.daterange">
+      <trans-unit id="egaNXjp" resname="label.daterange">
         <source>label.daterange</source>
         <target>Intervalo de tempo</target>
       </trans-unit>
-      <trans-unit id="modal.columns.title">
+      <trans-unit id="UbnqJLn" resname="modal.columns.title">
         <source>modal.columns.title</source>
         <target>Alterar a visibilidade da coluna</target>
       </trans-unit>
-      <trans-unit id="modal.columns.description">
+      <trans-unit id="EbfIoLp" resname="modal.columns.description">
         <source>modal.columns.description</source>
         <target>Ao salvar, as colunas desmarcadas serão ocultadas e essa configuração será armazenada em um cookie do navegador. Se você excluir seus cookies, as configurações serão invertidas.</target>
       </trans-unit>
-      <trans-unit id="label.fixedRate">
+      <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Taxa fixa</target>
       </trans-unit>
-      <trans-unit id="label.color">
+      <trans-unit id="YTSS_Q1" resname="label.color">
         <source>label.color</source>
         <target>Cor</target>
       </trans-unit>
       <!--
               User profile
             -->
-      <trans-unit id="profile.title">
+      <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Perfil do Usuário</target>
       </trans-unit>
-      <trans-unit id="profile.about_me">
+      <trans-unit id="HWKJZ0T" resname="profile.about_me">
         <source>profile.about_me</source>
         <target>Sobre mim</target>
       </trans-unit>
-      <trans-unit id="profile.first_entry">
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
         <source>profile.first_entry</source>
         <target>Trabalhando desde</target>
       </trans-unit>
-      <trans-unit id="profile.settings">
+      <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
         <target>Perfil</target>
       </trans-unit>
-      <trans-unit id="profile.password">
+      <trans-unit id="A6TLLQa" resname="profile.password">
         <source>profile.password</source>
         <target>Senha</target>
       </trans-unit>
-      <trans-unit id="profile.api-token">
+      <trans-unit id="Z34ZpjK" resname="profile.api-token">
         <source>profile.api-token</source>
         <target>API</target>
       </trans-unit>
-      <trans-unit id="profile.roles">
+      <trans-unit id="ygtTz8." resname="profile.roles">
         <source>profile.roles</source>
         <target>Papéis</target>
       </trans-unit>
-      <trans-unit id="profile.preferences">
+      <trans-unit id="MQKiG33" resname="profile.preferences">
         <source>profile.preferences</source>
         <target>Preferências</target>
       </trans-unit>
-      <trans-unit id="label.theme.collapsed_sidebar">
+      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
         <source>label.theme.collapsed_sidebar</source>
         <target>Alterna o estado da barra lateral esquerda no carregamento da página (abrir ou recolher)</target>
       </trans-unit>
-      <trans-unit id="label.calendar.initial_view">
+      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
         <source>label.calendar.initial_view</source>
         <target>Vista inicial do calendário</target>
       </trans-unit>
-      <trans-unit id="label.login.initial_view">
+      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
         <source>label.login.initial_view</source>
         <target>Visualização inicial após o login</target>
       </trans-unit>
       <!-- Options for user-preference label.calendar.initial_view -->
-      <trans-unit id="month">
+      <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Mês</target>
       </trans-unit>
-      <trans-unit id="agendaWeek">
+      <trans-unit id="Irm6dfx" resname="agendaWeek">
         <source>agendaWeek</source>
         <target>Semana</target>
       </trans-unit>
-      <trans-unit id="agendaDay">
+      <trans-unit id="Q0Zip02" resname="agendaDay">
         <source>agendaDay</source>
         <target>Dia</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.daily_stats">
+      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
         <source>label.timesheet.daily_stats</source>
         <target>Mostrar estatísticas diárias no quadro de horários</target>
       </trans-unit>
       <!--
               User timesheet calendar
             -->
-      <trans-unit id="calendar.title">
-        <source>calendar.title</source>
+      <trans-unit id="UVJ5Die" resname="calendar">
+        <source>calendar</source>
         <target>Calendário</target>
       </trans-unit>
       <!--
               Admin: Timesheet
             -->
-      <trans-unit id="admin_timesheet.title">
-        <source>admin_timesheet.title</source>
-        <target>Quadro de Horários</target>
-      </trans-unit>
-      <!--
-              Admin: Projects
-            -->
-      <trans-unit id="admin_project.title">
-        <source>admin_project.title</source>
-        <target>Projetos</target>
-      </trans-unit>
-      <trans-unit id="admin_project.short_stats">
-        <source>admin_project.short_stats</source>
-        <target>
-                    Atualmente o %project% para o cliente %customer% tem %activities%
-                    atividades e %records% registros de tempo, que contam até um total de %duration%.
-                </target>
-      </trans-unit>
-      <!--
-              Admin: Activity
-            -->
-      <trans-unit id="admin_activity.title">
-        <source>admin_activity.title</source>
-        <target>Atividades</target>
-      </trans-unit>
-      <trans-unit id="admin_activity.short_stats">
-        <source>admin_activity.short_stats</source>
-        <target>
-                    Atualmente o %project% para o cliente %customer% tem %activities%
-                    atividades e %records% registros de tempo, que contam até um total de %duration%.
-                </target>
-      </trans-unit>
       <!--
               Admin: Customer
             -->
-      <trans-unit id="admin_customer.title">
-        <source>admin_customer.title</source>
-        <target>Cliente</target>
-      </trans-unit>
-      <trans-unit id="label.number">
+      <trans-unit id="39AtPxQ" resname="label.number">
         <source>label.number</source>
         <target>Conta</target>
       </trans-unit>
-      <trans-unit id="label.company">
+      <trans-unit id="7jfRn_1" resname="label.company">
         <source>label.company</source>
         <target>Nome da Empresa</target>
       </trans-unit>
-      <trans-unit id="label.vat">
+      <trans-unit id="GOStgLi" resname="label.vat">
         <source>label.vat</source>
         <target>Imposto</target>
       </trans-unit>
-      <trans-unit id="label.contact">
+      <trans-unit id="0tkOMo1" resname="label.contact">
         <source>label.contact</source>
         <target>Contato</target>
       </trans-unit>
-      <trans-unit id="label.address">
+      <trans-unit id="c9W5AO4" resname="label.address">
         <source>label.address</source>
         <target>Endereço</target>
       </trans-unit>
-      <trans-unit id="label.country">
+      <trans-unit id="k7MJQ82" resname="label.country">
         <source>label.country</source>
         <target>País</target>
       </trans-unit>
-      <trans-unit id="label.phone">
+      <trans-unit id="g03c_vw" resname="label.phone">
         <source>label.phone</source>
         <target>Telefone</target>
       </trans-unit>
-      <trans-unit id="label.fax">
+      <trans-unit id="eRyhERS" resname="label.fax">
         <source>label.fax</source>
         <target>Fax</target>
       </trans-unit>
-      <trans-unit id="label.mobile">
+      <trans-unit id="AawT9pW" resname="label.mobile">
         <source>label.mobile</source>
         <target>Celular</target>
       </trans-unit>
-      <trans-unit id="label.homepage">
+      <trans-unit id="PS9IH_t" resname="label.homepage">
         <source>label.homepage</source>
         <target>Pagina inicial</target>
       </trans-unit>
-      <trans-unit id="label.timezone">
+      <trans-unit id="dmtPdwq" resname="label.timezone">
         <source>label.timezone</source>
         <target>Fuso horário</target>
       </trans-unit>
-      <trans-unit id="label.currency">
+      <trans-unit id="otd2FZd" resname="label.currency">
         <source>label.currency</source>
         <target>Moeda</target>
-      </trans-unit>
-      <trans-unit id="admin_customer.short_stats">
-        <source>admin_customer.short_stats</source>
-        <target>
-                   Atualmente o %project% para o cliente %customer% tem %activities%
-                    atividades e %records% registros de tempo, que contam até um total de %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: User
             -->
-      <trans-unit id="admin_user.title">
-        <source>admin_user.title</source>
-        <target>Usuário</target>
-      </trans-unit>
-      <trans-unit id="label.alias">
+      <trans-unit id="TRDzmCV" resname="label.alias">
         <source>label.alias</source>
         <target>Nome</target>
       </trans-unit>
-      <trans-unit id="label.title">
+      <trans-unit id="UrRn8xj" resname="label.title">
         <source>label.title</source>
         <target>Título</target>
       </trans-unit>
-      <trans-unit id="label.avatar">
+      <trans-unit id="nWMH_Nr" resname="label.avatar">
         <source>label.avatar</source>
-        <target>Imagem de perfil</target>
+        <target>Imagem do perfil (URL)</target>
       </trans-unit>
-      <trans-unit id="label.active">
+      <trans-unit id="KtTP.Sh" resname="label.active">
         <source>label.active</source>
         <target>Ativo</target>
       </trans-unit>
-      <trans-unit id="label.roles">
+      <trans-unit id="iD6CNOO" resname="label.roles">
         <source>label.roles</source>
         <target>Função</target>
-      </trans-unit>
-      <trans-unit id="admin_user.short_stats">
-        <source>admin_user.short_stats</source>
-        <target>
-                    Atualmente o usuário %user% possuí %records% registros de tempo, que contam até um total de %duration%.
-                </target>
       </trans-unit>
       <!--
               Admin: Plugins
             -->
-      <trans-unit id="label.version">
+      <trans-unit id="d75KAlJ" resname="label.version">
         <source>label.version</source>
         <target>Versão</target>
       </trans-unit>
-      <trans-unit id="label.required_version">
+      <trans-unit id="8Rfa01v" resname="label.required_version">
         <source>label.required_version</source>
         <target>Compatível com</target>
       </trans-unit>
       <!--
               ROLES
             -->
-      <trans-unit id="ROLE_SUPER_ADMIN">
+      <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>Administrador do Sistema</target>
       </trans-unit>
-      <trans-unit id="ROLE_ADMIN">
+      <trans-unit id="718iPw6" resname="ROLE_ADMIN">
         <source>ROLE_ADMIN</source>
         <target>Administrador</target>
       </trans-unit>
-      <trans-unit id="ROLE_TEAMLEAD">
+      <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD">
         <source>ROLE_TEAMLEAD</source>
         <target>Líder da equipe</target>
       </trans-unit>
-      <trans-unit id="ROLE_USER">
+      <trans-unit id="rvO5ZXf" resname="ROLE_USER">
         <source>ROLE_USER</source>
         <target>Usuário</target>
       </trans-unit>
       <!--
               Statistics data for Dashboard & Users profile
             -->
-      <trans-unit id="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday">
         <source>stats.durationToday</source>
         <target>Horas de trabalho hoje</target>
       </trans-unit>
-      <trans-unit id="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek">
         <source>stats.durationWeek</source>
         <target>Horas de trabalho esta semana</target>
       </trans-unit>
-      <trans-unit id="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
         <source>stats.durationMonth</source>
         <target>Horas de trabalho este mês</target>
       </trans-unit>
-      <trans-unit id="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear">
         <source>stats.durationYear</source>
         <target>Horas de trabalho este ano</target>
       </trans-unit>
-      <trans-unit id="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
         <source>stats.durationTotal</source>
         <target>Total de horas de trabalho</target>
       </trans-unit>
-      <trans-unit id="stats.yourWorkingHours">
+      <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
         <target>Seu horário de trabalho</target>
       </trans-unit>
-      <trans-unit id="stats.amountToday">
+      <trans-unit id="023M9Ta" resname="stats.amountToday">
         <source>stats.amountToday</source>
         <target>Receita hoje</target>
       </trans-unit>
-      <trans-unit id="stats.amountWeek">
+      <trans-unit id="xnJvYAE" resname="stats.amountWeek">
         <source>stats.amountWeek</source>
         <target>Receita esta semana</target>
       </trans-unit>
-      <trans-unit id="stats.amountMonth">
+      <trans-unit id="ulr3reE" resname="stats.amountMonth">
         <source>stats.amountMonth</source>
         <target>Receita este mês</target>
       </trans-unit>
-      <trans-unit id="stats.amountYear">
+      <trans-unit id="bQZyZaO" resname="stats.amountYear">
         <source>stats.amountYear</source>
         <target>Receita este ano</target>
       </trans-unit>
-      <trans-unit id="stats.amountTotal">
+      <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target>Receita total</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveToday">
+      <trans-unit id="xyiadv3" resname="stats.userActiveToday">
         <source>stats.userActiveToday</source>
         <target>Usuários ativos hoje</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveWeek">
+      <trans-unit id="knMHaeO" resname="stats.userActiveWeek">
         <source>stats.userActiveWeek</source>
         <target>Usuários ativos nesta semana</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveMonth">
+      <trans-unit id="adzVDgb" resname="stats.userActiveMonth">
         <source>stats.userActiveMonth</source>
         <target>Usuários ativos este mês</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveYear">
+      <trans-unit id="AswjFvh" resname="stats.userActiveYear">
         <source>stats.userActiveYear</source>
         <target>Usuários ativos este ano</target>
       </trans-unit>
-      <trans-unit id="stats.userActiveTotal">
+      <trans-unit id="dLTb1Po" resname="stats.userActiveTotal">
         <source>stats.userActiveTotal</source>
         <target>Usuários ativos total</target>
       </trans-unit>
-      <trans-unit id="stats.activeRecordings">
+      <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
         <target>Registros ativos</target>
       </trans-unit>
-      <trans-unit id="stats.userTotal">
+      <trans-unit id="t5eIWp8" resname="stats.userTotal">
         <source>stats.userTotal</source>
         <target>Quantidade de usuários</target>
       </trans-unit>
-      <trans-unit id="stats.activityTotal">
+      <trans-unit id="Bor.76M" resname="stats.activityTotal">
         <source>stats.activityTotal</source>
         <target>Quantidade de atividades</target>
       </trans-unit>
-      <trans-unit id="stats.projectTotal">
+      <trans-unit id="67uSaR3" resname="stats.projectTotal">
         <source>stats.projectTotal</source>
         <target>Quantidade de projetos</target>
       </trans-unit>
-      <trans-unit id="stats.customerTotal">
+      <trans-unit id="tnD6aPj" resname="stats.customerTotal">
         <source>stats.customerTotal</source>
         <target>Quantidade de clientes</target>
       </trans-unit>
       <!--
               Invoice
             -->
-      <trans-unit id="admin_invoice_template.title">
+      <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Modelo de fatura</target>
       </trans-unit>
-      <trans-unit id="invoice.title">
-        <source>invoice.title</source>
+      <trans-unit id="SR2r1Cs" resname="invoices">
+        <source>invoices</source>
         <target>Faturas</target>
       </trans-unit>
-      <trans-unit id="button.print">
+      <trans-unit id="X70dwP8" resname="button.print">
         <source>button.print</source>
         <target>Imprimir</target>
       </trans-unit>
-      <trans-unit id="button.csv">
+      <trans-unit id="W_TXvSi" resname="button.csv">
         <source>button.csv</source>
         <target>CSV</target>
       </trans-unit>
-      <trans-unit id="button.xlsx">
+      <trans-unit id="vC2IsaP" resname="button.xlsx">
         <source>button.xlsx</source>
         <target>Excel</target>
       </trans-unit>
-      <trans-unit id="button.pdf">
+      <trans-unit id="aAa5uRR" resname="button.pdf">
         <source>button.pdf</source>
         <target>PDF</target>
       </trans-unit>
-      <trans-unit id="button.ods">
+      <trans-unit id="ulYFDIo" resname="button.ods">
         <source>button.ods</source>
         <target>ODS</target>
       </trans-unit>
-      <trans-unit id="invoice_print">
+      <trans-unit id="zPcx3O_" resname="invoice_print">
         <source>invoice_print</source>
         <target>Fatura</target>
       </trans-unit>
-      <trans-unit id="label.template">
+      <trans-unit id="p0IprAw" resname="label.template">
         <source>label.template</source>
         <target>Modelo</target>
       </trans-unit>
-      <trans-unit id="label.due_days">
+      <trans-unit id="zfIRxJh" resname="label.due_days">
         <source>label.due_days</source>
         <target>Prazo de pagamento em dias</target>
       </trans-unit>
-      <trans-unit id="invoice.due_days">
+      <trans-unit id="rAJrxSK" resname="invoice.due_days">
         <source>invoice.due_days</source>
         <target>Alvo de pagamento</target>
       </trans-unit>
-      <trans-unit id="invoice.from">
-        <source>invoice.from</source>
-        <target>De</target>
-      </trans-unit>
-      <trans-unit id="invoice.to">
+      <trans-unit id="hx7vsMA" resname="invoice.to">
         <source>invoice.to</source>
         <target>Para</target>
       </trans-unit>
-      <trans-unit id="invoice.number">
+      <trans-unit id="x_W5sV4" resname="invoice.number">
         <source>invoice.number</source>
         <target>Número da Fatura</target>
       </trans-unit>
-      <trans-unit id="invoice.subtotal">
+      <trans-unit id="86KyrKO" resname="invoice.subtotal">
         <source>invoice.subtotal</source>
         <target>Subtotal</target>
       </trans-unit>
-      <trans-unit id="invoice.tax">
+      <trans-unit id="EO57yXg" resname="invoice.tax">
         <source>invoice.tax</source>
         <target>Imposto</target>
       </trans-unit>
-      <trans-unit id="invoice.total">
+      <trans-unit id="N68vyvo" resname="invoice.total">
         <source>invoice.total</source>
         <target>Total</target>
       </trans-unit>
-      <trans-unit id="invoice.service_date">
+      <trans-unit id="TPzFWUs" resname="invoice.service_date">
         <source>invoice.service_date</source>
         <target>Data de serviço</target>
       </trans-unit>
-      <trans-unit id="label.amount">
+      <trans-unit id="6x24VVR" resname="label.amount">
         <source>label.amount</source>
         <target>Quantidade</target>
       </trans-unit>
-      <trans-unit id="label.total_rate">
+      <trans-unit id="g7EpaPY" resname="label.total_rate">
         <source>label.total_rate</source>
         <target>Preço Total</target>
       </trans-unit>
-      <trans-unit id="label.unit_price">
+      <trans-unit id="MF3MdTu" resname="label.unit_price">
         <source>label.unit_price</source>
         <target>Preço unitário</target>
       </trans-unit>
-      <trans-unit id="label.payment_terms">
+      <trans-unit id="77aZC3r" resname="label.payment_terms">
         <source>label.payment_terms</source>
         <target>Termos de pagamento</target>
       </trans-unit>
-      <trans-unit id="invoice.signature_user">
+      <trans-unit id="9p2KQag" resname="invoice.signature_user">
         <source>invoice.signature_user</source>
         <target>Confirmação: Data / Nome do Consultor / Assinatura</target>
       </trans-unit>
-      <trans-unit id="invoice.signature_customer">
+      <trans-unit id="Q9ykNhO" resname="invoice.signature_customer">
         <source>invoice.signature_customer</source>
         <target>Confirmação: Data / Nome do Cliente / Assinatura</target>
       </trans-unit>
-      <trans-unit id="invoice.total_working_time">
+      <trans-unit id="c3d6p33" resname="invoice.total_working_time">
         <source>invoice.total_working_time</source>
         <target>Duração Total</target>
       </trans-unit>
-      <trans-unit id="label.orderNumber">
+      <trans-unit id="BS00SS7" resname="label.orderNumber">
         <source>label.orderNumber</source>
         <target>Número do pedido</target>
       </trans-unit>
-      <trans-unit id="label.invoice_tax_number">
-        <source>label.invoice_tax_number</source>
-        <target>VAT no. (Imposto Britânico):</target>
-      </trans-unit>
-      <trans-unit id="label.invoice_bank_account">
+      <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
         <target>Conta Bancária</target>
       </trans-unit>
       <!--
               Export
             -->
-      <trans-unit id="export.title">
+      <trans-unit id="F6Jmro7" resname="export.title">
         <source>export.title</source>
         <target>Exportar</target>
       </trans-unit>
-      <trans-unit id="export.subtitle">
-        <source>export.subtitle</source>
-        <target>Exportar dados do quadro de horários para vários formatos</target>
-      </trans-unit>
-      <trans-unit id="export.period">
+      <trans-unit id="vjmoQGo" resname="export.period">
         <source>export.period</source>
         <target>Período</target>
       </trans-unit>
-      <trans-unit id="export.document_title">
+      <trans-unit id="3CQ7A2m" resname="export.document_title">
         <source>export.document_title</source>
         <target>Lista de despesas</target>
       </trans-unit>
-      <trans-unit id="export.full_list">
+      <trans-unit id="d5wyWRD" resname="export.full_list">
         <source>export.full_list</source>
         <target>Lista completa</target>
       </trans-unit>
-      <trans-unit id="export.summary">
+      <trans-unit id="N778uJ6" resname="export.summary">
         <source>export.summary</source>
         <target>Sumário</target>
       </trans-unit>
-      <trans-unit id="export.page_of">
+      <trans-unit id="ElDyzrx" resname="export.page_of">
         <source>export.page_of</source>
         <target>Página %page% de %pages%</target>
       </trans-unit>
-      <trans-unit id="export.date_copyright">
+      <trans-unit id="vKY0tof" resname="export.date_copyright">
         <source>export.date_copyright</source>
         <target>Criado %date% com %kimai%</target>
       </trans-unit>
       <!--
              Navbar - recent entries and activities
             -->
-      <trans-unit id="active.entries">
+      <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Suas medições de tempo ativo</target>
       </trans-unit>
-      <trans-unit id="timesheet.all">
+      <trans-unit id="e7XS97t" resname="timesheet.all">
         <source>timesheet.all</source>
         <target>Mostrar todos os registros</target>
       </trans-unit>
-      <trans-unit id="recent.activities">
+      <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
         <target>Reiniciar uma das suas últimas atividades</target>
       </trans-unit>
-      <trans-unit id="recent.activities.format">
+      <trans-unit id="SLV47Uu" resname="recent.activities.format">
         <source>recent.activities.format</source>
         <target>%activity% no %project% para %customer%</target>
       </trans-unit>
-      <trans-unit id="timesheet.start">
+      <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>Criar novo registro de tempo</target>
       </trans-unit>
       <!--
               TOOLBARS
             -->
-      <trans-unit id="label.pageSize">
+      <trans-unit id="MPimOps" resname="label.pageSize">
         <source>label.pageSize</source>
         <target>Tamanho do papel</target>
       </trans-unit>
-      <trans-unit id="label.entryState">
+      <trans-unit id="KhyA_PW" resname="label.entryState">
         <source>label.entryState</source>
         <target>Registros</target>
       </trans-unit>
-      <trans-unit id="label.exported">
+      <trans-unit id="X3JM9wj" resname="label.exported">
         <source>label.exported</source>
         <target>Exportado</target>
       </trans-unit>
-      <trans-unit id="entryState.exported">
+      <trans-unit id="_DDecAV" resname="entryState.exported">
         <source>entryState.exported</source>
         <target>Desmarcado</target>
       </trans-unit>
-      <trans-unit id="entryState.not_exported">
+      <trans-unit id="ccCiXyR" resname="entryState.not_exported">
         <source>entryState.not_exported</source>
         <target>Aberto</target>
       </trans-unit>
-      <trans-unit id="entryState.all">
+      <trans-unit id="do7fP0q" resname="entryState.all">
         <source>entryState.all</source>
         <target>Tudo</target>
       </trans-unit>
-      <trans-unit id="entryState.running">
+      <trans-unit id="xm7mqoK" resname="entryState.running">
         <source>entryState.running</source>
         <target>Ativos</target>
       </trans-unit>
-      <trans-unit id="entryState.stopped">
+      <trans-unit id="spHpd_I" resname="entryState.stopped">
         <source>entryState.stopped</source>
         <target>Parado</target>
       </trans-unit>
-      <trans-unit id="export.clear_all">
+      <trans-unit id="BhsaLxX" resname="export.clear_all">
         <source>export.clear_all</source>
         <target>Marcar todos os registros mostrados como aberto?</target>
       </trans-unit>
-      <trans-unit id="export.mark_all">
+      <trans-unit id="qtjPKUT" resname="export.mark_all">
         <source>export.mark_all</source>
         <target>Marcar todos os registros mostrados como resolvido?</target>
       </trans-unit>
-      <trans-unit id="label.globalsOnly">
+      <trans-unit id="S0vT92U" resname="label.globalsOnly">
         <source>label.globalsOnly</source>
         <target>Somente global</target>
       </trans-unit>
-      <trans-unit id="rates.empty">
+      <trans-unit id="0M_Gylq" resname="rates.empty">
         <source>rates.empty</source>
-        <target>Nenhuma taxa foi configurada ainda.</target>
+        <target>Nenhuma taxa horária foi configurada.</target>
       </trans-unit>
-      <trans-unit id="attachments">
+      <trans-unit id="OTDmccn" resname="attachments">
         <source>attachments</source>
         <target>Arquivos</target>
       </trans-unit>
-      <trans-unit id="my.profile">
+      <trans-unit id="hBNESu6" resname="my.profile">
         <source>my.profile</source>
         <target>Meu perfil</target>
       </trans-unit>
-      <trans-unit id="search">
+      <trans-unit id="JBkykGe" resname="search">
         <source>search</source>
         <target>Procurar</target>
       </trans-unit>
-      <trans-unit id="upload">
+      <trans-unit id=".0CFrRV" resname="upload">
         <source>upload</source>
         <target>Enviar</target>
       </trans-unit>
-      <trans-unit id="error.no_comments_found">
+      <trans-unit id="hlu4iX5" resname="error.no_comments_found">
         <source>error.no_comments_found</source>
         <target>Não houve nenhum comentários postados ainda.</target>
       </trans-unit>
-      <trans-unit id="menu.doctor">
+      <trans-unit id="1kHI0gb" resname="menu.doctor">
         <source>menu.doctor</source>
         <target>Doutor</target>
       </trans-unit>
-      <trans-unit id="menu.admin_team">
+      <trans-unit id="pA.bYIk" resname="menu.admin_team">
         <source>menu.admin_team</source>
         <target>Times</target>
       </trans-unit>
-      <trans-unit id="menu.reporting">
+      <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
         <target>Reportando</target>
       </trans-unit>
-      <trans-unit id="login_required">
+      <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Permissão ausente. Redirecionar para o login?</target>
       </trans-unit>
-      <trans-unit id="rates.title">
+      <trans-unit id="mflwMcX" resname="rates.title">
         <source>rates.title</source>
         <target>Taxas</target>
       </trans-unit>
-      <trans-unit id="update_multiple">
+      <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
         <target>%action% %count% entradas?</target>
       </trans-unit>
-      <trans-unit id="label.appendTags">
+      <trans-unit id="BxkmaKz" resname="label.appendTags">
         <source>label.appendTags</source>
         <target>Tags de apêndice</target>
       </trans-unit>
-      <trans-unit id="label.decimalDuration">
+      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
         <source>label.decimalDuration</source>
         <target>Duração da exibição como número decimal</target>
       </trans-unit>
-      <trans-unit id="Allowed character: A-Z and _">
+      <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _">
         <source>Allowed character: A-Z and _</source>
         <target>Caractere permitido: A-Z e _</target>
       </trans-unit>
-      <trans-unit id="label.vat_id">
+      <trans-unit id="Dgmh_mv" resname="label.vat_id">
         <source>label.vat_id</source>
         <target>IVA-ID</target>
       </trans-unit>
-      <trans-unit id="label.timesheet.export_decimal">
+      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
         <source>label.timesheet.export_decimal</source>
         <target>Use a duração decimal na exportação</target>
       </trans-unit>
-      <trans-unit id="help.fixedRate">
+      <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>
         <target>Cada registro de cada vez recebe o mesmo valor, independentemente de sua duração</target>
       </trans-unit>
-      <trans-unit id="label.my_team_projects">
+      <trans-unit id="jTiYRIu" resname="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>Projetos e orçamentos da equipe</target>
+        <target>Meus projetos</target>
       </trans-unit>
-      <trans-unit id="label.teamlead">
+      <trans-unit id="Zpj9UB4" resname="label.teamlead">
         <source>label.teamlead</source>
         <target>Liderança de equipe</target>
       </trans-unit>
-      <trans-unit id="label.recalculate_rates">
+      <trans-unit id="v72sA1c" resname="label.recalculate_rates">
         <source>label.recalculate_rates</source>
         <target>Taxas de recalculação</target>
       </trans-unit>
-      <trans-unit id="export.filter">
+      <trans-unit id="iwWaUoa" resname="export.filter">
         <source>export.filter</source>
         <target>Filtrar dados para exportação</target>
       </trans-unit>
-      <trans-unit id="label.orderDate">
+      <trans-unit id="as948k9" resname="label.orderDate">
         <source>label.orderDate</source>
         <target>Data do pedido</target>
       </trans-unit>
-      <trans-unit id="label.mark_as_exported">
+      <trans-unit id="7J7G3Vr" resname="label.mark_as_exported">
         <source>label.mark_as_exported</source>
         <target>Marca como exportada</target>
       </trans-unit>
-      <trans-unit id="button.preview_print">
+      <trans-unit id="IQ9DUOW" resname="button.preview_print">
         <source>button.preview_print</source>
         <target>Visualização de impressão</target>
       </trans-unit>
-      <trans-unit id="invoice.filter">
+      <trans-unit id="ov4OQOh" resname="invoice.filter">
         <source>invoice.filter</source>
         <target>Filtrar dados da fatura</target>
       </trans-unit>
-      <trans-unit id="stats.workingTimeMonth">
+      <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
         <target>%month% %year%</target>
       </trans-unit>
-      <trans-unit id="stats.workingTimeWeek">
+      <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
         <target>Semana do calendário %week%</target>
       </trans-unit>
-      <trans-unit id="user_role.title">
+      <trans-unit id="G.GEdlk" resname="user_role.title">
         <source>user_role.title</source>
         <target>Função do usuário</target>
       </trans-unit>
-      <trans-unit id="label.plus_more">
+      <trans-unit id="vTY9SUk" resname="label.plus_more">
         <source>label.plus_more</source>
         <target>+%count% mais</target>
       </trans-unit>
-      <trans-unit id="help.batch_meta_fields">
+      <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields">
         <source>help.batch_meta_fields</source>
         <target>Os campos a serem atualizados devem primeiro ser ativados clicando na caixa de seleção associada.</target>
       </trans-unit>
-      <trans-unit id="label.batch_meta_fields">
+      <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">
         <source>label.batch_meta_fields</source>
         <target>Campos adicionais</target>
       </trans-unit>
-      <trans-unit id="status.paid">
+      <trans-unit id="PHJwR4w" resname="status.paid">
         <source>status.paid</source>
         <target>Pago</target>
       </trans-unit>
-      <trans-unit id="status.pending">
+      <trans-unit id="Uvo1CbP" resname="status.pending">
         <source>status.pending</source>
         <target>Pendente</target>
       </trans-unit>
-      <trans-unit id="status.new">
+      <trans-unit id="X_NRsed" resname="status.new">
         <source>status.new</source>
         <target>Novo</target>
       </trans-unit>
-      <trans-unit id="label.status">
+      <trans-unit id="hzhzbqw" resname="label.status">
         <source>label.status</source>
         <target>Status</target>
       </trans-unit>
-      <trans-unit id="button.preview">
+      <trans-unit id="7H7P1mE" resname="button.preview">
         <source>button.preview</source>
         <target>Visualizar</target>
       </trans-unit>
-      <trans-unit id="stats.percentUsedLeft">
+      <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
         <target>%percent%% usado (%left% ainda estão abertos)</target>
       </trans-unit>
-      <trans-unit id="stats.percentUsed">
+      <trans-unit id="unC5MXv" resname="stats.percentUsed">
         <source>stats.percentUsed</source>
         <target>%percent%% usado</target>
       </trans-unit>
-      <trans-unit id="stats.workingTimeYear">
+      <trans-unit id="JnUFsNi" resname="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
         <target>Ano inteiro %year%</target>
       </trans-unit>
-      <trans-unit id="stats.workingTimeToday">
+      <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
         <target>Hoje, %day%</target>
       </trans-unit>
-      <trans-unit id="user_permissions.title">
+      <trans-unit id="ZlZ20pG" resname="user_permissions.title">
         <source>user_permissions.title</source>
         <target>Permissões do usuário</target>
       </trans-unit>
-      <trans-unit id="label.project_end">
+      <trans-unit id="4kQGReV" resname="label.project_end">
         <source>label.project_end</source>
         <target>Fim do projeto</target>
       </trans-unit>
-      <trans-unit id="label.project_start">
+      <trans-unit id="yLOqEX_" resname="label.project_start">
         <source>label.project_start</source>
         <target>Início do projeto</target>
       </trans-unit>
-      <trans-unit id="label.lastLogin">
+      <trans-unit id="hO7mkmf" resname="label.lastLogin">
         <source>label.lastLogin</source>
         <target>Último login</target>
       </trans-unit>
-      <trans-unit id="profile.teams">
+      <trans-unit id="DZ7XGML" resname="profile.teams">
         <source>profile.teams</source>
         <target>Equipes</target>
       </trans-unit>
-      <trans-unit id="profile.registration_date">
+      <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
         <target>Registrado em</target>
       </trans-unit>
-      <trans-unit id="label.replaceTags">
+      <trans-unit id="EoouxGX" resname="label.replaceTags">
         <source>label.replaceTags</source>
         <target>Substituir tags</target>
       </trans-unit>
-      <trans-unit id="label.progress">
+      <trans-unit id="1PQHtXu" resname="label.progress">
         <source>label.progress</source>
         <target>Progresso</target>
       </trans-unit>
-      <trans-unit id="label.my_teams">
+      <trans-unit id="f3KMQJh" resname="label.my_teams">
         <source>label.my_teams</source>
         <target>Minhas equipes</target>
       </trans-unit>
-      <trans-unit id="action.reset">
+      <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
         <target>Restaurar</target>
       </trans-unit>
-      <trans-unit id="label.billable">
+      <trans-unit id="vkHr9AP" resname="label.billable">
         <source>label.billable</source>
         <target>Faturável</target>
       </trans-unit>
-      <trans-unit id="placeholder.type_message">
+      <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Digite sua mensagem...</target>
+        <target>Digite sua mensagem…</target>
       </trans-unit>
-      <trans-unit id="label.team">
+      <trans-unit id="Ss2xe99" resname="label.team">
         <source>label.team</source>
         <target>Equipe</target>
       </trans-unit>
-      <trans-unit id="help.rate_internal">
+      <trans-unit id="uz4SmfP" resname="help.rate_internal">
         <source>help.rate_internal</source>
         <target>Custos internos (se isso não for especificado, a taxa normal é usada)</target>
       </trans-unit>
-      <trans-unit id="label.rate_internal">
+      <trans-unit id="QzvjNwg" resname="label.rate_internal">
         <source>label.rate_internal</source>
         <target>Taxa interna</target>
       </trans-unit>
-      <trans-unit id="help.rate">
+      <trans-unit id="djL6LMC" resname="help.rate">
         <source>help.rate</source>
         <target>Taxa horária a ser cobrada</target>
       </trans-unit>
-      <trans-unit id="label.theme.layout">
+      <trans-unit id="42BRM3Q" resname="label.theme.layout">
         <source>label.theme.layout</source>
         <target>Exibição: layout</target>
       </trans-unit>
-      <trans-unit id="sum.total">
+      <trans-unit id="zFfl7jw" resname="sum.total">
         <source>sum.total</source>
         <target>Total</target>
       </trans-unit>
-      <trans-unit id="modal.dirty">
+      <trans-unit id="XP5zkiN" resname="modal.dirty">
         <source>modal.dirty</source>
         <target>O formulário foi alterado. Por favor clique em "Salvar" para armazenar as alterações ou "Fechar" para cancelar.</target>
+      </trans-unit>
+      <trans-unit id="csF1D35" resname="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>Não cobrado</target>
+      </trans-unit>
+      <trans-unit id="3zn5T5e" resname="label.not_exported">
+        <source>label.not_exported</source>
+        <target>Não exportado</target>
+      </trans-unit>
+      <trans-unit id="B.Dbbob" resname="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>Mostrar entradas sem orçamento</target>
+      </trans-unit>
+      <trans-unit id="z_YHoZn" resname="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target>Mostrar entradas sem reservas</target>
+      </trans-unit>
+      <trans-unit id="crrlEUA" resname="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target>Pular a pré-visualização das %rows% mais filas …</target>
+      </trans-unit>
+      <trans-unit id="Xij3oQl" resname="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>Data de pagamento</target>
+      </trans-unit>
+      <trans-unit id="YNGNfGn" resname="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>Taxa de imposto</target>
+      </trans-unit>
+      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>Atualizar título do navegador</target>
+      </trans-unit>
+      <trans-unit id="9hpJPiG" resname="action.save_all">
+        <source>action.save_all</source>
+        <target>Salvar tudo</target>
+      </trans-unit>
+      <trans-unit id="O5w1jzb" resname="file">
+        <source>file</source>
+        <target>Arquivo</target>
+      </trans-unit>
+      <trans-unit id="Z8Fxbvf" resname="label.orderBy">
+        <source>label.orderBy</source>
+        <target>Ordenar por</target>
+      </trans-unit>
+      <trans-unit id="0D_zaYd" resname="label.desc">
+        <source>label.desc</source>
+        <target>Descendente</target>
+      </trans-unit>
+      <trans-unit id="31x84Dt" resname="label.asc">
+        <source>label.asc</source>
+        <target>Ascendente</target>
+      </trans-unit>
+      <trans-unit id="BytPihM" resname="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target>Salve a configuração como sendo o favorito da pesquisa</target>
+      </trans-unit>
+      <trans-unit id="IolBPQD" resname="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target>Termo de pesquisa</target>
+      </trans-unit>
+      <trans-unit id="NNKq04n" resname="label.remove_default">
+        <source>label.remove_default</source>
+        <target>Deletar Configuração Padrão</target>
+      </trans-unit>
+      <trans-unit id="qDnURk7" resname="label.last_record">
+        <source>label.last_record</source>
+        <target>Último lançamento</target>
+      </trans-unit>
+      <trans-unit id="AJ6dwR." resname="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>Sem reserva de tempo desde</target>
+      </trans-unit>
+      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>Usuários ativos deste ano fiscal</target>
+      </trans-unit>
+      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target>Receita deste ano fiscal</target>
+      </trans-unit>
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>Horário de trabalho neste ano fiscal</target>
+      </trans-unit>
+      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>Ano fiscal</target>
+      </trans-unit>
+      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target>Caso queira excluir uma entrada, arraste-a para o botão.</target>
+      </trans-unit>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>Foi enviado um e-mail. Ele contém um link que você deve clicar para redefinir a sua senha. Nota: Você só pode solicitar uma nova senha uma vez dentro do limite de %tokenLifetime% horas. Caso não receba um e-mail, verifique a sua pasta de spam ou tente novamente.</target>
+      </trans-unit>
+      <trans-unit id=".ndupSK" resname="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Um e-mail foi enviado para %email%. Ele contém um link de ativação que você deve clicar para ativar a sua conta.</target>
+      </trans-unit>
+      <trans-unit id="pX_3dNm" resname="stats.revenue">
+        <source>stats.revenue</source>
+        <target>Receitas</target>
+      </trans-unit>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>Tempo de trabalho</target>
+      </trans-unit>
+      <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>A solicitação não pôde ser processada. Muitos resultados foram encontrados.</target>
+      </trans-unit>
+      <trans-unit id="LXdqaTH" resname="label.account_number">
+        <source>label.account_number</source>
+        <target>Número da equipe</target>
+      </trans-unit>
+      <trans-unit id="RRj6PYN" resname="label.invoice_tax_number">
+        <source>label.invoice_tax_number</source>
+        <target>No. do VAT:</target>
+      </trans-unit>
+      <trans-unit id="4XKFnWh" resname="invoice.from">
+        <source>invoice.from</source>
+        <target>De</target>
+      </trans-unit>
+      <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target>Atualmente existe %records% de registros de tempo, que somam até uma duração total de %duration%.</target>
+      </trans-unit>
+      <trans-unit id="cHfLJtL" resname="label.budgetType_month">
+        <source>label.budgetType_month</source>
+        <target>Mensal</target>
+      </trans-unit>
+      <trans-unit id="PoF7hD8" resname="label.budgetType">
+        <source>label.budgetType</source>
+        <target>Tipo do orçamento</target>
+      </trans-unit>
+      <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% utilizado (%left% ainda estão abertos este mês)</target>
+      </trans-unit>
+      <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>%percent%% usado este mês</target>
+      </trans-unit>
+      <trans-unit id="tp.gIrE" resname="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target>Adicione um novo usuário à equipe, selecionando-o a partir lista. Em seguida, você pode decidir se o usuário deve se tornar um líder de equipe.</target>
+      </trans-unit>
+      <trans-unit id="Zif614Q" resname="add_user.label">
+        <source>add_user.label</source>
+        <target>Adicione um usuário</target>
+      </trans-unit>
+      <trans-unit id="W92QGbY" resname="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target>Sua pesquisa tem %count% resultados. Caso a exportação falhe, você tem que reduzir ainda mais a sua pesquisa.</target>
+      </trans-unit>
+      <trans-unit id="pnGDFmf" resname="label.type">
+        <source>label.type</source>
+        <target>Tipo</target>
+      </trans-unit>
+      <trans-unit id="yNWIi5U" resname="default_value_new">
+        <source>default_value_new</source>
+        <target>Valores predefinidos para as novas entradas</target>
+      </trans-unit>
+      <trans-unit id="jdbtx6z" resname="action.add">
+        <source>action.add</source>
+        <target>Adiciona</target>
+      </trans-unit>
+      <trans-unit id="f8oNzSP" resname="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target>Horas de trabalhos semanais</target>
+      </trans-unit>
+      <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
+        <source>label.includeBudgetType_month</source>
+        <target>Mostre as entradas com orçamentos "mensais"</target>
+      </trans-unit>
+      <trans-unit id="9Rhadz6" resname="label.budgetType_full">
+        <source>label.budgetType_full</source>
+        <target>Ciclo de vida</target>
+      </trans-unit>
+      <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
+        <source>label.includeBudgetType_full</source>
+        <target>Mostre as entradas com orçamento com "ciclo de vida"</target>
+      </trans-unit>
+      <trans-unit id="gT9W2pZ" resname="status.canceled">
+        <source>status.canceled</source>
+        <target>Cancelado</target>
+      </trans-unit>
+      <trans-unit id="61p_ckr" resname="label.hours_24">
+        <source>label.hours_24</source>
+        <target>24 horas</target>
+      </trans-unit>
+      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
+        <source>stats.workingTimeWeekShort</source>
+        <target>Semana %week%</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target>O diretório "%dir%" está protegido contra gravação.</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+        <source>invoice_document.max_reached</source>
+        <target>Atingiu o valor máximo de %max% documentos da nota fiscal. É possível adicionar mais depois de remover um.</target>
+      </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>error.directory_missing</source>
+        <target>O diretório "%dir%" não existe e não pôde ser criado.</target>
+      </trans-unit>
+      <trans-unit id="PCEFPeg" resname="updated_at">
+        <source>Updated at</source>
+        <target>Atualizado em</target>
       </trans-unit>
     </body>
   </file>

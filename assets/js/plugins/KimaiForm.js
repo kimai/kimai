@@ -32,4 +32,25 @@ export default class KimaiForm extends KimaiPlugin {
         this.getContainer().getPlugin('date-time-picker').destroyDateTimePicker(formSelector);
         this.getContainer().getPlugin('date-range-picker').destroyDateRangePicker(formSelector);
     }
+
+    /**
+     * @param {HTMLFormElement} form
+     * @param {Object} overwrites
+     * @returns {string}
+     */
+    convertFormDataToQueryString(form, overwrites = {})
+    {
+        let serialized = [];
+        let data = new FormData(form);
+
+        for (const key in overwrites) {
+            data.set(key, overwrites[key]);
+        }
+
+        for (let row of data) {
+            serialized.push(encodeURIComponent(row[0]) + "=" + encodeURIComponent(row[1]));
+        }
+
+        return serialized.join('&');
+    }
 }

@@ -18,12 +18,11 @@ use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Collections\Collection;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Entity\Activity
  */
-class ActivityTest extends TestCase
+class ActivityTest extends AbstractEntityTest
 {
     public function testDefaultValues()
     {
@@ -36,12 +35,15 @@ class ActivityTest extends TestCase
         $this->assertTrue($sut->isGlobal());
         $this->assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
-        $this->assertEquals(0.0, $sut->getBudget());
-        $this->assertEquals(0, $sut->getTimeBudget());
         $this->assertInstanceOf(Collection::class, $sut->getMetaFields());
         $this->assertEquals(0, $sut->getMetaFields()->count());
         $this->assertNull($sut->getMetaField('foo'));
         $this->assertInstanceOf(Collection::class, $sut->getTeams());
+    }
+
+    public function testBudgets()
+    {
+        $this->assertBudget(new Activity());
     }
 
     public function testSetterAndGetter()
@@ -58,19 +60,13 @@ class ActivityTest extends TestCase
         $this->assertEquals('hello world', $sut->getComment());
 
         self::assertFalse($sut->hasColor());
-        $this->assertInstanceOf(Activity::class, $sut->setColor('#fffccc'));
+        $sut->setColor('#fffccc');
         $this->assertEquals('#fffccc', $sut->getColor());
         self::assertTrue($sut->hasColor());
 
-        $this->assertInstanceOf(Activity::class, $sut->setColor(Constants::DEFAULT_COLOR));
+        $sut->setColor(Constants::DEFAULT_COLOR);
         $this->assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
-
-        $this->assertInstanceOf(Activity::class, $sut->setBudget(12345.67));
-        $this->assertEquals(12345.67, $sut->getBudget());
-
-        $this->assertInstanceOf(Activity::class, $sut->setTimeBudget(937321));
-        $this->assertEquals(937321, $sut->getTimeBudget());
 
         $this->assertTrue($sut->isGlobal());
         $this->assertInstanceOf(Activity::class, $sut->setProject(new Project()));
@@ -139,6 +135,9 @@ class ActivityTest extends TestCase
             ['label.id', 'integer'],
             ['label.name', 'string'],
             ['label.project', 'string'],
+            ['label.budget', 'float'],
+            ['label.timeBudget', 'duration'],
+            ['label.budgetType', 'string'],
             ['label.color', 'string'],
             ['label.visible', 'boolean'],
             ['label.comment', 'string'],
@@ -155,7 +154,48 @@ class ActivityTest extends TestCase
         foreach ($expected as $item) {
             $column = $columns[$i++];
             self::assertEquals($item[0], $column->getLabel());
-            self::assertEquals($item[1], $column->getType());
+            self::assertEquals($item[1], $column->getType(), 'Wrong type for field: ' . $item[0]);
         }
+    }
+
+    public function testClone()
+    {
+        $sut = new Activity();
+        $sut->setName('activity1111');
+        $sut->setComment('DE-0123456789');
+
+        $project = new Project();
+        $project->setName('foo');
+        $project->setOrderNumber('1234567890');
+        $project->setBudget(123.45);
+        $project->setTimeBudget(12345);
+        $project->setVisible(false);
+        $project->setEnd(new \DateTime());
+        $project->setColor('#ccc');
+
+        $sut->setProject($project);
+
+        $team = new Team();
+        $sut->addTeam($team);
+
+        $meta = new ActivityMeta();
+        $meta->setName('blabla');
+        $meta->setValue('1234567890');
+        $meta->setIsVisible(false);
+        $meta->setIsRequired(true);
+        $sut->setMetaField($meta);
+
+        $clone = clone $sut;
+
+        foreach ($sut->getMetaFields() as $metaField) {
+            $cloneMeta = $clone->getMetaField($metaField->getName());
+            self::assertEquals($cloneMeta->getValue(), $metaField->getValue());
+        }
+        self::assertEquals($clone->getBudget(), $sut->getBudget());
+        self::assertEquals($clone->getTimeBudget(), $sut->getTimeBudget());
+        self::assertEquals($clone->getComment(), $sut->getComment());
+        self::assertEquals($clone->getColor(), $sut->getColor());
+        self::assertEquals('DE-0123456789', $clone->getComment());
+        self::assertEquals('activity1111', $clone->getName());
     }
 }

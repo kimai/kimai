@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @Route(path="/admin/teams")
@@ -55,11 +57,8 @@ final class TeamController extends AbstractController
         $query->setCurrentUser($this->getUser());
 
         $form = $this->getToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
-
-        if (!$form->isValid()) {
-            $query->resetByFormError($form->getErrors());
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('admin_team');
         }
 
         $teams = $repository->getPagerfantaForQuery($query);
@@ -84,30 +83,23 @@ final class TeamController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/duplicate", name="team_duplicate", methods={"GET", "POST"})
+     * @Route(path="/{id}/duplicate/{token}", name="team_duplicate", methods={"GET", "POST"})
      * @Security("is_granted('edit', team) and is_granted('create_team')")
      */
-    public function duplicateTeam(Team $team, Request $request)
+    public function duplicateTeam(Team $team, string $token, CsrfTokenManagerInterface $csrfTokenManager)
     {
-        $newTeam = new Team();
-        $newTeam->setName($team->getName() . ' [COPY]');
-        $newTeam->setTeamLead($team->getTeamLead());
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('team.duplicate', $token))) {
+            $this->flashError('action.csrf.error');
 
-        foreach ($team->getUsers() as $user) {
-            $newTeam->addUser($user);
+            return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
         }
-        foreach ($team->getCustomers() as $customer) {
-            $newTeam->addCustomer($customer);
-        }
-        foreach ($team->getProjects() as $project) {
-            $newTeam->addProject($project);
-        }
+
+        $csrfTokenManager->refreshToken('team.duplicate');
+
+        $newTeam = clone $team;
+        $newTeam->setName($team->getName() . ' [COPY]');
 
         try {
-            // make sure that the teamlead is always part of the team, otherwise permission checks
-            // and filtering might not work as expected!
-            $team->addUser($team->getTeamLead());
-
             $this->repository->saveTeam($newTeam);
             $this->flashSuccess('action.update.success');
 
@@ -143,10 +135,6 @@ final class TeamController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                // make sure that the teamlead is always part of the team, otherwise permission checks
-                // and filtering might not work as expected!
-                $team->addUser($team->getTeamLead());
-
                 $this->repository->saveTeam($team);
                 $this->flashSuccess('action.update.success');
 
@@ -178,15 +166,27 @@ final class TeamController extends AbstractController
             'method' => 'POST',
         ]);
 
-        if ($request->isMethod('POST') && (null !== ($editFormValues = $request->get($editForm->getName())))) {
-            $editForm->submit($editFormValues, true);
+        $editForm->handleRequest($request);
 
-            if ($editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            try {
+                $this->repository->saveTeam($team);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
+            } catch (\Exception $ex) {
+                $this->flashUpdateException($ex);
+            }
+        }
+
+        if (null !== $team->getId()) {
+            $customerForm = $this->createForm(TeamCustomerForm::class, $team, [
+                'method' => 'POST',
+            ]);
+            $customerForm->handleRequest($request);
+
+            if ($customerForm->isSubmitted() && $customerForm->isValid()) {
                 try {
-                    // make sure that the teamlead is always part of the team, otherwise permission checks
-                    // and filtering might not work as expected!
-                    $team->addUser($team->getTeamLead());
-
                     $this->repository->saveTeam($team);
                     $this->flashSuccess('action.update.success');
 
@@ -195,44 +195,20 @@ final class TeamController extends AbstractController
                     $this->flashUpdateException($ex);
                 }
             }
-        }
-
-        if (null !== $team->getId()) {
-            $customerForm = $this->createForm(TeamCustomerForm::class, $team, [
-                'method' => 'POST',
-            ]);
-
-            if ($request->isMethod('POST') && (null !== ($customerFormValues = $request->get($customerForm->getName())))) {
-                $customerForm->submit($customerFormValues, true);
-
-                if ($customerForm->isValid()) {
-                    try {
-                        $this->repository->saveTeam($team);
-                        $this->flashSuccess('action.update.success');
-
-                        return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
-                    } catch (\Exception $ex) {
-                        $this->flashUpdateException($ex);
-                    }
-                }
-            }
 
             $projectForm = $this->createForm(TeamProjectForm::class, $team, [
                 'method' => 'POST',
             ]);
+            $projectForm->handleRequest($request);
 
-            if ($request->isMethod('POST') && (null !== ($projectFormValues = $request->get($projectForm->getName())))) {
-                $projectForm->submit($projectFormValues, true);
+            if ($projectForm->isSubmitted() && $projectForm->isValid()) {
+                try {
+                    $this->repository->saveTeam($team);
+                    $this->flashSuccess('action.update.success');
 
-                if ($projectForm->isValid()) {
-                    try {
-                        $this->repository->saveTeam($team);
-                        $this->flashSuccess('action.update.success');
-
-                        return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
-                    } catch (\Exception $ex) {
-                        $this->flashUpdateException($ex);
-                    }
+                    return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
+                } catch (\Exception $ex) {
+                    $this->flashUpdateException($ex);
                 }
             }
         }

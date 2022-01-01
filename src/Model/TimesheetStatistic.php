@@ -17,28 +17,15 @@ use DateTime;
 class TimesheetStatistic
 {
     /**
-     * @var int
-     */
-    protected $durationThisMonth = 0;
-    /**
-     * @var int
-     */
-    protected $durationTotal = 0;
-    /**
-     * @var float
-     */
-    protected $amountThisMonth = 0;
-    /**
-     * @var float
-     */
-    protected $amountTotal = 0;
-    /**
      * @var \DateTime|null
      */
     protected $firstEntry;
-    /**
-     * @var int
-     */
+    protected $durationThisMonth = 0;
+    protected $durationTotal = 0;
+    protected $amountThisMonth = 0.0;
+    protected $amountTotal = 0.0;
+    protected $amountThisMonthBillable = 0.0;
+    protected $amountTotalBillable = 0.0;
     protected $recordsTotal = 0;
 
     public function getDurationThisMonth(): int
@@ -46,12 +33,9 @@ class TimesheetStatistic
         return $this->durationThisMonth;
     }
 
-    /**
-     * @param int $durationThisMonth
-     */
-    public function setDurationThisMonth($durationThisMonth)
+    public function setDurationThisMonth(int $durationThisMonth): void
     {
-        $this->durationThisMonth = (int) $durationThisMonth;
+        $this->durationThisMonth = $durationThisMonth;
     }
 
     /**
@@ -69,9 +53,19 @@ class TimesheetStatistic
      *
      * @param float|int $amountTotal
      */
-    public function setAmountTotal($amountTotal)
+    public function setAmountTotal($amountTotal): void
     {
         $this->amountTotal = (float) $amountTotal;
+    }
+
+    public function getRateTotalBillable(): float
+    {
+        return $this->amountTotalBillable;
+    }
+
+    public function setRateTotalBillable(float $amountTotal): void
+    {
+        $this->amountTotalBillable = $amountTotal;
     }
 
     public function getDurationTotal(): int
@@ -82,7 +76,7 @@ class TimesheetStatistic
     /**
      * @param int $durationTotal
      */
-    public function setDurationTotal($durationTotal)
+    public function setDurationTotal($durationTotal): void
     {
         $this->durationTotal = (int) $durationTotal;
     }
@@ -102,40 +96,41 @@ class TimesheetStatistic
      *
      * @param float|int $amountThisMonth
      */
-    public function setAmountThisMonth($amountThisMonth)
+    public function setAmountThisMonth($amountThisMonth): void
     {
         $this->amountThisMonth = (float) $amountThisMonth;
     }
 
+    public function getRateThisMonthBillable(): float
+    {
+        return $this->amountThisMonthBillable;
+    }
+
+    public function setRateThisMonthBillable(float $amountThisMonth): void
+    {
+        $this->amountThisMonthBillable = $amountThisMonth;
+    }
+
+    /**
+     * @deprecated since 1.15 use TimesheetStatisticService::findFirstRecordDate() instead, will be removed with 2.0
+     */
     public function getFirstEntry(): ?\DateTime
     {
         return $this->firstEntry;
     }
 
-    /**
-     * @param DateTime $firstEntry
-     */
-    public function setFirstEntry(DateTime $firstEntry)
+    public function setFirstEntry(DateTime $firstEntry): void
     {
         $this->firstEntry = $firstEntry;
     }
 
-    /**
-     * @return int
-     */
     public function getRecordsTotal(): int
     {
         return $this->recordsTotal;
     }
 
-    /**
-     * @param int $recordsTotal
-     * @return TimesheetStatistic
-     */
-    public function setRecordsTotal(int $recordsTotal)
+    public function setRecordsTotal(int $recordsTotal): void
     {
         $this->recordsTotal = $recordsTotal;
-
-        return $this;
     }
 }

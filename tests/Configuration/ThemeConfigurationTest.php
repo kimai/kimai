@@ -9,20 +9,22 @@
 
 namespace App\Tests\Configuration;
 
+use App\Configuration\SystemConfiguration;
 use App\Configuration\ThemeConfiguration;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Configuration\ThemeConfiguration
- * @covers \App\Configuration\StringAccessibleConfigTrait
+ * @covers \App\Configuration\SystemConfiguration
  */
 class ThemeConfigurationTest extends TestCase
 {
     protected function getSut(array $settings, array $loaderSettings = []): ThemeConfiguration
     {
         $loader = new TestConfigLoader($loaderSettings);
+        $config = new SystemConfiguration($loader, ['theme' => $settings]);
 
-        return new ThemeConfiguration($loader, $settings);
+        return new ThemeConfiguration($config);
     }
 
     /**
@@ -47,23 +49,8 @@ class ThemeConfigurationTest extends TestCase
                 'company' => null,
                 'title' => null,
             ],
-            'auto_reload_datatable' => false,
             'tags_create' => true,
         ];
-    }
-
-    public function testPrefix()
-    {
-        $sut = $this->getSut($this->getDefaultSettings(), []);
-        $this->assertEquals('theme', $sut->getPrefix());
-    }
-
-    public function testConfigs()
-    {
-        $sut = $this->getSut($this->getDefaultSettings(), []);
-        $this->assertFalse($sut->isAutoReloadDatatable());
-        $this->assertTrue($sut->isAllowTagCreation());
-        $this->assertNull($sut->getTitle());
     }
 
     /**
@@ -72,6 +59,7 @@ class ThemeConfigurationTest extends TestCase
     public function testDeprecations()
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);
-        $this->assertEquals('', $sut->getSelectPicker());
+        $this->assertTrue($sut->isAllowTagCreation());
+        $this->assertNull($sut->getTitle());
     }
 }

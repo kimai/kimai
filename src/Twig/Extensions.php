@@ -27,10 +27,12 @@ class Extensions extends AbstractExtension
     public function getFilters()
     {
         return [
+            new TwigFilter('report_date', [$this, 'formatReportDate']),
             new TwigFilter('docu_link', [$this, 'documentationLink']),
             new TwigFilter('multiline_indent', [$this, 'multilineIndent']),
             new TwigFilter('color', [$this, 'color']),
             new TwigFilter('font_contrast', [$this, 'calculateFontContrastColor']),
+            new TwigFilter('default_color', [$this, 'defaultColor']),
             new TwigFilter('nl2str', [$this, 'replaceNewline'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
         ];
     }
@@ -43,7 +45,13 @@ class Extensions extends AbstractExtension
         return [
             new TwigFunction('class_name', [$this, 'getClassName']),
             new TwigFunction('iso_day_by_name', [$this, 'getIsoDayByName']),
+            new TwigFunction('random_color', [$this, 'randomColor']),
         ];
+    }
+
+    public function formatReportDate(\DateTime $dateTime): string
+    {
+        return $dateTime->format('Y-m-d');
     }
 
     public function getIsoDayByName(string $weekDay): int
@@ -71,9 +79,19 @@ class Extensions extends AbstractExtension
         return (new Color())->getColor($entity, $defaultColor);
     }
 
+    public function randomColor(?string $input = null): string
+    {
+        return (new Color())->getRandom($input);
+    }
+
     public function calculateFontContrastColor(string $color): string
     {
         return (new Color())->getFontContrastColor($color);
+    }
+
+    public function defaultColor(?string $color = null): string
+    {
+        return $color ?? Constants::DEFAULT_COLOR;
     }
 
     /**

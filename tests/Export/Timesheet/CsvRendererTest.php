@@ -31,7 +31,7 @@ class CsvRendererTest extends AbstractRendererTest
     public function getTestModel()
     {
         return [
-            ['400', '2437.12', ' EUR 1,947.99 ', 7, 5, 1, 2, 2]
+            ['400', '2437.12', ' EUR 1,947.99 ', 6, 5, 1, 2, 2]
         ];
     }
 
@@ -46,14 +46,13 @@ class CsvRendererTest extends AbstractRendererTest
         $response = $this->render($sut);
 
         $file = $response->getFile();
+        $prefix = date('Ymd');
         $this->assertEquals('text/csv', $response->headers->get('Content-Type'));
-        $this->assertEquals('attachment; filename=kimai-export.csv', $response->headers->get('Content-Disposition'));
+        $this->assertEquals('attachment; filename=' . $prefix . '-Customer_Name-project_name.csv', $response->headers->get('Content-Disposition'));
 
         $this->assertTrue(file_exists($file->getRealPath()));
         $content = file_get_contents($file->getRealPath());
 
-        $this->assertStringContainsString('"' . $totalDuration . '"', $content);
-        $this->assertStringContainsString('"' . $totalRate . '"', $content);
         $this->assertStringContainsString('"' . $expectedRate . '"', $content);
         $this->assertEquals($expectedRows, substr_count($content, PHP_EOL));
         $this->assertEquals($expectedDescriptions, substr_count($content, 'activity description'));
@@ -88,20 +87,26 @@ class CsvRendererTest extends AbstractRendererTest
             10 => 'activity description',
             11 => '',
             12 => '',
-            13 => 'foo,bar',
-            14 => '',
-            15 => ' EUR 84.00 ',
-            16 => 'meta-bar',
-            17 => 'meta-bar2',
-            18 => 'customer-bar',
-            19 => '',
-            20 => 'project-foo2',
-            21 => 'activity-bar',
+            13 => '',
+            14 => 'foo,bar',
+            15 => '',
+            16 => ' EUR 84.00 ',
+            17 => 'meta-bar',
+            18 => 'meta-bar2',
+            19 => 'customer-bar',
+            20 => '',
+            21 => 'project-foo2',
+            22 => 'activity-bar',
+            23 => 'timesheet',
+            24 => 'work',
+            25 => 'A-0123456789',
+            26 => 'DE-9876543210',
+            27 => 'ORDER-123',
         ];
 
-        self::assertEquals(7, \count($all));
+        self::assertEquals(6, \count($all));
         self::assertEquals($expected, $all[5]);
         self::assertEquals(\count($expected), \count($all[0]));
-        self::assertEquals('foo', $all[4][13]);
+        self::assertEquals('foo', $all[4][14]);
     }
 }

@@ -10,7 +10,7 @@
 namespace App\Tests\Saml\Security;
 
 use App\Saml\Security\SamlAuthenticationSuccessHandler;
-use Hslavich\OneloginSamlBundle\Security\Authentication\Token\SamlToken;
+use App\Saml\Token\SamlToken;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\HttpUtils;
@@ -20,8 +20,6 @@ use Symfony\Component\Security\Http\HttpUtils;
  */
 class SamlAuthenticationSuccessHandlerTest extends TestCase
 {
-    private $handler;
-
     public function testWithAlwaysUseDefaultTargetPath()
     {
         $httpUtils = new HttpUtils($this->getUrlGenerator());

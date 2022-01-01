@@ -1,96 +1,96 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="cs" datatype="plaintext" original="actions.en.xlf">
     <body>
-      <trans-unit id="stop">
+      <trans-unit id="bEXLcqN" resname="stop">
         <source>stop</source>
         <target>Stop</target>
       </trans-unit>
-      <trans-unit id="back">
+      <trans-unit id="PEgjRvN" resname="back">
         <source>back</source>
         <target>Zpět</target>
       </trans-unit>
-      <trans-unit id="edit">
+      <trans-unit id="JiEhxTc" resname="edit">
         <source>edit</source>
         <target>Upravit</target>
       </trans-unit>
-      <trans-unit id="trash">
+      <trans-unit id="4G2jBDS" resname="trash">
         <source>trash</source>
         <target>Odstranit</target>
       </trans-unit>
-      <trans-unit id="report">
+      <trans-unit id="hF6RgxM" resname="report">
         <source>report</source>
         <target>Hlášení</target>
       </trans-unit>
-      <trans-unit id="repeat">
+      <trans-unit id="JeK2sQZ" resname="repeat">
         <source>repeat</source>
         <target>Začít znovu</target>
       </trans-unit>
-      <trans-unit id="profile-stats">
+      <trans-unit id="J0sRBY_" resname="profile-stats">
         <source>profile-stats</source>
         <target>Profil</target>
       </trans-unit>
-      <trans-unit id="settings">
+      <trans-unit id="zeD7Dew" resname="settings">
         <source>settings</source>
         <target>Nastavení</target>
       </trans-unit>
-      <trans-unit id="timesheet">
-        <source>timesheet</source>
+      <trans-unit id="xovWV.Y" resname="timesheet.filter">
+        <source>Filter timesheets</source>
         <target>Pracovní výkaz</target>
       </trans-unit>
-      <trans-unit id="customer">
-        <source>customer</source>
+      <trans-unit id="U7.woIo" resname="customer.filter">
+        <source>Filter customers</source>
         <target>Filtr zákazníků</target>
       </trans-unit>
-      <trans-unit id="project">
-        <source>project</source>
+      <trans-unit id="j9gsVnq" resname="project.filter">
+        <source>Filter projects</source>
         <target>Filtr projektů</target>
       </trans-unit>
-      <trans-unit id="activity">
-        <source>activity</source>
+      <trans-unit id="xl_5l3y" resname="activity.filter">
+        <source>Filter activities</source>
         <target>Filtr aktivit</target>
       </trans-unit>
-      <trans-unit id="copy">
+      <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
         <target>Vytvořit kopii</target>
       </trans-unit>
-      <trans-unit id="home">
+      <trans-unit id="TqFAWIF" resname="home">
         <source>home</source>
         <target>Úvodní stránka</target>
       </trans-unit>
-      <trans-unit id="create-project">
+      <trans-unit id="PBlIO2x" resname="create-project">
         <source>create-project</source>
         <target>Vytvořit projekt</target>
       </trans-unit>
-      <trans-unit id="create-activity">
+      <trans-unit id="UbouFOs" resname="create-activity">
         <source>create-activity</source>
         <target>Vytvořit aktivitu</target>
       </trans-unit>
-      <trans-unit id="create-timesheet">
+      <trans-unit id="QR1nvcR" resname="create-timesheet">
         <source>create-timesheet</source>
         <target>Vytvořit pracovní výkaz</target>
       </trans-unit>
-      <trans-unit id="permissions">
+      <trans-unit id="T_PN1AT" resname="permissions">
         <source>permissions</source>
         <target>Oprávnění skupiny</target>
       </trans-unit>
-      <trans-unit id="invoice.pending">
+      <trans-unit id="hHIeqOW" resname="invoice.pending">
         <source>invoice.pending</source>
         <target>Čeká se na platbu</target>
       </trans-unit>
-      <trans-unit id="invoice.paid">
+      <trans-unit id="9M4b2ZN" resname="invoice.paid">
         <source>invoice.paid</source>
         <target>Faktura uhrazena</target>
       </trans-unit>
-      <trans-unit id="download">
+      <trans-unit id="aP9j_4L" resname="download">
         <source>download</source>
         <target>Stáhnout</target>
       </trans-unit>
-      <trans-unit id="details">
+      <trans-unit id="Qf.Yt2r" resname="details">
         <source>details</source>
         <target>Ukázat</target>
       </trans-unit>
-      <trans-unit id="create-timesheet-multiuser">
+      <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser">
         <source>create-timesheet-multiuser</source>
         <target>Pro více uživatelů</target>
       </trans-unit>

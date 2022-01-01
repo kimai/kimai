@@ -23,6 +23,24 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 class UserPreferenceSubscriberTest extends TestCase
 {
+    public const EXPECTED_PREFERENCES = [
+        'hourly_rate',
+        'internal_rate',
+        'timezone',
+        'language',
+        'first_weekday',
+        'skin',
+        'hours_24',
+        'theme.layout',
+        'theme.collapsed_sidebar',
+        'theme.update_browser_title',
+        'calendar.initial_view',
+        'reporting.initial_view',
+        'login.initial_view',
+        'timesheet.daily_stats',
+        'timesheet.export_decimal',
+    ];
+
     public function testGetSubscribedEvents()
     {
         $events = UserPreferenceSubscriber::getSubscribedEvents();
@@ -40,12 +58,17 @@ class UserPreferenceSubscriberTest extends TestCase
         self::assertSame($user, $event->getUser());
 
         $prefs = $sut->getDefaultPreferences($user);
-        self::assertCount(13, $prefs);
+        foreach ($prefs as $pref) {
+            $this->assertTrue(\in_array($pref->getName(), self::EXPECTED_PREFERENCES), 'Unknown user preference: ' . $pref->getName());
+        }
+
+        self::assertCount(\count(self::EXPECTED_PREFERENCES), $prefs);
 
         foreach ($prefs as $pref) {
             switch ($pref->getName()) {
                 case UserPreference::HOURLY_RATE:
                 case UserPreference::INTERNAL_RATE:
+                case 'reporting.initial_view':
                     self::assertTrue($pref->isEnabled());
                     break;
 
@@ -70,12 +93,13 @@ class UserPreferenceSubscriberTest extends TestCase
         // TODO test merging values
         $sut->loadUserPreferences($event);
         $prefs = $event->getUser()->getPreferences();
-        self::assertCount(13, $prefs);
+        self::assertCount(\count(self::EXPECTED_PREFERENCES), $prefs);
 
         foreach ($prefs as $pref) {
             switch ($pref->getName()) {
                 case UserPreference::HOURLY_RATE:
                 case UserPreference::INTERNAL_RATE:
+                case 'reporting.initial_view':
                     self::assertFalse($pref->isEnabled());
                 break;
 
@@ -88,7 +112,7 @@ class UserPreferenceSubscriberTest extends TestCase
     protected function getSubscriber(bool $seeHourlyRate)
     {
         $authMock = $this->createMock(AuthorizationCheckerInterface::class);
-        $authMock->expects($this->once())->method('isGranted')->willReturn($seeHourlyRate);
+        $authMock->method('isGranted')->willReturn($seeHourlyRate);
 
         $eventMock = $this->createMock(EventDispatcherInterface::class);
         $formConfigMock = $this->createMock(SystemConfiguration::class);

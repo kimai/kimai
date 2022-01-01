@@ -27,7 +27,6 @@ class UserRolesType extends AbstractType
     {
         $builder
             ->add('roles', UserRoleType::class, [
-                'label' => 'label.roles',
                 'multiple' => true,
                 'expanded' => true,
             ])

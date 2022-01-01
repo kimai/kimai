@@ -1,24 +1,24 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="tr" datatype="plaintext" original="exceptions.en.xlf">
     <body>
-      <trans-unit id="access.denied">
+      <trans-unit id="DhMUS5c" resname="access.denied">
         <source>access.denied</source>
         <target state="translated">Erişim engellendi</target>
       </trans-unit>
-      <trans-unit id="stacktrace">
+      <trans-unit id="wSGnVM4" resname="stacktrace">
         <source>stacktrace</source>
         <target state="translated">Burada bir problem oluştu</target>
       </trans-unit>
-      <trans-unit id="http_error.title">
+      <trans-unit id="rtYKRSj" resname="http_error.title">
         <source>http_error.title</source>
         <target state="translated">Hata</target>
       </trans-unit>
-      <trans-unit id="http_error.description">
+      <trans-unit id="e3w.2Rf" resname="http_error.description">
         <source>http_error.description</source>
         <target state="translated">Ups! Bir hata oluştu</target>
       </trans-unit>
-      <trans-unit id="http_error.suggestion">
+      <trans-unit id="ru5FEGk" resname="http_error.suggestion">
         <source>http_error.suggestion</source>
         <target state="translated">
                     Beklenmeyen bir hata oluştu, tekrar deneyin.
@@ -26,27 +26,24 @@
                     yöneticiyle iletişime geçiniz.
                 </target>
       </trans-unit>
-      <trans-unit id="http_error_404.description">
+      <trans-unit id="_W1eNz2" resname="http_error_404.description">
         <source>http_error_404.description</source>
         <target state="translated">Sayfa bulunamadı</target>
       </trans-unit>
-      <trans-unit id="http_error_404.suggestion">
+      <trans-unit id="MWNS5dg" resname="http_error_404.suggestion">
         <source>http_error_404.suggestion</source>
         <target state="translated">
                     Erişmeye çalıştığınız sayfayı bulamadık.
                     Bu arada, kontrol panelinize geri dönüp tekrar başlayabilirsiniz.
                 </target>
       </trans-unit>
-      <trans-unit id="http_error_403.description">
+      <trans-unit id="Qn5rwdU" resname="http_error_403.description">
         <source>http_error_403.description</source>
         <target state="translated">Bu sayfaya erişim kısıtlı</target>
       </trans-unit>
-      <trans-unit id="http_error_403.suggestion">
+      <trans-unit id="zDeeh7L" resname="http_error_403.suggestion">
         <source>http_error_403.suggestion</source>
-        <target state="translated">
-                    Özür dileriz, bu sayfayı görmeye izniniz yok.
-                    Hata olduğunu düşünüyorsanız yöneticiyle iletişime geçiniz.
-                </target>
+        <target state="translated">Üzgünüz, ancak bu sayfayı görmek için yeterli izniniz yok. Bunun bir hata olduğunu düşünüyorsanız lütfen yöneticinizle görüşün.</target>
       </trans-unit>
     </body>
   </file>

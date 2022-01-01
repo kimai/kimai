@@ -18,12 +18,11 @@ use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Collections\Collection;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Entity\Project
  */
-class ProjectTest extends TestCase
+class ProjectTest extends AbstractEntityTest
 {
     public function testDefaultValues()
     {
@@ -39,13 +38,17 @@ class ProjectTest extends TestCase
         self::assertTrue($sut->isVisible());
         self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
-        self::assertEquals(0.0, $sut->getBudget());
-        self::assertEquals(0, $sut->getTimeBudget());
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
         self::assertEquals(0, $sut->getMetaFields()->count());
         self::assertNull($sut->getMetaField('foo'));
         self::assertInstanceOf(Collection::class, $sut->getTeams());
         self::assertEquals(0, $sut->getTeams()->count());
+        self::assertTrue($sut->isVisibleAtDate(new \DateTime()));
+    }
+
+    public function testBudgets()
+    {
+        $this->assertBudget(new Project());
     }
 
     public function testSetterAndGetter()
@@ -82,22 +85,16 @@ class ProjectTest extends TestCase
         self::assertEquals('a comment', $sut->getComment());
 
         self::assertFalse($sut->hasColor());
-        self::assertInstanceOf(Project::class, $sut->setColor('#fffccc'));
+        $sut->setColor('#fffccc');
         self::assertEquals('#fffccc', $sut->getColor());
         self::assertTrue($sut->hasColor());
 
-        self::assertInstanceOf(Project::class, $sut->setColor(Constants::DEFAULT_COLOR));
+        $sut->setColor(Constants::DEFAULT_COLOR);
         self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
 
         self::assertInstanceOf(Project::class, $sut->setVisible(false));
         self::assertFalse($sut->isVisible());
-
-        self::assertInstanceOf(Project::class, $sut->setBudget(12345.67));
-        self::assertEquals(12345.67, $sut->getBudget());
-
-        self::assertInstanceOf(Project::class, $sut->setTimeBudget(937321));
-        self::assertEquals(937321, $sut->getTimeBudget());
     }
 
     public function testMetaFields()
@@ -166,6 +163,9 @@ class ProjectTest extends TestCase
             ['label.orderDate', 'datetime'],
             ['label.project_start', 'datetime'],
             ['label.project_end', 'datetime'],
+            ['label.budget', 'float'],
+            ['label.timeBudget', 'duration'],
+            ['label.budgetType', 'string'],
             ['label.color', 'string'],
             ['label.visible', 'boolean'],
             ['label.comment', 'string'],
@@ -184,5 +184,77 @@ class ProjectTest extends TestCase
             self::assertEquals($item[0], $column->getLabel());
             self::assertEquals($item[1], $column->getType());
         }
+    }
+
+    public function testClone()
+    {
+        $customer = new Customer();
+        $customer->setName('prj-customer');
+        $customer->setVatId('DE-0123456789');
+
+        $sut = new Project();
+        $sut->setName('foo');
+        $sut->setOrderNumber('1234567890');
+        $sut->setBudget(123.45);
+        $sut->setTimeBudget(12345);
+        $sut->setVisible(false);
+        $sut->setEnd(new \DateTime());
+        $sut->setColor('#ccc');
+
+        $sut->setCustomer($customer);
+
+        $team = new Team();
+        $sut->addTeam($team);
+
+        $meta = new ProjectMeta();
+        $meta->setName('blabla');
+        $meta->setValue('1234567890');
+        $meta->setIsVisible(false);
+        $meta->setIsRequired(true);
+        $sut->setMetaField($meta);
+
+        $clone = clone $sut;
+
+        foreach ($sut->getMetaFields() as $metaField) {
+            $cloneMeta = $clone->getMetaField($metaField->getName());
+            self::assertEquals($cloneMeta->getValue(), $metaField->getValue());
+        }
+        self::assertEquals($clone->getBudget(), $sut->getBudget());
+        self::assertEquals($clone->getTimeBudget(), $sut->getTimeBudget());
+        self::assertEquals($clone->getEnd(), $sut->getEnd());
+        self::assertEquals($clone->getColor(), $sut->getColor());
+        self::assertEquals('DE-0123456789', $clone->getCustomer()->getVatId());
+        self::assertEquals('prj-customer', $clone->getCustomer()->getName());
+    }
+
+    public function testIsVisibleAtDateTime()
+    {
+        $now = new \DateTime();
+
+        $customer = new Customer();
+
+        $sut = new Project();
+        $sut->setVisible(false);
+        self::assertFalse($sut->isVisibleAtDate($now));
+        $sut->setVisible(true);
+        self::assertTrue($sut->isVisibleAtDate($now));
+        $sut->setCustomer($customer);
+        self::assertTrue($sut->isVisibleAtDate($now));
+        $customer->setVisible(false);
+        self::assertFalse($sut->isVisibleAtDate($now));
+        $customer->setVisible(true);
+        self::assertTrue($sut->isVisibleAtDate($now));
+        $sut->setEnd(new \DateTime('+1 hour'));
+        self::assertTrue($sut->isVisibleAtDate($now));
+        $sut->setEnd($now);
+        self::assertTrue($sut->isVisibleAtDate($now));
+        $sut->setEnd(new \DateTime('-1 hour'));
+        self::assertFalse($sut->isVisibleAtDate($now));
+        $sut->setEnd(new \DateTime('+1 hour'));
+        self::assertTrue($sut->isVisibleAtDate($now));
+        $sut->setStart(new \DateTime('-1 hour'));
+        self::assertTrue($sut->isVisibleAtDate($now));
+        $sut->setStart(new \DateTime('+1 hour'));
+        self::assertFalse($sut->isVisibleAtDate($now));
     }
 }

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'users'|trans }}{% endblock %}
 
 {% block main %}
     {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
@@ -11,6 +11,67 @@
     } %}
     {% embed formEditTemplate with formOptions %}
         {% block form_body %}
+            <div class="row">
+                <div class="col-md-5">
+                    {{ form_row(form.username) }}
+                </div>
+                <div class="col-md-5">
+                    {{ form_row(form.email) }}
+                </div>
+                <div class="col-md-2">
+                    {{ form_row(form.color) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    {{ form_row(form.alias) }}
+                </div>
+                <div class="col-md-5">
+                    {{ form_row(form.title) }}
+                </div>
+                <div class="col-md-2">
+                    {{ form_row(form.accountNumber) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.plainPassword.first) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.plainPassword.second) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.language) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.timezone) }}
+                </div>
+            </div>
+
+            {% if form.teams is defined or form.roles is defined %}
+                {% set length = 12 %}
+                {% if form.teams is defined and form.roles is defined %}
+                    {% set length = 6 %}
+                {% endif %}
+                <div class="row">
+                    {% if form.teams is defined %}
+                    <div class="col-md-{{ length }}">
+                        {{ form_row(form.teams) }}
+                    </div>
+                    {% endif %}
+                    {% if form.roles is defined %}
+                    <div class="col-md-{{ length }}">
+                        {{ form_row(form.roles) }}
+                    </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+
             {{ form_widget(form) }}
         {% endblock %}
     {% endembed %}

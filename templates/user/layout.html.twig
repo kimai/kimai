@@ -2,9 +2,8 @@
 {% import "user/actions.html.twig" as actions %}
 {% import "macros/widgets.html.twig" as widgets %}
 
-{% block page_title %}{{ 'admin_user.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'users'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.user(user, tab) }}{% endblock %}
-{% block page_icon %}{{ 'user'|icon }}{% endblock %}
 
 {% block main %}
     <div class="row">
@@ -22,7 +21,7 @@
         </div>
         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
             <div class="hidden-xs">
-            {% set event = actions(app.user, 'user', {'view': tab, 'user': user}) %}
+            {% set event = actions(app.user, 'user', tab, {'user': user}) %}
             {{ widgets.list_group_actions(event.actions, app.request.requestUri) }}
             </div>
             {% block profile_navbar %}{% endblock %}

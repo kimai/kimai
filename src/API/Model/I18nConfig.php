@@ -19,16 +19,6 @@ use JMS\Serializer\Annotation as Serializer;
 final class I18nConfig
 {
     /**
-     * Format used for 'begin' and 'end'
-     *
-     * @var string
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     * @Serializer\Type(name="string")
-     */
-    private $formDateTime = '';
-    /**
      * Format used for toolbar queries
      *
      * @var string
@@ -36,6 +26,7 @@ final class I18nConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
     private $formDate = '';
     /**
@@ -46,6 +37,7 @@ final class I18nConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
     private $dateTime = '';
     /**
@@ -56,6 +48,7 @@ final class I18nConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
     private $date = '';
     /**
@@ -66,6 +59,7 @@ final class I18nConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
     private $time = '';
     /**
@@ -76,6 +70,7 @@ final class I18nConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
     private $duration = '';
     /**
@@ -86,6 +81,7 @@ final class I18nConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="boolean")
+     * @phpstan-ignore-next-line
      */
     private $is24hours = true;
     /**
@@ -96,19 +92,13 @@ final class I18nConfig
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="DateTime")
+     * @phpstan-ignore-next-line
      */
     private $now;
 
     public function setNow(\DateTime $now): I18nConfig
     {
         $this->now = $now;
-
-        return $this;
-    }
-
-    public function setFormDateTime(string $formDateTime): I18nConfig
-    {
-        $this->formDateTime = $formDateTime;
 
         return $this;
     }

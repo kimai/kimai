@@ -25,9 +25,10 @@
         <env name="DATABASE_URL" value="mysql://kimai2_test:kimai2_test@127.0.0.1:3306/kimai2_test"/>
         <env name="CORS_ALLOW_ORIGIN" value="^https?://localhost(:[0-9]+)?$"/>
         <env name="MAILER_URL" value="null://null"/>
+        <env name="MAILER_FROM" value="kimai@example.com"/>
 
         <!--
-            REINSTALL THE TEST DATABASE, AFTER CHANGING STRUCTURE?
+            REINSTALL THE TEST DATABASE, eg. AFTER CHANGING STRUCTURE!
 
             Simple:
             - change to "true"

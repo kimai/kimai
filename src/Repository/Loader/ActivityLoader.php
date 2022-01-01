@@ -14,14 +14,13 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class ActivityLoader implements LoaderInterface
 {
-    /**
-     * @var ActivityIdLoader
-     */
-    private $loader;
+    private $entityManager;
+    private $fullyHydrated;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, bool $fullyHydrated = false)
     {
-        $this->loader = new ActivityIdLoader($entityManager);
+        $this->entityManager = $entityManager;
+        $this->fullyHydrated = $fullyHydrated;
     }
 
     /**
@@ -33,6 +32,7 @@ final class ActivityLoader implements LoaderInterface
             return $activity->getId();
         }, $activities);
 
-        $this->loader->loadResults($ids);
+        $loader = new ActivityIdLoader($this->entityManager, $this->fullyHydrated);
+        $loader->loadResults($ids);
     }
 }

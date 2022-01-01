@@ -82,12 +82,11 @@ class LayoutControllerTest extends ControllerBaseTest
 
         $content = $client->getResponse()->getContent();
 
-        self::assertStringContainsString('<li class="dropdown messages-menu" style="display:none">', $content);
-        self::assertStringContainsString('<ul class="dropdown-menu"', $content);
+        self::assertStringContainsString('<li class="messages-menu', $content);
+        self::assertStringContainsString('<div class="ddt-small ticktac-single ', $content);
         self::assertStringContainsString('data-api="', $content);
         self::assertStringContainsString('data-href="', $content);
         self::assertStringContainsString('data-icon=', $content);
-        self::assertStringContainsString('data-format=', $content);
         self::assertStringContainsString('<ul class="menu">', $content);
         self::assertStringContainsString('<li class="messages-menu-empty" style="">', $content);
     }

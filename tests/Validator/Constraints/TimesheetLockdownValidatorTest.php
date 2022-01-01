@@ -12,15 +12,17 @@ namespace App\Tests\Validator\Constraints;
 use App\Configuration\ConfigLoaderInterface;
 use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Timesheet\LockdownService;
 use App\Validator\Constraints\TimesheetLockdown;
 use App\Validator\Constraints\TimesheetLockdownValidator;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
+ * @covers \App\Validator\Constraints\TimesheetLockdown
  * @covers \App\Validator\Constraints\TimesheetLockdownValidator
  */
 class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
@@ -32,7 +34,8 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
 
     protected function createMyValidator(bool $allowOverwriteFull, bool $allowOverwriteGrace, ?string $start, ?string $end, ?string $grace)
     {
-        $auth = $this->createMock(AuthorizationCheckerInterface::class);
+        $auth = $this->createMock(Security::class);
+        $auth->method('getUser')->willReturn(new User());
         $auth->method('isGranted')->willReturnCallback(
             function ($attributes, $subject = null) use ($allowOverwriteFull, $allowOverwriteGrace) {
                 switch ($attributes) {

@@ -11,7 +11,6 @@
 
 import jQuery from 'jquery';
 import KimaiPlugin from '../KimaiPlugin';
-import moment from "moment";
 
 export default class KimaiDatePicker extends KimaiPlugin {
 
@@ -35,6 +34,7 @@ export default class KimaiDatePicker extends KimaiPlugin {
                 singleDatePicker: true,
                 showDropdowns: true,
                 autoUpdateInput: false,
+                drops: 'down',
                 locale: {
                     format: localeFormat,
                     firstDay: firstDow,
@@ -43,6 +43,14 @@ export default class KimaiDatePicker extends KimaiPlugin {
                     customRangeLabel: TRANSLATE.get('customRange'),
                     daysOfWeek: DATE_UTILS.getWeekDaysShort(),
                     monthNames: DATE_UTILS.getMonthNames(),
+                }
+            });
+
+            jQuery(this).on('show.daterangepicker', function (ev, picker) {
+                if (picker.element.offset().top - jQuery(window).scrollTop() + picker.container.outerHeight() + 30 > jQuery(window).height()) {
+                    // "up" is not possible here, because the code is triggered on many mobile phones and the picker then appears out of window
+                    picker.drops = 'auto';
+                    picker.move();
                 }
             });
 

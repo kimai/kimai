@@ -60,7 +60,7 @@ class CustomerControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/customer/');
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
             'visibility' => 1,
@@ -92,7 +92,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/customer/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form.header-search')->form();
+        $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/customer/export'));
         $client->submit($form, [
             'searchTerm' => 'feature:timetracking foo',
@@ -113,6 +113,8 @@ class CustomerControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.box#customer_details_box');
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#project_list_box');
+        self::assertEquals(1, $node->count());
+        $node = $client->getCrawler()->filter('div.box#time_budget_box');
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.box#budget_box');
         self::assertEquals(1, $node->count());
@@ -174,19 +176,43 @@ class CustomerControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
+
+        $token = self::$container->get('security.csrf.token_manager')->getToken('customer.delete_comment');
+
         $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-msg');
         self::assertStringContainsString('Blah foo bar', $node->html());
         $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.confirmation-link');
-        self::assertStringEndsWith('/comment_delete', $node->attr('href'));
+        self::assertStringEndsWith('/comment_delete/' . $token, $node->attr('href'));
+
+        $comments = $this->getEntityManager()->getRepository(CustomerComment::class)->findAll();
+        $id = $comments[0]->getId();
+
+        $this->request($client, '/admin/customer/' . $id . '/comment_delete/' . $token);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box .box-body');
+        self::assertStringContainsString('There were no comments posted yet', $node->html());
+    }
+
+    public function testDeleteCommentActionWithoutToken()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
+        $form = $client->getCrawler()->filter('form[name=customer_comment_form]')->form();
+        $client->submit($form, [
+            'customer_comment_form' => [
+                'message' => 'Blah foo bar',
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
+        $client->followRedirect();
 
         $comments = $this->getEntityManager()->getRepository(CustomerComment::class)->findAll();
         $id = $comments[0]->getId();
 
         $this->request($client, '/admin/customer/' . $id . '/comment_delete');
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-body');
-        self::assertStringContainsString('There were no comments posted yet', $node->html());
+
+        $this->assertRouteNotFound($client);
     }
 
     public function testPinCommentAction()
@@ -209,12 +235,16 @@ class CustomerControllerTest extends ControllerBaseTest
         $comments = $this->getEntityManager()->getRepository(CustomerComment::class)->findAll();
         $id = $comments[0]->getId();
 
-        $this->request($client, '/admin/customer/' . $id . '/comment_pin');
+        $token = self::$container->get('security.csrf.token_manager')->getToken('customer.pin_comment');
+
+        $this->request($client, '/admin/customer/' . $id . '/comment_pin/' . $token);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.btn.active');
+        $token2 = self::$container->get('security.csrf.token_manager')->getToken('customer.pin_comment');
         self::assertEquals(1, $node->count());
-        self::assertEquals($this->createUrl('/admin/customer/' . $id . '/comment_pin'), $node->attr('href'));
+        self::assertEquals($this->createUrl('/admin/customer/' . $id . '/comment_pin/' . $token2), $node->attr('href'));
+        self::assertNotEquals($token, $token2);
     }
 
     public function testCreateDefaultTeamAction()
@@ -344,9 +374,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $team2->tick();
 
         $client->submit($form);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/'));
-        $client->followRedirect();
-        $this->assertHasDataTable($client);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
 
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);

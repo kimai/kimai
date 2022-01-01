@@ -21,14 +21,17 @@ abstract class AbstractWidgetTypeTest extends TestCase
 
     abstract public function getDefaultOptions(): array;
 
-    public function testDefaultValues()
+    protected function assertDefaultData(AbstractWidgetType $sut)
+    {
+        self::assertNull($sut->getData());
+    }
+
+    public function testDefaultData()
     {
         $sut = $this->createSut();
         self::assertInstanceOf(AbstractWidgetType::class, $sut);
-        self::assertEquals('', $sut->getId());
-        self::assertEquals('', $sut->getTitle());
         self::assertEquals($this->getDefaultOptions(), $sut->getOptions());
-        self::assertNull($sut->getData());
+        $this->assertDefaultData($sut);
         self::assertEquals('bar', $sut->getOption('foo', 'bar'));
     }
 
@@ -51,7 +54,10 @@ abstract class AbstractWidgetTypeTest extends TestCase
         self::assertEquals(array_merge($this->getDefaultOptions(), ['föööö' => 'trääääää']), $sut->getOptions());
 
         $sut->setOptions(['blub' => 'blab', 'dataType' => 'money']);
-        self::assertEquals(['blub' => 'blab', 'dataType' => 'money', 'föööö' => 'trääääää'], $sut->getOptions());
+        $options = $sut->getOptions();
+        self::assertEquals('blab', $options['blub']);
+        self::assertEquals('money', $options['dataType']);
+        self::assertEquals('trääääää', $options['föööö']);
 
         // id
         $sut->setId('cvbnmyx');

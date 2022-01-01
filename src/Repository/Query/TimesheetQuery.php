@@ -20,6 +20,7 @@ use App\Form\Model\DateRange;
 class TimesheetQuery extends ActivityQuery implements BillableInterface
 {
     use BillableTrait;
+    use DateRangeTrait;
 
     public const STATE_ALL = 1;
     public const STATE_RUNNING = 2;
@@ -50,10 +51,6 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
      */
     private $modifiedAfter;
     /**
-     * @var DateRange
-     */
-    protected $dateRange;
-    /**
      * @var iterable
      */
     protected $tags = [];
@@ -61,15 +58,35 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
      * @var User[]
      */
     private $users = [];
+    /**
+     * @var int|null
+     */
+    private $maxResults;
 
-    public function __construct()
+    public function __construct(bool $resetTimes = true)
     {
         parent::__construct();
         $this->setDefaults([
             'order' => self::ORDER_DESC,
             'orderBy' => 'begin',
-            'dateRange' => new DateRange()
+            'dateRange' => new DateRange($resetTimes),
+            'exported' => self::STATE_ALL,
+            'state' => self::STATE_ALL,
+            'billable' => null,
+            'tags' => [],
+            'users' => [],
+            'activities' => [],
         ]);
+    }
+
+    public function getMaxResults(): ?int
+    {
+        return $this->maxResults;
+    }
+
+    public function setMaxResults(?int $maxResults): void
+    {
+        $this->maxResults = $maxResults;
     }
 
     public function addUser(User $user): self
@@ -226,42 +243,6 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
         if (\in_array($exported, [self::STATE_ALL, self::STATE_EXPORTED, self::STATE_NOT_EXPORTED], true)) {
             $this->exported = $exported;
         }
-
-        return $this;
-    }
-
-    public function getBegin(): ?\DateTime
-    {
-        return $this->dateRange->getBegin();
-    }
-
-    public function setBegin(\DateTime $begin): TimesheetQuery
-    {
-        $this->dateRange->setBegin($begin);
-
-        return $this;
-    }
-
-    public function getEnd(): ?\DateTime
-    {
-        return $this->dateRange->getEnd();
-    }
-
-    public function setEnd(\DateTime $end): TimesheetQuery
-    {
-        $this->dateRange->setEnd($end);
-
-        return $this;
-    }
-
-    public function getDateRange(): DateRange
-    {
-        return $this->dateRange;
-    }
-
-    public function setDateRange(DateRange $dateRange): TimesheetQuery
-    {
-        $this->dateRange = $dateRange;
 
         return $this;
     }

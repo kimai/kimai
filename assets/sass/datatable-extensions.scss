@@ -5,13 +5,33 @@
  * file that was distributed with this source code.
  */
 
+@import "variables";
+
+table.dataTable.table > tbody > tr > td {
+    vertical-align: middle;
+    .img-circle {
+        max-width: 30px;
+        margin-right: 0;
+        &.teamlead {
+            box-shadow: 0 0 5px 3px $gray-lte;
+        }
+    }
+}
+
 span.label-color,
 span.label-meta,
 span.label-tag,
+span.label-user,
 span.label-activity,
 span.label-project,
 span.label-customer {
     display: inline-block;
+    .name {
+        white-space: nowrap;
+        .name-inner {
+            white-space: normal;
+        }
+    }
     .dot {
         font-size: 9px;
         margin-right: 3px;
@@ -37,6 +57,9 @@ table.dataTable {
         &.overlapping {
             border-top: 2px dotted red;
         }
+        &.exported {
+            opacity: 0.7;
+        }
     }
     td {
         /*
@@ -48,7 +71,6 @@ table.dataTable {
         }
         .label {
             font-size: 85%;
-            font-weight: 500;
             padding: .3em .6em .3em;
             line-height: 24px;
         }
@@ -66,6 +88,47 @@ table.dataTable {
         }
         span.label-invisible {
             opacity: 0.8;
+        }
+    }
+    tfoot {
+        tr {
+            /* overwritten if used in tfoot, to switch the border from below to top */
+            &.summary td {
+                border-top: 1px solid #ccc;
+                border-bottom: 0;
+            }
+        }
+    }
+    th.weekend,
+    td.weekend {
+        background-color: #f9f9f9;
+    }
+    /* order is important, "today” should overwrite "weekend" therefor later in the file */
+    th.today,
+    td.today {
+        background-color: $highlight-today;
+    }
+    th.total,
+    td.total {
+        font-weight: bold;
+    }
+}
+
+/* Quick entry form */
+.form-dataTable {
+    table.dataTable {
+        .form-group {
+            margin-bottom: 0;
+        }
+    }
+}
+
+table.table-hover {
+    tr {
+        &.exported {
+            &:hover {
+                opacity: 1.0;
+            }
         }
     }
 }

@@ -19,8 +19,8 @@ use App\Repository\InvoiceTemplateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Repository\Query\TimesheetQuery;
-use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
+use App\Timesheet\DateTimeFactory;
 use App\Utils\SearchTerm;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -39,10 +39,6 @@ class InvoiceCreateCommand extends Command
      * @var ServiceInvoice
      */
     private $serviceInvoice;
-    /**
-     * @var TimesheetRepository
-     */
-    private $timesheetRepository;
     /**
      * @var CustomerRepository
      */
@@ -67,10 +63,10 @@ class InvoiceCreateCommand extends Command
      * @var string|null
      */
     private $previewDirectory;
+    private $previewUniqueFile = false;
 
     public function __construct(
         ServiceInvoice $serviceInvoice,
-        TimesheetRepository $timesheetRepository,
         CustomerRepository $customerRepository,
         ProjectRepository $projectRepository,
         InvoiceTemplateRepository $invoiceTemplateRepository,
@@ -78,7 +74,6 @@ class InvoiceCreateCommand extends Command
         EventDispatcherInterface $eventDispatcher
     ) {
         $this->serviceInvoice = $serviceInvoice;
-        $this->timesheetRepository = $timesheetRepository;
         $this->customerRepository = $customerRepository;
         $this->projectRepository = $projectRepository;
         $this->invoiceTemplateRepository = $invoiceTemplateRepository;
@@ -99,7 +94,7 @@ class InvoiceCreateCommand extends Command
             ->addOption('user', null, InputOption::VALUE_REQUIRED, 'The user to be used for generating the invoices')
             ->addOption('start', null, InputOption::VALUE_OPTIONAL, 'Start date (format: 2020-01-01, default: start of the month)', null)
             ->addOption('end', null, InputOption::VALUE_OPTIONAL, 'End date (format: 2020-01-31, default: end of the month)', null)
-            ->addOption('timezone', null, InputOption::VALUE_OPTIONAL, 'Timezone for start and end date query', date_default_timezone_get())
+            ->addOption('timezone', null, InputOption::VALUE_OPTIONAL, 'Timezone for start and end date query (fallback: users timezone)', null)
             ->addOption('customer', null, InputOption::VALUE_OPTIONAL, 'Comma separated list of customer IDs', null)
             ->addOption('project', null, InputOption::VALUE_OPTIONAL, 'Comma separated list of project IDs', null)
             ->addOption('by-customer', null, InputOption::VALUE_NONE, 'If set, one invoice for each active customer in the given timerange is created')
@@ -110,6 +105,7 @@ class InvoiceCreateCommand extends Command
             ->addOption('search', null, InputOption::VALUE_OPTIONAL, 'Search term to filter invoice entries', null)
             ->addOption('exported', null, InputOption::VALUE_OPTIONAL, 'Exported filter for invoice entries (possible values: exported, all), by default only "not exported" items are fetched', null)
             ->addOption('preview', null, InputOption::VALUE_OPTIONAL, 'Absolute path for a rendered preview of the invoice, which will neither be saved nor the items be marked as exported.', null)
+            ->addOption('preview-unique', null, InputOption::VALUE_NONE, 'Adds a unique part to the filename of the generated invoice preview file, so there is no chance that they get overwritten on same project name.')
         ;
     }
 
@@ -157,7 +153,13 @@ class InvoiceCreateCommand extends Command
                 return 1;
         }
 
-        $timezone = new \DateTimeZone($input->getOption('timezone'));
+        $timezone = $input->getOption('timezone');
+        if ($timezone === null) {
+            $timezone = $user->getTimezone();
+        }
+
+        $timezone = new \DateTimeZone($timezone);
+        $dateFactory = new DateTimeFactory($timezone, $user->isFirstDayOfWeekSunday());
 
         if (!empty($input->getOption('start')) && empty($input->getOption('end'))) {
             $io->error('You need to supply a end date if a start date was given');
@@ -191,7 +193,7 @@ class InvoiceCreateCommand extends Command
         $start = $input->getOption('start');
         if (!empty($start)) {
             try {
-                $start = new \DateTime($start, $timezone);
+                $start = $dateFactory->createDateTime($start);
             } catch (\Exception $ex) {
                 $io->error('Invalid start date given');
 
@@ -199,14 +201,14 @@ class InvoiceCreateCommand extends Command
             }
         }
         if (!$start instanceof \DateTime) {
-            $start = new \DateTime('first day of this month', $timezone);
+            $start = $dateFactory->getStartOfMonth();
         }
         $start->setTime(0, 0, 0);
 
         $end = $input->getOption('end');
         if (!empty($end)) {
             try {
-                $end = new \DateTime($end, $timezone);
+                $end = $dateFactory->createDateTime($end);
             } catch (\Exception $ex) {
                 $io->error('Invalid end date given');
 
@@ -214,7 +216,7 @@ class InvoiceCreateCommand extends Command
             }
         }
         if (!$end instanceof \DateTime) {
-            $end = new \DateTime('last day of this month', $timezone);
+            $end = $dateFactory->getEndOfMonth();
         }
         $end->setTime(23, 59, 59);
 
@@ -225,6 +227,7 @@ class InvoiceCreateCommand extends Command
 
         $markAsExported = false;
         if ($input->getOption('preview') !== null) {
+            $this->previewUniqueFile = $input->getOption('preview-unique');
             $this->previewDirectory = rtrim($input->getOption('preview'), '/') . '/';
             if (!is_dir($this->previewDirectory) || !is_writable($this->previewDirectory)) {
                 $io->error('Invalid preview directory given');
@@ -238,7 +241,6 @@ class InvoiceCreateCommand extends Command
         // =============== VALIDATION END ===============
 
         $defaultQuery = new InvoiceQuery();
-        $defaultQuery->setOrder(InvoiceQuery::ORDER_ASC);
         $defaultQuery->setBegin($start);
         $defaultQuery->setEnd($end);
         $defaultQuery->setCurrentUser($user);
@@ -351,8 +353,9 @@ class InvoiceCreateCommand extends Command
                     $filename = $filename[1];
                 }
             }
-            // depending on your setup, this might be a good idea
-            // $filename = uniqid() . $filename;
+            if ($this->previewUniqueFile) {
+                $filename = uniqid('invoice_') . $filename;
+            }
         }
 
         if ($response instanceof BinaryFileResponse) {
@@ -519,7 +522,7 @@ class InvoiceCreateCommand extends Command
      */
     private function getActiveCustomers(InvoiceQuery $invoiceQuery): array
     {
-        $results = $this->timesheetRepository->getTimesheetsForQuery($invoiceQuery);
+        $results = $this->serviceInvoice->getInvoiceItems($invoiceQuery);
 
         $customers = [];
 
@@ -537,7 +540,7 @@ class InvoiceCreateCommand extends Command
      */
     private function getActiveProjects(InvoiceQuery $invoiceQuery): array
     {
-        $results = $this->timesheetRepository->getTimesheetsForQuery($invoiceQuery);
+        $results = $this->serviceInvoice->getInvoiceItems($invoiceQuery);
 
         $projects = [];
 

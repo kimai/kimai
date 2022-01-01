@@ -49,6 +49,9 @@ class CustomerMeta implements MetaTableTypeInterface
         return $this;
     }
 
+    /**
+     * @return Customer|null
+     */
     public function getEntity(): ?EntityWithMetaFields
     {
         return $this->customer;

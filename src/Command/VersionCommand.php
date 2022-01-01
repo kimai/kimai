@@ -31,9 +31,10 @@ class VersionCommand extends Command
             ->setDescription('Receive version information')
             ->setHelp('This command allows you to fetch various version information about Kimai.')
             ->addOption('name', null, InputOption::VALUE_NONE, 'Display the major release name')
-            ->addOption('candidate', null, InputOption::VALUE_NONE, 'Display the current version candidate (e.g. "stable" or "dev")')
             ->addOption('short', null, InputOption::VALUE_NONE, 'Display the version only')
-            ->addOption('semver', null, InputOption::VALUE_NONE, 'Semantical versioning (SEMVER) compatible version string')
+            // @deprecated since 1.14.1
+            ->addOption('candidate', null, InputOption::VALUE_NONE, 'DEPRECATED: Display the current version candidate (e.g. "stable" or "dev")')
+            ->addOption('semver', null, InputOption::VALUE_NONE, 'DEPRECATED: Semantical versioning (SEMVER) compatible version string')
         ;
     }
 
@@ -68,7 +69,7 @@ class VersionCommand extends Command
             return 0;
         }
 
-        $io->writeln(Constants::SOFTWARE . ' - ' . Constants::VERSION . ' ' . Constants::STATUS . ' (' . Constants::NAME . ') by Kevin Papst and contributors.');
+        $io->writeln(Constants::SOFTWARE . ' ' . Constants::VERSION . ' by Kevin Papst and contributors.');
 
         return 0;
     }

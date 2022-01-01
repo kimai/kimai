@@ -2,21 +2,16 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% extends 'export/layout.html.twig' %}
 
-{% set showRateBudget = false %}
-{% set showTimeBudget = false %}
-{% for budget in budgets %}
-    {% if budget.money_left > 0 %}
-        {% set showRateBudget = true %}
-    {% endif %}
-    {% if budget.time_left > 0 %}
-        {% set showTimeBudget = true %}
-    {% endif %}
-{% endfor %}
+{% block document_title %}{{ 'export.title'|trans }}{% endblock %}
+
+{% set storageItemName = 'kimai_html_export' %}
 
 {% set decimal = decimal|default(false) %}
 {% set columnTitles = {} %}
 {% set columns = {
     'date': true,
+    'begin': false,
+    'end': false,
     'username': false,
     'customer': true,
     'project': true,
@@ -57,68 +52,218 @@
 
 {% block javascripts %}
     <script type="text/javascript">
-        document.getElementById('summary-by-activities').addEventListener('click', function(event) {
-            document.getElementById('summary-project').style.display = event.target.checked ? 'none' : 'table';
-            document.getElementById('summary-activity').style.display = event.target.checked ? 'table' : 'none';
-        });
-        document.getElementById('summary-show').addEventListener('click', function(event) {
-            document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
-        });
-        {% if showTimeBudget %}
-        document.getElementById('summary-timeBudget').addEventListener('click', function(event) {
-            var cells = document.getElementsByClassName('export-timeBudget');
-            for (var columnCell of cells) {
-                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
-            }
-        });
-        {% endif %}
-        {% if showRateBudget %}
-        document.getElementById('summary-budget').addEventListener('click', function(event) {
-            var cells = document.getElementsByClassName('export-budget');
-            for (var columnCell of cells) {
-                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
-            }
-        });
-        {% endif %}
-        document.getElementById('summary-duration').addEventListener('click', function(event) {
-            var cells = document.getElementsByClassName('summary-duration');
-            for (var columnCell of cells) {
-                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
-            }
-        });
-        document.getElementById('summary-rate').addEventListener('click', function(event) {
-            var cells = document.getElementsByClassName('summary-rate');
-            for (var columnCell of cells) {
-                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
-            }
-        });
-        document.getElementById('summary-rate-internal').addEventListener('click', function(event) {
-            var cells = document.getElementsByClassName('summary-rate-internal');
-            for (var columnCell of cells) {
-                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
-            }
-        });
-        document.getElementById('summary-show').addEventListener('click', function(event) {
-            document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
-        });
-        document.getElementById('records-show').addEventListener('click', function(event) {
-            document.getElementById('export-records').style.display = event.target.checked ? 'block' : 'none';
-        });
-        var columnCheckboxes = document.getElementsByClassName('column-visibility-changer');
-        for (var checkbox of columnCheckboxes) {
-            checkbox.addEventListener('click', function(event) {
-                var cells = document.getElementsByClassName('column-'+event.target.name);
+        let initialized = false;
+
+        window.addEventListener('load', function() {
+            var loader = new KimaiWebLoader({
+                formatDuration: '{{ get_format_duration() }}',
+                locale: '{{ app.request.locale }}',
+            }, {});
+            var DATES = loader.getKimai().getPlugin('date');
+
+            document.getElementById('duration-decimal').addEventListener('click', function(event) {
+                var spans = document.getElementsByClassName('duration-format');
+                for (var span of spans) {
+                    var duration = span.dataset['duration'];
+                    if (duration === undefined) {
+                        continue;
+                    }
+                    if (!event.target.checked) {
+                        span.innerHTML = DATES.formatSeconds(duration);
+                    } else {
+                        span.innerHTML = (new Intl.NumberFormat('{{ app.request.locale }}', {maximumFractionDigits: 2}).format(duration / 3600));
+                    }
+                }
+                saveVisibility();
+            });
+
+            document.getElementById('summary-by-activities').addEventListener('click', function(event) {
+                document.getElementById('summary-project').style.display = event.target.checked ? 'none' : 'table';
+                document.getElementById('summary-activity').style.display = event.target.checked ? 'table' : 'none';
+                saveVisibility();
+            });
+            document.getElementById('date-format').addEventListener('change', function(event) {
+                changedDateFormat(event.target.value, 'dateformat');
+            });
+            document.getElementById('begin-format').addEventListener('change', function(event) {
+                changedDateFormat(event.target.value, 'beginformat');
+            });
+            document.getElementById('end-format').addEventListener('change', function(event) {
+                changedDateFormat(event.target.value, 'endformat');
+            });
+            document.getElementById('summary-show').addEventListener('click', function(event) {
+                document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
+                saveVisibility();
+            });
+            document.getElementById('summary-timeBudget').addEventListener('click', function(event) {
+                var cells = document.getElementsByClassName('export-timeBudget');
                 for (var columnCell of cells) {
                     columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
                 }
+                saveVisibility();
             });
+            document.getElementById('summary-budget').addEventListener('click', function(event) {
+                var cells = document.getElementsByClassName('export-budget');
+                for (var columnCell of cells) {
+                    columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+                }
+                saveVisibility();
+            });
+            document.getElementById('summary-duration').addEventListener('click', function(event) {
+                var cells = document.getElementsByClassName('summary-duration');
+                for (var columnCell of cells) {
+                    columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+                }
+                saveVisibility();
+            });
+            document.getElementById('summary-rate').addEventListener('click', function(event) {
+                var cells = document.getElementsByClassName('summary-rate');
+                for (var columnCell of cells) {
+                    columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+                }
+                saveVisibility();
+            });
+            document.getElementById('summary-rate-internal').addEventListener('click', function(event) {
+                var cells = document.getElementsByClassName('summary-rate-internal');
+                for (var columnCell of cells) {
+                    columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+                }
+                saveVisibility();
+            });
+            document.getElementById('summary-show').addEventListener('click', function(event) {
+                document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
+                saveVisibility();
+            });
+            document.getElementById('records-show').addEventListener('click', function(event) {
+                document.getElementById('export-records').style.display = event.target.checked ? 'block' : 'none';
+                saveVisibility();
+            });
+
+            var columnCheckboxes = document.getElementsByClassName('column-visibility-changer');
+
+            for (var checkbox of columnCheckboxes) {
+                checkbox.addEventListener('click', function(event) {
+                    changeVisibility(event.target.name, event.target.checked);
+                });
+            }
+
+            var editableTitles = document.querySelectorAll('[contenteditable=true]');
+
+            for (var editable of editableTitles) {
+                editable.addEventListener('input', function(event) {
+                    if (event.target.innerText === '') {
+                        return;
+                    }
+                    saveVisibility();
+                });
+            }
+
+            // needs to be executed as last action in the flow, after the listener were registered
+            let config = localStorage.getItem('{{ storageItemName }}');
+            if (config !== null) {
+                try {
+                    config = JSON.parse(config);
+                    for (const elName in config) {
+                        if (!config.hasOwnProperty(elName)) {
+                            continue;
+                        }
+                        let elValue = config[elName];
+                        let el = document.getElementById(elName);
+                        if (el === undefined || el === null) {
+                            el = document.getElementById('records-column-' + elName);
+                            if (el === undefined || el === null) {
+                                continue;
+                            }
+                        }
+                        if (el.type === 'checkbox') {
+                            if (elValue !== el.checked) {
+                                el.click();
+                            }
+                        } else if (el.type === 'select-one') {
+                            if (el.value !== elValue) {
+                                el.value = elValue;
+                                el.dispatchEvent(new Event('change'));
+                            }
+                        } else if (el.isContentEditable) {
+                            el.innerText = elValue;
+                        }
+                    }
+                } catch (e) {
+                    // ignore error in restoring
+                    console.log('Failed to restore settings, clearing all up: ', e);
+                    localStorage.removeItem('{{ storageItemName }}');
+                }
+            }
+
+            initialized = true;
+        });
+
+        function changeVisibility(column, visible)
+        {
+            var cells = document.getElementsByClassName('column-' + column);
+            for (var columnCell of cells) {
+                columnCell.style.display = visible ? 'table-cell' : 'none';
+            }
+            saveVisibility();
         }
+
+        function changedDateFormat(formatType, className)
+        {
+            var elements = document.getElementsByClassName(className);
+            for (var elem of elements) {
+                var formattedDate = elem.dataset[formatType];
+                if (formattedDate === undefined) {
+                    continue;
+                }
+                elem.innerHTML = formattedDate;
+            }
+            saveVisibility();
+        }
+
+        function saveVisibility()
+        {
+            if (!initialized) {
+                return;
+            }
+
+            const form = document.getElementsByTagName('form')[0];
+            let settings = {};
+            for (let checkbox of form.querySelectorAll('input[type=checkbox]')) {
+                settings[checkbox.getAttribute('id')] = checkbox.checked;
+            }
+            for (let selectbox of form.querySelectorAll('select')) {
+                settings[selectbox.getAttribute('id')] = selectbox.value;
+            }
+            for (let editable of document.querySelectorAll('[contenteditable=true]')) {
+                settings[editable.getAttribute('id')] = editable.innerText;
+            }
+            localStorage.setItem('{{ storageItemName }}', JSON.stringify(settings));
+        }
+
+        function resetExport()
+        {
+            var editableTitles = document.querySelectorAll('[contenteditable=true]');
+
+            for (var editable of editableTitles) {
+                editable.innerText = editable.dataset['original'];
+            }
+
+            localStorage.removeItem('{{ storageItemName }}');
+            const form = document.getElementsByTagName('form')[0];
+            form.reset();
+        }
+
     </script>
 {% endblock %}
 
 {% block styles %}
     <style>
-        .items tr.summary {
+        @media print{
+            h2 { font-size: 22px; }
+            h3 { font-size: 18px; }
+            p, td { font-size: 11px; }
+            th, td.totals { font-size: 12px; }
+            table.table-bordered.dataTable { border-collapse: collapse!important; }
         }
         .items td.totals {
             font-weight: bold;
@@ -127,52 +272,92 @@
         .items td.duration,
         .items th.duration,
         .items th.cost,
-        .items td.cost {
-            text-align: center;
+        .items td.cost,
+        .items th.column-rate,
+        .items th.column-rate_internal,
+        .items th.column-duration
+        {
+            text-align: right;
         }
-        .toolbar {
-            border-bottom: 1px solid #ccc;
-            background-color: #eee;
-            padding: 5px 0 0 5px;
+        .table>thead:first-child>tr:first-child>th {
+            padding-right: 5px;
         }
     </style>
 {% endblock %}
 
 {% block export %}
-    <div class="row no-print toolbar">
-        <div class="col-xs-12">
-            <form class="navbar-form">
-                <div class="form-group">
-                    {{ 'export.summary'|trans }}:
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="summary-show">
-                        <input type="checkbox" id="summary-show" name="summary-show" checked="checked">
-                        {{ 'label.visible'|trans }}
-                    </label>
-                </div>
+    <form class="form-inline no-print">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{ 'settings'|trans({}, 'actions') }}
+            </div>
+            <div class="panel-body">
+                <label class="control-label" for="duration-decimal">
+                    <input type="checkbox" id="duration-decimal" name="duration-decimal"{% if decimal%} checked="checked"{% endif %}>
+                    {{ 'label.timesheet.export_decimal'|trans }}
+                </label>
+                |
+                <label class="control-label" for="date-format">
+                    {{ 'label.date'|trans }}:
+                    {% set demo_date = create_date('2020-01-01 20:00:00') %}
+                    <select id="date-format" name="date-format">
+                        <option value="time">{{ demo_date|date_time }}</option>
+                        <option value="short">{{ demo_date|date_short }}</option>
+                        <option value="full">{{ demo_date|date_full }}</option>
+                    </select>
+                </label>
+                |
+                <label class="control-label" for="begin-format">
+                    {{ 'label.begin'|trans }}:
+                    {% set demo_date = create_date('2020-01-01 11:00:00') %}
+                    <select id="begin-format" name="begin-format">
+                        <option value="plain">{{ demo_date|date_format('H:i') }}</option>
+                        <option value="time">{{ demo_date|date_time }}</option>
+                        <option value="short">{{ demo_date|date_short }}</option>
+                        <option value="full">{{ demo_date|date_full }}</option>
+                    </select>
+                </label>
+                |
+                <label class="control-label" for="end-format">
+                    {{ 'label.end'|trans }}:
+                    {% set demo_date = create_date('2020-01-01 18:00:00') %}
+                    <select id="end-format" name="end-format">
+                        <option value="plain">{{ demo_date|date_format('H:i') }}</option>
+                        <option value="time">{{ demo_date|date_time }}</option>
+                        <option value="short">{{ demo_date|date_short }}</option>
+                        <option value="full">{{ demo_date|date_full }}</option>
+                    </select>
+                </label>
+                <button type="reset" class="btn btn-primary pull-right" onclick="resetExport()">{{ 'action.reset'|trans }}</button>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <label class="control-label" for="summary-show">
+                    <input type="checkbox" id="summary-show" name="summary-show" checked="checked">
+                    {{ 'export.summary'|trans }}
+                </label>
+            </div>
+            <div class="panel-body">
                 <div class="form-group">
                     <label class="control-label" for="summary-by-activities">
                         <input type="checkbox" id="summary-by-activities" name="summary-by-activities">
                         {{ 'label.activity'|trans }}
                     </label>
                 </div>
-                {% if showTimeBudget %}
                 <div class="form-group">
                     <label class="control-label" for="summary-timeBudget">
                         <input type="checkbox" id="summary-timeBudget" name="summary-timeBudget" checked>
                         {{ 'label.timeBudget'|trans }}
                     </label>
                 </div>
-                {% endif %}
-                {% if showRateBudget %}
                 <div class="form-group">
                     <label class="control-label" for="summary-budget">
                         <input type="checkbox" id="summary-budget" name="summary-budget" checked>
                         {{ 'label.budget'|trans }}
                     </label>
                 </div>
-                {% endif %}
 
                 <div class="form-group">
                     <label class="control-label" for="summary-duration">
@@ -192,18 +377,19 @@
                         {{ 'label.rate'|trans }}
                     </label>
                 </div>
-            </form>
+            </div>
+        </div>
 
-            <form class="navbar-form">
-                <div class="form-group">
-                    {{ 'export.full_list'|trans }}:
-                </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
                 <div class="form-group">
                     <label class="control-label" for="records-show">
                         <input type="checkbox" id="records-show" name="records-show" checked="checked">
-                        {{ 'label.visible'|trans }}
+                        {{ 'export.full_list'|trans }}
                     </label>
                 </div>
+            </div>
+            <div class="panel-body">
                 {% for columnId, visibility in columns %}
                     <div class="form-group">
                         <label class="control-label" for="records-column-{{ columnId }}">
@@ -212,13 +398,13 @@
                         </label>
                     </div>
                 {% endfor %}
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
 
     <div class="row">
         <div class="col-xs-12">
-            <h2>{{ 'export.document_title'|trans }}</h2>
+            <h2 id="doc-title" contenteditable="true" data-original="{{ 'export.document_title'|trans }}">{{ 'export.document_title'|trans }}</h2>
             <p>
                 {{ 'export.period'|trans }}:
                 {{ query.begin|date_short }} - {{ query.end|date_short }}
@@ -228,18 +414,14 @@
 
     <div class="row" id="export-summary">
         <div class="col-xs-12">
-            <h3>{{ 'export.summary'|trans }}</h3>
+            <h3 id="doc-summary" contenteditable="true" data-original="{{ 'export.summary'|trans }}">{{ 'export.summary'|trans }}</h3>
             <table class="items table table-condensed table-bordered dataTable" id="summary-project">
                 <thead>
                 <tr>
                     <th>{{ 'label.customer'|trans }}</th>
                     <th>{{ 'label.project'|trans }}</th>
-                    {% if showTimeBudget %}
-                        <th class="center export-timeBudget">{{ 'label.timeBudget'|trans }}</th>
-                    {% endif %}
-                    {% if showRateBudget %}
-                        <th class="center export-budget">{{ 'label.budget'|trans }}</th>
-                    {% endif %}
+                    <th class="center export-timeBudget">{{ 'label.timeBudget'|trans }}</th>
+                    <th class="center export-budget">{{ 'label.budget'|trans }}</th>
                     <th class="duration summary-duration">{{ 'label.duration'|trans }}</th>
                     <th class="cost summary-rate-internal">{{ 'label.rate_internal'|trans }}</th>
                     <th class="cost summary-rate">{{ 'label.rate'|trans }}</th>
@@ -259,13 +441,11 @@
                     {% if customer is not same as(summary.customer) %}
                         <tr class="summary">
                             <td colspan="2">&nbsp;</td>
-                            {% if showTimeBudget %}
-                                <td class="export-timeBudget"></td>
-                            {% endif %}
-                            {% if showRateBudget %}
-                                <td class="export-budget"></td>
-                            {% endif %}
-                            <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
+                            <td class="export-timeBudget"></td>
+                            <td class="export-budget"></td>
+                            <td class="totals duration summary-duration">
+                                <span class="duration-format" data-duration="{{ customerDuration }}">{{ customerDuration|duration(decimal) }}</span>
+                            </td>
                             <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
                             <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                         </tr>
@@ -278,21 +458,19 @@
                     <tr>
                         <td>{{ summary.customer }}</td>
                         <td>{{ summary.project }}</td>
-                        {% if showTimeBudget %}
-                            <td class="center export-timeBudget">
-                                {% if budgets[id] is defined and budgets[id].time_left > 0 %}
-                                    {{ budgets[id].time_left|duration(decimal) }}
-                                {% endif %}
-                            </td>
-                        {% endif %}
-                        {% if showRateBudget %}
-                            <td class="center export-budget">
-                                {% if budgets[id] is defined and budgets[id].money_left > 0 %}
-                                    {{ budgets[id].money_left|money(summary.currency) }}
-                                {% endif %}
-                            </td>
-                        {% endif %}
-                        <td class="duration summary-duration">{{ summary.duration|duration(decimal) }}</td>
+                        <td class="center export-timeBudget">
+                            {% if budgets[id] is defined and budgets[id].time_left > 0 %}
+                                <span class="duration-format" data-duration="{{ budgets[id].time_left }}">{{ budgets[id].time_left|duration(decimal) }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="center export-budget">
+                            {% if budgets[id] is defined and budgets[id].money_left > 0 %}
+                                {{ budgets[id].money_left|money(summary.currency) }}
+                            {% endif %}
+                        </td>
+                        <td class="duration summary-duration">
+                            <span class="duration-format" data-duration="{{ summary.duration }}">{{ summary.duration|duration(decimal) }}</span>
+                        </td>
                         <td class="cost summary-rate-internal">{{ summary.rate_internal|money(summary.currency) }}</td>
                         <td class="cost summary-rate">{{ summary.rate|money(summary.currency) }}</td>
                     </tr>
@@ -303,13 +481,11 @@
                 {% if customer is not same as(null) %}
                     <tr class="summary">
                         <td colspan="2">&nbsp;</td>
-                        {% if showTimeBudget %}
-                            <td class="export-timeBudget"></td>
-                        {% endif %}
-                        {% if showRateBudget %}
-                            <td class="export-budget"></td>
-                        {% endif %}
-                        <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
+                        <td class="export-timeBudget"></td>
+                        <td class="export-budget"></td>
+                        <td class="totals duration summary-duration">
+                            <span class="duration-format" data-duration="{{ customerDuration }}">{{ customerDuration|duration(decimal) }}</span>
+                        </td>
                         <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
                         <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                     </tr>
@@ -329,6 +505,8 @@
                     <th>{{ 'label.customer'|trans }}</th>
                     <th>{{ 'label.project'|trans }}</th>
                     <th>{{ 'label.activity'|trans }}</th>
+                    <th class="center export-timeBudget">{{ 'label.timeBudget'|trans }}</th>
+                    <th class="center export-budget">{{ 'label.budget'|trans }}</th>
                     <th class="duration summary-duration">{{ 'label.duration'|trans }}</th>
                     <th class="cost summary-rate-internal">{{ 'label.rate_internal'|trans }}</th>
                     <th class="cost summary-rate">{{ 'label.rate'|trans }}</th>
@@ -340,7 +518,7 @@
                 {% set customerRate = 0 %}
                 {% set customerInternalRate = 0 %}
                 {% set customerCurrency = null %}
-                {% for summary in summaries %}
+                {% for id, summary in summaries %}
                     {% if customer is same as(null) %}
                         {% set customer = summary.customer %}
                         {% set customerCurrency = summary.currency %}
@@ -348,7 +526,11 @@
                     {% if customer is not same as(summary.customer) %}
                         <tr class="summary">
                             <td colspan="3"></td>
-                            <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
+                            <td class="export-timeBudget"></td>
+                            <td class="export-budget"></td>
+                            <td class="totals duration summary-duration">
+                                <span class="duration-format" data-duration="{{ customerDuration }}">{{ customerDuration|duration(decimal) }}</span>
+                            </td>
                             <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
                             <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                         </tr>
@@ -358,12 +540,29 @@
                         {% set customerRate = 0 %}
                         {% set customerInternalRate = 0 %}
                     {% endif %}
-                    {% for activitySummary in summary.activities %}
+                    {% for activityId, activitySummary in summary.activities %}
                         <tr>
                             <td>{{ summary.customer }}</td>
                             <td>{{ summary.project }}</td>
                             <td>{{ activitySummary.activity }}</td>
-                            <td class="duration summary-duration">{{ activitySummary.duration|duration(decimal) }}</td>
+                            {% if activity_budgets[id] is defined and activity_budgets[id][activityId] is defined %}
+                                <td class="center export-timeBudget">
+                                    {% if activity_budgets[id][activityId].time_left > 0 %}
+                                        <span class="duration-format" data-duration="{{ activity_budgets[id][activityId].time_left }}">{{ activity_budgets[id][activityId].time_left|duration(decimal) }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="center export-budget">
+                                    {% if activity_budgets[id][activityId].money_left > 0 %}
+                                        {{ activity_budgets[id][activityId].money_left|money(summary.currency) }}
+                                    {% endif %}
+                                </td>
+                            {% else %}
+                                <td class="center export-timeBudget"></td>
+                                <td class="center export-budget"></td>
+                            {% endif %}
+                            <td class="duration summary-duration">
+                                <span class="duration-format" data-duration="{{ activitySummary.duration }}">{{ activitySummary.duration|duration(decimal) }}</span>
+                            </td>
                             <td class="cost summary-rate-internal">{{ activitySummary.rate_internal|money(activitySummary.currency) }}</td>
                             <td class="cost summary-rate">{{ activitySummary.rate|money(activitySummary.currency) }}</td>
                         </tr>
@@ -375,7 +574,11 @@
                 {% if customer is not same as(null) %}
                     <tr class="summary">
                         <td colspan="3"></td>
-                        <td class="totals duration summary-duration">{{ customerDuration|duration(decimal) }}</td>
+                        <td class="export-timeBudget"></td>
+                        <td class="export-budget"></td>
+                        <td class="totals duration summary-duration">
+                            <span class="duration-format" data-duration="{{ customerDuration }}">{{ customerDuration|duration(decimal) }}</span>
+                        </td>
                         <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
                         <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                     </tr>
@@ -387,8 +590,8 @@
 
     <div class="row" id="export-records">
         <div class="col-xs-12">
-            <h3>{{ 'export.full_list'|trans }}</h3>
-            <table class="table table-condensed table-bordered dataTable">
+            <h3 id="doc-records" contenteditable="true" data-original="{{ 'export.full_list'|trans }}">{{ 'export.full_list'|trans }}</h3>
+            <table class="items table table-condensed table-bordered dataTable">
                 <thead>
                 <tr>
                     {% for columnId, visibility in columns %}
@@ -419,11 +622,19 @@
                     {% endif %}
                     <tr>
                         <td class="column-date text-nowrap" {% if not columns.date %}style="display: none"{% endif %}>
+                            <span class="dateformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_full }}" data-time="{{ entry.begin|date_time }}">
                             {{ entry.begin|date_time }}
-                            {% if entry.end %}
-                                <br>
-                                {{ entry.end|date_time }}
-                            {% endif %}
+                            </span>
+                        </td>
+                        <td class="column-begin text-nowrap" {% if not columns.begin %}style="display: none"{% endif %}>
+                            <span class="beginformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_full }}" data-time="{{ entry.begin|date_time }}" data-plain="{{ entry.begin|date_format('H:i') }}">
+                            {{ entry.begin|date_format('H:i') }}
+                            </span>
+                        </td>
+                        <td class="column-end text-nowrap" {% if not columns.end %}style="display: none"{% endif %}>
+                            <span class="endformat" data-short="{{ entry.end|date_short }}" data-full="{{ entry.end|date_full }}" data-time="{{ entry.end|date_time }}" data-plain="{{ entry.end|date_format('H:i') }}">
+                            {{ entry.end|date_format('H:i') }}
+                            </span>
                         </td>
                         <td class="column-username" {% if not columns.username %}style="display: none"{% endif %}>
                             {{ widgets.username(entry.user) }}
@@ -491,17 +702,17 @@
                         <td class="column-fixedRate text-nowrap" {% if not columns.fixedRate %}style="display: none"{% endif %}>
                             {{ entry.fixedRate|money(entry.project.customer.currency) }}
                         </td>
-                        <td class="column-duration text-nowrap" {% if not columns.duration %}style="display: none"{% endif %}>
-                            {{ entry.duration|duration(decimal) }}
+                        <td class="duration column-duration text-nowrap" {% if not columns.duration %}style="display: none"{% endif %}>
+                            <span class="duration-format" data-duration="{{ entry.duration }}">{{ entry.duration|duration(decimal) }}</span>
                         </td>
-                        <td class="column-rate_internal text-nowrap" {% if not columns.rate_internal %}style="display: none"{% endif %}>
+                        <td class="cost column-rate_internal text-nowrap" {% if not columns.rate_internal %}style="display: none"{% endif %}>
                             {% if entry.internalRate is defined %}
                                 {{ entry.internalRate|money(entry.project.customer.currency) }}
                             {% else %}
                                 {{ entry.rate|money(entry.project.customer.currency) }}
                             {% endif %}
                         </td>
-                        <td class="column-rate text-nowrap" {% if not columns.rate %}style="display: none"{% endif %}>
+                        <td class="cost column-rate text-nowrap" {% if not columns.rate %}style="display: none"{% endif %}>
                             {{ entry.rate|money(entry.project.customer.currency) }}
                         </td>
                     </tr>
@@ -514,7 +725,7 @@
                         {% endif %}
                     {% endfor %}
                     <th class="text-nowrap column-duration">
-                        {{- timeWorked|duration(decimal) -}}
+                        <span class="duration-format" data-duration="{{ timeWorked }}">{{- timeWorked|duration(decimal) -}}</span>
                     </th>
                     <th class="text-nowrap column-rate_internal">
                         {%- if currency is not null and currency is not same as(false) %}

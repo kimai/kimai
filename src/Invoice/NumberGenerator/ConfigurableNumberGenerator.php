@@ -58,21 +58,29 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
     {
         $format = $this->configuration->find('invoice.number_format');
         $invoiceDate = $this->model->getInvoiceDate();
-        $result = $format;
 
-        preg_match_all('/{[^}]*?}/', $format, $matches);
-        foreach ($matches[0] as $part) {
-            $partialResult = $this->parseReplacer($invoiceDate, $part);
-            $result = str_replace($part, $partialResult, $result);
-        }
+        $loops = 0;
+        $increaseBy = 0;
+
+        do {
+            $result = $format;
+
+            preg_match_all('/{[^}]*?}/', $format, $matches);
+
+            foreach ($matches[0] as $part) {
+                $partialResult = $this->parseReplacer($invoiceDate, $part, $increaseBy);
+                $result = str_replace($part, $partialResult, $result);
+            }
+
+            $increaseBy++;
+        } while ($this->repository->hasInvoice($result) && $loops++ < 99);
 
         return (string) $result;
     }
 
-    private function parseReplacer(\DateTime $invoiceDate, string $originalFormat): string
+    private function parseReplacer(\DateTime $invoiceDate, string $originalFormat, int $increaseBy): string
     {
         $formatterLength = null;
-        $increaseBy = 0;
         $formatPattern = str_replace(['{', '}'], '', $originalFormat);
 
         $parts = preg_split('/([+\-,])+/', $formatPattern, -1, PREG_SPLIT_DELIM_CAPTURE);
@@ -151,7 +159,7 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
 
             // for customer
             case 'cc':
-                $partialResult = $this->repository->getCounterForAllTime($invoiceDate, $this->model->getCustomer()) + $increaseBy;
+                $partialResult = $this->repository->getCounterForCustomerAllTime($this->model->getCustomer()) + $increaseBy;
                 break;
 
             case 'ccy':
@@ -166,9 +174,34 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
                 $partialResult = $this->repository->getCounterForDay($invoiceDate, $this->model->getCustomer()) + $increaseBy;
                 break;
 
+            // for user
+            case 'cu':
+                $partialResult = $this->repository->getCounterForUserAllTime($this->model->getUser()) + $increaseBy;
+                break;
+
+            case 'cuy':
+                $partialResult = $this->repository->getCounterForYear($invoiceDate, null, $this->model->getUser()) + $increaseBy;
+                break;
+
+            case 'cum':
+                $partialResult = $this->repository->getCounterForMonth($invoiceDate, null, $this->model->getUser()) + $increaseBy;
+                break;
+
+            case 'cud':
+                $partialResult = $this->repository->getCounterForDay($invoiceDate, null, $this->model->getUser()) + $increaseBy;
+                break;
+
+            case 'ustaff':
+                $partialResult = $this->model->getUser() !== null ? $this->model->getUser()->getAccountNumber() : '';
+                break;
+
+            case 'uid':
+                $partialResult = $this->model->getUser() !== null ? (string) $this->model->getUser()->getId() : '';
+                break;
+
             // across all invoices
             case 'c':
-                $partialResult = $this->repository->getCounterForAllTime($invoiceDate) + $increaseBy;
+                $partialResult = $this->repository->getCounterForCustomerAllTime() + $increaseBy;
                 break;
 
             case 'cy':
@@ -181,6 +214,14 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
 
             case 'cd':
                 $partialResult = $this->repository->getCounterForDay($invoiceDate) + $increaseBy;
+                break;
+
+            case 'cname':
+                $partialResult = $this->model->getCustomer() !== null ? $this->model->getCustomer()->getName() : '';
+                break;
+
+            case 'cnumber':
+                $partialResult = $this->model->getCustomer() !== null ? $this->model->getCustomer()->getNumber() : '';
                 break;
 
             default:

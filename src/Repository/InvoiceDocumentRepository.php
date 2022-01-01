@@ -51,6 +51,18 @@ final class InvoiceDocumentRepository
     }
 
     /**
+     * @codeCoverageIgnore
+     */
+    public function remove(InvoiceDocument $invoiceDocument): void
+    {
+        if (stripos($invoiceDocument->getFilename(), $this->getUploadDirectory()) === false) {
+            throw new \InvalidArgumentException('Cannot delete built-in invoice template');
+        }
+
+        @unlink(realpath($invoiceDocument->getFilename()));
+    }
+
+    /**
      * @deprecated since 1.10 - will be removed with 2.0 - use getUploadDirectory() instead
      */
     public function getCustomInvoiceDirectory(): string

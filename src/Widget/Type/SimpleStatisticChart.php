@@ -24,13 +24,13 @@ class SimpleStatisticChart extends SimpleWidget implements UserWidget
      */
     private $query;
     /**
-     * @var string
+     * @var string|\DateTime
      */
-    private $begin;
+    protected $begin;
     /**
-     * @var string
+     * @var string|\DateTime
      */
-    private $end;
+    protected $end;
     /**
      * @var User|null
      */
@@ -83,6 +83,16 @@ class SimpleStatisticChart extends SimpleWidget implements UserWidget
         return $this;
     }
 
+    public function getTimezone(): \DateTimeZone
+    {
+        $timezone = date_default_timezone_get();
+        if (null !== $this->user) {
+            $timezone = $this->user->getTimezone();
+        }
+
+        return new \DateTimeZone($timezone);
+    }
+
     /**
      * @param array $options
      * @return mixed|null
@@ -90,21 +100,26 @@ class SimpleStatisticChart extends SimpleWidget implements UserWidget
      */
     public function getData(array $options = [])
     {
-        $timezone = date_default_timezone_get();
-        if (null !== $this->user) {
-            $timezone = $this->user->getTimezone();
-        }
-        $timezone = new \DateTimeZone($timezone);
+        $timezone = $this->getTimezone();
 
-        $begin = !empty($this->begin) ? new \DateTime($this->begin, $timezone) : null;
-        $end = !empty($this->end) ? new \DateTime($this->end, $timezone) : null;
+        $begin = $this->begin;
+        $end = $this->end;
+
+        if (!empty($begin) && \is_string($begin)) {
+            $begin = new \DateTime($begin, $timezone);
+        }
+
+        if (!empty($end) && \is_string($end)) {
+            $end = new \DateTime($end, $timezone);
+        }
 
         try {
+            $user = null;
             if (true === $this->queryWithUser) {
-                return $this->repository->getStatistic($this->query, $begin, $end, $this->user);
-            } else {
-                return $this->repository->getStatistic($this->query, $begin, $end, null);
+                $user = $this->user;
             }
+
+            return $this->repository->getStatistic($this->query, $begin, $end, $user);
         } catch (\Exception $ex) {
             throw new WidgetException(
                 'Failed loading widget data: ' . $ex->getMessage()

@@ -15,6 +15,11 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class XlsxRenderer extends AbstractSpreadsheetRenderer
 {
+    protected function isTotalRowSupported(): bool
+    {
+        return true;
+    }
+
     public function getFileExtension(): string
     {
         return '.xlsx';

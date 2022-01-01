@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="da" datatype="plaintext" original="email.en.xlf">
+    <body>
+      <trans-unit id="pjr3FDv" resname="registration.subject">
+        <source>registration.subject</source>
+        <target>Aktiver din konto</target>
+      </trans-unit>
+      <trans-unit id="QtcznHC" resname="registration.title">
+        <source>registration.title</source>
+        <target>Velkommen %username%</target>
+      </trans-unit>
+      <trans-unit id="YMLel3P" resname="registration.button">
+        <source>registration.button</source>
+        <target>Aktiver din konto</target>
+      </trans-unit>
+      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+        <source>reset.subject</source>
+        <target>Nulstil dit kodeord</target>
+      </trans-unit>
+      <trans-unit id="G2mhn_2" resname="reset.title">
+        <source>reset.title</source>
+        <target>Det kan ske …</target>
+      </trans-unit>
+      <trans-unit id="qbt.84Y" resname="reset.button">
+        <source>reset.button</source>
+        <target>Nulstil dit kodeord</target>
+      </trans-unit>
+      <trans-unit id="rhkMAep" resname="reset.intro">
+        <source>reset.intro</source>
+        <target>... så du har glemt dit kodeord? Intet problem: Kimai hjælper dig med at oprette et nyt:</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

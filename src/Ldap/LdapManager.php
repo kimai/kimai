@@ -15,29 +15,17 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
+ *
+ * @final
  */
 class LdapManager
 {
-    /**
-     * @var LdapConfiguration
-     */
-    protected $config;
-    /**
-     * @var LdapDriver
-     */
-    protected $driver;
-    /**
-     * @var array
-     */
-    protected $params = [];
-    /**
-     * @var LdapUserHydrator
-     */
-    protected $hydrator;
+    private $driver;
+    private $hydrator;
+    private $config;
 
     public function __construct(LdapDriver $driver, LdapUserHydrator $hydrator, LdapConfiguration $config)
     {
-        $this->params = $config->getUserParameters();
         $this->config = $config;
         $this->driver = $driver;
         $this->hydrator = $hydrator;
@@ -52,7 +40,9 @@ class LdapManager
      */
     public function findUserByUsername(string $username): ?UserInterface
     {
-        return $this->findUserBy([$this->params['usernameAttribute'] => $username]);
+        $params = $this->config->getUserParameters();
+
+        return $this->findUserBy([$params['usernameAttribute'] => $username]);
     }
 
     /**
@@ -62,8 +52,9 @@ class LdapManager
      */
     public function findUserBy(array $criteria): ?UserInterface
     {
+        $params = $this->config->getUserParameters();
         $filter = $this->buildFilter($criteria);
-        $entries = $this->driver->search($this->params['baseDn'], $filter);
+        $entries = $this->driver->search($params['baseDn'], $filter);
 
         if ($entries['count'] > 1) {
             throw new LdapDriverException('This search must only return a single user');
@@ -77,10 +68,12 @@ class LdapManager
         return $this->hydrator->hydrate($entries[0]);
     }
 
-    protected function buildFilter(array $criteria, string $condition = '&'): string
+    private function buildFilter(array $criteria, string $condition = '&'): string
     {
+        $params = $this->config->getUserParameters();
+
         $filters = [];
-        $filters[] = $this->params['filter'];
+        $filters[] = $params['filter'];
         foreach ($criteria as $key => $value) {
             $value = ldap_escape($value, '', LDAP_ESCAPE_FILTER);
             $filters[] = sprintf('(%s=%s)', $key, $value);
@@ -118,7 +111,8 @@ class LdapManager
         }
         $user->setPreferenceValue('ldap.dn', $baseDn);
 
-        $entries = $this->driver->search($baseDn, $this->params['attributesFilter']);
+        $params = $this->config->getUserParameters();
+        $entries = $this->driver->search($baseDn, $params['attributesFilter']);
 
         if ($entries['count'] > 1) {
             throw new LdapDriverException('This search must only return a single user');
@@ -151,7 +145,7 @@ class LdapManager
         }
     }
 
-    protected function getRoles(string $dn, array $roleParameter): array
+    private function getRoles(string $dn, array $roleParameter): array
     {
         $filter = $roleParameter['filter'] ?? '';
 

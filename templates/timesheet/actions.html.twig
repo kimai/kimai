@@ -1,85 +1,21 @@
-{% macro timesheets(view) %}
+{% macro timesheets(view, query) %}
     {% import "macros/widgets.html.twig" as widgets %}
-
-    {% set actions = {'search': {'class': 'search-toggle visible-xs-inline'}} %}
-    {% if is_granted('export_own_timesheet') %}
-        {% set exporterIds = timesheet_exporter() %}
-        {% if exporterIds|length == 1 %}
-            {% set actions = actions|merge({'download': {'url': path('timesheet_export', {'exporter': exporterIds.0}), 'class': 'toolbar-action'}}) %}
-        {% elseif exporterIds|length > 1 %}
-            {% set children = {} %}
-            {% for exporter in exporterIds %}
-                {% set children = children|merge({(exporter): {'title': ('button.' ~ exporter)|trans, 'url': path('timesheet_export', {'exporter': exporter}), 'class': 'toolbar-action exporter-' ~ exporter}}) %}
-            {% endfor %}
-            {% set actions = actions|merge({'download': {'children': children}}) %}
-        {% endif %}
-    {% endif %}
-    {% set actions = actions|merge({'visibility': {'modal': '#modal_timesheet'}}) %}
-    {% if is_granted('create_own_timesheet') %}
-        {% set actions = actions|merge({'create': {'url': path('timesheet_create'), 'class': 'modal-ajax-form'}}) %}
-    {% endif %}
-
-    {% set actions = actions|merge({'help': {'url': 'timesheet.html'|docu_link, 'target': '_blank'}}) %}
-
-    {% set event = trigger('actions.timesheets', {'actions': actions, 'view': view}) %}
-    {{ widgets.page_actions(event.payload.actions) }}
+    {% set event = actions(app.user, 'timesheets', view, {'query': query}) %}
+    {{ widgets.page_actions(event.actions) }}
 {% endmacro %}
 
 {% macro timesheet(timesheet, view, options) %}
-    {%- apply spaceless -%}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set actions = {} %}
-
-    {% if timesheet.id is not empty %}
-        {% if not timesheet.end and is_granted('stop', timesheet) %}
-            {% set actions = actions|merge({'stop': {'url': path('stop_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.timesheetStop kimai.timesheetUpdate', 'data-method': 'PATCH', 'data-msg-error': 'timesheet.stop.error', 'data-msg-success': 'timesheet.stop.success'}}}) %}
-        {% endif %}
-
-        {% if timesheet.end and is_granted('start', timesheet) %}
-            {% set actions = actions|merge({'repeat': {'url': path('restart_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-payload': '{"copy": "all"}', 'data-event': 'kimai.timesheetStart kimai.timesheetUpdate', 'data-method': 'PATCH', 'data-msg-error': 'timesheet.start.error', 'data-msg-success': 'timesheet.start.success'}}}) %}
-        {% endif %}
-
-        {% if is_granted('duplicate', timesheet) %}
-            {% set actions = actions|merge({'copy': {'url': path('duplicate_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-payload': '{"copy": "all"}', 'data-event': 'kimai.timesheetStart kimai.timesheetUpdate', 'data-method': 'PATCH', 'data-msg-error': 'action.update.error', 'data-msg-success': 'action.update.success'}}}) %}
-        {% endif %}
-
-        {% if is_granted('edit', timesheet) %}
-            {% set class = '' %}
-            {% if view != 'edit' %}
-                {% set class = 'modal-ajax-form' %}
-            {% endif %}
-            {% set actions = actions|merge({'edit': {'url': path('timesheet_edit', {'id': timesheet.id}), 'class': class}}) %}
-        {% endif %}
-
-        {% if actions|length > 0 %}
-            {% set actions = actions|merge({'divider': null}) %}
-        {% endif %}
-
-        {% if view == 'index' and is_granted('delete', timesheet) %}
-            {% set actions = actions|merge({'trash': {'url': path('delete_timesheet', {'id' : timesheet.id}), 'class': 'api-link', 'attr': {'data-event': 'kimai.timesheetDelete kimai.timesheetUpdate', 'data-method': 'DELETE', 'data-question': 'confirm.delete', 'data-msg-error': 'action.delete.error', 'data-msg-success': 'action.delete.success'}}}) %}
-        {% endif %}
-    {% endif %}
-
-    {% if view != 'index' and view != 'custom' %}
-        {% set actions = actions|merge({'back': options.back|default(path('timesheet'))}) %}
-    {% endif %}
-
-    {% set event = trigger('actions.timesheet', {'actions': actions, 'view': view, 'timesheet': timesheet}) %}
+    {% set event = actions(app.user, 'timesheet', view, {'timesheet': timesheet}) %}
     {% if view == 'index' or view == 'custom' %}
-        {{ widgets.table_actions(event.payload.actions) }}
+        {{ widgets.table_actions(event.actions) }}
     {% else %}
-        {{ widgets.entity_actions(event.payload.actions) }}
+        {{ widgets.page_actions(event.actions) }}
     {% endif %}
-    {%- endapply -%}
 {% endmacro %}
 
 {% macro timesheets_multi_update(view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-
-    {% set actions = {} %}
-    {% set actions = actions|merge({'back': path('timesheet')}) %}
-    {% set actions = actions|merge({'help': {'url': 'timesheet.html'|docu_link, 'target': '_blank'}}) %}
-
-    {% set event = trigger('actions.timesheets_multi_update', {'actions': actions, 'view': view}) %}
-    {{ widgets.page_actions(event.payload.actions) }}
+    {% set event = actions(app.user, 'timesheets_multi_update', view) %}
+    {{ widgets.page_actions(event.actions) }}
 {% endmacro %}

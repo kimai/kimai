@@ -1,9 +1,11 @@
 {% if form_theme is defined %}
     {% form_theme form form_theme %}
 {% endif %}
+{% set _back = back is defined and back is not same as (false) ? back : false %}
+{% set _reset = reset is defined and reset is same as (false) ? false : true %}
 <div class="box box-primary">
     {% block form_before %}{% endblock %}
-    {{ form_start(form) }}
+    {{ form_start(form, formStartOptions|default({})) }}
     <div class="box-header with-border">
         <h3 class="box-title">
             {{ title }}
@@ -18,11 +20,13 @@
         {% endblock %}
     </div>
     <div class="box-footer">
-        <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
-        {% if back|default(false) %}
-            <a href="{{ back }}" class="btn btn-link">{{ 'action.back'|trans }}</a>
+        {% block submit_button %}
+            <input type="submit" data-loading-text="{{ (submit_button|default('action.save'))|trans }}…" value="{{ (submit_button|default('action.save'))|trans }}" class="btn btn-primary" />
+        {% endblock %}
+        {% if _back is not same as (false) %}
+            <a href="{{ _back }}" class="btn btn-link">{{ 'action.back'|trans }}</a>
         {% endif %}
-        {% if reset|default(true) %}
+        {% if _reset is not same as (false) %}
             <input type="reset" value="{{ 'action.reset'|trans }}" class="btn btn-link pull-right" />
         {% endif %}
     </div>

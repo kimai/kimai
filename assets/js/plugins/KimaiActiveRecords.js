@@ -24,37 +24,39 @@ export default class KimaiActiveRecords extends KimaiPlugin {
     }
 
     init() {
-        const menu = document.querySelector(this.selector);
+        this.menu = document.querySelector(this.selector);
 
         // the menu can be hidden if user has no permissions to see it
-        if (menu === null) {
+        if (this.menu === null) {
             return;
         }
 
-        const dropdown = menu.querySelector('ul.dropdown-menu');
-
-        this.attributes = dropdown.dataset;
-        this.itemList = dropdown.querySelector('li > ul.menu');
-        this.label = menu.querySelector('a > span.label');
+        this.attributes = this.menu.dataset;
 
         const self = this;
         const handle = function() { self.reloadActiveRecords(); };
 
         document.addEventListener('kimai.timesheetUpdate', handle);
+        document.addEventListener('kimai.timesheetDelete', handle);
         document.addEventListener('kimai.activityUpdate', handle);
+        document.addEventListener('kimai.activityDelete', handle);
         document.addEventListener('kimai.projectUpdate', handle);
+        document.addEventListener('kimai.projectDelete', handle);
         document.addEventListener('kimai.customerUpdate', handle);
-    }
-
-    emptyList() {
-        this.itemList.innerHTML = '';
+        document.addEventListener('kimai.customerDelete', handle);
     }
 
     _toggleMenu(hasEntries) {
-        const menu = document.querySelector(this.selector);
-        const menuEmpty = document.querySelector(this.selectorEmpty);
+        this.menu.style.display = hasEntries ? 'inline-block' : 'none';
+        if (!hasEntries) {
+            // make sure that template entries in the menu are removed, otherwise they
+            // might still be shown in the browsers title
+            for (let record of this.menu.querySelectorAll('[data-since]')) {
+                record.dataset['since'] = '';
+            }
+        }
 
-        menu.style.display = hasEntries ? 'inline-block' : 'none';
+        const menuEmpty = document.querySelector(this.selectorEmpty);
         if (menuEmpty !== null) {
             menuEmpty.style.display = !hasEntries ? 'inline-block' : 'none';
         }
@@ -63,42 +65,52 @@ export default class KimaiActiveRecords extends KimaiPlugin {
     setEntries(entries) {
         this._toggleMenu(entries.length > 0);
 
+        const template = this.menu.querySelector('[data-template="active-record"]');
+
+        const label = this.menu.querySelector('a > span.label');
+        if (label !== null) {
+            label.innerText = entries.length === 0 ? '' : entries.length;
+        }
+
         if (entries.length === 0) {
-            this.label.innerText = '';
-            this.emptyList();
             return;
         }
 
-        let htmlToInsert = '';
-        const durations = this.getContainer().getPlugin('timesheet-duration');
-
-        for (let timesheet of entries) {
-            htmlToInsert +=
-                    `<li>` +
-                        `<a href="${ this.attributes['href'].replace('000', timesheet.id) }" data-event="kimai.timesheetStop kimai.timesheetUpdate" class="api-link" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success">` +
-                            `<div class="pull-left">` +
-                                `<i class="${ this.attributes['icon'] } fa-2x"></i>` +
-                            `</div>` +
-                            `<h4>` +
-                                `<span>${ timesheet.activity.name }</span>` +
-                                `<small>` +
-                                    `<span data-title="true" data-since="${ timesheet.begin }" data-format="${ this.attributes['format'] }">${ durations.formatDuration(timesheet.duration, this.attributes['format']) }</span>` +
-                                `</small>` +
-                            `</h4>` +
-                            `<p>${ timesheet.project.name } (${ timesheet.project.customer.name })</p>` +
-                        `</a>` +
-                    `</li>`;
-        }
-
-        if (this.label.dataset.warning < entries.length) {
-            this.label.classList = 'label label-danger';
+        if (template === null) {
+            this._replaceInNode(this.menu, entries[0]);
         } else {
-            this.label.classList = 'label label-warning';
-        }
-        this.label.innerText = entries.length;
-        this.itemList.innerHTML = htmlToInsert;
+            const container = template.parentElement;
+            container.innerHTML = '';
 
-        durations.updateRecords();
+            for (let timesheet of entries) {
+                const newNode = template.cloneNode(true);
+                container.appendChild(this._replaceInNode(newNode, timesheet));
+            }
+        }
+
+        this.getContainer().getPlugin('timesheet-duration').updateRecords();
+    }
+
+    _replaceInNode(node, timesheet) {
+        const date = this.getContainer().getPlugin('date');
+        const allReplacer = node.querySelectorAll('[data-replacer]');
+        for (let node of allReplacer) {
+            const replacerName = node.dataset['replacer'];
+            if (replacerName === 'url') {
+                node.href = this.attributes['href'].replace('000', timesheet.id);
+            } else if (replacerName === 'activity') {
+                node.innerText = timesheet.activity.name;
+            } else if (replacerName === 'project') {
+                node.innerText = timesheet.project.name;
+            } else if (replacerName === 'customer') {
+                node.innerText = timesheet.project.customer.name;
+            } else if (replacerName === 'duration') {
+                node.dataset['since'] = timesheet.begin;
+                node.innerText = date.formatDuration(timesheet.duration);
+            }
+        }
+
+        return node;
     }
 
     reloadActiveRecords() {

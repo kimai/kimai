@@ -19,13 +19,26 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class ProjectValidator extends ConstraintValidator
 {
     /**
+     * @var Constraint[]
+     */
+    private $constraints;
+
+    /**
+     * @param Constraint[] $constraints
+     */
+    public function __construct(iterable $constraints = [])
+    {
+        $this->constraints = $constraints;
+    }
+
+    /**
      * @param Project|mixed $value
      * @param Constraint $constraint
      */
     public function validate($value, Constraint $constraint)
     {
         if (!($constraint instanceof ProjectConstraint)) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Project');
+            throw new UnexpectedTypeException($constraint, ProjectConstraint::class);
         }
 
         if (!\is_object($value) || !($value instanceof Project)) {
@@ -33,6 +46,13 @@ class ProjectValidator extends ConstraintValidator
         }
 
         $this->validateProject($value, $this->context);
+
+        foreach ($this->constraints as $constraint) {
+            $this->context
+                ->getValidator()
+                ->inContext($this->context)
+                ->validate($value, $constraint, [Constraint::DEFAULT_GROUP]);
+        }
     }
 
     protected function validateProject(Project $project, ExecutionContextInterface $context)

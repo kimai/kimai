@@ -9,10 +9,14 @@
 
 namespace App\Controller;
 
+use App\Utils\FileHelper;
+use Composer\InstalledVersions;
 use PackageVersions\Versions;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @Route(path="/doctor")
@@ -39,33 +43,34 @@ class DoctorController extends AbstractController
      */
     public const DIRECTORIES_WRITABLE = [
         'var/cache/',
-        'var/data/',
         'var/log/',
-        'var/sessions/',
-        'public/avatars/',
     ];
 
-    /**
-     * @var string
-     */
     private $projectDirectory;
-    /**
-     * @var string
-     */
     private $environment;
+    private $fileHelper;
 
-    public function __construct(string $projectDirectory, string $kernelEnvironment)
+    public function __construct(string $projectDirectory, string $kernelEnvironment, FileHelper $fileHelper)
     {
         $this->projectDirectory = $projectDirectory;
         $this->environment = $kernelEnvironment;
+        $this->fileHelper = $fileHelper;
     }
 
     /**
-     * @Route(path="/flush-log", name="doctor_flush_log", methods={"GET"})
+     * @Route(path="/flush-log/{token}", name="doctor_flush_log", methods={"GET"})
      * @Security("is_granted('system_configuration')")
      */
-    public function deleteLogfileAction(): Response
+    public function deleteLogfileAction(string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('doctor.flush_log', $token))) {
+            $this->flashError('action.csrf.error');
+
+            return $this->redirectToRoute('doctor');
+        }
+
+        $csrfTokenManager->refreshToken('doctor.flush_log');
+
         $logfile = $this->getLogFilename();
 
         if (file_exists($logfile)) {
@@ -111,26 +116,39 @@ class DoctorController extends AbstractController
 
     private function getComposerPackages(): array
     {
-        $packages = [];
+        $versions = [];
 
-        if (class_exists('Composer\Versions')) {
-            // TODO composer 2
+        if (class_exists(InstalledVersions::class)) {
+            $rootPackage = InstalledVersions::getRootPackage()['name'];
+            foreach (InstalledVersions::getInstalledPackages() as $package) {
+                $versions[$package] = InstalledVersions::getPrettyVersion($package);
+            }
         } else {
-            $packages = Versions::VERSIONS;
+            @trigger_error('Please upgrade your Composer to 2.x', E_USER_DEPRECATED);
+
+            // @deprecated since 1.14, will be removed with 2.0
+            $rootPackage = Versions::rootPackageName();
+            foreach (Versions::VERSIONS as $name => $version) {
+                $versions[$name] = explode('@', $version)[0];
+            }
         }
 
         // remove kimai from the package list
-        $packages = array_filter($packages, function ($name) {
-            if ($name === Versions::ROOT_PACKAGE_NAME) {
+        $versions = array_filter($versions, function ($version, $name) use ($rootPackage) {
+            if ($name === $rootPackage) {
+                return false;
+            }
+
+            if ($version === null || $version === '*') {
                 return false;
             }
 
             return true;
-        }, ARRAY_FILTER_USE_KEY);
+        }, ARRAY_FILTER_USE_BOTH);
 
-        ksort($packages);
+        ksort($versions);
 
-        return $packages;
+        return $versions;
     }
 
     private function getLoadedExtensions()
@@ -142,12 +160,6 @@ class DoctorController extends AbstractController
             if (\extension_loaded($extName)) {
                 $results[$extName] = true;
             }
-        }
-
-        $results['Freetype Support'] = true;
-        // @see AvatarService::hasDependencies()
-        if (!\function_exists('imagettfbbox')) {
-            $results['Freetype Support'] = false;
         }
 
         return $results;
@@ -207,20 +219,31 @@ class DoctorController extends AbstractController
 
     private function getFilePermissions()
     {
-        $results = [];
+        $testPaths = [];
+        $baseDir = $this->projectDirectory . DIRECTORY_SEPARATOR;
 
         foreach (self::DIRECTORIES_WRITABLE as $path) {
-            $results[$path] = false;
-            $fullPath = $this->projectDirectory . '/' . $path;
+            $fullPath = $baseDir . $path;
             $fullUri = realpath($fullPath);
 
             if ($fullUri === false && !file_exists($fullPath)) {
                 @mkdir($fullPath);
+                clearstatcache(true);
                 $fullUri = realpath($fullPath);
             }
 
+            $testPaths[] = $fullUri;
+        }
+
+        $results = [];
+        $testPaths[] = $this->fileHelper->getDataDirectory();
+        foreach ($testPaths as $fullUri) {
+            $fullUri = rtrim($fullUri, DIRECTORY_SEPARATOR);
+            $tmp = str_replace($baseDir, '', $fullUri) . DIRECTORY_SEPARATOR;
             if ($fullUri !== false && is_readable($fullUri) && is_writable($fullUri)) {
-                $results[$path] = true;
+                $results[$tmp] = true;
+            } else {
+                $results[$tmp] = false;
             }
         }
 

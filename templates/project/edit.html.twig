@@ -1,13 +1,13 @@
 {% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "project/actions.html.twig" as actions %}
 
-{% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'projects'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.project(project, 'edit') }}{% endblock %}
 
 {% block main %}
     {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
-        'title': (project.id is null ? 'create'|trans : 'edit'|trans({}, 'actions')),
+        'title': (project.id is null ? 'create-project'|trans({}, 'actions') : 'edit'|trans({}, 'actions')),
         'form': form,
         'back': path('admin_project')
     } %}
@@ -41,11 +41,14 @@
             </div>
             {% if form.budget is defined %}
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     {{ form_row(form.budget) }}
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     {{ form_row(form.timeBudget) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(form.budgetType) }}
                 </div>
             </div>
             {% endif %}

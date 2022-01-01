@@ -1,35 +1,38 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "calendar/actions.html.twig" as actions %}
+{% import "macros/widgets.html.twig" as widgets %}
 
-{% block page_title %}{{ 'calendar.title'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.calendar('index') }}{% endblock %}
+{% block page_title %}{{ 'calendar'|trans }}{% endblock %}
+{% block page_actions %}
+    {% set event = actions(app.user, 'calendar', 'index') %}
+    {{ widgets.page_actions(event.actions) }}
+{% endblock %}
 
 {% block main %}
     <div class="row">
-        {% set hasDragAndDrop = (dragAndDrop is not empty and (dragAndDrop|filter(s => s.entries|length > 0)|length > 0)) %}
+        {% set hasDragAndDrop = (config.dragDropAmount > 0 and dragAndDrop is not empty and (dragAndDrop|filter(s => s.entries|length > 0)|length > 0)) %}
         {% if hasDragAndDrop %}
-            <div class="hidden-xs col-sm-5 col-md-4 col-lg-3 no-print">
-                {% for source in dragAndDrop|filter(s => s.entries|length > 0) %}
-                    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-                        {% block box_title %}{{ source.title|trans }}{% endblock %}
-                        {% block box_body_class %}drag-and-drop-source{% endblock %}
-                        {% block box_body %}
-                            <div class="external-events" data-method="{{ source.method }}" data-route="{{ path(source.route, source.routeParams) }}" data-route-replacer="{{ source.routeReplacer|json_encode|e('html_attr') }}">
-                                {% for entry in source.entries %}
-                                    <div draggable="true" style="background-color: {{ entry.color }}; color: {{ entry.color|font_contrast }}" class="external-event ui-draggable ui-draggable-handle" data-entry="{{ entry.data|json_encode|e('html_attr') }}">
-                                        {% if source.blockInclude is not null and entry.blockName is not null and block(entry.blockName, source.blockInclude) is defined %}
-                                            {{ block(entry.blockName, source.blockInclude) }}
-                                        {% else %}
-                                            <span class="title">{{ entry.title }}</span>
-                                        {% endif %}
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        {% endblock %}
-                    {% endembed %}
-                {% endfor %}
-            </div>
+        <div class="hidden-xs col-sm-5 col-md-4 col-lg-3 no-print">
+            {% for source in dragAndDrop|filter(s => s.entries|length > 0) %}
+                {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+                    {% block box_title %}{{ source.title|trans }}{% endblock %}
+                    {% block box_body_class %}drag-and-drop-source{% endblock %}
+                    {% block box_body %}
+                        <div class="external-events" data-method="{{ source.method }}" data-route="{{ path(source.route, source.routeParams) }}" data-route-replacer="{{ source.routeReplacer|json_encode|e('html_attr') }}">
+                            {% for entry in source.entries|slice(0, config.dragDropAmount) %}
+                                <div draggable="true" style="background-color: {{ entry.color }}; color: {{ entry.color|font_contrast }}" class="external-event ui-draggable ui-draggable-handle" data-entry="{{ entry.data|json_encode|e('html_attr') }}"{% if entry.project is not null %} data-toggle="tooltip" title="{{ entry.project.customer.name }}"{% endif %}>
+                                    {% if source.blockInclude is not null and entry.blockName is not null and block(entry.blockName, source.blockInclude) is defined %}
+                                        {{ block(entry.blockName, source.blockInclude) }}
+                                    {% else %}
+                                        <span class="title">{{ entry.title }}</span>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endblock %}
+                {% endembed %}
+            {% endfor %}
+        </div>
         {% endif %}
 
         <div class="col-xs-12 {% if hasDragAndDrop %}col-sm-7 col-md-8 col-lg-9 col-print-12{% endif %}">
@@ -117,20 +120,13 @@
 
         function renderEventPopoverContent(eventObj)
         {
-            {# https://stackoverflow.com/questions/26530076/fullcalendar-js-deleting-event-on-button-click #}
-            {#
-            $el.append('<div style="position: absolute; top: 0; right: 0;" class="pull-right closeon">X</div>');
-            $el.find('.closeon').on('click', function(closeEvent) {
-                console.log(closeEvent);
-                jQuery('{{ calendarSelector }}').fullCalendar('removeEvents',eventObj._id);
-                closeEvent.stopPropagation();
-            });
-            #}
+            const escaper = kimai.getPlugin('escape');
+
             return '<div class="calendar-entry">' +
                     '<ul>' +
-                        '<li>' + '{{ 'label.customer'|trans }}: ' + eventObj.customer + '</li>' +
-                        '<li>' + '{{ 'label.project'|trans }}: ' + eventObj.project + '</li>' +
-                        '<li>' + '{{ 'label.activity'|trans }}: ' + eventObj.activity + '</li>' +
+                        '<li>' + '{{ 'label.customer'|trans }}: ' + escaper.escapeForHtml(eventObj.customer) + '</li>' +
+                        '<li>' + '{{ 'label.project'|trans }}: ' + escaper.escapeForHtml(eventObj.project) + '</li>' +
+                        '<li>' + '{{ 'label.activity'|trans }}: ' + escaper.escapeForHtml(eventObj.activity) + '</li>' +
                     '</ul>' +
                     (eventObj.description !== null || eventObj.tags.length > 0 ? '<hr>' : '') +
                     (eventObj.description ? '<p>' + eventObj.description + '</p>' : '') +
@@ -191,7 +187,7 @@
                 });
             });
 
-            // convert HTML to draggable items
+            {# convert HTML to draggable items #}
             jQuery('.external-events .external-event').each(function () {
                 {# FullCalendar 3 can only work with jQuery UI elements #}
                 jQuery(this).draggable({
@@ -203,16 +199,19 @@
 
             let kimai = event.detail.kimai;
             let API = kimai.getPlugin('api');
+            let DATES = kimai.getPlugin('date');
             jQuery('{{ calendarSelector }}').fullCalendar({
+                themeSystem: 'bootstrap3',
                 defaultView: '{{ app.user.getPreferenceValue('calendar.initial_view') }}',
                 {% if google is not null %}
                 googleCalendarApiKey: '{{ google.apiKey }}',
                 {% endif %}
                 header    : {
-                    left  : 'prev,next today',
+                    left  : 'prev,next today{% if is_granted('delete_own_timesheet') %} deleteButton{% endif %}',
                     center: 'title',
                     right : 'month,agendaWeek,agendaDay'
                 },
+                dragRevertDuration: 0,
                 eventLimit: {{ config.dayLimit }},
                 weekNumbersWithinDays: true,
                 weekNumberCalculation: 'ISO',
@@ -221,12 +220,14 @@
                 navLinks: true,
                 locale: kimai.getConfiguration().get('locale').replace('_', '-').toLowerCase(),
                 firstDay: kimai.getConfiguration().get('first_dow_iso'),
-                {#
-                // TODO calculate height properly instead of relying on the default aspectRatio
-                height: function() {
-                    return 'parent';
+                customButtons: {
+                    deleteButton: {
+                        text: '{{ 'action.delete'|trans }}',
+                        click: function() {
+                            kimai.getPlugin('alert').info('{{ 'calendar.drag_and_drop.delete'|trans }}');
+                        }
+                    }
                 },
-                #}
                 height: 'auto',
                 nowIndicator: true,
                 now: '{{ now|date_format('c') }}',
@@ -324,7 +325,7 @@
                                 callback(apiEvents);
                             });
                         },
-                        color: '{{ kimai_context.calendar.background_color }}',
+                        color: '{{ config('theme.calendar.background_color') }}',
                         name: 'kimaiUserTimeSource'
                     }
                     {% if google is not null %}
@@ -340,15 +341,21 @@
                         {% endfor %}
                     {% endif %}
                 ],
-                eventRender: function(eventObj, $el) {
-                    // don't show popover for google calendar
+                eventRender: function(eventObj, $el, view) {
+                    {# don't show popover for google calendar #}
                     if (eventObj.source.ajaxSettings !== undefined) {
                         return;
                     }
-                    // or when an event is dragged or resized
+
+                    {# or when an event is dragged or resized #}
                     if (!showPopover()) {
                         return;
                     }
+
+                    if (view.name !== 'month' ) {
+                        jQuery(".fc-dailytotal").text(DATES.formatSeconds(0)).data('seconds', 0).data('ids', '');
+                    }
+
                     hidePopover();
                     $el.popover({
                         title: renderEventPopoverTitle(eventObj),
@@ -359,57 +366,120 @@
                         html: true
                     });
                 },
-            {% if not is_punch_mode and is_granted('create_own_timesheet') %}
-                dayClick: function(date, jsEvent, view) {
-                    {# day-clicks are always triggered, unless a selection was created.
-                       So clicking in a day (month view) or any slot (week and day view) will trigger a dayClick
-                       BEFORE triggering a select - make sure not two create dialogs are requested #}
-                    if (view.type !== 'month') {
+                viewRender: function(view, element) {
+                    if (view.name === 'month') {
                         return;
                     }
 
-                    let createUrl = '{{ path('timesheet_create') }}?begin=' + date.format();
-                    kimai.getPlugin('modal').openUrlInModal(createUrl);
+                    {# allowed in agendaWeek and agendaDay #}
+                    jQuery(".fc-day-header").each(function (key, val) {
+                        var $this = jQuery(this);
+                        var dateYMD = $this.attr("data-date");
+                        $this.append('<div class="fc-dailytotal" data-seconds="0" data-ids="" id="dailytotal-' + dateYMD + '">'+DATES.formatSeconds(0)+'</div>');
+                    });
                 },
-                selectable: true,
-                select: function(start, end, jsEvent, view) {
-                    if(view.type === 'month') {
-                        {# multi-day clicks are NOT allowed in the month view, as simple day clicks would also trigger
-                           a select - there is no way to distinguish a simple click and a two day selection #}
+                eventAfterRender: function(event, element, view) {
+                    {# allowed in agendaWeek and agendaDay #}
+                    if (view.name === 'month') {
                         return;
                     }
-                    let createUrl = '{{ path('timesheet_create') }}' + '?from=' + start.format() + '&to=' + end.format();
-                    kimai.getPlugin('modal').openUrlInModal(createUrl);
-                },
-            {% endif %}
-            {% if is_granted('edit_own_timesheet') %}
-                eventClick: function(eventObj, jsEvent, view) {
-                    if (eventObj.source.ajaxSettings !== undefined) {
-                        jsEvent.preventDefault();
+
+                    {# TODO calculate duration for running entries #}
+                    if (event.end === null) {
                         return;
                     }
-                    let editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', eventObj.id);
-                    kimai.getPlugin('modal').openUrlInModal(editUrl);
+
+                    {# TODO split day entries are calculated only for the begin date #}
+                    var $element = jQuery("#dailytotal-" + moment(event.start).format("YYYY-MM-DD"));
+                    var ids = $element.data('ids');
+                    if (ids === null || ids === undefined) {
+                        ids = '';
+                    }
+
+                    if (ids.indexOf(event.id) !== -1) {
+                        return;
+                    }
+
+                    var prev = $element.data('seconds');
+                    var duration = prev + ((event.end - event.start) / 1000);
+                    $element.data('seconds', duration);
+                    $element.data('ids', event.id + ' ' + ids);
+                    $element.text(DATES.formatSeconds(duration));
                 },
-                {% if not is_punch_mode %}
-                editable: true,
-                eventDragStart: function(event, jsEvent, ui, view) {
-                    deactivatePopover();
-                },
-                eventDragStop: function(event, jsEvent, ui, view) {
-                    activatePopover();
-                },
-                eventDrop: changeHandler,
-                eventResizeStart: function(event, jsEvent, ui, view) {
-                    deactivatePopover();
-                },
-                eventResizeStop: function(event, jsEvent, ui, view) {
-                    activatePopover();
-                },
-                eventResize: changeHandler,
+                {% if not is_punch_mode and is_granted('create_own_timesheet') %}
+                    dayClick: function(date, jsEvent, view) {
+                        {#
+                           Day-clicks are always triggered, unless a selection was created.
+                           So clicking in a day (month view) or any slot (week and day view) will trigger a dayClick
+                           BEFORE triggering a select - make sure not two create dialogs are requested
+                        #}
+                        if (view.type !== 'month') {
+                            return;
+                        }
+
+                        let createUrl = '{{ path('timesheet_create') }}?begin=' + date.format();
+                        kimai.getPlugin('modal').openUrlInModal(createUrl);
+                    },
+                    selectable: true,
+                    select: function(start, end, jsEvent, view) {
+                        if(view.type === 'month') {
+                            {#
+                               Multi-day clicks are NOT allowed in the month view, as simple day clicks would also trigger
+                               a select - there is no way to distinguish a simple click and a two day selection
+                            #}
+                            return;
+                        }
+                        let createUrl = '{{ path('timesheet_create') }}' + '?from=' + start.format() + '&to=' + end.format();
+                        kimai.getPlugin('modal').openUrlInModal(createUrl);
+                    },
                 {% endif %}
-            {% endif %}
-            })
+                {% if is_granted('edit_own_timesheet') %}
+                    eventClick: function(eventObj, jsEvent, view) {
+                        if (eventObj.source.ajaxSettings !== undefined) {
+                            jsEvent.preventDefault();
+                            return;
+                        }
+                        let editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', eventObj.id);
+                        kimai.getPlugin('modal').openUrlInModal(editUrl);
+                    },
+                    {% if not is_punch_mode %}
+                        editable: true,
+                        eventDragStart: function(event, jsEvent, ui, view) {
+                            deactivatePopover();
+                        },
+                        eventDragStop: function(event, jsEvent, ui, view) {
+                            activatePopover();
+                            {% if is_granted('delete_own_timesheet') %}
+                                var trash = jQuery('.fc-deleteButton-button');
+                                var offset = trash.offset();
+
+                                if (jsEvent.pageX >= offset.left && jsEvent.pageX<= (offset.left + trash.outerWidth(true)) &&
+                                    jsEvent.pageY >= offset.top && jsEvent.pageY <= (offset.top + trash.outerHeight(true))) {
+                                    API.delete(
+                                        '{{ path('delete_timesheet', {'id': '__xxx__'}) }}'.replace('__xxx__', event.id),
+                                        function () {
+                                            kimai.getPlugin('alert').success('action.delete.success');
+                                            jQuery('{{ calendarSelector }}').fullCalendar('removeEvents', event._id);
+                                        }, function () {
+                                            kimai.getPlugin('alert').success('action.delete.error');
+                                        }
+                                    );
+                                }
+                            {% endif %}
+                        },
+                        eventDrop: changeHandler,
+                        eventResizeStart: function(event, jsEvent, ui, view) {
+                            deactivatePopover();
+                        },
+                        eventResizeStop: function(event, jsEvent, ui, view) {
+                            activatePopover();
+                        },
+                        eventResize: changeHandler,
+                    {% endif %}
+                {% endif %}
+            });
+            var trashBtn = jQuery('.fc-deleteButton-button');
+            trashBtn.html('<span class="text-danger"><i class="{{ 'trash'|icon }} text-danger"></i> ' + trashBtn.text() + '</span>');
         });
     </script>
 {% endblock %}

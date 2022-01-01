@@ -13,13 +13,14 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Project;
+use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Invoice\Calculator\ShortInvoiceCalculator;
 use App\Invoice\InvoiceItem;
-use App\Invoice\InvoiceModel;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
+use App\Tests\Mocks\InvoiceModelFactoryFactory;
 
 /**
  * @covers \App\Invoice\Calculator\ShortInvoiceCalculator
@@ -56,6 +57,8 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
+            ->addTag((new Tag())->setName('foo'))
+            ->addTag((new Tag())->setName('bar'))
         ;
 
         $timesheet2 = new Timesheet();
@@ -68,6 +71,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
             ->setProject($project)
             ->setBegin(new \DateTime())
             ->setEnd(new \DateTime())
+            ->addTag((new Tag())->setName('bar1'))
         ;
 
         $timesheet3 = new Timesheet();
@@ -87,7 +91,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $query = new InvoiceQuery();
         $query->setActivity($activity);
 
-        $model = new InvoiceModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->addEntries($entries);
@@ -112,6 +116,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertEquals(472.5, $result->getRate());
         $this->assertEquals(5800, $result->getDuration());
         $this->assertEquals(3, $result->getAmount());
+        $this->assertEquals(['foo', 'bar', 'bar1'], $result->getTags());
     }
 
     public function testWithMultipleEntriesDifferentRates()
@@ -168,7 +173,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $query = new InvoiceQuery();
         $query->setActivity($activity);
 
-        $model = new InvoiceModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->addEntries($entries);
@@ -247,7 +252,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $query = new InvoiceQuery();
         $query->setActivity($activity);
 
-        $model = new InvoiceModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->addEntries($entries);

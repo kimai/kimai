@@ -18,36 +18,29 @@ use App\Form\Type\CalendarViewType;
 use App\Form\Type\FirstWeekDayType;
 use App\Form\Type\InitialViewType;
 use App\Form\Type\LanguageType;
+use App\Form\Type\ReportType;
 use App\Form\Type\SkinType;
 use App\Form\Type\ThemeLayoutType;
+use App\Form\Type\TimezoneType;
+use App\Reporting\ReportingService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\Range;
 
 final class UserPreferenceSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var EventDispatcherInterface
-     */
     private $eventDispatcher;
-    /**
-     * @var AuthorizationCheckerInterface
-     */
     private $voter;
-    /**
-     * @var SystemConfiguration
-     */
     private $configuration;
 
-    public function __construct(EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter, SystemConfiguration $formConfig)
+    public function __construct(EventDispatcherInterface $eventDispatcher, AuthorizationCheckerInterface $voter, SystemConfiguration $systemConfiguration)
     {
-        $this->eventDispatcher = $dispatcher;
+        $this->eventDispatcher = $eventDispatcher;
         $this->voter = $voter;
-        $this->configuration = $formConfig;
+        $this->configuration = $systemConfiguration;
     }
 
     public static function getSubscribedEvents(): array
@@ -68,6 +61,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
             $timezone = date_default_timezone_get();
         }
 
+        $enableDefaultReport = $this->voter->isGranted('view_reporting');
         $enableHourlyRate = false;
         $hourlyRateOptions = [];
 
@@ -119,6 +113,13 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setType(FirstWeekDayType::class),
 
             (new UserPreference())
+                ->setName(UserPreference::HOUR_24)
+                ->setValue(true)
+                ->setOrder(305)
+                ->setSection('locale')
+                ->setType(CheckboxType::class),
+
+            (new UserPreference())
                 ->setName(UserPreference::SKIN)
                 ->setValue($this->configuration->getUserDefaultTheme())
                 ->setOrder(400)
@@ -152,6 +153,14 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setOrder(600)
                 ->setSection('behaviour')
                 ->setType(CalendarViewType::class),
+
+            (new UserPreference())
+                ->setName('reporting.initial_view')
+                ->setValue(ReportingService::DEFAULT_VIEW)
+                ->setOrder(650)
+                ->setSection('behaviour')
+                ->setEnabled($enableDefaultReport)
+                ->setType(ReportType::class),
 
             (new UserPreference())
                 ->setName('login.initial_view')

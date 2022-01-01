@@ -84,4 +84,22 @@ EOT;
 EOT;
         $this->assertEquals($html, $sut->toHtml($markdown));
     }
+
+    public function testLinksAreSanitized()
+    {
+        $sut = new Markdown();
+
+        $html = <<<'EOT'
+<p><a href="javascript%3Aalert(`XSS`)">XSS</a><br />
+<a href="javascript%3Aalert(&quot;XSS&quot;)">XSS</a><br />
+<a href="javascript%3Aalert(&#039;XSS&#039;)">XSS</a></p>
+EOT;
+
+        $markdown = <<<EOT
+[XSS](javascript:alert(`XSS`))
+[XSS](javascript:alert("XSS"))
+[XSS](javascript:alert('XSS'))
+EOT;
+        $this->assertEquals($html, $sut->toHtml($markdown));
+    }
 }

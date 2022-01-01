@@ -14,14 +14,13 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class ProjectLoader implements LoaderInterface
 {
-    /**
-     * @var ProjectIdLoader
-     */
-    private $loader;
+    private $entityManager;
+    private $fullyHydrated;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, bool $fullyHydrated = false)
     {
-        $this->loader = new ProjectIdLoader($entityManager);
+        $this->entityManager = $entityManager;
+        $this->fullyHydrated = $fullyHydrated;
     }
 
     /**
@@ -33,6 +32,7 @@ final class ProjectLoader implements LoaderInterface
             return $project->getId();
         }, $projects);
 
-        $this->loader->loadResults($ids);
+        $loader = new ProjectIdLoader($this->entityManager, $this->fullyHydrated);
+        $loader->loadResults($ids);
     }
 }

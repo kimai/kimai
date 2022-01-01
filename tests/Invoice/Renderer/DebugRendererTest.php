@@ -131,23 +131,41 @@ class DebugRendererTest extends TestCase
             'customer.email',
             'customer.fax',
             'customer.phone',
+            'customer.budget_open',
+            'customer.budget_open_plain',
+            'customer.time_budget_open',
+            'customer.time_budget_open_plain',
             'customer.mobile',
             'customer.meta.foo-customer',
             'activity.id',
             'activity.name',
             'activity.comment',
             'activity.meta.foo-activity',
+            'activity.budget_open',
+            'activity.budget_open_plain',
+            'activity.time_budget_open',
+            'activity.time_budget_open_plain',
             'user.alias',
             'user.email',
             'user.name',
             'user.title',
             'user.meta.hello',
             'user.meta.kitty',
-            'testFromModelHydrator'
+            'testFromModelHydrator',
         ];
+
+        if ($activityCounter === 1) {
+            $keys = array_merge($keys, [
+                'activity',
+            ]);
+        }
 
         if ($activityCounter > 1) {
             $keys = array_merge($keys, [
+                'activity.1.budget_open',
+                'activity.1.budget_open_plain',
+                'activity.1.time_budget_open',
+                'activity.1.time_budget_open_plain',
                 'activity.1.id',
                 'activity.1.name',
                 'activity.1.comment',
@@ -171,7 +189,16 @@ class DebugRendererTest extends TestCase
                 'project.budget_time',
                 'project.budget_time_decimal',
                 'project.budget_time_minutes',
+                'project.budget_open',
+                'project.budget_open_plain',
+                'project.time_budget_open',
+                'project.time_budget_open_plain',
             ]);
+            if ($projectCounter === 1) {
+                $keys = array_merge($keys, [
+                    'project',
+                ]);
+            }
             if ($projectCounter > 1) {
                 $keys = array_merge($keys, [
                     'project.1.id',
@@ -188,6 +215,10 @@ class DebugRendererTest extends TestCase
                     'project.1.budget_time',
                     'project.1.budget_time_decimal',
                     'project.1.budget_time_minutes',
+                    'project.1.budget_open',
+                    'project.1.budget_open_plain',
+                    'project.1.time_budget_open',
+                    'project.1.time_budget_open_plain',
                 ]);
             }
         }
@@ -242,7 +273,8 @@ class DebugRendererTest extends TestCase
             'entry.customer.meta.foo-customer',
             'entry.category',
             'entry.type',
-            'testFromItemHydrator'
+            'testFromItemHydrator',
+            'entry.tags',
         ];
 
         $keys = array_merge($keys, $metaFields);

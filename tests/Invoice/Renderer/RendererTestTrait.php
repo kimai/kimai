@@ -28,7 +28,9 @@ use App\Invoice\InvoiceFormatter;
 use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\AbstractRenderer;
+use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
+use App\Tests\Mocks\InvoiceModelFactoryFactory;
 
 trait RendererTestTrait
 {
@@ -216,7 +218,7 @@ trait RendererTestTrait
         $query->setEnd(new \DateTime());
         $query->setProjects([$project, $project2]);
 
-        $model = new InvoiceModel($this->getFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel($this->getFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->addEntries($entries);
@@ -228,12 +230,23 @@ trait RendererTestTrait
 
         $model->setCalculator($calculator);
 
-        $numberGenerator = new DateNumberGenerator();
+        $numberGenerator = $this->getNumberGeneratorSut();
         $numberGenerator->setModel($model);
 
         $model->setNumberGenerator($numberGenerator);
 
         return $model;
+    }
+
+    private function getNumberGeneratorSut()
+    {
+        $repository = $this->createMock(InvoiceRepository::class);
+        $repository
+            ->expects($this->any())
+            ->method('hasInvoice')
+            ->willReturn(false);
+
+        return new DateNumberGenerator($repository);
     }
 
     protected function getInvoiceModelOneEntry(): InvoiceModel
@@ -289,7 +302,7 @@ trait RendererTestTrait
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
 
-        $model = new InvoiceModel($this->getFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel($this->getFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->addEntries($entries);
@@ -301,7 +314,7 @@ trait RendererTestTrait
 
         $model->setCalculator($calculator);
 
-        $numberGenerator = new DateNumberGenerator();
+        $numberGenerator = $this->getNumberGeneratorSut();
         $numberGenerator->setModel($model);
 
         $model->setNumberGenerator($numberGenerator);

@@ -1,38 +1,62 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ru" datatype="plaintext" original="validators.en.xlf">
     <body>
-      <trans-unit id="This value is not a valid role.">
+      <trans-unit id="IkNxbBI" resname="This value is not a valid role.">
         <source>This value is not a valid role.</source>
         <target>Это значение - недействительная роль.</target>
       </trans-unit>
-      <trans-unit id="End date must not be earlier then start date.">
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
         <source>End date must not be earlier then start date.</source>
         <target>Конечная дата не может быть установлена ранее начальной даты.</target>
       </trans-unit>
-      <trans-unit id="The given value is not a valid time.">
+      <trans-unit id="VJSZSD0" resname="The given value is not a valid time.">
         <source>The given value is not a valid time.</source>
         <target>Это значение - недействительное время.</target>
       </trans-unit>
-      <trans-unit id="You already have an entry for this time.">
+      <trans-unit id="u2wjm2i" resname="You already have an entry for this time.">
         <source>You already have an entry for this time.</source>
         <target>У Вас уже есть запись на это время.</target>
       </trans-unit>
-      <trans-unit id="This period is locked, please choose a later date.">
+      <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date.">
         <source>This period is locked, please choose a later date.</source>
         <target>Период заблокирован, пожалуйста, выберите дату позже.</target>
       </trans-unit>
-      <trans-unit id="This invoice document cannot be used, please rename the file and upload it again.">
+      <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again.">
         <source>This invoice document cannot be used, please rename the file and upload it again.</source>
         <target>Счет не может быть использован, пожалуйста, переименуйте файл и загрузите снова.</target>
       </trans-unit>
-      <trans-unit id="You must select at least one user or team.">
+      <trans-unit id="1V6BsD_" resname="You must select at least one user or team.">
         <source>You must select at least one user or team.</source>
         <target>Вы должны выбрать минимум одного пользователя или команду.</target>
       </trans-unit>
-      <trans-unit id="The begin date cannot be in the future.">
+      <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
         <target>Дата начала не может быть в будущем.</target>
+      </trans-unit>
+      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target>Максимум {{ value }} часов доступно.</target>
+      </trans-unit>
+      <trans-unit id="1oKCOa5" resname="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target>Бюджет исчерпан. Из доступного %budget% зарезервировано %used%, %free% может быть использовано.</target>
+      </trans-unit>
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target>Введенные пароли не совпадают.</target>
+      </trans-unit>
+      <trans-unit id="6u6oCwB" resname="The email is already used.">
+        <source>The email is already used.</source>
+        <target>Указанный email уже используется.</target>
+      </trans-unit>
+      <trans-unit id="S14XECA" resname="The username is already used.">
+        <source>The username is already used.</source>
+        <target>Указанное имя пользователя уже используется.</target>
+      </trans-unit>
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target>В команде должен быть назначен хотя бы один руководитель.</target>
       </trans-unit>
     </body>
   </file>

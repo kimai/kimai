@@ -24,14 +24,14 @@ class ExportQueryTest extends TimesheetQueryTest
         $this->assertPage($sut);
         $this->assertPageSize($sut);
         $this->assertOrderBy($sut, 'begin');
-        $this->assertOrder($sut, ExportQuery::ORDER_DESC);
+        $this->assertOrder($sut, ExportQuery::ORDER_ASC);
 
         $this->assertUser($sut);
         $this->assertCustomer($sut);
         $this->assertProject($sut);
         $this->assertActivity($sut);
-        $this->assertState($sut);
-        $this->assertExported($sut);
+        $this->assertStateWith($sut, ExportQuery::STATE_STOPPED);
+        $this->assertExportedWith($sut, ExportQuery::STATE_NOT_EXPORTED);
         $this->assertRenderer($sut);
         $this->assertMarkAsExported($sut);
     }

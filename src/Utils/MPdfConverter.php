@@ -74,11 +74,23 @@ class MPdfConverter implements HtmlToPdfConverter
             @ini_set('pcre.backtrack_limit', '1000000');
         }
 
+        // large amount of data take time
+        @ini_set('max_execution_time', '120');
+
         // reduce the size of content parts that are passed to MPDF, to prevent
         // https://mpdf.github.io/troubleshooting/known-issues.html#blank-pages-or-some-sections-missing
         $parts = explode('<pagebreak>', $html);
         for ($i = 0; $i < \count($parts); $i++) {
-            $mpdf->WriteHTML($parts[$i]);
+            if (stripos($parts[$i], '<!-- CONTENT_PART -->') !== false) {
+                $subParts = explode('<!-- CONTENT_PART -->', $parts[$i]);
+                $run = 0;
+                foreach ($subParts as $subPart) {
+                    $mpdf->WriteHTML($subPart);
+                }
+            } else {
+                $mpdf->WriteHTML($parts[$i]);
+            }
+
             if ($i < \count($parts) - 1) {
                 $mpdf->WriteHTML('<pagebreak>');
             }

@@ -30,7 +30,7 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('kimai');
         /** @var ArrayNodeDefinition $node */
@@ -61,6 +61,7 @@ class Configuration implements ConfigurationInterface
                 ->append($this->getLanguagesNode())
                 ->append($this->getCalendarNode())
                 ->append($this->getThemeNode())
+                ->append($this->getCompanyNode())
                 ->append($this->getIndustryNode())
                 ->append($this->getDashboardNode())
                 ->append($this->getWidgetsNode())
@@ -68,13 +69,32 @@ class Configuration implements ConfigurationInterface
                 ->append($this->getPermissionsNode())
                 ->append($this->getLdapNode())
                 ->append($this->getSamlNode())
+                ->append($this->getQuickEntryNode())
             ->end()
         ->end();
 
         return $treeBuilder;
     }
 
-    protected function getTimesheetNode()
+    private function getQuickEntryNode()
+    {
+        $builder = new TreeBuilder('quick_entry');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->integerNode('recent_activities')
+                    ->defaultValue(5)
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    private function getTimesheetNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('timesheet');
         /** @var ArrayNodeDefinition $node */
@@ -198,6 +218,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->integerNode('soft_limit')
                             ->defaultValue(1)
+                            ->setDeprecated('The node "%node%" at path "%path%" is deprecated, please use "kimai.timesheet.active_entries.hard_limit" instead.')
                             ->validate()
                                 ->ifTrue(function ($value) {
                                     return $value <= 0;
@@ -222,6 +243,9 @@ class Configuration implements ConfigurationInterface
                         ->booleanNode('allow_future_times')
                             ->defaultTrue()
                         ->end()
+                        ->booleanNode('allow_overbooking_budget')
+                            ->defaultTrue()
+                        ->end()
                         ->booleanNode('allow_overlapping_records')
                             ->defaultTrue()
                         ->end()
@@ -231,8 +255,20 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('lockdown_period_end')
                             ->defaultNull()
                         ->end()
+                        ->scalarNode('lockdown_period_timezone')
+                            ->defaultNull()
+                        ->end()
                         ->scalarNode('lockdown_grace_period')
                             ->defaultNull()
+                        ->end()
+                        ->scalarNode('lockdown_grace_period')
+                            ->defaultNull()
+                        ->end()
+                        ->integerNode('break_warning_duration')
+                            ->defaultValue(0)
+                        ->end()
+                        ->integerNode('long_running_duration')
+                            ->defaultValue(0)
                         ->end()
                     ->end()
                 ->end()
@@ -242,7 +278,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getInvoiceNode()
+    private function getInvoiceNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('invoice');
         /** @var ArrayNodeDefinition $node */
@@ -275,7 +311,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getExportNode()
+    private function getExportNode()
     {
         $builder = new TreeBuilder('export');
         /** @var ArrayNodeDefinition $node */
@@ -302,7 +338,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getLanguagesNode()
+    private function getLanguagesNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('languages');
         /** @var ArrayNodeDefinition $node */
@@ -312,13 +348,19 @@ class Configuration implements ConfigurationInterface
             ->useAttributeAsKey('name', false) // see https://github.com/symfony/symfony/issues/18988
             ->arrayPrototype()
                 ->children()
-                    ->scalarNode('date_time_type')->defaultValue('yyyy-MM-dd HH:mm')->end()     // for DateTimeType
+                    ->scalarNode('date_time_type')                                              // for DateTimeType
+                        ->defaultValue('yyyy-MM-dd HH:mm')
+                        ->setDeprecated('date_time_type is deprecated since 1.16 and was replaced by the 24 user configuration')
+                    ->end()
                     ->scalarNode('date_type')->defaultValue('yyyy-MM-dd')->end()                // for DateType
                     ->scalarNode('date')->defaultValue('Y-m-d')->end()                          // for display via twig
                     ->scalarNode('date_time')->defaultValue('m-d H:i')->end()                   // for display via twig
                     ->scalarNode('duration')->defaultValue('%%h:%%m h')->end()                  // for display via twig
                     ->scalarNode('time')->defaultValue('H:i')->end()                            // for display via twig
-                    ->booleanNode('24_hours')->defaultTrue()->end()                             // for DateTimeType JS component
+                    ->booleanNode('24_hours')                                                   // for DateTimeType JS component
+                        ->defaultTrue()
+                        ->setDeprecated('24_hours is deprecated since 1.16 and a user configuration now')
+                    ->end()
                 ->end()
             ->end()
         ;
@@ -326,7 +368,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getCalendarNode()
+    private function getCalendarNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('calendar');
         /** @var ArrayNodeDefinition $node */
@@ -374,13 +416,26 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->booleanNode('weekends')->defaultTrue()->end()
+                ->integerNode('dragdrop_amount')
+                    ->defaultValue(10)
+                    ->validate()
+                        ->ifTrue(static function ($v) {
+                            if ($v === null || $v < 0 || $v > 20) {
+                                return true;
+                            }
+
+                            return false;
+                        })
+                        ->thenInvalid('The dragdrop_amount must be between 0 and 20')
+                    ->end()
+                ->end()
             ->end()
         ;
 
         return $node;
     }
 
-    protected function getThemeNode()
+    private function getThemeNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('theme');
         /** @var ArrayNodeDefinition $node */
@@ -401,14 +456,24 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue('selectpicker')
                     ->setDeprecated()
                 ->end()
-                ->booleanNode('auto_reload_datatable')
-                    ->defaultFalse()
-                ->end()
                 ->booleanNode('tags_create')
                     ->defaultTrue()
                 ->end()
                 ->booleanNode('show_about')
                     ->defaultTrue()
+                ->end()
+                ->booleanNode('colors_limited')
+                    ->defaultTrue()
+                ->end()
+                ->scalarNode('color_choices')
+                    ->defaultValue(implode(',', [
+                        'Silver|#c0c0c0', 'Gray|#808080', 'Black|#000000',
+                        'Maroon|#800000', 'Brown|#a52a2a', 'Red|#ff0000', 'Orange|#ffa500',
+                        'Gold|#ffd700', 'Yellow|#ffff00', 'Peach|#ffdab9', 'Khaki|#f0e68c',
+                        'Olive|#808000', 'Lime|#00ff00', 'Jelly|#9acd32', 'Green|#008000', 'Teal|#008080',
+                        'Aqua|#00ffff', 'LightBlue|#add8e6', 'DeepSky|#00bfff', 'Dodger|#1e90ff', 'Blue|#0000ff', 'Navy|#000080',
+                        'Purple|#800080', 'Fuchsia|#ff00ff', 'Violet|#ee82ee', 'Rose|#ffe4e1', 'Lavender|#E6E6FA'
+                    ]))
                 ->end()
                 ->arrayNode('chart')
                     ->addDefaultsIfNotSet()
@@ -448,13 +513,19 @@ class Configuration implements ConfigurationInterface
                 ->integerNode('autocomplete_chars')
                     ->defaultValue(3)
                 ->end()
+                ->booleanNode('random_colors')
+                    ->defaultTrue()
+                ->end()
+                ->booleanNode('avatar_url')
+                    ->defaultFalse()
+                ->end()
             ->end()
         ;
 
         return $node;
     }
 
-    protected function getIndustryNode()
+    private function getIndustryNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('industry');
         /** @var ArrayNodeDefinition $node */
@@ -470,7 +541,23 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getUserNode()
+    private function getCompanyNode(): ArrayNodeDefinition
+    {
+        $builder = new TreeBuilder('company');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->scalarNode('financial_year')->defaultNull()->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    private function getUserNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('user');
         /** @var ArrayNodeDefinition $node */
@@ -479,11 +566,20 @@ class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
-                ->booleanNode('registration')
+                ->booleanNode('login')
                     ->defaultTrue()
+                ->end()
+                ->booleanNode('registration')
+                    ->defaultFalse()
                 ->end()
                 ->booleanNode('password_reset')
                     ->defaultTrue()
+                ->end()
+                ->integerNode('password_reset_retry_ttl')
+                    ->defaultValue(7200)
+                ->end()
+                ->integerNode('password_reset_token_ttl')
+                    ->defaultValue(86400)
                 ->end()
             ->end()
         ;
@@ -491,7 +587,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getWidgetsNode()
+    private function getWidgetsNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('widgets');
         /** @var ArrayNodeDefinition $node */
@@ -518,7 +614,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getDashboardNode()
+    private function getDashboardNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('dashboard');
         /** @var ArrayNodeDefinition $node */
@@ -547,7 +643,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getDefaultsNode()
+    private function getDefaultsNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('defaults');
         /** @var ArrayNodeDefinition $node */
@@ -562,6 +658,12 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('timezone')->defaultNull()->end()
                         ->scalarNode('country')->defaultValue('DE')->end()
                         ->scalarNode('currency')->defaultValue(Customer::DEFAULT_CURRENCY)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('timesheet')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('billable')->defaultTrue()->end()
                     ->end()
                 ->end()
                 ->arrayNode('user')
@@ -579,7 +681,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getPermissionsNode()
+    private function getPermissionsNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('permissions');
         /** @var ArrayNodeDefinition $node */
@@ -629,7 +731,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getLdapNode()
+    private function getLdapNode(): ArrayNodeDefinition
     {
         $treeBuilder = new TreeBuilder('ldap');
         $node = $treeBuilder->getRootNode();
@@ -637,6 +739,9 @@ class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
+                ->booleanNode('activate')
+                    ->defaultFalse()
+                ->end()
                 ->arrayNode('connection')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -734,13 +839,13 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->validate()
                 ->ifTrue(static function ($v) {
-                    return null !== $v['connection']['host'] && !\extension_loaded('ldap');
+                    return $v['activate'] && !\extension_loaded('ldap');
                 })
                 ->thenInvalid('LDAP is activated, but the LDAP PHP extension is not loaded.')
             ->end()
             ->validate()
                 ->ifTrue(static function ($v) {
-                    return null !== $v['connection']['host'] && empty($v['user']['baseDn']);
+                    return $v['activate'] && empty($v['user']['baseDn']);
                 })
                 ->thenInvalid('The "ldap.user.baseDn" config must be set if LDAP is activated.')
             ->end()
@@ -749,7 +854,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getSamlNode()
+    private function getSamlNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('saml');
         /** @var ArrayNodeDefinition $node */

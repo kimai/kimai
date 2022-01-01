@@ -47,11 +47,11 @@ class InvoiceFixtures extends Fixture
                 ->setVat($invoiceConfig[6])
                 ->setDueDays($invoiceConfig[7])
                 ->setPaymentTerms($invoiceConfig[8])
-                ->setVatId($faker->vat)
                 ->setAddress($this->generateAddress($faker))
                 ->setContact($this->generateContact($faker))
                 ->setPaymentDetails($this->generatePaymentDetails($faker))
             ;
+            $template->setVatId($faker->creditCardNumber());
 
             $manager->persist($template);
             $manager->flush();
@@ -68,7 +68,7 @@ class InvoiceFixtures extends Fixture
         ;
 
         $paymentTerms_alt =
-            $faker->firstName . ', thank you very much. We really appreciate your business.' . PHP_EOL .
+            $faker->firstName() . ', thank you very much. We really appreciate your business.' . PHP_EOL .
             'Please send payments before the due date. I would like to thank you for your confidence and will gladly be there for you in the future.'
         ;
 
@@ -86,37 +86,37 @@ class InvoiceFixtures extends Fixture
 
         // name, title, renderer, calculator, numberGenerator, company, vat, dueDays, address, paymentTerms
         return [
-            ['Invoice (PDF)',             'Invoice',         'default-pdf',      'default',  'default', $faker->company, 16, 10, $paymentTerms],
-            ['Invoice (HTML)',            'Company name',    'default',          'default',  'default', $faker->company, 19, 30, $paymentTerms],
-            ['Freelancer (HTML, short)',  'Invoice',         'freelancer',       'short',    'default', $faker->company, 19, 14, $paymentTerms_de],
-            ['Timesheet (HTML)',          'Timesheet',       'timesheet',        'default',  'default', $faker->company, 19, 7,  $paymentTerms_alt],
+            ['Invoice (PDF)',             'Invoice',         'default-pdf',      'default',  'default', $faker->company(), 16, 10, $paymentTerms],
+            ['Invoice (HTML)',            'Company name',    'default',          'default',  'default', $faker->company(), 19, 30, $paymentTerms],
+            ['Freelancer (HTML, short)',  'Invoice',         'freelancer',       'short',    'default', $faker->company(), 19, 14, $paymentTerms_de],
+            ['Timesheet (HTML)',          'Timesheet',       'timesheet',        'default',  'default', $faker->company(), 19, 7,  $paymentTerms_alt],
             ['Company invoice (DOCX)',    'Invoice',         'company',          'default',  'default', 'Kimai Inc.',    19, 14, $paymentTerms_alt],
         ];
     }
 
-    protected function generatePaymentDetails(Generator $faker)
+    protected function generatePaymentDetails(Generator $faker): string
     {
         return
             'Acme Bank' . PHP_EOL .
-            'Account: ' . $faker->bankAccountNumber . PHP_EOL .
+            'BIC: ' . $faker->swiftBicNumber() . PHP_EOL .
             'IBAN: ' . $faker->iban('DE')
         ;
     }
 
-    protected function generateContact(Generator $faker)
+    protected function generateContact(Generator $faker): string
     {
         return
-            'Phone: ' . $faker->phoneNumber . PHP_EOL .
-            'Email: ' . $faker->safeEmail . PHP_EOL .
-            'Web: www.' . $faker->domainName
+            'Phone: ' . $faker->phoneNumber() . PHP_EOL .
+            'Email: ' . $faker->safeEmail() . PHP_EOL .
+            'Web: www.' . $faker->domainName()
         ;
     }
 
-    protected function generateAddress(Generator $faker)
+    protected function generateAddress(Generator $faker): string
     {
         return
-            $faker->streetAddress . PHP_EOL .
-            $faker->city . ', ' . $faker->stateAbbr . ' ' . $faker->postcode
+            $faker->streetAddress() . PHP_EOL .
+            $faker->postcode() . ' ' . $faker->city() . ', ' . $faker->country()
         ;
     }
 }

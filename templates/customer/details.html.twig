@@ -2,8 +2,8 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "customer/actions.html.twig" as actions %}
 
-{% block page_actions %}{{ actions.customer(customer, 'details') }}{% endblock %}
-{% block page_title %}{{ 'admin_customer.title'|trans }}{% endblock %}
+{% block page_actions %}{{ actions.customer(customer, 'customer_details') }}{% endblock %}
+{% block page_title %}{{ 'customers'|trans }}{% endblock %}
 
 {% block main %}
     {% set can_edit = is_granted('edit', customer) %}
@@ -29,7 +29,7 @@
             {% endif %}
             <table class="table table-hover dataTable">
                 {% if not customer.visible %}
-                    <tr>
+                    <tr class="{{ widgets.class_customer_row(customer, now) }}">
                         <th>{{ 'label.visible'|trans }}</th>
                         <td>{{ widgets.label_boolean(customer.visible) }}</td>
                     </tr>
@@ -85,7 +85,7 @@
                 {% if customer.timezone is not empty %}
                     <tr>
                         <th>{{ 'label.timezone'|trans }}</th>
-                        <td>{{ now|date_full }} ({{ customer.timezone }})</td>
+                        <td>{{ customer_now|date_full }} ({{ customer.timezone }})</td>
                     </tr>
                 {% endif %}
                 {% if customer.currency is not empty %}
@@ -121,7 +121,7 @@
     {{ render(controller('App\\Controller\\CustomerController::projectsAction', {'customer': customer.id, 'page': 1})) }}
     
     {% if stats is not null %}
-        {{ include('customer/embed_budget.html.twig', {'customer': customer, 'stats': stats}) }}
+        {{ include('embeds/budgets.html.twig', {'entity': customer, 'stats': stats, 'currency': customer.currency}) }}
     {% endif %}
 
     {% if can_edit %}
@@ -139,7 +139,7 @@
     {% if comments is not null %}
         {% set options = {'form': commentForm, 'comments': comments} %}
         {% if can_edit %}
-            {% set options = options|merge({'route_pin': 'customer_comment_pin', 'route_delete': 'customer_comment_delete'}) %}
+            {% set options = options|merge({'route_pin': 'customer_comment_pin', 'route_delete': 'customer_comment_delete', 'csrf_delete': 'customer.delete_comment', 'csrf_pin': 'customer.pin_comment'}) %}
         {% endif %}
         {{ include('embeds/comments.html.twig', options) }}
     {% endif %}
@@ -150,7 +150,7 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
-            KimaiReloadPageWidget.create('kimai.customerTeamUpdate kimai.customerUpdate kimai.teamUpdate kimai.projectTeamUpdate kimai.projectUpdate kimai.rateUpdate');
+            KimaiReloadPageWidget.create('kimai.customerTeamUpdate kimai.customerUpdate kimai.teamUpdate kimai.projectTeamUpdate kimai.rateUpdate');
         });
     </script>
 {% endblock %}

@@ -9,13 +9,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Timesheet;
+use App\Export\ExportItemInterface;
 use App\Export\ServiceExport;
+use App\Export\TooManyItemsExportException;
 use App\Form\Toolbar\ExportToolbarForm;
 use App\Repository\Query\ExportQuery;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,30 +46,53 @@ class ExportController extends AbstractController
         $query = $this->getDefaultQuery();
 
         $showPreview = false;
+        $tooManyResults = false;
         $maxItemsPreview = 500;
         $entries = [];
 
         $form = $this->getToolbarForm($query, 'GET');
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('export');
+        }
 
-        if ($form->isValid()) {
-            /** @var SubmitButton $previewButton */
-            $previewButton = $form->get('preview');
-            if ($previewButton->isClicked()) {
+        $byCustomer = [];
+
+        if ($form->isValid() && ($query->hasBookmark() || $request->query->has('performSearch'))) {
+            try {
                 $showPreview = true;
-                $query->setPageSize($maxItemsPreview);
                 $entries = $this->getEntries($query);
+                foreach ($entries as $entry) {
+                    $cid = $entry->getProject()->getCustomer()->getId();
+                    if (!isset($byCustomer[$cid])) {
+                        $byCustomer[$cid] = [
+                            'customer' => $entry->getProject()->getCustomer(),
+                            'rate' => 0,
+                            'internalRate' => 0,
+                            'duration' => 0,
+                        ];
+                    }
+                    $byCustomer[$cid]['rate'] += $entry->getRate();
+                    $byCustomer[$cid]['internalRate'] += $entry->getInternalRate();
+                    $byCustomer[$cid]['duration'] += $entry->getDuration();
+                }
+            } catch (TooManyItemsExportException $ex) {
+                $tooManyResults = true;
+                $showPreview = false;
+                $entries = [];
+                $this->logException($ex);
             }
         }
 
         return $this->render('export/index.html.twig', [
+            'too_many' => $tooManyResults,
+            'by_customer' => $byCustomer,
             'query' => $query,
             'entries' => $entries,
             'form' => $form->createView(),
             'renderer' => $this->export->getRenderer(),
-            'preview_max' => $maxItemsPreview,
+            'preview_limit' => $maxItemsPreview,
             'preview_show' => $showPreview,
+            'decimal' => $this->getUser()->isExportDecimal(),
         ]);
     }
 
@@ -111,11 +134,8 @@ class ExportController extends AbstractController
         $end = $this->getDateTimeFactory()->getEndOfMonth();
 
         $query = new ExportQuery();
-        $query->setOrder(ExportQuery::ORDER_ASC);
         $query->setBegin($begin);
         $query->setEnd($end);
-        $query->setState(ExportQuery::STATE_STOPPED);
-        $query->setExported(ExportQuery::STATE_NOT_EXPORTED);
         $query->setCurrentUser($this->getUser());
 
         return $query;
@@ -123,7 +143,8 @@ class ExportController extends AbstractController
 
     /**
      * @param ExportQuery $query
-     * @return Timesheet[]
+     * @return ExportItemInterface[]
+     * @throws TooManyItemsExportException
      */
     protected function getEntries(ExportQuery $query): array
     {

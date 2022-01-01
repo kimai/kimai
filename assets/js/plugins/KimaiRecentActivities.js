@@ -42,9 +42,13 @@ export default class KimaiRecentActivities extends KimaiPlugin {
 
         document.addEventListener('kimai.recentActivities', handle);
         document.addEventListener('kimai.timesheetUpdate', handle);
+        document.addEventListener('kimai.timesheetDelete', handle);
         document.addEventListener('kimai.activityUpdate', handle);
+        document.addEventListener('kimai.activityDelete', handle);
         document.addEventListener('kimai.projectUpdate', handle);
+        document.addEventListener('kimai.projectDelete', handle);
         document.addEventListener('kimai.customerUpdate', handle);
+        document.addEventListener('kimai.customerDelete', handle);
     }
 
     emptyList() {
@@ -61,9 +65,10 @@ export default class KimaiRecentActivities extends KimaiPlugin {
 
         for (let timesheet of entries) {
             let label = this.attributes['template']
-                .replace('%customer%', timesheet.project.customer.name)
-                .replace('%project%', timesheet.project.name)
-                .replace('%activity%', timesheet.activity.name);
+                .replace('%customer%', this.escape(timesheet.project.customer.name))
+                .replace('%project%', this.escape(timesheet.project.name))
+                .replace('%activity%', this.escape(timesheet.activity.name))
+            ;
 
             htmlToInsert +=
                 `<li>` +

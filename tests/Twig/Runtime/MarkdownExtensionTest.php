@@ -27,6 +27,10 @@ class MarkdownExtensionTest extends TestCase
         $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals('<p><em>test</em></p>', $sut->markdownToHtml('*test*'));
         $this->assertEquals('<p># foobar</p>', $sut->markdownToHtml('# foobar'));
+        $this->assertEquals(
+            '<p><a href="javascript%3Aalert(`XSS`)">XSS</a></p>',
+            $sut->markdownToHtml('[XSS](javascript:alert(`XSS`))')
+        );
     }
 
     public function testTimesheetContent()
@@ -46,6 +50,10 @@ class MarkdownExtensionTest extends TestCase
         $this->assertEquals(
             "<ul>\n<li>test</li>\n<li>foo</li>\n</ul>\n<p>foo <strong>bar</strong></p>",
             $sut->timesheetContent("- test\n- foo\n\nfoo __bar__")
+        );
+        $this->assertEquals(
+            '<p><a href="javascript%3Aalert(`XSS`)">XSS</a></p>',
+            $sut->timesheetContent('[XSS](javascript:alert(`XSS`))')
         );
     }
 
@@ -75,6 +83,59 @@ class MarkdownExtensionTest extends TestCase
         $this->assertEquals(
             "<ul>\n<li>test</li>\n<li>foo</li>\n</ul>\n<p>foo <strong>bar</strong></p>",
             $sut->commentContent("- test\n- foo\n\nfoo __bar__")
+        );
+        $this->assertEquals(
+            '<p><a href="javascript%3Aalert(`XSS`)">XSS</a></p>',
+            $sut->commentContent('[XSS](javascript:alert(`XSS`))')
+        );
+    }
+
+    public function testCommentOneLiner()
+    {
+        $loader = $this->createMock(ConfigLoaderInterface::class);
+        $config = new SystemConfiguration($loader, []);
+        $sut = new MarkdownExtension(new Markdown(), $config);
+
+        $loremIpsum = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.';
+
+        $this->assertEquals('', $sut->commentOneLiner(null));
+        $this->assertEquals('', $sut->commentOneLiner(''));
+        $this->assertEquals('', $sut->commentOneLiner(null, false));
+        $this->assertEquals('', $sut->commentOneLiner('', true));
+
+        $this->assertEquals(
+            'Lorem ipsum dolor sit amet, consetetur sadipscing &hellip;',
+            $sut->commentOneLiner($loremIpsum, false)
+        );
+
+        $this->assertEquals(
+            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. &hellip;',
+            $sut->commentOneLiner(implode(PHP_EOL, [$loremIpsum, $loremIpsum, $loremIpsum]), true)
+        );
+
+        $this->assertEquals(
+            'Lorem ipsum dolor sit amet, consetetur sadipscing &hellip;',
+            $sut->commentOneLiner(implode(PHP_EOL, [$loremIpsum, $loremIpsum, $loremIpsum]), false)
+        );
+
+        $this->assertEquals(
+            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt',
+            $sut->commentOneLiner(implode(PHP_EOL, ['Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt']), true)
+        );
+
+        $this->assertEquals(
+            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt &hellip;',
+            $sut->commentOneLiner(implode(PHP_EOL, ['Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt', 'ssdf']), true)
+        );
+
+        $this->assertEquals(
+            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt',
+            $sut->commentOneLiner(implode(PHP_EOL, ['Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt']))
+        );
+
+        $this->assertEquals(
+            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt &hellip;',
+            $sut->commentOneLiner(implode(PHP_EOL, ['Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt', 'ssdf']))
         );
     }
 }

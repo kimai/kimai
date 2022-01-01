@@ -1,247 +1,303 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" target-language="de" datatype="plaintext" original="system-configuration.en.xlf">
-        <body>
-            <trans-unit id="title">
-                <source>title</source>
-                <target>Einstellungen</target>
-            </trans-unit>
-            <trans-unit id="subtitle">
-                <source>subtitle</source>
-                <target>Globale Einstellungen ihrer Zeiterfassung ändern</target>
-            </trans-unit>
-            <trans-unit id="timesheet">
-                <source>timesheet</source>
-                <target>Zeiterfassung</target>
-            </trans-unit>
-            <trans-unit id="invoice">
-                <source>invoice</source>
-                <target>Rechnungen</target>
-            </trans-unit>
-            <trans-unit id="form_customer">
-                <source>form_customer</source>
-                <target>Kunden anlegen - Standard Werte</target>
-            </trans-unit>
-            <trans-unit id="form_user">
-                <source>form_user</source>
-                <target>Benutzer - Standard Werte</target>
-            </trans-unit>
-            <trans-unit id="theme">
-                <source>theme</source>
-                <target>Darstellung</target>
-            </trans-unit>
-            <trans-unit id="calendar">
-                <source>calendar</source>
-                <target>Kalender</target>
-            </trans-unit>
-            <trans-unit id="label.theme.markdown_content">
-                <source>label.theme.markdown_content</source>
-                <target>Erlaube Markdown-Formatierungen in Beschreibungen und Kommentaren</target>
-            </trans-unit>
-            <trans-unit id="label.theme.tags_create">
-                <source>label.theme.tags_create</source>
-                <target>Schlagworte: Suche per Auto-Complete und Erstellung von Schlagworten erlauben</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.mode">
-                <source>label.timesheet.mode</source>
-                <target>Zeiterfassungs Modus</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.mode_default">
-                <source>label.timesheet.mode_default</source>
-                <target>[Standard] Start- und Endzeiten können bearbeitet werden</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.mode_duration_only">
-                <source>label.timesheet.mode_duration_only</source>
-                <target>[Dauer] ersetzt den Endzeitpunkt durch ein Eingabefeld für Dauer</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.mode_duration_fixed_begin">
-                <source>label.timesheet.mode_duration_fixed_begin</source>
-                <target>[Dauer] Konfigurierbare feste Startzeit, nur Dauer kann geändert werden</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.mode_punch">
-                <source>label.timesheet.mode_punch</source>
-                <target>[Stechuhr] Benutzer kann Aufzeichnungen starten und stoppen, aber weder Zeiten noch Dauer bearbeiten</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.rules.allow_future_times">
-                <source>label.timesheet.rules.allow_future_times</source>
-                <target>Erlaube Zeiteinträge in der Zukunft</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.rules.allow_overlapping_records">
-                <source>label.timesheet.rules.allow_overlapping_records</source>
-                <target>Erlaube überlappende Zeiteinträge</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.rules.lockdown_period_start">
-                <source>label.timesheet.rules.lockdown_period_start</source>
-                <target>Start des gesperrten Zeitraums (relatives PHP Datumsformat)</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.rules.lockdown_period_end">
-                <source>label.timesheet.rules.lockdown_period_end</source>
-                <target>Ende des gesperrten Zeitraums (relatives PHP Datumsformat)</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.rules.lockdown_grace_period">
-                <source>label.timesheet.rules.lockdown_grace_period</source>
-                <target>Übergangsfrist für gesperrten Zeitraum (relatives PHP Datumsformat ab Enddatum)</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.active_entries.hard_limit">
-                <source>label.timesheet.active_entries.hard_limit</source>
-                <target>Erlaubte Anzahl an gleichzeitig laufenden Zeiteinträgen</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.active_entries.soft_limit">
-                <source>label.timesheet.active_entries.soft_limit</source>
-                <target>Anzahl an laufenden Zeiteinträgen ab denen einen Warnung angezeigt wird</target>
-            </trans-unit>
-            <trans-unit id="label.theme.autocomplete_chars">
-                <source>label.theme.autocomplete_chars</source>
-                <target>Minimale Anzahl Buchstaben für den Start der Autovervollständigung</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.week_numbers">
-                <source>label.calendar.week_numbers</source>
-                <target>Kalenderwochen anzeigen</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.weekends">
-                <source>label.calendar.weekends</source>
-                <target>Wochenenden anzeigen</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.businessHours.begin">
-                <source>label.calendar.businessHours.begin</source>
-                <target>Start der üblichen Arbeitszeit (wird optisch hervorgehoben)</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.businessHours.end">
-                <source>label.calendar.businessHours.end</source>
-                <target>Ende der üblichen Arbeitszeit (wird optisch hervorgehoben)</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.visibleHours.begin">
-                <source>label.calendar.visibleHours.begin</source>
-                <target>Start des sichtbaren Zeitbereichs</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.visibleHours.end">
-                <source>label.calendar.visibleHours.end</source>
-                <target>Ende des sichtbaren Zeitbereichs</target>
-            </trans-unit>
-            <trans-unit id="label.calendar.slot_duration">
-                <source>label.calendar.slot_duration</source>
-                <target>Slotdauer für Wochen- und Tagesansicht (Format: hh:mm:ss)</target>
-            </trans-unit>
-            <trans-unit id="branding">
-                <source>branding</source>
-                <target>Markendarstellung</target>
-            </trans-unit>
-            <trans-unit id="label.theme.branding.logo">
-                <source>label.theme.branding.logo</source>
-                <target>Logo (Bild URL, ersetzt das Unternehmen im Anmeldebildschirm)</target>
-            </trans-unit>
-            <trans-unit id="label.theme.branding.company">
-                <source>label.theme.branding.company</source>
-                <target>Unternehmen</target>
-            </trans-unit>
-            <trans-unit id="label.theme.branding.mini">
-                <source>label.theme.branding.mini</source>
-                <target>Mini Logo (zugeklappte Seitenleiste)</target>
-            </trans-unit>
-            <trans-unit id="label.theme.branding.title">
-                <source>label.theme.branding.title</source>
-                <target>Browser Titel</target>
-            </trans-unit>
-            <trans-unit id="rounding">
-                <source>rounding</source>
-                <target>Zeitenrundung</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.rounding.default.begin">
-                <source>label.timesheet.rounding.default.begin</source>
-                <target>Rundung des Startzeitpunkts in Minuten (0 = deaktiviert)</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.rounding.default.end">
-                <source>label.timesheet.rounding.default.end</source>
-                <target>Rundung des Endzeitpunkts in Minuten (0 = deaktiviert)</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.rounding.default.duration">
-                <source>label.timesheet.rounding.default.duration</source>
-                <target>Rundung der Dauer in Minuten (0 = deaktiviert)</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.rounding.default.mode">
-                <source>label.timesheet.rounding.default.mode</source>
-                <target>Rundungsmodus</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.rounding.default.days">
-                <source>label.timesheet.rounding.default.days</source>
-                <target>Tage der Woche an denen gerundet wird</target>
-            </trans-unit>
-            <trans-unit id="Monday">
-                <source>Monday</source>
-                <target>Montag</target>
-            </trans-unit>
-            <trans-unit id="Tuesday">
-                <source>Tuesday</source>
-                <target>Dienstag</target>
-            </trans-unit>
-            <trans-unit id="Wednesday">
-                <source>Wednesday</source>
-                <target>Mittwoch</target>
-            </trans-unit>
-            <trans-unit id="Thursday">
-                <source>Thursday</source>
-                <target>Donnerstag</target>
-            </trans-unit>
-            <trans-unit id="Friday">
-                <source>Friday</source>
-                <target>Freitag</target>
-            </trans-unit>
-            <trans-unit id="Saturday">
-                <source>Saturday</source>
-                <target>Samstag</target>
-            </trans-unit>
-            <trans-unit id="Sunday">
-                <source>Sunday</source>
-                <target>Sonntag</target>
-            </trans-unit>
-            <trans-unit id="Ceil">
-                <source>Ceil</source>
-                <target>Ceil: Start, Ende und Dauer werden nach oben gerundet</target>
-            </trans-unit>
-            <trans-unit id="Closest">
-                <source>Closest</source>
-                <target>Closest: Mathematische Rundung zum nächsten Wert</target>
-            </trans-unit>
-            <trans-unit id="Default">
-                <source>Default</source>
-                <target>Standard: Start wird nach unten, Ende und Dauer nach oben gerundet</target>
-            </trans-unit>
-            <trans-unit id="Floor">
-                <source>Floor</source>
-                <target>Floor: Start, Ende und Dauer werden nach unten gerundet</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.default_begin">
-                <source>label.timesheet.default_begin</source>
-                <target>Standard Startzeit (wird nicht in jedem Zeiterfassungs Modus verwendet)</target>
-            </trans-unit>
-            <trans-unit id="label.simple_form">
-                <source>label.simple_form</source>
-                <target>Einfache Suche</target>
-            </trans-unit>
-            <trans-unit id="label.invoice.number_format">
-                <source>label.invoice.number_format</source>
-                <target>Rechnungsnummer Format</target>
-            </trans-unit>
-            <trans-unit id="first_weekday">
-                <source>first_weekday</source>
-                <target>Erster Tag der Woche</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.duration_increment">
-                <source>label.timesheet.duration_increment</source>
-                <target>Minuten Auswahl für Dauer</target>
-            </trans-unit>
-            <trans-unit id="label.timesheet.time_increment">
-                <source>label.timesheet.time_increment</source>
-                <target>Minuten Auswahl für Von &amp; Bis</target>
-            </trans-unit>
-            <trans-unit id="increment_rounding">
-                <source>increment_rounding</source>
-                <target>Verwende konfigurierten Wert der Rundungsregel</target>
-            </trans-unit>
-            <trans-unit id="off">
-                <source>off</source>
-                <target>Aus</target>
-            </trans-unit>
-        </body>
-    </file>
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="de" datatype="plaintext" original="system-configuration.en.xlf">
+    <body>
+      <trans-unit id="ycErWZK" resname="timesheet">
+        <source>Time tracking</source>
+        <target state="translated">Zeiterfassung</target>
+      </trans-unit>
+      <trans-unit id="PLggHn." resname="theme">
+        <source>theme</source>
+        <target>Darstellung</target>
+      </trans-unit>
+      <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
+        <source>label.theme.markdown_content</source>
+        <target>Erlaube Markdown-Formatierungen in Beschreibungen und Kommentaren</target>
+      </trans-unit>
+      <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
+        <source>label.theme.tags_create</source>
+        <target>Schlagworte: Suche per Auto-Complete und Erstellung von Schlagworten erlauben</target>
+      </trans-unit>
+      <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
+        <source>label.theme.avatar_url</source>
+        <target>Erlaube die Nutzung von URLs für Avatar Bilder</target>
+      </trans-unit>
+      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
+        <source>label.theme.random_colors</source>
+        <target>Zufallsfarben verwenden für Objekte ohne zugewiesene Farbe</target>
+      </trans-unit>
+      <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
+        <source>label.timesheet.mode</source>
+        <target>Zeiterfassungs Modus</target>
+      </trans-unit>
+      <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
+        <source>label.timesheet.mode_default</source>
+        <target>[Standard] Start- und Endzeiten können bearbeitet werden</target>
+      </trans-unit>
+      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
+        <source>label.timesheet.mode_duration_only</source>
+        <target>[Dauer] ersetzt den Endzeitpunkt durch ein Eingabefeld für Dauer</target>
+      </trans-unit>
+      <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
+        <source>label.timesheet.mode_duration_fixed_begin</source>
+        <target>[Dauer] Konfigurierbare feste Startzeit, nur Dauer kann geändert werden</target>
+      </trans-unit>
+      <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
+        <source>label.timesheet.mode_punch</source>
+        <target>[Stechuhr] Benutzer kann Aufzeichnungen starten und stoppen, aber weder Zeiten noch Dauer bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
+        <source>label.timesheet.rules.allow_future_times</source>
+        <target>Erlaube Zeiteinträge in der Zukunft</target>
+      </trans-unit>
+      <trans-unit id="VAAaL2t" resname="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target>Überbuchung hinterlegter Budgets erlauben</target>
+      </trans-unit>
+      <trans-unit id=".NE5mGi" resname="label.timesheet.rules.allow_overlapping_records">
+        <source>label.timesheet.rules.allow_overlapping_records</source>
+        <target>Erlaube überlappende Zeiteinträge</target>
+      </trans-unit>
+      <trans-unit id="tuPXa0S" resname="lockdown_period">
+        <source>lockdown_period</source>
+        <target>Gesperrter Zeitraum</target>
+      </trans-unit>
+      <trans-unit id="HeDzoVE" resname="label.timesheet.rules.lockdown_period_timezone">
+        <source>label.timesheet.rules.lockdown_period_timezone</source>
+        <target>Zeitzone (falls leer, wird Zeitzone des jeweiligen Benutzers verwendet)</target>
+      </trans-unit>
+      <trans-unit id="yVBJECt" resname="label.timesheet.rules.lockdown_period_start">
+        <source>label.timesheet.rules.lockdown_period_start</source>
+        <target>Start des gesperrten Zeitraums (relatives PHP Datumsformat)</target>
+      </trans-unit>
+      <trans-unit id=".es2tyO" resname="label.timesheet.rules.lockdown_period_end">
+        <source>label.timesheet.rules.lockdown_period_end</source>
+        <target>Ende des gesperrten Zeitraums (relatives PHP Datumsformat)</target>
+      </trans-unit>
+      <trans-unit id="y2i0PU3" resname="label.timesheet.rules.lockdown_grace_period">
+        <source>label.timesheet.rules.lockdown_grace_period</source>
+        <target>Übergangsfrist für gesperrten Zeitraum (relatives PHP Datumsformat ab Enddatum)</target>
+      </trans-unit>
+      <trans-unit id="oIueXaX" resname="label.timesheet.active_entries.hard_limit">
+        <source>label.timesheet.active_entries.hard_limit</source>
+        <target>Erlaubte Anzahl an gleichzeitig laufenden Zeiteinträgen</target>
+      </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target>Anzahl übernommener Einträge aus Vorwochen</target>
+      </trans-unit>
+      <trans-unit id="iZLna_g" resname="label.theme.autocomplete_chars">
+        <source>label.theme.autocomplete_chars</source>
+        <target>Minimale Anzahl Buchstaben für den Start der Autovervollständigung</target>
+      </trans-unit>
+      <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
+        <source>label.calendar.week_numbers</source>
+        <target>Kalenderwochen anzeigen</target>
+      </trans-unit>
+      <trans-unit id="NULxaYp" resname="label.calendar.weekends">
+        <source>label.calendar.weekends</source>
+        <target>Wochenenden anzeigen</target>
+      </trans-unit>
+      <trans-unit id="AMCb58W" resname="label.calendar.businessHours.begin">
+        <source>label.calendar.businessHours.begin</source>
+        <target>Start der üblichen Arbeitszeit (wird optisch hervorgehoben)</target>
+      </trans-unit>
+      <trans-unit id="3nfAkqy" resname="label.calendar.businessHours.end">
+        <source>label.calendar.businessHours.end</source>
+        <target>Ende der üblichen Arbeitszeit (wird optisch hervorgehoben)</target>
+      </trans-unit>
+      <trans-unit id="Yl4Ztfv" resname="label.calendar.visibleHours.begin">
+        <source>label.calendar.visibleHours.begin</source>
+        <target>Start des sichtbaren Zeitbereichs</target>
+      </trans-unit>
+      <trans-unit id="UJGYdCt" resname="label.calendar.visibleHours.end">
+        <source>label.calendar.visibleHours.end</source>
+        <target>Ende des sichtbaren Zeitbereichs</target>
+      </trans-unit>
+      <trans-unit id="AlBuZhv" resname="label.calendar.slot_duration">
+        <source>label.calendar.slot_duration</source>
+        <target>Slotdauer für Wochen- und Tagesansicht (Format: hh:mm:ss)</target>
+      </trans-unit>
+      <trans-unit id="nwuLBP4" resname="branding">
+        <source>branding</source>
+        <target>Mein Unternehmen</target>
+      </trans-unit>
+      <trans-unit id="m5dLCoB" resname="label.theme.branding.logo">
+        <source>label.theme.branding.logo</source>
+        <target>Logo URL (ersetzt den Unternehmensnamen im Anmeldebildschirm)</target>
+      </trans-unit>
+      <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
+        <source>label.theme.branding.company</source>
+        <target>Unternehmensname</target>
+      </trans-unit>
+      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
+        <source>label.theme.branding.mini</source>
+        <target>Mini Logo (zugeklappte Seitenleiste)</target>
+      </trans-unit>
+      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
+        <source>label.theme.branding.title</source>
+        <target>Browser Titel</target>
+      </trans-unit>
+      <trans-unit id=".CeyZwj" resname="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target>Geschäftsjahr</target>
+      </trans-unit>
+      <trans-unit id="Gdb5M4w" resname="rounding">
+        <source>rounding</source>
+        <target>Zeitenrundung</target>
+      </trans-unit>
+      <trans-unit id="0wyl4Bb" resname="label.timesheet.rounding.default.begin">
+        <source>label.timesheet.rounding.default.begin</source>
+        <target>Rundung des Startzeitpunkts in Minuten (0 = deaktiviert)</target>
+      </trans-unit>
+      <trans-unit id="Jx6bTVr" resname="label.timesheet.rounding.default.end">
+        <source>label.timesheet.rounding.default.end</source>
+        <target>Rundung des Endzeitpunkts in Minuten (0 = deaktiviert)</target>
+      </trans-unit>
+      <trans-unit id="Hnl7Jxt" resname="label.timesheet.rounding.default.duration">
+        <source>label.timesheet.rounding.default.duration</source>
+        <target>Rundung der Dauer in Minuten (0 = deaktiviert)</target>
+      </trans-unit>
+      <trans-unit id="aenIpDV" resname="label.timesheet.rounding.default.mode">
+        <source>label.timesheet.rounding.default.mode</source>
+        <target>Rundungsmodus</target>
+      </trans-unit>
+      <trans-unit id="D1NSPl5" resname="label.timesheet.rounding.default.days">
+        <source>label.timesheet.rounding.default.days</source>
+        <target>Tage der Woche an denen gerundet wird</target>
+      </trans-unit>
+      <trans-unit id="agDfwdy" resname="Monday">
+        <source>Monday</source>
+        <target>Montag</target>
+      </trans-unit>
+      <trans-unit id="fYrx3hJ" resname="Tuesday">
+        <source>Tuesday</source>
+        <target>Dienstag</target>
+      </trans-unit>
+      <trans-unit id="wKbMgpz" resname="Wednesday">
+        <source>Wednesday</source>
+        <target>Mittwoch</target>
+      </trans-unit>
+      <trans-unit id=".CZiBi." resname="Thursday">
+        <source>Thursday</source>
+        <target>Donnerstag</target>
+      </trans-unit>
+      <trans-unit id="4h8.Nyp" resname="Friday">
+        <source>Friday</source>
+        <target>Freitag</target>
+      </trans-unit>
+      <trans-unit id="2_Ncc2P" resname="Saturday">
+        <source>Saturday</source>
+        <target>Samstag</target>
+      </trans-unit>
+      <trans-unit id="hz.vdg5" resname="Sunday">
+        <source>Sunday</source>
+        <target>Sonntag</target>
+      </trans-unit>
+      <trans-unit id="jmsE4EY" resname="Ceil">
+        <source>Ceil</source>
+        <target>Ceil: Start, Ende und Dauer werden nach oben gerundet</target>
+      </trans-unit>
+      <trans-unit id="Y_qmsDz" resname="Closest">
+        <source>Closest</source>
+        <target>Closest: Mathematische Rundung zum nächsten Wert</target>
+      </trans-unit>
+      <trans-unit id="IbERy.5" resname="Default">
+        <source>Default</source>
+        <target>Standard: Start wird nach unten, Ende und Dauer nach oben gerundet</target>
+      </trans-unit>
+      <trans-unit id="0mjJxEk" resname="Floor">
+        <source>Floor</source>
+        <target>Floor: Start, Ende und Dauer werden nach unten gerundet</target>
+      </trans-unit>
+      <trans-unit id="DY_cM92" resname="label.timesheet.default_begin">
+        <source>label.timesheet.default_begin</source>
+        <target>Standard Startzeit (wird nicht in jedem Zeiterfassungs Modus verwendet)</target>
+      </trans-unit>
+      <trans-unit id="cRbnwyP" resname="label.simple_form">
+        <source>label.simple_form</source>
+        <target>Einfache Suche</target>
+      </trans-unit>
+      <trans-unit id="HrEBLUr" resname="label.invoice.number_format">
+        <source>label.invoice.number_format</source>
+        <target>Rechnungsnummer Format</target>
+      </trans-unit>
+      <trans-unit id="6CSB6iM" resname="first_weekday">
+        <source>first_weekday</source>
+        <target>Erster Tag der Woche</target>
+      </trans-unit>
+      <trans-unit id="40i4Xlr" resname="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target>Minuten Auswahl für Dauer</target>
+      </trans-unit>
+      <trans-unit id="x3AfnWn" resname="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>Minuten Auswahl für Von &amp; Bis</target>
+      </trans-unit>
+      <trans-unit id="9C1qkmD" resname="increment_rounding">
+        <source>increment_rounding</source>
+        <target>Verwende konfigurierten Wert der Rundungsregel</target>
+      </trans-unit>
+      <trans-unit id="tNxm3eg" resname="off">
+        <source>off</source>
+        <target>Aus</target>
+      </trans-unit>
+      <trans-unit id="QHVk7AA" resname="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target>Farbauswahl einschränken</target>
+      </trans-unit>
+      <trans-unit id="scCc2Xm" resname="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target>Erlaubte Farben</target>
+      </trans-unit>
+      <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
+        <source>help.theme.color_choices</source>
+        <target>Kommagetrennte Liste von HTML Farbcodes. Farbnamen können festgelegt werden, indem dem Farbcode ein Name und das Trennzeichen | vorangestellt wird, z. B.: White|#ffffff,Black|#000000.</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target>Authentifizierung</target>
+      </trans-unit>
+      <trans-unit id="CCXeSFj" resname="label.user_auth_login">
+        <source>label.user_auth_login</source>
+        <target>Anmeldeformular</target>
+      </trans-unit>
+      <trans-unit id=".zZ_MeA" resname="label.user_auth_registration">
+        <source>label.user_auth_registration</source>
+        <target>Benutzerregistrierung</target>
+      </trans-unit>
+      <trans-unit id="t2zKRp5" resname="label.user_auth_password_reset">
+        <source>label.user_auth_password_reset</source>
+        <target>Passwort vergessen</target>
+      </trans-unit>
+      <trans-unit id="ufoC1qF" resname="label.user_auth_password_reset_retry_ttl">
+        <source>label.user_auth_password_reset_retry_ttl</source>
+        <target>Passwort vergessen – Sekunden, bevor ein Benutzer die nächste E-Mail anfordern kann</target>
+      </trans-unit>
+      <trans-unit id="0Tj.NhS" resname="label.user_auth_password_reset_token_ttl">
+        <source>label.user_auth_password_reset_token_ttl</source>
+        <target>Passwort vergessen – Sekunden, bevor ein Zurücksetzen-Link abläuft</target>
+      </trans-unit>
+      <trans-unit id="71FjFMp" resname="label.ldap_activate">
+        <source>label.ldap_activate</source>
+        <target>LDAP-Anmeldung</target>
+      </trans-unit>
+      <trans-unit id="A3HPT4p" resname="label.saml_activate">
+        <source>label.saml_activate</source>
+        <target>SAML-Anmeldung</target>
+      </trans-unit>
+      <trans-unit id="jLG6z.w" resname="label.timesheet.rules.break_warning_duration">
+        <source>label.timesheet.rules.break_warning_duration</source>
+        <target>Maximale Dauer eines Zeiteintrags in Minuten, bevor eine Pausen-Warnung angezeigt wird (0 = deaktiviert)</target>
+      </trans-unit>
+      <trans-unit id="h4bhOny" resname="label.timesheet.rules.long_running_duration">
+        <source>label.timesheet.rules.long_running_duration</source>
+        <target>Maximale Dauer eines Zeiteintrags in Minuten, bevor das Speichern abgelehnt wird (0 = deaktiviert)</target>
+      </trans-unit>
+      <trans-unit id="ZUTc3eH" resname="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target>Anzahl an Einträgen für Drag&amp;Drop (0 = deaktiviert)</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

@@ -30,18 +30,13 @@ final class UpdateCommand extends Command
     public const ERROR_MIGRATIONS = 32;
 
     /**
-     * @var string
-     */
-    private $rootDir;
-    /**
      * @var Connection
      */
     private $connection;
 
-    public function __construct(string $projectDirectory, Connection $connection)
+    public function __construct(Connection $connection)
     {
         parent::__construct();
-        $this->rootDir = $projectDirectory;
         $this->connection = $connection;
     }
 
@@ -121,7 +116,7 @@ final class UpdateCommand extends Command
         if ($cacheResult !== 0) {
             $io->warning(
                 [
-                    sprintf('Updated %s to version %s (%s) but the cache could not be rebuilt.', Constants::SOFTWARE, Constants::VERSION, Constants::STATUS),
+                    sprintf('Updated %s to version %s but the cache could not be rebuilt.', Constants::SOFTWARE, Constants::VERSION),
                     'Please run the cache commands manually:',
                     'bin/console cache:clear --env=' . $environment . PHP_EOL .
                     'bin/console cache:warmup --env=' . $environment
@@ -129,7 +124,7 @@ final class UpdateCommand extends Command
             );
         } else {
             $io->success(
-                sprintf('Congratulations! Successfully updated %s to version %s (%s)', Constants::SOFTWARE, Constants::VERSION, Constants::STATUS)
+                sprintf('Congratulations! Successfully updated %s to version %s', Constants::SOFTWARE, Constants::VERSION)
             );
         }
 

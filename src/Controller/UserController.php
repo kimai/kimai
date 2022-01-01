@@ -22,7 +22,6 @@ use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
-use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -78,14 +77,10 @@ final class UserController extends AbstractController
         $query->setPage($page);
 
         $form = $this->getToolbarForm($query);
-        $form->setData($query);
-        $form->submit($request->query->all(), false);
-
-        if (!$form->isValid()) {
-            $query->resetByFormError($form->getErrors());
+        if ($this->handleSearch($form, $request)) {
+            return $this->redirectToRoute('admin_user');
         }
 
-        /* @var $entries Pagerfanta */
         $entries = $this->getRepository()->getPagerfantaForQuery($query);
 
         $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::USERS);
@@ -131,7 +126,7 @@ final class UserController extends AbstractController
 
             $this->flashSuccess('action.update.success');
 
-            if ($editForm->get('create_more')->getData() !== true) {
+            if ($editForm->has('create_more') && $editForm->get('create_more')->getData() !== true) {
                 return $this->redirectToRoute('user_profile_edit', ['username' => $user->getUsername()]);
             }
 
@@ -141,7 +136,9 @@ final class UserController extends AbstractController
             $user->setTimezone($firstUser->getTimezone());
 
             $editForm = $this->getCreateUserForm($user);
-            $editForm->get('create_more')->setData(true);
+            if ($editForm->has('create_more')) {
+                $editForm->get('create_more')->setData(true);
+            }
         }
 
         return $this->render('user/create.html.twig', [
@@ -246,6 +243,8 @@ final class UserController extends AbstractController
             'include_active_flag' => true,
             'include_preferences' => $this->isGranted('preferences', $user),
             'include_add_more' => true,
+            'include_teams' => $this->isGranted('teams_other_profile'),
+            'include_roles' => $this->isGranted('roles_other_profile'),
         ]);
     }
 }

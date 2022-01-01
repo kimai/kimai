@@ -33,6 +33,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractRendererTest extends KernelTestCase
@@ -51,8 +52,11 @@ abstract class AbstractRendererTest extends KernelTestCase
             ]
         ];
 
+        $security = $this->createMock(Security::class);
+        $security->expects($this->any())->method('getUser')->willReturn(new User());
+
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $dateExtension = new LocaleFormatExtensions(new LanguageFormattings($languages));
+        $dateExtension = new LocaleFormatExtensions(new LanguageFormattings($languages), $security);
 
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
@@ -71,11 +75,14 @@ abstract class AbstractRendererTest extends KernelTestCase
     {
         $customer = new Customer();
         $customer->setName('Customer Name');
+        $customer->setNumber('A-0123456789');
+        $customer->setVatId('DE-9876543210');
         $customer->setMetaField((new CustomerMeta())->setName('customer-foo')->setValue('customer-bar')->setIsVisible(true));
 
         $project = new Project();
         $project->setName('project name');
         $project->setCustomer($customer);
+        $project->setOrderNumber('ORDER-123');
         $project->setMetaField((new ProjectMeta())->setName('project-bar')->setValue('project-bar')->setIsVisible(true));
         $project->setMetaField((new ProjectMeta())->setName('project-foo2')->setValue('project-foo2')->setIsVisible(true));
 
