@@ -55,8 +55,6 @@ class TimesheetFixtures extends Fixture implements FixtureGroupInterface
 
     public function getRandomFirstDay(): \DateTime
     {
-        return new \DateTime(rand(-25, -3) . ' days');
-
         return new \DateTime(rand(-1095, 14) . ' days');
     }
 
