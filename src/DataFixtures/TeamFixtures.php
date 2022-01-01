@@ -13,7 +13,6 @@ use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
@@ -26,20 +25,15 @@ use Faker\Factory;
  *
  * @codeCoverageIgnore
  */
-class TeamFixtures extends Fixture implements DependentFixtureInterface
+class TeamFixtures extends Fixture
 {
     public const AMOUNT_TEAMS = 10;
     public const MAX_USERS_PER_TEAM = 15;
     public const MAX_PROJECTS_PER_TEAM = 5;
 
-    /**
-     * @return string[]
-     */
-    public function getDependencies()
+    public static function getGroups(): array
     {
-        return [
-            UserFixtures::class,
-        ];
+        return ['users', 'team'];
     }
 
     /**
