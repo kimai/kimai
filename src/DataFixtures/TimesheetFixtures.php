@@ -18,7 +18,6 @@ use App\Entity\UserPreference;
 use App\Timesheet\Util;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
@@ -26,20 +25,20 @@ use Faker\Factory;
  * Defines the sample data to load in the database when running the unit and
  * functional tests or while development.
  *
- * Execute this command to load the data:
+ * Execute this command to load add fixture data:
  * bin/console doctrine:fixtures:load
+ *
+ * Or simply append it to your running installation:
+ * bin/console doctrine:fixtures:load --append --group=timesheet
  *
  * @codeCoverageIgnore
  */
-class TimesheetFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
+class TimesheetFixtures extends Fixture implements FixtureGroupInterface
 {
     public const MIN_TIMESHEETS_PER_USER = 50;
     public const MAX_TIMESHEETS_PER_USER = 500;
-    public const MAX_TIMESHEETS_TOTAL = 5000;
+    public const MAX_TIMESHEETS_TOTAL = 200;
     public const MAX_RUNNING_TIMESHEETS_PER_USER = 1;
-    public const TIMERANGE_BEGIN_DAYS = 1; // yesterday
-    public const TIMERANGE_END_DAYS = 1095; // 3 years
-    public const TIMERANGE_RUNNING = 1047; // in minutes = 17:45 hours
     public const MIN_MINUTES_PER_ENTRY = 15;
     public const MAX_MINUTES_PER_ENTRY = 840; // 14h
     public const MAX_DESCRIPTION_LENGTH = 200;
@@ -49,21 +48,14 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface, Fi
 
     public const BATCH_SIZE = 100;
 
-    /**
-     * @return class-string[]
-     */
-    public function getDependencies()
-    {
-        return [
-            UserFixtures::class,
-            CustomerFixtures::class,
-            TagFixtures::class,
-        ];
-    }
-
     public static function getGroups(): array
     {
         return ['timesheet'];
+    }
+
+    public function getRandomFirstDay(): \DateTime
+    {
+        return new \DateTime(rand(-1095, 14) . ' days');
     }
 
     /**
@@ -218,8 +210,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface, Fi
 
     private function createTimesheetEntry(User $user, Activity $activity, Project $project, ?string $description, bool $setEndDate)
     {
-        $start = new \DateTime();
-        $start = $start->modify('- ' . (rand(self::TIMERANGE_BEGIN_DAYS, self::TIMERANGE_END_DAYS)) . ' days');
+        $start = $this->getRandomFirstDay();
         $start = $start->modify('- ' . (rand(1, 86400)) . ' seconds');
         $start->setTimezone(new \DateTimeZone($user->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get())));
 
@@ -246,7 +237,7 @@ class TimesheetFixtures extends Fixture implements DependentFixtureInterface, Fi
         } else {
             // running entries should be short
             $newBegin = clone $entry->getBegin();
-            $newBegin->setTimestamp(time())->modify('- ' . rand(10, self::TIMERANGE_RUNNING) . ' minutes');
+            $newBegin->setTimestamp(time())->modify('- ' . rand(self::MIN_MINUTES_PER_ENTRY, self::MAX_MINUTES_PER_ENTRY) . ' minutes');
             $entry->setBegin($newBegin);
         }
 

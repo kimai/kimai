@@ -76,10 +76,9 @@ final class PaginatedWorkingTimeChart extends SimpleWidget implements UserWidget
         $week = $options['week'];
 
         $weekBegin = ($dateTimeFactory->createDateTime())->setISODate($year, $week, 1)->setTime(0, 0, 0);
-        $weekEnd = ($dateTimeFactory->createDateTime())->setISODate($year, $week, 7)->setTime(23, 59, 59);
 
         $weekBegin = $dateTimeFactory->getStartOfWeek($weekBegin);
-        $weekEnd = $dateTimeFactory->getEndOfWeek($weekEnd);
+        $weekEnd = $dateTimeFactory->getEndOfWeek($weekBegin);
 
         $lastWeekInYear = $this->getLastWeekInYear($year);
         $lastWeekInLastYear = $this->getLastWeekInYear($year - 1);
