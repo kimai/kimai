@@ -4,7 +4,7 @@
 {% import "macros/search.html.twig" as search %}
 {% import "tags/actions.html.twig" as actions %}
 
-{% block page_title %}{{ 'menu.tags'|trans }}{% endblock %}
+{% block page_title %}{{ 'tags'|trans }}{% endblock %}
 {% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
 {% block page_actions %}{{ actions.tags('index', query) }}{% endblock %}
 

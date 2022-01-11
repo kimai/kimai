@@ -54,6 +54,10 @@
         <source>action.upload.error</source>
         <target>Nie można przesłać lub zapisać pliku: %reason%</target>
       </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R">
+        <source>action.csrf.error</source>
+        <target>Ta akcja nie może być zrealizowana: błędny klucz bezpieczeństwa.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

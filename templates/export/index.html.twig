@@ -16,6 +16,7 @@
 } %}
 
 {% set tableName = 'export' %}
+{% set editExported = is_granted('edit_exported_timesheet') %}
 {% set showMarkAsExportedButton = false %}
 {% set showToggleButton = false %}
 {% if entries is not empty and is_granted('edit_export_other_timesheet') %}
@@ -211,14 +212,18 @@
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
                     {% if is_granted('edit_export', entry) %}
                         {% if entry.exported %}
-                            <button type="button" class="btn btn-outline-secondary exportBtn active" data-toggle="button" aria-pressed="true"
-                                    data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
-                            {{ 'entryState.exported'|trans }}
-                            </button>
+                            {% if editExported %}
+                                <button type="button" class="btn btn-outline-secondary exportBtn active" data-toggle="button" aria-pressed="true"
+                                        data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
+                                    {{ 'entryState.exported'|trans }}
+                                </button>
+                            {% else %}
+                                {{ 'entryState.exported'|trans }}
+                            {% endif %}
                         {% else %}
                             <button type="button" class="btn btn-light exportBtn" data-toggle="button" aria-pressed="false"
                                     data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
-                            {{ 'entryState.not_exported'|trans }}
+                                {{ 'entryState.not_exported'|trans }}
                             </button>
                         {% endif %}
                     {% else %}
@@ -245,6 +250,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        // FIXME v2
         function updateTimesheetExportState(node, id, exported)
         {
             /** @type {KimaiAlert} */
@@ -265,6 +271,63 @@
                     }
                 }
             );
+        }
+
+        // FIXME v1
+        function updateTimesheetExportState_v1(button, id, exported)
+        {
+            var ALERT = kimai.getPlugin('alert');
+
+            // FIXME use Kimai API plugin
+            $.ajax({
+                url: '{{ path('export_timesheet', {id: '-s-'}) }}'.replace('-s-', id),
+                headers: {
+                    'X-AUTH-SESSION': true,
+                    'Content-Type':'application/json'
+                },
+                method: 'PATCH',
+                success: function(data) {
+                    let isShowAll = jQuery('select#exported').val() === '{{ constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') }}';
+                    if (exported) {
+                        {% if editExported %}
+                        button.button('exported');
+                        {% else %}
+                        if (isShowAll) {
+                            button.replaceWith('{{ 'entryState.exported'|trans }}');
+                        }
+                        {% endif %}
+                    } else {
+                        button.button('clean');
+                    }
+                    if (!isShowAll) {
+                        button.closest('tr').hide('ease', function() {
+                            jQuery(this).remove();
+                            if(jQuery(this).closest('table').find('tbody tr:visible').length === 0) {
+                                jQuery('#export-buttons button').prop('disabled', true);
+                            }
+                        });
+                    }
+                }, error: function(jqXHR, textStatus, errorThrown) {
+                    var message = 'An error occured';
+                    if (jqXHR.responseJSON !== undefined) {
+                        message = jqXHR.responseJSON.message;
+                        if (jqXHR.responseJSON.errors !== undefined)
+                        {
+                            var errors = jqXHR.responseJSON.errors.errors;
+                            for (var i = 0; i < errors.length; i++) {
+                                message += ' / ' + errors[i];
+                            }
+                        }
+                    }
+                    ALERT.error('{{ 'action.update.error'|trans({}, 'flashmessages') }}', message);
+                    button.button('reset');
+                    if (exported) {
+                        button.removeClass('active');
+                    } else {
+                        button.addClass('active');
+                    }
+                }
+            });
         }
 
         document.addEventListener('kimai.initialized', function() {
@@ -328,6 +391,17 @@
                     // ... so the button is re-enabled immediately - that should be fixed in a future update
                     document.getElementById(displayBtn).classList.remove('d-none');
                     document.getElementById(hideBtn).classList.add('d-none');
+                    // FIXME master below
+                    /*
+                    btn.removeClass('disabled');
+                    if (btn.hasClass('export-off')) {
+                        btn.removeClass('export-off');
+                        btn.html('<i class="fas fa-toggle-off"></i>');
+                    } else {
+                        btn.addClass('export-off');
+                        btn.html('<i class="fas fa-toggle-on"></i>');
+                    }
+                    */
                 });
             }
 

@@ -9,6 +9,8 @@
 
 namespace App\Invoice;
 
+use App\Activity\ActivityStatisticService;
+use App\Customer\CustomerStatisticService;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Entity\User;
@@ -18,6 +20,7 @@ use App\Invoice\Hydrator\InvoiceModelCustomerHydrator;
 use App\Invoice\Hydrator\InvoiceModelDefaultHydrator;
 use App\Invoice\Hydrator\InvoiceModelProjectHydrator;
 use App\Invoice\Hydrator\InvoiceModelUserHydrator;
+use App\Project\ProjectStatisticService;
 use App\Repository\Query\InvoiceQuery;
 
 /**
@@ -75,14 +78,17 @@ final class InvoiceModel
      */
     private $invoiceNumber;
 
-    public function __construct(InvoiceFormatter $formatter)
+    /**
+     * @internal use InvoiceModelFactory
+     */
+    public function __construct(InvoiceFormatter $formatter, CustomerStatisticService $customerStatistic, ProjectStatisticService $projectStatistic, ActivityStatisticService $activityStatistic)
     {
         $this->invoiceDate = new \DateTime();
         $this->formatter = $formatter;
         $this->addModelHydrator(new InvoiceModelDefaultHydrator());
-        $this->addModelHydrator(new InvoiceModelCustomerHydrator());
-        $this->addModelHydrator(new InvoiceModelProjectHydrator());
-        $this->addModelHydrator(new InvoiceModelActivityHydrator());
+        $this->addModelHydrator(new InvoiceModelCustomerHydrator($customerStatistic));
+        $this->addModelHydrator(new InvoiceModelProjectHydrator($projectStatistic));
+        $this->addModelHydrator(new InvoiceModelActivityHydrator($activityStatistic));
         $this->addModelHydrator(new InvoiceModelUserHydrator());
         $this->addItemHydrator(new InvoiceItemDefaultHydrator());
     }

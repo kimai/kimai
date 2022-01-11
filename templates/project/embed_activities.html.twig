@@ -1,7 +1,7 @@
     {% embed '@theme/embeds/card.html.twig' with {'project': project, 'activities': activities, 'page': page} %}
         {% import "activity/actions.html.twig" as actions %}
         {% import "macros/widgets.html.twig" as widgets %}
-        {% block box_title %}{{ 'menu.admin_activity'|trans }}{% endblock %}
+        {% block box_title %}{{ 'activities'|trans }}{% endblock %}
         {% block box_attributes %}
             id="activity_list_box" data-reload="kimai.activityUpdate kimai.activityDelete"
         {% endblock %}

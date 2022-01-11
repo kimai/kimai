@@ -42,7 +42,11 @@ final class TimesheetExportedValidator extends ConstraintValidator
             return;
         }
 
-        if (null !== $this->security->getUser() && $this->security->isGranted('edit_exported_timesheet')) {
+        // this was "edit_exported_timesheet" before, but that was wrong, because the first time this
+        // can trigger is the moment when the "export" flag ist set from the "edit form".
+        // most teamleads should not have "edit_exported_timesheet" but only "edit_export_other_timesheet"
+
+        if (null !== $this->security->getUser() && $this->security->isGranted('edit_export', $timesheet)) {
             return;
         }
 

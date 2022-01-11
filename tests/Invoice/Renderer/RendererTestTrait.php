@@ -30,6 +30,7 @@ use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\AbstractRenderer;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
+use App\Tests\Mocks\InvoiceModelFactoryFactory;
 
 trait RendererTestTrait
 {
@@ -217,7 +218,7 @@ trait RendererTestTrait
         $query->setEnd(new \DateTime());
         $query->setProjects([$project, $project2]);
 
-        $model = new InvoiceModel($this->getFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel($this->getFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->addEntries($entries);
@@ -301,7 +302,7 @@ trait RendererTestTrait
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
 
-        $model = new InvoiceModel($this->getFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel($this->getFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->addEntries($entries);

@@ -14,6 +14,34 @@
         <source>report_monthly_users</source>
         <target>Měsíční pohled všech uživatelů</target>
       </trans-unit>
+      <trans-unit id="q_A4AHD" resname="report_weekly_users">
+        <source>report_weekly_users</source>
+        <target>Týdenní pohled všech uživatelů</target>
+      </trans-unit>
+      <trans-unit id="518eY_l" resname="report_project_details">
+        <source>report_project_details</source>
+        <target>Podrobnosti o projektu</target>
+      </trans-unit>
+      <trans-unit id="BQAsynV" resname="report_project_daterange">
+        <source>report_project_daterange</source>
+        <target>Měsíční výkaz</target>
+      </trans-unit>
+      <trans-unit id="1gBKwGH" resname="report_inactive_project">
+        <source>report_inactive_project</source>
+        <target>Neaktivní projekty</target>
+      </trans-unit>
+      <trans-unit id="R.9yUkf" resname="report_project_view">
+        <source>report_project_view</source>
+        <target>Přehled projektu</target>
+      </trans-unit>
+      <trans-unit id="VD98UBN" resname="report_yearly_users">
+        <source>report_yearly_users</source>
+        <target>Roční pohled všech uživatelů</target>
+      </trans-unit>
+      <trans-unit id="ns_jU13" resname="reporting.initial_view">
+        <source>reporting.initial_view</source>
+        <target>Počáteční výkaz</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

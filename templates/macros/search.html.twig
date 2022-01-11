@@ -12,7 +12,7 @@
             {% set orderHasError = form.orderBy.vars.errors|length > 0 or form.order.vars.errors|length > 0 %}
             {% set orderBy = form_widget(form.orderBy) %}
             {% set order = form_widget(form.order) %}
-            {{ form_widget(form) }}
+            {{ form_rest(form) }}
             <div class="row mb-3{% if orderHasError %} is-invalid{% endif %}">
                 {{ form_label(form.orderBy) }}
                 <div class="col-sm-5 col-xs-5">
@@ -36,6 +36,7 @@
 {% endmacro %}
 
 {% macro searchButton(form) %}
+    <input type="hidden" name="_token" value="{{ csrf_token('search') }}">
     <div class="btn-group me-auto">
         {% if form.vars.data.bookmark %}
             <button type="submit" id="setDefaultQuery" name="setDefaultQuery" class="btn btn-outline-secondary" data-toggle="tooltip" title="{{ 'label.set_as_default'|trans }}">

@@ -45,6 +45,7 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
+    public const PLUGIN_DIRECTORY = '/var/plugins';
     public const CONFIG_EXTS = '.{php,xml,yaml,yml}';
 
     public const TAG_PLUGIN = 'kimai.plugin';
@@ -128,8 +129,7 @@ class Kernel extends BaseKernel
 
     private function getBundleClasses(): array
     {
-        //return[]; // FIXME remove me
-        $pluginsDir = $this->getProjectDir() . '/var/plugins';
+        $pluginsDir = $this->getProjectDir() . self::PLUGIN_DIRECTORY;
         if (!file_exists($pluginsDir)) {
             return [];
         }

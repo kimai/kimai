@@ -26,6 +26,7 @@ use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
+use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -53,6 +54,16 @@ class InvoiceTest extends TestCase
         self::assertFalse($sut->isPaid());
         self::assertFalse($sut->isOverdue());
         self::assertNull($sut->getPaymentDate());
+        self::assertNull($sut->getComment());
+    }
+
+    public function testSetInvalidStatus()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown invoice status');
+
+        $sut = new Invoice();
+        $sut->setStatus('foo');
     }
 
     public function testSetterAndGetter()
@@ -64,17 +75,35 @@ class InvoiceTest extends TestCase
         self::assertFalse($sut->isNew());
         self::assertTrue($sut->isPending());
         self::assertFalse($sut->isPaid());
+        self::assertFalse($sut->isCanceled());
+        self::assertEquals(Invoice::STATUS_PENDING, $sut->getStatus());
 
         $sut->setIsPaid();
         self::assertFalse($sut->isNew());
         self::assertFalse($sut->isPending());
         self::assertTrue($sut->isPaid());
+        self::assertFalse($sut->isCanceled());
+        self::assertEquals(Invoice::STATUS_PAID, $sut->getStatus());
+
+        $sut->setStatus(Invoice::STATUS_PENDING);
+        self::assertTrue($sut->isPending());
+        self::assertEquals(Invoice::STATUS_PENDING, $sut->getStatus());
+
+        $sut->setIsCanceled();
+        self::assertFalse($sut->isNew());
+        self::assertFalse($sut->isPending());
+        self::assertFalse($sut->isPaid());
+        self::assertFalse($sut->isOverdue());
+        self::assertTrue($sut->isCanceled());
+        self::assertEquals(Invoice::STATUS_CANCELED, $sut->getStatus());
 
         $sut->setIsNew();
         self::assertTrue($sut->isNew());
         self::assertFalse($sut->isPending());
         self::assertFalse($sut->isPaid());
         self::assertFalse($sut->isOverdue());
+        self::assertFalse($sut->isCanceled());
+        self::assertEquals(Invoice::STATUS_NEW, $sut->getStatus());
 
         $paymentDate = new \DateTime();
         $sut->setPaymentDate($paymentDate);
@@ -101,6 +130,9 @@ class InvoiceTest extends TestCase
         self::assertEquals(348.99, $sut->getTotal());
         self::assertNotNull($sut->getUser());
         self::assertEquals(19, $sut->getVat());
+
+        $sut->setComment('foo bar');
+        self::assertEquals('foo bar', $sut->getComment());
     }
 
     protected function getInvoiceModel(\DateTime $created): InvoiceModel
@@ -158,7 +190,7 @@ class InvoiceTest extends TestCase
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
 
-        $model = new InvoiceModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->addEntries($entries);

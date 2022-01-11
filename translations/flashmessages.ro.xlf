@@ -54,6 +54,10 @@
         <source>action.upload.error</source>
         <target>Acest fișier nu a putut fi încărcat sau salvat: %reason%</target>
       </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R">
+        <source>action.csrf.error</source>
+        <target>Acțiunea nu a putut fi efectuată: token de securitate invalid.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

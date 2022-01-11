@@ -114,15 +114,15 @@
             {% if form.begin is defined and form.end is defined and form.duration is defined %}
                 {% set blockPrefix = form.vars.id %}
                 <script type="text/javascript">
-                    $('body').on('change', '#{{ blockPrefix }}_begin', function(ev) {
-                        changedBegin($(this).val());
+                    jQuery('body').on('change', '#{{ blockPrefix }}_begin', function(ev) {
+                        changedBegin(jQuery(this).val());
                     });
 
-                    $('body').on('change', '#{{ blockPrefix }}_end', function(ev) {
-                        changedEnd($(this).val());
+                    jQuery('body').on('change', '#{{ blockPrefix }}_end', function(ev) {
+                        changedEnd(jQuery(this).val());
                     });
 
-                    $('body').on('change', '#{{ blockPrefix }}_duration', function(ev) {
+                    jQuery('body').on('change', '#{{ blockPrefix }}_duration', function(ev) {
                         changedDuration();
                     });
 

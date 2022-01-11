@@ -357,6 +357,11 @@ class SystemConfiguration implements SystemBundleConfiguration
         return $this->getIncrement('timesheet.time_increment', $this->getTimesheetDefaultRoundingEnd(), 0);
     }
 
+    public function getQuickEntriesRecentAmount(): int
+    {
+        return $this->getIncrement('quick_entry.recent_activities', 5, 0) ?? 5;
+    }
+
     // ========== Company configurations ==========
 
     public function getFinancialYearStart(): ?string

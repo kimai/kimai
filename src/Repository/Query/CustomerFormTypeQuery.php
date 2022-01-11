@@ -20,6 +20,7 @@ final class CustomerFormTypeQuery extends BaseFormTypeQuery
      * @var Customer|null
      */
     private $customerToIgnore;
+    private $allowCustomerPreselect = false;
 
     /**
      * @param Customer|int|null $customer
@@ -32,6 +33,16 @@ final class CustomerFormTypeQuery extends BaseFormTypeQuery
             }
             $this->setCustomers($customer);
         }
+    }
+
+    public function isAllowCustomerPreselect(): bool
+    {
+        return $this->allowCustomerPreselect;
+    }
+
+    public function setAllowCustomerPreselect(bool $allowCustomerPreselect): void
+    {
+        $this->allowCustomerPreselect = $allowCustomerPreselect;
     }
 
     /**

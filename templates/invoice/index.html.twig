@@ -79,7 +79,7 @@
         {% embed '@theme/embeds/card.html.twig' %}
             {% import "macros/widgets.html.twig" as widgets %}
             {% block box_title %}
-                {{ 'button.preview'|trans }}: {{ 'invoice.title'|trans }}
+                {{ 'button.preview'|trans }}: {{ 'invoices'|trans }}
             {% endblock %}
             {% block box_body_class %}p-0{% endblock %}
             {% block box_footer %}
@@ -112,8 +112,12 @@
                                     <span title="{{ 'label.vat'|trans }}: {{ model.calculator.tax|money(currency) }}" data-toggle="tooltip">{{ model.calculator.total|money(currency) }}</span>
                                 </td>
                                 <td class="w-min text-center actions alwaysVisible">
+                                    {# v2 und aktiv ist v1
                                     {{ widgets.action_button('print', {'icon': 'print', 'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'attr': {'data-href': path('invoice_preview', {'customer': model.customer.id, 'template': model.template.id})}}, 'secondary') }}
                                     {{ widgets.action_button('save', {'icon': 'invoice', 'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'attr': {'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id})}}, 'success') }}
+                                    #}
+                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'class': 'btn btn-sm', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_preview', {'customer': model.customer.id, 'token': csrf_token('invoice.preview')})}}) }}
+                                    {{ widgets.action_button('save', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'class': 'btn btn-sm', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id, 'token': csrf_token('invoice.create')})}}, 'success') }}
                                 </td>
                             </tr>
                         {% endfor %}
@@ -214,21 +218,21 @@
 
         function singleInvoice(link)
         {
-            let formPlugin = kimai.getPlugin('form');
-            let data = formPlugin.getFormData(document.getElementById('{{ formId }}'));
-            let uri = formPlugin.convertFormDataToQueryString(data);
-            let baseUrl = link.getAttribute('data-href');
-            link.href = baseUrl + '?' + uri;
+            const formPlugin = kimai.getPlugin('form');
+            const overwrites = {'customers[]': link.dataset['customer'], 'template': link.dataset['template']};
+            const uri = formPlugin.convertFormDataToQueryString(document.getElementById('{{ formId }}'), overwrites);
+
+            link.href = link.dataset['href'] + '?' + uri;
 
             return true;
         }
 
         function saveAllInvoices(link)
         {
-            let formPlugin = kimai.getPlugin('form');
-            let data = formPlugin.getFormData(document.getElementById('{{ formId }}'));
-            let uri = formPlugin.convertFormDataToQueryString(data);
-            link.href = '{{ path('invoice') }}?createInvoice=true&' + uri;
+            const formPlugin = kimai.getPlugin('form');
+            const uri = formPlugin.convertFormDataToQueryString(document.getElementById('{{ formId }}'));
+
+            link.href = '{{ path('invoice') }}?token={{ csrf_token('invoice.create') }}&createInvoice=true&' + uri;
 
             return true;
         }

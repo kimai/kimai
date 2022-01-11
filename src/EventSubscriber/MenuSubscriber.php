@@ -64,7 +64,7 @@ final class MenuSubscriber implements EventSubscriberInterface
             }
 
             $times->addChild(
-                new MenuItemModel('calendar', 'calendar.title', 'calendar', [], 'calendar')
+                new MenuItemModel('calendar', 'calendar', 'calendar', [], 'calendar')
             );
         }
 
@@ -86,12 +86,12 @@ final class MenuSubscriber implements EventSubscriberInterface
             $menu->addChild($times);
         }
 
-        $invoice = new MenuItemModel('invoice', 'invoice.title', null, [], 'invoice');
+        $invoice = new MenuItemModel('invoice', 'invoices', null, [], 'invoice');
         $invoice->setChildRoutes(['admin_invoice_template', 'admin_invoice_template_edit', 'admin_invoice_template_create', 'admin_invoice_template_copy', 'admin_invoice_list', 'admin_invoice_document_upload']);
 
         if ($auth->isGranted('view_invoice')) {
             $invoice->addChild(new MenuItemModel('invoice', 'invoice_form.title', 'invoice', [], 'invoice'));
-            $invoice->addChild(new MenuItemModel('invoice-listing', 'invoice.title', 'admin_invoice_list', [], 'list'));
+            $invoice->addChild(new MenuItemModel('invoice-listing', 'invoices', 'admin_invoice_list', [], 'list'));
 
             if ($auth->isGranted('manage_invoice_template')) {
                 $invoice->addChild(new MenuItemModel('invoice-template', 'admin_invoice_template.title', 'admin_invoice_template', [], 'invoice-template'));
@@ -114,26 +114,26 @@ final class MenuSubscriber implements EventSubscriberInterface
         $menu = $event->getAdminMenu();
 
         if ($auth->isGranted('view_customer') || $auth->isGranted('view_teamlead_customer') || $auth->isGranted('view_team_customer')) {
-            $customers = new MenuItemModel('customer_admin', 'menu.admin_customer', 'admin_customer', [], 'customer');
+            $customers = new MenuItemModel('customer_admin', 'customers', 'admin_customer', [], 'customer');
             $customers->setChildRoutes(['admin_customer_create', 'admin_customer_permissions', 'customer_details', 'admin_customer_edit', 'admin_customer_delete']);
             $menu->addChild($customers);
         }
 
         if ($auth->isGranted('view_project') || $auth->isGranted('view_teamlead_project') || $auth->isGranted('view_team_project')) {
-            $projects = new MenuItemModel('project_admin', 'menu.admin_project', 'admin_project', [], 'project');
+            $projects = new MenuItemModel('project_admin', 'projects', 'admin_project', [], 'project');
             $projects->setChildRoutes(['admin_project_permissions', 'admin_project_create', 'project_details', 'admin_project_edit', 'admin_project_delete']);
             $menu->addChild($projects);
         }
 
         if ($auth->isGranted('view_activity') || $auth->isGranted('view_teamlead_activity') || $auth->isGranted('view_team_activity')) {
-            $activities = new MenuItemModel('activity_admin', 'menu.admin_activity', 'admin_activity', [], 'activity');
+            $activities = new MenuItemModel('activity_admin', 'activities', 'admin_activity', [], 'activity');
             $activities->setChildRoutes(['admin_activity_create', 'activity_details', 'admin_activity_edit', 'admin_activity_delete']);
             $menu->addChild($activities);
         }
 
         if ($auth->isGranted('view_tag')) {
             $menu->addChild(
-                new MenuItemModel('tags', 'menu.tags', 'tags', [], 'fas fa-tags')
+                new MenuItemModel('tags', 'tags', 'tags', [], 'fas fa-tags')
             );
         }
 
@@ -143,7 +143,7 @@ final class MenuSubscriber implements EventSubscriberInterface
         $menu = $event->getSystemMenu();
 
         if ($auth->isGranted('view_user')) {
-            $users = new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], 'users');
+            $users = new MenuItemModel('user_admin', 'users', 'admin_user', [], 'users');
             $users->setChildRoutes(['admin_user_create', 'admin_user_delete',  'user_profile', 'user_profile_edit', 'user_profile_password', 'user_profile_api_token', 'user_profile_roles', 'user_profile_teams', 'user_profile_preferences']);
             $menu->addChild($users);
         }

@@ -31,7 +31,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col text-center">
-                    <a href="{{ path('saml_login') }}" class="btn btn-white w-50">
+                    <a href="{{ path('saml_login') }}" tabindex="50" class="btn btn-white w-50">
                         {% set provider = kimai_config.samlProvider %}
                         {% if provider is not null %}
                             <i class="icon fab fa-{{ provider}} text-{{ provider }}"></i>

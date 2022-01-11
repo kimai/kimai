@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sv" datatype="plaintext" original="actions.en.xlf">
     <body>
@@ -34,20 +34,20 @@
         <source>settings</source>
         <target state="translated">Inställningar</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
+      <trans-unit id="xovWV.Y" resname="timesheet.filter">
+        <source>Filter timesheets</source>
         <target state="translated">Tidrapport</target>
       </trans-unit>
-      <trans-unit id="tsRYY4d" resname="customer">
-        <source>customer</source>
+      <trans-unit id="U7.woIo" resname="customer.filter">
+        <source>Filter customers</source>
         <target state="translated">Filtrera kunder</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
-        <source>project</source>
+      <trans-unit id="j9gsVnq" resname="project.filter">
+        <source>Filter projects</source>
         <target state="translated">Filtrera projekt</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
-        <source>activity</source>
+      <trans-unit id="xl_5l3y" resname="activity.filter">
+        <source>Filter activities</source>
         <target state="translated">Filtrera aktiviter</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
@@ -97,6 +97,10 @@
       <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser">
         <source>create-timesheet-multiuser</source>
         <target>För flera användare</target>
+      </trans-unit>
+      <trans-unit id="SEyZupT" resname="invoice.cancel">
+        <source>invoice.cancel</source>
+        <target>Avbryt faktura</target>
       </trans-unit>
     </body>
   </file>

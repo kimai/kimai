@@ -6,7 +6,7 @@
 
 {% macro invoice(invoice, view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'invoice', view, {'invoice': invoice, 'token': csrf_token('invoice.delete')}) %}
+    {% set event = actions(app.user, 'invoice', view, {'invoice': invoice, 'token': csrf_token('invoice.status')}) %}
     {{ widgets.table_actions(event.actions) }}
 {% endmacro %}
 
@@ -31,5 +31,11 @@
 {% macro invoice_template(template, view) %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set event = actions(app.user, 'invoice_template', view, {'template': template, 'token': csrf_token('invoice.delete_template')}) %}
+    {{ widgets.table_actions(event.actions) }}
+{% endmacro %}
+
+{% macro invoice_document(document, view) %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% set event = actions(app.user, 'invoice_document', view, {'document': document, 'token': csrf_token('invoice.delete_document')}) %}
     {{ widgets.table_actions(event.actions) }}
 {% endmacro %}

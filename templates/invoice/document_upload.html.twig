@@ -1,29 +1,33 @@
-{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 {% import "invoice/actions.html.twig" as actions %}
+{% import "macros/widgets.html.twig" as widgets %}
 
-{% block page_title %}{{ 'invoice_document.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'label.invoice_renderer'|trans({}, 'invoice-renderer') }}{% endblock %}
 {% block page_actions %}{{ actions.invoice_upload('index') }}{% endblock %}
 
 {% block main %}
-    {% if form is not null %}
-        {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+    {% if can_upload and form is not null %}
+        {% form_theme form '@theme/layout/form-theme-horizontal.html.twig' %}
         {% set formOptions = {
             'title': 'upload'|trans,
             'form': form,
+            'back': false,
             'reset': false
         } %}
 
-        {% embed formEditTemplate with formOptions %}
+        {% embed 'default/_form.html.twig' with formOptions %}
             {% block form_body %}
                 {{ form_row(form.document) }}
                 {{ form_widget(form) }}
             {% endblock %}
         {% endembed %}
+    {% elseif upload_error is not null %}
+        {{ widgets.callout('warning', upload_error|trans(error_replacer)) }}
     {% endif %}
 
     {% if documents|length > 0 %}
         {% embed '@theme/embeds/card.html.twig' with {'documents': documents} %}
-            {% import "project/actions.html.twig" as actions %}
+            {% import "invoice/actions.html.twig" as actions %}
             {% import "macros/widgets.html.twig" as widgets %}
             {% block box_title %}{{ 'label.invoice_renderer'|trans({}, 'invoice-renderer') }}{% endblock %}
             {% block box_attributes %}
@@ -33,16 +37,29 @@
             {% block box_body %}
                 <table class="table table-hover dataTable">
                     <thead>
-                        <th>{{ 'label.id'|trans }}</th>
-                        <th>{{ 'label.date'|trans }}</th>
-                        <th>{{ 'file'|trans }}</th>
+                        <tr>
+                            <th>{{ 'file'|trans }}</th>
+                            <th>{{ 'updated_at'|trans }}</th>
+                            <th>{{ 'label.template'|trans }}</th>
+                            <th></th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {% for document in documents %}
+                    {% for config in documents %}
+                        {% set document = config.document %}
                         <tr>
-                            <td class="text-nowrap">{{ document.id }}</td>
-                            <td class="text-nowrap">{{ document.lastChange|date }}</td>
                             <td>{{ document.name }}</td>
+                            <td>{{ document.lastChange|date }}</td>
+                            <td>
+                                {% if config.template is not null %}
+                                    {{ config.template.name }}
+                                {% endif %}
+                            </td>
+                            <td class="actions">
+                                {% if not config.used %}
+                                    {{ actions.invoice_document(document, 'index') }}
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

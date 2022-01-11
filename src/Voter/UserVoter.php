@@ -29,7 +29,6 @@ final class UserVoter extends Voter
         'preferences',
         'api-token',
         'hourly-rate',
-        // teams_own_profile could be merged with view_team_member
         'view_team_member',
     ];
 

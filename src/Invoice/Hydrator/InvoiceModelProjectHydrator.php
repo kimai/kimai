@@ -10,39 +10,52 @@
 namespace App\Invoice\Hydrator;
 
 use App\Entity\Project;
-use App\Invoice\InvoiceFormatter;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
+use App\Project\ProjectStatisticService;
 
 class InvoiceModelProjectHydrator implements InvoiceModelHydrator
 {
+    use BudgetHydratorTrait;
+
+    private $projectStatistic;
+
+    public function __construct(ProjectStatisticService $projectStatistic)
+    {
+        $this->projectStatistic = $projectStatistic;
+    }
+
     public function hydrate(InvoiceModel $model): array
     {
         if (!$model->getQuery()->hasProjects()) {
             return [];
         }
 
-        $formatter = $model->getFormatter();
-        $currency = $model->getCurrency();
-
         $values = [];
         $i = 0;
+
+        if (\count($model->getQuery()->getProjects()) === 1) {
+            $values['project'] = $model->getQuery()->getProjects()[0]->getName();
+        }
 
         foreach ($model->getQuery()->getProjects() as $project) {
             $prefix = '';
             if ($i > 0) {
                 $prefix = $i . '.';
             }
-            $values = array_merge($values, $this->getValuesFromProject($project, $formatter, $currency, $prefix));
+            $values = array_merge($values, $this->getValuesFromProject($model, $project, $prefix));
             $i++;
         }
 
         return $values;
     }
 
-    private function getValuesFromProject(Project $project, InvoiceFormatter $formatter, string $currency, string $prefix): array
+    private function getValuesFromProject(InvoiceModel $model, Project $project, string $prefix): array
     {
         $prefix = 'project.' . $prefix;
+
+        $formatter = $model->getFormatter();
+        $currency = $model->getCurrency();
 
         $values = [
             $prefix . 'id' => $project->getId(),
@@ -59,6 +72,10 @@ class InvoiceModelProjectHydrator implements InvoiceModelHydrator
             $prefix . 'budget_time_decimal' => $formatter->getFormattedDecimalDuration($project->getTimeBudget()),
             $prefix . 'budget_time_minutes' => (int) ($project->getTimeBudget() / 60),
         ];
+
+        $statistic = $this->projectStatistic->getBudgetStatisticModel($project, $model->getQuery()->getEnd());
+
+        $values = array_merge($values, $this->getBudgetValues($prefix, $statistic, $model));
 
         foreach ($project->getVisibleMetaFields() as $metaField) {
             $values = array_merge($values, [
