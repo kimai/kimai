@@ -186,10 +186,6 @@
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>Permitir entradas de tempo sobrepostas</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target>Faturas</target>
-      </trans-unit>
       <trans-unit id="ZUTc3eH" resname="label.calendar.dragdrop_amount">
         <source>label.calendar.dragdrop_amount</source>
         <target>Quantidade das entradas para arrastar e largar (0 = desativado)</target>

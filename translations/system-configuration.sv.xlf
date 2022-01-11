@@ -234,10 +234,6 @@
         <source>label.theme.avatar_url</source>
         <target>Tillåt URL:er för profilbilder</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target>Fakturor</target>
-      </trans-unit>
       <trans-unit id="ZUTc3eH" resname="label.calendar.dragdrop_amount">
         <source>label.calendar.dragdrop_amount</source>
         <target>Antalet poster för dra &amp; släpp (0 = inaktiverat)</target>

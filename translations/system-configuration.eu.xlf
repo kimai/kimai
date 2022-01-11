@@ -206,10 +206,6 @@
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>Baimendu gainjarritako denbora-sarrerak</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target>Fakturak</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

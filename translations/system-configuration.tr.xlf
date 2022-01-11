@@ -186,10 +186,6 @@
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>Çakışan zaman kayıtlarına izin ver</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target>Faturalar</target>
-      </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
         <target>Kapalı</target>

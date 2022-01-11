@@ -162,10 +162,6 @@
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>Permetti la sovrapposizione di voci di tempo</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target>Fatture</target>
-      </trans-unit>
       <trans-unit id="A3HPT4p" resname="label.saml_activate">
         <source>label.saml_activate</source>
         <target>Accesso SAML</target>

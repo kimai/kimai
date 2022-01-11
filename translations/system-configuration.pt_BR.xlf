@@ -186,10 +186,6 @@
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>Permitir entradas de tempo sobrepostas</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target>Faturas</target>
-      </trans-unit>
       <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
         <source>help.theme.color_choices</source>
         <target>Lista separada por vírgulas com os códigos das cores HTML. Os nomes das cores podem ser definidos através do prefixo do código da cor com um nome e o delimitador |, por exemplo: Branco|#ffffffff,Preto|#000000.</target>

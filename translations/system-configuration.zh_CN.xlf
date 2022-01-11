@@ -246,10 +246,6 @@
         <source>label.theme.random_colors</source>
         <target>对没有指定颜色的对象使用随机颜色</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target>发票</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

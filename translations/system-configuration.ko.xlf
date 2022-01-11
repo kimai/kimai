@@ -186,10 +186,6 @@
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>겹치는 시간 항목 허용</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target>인보이스</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

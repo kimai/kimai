@@ -114,10 +114,6 @@
         <source>label.timesheet.rules.allow_overlapping_records</source>
         <target>Permitir registros de tiempo traslapados</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target>Facturas</target>
-      </trans-unit>
       <trans-unit id="Hnl7Jxt" resname="label.timesheet.rounding.default.duration">
         <source>label.timesheet.rounding.default.duration</source>
         <target>Redondeo de la duración en minutos (0 = desactivado)</target>

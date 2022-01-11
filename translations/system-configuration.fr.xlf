@@ -186,10 +186,6 @@
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target>[Durée] heure de début fixe configurable, seule la durée peut-être modifiée</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target>Factures</target>
-      </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
         <target>Désactivé</target>
