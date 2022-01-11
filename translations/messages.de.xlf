@@ -73,8 +73,8 @@
         <target>Suchfavorit löschen</target>
       </trans-unit>
       <trans-unit id="label.remove_filter">
-          <source>label.remove_filter</source>
-          <target>Suchfilter zurücksetzen</target>
+        <source>label.remove_filter</source>
+        <target>Suchfilter zurücksetzen</target>
       </trans-unit>
       <trans-unit id="31x84Dt" resname="label.asc">
         <source>label.asc</source>
@@ -916,18 +916,18 @@
         <source>admin_invoice_template.title</source>
         <target>Rechnungsvorlagen</target>
       </trans-unit>
-        <trans-unit id="invoice_document.title">
-            <source>invoice_document.title</source>
-            <target>Rechnungsdokument</target>
-        </trans-unit>
+      <trans-unit id="invoice_document.title">
+        <source>invoice_document.title</source>
+        <target>Rechnungsdokument</target>
+      </trans-unit>
       <trans-unit id="SR2r1Cs" resname="invoices">
         <source>invoices</source>
         <target>Rechnungen</target>
       </trans-unit>
-        <trans-unit id="invoice_form.title">
-            <source>invoice_form.title</source>
-            <target>Rechnung erstellen</target>
-        </trans-unit>
+      <trans-unit id="invoice_form.title">
+        <source>invoice_form.title</source>
+        <target>Rechnung erstellen</target>
+      </trans-unit>
       <trans-unit id="ov4OQOh" resname="invoice.filter">
         <source>invoice.filter</source>
         <target>Rechnungsdaten filtern</target>

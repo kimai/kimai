@@ -72,10 +72,10 @@
         <source>label.remove_default</source>
         <target>Delete search favourite</target>
       </trans-unit>
-        <trans-unit id="label.remove_filter">
-            <source>label.remove_filter</source>
-            <target>Reset search filter</target>
-        </trans-unit>
+      <trans-unit id="label.remove_filter">
+        <source>label.remove_filter</source>
+        <target>Reset search filter</target>
+      </trans-unit>
       <trans-unit id="31x84Dt" resname="label.asc">
         <source>label.asc</source>
         <target>Ascending</target>
