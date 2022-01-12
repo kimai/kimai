@@ -26,7 +26,7 @@ class InvoiceTemplatesSubscriber extends AbstractActionsSubscriber
 
         // File upload does not work in a modal right now
         if ($this->isGranted('upload_invoice_template')) {
-            $event->addAction('upload', ['url' => $this->path('admin_invoice_document_upload'), 'title' => 'invoice_document.title']);
+            $event->addAction('upload', ['url' => $this->path('admin_invoice_document_upload'), 'title' => 'label.invoice_renderer', 'translation_domain' => 'invoice-renderer']);
         }
 
         $event->addHelp($this->documentationLink('invoices.html'));
