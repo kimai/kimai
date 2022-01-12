@@ -920,10 +920,6 @@
         <source>admin_invoice_template.title</source>
         <target>Invoice template</target>
       </trans-unit>
-      <trans-unit id="YrkzpkS" resname="invoice_document.title">
-        <source>invoice_document.title</source>
-        <target>Invoice document</target>
-      </trans-unit>
       <trans-unit id="SR2r1Cs" resname="invoices">
         <source>invoices</source>
         <target>Invoices</target>
