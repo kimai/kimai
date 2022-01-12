@@ -110,21 +110,21 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/customer/1/details');
         self::assertHasProgressbar($client);
 
-        $node = $client->getCrawler()->filter('div.box#customer_details_box');
+        $node = $client->getCrawler()->filter('div.card#customer_details_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#project_list_box');
+        $node = $client->getCrawler()->filter('div.card#project_list_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#time_budget_box');
+        $node = $client->getCrawler()->filter('div.card#time_budget_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#budget_box');
+        $node = $client->getCrawler()->filter('div.card#budget_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#team_listing_box');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#comments_box');
+        $node = $client->getCrawler()->filter('div.card#comments_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#team_listing_box a.btn.btn-default');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box a.btn.btn-default');
         self::assertEquals(2, $node->count());
-        $node = $client->getCrawler()->filter('div.box#customer_rates_box');
+        $node = $client->getCrawler()->filter('div.card#customer_rates_box');
         self::assertEquals(1, $node->count());
     }
 
@@ -141,9 +141,9 @@ class CustomerControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#customer_rates_box');
+        $node = $client->getCrawler()->filter('div.card#customer_rates_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#customer_rates_box table.dataTable tbody tr:not(.summary)');
+        $node = $client->getCrawler()->filter('div.card#customer_rates_box table.dataTable tbody tr:not(.summary)');
         self::assertEquals(1, $node->count());
         self::assertStringContainsString('123.45', $node->text(null, true));
     }
@@ -160,7 +160,7 @@ class CustomerControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
+        $node = $client->getCrawler()->filter('div.card#comments_box .direct-chat-text');
         self::assertStringContainsString('<p>A beautiful and short comment <strong>with some</strong> markdown formatting</p>', $node->html());
     }
 
@@ -179,9 +179,9 @@ class CustomerControllerTest extends ControllerBaseTest
 
         $token = self::$container->get('security.csrf.token_manager')->getToken('customer.delete_comment');
 
-        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-msg');
+        $node = $client->getCrawler()->filter('div.card#comments_box .direct-chat-msg');
         self::assertStringContainsString('Blah foo bar', $node->html());
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.confirmation-link');
+        $node = $client->getCrawler()->filter('div.card#comments_box .box-body a.confirmation-link');
         self::assertStringEndsWith('/comment_delete/' . $token, $node->attr('href'));
 
         $comments = $this->getEntityManager()->getRepository(CustomerComment::class)->findAll();
@@ -190,7 +190,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/customer/' . $id . '/comment_delete/' . $token);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-body');
+        $node = $client->getCrawler()->filter('div.card#comments_box .box-body');
         self::assertStringContainsString('There were no comments posted yet', $node->html());
     }
 
@@ -227,9 +227,9 @@ class CustomerControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
+        $node = $client->getCrawler()->filter('div.card#comments_box .direct-chat-text');
         self::assertStringContainsString('Blah foo bar', $node->html());
-        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text a.btn.active');
+        $node = $client->getCrawler()->filter('div.card#comments_box .direct-chat-text a.btn.active');
         self::assertEquals(0, $node->count());
 
         $comments = $this->getEntityManager()->getRepository(CustomerComment::class)->findAll();
@@ -240,7 +240,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/customer/' . $id . '/comment_pin/' . $token);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.btn.active');
+        $node = $client->getCrawler()->filter('div.card#comments_box .box-body a.btn.active');
         $token2 = self::$container->get('security.csrf.token_manager')->getToken('customer.pin_comment');
         self::assertEquals(1, $node->count());
         self::assertEquals($this->createUrl('/admin/customer/' . $id . '/comment_pin/' . $token2), $node->attr('href'));
@@ -251,15 +251,15 @@ class CustomerControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/customer/1/details');
-        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .box-body');
         self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text(null, true));
 
         $this->request($client, '/admin/customer/1/create_team');
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-title');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .box-title');
         self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
-        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body table tbody tr');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .box-body table tbody tr');
         self::assertEquals(1, $node->count());
 
         // creating the default team a second time fails, as the name already exists
@@ -273,7 +273,7 @@ class CustomerControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/customer/1/projects/1');
-        $node = $client->getCrawler()->filter('div.box#project_list_box .box-body table tbody tr');
+        $node = $client->getCrawler()->filter('div.card#project_list_box .box-body table tbody tr');
         self::assertEquals(1, $node->count());
 
         /** @var EntityManager $em */
@@ -287,10 +287,10 @@ class CustomerControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/customer/1/projects/1');
 
-        $node = $client->getCrawler()->filter('div.box#project_list_box .box-tools ul.pagination li');
+        $node = $client->getCrawler()->filter('div.card#project_list_box .box-tools ul.pagination li');
         self::assertEquals(4, $node->count());
 
-        $node = $client->getCrawler()->filter('div.box#project_list_box .box-body table tbody tr');
+        $node = $client->getCrawler()->filter('div.card#project_list_box .box-body table tbody tr');
         self::assertEquals(5, $node->count());
     }
 

@@ -144,21 +144,21 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/project/1/details');
         self::assertHasProgressbar($client);
 
-        $node = $client->getCrawler()->filter('div.box#project_details_box');
+        $node = $client->getCrawler()->filter('div.card#project_details_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#activity_list_box');
+        $node = $client->getCrawler()->filter('div.card#activity_list_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#time_budget_box');
+        $node = $client->getCrawler()->filter('div.card#time_budget_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#budget_box');
+        $node = $client->getCrawler()->filter('div.card#budget_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#team_listing_box');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#comments_box');
+        $node = $client->getCrawler()->filter('div.card#comments_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#team_listing_box a.btn.btn-default');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box a.btn.btn-default');
         self::assertEquals(2, $node->count());
-        $node = $client->getCrawler()->filter('div.box#project_rates_box');
+        $node = $client->getCrawler()->filter('div.card#project_rates_box');
         self::assertEquals(1, $node->count());
     }
 
@@ -180,9 +180,9 @@ class ProjectControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/' . $projectId . '/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#project_rates_box');
+        $node = $client->getCrawler()->filter('div.card#project_rates_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#project_rates_box table.dataTable tbody tr:not(.summary)');
+        $node = $client->getCrawler()->filter('div.card#project_rates_box table.dataTable tbody tr:not(.summary)');
         self::assertEquals(1, $node->count());
         self::assertStringContainsString($rate, $node->text(null, true));
     }
@@ -221,9 +221,9 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/project/1/duplicate/' . $token);
         $this->assertIsRedirect($client, '/details');
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#project_rates_box');
+        $node = $client->getCrawler()->filter('div.card#project_rates_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.box#project_rates_box table.dataTable tbody tr:not(.summary)');
+        $node = $client->getCrawler()->filter('div.card#project_rates_box table.dataTable tbody tr:not(.summary)');
         self::assertEquals(1, $node->count());
         self::assertStringContainsString('123.45', $node->text(null, true));
     }
@@ -259,7 +259,7 @@ class ProjectControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
+        $node = $client->getCrawler()->filter('div.card#comments_box .direct-chat-text');
         self::assertStringContainsString('<p>A beautiful and long comment <strong>with some</strong> markdown formatting</p>', $node->html());
     }
 
@@ -275,9 +275,9 @@ class ProjectControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
+        $node = $client->getCrawler()->filter('div.card#comments_box .direct-chat-text');
         self::assertStringContainsString('Foo bar blub', $node->html());
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.confirmation-link');
+        $node = $client->getCrawler()->filter('div.card#comments_box .box-body a.confirmation-link');
 
         $comments = $this->getEntityManager()->getRepository(ProjectComment::class)->findAll();
         $id = $comments[0]->getId();
@@ -288,7 +288,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/project/' . $id . '/comment_delete/' . $token);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-body');
+        $node = $client->getCrawler()->filter('div.card#comments_box .box-body');
         self::assertStringContainsString('There were no comments posted yet', $node->html());
     }
 
@@ -304,9 +304,9 @@ class ProjectControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
+        $node = $client->getCrawler()->filter('div.card#comments_box .direct-chat-text');
         self::assertStringContainsString('Foo bar blub', $node->html());
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.btn.active');
+        $node = $client->getCrawler()->filter('div.card#comments_box .box-body a.btn.active');
         self::assertEquals(0, $node->count());
 
         $comments = $this->getEntityManager()->getRepository(ProjectComment::class)->findAll();
@@ -317,7 +317,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/project/' . $id . '/comment_pin/' . $token);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#comments_box .box-body a.btn.active');
+        $node = $client->getCrawler()->filter('div.card#comments_box .box-body a.btn.active');
         $token2 = self::$container->get('security.csrf.token_manager')->getToken('project.pin_comment');
         self::assertEquals(1, $node->count());
         self::assertEquals($this->createUrl('/admin/project/' . $id . '/comment_pin/' . $token2), $node->attr('href'));
@@ -328,15 +328,15 @@ class ProjectControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/project/1/details');
-        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .box-body');
         self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text(null, true));
 
         $this->request($client, '/admin/project/1/create_team');
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-title');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .box-title');
         self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
-        $node = $client->getCrawler()->filter('div.box#team_listing_box .box-body table tbody tr');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .box-body table tbody tr');
         self::assertEquals(1, $node->count());
 
         // creating the default team a second time fails, as the name already exists
@@ -350,9 +350,9 @@ class ProjectControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/project/1/activities/1');
-        $node = $client->getCrawler()->filter('div.box#activity_list_box .box-tools ul.pagination li');
+        $node = $client->getCrawler()->filter('div.card#activity_list_box .box-tools ul.pagination li');
         self::assertEquals(0, $node->count());
-        $node = $client->getCrawler()->filter('div.box#activity_list_box .box-tools a.modal-ajax-form.open-edit');
+        $node = $client->getCrawler()->filter('div.card#activity_list_box .box-tools a.modal-ajax-form.open-edit');
         self::assertEquals(1, $node->count());
 
         /** @var EntityManager $em */
@@ -365,10 +365,10 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/project/1/activities/1');
 
-        $node = $client->getCrawler()->filter('div.box#activity_list_box .box-tools ul.pagination li');
+        $node = $client->getCrawler()->filter('div.card#activity_list_box .box-tools ul.pagination li');
         self::assertEquals(4, $node->count());
 
-        $node = $client->getCrawler()->filter('div.box#activity_list_box .box-body table tbody tr');
+        $node = $client->getCrawler()->filter('div.card#activity_list_box .box-body table tbody tr');
         self::assertEquals(5, $node->count());
     }
 

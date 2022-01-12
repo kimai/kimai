@@ -238,7 +238,7 @@ abstract class ControllerBaseTest extends WebTestCase
     protected static function assertHasProgressbar(HttpKernelBrowser $client)
     {
         $content = $client->getResponse()->getContent();
-        self::assertStringContainsString('<div class="progress-bar progress-bar-', $content);
+        self::assertStringContainsString('<div class="progress-bar', $content);
         self::assertStringContainsString('" role="progressbar" aria-valuenow="', $content);
         self::assertStringContainsString('" aria-valuemin="0" aria-valuemax="100" style="width: ', $content);
     }
