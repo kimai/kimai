@@ -271,7 +271,7 @@ class ActivityControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/activity/1/details');
-        $node = $client->getCrawler()->filter('div.card#team_listing_box .box-body');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body');
         self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text(null, true));
 
         $this->request($client, '/admin/activity/1/create_team');
@@ -279,7 +279,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.card#team_listing_box .box-title');
         self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
-        $node = $client->getCrawler()->filter('div.card#team_listing_box .box-body table tbody tr');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body table tbody tr');
         self::assertEquals(1, $node->count());
 
         // creating the default team a second time fails, as the name already exists

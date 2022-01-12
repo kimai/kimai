@@ -24,7 +24,7 @@ class AboutControllerTest extends ControllerBaseTest
         $result = $client->getCrawler()->filter('ul.nav.nav-stacked li a');
         $this->assertEquals(4, \count($result));
 
-        $result = $client->getCrawler()->filter('div.box-body pre');
+        $result = $client->getCrawler()->filter('div.card-body pre');
         $this->assertEquals(1, \count($result));
         $this->assertStringContainsString('MIT License', $result->text(null, true));
     }

@@ -36,7 +36,7 @@ class CalendarControllerTest extends ControllerBaseTest
         $crawler = $client->getCrawler();
         $calendar = $crawler->filter('div#timesheet_calendar');
         $this->assertEquals(1, $calendar->count());
-        $dragAndDropBoxes = $crawler->filter('div.box-body.drag-and-drop-source');
+        $dragAndDropBoxes = $crawler->filter('div.card-body.drag-and-drop-source');
         $this->assertEquals(1, $dragAndDropBoxes->count());
     }
 
