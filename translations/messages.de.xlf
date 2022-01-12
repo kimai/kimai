@@ -72,7 +72,7 @@
         <source>label.remove_default</source>
         <target>Suchfavorit löschen</target>
       </trans-unit>
-      <trans-unit id="label.remove_filter">
+      <trans-unit id="nrf4Emm" resname="label.remove_filter">
         <source>label.remove_filter</source>
         <target>Suchfilter zurücksetzen</target>
       </trans-unit>
@@ -739,11 +739,11 @@
         <source>label.version</source>
         <target>Version</target>
       </trans-unit>
-      <trans-unit id="8Rfa01vsdfs" resname="plugin.installed">
+      <trans-unit id="On18MKP" resname="plugin.installed">
         <source>plugin.installed</source>
         <target>Installierte Erweiterungen</target>
       </trans-unit>
-      <trans-unit id="8Rfa01vsdfssdf" resname="plugin.marketplace">
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
         <source>plugin.marketplace</source>
         <target>Neue Erweiterungen aus dem Marktplatz</target>
       </trans-unit>
@@ -920,7 +920,7 @@
         <source>admin_invoice_template.title</source>
         <target>Rechnungsvorlagen</target>
       </trans-unit>
-      <trans-unit id="invoice_document.title">
+      <trans-unit id="YrkzpkS" resname="invoice_document.title">
         <source>invoice_document.title</source>
         <target>Rechnungsdokument</target>
       </trans-unit>
@@ -928,7 +928,7 @@
         <source>invoices</source>
         <target>Rechnungen</target>
       </trans-unit>
-      <trans-unit id="invoice_form.title">
+      <trans-unit id="ojfv7Jl" resname="invoice_form.title">
         <source>invoice_form.title</source>
         <target>Rechnung erstellen</target>
       </trans-unit>
@@ -972,7 +972,7 @@
         <source>label.mark_as_exported</source>
         <target>Als exportiert markieren</target>
       </trans-unit>
-      <trans-unit id="7J7G3Va" resname="label.mark_as_open">
+      <trans-unit id="IOyOL8y" resname="label.mark_as_open">
         <source>label.mark_as_open</source>
         <target>Als offen markieren</target>
       </trans-unit>
@@ -1273,7 +1273,7 @@
         <source>team.add_user.help</source>
         <target>Durch Auswahl wird dem Team ein neuer Benutzer hinzugefügt. Sie können im Anschluss festlegen, ob der Benutzer ein Teamleiter sein soll.</target>
       </trans-unit>
-      <trans-unit id="team.configure_teamlead.help">
+      <trans-unit id="5kFod8o" resname="team.configure_teamlead.help">
         <source>team.configure_teamlead.help</source>
         <target>Die selektierten bzw. hervorgehobenen Benutzer sind Teamleiter.</target>
       </trans-unit>
@@ -1300,47 +1300,47 @@
         <source>invoice_document.max_reached</source>
         <target>Maximale Anzahl von %max% Rechnungsdokumenten erreicht. Um weitere hinzufügen müssen Sie zunächst eins löschen.</target>
       </trans-unit>
-      <trans-unit id="pagination">
+      <trans-unit id="wwrREDg" resname="pagination">
         <source>pagination</source>
         <target>Zeige die Einträge %start% bis %end% von insgesamt %total% an.</target>
       </trans-unit>
-      <trans-unit id="skin.light">
+      <trans-unit id="mjKOAgQ" resname="skin.light">
         <source>skin.light</source>
         <target>Helle Farben</target>
       </trans-unit>
-      <trans-unit id="skin.dark">
+      <trans-unit id="WOFPb2i" resname="skin.dark">
         <source>skin.dark</source>
         <target>Dunkle Farben</target>
       </trans-unit>
-      <trans-unit id="layout.boxed">
+      <trans-unit id="__SlRre" resname="layout.boxed">
         <source>layout.boxed</source>
         <target>Zentrierte Darstellung</target>
       </trans-unit>
-      <trans-unit id="layout.fluid">
+      <trans-unit id="97TTEU5" resname="layout.fluid">
         <source>layout.fluid</source>
         <target>Volle Bildschirmbreite</target>
       </trans-unit>
-      <trans-unit id="api_password.intro">
+      <trans-unit id="JSBReoa" resname="api_password.intro">
         <source>api_password.intro</source>
         <target>Das API Passwort dient zur Kommunikation zwischen Kimai und von Ihnen genutzten Apps.</target>
       </trans-unit>
-      <trans-unit id="api_password.missing_title">
+      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>
         <target>API kann nicht genutzt werden</target>
       </trans-unit>
-      <trans-unit id="api_password.missing_description">
+      <trans-unit id="fxFzCHd" resname="api_password.missing_description">
         <source>api_password.missing_description</source>
         <target>Sie haben noch kein API Passwort hinterlegt. Aus Sicherheitsgründen ist die Nutzung der API bis zur Hinterlegung eines Passworts für Sie nicht nutzbar.</target>
       </trans-unit>
-      <trans-unit id="tags.no_results">
+      <trans-unit id="za1AHbg" resname="tags.no_results">
         <source>tags.no_results</source>
         <target>Kein Ergebnis gefunden für "%input%"</target>
       </trans-unit>
-      <trans-unit id="tags.add_new">
+      <trans-unit id="Gphgnvt" resname="tags.add_new">
         <source>tags.add_new</source>
         <target>Neues Stichwort "%input%" hinzufügen</target>
       </trans-unit>
-      <trans-unit id="please_choose">
+      <trans-unit id="dru_Thv" resname="please_choose">
         <source>please_choose</source>
         <target>Bitte auswählen</target>
       </trans-unit>

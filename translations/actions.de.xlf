@@ -102,7 +102,7 @@
         <source>filter</source>
         <target>Daten filtern</target>
       </trans-unit>
-      <trans-unit id="vcard">
+      <trans-unit id="pJzNT.n" resname="vcard">
         <source>vcard</source>
         <target>Visitenkarte</target>
       </trans-unit>
