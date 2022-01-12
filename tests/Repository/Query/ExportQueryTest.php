@@ -38,10 +38,10 @@ class ExportQueryTest extends TimesheetQueryTest
 
     protected function assertMarkAsExported(ExportQuery $sut)
     {
-        $this->assertFalse($sut->isMarkAsExported());
-
-        $sut->setMarkAsExported(true);
         $this->assertTrue($sut->isMarkAsExported());
+
+        $sut->setMarkAsExported(false);
+        $this->assertFalse($sut->isMarkAsExported());
     }
 
     protected function assertRenderer(ExportQuery $sut)
