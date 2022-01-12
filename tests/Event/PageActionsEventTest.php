@@ -95,13 +95,13 @@ class PageActionsEventTest extends TestCase
         $this->assertEquals(8, $sut->countActions());
 
         $expected = [
-            'search' => ['modal' => '#modal_search', 'label' => null],
+            'search' => ['modal' => '#modal_search', 'label' => null, 'title' => 'search'],
             'divider0' => null,
-            'back' => ['url' => 'foo1', 'translation_domain' => 'actions'],
-            'visibility' => ['modal' => '#foo2'],
-            'help' => ['url' => 'foo4', 'target' => '_blank'],
-            'create' => ['url' => 'foo5', 'class' => 'modal-ajax-form'],
-            'download' => ['url' => 'foo7', 'class' => 'toolbar-action'],
+            'back' => ['url' => 'foo1', 'translation_domain' => 'actions', 'title' => 'back'],
+            'visibility' => ['modal' => '#foo2', 'title' => 'modal.columns.title'],
+            'help' => ['url' => 'foo4', 'target' => '_blank', 'title' => 'help', 'translation_domain' => 'about'],
+            'create' => ['url' => 'foo5', 'class' => 'modal-ajax-form', 'title' => 'create'],
+            'download' => ['url' => 'foo7', 'class' => 'toolbar-action', 'title' => 'export.title'],
             'trash' => ['url' => 'foo3', 'class' => 'modal-ajax-form text-red'],
         ];
 
@@ -114,13 +114,13 @@ class PageActionsEventTest extends TestCase
 
         // make sure that modal always start with #, no matter what was given
         $sut->addColumnToggle('#fooX');
-        $this->assertEquals(['visibility' => ['modal' => '#fooX']], $sut->getActions());
+        $this->assertEquals(['visibility' => ['modal' => '#fooX', 'title' => 'modal.columns.title']], $sut->getActions());
         // make sure that a second toggle cannot be added
         $sut->addColumnToggle('fooY');
-        $this->assertEquals(['visibility' => ['modal' => '#fooX']], $sut->getActions());
+        $this->assertEquals(['visibility' => ['modal' => '#fooX', 'title' => 'modal.columns.title']], $sut->getActions());
 
         $sut->removeAction('visibility');
         $sut->addColumnToggle('fooY');
-        $this->assertEquals(['visibility' => ['modal' => '#fooY']], $sut->getActions());
+        $this->assertEquals(['visibility' => ['modal' => '#fooY', 'title' => 'modal.columns.title']], $sut->getActions());
     }
 }

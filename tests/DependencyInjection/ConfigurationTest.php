@@ -369,7 +369,7 @@ class ConfigurationTest extends TestCase
                     'background_color' => '#3c8dbc',
                     'border_color' => '#3b8bba',
                     'grid_color' => 'rgba(0,0,0,.05)',
-                    'height' => '200',
+                    'height' => '300',
                 ],
                 'branding' => [
                     'logo' => null,
@@ -403,7 +403,7 @@ class ConfigurationTest extends TestCase
                 'user' => [
                     'timezone' => null,
                     'language' => 'en',
-                    'theme' => null,
+                    'theme' => 'default',
                     'currency' => 'EUR',
                 ],
             ],
@@ -453,6 +453,7 @@ class ConfigurationTest extends TestCase
                 'connection' => [
                     'organization' => []
                 ],
+                'provider' => null,
             ],
             'company' => [
                 'financial_year' => null,
