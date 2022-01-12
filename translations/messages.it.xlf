@@ -639,10 +639,6 @@
         <source>label.version</source>
         <target>Versione</target>
       </trans-unit>
-      <trans-unit id="8Rfa01v" resname="label.required_version">
-        <source>label.required_version</source>
-        <target>Compatibile con</target>
-      </trans-unit>
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>Amministratore di sistema</target>

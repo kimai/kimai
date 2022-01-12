@@ -11,7 +11,11 @@ namespace App\Controller;
 
 use App\Plugin\PluginManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * @Route(path="/admin/plugins")
@@ -19,33 +23,54 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PluginController extends AbstractController
 {
-    /**
-     * @var PluginManager
-     */
-    protected $plugins;
+    private $client;
+    private $cache;
 
-    /**
-     * @param PluginManager $manager
-     */
-    public function __construct(PluginManager $manager)
+    public function __construct(HttpClientInterface $client, CacheInterface $cache)
     {
-        $this->plugins = $manager;
+        $this->client = $client;
+        $this->cache = $cache;
     }
 
     /**
      * @Route(path="/", name="plugins", methods={"GET"})
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function indexAction(PluginManager $manager): Response
     {
-        $plugins = $this->plugins->getPlugins();
-        foreach ($this->plugins->getPlugins() as $plugin) {
-            $this->plugins->loadMetadata($plugin);
+        $installed = [];
+        $plugins = $manager->getPlugins();
+        foreach ($plugins as $plugin) {
+            $manager->loadMetadata($plugin);
+            $installed[] = $plugin->getId();
         }
 
         return $this->render('plugin/index.html.twig', [
             'plugins' => $plugins,
+            'installed' => $installed,
+            'extensions' => $this->getPluginInformation()
         ]);
+    }
+
+    private function getPluginInformation(): array
+    {
+        $this->cache->delete('kimai.marketplace_extensions');
+
+        return $this->cache->get('kimai.marketplace_extensions', function (ItemInterface $item) {
+            $response = $this->client->request('GET', 'https://www.kimai.org/plugins.json');
+
+            if ($response->getStatusCode() !== 200) {
+                return [];
+            }
+
+            $json = json_decode($response->getContent(), true);
+
+            if ($json === null) {
+                return [];
+            }
+
+            $item->expiresAfter(86400); // one day
+
+            return $response->toArray();
+        });
     }
 }

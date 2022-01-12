@@ -10,6 +10,7 @@
 namespace App\Tests\Plugin;
 
 use App\Plugin\Plugin;
+use App\Plugin\PluginInterface;
 use App\Plugin\PluginMetadata;
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +21,7 @@ class PluginTest extends TestCase
 {
     public function testEmptyObject()
     {
-        $plugin = new Plugin();
+        $plugin = new Plugin($this->createMock(PluginInterface::class));
         $this->assertNull($plugin->getId());
         $this->assertNull($plugin->getName());
         $this->assertNull($plugin->getPath());
@@ -30,22 +31,10 @@ class PluginTest extends TestCase
     public function testGetterAndSetter()
     {
         $metadata = new PluginMetadata();
-        $metadata
-            ->setDescription('foo')
-            ->setHomepage('http://www.example.com')
-            ->setVersion('13.7')
-            ->setKimaiVersion('1.1')
-        ;
 
-        $plugin = new Plugin();
-        $this->assertInstanceOf(Plugin::class, $plugin->setId('foo2'));
-        $this->assertInstanceOf(Plugin::class, $plugin->setName('foo'));
-        $this->assertInstanceOf(Plugin::class, $plugin->setPath('bar'));
-        $this->assertInstanceOf(Plugin::class, $plugin->setMetadata($metadata));
+        $plugin = new Plugin($this->createMock(PluginInterface::class));
+        $plugin->setMetadata($metadata);
 
-        $this->assertEquals('foo2', $plugin->getId());
-        $this->assertEquals('foo', $plugin->getName());
-        $this->assertEquals('bar', $plugin->getPath());
-        $this->assertSame($metadata, $plugin->getMetadata());
+        $this->assertEquals($metadata, $plugin->getMetadata());
     }
 }

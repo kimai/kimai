@@ -309,6 +309,8 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'color' => '@string',
                     'alias' => '@string',
                     'accountNumber' => '@string',
+                    'initials' => '@string',
+                    'title' => '@string',
                 ];
 
             // if a user is loaded explicitly

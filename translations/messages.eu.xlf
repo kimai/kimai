@@ -583,10 +583,6 @@
         <source>label.version</source>
         <target>Bertsioa</target>
       </trans-unit>
-      <trans-unit id="8Rfa01v" resname="label.required_version">
-        <source>label.required_version</source>
-        <target>Ondorengoekin bateragarria</target>
-      </trans-unit>
       <!--
               ROLES
             -->

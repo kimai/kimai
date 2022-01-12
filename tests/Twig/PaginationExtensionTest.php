@@ -47,7 +47,7 @@ class PaginationExtensionTest extends TestCase
 
     public function testGetFunctions()
     {
-        $functions = ['pagerfanta', 'pagination'];
+        $functions = ['pagination'];
         $sut = $this->getSut();
         $twigFunctions = $sut->getFunctions();
         self::assertCount(\count($functions), $twigFunctions);

@@ -589,10 +589,6 @@
         <source>label.version</source>
         <target>גרסה</target>
       </trans-unit>
-      <trans-unit id="8Rfa01v" resname="label.required_version">
-        <source>label.required_version</source>
-        <target>תואם ל־</target>
-      </trans-unit>
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>הנהלת מערכת</target>

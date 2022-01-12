@@ -25,18 +25,4 @@ class PluginMetadataTest extends TestCase
         $this->assertNull($sut->getVersion());
         $this->assertNull($sut->getKimaiVersion());
     }
-
-    public function testGetterAndSetter()
-    {
-        $sut = new PluginMetadata();
-        $this->assertInstanceOf(PluginMetadata::class, $sut->setVersion('13.7'));
-        $this->assertInstanceOf(PluginMetadata::class, $sut->setHomepage('http://www.example.com'));
-        $this->assertInstanceOf(PluginMetadata::class, $sut->setDescription('foo bar'));
-        $this->assertInstanceOf(PluginMetadata::class, $sut->setKimaiVersion('1.0'));
-
-        $this->assertEquals('13.7', $sut->getVersion());
-        $this->assertEquals('http://www.example.com', $sut->getHomepage());
-        $this->assertEquals('foo bar', $sut->getDescription());
-        $this->assertEquals('1.0', $sut->getKimaiVersion());
-    }
 }

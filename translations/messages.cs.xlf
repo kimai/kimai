@@ -515,10 +515,6 @@
         <source>label.version</source>
         <target>Verze</target>
       </trans-unit>
-      <trans-unit id="8Rfa01v" resname="label.required_version">
-        <source>label.required_version</source>
-        <target>Kompatibilní s</target>
-      </trans-unit>
       <!--
               ROLES
             -->

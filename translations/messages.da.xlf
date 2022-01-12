@@ -575,10 +575,6 @@
         <source>label.version</source>
         <target>Version</target>
       </trans-unit>
-      <trans-unit id="8Rfa01v" resname="label.required_version">
-        <source>label.required_version</source>
-        <target>Kompatibel with</target>
-      </trans-unit>
       <!--
               ROLES
             -->

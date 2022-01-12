@@ -23,6 +23,7 @@ use App\Invoice\NumberGeneratorInterface;
 use App\Invoice\RendererInterface as InvoiceRendererInterface;
 use App\Ldap\FormLoginLdapFactory;
 use App\Plugin\PluginInterface;
+use App\Plugin\PluginMetadata;
 use App\Saml\Security\SamlFactory;
 use App\Timesheet\CalculatorInterface as TimesheetCalculator;
 use App\Timesheet\Rounding\RoundingInterface;
@@ -121,8 +122,8 @@ class Kernel extends BaseKernel
             }
         } else {
             // ... or we load them dynamically from the plugins directory
-            foreach ($this->getBundleClasses() as $pluginClass) {
-                yield new $pluginClass();
+            foreach ($this->getBundleClasses() as $plugin) {
+                yield $plugin;
             }
         }
     }
@@ -140,8 +141,9 @@ class Kernel extends BaseKernel
         /** @var SplFileInfo $bundleDir */
         foreach ($finder->in($pluginsDir) as $bundleDir) {
             $bundleName = $bundleDir->getRelativePathname();
+            $fullPath = $bundleDir->getRealPath();
 
-            if (file_exists($bundleDir->getRealPath() . '/.disabled')) {
+            if (file_exists($fullPath . '/.disabled')) {
                 continue;
             }
 
@@ -150,7 +152,18 @@ class Kernel extends BaseKernel
                 continue;
             }
 
-            $plugins[] = $pluginClass;
+            $plugin = new $pluginClass();
+            if (!$plugin instanceof PluginInterface) {
+                throw new \Exception(sprintf('Bundle "%s" does not implement %s, which is not supported since 2.0.', $bundleName, PluginInterface::class));
+            }
+
+            $meta = PluginMetadata::loadFromComposer($fullPath);
+
+            if ($meta->getKimaiVersion() > Constants::VERSION_ID) {
+                throw new \Exception(sprintf('Bundle "%s" requires minimum Kimai version %s, but yours is lower: %s (%s). Please update Kimai or use a lower Plugin version.', $bundleName, $meta->getKimaiVersion(), Constants::VERSION, Constants::VERSION_ID));
+            }
+
+            $plugins[] = $plugin;
         }
 
         return $plugins;

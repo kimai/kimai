@@ -41,8 +41,7 @@ class PluginControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
         /** @var PluginManager $manager */
-        $manager = self::$container->get(PluginManager::class);
-        $manager->addPlugin(new TestPlugin());
+        $manager = self::$container->set(PluginManager::class, new PluginManager([new TestPlugin()]));
 
         $this->assertAccessIsGranted($client, '/admin/plugins/');
         $this->assertHasDataTable($client);
