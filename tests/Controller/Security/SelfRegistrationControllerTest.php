@@ -58,7 +58,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $content = $response->getContent();
         $this->assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
         $this->assertStringContainsString('Register a new account', $content);
-        $this->assertStringContainsString('<form name="fos_user_registration_form" method="post" action="/en/register/" class="registration_register">', $content);
+        $this->assertStringContainsString('<form name="fos_user_registration_form" method="post" action="/en/register/" class="fos_user_registration_register">', $content);
         $this->assertStringContainsString('<input type="email"', $content);
         $this->assertStringContainsString('id="fos_user_registration_form_email" name="fos_user_registration_form[email]" required="required"', $content);
         $this->assertStringContainsString('<input type="text"', $content);

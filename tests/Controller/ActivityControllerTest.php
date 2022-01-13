@@ -277,7 +277,7 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/activity/1/create_team');
         $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#team_listing_box .box-title');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-title');
         self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
         $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body table tbody tr');
         self::assertEquals(1, $node->count());

@@ -16,7 +16,9 @@ use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Form\Type\DateRangeType;
 use App\Repository\ConfigurationRepository;
+use App\Repository\TagRepository;
 use App\Tests\DataFixtures\ActivityFixtures;
+use App\Tests\DataFixtures\TagFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
 use App\Timesheet\DateTimeFactory;
@@ -41,7 +43,6 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertHasNoEntriesWithFilter($client);
         $this->assertPageActions($client, [
             'search' => '#',
-            'visibility' => '#',
             'download toolbar-action modal-ajax-form' => $this->createUrl('/timesheet/export/'),
             'create modal-ajax-form' => $this->createUrl('/timesheet/create'),
             'help' => 'https://www.kimai.org/documentation/timesheet.html'
@@ -460,6 +461,11 @@ class TimesheetControllerTest extends ControllerBaseTest
     public function testCreateActionWithBeginAndEndAndTagValues()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $fixture = new TagFixtures();
+        $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
+        $this->importFixture($fixture);
+
         $this->request($client, '/timesheet/create?begin=2018-08-02&end=2018-08-02&tags=one,two,three');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -558,6 +564,10 @@ class TimesheetControllerTest extends ControllerBaseTest
         $timesheets = $this->importFixture($fixture);
         $id = $timesheets[0]->getId();
 
+        $fixture = new TagFixtures();
+        $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
+        $this->importFixture($fixture);
+
         $this->request($client, '/timesheet/' . $id . '/edit');
 
         $response = $client->getResponse();
@@ -615,7 +625,6 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $client->submit($form, [
             'multi_update_table' => [
-                'action' => $this->createUrl('/timesheet/multi-delete'),
                 'entities' => implode(',', $ids)
             ]
         ]);
@@ -634,6 +643,10 @@ class TimesheetControllerTest extends ControllerBaseTest
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setUser($user);
+        $this->importFixture($fixture);
+
+        $fixture = new TagFixtures();
+        $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
         $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/timesheet/');
@@ -655,7 +668,6 @@ class TimesheetControllerTest extends ControllerBaseTest
 
         $client->submit($form, [
             'multi_update_table' => [
-                'action' => $this->createUrl('/timesheet/multi-update'),
                 'entities' => implode(',', $ids)
             ]
         ]);

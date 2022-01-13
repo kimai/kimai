@@ -127,7 +127,6 @@ class TagControllerTest extends ControllerBaseTest
 
         $client->submit($form, [
             'multi_update_table' => [
-                'action' => $this->createUrl('/admin/tags/multi-delete'),
                 'entities' => implode(',', $ids)
             ]
         ]);

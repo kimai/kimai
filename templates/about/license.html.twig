@@ -9,7 +9,7 @@
     <div class="row row-cards mb-3">
         <div class="col-lg-4">
             <div class="card">
-                <div class="card-body p-4 text-center">
+                <div class="card-body card_intro p-4 text-center">
 
                     <img src="{{ asset('apple-touch-icon.png') }}" class="avatar avatar-2xl mb-3 avatar-rounded" alt="{{ constant('App\\Constants::SOFTWARE') }}">
 
@@ -51,6 +51,7 @@
         <div class="col-lg-8">
             {% embed '@theme/embeds/card.html.twig' %}
                 {% block box_title %}Credits{% endblock %}
+                {% block box_body_class %}credits_card{% endblock %}
                 {% block box_body %}
                     <p>
                         The following amazing software libraries were used when creating Kimai. It wouldn't be possible without them.
@@ -82,7 +83,7 @@
     <div class="row row-cards mb-3">
         <div class="col-lg-8">
             <div class="card card-lg">
-                <div class="card-body">
+                <div class="card-body card_license">
                     <div class="markdown">
                         <p>A license grants you a non-exclusive and non-transferable right to use and incorporate the item in your personal or commercial projects.</p>
                         <h3>License</h3>
@@ -93,7 +94,7 @@
         </div>
         <div class="col-lg-4">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body card_details">
                     <div class="d-flex align-items-center mb-3">
                         <div class="me-3">
                             <i class="fa-2x fas fa-balance-scale"></i>

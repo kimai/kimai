@@ -122,7 +122,7 @@ class CustomerControllerTest extends ControllerBaseTest
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.card#comments_box');
         self::assertEquals(1, $node->count());
-        $node = $client->getCrawler()->filter('div.card#team_listing_box a.btn.btn-default');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-actions a.btn');
         self::assertEquals(2, $node->count());
         $node = $client->getCrawler()->filter('div.card#customer_rates_box');
         self::assertEquals(1, $node->count());
@@ -160,7 +160,7 @@ class CustomerControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .direct-chat-text');
+        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
         self::assertStringContainsString('<p>A beautiful and short comment <strong>with some</strong> markdown formatting</p>', $node->html());
     }
 
@@ -179,7 +179,7 @@ class CustomerControllerTest extends ControllerBaseTest
 
         $token = self::$container->get('security.csrf.token_manager')->getToken('customer.delete_comment');
 
-        $node = $client->getCrawler()->filter('div.card#comments_box .direct-chat-msg');
+        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
         self::assertStringContainsString('Blah foo bar', $node->html());
         $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.confirmation-link');
         self::assertStringEndsWith('/comment_delete/' . $token, $node->attr('href'));
@@ -227,9 +227,9 @@ class CustomerControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .direct-chat-text');
+        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
         self::assertStringContainsString('Blah foo bar', $node->html());
-        $node = $client->getCrawler()->filter('div.card#comments_box .direct-chat-text a.btn.active');
+        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.btn.active');
         self::assertEquals(0, $node->count());
 
         $comments = $this->getEntityManager()->getRepository(CustomerComment::class)->findAll();
@@ -257,7 +257,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->request($client, '/admin/customer/1/create_team');
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#team_listing_box .box-title');
+        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-title');
         self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
         $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body table tbody tr');
         self::assertEquals(1, $node->count());
@@ -287,7 +287,7 @@ class CustomerControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/customer/1/projects/1');
 
-        $node = $client->getCrawler()->filter('div.card#project_list_box .box-tools ul.pagination li');
+        $node = $client->getCrawler()->filter('div.card#project_list_box .card-footer ul.pagination li');
         self::assertEquals(4, $node->count());
 
         $node = $client->getCrawler()->filter('div.card#project_list_box .card-body table tbody tr');

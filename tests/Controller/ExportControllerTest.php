@@ -240,7 +240,7 @@ class ExportControllerTest extends ControllerBaseTest
         // poor mans assertions ;-)
         $this->assertStringContainsString('export_print', $node->getIterator()[0]->getAttribute('class'));
         $this->assertStringContainsString('<h2 id="doc-title" contenteditable="true"', $content);
-        $this->assertStringContainsString('<h3 id="doc-summary" contenteditable="true" data-original="Summary">Summary</h3>', $content);
+        $this->assertStringContainsString('<h3 class="card-title" id="doc-summary" contenteditable="true" data-original="Summary">Summary</h3>', $content);
 
         $node = $client->getCrawler()->filter('section.export div#export-records table.dataTable tbody tr');
         // 20 rows + the summary footer

@@ -21,10 +21,10 @@ class AboutControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/about');
 
-        $result = $client->getCrawler()->filter('ul.nav.nav-stacked li a');
+        $result = $client->getCrawler()->filter('.content a.card-btn');
         $this->assertEquals(4, \count($result));
 
-        $result = $client->getCrawler()->filter('div.card-body pre');
+        $result = $client->getCrawler()->filter('div.card-body.card_details');
         $this->assertEquals(1, \count($result));
         $this->assertStringContainsString('MIT License', $result->text(null, true));
     }

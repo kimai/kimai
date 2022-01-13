@@ -260,11 +260,11 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertPageActions(HttpKernelBrowser $client, array $buttons)
     {
-        $node = $client->getCrawler()->filter('section.content-header div.breadcrumb div.box-tools div.btn-group a');
+        $node = $client->getCrawler()->filter('div.page-header div.page-actions a');
 
         /** @var \DOMElement $element */
         foreach ($node->getIterator() as $element) {
-            $expectedClass = str_replace('btn btn-default btn-', '', $element->getAttribute('class'));
+            $expectedClass = trim(str_replace(['btn action-', ' btn-icon'], '', $element->getAttribute('class')));
             self::assertArrayHasKey($expectedClass, $buttons);
             $expectedUrl = $buttons[$expectedClass];
             self::assertEquals($expectedUrl, $element->getAttribute('href'));
@@ -291,7 +291,7 @@ abstract class ControllerBaseTest extends WebTestCase
         $result = $client->submit($form, $formData);
 
         $submittedForm = $result->filter($formSelector);
-        $validationErrors = $submittedForm->filter('li.text-danger');
+        $validationErrors = $submittedForm->filter('div.invalid-feedback.d-block');
 
         self::assertEquals(
             \count($fieldNames),
@@ -309,9 +309,9 @@ abstract class ControllerBaseTest extends WebTestCase
             if (\count($validation) < 1) {
                 // decorated form fields with icon have a different html structure, see kimai-theme.html.twig
                 /** @var \DOMElement $listMsg */
-                $listMsg = $field->parents()->getNode(1);
+                $listMsg = $field->getNode(0); //->parents()->getNode(1);
                 $classes = $listMsg->getAttribute('class');
-                self::assertStringContainsString('has-error', $classes, 'Form field has no validation message: ' . $name);
+                self::assertStringContainsString('is-invalid', $classes, 'Form field has no validation message: ' . $name);
             }
         }
     }
@@ -344,7 +344,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertCalloutWidgetWithMessage(HttpKernelBrowser $client, string $message)
     {
-        $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
+        $node = $client->getCrawler()->filter('div.alert.alert-warning.alert-important');
         self::assertStringContainsString($message, $node->text(null, true));
     }
 

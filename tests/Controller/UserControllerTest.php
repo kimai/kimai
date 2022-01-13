@@ -36,7 +36,6 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_user_admin', 7);
         $this->assertPageActions($client, [
             'search' => '#',
-            'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/user/export'),
             'create' => $this->createUrl('/admin/user/create'),
             'help' => 'https://www.kimai.org/documentation/users.html'

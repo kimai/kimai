@@ -58,7 +58,7 @@ class ProjectDetailsControllerTest extends ControllerBaseTest
         $rows = $client->getCrawler()->filterXPath("//form[@id='project-details-form']");
         self::assertEquals(1, $rows->count());
 
-        $rows = $client->getCrawler()->filterXPath("//div[@id='reporting-content']/div[@class='nav-tabs-custom']");
+        $rows = $client->getCrawler()->filterXPath("//div[@id='reporting-content']//ul[contains(@class, 'nav-tabs')]");
         self::assertGreaterThan(1, $rows->count());
     }
 }

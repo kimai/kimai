@@ -34,10 +34,10 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $expectedForms = $this->getTestDataForms();
 
-        $result = $client->getCrawler()->filter('section.content div.box.box-primary');
+        $result = $client->getCrawler()->filter('section.content div.card');
         $this->assertEquals(\count($expectedForms), \count($result));
 
-        $result = $client->getCrawler()->filter('section.content div.box.box-primary form');
+        $result = $client->getCrawler()->filter('section.content div.card form');
         $this->assertEquals(\count($expectedForms), \count($result));
 
         foreach ($expectedForms as $formConfig) {
@@ -54,10 +54,10 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/system-config/edit/timesheet');
 
-        $result = $client->getCrawler()->filter('section.content div.box.box-primary');
+        $result = $client->getCrawler()->filter('section.content div.card');
         $this->assertEquals(1, \count($result));
 
-        $result = $client->getCrawler()->filter('section.content div.box.box-primary form');
+        $result = $client->getCrawler()->filter('section.content div.card form');
         $this->assertEquals(1, \count($result));
 
         $result = $client->getCrawler()->filter('form[name=system_configuration_form_timesheet]');
@@ -219,7 +219,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertNull($configService->find('defaults.user.timezone'));
-        $this->assertNull($configService->find('defaults.user.theme'));
+        $this->assertEquals('default', $configService->find('defaults.user.theme'));
         $this->assertEquals('en', $configService->find('defaults.user.language'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_user]')->form();
@@ -228,7 +228,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 'configuration' => [
                     ['name' => 'defaults.user.timezone', 'value' => 'Pacific/Tahiti'],
                     ['name' => 'defaults.user.language', 'value' => 'ru'],
-                    ['name' => 'defaults.user.theme', 'value' => 'purple'],
+                    ['name' => 'defaults.user.theme', 'value' => 'dark'],
                 ]
             ]
         ]);
@@ -240,7 +240,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertEquals('Pacific/Tahiti', $configService->find('defaults.user.timezone'));
-        $this->assertEquals('purple', $configService->find('defaults.user.theme'));
+        $this->assertEquals('dark', $configService->find('defaults.user.theme'));
         $this->assertEquals('ru', $configService->find('defaults.user.language'));
     }
 
@@ -305,13 +305,14 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             [
                 'system_configuration_form_theme' => [
                     'configuration' => [
-                        ['name' => 'theme.select_type', 'value' => 'foo'],
                         ['name' => 'timesheet.markdown_content', 'value' => 1],
+                        ['name' => 'theme.colors_limited', 'value' => 1],
+                        ['name' => 'theme.color_choices', 'value' => '11234567865=)(/&%$§Silver|#c0c0c0'],
                     ]
                 ]
             ],
             [
-                '#system_configuration_form_theme_configuration_0_value',
+                '#system_configuration_form_theme_configuration_2_value',
             ],
             true
         );

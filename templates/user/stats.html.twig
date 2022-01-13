@@ -49,7 +49,7 @@
 
     {# BOX WITH SHORT STATS #}
     {% if stats is not null %}
-    <div class="card box-user-profile mb-3">
+    <div class="card mb-3">
         <div class="card-body text-center">
             {% set seeOwnRate = is_granted('view_rate_own_timesheet') %}
             {% set columnLength = seeOwnRate ? 3 : 6 %}
@@ -102,9 +102,9 @@
         {% embed '@theme/embeds/card.html.twig' %}
             {% import "macros/charts.html.twig" as charts %}
             {% import "macros/widgets.html.twig" as macros %}
-            {% block box_title %}
+            {% block box_title -%}
                 {{ year }}
-            {% endblock %}
+            {%- endblock %}
             {% block box_tools %}
                 {% set totalDuration = 0 %}
                 {% for month in workMonths.year(year) %}

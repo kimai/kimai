@@ -13,6 +13,8 @@ use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Form\Type\DateRangeType;
+use App\Repository\TagRepository;
+use App\Tests\DataFixtures\TagFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Timesheet\DateTimeFactory;
 use App\Timesheet\Util;
@@ -43,10 +45,9 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $this->assertPageActions($client, [
             'search' => '#',
-            'visibility' => '#',
             'download toolbar-action modal-ajax-form' => $this->createUrl('/team/timesheet/export/'),
-            'create-ts modal-ajax-form' => $this->createUrl('/team/timesheet/create'),
-            'create-ts-mu modal-ajax-form' => $this->createUrl('/team/timesheet/create_mu'),
+            'create create-ts modal-ajax-form' => $this->createUrl('/team/timesheet/create'),
+            'multi-user create-ts-mu modal-ajax-form' => $this->createUrl('/team/timesheet/create_mu'),
             'help' => 'https://www.kimai.org/documentation/timesheet.html'
         ]);
     }
@@ -57,7 +58,6 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $start = new \DateTime('first day of this month');
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_USER);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
@@ -94,7 +94,6 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $start = new \DateTime('first day of this month');
 
-        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(5);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
@@ -115,8 +114,6 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->request($client, '/team/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
-
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'location:homeoffice foobar',
@@ -131,7 +128,6 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $em = $this->getEntityManager();
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(7);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
@@ -201,6 +197,11 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
     public function testCreateForMultipleUsersAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $fixture = new TagFixtures();
+        $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
+        $this->importFixture($fixture);
+
         $this->request($client, '/team/timesheet/create_mu');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
@@ -270,6 +271,10 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $timesheets = $this->importFixture($fixture);
         $id = $timesheets[0]->getId();
 
+        $fixture = new TagFixtures();
+        $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
+        $this->importFixture($fixture);
+
         $this->request($client, '/team/timesheet/' . $id . '/edit');
 
         $response = $client->getResponse();
@@ -306,7 +311,6 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_TEAMLEAD);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
@@ -330,7 +334,6 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $client->submit($form, [
             'multi_update_table' => [
-                'action' => $this->createUrl('/team/timesheet/multi-delete'),
                 'entities' => implode(',', $ids)
             ]
         ]);
@@ -345,11 +348,14 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
-        $em = $this->getEntityManager();
         $user = $this->getUserByRole(User::ROLE_TEAMLEAD);
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(10);
         $fixture->setUser($user);
+        $this->importFixture($fixture);
+
+        $fixture = new TagFixtures();
+        $fixture->importAmount(TagRepository::MAX_AMOUNT_SELECT);
         $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/team/timesheet/');
@@ -371,7 +377,6 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $client->submit($form, [
             'multi_update_table' => [
-                'action' => $this->createUrl('/team/timesheet/multi-update'),
                 'entities' => implode(',', $ids)
             ]
         ]);

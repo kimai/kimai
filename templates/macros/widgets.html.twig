@@ -16,6 +16,7 @@
                         {% if tabler_bundle.isDarkMode() %}
                             {% set values = values|merge({class: 'btn-outline-light ' ~ (values.class|default(''))}) %}
                         {% endif %}
+                        {% set values = values|merge({class: 'action-' ~ icon ~ ' ' ~ (values.class|default(''))}) %}
                         {{ _self.action_button(icon, values) }}
                     {% endif %}
                 {% endif %}

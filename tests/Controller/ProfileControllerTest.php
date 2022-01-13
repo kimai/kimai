@@ -39,7 +39,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $content = $client->getResponse()->getContent();
         $year = (new \DateTime())->format('Y');
-        $this->assertStringContainsString('<h3 class="box-title">' . $year . '</h3>', $content);
+        $this->assertStringContainsString('<h3 class="card-title">' . $year . '</h3>', $content);
         $this->assertStringContainsString('new Chart(', $content);
         $this->assertStringContainsString('<canvas id="userProfileChart' . $year . '"', $content);
     }
@@ -67,7 +67,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         foreach ($dates as $start) {
             $year = $start->format('Y');
-            $this->assertStringContainsString('<h3 class="box-title">' . $year . '</h3>', $content);
+            $this->assertStringContainsString('<h3 class="card-title">' . $year . '</h3>', $content);
             $this->assertStringContainsString('<canvas id="userProfileChart' . $year . '"', $content);
         }
 
@@ -81,9 +81,6 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertEquals(1, $profileBox->count());
         $profileAvatar = $profileBox->filter('span.avatar');
         $this->assertEquals(1, $profileAvatar->count());
-        $alt = $profileAvatar->attr('title');
-
-        $this->assertEquals($username, $alt);
     }
 
     protected function assertHasAboutMeBox(HttpKernelBrowser $client, string $username)
@@ -408,7 +405,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $this->assertEquals($hourlyRateOriginal, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
         $this->assertNull($user->getPreferenceValue(UserPreference::INTERNAL_RATE));
-        $this->assertNull($user->getPreferenceValue(UserPreference::SKIN));
+        $this->assertEquals('default', $user->getPreferenceValue(UserPreference::SKIN));
 
         $form = $client->getCrawler()->filter('form[name=user_preferences_form]')->form();
         $client->submit($form, [
@@ -419,7 +416,7 @@ class ProfileControllerTest extends ControllerBaseTest
                     2 => ['name' => UserPreference::TIMEZONE, 'value' => 'America/Creston'],
                     3 => ['name' => UserPreference::LOCALE, 'value' => 'ar'],
                     4 => ['name' => UserPreference::FIRST_WEEKDAY, 'value' => 'sunday'],
-                    6 => ['name' => UserPreference::SKIN, 'value' => 'blue'],
+                    6 => ['name' => UserPreference::SKIN, 'value' => 'dark'],
                 ]
             ]
         ]);
@@ -441,7 +438,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertEquals('ar', $user->getPreferenceValue(UserPreference::LOCALE));
         $this->assertEquals('ar', $user->getLanguage());
         $this->assertEquals('ar', $user->getLocale());
-        $this->assertEquals('blue', $user->getPreferenceValue(UserPreference::SKIN));
+        $this->assertEquals('dark', $user->getPreferenceValue(UserPreference::SKIN));
         $this->assertEquals('sunday', $user->getPreferenceValue(UserPreference::FIRST_WEEKDAY));
         $this->assertEquals('sunday', $user->getFirstDayOfWeek());
     }

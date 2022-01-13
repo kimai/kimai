@@ -21,12 +21,19 @@ class ReportingControllerTest extends ControllerBaseTest
         $this->assertUrlIsSecured('/reporting');
     }
 
-    public function testRedirectForDefaultReportUrl()
+    public function testOverviewPage()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/reporting/');
+        $nodes = $client->getCrawler()->filter('section.content div.card');
+        $this->assertCount(9, $nodes);
+    }
+
+    public function testOverviewPageAsUser()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/reporting/');
-        $this->assertIsRedirect($client, $this->createUrl('/reporting/week_by_user'));
-        $client->followRedirect();
-        self::assertStringContainsString('<div class="card-body user-week-reporting-box', $client->getResponse()->getContent());
+        $nodes = $client->getCrawler()->filter('section.content div.card');
+        $this->assertCount(2, $nodes);
     }
 }
