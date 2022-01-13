@@ -62,7 +62,7 @@ final class TagFixtures implements TestFixture
     {
         $tags = [];
         for ($i = 0; $i <= $amount; $i++) {
-            $tags[] = $i;
+            $tags[] = (string) $i;
         }
         $this->setTagArray($tags);
     }
