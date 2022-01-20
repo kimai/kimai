@@ -38,12 +38,14 @@ class InvoiceControllerTest extends ControllerBaseTest
 
     private function clearInvoiceFiles()
     {
-        $path = __DIR__ . '/../_data/invoices/';
+        foreach (['invoices', 'invoices_proof'] as $pathName) {
+            $path = sprintf('%s/../_data/%s/', __DIR__, $pathName);
 
-        if (is_dir($path)) {
-            $files = glob($path . '*');
-            foreach ($files as $file) {
-                unlink($file);
+            if (is_dir($path)) {
+                $files = glob($path . '*');
+                foreach ($files as $file) {
+                    unlink($file);
+                }
             }
         }
     }
