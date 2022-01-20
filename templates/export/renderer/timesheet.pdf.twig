@@ -1,0 +1,18 @@
+{% extends 'export/pdf-layout.html.twig' %}
+{% set showRateColumn = false %}
+{% set showRateBudget = false %}
+{% set showTimeBudget = false %}
+{% set showUserColumn = true %}
+{% set showCustomerSummary = false %}
+{% set decimal = true %}
+{% set showDateTimeShort = true %}
+{% block title %}{{ 'timesheet.pdf.twig'|trans({}, 'export') }}{% endblock %}
+{% block description %}
+    {% if entry.description is not empty %}
+        {{ entry.description|desc2html }}
+    {% elseif entry.activity is not null %}
+        {{ entry.activity.name }}
+    {% endif %}
+    <br>
+    <small>{{ entry.project.customer.name }}, {{ entry.project.name }}</small>
+{% endblock %}
