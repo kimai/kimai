@@ -9,16 +9,18 @@
 
 namespace App\Repository;
 
+use App\Entity\Invoice;
 use App\Entity\Timesheet;
 use App\Invoice\InvoiceItemInterface;
 use App\Invoice\InvoiceItemRepositoryInterface;
+use App\Invoice\InvoiceModel;
 use App\Repository\Query\InvoiceQuery;
 
+/**
+ * @internal only to be used by the invoice system
+ */
 final class TimesheetInvoiceItemRepository implements InvoiceItemRepositoryInterface
 {
-    /**
-     * @var TimesheetRepository
-     */
     private $repository;
 
     public function __construct(TimesheetRepository $repository)
@@ -37,21 +39,30 @@ final class TimesheetInvoiceItemRepository implements InvoiceItemRepositoryInter
 
     /**
      * @param InvoiceItemInterface[] $invoiceItems
+     * @deprecated since 1.17 - use saveInvoice() instead
      */
     public function setExported(array $invoiceItems)
     {
+    }
+
+    public function saveInvoice(Invoice $invoice, InvoiceModel $model): void
+    {
+        $setExported = $model->getQuery()->isMarkAsExported();
+
         $timesheets = [];
 
-        foreach ($invoiceItems as $item) {
+        foreach ($model->getEntries() as $item) {
             if ($item instanceof Timesheet) {
+                if ($setExported) {
+                    $item->setExported(true);
+                }
+                $item->addInvoice($invoice);
                 $timesheets[] = $item;
             }
         }
 
-        if (empty($timesheets)) {
-            return;
+        if (\count($timesheets) > 0) {
+            $this->repository->saveMultiple($timesheets);
         }
-
-        $this->repository->setExported($timesheets);
     }
 }

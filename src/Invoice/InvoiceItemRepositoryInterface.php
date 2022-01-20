@@ -9,12 +9,19 @@
 
 namespace App\Invoice;
 
+use App\Entity\Invoice;
 use App\Repository\Query\InvoiceQuery;
 
+/**
+ * @method void saveInvoice(Invoice $invoice, InvoiceModel $model)
+ */
 interface InvoiceItemRepositoryInterface
 {
+    // public function saveInvoice(Invoice $invoice, InvoiceModel $model): void;
+
     /**
      * @param InvoiceItemInterface[] $invoiceItems
+     * @deprecated since 1.17 - use saveInvoice() instead
      * @return void
      */
     public function setExported(array $invoiceItems) /* : void */;

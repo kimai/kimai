@@ -11,6 +11,7 @@ namespace App\Tests\Entity;
 
 use App\Entity\Activity;
 use App\Entity\Customer;
+use App\Entity\Invoice;
 use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
@@ -45,6 +46,8 @@ class TimesheetTest extends TestCase
         self::assertNull($sut->getInternalRate());
         self::assertNull($sut->getHourlyRate());
         self::assertEquals(new ArrayCollection(), $sut->getTags());
+        self::assertEquals([], $sut->getInvoices());
+        self::assertFalse($sut->isInvoiced());
         self::assertEquals([], $sut->getTagsAsArray());
         self::assertInstanceOf(Timesheet::class, $sut->setFixedRate(13.47));
         self::assertEquals(13.47, $sut->getFixedRate());
@@ -70,6 +73,10 @@ class TimesheetTest extends TestCase
         self::assertEquals(1, $sut->getInternalRate());
         $sut->setInternalRate(null);
         self::assertNull($sut->getInternalRate());
+
+        $sut->addInvoice(new Invoice());
+        self::assertEquals(1, \count($sut->getInvoices()));
+        self::assertTrue($sut->isInvoiced());
     }
 
     protected function getEntity()

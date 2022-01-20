@@ -250,6 +250,9 @@ final class TimesheetService
 
     public function deleteTimesheet(Timesheet $timesheet): void
     {
+        if ($timesheet->isInvoiced()) {
+            throw new \Exception('Timesheet already invoiced.');
+        }
         $this->dispatcher->dispatch(new TimesheetDeletePreEvent($timesheet));
         $this->repository->delete($timesheet);
     }
