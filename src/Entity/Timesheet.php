@@ -319,17 +319,26 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      */
     private $meta;
     /**
-     * @var Invoice|null
+     * @var Collection<Invoice>
      *
-     * @ ORM\ManyToOne(targetEntity="App\Entity\Invoice")
-     * @ ORM\JoinColumn(onDelete="SET NULL", nullable=true)
+     * @ORM\ManyToMany(targetEntity="Invoice", cascade={"persist"}, fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(
+     *  name="kimai2_timesheets_invoices",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="timesheet_id", referencedColumnName="id", onDelete="CASCADE")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="invoice_id", referencedColumnName="id", onDelete="CASCADE")
+     *  }
+     * )
      */
-    private $invoice;
+    private $invoices;
 
     public function __construct()
     {
         $this->tags = new ArrayCollection();
         $this->meta = new ArrayCollection();
+        $this->invoices = new ArrayCollection();
     }
 
     /**
@@ -692,14 +701,22 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         return $this->modifiedAt;
     }
 
-    public function getInvoice(): ?Invoice
+    public function getInvoices(): array
     {
-        return $this->invoice;
+        return $this->invoices->toArray();
     }
 
-    public function setInvoice(?Invoice $invoice): void
+    public function isInvoiced(): bool
     {
-        $this->invoice = $invoice;
+        return $this->invoices->count() > 0;
+    }
+
+    public function addInvoice(Invoice $invoice): void
+    {
+        if ($this->invoices->contains($invoice)) {
+            return;
+        }
+        $this->invoices->add($invoice);
     }
 
     /**
@@ -761,7 +778,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
             $timesheet->$k = $v;
         }
 
-        $timesheet->invoice = null;
+        $timesheet->invoices = new ArrayCollection();
         $timesheet->meta = new ArrayCollection();
 
         /** @var TimesheetMeta $meta */
@@ -786,7 +803,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         }
 
         $this->exported = false;
-        $this->invoice = null;
+        $this->invoices = new ArrayCollection();
 
         $currentMeta = $this->meta;
         $this->meta = new ArrayCollection();

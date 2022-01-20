@@ -187,15 +187,12 @@ final class ServiceInvoice
         return null;
     }
 
-    public function saveGeneratedInvoice(InvoicePostRenderEvent $event): string
+    private function saveFileFromResponse(Response $response, string $filename): string
     {
         $invoiceDirectory = $this->getInvoicesDirectory();
-        $filename = (string) new InvoiceFilename($event->getModel());
 
-        $response = $event->getResponse();
-
-        if ($event->getResponse()->headers->has('Content-Disposition')) {
-            $disposition = $event->getResponse()->headers->get('Content-Disposition');
+        if ($response->headers->has('Content-Disposition')) {
+            $disposition = $response->headers->get('Content-Disposition');
             $parts = explode(';', $disposition);
             foreach ($parts as $part) {
                 if (stripos($part, 'filename=') === false) {
@@ -207,7 +204,7 @@ final class ServiceInvoice
                 }
             }
         } else {
-            $disposition = $event->getResponse()->headers->get('Content-Type');
+            $disposition = $response->headers->get('Content-Type');
             $parts = explode(';', $disposition);
             $parts = explode('/', $parts[0]);
             $filename .= '.' . $parts[1];
@@ -221,7 +218,7 @@ final class ServiceInvoice
             $file = $response->getFile();
             $file->move($invoiceDirectory, $filename);
         } else {
-            $this->fileHelper->saveFile($invoiceDirectory . $filename, $event->getResponse()->getContent());
+            $this->fileHelper->saveFile($invoiceDirectory . $filename, $response->getContent());
         }
 
         return $filename;
@@ -298,16 +295,6 @@ final class ServiceInvoice
         return new DateTimeFactory(new \DateTimeZone($timezone), $sunday);
     }
 
-    /**
-     * @param InvoiceItemInterface[] $entries
-     */
-    private function markEntriesAsExported(array $entries)
-    {
-        foreach ($this->getInvoiceItemRepositories() as $repository) {
-            $repository->setExported($entries);
-        }
-    }
-
     public function renderInvoiceWithModel(InvoiceModel $model, EventDispatcherInterface $dispatcher): Response
     {
         $document = $this->getDocumentByName($model->getTemplate()->getRenderer());
@@ -345,7 +332,7 @@ final class ServiceInvoice
      * @return Invoice
      * @throws \Exception
      */
-    public function createInvoiceFromModel(InvoiceModel $model, EventDispatcherInterface $dispatcher): Invoice
+    private function createInvoiceFromModel(InvoiceModel $model, EventDispatcherInterface $dispatcher): Invoice
     {
         $document = $this->getDocumentByName($model->getTemplate()->getRenderer());
         if (null === $document) {
@@ -365,18 +352,25 @@ final class ServiceInvoice
                 $event = new InvoicePostRenderEvent($model, $document, $renderer, $response);
                 $dispatcher->dispatch($event);
 
-                $invoiceFilename = $this->saveGeneratedInvoice($event);
+                $filename = (string) new InvoiceFilename($event->getModel());
+
+                $invoiceFilename = $this->saveFileFromResponse($event->getResponse(), $filename);
 
                 $invoice = new Invoice();
                 $invoice->setModel($model);
                 $invoice->setFilename($invoiceFilename);
                 $this->invoiceRepository->saveInvoice($invoice);
 
-                if ($model->getQuery()->isMarkAsExported()) {
-                    $this->markEntriesAsExported($model->getEntries());
+                foreach ($this->getInvoiceItemRepositories() as $repository) {
+                    if ($model->getQuery()->isMarkAsExported()) {
+                        $repository->setExported($model->getEntries());
+                    }
+                    if (method_exists($repository, 'saveInvoice')) {
+                        $repository->saveInvoice($invoice, $model);
+                    }
                 }
 
-                $dispatcher->dispatch(new InvoiceCreatedEvent($invoice));
+                $dispatcher->dispatch(new InvoiceCreatedEvent($invoice, $model));
 
                 return $invoice;
             }
