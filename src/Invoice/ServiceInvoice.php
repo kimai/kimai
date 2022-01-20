@@ -376,7 +376,7 @@ final class ServiceInvoice
                     $this->markEntriesAsExported($model->getEntries());
                 }
 
-                $dispatcher->dispatch(new InvoiceCreatedEvent($invoice));
+                $dispatcher->dispatch(new InvoiceCreatedEvent($invoice, $model));
 
                 return $invoice;
             }

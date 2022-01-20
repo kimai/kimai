@@ -11,6 +11,8 @@ namespace App\Tests\Event;
 
 use App\Entity\Invoice;
 use App\Event\InvoiceCreatedEvent;
+use App\Tests\Invoice\DebugFormatter;
+use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,9 +23,11 @@ class InvoiceCreatedEventTest extends TestCase
     public function testDefaultValues()
     {
         $invoice = new Invoice();
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
 
-        $sut = new InvoiceCreatedEvent($invoice);
+        $sut = new InvoiceCreatedEvent($invoice, $model);
 
         self::assertSame($invoice, $sut->getInvoice());
+        self::assertSame($model, $sut->getInvoiceModel());
     }
 }
