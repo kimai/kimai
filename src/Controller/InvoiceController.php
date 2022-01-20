@@ -13,7 +13,10 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
+use App\Entity\MetaTableTypeInterface;
 use App\Event\InvoiceDocumentsEvent;
+use App\Event\InvoiceMetaDefinitionEvent;
+use App\Event\InvoiceMetaDisplayEvent;
 use App\Export\Spreadsheet\AnnotatedObjectExporter;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
@@ -347,6 +350,7 @@ final class InvoiceController extends AbstractController
             'query' => $query,
             'toolbarForm' => $form->createView(),
             'download' => $invoice,
+            'metaColumns' => $this->findMetaColumns($query),
         ]);
     }
 
@@ -695,8 +699,23 @@ final class InvoiceController extends AbstractController
         ]);
     }
 
+    /**
+     * @param InvoiceArchiveQuery $query
+     * @return MetaTableTypeInterface[]
+     */
+    private function findMetaColumns(InvoiceArchiveQuery $query): array
+    {
+        $event = new InvoiceMetaDisplayEvent($query, InvoiceMetaDisplayEvent::INVOICE);
+        $this->dispatcher->dispatch($event);
+
+        return $event->getFields();
+    }
+
     private function createInvoiceEditForm(Invoice $invoice): FormInterface
     {
+        $event = new InvoiceMetaDefinitionEvent($invoice);
+        $this->dispatcher->dispatch($event);
+
         return $this->createForm(InvoiceEditForm::class, $invoice, [
             'action' => $this->generateUrl('admin_invoice_edit', ['id' => $invoice->getId()]),
             'method' => 'POST',
