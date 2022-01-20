@@ -23,10 +23,10 @@ trait TwigRendererTrait
         $previousTranslation = null;
         $previousFormatLocale = null;
 
-        if ($language === null) {
+        if ($language !== null) {
             $previousTranslation = $this->switchTranslationLocale($twig, $language);
         }
-        if ($formatLocale === null) {
+        if ($formatLocale !== null) {
             $previousFormatLocale = $this->switchFormatLocale($twig, $formatLocale);
         }
 
