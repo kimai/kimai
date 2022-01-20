@@ -286,7 +286,7 @@ class TranslationCommand extends Command
                 $id,
                 $values['resname'],
                 $values['source'],
-                $values['target'],
+                $values['target']
             );
         }
 

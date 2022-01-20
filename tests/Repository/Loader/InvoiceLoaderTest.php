@@ -20,7 +20,7 @@ class InvoiceLoaderTest extends AbstractLoaderTest
 {
     public function testLoadResults()
     {
-        $em = $this->getEntityManagerMock(2);
+        $em = $this->getEntityManagerMock(3);
 
         $sut = new InvoiceLoader($em);
 

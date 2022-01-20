@@ -11,6 +11,8 @@ namespace App\Entity;
 
 use App\Export\Annotation as Exporter;
 use App\Invoice\InvoiceModel;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -27,14 +29,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("invoiceNumber")
  * @UniqueEntity("invoiceFilename")
  *
- * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "subtotal", "total", "tax", "currency", "vat", "dueDays", "dueDate", "paymentDate", "user", "invoiceFilename", "comment"})
+ * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "subtotal", "total", "tax", "currency", "vat", "dueDays", "dueDate", "paymentDate", "user", "invoiceFilename", "customerNumber", "comment"})
  * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
  * @Exporter\Expose("customerNumber", label="label.number", exp="object.getCustomer() === null ? null : object.getCustomer().getNumber()")
  * @Exporter\Expose("dueDate", label="invoice.due_days", type="datetime", exp="object.getDueDate() === null ? null : object.getDueDate()")
  * @Exporter\Expose("user", label="label.username", type="string", exp="object.getUser() === null ? null : object.getUser().getDisplayName()")
  * @Exporter\Expose("paymentDate", label="invoice.payment_date", type="date", exp="object.getPaymentDate() === null ? null : object.getPaymentDate()")
  */
-class Invoice
+class Invoice implements EntityWithMetaFields
 {
     public const STATUS_PENDING = 'pending';
     public const STATUS_PAID = 'paid';
@@ -49,7 +51,6 @@ class Invoice
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @phpstan-ignore-next-line
      */
     private $id;
 
@@ -195,6 +196,28 @@ class Invoice
      * @ORM\Column(name="payment_date", type="date", nullable=true)
      */
     private $paymentDate;
+
+    /**
+     * Meta fields
+     *
+     * All visible meta (custom) fields registered with this invoice
+     *
+     * @var InvoiceMeta[]|Collection
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Invoice"})
+     * @Serializer\Type(name="array<App\Entity\InvoiceMeta>")
+     * @Serializer\SerializedName("metaFields")
+     * @Serializer\Accessor(getter="getVisibleMetaFields")
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\InvoiceMeta", mappedBy="invoice", cascade={"persist"})
+     */
+    private $meta;
+
+    public function __construct()
+    {
+        $this->meta = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -398,5 +421,69 @@ class Invoice
     public function getComment(): ?string
     {
         return $this->comment;
+    }
+
+    /**
+     * @return Collection|MetaTableTypeInterface[]
+     */
+    public function getMetaFields(): Collection
+    {
+        return $this->meta;
+    }
+
+    /**
+     * @return MetaTableTypeInterface[]
+     */
+    public function getVisibleMetaFields(): array
+    {
+        $all = [];
+        foreach ($this->meta as $meta) {
+            if ($meta->isVisible()) {
+                $all[] = $meta;
+            }
+        }
+
+        return $all;
+    }
+
+    public function getMetaField(string $name): ?MetaTableTypeInterface
+    {
+        foreach ($this->meta as $field) {
+            if (strtolower($field->getName()) === strtolower($name)) {
+                return $field;
+            }
+        }
+
+        return null;
+    }
+
+    public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
+    {
+        if (null === ($current = $this->getMetaField($meta->getName()))) {
+            $meta->setEntity($this);
+            $this->meta->add($meta);
+
+            return $this;
+        }
+
+        $current->merge($meta);
+
+        return $this;
+    }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+        }
+
+        $currentMeta = $this->meta;
+        $this->meta = new ArrayCollection();
+        /** @var InvoiceMeta $meta */
+        foreach ($currentMeta as $meta) {
+            $newMeta = clone $meta;
+            $newMeta->setEntity($this);
+            $this->setMetaField($newMeta);
+        }
     }
 }

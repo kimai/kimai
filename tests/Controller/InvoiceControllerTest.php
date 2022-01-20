@@ -199,6 +199,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client);
         $this->assertRedirectUrl($client, '/invoice/show?id=', false);
         $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertDataTableRowCount($client, 'datatable_invoices', 1);
 
         $em = $this->getEntityManager();

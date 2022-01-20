@@ -38,6 +38,10 @@ final class TimesheetExportedValidator extends ConstraintValidator
             throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
         }
 
+        if ($timesheet->getId() === null) {
+            return;
+        }
+
         if (!$timesheet->isExported()) {
             return;
         }

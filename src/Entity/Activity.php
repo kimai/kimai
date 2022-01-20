@@ -325,7 +325,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
 
         $currentMeta = $this->meta;
         $this->meta = new ArrayCollection();
-        /** @var ProjectMeta $meta */
+        /** @var ActivityMeta $meta */
         foreach ($currentMeta as $meta) {
             $newMeta = clone $meta;
             $newMeta->setEntity($this);
