@@ -595,7 +595,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
 
         $currentMeta = $this->meta;
         $this->meta = new ArrayCollection();
-        /** @var ProjectMeta $meta */
+        /** @var CustomerMeta $meta */
         foreach ($currentMeta as $meta) {
             $newMeta = clone $meta;
             $newMeta->setEntity($this);
