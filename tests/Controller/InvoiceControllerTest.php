@@ -38,14 +38,12 @@ class InvoiceControllerTest extends ControllerBaseTest
 
     private function clearInvoiceFiles()
     {
-        foreach (['invoices', 'invoices_proof'] as $pathName) {
-            $path = sprintf('%s/../_data/%s/', __DIR__, $pathName);
+        $path = __DIR__ . '/../_data/invoices/';
 
-            if (is_dir($path)) {
-                $files = glob($path . '*');
-                foreach ($files as $file) {
-                    unlink($file);
-                }
+        if (is_dir($path)) {
+            $files = glob($path . '*');
+            foreach ($files as $file) {
+                unlink($file);
             }
         }
     }
@@ -201,6 +199,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client);
         $this->assertRedirectUrl($client, '/invoice/show?id=', false);
         $client->followRedirect();
+        $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertDataTableRowCount($client, 'datatable_invoices', 1);
 
         $em = $this->getEntityManager();
