@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("invoiceNumber")
  * @UniqueEntity("invoiceFilename")
  *
- * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "subtotal", "total", "tax", "currency", "vat", "dueDays", "dueDate", "paymentDate", "user", "invoiceFilename", "comment"})
+ * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "subtotal", "total", "tax", "currency", "vat", "dueDays", "dueDate", "paymentDate", "user", "invoiceFilename", "customerNumber", "comment"})
  * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
  * @Exporter\Expose("customerNumber", label="label.number", exp="object.getCustomer() === null ? null : object.getCustomer().getNumber()")
  * @Exporter\Expose("dueDate", label="invoice.due_days", type="datetime", exp="object.getDueDate() === null ? null : object.getDueDate()")
