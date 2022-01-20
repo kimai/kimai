@@ -337,9 +337,10 @@ class InvoiceCreateCommand extends Command
         return $invoices;
     }
 
-    private function saveInvoicePreview(Response $response)
+    private function saveInvoicePreview(Response $response): string
     {
         $filename = uniqid('invoice_');
+        $directory = rtrim($this->previewDirectory, '/') . '/';
 
         if ($response->headers->has('Content-Disposition')) {
             $disposition = $response->headers->get('Content-Disposition');
@@ -360,12 +361,12 @@ class InvoiceCreateCommand extends Command
 
         if ($response instanceof BinaryFileResponse) {
             $file = $response->getFile();
-            $file->move($this->previewDirectory, $filename);
+            $file->move($directory, $filename);
         } else {
-            (new Filesystem())->dumpFile($this->previewDirectory . $filename, $response->getContent());
+            (new Filesystem())->dumpFile($directory . $filename, $response->getContent());
         }
 
-        return $this->previewDirectory . $filename;
+        return $directory . $filename;
     }
 
     /**
