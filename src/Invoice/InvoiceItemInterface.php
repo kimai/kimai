@@ -30,10 +30,7 @@ interface InvoiceItemInterface
     public function getRate(): float;
 
     // will be activated with 2.0
-    /*
-    public function getInternalRate(): ?float;
-    public function setInvoice(Invoice $invoice): void;
-    */
+    // public function getInternalRate(): ?float;
 
     public function getUser(): ?User;
 

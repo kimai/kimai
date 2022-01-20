@@ -26,7 +26,6 @@ interface ExportItemInterface extends InvoiceItemInterface
 
     // will be activated with 2.0
     // public function isBillable(): bool;
-    // public function setIsExported(): void;
 
     /**
      * Returns the named meta field or null.
