@@ -12,6 +12,9 @@ namespace App\Export;
 use App\Entity\MetaTableTypeInterface;
 use App\Invoice\InvoiceItemInterface;
 
+/**
+ * Will be merged with InvoiceItemInterface in 2.0
+ */
 interface ExportItemInterface extends InvoiceItemInterface
 {
     /**

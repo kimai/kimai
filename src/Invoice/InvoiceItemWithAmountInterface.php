@@ -9,6 +9,9 @@
 
 namespace App\Invoice;
 
+/**
+ * Will be removed with 2.0, just here for BC compatibility.
+ */
 interface InvoiceItemWithAmountInterface
 {
     public function getAmount(): float;
