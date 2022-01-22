@@ -56,10 +56,10 @@ class MPdfConverter implements HtmlToPdfConverter
     /**
      * @param string $html
      * @param array $options
-     * @return mixed|string
+     * @return string
      * @throws \Mpdf\MpdfException
      */
-    public function convertToPdf(string $html, array $options = [])
+    public function convertToPdf(string $html, array $options = []): string
     {
         $options = array_merge(
             $this->sanitizeOptions($options),
