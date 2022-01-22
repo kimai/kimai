@@ -100,7 +100,7 @@ final class CreateUserCommand extends Command
      */
     protected function askForPassword(InputInterface $input, OutputInterface $output): string
     {
-        /** @var QuestionHelper $helper */
+        /* @var QuestionHelper $helper */
         $helper = $this->getHelper('question');
 
         $passwordQuestion = new Question('Please enter the password: ');
