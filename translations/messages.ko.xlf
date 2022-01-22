@@ -1253,6 +1253,14 @@
         <source>label.budgetType_month</source>
         <target>월별</target>
       </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target>Directory "%dir%" is write protected.</target>
+      </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>error.directory_missing</source>
+        <target>Directory "%dir%" is not existing and could not be created.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
