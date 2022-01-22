@@ -5,9 +5,6 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
-    "composer/pcre": {
-        "version": "1.0.1"
-    },
     "composer/semver": {
         "version": "1.4.2"
     },
