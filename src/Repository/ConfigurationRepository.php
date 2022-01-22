@@ -51,10 +51,23 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
         self::$initialized = true;
     }
 
+    public function getConfigurationByName(string $name): ?Configuration
+    {
+        return $this->findOneBy(['name' => $name]);
+    }
+
     public function saveConfiguration(Configuration $configuration)
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($configuration);
+        $entityManager->flush();
+        $this->clearCache();
+    }
+
+    public function deleteConfiguration(Configuration $configuration)
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($configuration);
         $entityManager->flush();
         $this->clearCache();
     }
