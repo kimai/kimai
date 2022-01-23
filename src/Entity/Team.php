@@ -59,7 +59,7 @@ class Team
     /**
      * All team member (including team leads)
      *
-     * @var TeamMember[]|Collection<TeamMember>
+     * @var Collection<TeamMember>
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity"})

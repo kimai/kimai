@@ -32,7 +32,6 @@ class TeamMember
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @phpstan-ignore-next-line
      */
     private $id;
     /**

@@ -20,7 +20,7 @@ trait ColorTrait
     /**
      * The assigned color in HTML hex format, eg. #dd1d00
      *
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
@@ -32,9 +32,6 @@ trait ColorTrait
      */
     private $color = null;
 
-    /**
-     * @return string
-     */
     public function getColor(): ?string
     {
         if ($this->color === Constants::DEFAULT_COLOR) {
@@ -49,9 +46,6 @@ trait ColorTrait
         return null !== $this->color && $this->color !== Constants::DEFAULT_COLOR;
     }
 
-    /**
-     * @param string $color
-     */
     public function setColor(?string $color = null): void
     {
         $this->color = $color;
