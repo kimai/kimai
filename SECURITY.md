@@ -5,10 +5,10 @@
 As announced in the [README](README.md) I only support the latest available release and master.
 
 | Version | Supported          |
-| ------- | ------------------ |
+|---------| ------------------ |
 | master  | :white_check_mark: |
-| 1.16    | :white_check_mark: |
-| < 1.16  | :x:                |
+| 1.17    | :white_check_mark: |
+| < 1.17  | :x:                |
 
 ## Reporting a Vulnerability
 
