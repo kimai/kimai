@@ -9,6 +9,7 @@ monolog:
                 - ^/
         nested:
             type: stream
+            level: info
             path: "%kernel.logs_dir%/%kernel.environment%.log"
 
         console:
