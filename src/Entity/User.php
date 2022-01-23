@@ -100,7 +100,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * The user alias will be displayed in the frontend instead of the username
      *
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
@@ -114,7 +114,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * Registration date for the user
      *
-     * @var DateTime
+     * @var DateTime|null
      *
      * @Exporter\Expose(label="profile.registration_date", type="datetime")
      *
@@ -124,7 +124,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * An additional title for the user, like the Job position or Department
      *
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"User_Entity"})
@@ -136,9 +136,9 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     private $title;
     /**
-     * URL to the users avatar, will be auto-generated if empty
+     * URL to the user avatar, will be auto-generated if empty
      *
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"User_Entity"})
@@ -150,7 +150,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * API token (password) for this user
      *
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="api_token", type="string", length=255, nullable=true)
      */
@@ -167,7 +167,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      *
      * List of preferences for this user, required ones have dedicated fields/methods
      *
-     * @var UserPreference[]|Collection
+     * @var Collection<UserPreference>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\UserPreference", mappedBy="user", cascade={"persist"})
      */
@@ -175,7 +175,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * List of all team memberships.
      *
-     * @var TeamMember[]|ArrayCollection<TeamMember>
+     * @var Collection<TeamMember>
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"User_Entity"})
@@ -187,9 +187,9 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     private $memberships;
     /**
-     * The type of authentication used by the user (eg. "kimai", "ldap", "saml")
+     * The type of authentication used by the user (e.g. "kimai", "ldap", "saml")
      *
-     * @var string
+     * @var string|null
      * @internal for internal usage only
      *
      * @ORM\Column(name="auth", type="string", length=20, nullable=true)

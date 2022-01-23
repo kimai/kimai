@@ -31,6 +31,7 @@ abstract class AbstractRepositoryTest extends KernelTestCase
      */
     protected function setUp(): void
     {
+        parent::setUp();
         $kernel = self::bootKernel();
 
         $this->entityManager = $kernel->getContainer()

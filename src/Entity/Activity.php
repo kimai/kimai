@@ -99,7 +99,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     /**
      * Description of this activity
      *
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity_Entity"})

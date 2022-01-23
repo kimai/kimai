@@ -46,10 +46,10 @@ class UserPreferenceTest extends TestCase
         $sut->setType(IntegerType::class);
         self::assertSame(1, $sut->getValue());
         $sut->setType(YesNoType::class);
-        self::assertSame(true, $sut->getValue());
+        self::assertTrue($sut->getValue());
         $sut->setValue('0');
         $sut->setType(CheckboxType::class);
-        self::assertSame(false, $sut->getValue());
+        self::assertFalse($sut->getValue());
     }
 
     public function testGetLabelWithLabelOption()
