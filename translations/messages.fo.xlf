@@ -975,6 +975,70 @@
         <source>label.hours_24</source>
         <target>24 tímar</target>
       </trans-unit>
+      <trans-unit id="5gjqxgK" resname="label.fixedRate">
+        <source>label.fixedRate</source>
+        <target>Fastur kostnáður</target>
+      </trans-unit>
+      <trans-unit id="Dgmh_mv" resname="label.vat_id">
+        <source>label.vat_id</source>
+        <target>V-tal</target>
+      </trans-unit>
+      <trans-unit id="F6Jmro7" resname="export.title">
+        <source>export.title</source>
+        <target>Útflyt</target>
+      </trans-unit>
+      <trans-unit id="pnGDFmf" resname="label.type">
+        <source>label.type</source>
+        <target>Slag</target>
+      </trans-unit>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>Ein teldupostur er sendur. Telduposturin inniheldur eina leinkju, ið tú skalt trýst á, fyri at endurseta títt loyniorð. GG: Tú kanst einans biða um eitt nýtt loyniorð einaferð hvønn %tokenLifetime% tíma. Um tú ikki móttekur ein teldupost, kannað so tína fras mappu ella royn umaftur.</target>
+      </trans-unit>
+      <trans-unit id="Uvo1CbP" resname="status.pending">
+        <source>status.pending</source>
+        <target>Bíðistøðu</target>
+      </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>error.directory_missing</source>
+        <target>Mappan "%dir%" finninst ikki, og tað bar ikki til at skapa hana.</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target>Mappan "%dir%" skrivivard.</target>
+      </trans-unit>
+      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
+        <source>label.calendar.initial_view</source>
+        <target>Byrjanarvísan fyri kalendara</target>
+      </trans-unit>
+      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
+        <source>label.login.initial_view</source>
+        <target>Byrjanarvísan eftir innritan</target>
+      </trans-unit>
+      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>navnabót kagara dagførd</target>
+      </trans-unit>
+      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
+        <source>label.timesheet.export_decimal</source>
+        <target>Nýt kommatals-tíðarlongd í útflutningi</target>
+      </trans-unit>
+      <trans-unit id="7J7G3Vr" resname="label.mark_as_exported">
+        <source>label.mark_as_exported</source>
+        <target>Merk sum útflutt</target>
+      </trans-unit>
+      <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>%percent%% brúkt hendan mánaðin</target>
+      </trans-unit>
+      <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% brúkt (%left% er enn opið hendan mánaðin)</target>
+      </trans-unit>
+      <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>Umbønin kundi ikki fullfíggjast. Ov nógv úrslit vóru funnin.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
