@@ -135,22 +135,11 @@ class Team
     }
 
     /**
-     * Indexed by ID to use it within collection type forms.
-     *
-     * @return TeamMember[]
+     * @return Collection<TeamMember>
      */
-    public function getMembers(): iterable
+    public function getMembers(): Collection
     {
-        $all = [];
-        foreach ($this->members as $member) {
-            if ($member->getId() === null) {
-                $all[] = $member;
-            } else {
-                $all[$member->getId()] = $member;
-            }
-        }
-
-        return $all;
+        return $this->members;
     }
 
     public function addMember(TeamMember $member): void
@@ -172,10 +161,6 @@ class Team
             return;
         }
 
-        if (null !== ($existing = $this->findMember($member))) {
-            return;
-        }
-
         $this->members->add($member);
         $member->getUser()->addMembership($member);
     }
@@ -185,22 +170,11 @@ class Team
         return $this->members->contains($member);
     }
 
-    private function findMember(TeamMember $member): ?TeamMember
-    {
-        foreach ($this->members as $oldMember) {
-            if ($oldMember->getUser() === $member->getUser() && $oldMember->getTeam() === $member->getTeam()) {
-                return $oldMember;
-            }
-        }
-
-        return null;
-    }
-
     private function findMemberByUser(User $user): ?TeamMember
     {
-        foreach ($this->members as $oldMember) {
-            if ($oldMember->getUser() === $user) {
-                return $oldMember;
+        foreach ($this->members as $member) {
+            if ($member->getUser() === $user) {
+                return $member;
             }
         }
 
@@ -209,12 +183,12 @@ class Team
 
     public function removeMember(TeamMember $member): void
     {
-        if (null === ($existingMember = $this->findMember($member))) {
+        if (!$this->members->contains($member)) {
             return;
         }
 
-        $this->members->removeElement($existingMember);
-        $existingMember->getUser()->removeMembership($existingMember);
+        $this->members->removeElement($member);
+        $member->getUser()->removeMembership($member);
     }
 
     /**

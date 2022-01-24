@@ -584,17 +584,13 @@ class User implements UserInterface, EquatableInterface, \Serializable
             return;
         }
 
-        if (null !== ($existing = $this->findMember($member))) {
-            return;
-        }
-
         $this->memberships->add($member);
         $member->getTeam()->addMember($member);
     }
 
     public function removeMembership(TeamMember $member): void
     {
-        if (null === ($member = $this->findMember($member))) {
+        if (!$this->memberships->contains($member)) {
             return;
         }
 
@@ -603,38 +599,16 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * Indexed by ID to use it within collection type forms.
-     *
-     * @return TeamMember[]
+     * @return Collection<TeamMember>
      */
-    public function getMemberships(): iterable
+    public function getMemberships(): Collection
     {
-        $all = [];
-        foreach ($this->memberships as $member) {
-            if ($member->getId() === null) {
-                $all[] = $member;
-            } else {
-                $all[$member->getId()] = $member;
-            }
-        }
-
-        return $all;
+        return $this->memberships;
     }
 
     public function hasMembership(TeamMember $member): bool
     {
         return $this->memberships->contains($member);
-    }
-
-    private function findMember(TeamMember $member): ?TeamMember
-    {
-        foreach ($this->memberships as $oldMember) {
-            if ($oldMember->getUser() === $member->getUser() && $oldMember->getTeam() === $member->getTeam()) {
-                return $oldMember;
-            }
-        }
-
-        return null;
     }
 
     /**
@@ -830,10 +804,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
         return $this->auth === null || $this->auth === self::AUTH_INTERNAL;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function addRole($role)
+    public function addRole(string $role)
     {
         $role = strtoupper($role);
         if ($role === static::DEFAULT_ROLE) {

@@ -235,13 +235,6 @@ final class TeamController extends BaseApiController
             throw new NotFoundException();
         }
 
-        // cache the current memberlist
-        /** @var TeamMember[] $originalMembers */
-        $originalMembers = [];
-        foreach ($team->getMembers() as $member) {
-            $originalMembers[] = $member;
-        }
-
         $form = $this->createForm(TeamApiEditForm::class, $team);
 
         $form->setData($team);
@@ -252,14 +245,6 @@ final class TeamController extends BaseApiController
             $view->getContext()->setGroups(self::GROUPS_FORM);
 
             return $this->viewHandler->handle($view);
-        }
-
-        // and now remove the ones, which are not in the list any longer
-        foreach ($originalMembers as $member) {
-            if (!$team->hasMember($member)) {
-                $member->getUser()->removeMembership($member);
-                $this->repository->removeTeamMember($member);
-            }
         }
 
         $this->repository->saveTeam($team);
