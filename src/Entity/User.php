@@ -595,7 +595,9 @@ class User implements UserInterface, EquatableInterface, \Serializable
         }
 
         $this->memberships->removeElement($member);
-        $member->getUser()->removeMembership($member);
+        $member->getTeam()->removeMember($member);
+        $member->setUser(null);
+        $member->setTeam(null);
     }
 
     /**
