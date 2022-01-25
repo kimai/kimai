@@ -142,11 +142,6 @@ class Team
         return $this->members;
     }
 
-    public function removeMembers(): void
-    {
-        $this->members->clear();
-    }
-
     public function addMember(TeamMember $member): void
     {
         if ($this->members->contains($member)) {
