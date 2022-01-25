@@ -156,8 +156,12 @@ class Team
             throw new \InvalidArgumentException('Cannot set foreign team membership');
         }
 
-        // when using the API an invalid user id does not trigger the validation first, but after calling this method :-(
+        // when using the API an invalid User ID triggers the validation too late
         if ($member->getUser() === null) {
+            return;
+        }
+
+        if (null !== $this->findMemberByUser($member->getUser())) {
             return;
         }
 

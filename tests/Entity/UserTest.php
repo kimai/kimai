@@ -449,6 +449,9 @@ class UserTest extends TestCase
 
         self::assertFalse($sut->isTeamleadOf($team));
 
+        $member = new TeamMember();
+        $member->setTeam($team);
+
         $sut->addMembership($member);
         self::assertCount(1, $sut->getMemberships());
         self::assertFalse($sut->isTeamleadOf($team));
