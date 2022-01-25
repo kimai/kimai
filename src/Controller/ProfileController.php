@@ -9,7 +9,6 @@
 
 namespace App\Controller;
 
-use App\Entity\TeamMember;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
@@ -19,7 +18,9 @@ use App\Form\UserPasswordType;
 use App\Form\UserPreferencesForm;
 use App\Form\UserRolesType;
 use App\Form\UserTeamsType;
+use App\Repository\TeamRepository;
 use App\Repository\TimesheetRepository;
+use App\Repository\UserRepository;
 use App\Timesheet\TimesheetStatisticService;
 use App\User\UserService;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -78,15 +79,13 @@ final class ProfileController extends AbstractController
      * @Route(path="/{username}/edit", name="user_profile_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', profile)")
      */
-    public function editAction(User $profile, Request $request): Response
+    public function editAction(User $profile, Request $request, UserRepository $userRepository): Response
     {
         $form = $this->createEditForm($profile);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($profile);
-            $entityManager->flush();
+            $userRepository->saveUser($profile);
 
             $this->flashSuccess('action.update.success');
 
@@ -152,7 +151,7 @@ final class ProfileController extends AbstractController
      * @Route(path="/{username}/roles", name="user_profile_roles", methods={"GET", "POST"})
      * @Security("is_granted('roles', profile)")
      */
-    public function rolesAction(User $profile, Request $request): Response
+    public function rolesAction(User $profile, Request $request, UserRepository $userRepository): Response
     {
         $isSuperAdmin = $profile->isSuperAdmin();
 
@@ -166,9 +165,7 @@ final class ProfileController extends AbstractController
                 $profile->setSuperAdmin(true);
             }
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($profile);
-            $entityManager->flush();
+            $userRepository->saveUser($profile);
 
             $this->flashSuccess('action.update.success');
 
@@ -186,7 +183,7 @@ final class ProfileController extends AbstractController
      * @Route(path="/{username}/teams", name="user_profile_teams", methods={"GET", "POST"})
      * @Security("is_granted('teams', profile)")
      */
-    public function teamsAction(User $profile, Request $request, UserService $service): Response
+    public function teamsAction(User $profile, Request $request, UserRepository $userRepository, TeamRepository $teamRepository): Response
     {
         $originalMembers = new ArrayCollection();
         foreach ($profile->getMemberships() as $member) {
@@ -197,18 +194,15 @@ final class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-
-            /** @var TeamMember $member */
             foreach ($originalMembers as $member) {
                 if (!$profile->hasMembership($member)) {
-                    $member->getTeam()->removeMember($member);
-                    $entityManager->remove($profile);
+                    $member->setTeam(null);
+                    $member->setUser(null);
+                    $teamRepository->removeTeamMember($member);
                 }
             }
 
-            $entityManager->persist($profile);
-            $entityManager->flush();
+            $userRepository->saveUser($profile);
 
             $this->flashSuccess('action.update.success');
 

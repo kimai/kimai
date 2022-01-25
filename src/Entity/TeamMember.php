@@ -107,7 +107,7 @@ class TeamMember
     public function __clone()
     {
         if ($this->id !== null) {
-            $id = null;
+            $this->id = null;
         }
     }
 }
