@@ -89,6 +89,10 @@ final class CustomerVoter extends Voter
                 }
             }
 
+            if ($user->canSeeAllData()) {
+                return true;
+            }
+
             return false;
         }
 
