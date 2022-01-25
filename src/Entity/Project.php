@@ -57,6 +57,8 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     use BudgetTrait;
     use ColorTrait;
 
+    public const INTERNAL_PROJECT = 'Internal';
+
     /**
      * Internal ID
      *

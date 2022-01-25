@@ -71,6 +71,12 @@
         .text-nowrap {
             white-space: nowrap;
         }
+        .internalActivityTable table {
+        }
+        .internalActivityTable td {
+            border: 0.1mm solid #000000;
+            padding-left: 0.1mm;
+        }
     </style>
 {% endblock %}
 </head>
@@ -113,6 +119,7 @@ mpdf-->
         <tr>
             <th>{{ 'label.customer'|trans }}</th>
             <th>{{ 'label.project'|trans }}</th>
+            <th>{{ 'label.activity'|trans }}</th>
             {% if showTimeBudget %}
                 <th class="center">{{ 'label.timeBudget'|trans }}</th>
             {% endif %}
@@ -153,7 +160,7 @@ mpdf-->
             {% endif %}
             {% if customer is not same as(summary.customer) %}
                 <tr class="summary">
-                    <td colspan="2">
+                    <td colspan="3">
                     </td>
                     {% if showTimeBudget %}
                         <td></td>
@@ -179,6 +186,22 @@ mpdf-->
             <tr class="{{ cycle(['odd', 'even'], customerCount) }}">
                 <td>{{ summary.customer }}</td>
                 <td>{{ summary.project }}</td>
+                <td style="padding: 0px;">
+                    <table class="internalActivityTable" width="100%" style="border-spacing: 0px !important;">
+                    {% for activity in uniqueActivitiesArray %}
+                        {% if durationInternalActivities[summary.project] %}
+                            <tr>
+                                <td style="text-align:left; padding: 3px;">
+                                {{  activity }} 
+                                </td>
+                                <td style="text-align:right; padding: 3px;">
+                                {{  durationInternalActivities[summary.project][activity] | duration }}
+                                </td>    
+                            </tr>             
+                        {% endif %}
+                    {% endfor %}
+                    </table>
+                </td>
                 {% if showTimeBudget %}
                     <td class="center">
                         {% if budgets[id] is defined and budgets[id].time_left > 0 %}
@@ -208,7 +231,7 @@ mpdf-->
         {% endfor %}
         {% if customer is not same as(null) %}
         <tr class="summary">
-            <td colspan="2"></td>
+            <td colspan="3"></td>
             {% if showTimeBudget %}
                 <td></td>
             {% endif %}
@@ -226,7 +249,7 @@ mpdf-->
         {% endif %}
         {% if showTotalSummary and not multiCurrency %}
         <tr class="summary-total">
-            <td class="totals" colspan="2">
+            <td class="totals" colspan="3">
                 {{ 'sum.total'|trans }}
             </td>
             {% if showTimeBudget %}

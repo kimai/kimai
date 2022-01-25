@@ -16,6 +16,8 @@ use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
 use App\Utils\FileHelper;
 use App\Utils\HtmlToPdfConverter;
+use App\Entity\Activity;
+use App\Entity\Project;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Twig\Environment;
@@ -99,6 +101,21 @@ class PDFRenderer
         $context = new ExportContext();
         $context->setOption('filename', $filename->getFilename());
 
+        $uniqueActivitiesArray = [];
+        $durationInternalActivities = [];
+        foreach ($timesheets as $exportItem) {
+            $activityName = $exportItem->getActivity()->getName();
+            $projectName = $exportItem->getProject()->getName();
+            if(!is_null($activityName) && $projectName === Project::INTERNAL_PROJECT)
+            {
+                array_push($uniqueActivitiesArray, $activityName);
+                if(empty($durationInternalActivities[$projectName][$activityName]) === true)
+                    $durationInternalActivities[$projectName][$activityName] = 0;
+                $durationInternalActivities[$projectName][$activityName] += $exportItem->getDuration();
+            }
+        }
+        $uniqueActivitiesArray = array_unique($uniqueActivitiesArray);
+
         $summary = $this->calculateSummary($timesheets);
         $content = $this->twig->render($this->getTemplate(), array_merge([
             'entries' => $timesheets,
@@ -108,7 +125,9 @@ class PDFRenderer
             'summaries' => $summary,
             'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectStatisticService),
             'decimal' => false,
-            'pdfContext' => $context
+            'pdfContext' => $context,
+            'uniqueActivitiesArray' => $uniqueActivitiesArray,
+            'durationInternalActivities' => $durationInternalActivities
         ], $this->getOptions($query)));
 
         $pdfOptions = array_merge($context->getOptions(), $this->getPdfOptions());

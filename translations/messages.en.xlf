@@ -317,6 +317,10 @@
         <source>label.project</source>
         <target>Project</target>
       </trans-unit>
+      <trans-unit id="KtnqJcg" resname="label.activity">
+        <source>label.activity</source>
+        <target>Activity</target>
+      </trans-unit>
       <trans-unit id="VNCQ7YU" resname="label.tag">
         <source>label.tag</source>
         <target>Tags</target>
