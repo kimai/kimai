@@ -66,6 +66,18 @@
         <source>This period is locked, please choose a later date.</source>
         <target>Denne periode er låst, vælg venligst en senere dato.</target>
       </trans-unit>
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target>Denne time seddel er allerede eksporteret.</target>
+      </trans-unit>
+      <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
+        <source>An activity needs to be selected.</source>
+        <target>En aktivitet skal vælges.</target>
+      </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target>Et projekt skal vælges.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
