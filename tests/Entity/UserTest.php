@@ -146,12 +146,12 @@ class UserTest extends TestCase
             ->setValue('foobar');
         $user->addPreference($preference);
         self::assertEquals('foobar', $user->getPreferenceValue('test', 'foo'));
-        self::assertEquals('foobar', $user->getMetaFieldValue('test', 'foo'));
+        self::assertEquals('foobar', $user->getMetaFieldValue('test'));
         self::assertEquals($preference, $user->getPreference('test'));
 
         $user->setPreferenceValue('test', 'Hello World');
         self::assertEquals('Hello World', $user->getPreferenceValue('test', 'foo'));
-        self::assertEquals('Hello World', $user->getMetaFieldValue('test', 'foo'));
+        self::assertEquals('Hello World', $user->getMetaFieldValue('test'));
 
         self::assertNull($user->getPreferenceValue('test2'));
         self::assertNull($user->getMetaFieldValue('test2'));
