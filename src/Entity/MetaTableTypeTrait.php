@@ -109,7 +109,7 @@ trait MetaTableTypeTrait
     }
 
     /**
-     * @return mixed|null
+     * @return int|bool|string|null
      */
     public function getValue()
     {
