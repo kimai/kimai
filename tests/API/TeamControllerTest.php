@@ -170,6 +170,13 @@ class TeamControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result['id']);
         self::assertCount(3, $result['users']);
 
+        $this->request($client, '/api/teams/' . $updateId);
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
+        self::assertCount(3, $result['users']);
+
         self::assertFalse($result['members'][1]['teamlead']);
         self::assertEquals(1, $result['members'][1]['user']['id']);
         self::assertEquals('clara_customer', $result['members'][1]['user']['username']);

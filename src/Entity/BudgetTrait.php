@@ -51,7 +51,7 @@ trait BudgetTrait
      *  - null      = default / full time
      *  - month     = monthly budget
      *
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity_Entity", "Project_Entity", "Customer_Entity"})

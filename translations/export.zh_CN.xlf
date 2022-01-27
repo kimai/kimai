@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-CN" datatype="plaintext" original="export.en.xlf">
     <body>
       <trans-unit id="oRRnhwf" resname="default.pdf.twig">
-        <source>default.pdf.twig</source>
-        <target>标准</target>
+        <source>Default</source>
+        <target>默认</target>
       </trans-unit>
       <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig">
         <source>default-budget.pdf.twig</source>

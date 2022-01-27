@@ -105,7 +105,7 @@ trait StringAccessibleConfigTrait
 
     /**
      * @param string $key
-     * @return mixed
+     * @return string|int|bool|float|null|array
      */
     public function find(string $key)
     {

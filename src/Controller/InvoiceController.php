@@ -295,7 +295,7 @@ final class InvoiceController extends AbstractController
         $csrfTokenManager->refreshToken('invoice.status');
 
         try {
-            $this->service->deleteInvoice($invoice);
+            $this->service->deleteInvoice($invoice, $this->dispatcher);
             $this->flashSuccess('action.delete.success');
         } catch (Exception $ex) {
             $this->flashDeleteException($ex);

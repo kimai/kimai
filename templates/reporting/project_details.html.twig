@@ -6,8 +6,8 @@
 
 {% set tableName = tableName|default('project_details_reporting') %}
 {% set tableId = 'project-details-form' %}
-{% set view_revenue_tab = project_details is not null and is_granted('budget', project_details.project) %}
-{% set view_revenue_user = project_details is not null and is_granted('view_rate_other_timesheet') %}
+{% set view_budget = project_details is not null and is_granted('budget', project_details.project) %}
+{% set view_revenue = project_details is not null and is_granted('view_rate_other_timesheet') %}
 {% set see_users = is_granted('view_other_timesheet') or is_granted('view_other_reporting') %}
 
 {% block stylesheets %}
@@ -23,7 +23,7 @@
 {% block javascripts %}
     {{ parent() }}
     {% set options = {'label': 'duration', 'title': 'name', 'legend': 'false'} %}
-    {% if view_revenue_user and view_revenue_tab %}
+    {% if view_revenue %}
         {% set options = options|merge({'footer': 'rate'}) %}
     {% endif %}
     {{ charts.doughnut_javascript(options) }}
@@ -79,17 +79,17 @@
     {% endif %}
 
     {% if hasData %}
-        {{ _self.project_details(project, project_view, project_details, view_revenue_tab, view_revenue_user, see_users) }}
+        {{ _self.project_details(project, project_view, project_details, view_budget, view_revenue, see_users) }}
         {% set currency = project.customer.currency %}
 
         {%- for yearStat in project_details.years|reverse %}
             {% set year = yearStat.year %}
-            {{ _self.duration_stat(year, year, year, month_names(), yearStat, project_details.getYearActivities(year), project_details.userYears(year), currency, view_revenue_tab, see_users) }}
+            {{ _self.duration_stat(year, year, year, month_names(), yearStat, project_details.getYearActivities(year), project_details.userYears(year), currency, view_revenue, see_users) }}
         {% endfor %}
     {% endif %}
 {% endblock %}
 
-{% macro duration_stat(id, title, year, labels, yearStat, activities, users, currency, view_revenue_tab, see_users) %}
+{% macro duration_stat(id, title, year, labels, yearStat, activities, users, currency, view_revenue, see_users) %}
     {% set rates = [] %}
     {% set durations = [] %}
     {% set chartPrefix = 'chart' ~ id %}
@@ -111,11 +111,11 @@
             <li><a data-chart="{{ chartPrefix }}User" href="#user-chart-{{ id}}" data-toggle="tab">{{ 'label.user'|trans }}</a></li>
             {% endif %}
             <li><a data-chart="{{ chartPrefix }}Activity" href="#activity-chart-{{ id}}" data-toggle="tab">{{ 'label.activity'|trans }}</a></li>
-            {% if view_revenue_tab %}
+            {% if view_revenue %}
                 <li><a data-chart="{{ chartPrefix }}Rate" href="#revenue-chart-{{ id }}" data-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
             {% endif %}
             <li class="active"><a data-chart="{{ chartPrefix }}Duration" href="#time-chart-{{ id }}" data-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
-            <li class="pull-left header">{{ title }} {{ widgets.label(yearStat.duration|duration, 'gray') }} {{ widgets.label(yearStat.rate|money(currency), 'gray') }}</small></li>
+            <li class="pull-left header">{{ title }} {{ widgets.label(yearStat.duration|duration, 'gray') }}{% if view_revenue %} {{ widgets.label(yearStat.rate|money(currency), 'gray') }}{% endif %}</small></li>
         </ul>
         <div class="tab-content no-padding">
             <div class="chart tab-pane active" id="time-chart-{{ id }}">
@@ -125,7 +125,7 @@
                     </div>
                 </div>
             </div>
-            {% if view_revenue_tab %}
+            {% if view_revenue %}
                 <div class="chart tab-pane" id="revenue-chart-{{ id }}">
                     <div class="row">
                         <div class="col-xs-12">
@@ -135,7 +135,7 @@
                 </div>
             {% endif %}
             <div class="chart tab-pane" id="activity-chart-{{ id }}">
-                {{ _self.activity_tab(activities, yearStat.duration, currency, chartPrefix, view_revenue_tab) }}
+                {{ _self.activity_tab(activities, yearStat.duration, currency, chartPrefix, view_revenue) }}
             </div>
             {% if see_users %}
             <div class="chart tab-pane" id="user-chart-{{ id }}">
@@ -208,9 +208,9 @@
     totalDuration    = int
     currency         = string
     chartPrefix      = string
-    view_revenue_tab = boolean
+    view_revenue     = boolean
 #}
-{% macro activity_tab(activities, totalDuration, currency, chartPrefix, view_revenue_tab) %}
+{% macro activity_tab(activities, totalDuration, currency, chartPrefix, view_revenue) %}
     {% set dataset = [] %}
     {% set labels = [] %}
     <div class="row">
@@ -225,7 +225,7 @@
                     <tr>
                         <td>{{ widgets.label_activity(stat.activity, {'inherit': false, 'random': true}) }}</td>
                         <td class="text-nowrap text-right">{{ stat.duration|duration }}</td>
-                        {% if view_revenue_tab %}
+                        {% if view_revenue %}
                         <td class="text-nowrap text-right">{{ stat.rate|money(currency) }}</td>
                         {% endif %}
                         <td class="text-nowrap text-right">{{ percentage|number_format(1) }} %</td>
@@ -245,7 +245,7 @@
     project_view    = ProjectViewModel
     project_details = ProjectDetailsModel
 #}
-{% macro project_details(project, project_view, project_details, view_revenue_tab, view_revenue_user, see_users) %}
+{% macro project_details(project, project_view, project_details, view_budget, view_revenue, see_users) %}
     {% set activities = project_details.activities %}
     {% set years = project_details.years %}
     {% import "macros/progressbar.html.twig" as progress %}
@@ -271,7 +271,7 @@
             {% if activities is not empty %}
             <li><a data-chart="{{ chartPrefix }}Activity" href="#activity-chart" data-toggle="tab">{{ 'label.activity'|trans }}</a></li>
             {% endif %}
-            {% if view_revenue_tab and project_view.rateTotal > 0 %}
+            {% if view_revenue and project_view.rateTotal > 0 %}
             <li><a data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
             {% endif %}
             {% if project_view.durationTotal > 0 %}
@@ -301,7 +301,7 @@
                                 </th>
                                 <td>{{ project_view.durationTotal|duration }}</td>
                             </tr>
-                            {% if view_revenue_tab %}
+                            {% if view_revenue %}
                             <tr>
                                 <th class="w-min">
                                     {{ 'stats.amountTotal'|trans }}
@@ -352,7 +352,7 @@
                         </table>
                     </div>
                 </div>
-                {% if view_revenue_tab and (project.timeBudget > 0 or project.budget > 0) %}
+                {% if view_budget and (project.timeBudget > 0 or project.budget > 0) %}
                     {% set budgetStats = project_details.budgetStatisticModel %}
                     <div class="row">
                         <div class="col-xs-12">
@@ -389,7 +389,7 @@
                 {% endif %}
 
             </div>
-            {% if view_revenue_tab and project_view.rateTotal > 0 %}
+            {% if view_revenue and project_view.rateTotal > 0 %}
             <div class="chart tab-pane" id="revenue-chart">
                 {{ charts.bar_chart(chartPrefix ~ 'Rate', labels, [rates], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix ~ 'Rate'}) }}
             </div>
@@ -401,7 +401,7 @@
             {% endif %}
             {% if activities is not empty %}
             <div class="chart tab-pane" id="activity-chart">
-                {{ _self.activity_tab(activities, project_view.durationTotal, project.customer.currency, chartPrefix, view_revenue_tab) }}
+                {{ _self.activity_tab(activities, project_view.durationTotal, project.customer.currency, chartPrefix, view_revenue) }}
             </div>
             {% endif %}
             {% if see_users and project_details.userStats|length > 0 %}
@@ -430,7 +430,7 @@
                                     <td class="text-nowrap text-right">
                                         {{ userStat.duration|duration }}
                                     </td>
-                                    {% if view_revenue_user %}
+                                    {% if view_revenue %}
                                     <td class="text-nowrap text-right">
                                         {{ userStat.rate|money(currency) }}
                                     </td>
@@ -443,7 +443,7 @@
                                 <tr>
                                     <td></td>
                                     <th class="text-nowrap text-right total">{{ totalDuration|duration }}</th>
-                                    {% if view_revenue_user %}
+                                    {% if view_revenue %}
                                     <th class="text-nowrap text-right total">{{ rateTotal|money(currency) }}</th>
                                     {% endif %}
                                     <td></td>

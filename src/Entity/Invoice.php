@@ -53,7 +53,6 @@ class Invoice implements EntityWithMetaFields
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
     /**
      * @var string
      *
@@ -63,9 +62,8 @@ class Invoice implements EntityWithMetaFields
      * @Assert\NotNull()
      */
     private $invoiceNumber;
-
     /**
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
@@ -75,25 +73,22 @@ class Invoice implements EntityWithMetaFields
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
     private $comment;
-
     /**
-     * @var Customer|null
+     * @var Customer
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
     private $customer;
-
     /**
-     * @var User|null
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
     private $user;
-
     /**
      * @var \DateTime
      *
@@ -103,14 +98,12 @@ class Invoice implements EntityWithMetaFields
      * @Assert\NotNull()
      */
     private $createdAt;
-
     /**
      * @var string
      *
      * @ORM\Column(name="timezone", type="string", length=64, nullable=false)
      */
     private $timezone;
-
     /**
      * @var float
      *
@@ -120,7 +113,6 @@ class Invoice implements EntityWithMetaFields
      * @Assert\NotNull()
      */
     private $total = 0.00;
-
     /**
      * @var float
      *
@@ -130,7 +122,6 @@ class Invoice implements EntityWithMetaFields
      * @Assert\NotNull()
      */
     private $tax = 0.00;
-
     /**
      * @var string
      *
@@ -141,7 +132,6 @@ class Invoice implements EntityWithMetaFields
      * @Assert\Length(max=3)
      */
     private $currency;
-
     /**
      * @var int
      *
@@ -152,7 +142,6 @@ class Invoice implements EntityWithMetaFields
      * @Assert\Range(min = 0, max = 999)
      */
     private $dueDays = 30;
-
     /**
      * @var float
      *
@@ -163,7 +152,6 @@ class Invoice implements EntityWithMetaFields
      * @Assert\Range(min = 0.0, max = 99.99)
      */
     private $vat = 0.00;
-
     /**
      * @var string
      *
@@ -173,7 +161,6 @@ class Invoice implements EntityWithMetaFields
      * @Assert\NotNull()
      */
     private $status = self::STATUS_NEW;
-
     /**
      * @var string
      *
@@ -184,19 +171,16 @@ class Invoice implements EntityWithMetaFields
      * @Assert\Length(min=1, max=150, allowEmptyString=false)
      */
     private $invoiceFilename;
-
     /**
      * @var bool
      */
     private $localized = false;
-
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="payment_date", type="date", nullable=true)
      */
     private $paymentDate;
-
     /**
      * Meta fields
      *

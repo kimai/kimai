@@ -49,7 +49,7 @@ class UserPreference
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="preferences")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      * @Assert\NotNull()
      */
     private $user;
@@ -65,7 +65,7 @@ class UserPreference
      */
     private $name;
     /**
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})

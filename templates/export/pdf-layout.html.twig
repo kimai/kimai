@@ -3,16 +3,18 @@
 {% set showRateColumn = showRateColumn ?? is_granted('view_rate_other_timesheet') %}
 {% set showRateBudget = showRateBudget ?? false %}
 {% set showTimeBudget = showTimeBudget ?? false %}
+{% set showCustomerSummary = showCustomerSummary ?? true %}
 {% set showTotalSummary = showTotalSummary ?? true %}
+{% set showDateTimeShort = showDateTimeShort ?? false %}
 {% set now = create_date('now', app.user) %}
 {% set decimal = decimal ?? false %}
 {# this is only triggered, if a user exports from his personal timesheet screen #}
-{% if query.user is not null %}
+{% if query is defined and query.user is not null %}
     {% set showUserColumn = false %}
     {# if exporting via the admin screen, users without view_rate_own_timesheet might still see their own rates #}
     {% set showRateColumn = is_granted('view_rate_own_timesheet') %}
 {% endif %}
-<html lang="{{ app.request.locale }}">
+<html{% if app.request is defined and app.request is not null %} lang="{{ app.request.locale }}"{% endif %}>
 <head>
 {% block styles %}
     <style>
@@ -88,7 +90,7 @@
 <tr>
     <td align="left">
     {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
-    {% if not showUserColumn and query.user %}
+    {% if not showUserColumn and query is defined and query.user %}
         &ndash;
         {{ 'label.user'|trans }}: {{ query.user.displayName }}
     {% endif %}
@@ -108,11 +110,13 @@
 mpdf-->
 {% endblock %}
 {% block summary %}
-    <h2 style="margin-bottom: 0; padding-bottom: 0">{{ 'export.document_title'|trans }}</h2>
+    <h2 style="margin-bottom: 4px; padding-bottom: 0">{% block title %}{{ 'export.document_title'|trans }}{% endblock %}</h2>
+    {% if query is defined %}
     <p>
         {{ 'export.period'|trans }}:
         {{ query.begin|date_short }} - {{ query.end|date_short }}
     </p>
+    {% endif %}
     <h3>{{ 'export.summary'|trans }}</h3>
     <table class="items">
         <thead>
@@ -229,7 +233,7 @@ mpdf-->
             {% set customerInternalRate = customerInternalRate + summary.rate_internal %}
             {% set customerCount = customerCount + 1 %}
         {% endfor %}
-        {% if customer is not same as(null) %}
+        {% if showCustomerSummary and customer is not same as(null) %}
         <tr class="summary">
             <td colspan="3"></td>
             {% if showTimeBudget %}
@@ -308,21 +312,22 @@ mpdf-->
             {% endif %}
             <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
                 <td class="text-nowrap">
-                    {{ entry.begin|date_time }}
+                    {% block date_begin %}{% if not showDateTimeShort %}{{ entry.begin|date_time }}{% else %}{{ entry.begin|date_short }}{% endif %}{% endblock %}
                     {% if entry.end %}
-                        <br>
-                        {{ entry.end|date_time }}
+                        {% block date_end %}{% if not showDateTimeShort %}<br>{{ entry.end|date_time }}{% endif %}{% endblock %}
                     {% endif %}
                 </td>
                 {% if showUserColumn %}
                     <td>{{ entry.user.displayName }}</td>
                 {% endif %}
                 <td>
-                    {{ entry.project.customer.name }} - {{ entry.project.name }}{% if entry.activity is not null %} - {{ entry.activity.name }}{% endif %}
-                    {% if entry.description is not empty %}
-                        <br>
-                        <i>{{ entry.description|desc2html }}</i>
-                    {% endif %}
+                    {% block description %}
+                        {{ entry.project.customer.name }} - {{ entry.project.name }}{% if entry.activity is not null %} - {{ entry.activity.name }}{% endif %}
+                        {% if entry.description is not empty %}
+                            <br>
+                            <i>{{ entry.description|desc2html }}</i>
+                        {% endif %}
+                    {% endblock %}
                 </td>
                 <td class="duration">{{ entry.duration|duration(decimal) }}</td>
                 {% if showRateColumn %}
@@ -341,9 +346,9 @@ mpdf-->
         {% endfor %}
         <tr class="summary">
             {% if showUserColumn %}
-                <td colspan="3"></td>
+                <td colspan="3">{{ 'sum.total'|trans }}</td>
             {% else %}
-                <td colspan="2"></td>
+                <td colspan="2">{{ 'sum.total'|trans }}</td>
             {% endif %}
             <td class="totals duration">{{ duration|duration(decimal) }}</td>
             {% if showRateColumn %}
