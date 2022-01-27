@@ -537,7 +537,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * @param string $name
      * @param mixed $default
-     * @return bool|int|null|string
+     * @return bool|int|string|null
      */
     public function getPreferenceValue(string $name, $default = null)
     {
@@ -547,6 +547,15 @@ class User implements UserInterface, EquatableInterface, \Serializable
         }
 
         return $preference->getValue();
+    }
+
+    /**
+     * @param string $name
+     * @return bool|int|string|null
+     */
+    public function getMetaFieldValue(string $name)
+    {
+        return $this->getPreferenceValue($name);
     }
 
     /**
