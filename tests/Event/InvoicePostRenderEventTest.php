@@ -11,9 +11,9 @@ namespace App\Tests\Event;
 
 use App\Entity\InvoiceDocument;
 use App\Event\InvoicePostRenderEvent;
-use App\Invoice\InvoiceModel;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Invoice\Renderer\DebugRenderer;
+use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,7 +24,7 @@ class InvoicePostRenderEventTest extends TestCase
 {
     public function testDefaultValues()
     {
-        $model = new InvoiceModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $document = new InvoiceDocument(new \SplFileInfo(__FILE__));
         $renderer = new DebugRenderer();
         $response = new Response();

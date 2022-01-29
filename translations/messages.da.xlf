@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="da" datatype="plaintext" original="messages.en.xlf">
     <body>
@@ -7,7 +7,7 @@
             -->
       <trans-unit id="N7mikjJ" resname="time_tracking">
         <source>time_tracking</source>
-        <target>Tidsregistrering</target>
+        <target state="translated">Tidsregistrering</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -118,10 +118,6 @@
         <source>menu.timesheet</source>
         <target>Min timeseddel</target>
       </trans-unit>
-      <trans-unit id="Ci9W8.K" resname="menu.invoice">
-        <source>menu.invoice</source>
-        <target>Fakturaer</target>
-      </trans-unit>
       <trans-unit id="I.eil4u" resname="menu.export">
         <source>menu.export</source>
         <target>Eksporter</target>
@@ -130,20 +126,20 @@
         <source>menu.admin_timesheet</source>
         <target>Timesedler</target>
       </trans-unit>
-      <trans-unit id="Y_jAD36" resname="menu.admin_customer">
-        <source>menu.admin_customer</source>
+      <trans-unit id="IeshU90" resname="customers">
+        <source>customers</source>
         <target>Kunder</target>
       </trans-unit>
-      <trans-unit id="oDLp9t3" resname="menu.admin_project">
-        <source>menu.admin_project</source>
+      <trans-unit id="JXfA9Ve" resname="projects">
+        <source>projects</source>
         <target>Projekter</target>
       </trans-unit>
-      <trans-unit id="wriHFwl" resname="menu.admin_activity">
-        <source>menu.admin_activity</source>
+      <trans-unit id="YkyVVAY" resname="activities">
+        <source>activities</source>
         <target>Aktiviteter</target>
       </trans-unit>
-      <trans-unit id="oZo1BnZ" resname="menu.admin_user">
-        <source>menu.admin_user</source>
+      <trans-unit id="fftM9nd" resname="users">
+        <source>users</source>
         <target>Brugere</target>
       </trans-unit>
       <trans-unit id="pA.bYIk" resname="menu.admin_team">
@@ -158,8 +154,8 @@
         <source>menu.system_configuration</source>
         <target>Indstillinger</target>
       </trans-unit>
-      <trans-unit id="yo4f8Kh" resname="menu.tags">
-        <source>menu.tags</source>
+      <trans-unit id="l4wviUE" resname="tags">
+        <source>tags</source>
         <target>Etiketter</target>
       </trans-unit>
       <trans-unit id="1kHI0gb" resname="menu.doctor">
@@ -479,38 +475,16 @@
       <!--
               User timesheet calendar
             -->
-      <trans-unit id="HWiuMV6" resname="calendar.title">
-        <source>calendar.title</source>
+      <trans-unit id="UVJ5Die" resname="calendar">
+        <source>calendar</source>
         <target>Kalender</target>
       </trans-unit>
       <!--
               Admin: Timesheet
             -->
-      <trans-unit id="bSDjzZL" resname="admin_timesheet.title">
-        <source>admin_timesheet.title</source>
-        <target>Timesedler</target>
-      </trans-unit>
-      <!--
-              Admin: Projects
-            -->
-      <trans-unit id="DFjFRGe" resname="admin_project.title">
-        <source>admin_project.title</source>
-        <target>Projekter</target>
-      </trans-unit>
-      <!--
-              Admin: Activity
-            -->
-      <trans-unit id="auu8q0u" resname="admin_activity.title">
-        <source>admin_activity.title</source>
-        <target>Aktiviteter</target>
-      </trans-unit>
       <!--
               Admin: Customer
             -->
-      <trans-unit id="2TvKX9Z" resname="admin_customer.title">
-        <source>admin_customer.title</source>
-        <target>Kunde</target>
-      </trans-unit>
       <trans-unit id="39AtPxQ" resname="label.number">
         <source>label.number</source>
         <target>Bruger</target>
@@ -566,10 +540,6 @@
       <!--
               Admin: Users
             -->
-      <trans-unit id="t34EvnF" resname="admin_user.title">
-        <source>admin_user.title</source>
-        <target>Bruger</target>
-      </trans-unit>
       <trans-unit id="TRDzmCV" resname="label.alias">
         <source>label.alias</source>
         <target>Navn</target>
@@ -734,8 +704,8 @@
         <source>admin_invoice_template.title</source>
         <target>Faturaskabelon</target>
       </trans-unit>
-      <trans-unit id="iERywrp" resname="invoice.title">
-        <source>invoice.title</source>
+      <trans-unit id="SR2r1Cs" resname="invoices">
+        <source>invoices</source>
         <target>Fakturaer</target>
       </trans-unit>
       <trans-unit id="ov4OQOh" resname="invoice.filter">
@@ -852,7 +822,7 @@
       </trans-unit>
       <trans-unit id="RRj6PYN" resname="label.invoice_tax_number">
         <source>label.invoice_tax_number</source>
-        <target>VAT no.:</target>
+        <target>CVR nr:</target>
       </trans-unit>
       <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
@@ -1009,7 +979,7 @@
       </trans-unit>
       <trans-unit id=".0CFrRV" resname="upload">
         <source>upload</source>
-        <target>Upload</target>
+        <target state="translated">Upload</target>
       </trans-unit>
     </body>
   </file>

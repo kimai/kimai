@@ -1,7 +1,7 @@
 {% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "system-configuration/actions.html.twig" as actions %}
 
-{% block page_title %}{{ 'title'|trans({}, 'system-configuration') }}{% endblock %}
+{% block page_title %}{{ 'menu.system_configuration'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.system_configuration('index') }}{% endblock %}
 
 {% block main %}
@@ -9,8 +9,8 @@
     {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
 
     {% for section in sections %}
-        {% set title = section.model.section|trans({}, 'system-configuration') %}
-        {% if title == section.model.section %}
+        {% set title = section.model.translation|trans({}, section.model.translationDomain) %}
+        {% if title == section.model.translation %}
             {% set title = ('label.' ~ section.model.section)|trans %}
         {% endif %}
         {{ include(formEditTemplate, {

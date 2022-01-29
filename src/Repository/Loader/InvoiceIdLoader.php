@@ -39,16 +39,24 @@ final class InvoiceIdLoader implements LoaderInterface
         $em = $this->entityManager;
 
         $qb = $em->createQueryBuilder();
-        $customer = $qb->select('PARTIAL i.{id}', 'customer')
+        $qb->select('PARTIAL i.{id}', 'customer')
             ->from(Invoice::class, 'i')
             ->leftJoin('i.customer', 'customer')
             ->getQuery()
             ->execute();
 
         $qb = $em->createQueryBuilder();
-        $user = $qb->select('PARTIAL i.{id}', 'user')
+        $qb->select('PARTIAL i.{id}', 'user')
             ->from(Invoice::class, 'i')
             ->leftJoin('i.user', 'user')
+            ->getQuery()
+            ->execute();
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('PARTIAL i.{id}', 'meta')
+            ->from(Invoice::class, 'i')
+            ->leftJoin('i.meta', 'meta')
+            ->andWhere($qb->expr()->in('i.id', $ids))
             ->getQuery()
             ->execute();
     }

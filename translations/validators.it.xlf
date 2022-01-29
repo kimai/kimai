@@ -70,6 +70,14 @@
         <source>An activity needs to be selected.</source>
         <target>È necessario selezionare un'attività.</target>
       </trans-unit>
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target>Questa scheda attività è già stata esportata.</target>
+      </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target>È necessario selezionare un progetto.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

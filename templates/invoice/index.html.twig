@@ -17,7 +17,7 @@
 
 {% set tableName = 'invoice' %}
 
-{% block page_title %}{{ 'invoice.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'invoices'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.invoices('index') }}{% endblock %}
 
 {% block main_before %}
@@ -81,7 +81,7 @@
             {% import "macros/widgets.html.twig" as widgets %}
             {% import '@AdminLTE/Macros/buttons.html.twig' as button %}
             {% block box_title %}
-                {{ 'button.preview'|trans }}: {{ 'invoice.title'|trans }}
+                {{ 'button.preview'|trans }}: {{ 'invoices'|trans }}
             {% endblock %}
             {% block box_body_class %}no-padding{% endblock %}
             {% block box_footer %}
@@ -108,9 +108,8 @@
                                     {{ widgets.label_customer(model.customer) }}
                                 </td>
                                 <td class="w-min text-center">
-                                    {{ widgets.action_button('show', {'url': '#invoice_preview_details_' ~ model.customer.id, 'title': 'timesheet.all'|trans, 'class': 'btn btn-sm hidden-xs hidden-sm'}, 'link') }}
-                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'class': 'btn btn-sm', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_preview', {'customer': model.customer.id})}}) }}
-                                    {{ widgets.action_button('save', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'class': 'btn btn-sm', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id})}}, 'success') }}
+                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'class': 'btn btn-sm', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_preview', {'customer': model.customer.id, 'token': csrf_token('invoice.preview')})}}) }}
+                                    {{ widgets.action_button('save', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'class': 'btn btn-sm', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id, 'token': csrf_token('invoice.create')})}}, 'success') }}
                                 </td>
                                 <td class="w-min text-right hidden-xs">
                                     {{ model.calculator.timeWorked|duration(isDecimal) }}
@@ -228,7 +227,7 @@
             const formPlugin = kimai.getPlugin('form');
             const uri = formPlugin.convertFormDataToQueryString(document.getElementById('{{ formId }}'));
 
-            link.href = '{{ path('invoice') }}?createInvoice=true&' + uri;
+            link.href = '{{ path('invoice') }}?token={{ csrf_token('invoice.create') }}&createInvoice=true&' + uri;
 
             return true;
         }

@@ -99,7 +99,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     /**
      * Description of this activity
      *
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity_Entity"})
@@ -261,6 +261,20 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
         return null;
     }
 
+    /**
+     * @param string $name
+     * @return bool|int|string|null
+     */
+    public function getMetaFieldValue(string $name)
+    {
+        $field = $this->getMetaField($name);
+        if ($field === null) {
+            return null;
+        }
+
+        return $field->getValue();
+    }
+
     public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
     {
         if (null === ($current = $this->getMetaField($meta->getName()))) {
@@ -325,7 +339,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
 
         $currentMeta = $this->meta;
         $this->meta = new ArrayCollection();
-        /** @var ProjectMeta $meta */
+        /** @var ActivityMeta $meta */
         foreach ($currentMeta as $meta) {
             $newMeta = clone $meta;
             $newMeta->setEntity($this);

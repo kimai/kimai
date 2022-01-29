@@ -9,6 +9,7 @@
 
 namespace App\Tests\Invoice\Hydrator;
 
+use App\Activity\ActivityStatisticService;
 use App\Invoice\Hydrator\InvoiceModelActivityHydrator;
 use App\Tests\Invoice\Renderer\RendererTestTrait;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +25,7 @@ class InvoiceModelActivityHydratorTest extends TestCase
     {
         $model = $this->getInvoiceModel();
 
-        $sut = new InvoiceModelActivityHydrator();
+        $sut = new InvoiceModelActivityHydrator($this->createMock(ActivityStatisticService::class));
 
         $result = $sut->hydrate($model);
         $this->assertModelStructure($result);
@@ -41,10 +42,18 @@ class InvoiceModelActivityHydratorTest extends TestCase
             'activity.name',
             'activity.comment',
             'activity.meta.foo-activity',
+            'activity.budget_open',
+            'activity.budget_open_plain',
+            'activity.time_budget_open',
+            'activity.time_budget_open_plain',
             'activity.1.id',
             'activity.1.name',
             'activity.1.comment',
             'activity.1.meta.foo-activity',
+            'activity.1.budget_open',
+            'activity.1.budget_open_plain',
+            'activity.1.time_budget_open',
+            'activity.1.time_budget_open_plain',
         ];
 
         $givenKeys = array_keys($model);

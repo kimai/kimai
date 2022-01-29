@@ -35,11 +35,24 @@ jobs:
                     extensions: mbstring, xml, ctype, iconv, intl, mysql, zip, gd, ldap
                     tools: cs2pr:1.1.0
 
+            -   name: Determine composer cache directory
+                id: composer-cache
+                run: "echo \"::set-output name=directory::$(composer config cache-dir)\""
+
+            -   name: Cache Composer dependencies
+                uses: actions/cache@v2
+                with:
+                    path: "${{ steps.composer-cache.outputs.directory }}"
+                    key: ${{ runner.os }}-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+
             -   name: Install dependencies
-                uses: ramsey/composer-install@v1
+                run: composer install
 
             -   name: Validate Composer
                 run: composer validate --strict
+
+            -   name: Warmup cache for PHPStan
+                run: APP_ENV=dev bin/console kimai:reload -n
 
             -   name: Check codestyles
                 run: vendor/bin/php-cs-fixer fix --dry-run --verbose --config=.php-cs-fixer.dist.php --using-cache=no --show-progress=none --format=checkstyle | cs2pr

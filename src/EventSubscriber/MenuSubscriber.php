@@ -10,7 +10,6 @@
 namespace App\EventSubscriber;
 
 use App\Event\ConfigureMainMenuEvent;
-use App\Timesheet\TrackingModeService;
 use App\Twig\IconExtension;
 use App\Utils\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -22,12 +21,10 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 final class MenuSubscriber implements EventSubscriberInterface
 {
     private $security;
-    private $trackingModeService;
 
-    public function __construct(AuthorizationCheckerInterface $security, TrackingModeService $trackingModeService)
+    public function __construct(AuthorizationCheckerInterface $security)
     {
         $this->security = $security;
-        $this->trackingModeService = $trackingModeService;
     }
 
     public static function getSubscribedEvents(): array
@@ -55,22 +52,19 @@ final class MenuSubscriber implements EventSubscriberInterface
             $timesheets->setChildRoutes(['timesheet_export', 'timesheet_edit', 'timesheet_create', 'timesheet_multi_update']);
             $menu->addItem($timesheets);
 
-            if ($auth->isGranted('weekly_own_timesheet') && $auth->isGranted('edit_own_timesheet')) {
-                $mode = $this->trackingModeService->getActiveMode();
-                if ($mode->canEditDuration() || $mode->canEditEnd()) {
-                    $menu->addItem(
-                        new MenuItemModel('quick_entry', 'quick_entry.title', 'quick_entry', [], $icons->icon('weekly-times'))
-                    );
-                }
+            if ($auth->isGranted('quick-entry')) {
+                $menu->addItem(
+                    new MenuItemModel('quick_entry', 'quick_entry.title', 'quick_entry', [], $icons->icon('weekly-times'))
+                );
             }
 
             $menu->addItem(
-                new MenuItemModel('calendar', 'calendar.title', 'calendar', [], $icons->icon('calendar'))
+                new MenuItemModel('calendar', 'calendar', 'calendar', [], $icons->icon('calendar'))
             );
         }
 
         if ($auth->isGranted('view_invoice')) {
-            $invoice = new MenuItemModel('invoice', 'menu.invoice', 'invoice', [], $icons->icon('invoice'));
+            $invoice = new MenuItemModel('invoice', 'invoices', 'invoice', [], $icons->icon('invoice'));
             $invoice->setChildRoutes(['admin_invoice_template', 'admin_invoice_template_edit', 'admin_invoice_template_create', 'admin_invoice_template_copy', 'admin_invoice_list', 'admin_invoice_document_upload']);
             $menu->addItem($invoice);
         }
@@ -97,26 +91,26 @@ final class MenuSubscriber implements EventSubscriberInterface
         }
 
         if ($auth->isGranted('view_customer') || $auth->isGranted('view_teamlead_customer') || $auth->isGranted('view_team_customer')) {
-            $customers = new MenuItemModel('customer_admin', 'menu.admin_customer', 'admin_customer', [], $icons->icon('customer'));
+            $customers = new MenuItemModel('customer_admin', 'customers', 'admin_customer', [], $icons->icon('customer'));
             $customers->setChildRoutes(['admin_customer_create', 'admin_customer_permissions', 'customer_details', 'admin_customer_edit', 'admin_customer_delete']);
             $menu->addChild($customers);
         }
 
         if ($auth->isGranted('view_project') || $auth->isGranted('view_teamlead_project') || $auth->isGranted('view_team_project')) {
-            $projects = new MenuItemModel('project_admin', 'menu.admin_project', 'admin_project', [], $icons->icon('project'));
+            $projects = new MenuItemModel('project_admin', 'projects', 'admin_project', [], $icons->icon('project'));
             $projects->setChildRoutes(['admin_project_permissions', 'admin_project_create', 'project_details', 'admin_project_edit', 'admin_project_delete']);
             $menu->addChild($projects);
         }
 
         if ($auth->isGranted('view_activity') || $auth->isGranted('view_teamlead_activity') || $auth->isGranted('view_team_activity')) {
-            $activities = new MenuItemModel('activity_admin', 'menu.admin_activity', 'admin_activity', [], $icons->icon('activity'));
+            $activities = new MenuItemModel('activity_admin', 'activities', 'admin_activity', [], $icons->icon('activity'));
             $activities->setChildRoutes(['admin_activity_create', 'activity_details', 'admin_activity_edit', 'admin_activity_delete']);
             $menu->addChild($activities);
         }
 
         if ($auth->isGranted('view_tag')) {
             $menu->addChild(
-                new MenuItemModel('tags', 'menu.tags', 'tags', [], 'fas fa-tags')
+                new MenuItemModel('tags', 'tags', 'tags', [], 'fas fa-tags')
             );
         }
 
@@ -124,7 +118,7 @@ final class MenuSubscriber implements EventSubscriberInterface
         $menu = $event->getSystemMenu();
 
         if ($auth->isGranted('view_user')) {
-            $users = new MenuItemModel('user_admin', 'menu.admin_user', 'admin_user', [], $icons->icon('users'));
+            $users = new MenuItemModel('user_admin', 'users', 'admin_user', [], $icons->icon('users'));
             $users->setChildRoutes(['admin_user_create', 'admin_user_delete',  'user_profile', 'user_profile_edit', 'user_profile_password', 'user_profile_api_token', 'user_profile_roles', 'user_profile_teams', 'user_profile_preferences']);
             $menu->addChild($users);
         }

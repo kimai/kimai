@@ -1,7 +1,7 @@
 {% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "customer/actions.html.twig" as actions %}
 
-{% block page_title %}{{ 'admin_customer.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'customers'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.customer(customer, 'delete') }}{% endblock %}
 
 {% block main %}

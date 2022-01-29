@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="tr" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="qvIyBkY" resname="title">
-        <source>title</source>
-        <target state="translated">Ayarlar</target>
-      </trans-unit>
       <trans-unit id="ycErWZK" resname="timesheet">
         <source>Time tracking</source>
         <target state="translated">Zaman izleme</target>
@@ -13,10 +9,6 @@
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
         <target state="translated">Tema</target>
-      </trans-unit>
-      <trans-unit id="UVJ5Die" resname="calendar">
-        <source>calendar</source>
-        <target state="translated">Takvim</target>
       </trans-unit>
       <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
         <source>label.theme.markdown_content</source>
@@ -206,10 +198,6 @@
         <source>label.theme.tags_create</source>
         <target>Etiketler: aramada otomatik tamamlama kullan ve etiket oluşturmaya izin ver</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target>Faturalar</target>
-      </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
         <target>Kapalı</target>
@@ -305,6 +293,10 @@
       <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
         <source>label.theme.avatar_url</source>
         <target>Avatarlar için URL kullanımına izin ver</target>
+      </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target>Önceki haftalardan alınan kayıt sayısı</target>
       </trans-unit>
     </body>
   </file>

@@ -15,7 +15,6 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
-use App\Entity\TeamMember;
 use App\Entity\User;
 use App\Form\API\TeamApiEditForm;
 use App\Repository\ActivityRepository;
@@ -201,7 +200,7 @@ final class TeamController extends BaseApiController
      * Update an existing team
      *
      * @SWG\Patch(
-     *      description="Update an existing team, you can pass all or just a subset of all attributes (passing users will replace all existing ones)",
+     *      description="Update an existing team, you can pass all or just a subset of all attributes (passing members will replace all existing ones)",
      *      @SWG\Response(
      *          response=200,
      *          description="Returns the updated team",
@@ -235,11 +234,12 @@ final class TeamController extends BaseApiController
             throw new NotFoundException();
         }
 
-        // cache the current memberlist
-        /** @var TeamMember[] $originalMembers */
-        $originalMembers = [];
-        foreach ($team->getMembers() as $member) {
-            $originalMembers[] = $member;
+        if ($request->request->has('members')) {
+            foreach ($team->getMembers() as $member) {
+                $team->removeMember($member);
+                $this->repository->removeTeamMember($member);
+            }
+            $this->repository->saveTeam($team);
         }
 
         $form = $this->createForm(TeamApiEditForm::class, $team);
@@ -252,14 +252,6 @@ final class TeamController extends BaseApiController
             $view->getContext()->setGroups(self::GROUPS_FORM);
 
             return $this->viewHandler->handle($view);
-        }
-
-        // and now remove the ones, which are not in the list any longer
-        foreach ($originalMembers as $member) {
-            if (!$team->hasMember($member)) {
-                $member->getUser()->removeMembership($member);
-                $this->repository->removeTeamMember($member);
-            }
         }
 
         $this->repository->saveTeam($team);

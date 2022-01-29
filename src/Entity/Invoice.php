@@ -11,7 +11,10 @@ namespace App\Entity;
 
 use App\Export\Annotation as Exporter;
 use App\Invoice\InvoiceModel;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -26,14 +29,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("invoiceNumber")
  * @UniqueEntity("invoiceFilename")
  *
- * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "subtotal", "total", "tax", "currency", "vat", "dueDays", "dueDate", "paymentDate", "user", "invoiceFilename"})
+ * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "subtotal", "total", "tax", "currency", "vat", "dueDays", "dueDate", "paymentDate", "user", "invoiceFilename", "customerNumber", "comment"})
  * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
  * @Exporter\Expose("customerNumber", label="label.number", exp="object.getCustomer() === null ? null : object.getCustomer().getNumber()")
  * @Exporter\Expose("dueDate", label="invoice.due_days", type="datetime", exp="object.getDueDate() === null ? null : object.getDueDate()")
  * @Exporter\Expose("user", label="label.username", type="string", exp="object.getUser() === null ? null : object.getUser().getDisplayName()")
  * @Exporter\Expose("paymentDate", label="invoice.payment_date", type="date", exp="object.getPaymentDate() === null ? null : object.getPaymentDate()")
  */
-class Invoice
+class Invoice implements EntityWithMetaFields
 {
     public const STATUS_PENDING = 'pending';
     public const STATUS_PAID = 'paid';
@@ -48,10 +51,8 @@ class Invoice
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @phpstan-ignore-next-line
      */
     private $id;
-
     /**
      * @var string
      *
@@ -61,25 +62,33 @@ class Invoice
      * @Assert\NotNull()
      */
     private $invoiceNumber;
-
     /**
-     * @var Customer|null
+     * @var string|null
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Customer_Entity"})
+     *
+     * @Exporter\Expose(label="label.comment")
+     *
+     * @ORM\Column(name="comment", type="text", nullable=true)
+     */
+    private $comment;
+    /**
+     * @var Customer
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
     private $customer;
-
     /**
-     * @var User|null
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
     private $user;
-
     /**
      * @var \DateTime
      *
@@ -89,14 +98,12 @@ class Invoice
      * @Assert\NotNull()
      */
     private $createdAt;
-
     /**
      * @var string
      *
      * @ORM\Column(name="timezone", type="string", length=64, nullable=false)
      */
     private $timezone;
-
     /**
      * @var float
      *
@@ -106,7 +113,6 @@ class Invoice
      * @Assert\NotNull()
      */
     private $total = 0.00;
-
     /**
      * @var float
      *
@@ -116,7 +122,6 @@ class Invoice
      * @Assert\NotNull()
      */
     private $tax = 0.00;
-
     /**
      * @var string
      *
@@ -127,7 +132,6 @@ class Invoice
      * @Assert\Length(max=3)
      */
     private $currency;
-
     /**
      * @var int
      *
@@ -138,7 +142,6 @@ class Invoice
      * @Assert\Range(min = 0, max = 999)
      */
     private $dueDays = 30;
-
     /**
      * @var float
      *
@@ -149,7 +152,6 @@ class Invoice
      * @Assert\Range(min = 0.0, max = 99.99)
      */
     private $vat = 0.00;
-
     /**
      * @var string
      *
@@ -159,7 +161,6 @@ class Invoice
      * @Assert\NotNull()
      */
     private $status = self::STATUS_NEW;
-
     /**
      * @var string
      *
@@ -170,18 +171,37 @@ class Invoice
      * @Assert\Length(min=1, max=150, allowEmptyString=false)
      */
     private $invoiceFilename;
-
     /**
      * @var bool
      */
     private $localized = false;
-
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      *
      * @ORM\Column(name="payment_date", type="date", nullable=true)
      */
     private $paymentDate;
+    /**
+     * Meta fields
+     *
+     * All visible meta (custom) fields registered with this invoice
+     *
+     * @var InvoiceMeta[]|Collection
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Invoice"})
+     * @Serializer\Type(name="array<App\Entity\InvoiceMeta>")
+     * @Serializer\SerializedName("metaFields")
+     * @Serializer\Accessor(getter="getVisibleMetaFields")
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\InvoiceMeta", mappedBy="invoice", cascade={"persist"})
+     */
+    private $meta;
+
+    public function __construct()
+    {
+        $this->meta = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -312,6 +332,20 @@ class Invoice
         return $this->status === self::STATUS_CANCELED;
     }
 
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): void
+    {
+        if (!\in_array($status, [self::STATUS_NEW, self::STATUS_PENDING, self::STATUS_PAID, self::STATUS_CANCELED])) {
+            throw new \InvalidArgumentException('Unknown invoice status');
+        }
+
+        $this->status = $status;
+    }
+
     public function setIsCanceled(): void
     {
         $this->status = self::STATUS_CANCELED;
@@ -361,5 +395,93 @@ class Invoice
         $this->paymentDate = $paymentDate;
 
         return $this;
+    }
+
+    public function setComment(?string $comment): void
+    {
+        $this->comment = $comment;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @return Collection|MetaTableTypeInterface[]
+     */
+    public function getMetaFields(): Collection
+    {
+        return $this->meta;
+    }
+
+    /**
+     * @return MetaTableTypeInterface[]
+     */
+    public function getVisibleMetaFields(): array
+    {
+        $all = [];
+        foreach ($this->meta as $meta) {
+            if ($meta->isVisible()) {
+                $all[] = $meta;
+            }
+        }
+
+        return $all;
+    }
+
+    public function getMetaField(string $name): ?MetaTableTypeInterface
+    {
+        foreach ($this->meta as $field) {
+            if (strtolower($field->getName()) === strtolower($name)) {
+                return $field;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $name
+     * @return bool|int|string|null
+     */
+    public function getMetaFieldValue(string $name)
+    {
+        $field = $this->getMetaField($name);
+        if ($field === null) {
+            return null;
+        }
+
+        return $field->getValue();
+    }
+
+    public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
+    {
+        if (null === ($current = $this->getMetaField($meta->getName()))) {
+            $meta->setEntity($this);
+            $this->meta->add($meta);
+
+            return $this;
+        }
+
+        $current->merge($meta);
+
+        return $this;
+    }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+        }
+
+        $currentMeta = $this->meta;
+        $this->meta = new ArrayCollection();
+        /** @var InvoiceMeta $meta */
+        foreach ($currentMeta as $meta) {
+            $newMeta = clone $meta;
+            $newMeta->setEntity($this);
+            $this->setMetaField($newMeta);
+        }
     }
 }

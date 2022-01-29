@@ -16,6 +16,7 @@ use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\InvoiceModel;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\NumberGenerator\IncrementingNumberGenerator;
+use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,7 +27,7 @@ class InvoiceModelTest extends TestCase
     public function testEmptyObject()
     {
         $formatter = new DebugFormatter();
-        $sut = new InvoiceModel($formatter);
+        $sut = (new InvoiceModelFactoryFactory($this))->create()->createModel($formatter);
 
         self::assertNull($sut->getQuery());
         self::assertNull($sut->getCustomer());
@@ -51,7 +52,7 @@ class InvoiceModelTest extends TestCase
     public function testEmptyObjectThrowsExceptionOnNumberGenerator()
     {
         $formatter = new DebugFormatter();
-        $sut = new InvoiceModel($formatter);
+        $sut = (new InvoiceModelFactoryFactory($this))->create()->createModel($formatter);
 
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('InvoiceModel::getInvoiceNumber() cannot be called before calling setNumberGenerator()');
@@ -60,7 +61,7 @@ class InvoiceModelTest extends TestCase
 
     public function testSetter()
     {
-        $sut = new InvoiceModel(new DebugFormatter());
+        $sut = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
 
         $query = new InvoiceQuery();
         self::assertInstanceOf(InvoiceModel::class, $sut->setQuery($query));
@@ -95,7 +96,7 @@ class InvoiceModelTest extends TestCase
      */
     public function testDeprecations()
     {
-        $sut = new InvoiceModel(new DebugFormatter());
+        $sut = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
 
         $entries = [new Timesheet()];
         self::assertInstanceOf(InvoiceModel::class, $sut->setEntries($entries));

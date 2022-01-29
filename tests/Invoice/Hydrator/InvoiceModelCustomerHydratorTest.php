@@ -9,6 +9,7 @@
 
 namespace App\Tests\Invoice\Hydrator;
 
+use App\Customer\CustomerStatisticService;
 use App\Invoice\Hydrator\InvoiceModelCustomerHydrator;
 use App\Tests\Invoice\Renderer\RendererTestTrait;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +25,7 @@ class InvoiceModelCustomerHydratorTest extends TestCase
     {
         $model = $this->getInvoiceModel();
 
-        $sut = new InvoiceModelCustomerHydrator();
+        $sut = new InvoiceModelCustomerHydrator($this->createMock(CustomerStatisticService::class));
 
         $result = $sut->hydrate($model);
         $this->assertModelStructure($result);
@@ -52,6 +53,10 @@ class InvoiceModelCustomerHydratorTest extends TestCase
             'customer.phone',
             'customer.mobile',
             'customer.meta.foo-customer',
+            'customer.budget_open',
+            'customer.budget_open_plain',
+            'customer.time_budget_open',
+            'customer.time_budget_open_plain',
         ];
 
         $givenKeys = array_keys($model);

@@ -25,7 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Controller used to enter times in weekly form.
  *
  * @Route(path="/quick_entry")
- * @Security("is_granted('weekly_own_timesheet') and is_granted('edit_own_timesheet')")
+ * @Security("is_granted('quick-entry')")
  */
 class QuickEntryController extends AbstractController
 {
@@ -45,14 +45,6 @@ class QuickEntryController extends AbstractController
      */
     public function quickEntry(Request $request, ?string $begin = null)
     {
-        $mode = $this->timesheetService->getActiveTrackingMode();
-
-        if (!$mode->canEditDuration() && !$mode->canEditEnd()) {
-            $this->flashError('Not allowed');
-
-            return $this->redirectToRoute('homepage');
-        }
-
         $factory = $this->getDateTimeFactory();
         if ($begin === null) {
             $begin = $factory->createDateTime();
@@ -106,7 +98,8 @@ class QuickEntryController extends AbstractController
         ksort($rows);
 
         // attach recent activities
-        $timesheets = $this->repository->getRecentActivities($this->getUser(), null, 5);
+        $amount = $this->configuration->getQuickEntriesRecentAmount();
+        $timesheets = $this->repository->getRecentActivities($this->getUser(), null, $amount);
         foreach ($timesheets as $timesheet) {
             $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId();
             if (\array_key_exists($id, $rows)) {

@@ -94,11 +94,20 @@ final class InvoiceItem
 
     public function getAdditionalField(string $name, $default = null)
     {
-        if (isset($this->additionalFields[$name])) {
+        if (\array_key_exists($name, $this->additionalFields)) {
             return $this->additionalFields[$name];
         }
 
         return $default;
+    }
+
+    public function getMetaFieldValue(string $field)
+    {
+        if (\array_key_exists($field, $this->additionalFields)) {
+            return $this->additionalFields[$field];
+        }
+
+        return null;
     }
 
     public function getActivity(): ?Activity

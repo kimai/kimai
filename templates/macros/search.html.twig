@@ -40,6 +40,7 @@
 {% endmacro %}
 
 {% macro searchButton(form) %}
+    <input type="hidden" name="_token" value="{{ csrf_token('search') }}">
     <div class="btn-group">
         <button type="submit" name="performSearch" value="performSearch" class="btn btn-primary pull-left" data-type="submit">{{ 'search'|trans }}</button>
     </div>
@@ -56,7 +57,7 @@
             </button>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="?removeDefaultQuery={{ form.vars.data.bookmark.name }}" id="removeDefaultQuery">{{ 'label.remove_default'|trans }}</a>
+                    <a href="?_token={{ csrf_token('search') }}&removeDefaultQuery={{ form.vars.data.bookmark.name }}" id="removeDefaultQuery">{{ 'label.remove_default'|trans }}</a>
                 </li>
             </ul>
         {% else %}

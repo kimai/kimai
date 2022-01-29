@@ -29,7 +29,7 @@ interface MetaTableTypeInterface
     public function setName(string $name): MetaTableTypeInterface;
 
     /**
-     * @return mixed|null
+     * @return int|bool|string|null
      */
     public function getValue();
 

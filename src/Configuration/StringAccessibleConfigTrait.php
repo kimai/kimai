@@ -58,28 +58,33 @@ trait StringAccessibleConfigTrait
         // especially the pointers could be a problem in the future
         foreach ($this->getConfigurations($this->repository) as $configuration) {
             $temp = explode('.', $configuration->getName());
-            $array = &$this->settings;
-            if ($temp[0] === $this->getPrefix()) {
-                $temp = \array_slice($temp, 1);
-            }
-            foreach ($temp as $key2) {
-                if (!\array_key_exists($key2, $array)) {
-                    $array[$key2] = $configuration->getValue();
-                    continue;
-                }
-                if (\is_array($array[$key2])) {
-                    $array = &$array[$key2];
-                } elseif (\is_bool($array[$key2])) {
-                    $array[$key2] = (bool) $configuration->getValue();
-                } elseif (\is_int($array[$key2])) {
-                    $array[$key2] = (int) $configuration->getValue();
-                } else {
-                    $array[$key2] = $configuration->getValue();
-                }
-            }
+            $this->setConfiguration($temp, $configuration->getValue());
         }
 
         $this->initialized = true;
+    }
+
+    private function setConfiguration(array $keys, ?string $value): void
+    {
+        $array = &$this->settings;
+        if ($keys[0] === $this->getPrefix()) {
+            $keys = \array_slice($keys, 1);
+        }
+        foreach ($keys as $key2) {
+            if (!\array_key_exists($key2, $array)) {
+                $array[$key2] = $value;
+                continue;
+            }
+            if (\is_array($array[$key2])) {
+                $array = &$array[$key2];
+            } elseif (\is_bool($array[$key2])) {
+                $array[$key2] = (bool) $value;
+            } elseif (\is_int($array[$key2])) {
+                $array[$key2] = (int) $value;
+            } else {
+                $array[$key2] = $value;
+            }
+        }
     }
 
     /**
@@ -100,7 +105,7 @@ trait StringAccessibleConfigTrait
 
     /**
      * @param string $key
-     * @return mixed
+     * @return string|int|bool|float|null|array
      */
     public function find(string $key)
     {
@@ -181,7 +186,7 @@ trait StringAccessibleConfigTrait
      */
     public function offsetSet($offset, $value)
     {
-        throw new \BadMethodCallException('SystemBundleConfiguration does not support offsetSet()');
+        $this->setConfiguration(explode('.', $offset), $value);
     }
 
     /**

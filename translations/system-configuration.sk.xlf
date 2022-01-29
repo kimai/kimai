@@ -2,12 +2,8 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sk" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="qvIyBkY" resname="title">
-        <source>title</source>
-        <target>Nastavenia</target>
-      </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
+      <trans-unit id="ycErWZK" resname="timesheet">
+        <source>Time tracking</source>
         <target>Pracovný výkaz</target>
       </trans-unit>
       <trans-unit id="ddoIrUk" resname="label.timesheet.markdown_content">
@@ -178,17 +174,9 @@
         <source>label.theme.markdown_content</source>
         <target>Povoliť formátovanie poznámok v popiskoch a komentároch</target>
       </trans-unit>
-      <trans-unit id="UVJ5Die" resname="calendar">
-        <source>calendar</source>
-        <target>Kalendár</target>
-      </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
         <target>Vzhľad</target>
-      </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target>Faktúry</target>
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor">
         <source>Floor</source>

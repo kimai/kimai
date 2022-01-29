@@ -1,7 +1,7 @@
 {% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "project/actions.html.twig" as actions %}
 
-{% block page_title %}{{ 'admin_project.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'projects'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.project(project, 'delete') }}{% endblock %}
 
 {% block main %}

@@ -125,10 +125,6 @@
         <source>menu.timesheet</source>
         <target>השעות שלי</target>
       </trans-unit>
-      <trans-unit id="Ci9W8.K" resname="menu.invoice">
-        <source>menu.invoice</source>
-        <target>חשבוניות</target>
-      </trans-unit>
       <trans-unit id="I.eil4u" resname="menu.export">
         <source>menu.export</source>
         <target>ייצוא נתונים</target>
@@ -137,20 +133,20 @@
         <source>menu.admin_timesheet</source>
         <target>גיליון שעות</target>
       </trans-unit>
-      <trans-unit id="Y_jAD36" resname="menu.admin_customer">
-        <source>menu.admin_customer</source>
+      <trans-unit id="IeshU90" resname="customers">
+        <source>customers</source>
         <target>לקוחות</target>
       </trans-unit>
-      <trans-unit id="oDLp9t3" resname="menu.admin_project">
-        <source>menu.admin_project</source>
+      <trans-unit id="JXfA9Ve" resname="projects">
+        <source>projects</source>
         <target>מיזמים</target>
       </trans-unit>
-      <trans-unit id="wriHFwl" resname="menu.admin_activity">
-        <source>menu.admin_activity</source>
+      <trans-unit id="YkyVVAY" resname="activities">
+        <source>activities</source>
         <target>פעילויות</target>
       </trans-unit>
-      <trans-unit id="oZo1BnZ" resname="menu.admin_user">
-        <source>menu.admin_user</source>
+      <trans-unit id="fftM9nd" resname="users">
+        <source>users</source>
         <target>משתמשים</target>
       </trans-unit>
       <trans-unit id="pA.bYIk" resname="menu.admin_team">
@@ -165,8 +161,8 @@
         <source>menu.system_configuration</source>
         <target>הגדרות</target>
       </trans-unit>
-      <trans-unit id="yo4f8Kh" resname="menu.tags">
-        <source>menu.tags</source>
+      <trans-unit id="l4wviUE" resname="tags">
+        <source>tags</source>
         <target>תגיות</target>
       </trans-unit>
       <trans-unit id="1kHI0gb" resname="menu.doctor">
@@ -497,17 +493,9 @@
         <source>label.timesheet.export_decimal</source>
         <target>ייצוא משך זמן עם נקודה עשרונית</target>
       </trans-unit>
-      <trans-unit id="HWiuMV6" resname="calendar.title">
-        <source>calendar.title</source>
+      <trans-unit id="UVJ5Die" resname="calendar">
+        <source>calendar</source>
         <target>לוח שנה</target>
-      </trans-unit>
-      <trans-unit id="bSDjzZL" resname="admin_timesheet.title">
-        <source>admin_timesheet.title</source>
-        <target>גיליון שעות</target>
-      </trans-unit>
-      <trans-unit id="DFjFRGe" resname="admin_project.title">
-        <source>admin_project.title</source>
-        <target>מיזמים</target>
       </trans-unit>
       <trans-unit id="yLOqEX_" resname="label.project_start">
         <source>label.project_start</source>
@@ -516,14 +504,6 @@
       <trans-unit id="4kQGReV" resname="label.project_end">
         <source>label.project_end</source>
         <target>סוף מיזם</target>
-      </trans-unit>
-      <trans-unit id="auu8q0u" resname="admin_activity.title">
-        <source>admin_activity.title</source>
-        <target>פעילויות</target>
-      </trans-unit>
-      <trans-unit id="2TvKX9Z" resname="admin_customer.title">
-        <source>admin_customer.title</source>
-        <target>לקוח</target>
       </trans-unit>
       <trans-unit id="39AtPxQ" resname="label.number">
         <source>label.number</source>
@@ -576,10 +556,6 @@
       <trans-unit id="otd2FZd" resname="label.currency">
         <source>label.currency</source>
         <target>מטבע</target>
-      </trans-unit>
-      <trans-unit id="t34EvnF" resname="admin_user.title">
-        <source>admin_user.title</source>
-        <target>משתמש</target>
       </trans-unit>
       <trans-unit id="TRDzmCV" resname="label.alias">
         <source>label.alias</source>
@@ -733,8 +709,8 @@
         <source>admin_invoice_template.title</source>
         <target>תבנית חשבונית</target>
       </trans-unit>
-      <trans-unit id="iERywrp" resname="invoice.title">
-        <source>invoice.title</source>
+      <trans-unit id="SR2r1Cs" resname="invoices">
+        <source>invoices</source>
         <target>חשבוניות</target>
       </trans-unit>
       <trans-unit id="ov4OQOh" resname="invoice.filter">
@@ -1208,6 +1184,26 @@
       <trans-unit id="61p_ckr" resname="label.hours_24">
         <source>label.hours_24</source>
         <target>24 שעות</target>
+      </trans-unit>
+      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
+        <source>stats.workingTimeWeekShort</source>
+        <target>שבוע %week%</target>
+      </trans-unit>
+      <trans-unit id="PCEFPeg" resname="updated_at">
+        <source>Updated at</source>
+        <target>עודכן בתאריך</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target>התיקייה „%dir%” מוגנת בפני כתיבה.</target>
+      </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>error.directory_missing</source>
+        <target>התיקייה „%dir%” לא קיימת ולא ניתן ליצור אותה.</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+        <source>invoice_document.max_reached</source>
+        <target>הגעת לכמות המרבית %max% של מסמכי חשבוניות. אפשר להוסיף עוד לאחר הסרת אחת מהן.</target>
       </trans-unit>
     </body>
   </file>

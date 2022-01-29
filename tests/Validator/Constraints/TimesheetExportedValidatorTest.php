@@ -36,7 +36,7 @@ class TimesheetExportedValidatorTest extends ConstraintValidatorTestCase
         $auth->method('isGranted')->willReturnCallback(
             function ($attributes, $subject = null) use ($allowEdit) {
                 switch ($attributes) {
-                    case 'edit_exported_timesheet':
+                    case 'edit_export':
                         return $allowEdit;
                 }
 
@@ -66,8 +66,9 @@ class TimesheetExportedValidatorTest extends ConstraintValidatorTestCase
         $this->validator = $this->createMyValidator(false);
         $this->validator->initialize($this->context);
 
-        $timesheet = new Timesheet();
-        $timesheet->setExported(true);
+        $timesheet = $this->createMock(Timesheet::class);
+        $timesheet->method('isExported')->willReturn(true);
+        $timesheet->method('getId')->willReturn(1);
 
         $this->validator->validate($timesheet, new TimesheetExported());
 
@@ -75,6 +76,20 @@ class TimesheetExportedValidatorTest extends ConstraintValidatorTestCase
             ->atPath('property.path.exported')
             ->setCode(TimesheetExported::TIMESHEET_EXPORTED)
             ->assertRaised();
+    }
+
+    public function testNotTriggersOnNewTimesheet()
+    {
+        $this->validator = $this->createMyValidator(false);
+        $this->validator->initialize($this->context);
+
+        $timesheet = $this->createMock(Timesheet::class);
+        $timesheet->method('isExported')->willReturn(true);
+        $timesheet->method('getId')->willReturn(null);
+
+        $this->validator->validate($timesheet, new TimesheetExported());
+
+        $this->assertNoViolation();
     }
 
     public function testDoesNotTriggerWithPermission()

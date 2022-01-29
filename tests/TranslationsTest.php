@@ -57,7 +57,7 @@ class TranslationsTest extends TestCase
             $body = $english->file->body;
 
             foreach ($body->children() as $transUnit) {
-                preg_match_all('/%.+%/Uu', (string) $transUnit->target, $matches);
+                preg_match_all('/%[a-zA-Z]{1,}%/Uu', (string) $transUnit->target, $matches);
                 if (!empty($matches) && !empty($matches[0])) {
                     asort($matches[0]);
                     $trans[(string) $transUnit->source] = array_values($matches[0]);
@@ -86,11 +86,9 @@ class TranslationsTest extends TestCase
                     $key = (string) $transUnit->source;
                     if (isset($transLang[$key])) {
                         // some special cases, which don't work properly - base translation should be changed
-                        if (!\in_array($key, ['stats.percentUsed', 'stats.percentUsedLeft', 'stats.percentUsed_month', 'stats.percentUsedLeft_month'])) {
-                            preg_match_all('/%.+%/Uu', (string) $transUnit->target, $matches);
-                            asort($matches[0]);
-                            self::assertEquals($transLang[$key], array_values($matches[0]), sprintf('Invalid replacer "%s" in "%s"', $key, basename($file)));
-                        }
+                        preg_match_all('/%[a-zA-Z]{1,}%/Uu', (string) $transUnit->target, $matches);
+                        asort($matches[0]);
+                        self::assertEquals($transLang[$key], array_values($matches[0]), sprintf('Invalid replacer "%s" in "%s"', $key, basename($file)));
                         $counter++;
                         unset($transLang[$key]);
                     }

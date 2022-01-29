@@ -70,6 +70,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
     {
         return [
             ['form[name=system_configuration_form_timesheet]', $this->createUrl('/admin/system-config/update/timesheet')],
+            ['form[name=system_configuration_form_quick_entry]', $this->createUrl('/admin/system-config/update/quick_entry')],
             ['form[name=system_configuration_form_lockdown_period]', $this->createUrl('/admin/system-config/update/lockdown_period')],
             ['form[name=system_configuration_form_invoice]', $this->createUrl('/admin/system-config/update/invoice')],
             ['form[name=system_configuration_form_authentication]', $this->createUrl('/admin/system-config/update/authentication')],

@@ -80,13 +80,23 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
     public function getDurationBillable(): int
     {
         if ($this->isMonthlyBudget()) {
-            if ($this->statistic === null) {
-                return 0;
-            }
-
-            return $this->statistic->getDurationBillable();
+            return $this->getDurationBillableRelative();
         }
 
+        return $this->getDurationBillableTotal();
+    }
+
+    public function getDurationBillableRelative(): int
+    {
+        if ($this->statistic === null) {
+            return 0;
+        }
+
+        return $this->statistic->getDurationBillable();
+    }
+
+    public function getDurationBillableTotal(): int
+    {
         if ($this->statisticTotal === null) {
             return 0;
         }
@@ -96,7 +106,14 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
 
     public function getTimeBudgetOpen(): int
     {
-        $value = $this->getTimeBudget() - $this->getTimeBudgetSpent();
+        $value = $this->getTimeBudget() - $this->getDurationBillable();
+
+        return $value > 0 ? $value : 0;
+    }
+
+    public function getTimeBudgetOpenRelative(): int
+    {
+        $value = $this->getTimeBudget() - $this->getDurationBillableRelative();
 
         return $value > 0 ? $value : 0;
     }
@@ -118,7 +135,14 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
 
     public function getBudgetOpen(): float
     {
-        $value = $this->getBudget() - $this->getBudgetSpent();
+        $value = $this->getBudget() - $this->getRateBillable();
+
+        return $value > 0 ? $value : 0;
+    }
+
+    public function getBudgetOpenRelative(): float
+    {
+        $value = $this->getBudget() - $this->getRateBillableRelative();
 
         return $value > 0 ? $value : 0;
     }
@@ -131,13 +155,23 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
     public function getRateBillable(): float
     {
         if ($this->isMonthlyBudget()) {
-            if ($this->statistic === null) {
-                return 0.00;
-            }
-
-            return $this->statistic->getRateBillable();
+            return $this->getRateBillableRelative();
         }
 
+        return $this->getRateBillableTotal();
+    }
+
+    public function getRateBillableRelative(): float
+    {
+        if ($this->statistic === null) {
+            return 0.00;
+        }
+
+        return $this->statistic->getRateBillable();
+    }
+
+    public function getRateBillableTotal(): float
+    {
         if ($this->statisticTotal === null) {
             return 0.00;
         }

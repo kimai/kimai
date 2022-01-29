@@ -285,8 +285,8 @@
         <source>invoice.filter</source>
         <target>Rechnungsdaten filtern</target>
       </trans-unit>
-      <trans-unit id="iERywrp" resname="invoice.title">
-        <source>invoice.title</source>
+      <trans-unit id="SR2r1Cs" resname="invoices">
+        <source>invoices</source>
         <target>Rechnungen</target>
       </trans-unit>
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
@@ -465,10 +465,6 @@
         <source>label.alias</source>
         <target>Name</target>
       </trans-unit>
-      <trans-unit id="t34EvnF" resname="admin_user.title">
-        <source>admin_user.title</source>
-        <target>Benutzer</target>
-      </trans-unit>
       <trans-unit id="otd2FZd" resname="label.currency">
         <source>label.currency</source>
         <target>Währung</target>
@@ -513,14 +509,6 @@
         <source>label.number</source>
         <target>Kundennummer</target>
       </trans-unit>
-      <trans-unit id="2TvKX9Z" resname="admin_customer.title">
-        <source>admin_customer.title</source>
-        <target>Kunden</target>
-      </trans-unit>
-      <trans-unit id="auu8q0u" resname="admin_activity.title">
-        <source>admin_activity.title</source>
-        <target>Tätigkeiten</target>
-      </trans-unit>
       <trans-unit id="4kQGReV" resname="label.project_end">
         <source>label.project_end</source>
         <target>Projekt Ende</target>
@@ -529,16 +517,8 @@
         <source>label.project_start</source>
         <target>Projekt Start</target>
       </trans-unit>
-      <trans-unit id="DFjFRGe" resname="admin_project.title">
-        <source>admin_project.title</source>
-        <target>Projekte</target>
-      </trans-unit>
-      <trans-unit id="bSDjzZL" resname="admin_timesheet.title">
-        <source>admin_timesheet.title</source>
-        <target>Zeiterfassung</target>
-      </trans-unit>
-      <trans-unit id="HWiuMV6" resname="calendar.title">
-        <source>calendar.title</source>
+      <trans-unit id="UVJ5Die" resname="calendar">
+        <source>calendar</source>
         <target>Kalender</target>
       </trans-unit>
       <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
@@ -881,8 +861,8 @@
         <source>menu.doctor</source>
         <target>Doktor</target>
       </trans-unit>
-      <trans-unit id="yo4f8Kh" resname="menu.tags">
-        <source>menu.tags</source>
+      <trans-unit id="l4wviUE" resname="tags">
+        <source>tags</source>
         <target>Schlagworte</target>
       </trans-unit>
       <trans-unit id="IXtkHRw" resname="menu.system_configuration">
@@ -897,20 +877,20 @@
         <source>menu.admin_team</source>
         <target>Teams</target>
       </trans-unit>
-      <trans-unit id="oZo1BnZ" resname="menu.admin_user">
-        <source>menu.admin_user</source>
+      <trans-unit id="fftM9nd" resname="users">
+        <source>users</source>
         <target>Benutzer</target>
       </trans-unit>
-      <trans-unit id="wriHFwl" resname="menu.admin_activity">
-        <source>menu.admin_activity</source>
+      <trans-unit id="YkyVVAY" resname="activities">
+        <source>activities</source>
         <target>Tätigkeiten</target>
       </trans-unit>
-      <trans-unit id="oDLp9t3" resname="menu.admin_project">
-        <source>menu.admin_project</source>
+      <trans-unit id="JXfA9Ve" resname="projects">
+        <source>projects</source>
         <target>Projekte</target>
       </trans-unit>
-      <trans-unit id="Y_jAD36" resname="menu.admin_customer">
-        <source>menu.admin_customer</source>
+      <trans-unit id="IeshU90" resname="customers">
+        <source>customers</source>
         <target>Kunden</target>
       </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
@@ -924,10 +904,6 @@
       <trans-unit id="I.eil4u" resname="menu.export">
         <source>menu.export</source>
         <target>Export</target>
-      </trans-unit>
-      <trans-unit id="Ci9W8.K" resname="menu.invoice">
-        <source>menu.invoice</source>
-        <target>Rechnungen</target>
       </trans-unit>
       <trans-unit id="C0W7_BT" resname="menu.timesheet">
         <source>menu.timesheet</source>

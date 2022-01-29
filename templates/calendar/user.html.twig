@@ -2,7 +2,7 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/widgets.html.twig" as widgets %}
 
-{% block page_title %}{{ 'calendar.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'calendar'|trans }}{% endblock %}
 {% block page_actions %}
     {% set event = actions(app.user, 'calendar', 'index') %}
     {{ widgets.page_actions(event.actions) }}

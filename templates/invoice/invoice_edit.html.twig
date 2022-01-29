@@ -1,6 +1,6 @@
 {% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
 
-{% block page_title %}{{ 'invoice.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'invoices'|trans }}{% endblock %}
 
 {% block main %}
     {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}

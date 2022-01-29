@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fo" datatype="plaintext" original="messages.en.xlf">
     <body>
@@ -53,24 +53,20 @@
         <source>menu.timesheet</source>
         <target>Mínar tíðir</target>
       </trans-unit>
-      <trans-unit id="Ci9W8.K" resname="menu.invoice">
-        <source>menu.invoice</source>
-        <target>Fakturar</target>
-      </trans-unit>
       <trans-unit id="I.eil4u" resname="menu.export">
         <source>menu.export</source>
         <target>Útflyt</target>
       </trans-unit>
-      <trans-unit id="Y_jAD36" resname="menu.admin_customer">
-        <source>menu.admin_customer</source>
+      <trans-unit id="IeshU90" resname="customers">
+        <source>customers</source>
         <target>Kundar</target>
       </trans-unit>
-      <trans-unit id="oDLp9t3" resname="menu.admin_project">
-        <source>menu.admin_project</source>
+      <trans-unit id="JXfA9Ve" resname="projects">
+        <source>projects</source>
         <target>Verkætlanir</target>
       </trans-unit>
-      <trans-unit id="oZo1BnZ" resname="menu.admin_user">
-        <source>menu.admin_user</source>
+      <trans-unit id="fftM9nd" resname="users">
+        <source>users</source>
         <target>Brúkarar</target>
       </trans-unit>
       <trans-unit id="pA.bYIk" resname="menu.admin_team">
@@ -199,16 +195,8 @@
         <source>label.avatar</source>
         <target>Vanga mynd</target>
       </trans-unit>
-      <trans-unit id="2TvKX9Z" resname="admin_customer.title">
-        <source>admin_customer.title</source>
-        <target>Kundi</target>
-      </trans-unit>
-      <trans-unit id="bSDjzZL" resname="admin_timesheet.title">
-        <source>admin_timesheet.title</source>
-        <target>Arbeiðsseðlar</target>
-      </trans-unit>
-      <trans-unit id="HWiuMV6" resname="calendar.title">
-        <source>calendar.title</source>
+      <trans-unit id="UVJ5Die" resname="calendar">
+        <source>calendar</source>
         <target>Kalendari</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
@@ -243,10 +231,6 @@
         <source>label.alias</source>
         <target>Navn</target>
       </trans-unit>
-      <trans-unit id="t34EvnF" resname="admin_user.title">
-        <source>admin_user.title</source>
-        <target>Brúkari</target>
-      </trans-unit>
       <trans-unit id="otd2FZd" resname="label.currency">
         <source>label.currency</source>
         <target>Gjaldoyra</target>
@@ -278,10 +262,6 @@
       <trans-unit id="39AtPxQ" resname="label.number">
         <source>label.number</source>
         <target>Konta</target>
-      </trans-unit>
-      <trans-unit id="DFjFRGe" resname="admin_project.title">
-        <source>admin_project.title</source>
-        <target>Verkætlanir</target>
       </trans-unit>
       <trans-unit id="Q0Zip02" resname="agendaDay">
         <source>agendaDay</source>
@@ -483,8 +463,8 @@
         <source>admin_invoice_template.title</source>
         <target>Vørurokningar skapilón</target>
       </trans-unit>
-      <trans-unit id="iERywrp" resname="invoice.title">
-        <source>invoice.title</source>
+      <trans-unit id="SR2r1Cs" resname="invoices">
+        <source>invoices</source>
         <target>Vørurokningar</target>
       </trans-unit>
       <trans-unit id="7H7P1mE" resname="button.preview">
@@ -567,8 +547,8 @@
         <source>entryState.stopped</source>
         <target>Steðga</target>
       </trans-unit>
-      <trans-unit id="yo4f8Kh" resname="menu.tags">
-        <source>menu.tags</source>
+      <trans-unit id="l4wviUE" resname="tags">
+        <source>tags</source>
         <target>Frámerki</target>
       </trans-unit>
       <trans-unit id="mflwMcX" resname="rates.title">
@@ -727,12 +707,8 @@
         <source>stats.activityTotal</source>
         <target>Virksemi</target>
       </trans-unit>
-      <trans-unit id="auu8q0u" resname="admin_activity.title">
-        <source>admin_activity.title</source>
-        <target>Virksemi</target>
-      </trans-unit>
-      <trans-unit id="wriHFwl" resname="menu.admin_activity">
-        <source>menu.admin_activity</source>
+      <trans-unit id="YkyVVAY" resname="activities">
+        <source>activities</source>
         <target>Virksemi</target>
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
@@ -982,6 +958,86 @@
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
         <target>Hesar dátur verða eisini strikaðar! Um hetta ikki ynskist, so kanst tú velja, at flyta dáturnar til eitt av fylgjandi møguleikum:</target>
+      </trans-unit>
+      <trans-unit id="jdbtx6z" resname="action.add">
+        <source>action.add</source>
+        <target>Legg aftrat</target>
+      </trans-unit>
+      <trans-unit id=".ndupSK" resname="registration.check_email">
+        <source>registration.check_email</source>
+        <target>Ein teldupostur er sendur til %email%. Telduposturin inniheldur eina leinkju, ið tú skalt trýsta á, fyri at virkna tína kontu.</target>
+      </trans-unit>
+      <trans-unit id="f8oNzSP" resname="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target>Vikuarbeiðistímar</target>
+      </trans-unit>
+      <trans-unit id="61p_ckr" resname="label.hours_24">
+        <source>label.hours_24</source>
+        <target>24 tímar</target>
+      </trans-unit>
+      <trans-unit id="5gjqxgK" resname="label.fixedRate">
+        <source>label.fixedRate</source>
+        <target>Fastur kostnáður</target>
+      </trans-unit>
+      <trans-unit id="Dgmh_mv" resname="label.vat_id">
+        <source>label.vat_id</source>
+        <target>V-tal</target>
+      </trans-unit>
+      <trans-unit id="F6Jmro7" resname="export.title">
+        <source>export.title</source>
+        <target>Útflyt</target>
+      </trans-unit>
+      <trans-unit id="pnGDFmf" resname="label.type">
+        <source>label.type</source>
+        <target>Slag</target>
+      </trans-unit>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>Ein teldupostur er sendur. Telduposturin inniheldur eina leinkju, ið tú skalt trýst á, fyri at endurseta títt loyniorð. GG: Tú kanst einans biða um eitt nýtt loyniorð einaferð hvønn %tokenLifetime% tíma. Um tú ikki móttekur ein teldupost, kannað so tína fras mappu ella royn umaftur.</target>
+      </trans-unit>
+      <trans-unit id="Uvo1CbP" resname="status.pending">
+        <source>status.pending</source>
+        <target>Bíðistøðu</target>
+      </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>error.directory_missing</source>
+        <target>Mappan "%dir%" finninst ikki, og tað bar ikki til at skapa hana.</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target>Mappan "%dir%" skrivivard.</target>
+      </trans-unit>
+      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
+        <source>label.calendar.initial_view</source>
+        <target>Byrjanarvísan fyri kalendara</target>
+      </trans-unit>
+      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
+        <source>label.login.initial_view</source>
+        <target>Byrjanarvísan eftir innritan</target>
+      </trans-unit>
+      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>navnabót kagara dagførd</target>
+      </trans-unit>
+      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
+        <source>label.timesheet.export_decimal</source>
+        <target>Nýt kommatals-tíðarlongd í útflutningi</target>
+      </trans-unit>
+      <trans-unit id="7J7G3Vr" resname="label.mark_as_exported">
+        <source>label.mark_as_exported</source>
+        <target>Merk sum útflutt</target>
+      </trans-unit>
+      <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target>%percent%% brúkt hendan mánaðin</target>
+      </trans-unit>
+      <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target>%percent%% brúkt (%left% er enn opið hendan mánaðin)</target>
+      </trans-unit>
+      <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>Umbønin kundi ikki fullfíggjast. Ov nógv úrslit vóru funnin.</target>
       </trans-unit>
     </body>
   </file>

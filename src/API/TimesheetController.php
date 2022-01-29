@@ -36,6 +36,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -704,6 +705,11 @@ class TimesheetController extends BaseApiController
     public function exportAction(Timesheet $id): Response
     {
         $timesheet = $id;
+
+        if ($timesheet->isExported() && !$this->isGranted('edit_exported_timesheet')) {
+            throw new AccessDeniedHttpException('User cannot edit an exported timesheet');
+        }
+
         $timesheet->setExported(!$timesheet->isExported());
 
         $this->service->updateTimesheet($timesheet);

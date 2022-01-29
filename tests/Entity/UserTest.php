@@ -137,6 +137,7 @@ class UserTest extends TestCase
         $user = new User();
         self::assertNull($user->getPreference('test'));
         self::assertNull($user->getPreferenceValue('test'));
+        self::assertNull($user->getMetaFieldValue('test'));
         self::assertEquals('foo', $user->getPreferenceValue('test', 'foo'));
 
         $preference = new UserPreference();
@@ -145,14 +146,18 @@ class UserTest extends TestCase
             ->setValue('foobar');
         $user->addPreference($preference);
         self::assertEquals('foobar', $user->getPreferenceValue('test', 'foo'));
+        self::assertEquals('foobar', $user->getMetaFieldValue('test'));
         self::assertEquals($preference, $user->getPreference('test'));
 
         $user->setPreferenceValue('test', 'Hello World');
         self::assertEquals('Hello World', $user->getPreferenceValue('test', 'foo'));
+        self::assertEquals('Hello World', $user->getMetaFieldValue('test'));
 
         self::assertNull($user->getPreferenceValue('test2'));
+        self::assertNull($user->getMetaFieldValue('test2'));
         $user->setPreferenceValue('test2', 'I like rain');
         self::assertEquals('I like rain', $user->getPreferenceValue('test2'));
+        self::assertEquals('I like rain', $user->getMetaFieldValue('test2'));
 
         $user->setPreferenceValue('theme.layout', 'boxed');
         self::assertTrue($user->isSmallLayout());
@@ -448,6 +453,9 @@ class UserTest extends TestCase
         self::assertCount(0, $sut->getMemberships());
 
         self::assertFalse($sut->isTeamleadOf($team));
+
+        $member = new TeamMember();
+        $member->setTeam($team);
 
         $sut->addMembership($member);
         self::assertCount(1, $sut->getMemberships());

@@ -18,9 +18,9 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Invoice\Calculator\ShortInvoiceCalculator;
 use App\Invoice\InvoiceItem;
-use App\Invoice\InvoiceModel;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
+use App\Tests\Mocks\InvoiceModelFactoryFactory;
 
 /**
  * @covers \App\Invoice\Calculator\ShortInvoiceCalculator
@@ -91,7 +91,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $query = new InvoiceQuery();
         $query->setActivity($activity);
 
-        $model = new InvoiceModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->addEntries($entries);
@@ -173,7 +173,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $query = new InvoiceQuery();
         $query->setActivity($activity);
 
-        $model = new InvoiceModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->addEntries($entries);
@@ -252,7 +252,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $query = new InvoiceQuery();
         $query->setActivity($activity);
 
-        $model = new InvoiceModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setCustomer($customer);
         $model->setTemplate($template);
         $model->addEntries($entries);

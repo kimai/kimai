@@ -34,20 +34,20 @@
         <source>settings</source>
         <target>参数选择</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>timesheet</source>
+      <trans-unit id="xovWV.Y" resname="timesheet.filter">
+        <source>Filter timesheets</source>
         <target>时间表</target>
       </trans-unit>
-      <trans-unit id="tsRYY4d" resname="customer">
-        <source>customer</source>
+      <trans-unit id="U7.woIo" resname="customer.filter">
+        <source>Filter customers</source>
         <target>筛选用户</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
-        <source>project</source>
+      <trans-unit id="j9gsVnq" resname="project.filter">
+        <source>Filter projects</source>
         <target>筛选项目</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
-        <source>activity</source>
+      <trans-unit id="xl_5l3y" resname="activity.filter">
+        <source>Filter activities</source>
         <target>筛选活动</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">

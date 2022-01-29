@@ -30,7 +30,7 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('kimai');
         /** @var ArrayNodeDefinition $node */
@@ -69,13 +69,32 @@ class Configuration implements ConfigurationInterface
                 ->append($this->getPermissionsNode())
                 ->append($this->getLdapNode())
                 ->append($this->getSamlNode())
+                ->append($this->getQuickEntryNode())
             ->end()
         ->end();
 
         return $treeBuilder;
     }
 
-    protected function getTimesheetNode()
+    private function getQuickEntryNode()
+    {
+        $builder = new TreeBuilder('quick_entry');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->integerNode('recent_activities')
+                    ->defaultValue(5)
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    private function getTimesheetNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('timesheet');
         /** @var ArrayNodeDefinition $node */
@@ -259,7 +278,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getInvoiceNode()
+    private function getInvoiceNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('invoice');
         /** @var ArrayNodeDefinition $node */
@@ -292,7 +311,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getExportNode()
+    private function getExportNode()
     {
         $builder = new TreeBuilder('export');
         /** @var ArrayNodeDefinition $node */
@@ -319,7 +338,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getLanguagesNode()
+    private function getLanguagesNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('languages');
         /** @var ArrayNodeDefinition $node */
@@ -349,7 +368,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getCalendarNode()
+    private function getCalendarNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('calendar');
         /** @var ArrayNodeDefinition $node */
@@ -416,7 +435,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getThemeNode()
+    private function getThemeNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('theme');
         /** @var ArrayNodeDefinition $node */
@@ -506,7 +525,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getIndustryNode()
+    private function getIndustryNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('industry');
         /** @var ArrayNodeDefinition $node */
@@ -522,7 +541,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getCompanyNode()
+    private function getCompanyNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('company');
         /** @var ArrayNodeDefinition $node */
@@ -538,7 +557,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getUserNode()
+    private function getUserNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('user');
         /** @var ArrayNodeDefinition $node */
@@ -568,7 +587,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getWidgetsNode()
+    private function getWidgetsNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('widgets');
         /** @var ArrayNodeDefinition $node */
@@ -595,7 +614,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getDashboardNode()
+    private function getDashboardNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('dashboard');
         /** @var ArrayNodeDefinition $node */
@@ -624,7 +643,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getDefaultsNode()
+    private function getDefaultsNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('defaults');
         /** @var ArrayNodeDefinition $node */
@@ -662,7 +681,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getPermissionsNode()
+    private function getPermissionsNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('permissions');
         /** @var ArrayNodeDefinition $node */
@@ -712,7 +731,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getLdapNode()
+    private function getLdapNode(): ArrayNodeDefinition
     {
         $treeBuilder = new TreeBuilder('ldap');
         $node = $treeBuilder->getRootNode();
@@ -835,7 +854,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    protected function getSamlNode()
+    private function getSamlNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('saml');
         /** @var ArrayNodeDefinition $node */

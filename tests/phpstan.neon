@@ -1,7 +1,10 @@
 includes:
     - %rootDir%/../phpstan-symfony/extension.neon
+    - %rootDir%/../phpstan-symfony/rules.neon
     - %rootDir%/../phpstan-doctrine/extension.neon
+    - %rootDir%/../phpstan-doctrine/rules.neon
     - %rootDir%/../phpstan-phpunit/extension.neon
+    - %rootDir%/../phpstan-phpunit/rules.neon
 
 parameters:
     tmpDir: %rootDir%/../../../var/cache/phpstan
@@ -10,3 +13,5 @@ parameters:
     excludePaths:
         - %rootDir%/../../../tests/Ldap/LdapDriverTest.php
     inferPrivatePropertyTypeFromConstructor: true
+    doctrine:
+        objectManagerLoader: %rootDir%/../../../tests/phpstan-doctrine.php

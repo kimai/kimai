@@ -12,10 +12,10 @@ namespace App\Tests\Invoice\NumberGenerator;
 use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
 use App\Entity\User;
-use App\Invoice\InvoiceModel;
 use App\Invoice\NumberGenerator\ConfigurableNumberGenerator;
 use App\Repository\InvoiceRepository;
 use App\Tests\Invoice\DebugFormatter;
+use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -156,7 +156,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
         $user->method('getAccountNumber')->willReturn('0815');
 
         $sut = $this->getSut($format, $counter);
-        $model = new InvoiceModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setInvoiceDate($invoiceDate);
         $model->setCustomer($customer);
         $model->setUser($user);
@@ -197,7 +197,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
         $this->expectExceptionMessage(sprintf('Unknown %s found', $brokenPart));
 
         $sut = $this->getSut($format);
-        $model = new InvoiceModel(new DebugFormatter());
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setInvoiceDate($invoiceDate);
         $model->setCustomer(new Customer());
         $sut->setModel($model);

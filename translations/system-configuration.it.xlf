@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="qvIyBkY" resname="title">
-        <source>title</source>
-        <target>Impostazioni</target>
-      </trans-unit>
       <trans-unit id="ycErWZK" resname="timesheet">
         <source>Time tracking</source>
         <target>Rilevamento del tempo</target>
@@ -13,10 +9,6 @@
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
         <target>Tema</target>
-      </trans-unit>
-      <trans-unit id="UVJ5Die" resname="calendar">
-        <source>calendar</source>
-        <target>Calendario</target>
       </trans-unit>
       <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
         <source>label.theme.markdown_content</source>
@@ -178,10 +170,6 @@
         <source>label.theme.tags_create</source>
         <target>Etichette: utilizza la ricerca di completamento automatico e consenti la creazione di etichette</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
-        <source>invoice</source>
-        <target>Fatture</target>
-      </trans-unit>
       <trans-unit id="A3HPT4p" resname="label.saml_activate">
         <source>label.saml_activate</source>
         <target>Accesso SAML</target>
@@ -269,6 +257,46 @@
       <trans-unit id="HeDzoVE" resname="label.timesheet.rules.lockdown_period_timezone">
         <source>label.timesheet.rules.lockdown_period_timezone</source>
         <target>Fuso orario (se vuoto, viene usato il fuso orario del rispettivo utente)</target>
+      </trans-unit>
+      <trans-unit id="tuPXa0S" resname="lockdown_period">
+        <source>lockdown_period</source>
+        <target>Periodo di blocco</target>
+      </trans-unit>
+      <trans-unit id="ZUTc3eH" resname="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target>Quantità di voci per il trascinamento della selezione (0 = disattivato)</target>
+      </trans-unit>
+      <trans-unit id="h4bhOny" resname="label.timesheet.rules.long_running_duration">
+        <source>label.timesheet.rules.long_running_duration</source>
+        <target>Durata massima di una registrazione scheda attività in minuti prima che il salvataggio venga rifiutato (0 = disattivato)</target>
+      </trans-unit>
+      <trans-unit id="VAAaL2t" resname="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target>Permetti l'overbooking dei budget memorizzati</target>
+      </trans-unit>
+      <trans-unit id=".es2tyO" resname="label.timesheet.rules.lockdown_period_end">
+        <source>label.timesheet.rules.lockdown_period_end</source>
+        <target>Fine del periodo di blocco (data relativa a PHP)</target>
+      </trans-unit>
+      <trans-unit id="yVBJECt" resname="label.timesheet.rules.lockdown_period_start">
+        <source>label.timesheet.rules.lockdown_period_start</source>
+        <target>Inizio del periodo di blocco (data relativa a PHP)</target>
+      </trans-unit>
+      <trans-unit id="y2i0PU3" resname="label.timesheet.rules.lockdown_grace_period">
+        <source>label.timesheet.rules.lockdown_grace_period</source>
+        <target>Fine del periodo di grazia del lockdown (data relativa a PHP alla fine del periodo di blocco)</target>
+      </trans-unit>
+      <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
+        <source>help.theme.color_choices</source>
+        <target>Elenco separato da virgole di codici colore HTML. I nomi dei colori possono essere impostati anteponendo al codice del colore un nome e il delimitatore |, es: Bianco|#ffffffff,Nero|#000000.</target>
+      </trans-unit>
+      <trans-unit id="jLG6z.w" resname="label.timesheet.rules.break_warning_duration">
+        <source>label.timesheet.rules.break_warning_duration</source>
+        <target>Durata massima di una registrazione della scheda attività in minuti prima che venga visualizzato un «avviso di pausa» (0 = disattivato)</target>
+      </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target>Numero di voci riprese dalle settimane precedenti</target>
       </trans-unit>
     </body>
   </file>

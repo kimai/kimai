@@ -45,7 +45,7 @@ trait MetaTableTypeTrait
     /**
      * Value of the meta (custom) field
      *
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
@@ -109,7 +109,7 @@ trait MetaTableTypeTrait
     }
 
     /**
-     * @return mixed|null
+     * @return int|bool|string|null
      */
     public function getValue()
     {

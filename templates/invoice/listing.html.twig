@@ -9,6 +9,14 @@
     'date': {'class': 'alwaysVisible'},
     'user': {'class': 'hidden-xs hidden-sm text-nowrap hidden', 'orderBy': false},
     'customer': {'class': 'hidden-xs hidden-sm text-nowrap', 'orderBy': false},
+    'comment': {'class': 'hidden-xs hidden-sm', 'title': 'label.description'|trans},
+} %}
+{% for field in metaColumns %}
+    {% set columns = columns|merge({
+        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'hidden-xs hidden-sm', 'orderBy': false}
+    }) %}
+{% endfor %}
+{% set columns = columns|merge({
     'invoice_number': {'class': 'hidden-xs hidden-sm w-min', 'title': 'invoice.number'|trans, 'orderBy': false},
     'due_date': {'class': 'hidden-xs w-min', 'title': 'invoice.due_days'|trans, 'orderBy': false},
     'payment_date': {'class': 'hidden-xs hidden w-min', 'title': 'invoice.payment_date'|trans, 'orderBy': false},
@@ -17,11 +25,11 @@
     'tax': {'class': 'hidden-xs text-right w-min hidden', 'title': 'invoice.tax'|trans},
     'total_rate': {'class': 'hidden-xs text-right w-min'},
     'actions': {'class': 'actions alwaysVisible', 'orderBy': false},
-} %}
+}) %}
 
 {% set tableName = 'invoices' %}
 
-{% block page_title %}{{ 'invoice.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'invoices'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.invoice_listing('index', query) }}{% endblock %}
 {% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
 
@@ -36,10 +44,16 @@
     {% else %}
         {{ tables.datatable_header(tableName, columns, query, {}) }}
         {% for entry in entries %}
-            <tr class="alternative-link open-edit{% if entry.canceled %} warning text-muted{% endif %}" data-href="{{ path('admin_invoice_download', {'id': entry.id}) }}">
+            <tr class="modal-ajax-form open-edit{% if entry.canceled %} warning text-muted{% endif %}" data-href="{{ path('admin_invoice_edit', {'id': entry.id}) }}">
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.createdAt|date_short }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">{{ widgets.user_avatar(entry.user) }} {{ widgets.username(entry.user) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">{{ widgets.label_customer(entry.customer) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment }}</td>
+                {% for field in metaColumns %}
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
+                        {{ tables.datatable_meta_column(entry, field) }}
+                    </td>
+                {% endfor %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'invoice_number') }}">{{ widgets.label(entry.invoiceNumber, 'default') }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'due_date') }}">{{ macros.invoice_due_date(entry) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'payment_date') }}">

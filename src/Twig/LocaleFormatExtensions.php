@@ -137,7 +137,7 @@ final class LocaleFormatExtensions extends AbstractExtension
         return $this->formatter;
     }
 
-    private function getLocale()
+    public function getLocale(): string
     {
         if (null === $this->locale) {
             $this->locale = \Locale::getDefault();

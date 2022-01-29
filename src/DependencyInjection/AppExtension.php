@@ -100,6 +100,7 @@ class AppExtension extends Extension
         $container->setParameter('kimai.i18n_domains', $localTranslations);
 
         // this should happen always at the end, so bundles do not mess with the base configuration
+        /* @phpstan-ignore-next-line */
         if ($container->hasParameter('kimai.bundles.config')) {
             $bundleConfig = $container->getParameter('kimai.bundles.config');
             if (!\is_array($bundleConfig)) {

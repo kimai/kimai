@@ -28,7 +28,7 @@ trait Rate
      */
     private $id;
     /**
-     * @var User
+     * @var User|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="da" datatype="plaintext" original="teams.en.xlf">
     <body>
@@ -13,6 +13,26 @@
       <trans-unit id="QchGnbx" resname="teams.customer_access">
         <source>teams.customer_access</source>
         <target>Giv adgang til kunder</target>
+      </trans-unit>
+      <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited">
+        <source>team.project_visibility_inherited</source>
+        <target>Projektet har begrænset adgang, da hold rettigheder er indstillet til kunden.</target>
+      </trans-unit>
+      <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited">
+        <source>team.activity_visibility_inherited</source>
+        <target>Aktiviteten har begrænset adgang, da hold rettigheder er tildelt projektet og/eller kunden.</target>
+      </trans-unit>
+      <trans-unit id="cZEIdcu" resname="team.create_default">
+        <source>team.create_default</source>
+        <target>Opret et nyt hold for at begrænse adgang</target>
+      </trans-unit>
+      <trans-unit id=".yIcFDx" resname="team.visibility_global">
+        <source>team.visibility_global</source>
+        <target>Synlig for alle, da der endnu ikke er tildelt et hold.</target>
+      </trans-unit>
+      <trans-unit id="hlIIRjb" resname="team.visibility_restricted">
+        <source>team.visibility_restricted</source>
+        <target>Kun synlig for følgende hold og alle administratorer.</target>
       </trans-unit>
     </body>
   </file>
