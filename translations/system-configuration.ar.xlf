@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ar" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
       <trans-unit id="ycErWZK" resname="timesheet">
         <source>Time tracking</source>
-        <target>الجداول الزمنية</target>
+        <target>تتبع الوقت</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
@@ -237,6 +237,18 @@
       <trans-unit id=".CeyZwj" resname="label.company.financial_year">
         <source>label.company.financial_year</source>
         <target>السنة المالية</target>
+      </trans-unit>
+      <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
+        <source>label.theme.avatar_url</source>
+        <target>السماح باستخدام عناوين URL للصور الرمزية</target>
+      </trans-unit>
+      <trans-unit id="tuPXa0S" resname="lockdown_period">
+        <source>lockdown_period</source>
+        <target>فترة الإغلاق</target>
+      </trans-unit>
+      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
+        <source>label.theme.random_colors</source>
+        <target>استخدام ألوان عشوائية للمكونات التي ليس لها لون معين</target>
       </trans-unit>
     </body>
   </file>
