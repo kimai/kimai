@@ -50,6 +50,10 @@
         <source>An activity needs to be selected.</source>
         <target>يجب اختيار نشاط.</target>
       </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target>يجب تحديد مشروع.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
