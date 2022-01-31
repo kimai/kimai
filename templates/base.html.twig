@@ -78,12 +78,7 @@
 {% endblock %}
 
 {% block logo_large %}
-    {% set company = config('theme.branding.company') %}
-    {% if company is not empty %}
-        {{ company|raw }}
-    {% else %}
-        <b>Kimai</b> - Time Tracking
-    {% endif %}
+    <img src="{{ asset('build/images/starbug_logo_white.svg') }}" alt="Starbug - Timetrack"/>
 {% endblock %}
 
 {% block footer %}
