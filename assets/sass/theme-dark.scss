@@ -17,6 +17,7 @@
             min-width: unset;
             color: $dark-mode-text;
         }
+
         .item {
             background-color: $dark;
             color: $dark-mode-text;
@@ -33,10 +34,12 @@
             background-color: $dark-mode-today;
             color: $dark-mode-text;
         }
+
         th.weekend, td.weekend {
             background-color: $dark-mode-weekend;
             color: $dark-mode-text;
         }
+
         tr {
             &.summary td {
                 background-color: $dark-mode-darken;
@@ -51,9 +54,13 @@
 
     .overlay {
         background: rgba(0, 0, 0, 0.5);
+
         > .fas {
             color: $dark-mode-text;
         }
     }
 
+    .daterangepicker {
+        color: #000;
+    }
 }
