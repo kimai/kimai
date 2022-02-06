@@ -63,7 +63,7 @@ class TagsInputType extends AbstractType
         $view->vars['attr'] = array_merge($view->vars['attr'], [
             'data-autocomplete-url' => $this->router->generate('get_tags'),
             'data-minimum-character' => 3,
-            'class' => 'js-autocomplete',
+            'class' => 'js-autocomplete form-select',
             'autocomplete' => 'off',
         ]);
 

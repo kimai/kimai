@@ -104,6 +104,7 @@ tabler:
         reporting: far fa-chart-bar
         right: fas fa-chevron-right
         roles: fas fa-user-shield
+        save: far fa-save
         search: fas fa-search
         settings: fas fa-cog
         shop: fas fa-shopping-cart

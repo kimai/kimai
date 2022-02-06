@@ -10,3 +10,10 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts/";
 @import '~@fortawesome/fontawesome-free/scss/regular';
 @import '~@fortawesome/fontawesome-free/scss/solid';
 @import '~@fortawesome/fontawesome-free/scss/brands';
+
+/* all icon-buttons with fontawesome icons */
+.btn-icon i.icon {
+    font-size: 16px;
+    color: $text-muted;
+    padding-top: 2px;
+}

@@ -46,6 +46,6 @@
     "defaults"
   ],
   "dependencies": {
-    "tom-select": "^2.0.0-rc.4"
+    "tom-select": "^2.0.0"
   }
 }

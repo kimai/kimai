@@ -26,12 +26,12 @@
                         </div>
                         <div class="col-auto align-self-center">
                             {% if route_pin is not null %}
-                                <a href="{{ path(route_pin, {'id': comment.id, 'token': csrf_pin}) }}" class="btn btn-outline-secondary btn-icon btn-sm {% if comment.pinned %}active{% endif %}">{{ icon('pin') }}</a>
+                                <a href="{{ path(route_pin, {'id': comment.id, 'token': csrf_pin}) }}" class="btn btn-ghost-secondary btn-icon {% if comment.pinned %}active{% endif %}">{{ icon('pin') }}</a>
                             {% elseif comment.pinned %}
                                 {{ icon('pin') }}
                             {% endif %}
                             {% if route_delete is not null and ((not delete_by_user) or (delete_by_user and comment.createdBy.id == app.user.id)) %}
-                                <a href="{{ path(route_delete, {'id': comment.id, 'token': csrf_delete}) }}" class="confirmation-link btn btn-outline-secondary btn-icon btn-sm" data-question="confirm.delete">{{ icon('delete') }}</a>
+                                <a href="{{ path(route_delete, {'id': comment.id, 'token': csrf_delete}) }}" class="confirmation-link btn btn-ghost-secondary btn-icon" data-question="confirm.delete">{{ icon('delete') }}</a>
                             {% endif %}
                         </div>
                     </div>
