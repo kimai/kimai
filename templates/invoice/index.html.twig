@@ -112,11 +112,7 @@
                                     <span title="{{ 'label.vat'|trans }}: {{ model.calculator.tax|money(currency) }}" data-toggle="tooltip">{{ model.calculator.total|money(currency) }}</span>
                                 </td>
                                 <td class="w-min text-center actions alwaysVisible">
-                                    {# v2 und aktiv ist v1
-                                    {{ widgets.action_button('print', {'icon': 'print', 'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'attr': {'data-href': path('invoice_preview', {'customer': model.customer.id, 'template': model.template.id})}}, 'secondary') }}
-                                    {{ widgets.action_button('save', {'icon': 'invoice', 'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'attr': {'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id})}}, 'success') }}
-                                    #}
-                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_preview', {'customer': model.customer.id, 'token': csrf_token('invoice.preview')})}}) }}
+                                    {{ widgets.action_button('print',   {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_preview', {'customer': model.customer.id, 'token': csrf_token('invoice.preview')})}}) }}
                                     {{ widgets.action_button('invoice', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id, 'token': csrf_token('invoice.create')})}}, 'success') }}
                                 </td>
                             </tr>
