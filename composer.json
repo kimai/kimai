@@ -30,7 +30,7 @@
         "jeroendesloovere/vcard": "^1.7",
         "jms/metadata": "^2.0",
         "jms/serializer-bundle": "^3.9",
-        "kevinpapst/tabler-bundle": "^0.1",
+        "kevinpapst/tabler-bundle": "dev-main",
         "league/csv": "^9.4",
         "league/html-to-markdown": "^5.0",
         "mpdf/mpdf": "^8.0",
@@ -102,7 +102,7 @@
     ],
     "config": {
         "platform": {
-            "php": "7.3"
+            "php": "7.4"
         },
         "preferred-install": {
             "*": "dist"

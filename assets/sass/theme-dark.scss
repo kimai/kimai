@@ -27,12 +27,6 @@
         color: $dark-mode-text;
     }
 
-    form .card-body fieldset {
-        &:hover {
-            background-color: $dark-mode-weekend;
-        }
-    }
-
     /* datatable-extensions.scss */
     table.dataTable {
         th.today, td.today {

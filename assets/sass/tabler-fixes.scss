@@ -3,36 +3,19 @@ These should be posted as PR in tabler direct
 See https://github.com/tabler/tabler/issues/945
 */
 @include dark-mode {
+    /* see Dashboard User widget title => links to User screen */
     .link-dark {
         color: $dark-mode-text;
     }
-    .bg-gray, .bg-default {
-        color: $dark;
-    }
-    pre {
-        background-color: transparent;
-    }
-    .btn-close {
-        color: $dark-mode-text;
-    }
-    /* list items like the task management widgets */
-    .text-body {
-        color: $dark-mode-text!important;
-    }
-    .list-group-item {
-        border-color: $border-color-dark-transparent;
-    }
-
 }
 
-@each $name, $color in $theme-colors {
-    .btn-ghost-#{$name} {
-        &.btn-icon {
-            &:hover {
-                border-color: lighten($color, 25%);
-                background-color: lighten($color, 50%);
-                color: var(--#{$variable-prefix}btn-color-text);
-            }
-        }
-    }
+/* all icon buttons */
+.btn-icon i.icon {
+    font-size: 16px;
+    color: $text-muted;
+    padding-top: 2px;
+}
+
+.btn-group .btn.btn-icon {
+
 }

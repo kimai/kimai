@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "24f65e7dedcdc5fdb1dbb7aa90d88897",
+    "content-hash": "153a3beb0f694d188969d40c46e0fd2c",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2424,31 +2424,31 @@
         },
         {
             "name": "kevinpapst/tabler-bundle",
-            "version": "0.1",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "657ea7142a71a4c8efa311e253a71c6cb15559e2"
+                "reference": "6eabc70e13a1e99007880ec136f9f67abd037de2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/657ea7142a71a4c8efa311e253a71c6cb15559e2",
-                "reference": "657ea7142a71a4c8efa311e253a71c6cb15559e2",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/6eabc70e13a1e99007880ec136f9f67abd037de2",
+                "reference": "6eabc70e13a1e99007880ec136f9f67abd037de2",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.3",
-                "symfony/asset": ">4.3",
-                "symfony/config": ">4.3",
-                "symfony/dependency-injection": ">4.3",
-                "symfony/event-dispatcher": ">4.3",
-                "symfony/http-foundation": ">4.3",
-                "symfony/http-kernel": ">4.3",
-                "symfony/options-resolver": ">4.3",
-                "symfony/security-core": ">4.3",
-                "symfony/translation": ">4.3",
-                "symfony/twig-bridge": ">4.3",
-                "twig/twig": ">2.0"
+                "php": "^7.4|^8.0",
+                "symfony/asset": "^4.4|^5.0",
+                "symfony/config": "^4.4|^5.0",
+                "symfony/dependency-injection": "^4.4|^5.0",
+                "symfony/event-dispatcher": "^4.4|^5.0",
+                "symfony/http-foundation": "^4.4|^5.0",
+                "symfony/http-kernel": "^4.4|^5.0",
+                "symfony/options-resolver": "^4.4|^5.0",
+                "symfony/security-core": "^4.4|^5.0",
+                "symfony/translation": "^4.4|^5.0",
+                "symfony/twig-bridge": "^4.4|^5.0",
+                "twig/twig": "^3.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.0",
@@ -2458,11 +2458,12 @@
                 "phpstan/phpstan-phpunit": "^1.0",
                 "phpstan/phpstan-symfony": "^1.0",
                 "phpunit/phpunit": "^8.0",
-                "symfony/framework-bundle": ">4.3"
+                "symfony/framework-bundle": "^4.4|^5.0"
             },
             "suggest": {
                 "knplabs/knp-menu-bundle": "Allows easy menu integration"
             },
+            "default-branch": true,
             "type": "symfony-bundle",
             "autoload": {
                 "psr-4": {
@@ -2482,7 +2483,7 @@
             "description": "Admin/Backend theme bundle for Symfony based on Tabler.io",
             "support": {
                 "issues": "https://github.com/kevinpapst/TablerBundle/issues",
-                "source": "https://github.com/kevinpapst/TablerBundle/tree/0.1"
+                "source": "https://github.com/kevinpapst/TablerBundle/tree/main"
             },
             "funding": [
                 {
@@ -2494,7 +2495,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-11-02T10:07:42+00:00"
+            "time": "2022-02-05T20:08:53+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -13696,7 +13697,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "kevinpapst/tabler-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
@@ -13711,7 +13714,7 @@
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.3"
+        "php": "7.4"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.2.0"
 }
