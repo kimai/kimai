@@ -2,7 +2,11 @@
 {% import "macros/widgets.html.twig" as widgets %}
 
 {% block page_title %}{{ 'menu.reporting'|trans }}{% endblock %}
-{% block page_subtitle %}{% block report_title %}{% endblock %}{% endblock %}
+
+{% block page_statistic %}
+    {% block report_title %}{% endblock %}
+{% endblock %}
+
 {% block page_actions %}
     {% set event = actions(app.user, 'reporting', 'report') %}
     {{ widgets.page_actions(event.actions) }}

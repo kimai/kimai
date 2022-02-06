@@ -4,7 +4,7 @@
 
 {%- macro page_actions(actions) -%}
     {% set later = [] %}
-    <div class="page-actions btn-group">
+    <div class="page-actions btn-group text-muted">
         {%- apply spaceless -%}
             {%- for icon,values in actions  %}
                 {% if 'divider' in icon and values is null %}
@@ -13,9 +13,6 @@
                     {% if values.children is defined %}
                         {% set later = later|merge(values.children) %}
                     {% else %}
-                        {% if tabler_bundle.isDarkMode() %}
-                            {% set values = values|merge({class: 'btn-outline-light ' ~ (values.class|default(''))}) %}
-                        {% endif %}
                         {% set values = values|merge({class: 'action-' ~ icon ~ ' ' ~ (values.class|default(''))}) %}
                         {{ _self.action_button(icon, values) }}
                     {% endif %}

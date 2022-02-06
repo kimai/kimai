@@ -2,7 +2,7 @@
 {% import "macros/widgets.html.twig" as widgets %}
 
 {% block page_title %}{{ 'menu.doctor'|trans }}{% endblock %}
-{% block page_subtitle %}{{ 'label.version'|trans }}: {{ constant('App\\Constants::VERSION') }} {{ constant('App\\Constants::STATUS') }} ({{ environment }}){% endblock %}
+{% block page_pretitle %}{{ 'label.version'|trans }}: {{ constant('App\\Constants::VERSION') }} {{ constant('App\\Constants::STATUS') }} ({{ environment }}){% endblock %}
 {% block page_actions %}
     {% set event = actions(app.user, 'doctor', 'index') %}
     {{ widgets.page_actions(event.actions) }}

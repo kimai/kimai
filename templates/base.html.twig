@@ -5,11 +5,6 @@
 {%- endblock -%}
 
 {% block page_title %}{{- get_title() -}}{% endblock %}
-{% block page_stats %}
-    {% if block('page_stats_small') is defined %}
-    <div class="text-muted mt-1">{{ block('page_stats_small') }}</div>
-    {% endif %}
-{% endblock %}
 
 {% block after_body_start %}
     {% embed '@theme/embeds/modal.html.twig' %}
@@ -71,7 +66,13 @@
     {{- get_title() -}}
 {% endblock %}
 
-{% block page_subtitle %}{% endblock %}
+{% block page_pretitle %}{% endblock %}
+
+{% block page_subtitle %}
+    {% if block('page_statistic') is defined %}
+        <div class="text-muted mt-1">{{ block('page_statistic') }}</div>
+    {% endif %}
+{% endblock %}
 
 {% block logo_mini %}
     {% set mini = config('theme.branding.mini') %}
@@ -110,9 +111,7 @@
 {# deactivated blocks from the original theme #}
 {% block navbar_search %}{% endblock %}
 
-{% block breadcrumb %}
-    {% block page_actions %}{% endblock %}
-{% endblock %}
+{% block page_actions %}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
