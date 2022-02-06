@@ -809,6 +809,14 @@
         <source>label.globalsOnly</source>
         <target>グローバルオンリー</target>
       </trans-unit>
+      <trans-unit id=".0CFrRV" resname="upload">
+        <source>upload</source>
+        <target>アップロード</target>
+      </trans-unit>
+      <trans-unit id="JBkykGe" resname="search">
+        <source>search</source>
+        <target>検索</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

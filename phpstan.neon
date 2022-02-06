@@ -1,8 +1,9 @@
 includes:
-    - vendor/phpstan/phpstan-symfony/extension.neon
-    - vendor/phpstan/phpstan-doctrine/extension.neon
-    - vendor/phpstan/phpstan-symfony/rules.neon
-    - vendor/phpstan/phpstan/conf/bleedingEdge.neon
+    - %rootDir%/../phpstan-symfony/extension.neon
+    - %rootDir%/../phpstan-symfony/rules.neon
+    - %rootDir%/../phpstan-doctrine/extension.neon
+    - %rootDir%/../phpstan-doctrine/rules.neon
+    - %rootDir%/../phpstan/conf/bleedingEdge.neon
 
 parameters:
     tmpDir: %rootDir%/../../../var/cache/phpstan
@@ -12,3 +13,7 @@ parameters:
         - %rootDir%/../../../src/Ldap/LdapDriver.php
     treatPhpDocTypesAsCertain: false
     inferPrivatePropertyTypeFromConstructor: true
+    doctrine:
+        objectManagerLoader: %rootDir%/../../../tests/phpstan-doctrine.php
+    symfony:
+        containerXmlPath: %rootDir%/../../../var/cache/dev/srcApp_KernelDevDebugContainer.xml

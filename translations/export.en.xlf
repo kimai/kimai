@@ -2,17 +2,21 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="en" datatype="plaintext" original="export.en.xlf">
     <body>
-      <trans-unit id="oRRnhwf" resname="default.pdf.twig">
-        <source>default.pdf.twig</source>
-        <target>Standard</target>
+      <trans-unit id="IbERy.5" resname="default.pdf.twig">
+        <source>Default</source>
+        <target>Default</target>
       </trans-unit>
-      <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig">
-        <source>default-budget.pdf.twig</source>
+      <trans-unit id="Xvh5B5U" resname="default-budget.pdf.twig">
+        <source>With remaining budget</source>
         <target>With remaining budget</target>
       </trans-unit>
-      <trans-unit id="AuhL8Sb" resname="default-internal.pdf.twig">
-        <source>default-internal.pdf.twig</source>
+      <trans-unit id="rok3rBO" resname="default-internal.pdf.twig">
+        <source>With internal rates</source>
         <target>With internal rates</target>
+      </trans-unit>
+      <trans-unit id="bTIKMV." resname="timesheet.pdf.twig">
+        <source>Timesheet</source>
+        <target>Timesheet</target>
       </trans-unit>
     </body>
   </file>

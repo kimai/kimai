@@ -11,6 +11,7 @@ namespace App\Form;
 
 use App\Entity\Invoice;
 use App\Form\Type\DatePickerType;
+use App\Form\Type\MetaFieldsCollectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -48,6 +49,8 @@ class InvoiceEditForm extends AbstractType
                 'label' => 'invoice.payment_date',
                 'required' => false,
             ]));
+
+        $builder->add('metaFields', MetaFieldsCollectionType::class);
     }
 
     /**

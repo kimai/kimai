@@ -10,6 +10,8 @@
 namespace App\Export;
 
 use App\Entity\Customer;
+use App\Entity\Project;
+use App\Entity\User;
 use App\Repository\Query\TimesheetQuery;
 use App\Utils\FileHelper;
 
@@ -19,40 +21,35 @@ final class ExportFilename
      * @var string
      */
     private $filename;
+    /**
+     * @var Customer|null
+     */
+    private $customer;
+    /**
+     * @var Project|null
+     */
+    private $project;
+    /**
+     * @var User|null
+     */
+    private $user;
 
     public function __construct(TimesheetQuery $query)
     {
-        $filename = date('Ymd');
-        $hasName = false;
-
         $customers = $query->getCustomers();
         if (\count($customers) === 1) {
-            $filename .= '-' . $this->convert($this->getCustomerName($customers[0]));
-            $hasName = true;
+            $this->customer = $customers[0];
         }
 
         $projects = $query->getProjects();
         if (\count($projects) === 1) {
-            if (!$hasName) {
-                $filename .= '-' . $this->convert($this->getCustomerName($projects[0]->getCustomer()));
-            }
-            $filename .= '-' . $this->convert($projects[0]->getName());
-            $hasName = true;
+            $this->project = $projects[0];
         }
 
         $users = $query->getUsers();
         if (\count($users) === 1) {
-            $filename .= '-' . $this->convert($users[0]->getDisplayName());
-            $hasName = true;
+            $this->user = $users[0];
         }
-
-        if (!$hasName) {
-            $filename .= '-kimai-export';
-        }
-
-        $filename = str_replace(['/', '\\'], '-', $filename);
-
-        $this->filename = $filename;
     }
 
     private function getCustomerName(Customer $customer): string
@@ -72,6 +69,37 @@ final class ExportFilename
 
     public function getFilename()
     {
+        if ($this->filename === null) {
+            $filename = date('Ymd');
+            $hasName = false;
+
+            if ($this->customer !== null) {
+                $filename .= '-' . $this->convert($this->getCustomerName($this->customer));
+                $hasName = true;
+            }
+
+            if ($this->project !== null) {
+                if (!$hasName) {
+                    $filename .= '-' . $this->convert($this->getCustomerName($this->project->getCustomer()));
+                }
+                $filename .= '-' . $this->convert($this->project->getName());
+                $hasName = true;
+            }
+
+            if ($this->user !== null) {
+                $filename .= '-' . $this->convert($this->user->getDisplayName());
+                $hasName = true;
+            }
+
+            if (!$hasName) {
+                $filename .= '-kimai-export';
+            }
+
+            $filename = str_replace(['/', '\\'], '-', $filename);
+
+            $this->filename = $filename;
+        }
+
         return $this->filename;
     }
 

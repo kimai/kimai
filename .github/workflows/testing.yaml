@@ -51,6 +51,9 @@ jobs:
             -   name: Validate Composer
                 run: composer validate --strict
 
+            -   name: Warmup cache for PHPStan
+                run: APP_ENV=dev bin/console kimai:reload -n
+
             -   name: Check codestyles
                 run: vendor/bin/php-cs-fixer fix --dry-run --verbose --config=.php-cs-fixer.dist.php --using-cache=no --show-progress=none --format=checkstyle | cs2pr
 

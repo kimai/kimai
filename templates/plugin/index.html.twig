@@ -29,7 +29,7 @@
                 {% import "macros/datatables.html.twig" as tables %}
                 {% import "macros/widgets.html.twig" as widgets %}
                 {{ tables.datatable_header(tableName, columns, null, {columnConfig: false}) }}
-                {% for plugin in plugins %}
+                {% for plugin in plugins|sort((p1, p2) => p1.name|lower <=> p2.name|lower) %}
                     <tr>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
                             {% if plugin.id != plugin.name %}

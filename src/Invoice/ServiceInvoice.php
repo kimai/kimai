@@ -14,6 +14,7 @@ use App\Constants;
 use App\Entity\Invoice;
 use App\Entity\InvoiceDocument;
 use App\Event\InvoiceCreatedEvent;
+use App\Event\InvoiceDeleteEvent;
 use App\Event\InvoicePostRenderEvent;
 use App\Event\InvoicePreRenderEvent;
 use App\Repository\InvoiceDocumentRepository;
@@ -376,7 +377,7 @@ final class ServiceInvoice
                     $this->markEntriesAsExported($model->getEntries());
                 }
 
-                $dispatcher->dispatch(new InvoiceCreatedEvent($invoice));
+                $dispatcher->dispatch(new InvoiceCreatedEvent($invoice, $model));
 
                 return $invoice;
             }
@@ -418,12 +419,17 @@ final class ServiceInvoice
         return $this->createInvoiceFromModel($model, $dispatcher);
     }
 
-    public function deleteInvoice(Invoice $invoice)
+    public function deleteInvoice(Invoice $invoice, EventDispatcherInterface $dispatcher)
     {
         $invoiceDirectory = $this->getInvoicesDirectory();
+
         if (is_file($invoiceDirectory . $invoice->getInvoiceFilename())) {
             $this->fileHelper->removeFile($invoiceDirectory . $invoice->getInvoiceFilename());
         }
+
+        $event = new InvoiceDeleteEvent($invoice);
+        $dispatcher->dispatch($event);
+
         $this->invoiceRepository->deleteInvoice($invoice);
     }
 

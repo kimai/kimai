@@ -59,7 +59,7 @@ class Team
     /**
      * All team member (including team leads)
      *
-     * @var TeamMember[]|Collection<TeamMember>
+     * @var Collection<TeamMember>
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity"})
@@ -135,22 +135,11 @@ class Team
     }
 
     /**
-     * Indexed by ID to use it within collection type forms.
-     *
-     * @return TeamMember[]
+     * @return Collection<TeamMember>
      */
-    public function getMembers(): iterable
+    public function getMembers(): Collection
     {
-        $all = [];
-        foreach ($this->members as $member) {
-            if ($member->getId() === null) {
-                $all[] = $member;
-            } else {
-                $all[$member->getId()] = $member;
-            }
-        }
-
-        return $all;
+        return $this->members;
     }
 
     public function addMember(TeamMember $member): void
@@ -167,12 +156,12 @@ class Team
             throw new \InvalidArgumentException('Cannot set foreign team membership');
         }
 
-        // when using the API an invalid user id does not trigger the validation first, but after calling this method :-(
+        // when using the API an invalid User ID triggers the validation too late
         if ($member->getUser() === null) {
             return;
         }
 
-        if (null !== ($existing = $this->findMember($member))) {
+        if (null !== $this->findMemberByUser($member->getUser())) {
             return;
         }
 
@@ -185,22 +174,11 @@ class Team
         return $this->members->contains($member);
     }
 
-    private function findMember(TeamMember $member): ?TeamMember
-    {
-        foreach ($this->members as $oldMember) {
-            if ($oldMember->getUser() === $member->getUser() && $oldMember->getTeam() === $member->getTeam()) {
-                return $oldMember;
-            }
-        }
-
-        return null;
-    }
-
     private function findMemberByUser(User $user): ?TeamMember
     {
-        foreach ($this->members as $oldMember) {
-            if ($oldMember->getUser() === $user) {
-                return $oldMember;
+        foreach ($this->members as $member) {
+            if ($member->getUser() === $user) {
+                return $member;
             }
         }
 
@@ -209,12 +187,14 @@ class Team
 
     public function removeMember(TeamMember $member): void
     {
-        if (null === ($existingMember = $this->findMember($member))) {
+        if (!$this->members->contains($member)) {
             return;
         }
 
-        $this->members->removeElement($existingMember);
-        $existingMember->getUser()->removeMembership($existingMember);
+        $this->members->removeElement($member);
+        $member->getUser()->removeMembership($member);
+        $member->setTeam(null);
+        $member->setUser(null);
     }
 
     /**

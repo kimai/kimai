@@ -104,7 +104,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     /**
      * Project order number
      *
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Project_Entity"})
@@ -116,7 +116,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      */
     private $orderNumber;
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Project_Entity"})
@@ -131,7 +131,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      */
     private $orderDate;
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Project"})
@@ -146,7 +146,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      */
     private $start;
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Project"})
@@ -161,7 +161,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      */
     private $end;
     /**
-     * @var string
+     * @var string|null
      * @internal used for storing the timezone for "order", "start" and "end" date
      *
      * @ORM\Column(name="timezone", type="string", length=64, nullable=true)
@@ -173,7 +173,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      */
     private $localized = false;
     /**
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Project_Entity"})
@@ -423,6 +423,20 @@ class Project implements EntityWithMetaFields, EntityWithBudget
         }
 
         return null;
+    }
+
+    /**
+     * @param string $name
+     * @return bool|int|string|null
+     */
+    public function getMetaFieldValue(string $name)
+    {
+        $field = $this->getMetaField($name);
+        if ($field === null) {
+            return null;
+        }
+
+        return $field->getValue();
     }
 
     public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields

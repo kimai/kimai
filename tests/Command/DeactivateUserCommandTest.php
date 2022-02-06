@@ -31,6 +31,7 @@ class DeactivateUserCommandTest extends KernelTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
         $container = self::$kernel->getContainer();

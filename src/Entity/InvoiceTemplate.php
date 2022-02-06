@@ -32,7 +32,6 @@ class InvoiceTemplate
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
     /**
      * @var string
      *
@@ -41,7 +40,6 @@ class InvoiceTemplate
      * @Assert\Length(min=1, max=60, allowEmptyString=false)
      */
     private $name;
-
     /**
      * @var string
      *
@@ -49,7 +47,6 @@ class InvoiceTemplate
      * @Assert\NotBlank()
      */
     private $title;
-
     /**
      * @var string
      *
@@ -57,29 +54,25 @@ class InvoiceTemplate
      * @Assert\NotBlank()
      */
     private $company;
-
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="vat_id", type="string", length=50, nullable=true)
      * @Assert\Length(max=50)
      */
     private $vatId;
-
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="address", type="text", nullable=true)
      */
     private $address;
-
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="contact", type="text", nullable=true)
      */
     private $contact;
-
     /**
      * @var int
      *
@@ -87,7 +80,6 @@ class InvoiceTemplate
      * @Assert\Range(min = 0, max = 999)
      */
     private $dueDays = 30;
-
     /**
      * @var float
      *
@@ -95,7 +87,6 @@ class InvoiceTemplate
      * @Assert\Range(min = 0.0, max = 99.99)
      */
     private $vat = 0.00;
-
     /**
      * @var string
      *
@@ -112,7 +103,6 @@ class InvoiceTemplate
      * @Assert\Length(max=20)
      */
     private $numberGenerator = 'default';
-
     /**
      * @var string
      *
@@ -121,21 +111,18 @@ class InvoiceTemplate
      * @Assert\Length(max=20)
      */
     private $renderer = 'default';
-
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="payment_terms", type="text", nullable=true)
      */
     private $paymentTerms;
-
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="payment_details", type="text", nullable=true)
      */
     private $paymentDetails;
-
     /**
      * Used when rendering HTML templates.
      *
@@ -145,11 +132,10 @@ class InvoiceTemplate
      * @Assert\NotNull()
      */
     private $decimalDuration = false;
-
     /**
      * Used for translations and locale dependent number and date formats.
      *
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="language", type="string", length=6, nullable=true)
      */

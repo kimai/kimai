@@ -64,7 +64,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      */
     private $name;
     /**
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
@@ -76,7 +76,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      */
     private $number;
     /**
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
@@ -99,7 +99,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      */
     private $visible = true;
     /**
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
@@ -111,7 +111,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      */
     private $company;
     /**
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
@@ -123,7 +123,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      */
     private $vatId;
     /**
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
@@ -135,7 +135,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      */
     private $contact;
     /**
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
@@ -174,7 +174,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      */
     private $currency = self::DEFAULT_CURRENCY;
     /**
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
@@ -186,7 +186,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      */
     private $phone;
     /**
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
@@ -198,7 +198,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      */
     private $fax;
     /**
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
@@ -214,7 +214,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      *
      * Limited via RFC to 254 chars
      *
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
@@ -226,7 +226,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      */
     private $email;
     /**
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
@@ -531,6 +531,20 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         return null;
     }
 
+    /**
+     * @param string $name
+     * @return bool|int|string|null
+     */
+    public function getMetaFieldValue(string $name)
+    {
+        $field = $this->getMetaField($name);
+        if ($field === null) {
+            return null;
+        }
+
+        return $field->getValue();
+    }
+
     public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
     {
         if (null === ($current = $this->getMetaField($meta->getName()))) {
@@ -595,7 +609,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
 
         $currentMeta = $this->meta;
         $this->meta = new ArrayCollection();
-        /** @var ProjectMeta $meta */
+        /** @var CustomerMeta $meta */
         foreach ($currentMeta as $meta) {
             $newMeta = clone $meta;
             $newMeta->setEntity($this);

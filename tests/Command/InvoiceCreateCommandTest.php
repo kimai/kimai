@@ -61,6 +61,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
         $this->clearInvoiceFiles();
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);

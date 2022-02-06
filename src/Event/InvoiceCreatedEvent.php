@@ -10,22 +10,27 @@
 namespace App\Event;
 
 use App\Entity\Invoice;
+use App\Invoice\InvoiceModel;
 use Symfony\Contracts\EventDispatcher\Event;
 
 final class InvoiceCreatedEvent extends Event
 {
-    /**
-     * @var Invoice
-     */
     private $invoice;
+    private $model;
 
-    public function __construct(Invoice $invoice)
+    public function __construct(Invoice $invoice, InvoiceModel $model)
     {
         $this->invoice = $invoice;
+        $this->model = $model;
     }
 
     public function getInvoice(): Invoice
     {
         return $this->invoice;
+    }
+
+    public function getInvoiceModel(): InvoiceModel
+    {
+        return $this->model;
     }
 }

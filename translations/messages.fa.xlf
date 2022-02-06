@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fa" datatype="plaintext" original="messages.en.xlf">
     <body>
@@ -422,6 +422,141 @@
       <trans-unit id="IolBPQD" resname="label.searchTerm">
         <source>label.searchTerm</source>
         <target>عبارت جستجو</target>
+      </trans-unit>
+      <trans-unit id="Zpj9UB4" resname="label.teamlead">
+        <source>label.teamlead</source>
+        <target>رهبری تیم</target>
+      </trans-unit>
+      <trans-unit id="trDJK9W" resname="label.begin">
+        <source>label.begin</source>
+        <target>از</target>
+      </trans-unit>
+      <trans-unit id="R9typUt" resname="label.end">
+        <source>label.end</source>
+        <target>به</target>
+      </trans-unit>
+      <trans-unit id="egaNXjp" resname="label.daterange">
+        <source>label.daterange</source>
+        <target>محدوده زمانی</target>
+      </trans-unit>
+      <trans-unit id="YTSS_Q1" resname="label.color">
+        <source>label.color</source>
+        <target>رنگ</target>
+      </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>error.directory_missing</source>
+        <target>موقعیت "%dir%" وجود ندارد و قابل ساختن نیست.</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target>موقعیت "%dir%" در برابر write حفاظت شده است.</target>
+      </trans-unit>
+      <trans-unit id="jdbtx6z" resname="action.add">
+        <source>action.add</source>
+        <target>افزودن</target>
+      </trans-unit>
+      <trans-unit id="b43sCwO" resname="help.fixedRate">
+        <source>help.fixedRate</source>
+        <target>هربار سابقه مقدار معینی میگیرد، صرف نظر از مدت آن</target>
+      </trans-unit>
+      <trans-unit id="EoouxGX" resname="label.replaceTags">
+        <source>label.replaceTags</source>
+        <target>جایگزینی برچسب ها</target>
+      </trans-unit>
+      <trans-unit id="BxkmaKz" resname="label.appendTags">
+        <source>label.appendTags</source>
+        <target>پیوست تگ ها</target>
+      </trans-unit>
+      <trans-unit id="1_wnK76" resname="profile.title">
+        <source>profile.title</source>
+        <target>نمایه کاربر</target>
+      </trans-unit>
+      <trans-unit id="HWKJZ0T" resname="profile.about_me">
+        <source>profile.about_me</source>
+        <target>درباره من</target>
+      </trans-unit>
+      <trans-unit id="1c0EQaz" resname="profile.registration_date">
+        <source>profile.registration_date</source>
+        <target>ثبت شده در</target>
+      </trans-unit>
+      <trans-unit id="A6TLLQa" resname="profile.password">
+        <source>profile.password</source>
+        <target>رمز</target>
+      </trans-unit>
+      <trans-unit id="Z34ZpjK" resname="profile.api-token">
+        <source>profile.api-token</source>
+        <target>رابط برنامه نویسی اپلیکیشن</target>
+      </trans-unit>
+      <trans-unit id="ygtTz8." resname="profile.roles">
+        <source>profile.roles</source>
+        <target>نقش ها</target>
+      </trans-unit>
+      <trans-unit id="DZ7XGML" resname="profile.teams">
+        <source>profile.teams</source>
+        <target>تیم ها</target>
+      </trans-unit>
+      <trans-unit id="MQKiG33" resname="profile.preferences">
+        <source>profile.preferences</source>
+        <target>الویت ها</target>
+      </trans-unit>
+      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
+        <source>label.login.initial_view</source>
+        <target>نمایه ابتدایی بعد از ورود</target>
+      </trans-unit>
+      <trans-unit id="hO7mkmf" resname="label.lastLogin">
+        <source>label.lastLogin</source>
+        <target>آخرین ورود</target>
+      </trans-unit>
+      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
+        <source>label.theme.collapsed_sidebar</source>
+        <target>کوچک کردن نوار کناری سمت چپ</target>
+      </trans-unit>
+      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
+        <source>label.calendar.initial_view</source>
+        <target>مشاهده ابتدایی و ساده تقویم</target>
+      </trans-unit>
+      <trans-unit id="dwEVXUR" resname="timesheet.edit">
+        <source>timesheet.edit</source>
+        <target>ویرایش سابقه.</target>
+      </trans-unit>
+      <trans-unit id="UbnqJLn" resname="modal.columns.title">
+        <source>modal.columns.title</source>
+        <target>ویرایش پدیداری ستون</target>
+      </trans-unit>
+      <trans-unit id="xEYQXPy" resname="profile.settings">
+        <source>profile.settings</source>
+        <target>نمایه</target>
+      </trans-unit>
+      <trans-unit id="NNKq04n" resname="label.remove_default">
+        <source>label.remove_default</source>
+        <target>حذف جستجوی علاقه مندی</target>
+      </trans-unit>
+      <trans-unit id=".ndupSK" resname="registration.check_email">
+        <source>registration.check_email</source>
+        <target>ایمیلی برای %email% شامل لینک فعالسازی ارسال شد. جهت فعال کردن حساب کاربری خود باید بر روی آن کلیک کنید.</target>
+      </trans-unit>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target>‌لینکی به ایمیل شما ارسال شد. جهت بازیابی رمز خود روی آن کلیک کنید. نکته: شما در طی %tokenLifetime% ساعت فقط یکبار می‌توانید رمز جدید درخواست کنید.
+اگر ایمیل برای شما ارسال نشد پوشه spam را بررسی کنید یا دوباره تلاش کنید.</target>
+      </trans-unit>
+      <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>درخواست قابل انجام نیست.
+نتایج زیادی پیدا شدند.</target>
+      </trans-unit>
+      <trans-unit id="5gjqxgK" resname="label.fixedRate">
+        <source>label.fixedRate</source>
+        <target>نرخ ثابت</target>
+      </trans-unit>
+      <trans-unit id="EbfIoLp" resname="modal.columns.description">
+        <source>modal.columns.description</source>
+        <target>ذخیره ستون های علامت گذاری نشده مخفی خواهد بود و این تنظیمات در کوکی مرورگر ذخیره می‌شود.
+اگر کوکی ها را پاک کنید تنظیمات به حالت اولیه بازمیگردند.</target>
+      </trans-unit>
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry">
+        <source>profile.first_entry</source>
+        <target>کار میکند از تاریخ</target>
       </trans-unit>
     </body>
   </file>

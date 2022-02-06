@@ -14,6 +14,7 @@ use App\Entity\ActivityMeta;
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
 use App\Entity\Invoice;
+use App\Entity\InvoiceMeta;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Project;
 use App\Entity\ProjectMeta;
@@ -220,5 +221,61 @@ class InvoiceTest extends TestCase
             ->willReturn(false);
 
         return new DateNumberGenerator($repository);
+    }
+
+    public function testClone()
+    {
+        $sut = new Invoice();
+        $sut->setComment('foo kajsdhgf aksjdhfg');
+        $sut->setFilename('1234567890');
+
+        $meta = new InvoiceMeta();
+        $meta->setName('blabla');
+        $meta->setValue('1234567890');
+        $meta->setIsVisible(false);
+        $meta->setIsRequired(true);
+        $sut->setMetaField($meta);
+
+        $clone = clone $sut;
+
+        foreach ($sut->getMetaFields() as $metaField) {
+            $cloneMeta = $clone->getMetaField($metaField->getName());
+            self::assertEquals($cloneMeta->getValue(), $metaField->getValue());
+        }
+        self::assertEquals('1234567890', $clone->getInvoiceFilename());
+        self::assertEquals('foo kajsdhgf aksjdhfg', $clone->getComment());
+    }
+
+    public function testMetaFields()
+    {
+        $sut = new Invoice();
+
+        self::assertNull($sut->getMetaFieldValue('foo'));
+
+        $meta = new InvoiceMeta();
+        $meta->setName('foo')->setValue('bar2')->setType('test');
+        self::assertInstanceOf(Invoice::class, $sut->setMetaField($meta));
+        self::assertEquals(1, $sut->getMetaFields()->count());
+        $result = $sut->getMetaField('foo');
+        self::assertSame($result, $meta);
+        self::assertEquals('test', $result->getType());
+        self::assertEquals('bar2', $result->getValue());
+        self::assertEquals('bar2', $sut->getMetaFieldValue('foo'));
+
+        $meta2 = new InvoiceMeta();
+        $meta2->setName('foo')->setValue('bar')->setType('test2');
+        self::assertInstanceOf(Invoice::class, $sut->setMetaField($meta2));
+        self::assertEquals(1, $sut->getMetaFields()->count());
+        self::assertCount(0, $sut->getVisibleMetaFields());
+
+        $result = $sut->getMetaField('foo');
+        self::assertSame($result, $meta);
+        self::assertEquals('test2', $result->getType());
+        self::assertEquals('bar2', $sut->getMetaFieldValue('foo'));
+
+        $sut->setMetaField((new InvoiceMeta())->setName('blub')->setIsVisible(true));
+        $sut->setMetaField((new InvoiceMeta())->setName('blab')->setIsVisible(true));
+        self::assertEquals(3, $sut->getMetaFields()->count());
+        self::assertCount(2, $sut->getVisibleMetaFields());
     }
 }

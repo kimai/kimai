@@ -134,7 +134,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      */
     private $begin;
     /**
-     * @var DateTime
+     * @var DateTime|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
@@ -160,7 +160,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      */
     private $localized = false;
     /**
-     * @var int
+     * @var int|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
@@ -202,7 +202,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      */
     private $project;
     /**
-     * @var string
+     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
@@ -240,7 +240,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      */
     private $fixedRate = null;
     /**
-     * @var float
+     * @var float|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Entity"})
@@ -717,6 +717,20 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param string $name
+     * @return bool|int|string|null
+     */
+    public function getMetaFieldValue(string $name)
+    {
+        $field = $this->getMetaField($name);
+        if ($field === null) {
+            return null;
+        }
+
+        return $field->getValue();
     }
 
     public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
