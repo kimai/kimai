@@ -103,7 +103,7 @@
                             {% set currency = model.currency %}
                             <tr>
                                 <td>
-                                    <a class="link-dark" href="#invoice_preview_details_{{ model.customer.id }}" data-toggle="tooltip" title="{{ 'timesheet.all'|trans }}">{{ widgets.label_customer(model.customer) }}</a>
+                                    <a class="link-dark text-reset" href="#invoice_preview_details_{{ model.customer.id }}" data-toggle="tooltip" title="{{ 'timesheet.all'|trans }}">{{ widgets.label_customer(model.customer) }}</a>
                                 </td>
                                 <td class="w-min text-end d-xs-none">
                                     {{ model.calculator.timeWorked|duration(isDecimal) }}
@@ -116,8 +116,8 @@
                                     {{ widgets.action_button('print', {'icon': 'print', 'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'attr': {'data-href': path('invoice_preview', {'customer': model.customer.id, 'template': model.template.id})}}, 'secondary') }}
                                     {{ widgets.action_button('save', {'icon': 'invoice', 'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'attr': {'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id})}}, 'success') }}
                                     #}
-                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'class': 'btn btn-sm', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_preview', {'customer': model.customer.id, 'token': csrf_token('invoice.preview')})}}) }}
-                                    {{ widgets.action_button('save', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'class': 'btn btn-sm', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id, 'token': csrf_token('invoice.create')})}}, 'success') }}
+                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_preview', {'customer': model.customer.id, 'token': csrf_token('invoice.preview')})}}) }}
+                                    {{ widgets.action_button('invoice', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id, 'token': csrf_token('invoice.create')})}}, 'success') }}
                                 </td>
                             </tr>
                         {% endfor %}
