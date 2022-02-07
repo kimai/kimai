@@ -12,12 +12,11 @@ namespace App\Command;
 use App\User\UserService;
 use App\Utils\CommandStyle;
 use App\Validator\ValidationFailedException;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ChangePasswordCommand extends Command
+final class ChangePasswordCommand extends AbstractUserCommand
 {
     private $userService;
 
@@ -35,7 +34,7 @@ class ChangePasswordCommand extends Command
             ->setDescription('Change the password of a user.')
             ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
-                new InputArgument('password', InputArgument::REQUIRED, 'The password'),
+                new InputArgument('password', InputArgument::OPTIONAL, 'The password'),
             ])
             ->setHelp(
                 <<<'EOT'
@@ -59,7 +58,12 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $username = $input->getArgument('username');
-        $password = $input->getArgument('password');
+
+        if (null !== $input->getArgument('password')) {
+            $password = $input->getArgument('password');
+        } else {
+            $password = $this->askForPassword($input, $output);
+        }
 
         $user = $this->userService->findUserByUsernameOrThrowException($username);
 
