@@ -49,11 +49,11 @@ class PDFRenderer
      */
     private $pdfOptions = [];
 
-    public function __construct(Environment $twig, HtmlToPdfConverter $converter, ProjectStatisticService $projectRepository)
+    public function __construct(Environment $twig, HtmlToPdfConverter $converter, ProjectStatisticService $projectStatisticService)
     {
         $this->twig = $twig;
         $this->converter = $converter;
-        $this->projectStatisticService = $projectRepository;
+        $this->projectStatisticService = $projectStatisticService;
     }
 
     protected function getTemplate(): string
