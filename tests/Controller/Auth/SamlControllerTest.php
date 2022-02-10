@@ -16,7 +16,6 @@ use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\Saml\SamlAuthFactoryFactory;
 use OneLogin\Saml2\Auth;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Util\Xml;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -83,7 +82,7 @@ class SamlControllerTest extends TestCase
 
     public function testMetadataAction()
     {
-        $expected = <<<EOD
+        $expectedXmlString = <<<EOD
 <?xml version="1.0"?>
     <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" validUntil="2020-07-23T10:26:50Z" cacheDuration="PT604800S" entityID="https://127.0.0.1:8010/auth/saml/metadata">
         <md:SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
@@ -118,8 +117,13 @@ EOD;
         self::assertInstanceOf(Response::class, $result);
         self::assertEquals('xml', $result->headers->get('Content-Type'));
 
-        $expected = Xml::load($expected);
-        $actual = Xml::load($result->getContent());
+        $expected = new \DOMDocument();
+        $tmp = $expected->loadXML($expectedXmlString);
+        self::assertTrue($tmp);
+
+        $actual = new \DOMDocument();
+        $tmp = $actual->loadXML($result->getContent());
+        self::assertTrue($tmp);
 
         // the "validUntil" attribute in the outer node changes per request
         self::assertEquals($expected->firstChild->firstChild, $actual->firstChild->firstChild);
