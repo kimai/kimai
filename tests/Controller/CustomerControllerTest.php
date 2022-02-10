@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\CustomerMeta;
@@ -160,6 +161,13 @@ class CustomerControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
+        self::assertStringContainsString('A beautiful and short comment **with some** markdown formatting', $node->html());
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
+        $configService->offsetSet('timesheet.markdown_content', true);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
         $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
         self::assertStringContainsString('<p>A beautiful and short comment <strong>with some</strong> markdown formatting</p>', $node->html());
     }
