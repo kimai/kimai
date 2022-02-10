@@ -78,7 +78,7 @@
         "dama/doctrine-test-bundle": "^6.0",
         "doctrine/doctrine-fixtures-bundle": "^3.2",
         "fakerphp/faker": "^1.15",
-        "friendsofphp/php-cs-fixer": "3.2.*",
+        "friendsofphp/php-cs-fixer": "^3.2",
         "phpstan/phpstan": "^1.0",
         "phpstan/phpstan-doctrine": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
