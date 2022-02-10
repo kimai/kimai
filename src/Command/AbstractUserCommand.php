@@ -17,12 +17,6 @@ use Symfony\Component\Console\Question\Question;
 
 abstract class AbstractUserCommand extends Command
 {
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @return string
-     */
     protected function askForPassword(InputInterface $input, OutputInterface $output): string
     {
         /** @var QuestionHelper $helper */
