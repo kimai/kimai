@@ -83,7 +83,7 @@
         "phpstan/phpstan-doctrine": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
         "phpstan/phpstan-symfony": "^1.0",
-        "phpunit/phpunit": "^8.0",
+        "phpunit/phpunit": "^9.0",
         "symfony/browser-kit": "^4.4",
         "symfony/css-selector": "^4.4",
         "symfony/debug-bundle": "^4.4",
