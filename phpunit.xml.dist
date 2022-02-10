@@ -21,12 +21,12 @@
         <env name="MAILER_URL" value="null://null"/>
         <env name="MAILER_FROM" value="kimai@example.com"/>
         <!--
-                REINSTALL THE TEST DATABASE, eg. AFTER CHANGING STRUCTURE!
+            REINSTALL THE TEST DATABASE, eg. AFTER CHANGING STRUCTURE!
 
-                Simple:
-                - change to "true"
-                - composer tests
-                - change back to "false"
+            Simple:
+            - change to "true"
+            - composer tests
+            - change back to "false"
         -->
         <env name="BOOTSTRAP_RESET_DATABASE" value="true"/>
     </php>
@@ -57,9 +57,9 @@
     </coverage>
 
     <!--
-          wrap tests inside database transactions, so tests can safely manipulate contents without
-          affecting other tests. @see https://github.com/dmaicher/doctrine-test-bundle
-      -->
+        wrap tests inside database transactions, so tests can safely manipulate contents without
+        affecting other tests. @see https://github.com/dmaicher/doctrine-test-bundle
+    -->
     <extensions>
         <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
     </extensions>
