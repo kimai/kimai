@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": ">=7.3",
+        "php": "7.4.*||8.0.*||8.1.*",
         "ext-gd": "*",
         "ext-intl": "*",
         "ext-json": "*",
@@ -78,7 +78,7 @@
         "dama/doctrine-test-bundle": "^6.0",
         "doctrine/doctrine-fixtures-bundle": "^3.2",
         "fakerphp/faker": "^1.15",
-        "friendsofphp/php-cs-fixer": "3.2.*",
+        "friendsofphp/php-cs-fixer": "^3.3",
         "phpstan/phpstan": "^1.0",
         "phpstan/phpstan-doctrine": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
