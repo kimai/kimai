@@ -33,14 +33,14 @@ class Duration
      * @param string $format
      * @return string|null
      */
-    public function format($seconds, $format = self::FORMAT_NO_SECONDS)
+    public function format(?int $seconds, string $format = self::FORMAT_NO_SECONDS)
     {
         if (null === $seconds) {
             return null;
         }
 
-        $hour = floor($seconds / 3600);
-        $minute = floor(($seconds / 60) % 60);
+        $hour = (int) floor($seconds / 3600);
+        $minute = (int) floor((int) ($seconds / 60) % 60);
 
         $hour = $hour > 9 ? $hour : '0' . $hour;
         $minute = $minute > 9 ? $minute : '0' . $minute;
@@ -60,7 +60,7 @@ class Duration
      * @param string $duration
      * @return int
      */
-    public function parseDurationString($duration): int
+    public function parseDurationString(string $duration): int
     {
         if (false !== stripos($duration, ':')) {
             return $this->parseDuration($duration, self::FORMAT_COLON);

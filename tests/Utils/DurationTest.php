@@ -60,6 +60,7 @@ class DurationTest extends TestCase
     public function getParseDurationTestData()
     {
         return [
+            [3600, null, Duration::FORMAT_DECIMAL],
             [3600, 1, Duration::FORMAT_DECIMAL],
             [5400, 1.5, Duration::FORMAT_DECIMAL],
             [3600, '1', Duration::FORMAT_DECIMAL],
