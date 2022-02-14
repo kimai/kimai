@@ -24,7 +24,7 @@ class ParsedownExtension extends \Parsedown
     protected $BlockTypes = [
         '*' => ['Rule', 'List'],
         '+' => ['List'],
-        '-' => ['SetextHeader', 'Table', 'Rule', 'List'],
+        '-' => ['Table', 'Rule', 'List'],
         '0' => ['List'],
         '1' => ['List'],
         '2' => ['List'],
@@ -37,7 +37,6 @@ class ParsedownExtension extends \Parsedown
         '9' => ['List'],
         ':' => ['Table'],
         '<' => ['Comment', 'Markup'],
-        '=' => ['SetextHeader'],
         '>' => ['Quote'],
         '[' => ['Reference'],
         '_' => ['Rule'],
@@ -124,7 +123,7 @@ class ParsedownExtension extends \Parsedown
      * @param string $text
      * @return string
      */
-    private function getIDfromText($text)
+    private function getIDfromText($text): string
     {
         $text = strtolower($text);
 

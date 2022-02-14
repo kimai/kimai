@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\ActivityRate;
@@ -290,6 +291,13 @@ class ProjectControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
+        self::assertStringContainsString('A beautiful and long comment **with some** markdown formatting', $node->html());
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
+        $configService->offsetSet('timesheet.markdown_content', true);
+        $this->assertAccessIsGranted($client, '/admin/project/1/details');
         $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
         self::assertStringContainsString('<p>A beautiful and long comment <strong>with some</strong> markdown formatting</p>', $node->html());
     }

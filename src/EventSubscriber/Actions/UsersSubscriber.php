@@ -38,6 +38,10 @@ class UsersSubscriber extends AbstractActionsSubscriber
             $event->addCreate($this->path('admin_user_create'), false);
         }
 
+        if ($this->isGranted('system_configuration')) {
+            $event->addAction('settings', ['url' => $this->path('system_configuration_section', ['section' => 'user']), 'class' => 'modal-ajax-form']);
+        }
+
         $event->addHelp($this->documentationLink('users.html'));
     }
 }

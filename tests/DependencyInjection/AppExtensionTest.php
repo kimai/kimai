@@ -10,7 +10,6 @@
 namespace App\Tests\DependencyInjection;
 
 use App\DependencyInjection\AppExtension;
-use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -301,7 +300,7 @@ class AppExtensionTest extends TestCase
      */
     public function testDurationOnlyDeprecationIsTriggered()
     {
-        $this->expectException(Notice::class);
+        $this->expectNotice();
         $this->expectExceptionMessage('Found ambiguous configuration: remove "kimai.timesheet.duration_only" and set "kimai.timesheet.mode" instead.');
 
         $minConfig = $this->getMinConfig();
@@ -449,7 +448,7 @@ class AppExtensionTest extends TestCase
 
     public function testWithBundleConfigurationFailsOnDuplicatedKey()
     {
-        $this->expectException(Notice::class);
+        $this->expectNotice();
         $this->expectExceptionMessage('Invalid bundle configuration "timesheet" found, skipping');
 
         $bundleConfig = [
@@ -463,7 +462,7 @@ class AppExtensionTest extends TestCase
 
     public function testWithBundleConfigurationFailsOnNonArray()
     {
-        $this->expectException(Notice::class);
+        $this->expectNotice();
         $this->expectExceptionMessage('Invalid bundle configuration found, skipping all bundle configuration');
 
         $container = $this->getContainer();

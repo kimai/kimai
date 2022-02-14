@@ -26,7 +26,7 @@ class MarkdownExtensionTest extends TestCase
         $config = new SystemConfiguration($loader, ['timesheet' => ['markdown_content' => true]]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         $this->assertEquals('<p><em>test</em></p>', $sut->markdownToHtml('*test*'));
-        $this->assertEquals('<p># foobar</p>', $sut->markdownToHtml('# foobar'));
+        $this->assertEquals('<h1>foobar</h1>', $sut->markdownToHtml('# foobar'));
         $this->assertEquals(
             '<p><a href="javascript%3Aalert(`XSS`)">XSS</a></p>',
             $sut->markdownToHtml('[XSS](javascript:alert(`XSS`))')
@@ -44,6 +44,9 @@ class MarkdownExtensionTest extends TestCase
         );
         $this->assertEquals('', $sut->timesheetContent(null));
         $this->assertEquals('', $sut->timesheetContent(''));
+        $this->assertEquals('# foobar', $sut->timesheetContent('# foobar'));
+        $this->assertEquals('## foobar', $sut->timesheetContent('## foobar'));
+        $this->assertEquals('### foobar', $sut->timesheetContent('### foobar'));
 
         $config = new SystemConfiguration($loader, ['timesheet' => ['markdown_content' => true]]);
         $sut = new MarkdownExtension(new Markdown(), $config);
@@ -75,6 +78,9 @@ class MarkdownExtensionTest extends TestCase
 
         $this->assertEquals('', $sut->commentContent(null));
         $this->assertEquals('', $sut->commentContent(''));
+        $this->assertEquals('# foobar', $sut->commentContent('# foobar'));
+        $this->assertEquals('## foobar', $sut->commentContent('## foobar'));
+        $this->assertEquals('### foobar', $sut->commentContent('### foobar'));
         $this->assertEquals('<p>' . $loremIpsum . '</p>', $sut->commentContent($loremIpsum, true));
         $this->assertEquals('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut l &hellip;', $sut->commentContent($loremIpsum));
 
