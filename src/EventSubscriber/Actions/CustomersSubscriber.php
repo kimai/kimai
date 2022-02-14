@@ -34,6 +34,10 @@ class CustomersSubscriber extends AbstractActionsSubscriber
             $event->addCreate($this->path('admin_customer_create'));
         }
 
+        if ($this->isGranted('system_configuration')) {
+            $event->addAction('settings', ['url' => $this->path('system_configuration_section', ['section' => 'customer']), 'class' => 'modal-ajax-form']);
+        }
+
         $event->addHelp($this->documentationLink('customer.html'));
     }
 }

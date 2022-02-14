@@ -43,6 +43,29 @@ class CustomerControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->assertAccessIsGranted($client, '/admin/customer/');
         $this->assertHasDataTable($client);
+
+        $this->assertPageActions($client, [
+            'search' => '#',
+            'visibility' => '#',
+            'download toolbar-action' => $this->createUrl('/admin/customer/export'),
+            'help' => 'https://www.kimai.org/documentation/customer.html'
+        ]);
+    }
+
+    public function testIndexActionAsSuperAdmin()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/');
+        $this->assertHasDataTable($client);
+
+        $this->assertPageActions($client, [
+            'search' => '#',
+            'visibility' => '#',
+            'download toolbar-action' => $this->createUrl('/admin/customer/export'),
+            'create modal-ajax-form' => $this->createUrl('/admin/customer/create'),
+            'settings modal-ajax-form' => $this->createUrl('/admin/system-config/edit/customer'),
+            'help' => 'https://www.kimai.org/documentation/customer.html'
+        ]);
     }
 
     public function testIndexActionWithSearchTermQuery()
@@ -60,6 +83,14 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/customer/');
+
+        $this->assertPageActions($client, [
+            'search' => '#',
+            'visibility' => '#',
+            'download toolbar-action' => $this->createUrl('/admin/customer/export'),
+            'create modal-ajax-form' => $this->createUrl('/admin/customer/create'),
+            'help' => 'https://www.kimai.org/documentation/customer.html'
+        ]);
 
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [

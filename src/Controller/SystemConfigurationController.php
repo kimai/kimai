@@ -14,12 +14,15 @@ use App\Event\SystemConfigurationEvent;
 use App\Form\Model\Configuration;
 use App\Form\Model\SystemConfiguration as SystemConfigurationModel;
 use App\Form\SystemConfigurationForm;
+use App\Form\Type\ActivityTypePatternType;
 use App\Form\Type\ArrayToCommaStringType;
+use App\Form\Type\CustomerTypePatternType;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\DateTimeTextType;
 use App\Form\Type\DayTimeType;
 use App\Form\Type\LanguageType;
 use App\Form\Type\MinuteIncrementType;
+use App\Form\Type\ProjectTypePatternType;
 use App\Form\Type\RoundingModeType;
 use App\Form\Type\SkinType;
 use App\Form\Type\TimezoneType;
@@ -496,6 +499,24 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('currency')
                         ->setType(CurrencyType::class)
                         ->setOptions(['help' => 'default_value_new']),
+                    (new Configuration())
+                        ->setName('customer.choice_pattern')
+                        ->setLabel('choice_pattern')
+                        ->setType(CustomerTypePatternType::class),
+                ]),
+            (new SystemConfigurationModel('project'))
+                ->setConfiguration([
+                    (new Configuration())
+                        ->setName('project.choice_pattern')
+                        ->setLabel('choice_pattern')
+                        ->setType(ProjectTypePatternType::class),
+                ]),
+            (new SystemConfigurationModel('activity'))
+                ->setConfiguration([
+                    (new Configuration())
+                        ->setName('activity.choice_pattern')
+                        ->setLabel('choice_pattern')
+                        ->setType(ActivityTypePatternType::class),
                 ]),
             (new SystemConfigurationModel('user'))
                 ->setConfiguration([
