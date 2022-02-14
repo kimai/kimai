@@ -15,67 +15,15 @@
         {% block box_title %}
             {{ form_widget(form.date) }}
         {% endblock %}
+        {% block box_tools %}
+            <button class="btn btn-default btn-sm" formaction="{{ path(export_route) }}" type="submit"><i class="{{ 'download'|icon }}"></i></button>
+        {% endblock %}
         {% block box_body_class %}{{ box_id }} table-responsive {% if hasData %}no-padding{% endif %}{% endblock %}
         {% block box_body %}
             {% if not hasData %}
                 {{ widgets.nothing_found() }}
             {% else %}
-                {% set absoluteTotals = 0 %}
-                {% set totals = {} %}
-                <table class="table table-bordered table-hover dataTable">
-                    <thead>
-                        <tr>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            {% for day in stats.0.getDateTimes() %}
-                                <th class="text-center text-nowrap{% if day is weekend %} weekend{% endif %}{% if day is today %} today{% endif %}">
-                                    {{ day|date_weekday }}
-                                </th>
-                                {% set totals = totals|merge({(day|report_date): 0}) %}
-                            {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for userDay in stats %}
-                        {% set usersTotalDuration = 0 %}
-                        <tr class="user">
-                            <td class="text-nowrap">
-                                {{ widgets.label_dot(userDay.user.displayName, userDay.user.color) }}
-                            </td>
-                            {% for day in userDay.days %}
-                                {% if day.totalDuration > 0 %}
-                                    {% set usersTotalDuration = usersTotalDuration + day.totalDuration %}
-                                    {% set absoluteTotals = absoluteTotals + day.totalDuration %}
-                                {% endif %}
-                                {% set totals = totals|merge({(day.date|report_date): (totals[day.date|report_date] + day.totalDuration)}) %}
-                            {% endfor %}
-                            <th class="text-nowrap text-center total">
-                                <a href="{{ path(subReportRoute, {'date': subReportDate|report_date, 'user': userDay.user.id}) }}">{{ usersTotalDuration|duration }}</a>
-                            </th>
-                            {% for day in userDay.days %}
-                                <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}{% if day.date is today %} today{% endif %}">
-                                    {% if day.totalDuration > 0 %}
-                                        {{ day.totalDuration|duration }}
-                                    {% endif %}
-                                </td>
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                    <tfoot>
-                        <tr class="summary">
-                            <td>{{ 'stats.durationTotal'|trans }}</td>
-                            <td class="text-center text-nowrap">
-                                {{ absoluteTotals|duration }}
-                            </td>
-                            {% for id, duration in totals %}
-                                <td class="text-center text-nowrap">
-                                    {{ duration|duration }}
-                                </td>
-                            {% endfor %}
-                        </tr>
-                    </tfoot>
-                </table>
+                {% embed 'reporting/report_user_list_data.html.twig' %}{% endembed %}
             {% endif %}
         {% endblock %}
     {% endembed %}
