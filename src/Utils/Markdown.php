@@ -10,7 +10,7 @@
 namespace App\Utils;
 
 /**
- * A simple class to parse markdown syntax and return HTML.
+ * Parse markdown syntax and return HTML.
  */
 final class Markdown
 {
@@ -19,20 +19,14 @@ final class Markdown
      */
     private $parser;
 
-    public function __construct()
-    {
-        $this->parser = new ParsedownExtension();
-        $this->parser->setUrlsLinked(true);
-        $this->parser->setBreaksEnabled(true);
-    }
-
-    /**
-     * @param string $text
-     * @param bool $safe
-     * @return string
-     */
     public function toHtml(string $text, bool $safe = true): string
     {
+        if ($this->parser === null) {
+            $this->parser = new ParsedownExtension();
+            $this->parser->setUrlsLinked(true);
+            $this->parser->setBreaksEnabled(true);
+        }
+
         if ($safe !== true) {
             @trigger_error('Only safe mode is supported in Markdown since 1.16.3 to prevent XSS attacks. Parameter $safe will be removed with 2.0', E_USER_DEPRECATED);
         }
@@ -41,5 +35,16 @@ final class Markdown
         $this->parser->setMarkupEscaped(true);
 
         return $this->parser->text($text);
+    }
+
+    public function withFullMarkdownSupport(string $text): string
+    {
+        $parser = new \Parsedown();
+        $parser->setUrlsLinked(true);
+        $parser->setBreaksEnabled(true);
+        $parser->setSafeMode(true);
+        $parser->setMarkupEscaped(true);
+
+        return $parser->text($text);
     }
 }

@@ -35,7 +35,7 @@
                     </div>
                     {{ widgets.user_avatar(comment.createdBy, false, 'direct-chat-img img-sm') }}
                     <div class="direct-chat-text">
-                        {{ comment.message|replace(replacer)|md2html }}
+                        {{ comment.message|replace(replacer)|comment2html }}
                     </div>
                 </div>
             {% endfor %}

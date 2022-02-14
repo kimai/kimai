@@ -39,6 +39,7 @@ class UserControllerTest extends ControllerBaseTest
             'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/user/export'),
             'create' => $this->createUrl('/admin/user/create'),
+            'settings modal-ajax-form' => $this->createUrl('/admin/system-config/edit/user'),
             'help' => 'https://www.kimai.org/documentation/users.html'
         ]);
     }

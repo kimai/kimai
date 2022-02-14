@@ -20,6 +20,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @covers \App\Command\ChangePasswordCommand
+ * @covers \App\Command\AbstractUserCommand
  * @group integration
  */
 class ChangePasswordCommandTest extends KernelTestCase
@@ -59,6 +60,7 @@ class ChangePasswordCommandTest extends KernelTestCase
         $input = [
             'command' => $command->getName(),
         ];
+        $interactive = false;
 
         if ($username !== null) {
             $input['username'] = $username;
@@ -66,10 +68,19 @@ class ChangePasswordCommandTest extends KernelTestCase
 
         if ($password !== null) {
             $input['password'] = $password;
+        } else {
+            $interactive = true;
         }
 
         $commandTester = new CommandTester($command);
-        $commandTester->execute($input);
+
+        $options = [];
+        if ($interactive) {
+            $options = ['interactive' => true];
+            $commandTester->setInputs(['12345678']);
+        }
+
+        $commandTester->execute($input, $options);
 
         return $commandTester;
     }
@@ -100,11 +111,10 @@ class ChangePasswordCommandTest extends KernelTestCase
         $this->callCommand(null, '1234567890');
     }
 
-    public function testWithMissingPassword()
+    public function testWithMissingPasswordAsksForPassword()
     {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Not enough arguments (missing: "password").');
-
-        $this->callCommand('1234567890', null);
+        $commandTester = $this->callCommand('john_user', null);
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('[OK] Changed password for user "john_user".', $output);
     }
 }
