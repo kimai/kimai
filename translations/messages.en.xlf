@@ -116,6 +116,10 @@
         <source>modal.dirty</source>
         <target>The form has changed. Please click "Save" to save the changes or "Close" to cancel.</target>
       </trans-unit>
+      <trans-unit id="sdfgsdfgsdfg" resname="label.choice_pattern">
+        <source>Display of entries in selection lists</source>
+        <target>Display of entries in selection lists</target>
+      </trans-unit>
       <!--
               Login / Security
             -->

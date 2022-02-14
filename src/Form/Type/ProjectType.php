@@ -9,10 +9,12 @@
 
 namespace App\Form\Type;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ProjectFormTypeQuery;
+use App\Utils\LocaleSettings;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\Options;
@@ -23,25 +25,93 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ProjectType extends AbstractType
 {
+    public const PATTERN_NAME = '{name}';
+    public const PATTERN_COMMENT = '{comment}';
+    public const PATTERN_ORDERNUMBER = '{ordernumber}';
+    public const PATTERN_DATERANGE = '{daterange}';
+    public const PATTERN_START = '{start}';
+    public const PATTERN_END = '{end}';
+    public const PATTERN_SPACER = '{spacer}';
+    public const SPACER = ' - ';
+
+    private $configuration;
+    private $localeSettings;
+    private $dateFormat;
+    private $pattern;
+
+    public function __construct(SystemConfiguration $configuration, LocaleSettings $localeSettings)
+    {
+        $this->configuration = $configuration;
+        $this->localeSettings = $localeSettings;
+    }
+
+    public function getChoiceLabel(Project $project): string
+    {
+        if ($this->dateFormat === null) {
+            $this->dateFormat = $this->localeSettings->getDateFormat();
+        }
+
+        if ($this->pattern === null) {
+            $this->pattern = $this->configuration->find('project.choice_pattern');
+
+            if ($this->pattern === null || stripos($this->pattern, '{') === false || stripos($this->pattern, '}') === false) {
+                $this->pattern = self::PATTERN_NAME;
+            }
+        }
+
+        $dateRange = '';
+        if ($project->getStart() !== null) {
+            $dateRange = self::PATTERN_START;
+        }
+        if ($project->getEnd() !== null) {
+            if ($dateRange !== '') {
+                $dateRange .= '-';
+            }
+            $dateRange .= self::PATTERN_END;
+        }
+
+        $start = '';
+        if ($project->getStart() !== null) {
+            $start = $project->getStart()->format($this->dateFormat);
+        }
+
+        $end = '';
+        if ($project->getEnd() !== null) {
+            $end = $project->getEnd()->format($this->dateFormat);
+        }
+
+        $name = $this->pattern;
+        $name = str_replace(self::PATTERN_NAME, $project->getName(), $name);
+        $name = str_replace(self::PATTERN_COMMENT, $project->getComment(), $name);
+        $name = str_replace(self::PATTERN_ORDERNUMBER, $project->getOrderNumber(), $name);
+        $name = str_replace(self::PATTERN_DATERANGE, $dateRange, $name);
+        $name = str_replace(self::PATTERN_START, $start, $name);
+        $name = str_replace(self::PATTERN_END, $end, $name);
+        $name = str_replace(self::PATTERN_SPACER, self::SPACER, $name);
+
+        $name = ltrim($name, self::SPACER);
+        $name = rtrim($name, self::SPACER);
+
+        if ($name === '' || $name === self::SPACER) {
+            $name = $project->getName();
+        }
+
+        return $name;
+    }
+
     /**
-     * @param Project $choiceValue
+     * @param Project $project
      * @param string $key
      * @param mixed $value
      * @return array
      */
-    public function choiceAttr($choiceValue, $key, $value)
+    public function getChoiceAttributes(Project $project, $key, $value): array
     {
-        $customer = null;
-
-        if (!($choiceValue instanceof Project)) {
-            return [];
+        if (null !== ($customer = $project->getCustomer())) {
+            return ['data-customer' => $customer->getId(), 'data-currency' => $customer->getCurrency()];
         }
 
-        if (null !== $choiceValue->getCustomer()) {
-            $customer = $choiceValue->getCustomer()->getId();
-        }
-
-        return ['data-customer' => $customer];
+        return [];
     }
 
     /**
@@ -57,8 +127,8 @@ class ProjectType extends AbstractType
             ],
             'label' => 'label.project',
             'class' => Project::class,
-            'choice_label' => 'name',
-            'choice_attr' => [$this, 'choiceAttr'],
+            'choice_label' => [$this, 'getChoiceLabel'],
+            'choice_attr' => [$this, 'getChoiceAttributes'],
             'group_by' => function (Project $project, $key, $index) {
                 return $project->getCustomer()->getName();
             },
