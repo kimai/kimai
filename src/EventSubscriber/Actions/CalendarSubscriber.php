@@ -24,6 +24,10 @@ class CalendarSubscriber extends AbstractActionsSubscriber
             $event->addCreate($this->path('timesheet_create'));
         }
 
+        if ($this->isGranted('system_configuration')) {
+            $event->addAction('settings', ['url' => $this->path('system_configuration_section', ['section' => 'calendar']), 'class' => 'modal-ajax-form']);
+        }
+
         $event->addHelp($this->documentationLink('calendar.html'));
     }
 }
