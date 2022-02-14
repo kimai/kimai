@@ -53,7 +53,6 @@ class TimesheetEditForm extends AbstractType
         $project = null;
         $customer = null;
         $currency = false;
-        $begin = null;
         $customerCount = $this->customers->countCustomer(true);
         $timezone = $options['timezone'];
         $isNew = true;

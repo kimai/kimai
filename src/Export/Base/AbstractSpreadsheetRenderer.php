@@ -45,8 +45,10 @@ abstract class AbstractSpreadsheetRenderer
     public const TIME_FORMAT = 'hh:mm';
     public const DURATION_FORMAT = '[hh]:mm';
     public const DURATION_DECIMAL = '#0.00';
+    // https://support.microsoft.com/de-de/office/zahlenformatcodes-5026bbd6-04bc-48cd-bf33-80f18b4eae68
+    // Part 1 = positive; Part 2 = negative; Part 3 = zero; Part 4 = Text
     public const RATE_FORMAT_DEFAULT = '#.##0,00 [$%1$s];-#.##0,00 [$%1$s]';
-    public const RATE_FORMAT_LEFT = '_("%1$s"* #,##0.00_);_("%1$s"* \(#,##0.00\);_("%1$s"* "-"??_);_(@_)';
+    public const RATE_FORMAT_LEFT = '_("%1$s"* #,##0.00_);_("%1$s"* -#,##0.00;_("%1$s"* "-"??_);_(@_)';
     public const RATE_FORMAT = self::RATE_FORMAT_LEFT;
 
     protected $durationFormat = self::DURATION_FORMAT;

@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\CustomerMeta;
@@ -42,6 +43,29 @@ class CustomerControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->assertAccessIsGranted($client, '/admin/customer/');
         $this->assertHasDataTable($client);
+
+        $this->assertPageActions($client, [
+            'search' => '#',
+            'visibility' => '#',
+            'download toolbar-action' => $this->createUrl('/admin/customer/export'),
+            'help' => 'https://www.kimai.org/documentation/customer.html'
+        ]);
+    }
+
+    public function testIndexActionAsSuperAdmin()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/customer/');
+        $this->assertHasDataTable($client);
+
+        $this->assertPageActions($client, [
+            'search' => '#',
+            'visibility' => '#',
+            'download toolbar-action' => $this->createUrl('/admin/customer/export'),
+            'create modal-ajax-form' => $this->createUrl('/admin/customer/create'),
+            'settings modal-ajax-form' => $this->createUrl('/admin/system-config/edit/customer'),
+            'help' => 'https://www.kimai.org/documentation/customer.html'
+        ]);
     }
 
     public function testIndexActionWithSearchTermQuery()
@@ -59,6 +83,14 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/customer/');
+
+        $this->assertPageActions($client, [
+            'search' => '#',
+            'visibility' => '#',
+            'download toolbar-action' => $this->createUrl('/admin/customer/export'),
+            'create modal-ajax-form' => $this->createUrl('/admin/customer/create'),
+            'help' => 'https://www.kimai.org/documentation/customer.html'
+        ]);
 
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
@@ -160,6 +192,13 @@ class CustomerControllerTest extends ControllerBaseTest
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
         $client->followRedirect();
+        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
+        self::assertStringContainsString('A beautiful and short comment **with some** markdown formatting', $node->html());
+
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
+        $configService->offsetSet('timesheet.markdown_content', true);
+        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
         $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
         self::assertStringContainsString('<p>A beautiful and short comment <strong>with some</strong> markdown formatting</p>', $node->html());
     }

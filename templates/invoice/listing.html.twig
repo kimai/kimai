@@ -6,9 +6,9 @@
 {% import "invoice/macros.html.twig" as macros %}
 
 {% set columns = {
-    'date': {'class': 'alwaysVisible'},
+    'date': {'class': 'alwaysVisible text-nowrap'},
     'user': {'class': 'hidden-xs hidden-sm text-nowrap hidden', 'orderBy': false},
-    'customer': {'class': 'hidden-xs hidden-sm text-nowrap', 'orderBy': false},
+    'customer': {'class': 'hidden-xs hidden-sm', 'orderBy': false},
     'comment': {'class': 'hidden-xs hidden-sm', 'title': 'label.description'|trans},
 } %}
 {% for field in metaColumns %}

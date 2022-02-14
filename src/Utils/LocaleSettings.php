@@ -18,13 +18,27 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 final class LocaleSettings extends LocaleFormats
 {
+    private $requestStack;
+    private $locale;
+
     public function __construct(RequestStack $requestStack, LanguageFormattings $formats)
     {
-        $locale = Constants::DEFAULT_LOCALE;
-        // request is null in a console command
-        if (null !== $requestStack->getMasterRequest()) {
-            $locale = $requestStack->getMasterRequest()->getLocale();
+        parent::__construct($formats, Constants::DEFAULT_LOCALE);
+        $this->requestStack = $requestStack;
+    }
+
+    public function getLocale(): string
+    {
+        if ($this->locale === null) {
+            $locale = \Locale::getDefault();
+
+            // request is null in a console command
+            if (null !== $this->requestStack->getMasterRequest()) {
+                $locale = $this->requestStack->getMasterRequest()->getLocale();
+            }
+            $this->locale = $locale;
         }
-        parent::__construct($formats, $locale);
+
+        return $this->locale;
     }
 }

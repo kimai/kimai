@@ -83,7 +83,6 @@ class MPdfConverter implements HtmlToPdfConverter
         for ($i = 0; $i < \count($parts); $i++) {
             if (stripos($parts[$i], '<!-- CONTENT_PART -->') !== false) {
                 $subParts = explode('<!-- CONTENT_PART -->', $parts[$i]);
-                $run = 0;
                 foreach ($subParts as $subPart) {
                     $mpdf->WriteHTML($subPart);
                 }
