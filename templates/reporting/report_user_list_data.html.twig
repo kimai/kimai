@@ -1,0 +1,69 @@
+{% set absoluteTotals = 0 %}
+{% set totals = {} %}
+<table class="table table-bordered table-hover dataTable">
+    <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th class="text-center">{{ 'stats.durationTotal'|trans }}</th>
+            {% for day in stats.0.getDateTimes() %}
+                <th class="text-center text-nowrap{% if day is weekend %} weekend{% endif %}{% if day is today %} today{% endif %}">
+                    {% block period_name %}
+                        {{ day|date_weekday }}
+                    {% endblock %}
+                </th>
+                {% set totals = totals|merge({(day|report_date): 0}) %}
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+    {% for userPeriod in stats %}
+        {% set usersTotalDuration = 0 %}
+        <tr class="user">
+            <td class="text-nowrap">
+                {% block user_column %}
+                    {% from "macros/widgets.html.twig" import label_dot %}
+                    {{ label_dot(userPeriod.user.displayName, userPeriod.user.color) }}
+                {% endblock %}
+            </td>
+            {% for period in userPeriod.days %}
+                {% if period.totalDuration > 0 %}
+                    {% set usersTotalDuration = usersTotalDuration + period.totalDuration %}
+                    {% set absoluteTotals = absoluteTotals + period.totalDuration %}
+                {% endif %}
+                {% set totals = totals|merge({(period.date|report_date): (totals[period.date|report_date] + period.totalDuration)}) %}
+            {% endfor %}
+            <th class="text-nowrap text-center total">
+                {% block total_duration_user %}
+                    <a href="{{ path(subReportRoute, {'date': subReportDate|report_date, 'user': userPeriod.user.id}) }}">{{ usersTotalDuration|duration(decimal) }}</a>
+                {% endblock %}
+            </th>
+            {% for period in userPeriod.days %}
+                <td class="text-nowrap text-center day-total{% if period.date is weekend %} weekend{% endif %}{% if period.date is today %} today{% endif %}">
+                    {% if period.totalDuration > 0 %}
+                        {% block duration %}
+                            {{ period.totalDuration|duration(decimal) }}
+                        {% endblock %}
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr class="summary">
+            <td>{{ 'stats.durationTotal'|trans }}</td>
+            <td class="text-center text-nowrap">
+                {% block total_duration %}
+                    {{ absoluteTotals|duration(decimal) }}
+                {% endblock %}
+            </td>
+            {% for id, total in totals %}
+                <td class="text-center text-nowrap">
+                    {% block total_duration_period %}
+                        {{ total|duration(decimal) }}
+                    {% endblock %}
+                </td>
+            {% endfor %}
+        </tr>
+    </tfoot>
+</table>

@@ -1,0 +1,74 @@
+{% set absoluteTotals = 0 %}
+{% set totals = {} %}
+<table class="table table-bordered table-hover dataTable">
+    <thead>
+    <tr>
+        <th>&nbsp;</th>
+        <th class="text-center">{{ 'stats.durationTotal'|trans }}</th>
+        {% for month in stats.0.getDateTimes() %}
+            <th class="text-center text-nowrap">
+                {% block period_name %}
+                <a href="{{ path('report_monthly_users', {'date': month|report_date}) }}">
+                    {{ month|month_name }}<br>
+                    {{ month|date_format('Y') }}
+                </a>
+                {% endblock %}
+            </th>
+            {% set totals = totals|merge({(month|report_date): 0}) %}
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for userPeriod in stats|filter(row => row.user is not null) %}
+        {% set usersTotalDuration = 0 %}
+        <tr class="user">
+            <td class="text-nowrap">
+                {% block user_column %}
+                    {% from "macros/widgets.html.twig" import label_dot %}
+                    {{ label_dot(userPeriod.user.displayName, userPeriod.user.color) }}
+                {% endblock %}
+            </td>
+            {% for mid, period in userPeriod.months %}
+                {% if period.totalDuration > 0 %}
+                    {% set usersTotalDuration = usersTotalDuration + period.totalDuration %}
+                    {% set absoluteTotals = absoluteTotals + period.totalDuration %}
+                {% endif %}
+            {% endfor %}
+            <th class="text-nowrap text-center total">
+                {% block total_duration_user %}
+                    {{ usersTotalDuration|duration(decimal) }}
+                {% endblock %}
+            </th>
+            {% for mid, period in userPeriod.months %}
+                <td class="text-nowrap text-center day-total">
+                    {% if period.totalDuration > 0 %}
+                        {% block duration %}
+                        <a href="{{ path('report_user_month', {'date': create_date(period.date.format('Y') ~'-'~period.date.format('m')~'-01')|report_date, 'user': userPeriod.user.id}) }}" data-toggle="tooltip" title="{{ 'label.billable'|trans }}: {{ period.billableDuration|duration(decimal) }}">
+                            {{ period.totalDuration|duration(decimal) }}
+                        </a>
+                        {% endblock %}
+                        {% set totals = totals|merge({(period.date|report_date): (totals[period.date|report_date] + period.totalDuration)}) %}
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr class="summary">
+        <td>{{ 'stats.durationTotal'|trans }}</td>
+        <td class="text-center text-nowrap">
+            {% block total_duration %}
+                {{ absoluteTotals|duration(decimal) }}
+            {% endblock %}
+        </td>
+        {% for id, total in totals %}
+            <td class="text-center text-nowrap">
+                {% block total_duration_period %}
+                    {{ total|duration(decimal) }}
+                {% endblock %}
+            </td>
+        {% endfor %}
+    </tr>
+    </tfoot>
+</table>

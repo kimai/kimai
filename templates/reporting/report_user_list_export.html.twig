@@ -1,0 +1,20 @@
+{% embed 'reporting/report_user_list_data.html.twig' %}
+    {% block user_column %}
+        {{ userPeriod.user.displayName }}
+    {% endblock %}
+    {% block duration -%}
+        =VALUE("{{ period.totalDuration|duration(true) }}")
+    {%- endblock %}
+    {% block total_duration_user -%}
+        =VALUE("{{ usersTotalDuration|duration(true) }}")
+    {%- endblock %}
+    {% block total_duration -%}
+        =VALUE("{{ absoluteTotals|duration(true) }}")
+    {%- endblock %}
+    {% block total_duration_period -%}
+        =VALUE("{{ total|duration(true) }}")
+    {%- endblock %}
+    {% block period_name %}
+        {{ day|date_short }}
+    {% endblock %}
+{% endembed %}

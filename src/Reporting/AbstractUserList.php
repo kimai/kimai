@@ -15,6 +15,7 @@ abstract class AbstractUserList
      * @var \DateTime
      */
     private $date;
+    private $decimal = false;
 
     public function getDate(): ?\DateTime
     {
@@ -24,5 +25,15 @@ abstract class AbstractUserList
     public function setDate(\DateTime $date): void
     {
         $this->date = $date;
+    }
+
+    public function isDecimal(): bool
+    {
+        return $this->decimal;
+    }
+
+    public function setDecimal(bool $decimal): void
+    {
+        $this->decimal = $decimal;
     }
 }
