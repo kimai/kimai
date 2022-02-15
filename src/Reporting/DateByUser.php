@@ -13,14 +13,10 @@ use App\Entity\User;
 
 abstract class DateByUser
 {
-    /**
-     * @var User
-     */
     private $user;
-    /**
-     * @var \DateTime
-     */
     private $date;
+    private $decimal = false;
+    private $sumType = 'duration';
 
     public function getUser(): ?User
     {
@@ -44,5 +40,29 @@ abstract class DateByUser
         $this->date = $date;
 
         return $this;
+    }
+
+    public function isDecimal(): bool
+    {
+        return $this->decimal;
+    }
+
+    public function setDecimal(bool $decimal): void
+    {
+        $this->decimal = $decimal;
+    }
+
+    public function getSumType(): ?string
+    {
+        return $this->sumType;
+    }
+
+    public function setSumType(string $sumType): void
+    {
+        if (!\in_array($sumType, ['duration', 'rate', 'internalRate'])) {
+            throw new \InvalidArgumentException('Unknown sum type');
+        }
+
+        $this->sumType = $sumType;
     }
 }

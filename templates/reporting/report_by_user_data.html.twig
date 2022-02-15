@@ -1,0 +1,143 @@
+{% import "macros/widgets.html.twig" as widgets %}
+{%- set absoluteDuration = 0 -%}
+{%- set absoluteInternalRate = 0 -%}
+{%- set absoluteRate = 0 -%}
+{%- set totalsDuration = {} -%}
+{%- set totalsInternalRate = {} -%}
+{%- set totalsRate = {} -%}
+{% if dataType == 'rate' %}
+    {% set dataTypeTitle = 'stats.amountTotal' %}
+{% elseif dataType == 'internalRate' %}
+    {% set dataTypeTitle = 'label.rate_internal' %}
+{% else %}
+    {% set dataTypeTitle = 'stats.durationTotal' %}
+{% endif %}
+{% set columns = 2 %}
+{% set totalCurrency = false %}
+<table class="table table-bordered table-hover dataTable">
+    <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th class="text-center">{{ dataTypeTitle|trans }}</th>
+            {% for day in days.dateTimes %}
+                <th class="text-center text-nowrap{% if day is weekend %} weekend{% endif %}{% if day is today %} today{% endif %}">
+                    {{ day|date_weekday }}
+                </th>
+                {% set columns = columns + 1 %}
+                {% set dayKey = day|report_date %}
+                {% set totalsDuration = totalsDuration|merge({(dayKey): 0}) %}
+                {% set totalsInternalRate = totalsInternalRate|merge({(dayKey): 0}) %}
+                {% set totalsRate = totalsRate|merge({(dayKey): 0}) %}
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+    {% set oldCustomer = null %}
+    {% for pid, project in rows|sort((a,b) => a.project.customer.id <=> b.project.customer.id) %}
+        {% set currency = project.project.customer.currency %}
+        {% if oldCustomer is null or oldCustomer != project.project.customer.id %}
+            {% set oldCustomer = project.project.customer.id %}
+            {% if totalCurrency is same as (false) %}
+                {% set totalCurrency = currency %}
+            {% elseif project.project.customer.currency != totalCurrency %}
+                {% set totalCurrency = null %}
+            {% endif %}
+            <tr class="summary">
+                <td colspan="{{ columns }}">{{ widgets.label_customer(project.project.customer) }}</td>
+            </tr>
+        {% endif %}
+        {% set absoluteDuration = absoluteDuration + project.duration %}
+        {% set absoluteInternalRate = absoluteInternalRate + project.internalRate %}
+        {% set absoluteRate = absoluteRate + project.rate %}
+        <tr class="project">
+            <td class="text-nowrap">
+                <strong>{{ widgets.label_project(project.project) }}</strong>
+            </td>
+            <td class="text-nowrap text-center total">
+                {% if dataType == 'rate' %}
+                    {{ project.rate|money(currency) }}
+                {% elseif dataType == 'internalRate' %}
+                    {{ project.internalRate|money(currency) }}
+                {% else %}
+                    {{ project.duration|duration(decimal) }}
+                {% endif %}
+            </td>
+            {% for day in project.days.days %}
+                {% set dayKey = day.date|report_date %}
+                <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}{% if day.date is today %} today{% endif %}">
+                    {% if day.duration > 0 or day.rate > 0 or day.internalRate > 0 %}
+                        {% if dataType == 'rate' %}
+                            {% set totalsRate = totalsRate|merge({(dayKey): (totalsRate[dayKey] + day.rate)}) %}
+                            <strong>{{ day.rate|money(currency) }}</strong>
+                        {% elseif dataType == 'internalRate' %}
+                            {% set totalsInternalRate = totalsInternalRate|merge({(dayKey): (totalsInternalRate[dayKey] + day.internalRate)}) %}
+                            <strong>{{ day.internalRate|money(currency) }}</strong>
+                        {% else %}
+                            {% set totalsDuration = totalsDuration|merge({(dayKey): (totalsDuration[dayKey] + day.duration)}) %}
+                            <strong>{{ day.duration|duration(decimal) }}</strong>
+                        {% endif %}
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+        {% for activity in project.activities %}
+            <tr class="activity">
+                <td class="text-nowrap">
+                    {{ widgets.label_activity(activity.activity) }}
+                </td>
+                <td class="text-nowrap text-center">
+                    {% if dataType == 'rate' %}
+                        {{ activity.rate|money(currency) }}
+                    {% elseif dataType == 'internalRate' %}
+                        {{ activity.internalRate|money(currency) }}
+                    {% else %}
+                        {{ activity.duration|duration(decimal) }}
+                    {% endif %}
+                </td>
+                {% for day in activity.days.days %}
+                    <td class="text-nowrap text-center day-total{% if day.date is weekend %} weekend{% endif %}{% if day.date is today %} today{% endif %}">
+                        {% if day.duration > 0 or day.rate > 0 or day.internalRate > 0 %}
+                            {% if dataType == 'rate' %}
+                                {{ day.rate|money(currency) }}
+                            {% elseif dataType == 'internalRate' %}
+                                {{ day.internalRate|money(currency) }}
+                            {% else %}
+                                {{ day.duration|duration(decimal) }}
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+    {% if totalCurrency is same as (false) %}
+        {% set totalCurrency = null %}
+    {% endif %}
+    <tfoot>
+        <tr class="summary">
+            <td>{{ dataTypeTitle|trans }}</td>
+            <td class="text-nowrap text-center total">
+                {% if dataType == 'rate' %}
+                    {{ absoluteRate|money(totalCurrency) }}
+                {% elseif dataType == 'internalRate' %}
+                    {{ absoluteInternalRate|money(totalCurrency) }}
+                {% else %}
+                    {{ absoluteDuration|duration(decimal) }}
+                {% endif %}
+            </td>
+            {% for day in days.dateTimes %}
+                {% set dayKey = day|report_date %}
+                <td class="text-nowrap text-center day-total{% if day is weekend %} weekend{% endif %}">
+                    {% if dataType == 'rate' %}
+                        {{ totalsRate[dayKey]|money(totalCurrency) }}
+                    {% elseif dataType == 'internalRate' %}
+                        {{ totalsInternalRate[dayKey]|money(totalCurrency) }}
+                    {% else %}
+                        {{ totalsDuration[dayKey]|duration(decimal) }}
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+    </tfoot>
+</table>

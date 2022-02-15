@@ -5,25 +5,60 @@
 {% block report %}
 
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
-        {% import "macros/widgets.html.twig" as widgets %}
+        {% from "macros/widgets.html.twig" import nothing_found %}
         {% block box_before %}
-            {{ form_start(form, {'attr': {'class': 'form-inline'}}) }}
+            {{ form_start(form, {'attr': {'class': 'form-inline kimai-1.17', 'id': 'user-list-filter-form'}}) }}
         {% endblock %}
         {% block box_after %}
             {{ form_end(form) }}
         {% endblock %}
         {% block box_title %}
             {{ form_widget(form.date) }}
-        {% endblock %}
-        {% block box_tools %}
-            <button class="btn btn-default btn-sm" formaction="{{ path(export_route) }}" type="submit"><i class="{{ 'download'|icon }}"></i></button>
+            {% if form.sumType.vars.choices|length > 1 %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="{{ 'display'|icon }}"></i> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu checkbox-menu">
+                        <li>
+                            {{ form_widget(form.sumType) }}
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+            <button class="btn btn-primary" formaction="{{ path(export_route) }}" type="submit"><i class="{{ 'download'|icon }}"></i></button>
         {% endblock %}
         {% block box_body_class %}{{ box_id }} table-responsive {% if hasData %}no-padding{% endif %}{% endblock %}
         {% block box_body %}
             {% if not hasData %}
-                {{ widgets.nothing_found() }}
+                {{ nothing_found() }}
             {% else %}
-                {% embed 'reporting/report_user_list_data.html.twig' %}{% endembed %}
+                {% embed 'reporting/user_list_period_data.html.twig' %}
+                    {% block period_name %}
+                        <th class="text-center text-nowrap{% if column is weekend %} weekend{% endif %}{% if column is today %} today{% endif %}">
+                            {{ column|date_weekday }}
+                        </th>
+                    {% endblock %}
+                    {% block total_rate_user %}
+                        <a href="{{ path(subReportRoute, {'sumType': dataType, 'date': subReportDate|report_date, 'user': userPeriod.user.id}) }}">{{ usersTotalRate|money }}</a>
+                    {% endblock %}
+                    {% block total_internal_rate_user %}
+                        <a href="{{ path(subReportRoute, {'sumType': dataType, 'date': subReportDate|report_date, 'user': userPeriod.user.id}) }}">{{ usersTotalInternalRate|money }}</a>
+                    {% endblock %}
+                    {% block total_duration_user %}
+                        <a href="{{ path(subReportRoute, {'sumType': dataType, 'date': subReportDate|report_date, 'user': userPeriod.user.id}) }}">{{ usersTotalDuration|duration(decimal) }}</a>
+                    {% endblock %}
+                    {% block rate %}
+                        {{ period.totalRate|money }}
+                    {% endblock %}
+                    {% block internal_rate %}
+                        {{ period.totalInternalRate|money }}
+                    {% endblock %}
+                    {% block duration %}
+                        {{ period.totalDuration|duration(decimal) }}
+                    {% endblock %}
+                    {% block period_cell_class %}{% if period.date is weekend %} weekend{% endif %}{% if period.date is today %} today{% endif %}{% endblock %}
+                {% endembed %}
             {% endif %}
         {% endblock %}
     {% endembed %}
@@ -34,8 +69,8 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
-            jQuery('#{{ form.date.vars.id }}').on('change', function(ev) {
-                jQuery(this).closest('form').submit();
+            jQuery('#user-list-filter-form').on('change', function(ev) {
+                jQuery(this).submit();
             });
         });
     </script>

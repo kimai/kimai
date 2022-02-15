@@ -39,6 +39,7 @@ final class IconExtension extends AbstractExtension
         'debug' => 'far fa-file-alt',
         'delete' => 'far fa-trash-alt',
         'details' => 'fas fa-info-circle',
+        'display' => 'fas fa-layer-group',
         'doctor' => 'fas fa-medkit',
         'dot' => 'fas fa-circle',
         'download' => 'fas fa-download',

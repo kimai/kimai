@@ -25,13 +25,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route(path="/reporting")
+ * @Route(path="/reporting/users")
  * @Security("is_granted('view_reporting') and is_granted('view_other_reporting') and is_granted('view_other_timesheet')")
  */
 final class ReportUsersMonthController extends AbstractController
 {
     /**
-     * @Route(path="/monthly_users_list", name="report_monthly_users", methods={"GET","POST"})
+     * @Route(path="/monthly", name="report_monthly_users", methods={"GET","POST"})
      */
     public function report(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {
@@ -42,7 +42,7 @@ final class ReportUsersMonthController extends AbstractController
     }
 
     /**
-     * @Route(path="/export/monthly_users_list", name="report_monthly_users_export", methods={"GET","POST"})
+     * @Route(path="/monthly_export", name="report_monthly_users_export", methods={"GET","POST"})
      */
     public function export(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {
@@ -53,7 +53,7 @@ final class ReportUsersMonthController extends AbstractController
         $reader = new Html();
         $spreadsheet = $reader->loadFromString($content);
 
-        $writer = new BinaryFileResponseWriter(new XlsxWriter(), 'kimai-export-users-weekly');
+        $writer = new BinaryFileResponseWriter(new XlsxWriter(), 'kimai-export-users-monthly');
 
         return $writer->getFileResponse($spreadsheet);
     }
@@ -110,6 +110,8 @@ final class ReportUsersMonthController extends AbstractController
         }
 
         return [
+            'period_attribute' => 'days',
+            'dataType' => $values->getSumType(),
             'report_title' => 'report_monthly_users',
             'box_id' => 'monthly-user-list-reporting-box',
             'export_route' => 'report_monthly_users_export',

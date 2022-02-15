@@ -10,6 +10,7 @@
 namespace App\Reporting;
 
 use App\Form\Type\MonthPickerType;
+use App\Form\Type\ReportSumType;
 use App\Form\Type\UserType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -41,6 +42,7 @@ class MonthByUserForm extends AbstractType
         if ($options['include_user']) {
             $builder->add('user', UserType::class, ['width' => false]);
         }
+        $builder->add('sumType', ReportSumType::class);
     }
 
     /**

@@ -27,13 +27,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route(path="/reporting")
+ * @Route(path="/reporting/users")
  * @Security("is_granted('view_reporting') and is_granted('view_other_reporting') and is_granted('view_other_timesheet')")
  */
 final class ReportUsersYearController extends AbstractController
 {
     /**
-     * @Route(path="/yearly_users_list", name="report_yearly_users", methods={"GET","POST"})
+     * @Route(path="/yearly", name="report_yearly_users", methods={"GET","POST"})
      *
      * @param Request $request
      * @return Response
@@ -48,7 +48,7 @@ final class ReportUsersYearController extends AbstractController
     }
 
     /**
-     * @Route(path="/export/yearly_users_list", name="report_yearly_users_export", methods={"GET","POST"})
+     * @Route(path="/yearly_export", name="report_yearly_users_export", methods={"GET","POST"})
      *
      * @param Request $request
      * @return Response
@@ -118,6 +118,8 @@ final class ReportUsersYearController extends AbstractController
         }
 
         return [
+            'period_attribute' => 'months',
+            'dataType' => $values->getSumType(),
             'report_title' => 'report_yearly_users',
             'box_id' => 'yearly-user-list-reporting-box',
             'export_route' => 'report_yearly_users_export',
