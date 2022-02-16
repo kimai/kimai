@@ -31,7 +31,7 @@ use Symfony\Component\Routing\Annotation\Route;
 final class ReportUsersMonthController extends AbstractController
 {
     /**
-     * @Route(path="/monthly", name="report_monthly_users", methods={"GET","POST"})
+     * @Route(path="/month", name="report_monthly_users", methods={"GET","POST"})
      */
     public function report(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {
@@ -42,7 +42,7 @@ final class ReportUsersMonthController extends AbstractController
     }
 
     /**
-     * @Route(path="/monthly_export", name="report_monthly_users_export", methods={"GET","POST"})
+     * @Route(path="/month_export", name="report_monthly_users_export", methods={"GET","POST"})
      */
     public function export(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {

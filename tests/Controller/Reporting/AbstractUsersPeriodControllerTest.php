@@ -1,0 +1,61 @@
+<?php
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace App\Tests\Controller\Reporting;
+
+use App\Entity\User;
+use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\DataFixtures\TimesheetFixtures;
+
+/**
+ * @group integration
+ */
+abstract class AbstractUsersPeriodControllerTest extends ControllerBaseTest
+{
+    protected function importReportingFixture(string $role)
+    {
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(50);
+        $fixture->setAmountRunning(10);
+        $fixture->setUser($this->getUserByRole($role));
+        $fixture->setStartDate(new \DateTime());
+        $this->importFixture($fixture);
+    }
+
+    abstract protected function getReportUrl(): string;
+
+    abstract protected function getBoxId(): string;
+
+    public function testIsSecure()
+    {
+        $this->assertUrlIsSecured($this->getReportUrl());
+    }
+
+    public function getTestData(): array
+    {
+        return [
+            ['duration', 'Working hours total'],
+            ['rate', 'Total revenue'],
+            ['internalRate', 'Internal rate'],
+        ];
+    }
+
+    /**
+     * @dataProvider getTestData
+     */
+    public function testUserPeriodReport(string $dataType, string $title)
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->importReportingFixture(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, sprintf('%s?date=12999119191&sumType=%s', $this->getReportUrl(), $dataType));
+        self::assertStringContainsString(sprintf('<div class="box-body %s', $this->getBoxId()), $client->getResponse()->getContent());
+        $cell = $client->getCrawler()->filterXPath("//th[contains(@class, 'reportDataTypeTitle')]");
+        self::assertEquals($title, $cell->text());
+    }
+}

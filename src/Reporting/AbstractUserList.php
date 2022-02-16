@@ -35,7 +35,7 @@ abstract class AbstractUserList
         $this->decimal = $decimal;
     }
 
-    public function getSumType(): ?string
+    public function getSumType(): string
     {
         return $this->sumType;
     }

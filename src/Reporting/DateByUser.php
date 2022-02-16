@@ -11,58 +11,17 @@ namespace App\Reporting;
 
 use App\Entity\User;
 
-abstract class DateByUser
+abstract class DateByUser extends AbstractUserList
 {
     private $user;
-    private $date;
-    private $decimal = false;
-    private $sumType = 'duration';
 
     public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(User $user): self
+    public function setUser(User $user): void
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    public function getDate(): ?\DateTime
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTime $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    public function isDecimal(): bool
-    {
-        return $this->decimal;
-    }
-
-    public function setDecimal(bool $decimal): void
-    {
-        $this->decimal = $decimal;
-    }
-
-    public function getSumType(): ?string
-    {
-        return $this->sumType;
-    }
-
-    public function setSumType(string $sumType): void
-    {
-        if (!\in_array($sumType, ['duration', 'rate', 'internalRate'])) {
-            throw new \InvalidArgumentException('Unknown sum type');
-        }
-
-        $this->sumType = $sumType;
     }
 }

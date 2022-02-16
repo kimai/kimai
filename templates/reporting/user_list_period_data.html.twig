@@ -15,7 +15,7 @@
     <thead>
         <tr>
             <th>&nbsp;</th>
-            <th class="text-center">{{ dataTypeTitle|trans }}</th>
+            <th class="text-center reportDataTypeTitle">{{ dataTypeTitle|trans }}</th>
             {% for column in stats.0.getDateTimes() %}
                 {% block period_name %}{% endblock %}
                 {% set columnKey = column|report_date %}

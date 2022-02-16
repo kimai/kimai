@@ -31,7 +31,7 @@ use Symfony\Component\Routing\Annotation\Route;
 final class ReportUsersWeekController extends AbstractController
 {
     /**
-     * @Route(path="/weekly", name="report_weekly_users", methods={"GET","POST"})
+     * @Route(path="/week", name="report_weekly_users", methods={"GET","POST"})
      */
     public function report(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {
@@ -42,7 +42,7 @@ final class ReportUsersWeekController extends AbstractController
     }
 
     /**
-     * @Route(path="/weekly_export", name="report_weekly_users_export", methods={"GET","POST"})
+     * @Route(path="/week_export", name="report_weekly_users_export", methods={"GET","POST"})
      */
     public function export(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {

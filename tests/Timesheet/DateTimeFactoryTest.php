@@ -238,4 +238,25 @@ class DateTimeFactoryTest extends TestCase
         self::assertEquals('01', $year->format('d'));
         self::assertEquals('00:00:00', $year->format('H:i:s'));
     }
+
+    public function testCreateEndOfYear()
+    {
+        $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
+
+        $now = $sut->createDateTime();
+        $year = $sut->createEndOfYear();
+        self::assertEquals($now->format('Y'), $year->format('Y'));
+        self::assertEquals('12', $year->format('m'));
+        self::assertEquals('31', $year->format('d'));
+        self::assertEquals('23:59:59', $year->format('H:i:s'));
+        $now->setTime(23, 59, 59);
+        self::assertEquals($now->format('H:i:s'), $year->format('H:i:s'));
+
+        $begin = $sut->createDateTime('2017-12-31 23:59:59');
+        $year = $sut->createEndOfYear($begin);
+        self::assertEquals('2017', $year->format('Y'));
+        self::assertEquals('12', $year->format('m'));
+        self::assertEquals('31', $year->format('d'));
+        self::assertEquals('23:59:59', $year->format('H:i:s'));
+    }
 }
