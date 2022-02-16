@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ar" datatype="plaintext" original="reporting.en.xlf">
+    <body>
+      <trans-unit id="XV3FBpu" resname="report_user_week">
+        <source>report_user_week</source>
+        <target>عرض أسبوعي لمستخدم واحد</target>
+      </trans-unit>
+      <trans-unit id="Ng47B75" resname="report_user_month">
+        <source>report_user_month</source>
+        <target>عرض شهري لمستخدم واحد</target>
+      </trans-unit>
+      <trans-unit id="q_A4AHD" resname="report_weekly_users">
+        <source>report_weekly_users</source>
+        <target>عرض أسبوعي لجميع المستخدمين</target>
+      </trans-unit>
+      <trans-unit id="zk30bmP" resname="report_monthly_users">
+        <source>report_monthly_users</source>
+        <target>عرض شهري لجميع المستخدمين</target>
+      </trans-unit>
+      <trans-unit id="VD98UBN" resname="report_yearly_users">
+        <source>report_yearly_users</source>
+        <target>عرض سنوي لجميع المستخدمين</target>
+      </trans-unit>
+      <trans-unit id="R.9yUkf" resname="report_project_view">
+        <source>report_project_view</source>
+        <target>نظرة عامة على المشروع</target>
+      </trans-unit>
+      <trans-unit id="518eY_l" resname="report_project_details">
+        <source>report_project_details</source>
+        <target>تفاصيل المشروع</target>
+      </trans-unit>
+      <trans-unit id="BQAsynV" resname="report_project_daterange">
+        <source>report_project_daterange</source>
+        <target>تقرير شهري</target>
+      </trans-unit>
+      <trans-unit id="1gBKwGH" resname="report_inactive_project">
+        <source>report_inactive_project</source>
+        <target>المشاريع غير النشطة</target>
+      </trans-unit>
+      <trans-unit id="ns_jU13" resname="reporting.initial_view">
+        <source>reporting.initial_view</source>
+        <target>التقرير الأولي</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
