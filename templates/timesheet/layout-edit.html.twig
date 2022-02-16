@@ -43,22 +43,22 @@
             </div>
             {% endif %}
             {% if form.customer is defined %}
-                {{ form_row(form.customer) }}
+                {{ form_row(form.customer, {'row_attr': {'class': 'timesheet_edit_form_row_customer'}}) }}
             {% endif %}
             {% if form.project is defined %}
-                {{ form_row(form.project) }}
+                {{ form_row(form.project, {'row_attr': {'class': 'timesheet_edit_form_row_project'}}) }}
             {% endif %}
             {% if form.activity is defined %}
-                {{ form_row(form.activity) }}
+                {{ form_row(form.activity, {'row_attr': {'class': 'timesheet_edit_form_row_activity'}}) }}
             {% endif %}
             {% if form.description is defined %}
-                {{ form_row(form.description) }}
+                {{ form_row(form.description, {'row_attr': {'class': 'timesheet_edit_form_row_description'}}) }}
             {% endif %}
             {% if form.tags is defined %}
-                {{ form_row(form.tags) }}
+                {{ form_row(form.tags, {'row_attr': {'class': 'timesheet_edit_form_row_tags'}}) }}
             {% endif %}
             {% if form.user is defined %}
-                {{ form_row(form.user) }}
+                {{ form_row(form.user, {'row_attr': {'class': 'timesheet_edit_form_row_user'}}) }}
             {% endif %}
             {% if form.users is defined or form.teams is defined %}
                 {% set uLength = 12 %}
@@ -81,10 +81,10 @@
             {% if form.fixedRate is defined and form.hourlyRate is defined %}
             <div class="row">
                 <div class="col-md-6">
-                    {{ form_row(form.fixedRate) }}
+                    {{ form_row(form.fixedRate, {'row_attr': {'class': 'timesheet_edit_form_row_fixedRate'}}) }}
                 </div>
                 <div class="col-md-6">
-                    {{ form_row(form.hourlyRate) }}
+                    {{ form_row(form.hourlyRate, {'row_attr': {'class': 'timesheet_edit_form_row_hourlyRate'}}) }}
                 </div>
             </div>
             {% endif %}
@@ -98,12 +98,12 @@
                 <div class="row">
                     {% if form.exported is defined %}
                     <div class="col-md-{{ ebLength }}">
-                        {{ form_row(form.exported) }}
+                        {{ form_row(form.exported, {'row_attr': {'class': 'timesheet_edit_form_row_exported'}}) }}
                     </div>
                     {% endif %}
                     {% if form.billable is defined %}
                     <div class="col-md-{{ ebLength }}">
-                        {{ form_row(form.billable) }}
+                        {{ form_row(form.billable, {'row_attr': {'class': 'timesheet_edit_form_row_billable'}}) }}
                     </div>
                     {% endif %}
                 </div>
