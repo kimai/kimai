@@ -991,7 +991,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>resetting.check_email</source>
-        <target>En email er blevet sendt. Den indeholder et link du skal klikke på for at nulstille din adgangskode. Note: Du kan kun anmode om en ny adgangskode indenfor %symbolskelevetid% timer. Hvis du ikke får en email så tjek din spam folder eller prøv igen.</target>
+        <target>En email er blevet sendt. Den indeholder et link du skal klikke på for at nulstille din adgangskode. Note: Du kan kun anmode om en ny adgangskode indenfor %tokenLifetime% timer. Hvis du ikke får en email så tjek din spam folder eller prøv igen.</target>
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
