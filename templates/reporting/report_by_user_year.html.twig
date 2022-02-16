@@ -34,19 +34,14 @@
         {% block box_body %}
             {% embed 'reporting/report_by_user_data.html.twig' %}
                 {% block period_name %}
-                    <th class="text-center text-nowrap{% if column is weekend %} weekend{% endif %}{% if column is today %} today{% endif %}">
-                        {{ column|date_weekday }}
+                    <th class="text-center text-nowrap">
+                        {{ column|month_name }}<br>
+                        {{ column|date_format('Y') }}
                     </th>
                 {% endblock %}
-                {% block column_classes_project -%}
-                    {% if column.date is weekend %} weekend{% endif %}{% if column.date is today %} today{% endif %}
-                {%- endblock %}
-                {% block column_classes_activity -%}
-                    {% if column.date is weekend %} weekend{% endif %}{% if column.date is today %} today{% endif %}
-                {%- endblock %}
-                {% block column_classes_total -%}
-                    {% if column is weekend %} weekend{% endif %}
-                {%- endblock %}
+                {% block column_classes_project %}{% endblock %}
+                {% block column_classes_activity %}{% endblock %}
+                {% block column_classes_total %}{% endblock %}
             {% endembed %}
         {% endblock %}
     {% endembed %}

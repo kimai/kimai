@@ -43,13 +43,19 @@
                         </th>
                     {% endblock %}
                     {% block total_rate_user %}
-                        {{ usersTotalRate|money }}
+                        <a href="{{ path('report_user_year', {'sumType': dataType, 'date': create_date(query.date.format('Y') ~'-01-01')|report_date, 'user': userPeriod.user.id}) }}">
+                            {{ usersTotalRate|money }}
+                        </a>
                     {% endblock %}
                     {% block total_internal_rate_user %}
-                        {{ usersTotalInternalRate|money }}
+                        <a href="{{ path('report_user_year', {'sumType': dataType, 'date': create_date(query.date.format('Y') ~'-01-01')|report_date, 'user': userPeriod.user.id}) }}">
+                            {{ usersTotalInternalRate|money }}
+                        </a>
                     {% endblock %}
                     {% block total_duration_user %}
-                        {{ usersTotalDuration|duration(decimal) }}
+                        <a href="{{ path('report_user_year', {'sumType': dataType, 'date': create_date(query.date.format('Y') ~'-01-01')|report_date, 'user': userPeriod.user.id}) }}">
+                            {{ usersTotalDuration|duration(decimal) }}
+                        </a>
                     {% endblock %}
                     {% block rate %}
                         <a href="{{ path('report_user_month', {'sumType': dataType, 'date': create_date(period.date.format('Y') ~'-'~period.date.format('m')~'-01')|report_date, 'user': userPeriod.user.id}) }}" data-toggle="tooltip" title="{{ 'label.billable'|trans }}: {{ period.billableDuration|duration(decimal) }}">

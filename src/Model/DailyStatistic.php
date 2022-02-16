@@ -14,7 +14,7 @@ use App\Model\Statistic\StatisticDate;
 use DateTime;
 use DateTimeInterface;
 
-final class DailyStatistic
+final class DailyStatistic implements DateStatisticInterface
 {
     /**
      * @var array<string, StatisticDate>
@@ -61,9 +61,24 @@ final class DailyStatistic
         return array_values($this->days);
     }
 
+    /**
+     * For unified frontend access
+     *
+     * @return StatisticDate[]
+     */
+    public function getData(): array
+    {
+        return $this->getDays();
+    }
+
     public function getDayByDateTime(\DateTimeInterface $date): ?StatisticDate
     {
         return $this->getDay($date->format('Y'), $date->format('m'), $date->format('d'));
+    }
+
+    public function getByDateTime(\DateTimeInterface $date): ?StatisticDate
+    {
+        return $this->getDayByDateTime($date);
     }
 
     public function getDayByReportDate(string $date): ?StatisticDate

@@ -91,7 +91,7 @@ final class UserMonthController extends AbstractUserReportController
             'box_id' => 'user-month-reporting-box',
             'form' => $form->createView(),
             'rows' => $data,
-            'days' => new DailyStatistic($start, $end, $selectedUser),
+            'period' => new DailyStatistic($start, $end, $selectedUser),
             'user' => $selectedUser,
             'current' => $start,
             'next' => $nextMonth,

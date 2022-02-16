@@ -118,6 +118,7 @@ final class ReportUsersYearController extends AbstractController
         }
 
         return [
+            'query' => $values,
             'period_attribute' => 'months',
             'dataType' => $values->getSumType(),
             'report_title' => 'report_yearly_users',

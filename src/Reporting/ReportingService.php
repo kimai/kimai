@@ -44,6 +44,7 @@ final class ReportingService
         if ($this->security->isGranted('view_reporting')) {
             $event->addReport(new Report('week_by_user', 'report_user_week', 'report_user_week', 'user'));
             $event->addReport(new Report('month_by_user', 'report_user_month', 'report_user_month', 'user'));
+            $event->addReport(new Report('year_by_user', 'report_user_year', 'report_user_year', 'user'));
             if ($this->security->isGranted('view_other_reporting') && $this->security->isGranted('view_other_timesheet')) {
                 $event->addReport(new Report('weekly_users_list', 'report_weekly_users', 'report_weekly_users', 'users'));
                 $event->addReport(new Report('monthly_users_list', 'report_monthly_users', 'report_monthly_users', 'users'));

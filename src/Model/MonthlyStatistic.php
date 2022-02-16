@@ -14,7 +14,7 @@ use App\Model\Statistic\StatisticDate;
 use DateTime;
 use DateTimeInterface;
 
-final class MonthlyStatistic
+final class MonthlyStatistic implements DateStatisticInterface
 {
     /**
      * @var array<string, array<int, StatisticDate>>
@@ -105,6 +105,26 @@ final class MonthlyStatistic
         }
 
         return $all;
+    }
+
+    /**
+     * For unified frontend access
+     *
+     * @return StatisticDate[]
+     */
+    public function getData(): array
+    {
+        return $this->getMonths();
+    }
+
+    public function getMonthByDateTime(DateTimeInterface $date): ?StatisticDate
+    {
+        return $this->getMonth($date->format('Y'), $date->format('m'));
+    }
+
+    public function getByDateTime(DateTimeInterface $date): ?StatisticDate
+    {
+        return $this->getMonthByDateTime($date);
     }
 
     public function getMonth(string $year, string $month): ?StatisticDate

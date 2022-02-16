@@ -10,9 +10,11 @@
 namespace App\Controller\Reporting;
 
 use App\Entity\User;
-use App\Model\DailyStatistic;
-use App\Reporting\WeekByUser;
-use App\Reporting\WeekByUserForm;
+use App\Model\DateStatisticInterface;
+use App\Model\MonthlyStatistic;
+use App\Reporting\YearByUser;
+use App\Reporting\YearByUserForm;
+use DateTime;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,18 +26,18 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  * @Route(path="/reporting/user")
  * @Security("is_granted('view_reporting')")
  */
-final class UserWeekController extends AbstractUserReportController
+final class UserYearController extends AbstractUserReportController
 {
     /**
-     * @Route(path="/week", name="report_user_week", methods={"GET","POST"})
+     * @Route(path="/year", name="report_user_year", methods={"GET","POST"})
      *
      * @param Request $request
      * @return Response
      * @throws Exception
      */
-    public function weekByUser(Request $request): Response
+    public function yearByUser(Request $request): Response
     {
-        return $this->render('reporting/report_by_user.html.twig', $this->getData($request));
+        return $this->render('reporting/report_by_user_year.html.twig', $this->getData($request));
     }
 
     private function getData(Request $request): array
@@ -44,11 +46,11 @@ final class UserWeekController extends AbstractUserReportController
         $dateTimeFactory = $this->getDateTimeFactory($currentUser);
         $canChangeUser = $this->canSelectUser();
 
-        $values = new WeekByUser();
+        $values = new YearByUser();
         $values->setUser($currentUser);
-        $values->setDate($dateTimeFactory->getStartOfWeek());
+        $values->setDate($dateTimeFactory->createStartOfYear());
 
-        $form = $this->createForm(WeekByUserForm::class, $values, [
+        $form = $this->createForm(YearByUserForm::class, $values, [
             'include_user' => $canChangeUser,
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
             'start_date' => $values->getDate(),
@@ -65,33 +67,43 @@ final class UserWeekController extends AbstractUserReportController
         }
 
         if ($values->getDate() === null) {
-            $values->setDate($dateTimeFactory->getStartOfWeek());
+            $values->setDate($dateTimeFactory->createStartOfYear());
         }
 
-        $start = $dateTimeFactory->getStartOfWeek($values->getDate());
-        $end = $dateTimeFactory->getEndOfWeek($values->getDate());
+        $start = $dateTimeFactory->createStartOfYear($values->getDate());
+        $end = $dateTimeFactory->createEndOfYear($values->getDate());
         $selectedUser = $values->getUser();
 
         $previous = clone $start;
-        $previous->modify('-1 week');
+        $previous->modify('-1 year');
 
         $next = clone $start;
-        $next->modify('+1 week');
+        $next->modify('+1 year');
 
         $data = $this->prepareReport($start, $end, $selectedUser);
 
         return [
             'decimal' => $values->isDecimal(),
             'dataType' => $values->getSumType(),
-            'report_title' => 'report_user_week',
-            'box_id' => 'user-week-reporting-box',
+            'report_title' => 'report_user_year',
+            'box_id' => 'user-year-reporting-box',
             'form' => $form->createView(),
-            'period' => new DailyStatistic($start, $end, $selectedUser),
+            'period' => new MonthlyStatistic($start, $end, $selectedUser),
             'rows' => $data,
             'user' => $selectedUser,
             'current' => $start,
             'next' => $next,
             'previous' => $previous,
         ];
+    }
+
+    protected function getStatisticDataRaw(DateTime $begin, DateTime $end, User $user): array
+    {
+        return $this->statisticService->getMonthlyStatisticsGrouped($begin, $end, [$user]);
+    }
+
+    protected function createStatisticModel(DateTime $begin, DateTime $end, User $user): DateStatisticInterface
+    {
+        return new MonthlyStatistic($begin, $end, $user);
     }
 }

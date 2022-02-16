@@ -45,7 +45,6 @@ class ReportSumType extends AbstractType
 
             return $choices;
         });
-
     }
 
     /**
