@@ -19,6 +19,11 @@ class ReportUsersYearControllerTest extends AbstractUsersPeriodControllerTest
         return '/reporting/users/year';
     }
 
+    protected function getReportExportUrl(): string
+    {
+        return '/reporting/users/year_export';
+    }
+
     protected function getBoxId(): string
     {
         return 'yearly-user-list-reporting-box';

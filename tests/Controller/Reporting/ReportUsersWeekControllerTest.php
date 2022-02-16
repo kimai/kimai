@@ -19,6 +19,11 @@ class ReportUsersWeekControllerTest extends AbstractUsersPeriodControllerTest
         return '/reporting/users/week';
     }
 
+    protected function getReportExportUrl(): string
+    {
+        return '/reporting/users/week_export';
+    }
+
     protected function getBoxId(): string
     {
         return 'weekly-user-list-reporting-box';

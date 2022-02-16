@@ -12,6 +12,7 @@ namespace App\Tests\Controller\Reporting;
 use App\Entity\User;
 use App\Tests\Controller\ControllerBaseTest;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * @group integration
@@ -29,6 +30,8 @@ abstract class AbstractUsersPeriodControllerTest extends ControllerBaseTest
     }
 
     abstract protected function getReportUrl(): string;
+
+    abstract protected function getReportExportUrl(): string;
 
     abstract protected function getBoxId(): string;
 
@@ -62,7 +65,7 @@ abstract class AbstractUsersPeriodControllerTest extends ControllerBaseTest
     /**
      * @dataProvider getTestData
      */
-    public function testUsersPeriodReportAsteamlead(string $dataType, string $title)
+    public function testUsersPeriodReportAsTeamlead(string $dataType, string $title)
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->importReportingFixture(User::ROLE_TEAMLEAD);
@@ -72,5 +75,21 @@ abstract class AbstractUsersPeriodControllerTest extends ControllerBaseTest
         self::assertEquals(0, $select->count());
         $cell = $client->getCrawler()->filterXPath("//th[contains(@class, 'reportDataTypeTitle')]");
         self::assertEquals($title, $cell->text());
+    }
+
+    /**
+     * @dataProvider getTestData
+     */
+    public function testUsersPeriodReportExport(string $dataType, string $title)
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->importReportingFixture(User::ROLE_SUPER_ADMIN);
+        $this->request($client, sprintf('%s?date=12999119191&sumType=%s', $this->getReportExportUrl(), $dataType));
+        $response = $client->getResponse();
+        $this->assertTrue($response->isSuccessful());
+        self::assertInstanceOf(BinaryFileResponse::class, $response);
+        self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
+        self::assertStringContainsString('attachment; filename=kimai-export-users-yearly_', $response->headers->get('Content-Disposition'));
+        self::assertStringContainsString('.xlsx', $response->headers->get('Content-Disposition'));
     }
 }
