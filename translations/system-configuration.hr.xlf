@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="ycErWZK" resname="timesheet">
         <source>Time tracking</source>
-        <target>Praćenje vremena</target>
+        <target>Evidentiranje vremena</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
@@ -40,11 +40,11 @@
       </trans-unit>
       <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
-        <target>[Trajanje] može se konfigurirati fiksno vrijeme početka, promijeniti se može samo trajanje</target>
+        <target>[Trajanje] podesivo fiksno vrijeme početka, promijeniti se može samo trajanje</target>
       </trans-unit>
       <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
         <source>label.timesheet.mode_punch</source>
-        <target>[Sat] korisnik može pokrenuti i prekinuti snimanja, ali ne može mijenjati vrijeme niti trajanje</target>
+        <target>[Štoperica] korisnik može pokrenuti i prekinuti snimanja, ali ne može mijenjati vremena niti trajanje</target>
       </trans-unit>
       <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
         <source>label.timesheet.rules.allow_future_times</source>
@@ -52,7 +52,7 @@
       </trans-unit>
       <trans-unit id="VAAaL2t" resname="label.timesheet.rules.allow_overbooking_budget">
         <source>label.timesheet.rules.allow_overbooking_budget</source>
-        <target>Dozvoli rezerviranja veća od spremljenih budžeta</target>
+        <target>Dozvoli prekoraćenje rezerviranja spremljenih budžeta</target>
       </trans-unit>
       <trans-unit id=".NE5mGi" resname="label.timesheet.rules.allow_overlapping_records">
         <source>label.timesheet.rules.allow_overlapping_records</source>
@@ -68,19 +68,19 @@
       </trans-unit>
       <trans-unit id="yVBJECt" resname="label.timesheet.rules.lockdown_period_start">
         <source>label.timesheet.rules.lockdown_period_start</source>
-        <target>Početak zaključanog razdoblja (PHP relativni datum do sada)</target>
+        <target>Početak zaključanog razdoblja (relativni PHP datum u odnosu na sada)</target>
       </trans-unit>
       <trans-unit id=".es2tyO" resname="label.timesheet.rules.lockdown_period_end">
         <source>label.timesheet.rules.lockdown_period_end</source>
-        <target>Kraj zaključanog razdoblja (PHP relativni datum do sada)</target>
+        <target>Kraj zaključanog razdoblja (relativni PHP datum u odnosu na sada)</target>
       </trans-unit>
       <trans-unit id="y2i0PU3" resname="label.timesheet.rules.lockdown_grace_period">
         <source>label.timesheet.rules.lockdown_grace_period</source>
-        <target>Kraj dodatnog zaključanog razdoblja (PHP relativni datum do kraja zaključanog razdoblja)</target>
+        <target>Kraj dodatnog zaključanog razdoblja (relativni PHP datum u odnosu na kraj zaključanog razdoblja)</target>
       </trans-unit>
       <trans-unit id="oIueXaX" resname="label.timesheet.active_entries.hard_limit">
         <source>label.timesheet.active_entries.hard_limit</source>
-        <target>Dozvoljeni broj istovremenih mjerenja vremena</target>
+        <target>Dozvoljeni broj istovremenih aktivnih unosa vremena</target>
       </trans-unit>
       <trans-unit id="iZLna_g" resname="label.theme.autocomplete_chars">
         <source>label.theme.autocomplete_chars</source>
@@ -112,7 +112,7 @@
       </trans-unit>
       <trans-unit id="AlBuZhv" resname="label.calendar.slot_duration">
         <source>label.calendar.slot_duration</source>
-        <target state="translated">Trajanje vremenskog razdoblja za pregled tjedna i dana (format: hh:mm:ss)</target>
+        <target state="translated">Trajanje vremenskog razdoblja za prikaz tjedna i dana (format: hh:mm:ss)</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>
