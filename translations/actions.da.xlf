@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="da" datatype="plaintext" original="actions.en.xlf">
     <body>
@@ -73,6 +73,10 @@
       <trans-unit id="T_PN1AT" resname="permissions">
         <source>permissions</source>
         <target>Hold tilladelser</target>
+      </trans-unit>
+      <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser">
+        <source>create-timesheet-multiuser</source>
+        <target>Til flere brugere</target>
       </trans-unit>
     </body>
   </file>

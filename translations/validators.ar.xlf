@@ -42,6 +42,18 @@
         <source>This period is locked, please choose a later date.</source>
         <target>هذه الفترة مقفلة، يرجى اختيار تاريخ لاحق.</target>
       </trans-unit>
+      <trans-unit id="INlaCgW" resname="An equal email is already used.">
+        <source>An equal email is already used.</source>
+        <target>تم استخدام بريد إلكتروني مشابه بالفعل.</target>
+      </trans-unit>
+      <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
+        <source>An activity needs to be selected.</source>
+        <target>يجب اختيار نشاط.</target>
+      </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target>يجب تحديد مشروع.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
