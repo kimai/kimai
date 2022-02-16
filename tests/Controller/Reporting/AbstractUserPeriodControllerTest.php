@@ -60,4 +60,16 @@ abstract class AbstractUserPeriodControllerTest extends ControllerBaseTest
         $cell = $client->getCrawler()->filterXPath("//th[contains(@class, 'reportDataTypeTitle')]");
         self::assertEquals($title, $cell->text());
     }
+
+    public function testUserPeriodReportAsTeamlead()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importReportingFixture(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, sprintf('%s?date=12999119191', $this->getReportUrl()));
+        self::assertStringContainsString(sprintf('<div class="box-body %s', $this->getBoxId()), $client->getResponse()->getContent());
+        $select = $client->getCrawler()->filterXPath("//select[@id='user']");
+        self::assertEquals(0, $select->count());
+        $cell = $client->getCrawler()->filterXPath("//th[contains(@class, 'reportDataTypeTitle')]");
+        self::assertEquals('Working hours total', $cell->text());
+    }
 }
