@@ -89,7 +89,7 @@ abstract class AbstractUsersPeriodControllerTest extends ControllerBaseTest
         $this->assertTrue($response->isSuccessful());
         self::assertInstanceOf(BinaryFileResponse::class, $response);
         self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
-        self::assertStringContainsString('attachment; filename=kimai-export-users-yearly_', $response->headers->get('Content-Disposition'));
+        self::assertStringContainsString('attachment; filename=kimai-export-users-', $response->headers->get('Content-Disposition'));
         self::assertStringContainsString('.xlsx', $response->headers->get('Content-Disposition'));
     }
 }
