@@ -35,8 +35,10 @@
             {% embed 'reporting/report_by_user_data.html.twig' %}
                 {% block period_name %}
                     <th class="text-center text-nowrap">
-                        {{ column|month_name }}<br>
-                        {{ column|date_format('Y') }}
+                        <a href="{{ path('report_user_month', {'date': column|report_date, 'sumType': dataType, 'user': user.id}) }}">
+                            {{ column|month_name }}<br>
+                            {{ column|date_format('Y') }}
+                        </a>
                     </th>
                 {% endblock %}
                 {% block column_classes_project %}{% endblock %}
