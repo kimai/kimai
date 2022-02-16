@@ -25,13 +25,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route(path="/reporting")
+ * @Route(path="/reporting/users")
  * @Security("is_granted('view_reporting') and is_granted('view_other_reporting') and is_granted('view_other_timesheet')")
  */
 final class ReportUsersWeekController extends AbstractController
 {
     /**
-     * @Route(path="/weekly_users_list", name="report_weekly_users", methods={"GET","POST"})
+     * @Route(path="/week", name="report_weekly_users", methods={"GET","POST"})
      */
     public function report(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {
@@ -42,7 +42,7 @@ final class ReportUsersWeekController extends AbstractController
     }
 
     /**
-     * @Route(path="/export/weekly_users_list", name="report_weekly_users_export", methods={"GET","POST"})
+     * @Route(path="/week_export", name="report_weekly_users_export", methods={"GET","POST"})
      */
     public function export(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {
@@ -107,6 +107,8 @@ final class ReportUsersWeekController extends AbstractController
         }
 
         return [
+            'period_attribute' => 'days',
+            'dataType' => $values->getSumType(),
             'report_title' => 'report_weekly_users',
             'box_id' => 'weekly-user-list-reporting-box',
             'export_route' => 'report_weekly_users_export',

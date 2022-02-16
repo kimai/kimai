@@ -25,7 +25,7 @@ class ReportingControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/reporting/');
-        $this->assertIsRedirect($client, $this->createUrl('/reporting/week_by_user'));
+        $this->assertIsRedirect($client, $this->createUrl('/reporting/user/week'));
         $client->followRedirect();
         self::assertStringContainsString('<div class="box-body user-week-reporting-box', $client->getResponse()->getContent());
     }

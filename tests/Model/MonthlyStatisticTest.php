@@ -104,5 +104,10 @@ class MonthlyStatisticTest extends TestCase
         self::assertNull($sut->getMonth('2019', '12'));
         self::assertNull($sut->getMonth('2020', '1'));
         self::assertNull($sut->getMonth('2020', '01'));
+        self::assertNull($sut->getMonthByDateTime(new \DateTime('2020-01-01')));
+        self::assertInstanceOf(StatisticDate::class, $sut->getMonthByDateTime(new \DateTime('2018-04-01')));
+        self::assertInstanceOf(StatisticDate::class, $sut->getByDateTime(new \DateTime('2018-04-01')));
+
+        self::assertSame($sut->getMonths(), $sut->getData());
     }
 }

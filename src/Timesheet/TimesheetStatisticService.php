@@ -143,11 +143,11 @@ final class TimesheetStatisticService
                 $stats[$uid][$pid] = ['project' => $pid, 'activities' => []];
             }
             if (!isset($stats[$uid][$pid]['activities'][$aid])) {
-                $stats[$uid][$pid]['activities'][$aid] = ['activity' => $aid, 'days' => new DailyStatistic($begin, $end, $usersById[$uid])];
+                $stats[$uid][$pid]['activities'][$aid] = ['activity' => $aid, 'data' => new DailyStatistic($begin, $end, $usersById[$uid])];
             }
 
             /** @var DailyStatistic $days */
-            $days = $stats[$uid][$pid]['activities'][$aid]['days'];
+            $days = $stats[$uid][$pid]['activities'][$aid]['data'];
             $day = $days->getDayByReportDate($row['date']);
 
             if ($day === null) {
@@ -161,6 +161,85 @@ final class TimesheetStatisticService
             if ($row['billable']) {
                 $day->setBillableRate((float) $row['rate']);
                 $day->setBillableDuration((int) $row['duration']);
+            }
+        }
+
+        return $stats;
+    }
+
+    /**
+     * @internal only for core development
+     * @param DateTime $begin
+     * @param DateTime $end
+     * @param User[] $users
+     * @return array<int, MonthlyStatistic[]>
+     */
+    public function getMonthlyStatisticsGrouped(DateTime $begin, DateTime $end, array $users): array
+    {
+        /** @var MonthlyStatistic[] $stats */
+        $stats = [];
+        $usersById = [];
+
+        foreach ($users as $user) {
+            $usersById[$user->getId()] = $user;
+            if (!isset($stats[$user->getId()])) {
+                $stats[$user->getId()] = [];
+            }
+        }
+
+        $qb = $this->repository->createQueryBuilder('t');
+        $qb
+            ->select('COALESCE(SUM(t.rate), 0.0) as rate')
+            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
+            ->addSelect('COALESCE(SUM(t.internalRate), 0) as internalRate')
+            ->addSelect('t.billable as billable')
+            ->addSelect('IDENTITY(t.user) as user')
+            ->addSelect('IDENTITY(t.project) as project')
+            ->addSelect('IDENTITY(t.activity) as activity')
+            ->addSelect('YEAR(t.date) as year')
+            ->addSelect('MONTH(t.date) as month')
+            ->where($qb->expr()->isNotNull('t.end'))
+            ->andWhere($qb->expr()->between('t.begin', ':begin', ':end'))
+            ->andWhere($qb->expr()->in('t.user', ':user'))
+            ->setParameter('begin', $begin)
+            ->setParameter('end', $end)
+            ->setParameter('user', $users)
+            ->groupBy('year')
+            ->addGroupBy('month')
+            ->addGroupBy('project')
+            ->addGroupBy('activity')
+            ->addGroupBy('user')
+            ->addGroupBy('billable')
+        ;
+
+        $results = $qb->getQuery()->getResult();
+
+        foreach ($results as $row) {
+            $uid = $row['user'];
+            $pid = $row['project'];
+            $aid = $row['activity'];
+            if (!isset($stats[$uid][$pid])) {
+                $stats[$uid][$pid] = ['project' => $pid, 'activities' => []];
+            }
+            if (!isset($stats[$uid][$pid]['activities'][$aid])) {
+                $stats[$uid][$pid]['activities'][$aid] = ['activity' => $aid, 'data' => new MonthlyStatistic($begin, $end, $usersById[$uid])];
+            }
+
+            /** @var MonthlyStatistic $months */
+            $months = $stats[$uid][$pid]['activities'][$aid]['data'];
+            $month = $months->getMonth((string) $row['year'], (string) $row['month']);
+
+            if ($month === null) {
+                // timezone differences
+                continue;
+            }
+
+            $month->setTotalDuration($month->getTotalDuration() + (int) $row['duration']);
+            $month->setTotalRate($month->getTotalRate() + (float) $row['rate']);
+            $month->setTotalInternalRate($month->getTotalInternalRate() + (float) $row['internalRate']);
+            if ($row['billable']) {
+                $month->setBillableRate((float) $row['rate']);
+                $month->setBillableDuration((int) $row['duration']);
             }
         }
 

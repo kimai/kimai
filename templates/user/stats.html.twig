@@ -27,7 +27,9 @@
     {% endif %}
 
     {% set monthRoute = null %}
-    {%- if user.enabled and is_granted('view_reporting') and (app.user.id == user.id or is_granted('view_other_timesheet')) -%}
+    {% set canSeeReport = user.enabled and is_granted('view_reporting') and (app.user.id == user.id or is_granted('view_other_timesheet')) %}
+
+    {%- if canSeeReport -%}
         {% set monthRoute = path('report_user_month', {'user': user.id, 'date': '__MONTH__'}) %}
     {% endif %}
 
@@ -37,6 +39,11 @@
         {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
             {% import "macros/charts.html.twig" as charts %}
             {% block box_title %}{{ year }}{% endblock %}
+            {% block box_tools %}
+                {%- if canSeeReport -%}
+                    <a class="btn btn-default btn-sm" href="{{ path('report_user_year', {'user': user.id, 'date': year ~ '-01-01'}) }}"><i class="{{ 'reporting'|icon }}"></i></a>
+                {% endif %}
+            {% endblock %}
             {% block box_body %}
                 {% set dataset = [] %}
                 {% for month in workMonths.year(year) %}

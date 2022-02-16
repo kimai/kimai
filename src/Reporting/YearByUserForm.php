@@ -10,15 +10,16 @@
 namespace App\Reporting;
 
 use App\Form\Type\ReportSumType;
+use App\Form\Type\UserType;
 use App\Form\Type\YearPickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class YearlyUserListForm extends AbstractType
+class YearByUserForm extends AbstractType
 {
     /**
-     * Simplify cross linking between pages by removing the block prefix.
+     * Simplify cross-linking between pages by removing the block prefix.
      *
      * @return null|string
      */
@@ -36,8 +37,11 @@ class YearlyUserListForm extends AbstractType
             'model_timezone' => $options['timezone'],
             'view_timezone' => $options['timezone'],
             'start_date' => $options['start_date'],
-            'show_range' => true,
         ]);
+
+        if ($options['include_user']) {
+            $builder->add('user', UserType::class, ['width' => false]);
+        }
         $builder->add('sumType', ReportSumType::class);
     }
 
@@ -47,9 +51,10 @@ class YearlyUserListForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => YearlyUserList::class,
+            'data_class' => YearByUser::class,
             'timezone' => date_default_timezone_get(),
             'start_date' => new \DateTime(),
+            'include_user' => false,
             'csrf_protection' => false,
             'method' => 'GET',
         ]);
