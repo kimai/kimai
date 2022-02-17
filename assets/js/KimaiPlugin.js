@@ -42,7 +42,7 @@ export default class KimaiPlugin {
     }
 
     /**
-     * This function returns null, if xou call it BEFORE init().
+     * This function returns null, if you call it BEFORE init().
      *
      * @returns {KimaiContainer}
      */
