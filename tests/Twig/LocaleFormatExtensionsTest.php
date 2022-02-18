@@ -74,7 +74,7 @@ class LocaleFormatExtensionsTest extends TestCase
 
     public function testGetFunctions()
     {
-        $functions = ['get_format_duration', 'create_date', 'locales', 'month_names'];
+        $functions = ['javascript_configurations', 'get_format_duration', 'create_date', 'locales', 'month_names'];
         $i = 0;
 
         $sut = $this->getSut('de', []);
@@ -477,6 +477,16 @@ class LocaleFormatExtensionsTest extends TestCase
         self::assertEquals(3.43, $sut->durationChart(12345));
         self::assertEquals(34.29, $sut->durationChart(123456));
         self::assertEquals(342.94, $sut->durationChart(1234567));
+    }
+
+    public function testJavascriptConfigurations()
+    {
+        $expected = [
+            'formatDuration' => '%h:%m h',
+            'formatDate' => 'Y-m-d'
+        ];
+        $sut = $this->getSut('en', $this->localeEn);
+        self::assertEquals($expected, $sut->getJavascriptConfiguration(new User()));
     }
 
     public function testDurationDecimal()

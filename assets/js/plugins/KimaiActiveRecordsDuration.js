@@ -37,7 +37,11 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
 
         if (activeRecords.length === 0) {
             if (this.updateBrowserTitle) {
-                document.title = document.querySelector('body').dataset['title'];
+                if (document.body.dataset['title'] === undefined) {
+                    this.updateBrowserTitle = false;
+                } else {
+                    document.title = document.body.dataset['title'];
+                }
             }
             return;
         }

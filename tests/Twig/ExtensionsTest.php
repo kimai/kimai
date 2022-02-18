@@ -17,6 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Twig\Node\Node;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use Twig\TwigTest;
 
 /**
  * @covers \App\Twig\Extensions
@@ -26,6 +27,18 @@ class ExtensionsTest extends TestCase
     protected function getSut(): Extensions
     {
         return new Extensions();
+    }
+
+    private function getTest(string $name): TwigTest
+    {
+        $sut = $this->getSut();
+        foreach ($sut->getTests() as $test) {
+            if ($test->getName() === $name) {
+                return $test;
+            }
+        }
+
+        throw new \Exception('Unknown twig test: ' . $name);
     }
 
     public function testGetFilters()
@@ -60,6 +73,22 @@ class ExtensionsTest extends TestCase
         foreach ($twigFunctions as $filter) {
             $this->assertInstanceOf(TwigFunction::class, $filter);
             $this->assertEquals($functions[$i++], $filter->getName());
+        }
+    }
+
+    public function testGetTests()
+    {
+        $tests = ['number'];
+        $i = 0;
+
+        $sut = $this->getSut();
+        $twigTests = $sut->getTests();
+        $this->assertCount(\count($tests), $twigTests);
+
+        /** @var TwigTest $test */
+        foreach ($twigTests as $test) {
+            $this->assertInstanceOf(TwigTest::class, $test);
+            $this->assertEquals($tests[$i++], $test->getName());
         }
     }
 
@@ -211,6 +240,17 @@ sdfsdf' . PHP_EOL . "\n" .
         self::assertEquals(Constants::DEFAULT_COLOR, $sut->defaultColor(null));
         self::assertEquals(Constants::DEFAULT_COLOR, $sut->defaultColor());
         self::assertEquals('', $sut->defaultColor(''));
+    }
+
+    public function testIsNumeric()
+    {
+        $test = $this->getTest('number');
+        self::assertFalse(\call_user_func($test->getCallable(), null));
+        self::assertFalse(\call_user_func($test->getCallable(), true));
+        self::assertFalse(\call_user_func($test->getCallable(), false));
+        self::assertFalse(\call_user_func($test->getCallable(), '1'));
+        self::assertTrue(\call_user_func($test->getCallable(), 1));
+        self::assertTrue(\call_user_func($test->getCallable(), 1.0));
     }
 
     private static function assertIsValidColor(string $color)
