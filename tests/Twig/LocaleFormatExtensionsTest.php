@@ -27,10 +27,10 @@ use Twig\TwigTest;
  */
 class LocaleFormatExtensionsTest extends TestCase
 {
-    private $localeEn = ['en' => ['date' => 'Y-m-d', 'duration' => '%h:%m h']];
-    private $localeDe = ['de' => ['date' => 'd.m.Y', 'duration' => '%h:%m h']];
-    private $localeRu = ['ru' => ['date' => 'd.m.Y', 'duration' => '%h:%m h']];
-    private $localeFake = ['XX' => ['date' => 'd.m.Y', 'duration' => '%h - %m - %s Zeit']];
+    private $localeEn = ['en' => ['date' => 'Y-m-d', 'duration' => '%h:%m h', 'date_type' => 'yyyy-MM-dd']];
+    private $localeDe = ['de' => ['date' => 'd.m.Y', 'duration' => '%h:%m h', 'date_type' => 'yyyy-MM-dd']];
+    private $localeRu = ['ru' => ['date' => 'd.m.Y', 'duration' => '%h:%m h', 'date_type' => 'yyyy-MM-dd']];
+    private $localeFake = ['XX' => ['date' => 'd.m.Y', 'duration' => '%h - %m - %s Zeit', 'date_type' => 'yyyy-MM-dd']];
 
     /**
      * @param string|array $locale
@@ -483,7 +483,10 @@ class LocaleFormatExtensionsTest extends TestCase
     {
         $expected = [
             'formatDuration' => '%h:%m h',
-            'formatDate' => 'Y-m-d'
+            'formatDate' => 'YYYY-MM-DD',
+            'defaultColor' => '#d2d6de',
+            'twentyFourHours' => true,
+            'updateBrowserTitle' => false,
         ];
         $sut = $this->getSut('en', $this->localeEn);
         self::assertEquals($expected, $sut->getJavascriptConfiguration(new User()));

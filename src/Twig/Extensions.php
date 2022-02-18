@@ -54,7 +54,7 @@ class Extensions extends AbstractExtension
     {
         return [
             new TwigTest('number', function ($value) {
-                return !is_string($value) && is_numeric($value);
+                return !\is_string($value) && is_numeric($value);
             }),
         ];
     }
