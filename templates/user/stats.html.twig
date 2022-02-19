@@ -12,8 +12,6 @@
     {{ encore_entry_script_tags('chart') }}
 {% endblock %}
 
-
-
 {% block profile_content %}
     <div class="card mb-3">
         <div class="card-body">
@@ -101,20 +99,20 @@
     {{ charts.bar_javascript({'footer': 'footer', 'label': 'tooltip', 'onclick': {'url': monthRoute, 'replacer': {'__MONTH__': 'month'}}}) }}
 
     {% for year in workMonths.years|reverse %}
+        {% set totalDuration = 0 %}
+        {% for month in workMonths.year(year) %}
+            {% set totalDuration = totalDuration + month.duration %}
+        {% endfor %}
         {% embed '@theme/embeds/card.html.twig' %}
             {% import "macros/charts.html.twig" as charts %}
             {% import "macros/widgets.html.twig" as macros %}
             {% block box_title -%}
-                {{ year }}
+                {{ year }} &ndash;
+                {{ macros.badge_counter(totalDuration|duration) }}
             {%- endblock %}
             {% block box_tools %}
-                {% set totalDuration = 0 %}
-                {% for month in workMonths.year(year) %}
-                    {% set totalDuration = totalDuration + month.duration %}
-                {% endfor %}
-                {{ macros.badge_counter(totalDuration|duration) }}
                 {%- if canSeeReport -%}
-                    <a class="btn btn-default btn-sm" href="{{ path('report_user_year', {'user': user.id, 'date': year ~ '-01-01'}) }}"><i class="{{ 'reporting'|icon }}"></i></a>
+                    <a class="btn btn-icon" href="{{ path('report_user_year', {'user': user.id, 'date': year ~ '-01-01'}) }}"><i class="{{ 'reporting'|icon }}"></i></a>
                 {% endif %}
             {% endblock %}
             {% block box_body %}

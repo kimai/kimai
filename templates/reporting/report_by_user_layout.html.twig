@@ -1,0 +1,40 @@
+{% extends 'reporting/layout.html.twig' %}
+
+{% block report_title %}{{ report_title|trans({}, 'reporting') }}{% endblock %}
+
+{% block report_form %}
+    {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': 'user-filter-form'}}) }}
+    <div class="btn-list w-100">
+        {% if form.user is defined %}
+            {{ form_row(form.user, {'label': false, 'row_attr': {'class': 'w-25'}}) }}
+        {% elseif app.user != user %}
+            {{ widgets.username(user) }}
+        {% endif %}
+        {{ form_widget(form.date) }}
+        {{ form_widget(form.sumType) }}
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block report %}
+
+    {% embed '@theme/embeds/card.html.twig' with {report_content: block('report_content'), box_id: box_id} only %}
+        {% import "macros/widgets.html.twig" as widgets %}
+        {% block box_body_class %}{{ box_id }} table-responsive p-0 m-0{% endblock %}
+        {% block box_body %}
+            {{ report_content|raw }}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            jQuery('#user-filter-form').on('change', function(ev) {
+                jQuery(this).submit();
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'reporting/layout.html.twig' %}
+
+{% block report_title %}{{ report_title|trans({}, 'reporting') }}{% endblock %}
+
+{% block report_form %}
+    {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': 'user-list-filter-form'}}) }}
+    <div class="btn-list">
+        {{ form_widget(form.date) }}
+        {{ form_widget(form.sumType) }}
+        <button class="btn btn-primary btn-icon" formaction="{{ path(export_route) }}" type="submit"><i class="{{ 'download'|icon }}"></i></button>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block report %}
+
+    {% embed '@theme/embeds/card.html.twig' with {report_content: block('report_content'), box_id: box_id, hasData: hasData} only %}
+        {% import "macros/widgets.html.twig" as widgets %}
+        {% block box_body_class %}{{ box_id }} table-responsive {% if hasData %}p-0{% endif %} m-0{% endblock %}
+        {% block box_body %}
+            {% if not hasData %}
+                {{ widgets.nothing_found() }}
+            {% else %}
+                {{ report_content|raw }}
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            jQuery('#user-list-filter-form').on('change', function(ev) {
+                jQuery(this).submit();
+            });
+        });
+    </script>
+{% endblock %}

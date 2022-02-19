@@ -215,3 +215,18 @@
         {{ block('form_widget_simple') }}
     {% endif %}
 {% endblock tags_widget %}
+
+{% block report_sum_widget %}
+    <div class="dropdown"{% if form.vars.choices|length <= 1 %} style="display: none"{% endif %}>
+        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ icon('display') }}
+        </button>
+        <ul class="dropdown-menu checkbox-menu">
+            {% for option in form.children %}
+                <li class="dropdown-item">
+                    {{ form_widget(option) }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock report_sum_widget %}

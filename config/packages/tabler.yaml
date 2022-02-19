@@ -60,6 +60,7 @@ tabler:
         debug: far fa-file-alt
         delete: far fa-trash-alt
         details: fas fa-info-circle
+        display: fas fa-layer-group
         doctor: fas fa-medkit
         documentation: fas fa-book
         docu_chapter: fas fa-question

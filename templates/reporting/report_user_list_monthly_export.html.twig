@@ -1,7 +1,4 @@
-{% embed 'reporting/user_list_period_data.html.twig' %}
-    {% block user_column %}
-        {{ userPeriod.user.displayName }}
-    {% endblock %}
+{% embed 'reporting/user_list_period_data.html.twig' with {avatar: false} %}
     {% block duration -%}
         =VALUE("{{ period.totalDuration|duration(true) }}")
     {%- endblock %}

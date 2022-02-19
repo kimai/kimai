@@ -102,7 +102,7 @@
             </h3>
             <div class="card-actions">
                 {{ widgets.badge_counter(yearStat.duration|duration) }}
-                {% if view_revenue_tab %}
+                {% if view_revenue %}
                     {{ widgets.badge_counter(yearStat.rate|money(currency)) }}
                 {% endif %}
             </div>
@@ -270,24 +270,24 @@
             </h3>
             <div class="card-actions">
                 {{ widgets.badge_counter(project_view.durationTotal|duration) }}
-                {% if view_revenue_tab %}
+                {% if view_revenue %}
                     {{ widgets.badge_counter(project_view.rateTotal|money(currency)) }}
                 {% endif %}
             </div>
         </div>
         <ul class="nav nav-tabs" data-bs-toggle="tabs">
             <li class="nav-item"><a class="nav-link active" href="#details-chart" data-bs-toggle="tab">{{ 'report_project_details'|trans({}, 'reporting') }}</a></li>
+            {% if project_view.durationTotal > 0 %}
+                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Duration" href="#time-chart" data-bs-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
+            {% endif %}
+            {% if view_revenue and project_view.rateTotal > 0 %}
+                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-bs-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
+            {% endif %}
             {% if see_users and project_details.userStats|length > 0 %}
                 <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}User" href="#user-chart" data-bs-toggle="tab">{{ 'label.user'|trans }}</a></li>
             {% endif %}
             {% if activities is not empty %}
                 <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Activity" href="#activity-chart" data-bs-toggle="tab">{{ 'label.activity'|trans }}</a></li>
-            {% endif %}
-            {% if view_revenue and project_view.rateTotal > 0 %}
-                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-bs-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
-            {% endif %}
-            {% if project_view.durationTotal > 0 %}
-                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Duration" href="#time-chart" data-bs-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
             {% endif %}
         </ul>
         <div class="tab-content mt-2 p-2">
