@@ -41,6 +41,30 @@ class ActivityControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->assertAccessIsGranted($client, '/admin/activity/');
         $this->assertHasDataTable($client);
+
+        $this->assertPageActions($client, [
+            'search' => '#',
+            'visibility' => '#',
+            'download toolbar-action' => $this->createUrl('/admin/activity/export'),
+            'create modal-ajax-form' => $this->createUrl('/admin/activity/create'),
+            'help' => 'https://www.kimai.org/documentation/activity.html'
+        ]);
+    }
+
+    public function testIndexActionAsSuperAdmin()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/activity/');
+        $this->assertHasDataTable($client);
+
+        $this->assertPageActions($client, [
+            'search' => '#',
+            'visibility' => '#',
+            'download toolbar-action' => $this->createUrl('/admin/activity/export'),
+            'create modal-ajax-form' => $this->createUrl('/admin/activity/create'),
+            'settings modal-ajax-form' => $this->createUrl('/admin/system-config/edit/activity'),
+            'help' => 'https://www.kimai.org/documentation/activity.html'
+        ]);
     }
 
     public function testIndexActionWithSearchTermQuery()

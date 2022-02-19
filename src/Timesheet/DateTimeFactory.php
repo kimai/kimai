@@ -156,6 +156,19 @@ class DateTimeFactory
         return $date;
     }
 
+    public function createEndOfYear(?DateTime $date = null): DateTime
+    {
+        if (null === $date) {
+            $date = $this->createDateTime();
+        } else {
+            $date = clone $date;
+        }
+
+        $date->modify('last day of december 23:59:59');
+
+        return $date;
+    }
+
     public function createStartOfFinancialYear(?string $financialYear = null): DateTime
     {
         $defaultDate = $this->createDateTime('01 january this year 00:00:00');

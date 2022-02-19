@@ -21,10 +21,7 @@ final class ThemeConfiguration implements \ArrayAccess
         $this->systemConfiguration = $systemConfiguration;
     }
 
-    /**
-     * @return bool
-     */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->systemConfiguration->has('theme.' . $offset);
     }
@@ -42,7 +39,7 @@ final class ThemeConfiguration implements \ArrayAccess
      * @param mixed $value
      * @throws \BadMethodCallException
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         throw new \BadMethodCallException('ThemeConfiguration does not support offsetSet()');
     }
@@ -51,7 +48,7 @@ final class ThemeConfiguration implements \ArrayAccess
      * @param mixed $offset
      * @throws \BadMethodCallException
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         throw new \BadMethodCallException('ThemeConfiguration does not support offsetUnset()');
     }

@@ -9,6 +9,7 @@
 
 namespace App\Reporting;
 
+use App\Form\Type\ReportSumType;
 use App\Form\Type\YearPickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,6 +38,7 @@ class YearlyUserListForm extends AbstractType
             'start_date' => $options['start_date'],
             'show_range' => true,
         ]);
+        $builder->add('sumType', ReportSumType::class);
     }
 
     /**

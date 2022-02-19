@@ -126,6 +126,6 @@ final class MarkdownExtension implements RuntimeExtensionInterface
      */
     public function markdownToHtml(string $content): string
     {
-        return $this->markdown->toHtml($content);
+        return $this->markdown->withFullMarkdownSupport($content);
     }
 }

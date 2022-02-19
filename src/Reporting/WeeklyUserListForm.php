@@ -9,6 +9,7 @@
 
 namespace App\Reporting;
 
+use App\Form\Type\ReportSumType;
 use App\Form\Type\WeekPickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -36,6 +37,7 @@ class WeeklyUserListForm extends AbstractType
             'view_timezone' => $options['timezone'],
             'start_date' => $options['start_date'],
         ]);
+        $builder->add('sumType', ReportSumType::class);
     }
 
     /**

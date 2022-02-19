@@ -6,7 +6,7 @@
 {% import "invoice/macros.html.twig" as macros %}
 
 {% set columns = {
-    'date': {'class': 'alwaysVisible'},
+    'date': {'class': 'alwaysVisible text-nowrap'},
     'user': {'class': 'd-xs-none d-sm-none text-nowrap d-none', 'orderBy': false},
     'customer': {'class': 'd-xs-none d-sm-none text-nowrap', 'orderBy': false},
     'comment': {'class': 'd-xs-none d-sm-none', 'title': 'label.description'|trans},

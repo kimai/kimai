@@ -3,13 +3,23 @@
 {% block report_title %}{{ report_title|trans({}, 'reporting') }}{% endblock %}
 
 {% block report_form %}
-    {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle'}}) }}
+    {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': 'user-filter-form'}}) }}
     {% if form.user is defined %}
         {{ form_row(form.user, {'label': false, 'row_attr': {'class': 'w-25 me-2'}}) }}
     {% elseif app.user != user %}
         {{ widgets.username(user) }}
     {% endif %}
     {{ form_row(form.date, {'label': false, 'row_attr': {'class': 'me-2'}}) }}
+    <div class="btn-group"{% if form.sumType.vars.choices|length <= 1 %} style="display: none"{% endif %}>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="{{ 'display'|icon }}"></i> <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu checkbox-menu">
+            <li>
+                {{ form_widget(form.sumType) }}
+            </li>
+        </ul>
+    </div>
     {{ form_end(form) }}
 {% endblock %}
 
@@ -19,6 +29,24 @@
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_body_class %}{{ box_id }} table-responsive p-0 m-0{% endblock %}
         {% block box_body %}
+            {#
+            {% embed 'reporting/report_by_user_data.html.twig' %}
+                {% block period_name %}
+                    <th class="text-center text-nowrap{% if column is weekend %} weekend{% endif %}{% if column is today %} today{% endif %}">
+                        {{ column|date_weekday }}
+                    </th>
+                {% endblock %}
+                {% block column_classes_project -%}
+                    {% if column.date is weekend %} weekend{% endif %}{% if column.date is today %} today{% endif %}
+                {%- endblock %}
+                {% block column_classes_activity -%}
+                    {% if column.date is weekend %} weekend{% endif %}{% if column.date is today %} today{% endif %}
+                {%- endblock %}
+                {% block column_classes_total -%}
+                    {% if column is weekend %} weekend{% endif %}
+                {%- endblock %}
+            {% endembed %}
+            #}
             {% set totals = {'totals': 0} %}
             {% set columns = 2 %}
             <table class="table table-hover dataTable">
@@ -97,13 +125,8 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
-            {% if form.user is defined %}
-            jQuery('#{{ form.user.vars.id }}').on('change', function(ev) {
-                jQuery(this).closest('form').submit();
-            });
-            {% endif %}
-            jQuery('#{{ form.date.vars.id }}').on('change', function(ev) {
-                jQuery(this).closest('form').submit();
+            jQuery('#user-filter-form').on('change', function(ev) {
+                jQuery(this).submit();
             });
         });
     </script>

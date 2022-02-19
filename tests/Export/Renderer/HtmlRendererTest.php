@@ -84,9 +84,10 @@ class HtmlRendererTest extends AbstractRendererTest
         $this->assertStringContainsString('<td>project name</td>', $content);
         $this->assertStringContainsString('<span class="duration-format" data-duration-decimal="1.83" data-duration="01:50 h">01:50 h</span>', $content);
         $this->assertStringContainsString('<td class="cost summary-rate">€2,437.12</td>', $content);
+        $this->assertStringContainsString('-€100.92', $content);
 
         // 5 times in the "full list" and once in the "summary with activities"
-        $this->assertEquals(6, substr_count($content, 'activity description'));
+        $this->assertEquals(7, substr_count($content, 'activity description'));
         $this->assertEquals(1, substr_count($content, '<td>activity description</td>'));
     }
 }

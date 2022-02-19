@@ -1,0 +1,46 @@
+{% embed 'reporting/user_list_period_data.html.twig' %}
+    {% block user_column %}
+        {{ userPeriod.user.displayName }}
+    {% endblock %}
+    {% block duration -%}
+        =VALUE("{{ period.totalDuration|duration(true) }}")
+    {%- endblock %}
+    {% block total_duration -%}
+        =VALUE("{{ absoluteDuration|duration(true) }}")
+    {%- endblock %}
+    {% block total_duration_user -%}
+        =VALUE("{{ usersTotalDuration|duration(true) }}")
+    {%- endblock %}
+    {% block total_duration_period -%}
+        =VALUE("{{ total|duration(true) }}")
+    {%- endblock %}
+    {% block rate %}
+        =VALUE("{{ period.totalRate|money }}")
+    {% endblock %}
+    {% block total_rate %}
+        =VALUE("{{ absoluteRate|money }}")
+    {% endblock %}
+    {% block total_rate_user %}
+        =VALUE("{{ usersTotalRate|money }}")
+    {% endblock %}
+    {% block total_rate_period %}
+        =VALUE("{{ total|money }}")
+    {% endblock %}
+    {% block internal_rate %}
+        =VALUE("{{ period.totalInternalRate|money }}")
+    {% endblock %}
+    {% block total_internal_rate %}
+        =VALUE("{{ absoluteInternalRate|money }}")
+    {% endblock %}
+    {% block total_internal_rate_user %}
+        =VALUE("{{ usersTotalInternalRate|money }}")
+    {% endblock %}
+    {% block total_internal_rate_period %}
+        =VALUE("{{ total|money }}")
+    {% endblock %}
+    {% block period_name %}
+        <th class="text-center text-nowrap">
+            {{ column|date_short }}
+        </th>
+    {% endblock %}
+{% endembed %}

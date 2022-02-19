@@ -11,38 +11,17 @@ namespace App\Reporting;
 
 use App\Entity\User;
 
-abstract class DateByUser
+abstract class DateByUser extends AbstractUserList
 {
-    /**
-     * @var User
-     */
     private $user;
-    /**
-     * @var \DateTime
-     */
-    private $date;
 
     public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(User $user): self
+    public function setUser(User $user): void
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    public function getDate(): ?\DateTime
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTime $date): self
-    {
-        $this->date = $date;
-
-        return $this;
     }
 }

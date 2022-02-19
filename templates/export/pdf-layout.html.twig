@@ -103,15 +103,18 @@
 <sethtmlpagefooter name="myfooter" value="on" />
 mpdf-->
 {% endblock %}
+{% block body_start %}{% endblock %}
 {% block summary %}
-    <h2 style="margin-bottom: 4px; padding-bottom: 0">{% block title %}{{ 'export.document_title'|trans }}{% endblock %}</h2>
-    {% if query is defined %}
-    <p>
-        {{ 'export.period'|trans }}:
-        {{ query.begin|date_short }} - {{ query.end|date_short }}
-    </p>
-    {% endif %}
-    <h3>{{ 'export.summary'|trans }}</h3>
+    {% block summary_header %}
+        <h2 style="margin-bottom: 4px; padding-bottom: 0">{% block title %}{{ 'export.document_title'|trans }}{% endblock %}</h2>
+        {% if query is defined %}
+        <p>
+            {{ 'export.period'|trans }}:
+            {{ query.begin|date_short }} - {{ query.end|date_short }}
+        </p>
+        {% endif %}
+        <h3>{{ 'export.summary'|trans }}</h3>
+    {% endblock %}
     <table class="items">
         <thead>
         <tr>
@@ -254,7 +257,9 @@ mpdf-->
     <pagebreak>
 {% endblock %}
 {% block items %}
-    <h3>{{ 'export.full_list'|trans }}</h3>
+    {% block items_header %}
+        <h3>{{ 'export.full_list'|trans }}</h3>
+    {% endblock %}
 
     {% set duration = 0 %}
     {% set rate = 0 %}
@@ -338,5 +343,6 @@ mpdf-->
         </tbody>
     </table>
 {% endblock %}
+{% block body_end %}{% endblock %}
 </body>
 </html>

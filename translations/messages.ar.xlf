@@ -85,11 +85,11 @@
       </trans-unit>
       <trans-unit id="IeshU90" resname="customers">
         <source>customers</source>
-        <target>زبون</target>
+        <target>الزبائن</target>
       </trans-unit>
       <trans-unit id="JXfA9Ve" resname="projects">
         <source>projects</source>
-        <target>مشاريع</target>
+        <target>المشاريع</target>
       </trans-unit>
       <trans-unit id="YkyVVAY" resname="activities">
         <source>activities</source>
@@ -104,7 +104,7 @@
             -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
-        <target>لا يوجد بيانات</target>
+        <target>لم يتم العثور على إدخالات على أساس عوامل التصفية المحددة الخاصة بك.</target>
       </trans-unit>
       <!--
               General labels
@@ -139,7 +139,7 @@
       </trans-unit>
       <trans-unit id="ysOvPSq" resname="label.name">
         <source>label.name</source>
-        <target>اسم</target>
+        <target>الإسم</target>
       </trans-unit>
       <trans-unit id="WqTho4C" resname="label.comment">
         <source>label.comment</source>
@@ -155,15 +155,15 @@
       </trans-unit>
       <trans-unit id="2ktNwkr" resname="label.budget">
         <source>label.budget</source>
-        <target>ميزانية</target>
+        <target>الميزانية</target>
       </trans-unit>
       <trans-unit id="l1wiL0h" resname="label.activity">
         <source>label.activity</source>
-        <target>نشاط</target>
+        <target>النشاط</target>
       </trans-unit>
       <trans-unit id="KtnqJcg" resname="label.project">
         <source>label.project</source>
-        <target>مشروع</target>
+        <target>المشروع</target>
       </trans-unit>
       <trans-unit id="VAbtieW" resname="label.hourlyRate">
         <source>label.hourlyRate</source>
@@ -183,7 +183,7 @@
       </trans-unit>
       <trans-unit id="Ih3IFXj" resname="label.rate">
         <source>label.rate</source>
-        <target>معدل</target>
+        <target>المعدل</target>
       </trans-unit>
       <trans-unit id="foM2o5T" resname="label.language">
         <source>label.language</source>
@@ -191,7 +191,7 @@
       </trans-unit>
       <trans-unit id="Z8a2kUf" resname="label.customer">
         <source>label.customer</source>
-        <target>العميل</target>
+        <target>الزبون</target>
       </trans-unit>
       <trans-unit id="D2N6_cP" resname="label.email">
         <source>label.email</source>
@@ -336,7 +336,7 @@
       </trans-unit>
       <trans-unit id="0tkOMo1" resname="label.contact">
         <source>label.contact</source>
-        <target>اتصل</target>
+        <target>جهة الإتصال</target>
       </trans-unit>
       <trans-unit id="c9W5AO4" resname="label.address">
         <source>label.address</source>
@@ -344,19 +344,19 @@
       </trans-unit>
       <trans-unit id="k7MJQ82" resname="label.country">
         <source>label.country</source>
-        <target>بلد</target>
+        <target>البلد</target>
       </trans-unit>
       <trans-unit id="g03c_vw" resname="label.phone">
         <source>label.phone</source>
-        <target>هاتف</target>
+        <target>الهاتف</target>
       </trans-unit>
       <trans-unit id="eRyhERS" resname="label.fax">
         <source>label.fax</source>
-        <target>فاكس</target>
+        <target>الفاكس</target>
       </trans-unit>
       <trans-unit id="AawT9pW" resname="label.mobile">
         <source>label.mobile</source>
-        <target>التليفون المحمول</target>
+        <target>الهاتف الخلوي</target>
       </trans-unit>
       <trans-unit id="PS9IH_t" resname="label.homepage">
         <source>label.homepage</source>
@@ -375,7 +375,7 @@
             -->
       <trans-unit id="TRDzmCV" resname="label.alias">
         <source>label.alias</source>
-        <target>اسم</target>
+        <target>الإسم</target>
       </trans-unit>
       <trans-unit id="UrRn8xj" resname="label.title">
         <source>label.title</source>
@@ -410,7 +410,7 @@
       </trans-unit>
       <trans-unit id="rvO5ZXf" resname="ROLE_USER">
         <source>ROLE_USER</source>
-        <target>المستخدم</target>
+        <target>مستخدم</target>
       </trans-unit>
       <!--
               Statistics data for Dashboard & Users profile
@@ -489,11 +489,11 @@
       </trans-unit>
       <trans-unit id="67uSaR3" resname="stats.projectTotal">
         <source>stats.projectTotal</source>
-        <target>عدد المشاريع</target>
+        <target>المشاريع</target>
       </trans-unit>
       <trans-unit id="tnD6aPj" resname="stats.customerTotal">
         <source>stats.customerTotal</source>
-        <target>عدد العملاء</target>
+        <target>الزبائن</target>
       </trans-unit>
       <!--
               Invoice
@@ -572,11 +572,11 @@
       </trans-unit>
       <trans-unit id="9p2KQag" resname="invoice.signature_user">
         <source>invoice.signature_user</source>
-        <target>التأكيد: تاريخ / اسم استشاري / التوقيع</target>
+        <target>للتأكيد: التاريخ / اسم المستشار / التوقيع</target>
       </trans-unit>
       <trans-unit id="Q9ykNhO" resname="invoice.signature_customer">
         <source>invoice.signature_customer</source>
-        <target>التأكيد: تاريخ / اسم العميل / التوقيع</target>
+        <target>للتأكيد: التاريخ / اسم الزبون / التوقيع</target>
       </trans-unit>
       <trans-unit id="c3d6p33" resname="invoice.total_working_time">
         <source>invoice.total_working_time</source>
@@ -603,7 +603,7 @@
       </trans-unit>
       <trans-unit id="SLV47Uu" resname="recent.activities.format">
         <source>recent.activities.format</source>
-        <target>%activity% في %project% ل %customer%</target>
+        <target>%activity% في %project% لـ %customer%</target>
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
@@ -658,7 +658,7 @@
       </trans-unit>
       <trans-unit id="v72sA1c" resname="label.recalculate_rates">
         <source>label.recalculate_rates</source>
-        <target>أعد حساب المعدلات</target>
+        <target>إعادة حساب المعدلات</target>
       </trans-unit>
       <trans-unit id="uz4SmfP" resname="help.rate_internal">
         <source>help.rate_internal</source>
@@ -694,7 +694,7 @@
       </trans-unit>
       <trans-unit id="1kHI0gb" resname="menu.doctor">
         <source>menu.doctor</source>
-        <target>طبيب</target>
+        <target>حالة الخدمات</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -734,7 +734,7 @@
       </trans-unit>
       <trans-unit id="0M_Gylq" resname="rates.empty">
         <source>rates.empty</source>
-        <target>لم يتم تكوين أي معدلات حتى الآن.</target>
+        <target>لم يتم ضبط أية معدلات حتى الآن.</target>
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments">
         <source>attachments</source>
@@ -770,7 +770,7 @@
       </trans-unit>
       <trans-unit id="zFfl7jw" resname="sum.total">
         <source>sum.total</source>
-        <target>إجمالي</target>
+        <target>الإجمالي</target>
       </trans-unit>
       <trans-unit id="O5w1jzb" resname="file">
         <source>file</source>
@@ -822,7 +822,7 @@
       </trans-unit>
       <trans-unit id="jTiYRIu" resname="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>مشاريع الفريق وamp; الميزانيات</target>
+        <target>مشاريعي</target>
       </trans-unit>
       <trans-unit id="9hpJPiG" resname="action.save_all">
         <source>action.save_all</source>
@@ -851,6 +851,250 @@
       <trans-unit id="BytPihM" resname="label.set_as_default">
         <source>label.set_as_default</source>
         <target>حفظ الإعداد ات كمفضلة البحث</target>
+      </trans-unit>
+      <trans-unit id="BxkmaKz" resname="label.appendTags">
+        <source>label.appendTags</source>
+        <target>إلحاق كلمات مفتاحية</target>
+      </trans-unit>
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target>ساعات العمل هذه السنة المالية</target>
+      </trans-unit>
+      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target>المستخدمون النشطون في هذه السنة المالية</target>
+      </trans-unit>
+      <trans-unit id="7H7P1mE" resname="button.preview">
+        <source>button.preview</source>
+        <target>معاينة</target>
+      </trans-unit>
+      <trans-unit id="d5wyWRD" resname="export.full_list">
+        <source>export.full_list</source>
+        <target>القائمة الكاملة</target>
+      </trans-unit>
+      <trans-unit id="vjmoQGo" resname="export.period">
+        <source>export.period</source>
+        <target>الفترة الزمنية</target>
+      </trans-unit>
+      <trans-unit id="61p_ckr" resname="label.hours_24">
+        <source>label.hours_24</source>
+        <target>24 ساعة</target>
+      </trans-unit>
+      <trans-unit id="DZ7XGML" resname="profile.teams">
+        <source>profile.teams</source>
+        <target>الفِرَق</target>
+      </trans-unit>
+      <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
+        <source>stats.yourWorkingHours</source>
+        <target>ساعات عملي</target>
+      </trans-unit>
+      <trans-unit id="N778uJ6" resname="export.summary">
+        <source>export.summary</source>
+        <target>الملخص</target>
+      </trans-unit>
+      <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target>لا يمكن معالجة الطلب. تم العثور على نتائج كثيرة جدًا.</target>
+      </trans-unit>
+      <trans-unit id="jdbtx6z" resname="action.add">
+        <source>action.add</source>
+        <target>اضافة</target>
+      </trans-unit>
+      <trans-unit id="Zif614Q" resname="add_user.label">
+        <source>add_user.label</source>
+        <target>إضافة مستخدم</target>
+      </trans-unit>
+      <trans-unit id="hO7mkmf" resname="label.lastLogin">
+        <source>label.lastLogin</source>
+        <target>آخر تسجيل دخول</target>
+      </trans-unit>
+      <trans-unit id="Irm6dfx" resname="agendaWeek">
+        <source>agendaWeek</source>
+        <target>أسبوع</target>
+      </trans-unit>
+      <trans-unit id="Q0Zip02" resname="agendaDay">
+        <source>agendaDay</source>
+        <target>يوم</target>
+      </trans-unit>
+      <trans-unit id="IQ9DUOW" resname="button.preview_print">
+        <source>button.preview_print</source>
+        <target>معاينة قبل الطباعة</target>
+      </trans-unit>
+      <trans-unit id="ulYFDIo" resname="button.ods">
+        <source>button.ods</source>
+        <target>ODS</target>
+      </trans-unit>
+      <trans-unit id="Dgmh_mv" resname="label.vat_id">
+        <source>label.vat_id</source>
+        <target>معرف ضريبة القيمة المضافة</target>
+      </trans-unit>
+      <trans-unit id="iwWaUoa" resname="export.filter">
+        <source>export.filter</source>
+        <target>تصفية البيانات المخصصة للتصدير</target>
+      </trans-unit>
+      <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth">
+        <source>stats.workingTimeMonth</source>
+        <target>%month% %year%</target>
+      </trans-unit>
+      <trans-unit id="ov4OQOh" resname="invoice.filter">
+        <source>invoice.filter</source>
+        <target>تصفية بيانات الفاتورة</target>
+      </trans-unit>
+      <trans-unit id="Xij3oQl" resname="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target>تاريخ الدفع</target>
+      </trans-unit>
+      <trans-unit id="hzhzbqw" resname="label.status">
+        <source>label.status</source>
+        <target>الحالة</target>
+      </trans-unit>
+      <trans-unit id="F6Jmro7" resname="export.title">
+        <source>export.title</source>
+        <target>تصدير</target>
+      </trans-unit>
+      <trans-unit id="PCEFPeg" resname="updated_at">
+        <source>Updated at</source>
+        <target>تم تحديثه في</target>
+      </trans-unit>
+      <trans-unit id="cHfLJtL" resname="label.budgetType_month">
+        <source>label.budgetType_month</source>
+        <target>شهريا</target>
+      </trans-unit>
+      <trans-unit id="yNWIi5U" resname="default_value_new">
+        <source>default_value_new</source>
+        <target>القيم الافتراضية للإدخالات الجديدة</target>
+      </trans-unit>
+      <trans-unit id="W_TXvSi" resname="button.csv">
+        <source>button.csv</source>
+        <target>CSV</target>
+      </trans-unit>
+      <trans-unit id="vC2IsaP" resname="button.xlsx">
+        <source>button.xlsx</source>
+        <target>Excel</target>
+      </trans-unit>
+      <trans-unit id="aAa5uRR" resname="button.pdf">
+        <source>button.pdf</source>
+        <target>PDF</target>
+      </trans-unit>
+      <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">
+        <source>label.batch_meta_fields</source>
+        <target>حقول إضافية</target>
+      </trans-unit>
+      <trans-unit id="qDnURk7" resname="label.last_record">
+        <source>label.last_record</source>
+        <target>آخر إدخال</target>
+      </trans-unit>
+      <trans-unit id="YNGNfGn" resname="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target>معدل الضريبة</target>
+      </trans-unit>
+      <trans-unit id="1c0EQaz" resname="profile.registration_date">
+        <source>profile.registration_date</source>
+        <target>مسجل في</target>
+      </trans-unit>
+      <trans-unit id="pcfRcZ4" resname="month">
+        <source>month</source>
+        <target>شهر</target>
+      </trans-unit>
+      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target>تحديث عنوان المتصفح</target>
+      </trans-unit>
+      <trans-unit id="yLOqEX_" resname="label.project_start">
+        <source>label.project_start</source>
+        <target>بداية المشروع</target>
+      </trans-unit>
+      <trans-unit id="4kQGReV" resname="label.project_end">
+        <source>label.project_end</source>
+        <target>نهاية المشروع</target>
+      </trans-unit>
+      <trans-unit id="ZlZ20pG" resname="user_permissions.title">
+        <source>user_permissions.title</source>
+        <target>التسريحات المخولة للمستخدم</target>
+      </trans-unit>
+      <trans-unit id="G.GEdlk" resname="user_role.title">
+        <source>user_role.title</source>
+        <target>دور المستخدم</target>
+      </trans-unit>
+      <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _">
+        <source>Allowed character: A-Z and _</source>
+        <target>الحروف المسموح بها: A-Z و _</target>
+      </trans-unit>
+      <trans-unit id="d75KAlJ" resname="label.version">
+        <source>label.version</source>
+        <target>اﻹصدار</target>
+      </trans-unit>
+      <trans-unit id="8Rfa01v" resname="label.required_version">
+        <source>label.required_version</source>
+        <target>متوافق مع</target>
+      </trans-unit>
+      <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
+        <source>stats.workingTimeToday</source>
+        <target>اليوم، %day%</target>
+      </trans-unit>
+      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
+        <source>stats.workingTimeWeekShort</source>
+        <target>الأسبوع %week%</target>
+      </trans-unit>
+      <trans-unit id="JnUFsNi" resname="stats.workingTimeYear">
+        <source>stats.workingTimeYear</source>
+        <target>السنة الكاملة %year%</target>
+      </trans-unit>
+      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target>السنة المالية</target>
+      </trans-unit>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target>وقت العمل</target>
+      </trans-unit>
+      <trans-unit id="gT9W2pZ" resname="status.canceled">
+        <source>status.canceled</source>
+        <target>ملغاة</target>
+      </trans-unit>
+      <trans-unit id="3zn5T5e" resname="label.not_exported">
+        <source>label.not_exported</source>
+        <target>لم تصدّر</target>
+      </trans-unit>
+      <trans-unit id="csF1D35" resname="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target>لم يتم فوترتها</target>
+      </trans-unit>
+      <trans-unit id="LXdqaTH" resname="label.account_number">
+        <source>label.account_number</source>
+        <target>رقم الموظف</target>
+      </trans-unit>
+      <trans-unit id="PoF7hD8" resname="label.budgetType">
+        <source>label.budgetType</source>
+        <target>نوع الميزانية</target>
+      </trans-unit>
+      <trans-unit id="f8oNzSP" resname="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target>ساعات العمل الأسبوعية</target>
+      </trans-unit>
+      <trans-unit id="3CQ7A2m" resname="export.document_title">
+        <source>export.document_title</source>
+        <target>تصدير الصحائف الزمنية</target>
+      </trans-unit>
+      <trans-unit id="AJ6dwR." resname="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target>لا يوجد حجز للوقت منذ</target>
+      </trans-unit>
+      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
+        <source>label.login.initial_view</source>
+        <target>طريقة العرض الأولية بعد تسجيل الدخول</target>
+      </trans-unit>
+      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
+        <source>label.timesheet.export_decimal</source>
+        <target>استخدم المدة العشرية في التصدير</target>
+      </trans-unit>
+      <trans-unit id="UVJ5Die" resname="calendar">
+        <source>calendar</source>
+        <target>التقويم</target>
+      </trans-unit>
+      <trans-unit id="B.Dbbob" resname="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target>إظهار الإدخالات التي ليس لها ميزانية</target>
       </trans-unit>
     </body>
   </file>

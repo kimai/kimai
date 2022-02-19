@@ -120,6 +120,10 @@
         <source>modal.dirty</source>
         <target>Das Formular wurde geändert. Bitte klicken Sie „Speichern“, um die Änderungen zu sichern oder „Schließen“, um abzubrechen.</target>
       </trans-unit>
+      <trans-unit id="sdfgsdfgsdfg" resname="label.choice_pattern">
+        <source>Display of entries in selection lists</source>
+        <target>Darstellung der Einträge in Auswahllisten</target>
+      </trans-unit>
       <!--
               Login / Security
             -->

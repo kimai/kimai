@@ -163,7 +163,18 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->setMetaField((new TimesheetMeta())->setName('foo2')->setValue('meta-bar2')->setIsVisible(true))
         ;
 
-        $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];
+        $timesheet6 = new Timesheet();
+        $timesheet6
+            ->setDuration(400)
+            ->setFixedRate(-100.92)
+            ->setUser((new User())->setUsername('nivek'))
+            ->setActivity($activity)
+            ->setProject($project)
+            ->setBegin(new \DateTime('2019-06-16 12:00:00'))
+            ->setEnd(new \DateTime('2019-06-16 12:06:40'))
+        ;
+
+        $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5, $timesheet6];
 
         $query = new TimesheetQuery();
         $query->setActivities([$activity]);
