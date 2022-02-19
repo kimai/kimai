@@ -7,7 +7,7 @@
     {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
         {% from "macros/widgets.html.twig" import nothing_found %}
         {% block box_before %}
-            {{ form_start(form, {'attr': {'class': 'form-inline kimai-1.17', 'id': 'user-list-filter-form'}}) }}
+            {{ form_start(form, {'attr': {'class': 'form-inline', 'id': 'user-list-filter-form'}}) }}
         {% endblock %}
         {% block box_after %}
             {{ form_end(form) }}
