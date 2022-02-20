@@ -27,3 +27,17 @@
     display: table;
     table-layout: fixed;
 }
+
+// add a colored square in front of an option if the color attribute is set
+.select2-container--bootstrap .colored-option {
+    display: flex;
+    &:before {
+        $size: 20px;
+        background-color: var(--color);
+        content: '';
+        display: inline-block;
+        height: $size;
+        margin-right: 10px;
+        width: $size;
+    }
+}

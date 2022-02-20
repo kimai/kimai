@@ -115,12 +115,21 @@ export default class KimaiFormSelect extends KimaiPlugin {
             };
         }
 
+        // wrap option with color information, if the attribute is set
+        const templateFunc = function (data) {
+            const color = data.element?.dataset?.color ?? null;
+            return color ? jQuery(`<span class="colored-option" style="--color: ${color}">${data.text}</span>`) : data.text;
+        };
+
         options = {...options, ...{
             language: this.getConfiguration('locale').replace('_', '-'),
             theme: "bootstrap",
             matcher: this.matcher,
             dropdownAutoWidth: true,
-            width: "resolve"
+            width: "resolve",
+            matcher: this.matcher,
+            templateSelection: templateFunc,
+            templateResult: templateFunc
         }};
 
         const element = jQuery(node);
