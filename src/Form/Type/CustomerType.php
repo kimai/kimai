@@ -76,7 +76,7 @@ class CustomerType extends AbstractType
 
     public function getChoiceAttributes(Customer $customer, $key, $value): array
     {
-        return ['data-currency' => $customer->getCurrency()];
+        return ['data-currency' => $customer->getCurrency(), 'data-color' => $customer->getColor()];
     }
 
     /**
@@ -117,7 +117,6 @@ class CustomerType extends AbstractType
                 if (null !== $options['ignore_customer']) {
                     $query->setCustomerToIgnore($options['ignore_customer']);
                 }
-
                 return $repo->getQueryBuilderForFormType($query);
             };
         });

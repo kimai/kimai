@@ -62,6 +62,9 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
             ],
             'label' => 'label.color',
             'empty_data' => null,
+            'choice_attr' => function($choiceValue, $key, $value) {
+                return ['data-color' => $value];
+            },
         ];
 
         if ($this->isLimitedColors()) {
@@ -74,7 +77,6 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
 
             $options['choices'] = $choices;
             $options['search'] = false;
-            $options['attr']['data-renderer'] = 'color';
         }
 
         $resolver->setDefaults($options);

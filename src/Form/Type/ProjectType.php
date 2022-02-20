@@ -106,7 +106,10 @@ class ProjectType extends AbstractType
     public function getChoiceAttributes(Project $project, $key, $value): array
     {
         if (null !== ($customer = $project->getCustomer())) {
-            return ['data-customer' => $customer->getId(), 'data-currency' => $customer->getCurrency()];
+            return [
+                'data-customer' => $customer->getId(),
+                'data-currency' => $customer->getCurrency(),
+                'data-color' => $project->getColor()];
         }
 
         return [];

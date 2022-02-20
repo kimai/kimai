@@ -90,7 +90,11 @@ class ActivityType extends AbstractType
     public function getChoiceAttributes(Activity $activity, $key, $value)
     {
         if (null !== ($project = $activity->getProject())) {
-            return ['data-project' => $project->getId(), 'data-currency' => $project->getCustomer()->getCurrency()];
+            return [
+                'data-project' => $project->getId(),
+                'data-currency' => $project->getCustomer()->getCurrency(),
+                'data-color' => $activity->getColor()
+            ];
         }
 
         return [];
