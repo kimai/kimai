@@ -132,14 +132,14 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setOrder(450)
                 ->setSection('theme')
                 ->setType(ThemeLayoutType::class),
-
+/*
             (new UserPreference())
                 ->setName('theme.collapsed_sidebar')
                 ->setValue(true)
                 ->setOrder(500)
                 ->setSection('theme')
                 ->setType(CheckboxType::class),
-
+*/
             (new UserPreference())
                 ->setName('theme.update_browser_title')
                 ->setValue(true)

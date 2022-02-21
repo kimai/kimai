@@ -12,7 +12,7 @@
     <div class="row">
         {% set hasDragAndDrop = (config.dragDropAmount > 0 and dragAndDrop is not empty and (dragAndDrop|filter(s => s.entries|length > 0)|length > 0)) %}
         {% if hasDragAndDrop %}
-        <div class="d-xs-none col-sm-5 col-md-4 col-lg-3 d-print-none">
+        <div class="col-md-4 col-lg-3 d-none d-md-block">
             {% for source in dragAndDrop|filter(s => s.entries|length > 0) %}
                 {% embed '@theme/embeds/card.html.twig' %}
                     {% block box_title %}{{ source.title|trans }}{% endblock %}
@@ -39,7 +39,7 @@
         </div>
         {% endif %}
 
-        <div class="col-xs-12 {% if hasDragAndDrop %}col-sm-7 col-md-8 col-lg-9 col-print-12{% endif %}">
+        <div class="col-xs-12 {% if hasDragAndDrop %}col-md-8 col-lg-9 col-print-12{% endif %}">
             {% embed '@theme/embeds/card.html.twig' %}
                 {% block box_body_class %}p-3{% endblock %}
                 {% block box_body %}

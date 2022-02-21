@@ -1,8 +1,6 @@
 {% extends 'reporting/layout.html.twig' %}
 {% import "macros/datatables.html.twig" as tables %}
 
-{% block report_title %}{{ 'report_project_daterange'|trans({}, 'reporting') }}{% endblock %}
-
 {% set columns = {
     'name':          {'class': 'alwaysVisible'},
     'timeBudget':    {'class': 'd-xs-none', 'title': 'label.timeBudget'|trans},
@@ -20,32 +18,27 @@
 
 {% block report_form %}
     {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': 'project-daterange-form'}}) }}
-    {% if form.customer is defined %}
-        {{ form_row(form.customer, {'label': false, 'placeholder': 'please_choose', 'row_attr': {'class': 'w-25 me-2'}}) }}
-    {% endif %}
-    {% if form.month is defined %}
-        {{ form_row(form.month, {'label': false, 'row_attr': {'class': 'me-2'}}) }}
-    {% endif %}
-    <div class="btn-group">
-        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ icon('filter') }}
-        </button>
-        <ul class="dropdown-menu checkbox-menu">
-            <li class="dropdown-item">
-                {{ form_widget(form.includeNoWork) }}
-            </li>
-            <li class="dropdown-item">
-                {{ form_widget(form.budgetType) }}
-            </li>
-        </ul>
+    <div class="btn-list w-100">
+        {{ form_row(form.customer, {'label': false, 'placeholder': 'please_choose', 'row_attr': {'class': 'w-50'}}) }}
+        {{ form_row(form.month, {'label': false}) }}
+        <div class="dropdown">
+            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ icon('filter') }}
+            </button>
+            <ul class="dropdown-menu checkbox-menu">
+                <li class="dropdown-item">
+                    {{ form_widget(form.includeNoWork) }}
+                </li>
+                {% for option in form.budgetType.children %}
+                    <li class="dropdown-divider"></li>
+                    <li class="dropdown-item">
+                        {{ form_widget(option) }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-    {{ form_rest(form) }}
-    {#
-    {{ form_row(form.customer, {'row_attr': {'class': 'w-25 me-2'}}) }}
-    {{ form_row(form.month, {'row_attr': {'class': 'me-2'}}) }}
-    {{ form_row(form.includeNoBudget, {'row_attr': {'class': 'me-2'}}) }}
     {{ form_end(form) }}
-    #}
 {% endblock %}
 
 {% block report %}

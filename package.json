@@ -23,7 +23,7 @@
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.15",
     "@symfony/webpack-encore": "^1.1",
-    "@tabler/core": "^1.0.0-beta2",
+    "@tabler/core": "^1.0.0-beta8",
     "bootstrap": "^5.1.3",
     "chart.js": "~2.9",
     "core-js": "^3.6",

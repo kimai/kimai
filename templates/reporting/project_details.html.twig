@@ -2,8 +2,6 @@
 {% import "macros/charts.html.twig" as charts %}
 {% import "macros/widgets.html.twig" as widgets %}
 
-{% block report_title %}{{ 'report_project_details'|trans({}, 'reporting') }}{% endblock %}
-
 {% set tableName = tableName|default('project_details_reporting') %}
 {% set tableId = 'project-details-form' %}
 {% set view_budget = project_details is not null and is_granted('budget', project_details.project) %}
@@ -57,8 +55,9 @@
 {% endblock %}
 
 {% block report_form %}
-    {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': tableId}}) }}
-    {{ form_row(form.project, {'row_attr': {'class': 'w-25 me-2'}}) }}
+    {% form_theme form '@theme/layout/form-theme-horizontal.html.twig' %}
+    {{ form_start(form, {'attr': {'id': tableId}}) }}
+    {{ form_row(form.project, {'placeholder': 'please_choose', 'row_attr': {'class': 'w-100'}}) }}
     {{ form_end(form) }}
 {% endblock %}
 

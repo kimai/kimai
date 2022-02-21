@@ -17,17 +17,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select an invoice renderer.
  */
-class InvoiceRendererType extends AbstractType
+final class InvoiceRendererType extends AbstractType
 {
-    /**
-     * @var ServiceInvoice
-     */
-    protected $service;
+    private $service;
 
-    /**
-     * InvoiceRendererType constructor.
-     * @param ServiceInvoice $service
-     */
     public function __construct(ServiceInvoice $service)
     {
         $this->service = $service;
@@ -61,13 +54,7 @@ class InvoiceRendererType extends AbstractType
         ]);
     }
 
-    /**
-     * @param string $value
-     * @param string $label
-     * @param string $index
-     * @return string
-     */
-    public function getGroupBy($value, $label, $index)
+    public function getGroupBy(string $value, string $label, string $index): string
     {
         $renderer = $label;
 

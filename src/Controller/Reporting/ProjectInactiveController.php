@@ -47,10 +47,10 @@ final class ProjectInactiveController extends AbstractController
             $byCustomer[$customer->getId()]['projects'][] = $entry;
         }
 
-        return $this->render('reporting/project_view.html.twig', [
+        return $this->render('reporting/project_inactive.html.twig', [
             'entries' => $byCustomer,
             'form' => $form->createView(),
-            'title' => 'report_inactive_project',
+            'report_title' => 'report_inactive_project',
             'tableName' => 'inactive_project_reporting',
             'now' => $now,
             'skipColumns' => ['today', 'week', 'month', 'projectStart', 'projectEnd', 'comment'],

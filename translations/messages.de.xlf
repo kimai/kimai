@@ -1239,7 +1239,7 @@
       </trans-unit>
       <trans-unit id="AJ6dwR." resname="label.last_record_before">
         <source>label.last_record_before</source>
-        <target>Keine Zeitbuchung mehr seit</target>
+        <target>Keine Zeitbuchung seit</target>
       </trans-unit>
       <trans-unit id="qDnURk7" resname="label.last_record">
         <source>label.last_record</source>

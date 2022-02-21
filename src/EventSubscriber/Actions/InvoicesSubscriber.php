@@ -23,7 +23,7 @@ class InvoicesSubscriber extends AbstractActionsSubscriber
         $event->addColumnToggle('#modal_invoice');
 
         if ($this->isGranted('system_configuration')) {
-            $event->addAction('settings', ['url' => $this->path('system_configuration_section', ['section' => 'invoice']), 'class' => 'modal-ajax-form', 'title' => 'settings', 'translation_domain' => 'actions']);
+            $event->addAction('settings', ['title' => 'settings', 'translation_domain' => 'actions', 'url' => $this->path('system_configuration_section', ['section' => 'invoice']), 'class' => 'modal-ajax-form']);
         }
 
         $event->addHelp($this->documentationLink('invoices.html'));

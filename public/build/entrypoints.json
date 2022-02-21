@@ -2,44 +2,44 @@
   "entrypoints": {
     "app": {
       "js": [
-        "build/runtime.1f6c2a27.js",
-        "build/app.279cb434.js"
+        "build/runtime.fb9c99a2.js",
+        "build/app.ed35580a.js"
       ],
       "css": [
-        "build/app.a4f2e2db.css"
+        "build/app.4e1863b4.css"
       ]
     },
     "invoice": {
       "js": [
-        "build/runtime.1f6c2a27.js",
-        "build/invoice.19f36eca.js"
+        "build/runtime.fb9c99a2.js",
+        "build/invoice.c8ae95ad.js"
       ],
       "css": [
-        "build/invoice.e245ede5.css"
+        "build/invoice.976047d9.css"
       ]
     },
     "invoice-pdf": {
       "js": [
-        "build/runtime.1f6c2a27.js",
-        "build/invoice-pdf.0ce1f3ce.js"
+        "build/runtime.fb9c99a2.js",
+        "build/invoice-pdf.d86b82ee.js"
       ],
       "css": [
-        "build/invoice-pdf.9a7468ef.css"
+        "build/invoice-pdf.b6dc0d9e.css"
       ]
     },
     "chart": {
       "js": [
-        "build/runtime.1f6c2a27.js",
-        "build/chart.e845e930.js"
+        "build/runtime.fb9c99a2.js",
+        "build/chart.3065c87d.js"
       ]
     },
     "calendar": {
       "js": [
-        "build/runtime.1f6c2a27.js",
-        "build/calendar.aa81e950.js"
+        "build/runtime.fb9c99a2.js",
+        "build/calendar.a15babda.js"
       ],
       "css": [
-        "build/calendar.25e7e872.css"
+        "build/calendar.9f5b3d41.css"
       ]
     }
   }

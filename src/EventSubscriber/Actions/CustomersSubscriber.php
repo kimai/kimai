@@ -34,7 +34,7 @@ class CustomersSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('system_configuration')) {
-            $event->addAction('settings', ['url' => $this->path('system_configuration_section', ['section' => 'customer']), 'class' => 'modal-ajax-form']);
+            $event->addAction('settings', ['title' => 'settings', 'translation_domain' => 'actions', 'url' => $this->path('system_configuration_section', ['section' => 'customer']), 'class' => 'modal-ajax-form']);
         }
 
         $event->addHelp($this->documentationLink('customer.html'));

@@ -7,7 +7,7 @@
 <div class="nav-item d-none d-md-flex me-3">
     <div class="btn-list">
         {% set class = "btn-outline-white" %}
-        {% if tabler_bundle.isDarkMode() %}
+        {% if tabler_bundle.isDarkMode() or tabler_bundle.isNavbarOverlapping() %}
             {% set class = "btn-dark" %}
         {% endif %}
         {% set entry = active_timesheets[0] %}

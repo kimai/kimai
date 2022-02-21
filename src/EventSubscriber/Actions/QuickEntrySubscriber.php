@@ -21,7 +21,7 @@ class QuickEntrySubscriber extends AbstractActionsSubscriber
     public function onActions(PageActionsEvent $event): void
     {
         if ($this->isGranted('system_configuration')) {
-            $event->addAction('settings', ['url' => $this->path('system_configuration_section', ['section' => 'quick_entry']), 'class' => 'modal-ajax-form']);
+            $event->addAction('settings', ['title' => 'settings', 'translation_domain' => 'actions', 'url' => $this->path('system_configuration_section', ['section' => 'quick_entry']), 'class' => 'modal-ajax-form']);
         }
 
         $event->addHelp($this->documentationLink('weekly-times.html'));

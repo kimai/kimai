@@ -34,8 +34,14 @@ class UsersSubscriber extends AbstractActionsSubscriber
             $event->addCreate($this->path('admin_user_create'), false);
         }
 
+        if ($this->isGranted('view_reporting') && $this->isGranted('view_other_reporting') && $this->isGranted('view_other_timesheet')) {
+            $event->addActionToSubmenu('report', 'weekly', ['url' => $this->path('report_weekly_users'), 'translation_domain' => 'reporting', 'title' => 'report_weekly_users']);
+            $event->addActionToSubmenu('report', 'monthly', ['url' => $this->path('report_monthly_users'), 'translation_domain' => 'reporting', 'title' => 'report_monthly_users']);
+            $event->addActionToSubmenu('report', 'yearly', ['url' => $this->path('report_yearly_users'), 'translation_domain' => 'reporting', 'title' => 'report_yearly_users']);
+        }
+
         if ($this->isGranted('system_configuration')) {
-            $event->addAction('settings', ['url' => $this->path('system_configuration_section', ['section' => 'user']), 'class' => 'modal-ajax-form']);
+            $event->addAction('settings', ['title' => 'settings', 'translation_domain' => 'actions', 'url' => $this->path('system_configuration_section', ['section' => 'user']), 'class' => 'modal-ajax-form']);
         }
 
         $event->addHelp($this->documentationLink('users.html'));

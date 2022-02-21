@@ -5,6 +5,9 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "composer/package-versions-deprecated": {
+        "version": "1.11.99.5"
+    },
     "composer/pcre": {
         "version": "1.0.1"
     },
@@ -174,12 +177,6 @@
     "laminas/laminas-escaper": {
         "version": "2.7.0"
     },
-    "laminas/laminas-eventmanager": {
-        "version": "3.2.1"
-    },
-    "laminas/laminas-zendframework-bridge": {
-        "version": "1.1.1"
-    },
     "league/csv": {
         "version": "9.4.1"
     },
@@ -231,12 +228,6 @@
     "nikic/php-parser": {
         "version": "v4.0.2"
     },
-    "ocramius/package-versions": {
-        "version": "1.2.0"
-    },
-    "ocramius/proxy-manager": {
-        "version": "2.1.1"
-    },
     "onelogin/php-saml": {
         "version": "3.4.1"
     },
@@ -251,9 +242,6 @@
     },
     "phar-io/version": {
         "version": "1.0.1"
-    },
-    "php": {
-        "version": "7.2.9"
     },
     "php-cs-fixer/diff": {
         "version": "v1.2.0"
@@ -528,9 +516,6 @@
     "symfony/intl": {
         "version": "v4.0.3"
     },
-    "symfony/ldap": {
-        "version": "v4.2.8"
-    },
     "symfony/mailchimp-mailer": {
         "version": "4.4",
         "recipe": {
@@ -791,12 +776,6 @@
     },
     "willdurand/negotiation": {
         "version": "v2.3.1"
-    },
-    "zendframework/zend-code": {
-        "version": "3.3.0"
-    },
-    "zendframework/zend-eventmanager": {
-        "version": "3.2.0"
     },
     "zircote/swagger-php": {
         "version": "2.0.13"

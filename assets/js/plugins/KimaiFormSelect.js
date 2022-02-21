@@ -122,14 +122,12 @@ export default class KimaiFormSelect extends KimaiPlugin {
                             text = escape(text);
                         }
                         return '<div>' + text + '</div>';
-                    },
+                    }
                 }
             }};
         }
 
-        options = {...options, ...{
-            render: render
-        }};
+        options = {...options, ...render};
 
         const select = new TomSelect(node, options);
         node.addEventListener('data-reloaded', (event) => {
@@ -145,7 +143,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
 
     activateSelectPicker(selector, container) {
         const fields = document.querySelectorAll(selector + ' ' + this.selector);
-        for (let field of fields) {
+        for (const field of fields) {
             this.activateSelectPickerByElement(field, container);
         }
     }

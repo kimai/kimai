@@ -5,6 +5,16 @@
 {% block page_title %}{{ 'teams.title'|trans({}, 'teams') }}{% endblock %}
 {% block page_actions %}{{ actions.team(team, 'edit') }}{% endblock %}
 
+{% block subtitle %}
+    {% block report_title %}
+        {% from "macros/widgets.html.twig" import breadcrumb %}
+        {{ breadcrumb({
+            ('teams.title'|trans({}, 'teams')): path('admin_team'),
+            ((team.id is null ? 'create'|trans: 'edit'|trans({}, 'actions'))): '#'
+        }) }}
+    {% endblock %}
+{% endblock %}
+
 {% block main %}
 <div class="row">
     <div class="col-md-6">

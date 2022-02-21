@@ -4,7 +4,7 @@
     data-title="{{- get_title()|e('html_attr') -}}"
 {%- endblock -%}
 
-{% block page_title %}{{- get_title() -}}{% endblock %}
+{% block page_title -%}{{- get_title() -}}{%- endblock %}
 
 {% block after_body_start %}
     {% embed '@theme/embeds/modal.html.twig' %}
@@ -68,7 +68,11 @@
 
 {% block page_pretitle %}{% endblock %}
 
-{% block page_subtitle %}{% endblock %}
+{% block page_subtitle %}
+    {%- if block('subtitle') is defined -%}
+    <div class="text-muted mt-1">{{ block('subtitle') }}</div>
+    {%- endif -%}
+{% endblock %}
 
 {% block logo_mini %}
     {% set mini = config('theme.branding.mini') %}

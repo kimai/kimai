@@ -80,7 +80,7 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
                     break;
 
                 case 'theme.collapsed_sidebar':
-                    $this->helper->setIsCondensedNavbar($ref->getValue());
+                    //$this->helper->setIsCondensedNavbar($ref->getValue());
                     break;
             }
         }

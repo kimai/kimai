@@ -1,28 +1,60 @@
+{% macro breadcrumb(breadcrumbs) %}
+    {% from '@theme/components/breadcrumb.html.twig' import breadcrumb %}
+    {{ breadcrumb(breadcrumbs) }}
+{% endmacro %}
+
 {% macro icon(icon) %}
 <i class="{{ icon|icon(icon) }}"></i>
 {% endmacro %}
 
 {%- macro page_actions(actions) -%}
-    {% set later = [] %}
-    <div class="page-actions btn-group text-muted">
+    {% set large = true %}
+    {% set btnClasses = 'btn-primary' %}
+    {% set helpClasses = '' %}
+    {% if tabler_bundle.isNavbarOverlapping() %}
+        {% set helpClasses = 'btn-dark' %}
+    {% elseif not tabler_bundle.isDarkMode() %}
+        {% set btnClasses = 'btn-white' %}
+    {% endif %}
+    {% set later = {} %}
+    {% set help = null %}
+    <div class="page-actions">
+        <div class="d-none d-sm-inline-flex btn-list">
         {%- apply spaceless -%}
-            {%- for icon,values in actions  %}
-                {% if 'divider' in icon and values is null %}
+            {%- for icon, values in actions  %}
+                {% if 'help' in icon %}
+                    {% set help = values %}
+                {% elseif 'divider' in icon and values is null %}
                     {# what to do here ? #}
                 {% else %}
-                    {% if values.children is defined %}
-                        {% set later = later|merge(values.children) %}
+                    {% if values.children is defined and values.children|length > 0 %}
+                            <div class="dropdown">
+                                <button type="button" class="btn {{ btnClasses}} dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ icon(icon) }}{% if large %} {{ icon|trans({}, 'actions') }}{% endif %}
+                                </button>
+                                <div class="dropdown-menu">
+                                {%- for icon, values in values.children %}
+                                    {% set values = values|merge({class: 'dropdown-item action-' ~ icon ~ ' ' ~ (values.class|default(''))}) %}
+                                    {{ _self.action_button(false, values, false) }}
+                                    {% endfor %}
+                                </div>
+                            </div>
                     {% else %}
-                        {% set values = values|merge({class: 'action-' ~ icon ~ ' ' ~ (values.class|default(''))}) %}
+                        {% set values = values|merge({combined: large, class: btnClasses ~ ' action-' ~ icon ~ ' ' ~ (values.class|default(''))}) %}
                         {{ _self.action_button(icon, values) }}
                     {% endif %}
                 {% endif %}
             {% endfor -%}
         {% endapply %}
+        {% if help is not null %}
+            {% set help = help|merge({class: helpClasses ~ ' action-help ' ~ (help.class|default(''))}) %}
+            {{ _self.action_button('help', help) }}
+        {% endif %}
+        </div>
+        <div class="d-inline-flex d-sm-none btn-list">
+            {{ _self.table_actions(actions, 'btn btn-dark') }}
+        </div>
     </div>
-    {% if later|length > 0 %}
-        {{ _self.page_actions(later) }}
-    {% endif %}
 {%- endmacro -%}
 
 {% macro page_header(title) %}
@@ -206,7 +238,7 @@
 {% macro table_actions(actions, class) %}
     {% if actions|length >= 1 %}
         {% import '@theme/components/actions.html.twig' as macro %}
-        {{ macro.actions(actions, {class: class ~ ' btn-sm', translationDomain: 'actions'}) }}
+        {{ macro.actions(actions, {'class': class|default('btn-sm'), translationDomain: 'actions'}) }}
     {% endif %}
 {% endmacro %}
 
@@ -216,11 +248,13 @@
 
 {% macro card_tool_button(icon, values) %}
     {% import '@theme/components/buttons.html.twig' as macro %}
+    {% set values = values|merge({'tooltip_attr': 'data-toggle'}) %}
     {{ macro.action_cardtoolbutton(icon, values) }}
 {% endmacro %}
 
 {% macro action_button(icon, values, type) %}
     {% import '@theme/components/button.html.twig' as macro %}
+    {% set values = values|merge({'tooltip_attr': 'data-toggle'}) %}
     {{ macro.button(icon, values, type) }}
 {% endmacro %}
 

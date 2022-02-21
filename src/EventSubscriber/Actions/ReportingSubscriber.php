@@ -20,10 +20,6 @@ class ReportingSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        if (!$event->isIndexView()) {
-            $event->addBack($this->path('reporting'));
-        }
-
         $event->addHelp($this->documentationLink('reporting.html'));
     }
 }

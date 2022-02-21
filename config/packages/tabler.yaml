@@ -10,6 +10,8 @@ tabler:
         dark_mode: false
         # condensed = one nav-bar, false = two nav-bars
         navbar_condensed: true
+        # overlap = https://preview.tabler.io/layout-navbar-overlap.html
+        navbar_overlap: true
         # boxed layout (true) or full-screen (false)
         boxed_layout: false
         # right to left = true
@@ -103,6 +105,7 @@ tabler:
         project: fas fa-briefcase
         repeat: fas fa-redo-alt
         reporting: far fa-chart-bar
+        report: far fa-chart-bar
         right: fas fa-chevron-right
         roles: fas fa-user-shield
         save: far fa-save

@@ -37,6 +37,8 @@ class NotificationsSubscriber implements EventSubscriberInterface
 
     public function onNotificationEvent(NotificationEvent $event): void
     {
+        return;
+
         $model = new NotificationModel('Test', 'Test', ThemeConstants::TYPE_INFO);
         $model->setUrl($this->urlGenerator->generate('dashboard'));
         $event->addNotification($model);

@@ -5,3 +5,13 @@
     {% import "timesheet-team/actions.html.twig" as actions %}
     {{ actions.timesheets_team_multi_update('multi-update') }}
 {% endblock %}
+
+{% block subtitle %}
+    {% block report_title %}
+        {% from "macros/widgets.html.twig" import breadcrumb %}
+        {{ breadcrumb({
+            ('menu.admin_timesheet'|trans): path('admin_timesheet_multi_update'),
+            ('edit'|trans({}, 'actions')): '#'
+        }) }}
+    {% endblock %}
+{% endblock %}

@@ -91,19 +91,20 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
     protected function activateByRoute($route, $items)
     {
         foreach ($items as $item) {
-            if ($item->hasChildren()) {
-                $this->activateByRoute($route, $item->getChildren());
-            } else {
-                if ($item->getRoute() == $route) {
+            if ($item instanceof MenuItemModel) {
+                if ($item->isChildRoute($route)) {
                     $item->setIsActive(true);
                     continue;
                 }
-                if ($item instanceof MenuItemModel) {
-                    if ($item->isChildRoute($route)) {
-                        $item->setIsActive(true);
-                        continue;
-                    }
-                }
+            }
+
+            if ($item->getRoute() === $route) {
+                $item->setIsActive(true);
+                continue;
+            }
+
+            if ($item->hasChildren()) {
+                $this->activateByRoute($route, $item->getChildren());
             }
         }
     }

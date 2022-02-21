@@ -31,6 +31,7 @@ class CustomerSubscriber extends AbstractActionsSubscriber
         }
 
         $canView = $this->isGranted('view', $customer);
+        $isListingView = $event->isIndexView() || $event->isCustomView();
 
         if (!$event->isView('customer_details') && $canView) {
             $event->addAction('details', ['title' => 'details', 'translation_domain' => 'actions', 'url' => $this->path('customer_details', ['id' => $customer->getId()])]);
@@ -70,7 +71,7 @@ class CustomerSubscriber extends AbstractActionsSubscriber
             $event->addDivider();
         }
 
-        if (!$event->isView('customer_details')) {
+        if ($isListingView) {
             if ($customer->isVisible() && $this->isGranted('create_project')) {
                 $event->addAction('create-project', [
                     'icon' => 'create',
@@ -84,8 +85,12 @@ class CustomerSubscriber extends AbstractActionsSubscriber
             $event->addDelete($this->path('admin_customer_delete', ['id' => $customer->getId()]));
         }
 
-        if ($this->isGranted('view_reporting') && $this->isGranted('budget_project')) {
-            $event->addAction('report_project_view', ['url' => $this->path('report_project_view', ['customer' => $customer->getId()]), 'icon' => 'reporting', 'translation_domain' => 'reporting']);
+        if ($isListingView && $this->isGranted('view_reporting') && $this->isGranted('budget_project')) {
+            $event->addAction('report_project_view', ['title' => 'report_project_view', 'url' => $this->path('report_project_view', ['customer' => $customer->getId()]), 'icon' => 'reporting', 'translation_domain' => 'reporting']);
+        }
+
+        if (!$isListingView) {
+            $event->addHelp($this->documentationLink('customer.html'));
         }
     }
 }

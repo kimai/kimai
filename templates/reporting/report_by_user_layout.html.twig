@@ -1,6 +1,5 @@
 {% extends 'reporting/layout.html.twig' %}
-
-{% block report_title %}{{ report_title|trans({}, 'reporting') }}{% endblock %}
+{% import "macros/widgets.html.twig" as widgets %}
 
 {% block report_form %}
     {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': 'user-filter-form'}}) }}

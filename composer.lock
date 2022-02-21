@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0d555e10c9f59579fa4850cfddfbd75",
+    "content-hash": "cec8267770fbb37d1103306a67b1b2f0",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2096,9 +2096,6 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "HandcraftedInTheAlps\\RestRoutingBundle\\": ""
-                },
                 "files": [
                     "Controller/Annotations/NamePrefix.php",
                     "Controller/Annotations/NoRoute.php",
@@ -2107,6 +2104,9 @@
                     "Controller/Annotations/Version.php",
                     "Routing/ClassResourceInterface.php"
                 ],
+                "psr-4": {
+                    "HandcraftedInTheAlps\\RestRoutingBundle\\": ""
+                },
                 "exclude-from-classmap": [
                     "Resources/",
                     "Tests/"
@@ -2126,6 +2126,59 @@
                 "source": "https://github.com/handcraftedinthealps/RestRoutingBundle/tree/1.0.5"
             },
             "time": "2021-12-19T17:31:53+00:00"
+        },
+        {
+            "name": "jeroendesloovere/vcard",
+            "version": "v1.7.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jeroendesloovere/vcard.git",
+                "reference": "2b8b6190c613d368b8cb6552e59cf6e6e7d0aea9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jeroendesloovere/vcard/zipball/2b8b6190c613d368b8cb6552e59cf6e6e7d0aea9",
+                "reference": "2b8b6190c613d368b8cb6552e59cf6e6e7d0aea9",
+                "shasum": ""
+            },
+            "require": {
+                "behat/transliterator": "~1.0",
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.6.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JeroenDesloovere\\VCard\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeroen Desloovere",
+                    "email": "info@jeroendesloovere.be",
+                    "homepage": "http://jeroendesloovere.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This VCard PHP class can generate a vCard with some data. When using an iOS device it will export as a .ics file because iOS devices don't support the default .vcf files.",
+            "homepage": "https://github.com/jeroendesloovere/vcard",
+            "keywords": [
+                ".vcf",
+                "generator",
+                "php",
+                "vCard"
+            ],
+            "support": {
+                "issues": "https://github.com/jeroendesloovere/vcard/issues",
+                "source": "https://github.com/jeroendesloovere/vcard/tree/v1.7.3"
+            },
+            "time": "2021-11-24T20:21:20+00:00"
         },
         {
             "name": "jms/metadata",
@@ -2377,12 +2430,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "9c779be1fcfd062398444eea9f55219003becc9e"
+                "reference": "c44d644e7784443f8c5237a08409263eb788b08e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/9c779be1fcfd062398444eea9f55219003becc9e",
-                "reference": "9c779be1fcfd062398444eea9f55219003becc9e",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/c44d644e7784443f8c5237a08409263eb788b08e",
+                "reference": "c44d644e7784443f8c5237a08409263eb788b08e",
                 "shasum": ""
             },
             "require": {
@@ -2444,7 +2497,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-02-10T11:09:22+00:00"
+            "time": "2022-02-20T23:20:34+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -2478,12 +2531,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Laminas\\Code\\": "src/"
-                },
                 "files": [
                     "polyfill/ReflectionEnumPolyfill.php"
-                ]
+                ],
+                "psr-4": {
+                    "Laminas\\Code\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -11474,16 +11527,16 @@
         },
         {
             "name": "phar-io/version",
-            "version": "3.1.1",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phar-io/version.git",
-                "reference": "15a90844ad40f127afd244c0cad228de2a80052a"
+                "reference": "c494dccd6802fd111a62ea5a474b33c0fd3dc76b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phar-io/version/zipball/15a90844ad40f127afd244c0cad228de2a80052a",
-                "reference": "15a90844ad40f127afd244c0cad228de2a80052a",
+                "url": "https://api.github.com/repos/phar-io/version/zipball/c494dccd6802fd111a62ea5a474b33c0fd3dc76b",
+                "reference": "c494dccd6802fd111a62ea5a474b33c0fd3dc76b",
                 "shasum": ""
             },
             "require": {
@@ -11519,9 +11572,9 @@
             "description": "Library for handling version information and constraints",
             "support": {
                 "issues": "https://github.com/phar-io/version/issues",
-                "source": "https://github.com/phar-io/version/tree/3.1.1"
+                "source": "https://github.com/phar-io/version/tree/3.2.0"
             },
-            "time": "2022-02-07T21:56:48+00:00"
+            "time": "2022-02-20T23:23:05+00:00"
         },
         {
             "name": "php-cs-fixer/diff",

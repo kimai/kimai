@@ -47,7 +47,7 @@ final class ProjectViewController extends AbstractController
         return $this->render('reporting/project_view.html.twig', [
             'entries' => $byCustomer,
             'form' => $form->createView(),
-            'title' => 'report_project_view',
+            'report_title' => 'report_project_view',
             'tableName' => 'project_view_reporting',
             'now' => $dateFactory->createDateTime(),
         ]);

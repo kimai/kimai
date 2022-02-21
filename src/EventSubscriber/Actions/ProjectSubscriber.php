@@ -30,18 +30,20 @@ class ProjectSubscriber extends AbstractActionsSubscriber
             return;
         }
 
+        $isListingView = $event->isIndexView() || $event->isCustomView();
+
         if (!$event->isView('project_details') && $this->isGranted('view', $project)) {
-            $event->addAction('details', ['url' => $this->path('project_details', ['id' => $project->getId()])]);
+            $event->addAction('details', ['title' => 'details', 'translation_domain' => 'actions', 'url' => $this->path('project_details', ['id' => $project->getId()])]);
         }
 
         if ($this->isGranted('edit', $project)) {
             $class = $event->isView('edit') ? '' : 'modal-ajax-form';
-            $event->addAction('edit', ['url' => $this->path('admin_project_edit', ['id' => $project->getId()]), 'class' => $class]);
+            $event->addAction('edit', ['title' => 'edit', 'translation_domain' => 'actions', 'url' => $this->path('admin_project_edit', ['id' => $project->getId()]), 'class' => $class]);
         }
 
         if ($this->isGranted('permissions', $project)) {
             $class = $event->isView('permissions') ? '' : 'modal-ajax-form';
-            $event->addAction('permissions', ['url' => $this->path('admin_project_permissions', ['id' => $project->getId()]), 'class' => $class]);
+            $event->addAction('permissions', ['title' => 'permissions', 'translation_domain' => 'actions', 'url' => $this->path('admin_project_permissions', ['id' => $project->getId()]), 'class' => $class]);
         }
 
         if ($event->countActions() > 0) {
@@ -60,7 +62,7 @@ class ProjectSubscriber extends AbstractActionsSubscriber
             $event->addDivider();
         }
 
-        if (!$event->isView('project_details')) {
+        if ($isListingView) {
             if ($project->isVisible() && $project->getCustomer()->isVisible() && $this->isGranted('create_activity')) {
                 $event->addAction('create-activity', [
                     'icon' => 'create',
@@ -73,7 +75,7 @@ class ProjectSubscriber extends AbstractActionsSubscriber
         if ($this->isGranted('edit', $project) && $this->isGranted('create_project')) {
             $event->addAction(
                 'copy',
-                ['url' => $this->path('admin_project_duplicate', ['id' => $project->getId(), 'token' => $payload['token']])]
+                ['title' => 'copy', 'translation_domain' => 'actions', 'url' => $this->path('admin_project_duplicate', ['id' => $project->getId(), 'token' => $payload['token']])]
             );
         }
 
@@ -82,7 +84,11 @@ class ProjectSubscriber extends AbstractActionsSubscriber
         }
 
         if ($project->isVisible() && $this->isGranted('view_reporting') && $this->isGranted('details', $project)) {
-            $event->addAction('report_project_details', ['url' => $this->path('report_project_details', ['project' => $project->getId()]), 'icon' => 'reporting', 'translation_domain' => 'reporting']);
+            $event->addAction('report_project_details', ['title' => 'report_project_details', 'translation_domain' => 'reporting', 'url' => $this->path('report_project_details', ['project' => $project->getId()]), 'icon' => 'reporting']);
+        }
+
+        if (!$isListingView) {
+            $event->addHelp($this->documentationLink('project.html'));
         }
     }
 }

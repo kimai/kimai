@@ -3,8 +3,13 @@
 
 {% block page_title %}{{ 'menu.reporting'|trans }}{% endblock %}
 
-{% block page_subtitle %}
-    {% block report_title %}{% endblock %}
+{% block subtitle %}
+    {% block report_title %}
+        {{ widgets.breadcrumb({
+            ('menu.reporting'|trans): path('reporting'),
+            (report_title|trans({}, 'reporting')): '#'
+        }) }}
+    {% endblock %}
 {% endblock %}
 
 {% block page_actions %}

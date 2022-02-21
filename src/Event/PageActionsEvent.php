@@ -52,6 +52,16 @@ class PageActionsEvent extends ThemeEvent
         return $this->isView('index');
     }
 
+    /**
+     * Custom view can only be table listings.
+     *
+     * @return bool
+     */
+    public function isCustomView(): bool
+    {
+        return $this->isView('custom');
+    }
+
     public function getView(): string
     {
         return $this->view;
@@ -154,11 +164,6 @@ class PageActionsEvent extends ThemeEvent
     public function addHelp(string $url): void
     {
         $this->addAction('help', ['url' => $url, 'target' => '_blank', 'title' => 'help', 'translation_domain' => 'about']);
-    }
-
-    public function addBack(string $url, string $title = 'back'): void
-    {
-        $this->addAction('back', ['url' => $url, 'translation_domain' => 'actions', 'title' => $title]);
     }
 
     public function addDelete(string $url, bool $remoteConfirm = true): void

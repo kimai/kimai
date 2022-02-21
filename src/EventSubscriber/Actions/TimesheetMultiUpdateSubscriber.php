@@ -20,7 +20,6 @@ class TimesheetMultiUpdateSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        $event->addBack($this->path('timesheet'));
         $event->addHelp($this->documentationLink('timesheet.html'));
     }
 }

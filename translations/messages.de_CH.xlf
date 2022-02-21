@@ -1071,7 +1071,7 @@
       </trans-unit>
       <trans-unit id="AJ6dwR." resname="label.last_record_before">
         <source>label.last_record_before</source>
-        <target>Keine Zeitbuchung mehr seit</target>
+        <target>Keine Zeitbuchung seit</target>
       </trans-unit>
       <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
         <source>calendar.drag_and_drop.delete</source>

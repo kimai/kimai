@@ -40,15 +40,15 @@ class UserSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('preferences', $user)) {
-            $event->addAction('settings', ['url' => $this->path('user_profile_preferences', ['username' => $user->getUsername()]), 'icon' => 'settings', 'title' => 'settings', 'translation_domain' => 'actions']);
+            $event->addAction('settings', ['title' => 'settings', 'translation_domain' => 'actions', 'url' => $this->path('user_profile_preferences', ['username' => $user->getUsername()])]);
         }
 
         $viewOther = $this->isGranted('view_other_timesheet');
-        if ($this->isGranted('view_reporting')) {
-            // also found in App\Controller\Reporting\ReportByUserController
-            if (($viewOther && $this->isGranted('view_other_reporting')) || ($event->getUser()->getId() === $user->getId())) {
-                $event->addAction('reporting', ['url' => $this->path('report_user_month', ['user' => $user->getId()]), 'icon' => 'reporting', 'title' => 'menu.reporting']);
-            }
+
+        if ($this->isGranted('view_reporting') && (($viewOther && $this->isGranted('view_other_reporting')) || ($event->getUser()->getId() === $user->getId()))) {
+            $event->addActionToSubmenu('report', 'weekly', ['url' => $this->path('report_user_week', ['user' => $user->getId()]), 'translation_domain' => 'reporting', 'title' => 'report_user_week']);
+            $event->addActionToSubmenu('report', 'monthly', ['url' => $this->path('report_user_month', ['user' => $user->getId()]), 'translation_domain' => 'reporting', 'title' => 'report_user_month']);
+            $event->addActionToSubmenu('report', 'yearly', ['url' => $this->path('report_user_year', ['user' => $user->getId()]), 'translation_domain' => 'reporting', 'title' => 'report_user_year']);
         }
 
         if ($viewOther && $user->isEnabled()) {

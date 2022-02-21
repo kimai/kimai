@@ -31,9 +31,6 @@ class InvoiceTemplateSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('manage_invoice_template')) {
-            if (!$event->isIndexView()) {
-                $event->addBack($this->path('invoice'));
-            }
             $event->addAction('edit', ['url' => $this->path('admin_invoice_template_edit', ['id' => $template->getId()]), 'class' => 'modal-ajax-form']);
             $event->addAction('copy', ['url' => $this->path('admin_invoice_template_copy', ['id' => $template->getId()])]);
             $event->addDelete($this->path('admin_invoice_template_delete', ['id' => $template->getId(), 'token' => $payload['token']]), false);
