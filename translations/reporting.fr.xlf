@@ -42,6 +42,10 @@
         <source>report_project_daterange</source>
         <target>Rapport mensuel</target>
       </trans-unit>
+      <trans-unit id="3JLmvfB" resname="report_user_year">
+        <source>report_user_year</source>
+        <target>Vue annuelle pour un utilisateur</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1269,6 +1269,10 @@
         <source>Updated at</source>
         <target>Atualizado em</target>
       </trans-unit>
+      <trans-unit id="sdfgsdfgsdfg" resname="label.choice_pattern">
+        <source>Display of entries in selection lists</source>
+        <target>Exibe as entradas nas listas de seleção</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
