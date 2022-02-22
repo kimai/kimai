@@ -10,6 +10,7 @@
 namespace App\Tests\Widget\Type;
 
 use App\Configuration\SystemConfiguration;
+use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\CounterYear;
@@ -23,6 +24,11 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class UserAmountYearTest extends AbstractWidgetTypeTest
 {
+    protected function assertDefaultData(AbstractWidgetType $sut)
+    {
+        self::assertEquals(0.0, $sut->getData());
+    }
+
     /**
      * @return CounterYear
      */
@@ -32,7 +38,9 @@ class UserAmountYearTest extends AbstractWidgetTypeTest
         $configuration = $this->createMock(SystemConfiguration::class);
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
 
-        return new UserAmountYear($repository, $configuration, $dispatcher);
+        $widget = new UserAmountYear($repository, $configuration, $dispatcher);
+        $widget->setUser(new User());
+        return $widget;
     }
 
     public function getDefaultOptions(): array
