@@ -36,7 +36,7 @@
     "jquery-ui": "^1.12",
     "js-cookie": "^2.2",
     "moment": "^2.29",
-    "node-sass": "^6.0",
+    "node-sass": "^7.0",
     "sass-loader": "^11.0",
     "select2": "^4.0",
     "select2-bootstrap-theme": "^0.1.0-beta.10",
