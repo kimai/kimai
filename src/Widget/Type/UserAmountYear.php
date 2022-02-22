@@ -38,7 +38,9 @@ final class UserAmountYear extends CounterYear
         $data = parent::getData($options);
 
         $event = new UserRevenueStatisticEvent($this->begin, $this->end, $this->user);
-        $event->addRevenue($data);
+        if ($data !== null) {
+            $event->addRevenue($data);
+        }
         $this->dispatcher->dispatch($event);
 
         return $event->getRevenue();

@@ -49,7 +49,9 @@ abstract class AbstractAmountPeriod extends SimpleStatisticChart
         $data = parent::getData($options);
 
         $event = new RevenueStatisticEvent($this->begin, $this->end);
-        $event->addRevenue($data);
+        if ($data !== null) {
+            $event->addRevenue($data);
+        }
         $this->dispatcher->dispatch($event);
 
         return $event->getRevenue();
