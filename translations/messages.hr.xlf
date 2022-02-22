@@ -1043,7 +1043,7 @@
       </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target>Preskočen pregled od još %rows% retka …</target>
+        <target>Preskočen je pregled od još %rows% retka …</target>
       </trans-unit>
       <!--
               Export
@@ -1269,6 +1269,10 @@
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
         <target>Dosegnut je maksimalni broj od %max% dokumenata za račune. Nakon uklanjanja možeš dodati još.</target>
+      </trans-unit>
+      <trans-unit id="sdfgsdfgsdfg" resname="label.choice_pattern">
+        <source>Display of entries in selection lists</source>
+        <target>Prikaz unosa u izbornim popisima</target>
       </trans-unit>
     </body>
   </file>

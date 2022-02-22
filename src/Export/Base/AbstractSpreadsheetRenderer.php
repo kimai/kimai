@@ -187,7 +187,7 @@ abstract class AbstractSpreadsheetRenderer
 
     protected function setDurationTotal(Worksheet $sheet, $column, $row, $startCoordinate, $endCoordinate)
     {
-        $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=SUM(%s:%s)', $startCoordinate, $endCoordinate));
+        $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=SUBTOTAL(9,%s:%s)', $startCoordinate, $endCoordinate));
         $style = $sheet->getStyleByColumnAndRow($column, $row);
         $style->getNumberFormat()->setFormatCode($this->durationFormat);
     }
@@ -203,7 +203,7 @@ abstract class AbstractSpreadsheetRenderer
 
     protected function setRateTotal(Worksheet $sheet, $column, $row, $startCoordinate, $endCoordinate)
     {
-        $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=SUM(%s:%s)', $startCoordinate, $endCoordinate));
+        $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=SUBTOTAL(9,%s:%s)', $startCoordinate, $endCoordinate));
     }
 
     protected function setRateStyle(Worksheet $sheet, $column, $row, $rate, $currency)

@@ -42,6 +42,10 @@
         <source>report_project_daterange</source>
         <target>Aylık rapor</target>
       </trans-unit>
+      <trans-unit id="3JLmvfB" resname="report_user_year">
+        <source>report_user_year</source>
+        <target>Bir kullanıcı için yıllık görünüm</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

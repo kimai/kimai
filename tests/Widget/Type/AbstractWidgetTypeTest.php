@@ -58,10 +58,6 @@ abstract class AbstractWidgetTypeTest extends TestCase
         self::assertEquals('blab', $options['blub']);
         self::assertEquals('money', $options['dataType']);
         self::assertEquals('trääääää', $options['föööö']);
-
-        // id
-        $sut->setId('cvbnmyx');
-        self::assertEquals('cvbnmyx', $sut->getId());
     }
 
     public function testData()
