@@ -282,6 +282,10 @@
         <source>label.theme.avatar_url</source>
         <target>Να επιτρέπετε η χρήση συνδέσμων για εικόνες προφίλ</target>
       </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target>Αριθμός καταχωρήσεων που λήφθηκαν από προηγούμενες εβδομάδες</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

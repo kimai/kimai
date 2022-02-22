@@ -1197,6 +1197,10 @@
         <source>invoice_document.max_reached</source>
         <target>הגעת לכמות המרבית %max% של מסמכי חשבוניות. אפשר להוסיף עוד לאחר הסרת אחת מהן.</target>
       </trans-unit>
+      <trans-unit id="sdfgsdfgsdfg" resname="label.choice_pattern">
+        <source>Display of entries in selection lists</source>
+        <target>הצגת רשומות ברשימות הבחירה</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

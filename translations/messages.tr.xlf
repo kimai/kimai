@@ -1261,6 +1261,10 @@
         <source>invoice_document.max_reached</source>
         <target>Azami %max% fatura belgesi miktarına ulaşıldı. Birini kaldırdıktan sonra daha fazlasını ekleyebilirsiniz.</target>
       </trans-unit>
+      <trans-unit id="sdfgsdfgsdfg" resname="label.choice_pattern">
+        <source>Display of entries in selection lists</source>
+        <target>Seçim listelerindeki kayıtların görüntülenmesi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
