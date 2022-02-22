@@ -202,7 +202,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
 
             let optGroup = this._createOptgroup(key);
             for (const entity of value) {
-                optGroup.appendChild(this._createOption(this._getTitleFromPattern(titlePattern, entity), entity.id));
+                optGroup.appendChild(this._createOption(this._getTitleFromPattern(titlePattern, entity), entity.id, entity.color));
             }
             options.push(optGroup);
         }
@@ -267,13 +267,17 @@ export default class KimaiFormSelect extends KimaiPlugin {
     /**
      * @param {string} label
      * @param {string} value
+     * @param {string|undefined} color
      * @returns {HTMLElement}
      * @private
      */
-    _createOption(label, value) {
+    _createOption(label, value, color = undefined) {
         let option = document.createElement('option');
         option.innerText = label;
         option.value = value;
+        if (color) {
+            option.dataset.color = color;
+        }
         return option;
     }
 
