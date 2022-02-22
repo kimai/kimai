@@ -40,6 +40,7 @@ class UserAmountYearTest extends AbstractWidgetTypeTest
 
         $widget = new UserAmountYear($repository, $configuration, $dispatcher);
         $widget->setUser(new User());
+
         return $widget;
     }
 
