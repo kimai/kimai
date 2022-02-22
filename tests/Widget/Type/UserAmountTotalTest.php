@@ -9,20 +9,20 @@
 
 namespace App\Tests\Widget\Type;
 
-use App\Configuration\SystemConfiguration;
+use App\Entity\User;
 use App\Repository\TimesheetRepository;
+use App\Widget\Type\AbstractUserAmountPeriod;
 use App\Widget\Type\AbstractWidgetType;
-use App\Widget\Type\AmountYear;
-use App\Widget\Type\CounterYear;
 use App\Widget\Type\SimpleStatisticChart;
+use App\Widget\Type\UserAmountTotal;
 use App\Widget\WidgetInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @covers \App\Widget\Type\AmountYear
- * @covers \App\Widget\Type\CounterYear
+ * @covers \App\Widget\Type\UserAmountTotal
+ * @covers \App\Widget\Type\AbstractUserAmountPeriod
  */
-class AmountYearTest extends AbstractWidgetTypeTest
+class UserAmountTotalTest extends AbstractWidgetTypeTest
 {
     protected function assertDefaultData(AbstractWidgetType $sut)
     {
@@ -30,15 +30,17 @@ class AmountYearTest extends AbstractWidgetTypeTest
     }
 
     /**
-     * @return CounterYear
+     * @return AbstractUserAmountPeriod
      */
     public function createSut(): AbstractWidgetType
     {
         $repository = $this->createMock(TimesheetRepository::class);
-        $configuration = $this->createMock(SystemConfiguration::class);
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
 
-        return new AmountYear($repository, $configuration, $dispatcher);
+        $widget = new UserAmountTotal($repository, $dispatcher);
+        $widget->setUser(new User());
+
+        return $widget;
     }
 
     public function getDefaultOptions(): array
@@ -46,7 +48,7 @@ class AmountYearTest extends AbstractWidgetTypeTest
         return [
             'dataType' => 'money',
             'icon' => 'money',
-            'color' => WidgetInterface::COLOR_YEAR,
+            'color' => WidgetInterface::COLOR_TOTAL,
         ];
     }
 
@@ -65,6 +67,6 @@ class AmountYearTest extends AbstractWidgetTypeTest
         $sut = $this->createSut();
 
         self::assertEquals('widget/widget-counter.html.twig', $sut->getTemplateName());
-        self::assertEquals('amountYear', $sut->getId());
+        self::assertEquals('userAmountTotal', $sut->getId());
     }
 }

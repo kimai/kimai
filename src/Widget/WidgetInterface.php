@@ -14,6 +14,7 @@ interface WidgetInterface
     public const COLOR_TODAY = 'green';
     public const COLOR_WEEK = 'blue';
     public const COLOR_MONTH = 'purple';
+    public const COLOR_YEAR = 'yellow';
     public const COLOR_TOTAL = 'red';
 
     /**

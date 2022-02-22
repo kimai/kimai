@@ -16,6 +16,7 @@ use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\CounterYear;
 use App\Widget\Type\SimpleStatisticChart;
 use App\Widget\Type\UserAmountYear;
+use App\Widget\WidgetInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -49,7 +50,7 @@ class UserAmountYearTest extends AbstractWidgetTypeTest
         return [
             'dataType' => 'money',
             'icon' => 'money',
-            'color' => 'yellow',
+            'color' => WidgetInterface::COLOR_YEAR,
         ];
     }
 

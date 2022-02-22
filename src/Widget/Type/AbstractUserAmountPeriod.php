@@ -48,7 +48,7 @@ abstract class AbstractUserAmountPeriod extends SimpleStatisticChart
 
         $data = parent::getData($options);
 
-        $event = new UserRevenueStatisticEvent($this->begin, $this->end, $this->user);
+        $event = new UserRevenueStatisticEvent($this->user, $this->begin, $this->end);
         if ($data !== null) {
             $event->addRevenue($data);
         }

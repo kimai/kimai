@@ -12,6 +12,7 @@ namespace App\Widget\Type;
 use App\Configuration\SystemConfiguration;
 use App\Event\RevenueStatisticEvent;
 use App\Repository\TimesheetRepository;
+use App\Widget\WidgetInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class AmountYear extends CounterYear
@@ -25,7 +26,7 @@ final class AmountYear extends CounterYear
         $this->setId('amountYear');
         $this->setOption('dataType', 'money');
         $this->setOption('icon', 'money');
-        $this->setOption('color', 'yellow');
+        $this->setOption('color', WidgetInterface::COLOR_YEAR);
         $this->setTitle('stats.amountYear');
     }
 

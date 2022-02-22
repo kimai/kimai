@@ -20,18 +20,18 @@ final class RevenueStatisticEvent extends Event
     private $end;
     private $revenue = 0.0;
 
-    public function __construct(\DateTime $begin, \DateTime $end)
+    public function __construct(?\DateTime $begin, ?\DateTime $end)
     {
         $this->begin = $begin;
         $this->end = $end;
     }
 
-    public function getBegin(): \DateTime
+    public function getBegin(): ?\DateTime
     {
         return $this->begin;
     }
 
-    public function getEnd(): \DateTime
+    public function getEnd(): ?\DateTime
     {
         return $this->end;
     }

@@ -20,18 +20,18 @@ final class UserRevenueStatisticEvent extends Event
     private $event;
     private $user;
 
-    public function __construct(\DateTime $begin, \DateTime $end, User $user)
+    public function __construct(User $user, ?\DateTime $begin, ?\DateTime $end)
     {
-        $this->event = new RevenueStatisticEvent($begin, $end);
         $this->user = $user;
+        $this->event = new RevenueStatisticEvent($begin, $end);
     }
 
-    public function getBegin(): \DateTime
+    public function getBegin(): ?\DateTime
     {
         return $this->event->getBegin();
     }
 
-    public function getEnd(): \DateTime
+    public function getEnd(): ?\DateTime
     {
         return $this->event->getEnd();
     }

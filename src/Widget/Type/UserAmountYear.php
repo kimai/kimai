@@ -12,6 +12,7 @@ namespace App\Widget\Type;
 use App\Configuration\SystemConfiguration;
 use App\Event\UserRevenueStatisticEvent;
 use App\Repository\TimesheetRepository;
+use App\Widget\WidgetInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class UserAmountYear extends CounterYear
@@ -25,7 +26,7 @@ final class UserAmountYear extends CounterYear
         $this->setId('userAmountYear');
         $this->setOption('dataType', 'money');
         $this->setOption('icon', 'money');
-        $this->setOption('color', 'yellow');
+        $this->setOption('color', WidgetInterface::COLOR_YEAR);
         $this->setTitle('stats.amountYear');
     }
 
@@ -37,7 +38,7 @@ final class UserAmountYear extends CounterYear
 
         $data = parent::getData($options);
 
-        $event = new UserRevenueStatisticEvent($this->begin, $this->end, $this->user);
+        $event = new UserRevenueStatisticEvent($this->user, $this->begin, $this->end);
         if ($data !== null) {
             $event->addRevenue($data);
         }
