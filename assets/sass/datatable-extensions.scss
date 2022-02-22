@@ -26,17 +26,12 @@ span.label-user,
 span.label-activity,
 span.label-project,
 span.label-customer {
-    display: inline-block;
-    .name {
-        white-space: nowrap;
-        .name-inner {
-            white-space: normal;
-        }
-    }
-    .dot {
-        font-size: 9px;
+    display: flex;
+    align-items: baseline;
+
+    .color-dot {
+
         margin-right: 3px;
-        color: $gray-lte;
     }
 }
 

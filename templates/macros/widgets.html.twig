@@ -156,15 +156,13 @@
 {% macro label_color_dot(type, isVisible, name, url, color) %}
     {% apply spaceless %}
     <span class="label-{{ type }}{{ isVisible is same as (false) ? ' label-invisible' : '' }}">
-        <span class="name">
-            <i class="dot {{ 'dot'|icon }} fa-fw"{% if color is not empty %} style="color:{{ color }}"{% endif %}></i>
-            <span class="name-inner">
-            {%- if url is not empty -%}
-                <a href="{{ url }}">{{ name }}</a>
-            {%- else -%}
-                {{ name }}
-            {%- endif -%}
-            </span>
+        {{ _self.color_dot_icon(color) }}
+        <span>
+        {%- if url is not empty -%}
+            <a href="{{ url }}">{{ name }}</a>
+        {%- else -%}
+            {{ name }}
+        {%- endif -%}
         </span>
     </span>
     {% endapply %}
@@ -172,8 +170,12 @@
 
 {% macro color_dot(color, tooltip) %}
     <span class="label-color" data-toggle="tooltip" data-placement="top" title="{{ tooltip }}">
-        <i class="dot {{ 'dot'|icon }} fa-fw"{% if color is not empty %} style="color:{{ color }}"{% endif %}></i>
+        {{ _self.color_dot_icon(color) }}
     </span>
+{% endmacro %}
+
+{% macro color_dot_icon(color) %}
+    <i class="color-dot"{% if color is not empty %} style="--color:{{ color }}"{% endif %}></i>
 {% endmacro %}
 
 {% macro badge_team_access(teams) %}

@@ -40,4 +40,7 @@
         margin-right: 10px;
         width: $size;
     }
+// add a colored dot in front of an option if the color attribute is set
+.select2-container--bootstrap .color-dot {
+    margin-right: 5px;
 }
