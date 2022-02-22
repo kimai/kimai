@@ -23,6 +23,11 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class AmountYearTest extends AbstractWidgetTypeTest
 {
+    protected function assertDefaultData(AbstractWidgetType $sut)
+    {
+        self::assertEquals(0.0, $sut->getData());
+    }
+
     /**
      * @return CounterYear
      */
