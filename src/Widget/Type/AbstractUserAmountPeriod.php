@@ -9,29 +9,40 @@
 
 namespace App\Widget\Type;
 
-use App\Configuration\SystemConfiguration;
 use App\Event\UserRevenueStatisticEvent;
 use App\Repository\TimesheetRepository;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final class UserAmountYear extends CounterYear
+abstract class AbstractUserAmountPeriod extends SimpleStatisticChart
 {
     private $dispatcher;
 
-    public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration, EventDispatcherInterface $dispatcher)
+    public function __construct(TimesheetRepository $repository, EventDispatcherInterface $dispatcher)
     {
-        parent::__construct($repository, $systemConfiguration);
+        parent::__construct($repository);
         $this->dispatcher = $dispatcher;
-        $this->setId('userAmountYear');
-        $this->setOption('dataType', 'money');
-        $this->setOption('icon', 'money');
-        $this->setOption('color', 'yellow');
-        $this->setTitle('stats.amountYear');
+    }
+
+    public function getTitle(): string
+    {
+        return 'stats.' . str_replace('userA', 'a', $this->getId());
+    }
+
+    public function getTemplateName(): string
+    {
+        return 'widget/widget-counter.html.twig';
+    }
+
+    public function getOptions(array $options = []): array
+    {
+        return array_merge([
+            'icon' => 'money',
+            'dataType' => 'money',
+        ], parent::getOptions($options));
     }
 
     public function getData(array $options = [])
     {
-        $this->titleYear = 'stats.amountFinancialYear';
         $this->setQuery(TimesheetRepository::STATS_QUERY_RATE);
         $this->setQueryWithUser(true);
 

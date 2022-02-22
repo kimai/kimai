@@ -15,6 +15,7 @@ use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\CounterYear;
 use App\Widget\Type\SimpleStatisticChart;
 use App\Widget\Type\UserAmountYear;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @covers \App\Widget\Type\UserAmountYear
@@ -29,8 +30,9 @@ class UserAmountYearTest extends AbstractWidgetTypeTest
     {
         $repository = $this->createMock(TimesheetRepository::class);
         $configuration = $this->createMock(SystemConfiguration::class);
+        $dispatcher = $this->createMock(EventDispatcherInterface::class);
 
-        return new UserAmountYear($repository, $configuration);
+        return new UserAmountYear($repository, $configuration, $dispatcher);
     }
 
     public function getDefaultOptions(): array
