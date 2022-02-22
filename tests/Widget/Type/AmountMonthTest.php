@@ -9,20 +9,19 @@
 
 namespace App\Tests\Widget\Type;
 
-use App\Configuration\SystemConfiguration;
 use App\Repository\TimesheetRepository;
+use App\Widget\Type\AbstractAmountPeriod;
 use App\Widget\Type\AbstractWidgetType;
-use App\Widget\Type\AmountYear;
-use App\Widget\Type\CounterYear;
+use App\Widget\Type\AmountMonth;
 use App\Widget\Type\SimpleStatisticChart;
 use App\Widget\WidgetInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @covers \App\Widget\Type\AmountYear
- * @covers \App\Widget\Type\CounterYear
+ * @covers \App\Widget\Type\AmountMonth
+ * @covers \App\Widget\Type\AbstractAmountPeriod
  */
-class AmountYearTest extends AbstractWidgetTypeTest
+class AmountMonthTest extends AbstractWidgetTypeTest
 {
     protected function assertDefaultData(AbstractWidgetType $sut)
     {
@@ -30,15 +29,14 @@ class AmountYearTest extends AbstractWidgetTypeTest
     }
 
     /**
-     * @return CounterYear
+     * @return AbstractAmountPeriod
      */
     public function createSut(): AbstractWidgetType
     {
         $repository = $this->createMock(TimesheetRepository::class);
-        $configuration = $this->createMock(SystemConfiguration::class);
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
 
-        return new AmountYear($repository, $configuration, $dispatcher);
+        return new AmountMonth($repository, $dispatcher);
     }
 
     public function getDefaultOptions(): array
@@ -46,7 +44,7 @@ class AmountYearTest extends AbstractWidgetTypeTest
         return [
             'dataType' => 'money',
             'icon' => 'money',
-            'color' => WidgetInterface::COLOR_YEAR,
+            'color' => WidgetInterface::COLOR_MONTH,
         ];
     }
 
@@ -65,6 +63,6 @@ class AmountYearTest extends AbstractWidgetTypeTest
         $sut = $this->createSut();
 
         self::assertEquals('widget/widget-counter.html.twig', $sut->getTemplateName());
-        self::assertEquals('amountYear', $sut->getId());
+        self::assertEquals('amountMonth', $sut->getId());
     }
 }

@@ -34,7 +34,7 @@ class SimpleStatisticChart extends SimpleWidget implements UserWidget
     /**
      * @var User|null
      */
-    private $user;
+    protected $user;
     /**
      * @var bool
      */
@@ -106,11 +106,11 @@ class SimpleStatisticChart extends SimpleWidget implements UserWidget
         $end = $this->end;
 
         if (!empty($begin) && \is_string($begin)) {
-            $begin = new \DateTime($begin, $timezone);
+            $this->begin = new \DateTime($begin, $timezone);
         }
 
         if (!empty($end) && \is_string($end)) {
-            $end = new \DateTime($end, $timezone);
+            $this->end = new \DateTime($end, $timezone);
         }
 
         try {
@@ -119,7 +119,7 @@ class SimpleStatisticChart extends SimpleWidget implements UserWidget
                 $user = $this->user;
             }
 
-            return $this->repository->getStatistic($this->query, $begin, $end, $user);
+            return $this->repository->getStatistic($this->query, $this->begin, $this->end, $user);
         } catch (\Exception $ex) {
             throw new WidgetException(
                 'Failed loading widget data: ' . $ex->getMessage()
