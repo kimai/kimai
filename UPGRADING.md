@@ -1,4 +1,4 @@
-# Upgrading Kimai 2
+# Upgrading Kimai
 
 _Make sure to create a backup before you start!_ 
 
@@ -12,6 +12,11 @@ Perform EACH version specific task between your version and the new one, otherwi
 ## [2.0](https://github.com/kevinpapst/kimai2/releases/tag/2.0)
 
 - Removed support for custom translation files (use TranslationBundle instead or write your own plugin)
+
+**ATTENTION**
+
+- This release bumps the minimum required PHP version to 8.0
+- local.yaml is not compatible with old version (dashboard default config)
 
 ## [1.16](https://github.com/kevinpapst/kimai2/releases/tag/1.16)
 

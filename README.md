@@ -27,7 +27,7 @@ It is built with modern technologies such as [Symfony](https://github.com/symfon
 
 ### Requirements
 
-- PHP 7.3 or higher (PHP 8 supported)
+- PHP 8.0 minimum
 - MariaDB or MySQL
 - A webserver and subdomain
 - PHP extensions: `gd`, `intl`, `json`, `mbstring`, `pdo`, `xsl`, `zip`
