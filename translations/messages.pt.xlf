@@ -1266,6 +1266,10 @@
         <source>error.directory_protected</source>
         <target>O diretório "%dir%" está protegido contra gravação.</target>
       </trans-unit>
+      <trans-unit id="sdfgsdfgsdfg" resname="label.choice_pattern">
+        <source>Display of entries in selection lists</source>
+        <target>Aparência das entradas nas listas de seleção</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
