@@ -76,7 +76,7 @@
       </trans-unit>
       <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
         <source>This timesheet is already exported.</source>
-        <target>Ovaj je raspored već izvezen.</target>
+        <target>Ova je vremenska tablica već izvezena.</target>
       </trans-unit>
     </body>
   </file>
