@@ -70,7 +70,7 @@
                     if (!event.target.checked) {
                         span.innerHTML = DATES.formatSeconds(duration);
                     } else {
-                        span.innerHTML = (new Intl.NumberFormat('{{ app.request.locale }}', {maximumFractionDigits: 2}).format(duration / 3600));
+                        span.innerHTML = (new Intl.NumberFormat('{{ app.request.locale|replace({'_': '-'}) }}', {maximumFractionDigits: 2}).format(duration / 3600));
                     }
                 }
                 saveVisibility();
