@@ -13,42 +13,55 @@ use App\Event\UserRevenueStatisticEvent;
 use App\Repository\TimesheetRepository;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-abstract class AbstractUserAmountPeriod extends SimpleStatisticChart
+abstract class AbstractUserRevenuePeriod extends AbstractWidget
 {
+    private $repository;
     private $dispatcher;
 
     public function __construct(TimesheetRepository $repository, EventDispatcherInterface $dispatcher)
     {
-        parent::__construct($repository);
+        $this->repository = $repository;
         $this->dispatcher = $dispatcher;
     }
 
     public function getTitle(): string
     {
-        return 'stats.' . str_replace('userA', 'a', $this->getId());
+        return 'stats.' . $this->getId();
     }
 
     public function getTemplateName(): string
     {
-        return 'widget/widget-counter.html.twig';
+        return 'widget/widget-counter-money.html.twig';
+    }
+
+    public function getPermissions(): array
+    {
+        return ['view_rate_own_timesheet'];
     }
 
     public function getOptions(array $options = []): array
     {
         return array_merge([
             'icon' => 'money',
-            'dataType' => 'money',
         ], parent::getOptions($options));
     }
 
-    public function getData(array $options = [])
+    protected function getRevenue(?string $begin, ?string $end, array $options = [])
     {
-        $this->setQuery(TimesheetRepository::STATS_QUERY_RATE);
-        $this->setQueryWithUser(true);
+        $user = $this->getUser();
+        $timezone = new \DateTimeZone($user->getTimezone());
 
-        $data = parent::getData($options);
+        if ($begin !== null) {
+            $begin = new \DateTime($begin, $timezone);
+        }
 
-        $event = new UserRevenueStatisticEvent($this->user, $this->begin, $this->end);
+        if ($end !== null) {
+            $end = new \DateTime($end, $timezone);
+        }
+
+        $data = $this->repository->getRevenue($begin, $end, $user);
+
+        $event = new UserRevenueStatisticEvent($user, $begin, $end);
         if ($data !== null) {
             $event->addRevenue($data);
         }

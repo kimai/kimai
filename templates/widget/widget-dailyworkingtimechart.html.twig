@@ -136,6 +136,10 @@
     {% if app.request.xmlHttpRequest %}
         paintChart();
     {% else %}
-        document.addEventListener('kimai.initialized', paintChart);
+        if (document.getElementById('dashboard-grid-container') !== null) {
+            document.addEventListener('dashboard.initialized', paintChart);
+        } else {
+            document.addEventListener('kimai.initialized', paintChart);
+        }
     {% endif %}
 </script>

@@ -1,0 +1,1 @@
+/*! For license information please see gridstack-h5.js.LICENSE.txt */

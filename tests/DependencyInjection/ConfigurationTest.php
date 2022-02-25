@@ -389,7 +389,33 @@ class ConfigurationTest extends TestCase
             'industry' => [
                 'translation' => null,
             ],
-            'dashboard' => [],
+            'dashboard' => [
+                'widgets' => [
+                    'PaginatedWorkingTimeChart',
+                    'UserTeams',
+                    'UserTeamProjects',
+                    'userAmountToday',
+                    'userAmountWeek',
+                    'userAmountMonth',
+                    'userAmountYear',
+                    'durationToday',
+                    'durationWeek',
+                    'durationMonth',
+                    'durationYear',
+                    'activeUsersToday',
+                    'activeUsersWeek',
+                    'activeUsersMonth',
+                    'activeUsersYear',
+                    'amountToday',
+                    'amountWeek',
+                    'amountMonth',
+                    'amountYear',
+                    'TotalsUser',
+                    'TotalsCustomer',
+                    'TotalsProject',
+                    'TotalsActivity',
+                ]
+            ],
             'widgets' => [],
             'defaults' => [
                 'timesheet' => [

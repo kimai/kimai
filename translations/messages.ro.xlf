@@ -329,10 +329,6 @@
         <source>dashboard.subtitle</source>
         <target>Bine ai venit!</target>
       </trans-unit>
-      <trans-unit id="yEa1Yz3" resname="dashboard.all">
-        <source>dashboard.all</source>
-        <target>Toți utilizatorii</target>
-      </trans-unit>
       <trans-unit id="4iliLZT" resname="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
         <target>Arată meniul</target>
@@ -625,24 +621,24 @@
         <source>stats.amountTotal</source>
         <target>Total încasări</target>
       </trans-unit>
-      <trans-unit id="xyiadv3" resname="stats.userActiveToday">
-        <source>stats.userActiveToday</source>
+      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
+        <source>stats.activeUsersToday</source>
         <target>Utilizatori activi azi</target>
       </trans-unit>
-      <trans-unit id="knMHaeO" resname="stats.userActiveWeek">
-        <source>stats.userActiveWeek</source>
+      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
+        <source>stats.activeUsersWeek</source>
         <target>Utilizatori activi săptămâna aceasta</target>
       </trans-unit>
-      <trans-unit id="adzVDgb" resname="stats.userActiveMonth">
-        <source>stats.userActiveMonth</source>
+      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
+        <source>stats.activeUsersMonth</source>
         <target>Utilizatori activi luna aceasta</target>
       </trans-unit>
-      <trans-unit id="AswjFvh" resname="stats.userActiveYear">
-        <source>stats.userActiveYear</source>
+      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
+        <source>stats.activeUsersYear</source>
         <target>Utilizatori activi anul acesta</target>
       </trans-unit>
-      <trans-unit id="dLTb1Po" resname="stats.userActiveTotal">
-        <source>stats.userActiveTotal</source>
+      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
+        <source>stats.activeUsersTotal</source>
         <target>Total utilizatori activi</target>
       </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">

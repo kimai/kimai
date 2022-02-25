@@ -62,8 +62,7 @@ class AppExtension extends Extension
         unset($config['languages']);
 
         $container->setParameter('kimai.calendar', $config['calendar']); // @deprecated since 1.13
-        $container->setParameter('kimai.dashboard', $config['dashboard']);
-        $container->setParameter('kimai.widgets', $config['widgets']);
+        $container->setParameter('kimai.dashboard', $config['dashboard']['widgets']);
         $container->setParameter('kimai.invoice.documents', $config['invoice']['documents']);
         $container->setParameter('kimai.export.documents', $config['export']['documents']);
         $container->setParameter('kimai.defaults', $config['defaults']); // @deprecated since 1.13

@@ -14,7 +14,6 @@ use App\Entity\Customer;
 use App\Entity\User;
 use App\Repository\InvoiceDocumentRepository;
 use App\Timesheet\Rounding\RoundingInterface;
-use App\Widget\Type\CompoundRow;
 use App\Widget\Type\Counter;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -612,21 +611,11 @@ class Configuration implements ConfigurationInterface
         $node = $builder->getRootNode();
 
         $node
-            ->requiresAtLeastOneElement()
-                ->useAttributeAsKey('key')
-                ->arrayPrototype()
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('type')->defaultValue(CompoundRow::class)->end()
-                        ->integerNode('order')->defaultValue(0)->end()
-                        ->scalarNode('title')->end()
-                        ->scalarNode('permission')->defaultNull()->end()
-                        ->arrayNode('widgets')
-                            ->isRequired()
-                            ->performNoDeepMerging()
-                            ->scalarPrototype()
-                        ->end()
-                    ->end()
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('widgets')
+                    ->scalarPrototype()->end()
+                    ->defaultValue(['PaginatedWorkingTimeChart', 'UserTeams', 'UserTeamProjects', 'userAmountToday', 'userAmountWeek', 'userAmountMonth', 'userAmountYear', 'durationToday', 'durationWeek', 'durationMonth', 'durationYear', 'activeUsersToday', 'activeUsersWeek', 'activeUsersMonth', 'activeUsersYear', 'amountToday', 'amountWeek', 'amountMonth', 'amountYear', 'TotalsUser', 'TotalsCustomer', 'TotalsProject', 'TotalsActivity'])
                 ->end()
             ->end()
         ;

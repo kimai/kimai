@@ -106,6 +106,14 @@
         <source>vcard</source>
         <target>Visitenkarte</target>
       </trans-unit>
+      <trans-unit id="rBineRV" resname="widget_add">
+        <source>Add widget</source>
+        <target>Widget hinzufügen</target>
+      </trans-unit>
+      <trans-unit id="ZtwAZC5" resname="widget_remove">
+        <source>Remove widget</source>
+        <target>Widget entfernen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

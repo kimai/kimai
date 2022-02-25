@@ -9,19 +9,23 @@
 
 namespace App\Tests\Twig\Runtime;
 
+use App\Entity\User;
 use App\Twig\Runtime\WidgetExtension;
 use App\Widget\Type\More;
-use App\Widget\WidgetInterface;
-use App\Widget\WidgetRendererInterface;
 use App\Widget\WidgetService;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Security;
+use Twig\Environment;
 
 /**
  * @covers \App\Twig\Runtime\WidgetExtension
  */
 class WidgetExtensionTest extends TestCase
 {
-    protected function getSut($hasWidget = null, $getWidget = null, $renderer = null): WidgetExtension
+    protected function getSut($hasWidget = null, $getWidget = null): WidgetExtension
     {
         $service = $this->createMock(WidgetService::class);
         if (null !== $hasWidget) {
@@ -30,21 +34,42 @@ class WidgetExtensionTest extends TestCase
         if (null !== $getWidget) {
             $service->expects($this->once())->method('getWidget')->willReturn($getWidget);
         }
-        if (null !== $renderer) {
-            $service->expects($this->once())->method('findRenderer')->willReturn($renderer);
-        }
 
-        return new WidgetExtension($service);
+        $interface = $this->createMock(TokenInterface::class);
+        $interface->expects($this->any())->method('getUser')->willReturn(new User());
+        $storage = $this->createMock(TokenStorageInterface::class);
+        $storage->expects($this->any())->method('getToken')->willReturn($interface);
+        $container = $this->createMock(ContainerInterface::class);
+        $container->expects($this->any())->method('get')->willReturn($storage);
+
+        $security = new Security($container);
+
+        return new WidgetExtension($service, $security);
+    }
+
+    private function getEnvironment(): Environment
+    {
+        $env = $this->createMock(Environment::class);
+        $env->expects($this->any())->method('render')->willReturnCallback(function (string $template, array $options) {
+            self::assertArrayHasKey('data', $options);
+            self::assertArrayHasKey('options', $options);
+            self::assertArrayHasKey('title', $options);
+            self::assertArrayHasKey('widget', $options);
+
+            return json_encode($options['options']);
+        });
+
+        return $env;
     }
 
     public function testRenderWidgetForInvalidValue()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Widget must either implement WidgetInterface or be a string');
+        $this->expectExceptionMessage('Widget must be either a WidgetInterface or a string');
 
         $sut = $this->getSut();
         /* @phpstan-ignore-next-line */
-        $sut->renderWidget(true);
+        $sut->renderWidget($this->getEnvironment(), true);
     }
 
     public function testRenderWidgetForUnknownWidget()
@@ -53,15 +78,16 @@ class WidgetExtensionTest extends TestCase
         $this->expectExceptionMessage('Unknown widget "test" requested');
 
         $sut = $this->getSut(false);
-        $sut->renderWidget('test');
+        $sut->renderWidget($this->getEnvironment(), 'test');
     }
 
     public function testRenderWidgetByString()
     {
         $widget = new More();
-        $sut = $this->getSut(true, $widget, new TestRenderer());
+        $widget->setId('test');
+        $sut = $this->getSut(true, $widget);
         $options = ['foo' => 'bar', 'dataType' => 'blub'];
-        $result = $sut->renderWidget('test', $options);
+        $result = $sut->renderWidget($this->getEnvironment(), 'test', $options);
         $data = json_decode($result, true);
         $this->assertEquals($options, $data);
     }
@@ -69,23 +95,10 @@ class WidgetExtensionTest extends TestCase
     public function testRenderWidgetObject()
     {
         $widget = new More();
-        $sut = $this->getSut(null, null, new TestRenderer());
+        $sut = $this->getSut(null, null);
         $options = ['foo' => 'bar', 'dataType' => 'blub'];
-        $result = $sut->renderWidget($widget, $options);
+        $result = $sut->renderWidget($this->getEnvironment(), $widget, $options);
         $data = json_decode($result, true);
         $this->assertEquals($options, $data);
-    }
-}
-
-class TestRenderer implements WidgetRendererInterface
-{
-    public function supports(WidgetInterface $widget): bool
-    {
-        return true;
-    }
-
-    public function render(WidgetInterface $widget, array $options = []): string
-    {
-        return json_encode($widget->getOptions($options));
     }
 }

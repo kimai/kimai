@@ -11,62 +11,49 @@ namespace App\Widget\Type;
 
 use App\Entity\Activity;
 use App\Entity\Project;
-use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
+use App\Widget\WidgetInterface;
 use DateTime;
 
-class DailyWorkingTimeChart extends SimpleWidget implements UserWidget
+final class DailyWorkingTimeChart extends AbstractWidget
 {
-    public const DEFAULT_CHART = 'bar';
-
-    /**
-     * @var TimesheetRepository
-     */
-    protected $repository;
+    private $repository;
 
     public function __construct(TimesheetRepository $repository)
     {
         $this->repository = $repository;
-        $this->setId('DailyWorkingTimeChart');
-        $this->setTitle('stats.yourWorkingHours');
-        $this->setOptions([
-            'begin' => null,
-            'end' => null,
-            'color' => '',
-            'type' => self::DEFAULT_CHART,
-            'id' => '',
-        ]);
     }
 
-    public function setUser(User $user): void
+    public function getWidth(): int
     {
-        $this->setOption('user', $user);
+        return WidgetInterface::WIDTH_FULL;
+    }
+
+    public function getHeight(): int
+    {
+        return WidgetInterface::HEIGHT_LARGE;
+    }
+
+    public function getPermissions(): array
+    {
+        return ['view_own_timesheet'];
     }
 
     public function getOptions(array $options = []): array
     {
-        $options = parent::getOptions($options);
-
-        if (!\in_array($options['type'], ['bar', 'line'])) {
-            $options['type'] = self::DEFAULT_CHART;
-        }
-
-        if (empty($options['id'])) {
-            $options['id'] = uniqid('DailyWorkingTimeChart_');
-        }
-
-        return $options;
+        return array_merge([
+            'begin' => null,
+            'end' => null,
+            'color' => '',
+            'type' => 'bar',
+            'id' => uniqid('DailyWorkingTimeChart_'),
+        ], parent::getOptions($options));
     }
 
     public function getData(array $options = [])
     {
-        $options = $this->getOptions($options);
-
-        $user = $options['user'];
-        if (null === $user || !($user instanceof User)) {
-            throw new \InvalidArgumentException('Widget option "user" must be an instance of ' . User::class);
-        }
+        $user = $this->getUser();
 
         $dateTimeFactory = DateTimeFactory::createByUser($user);
 
@@ -113,5 +100,20 @@ class DailyWorkingTimeChart extends SimpleWidget implements UserWidget
             'activities' => $activities,
             'data' => $statistics,
         ];
+    }
+
+    public function getTitle(): string
+    {
+        return 'stats.yourWorkingHours';
+    }
+
+    public function getId(): string
+    {
+        return 'DailyWorkingTimeChart';
+    }
+
+    public function getTemplateName(): string
+    {
+        return 'widget/widget-dailyworkingtimechart.html.twig';
     }
 }

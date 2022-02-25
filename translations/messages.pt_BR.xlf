@@ -290,10 +290,6 @@
         <source>dashboard.subtitle</source>
         <target>Bem-vindo!</target>
       </trans-unit>
-      <trans-unit id="yEa1Yz3" resname="dashboard.all">
-        <source>dashboard.all</source>
-        <target>Todos usuários</target>
-      </trans-unit>
       <!--
               Widgets
             -->
@@ -561,24 +557,24 @@
         <source>stats.amountTotal</source>
         <target>Receita total</target>
       </trans-unit>
-      <trans-unit id="xyiadv3" resname="stats.userActiveToday">
-        <source>stats.userActiveToday</source>
+      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
+        <source>stats.activeUsersToday</source>
         <target>Usuários ativos hoje</target>
       </trans-unit>
-      <trans-unit id="knMHaeO" resname="stats.userActiveWeek">
-        <source>stats.userActiveWeek</source>
+      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
+        <source>stats.activeUsersWeek</source>
         <target>Usuários ativos nesta semana</target>
       </trans-unit>
-      <trans-unit id="adzVDgb" resname="stats.userActiveMonth">
-        <source>stats.userActiveMonth</source>
+      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
+        <source>stats.activeUsersMonth</source>
         <target>Usuários ativos este mês</target>
       </trans-unit>
-      <trans-unit id="AswjFvh" resname="stats.userActiveYear">
-        <source>stats.userActiveYear</source>
+      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
+        <source>stats.activeUsersYear</source>
         <target>Usuários ativos este ano</target>
       </trans-unit>
-      <trans-unit id="dLTb1Po" resname="stats.userActiveTotal">
-        <source>stats.userActiveTotal</source>
+      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
+        <source>stats.activeUsersTotal</source>
         <target>Usuários ativos total</target>
       </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
@@ -1261,7 +1257,7 @@
         <source>Updated at</source>
         <target>Atualizado em</target>
       </trans-unit>
-      <trans-unit id="sdfgsdfgsdfg" resname="label.choice_pattern">
+      <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
         <target>Exibe as entradas nas listas de seleção</target>
       </trans-unit>

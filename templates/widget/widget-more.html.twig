@@ -23,11 +23,6 @@
                             {{ 'Invalid data' }}
                         {% else %}
                             {% block widget_data %}
-                                {% if options.dataType == 'duration' %}
-                                    {% set data = data|duration %}
-                                {% elseif options.dataType == 'money' %}
-                                    {% set data = data|money %}
-                                {% endif %}
                                 {{ data }}
                             {% endblock %}
                         {% endif %}

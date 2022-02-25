@@ -13,7 +13,7 @@ use App\Configuration\SystemConfiguration;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
 
-class CounterYear extends SimpleStatisticChart
+abstract class AbstractCounterYear extends AbstractSimpleStatisticChart
 {
     private $systemConfiguration;
     /**
@@ -25,24 +25,29 @@ class CounterYear extends SimpleStatisticChart
     {
         parent::__construct($repository);
         $this->systemConfiguration = $systemConfiguration;
-        $this->setOption('dataType', 'int');
     }
 
     public function getData(array $options = [])
     {
-        $this->begin = '01 january this year 00:00:00';
-        $this->end = '31 december this year 23:59:59';
+        $this->setBegin('01 january this year 00:00:00');
+        $this->setEnd('31 december this year 23:59:59');
 
         if (null !== ($financialYear = $this->systemConfiguration->getFinancialYearStart())) {
             $factory = new DateTimeFactory($this->getTimezone());
-            $this->begin = $factory->createStartOfFinancialYear($financialYear);
-            $this->end = $factory->createEndOfFinancialYear($this->begin);
+            $begin = $factory->createStartOfFinancialYear($financialYear);
+            $this->setBegin($begin);
+            $this->setEnd($factory->createEndOfFinancialYear($begin));
             if (!empty($this->titleYear)) {
                 $this->setTitle($this->titleYear);
             }
         }
 
         return parent::getData($options);
+    }
+
+    public function getTitle(): string
+    {
+        return 'stats.' . $this->getId();
     }
 
     public function getTemplateName(): string

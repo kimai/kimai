@@ -9,70 +9,42 @@
 
 namespace App\Widget;
 
-use App\Repository\WidgetRepository;
-
 /**
  * @final
  */
 class WidgetService
 {
     /**
-     * @var WidgetRendererInterface[]
+     * @var array
      */
-    private $renderer;
-    /**
-     * @var WidgetRepository
-     */
-    private $repository;
+    private $widgets = [];
 
-    /**
-     * @param WidgetRepository $repository
-     * @param WidgetRendererInterface[] $renderer
-     */
-    public function __construct(WidgetRepository $repository, iterable $renderer)
+    public function hasWidget(string $id): bool
     {
-        $this->renderer = $renderer;
-        $this->repository = $repository;
+        return \array_key_exists($id, $this->widgets);
     }
 
-    public function hasWidget(string $widget): bool
+    public function registerWidget(WidgetInterface $widget): void
     {
-        return $this->repository->has($widget);
-    }
-
-    public function getWidget(string $widget): WidgetInterface
-    {
-        return $this->repository->get($widget);
-    }
-
-    public function addRenderer(WidgetRendererInterface $renderer): WidgetService
-    {
-        $this->renderer[] = $renderer;
-
-        return $this;
+        if (!empty($widget->getId())) {
+            $this->widgets[$widget->getId()] = $widget;
+        }
     }
 
     /**
-     * @param WidgetInterface $widget
-     * @return WidgetRendererInterface
-     * @throws WidgetException
+     * @return array<string, WidgetInterface>
      */
-    public function findRenderer(WidgetInterface $widget): WidgetRendererInterface
+    public function getAllWidgets(): array
     {
-        foreach ($this->renderer as $renderer) {
-            if ($renderer->supports($widget)) {
-                return $renderer;
-            }
+        return $this->widgets;
+    }
+
+    public function getWidget(string $id): WidgetInterface
+    {
+        if (!$this->hasWidget($id)) {
+            throw new \InvalidArgumentException(sprintf('Cannot find widget: %s', $id));
         }
 
-        throw new WidgetException(sprintf('No renderer available for widget "%s"', \get_class($widget)));
-    }
-
-    /**
-     * @return WidgetRendererInterface[]
-     */
-    public function getRenderer(): iterable
-    {
-        return $this->renderer;
+        return $this->widgets[$id];
     }
 }

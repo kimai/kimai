@@ -140,7 +140,7 @@ class DateTimeFactory
      */
     public function createDateTimeFromFormat(string $format, ?string $datetime = 'now')
     {
-        return DateTime::createFromFormat($format, $datetime, $this->getTimezone());
+        return DateTime::createFromFormat($format, $datetime ?? 'now', $this->getTimezone());
     }
 
     public function createStartOfYear(?DateTime $date = null): DateTime

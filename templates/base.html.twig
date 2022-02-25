@@ -93,7 +93,7 @@
 {% endblock %}
 
 {% block footer %}
-    {% if app.request.attributes.get('_route') == 'dashboard' %}
+    {% if 'dashboard' in app.request.attributes.get('_route') %}
         {{ parent() }}
     {% endif %}
 {% endblock %}

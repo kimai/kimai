@@ -25,9 +25,11 @@ final class AmountToday extends AbstractAmountPeriod
 
     public function getData(array $options = [])
     {
-        $this->setBegin('00:00:00');
-        $this->setEnd('23:59:59');
+        return $this->getRevenue('00:00:00', '23:59:59', $options);
+    }
 
-        return parent::getData($options);
+    public function getPermissions(): array
+    {
+        return ['view_all_data'];
     }
 }

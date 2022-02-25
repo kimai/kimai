@@ -172,41 +172,30 @@ kimai:
 # DASHBOARD
 # --------------------------------------------------------------------------------
     dashboard:
-        user_duration:
-            title: ~
-            order: 10
-            permission: view_own_timesheet
-            widgets: [PaginatedWorkingTimeChart]
-        user_teams:
-            title: ~
-            order: 15
-            permission: ROLE_USER
-            widgets: [UserTeams, UserTeamProjects]
-        user_rates:
-            title: ~
-            order: 20
-            permission: view_rate_own_timesheet
-            widgets: [userAmountToday, userAmountWeek, userAmountMonth, userAmountYear]
-        duration:
-            title: dashboard.all
-            order: 30
-            permission: ROLE_TEAMLEAD
-            widgets: [durationToday, durationWeek, durationMonth, durationYear]
-        active_users:
-            title: ~
-            order: 40
-            permission: ROLE_TEAMLEAD
-            widgets: [activeUsersToday, activeUsersWeek, activeUsersMonth, activeUsersYear]
-        rates:
-            title: ~
-            order: 50
-            permission: view_all_data
-            widgets: [amountToday, amountWeek, amountMonth, amountYear]
-        totals:
-            title: ~
-            order: 100
-            permission: ROLE_USER
-            widgets: [TotalsUser, TotalsCustomer, TotalsProject, TotalsActivity]
+        widgets:
+            - PaginatedWorkingTimeChart
+            - userAmountToday
+            - userAmountWeek
+            - userAmountMonth
+            - userAmountYear
+            - UserTeams
+            - UserTeamProjects
+            - durationToday
+            - durationWeek
+            - durationMonth
+            - durationYear
+            - activeUsersToday
+            - activeUsersWeek
+            - activeUsersMonth
+            - activeUsersYear
+            - amountToday
+            - amountWeek
+            - amountMonth
+            - amountYear
+            - TotalsUser
+            - TotalsCustomer
+            - TotalsProject
+            - TotalsActivity
 # --------------------------------------------------------------------------------
 
 

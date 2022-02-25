@@ -159,10 +159,6 @@
         <source>label.toggle_dropdown</source>
         <target>نمایش منو</target>
       </trans-unit>
-      <trans-unit id="yEa1Yz3" resname="dashboard.all">
-        <source>dashboard.all</source>
-        <target>تمام کاربران</target>
-      </trans-unit>
       <trans-unit id="3PYadzb" resname="dashboard.subtitle">
         <source>dashboard.subtitle</source>
         <target>خوش آمدی!</target>

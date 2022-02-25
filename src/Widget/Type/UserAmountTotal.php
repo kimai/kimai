@@ -11,7 +11,7 @@ namespace App\Widget\Type;
 
 use App\Widget\WidgetInterface;
 
-final class UserAmountTotal extends AbstractUserAmountPeriod
+final class UserAmountTotal extends AbstractUserRevenuePeriod
 {
     public function getOptions(array $options = []): array
     {
@@ -21,5 +21,10 @@ final class UserAmountTotal extends AbstractUserAmountPeriod
     public function getId(): string
     {
         return 'userAmountTotal';
+    }
+
+    public function getData(array $options = [])
+    {
+        return $this->getRevenue(null, null, $options);
     }
 }

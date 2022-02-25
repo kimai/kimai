@@ -14,14 +14,13 @@ use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\Counter;
-use App\Widget\Type\CounterYear;
-use App\Widget\Type\SimpleWidget;
+use App\Widget\Type\DurationYear;
 use DateTime;
 
 /**
- * @covers \App\Widget\Type\CounterYear
- * @covers \App\Widget\Type\SimpleStatisticChart
- * @covers \App\Widget\Type\SimpleWidget
+ * @covers \App\Widget\Type\DurationYear
+ * @covers \App\Widget\Type\AbstractCounterYear
+ * @covers \App\Widget\Type\AbstractSimpleStatisticChart
  */
 class CounterYearTest extends AbstractSimpleStatisticsWidgetTypeTest
 {
@@ -33,8 +32,9 @@ class CounterYearTest extends AbstractSimpleStatisticsWidgetTypeTest
             $configuration->method('getFinancialYearStart')->willReturn($financialYear);
         }
 
-        $sut = new CounterYear($this->createMock(TimesheetRepository::class), $configuration);
-        $sut->setQuery(TimesheetRepository::STATS_QUERY_ACTIVE);
+        $sut = new DurationYear($this->createMock(TimesheetRepository::class), $configuration);
+        $sut->setQuery(TimesheetRepository::STATS_QUERY_AMOUNT);
+        $sut->setUser(new User());
 
         return $sut;
     }
@@ -46,13 +46,12 @@ class CounterYearTest extends AbstractSimpleStatisticsWidgetTypeTest
 
         $repository = $this->createMock(TimesheetRepository::class);
         $repository->expects($this->once())->method('getStatistic')->willReturnCallback(function (string $type, ?DateTime $begin, ?DateTime $end, ?User $user) {
-            self::assertEquals($type, 'active');
             self::assertNull($begin);
             self::assertNull($end);
             self::assertNull($user);
         });
         $sut = new Counter($repository);
-        $sut->setQuery(TimesheetRepository::STATS_QUERY_ACTIVE);
+        $sut->setQuery(TimesheetRepository::STATS_QUERY_AMOUNT);
         $sut->setUser($user);
         $sut->getData([]);
 
@@ -61,14 +60,13 @@ class CounterYearTest extends AbstractSimpleStatisticsWidgetTypeTest
 
         $repository = $this->createMock(TimesheetRepository::class);
         $repository->expects($this->once())->method('getStatistic')->willReturnCallback(function (string $type, ?DateTime $begin, ?DateTime $end, ?User $user) {
-            self::assertEquals($type, 'active');
             self::assertNull($begin);
             self::assertNull($end);
             self::assertNotNull($user);
             self::assertEquals('bar', $user->getAlias());
         });
         $sut = new Counter($repository);
-        $sut->setQuery(TimesheetRepository::STATS_QUERY_ACTIVE);
+        $sut->setQuery(TimesheetRepository::STATS_QUERY_AMOUNT);
         $sut->setUser($user);
         $sut->setQueryWithUser(true);
         $sut->getData([]);
@@ -76,26 +74,20 @@ class CounterYearTest extends AbstractSimpleStatisticsWidgetTypeTest
 
     public function getDefaultOptions(): array
     {
-        return ['dataType' => 'int'];
-    }
-
-    public function testExtendsSimpleWidget()
-    {
-        $sut = $this->createSut();
-        self::assertInstanceOf(SimpleWidget::class, $sut);
+        return ['icon' => 'duration', 'color' => 'yellow'];
     }
 
     public function testTemplateName()
     {
         /** @var Counter $sut */
         $sut = $this->createSut();
-        self::assertEquals('widget/widget-counter.html.twig', $sut->getTemplateName());
+        self::assertEquals('widget/widget-counter-duration.html.twig', $sut->getTemplateName());
     }
 
     public function testTemplateNameWithFinancialYear()
     {
         /** @var Counter $sut */
         $sut = $this->createSut('2020-01-01');
-        self::assertEquals('widget/widget-counter.html.twig', $sut->getTemplateName());
+        self::assertEquals('widget/widget-counter-duration.html.twig', $sut->getTemplateName());
     }
 }

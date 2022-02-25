@@ -46,6 +46,7 @@
     "defaults"
   ],
   "dependencies": {
+    "gridstack": "^5.0.0",
     "tom-select": "^2.0.0"
   }
 }

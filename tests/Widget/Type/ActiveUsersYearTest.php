@@ -10,46 +10,38 @@
 namespace App\Tests\Widget\Type;
 
 use App\Configuration\SystemConfiguration;
+use App\Entity\User;
 use App\Repository\TimesheetRepository;
+use App\Widget\Type\AbstractCounterYear;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\ActiveUsersYear;
-use App\Widget\Type\CounterYear;
-use App\Widget\Type\SimpleStatisticChart;
 
 /**
  * @covers \App\Widget\Type\ActiveUsersYear
- * @covers \App\Widget\Type\CounterYear
+ * @covers \App\Widget\Type\AbstractCounterYear
  */
 class ActiveUsersYearTest extends AbstractWidgetTypeTest
 {
     /**
-     * @return CounterYear
+     * @return AbstractCounterYear
      */
     public function createSut(): AbstractWidgetType
     {
         $repository = $this->createMock(TimesheetRepository::class);
         $configuration = $this->createMock(SystemConfiguration::class);
 
-        return new ActiveUsersYear($repository, $configuration);
+        $sut = new ActiveUsersYear($repository, $configuration);
+        $sut->setUser(new User());
+
+        return $sut;
     }
 
     public function getDefaultOptions(): array
     {
         return [
-            'dataType' => 'int',
             'icon' => 'users',
             'color' => 'yellow',
         ];
-    }
-
-    public function testData()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Cannot set data on instances of SimpleStatisticChart');
-
-        $sut = $this->createSut();
-        self::assertInstanceOf(SimpleStatisticChart::class, $sut);
-        $sut->setData(10);
     }
 
     public function testSettings()

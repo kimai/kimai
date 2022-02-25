@@ -219,10 +219,6 @@
         <source>dashboard.subtitle</source>
         <target>Velkommen.</target>
       </trans-unit>
-      <trans-unit id="yEa1Yz3" resname="dashboard.all">
-        <source>dashboard.all</source>
-        <target>Alle brukere</target>
-      </trans-unit>
       <!--
               Widgets
             -->
@@ -820,24 +816,24 @@
         <source>stats.amountTotal</source>
         <target>Lønn totalt</target>
       </trans-unit>
-      <trans-unit id="xyiadv3" resname="stats.userActiveToday">
-        <source>stats.userActiveToday</source>
+      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
+        <source>stats.activeUsersToday</source>
         <target>Aktive brukere i dag</target>
       </trans-unit>
-      <trans-unit id="knMHaeO" resname="stats.userActiveWeek">
-        <source>stats.userActiveWeek</source>
+      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
+        <source>stats.activeUsersWeek</source>
         <target>Aktive brukere denne uken</target>
       </trans-unit>
-      <trans-unit id="adzVDgb" resname="stats.userActiveMonth">
-        <source>stats.userActiveMonth</source>
+      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
+        <source>stats.activeUsersMonth</source>
         <target>Aktive brukere denne måneden</target>
       </trans-unit>
-      <trans-unit id="AswjFvh" resname="stats.userActiveYear">
-        <source>stats.userActiveYear</source>
+      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
+        <source>stats.activeUsersYear</source>
         <target>Aktive brukere dette året</target>
       </trans-unit>
-      <trans-unit id="dLTb1Po" resname="stats.userActiveTotal">
-        <source>stats.userActiveTotal</source>
+      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
+        <source>stats.activeUsersTotal</source>
         <target>Aktive brukere noensinne</target>
       </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">

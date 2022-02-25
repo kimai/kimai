@@ -9,13 +9,10 @@
 
 namespace App\Widget\Type;
 
-use App\Repository\TimesheetRepository;
-
-final class Counter extends SimpleStatisticChart
+final class Counter extends AbstractSimpleStatisticChart
 {
-    public function __construct(TimesheetRepository $repository)
+    public function getTemplateName(): string
     {
-        parent::__construct($repository);
-        $this->setOption('dataType', 'int');
+        return 'widget/widget-counter.html.twig';
     }
 }

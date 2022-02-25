@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+
+{% block page_title %}{{ 'dashboard.title'|trans }}{% endblock %}
+{% block subtitle %}{{ 'dashboard.subtitle'|trans }}{% endblock %}
+{% block page_actions %}
+    {% set event = actions(app.user, 'dashboard', (form is defined ? 'edit' : 'dashboard'), {'widgets': widgets, 'available': available}) %}
+    {{ widgets.page_actions(event.actions) }}
+{% endblock %}
+
+{% block page_content_class %}{{ parent() }} dashboard{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('chart') }}
+    {{ encore_entry_link_tags('dashboard') }}
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('chart') }}
+    {{ encore_entry_script_tags('dashboard') }}
+{% endblock %}
+
+{% block main %}
+
+    {% if widgets is empty %}
+        {{ widgets.nothing_found() }}
+    {% else %}
+        {% if form is defined %}
+            {{ widgets.callout('warning', 'dashboard.edit_mode') }}
+
+            {{ form_start(form, {'attr': {'style': 'display: none', 'id': 'dashboard-widgets'}}) }}
+            {{ form_end(form) }}
+        {% endif %}
+
+        <div class="grid-stack" id="dashboard-grid-container" style="visibility: hidden">
+            {% for widget in widgets %}
+                <div class="grid-stack-item" data-widget="{{ widget.id }}" gs-w="{{ widget.width }}" gs-min-w="{{ widget.width }}" gs-h="{{ widget.height }}" gs-id="{{ widget.id }}">
+                    <div class="grid-stack-item-content">
+                        {{ render_widget(widget) }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        let grid = null;
+
+        function resizeGrid() {
+            let width = document.body.clientWidth;
+            if (width < 576) {
+                grid.column(1);
+            } else if (width < 992) {
+                grid.column(2);
+            } else if (width) {
+                grid.column(4);
+            }
+        };
+
+        window.addEventListener('resize', function() {resizeGrid()});
+
+        document.addEventListener('kimai.initialized', function() {
+            grid = GridStack.init({
+                'float': false,
+                'cellHeight': 84,
+                'disableResize': true,
+                'column': 4,
+                'marginTop': 0,
+                'marginBottom': 0,
+                'marginLeft': 5,
+                'marginRight': 5,
+                'disableOneColumnMode': true,
+                {% if form is not defined %}
+                'staticGrid': true,
+                {% endif %}
+            });
+
+            resizeGrid();
+
+            document.dispatchEvent(new Event('dashboard.initialized'));
+            document.getElementById('dashboard-grid-container').style.visibility = 'visible';
+        });
+
+        {% if form is defined %}
+        function saveDashboard()
+        {
+            let serializedData = grid.save();
+            const choice = document.getElementById('form_widgets');
+            const values = [];
+            const newChoices = [];
+
+            for (let item of serializedData) {
+                values.push(item.id);
+                for (let i = 0; i < choice.options.length; i++) {
+                    if (choice.options[i].value === item.id) {
+                        choice.options[i].selected = true;
+                        newChoices.push(choice.options[i]);
+                        console.log(item.id, choice.options[i].value);
+                        break;
+                    }
+                }
+            }
+
+            choice.options.length = 0;
+            newChoices.forEach(child => choice.appendChild(child));
+            choice.dispatchEvent(new Event('change'));
+
+            document.getElementById('dashboard-widgets').submit();
+        }
+        {% endif %}
+    </script>
+{% endblock %}

@@ -261,9 +261,7 @@ class TimesheetRepository extends EntityRepository
                 $what = 'COALESCE(SUM(t.duration), 0)';
                 break;
             case self::STATS_QUERY_RATE:
-                $what = 'COALESCE(SUM(t.rate), 0)';
-                $billable = true;
-                break;
+                return $this->getRevenue($begin, $end, $user);
             case self::STATS_QUERY_USER:
                 $what = 'COUNT(DISTINCT(t.user))';
                 break;
@@ -275,6 +273,11 @@ class TimesheetRepository extends EntityRepository
         }
 
         return $this->queryTimeRange($what, $begin, $end, $user, $billable);
+    }
+
+    public function getRevenue(?DateTime $begin, ?DateTime $end, ?User $user)
+    {
+        return $this->queryTimeRange('COALESCE(SUM(t.rate), 0)', $begin, $end, $user, true);
     }
 
     /**

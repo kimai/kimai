@@ -9,16 +9,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Bookmark;
+use App\Entity\User;
 use App\Event\DashboardEvent;
-use App\Widget\Type\AbstractContainer;
-use App\Widget\Type\AuthorizedWidget;
-use App\Widget\Type\CompoundRow;
-use App\Widget\Type\UserWidget;
-use App\Widget\WidgetContainerInterface;
-use App\Widget\WidgetException;
+use App\Repository\BookmarkRepository;
+use App\Widget\WidgetInterface;
 use App\Widget\WidgetService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -29,125 +30,266 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class DashboardController extends AbstractController
 {
-    /**
-     * @var EventDispatcherInterface
-     */
+    public const BOOKMARK_TYPE = 'dashboard';
+    public const BOOKMARK_NAME = 'default';
+
     private $eventDispatcher;
+    private $service;
+    private $repository;
     /**
-     * @var WidgetService
-     */
-    private $widgets;
-    /**
-     * @var array
+     * @var array<string> array with names of default widgets
      */
     private $dashboard;
-
     /**
-     * @param EventDispatcherInterface $dispatcher
-     * @param WidgetService $service
-     * @param array $dashboard
+     * @var WidgetInterface[]|null
      */
-    public function __construct(EventDispatcherInterface $dispatcher, WidgetService $service, array $dashboard)
+    private $widgets;
+
+    public function __construct(EventDispatcherInterface $dispatcher, WidgetService $service, BookmarkRepository $repository, array $dashboard)
     {
         $this->eventDispatcher = $dispatcher;
-        $this->widgets = $service;
+        $this->service = $service;
+        $this->repository = $repository;
         $this->dashboard = $dashboard;
+    }
+
+    /**
+     * @param User $user
+     * @return array<WidgetInterface>
+     * @throws \Exception
+     */
+    private function getAllAvailableWidgets(User $user): array
+    {
+        if ($this->widgets === null) {
+            $all = [];
+            foreach ($this->service->getAllWidgets() as $widget) {
+                $widget->setUser($user);
+
+                $permissions = $widget->getPermissions();
+                if (\count($permissions) > 0) {
+                    $add = false;
+                    foreach ($permissions as $perm) {
+                        if ($this->isGranted($perm)) {
+                            $add = true;
+                            break;
+                        }
+                    }
+
+                    if (!$add) {
+                        continue;
+                    }
+                }
+                $all[] = $widget;
+            }
+            $this->widgets = $all;
+        }
+
+        return $this->widgets;
+    }
+
+    private function getBookmark(User $user): ?Bookmark
+    {
+        return $this->repository->findBookmark($user, self::BOOKMARK_TYPE, self::BOOKMARK_NAME);
+    }
+
+    private function getDefaultConfig(): array
+    {
+        $event = new DashboardEvent($this->getUser());
+
+        foreach ($this->dashboard as $widgetName) {
+            $event->addWidget($widgetName);
+        }
+
+        $this->eventDispatcher->dispatch($event);
+
+        return $event->getWidgets();
+    }
+
+    /**
+     * Returns the list of widgets names and options for a user.
+     *
+     * @param User $user
+     * @return array<int, array<string, mixed>>
+     */
+    private function getUserConfig(User $user): array
+    {
+        $bookmark = $this->getBookmark($user);
+        if ($bookmark !== null) {
+            return $bookmark->getContent();
+        }
+
+        $widgets = [];
+
+        foreach ($this->getDefaultConfig() as $name) {
+            $widgets[] = ['id' => $name, 'options' => []];
+        }
+
+        return $widgets;
+    }
+
+    /**
+     * @param array<WidgetInterface> $widgets
+     * @param User $user
+     * @return array<WidgetInterface>
+     */
+    private function filterWidgets(array $widgets, User $user): array
+    {
+        $filteredWidgets = [];
+
+        foreach ($this->getUserConfig($user) as $setting) {
+            $id = $setting['id'];
+            $options = $setting['options'];
+            foreach ($widgets as $widget) {
+                if ($widget->getId() === $id) {
+                    $tmpWidget = clone $widget;
+                    foreach ($options as $key => $value) {
+                        $tmpWidget->setOption($key, $value);
+                    }
+                    $filteredWidgets[] = $tmpWidget;
+                    break;
+                }
+            }
+        }
+
+        return $filteredWidgets;
     }
 
     /**
      * @Route(path="/", defaults={}, name="dashboard", methods={"GET"})
      */
-    public function indexAction()
+    public function index()
+    {
+        $user = $this->getUser();
+        $available = $this->getAllAvailableWidgets($user);
+
+        return $this->render('dashboard/grid.html.twig', [
+            'widgets' => $this->filterWidgets($available, $user),
+            'available' => $available,
+        ]);
+    }
+
+    /**
+     * @Route(path="/reset/", defaults={}, name="dashboard_reset", methods={"GET", "POST"})
+     */
+    public function reset()
+    {
+        $bookmark = $this->getBookmark($this->getUser());
+        if ($bookmark !== null) {
+            $this->repository->deleteBookmark($bookmark);
+        }
+
+        return $this->redirectToRoute('dashboard');
+    }
+
+    /**
+     * @Route(path="/add-widget/{widget}", defaults={}, name="dashboard_add", methods={"GET"})
+     */
+    public function add(string $widget): Response
     {
         $user = $this->getUser();
 
-        $event = new DashboardEvent($user);
-        foreach ($this->dashboard as $widgetRow) {
-            if (empty($widgetRow['widgets'])) {
+        $widgets = $this->getUserConfig($user);
+        foreach ($widgets as $id => $setting) {
+            if ($setting['id'] === $widget) {
+                return $this->redirectToRoute('dashboard_edit');
+            }
+        }
+
+        $widgets[] = ['id' => $widget, 'options' => []];
+
+        $this->saveBookmark($user, $widgets);
+
+        return $this->redirectToRoute('dashboard_edit');
+    }
+
+    /**
+     * @Route(path="/remove-widget/{widget}", defaults={}, name="dashboard_remove", methods={"GET"})
+     */
+    public function remove(string $widget): Response
+    {
+        $user = $this->getUser();
+
+        $widgets = $this->getUserConfig($user);
+        foreach ($widgets as $id => $setting) {
+            if ($setting['id'] === $widget) {
+                unset($widgets[$id]);
+            }
+        }
+
+        $this->saveBookmark($user, $widgets);
+
+        return $this->redirectToRoute('dashboard_edit');
+    }
+
+    private function saveBookmark(User $user, array $widgets)
+    {
+        $bookmark = $this->getBookmark($user);
+        if ($bookmark === null) {
+            $bookmark = new Bookmark();
+            $bookmark->setUser($user);
+            $bookmark->setType(self::BOOKMARK_TYPE);
+            $bookmark->setName(self::BOOKMARK_NAME);
+        }
+        $bookmark->setContent($widgets);
+
+        $this->repository->saveBookmark($bookmark);
+    }
+
+    /**
+     * @Route(path="/edit/", defaults={}, name="dashboard_edit", methods={"GET", "POST"})
+     */
+    public function edit(Request $request)
+    {
+        $user = $this->getUser();
+
+        $available = $this->getAllAvailableWidgets($user);
+        $widgets = $this->filterWidgets($available, $user);
+
+        $choices = [];
+
+        foreach ($available as $widget) {
+            if (empty($widget->getTitle())) {
                 continue;
             }
+            $choices[$widget->getId()] = $widget->getId();
+        }
 
-            if (null !== $widgetRow['permission'] && !$this->isGranted($widgetRow['permission'])) {
-                continue;
-            }
+        $form = $this->createFormBuilder(null, [])
+            ->add('widgets', ChoiceType::class, ['choices' => $choices, 'multiple' => true])
+            ->setAction($this->generateUrl('dashboard_edit'))
+            ->setMethod('POST')
+            ->getForm();
 
-            if (!isset($widgetRow['type'])) {
-                $widgetRow['type'] = CompoundRow::class;
-            }
+        $form->handleRequest($request);
 
-            if (!class_exists($widgetRow['type'])) {
-                throw new WidgetException(sprintf('Unknown widget type "%s"', $widgetRow['type']));
-            }
-
-            $row = new $widgetRow['type']();
-            if (!($row instanceof AbstractContainer)) {
-                throw new WidgetException(
-                    sprintf(
-                        'Expected widget type to be an instanceof "%s", but found "%s"',
-                        AbstractContainer::class,
-                        $widgetRow['type']
-                    )
-                );
-            }
-
-            $row->setTitle($widgetRow['title'] ?? '');
-            $row->setOrder($widgetRow['order']);
-
-            foreach ($widgetRow['widgets'] as $widgetName) {
-                if (!$this->widgets->hasWidget($widgetName)) {
-                    throw new \Exception(sprintf('Unknown widget "%s"', $widgetName));
-                }
-
-                $widget = $this->widgets->getWidget($widgetName);
-
-                $add = true;
-                if ($widget instanceof AuthorizedWidget) {
-                    $tmp = false;
-                    foreach ($widget->getPermissions() as $perm) {
-                        if ($this->isGranted($perm)) {
-                            $tmp = true;
-                            break;
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $userWidgets = $this->getUserConfig($user);
+                $saveWidgets = [];
+                foreach ($form->getData()['widgets'] as $widgetId) {
+                    $options = [];
+                    foreach ($userWidgets as $setting) {
+                        if ($setting['id'] === $widgetId) {
+                            $options = $setting['options'];
                         }
                     }
-                    $add = $tmp;
+                    $saveWidgets[] = ['id' => $widgetId, 'options' => $options];
                 }
 
-                if ($widget instanceof UserWidget) {
-                    $widget->setUser($user);
-                }
+                $this->saveBookmark($user, $saveWidgets);
 
-                if ($add) {
-                    $row->addWidget($widget);
-                }
-            }
+                $this->flashSuccess('action.update.success');
 
-            $event->addSection($row);
-        }
-
-        $this->eventDispatcher->dispatch($event);
-
-        $sections = $event->getSections();
-        $clearedSections = [];
-        /** @var WidgetContainerInterface $section */
-        foreach ($sections as $key => $section) {
-            if (!empty($section->getWidgets())) {
-                $clearedSections[] = $section;
+                return $this->redirectToRoute('dashboard');
+            } catch (\Exception $ex) {
+                $this->flashDeleteException($ex);
             }
         }
 
-        uasort(
-            $clearedSections,
-            function (WidgetContainerInterface $a, WidgetContainerInterface $b) {
-                if ($a->getOrder() == $b->getOrder()) {
-                    return 0;
-                }
-
-                return ($a->getOrder() < $b->getOrder()) ? -1 : 1;
-            }
-        );
-
-        return $this->render('dashboard/index.html.twig', [
-            'widgets' => $clearedSections
+        return $this->render('dashboard/grid.html.twig', [
+            'widgets' => $widgets,
+            'available' => $available,
+            'form' => $form->createView(),
         ]);
     }
 }

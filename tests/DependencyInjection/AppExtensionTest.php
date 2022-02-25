@@ -132,8 +132,31 @@ class AppExtensionTest extends TestCase
                 'weekends' => true,
                 'dragdrop_amount' => 10,
             ],
-            'kimai.dashboard' => [],
-            'kimai.widgets' => [],
+            'kimai.dashboard' => [
+                'PaginatedWorkingTimeChart',
+                'UserTeams',
+                'UserTeamProjects',
+                'userAmountToday',
+                'userAmountWeek',
+                'userAmountMonth',
+                'userAmountYear',
+                'durationToday',
+                'durationWeek',
+                'durationMonth',
+                'durationYear',
+                'activeUsersToday',
+                'activeUsersWeek',
+                'activeUsersMonth',
+                'activeUsersYear',
+                'amountToday',
+                'amountWeek',
+                'amountMonth',
+                'amountYear',
+                'TotalsUser',
+                'TotalsCustomer',
+                'TotalsProject',
+                'TotalsActivity',
+            ],
             'kimai.invoice.documents' => [
                 'var/invoices/',
                 'templates/invoice/renderer/',
@@ -214,13 +237,13 @@ class AppExtensionTest extends TestCase
             ],
             'kimai.timesheet.rates' => [],
             'kimai.timesheet.rounding' => [
-                    'default' => [
-                        'begin' => 1,
-                        'end' => 1,
-                        'duration' => 0,
-                        'mode' => 'default',
-                        'days' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'
-                    ]
+                'default' => [
+                    'begin' => 1,
+                    'end' => 1,
+                    'duration' => 0,
+                    'mode' => 'default',
+                    'days' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'
+                ]
             ],
             'kimai.permissions' => [
                 'ROLE_USER' => [],

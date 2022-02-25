@@ -130,4 +130,6 @@ tabler:
         visibility: far fa-eye
         warning: fas fa-exclamation-triangle
         weekly-times: fas fa-th
+        widget_add: fas fa-folder-plus
+        widget_remove: fas fa-folder-minus
         xlsx: fas fa-file-excel

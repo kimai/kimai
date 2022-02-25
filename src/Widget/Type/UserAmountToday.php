@@ -11,7 +11,7 @@ namespace App\Widget\Type;
 
 use App\Widget\WidgetInterface;
 
-final class UserAmountToday extends AbstractUserAmountPeriod
+final class UserAmountToday extends AbstractUserRevenuePeriod
 {
     public function getOptions(array $options = []): array
     {
@@ -25,9 +25,6 @@ final class UserAmountToday extends AbstractUserAmountPeriod
 
     public function getData(array $options = [])
     {
-        $this->setBegin('00:00:00');
-        $this->setEnd('23:59:59');
-
-        return parent::getData($options);
+        return $this->getRevenue('00:00:00', '23:59:59', $options);
     }
 }

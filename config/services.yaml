@@ -38,10 +38,6 @@ services:
     App\Utils\LanguageService:
         arguments: ['%app_locales%']
 
-    App\Repository\WidgetRepository:
-        arguments:
-            $widgets: '%kimai.widgets%'
-
     App\Controller\DashboardController:
         arguments:
             $dashboard: '%kimai.dashboard%'
@@ -70,10 +66,6 @@ services:
         
     App\Validator\Constraints\QuickEntryTimesheetValidator:
         arguments: [!tagged timesheet.validator]
-
-    App\Widget\WidgetService:
-        arguments:
-            $renderer: !tagged widget.renderer
 
     App\Utils\Translator:
         decorates: translator

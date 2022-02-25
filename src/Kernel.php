@@ -31,7 +31,6 @@ use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Validator\Constraints\ProjectConstraint;
 use App\Validator\Constraints\TimesheetConstraint;
 use App\Widget\WidgetInterface;
-use App\Widget\WidgetRendererInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -51,7 +50,6 @@ class Kernel extends BaseKernel
 
     public const TAG_PLUGIN = 'kimai.plugin';
     public const TAG_WIDGET = 'widget';
-    public const TAG_WIDGET_RENDERER = 'widget.renderer';
     public const TAG_EXPORT_RENDERER = 'export.renderer';
     public const TAG_EXPORT_REPOSITORY = 'export.repository';
     public const TAG_INVOICE_RENDERER = 'invoice.renderer';
@@ -85,7 +83,6 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(InvoiceCalculator::class)->addTag(self::TAG_INVOICE_CALCULATOR);
         $container->registerForAutoconfiguration(InvoiceItemRepositoryInterface::class)->addTag(self::TAG_INVOICE_REPOSITORY);
         $container->registerForAutoconfiguration(PluginInterface::class)->addTag(self::TAG_PLUGIN);
-        $container->registerForAutoconfiguration(WidgetRendererInterface::class)->addTag(self::TAG_WIDGET_RENDERER);
         $container->registerForAutoconfiguration(WidgetInterface::class)->addTag(self::TAG_WIDGET);
         $container->registerForAutoconfiguration(TimesheetExportInterface::class)->addTag(self::TAG_TIMESHEET_EXPORTER);
         $container->registerForAutoconfiguration(TrackingModeInterface::class)->addTag(self::TAG_TIMESHEET_TRACKING_MODE);

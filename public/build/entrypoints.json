@@ -6,7 +6,7 @@
         "build/app.ed35580a.js"
       ],
       "css": [
-        "build/app.4e1863b4.css"
+        "build/app.c6cf8419.css"
       ]
     },
     "invoice": {
@@ -40,6 +40,15 @@
       ],
       "css": [
         "build/calendar.9f5b3d41.css"
+      ]
+    },
+    "dashboard": {
+      "js": [
+        "build/runtime.fb9c99a2.js",
+        "build/dashboard.d2660a53.js"
+      ],
+      "css": [
+        "build/dashboard.484de6cd.css"
       ]
     }
   }

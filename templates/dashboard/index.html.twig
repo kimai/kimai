@@ -3,6 +3,10 @@
 
 {% block page_title %}{{ 'dashboard.title'|trans }}{% endblock %}
 {% block subtitle %}{{ 'dashboard.subtitle'|trans }}{% endblock %}
+{% block page_actions %}
+    {% set event = actions(app.user, 'dashboard', 'dashboard', {'widgets': widgets, 'available': available}) %}
+    {{ widgets.page_actions(event.actions) }}
+{% endblock %}
 
 {% block page_content_class %}{{ parent() }} dashboard{% endblock %}
 
@@ -22,8 +26,11 @@
         {{ widgets.nothing_found() }}
     {% else %}
         <div class="row row-cards">
-        {% for row in widgets %}
-            {{ render_widget(row) }}
+        {% for widget in widgets %}
+            {% set columnSize = widget.width %}
+            <div class="col-md-{{ columnSize * 3 }}{% if columnSize <= 2 %} col-sm-{{ columnSize * 6  }}{% endif %}">
+                {{ render_widget(widget) }}
+            </div>
         {% endfor %}
         </div>
     {% endif %}

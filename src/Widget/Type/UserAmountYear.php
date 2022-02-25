@@ -15,7 +15,7 @@ use App\Repository\TimesheetRepository;
 use App\Widget\WidgetInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final class UserAmountYear extends CounterYear
+final class UserAmountYear extends AbstractCounterYear
 {
     private $dispatcher;
 
@@ -23,11 +23,29 @@ final class UserAmountYear extends CounterYear
     {
         parent::__construct($repository, $systemConfiguration);
         $this->dispatcher = $dispatcher;
-        $this->setId('userAmountYear');
-        $this->setOption('dataType', 'money');
-        $this->setOption('icon', 'money');
-        $this->setOption('color', WidgetInterface::COLOR_YEAR);
-        $this->setTitle('stats.amountYear');
+    }
+
+    public function getTemplateName(): string
+    {
+        return 'widget/widget-counter-money.html.twig';
+    }
+
+    public function getPermissions(): array
+    {
+        return ['view_rate_own_timesheet'];
+    }
+
+    public function getId(): string
+    {
+        return 'userAmountYear';
+    }
+
+    public function getOptions(array $options = []): array
+    {
+        return array_merge([
+            'icon' => 'money',
+            'color' => WidgetInterface::COLOR_YEAR,
+        ], parent::getOptions($options));
     }
 
     public function getData(array $options = [])
@@ -38,7 +56,7 @@ final class UserAmountYear extends CounterYear
 
         $data = parent::getData($options);
 
-        $event = new UserRevenueStatisticEvent($this->user, $this->begin, $this->end);
+        $event = new UserRevenueStatisticEvent($this->getUser(), $this->getBegin(), $this->getEnd());
         if ($data !== null) {
             $event->addRevenue($data);
         }

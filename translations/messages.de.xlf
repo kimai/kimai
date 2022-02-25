@@ -120,7 +120,7 @@
         <source>modal.dirty</source>
         <target>Das Formular wurde geändert. Bitte klicken Sie „Speichern“, um die Änderungen zu sichern oder „Schließen“, um abzubrechen.</target>
       </trans-unit>
-      <trans-unit id="sdfgsdfgsdfg" resname="label.choice_pattern">
+      <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
         <target>Darstellung der Einträge in Auswahllisten</target>
       </trans-unit>
@@ -455,9 +455,9 @@
         <source>dashboard.subtitle</source>
         <target>Willkommen!</target>
       </trans-unit>
-      <trans-unit id="yEa1Yz3" resname="dashboard.all">
-        <source>dashboard.all</source>
-        <target>Alle Benutzer</target>
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode">
+        <source>dashboard.edit_mode</source>
+        <target>Sie können Ihre Widgets per Drag &amp; Drop neu anordnen. Das Hinzufügen und Entfernen von Widgets speichert ausstehende Änderungen.</target>
       </trans-unit>
       <!--
               Widgets
@@ -829,6 +829,26 @@
         <source>stats.durationTotal</source>
         <target>Arbeitszeit total</target>
       </trans-unit>
+      <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
+        <source>stats.userDurationToday</source>
+        <target>Meine Arbeitszeit heute</target>
+      </trans-unit>
+      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
+        <source>stats.userDurationWeek</source>
+        <target>Meine Arbeitszeit diese Woche</target>
+      </trans-unit>
+      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth">
+        <source>stats.userDurationMonth</source>
+        <target>Meine Arbeitszeit diesen Monat</target>
+      </trans-unit>
+      <trans-unit id="BjyLITj" resname="stats.userDurationYear">
+        <source>stats.userDurationYear</source>
+        <target>Meine Arbeitszeit dieses Jahr</target>
+      </trans-unit>
+      <trans-unit id="EedlgkM" resname="stats.userDurationTotal">
+        <source>stats.userDurationTotal</source>
+        <target>Meine Arbeitszeit total</target>
+      </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
         <target>Meine Arbeitszeiten</target>
@@ -857,28 +877,48 @@
         <source>stats.amountTotal</source>
         <target>Umsatz total</target>
       </trans-unit>
+      <trans-unit id="mQMcndl" resname="stats.userAmountToday">
+        <source>stats.userAmountToday</source>
+        <target>Mein Umsatz heute</target>
+      </trans-unit>
+      <trans-unit id="LDS9o5X" resname="stats.userAmountWeek">
+        <source>stats.userAmountWeek</source>
+        <target>Mein Umsatz diese Woche</target>
+      </trans-unit>
+      <trans-unit id="E3Kj9lt" resname="stats.userAmountMonth">
+        <source>stats.userAmountMonth</source>
+        <target>Mein Umsatz diesen Monat</target>
+      </trans-unit>
+      <trans-unit id="xvdsZsS" resname="stats.userAmountYear">
+        <source>stats.userAmountYear</source>
+        <target>Mein Umsatz dieses Jahr</target>
+      </trans-unit>
+      <trans-unit id="9jlbhkf" resname="stats.userAmountTotal">
+        <source>stats.userAmountTotal</source>
+        <target>Mein Umsatz total</target>
+      </trans-unit>
       <trans-unit id="xyiadv3" resname="stats.userActiveToday">
         <source>stats.userActiveToday</source>
         <target>Aktive Benutzer heute</target>
       </trans-unit>
-      <trans-unit id="knMHaeO" resname="stats.userActiveWeek">
-        <source>stats.userActiveWeek</source>
+      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
+        <source>stats.activeUsersWeek</source>
         <target>Aktive Benutzer diese Woche</target>
       </trans-unit>
       <trans-unit id="adzVDgb" resname="stats.userActiveMonth">
         <source>stats.userActiveMonth</source>
         <target>Aktive Benutzer diesen Monat</target>
       </trans-unit>
-      <trans-unit id="AswjFvh" resname="stats.userActiveYear">
-        <source>stats.userActiveYear</source>
+      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
+        <source>stats.activeUsersYear</source>
         <target>Aktive Benutzer dieses Jahr</target>
       </trans-unit>
       <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
         <source>stats.userActiveFinancialYear</source>
         <target>Aktive Benutzer dieses Geschäftsjahr</target>
       </trans-unit>
-      <trans-unit id="dLTb1Po" resname="stats.userActiveTotal">
-        <source>stats.userActiveTotal</source>
+      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
+        <source>stats.activeUsersTotal</source>
         <target>Aktive Benutzer jemals</target>
       </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">

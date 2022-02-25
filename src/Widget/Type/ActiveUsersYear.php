@@ -9,18 +9,17 @@
 
 namespace App\Widget\Type;
 
-use App\Configuration\SystemConfiguration;
 use App\Repository\TimesheetRepository;
+use App\Widget\WidgetInterface;
 
-final class ActiveUsersYear extends CounterYear
+final class ActiveUsersYear extends AbstractCounterYear
 {
-    public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration)
+    public function getOptions(array $options = []): array
     {
-        parent::__construct($repository, $systemConfiguration);
-        $this->setId('activeUsersYear');
-        $this->setOption('icon', 'users');
-        $this->setOption('color', 'yellow');
-        $this->setTitle('stats.userActiveYear');
+        return array_merge([
+            'icon' => 'users',
+            'color' => WidgetInterface::COLOR_YEAR,
+        ], parent::getOptions($options));
     }
 
     public function getData(array $options = [])
@@ -30,5 +29,10 @@ final class ActiveUsersYear extends CounterYear
         $this->setQueryWithUser(false);
 
         return parent::getData($options);
+    }
+
+    public function getId(): string
+    {
+        return 'activeUsersYear';
     }
 }

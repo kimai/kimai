@@ -1,13 +1,11 @@
 {% set teams = data %}
 {% set title = options.title|default(title|default('label.teams')) %}
-{% set widgetId = options.id %}
 
 {% if teams|length > 0 %}
     <div class="col-md-12">
         {% embed '@theme/embeds/card.html.twig' with {'border': false} %}
             {% import "macros/widgets.html.twig" as widgets %}
             {% block box_title %}{{ title|trans }}{% endblock %}
-            {% block box_attributes %}id="{{ widgetId }}"{% endblock %}
             {% block box_body_class %}p-0 box-body-scrollable{% endblock %}
             {% block box_body %}
                 {{ widgets.team_list(teams, {title: false}) }}

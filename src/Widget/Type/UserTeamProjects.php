@@ -11,42 +11,59 @@ namespace App\Widget\Type;
 
 use App\Entity\Project;
 use App\Entity\Team;
-use App\Entity\User;
 use App\Project\ProjectStatisticService;
 use App\Repository\Loader\ProjectLoader;
 use App\Repository\Loader\TeamLoader;
+use App\Widget\WidgetInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-class UserTeamProjects extends SimpleWidget implements AuthorizedWidget, UserWidget
+class UserTeamProjects extends AbstractWidget
 {
     private $statisticService;
     private $entityManager;
 
     public function __construct(ProjectStatisticService $statisticService, EntityManagerInterface $entityManager)
     {
-        $this->setId('UserTeamProjects');
-        $this->setTitle('label.my_team_projects');
-        $this->setOption('id', '');
         $this->statisticService = $statisticService;
         $this->entityManager = $entityManager;
     }
 
-    public function getOptions(array $options = []): array
+    public function getWidth(): int
     {
-        $options = parent::getOptions($options);
+        return WidgetInterface::WIDTH_HALF;
+    }
 
-        if (empty($options['id'])) {
-            $options['id'] = 'WidgetUserTeamProjects';
-        }
+    public function getHeight(): int
+    {
+        return WidgetInterface::HEIGHT_LARGE;
+    }
 
-        return $options;
+    public function getTitle(): string
+    {
+        return 'label.my_team_projects';
+    }
+
+    public function getTemplateName(): string
+    {
+        return 'widget/widget-userteamprojects.html.twig';
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getPermissions(): array
+    {
+        return ['budget_team_project', 'budget_teamlead_project', 'budget_project'];
+    }
+
+    public function getId(): string
+    {
+        return 'UserTeamProjects';
     }
 
     public function getData(array $options = [])
     {
-        $options = $this->getOptions($options);
-        /** @var User $user */
-        $user = $options['user'];
+        $user = $this->getUser();
         $now = new \DateTime('now', new \DateTimeZone($user->getTimezone()));
 
         $loader = new TeamLoader($this->entityManager);
@@ -76,18 +93,5 @@ class UserTeamProjects extends SimpleWidget implements AuthorizedWidget, UserWid
         }
 
         return $this->statisticService->getBudgetStatisticModelForProjects($projects, $now);
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getPermissions(): array
-    {
-        return ['budget_team_project', 'budget_teamlead_project', 'budget_project'];
-    }
-
-    public function setUser(User $user): void
-    {
-        $this->setOption('user', $user);
     }
 }

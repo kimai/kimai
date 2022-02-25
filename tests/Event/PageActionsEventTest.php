@@ -91,18 +91,16 @@ class PageActionsEventTest extends TestCase
         $sut->addCreate('foo6', false);
         $sut->addQuickExport('foo7');
 
-        $this->assertEquals(8, $sut->countActions());
-
         $expected = [
             'search' => ['modal' => '#modal_search', 'label' => null, 'title' => 'search'],
             'divider0' => null,
-            'back' => ['url' => 'foo1', 'translation_domain' => 'actions', 'title' => 'back'],
             'visibility' => ['modal' => '#foo2', 'title' => 'modal.columns.title'],
             'help' => ['url' => 'foo4', 'target' => '_blank', 'title' => 'help', 'translation_domain' => 'about'],
             'create' => ['url' => 'foo5', 'class' => 'modal-ajax-form', 'title' => 'create'],
             'download' => ['url' => 'foo7', 'class' => 'toolbar-action', 'title' => 'export.title'],
             'trash' => ['url' => 'foo3', 'class' => 'modal-ajax-form text-red'],
         ];
+        $this->assertEquals(\count($expected), $sut->countActions());
 
         $this->assertEquals($expected, $sut->getActions());
     }

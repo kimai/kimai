@@ -195,11 +195,7 @@ final class LocaleFormatter
         return $locales;
     }
 
-    /**
-     * @param DateTime|string $date
-     * @return string
-     */
-    public function dateShort($date)
+    public function dateShort(DateTime|string|null $date): string
     {
         if (null === $this->dateFormat) {
             $this->dateFormat = $this->localeFormats->getDateFormat();
@@ -207,7 +203,7 @@ final class LocaleFormatter
 
         if (!$date instanceof DateTime) {
             try {
-                $date = new DateTime($date);
+                $date = new DateTime($date ?? 'now');
             } catch (Exception $ex) {
                 return $date;
             }
