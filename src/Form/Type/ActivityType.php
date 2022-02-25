@@ -15,6 +15,8 @@ use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityFormTypeQuery;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -36,7 +38,7 @@ class ActivityType extends AbstractType
         $this->configuration = $configuration;
     }
 
-    public function getChoiceLabel(Activity $activity): string
+    private function getPattern(): string
     {
         if ($this->pattern === null) {
             $this->pattern = $this->configuration->find('activity.choice_pattern');
@@ -44,12 +46,18 @@ class ActivityType extends AbstractType
             if ($this->pattern === null || stripos($this->pattern, '{') === false || stripos($this->pattern, '}') === false) {
                 $this->pattern = self::PATTERN_NAME;
             }
+
+            $this->pattern = str_replace(self::PATTERN_SPACER, self::SPACER, $this->pattern);
         }
 
-        $name = $this->pattern;
+        return $this->pattern;
+    }
+
+    public function getChoiceLabel(Activity $activity): string
+    {
+        $name = $this->getPattern();
         $name = str_replace(self::PATTERN_NAME, $activity->getName(), $name);
         $name = str_replace(self::PATTERN_COMMENT, $activity->getComment(), $name);
-        $name = str_replace(self::PATTERN_SPACER, self::SPACER, $name);
 
         $name = ltrim($name, self::SPACER);
         $name = rtrim($name, self::SPACER);
@@ -128,6 +136,13 @@ class ActivityType extends AbstractType
                 return $repo->getQueryBuilderForFormType($query);
             };
         });
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['attr'] = array_merge($view->vars['attr'], [
+            'data-option-pattern' => $this->getPattern(),
+        ]);
     }
 
     /**

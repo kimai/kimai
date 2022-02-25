@@ -95,7 +95,11 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         {% for button in group %}
-                                            <li><a href="#" class="startExportBtn" data-type="{{ button.id }}">{{ (button.id)|trans({}, 'export') }}</a></li>
+                                            {% set btnTitle = (button.id)|trans({}, 'export') %}
+                                            {% if btnTitle == button.id %}
+                                                {% set btnTitle = button.id|split('.')|first|replace({'-': ' ', '_': ' '})|split(' ')|map(t => t|capitalize)|join(' ') %}
+                                            {% endif %}
+                                            <li><a href="#" class="startExportBtn" data-type="{{ button.id }}">{{ btnTitle }}</a></li>
                                         {% endfor %}
                                     </ul>
                                 </div>

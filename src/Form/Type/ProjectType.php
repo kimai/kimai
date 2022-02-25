@@ -17,6 +17,8 @@ use App\Repository\Query\ProjectFormTypeQuery;
 use App\Utils\LocaleSettings;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -45,52 +47,48 @@ class ProjectType extends AbstractType
         $this->localeSettings = $localeSettings;
     }
 
-    public function getChoiceLabel(Project $project): string
+    private function getPattern(): string
     {
-        if ($this->dateFormat === null) {
-            $this->dateFormat = $this->localeSettings->getDateFormat();
-        }
-
         if ($this->pattern === null) {
             $this->pattern = $this->configuration->find('project.choice_pattern');
 
             if ($this->pattern === null || stripos($this->pattern, '{') === false || stripos($this->pattern, '}') === false) {
                 $this->pattern = self::PATTERN_NAME;
             }
+
+            $this->pattern = str_replace(self::PATTERN_DATERANGE, self::PATTERN_START . '-' . self::PATTERN_END, $this->pattern);
+            $this->pattern = str_replace(self::PATTERN_SPACER, self::SPACER, $this->pattern);
         }
 
-        $dateRange = '';
-        if ($project->getStart() !== null) {
-            $dateRange = self::PATTERN_START;
-        }
-        if ($project->getEnd() !== null) {
-            if ($dateRange !== '') {
-                $dateRange .= '-';
-            }
-            $dateRange .= self::PATTERN_END;
+        return $this->pattern;
+    }
+
+    public function getChoiceLabel(Project $project): string
+    {
+        if ($this->dateFormat === null) {
+            $this->dateFormat = $this->localeSettings->getDateFormat();
         }
 
-        $start = '';
+        $start = '?';
         if ($project->getStart() !== null) {
             $start = $project->getStart()->format($this->dateFormat);
         }
 
-        $end = '';
+        $end = '?';
         if ($project->getEnd() !== null) {
             $end = $project->getEnd()->format($this->dateFormat);
         }
 
-        $name = $this->pattern;
+        $name = $this->getPattern();
         $name = str_replace(self::PATTERN_NAME, $project->getName(), $name);
         $name = str_replace(self::PATTERN_COMMENT, $project->getComment(), $name);
         $name = str_replace(self::PATTERN_ORDERNUMBER, $project->getOrderNumber(), $name);
-        $name = str_replace(self::PATTERN_DATERANGE, $dateRange, $name);
         $name = str_replace(self::PATTERN_START, $start, $name);
         $name = str_replace(self::PATTERN_END, $end, $name);
-        $name = str_replace(self::PATTERN_SPACER, self::SPACER, $name);
 
         $name = ltrim($name, self::SPACER);
         $name = rtrim($name, self::SPACER);
+        $name = str_replace('- ?-?', '', $name);
 
         if ($name === '' || $name === self::SPACER) {
             $name = $project->getName();
@@ -194,6 +192,13 @@ class ProjectType extends AbstractType
 
             return [];
         });
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['attr'] = array_merge($view->vars['attr'], [
+            'data-option-pattern' => $this->getPattern(),
+        ]);
     }
 
     /**

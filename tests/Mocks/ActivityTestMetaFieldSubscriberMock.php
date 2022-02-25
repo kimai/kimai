@@ -12,6 +12,7 @@ namespace App\Tests\Mocks;
 use App\Entity\ActivityMeta;
 use App\Event\ActivityMetaDefinitionEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
 
@@ -31,6 +32,13 @@ class ActivityTestMetaFieldSubscriberMock implements EventSubscriberInterface
             ->setType(TextType::class)
             ->addConstraint(new Length(['max' => 200]))
             ->setIsVisible(true);
+
+        $event->getEntity()->setMetaField($definition);
+
+        $definition = (new ActivityMeta())
+            ->setName('foobar')
+            ->setType(IntegerType::class)
+            ->setIsVisible(false);
 
         $event->getEntity()->setMetaField($definition);
     }

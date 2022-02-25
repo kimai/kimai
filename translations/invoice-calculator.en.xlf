@@ -34,6 +34,10 @@
         <source>weekly</source>
         <target>Weekly: one entry per week (uses start date)</target>
       </trans-unit>
+      <trans-unit id="aDtTH0H" resname="price">
+        <source>price</source>
+        <target>Price: one entry per price</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -9,6 +9,7 @@
 
 namespace App\Controller\Reporting;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Model\DateStatisticInterface;
 use App\Model\MonthlyStatistic;
@@ -35,12 +36,12 @@ final class UserYearController extends AbstractUserReportController
      * @return Response
      * @throws Exception
      */
-    public function yearByUser(Request $request): Response
+    public function yearByUser(Request $request, SystemConfiguration $systemConfiguration): Response
     {
-        return $this->render('reporting/report_by_user_year.html.twig', $this->getData($request));
+        return $this->render('reporting/report_by_user_year.html.twig', $this->getData($request, $systemConfiguration));
     }
 
-    private function getData(Request $request): array
+    private function getData(Request $request, SystemConfiguration $systemConfiguration): array
     {
         $currentUser = $this->getUser();
         $dateTimeFactory = $this->getDateTimeFactory($currentUser);
@@ -48,7 +49,14 @@ final class UserYearController extends AbstractUserReportController
 
         $values = new YearByUser();
         $values->setUser($currentUser);
-        $values->setDate($dateTimeFactory->createStartOfYear());
+
+        $defaultDate = $dateTimeFactory->createStartOfYear();
+
+        if (null !== ($financialYear = $systemConfiguration->getFinancialYearStart())) {
+            $defaultDate = $this->getDateTimeFactory()->createStartOfFinancialYear($financialYear);
+        }
+
+        $values->setDate(clone $defaultDate);
 
         $form = $this->createForm(YearByUserForm::class, $values, [
             'include_user' => $canChangeUser,
@@ -67,11 +75,14 @@ final class UserYearController extends AbstractUserReportController
         }
 
         if ($values->getDate() === null) {
-            $values->setDate($dateTimeFactory->createStartOfYear());
+            $values->setDate(clone $defaultDate);
         }
 
-        $start = $dateTimeFactory->createStartOfYear($values->getDate());
-        $end = $dateTimeFactory->createEndOfYear($values->getDate());
+        $start = $values->getDate();
+        // there is a potential edge case bug for financial years:
+        // the last month will be skipped, if the financial year started on a different day than the first
+        $end = $dateTimeFactory->createEndOfFinancialYear($start);
+
         $selectedUser = $values->getUser();
 
         $previous = clone $start;

@@ -10,10 +10,12 @@
 namespace App\Twig;
 
 use App\Configuration\LanguageFormattings;
+use App\Constants;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Utils\LocaleFormats;
 use App\Utils\LocaleFormatter;
+use App\Utils\MomentFormatConverter;
 use DateTime;
 use Symfony\Component\Security\Core\Security;
 use Twig\Extension\AbstractExtension;
@@ -100,6 +102,7 @@ final class LocaleFormatExtensions extends AbstractExtension
     public function getFunctions()
     {
         return [
+            new TwigFunction('javascript_configurations', [$this, 'getJavascriptConfiguration']),
             new TwigFunction('get_format_duration', [$this, 'getDurationFormat']),
             new TwigFunction('create_date', [$this, 'createDate']),
             new TwigFunction('locales', [$this, 'getLocales']),
@@ -265,8 +268,24 @@ final class LocaleFormatExtensions extends AbstractExtension
         return $user->is24Hour();
     }
 
+    public function getJavascriptConfiguration(User $user): array
+    {
+        $converter = new MomentFormatConverter();
+        $format = $this->getLocaleFormats()->getDateTypeFormat();
+
+        return [
+            'formatDuration' => $this->getLocaleFormats()->getDurationFormat(),
+            'formatDate' => $converter->convert($format),
+            'defaultColor' => Constants::DEFAULT_COLOR,
+            'twentyFourHours' => $user->is24Hour(),
+            'updateBrowserTitle' => (bool) $user->getPreferenceValue('theme.update_browser_title'),
+        ];
+    }
+
     public function getDurationFormat(): string
     {
+        @trigger_error('Twig function "get_format_duration()" is deprecated, use "javascript_configurations()" instead.', E_USER_DEPRECATED);
+
         return $this->getLocaleFormats()->getDurationFormat();
     }
 

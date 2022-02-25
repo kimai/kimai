@@ -18,6 +18,14 @@ export default class KimaiDateUtils extends KimaiPlugin {
         return 'date';
     }
 
+    /**
+     * @param {string} dateTime
+     * @returns {string}
+     */
+    getFormattedDate(dateTime) {
+        return moment(dateTime).format(this.getConfiguration('formatDate'));
+    }
+
     getWeekDaysShort() {
         return moment.localeData().weekdaysShort();
     }

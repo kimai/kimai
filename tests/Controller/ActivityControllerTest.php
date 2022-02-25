@@ -223,8 +223,9 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
-        $this->assertTrue($form->has('activity_edit_form[metaFields][0][value]'));
-        $this->assertFalse($form->has('activity_edit_form[metaFields][1][value]'));
+        $this->assertTrue($form->has('activity_edit_form[metaFields][metatestmock][value]'));
+        $this->assertTrue($form->has('activity_edit_form[metaFields][foobar][value]'));
+        $this->assertFalse($form->has('activity_edit_form[metaFields][0][value]'));
     }
 
     public function testEditAction()

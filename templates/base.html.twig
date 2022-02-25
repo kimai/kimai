@@ -288,28 +288,8 @@
 
 {% block javascripts %}
     {# no call to parent(), as we use a custom built for the frontend assets and don't want the default <script> #}
-    <script type="text/javascript">
-        window.addEventListener('load', function() {
-            var loader = new KimaiWebLoader(
-                {
-                    formatDuration: '{{ get_format_duration() }}',
-                    login: '{{ path('fos_user_security_login') }}',
-                    locale: '{{ app.request.locale }}',
-                    first_dow_iso: {{ iso_day_by_name(app.user.firstDayOfWeek) }},
-                    twentyFourHours: {{ app.user.is24Hour() ? 'true' : 'false' }},
-                    autoComplete: {{ kimai_config.themeAutocompleteCharacters }},
-                    defaultColor: '{{ constant('App\\Constants::DEFAULT_COLOR') }}',
-                    updateBrowserTitle: {% if app.user.preferenceValue('theme.update_browser_title') %}true{% else %}false{% endif %}
-                },
-                {
-                {% for key, translation in javascript_translations() -%}
-                    '{{ key }}': '{{ translation.0|trans({}, translation.1)|escape('js') }}',
-                {%- endfor %}
-                }
-            );
-            window.kimai = loader.getKimai();
-        });
-    </script>
+    {% import "macros/webloader.html.twig" as webloader %}
+    {{ webloader.init_frontend_loader() }}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::JAVASCRIPT')) %}
     {{ event.content|raw }}
 {% endblock %}

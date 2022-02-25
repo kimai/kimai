@@ -142,7 +142,9 @@ export default class KimaiSelectDataAPI extends KimaiPlugin {
             ordered[key] = options[key];
         });
 
-        this.getContainer().getPlugin('form-select').updateOptions(selectName, ordered);
+        /** @var {KimaiFormSelect} select */
+        const select = this.getContainer().getPlugin('form-select');
+        select.updateOptions(selectName, ordered);
     }
 
 }
