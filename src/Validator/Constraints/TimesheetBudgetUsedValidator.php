@@ -129,19 +129,23 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         }
 
         $now = new DateTime('now', $timesheet->getBegin()->getTimezone());
+        $recordDate = $timesheet->getBegin();
 
         if (null !== ($activity = $timesheet->getActivity()) && $activity->hasBudgets()) {
-            $stat = $this->activityStatisticService->getBudgetStatisticModel($activity, $now);
+            $dateTime = $activity->isMonthlyBudget() ? $recordDate : $now;
+            $stat = $this->activityStatisticService->getBudgetStatisticModel($activity, $dateTime);
             $this->checkBudgets($constraint, $stat, $timesheet, $activityDuration, $activityRate, 'activity');
         }
 
         if (null !== ($project = $timesheet->getProject())) {
             if ($project->hasBudgets()) {
-                $stat = $this->projectStatisticService->getBudgetStatisticModel($project, $now);
+                $dateTime = $project->isMonthlyBudget() ? $recordDate : $now;
+                $stat = $this->projectStatisticService->getBudgetStatisticModel($project, $dateTime);
                 $this->checkBudgets($constraint, $stat, $timesheet, $projectDuration, $projectRate, 'project');
             }
             if (null !== ($customer = $project->getCustomer()) && $customer->hasBudgets()) {
-                $stat = $this->customerStatisticService->getBudgetStatisticModel($customer, $now);
+                $dateTime = $customer->isMonthlyBudget() ? $recordDate : $now;
+                $stat = $this->customerStatisticService->getBudgetStatisticModel($customer, $dateTime);
                 $this->checkBudgets($constraint, $stat, $timesheet, $customerDuration, $customerRate, 'customer');
             }
         }
