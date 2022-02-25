@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="tr" datatype="plaintext" original="invoice-numbergenerator.en.xlf">
+  <file source-language="en" target-language="hr" datatype="plaintext" original="invoice-numbergenerator.en.xlf">
     <body>
       <trans-unit id="7zreGwV" resname="label.invoice_number_generator">
         <source>label.invoice_number_generator</source>
-        <target state="translated">Faturano-Oluşturucu</target>
+        <target>Generator broja računa</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="translated">Tarih</target>
+        <target>Datum</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target>Yapılandırılan biçim</target>
+        <target>Konfigurirani format</target>
       </trans-unit>
     </body>
   </file>
