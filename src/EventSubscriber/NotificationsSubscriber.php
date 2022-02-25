@@ -21,6 +21,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class NotificationsSubscriber implements EventSubscriberInterface
 {
+    /** @phpstan-ignore-next-line  */
     private $urlGenerator;
 
     public function __construct(UrlGeneratorInterface $urlGenerator)
@@ -39,6 +40,7 @@ class NotificationsSubscriber implements EventSubscriberInterface
     {
         return;
 
+        /** @phpstan-ignore-next-line  */
         $model = new NotificationModel('Test', 'Test', ThemeConstants::TYPE_INFO);
         $model->setUrl($this->urlGenerator->generate('dashboard'));
         $event->addNotification($model);
