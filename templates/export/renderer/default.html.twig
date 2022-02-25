@@ -1,6 +1,7 @@
+{% extends 'export/layout.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
-{% extends 'export/layout.html.twig' %}
+{% import "macros/webloader.html.twig" as webloader %}
 
 {% block document_title %}{{ 'export.title'|trans }}{% endblock %}
 
@@ -51,11 +52,11 @@
 }) %}
 
 {% block javascripts %}
-    {{ parent() }}
+    {{ webloader.init_frontend_loader() }}
     <script type="text/javascript">
         let initialized = false;
 
-        window.addEventListener('load', function() {
+        document.addEventListener('kimai.initialized', function(event) {
             document.getElementById('duration-decimal').addEventListener('click', function(event) {
                 var spans = document.getElementsByClassName('duration-format');
                 for (var span of spans) {
@@ -91,36 +92,36 @@
                 saveVisibility();
             });
             document.getElementById('summary-timeBudget').addEventListener('click', function(event) {
-                var cells = document.getElementsByClassName('export-timeBudget');
-                for (var columnCell of cells) {
+                let cells = document.getElementsByClassName('export-timeBudget');
+                for (let columnCell of cells) {
                     columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
                 }
                 saveVisibility();
             });
             document.getElementById('summary-budget').addEventListener('click', function(event) {
-                var cells = document.getElementsByClassName('export-budget');
-                for (var columnCell of cells) {
+                let cells = document.getElementsByClassName('export-budget');
+                for (let columnCell of cells) {
                     columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
                 }
                 saveVisibility();
             });
             document.getElementById('summary-duration').addEventListener('click', function(event) {
-                var cells = document.getElementsByClassName('summary-duration');
-                for (var columnCell of cells) {
+                let cells = document.getElementsByClassName('summary-duration');
+                for (let columnCell of cells) {
                     columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
                 }
                 saveVisibility();
             });
             document.getElementById('summary-rate').addEventListener('click', function(event) {
-                var cells = document.getElementsByClassName('summary-rate');
-                for (var columnCell of cells) {
+                let cells = document.getElementsByClassName('summary-rate');
+                for (let columnCell of cells) {
                     columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
                 }
                 saveVisibility();
             });
             document.getElementById('summary-rate-internal').addEventListener('click', function(event) {
-                var cells = document.getElementsByClassName('summary-rate-internal');
-                for (var columnCell of cells) {
+                let cells = document.getElementsByClassName('summary-rate-internal');
+                for (let columnCell of cells) {
                     columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
                 }
                 saveVisibility();
@@ -134,17 +135,17 @@
                 saveVisibility();
             });
 
-            var columnCheckboxes = document.getElementsByClassName('column-visibility-changer');
+            let columnCheckboxes = document.getElementsByClassName('column-visibility-changer');
 
-            for (var checkbox of columnCheckboxes) {
+            for (let checkbox of columnCheckboxes) {
                 checkbox.addEventListener('click', function(event) {
                     changeVisibility(event.target.name, event.target.checked);
                 });
             }
 
-            var editableTitles = document.querySelectorAll('[contenteditable=true]');
+            let editableTitles = document.querySelectorAll('[contenteditable=true]');
 
-            for (var editable of editableTitles) {
+            for (let editable of editableTitles) {
                 editable.addEventListener('input', function(event) {
                     if (event.target.innerText === '') {
                         return;
@@ -195,8 +196,8 @@
 
         function changeVisibility(column, visible)
         {
-            var cells = document.getElementsByClassName('column-' + column);
-            for (var columnCell of cells) {
+            let cells = document.getElementsByClassName('column-' + column);
+            for (let columnCell of cells) {
                 columnCell.style.display = visible ? 'table-cell' : 'none';
             }
             saveVisibility();
@@ -204,9 +205,9 @@
 
         function changedDateFormat(formatType, className)
         {
-            var elements = document.getElementsByClassName(className);
-            for (var elem of elements) {
-                var formattedDate = elem.dataset[formatType];
+            let elements = document.getElementsByClassName(className);
+            for (let elem of elements) {
+                let formattedDate = elem.dataset[formatType];
                 if (formattedDate === undefined) {
                     continue;
                 }
@@ -237,9 +238,9 @@
 
         function resetExport()
         {
-            var editableTitles = document.querySelectorAll('[contenteditable=true]');
+            let editableTitles = document.querySelectorAll('[contenteditable=true]');
 
-            for (var editable of editableTitles) {
+            for (let editable of editableTitles) {
                 editable.innerText = editable.dataset['original'];
             }
 
@@ -247,7 +248,6 @@
             const form = document.getElementsByTagName('form')[0];
             form.reset();
         }
-
     </script>
 {% endblock %}
 

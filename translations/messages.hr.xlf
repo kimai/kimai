@@ -1256,7 +1256,7 @@
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
-        <target>Dosegnut je maksimalni broj od %max% dokumenata za račune. Nakon uklanjanja možeš dodati još.</target>
+        <target>Dosegnut je maksimalni broj od %max% dokumenta računa. Nakon uklanjanja jednoga možeš dodati još.</target>
       </trans-unit>
       <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>

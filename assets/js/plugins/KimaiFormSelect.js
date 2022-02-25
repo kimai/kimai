@@ -174,18 +174,25 @@ export default class KimaiFormSelect extends KimaiPlugin {
 
         let emptyOpts = [];
         let options = [];
+        let titlePattern = null;
+        if (node.dataset['optionPattern'] !== undefined) {
+            titlePattern = node.dataset['optionPattern'];
+        }
+        if (titlePattern === null || titlePattern === '') {
+            titlePattern = '{name}';
+        }
 
         for (const [key, value] of Object.entries(data)) {
             if (key === '__empty__') {
                 for (const entity of value) {
-                    emptyOpts.push(this._createOption(entity.name, entity.id));
+                    emptyOpts.push(this._createOption(this._getTitleFromPattern(titlePattern, entity), entity.id));
                 }
                 continue;
             }
 
             let optGroup = this._createOptgroup(key);
             for (const entity of value) {
-                optGroup.appendChild(this._createOption(entity.name, entity.id));
+                optGroup.appendChild(this._createOption(this._getTitleFromPattern(titlePattern, entity), entity.id));
             }
             options.push(optGroup);
         }
@@ -199,6 +206,46 @@ export default class KimaiFormSelect extends KimaiPlugin {
         node.dispatchEvent(new CustomEvent('data-reloaded', {detail: selectedValue}));
         // if we don't trigger the change, the other selects won't reset
         node.dispatchEvent(new Event('change'));
+    }
+
+    /**
+     * @param {string} pattern
+     * @param {array} entity
+     * @private
+     */
+    _getTitleFromPattern(pattern, entity) {
+        const DATE_UTILS = this.getPlugin('date');
+        const regexp = new RegExp('{[^}]*?}','g');
+        let title = pattern;
+        let match = null;
+
+        while ((match = regexp.exec(pattern)) !== null) {
+            const field = match[0].substr(1, match[0].length - 2);
+            let value = entity[field] === undefined ? null : entity[field];
+            if ((field === 'start' || field === 'end')) {
+                if (value === null) {
+                    value = '?';
+                } else {
+                    value = DATE_UTILS.getFormattedDate(value);
+                }
+            }
+
+            title = title.replace(new RegExp('{' + field + '}', 'g'), value ?? '');
+        }
+        title = title.replace(/- \?-\?/, '');
+
+        const chars = '- ';
+        let start = 0, end = title.length;
+
+        while(start < end && chars.indexOf(title[start]) >= 0) {
+            ++start;
+        }
+
+        while(end > start && chars.indexOf(title[end - 1]) >= 0) {
+            --end;
+        }
+
+        return (start > 0 || end < title.length) ? title.substring(start, end) : title;
     }
 
     /**

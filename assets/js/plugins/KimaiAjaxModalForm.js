@@ -34,6 +34,10 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
         this.modalSelector = '#remote_form_modal';
         const modalElement = this._getModalElement();
 
+        if (modalElement === null) {
+            return;
+        }
+
         const enforceModalFocusFn = Modal.prototype._enforceFocus;
         Modal.prototype._enforceFocus = function () {};
 
@@ -101,6 +105,10 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
         return '#remote_form_modal .modal-content form';
     }
 
+    /**
+     * @returns {HTMLElement|null}
+     * @private
+     */
     _getModalElement() {
         return document.getElementById(this.modalSelector.replace('#', ''));
     }

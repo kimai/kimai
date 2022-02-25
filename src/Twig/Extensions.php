@@ -15,6 +15,7 @@ use App\Utils\Color;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use Twig\TwigTest;
 
 /**
  * Multiple Twig extensions: filters and functions
@@ -46,6 +47,15 @@ class Extensions extends AbstractExtension
             new TwigFunction('class_name', [$this, 'getClassName']),
             new TwigFunction('iso_day_by_name', [$this, 'getIsoDayByName']),
             new TwigFunction('random_color', [$this, 'randomColor']),
+        ];
+    }
+
+    public function getTests()
+    {
+        return [
+            new TwigTest('number', function ($value) {
+                return !\is_string($value) && is_numeric($value);
+            }),
         ];
     }
 

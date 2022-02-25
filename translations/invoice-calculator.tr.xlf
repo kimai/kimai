@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="tr" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
@@ -29,6 +29,10 @@
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target state="translated">Tarih: her gün için bir kayıt (başlangıç tarihini kullanır)</target>
+      </trans-unit>
+      <trans-unit id="iFDs7Zh" resname="weekly">
+        <source>weekly</source>
+        <target>Haftalık: haftada bir kayıt (başlangıç tarihini kullanır)</target>
       </trans-unit>
     </body>
   </file>

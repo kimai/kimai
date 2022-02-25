@@ -76,7 +76,7 @@ final class ReportUsersYearController extends AbstractController
         $query = new UserQuery();
         $query->setCurrentUser($currentUser);
         $allUsers = $userRepository->getUsersForQuery($query);
-        $defaultDate = $dateTimeFactory->createDateTime('01 january this year 00:00:00');
+        $defaultDate = $dateTimeFactory->createStartOfYear();
 
         if (null !== ($financialYear = $systemConfiguration->getFinancialYearStart())) {
             $defaultDate = $this->getDateTimeFactory()->createStartOfFinancialYear($financialYear);

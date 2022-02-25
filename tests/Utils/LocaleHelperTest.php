@@ -81,6 +81,8 @@ class LocaleHelperTest extends TestCase
         $this->assertEquals('123.234,76', $sut->money(123234.7554, null, true));
         $this->assertEquals('123.234,76', $sut->money(123234.7554, null, false));
         $this->assertEquals('123.234,76', $sut->money(123234.7554, 'EUR', false));
+        $this->assertEquals('-123.234,76', $sut->money(-123234.7554, null, false));
+        $this->assertEquals('-123.234,76', $sut->money(-123234.7554, 'EUR', false));
     }
 
     /**
@@ -105,6 +107,7 @@ class LocaleHelperTest extends TestCase
             ['13,75', 13.75, 'RUB', 'de'],
             ['13,75', 13.75, 'JPY', 'de'],
             ['13 933,49', 13933.49, 'JPY', 'ru'],
+            ['-13 933,49', -13933.49, 'JPY', 'ru'],
             ['13,75', 13.75, 'CNY', 'de'],
             ['13.933,00', 13933, 'CNY', 'de'],
             ['13 933,00', 13933, 'CNY', 'ru'],
@@ -141,6 +144,8 @@ class LocaleHelperTest extends TestCase
             ['13 933,00 CN¥', 13933, 'CNY', 'ru'],
             ['CN¥13,933.00', 13933, 'CNY', 'en'],
             ['1.234.567,89 $', 1234567.891234567890000, 'USD', 'de'],
+            ['-CN¥13,933.00', -13933, 'CNY', 'en'],
+            ['-1.234.567,89 $', -1234567.891234567890000, 'USD', 'de'],
         ];
     }
 

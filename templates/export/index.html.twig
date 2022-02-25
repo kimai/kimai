@@ -96,7 +96,7 @@
                     </div>
                     {% endif %}
                     <div class="d-flex">
-                        <div class="btn-group me-auto dropup" id="export-buttons" role="group">
+                        <div class="btn-group me-auto" id="export-buttons" role="group">
                             {% for group in buttons %}
                                 {% set button = group.0 %}
                                 {% if group|length == 1 %}
@@ -104,13 +104,17 @@
                                         {{ ('button.' ~ button.title)|trans }}
                                     </button>
                                 {% elseif group|length > 1 %}
-                                    <div class="btn-group dropup">
+                                    <div class="btn-group">
                                         <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             {{ ('button.' ~ button.title)|trans }}
                                         </button>
-                                        <div class="dropdown-menu dropup">
+                                        <div class="dropdown-menu">
                                             {% for button in group %}
-                                                <a href="#" class="dropdown-item startExportBtn" data-type="{{ button.id }}">{{ (button.id)|trans({}, 'export') }}</a>
+                                            {% set btnTitle = (button.id)|trans({}, 'export') %}
+                                            {% if btnTitle == button.id %}
+                                                {% set btnTitle = button.id|split('.')|first|replace({'-': ' ', '_': ' '})|split(' ')|map(t => t|capitalize)|join(' ') %}
+                                            {% endif %}
+                                            <a href="#" class="dropdown-item startExportBtn" data-type="{{ button.id }}">{{ btnTitle }}</a>
                                             {% endfor %}
                                         </div>
                                     </div>
