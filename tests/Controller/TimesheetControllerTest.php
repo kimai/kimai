@@ -257,8 +257,9 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
-        $this->assertTrue($form->has('timesheet_edit_form[metaFields][0][value]'));
-        $this->assertFalse($form->has('timesheet_edit_form[metaFields][1][value]'));
+        $this->assertTrue($form->has('timesheet_edit_form[metaFields][metatestmock][value]'));
+        $this->assertTrue($form->has('timesheet_edit_form[metaFields][foobar][value]'));
+        $this->assertFalse($form->has('timesheet_edit_form[metaFields][0][value]'));
     }
 
     public function testCreateActionDoesNotShowRateFieldsForUser()
