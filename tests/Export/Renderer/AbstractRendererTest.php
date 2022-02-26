@@ -104,7 +104,7 @@ abstract class AbstractRendererTest extends KernelTestCase
 
         $timesheet = new Timesheet();
         $timesheet
-            ->setDuration(3600)
+            ->setDuration(3600) // 60 minutes
             ->setRate(293.27)
             ->setUser($user1)
             ->setActivity($activity)
