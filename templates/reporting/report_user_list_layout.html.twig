@@ -12,9 +12,9 @@
 
 {% block report %}
 
-    {% embed '@theme/embeds/card.html.twig' with {report_content: block('report_content'), box_id: box_id, hasData: hasData} only %}
+    {% embed '@theme/embeds/card.html.twig' with {report_content: block('report_content'), box_id: box_id, hasData: hasData, fullsize: hasData} only %}
         {% import "macros/widgets.html.twig" as widgets %}
-        {% block box_body_class %}{{ box_id }} table-responsive {% if hasData %}p-0{% endif %} m-0{% endblock %}
+        {% block box_body_class %}{{ box_id }} table-responsive m-0{% endblock %}
         {% block box_body %}
             {% if not hasData %}
                 {{ widgets.nothing_found() }}

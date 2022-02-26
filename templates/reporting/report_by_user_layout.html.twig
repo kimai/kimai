@@ -17,9 +17,9 @@
 
 {% block report %}
 
-    {% embed '@theme/embeds/card.html.twig' with {report_content: block('report_content'), box_id: box_id} only %}
+    {% embed '@theme/embeds/card.html.twig' with {report_content: block('report_content'), box_id: box_id, fullsize: true} only %}
         {% import "macros/widgets.html.twig" as widgets %}
-        {% block box_body_class %}{{ box_id }} table-responsive p-0 m-0{% endblock %}
+        {% block box_body_class %}{{ box_id }} table-responsive m-0{% endblock %}
         {% block box_body %}
             {{ report_content|raw }}
         {% endblock %}

@@ -26,7 +26,7 @@ class ReportingControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/reporting/');
         $nodes = $client->getCrawler()->filter('section.content div.card');
-        $this->assertCount(9, $nodes);
+        $this->assertCount(10, $nodes);
     }
 
     public function testOverviewPageAsUser()
@@ -34,6 +34,6 @@ class ReportingControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/reporting/');
         $nodes = $client->getCrawler()->filter('section.content div.card');
-        $this->assertCount(2, $nodes);
+        $this->assertCount(3, $nodes);
     }
 }
