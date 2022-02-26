@@ -295,7 +295,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $configService->offsetSet('timesheet.markdown_content', true);
         $this->assertAccessIsGranted($client, '/admin/project/1/details');
-        $node = $client->getCrawler()->filter('div.box#comments_box .direct-chat-text');
+        $node = $client->getCrawler()->filter('div.card#comments_box .direct-chat-text');
         self::assertStringContainsString('<p>A beautiful and long comment <strong>with some</strong> markdown formatting</p>', $node->html());
     }
 
