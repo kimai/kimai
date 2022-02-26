@@ -30,6 +30,7 @@
     "daterangepicker": "^3.1",
     "file-loader": "^6.0",
     "fullcalendar": "^3.9",
+    "gridstack": "^5.0.0",
     "jquery": "<3.6",
     "jquery-ui": "^1.12",
     "js-cookie": "^2.2",
@@ -37,6 +38,7 @@
     "node-sass": "^7.0",
     "sass-loader": "^11.0",
     "sweetalert2": "^10.16",
+    "tom-select": "^2.0.0",
     "webpack-notifier": "^1.13"
   },
   "resolutions": {
@@ -44,9 +46,5 @@
   },
   "browserslist": [
     "defaults"
-  ],
-  "dependencies": {
-    "gridstack": "^5.0.0",
-    "tom-select": "^2.0.0"
-  }
+  ]
 }
