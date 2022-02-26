@@ -15,9 +15,9 @@
     {% else %}
 
         {% set columns = {
-            'name': {'class': ''},
-            'teamlead': {'class': '', 'orderBy': false},
-            'user': {'class': 'd-xs-none', 'orderBy': false},
+            'name': {'class': 'w-25'},
+            'teamlead': {'class': 'badges', 'orderBy': false},
+            'user': {'class': 'd-none d-sm-table-cell badges', 'orderBy': false},
             'actions': {'class': 'actions alwaysVisible'},
         } %}
 

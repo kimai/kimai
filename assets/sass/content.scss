@@ -26,6 +26,11 @@ td {
             margin: 0;
         }
     }
+    /* table cells that contain badges (like the team or timesheet view)
+       and are multi-line entries the badges do not have margin between them */
+    &.badges {
+        line-height: 22px;
+    }
 }
 
 .label-gray {
