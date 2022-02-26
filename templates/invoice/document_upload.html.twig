@@ -24,8 +24,9 @@
                 {{ 'upload'|trans }}
             {% endblock %}
             {% block box_body %}
+                {{ form_start(form) }}
                 {{ form_row(form.document) }}
-                {{ form_widget(form) }}
+                {{ form_end(form) }}
             {% endblock %}
             {% block box_footer %}
                 <button type="submit" class="btn btn-primary">{{ 'action.save'|trans }}</button>
