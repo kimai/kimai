@@ -38,9 +38,9 @@ class DashboardControllerTest extends ControllerBaseTest
         ]);
         $this->request($client, '/dashboard/');
         $this->assertTrue($client->getResponse()->isSuccessful());
-        self::assertEquals(1, $client->getCrawler()->filter('section.content #WidgetUserTeams')->count());
-        // team 1 has no project assignment right now
-        self::assertEquals(0, $client->getCrawler()->filter('section.content #WidgetUserTeamProjects')->count());
+        self::assertEquals(1, $client->getCrawler()->filter('div#UserTeams table.dataTable')->count());
+        // test_user_1 is member of one team (Test team) which has no project assignment, so the widget should be hidden
+        self::assertEquals(0, $client->getCrawler()->filter('div#UserTeamProjects table.dataTable')->count());
     }
 
     public function testIndexActionForAdmin()

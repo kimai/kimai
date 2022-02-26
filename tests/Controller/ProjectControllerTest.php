@@ -52,7 +52,6 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $this->assertPageActions($client, [
             'search' => '#',
-            'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/project/export'),
             'help' => 'https://www.kimai.org/documentation/project.html'
         ]);
@@ -66,7 +65,6 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $this->assertPageActions($client, [
             'search' => '#',
-            'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/project/export'),
             'create modal-ajax-form' => $this->createUrl('/admin/project/create'),
             'settings modal-ajax-form' => $this->createUrl('/admin/system-config/edit/project'),
@@ -92,7 +90,6 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $this->assertPageActions($client, [
             'search' => '#',
-            'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/project/export'),
             'create modal-ajax-form' => $this->createUrl('/admin/project/create'),
             'help' => 'https://www.kimai.org/documentation/project.html'

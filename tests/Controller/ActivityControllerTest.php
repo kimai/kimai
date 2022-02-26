@@ -44,7 +44,6 @@ class ActivityControllerTest extends ControllerBaseTest
 
         $this->assertPageActions($client, [
             'search' => '#',
-            'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/activity/export'),
             'create modal-ajax-form' => $this->createUrl('/admin/activity/create'),
             'help' => 'https://www.kimai.org/documentation/activity.html'
@@ -59,7 +58,6 @@ class ActivityControllerTest extends ControllerBaseTest
 
         $this->assertPageActions($client, [
             'search' => '#',
-            'visibility' => '#',
             'download toolbar-action' => $this->createUrl('/admin/activity/export'),
             'create modal-ajax-form' => $this->createUrl('/admin/activity/create'),
             'settings modal-ajax-form' => $this->createUrl('/admin/system-config/edit/activity'),

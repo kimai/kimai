@@ -260,11 +260,11 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function assertPageActions(HttpKernelBrowser $client, array $buttons)
     {
-        $node = $client->getCrawler()->filter('div.page-header div.page-actions a');
+        $node = $client->getCrawler()->filter('div.page-header div.page-actions .pa-desktop a');
 
         /** @var \DOMElement $element */
         foreach ($node->getIterator() as $element) {
-            $expectedClass = trim(str_replace(['btn action-', ' btn-icon'], '', $element->getAttribute('class')));
+            $expectedClass = trim(str_replace(['btn action-', ' btn-icon', 'btn btn-primary action-', 'btn btn-dark action-'], '', $element->getAttribute('class')));
             self::assertArrayHasKey($expectedClass, $buttons);
             $expectedUrl = $buttons[$expectedClass];
             self::assertEquals($expectedUrl, $element->getAttribute('href'));

@@ -19,7 +19,7 @@
     {% set later = {} %}
     {% set help = null %}
     <div class="page-actions">
-        <div class="d-none d-sm-inline-flex btn-list">
+        <div class="pa-desktop d-none d-sm-inline-flex btn-list">
         {%- apply spaceless -%}
             {%- for icon, values in actions  %}
                 {% if 'help' in icon %}
@@ -51,7 +51,7 @@
             {{ _self.action_button('help', help) }}
         {% endif %}
         </div>
-        <div class="d-inline-flex d-sm-none btn-list">
+        <div class="pa-mobile d-inline-flex d-sm-none btn-list">
             {{ _self.table_actions(actions, 'btn btn-dark') }}
         </div>
     </div>

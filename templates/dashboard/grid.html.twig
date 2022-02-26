@@ -36,7 +36,7 @@
 
         <div class="grid-stack" id="dashboard-grid-container" style="visibility: hidden">
             {% for widget in widgets %}
-                <div class="grid-stack-item" data-widget="{{ widget.id }}" gs-w="{{ widget.width }}" gs-min-w="{{ widget.width }}" gs-h="{{ widget.height }}" gs-id="{{ widget.id }}">
+                <div class="grid-stack-item" data-widget="{{ widget.id }}" gs-w="{{ widget.width }}" gs-min-w="{{ widget.width }}" gs-h="{{ widget.height }}" gs-id="{{ widget.id }}" id="{{ widget.id }}">
                     <div class="grid-stack-item-content">
                         {{ render_widget(widget) }}
                     </div>

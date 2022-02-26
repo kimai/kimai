@@ -28,7 +28,7 @@
         <div class="row row-cards">
         {% for widget in widgets %}
             {% set columnSize = widget.width %}
-            <div class="col-md-{{ columnSize * 3 }}{% if columnSize <= 2 %} col-sm-{{ columnSize * 6  }}{% endif %}">
+            <div class="col-md-{{ columnSize * 3 }}{% if columnSize <= 2 %} col-sm-{{ columnSize * 6  }}{% endif %}" id="{{ widget.id }}">
                 {{ render_widget(widget) }}
             </div>
         {% endfor %}
