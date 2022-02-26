@@ -20,7 +20,7 @@ final class AmountWeek extends AbstractAmountPeriod
 
     public function getId(): string
     {
-        return 'amountWeek';
+        return 'AmountWeek';
     }
 
     public function getData(array $options = [])

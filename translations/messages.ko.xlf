@@ -1133,8 +1133,8 @@
         <source>action.add</source>
         <target>첨부</target>
       </trans-unit>
-      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
-        <source>stats.userActiveFinancialYear</source>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
+        <source>stats.activeUsersFinancialYear</source>
         <target>이번 회계연도 활성화 사용자</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">

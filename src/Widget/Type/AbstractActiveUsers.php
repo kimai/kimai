@@ -30,7 +30,7 @@ abstract class AbstractActiveUsers extends AbstractSimpleStatisticChart
 
     public function getTitle(): string
     {
-        return 'stats.' . $this->getId();
+        return 'stats.' . lcfirst($this->getId());
     }
 
     public function getPermissions(): array

@@ -57,6 +57,6 @@ class UserAmountYearTest extends AbstractWidgetTypeTest
         $sut = $this->createSut();
 
         self::assertEquals('widget/widget-counter-money.html.twig', $sut->getTemplateName());
-        self::assertEquals('userAmountYear', $sut->getId());
+        self::assertEquals('UserAmountYear', $sut->getId());
     }
 }

@@ -51,6 +51,6 @@ class AmountTodayTest extends AbstractWidgetTest
         $sut = $this->createSut();
 
         self::assertEquals('widget/widget-counter-money.html.twig', $sut->getTemplateName());
-        self::assertEquals('amountToday', $sut->getId());
+        self::assertEquals('AmountToday', $sut->getId());
     }
 }

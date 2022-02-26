@@ -25,7 +25,7 @@ final class DurationMonth extends AbstractCounterDuration
 
     public function getId(): string
     {
-        return 'durationMonth';
+        return 'DurationMonth';
     }
 
     public function getTitle(): string

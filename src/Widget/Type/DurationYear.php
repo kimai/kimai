@@ -38,6 +38,6 @@ final class DurationYear extends AbstractCounterYear
 
     public function getId(): string
     {
-        return 'durationYear';
+        return 'DurationYear';
     }
 }

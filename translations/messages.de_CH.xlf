@@ -1073,8 +1073,8 @@
         <source>calendar.drag_and_drop.delete</source>
         <target>Wenn Sie einen Eintrag löschen wollen, müssen Sie ihn auf die Schaltfläche ziehen.</target>
       </trans-unit>
-      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
-        <source>stats.userActiveFinancialYear</source>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
+        <source>stats.activeUsersFinancialYear</source>
         <target>Aktive Benutzer dieses Geschäftsjahr</target>
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">

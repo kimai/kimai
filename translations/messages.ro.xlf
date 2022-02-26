@@ -1093,8 +1093,8 @@
         <source>stats.percentUsed_month</source>
         <target>%percent%%% folosit în această lună</target>
       </trans-unit>
-      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
-        <source>stats.userActiveFinancialYear</source>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
+        <source>stats.activeUsersFinancialYear</source>
         <target>Utilizatori activi în acest exercițiu financiar</target>
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">

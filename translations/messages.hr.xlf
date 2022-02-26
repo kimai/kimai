@@ -826,8 +826,8 @@
         <source>stats.activeUsersYear</source>
         <target>Aktivni korisnici ove godine</target>
       </trans-unit>
-      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
-        <source>stats.userActiveFinancialYear</source>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
+        <source>stats.activeUsersFinancialYear</source>
         <target>Aktivni korisnici ove fiskalne godine</target>
       </trans-unit>
       <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">

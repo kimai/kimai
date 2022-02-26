@@ -1108,8 +1108,8 @@
         <source>calendar.drag_and_drop.delete</source>
         <target>Se vuoi eliminare una voce, devi trascinarla sul pulsante.</target>
       </trans-unit>
-      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
-        <source>stats.userActiveFinancialYear</source>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
+        <source>stats.activeUsersFinancialYear</source>
         <target>Utenti attivi in questo anno finanziario</target>
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">

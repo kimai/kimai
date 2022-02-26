@@ -1134,8 +1134,8 @@
         <source>stats.percentUsed_month</source>
         <target>%percent%% usado este mês</target>
       </trans-unit>
-      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
-        <source>stats.userActiveFinancialYear</source>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
+        <source>stats.activeUsersFinancialYear</source>
         <target>Utilizadores ativos neste ano financeiro</target>
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
@@ -1254,7 +1254,7 @@
         <source>error.directory_protected</source>
         <target>O diretório "%dir%" está protegido contra gravação.</target>
       </trans-unit>
-      <trans-unit id="sdfgsdfgsdfg" resname="label.choice_pattern">
+      <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
         <target>Aparência das entradas nas listas de seleção</target>
       </trans-unit>

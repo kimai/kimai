@@ -20,7 +20,7 @@ final class UserAmountWeek extends AbstractUserRevenuePeriod
 
     public function getId(): string
     {
-        return 'userAmountWeek';
+        return 'UserAmountWeek';
     }
 
     public function getData(array $options = [])

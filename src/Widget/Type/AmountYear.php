@@ -52,7 +52,7 @@ final class AmountYear extends AbstractCounterYear
 
     public function getId(): string
     {
-        return 'amountYear';
+        return 'AmountYear';
     }
 
     public function getTemplateName(): string

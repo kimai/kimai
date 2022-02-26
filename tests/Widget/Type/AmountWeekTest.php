@@ -51,6 +51,6 @@ class AmountWeekTest extends AbstractWidgetTest
         $sut = $this->createSut();
 
         self::assertEquals('widget/widget-counter-money.html.twig', $sut->getTemplateName());
-        self::assertEquals('amountWeek', $sut->getId());
+        self::assertEquals('AmountWeek', $sut->getId());
     }
 }

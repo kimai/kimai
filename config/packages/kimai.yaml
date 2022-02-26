@@ -174,24 +174,24 @@ kimai:
     dashboard:
         widgets:
             - PaginatedWorkingTimeChart
-            - userAmountToday
-            - userAmountWeek
-            - userAmountMonth
-            - userAmountYear
+            - UserAmountToday
+            - UserAmountWeek
+            - UserAmountMonth
+            - UserAmountYear
             - UserTeams
             - UserTeamProjects
-            - durationToday
-            - durationWeek
-            - durationMonth
-            - durationYear
-            - activeUsersToday
-            - activeUsersWeek
-            - activeUsersMonth
-            - activeUsersYear
-            - amountToday
-            - amountWeek
-            - amountMonth
-            - amountYear
+            - DurationToday
+            - DurationWeek
+            - DurationMonth
+            - DurationYear
+            - ActiveUsersToday
+            - ActiveUsersWeek
+            - ActiveUsersMonth
+            - ActiveUsersYear
+            - AmountToday
+            - AmountWeek
+            - AmountMonth
+            - AmountYear
             - TotalsUser
             - TotalsCustomer
             - TotalsProject

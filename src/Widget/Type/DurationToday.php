@@ -25,7 +25,7 @@ final class DurationToday extends AbstractCounterDuration
 
     public function getId(): string
     {
-        return 'durationToday';
+        return 'DurationToday';
     }
 
     public function getTitle(): string

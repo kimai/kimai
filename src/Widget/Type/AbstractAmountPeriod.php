@@ -26,7 +26,7 @@ abstract class AbstractAmountPeriod extends AbstractWidget
 
     public function getTitle(): string
     {
-        return 'stats.' . $this->getId();
+        return 'stats.' . lcfirst($this->getId());
     }
 
     public function getTemplateName(): string

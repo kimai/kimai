@@ -24,7 +24,7 @@ final class ActiveUsersYear extends AbstractCounterYear
 
     public function getData(array $options = [])
     {
-        $this->titleYear = 'stats.userActiveFinancialYear';
+        $this->titleYear = 'stats.activeUsersFinancialYear';
         $this->setQuery(TimesheetRepository::STATS_QUERY_USER);
         $this->setQueryWithUser(false);
 

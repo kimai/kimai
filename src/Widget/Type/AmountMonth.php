@@ -20,7 +20,7 @@ final class AmountMonth extends AbstractAmountPeriod
 
     public function getId(): string
     {
-        return 'amountMonth';
+        return 'AmountMonth';
     }
 
     public function getData(array $options = [])

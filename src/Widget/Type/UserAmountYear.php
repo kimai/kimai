@@ -37,7 +37,7 @@ final class UserAmountYear extends AbstractCounterYear
 
     public function getId(): string
     {
-        return 'userAmountYear';
+        return 'UserAmountYear';
     }
 
     public function getOptions(array $options = []): array

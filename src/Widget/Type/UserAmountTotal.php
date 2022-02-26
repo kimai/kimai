@@ -20,7 +20,7 @@ final class UserAmountTotal extends AbstractUserRevenuePeriod
 
     public function getId(): string
     {
-        return 'userAmountTotal';
+        return 'UserAmountTotal';
     }
 
     public function getData(array $options = [])

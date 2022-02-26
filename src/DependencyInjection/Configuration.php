@@ -615,7 +615,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('widgets')
                     ->scalarPrototype()->end()
-                    ->defaultValue(['PaginatedWorkingTimeChart', 'UserTeams', 'UserTeamProjects', 'userAmountToday', 'userAmountWeek', 'userAmountMonth', 'userAmountYear', 'durationToday', 'durationWeek', 'durationMonth', 'durationYear', 'activeUsersToday', 'activeUsersWeek', 'activeUsersMonth', 'activeUsersYear', 'amountToday', 'amountWeek', 'amountMonth', 'amountYear', 'TotalsUser', 'TotalsCustomer', 'TotalsProject', 'TotalsActivity'])
+                    ->defaultValue(['PaginatedWorkingTimeChart', 'UserTeams', 'UserTeamProjects', 'UserAmountToday', 'UserAmountWeek', 'UserAmountMonth', 'UserAmountYear', 'DurationToday', 'DurationWeek', 'DurationMonth', 'DurationYear', 'activeUsersToday', 'activeUsersWeek', 'activeUsersMonth', 'activeUsersYear', 'AmountToday', 'AmountWeek', 'AmountMonth', 'AmountYear', 'TotalsUser', 'TotalsCustomer', 'TotalsProject', 'TotalsActivity'])
                 ->end()
             ->end()
         ;

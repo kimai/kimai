@@ -888,8 +888,8 @@
         <source>stats.amountFinancialYear</source>
         <target>Inntekter dette budsjettåret</target>
       </trans-unit>
-      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
-        <source>stats.userActiveFinancialYear</source>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
+        <source>stats.activeUsersFinancialYear</source>
         <target>Aktive brukere dette budsjettåret</target>
       </trans-unit>
       <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">

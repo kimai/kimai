@@ -1049,8 +1049,8 @@
         <source>error.too_many_entries</source>
         <target>Không thể xử lý yêu cầu. Quá nhiều kết quả đã được tìm thấy.</target>
       </trans-unit>
-      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
-        <source>stats.userActiveFinancialYear</source>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
+        <source>stats.activeUsersFinancialYear</source>
         <target>Người dùng tích cực trong năm tài chính này</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">

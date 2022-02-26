@@ -1157,8 +1157,8 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Budgetår</target>
       </trans-unit>
-      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
-        <source>stats.userActiveFinancialYear</source>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
+        <source>stats.activeUsersFinancialYear</source>
         <target>Aktiva användare under budgetåret</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">

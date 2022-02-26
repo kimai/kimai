@@ -1125,8 +1125,8 @@
         <source>registration.check_email</source>
         <target>Egy üzenet lett küldve a %email% címre. Ebben az üzenetben található az aktivációs link, amire kattintva aktiválhatod a fiókodat.</target>
       </trans-unit>
-      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
-        <source>stats.userActiveFinancialYear</source>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
+        <source>stats.activeUsersFinancialYear</source>
         <target>Aktív felhasználók ebben a pénzügyi évben</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">

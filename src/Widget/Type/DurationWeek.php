@@ -25,7 +25,7 @@ final class DurationWeek extends AbstractCounterDuration
 
     public function getId(): string
     {
-        return 'durationWeek';
+        return 'DurationWeek';
     }
 
     public function getTitle(): string

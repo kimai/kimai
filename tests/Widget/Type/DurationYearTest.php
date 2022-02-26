@@ -49,6 +49,6 @@ class DurationYearTest extends AbstractWidgetTypeTest
         $sut = $this->createSut();
 
         self::assertEquals('widget/widget-counter-duration.html.twig', $sut->getTemplateName());
-        self::assertEquals('durationYear', $sut->getId());
+        self::assertEquals('DurationYear', $sut->getId());
     }
 }

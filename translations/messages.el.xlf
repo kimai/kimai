@@ -1129,8 +1129,8 @@
         <source>label.last_record</source>
         <target>Τελευταία καταχώρηση</target>
       </trans-unit>
-      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
-        <source>stats.userActiveFinancialYear</source>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
+        <source>stats.activeUsersFinancialYear</source>
         <target>Ενεργοί χρήστες κατά το τρέχον οικονομικό έτος</target>
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">

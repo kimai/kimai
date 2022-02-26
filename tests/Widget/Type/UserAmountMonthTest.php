@@ -55,6 +55,6 @@ class UserAmountMonthTest extends AbstractWidgetTest
         $sut = $this->createSut();
 
         self::assertEquals('widget/widget-counter-money.html.twig', $sut->getTemplateName());
-        self::assertEquals('userAmountMonth', $sut->getId());
+        self::assertEquals('UserAmountMonth', $sut->getId());
     }
 }

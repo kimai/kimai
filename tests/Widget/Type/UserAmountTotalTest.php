@@ -55,6 +55,6 @@ class UserAmountTotalTest extends AbstractWidgetTest
         $sut = $this->createSut();
 
         self::assertEquals('widget/widget-counter-money.html.twig', $sut->getTemplateName());
-        self::assertEquals('userAmountTotal', $sut->getId());
+        self::assertEquals('UserAmountTotal', $sut->getId());
     }
 }

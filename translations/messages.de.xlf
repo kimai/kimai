@@ -897,24 +897,24 @@
         <source>stats.userAmountTotal</source>
         <target>Mein Umsatz total</target>
       </trans-unit>
-      <trans-unit id="xyiadv3" resname="stats.userActiveToday">
-        <source>stats.userActiveToday</source>
+      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
+        <source>stats.activeUsersToday</source>
         <target>Aktive Benutzer heute</target>
       </trans-unit>
       <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
         <source>stats.activeUsersWeek</source>
         <target>Aktive Benutzer diese Woche</target>
       </trans-unit>
-      <trans-unit id="adzVDgb" resname="stats.userActiveMonth">
-        <source>stats.userActiveMonth</source>
+      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
+        <source>stats.activeUsersMonth</source>
         <target>Aktive Benutzer diesen Monat</target>
       </trans-unit>
       <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
         <source>stats.activeUsersYear</source>
         <target>Aktive Benutzer dieses Jahr</target>
       </trans-unit>
-      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
-        <source>stats.userActiveFinancialYear</source>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
+        <source>stats.activeUsersFinancialYear</source>
         <target>Aktive Benutzer dieses Geschäftsjahr</target>
       </trans-unit>
       <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">

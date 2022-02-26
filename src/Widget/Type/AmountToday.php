@@ -20,7 +20,7 @@ final class AmountToday extends AbstractAmountPeriod
 
     public function getId(): string
     {
-        return 'amountToday';
+        return 'AmountToday';
     }
 
     public function getData(array $options = [])

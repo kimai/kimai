@@ -47,7 +47,7 @@ abstract class AbstractCounterYear extends AbstractSimpleStatisticChart
 
     public function getTitle(): string
     {
-        return 'stats.' . $this->getId();
+        return 'stats.' . lcfirst($this->getId());
     }
 
     public function getTemplateName(): string
