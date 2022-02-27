@@ -386,6 +386,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'boolean',
                     'color' => '@string',
                     'number' => '@string',
+                    'comment' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'currency' => 'string', // since 1.10
@@ -452,6 +453,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'start' => '@datetime',
                     'end' => '@datetime',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
+                    'comment' => '@string',
                 ];
 
             // if a project is explicitly loaded
@@ -504,6 +506,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'color' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'parentTitle' => '@string',
+                    'comment' => '@string',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                 ];
 
