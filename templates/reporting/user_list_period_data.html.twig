@@ -31,7 +31,7 @@
         {% set usersTotalInternalRate = 0 %}
         {% set usersTotalRate = 0 %}
         <tr class="user">
-            <td class="text-nowrap">
+            <td class="text-nowrap"{% block user_column_cell_attribute %}{% endblock %}>
                 {% block user_column %}
                     {% from "macros/widgets.html.twig" import label_dot %}
                     {{ label_dot(userPeriod.user.displayName, userPeriod.user.color) }}
@@ -55,7 +55,7 @@
                 {% set totalsInternalRate = totalsInternalRate|merge({(reportDateKey): (totalsInternalRate[reportDateKey] + period.totalInternalRate)}) %}
                 {% set totalsRate = totalsRate|merge({(reportDateKey): (totalsRate[reportDateKey] + period.totalRate)}) %}
             {% endfor %}
-            <th class="text-nowrap text-center total">
+            <th class="text-nowrap text-center total{% block user_total_cell_class %}{% endblock %}"{% block user_total_cell_attribute %}{% endblock %}>
                 {% if dataType == 'rate' %}
                     {% block total_rate_user %}{% endblock %}
                 {% elseif dataType == 'internalRate' %}
@@ -65,7 +65,7 @@
                 {% endif %}
             </th>
             {% for period in attribute(userPeriod, period_attribute) %}
-                <td class="text-nowrap text-center day-total{% block period_cell_class %}{% endblock %}">
+                <td class="text-nowrap text-center day-total{% block period_cell_class %}{% endblock %}"{% block period_cell_attribute %}{% endblock %}>
                     {% if period.totalDuration > 0 or period.totalRate > 0 or period.totalInternalRate > 0 %}
                         {% if dataType == 'rate' %}
                             {% block rate %}{% endblock %}
@@ -83,7 +83,7 @@
     <tfoot>
         <tr class="summary">
         <td>{{ dataTypeTitle|trans }}</td>
-            <td class="text-center text-nowrap">
+            <td class="text-center text-nowrap{% block total_period_cell_class %}{% endblock %}"{% block total_period_cell_attribute %}{% endblock %}>
                 {% if dataType == 'rate' %}
                     {% block total_rate %}
                         {{ absoluteRate|money }}
@@ -100,7 +100,7 @@
             </td>
             {% if dataType == 'rate' %}
                 {% for id, total in totalsRate %}
-                    <td class="text-center text-nowrap">
+                    <td class="text-center text-nowrap{% block total_rate_period_cell_class %}{% endblock %}"{% block total_rate_period_cell_attribute %}{% endblock %}>
                         {% block total_rate_period %}
                             {{ total|money }}
                         {% endblock %}
@@ -108,7 +108,7 @@
                 {% endfor %}
             {% elseif dataType == 'internalRate' %}
                 {% for id, total in totalsInternalRate %}
-                    <td class="text-center text-nowrap">
+                    <td class="text-center text-nowrap{% block total_internal_rate_period_cell_class %}{% endblock %}"{% block total_internal_rate_period_cell_attribute %}{% endblock %}>
                         {% block total_internal_rate_period %}
                             {{ total|money }}
                         {% endblock %}
@@ -116,7 +116,7 @@
                 {% endfor %}
             {% else %}
                 {% for id, total in totalsDuration %}
-                    <td class="text-center text-nowrap">
+                    <td class="text-center text-nowrap{% block total_duration_period_cell_class %}{% endblock %}"{% block total_duration_period_cell_attribute %}{% endblock %}>
                         {% block total_duration_period %}
                             {{ total|duration(decimal) }}
                         {% endblock %}

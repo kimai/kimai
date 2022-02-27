@@ -1,46 +1,59 @@
 {% embed 'reporting/user_list_period_data.html.twig' %}
+    {% set dataTypeFormat = '' %}
+    {% if dataType == 'rate' or dataType == 'internalRate' %}
+        {% set dataTypeFormat = ' data-format="' ~ constant('App\\Export\\Base\\AbstractSpreadsheetRenderer::RATE_FORMAT_NO_CURRENCY') ~ '"' %}
+    {% elseif dataType == 'duration' %}
+        {% set dataTypeFormat = ' data-format="' ~ constant('App\\Export\\Base\\AbstractSpreadsheetRenderer::DURATION_DECIMAL') ~ '"' %}
+    {% endif %}
     {% block user_column %}
         {{ userPeriod.user.displayName }}
     {% endblock %}
     {% block duration -%}
-        =VALUE("{{ period.totalDuration|duration(true) }}")
+        {{ period.totalDuration / 3600 }}
     {%- endblock %}
     {% block total_duration -%}
-        =VALUE("{{ absoluteDuration|duration(true) }}")
+        {{ absoluteDuration / 3600 }}
     {%- endblock %}
     {% block total_duration_user -%}
-        =VALUE("{{ usersTotalDuration|duration(true) }}")
+        {{ usersTotalDuration / 3600 }}
     {%- endblock %}
     {% block total_duration_period -%}
-        =VALUE("{{ total|duration(true) }}")
+        {{ total / 3600 }}
     {%- endblock %}
     {% block rate %}
-        =VALUE("{{ period.totalRate|money }}")
+        {{ period.totalRate }}
     {% endblock %}
     {% block total_rate %}
-        =VALUE("{{ absoluteRate|money }}")
+        {{ absoluteRate }}
     {% endblock %}
     {% block total_rate_user %}
-        =VALUE("{{ usersTotalRate|money }}")
+        {{ usersTotalRate }}
     {% endblock %}
     {% block total_rate_period %}
-        =VALUE("{{ total|money }}")
+        {{ total }}
     {% endblock %}
     {% block internal_rate %}
-        =VALUE("{{ period.totalInternalRate|money }}")
+        {{ period.totalInternalRate }}
     {% endblock %}
     {% block total_internal_rate %}
-        =VALUE("{{ absoluteInternalRate|money }}")
+        {{ absoluteInternalRate }}
     {% endblock %}
     {% block total_internal_rate_user %}
-        =VALUE("{{ usersTotalInternalRate|money }}")
+        {{ usersTotalInternalRate }}
     {% endblock %}
     {% block total_internal_rate_period %}
-        =VALUE("{{ total|money }}")
+        {{ total }}
     {% endblock %}
     {% block period_name %}
         <th class="text-center text-nowrap">
             {{ column|date_short }}
         </th>
     {% endblock %}
+    {% block user_column_cell_attribute %} data-format="@"{% endblock %}
+    {% block period_cell_attribute %}{{ dataTypeFormat|raw }}{% endblock %}
+    {% block user_total_cell_attribute %}{{ dataTypeFormat|raw }}{% endblock %}
+    {% block total_period_cell_attribute %}{{ dataTypeFormat|raw }}{% endblock %}
+    {% block total_rate_period_cell_attribute %}{{ dataTypeFormat|raw }}{% endblock %}
+    {% block total_internal_rate_period_cell_attribute %}{{ dataTypeFormat|raw }}{% endblock %}
+    {% block total_duration_period_cell_attribute %}{{ dataTypeFormat|raw }}{% endblock %}
 {% endembed %}
