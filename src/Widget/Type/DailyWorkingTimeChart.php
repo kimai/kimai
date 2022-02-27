@@ -40,6 +40,11 @@ final class DailyWorkingTimeChart extends AbstractWidget
         return ['view_own_timesheet'];
     }
 
+    public function isInternal(): bool
+    {
+        return true;
+    }
+
     public function getOptions(array $options = []): array
     {
         return array_merge([

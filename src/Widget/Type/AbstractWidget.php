@@ -72,4 +72,9 @@ abstract class AbstractWidget implements WidgetInterface
     {
         return array_merge($this->options, $options);
     }
+
+    public function isInternal(): bool
+    {
+        return false;
+    }
 }

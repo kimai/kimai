@@ -42,6 +42,10 @@ class DashboardSubscriber extends AbstractActionsSubscriber
             }
 
             foreach ($available as $widget) {
+                if ($widget->isInternal()) {
+                    continue;
+                }
+
                 if (\in_array($widget->getId(), $ids)) {
                     continue;
                 }

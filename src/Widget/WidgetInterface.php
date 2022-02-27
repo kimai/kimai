@@ -130,4 +130,11 @@ interface WidgetInterface
      * @return Form|null
      */
     public function getForm(): ?Form;
+
+    /**
+     * Whether this is a widget that is supposed to be selectable by the end-user.
+     *
+     * @return bool
+     */
+    public function isInternal(): bool;
 }

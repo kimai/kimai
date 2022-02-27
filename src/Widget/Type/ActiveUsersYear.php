@@ -31,6 +31,11 @@ final class ActiveUsersYear extends AbstractCounterYear
         return parent::getData($options);
     }
 
+    public function getPermissions(): array
+    {
+        return ['ROLE_TEAMLEAD'];
+    }
+
     public function getId(): string
     {
         return 'activeUsersYear';

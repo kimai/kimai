@@ -31,6 +31,11 @@ final class DurationYear extends AbstractCounterYear
         return parent::getData($options);
     }
 
+    public function getPermissions(): array
+    {
+        return ['view_other_timesheet'];
+    }
+
     public function getTemplateName(): string
     {
         return 'widget/widget-counter-duration.html.twig';

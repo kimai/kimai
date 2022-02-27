@@ -3,7 +3,6 @@
     {% set url = path(options.route, options.routeOptions|default([])) %}
 {% endif %}
 
-
 <div class="card card-sm">
     <div class="card-body">
         <div class="row align-items-center">
@@ -13,21 +12,21 @@
                 </span>
             </div>
             <div class="col">
-                    <div class="font-weight-medium">
-                        <a href="{{ url }}" class="link-dark stretched-link text-reset">
-                            {{ title|trans }}
-                        </a>
-                    </div>
-                    <div class="text-muted">
-                        {% if data is iterable %}
-                            {{ 'Invalid data' }}
-                        {% else %}
-                            {% block widget_data %}
-                                {{ data }}
-                            {% endblock %}
-                        {% endif %}
-                        <sup style="font-size: 20px">{{ unit|default('') }}</sup>
-                    </div>
+                <div class="font-weight-medium">
+                    <a href="{{ url }}" class="link-dark stretched-link text-reset">
+                        {{ title|trans }}
+                    </a>
+                </div>
+                <div class="text-muted">
+                    {% if data is iterable %}
+                        {{ 'Invalid data' }}
+                    {% else %}
+                        {% block widget_data %}
+                            {{ data }}
+                        {% endblock %}
+                    {% endif %}
+                    <sup style="font-size: 20px">{{ unit|default('') }}</sup>
+                </div>
             </div>
         </div>
     </div>
