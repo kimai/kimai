@@ -376,6 +376,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'color' => '@string',
                     'number' => '@string',
+                    'comment' => '@string',
                 ];
 
             // if a list of customers is loaded
@@ -428,6 +429,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'color' => '@string',
                     'customer' => 'int',
+                    'comment' => '@string',
                 ];
 
             // if a project is embedded in an expanded collection (here timesheet)
@@ -485,6 +487,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'project' => '@int',
                     'color' => '@string',
+                    'comment' => '@string',
                 ];
 
             case 'ActivityExpanded':
