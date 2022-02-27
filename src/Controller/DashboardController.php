@@ -162,7 +162,7 @@ class DashboardController extends AbstractController
         $user = $this->getUser();
         $available = $this->getAllAvailableWidgets($user);
 
-        return $this->render('dashboard/grid.html.twig', [
+        return $this->render('dashboard/index.html.twig', [
             'widgets' => $this->filterWidgets($available, $user),
             'available' => $available,
         ]);
