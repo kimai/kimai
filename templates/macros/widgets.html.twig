@@ -311,6 +311,7 @@
     {% set showTitle = options['title'] ?? true %}
     {% set collapseAt = options['collapse'] ?? 12 %}
     {% set nameClass = options['name_class'] ?? '' %}
+    {% set viewTeam = is_granted('view_team') %}
     <table class="table table-hover dataTable" role="grid">
         {% if showTitle %}
         <thead>
@@ -324,7 +325,7 @@
         {% for team in teams|sort((a, b) => a.name <=> b.name) %}
             {% set members = team.members|filter(m => m.user.enabled) %}
             {% set userTeamCount = members|length %}
-            <tr{% if is_granted('edit', team) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_team_member', {'id': team.id}) }}"{% endif %}>
+            <tr{% if viewTeam and is_granted('edit', team) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_team_member', {'id': team.id}) }}"{% endif %}>
                 <td class="{{ nameClass }}">
                     {{ _self.label_color_dot('color', true, team.name, null, team.color|colorize(team.name)) }}
                 </td>
