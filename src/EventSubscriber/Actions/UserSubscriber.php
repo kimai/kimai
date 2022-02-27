@@ -55,6 +55,10 @@ class UserSubscriber extends AbstractActionsSubscriber
             $event->addActionToSubmenu('filter', 'timesheet', ['url' => $this->path('admin_timesheet', ['users[]' => $user->getId()]), 'title' => 'timesheet.filter', 'translation_domain' => 'actions']);
         }
 
+        if ($this->isGranted('view_team')) {
+            $event->addActionToSubmenu('filter', 'teams', ['url' => $this->path('admin_team', ['users[]' => $user->getId()]), 'title' => 'menu.admin_team']);
+        }
+
         if ($event->isIndexView() && $this->isGranted('delete', $user)) {
             $event->addDelete($this->path('admin_user_delete', ['id' => $user->getId()]));
         }
