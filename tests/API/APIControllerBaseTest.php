@@ -440,6 +440,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'color' => '@string',
                     'customer' => ['result' => 'object', 'type' => 'Customer'],
+                    'comment' => '@string',
                 ];
 
             // if a collection of projects is loaded
@@ -497,6 +498,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'project' => ['result' => 'object', 'type' => '@ProjectExpanded'],
                     'color' => '@string',
+                    'comment' => '@string',
                 ];
 
             // collection of activities
