@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="he" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
@@ -37,6 +37,50 @@
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
         <target>שים לב: קבצים קיימים ידרסו וימחקו. סוגי קבצים מותרים: DOCX, ODS, XLSX.</target>
+      </trans-unit>
+      <trans-unit id="sjwwrr8" resname="Xlsx">
+        <source>Microsoft Excel (XLSX)</source>
+        <target state="needs-translation">Microsoft Excel (Xlsx)</target>
+      </trans-unit>
+      <trans-unit id="E5BwZHT" resname="programmatic">
+        <source>programmatic</source>
+        <target>לעיבוד נוסף</target>
+      </trans-unit>
+      <trans-unit id="nA.KOyM" resname="Html">
+        <source>Html</source>
+        <target>HTML (להדפסה דרך הדפדפן)</target>
+      </trans-unit>
+      <trans-unit id="QqvUWFt" resname="Ods">
+        <source>Ods</source>
+        <target>Open Office (Spreadsheet)</target>
+      </trans-unit>
+      <trans-unit id="kLKl8xE" resname="Pdf">
+        <source>Pdf</source>
+        <target>PDF</target>
+      </trans-unit>
+      <trans-unit id="jV1SPRL" resname="default-pdf">
+        <source>default-pdf</source>
+        <target>חשבונית</target>
+      </trans-unit>
+      <trans-unit id="v5KgTmC" resname="xml">
+        <source>xml</source>
+        <target>XML</target>
+      </trans-unit>
+      <trans-unit id="7acXRsA" resname="javascript">
+        <source>javascript</source>
+        <target>JSON</target>
+      </trans-unit>
+      <trans-unit id="mC2ePrm" resname="text">
+        <source>text</source>
+        <target>טקסט</target>
+      </trans-unit>
+      <trans-unit id="4NNx9U." resname="Docx">
+        <source>Microsoft Word (DOCX)</source>
+        <target state="needs-translation">Microsoft Word (Docx)</target>
+      </trans-unit>
+      <trans-unit id="sXlZPOC" resname="Xls">
+        <source>Microsoft Excel (XLS)</source>
+        <target state="needs-translation">Microsoft Excel (Xls)</target>
       </trans-unit>
     </body>
   </file>

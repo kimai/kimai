@@ -1261,6 +1261,18 @@
         <source>error.directory_missing</source>
         <target>Directory "%dir%" is not existing and could not be created.</target>
       </trans-unit>
+      <trans-unit id="PCEFPeg" resname="updated_at">
+        <source>Updated at</source>
+        <target state="needs-translation">Updated at</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+        <source>invoice_document.max_reached</source>
+        <target state="needs-translation">Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
+      </trans-unit>
+      <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
+        <source>Display of entries in selection lists</source>
+        <target state="needs-translation">Display of entries in selection lists</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

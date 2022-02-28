@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="de-CH" datatype="plaintext" original="about.en.xlf">
+    <body>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target state="needs-translation">Über Kimai</target>
+      </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target state="needs-translation">Support</target>
+      </trans-unit>
+      <trans-unit id="dHqPOYO" resname="website">
+        <source>website</source>
+        <target state="needs-translation">Homepage</target>
+      </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target state="needs-translation">Dokumentation</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target state="needs-translation">Spende für die Zukunft von Kimai</target>
+      </trans-unit>
+      <trans-unit id="DwbowBh" resname="published_under">
+        <source>published_under</source>
+        <target state="needs-translation">%kimai% wird veröffentlicht unter</target>
+      </trans-unit>
+      <trans-unit id="A0nWoXZ" resname="special_thanks">
+        <source>special_thanks</source>
+        <target state="needs-translation">Besonderer Dank geht an …</target>
+      </trans-unit>
+      <trans-unit id="L7cff3Q" resname="library_authors">
+        <source>library_authors</source>
+        <target state="needs-translation">… die Autoren der folgenden Software-Bibliotheken, ohne Euch wäre Kimai nicht möglich 👍</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

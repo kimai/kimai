@@ -39,16 +39,16 @@
         <target>Daha fazla işlem için</target>
       </trans-unit>
       <trans-unit id="sXlZPOC" resname="Xls">
-        <source>Xls</source>
-        <target>Microsoft Excel (Xls)</target>
+        <source>Microsoft Excel (XLS)</source>
+        <target>Microsoft Excel (XLS)</target>
       </trans-unit>
       <trans-unit id="QqvUWFt" resname="Ods">
         <source>Ods</source>
         <target>Open Office (Elektronik tablo)</target>
       </trans-unit>
       <trans-unit id="sjwwrr8" resname="Xlsx">
-        <source>Xlsx</source>
-        <target>Microsoft Excel (Xlsx)</target>
+        <source>Microsoft Excel (XLSX)</source>
+        <target>Microsoft Excel (XLSX)</target>
       </trans-unit>
       <trans-unit id="kLKl8xE" resname="Pdf">
         <source>Pdf</source>
@@ -67,8 +67,8 @@
         <target>HTML (Tarayıcı ile yazdırmak için)</target>
       </trans-unit>
       <trans-unit id="4NNx9U." resname="Docx">
-        <source>Docx</source>
-        <target>Microsoft Word (Docx)</target>
+        <source>Microsoft Word (DOCX)</source>
+        <target>Microsoft Word (DOCX)</target>
       </trans-unit>
       <trans-unit id="v5KgTmC" resname="xml">
         <source>xml</source>

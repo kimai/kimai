@@ -1209,12 +1209,12 @@
         <target>Жизненный цикл</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
-        <source>error.directory_missing</source>
-        <target>Каталог "%dir%" не существует и не может быть создан.</target>
+        <source>The directory “%dir%” does not exist and could not be created.</source>
+        <target>Каталог «%dir%» не существует и не может быть создан.</target>
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
-        <target>Каталог "%dir%" защищен от записи.</target>
+        <target>Каталог «%dir%» защищен от записи.</target>
       </trans-unit>
       <trans-unit id="jdbtx6z" resname="action.add">
         <source>action.add</source>
@@ -1255,6 +1255,10 @@
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
         <target>Достигнуто максимальное количество документов счета-фактуры %max%. Вы можете добавить больше после удаления одного документа.</target>
+      </trans-unit>
+      <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
+        <source>Display of entries in selection lists</source>
+        <target state="needs-translation">Display of entries in selection lists</target>
       </trans-unit>
     </body>
   </file>
