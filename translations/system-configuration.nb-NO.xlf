@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="nb-NO" datatype="plaintext" original="system-configuration.en.xlf">
+    <body>
+      <trans-unit id="ycErWZK" resname="timesheet">
+        <source>Time tracking</source>
+        <target>Tidsregistrering</target>
+      </trans-unit>
+      <trans-unit id="PLggHn." resname="theme">
+        <source>theme</source>
+        <target>Drakt</target>
+      </trans-unit>
+      <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
+        <source>label.theme.markdown_content</source>
+        <target>Tillat markdown-formatering i beskrivelser og kommentarer</target>
+      </trans-unit>
+      <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
+        <source>label.theme.tags_create</source>
+        <target>Etiketter: Bruk automatisk fullføring for søk og tillat opprettelse av etiketter</target>
+      </trans-unit>
+      <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
+        <source>label.theme.avatar_url</source>
+        <target>Tillat bruk av nettadresser for avatar-bilder</target>
+      </trans-unit>
+      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
+        <source>label.theme.random_colors</source>
+        <target>Bruk tilfeldige farger for objekter som ikke har tilknyttet farge</target>
+      </trans-unit>
+      <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
+        <source>label.timesheet.mode</source>
+        <target>Tidsregistreringsmodus</target>
+      </trans-unit>
+      <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
+        <source>label.timesheet.mode_default</source>
+        <target state="needs-translation">[Forvalg] Start- og slutt-tider kan redigeres</target>
+      </trans-unit>
+      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
+        <source>label.timesheet.mode_duration_only</source>
+        <target state="needs-translation">[Varighet] Erstatter start- og slutt-tider med et inndatafelt for varighet</target>
+      </trans-unit>
+      <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
+        <source>label.timesheet.mode_duration_fixed_begin</source>
+        <target>[Varighet] Oppsettbar fast starttid. Kun varighet kan endres.</target>
+      </trans-unit>
+      <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
+        <source>label.timesheet.mode_punch</source>
+        <target state="needs-translation">[Tidsklokke] Bruker kan starte og stoppe oppføringer, men ikke redigere tider eller varighet</target>
+      </trans-unit>
+      <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
+        <source>label.timesheet.rules.allow_future_times</source>
+        <target>Tillat tidsoppføringer i fremtiden</target>
+      </trans-unit>
+      <trans-unit id="VAAaL2t" resname="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target state="needs-translation">Tillat overbooking av lagrede budsjetter</target>
+      </trans-unit>
+      <trans-unit id=".NE5mGi" resname="label.timesheet.rules.allow_overlapping_records">
+        <source>label.timesheet.rules.allow_overlapping_records</source>
+        <target>Tillat overlappende tidsoppføringer</target>
+      </trans-unit>
+      <trans-unit id="tuPXa0S" resname="lockdown_period">
+        <source>lockdown_period</source>
+        <target>Låst periode</target>
+      </trans-unit>
+      <trans-unit id="HeDzoVE" resname="label.timesheet.rules.lockdown_period_timezone">
+        <source>label.timesheet.rules.lockdown_period_timezone</source>
+        <target>Tidssone (hvis tom vil tidssone for hver respektive bruker anvendes)</target>
+      </trans-unit>
+      <trans-unit id="yVBJECt" resname="label.timesheet.rules.lockdown_period_start">
+        <source>label.timesheet.rules.lockdown_period_start</source>
+        <target state="needs-translation">Start for nedlåsingsperiode (relativ PHP-dato til nå)</target>
+      </trans-unit>
+      <trans-unit id=".es2tyO" resname="label.timesheet.rules.lockdown_period_end">
+        <source>label.timesheet.rules.lockdown_period_end</source>
+        <target state="needs-translation">Slutt for nedlåsingsperiode (relativ PHP-dato til nå)</target>
+      </trans-unit>
+      <trans-unit id="y2i0PU3" resname="label.timesheet.rules.lockdown_grace_period">
+        <source>label.timesheet.rules.lockdown_grace_period</source>
+        <target state="needs-translation">Slutt på utsatt frist for nedlåsing (relativ PHP-dato til slutt for nedlåsingsperiode)</target>
+      </trans-unit>
+      <trans-unit id="oIueXaX" resname="label.timesheet.active_entries.hard_limit">
+        <source>label.timesheet.active_entries.hard_limit</source>
+        <target>Tillatt antall samkjørende tidsoppføringer</target>
+      </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target>Antall oppføringer overført fra tidligere uker</target>
+      </trans-unit>
+      <trans-unit id="iZLna_g" resname="label.theme.autocomplete_chars">
+        <source>label.theme.autocomplete_chars</source>
+        <target>Minste antall bokstaver å starte automatisk fullføring fra</target>
+      </trans-unit>
+      <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
+        <source>label.calendar.week_numbers</source>
+        <target>Vis ukenummer</target>
+      </trans-unit>
+      <trans-unit id="NULxaYp" resname="label.calendar.weekends">
+        <source>label.calendar.weekends</source>
+        <target>Vis helger</target>
+      </trans-unit>
+      <trans-unit id="AMCb58W" resname="label.calendar.businessHours.begin">
+        <source>label.calendar.businessHours.begin</source>
+        <target state="needs-translation">Start for normale arbeidstider (vil fremheves)</target>
+      </trans-unit>
+      <trans-unit id="3nfAkqy" resname="label.calendar.businessHours.end">
+        <source>label.calendar.businessHours.end</source>
+        <target state="needs-translation">Stopp for normale arbeidstider (vil fremheves)</target>
+      </trans-unit>
+      <trans-unit id="Yl4Ztfv" resname="label.calendar.visibleHours.begin">
+        <source>label.calendar.visibleHours.begin</source>
+        <target>Start for synlig tidsrom</target>
+      </trans-unit>
+      <trans-unit id="UJGYdCt" resname="label.calendar.visibleHours.end">
+        <source>label.calendar.visibleHours.end</source>
+        <target>Slutt for synlig tidsrom</target>
+      </trans-unit>
+      <trans-unit id="AlBuZhv" resname="label.calendar.slot_duration">
+        <source>label.calendar.slot_duration</source>
+        <target>Tidsbolksvariget for uke, og dagvisning (format: tt:mm:ss)</target>
+      </trans-unit>
+      <trans-unit id="nwuLBP4" resname="branding">
+        <source>branding</source>
+        <target>Min bedrift</target>
+      </trans-unit>
+      <trans-unit id="m5dLCoB" resname="label.theme.branding.logo">
+        <source>label.theme.branding.logo</source>
+        <target>Logo-nettadresse (erstatter bedriftsnavnet på innloggingsskjermen)</target>
+      </trans-unit>
+      <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
+        <source>label.theme.branding.company</source>
+        <target>Bedriftsnavn</target>
+      </trans-unit>
+      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
+        <source>label.theme.branding.mini</source>
+        <target>Mini-logo (sammenfelt sidefelt)</target>
+      </trans-unit>
+      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
+        <source>label.theme.branding.title</source>
+        <target>Nettlesertittel</target>
+      </trans-unit>
+      <trans-unit id=".CeyZwj" resname="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target state="needs-translation">Budsjettår</target>
+      </trans-unit>
+      <trans-unit id="Gdb5M4w" resname="rounding">
+        <source>rounding</source>
+        <target>Tidsavrunding</target>
+      </trans-unit>
+      <trans-unit id="0wyl4Bb" resname="label.timesheet.rounding.default.begin">
+        <source>label.timesheet.rounding.default.begin</source>
+        <target>Avrunding av starttid i minutter (0 = avskrudd)</target>
+      </trans-unit>
+      <trans-unit id="Jx6bTVr" resname="label.timesheet.rounding.default.end">
+        <source>label.timesheet.rounding.default.end</source>
+        <target>Avrunding av slutt-tid i minutter (0 = avskrudd)</target>
+      </trans-unit>
+      <trans-unit id="Hnl7Jxt" resname="label.timesheet.rounding.default.duration">
+        <source>label.timesheet.rounding.default.duration</source>
+        <target>Avrunding av varighet i minutter (0 = avskrudd)</target>
+      </trans-unit>
+      <trans-unit id="aenIpDV" resname="label.timesheet.rounding.default.mode">
+        <source>label.timesheet.rounding.default.mode</source>
+        <target>Avrundingsmodus</target>
+      </trans-unit>
+      <trans-unit id="D1NSPl5" resname="label.timesheet.rounding.default.days">
+        <source>label.timesheet.rounding.default.days</source>
+        <target state="needs-translation">Dager i uken når avrunding settes i verk</target>
+      </trans-unit>
+      <trans-unit id="agDfwdy" resname="Monday">
+        <source>Monday</source>
+        <target>Mandag</target>
+      </trans-unit>
+      <trans-unit id="fYrx3hJ" resname="Tuesday">
+        <source>Tuesday</source>
+        <target>Tirsdag</target>
+      </trans-unit>
+      <trans-unit id="wKbMgpz" resname="Wednesday">
+        <source>Wednesday</source>
+        <target>Onsdag</target>
+      </trans-unit>
+      <trans-unit id=".CZiBi." resname="Thursday">
+        <source>Thursday</source>
+        <target>Torsdag</target>
+      </trans-unit>
+      <trans-unit id="4h8.Nyp" resname="Friday">
+        <source>Friday</source>
+        <target>Fredag</target>
+      </trans-unit>
+      <trans-unit id="2_Ncc2P" resname="Saturday">
+        <source>Saturday</source>
+        <target>Lørdag</target>
+      </trans-unit>
+      <trans-unit id="hz.vdg5" resname="Sunday">
+        <source>Sunday</source>
+        <target>Søndag</target>
+      </trans-unit>
+      <trans-unit id="jmsE4EY" resname="Ceil">
+        <source>Ceil</source>
+        <target>Tak: Begynnelse, slutt og varighet vil bli rundet oppover</target>
+      </trans-unit>
+      <trans-unit id="Y_qmsDz" resname="Closest">
+        <source>Closest</source>
+        <target>Nærmest: Matematisk avrunding til nærmeste verdi</target>
+      </trans-unit>
+      <trans-unit id="IbERy.5" resname="Default">
+        <source>Default</source>
+        <target>Forvalg: Begynnelse og slutt rundes nedover, slutt og varighet oppover</target>
+      </trans-unit>
+      <trans-unit id="0mjJxEk" resname="Floor">
+        <source>Floor</source>
+        <target>Gulv: Begynnelse og slutt-varighet rundes nedover</target>
+      </trans-unit>
+      <trans-unit id="DY_cM92" resname="label.timesheet.default_begin">
+        <source>label.timesheet.default_begin</source>
+        <target>Forvalgt starttid (ikke brukt i alle tidsregistreringsmodus)</target>
+      </trans-unit>
+      <trans-unit id="cRbnwyP" resname="label.simple_form">
+        <source>label.simple_form</source>
+        <target>Enkelt søk</target>
+      </trans-unit>
+      <trans-unit id="HrEBLUr" resname="label.invoice.number_format">
+        <source>label.invoice.number_format</source>
+        <target>Fakturanummer-format</target>
+      </trans-unit>
+      <trans-unit id="6CSB6iM" resname="first_weekday">
+        <source>first_weekday</source>
+        <target>Første dag i uken</target>
+      </trans-unit>
+      <trans-unit id="40i4Xlr" resname="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target state="needs-translation">Minuttutvalg for varighet</target>
+      </trans-unit>
+      <trans-unit id="x3AfnWn" resname="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target state="needs-translation">Minuttutvalg for «Fra og til»</target>
+      </trans-unit>
+      <trans-unit id="9C1qkmD" resname="increment_rounding">
+        <source>increment_rounding</source>
+        <target>Bruk oppsatt verdi for avrundingsregel</target>
+      </trans-unit>
+      <trans-unit id="tNxm3eg" resname="off">
+        <source>off</source>
+        <target>Av</target>
+      </trans-unit>
+      <trans-unit id="QHVk7AA" resname="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target>Begrens fargevalg</target>
+      </trans-unit>
+      <trans-unit id="scCc2Xm" resname="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target>Tillate farger</target>
+      </trans-unit>
+      <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
+        <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
+        <target state="needs-translation">Kommainndelt liste over HTML-fargekoder. Fargenavn kan settes ved å innlede fargekoden med et navn og «|»-skilletegn, f.eks. Hvit|#ffffff,Svart|#000000.</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target>Identitetsbekreftelse</target>
+      </trans-unit>
+      <trans-unit id="CCXeSFj" resname="label.user_auth_login">
+        <source>label.user_auth_login</source>
+        <target>Innloggingsskjema</target>
+      </trans-unit>
+      <trans-unit id=".zZ_MeA" resname="label.user_auth_registration">
+        <source>label.user_auth_registration</source>
+        <target>Brukerregistrering</target>
+      </trans-unit>
+      <trans-unit id="t2zKRp5" resname="label.user_auth_password_reset">
+        <source>label.user_auth_password_reset</source>
+        <target>Glemt passord</target>
+      </trans-unit>
+      <trans-unit id="ufoC1qF" resname="label.user_auth_password_reset_retry_ttl">
+        <source>label.user_auth_password_reset_retry_ttl</source>
+        <target>Glemt passord. Antall sekunder før en bruker kan forespørre neste e-post</target>
+      </trans-unit>
+      <trans-unit id="0Tj.NhS" resname="label.user_auth_password_reset_token_ttl">
+        <source>label.user_auth_password_reset_token_ttl</source>
+        <target>Glemt passord. Antall sekunder før tilbakestillingslenker utløper</target>
+      </trans-unit>
+      <trans-unit id="71FjFMp" resname="label.ldap_activate">
+        <source>label.ldap_activate</source>
+        <target>LDAP-innlogging</target>
+      </trans-unit>
+      <trans-unit id="A3HPT4p" resname="label.saml_activate">
+        <source>label.saml_activate</source>
+        <target>SAML-innlogging</target>
+      </trans-unit>
+      <trans-unit id="jLG6z.w" resname="label.timesheet.rules.break_warning_duration">
+        <source>label.timesheet.rules.break_warning_duration</source>
+        <target>Maksimal varighet for en timeseddelsoppføring i minutter, før en «pauseadvarsel» vises (0 = avskrudd)</target>
+      </trans-unit>
+      <trans-unit id="h4bhOny" resname="label.timesheet.rules.long_running_duration">
+        <source>label.timesheet.rules.long_running_duration</source>
+        <target>Maksimal varighet for en timeseddelsoppføring i minutter, før lagring avslås (0 = avskrudd)</target>
+      </trans-unit>
+      <trans-unit id="ZUTc3eH" resname="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target state="needs-translation">Mengde oppføringer for dra-og-slipp (0 = avskrudd)</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
