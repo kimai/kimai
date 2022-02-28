@@ -50,7 +50,9 @@ class TranslationCommand extends Command
             ->addOption('duplicates', null, InputOption::VALUE_NONE, 'Find duplicate translation keys')
             ->addOption('delete-resname', null, InputOption::VALUE_REQUIRED, 'Deletes the translation by resname')
             ->addOption('extension', null, InputOption::VALUE_NONE, 'Find translation files with wrong extensions')
-            ->addOption('translate-locale', null, InputOption::VALUE_REQUIRED, 'Translate into the given locale')
+            ->addOption('fill-empty', null, InputOption::VALUE_NONE, 'Pre-fills empty translations with the english version')
+            // DEEPL TRANSLATION FEATURE - UNTESTED
+            ->addOption('translate-locale', null, InputOption::VALUE_REQUIRED, 'Translate into the given locale with Deepl')
             // @see https://www.deepl.com/de/pro#developer
             ->addOption('translate-deepl', null, InputOption::VALUE_REQUIRED, 'Translate using the "DeepL API Free" auth-key')
         ;
@@ -66,20 +68,25 @@ class TranslationCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $bases = [
-            'core' => $this->projectDirectory . '/translations',
-            'plugins' => $this->projectDirectory . Kernel::PLUGIN_DIRECTORY . '/*/Resources/translations',
+            'core' => $this->projectDirectory . '/translations/*.xlf',
+            'core_xliff' => $this->projectDirectory . '/translations/*.xliff',
+            'plugins' => $this->projectDirectory . Kernel::PLUGIN_DIRECTORY . '/*/Resources/translations/*.xlf',
+            'plugins_xliff' => $this->projectDirectory . Kernel::PLUGIN_DIRECTORY . '/*/Resources/translations/*.xliff',
         ];
 
         if ($input->getOption('delete-resname')) {
-            $files = glob($bases['core'] . '/*.xlf');
+            $files = glob($bases['core']);
             foreach ($files as $file) {
                 $this->removeKey($file, $input->getOption('delete-resname'));
             }
         }
 
+        // ==========================================================================
+        // Fix resname vs. id
+        // ==========================================================================
         if ($input->getOption('resname')) {
-            foreach ($bases as $id => $directory) {
-                $files = glob($directory . '/*.xlf');
+            foreach ($bases as $directory) {
+                $files = glob($directory);
 
                 foreach ($files as $file) {
                     $this->fixXlfFile($file);
@@ -87,9 +94,53 @@ class TranslationCommand extends Command
             }
         }
 
+        // ==========================================================================
+        // Fill empty translations with english version
+        // ==========================================================================
+        if ($input->getOption('fill-empty')) {
+            $translateFrom = ['de-CH' => 'de', 'de_CH' => 'de', 'pt_BR' => 'pt', 'pt-BR' => 'pt', 'pt' => 'pt_BR'];
+            $translations = [];
+            foreach ($bases as $directory) {
+                $files = glob($directory);
+
+                foreach ($files as $file) {
+                    $base = basename($file);
+                    $parts = explode('.', $base);
+                    $name = $parts[0];
+                    $fileLocale = $parts[1];
+                    $fromLocale = 'en';
+                    if (array_key_exists($fileLocale, $translateFrom)) {
+                        $fromLocale = $translateFrom[$fileLocale];
+                    }
+
+                    if (!array_key_exists($fromLocale, $translations)) {
+                        $translations[$fromLocale] = [];
+                    }
+
+                    if (!array_key_exists($name, $translations[$fromLocale])) {
+                        $fromLocaleName = str_replace('.' . $fileLocale . '.', '.' . $fromLocale . '.', $file);
+                        if (!file_exists($fromLocaleName)) {
+                            $io->error('Could not find translation file: ' . $fromLocaleName);
+                            return 1;
+                        }
+                        $translations[$fromLocale][$name] = $this->getTranslations($fromLocaleName);
+                    }
+
+                    if (stripos($base, '.'.$fromLocale.'.xlf') !== false || stripos($base, '.'.$fromLocale.'.xliff') !== false) {
+                        continue;
+                    }
+
+                    $this->fixEmptyTranslations($file, $translations[$fromLocale][$name]);
+                }
+            }
+        }
+
+        // ==========================================================================
+        // Find wrong file extensions
+        // ==========================================================================
         if ($input->getOption('extension')) {
-            foreach ($bases as $id => $directory) {
-                $files = glob($directory . '/*.xliff');
+            foreach ([$bases['core'], $bases['plugins']] as $directory) {
+                $files = glob($directory);
 
                 foreach ($files as $file) {
                     $file = str_replace($this->projectDirectory, '', $file);
@@ -98,20 +149,24 @@ class TranslationCommand extends Command
             }
         }
 
+        // ==========================================================================
+        // Find duplicate translation keys
+        // ==========================================================================
         if ($input->getOption('duplicates')) {
             $duplicates = [];
 
-            $files = glob($bases['core'] . '/*.xlf');
-            foreach ($files as $file) {
-                $xml = simplexml_load_file($file);
-                foreach ($xml->file->body->{'trans-unit'} as $unit) {
-                    $n = (string) $unit['resname'];
-                    if (!\array_key_exists($n, $duplicates)) {
-                        $duplicates[$n] = [];
-                    }
-                    $b = explode('.', basename($file))[0];
-                    if (!\in_array($b, $duplicates[$n])) {
-                        $duplicates[$n][] = $b;
+            foreach ($bases as $directory) {
+                foreach (glob($directory) as $file) {
+                    $xml = simplexml_load_file($file);
+                    foreach ($xml->file->body->{'trans-unit'} as $unit) {
+                        $n = (string) $unit['resname'];
+                        if (!\array_key_exists($n, $duplicates)) {
+                            $duplicates[$n] = [];
+                        }
+                        $b = explode('.', basename($file))[0];
+                        if (!\in_array($b, $duplicates[$n])) {
+                            $duplicates[$n][] = $b;
+                        }
                     }
                 }
             }
@@ -123,6 +178,9 @@ class TranslationCommand extends Command
             }
         }
 
+        // ==========================================================================
+        // DEEPL
+        // ==========================================================================
         $locale = $input->getOption('translate-locale');
         $deepl = $input->getOption('translate-deepl');
 
@@ -255,6 +313,23 @@ class TranslationCommand extends Command
         return 0;
     }
 
+    private function getTranslations(string $file): array
+    {
+        $translations = [];
+
+        $xml = simplexml_load_file($file);
+        foreach ($xml->file->body->{'trans-unit'} as $unit) {
+            if (!isset($unit['resname'])) {
+                throw new \Exception('Missing "resname" attribute in file: ' . $file);
+            }
+
+            $source = (string) $unit['resname'];
+            $translations[$source] = (string) $unit->target;
+        }
+
+        return $translations;
+    }
+
     private function writeXliffFile(string $base, string $domain, string $locale, array $translations = []): void
     {
         $from = $base . '/' . $domain . '.en.xlf';
@@ -312,7 +387,46 @@ class TranslationCommand extends Command
             if (!isset($unit['resname'])) {
                 $unit['resname'] = $source;
             }
-            $unit['id'] = strtr(substr(base64_encode(hash('sha256', $source, true)), 0, 7), '/+', '._');
+            $unit['id'] = $this->generateId($source);
+        }
+
+        $xmlDocument = new \DOMDocument('1.0');
+        $xmlDocument->preserveWhiteSpace = false;
+        $xmlDocument->formatOutput = true;
+        $xmlDocument->loadXML($xml->asXML());
+
+        file_put_contents($file, $xmlDocument->saveXML());
+    }
+
+    private function fixEmptyTranslations(string $file, array $translations): void
+    {
+        $xml = simplexml_load_file($file);
+        $foundEmpty = false;
+
+        foreach ($xml->file->body->{'trans-unit'} as $unit) {
+            if (!isset($unit['resname'])) {
+                continue;
+            }
+
+            $key = (string) $unit['resname'];
+
+            $translation = (string) $unit->target;
+            if (strlen($translation) > 0) {
+                continue;
+            }
+
+            if (!array_key_exists($key, $translations)) {
+                throw new \Exception(
+                    sprintf('Missing english translation for key: %s in file %s', $key, $file)
+                );
+            }
+            $unit->target[0] = $translations[$key];
+            $unit->target['state'] = 'needs-translation';
+            $foundEmpty = true;
+        }
+
+        if (!$foundEmpty) {
+            return;
         }
 
         $xmlDocument = new \DOMDocument('1.0');
@@ -346,5 +460,10 @@ class TranslationCommand extends Command
         $xmlDocument->loadXML($xml->asXML());
 
         file_put_contents($file, $xmlDocument->saveXML());
+    }
+
+    private function generateId(string $source): string
+    {
+        return strtr(substr(base64_encode(hash('sha256', $source, true)), 0, 7), '/+', '._');
     }
 }
