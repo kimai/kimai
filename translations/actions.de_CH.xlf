@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="de-CH" datatype="plaintext" original="actions.en.xlf">
+    <body>
+      <trans-unit id="bEXLcqN" resname="stop">
+        <source>stop</source>
+        <target state="needs-translation">Beenden</target>
+      </trans-unit>
+      <trans-unit id="PEgjRvN" resname="back">
+        <source>back</source>
+        <target state="needs-translation">Zurück</target>
+      </trans-unit>
+      <trans-unit id="JiEhxTc" resname="edit">
+        <source>edit</source>
+        <target state="needs-translation">Bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="4G2jBDS" resname="trash">
+        <source>trash</source>
+        <target state="needs-translation">Löschen</target>
+      </trans-unit>
+      <trans-unit id="hF6RgxM" resname="report">
+        <source>report</source>
+        <target state="needs-translation">Report</target>
+      </trans-unit>
+      <trans-unit id="JeK2sQZ" resname="repeat">
+        <source>repeat</source>
+        <target state="needs-translation">Neu starten</target>
+      </trans-unit>
+      <trans-unit id="J0sRBY_" resname="profile-stats">
+        <source>profile-stats</source>
+        <target state="needs-translation">Profil</target>
+      </trans-unit>
+      <trans-unit id="zeD7Dew" resname="settings">
+        <source>settings</source>
+        <target state="needs-translation">Einstellungen</target>
+      </trans-unit>
+      <trans-unit id="xovWV.Y" resname="timesheet.filter">
+        <source>Filter timesheets</source>
+        <target state="needs-translation">Stundenzettel filtern</target>
+      </trans-unit>
+      <trans-unit id="U7.woIo" resname="customer.filter">
+        <source>Filter customers</source>
+        <target state="needs-translation">Kunden filtern</target>
+      </trans-unit>
+      <trans-unit id="j9gsVnq" resname="project.filter">
+        <source>Filter projects</source>
+        <target state="needs-translation">Projekte filtern</target>
+      </trans-unit>
+      <trans-unit id="xl_5l3y" resname="activity.filter">
+        <source>Filter activities</source>
+        <target state="needs-translation">Tätigkeiten filtern</target>
+      </trans-unit>
+      <trans-unit id="b1pgNOd" resname="copy">
+        <source>copy</source>
+        <target state="needs-translation">Kopie erstellen</target>
+      </trans-unit>
+      <trans-unit id="TqFAWIF" resname="home">
+        <source>home</source>
+        <target state="needs-translation">Homepage</target>
+      </trans-unit>
+      <trans-unit id="PBlIO2x" resname="create-project">
+        <source>create-project</source>
+        <target state="needs-translation">Projekt erstellen</target>
+      </trans-unit>
+      <trans-unit id="UbouFOs" resname="create-activity">
+        <source>create-activity</source>
+        <target state="needs-translation">Tätigkeit erstellen</target>
+      </trans-unit>
+      <trans-unit id="QR1nvcR" resname="create-timesheet">
+        <source>create-timesheet</source>
+        <target state="needs-translation">Zeit erfassen</target>
+      </trans-unit>
+      <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser">
+        <source>create-timesheet-multiuser</source>
+        <target state="needs-translation">Für mehrere Benutzer</target>
+      </trans-unit>
+      <trans-unit id="T_PN1AT" resname="permissions">
+        <source>permissions</source>
+        <target state="needs-translation">Team Berechtigungen</target>
+      </trans-unit>
+      <trans-unit id="Qf.Yt2r" resname="details">
+        <source>details</source>
+        <target state="needs-translation">Anzeigen</target>
+      </trans-unit>
+      <trans-unit id="aP9j_4L" resname="download">
+        <source>download</source>
+        <target state="needs-translation">Herunterladen</target>
+      </trans-unit>
+      <trans-unit id="hHIeqOW" resname="invoice.pending">
+        <source>invoice.pending</source>
+        <target state="needs-translation">Warten auf Zahlungseingang</target>
+      </trans-unit>
+      <trans-unit id="9M4b2ZN" resname="invoice.paid">
+        <source>invoice.paid</source>
+        <target state="needs-translation">Rechnung bezahlt</target>
+      </trans-unit>
+      <trans-unit id="SEyZupT" resname="invoice.cancel">
+        <source>invoice.cancel</source>
+        <target state="needs-translation">Rechnung stornieren</target>
+      </trans-unit>
+      <trans-unit id="38M3a4J" resname="filter">
+        <source>filter</source>
+        <target state="needs-translation">Daten filtern</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

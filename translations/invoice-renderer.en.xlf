@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="en" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
@@ -20,20 +20,20 @@
         <target>HTML (for printing via Browser)</target>
       </trans-unit>
       <trans-unit id="4NNx9U." resname="Docx">
-        <source>Docx</source>
-        <target>Microsoft Word (Docx)</target>
+        <source>Microsoft Word (DOCX)</source>
+        <target>Microsoft Word (DOCX)</target>
       </trans-unit>
       <trans-unit id="sXlZPOC" resname="Xls">
-        <source>Xls</source>
-        <target>Microsoft Excel (Xls)</target>
+        <source>Microsoft Excel (XLS)</source>
+        <target>Microsoft Excel (XLS)</target>
       </trans-unit>
       <trans-unit id="QqvUWFt" resname="Ods">
         <source>Ods</source>
         <target>Open Office (Spreadsheet)</target>
       </trans-unit>
       <trans-unit id="sjwwrr8" resname="Xlsx">
-        <source>Xlsx</source>
-        <target>Microsoft Excel (Xlsx)</target>
+        <source>Microsoft Excel (XLSX)</source>
+        <target>Microsoft Excel (XLSX)</target>
       </trans-unit>
       <trans-unit id="kLKl8xE" resname="Pdf">
         <source>Pdf</source>

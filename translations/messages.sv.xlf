@@ -1234,12 +1234,12 @@
         <target>Lägg till</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
-        <source>error.directory_missing</source>
-        <target>Mappen "%dir%" existerar inte och kunde inte skapas.</target>
+        <source>The directory “%dir%” does not exist and could not be created.</source>
+        <target>Mappen ”%dir%” existerar inte och kunde inte skapas.</target>
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
-        <target>Mappen "%dir%" är skrivskyddad.</target>
+        <target>Mappen ”%dir%” är skrivskyddad.</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
@@ -1276,6 +1276,10 @@
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
         <target>Arbetstimmar under veckan</target>
+      </trans-unit>
+      <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
+        <source>Display of entries in selection lists</source>
+        <target state="needs-translation">Display of entries in selection lists</target>
       </trans-unit>
     </body>
   </file>

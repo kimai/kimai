@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="nb-NO" datatype="plaintext" original="invoice-renderer.en.xlf">
+    <body>
+      <trans-unit id=".Bji8X5" resname="label.invoice_renderer">
+        <source>label.invoice_renderer</source>
+        <target>Faktura-dokument</target>
+      </trans-unit>
+      <trans-unit id="7mEUv6C" resname="help.upload">
+        <source>help.upload</source>
+        <target>Obs: Eksisterende filer vil bli overskrevet. Filtypene DOCX, ODS og XLSX støttes.</target>
+      </trans-unit>
+      <!-- Optgroups -->
+      <trans-unit id="E5BwZHT" resname="programmatic">
+        <source>programmatic</source>
+        <target>For videre behandling</target>
+      </trans-unit>
+      <trans-unit id="nA.KOyM" resname="Html">
+        <source>Html</source>
+        <target>HTML (for utskrift via nettleser)</target>
+      </trans-unit>
+      <trans-unit id="4NNx9U." resname="Docx">
+        <source>Microsoft Word (DOCX)</source>
+        <target>Microsoft Word (DOCX)</target>
+      </trans-unit>
+      <trans-unit id="sXlZPOC" resname="Xls">
+        <source>Microsoft Excel (XLS)</source>
+        <target>Microsoft Excel (XLS)</target>
+      </trans-unit>
+      <trans-unit id="QqvUWFt" resname="Ods">
+        <source>Ods</source>
+        <target state="needs-translation">LibreOffice (regneark)</target>
+      </trans-unit>
+      <trans-unit id="sjwwrr8" resname="Xlsx">
+        <source>Microsoft Excel (XLSX)</source>
+        <target>Microsoft</target>
+      </trans-unit>
+      <trans-unit id="kLKl8xE" resname="Pdf">
+        <source>Pdf</source>
+        <target>PDF</target>
+      </trans-unit>
+      <!-- Renderer -->
+      <trans-unit id="N6juwc4" resname="default">
+        <source>default</source>
+        <target>Faktura</target>
+      </trans-unit>
+      <trans-unit id="jV1SPRL" resname="default-pdf">
+        <source>default-pdf</source>
+        <target>Faktura</target>
+      </trans-unit>
+      <trans-unit id="v5KgTmC" resname="xml">
+        <source>xml</source>
+        <target>XML</target>
+      </trans-unit>
+      <trans-unit id="7acXRsA" resname="javascript">
+        <source>javascript</source>
+        <target>JSON</target>
+      </trans-unit>
+      <trans-unit id="mC2ePrm" resname="text">
+        <source>text</source>
+        <target>Tekst</target>
+      </trans-unit>
+      <trans-unit id="lt2Y2LO" resname="timesheet">
+        <source>timesheet</source>
+        <target>Timeseddel</target>
+      </trans-unit>
+      <trans-unit id="M82JFjR" resname="freelancer">
+        <source>freelancer</source>
+        <target state="needs-translation">Frilanser</target>
+      </trans-unit>
+      <trans-unit id="XUbhXLF" resname="open-spreadsheet">
+        <source>open-spreadsheet</source>
+        <target>Faktura</target>
+      </trans-unit>
+      <trans-unit id="U_VP0mi" resname="spreadsheet">
+        <source>spreadsheet</source>
+        <target>Faktura</target>
+      </trans-unit>
+      <trans-unit id="8WjM3ZF" resname="company">
+        <source>company</source>
+        <target>Faktura</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
