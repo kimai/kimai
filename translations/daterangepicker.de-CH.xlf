@@ -4,39 +4,39 @@
     <body>
       <trans-unit id="s9Hdo7E" resname="daterangepicker.today">
         <source>daterangepicker.today</source>
-        <target></target>
+        <target state="needs-translation">Heute</target>
       </trans-unit>
       <trans-unit id="gkQA1YG" resname="daterangepicker.yesterday">
         <source>daterangepicker.yesterday</source>
-        <target></target>
+        <target state="needs-translation">Gestern</target>
       </trans-unit>
       <trans-unit id="CAvVEbc" resname="daterangepicker.lastWeek">
         <source>daterangepicker.lastWeek</source>
-        <target></target>
+        <target state="needs-translation">Letzte Woche</target>
       </trans-unit>
       <trans-unit id="HfcD1_y" resname="daterangepicker.thisWeek">
         <source>daterangepicker.thisWeek</source>
-        <target></target>
+        <target state="needs-translation">Diese Woche</target>
       </trans-unit>
       <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth">
         <source>daterangepicker.lastMonth</source>
-        <target></target>
+        <target state="needs-translation">Letzter Monat</target>
       </trans-unit>
       <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth">
         <source>daterangepicker.thisMonth</source>
-        <target></target>
+        <target state="needs-translation">Dieser Monat</target>
       </trans-unit>
       <trans-unit id="_9rEFED" resname="daterangepicker.lastYear">
         <source>daterangepicker.lastYear</source>
-        <target></target>
+        <target state="needs-translation">Letztes Jahr</target>
       </trans-unit>
       <trans-unit id="XgIrZS3" resname="daterangepicker.thisYear">
         <source>daterangepicker.thisYear</source>
-        <target></target>
+        <target state="needs-translation">Dieses Jahr</target>
       </trans-unit>
       <trans-unit id="MSENTM_" resname="daterangepicker.customRange">
         <source>daterangepicker.customRange</source>
-        <target></target>
+        <target state="needs-translation">Benutzerdefiniert</target>
       </trans-unit>
     </body>
   </file>

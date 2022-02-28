@@ -4,39 +4,39 @@
     <body>
       <trans-unit id="s9Hdo7E" resname="daterangepicker.today">
         <source>daterangepicker.today</source>
-        <target></target>
+        <target state="needs-translation">Today</target>
       </trans-unit>
       <trans-unit id="gkQA1YG" resname="daterangepicker.yesterday">
         <source>daterangepicker.yesterday</source>
-        <target></target>
+        <target state="needs-translation">Yesterday</target>
       </trans-unit>
       <trans-unit id="CAvVEbc" resname="daterangepicker.lastWeek">
         <source>daterangepicker.lastWeek</source>
-        <target></target>
+        <target state="needs-translation">Last week</target>
       </trans-unit>
       <trans-unit id="HfcD1_y" resname="daterangepicker.thisWeek">
         <source>daterangepicker.thisWeek</source>
-        <target></target>
+        <target state="needs-translation">This week</target>
       </trans-unit>
       <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth">
         <source>daterangepicker.lastMonth</source>
-        <target></target>
+        <target state="needs-translation">Last month</target>
       </trans-unit>
       <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth">
         <source>daterangepicker.thisMonth</source>
-        <target></target>
+        <target state="needs-translation">This month</target>
       </trans-unit>
       <trans-unit id="_9rEFED" resname="daterangepicker.lastYear">
         <source>daterangepicker.lastYear</source>
-        <target></target>
+        <target state="needs-translation">Last year</target>
       </trans-unit>
       <trans-unit id="XgIrZS3" resname="daterangepicker.thisYear">
         <source>daterangepicker.thisYear</source>
-        <target></target>
+        <target state="needs-translation">This year</target>
       </trans-unit>
       <trans-unit id="MSENTM_" resname="daterangepicker.customRange">
         <source>daterangepicker.customRange</source>
-        <target></target>
+        <target state="needs-translation">Custom range</target>
       </trans-unit>
     </body>
   </file>

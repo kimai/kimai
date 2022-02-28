@@ -4,19 +4,19 @@
     <body>
       <trans-unit id="IbERy.5" resname="default.pdf.twig">
         <source>Default</source>
-        <target></target>
+        <target state="needs-translation">Default</target>
       </trans-unit>
       <trans-unit id="Xvh5B5U" resname="default-budget.pdf.twig">
         <source>With remaining budget</source>
-        <target></target>
+        <target state="needs-translation">With remaining budget</target>
       </trans-unit>
       <trans-unit id="rok3rBO" resname="default-internal.pdf.twig">
         <source>With internal rates</source>
-        <target></target>
+        <target state="needs-translation">With internal rates</target>
       </trans-unit>
       <trans-unit id="bTIKMV." resname="timesheet.pdf.twig">
         <source>Timesheet</source>
-        <target></target>
+        <target state="needs-translation">Timesheet</target>
       </trans-unit>
     </body>
   </file>
