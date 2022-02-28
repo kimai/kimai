@@ -1198,7 +1198,7 @@
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
-        <target>Mappen «%dir» finnes ikke og kunne ikke opprettes.</target>
+        <target>Mappen «%dir%» finnes ikke og kunne ikke opprettes.</target>
       </trans-unit>
       <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
         <source>label.includeBudgetType_month</source>
