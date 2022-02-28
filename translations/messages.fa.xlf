@@ -562,6 +562,658 @@
         <source>profile.first_entry</source>
         <target>کار میکند از تاریخ</target>
       </trans-unit>
+      <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
+        <source>Display of entries in selection lists</source>
+        <target state="needs-translation">Display of entries in selection lists</target>
+      </trans-unit>
+      <trans-unit id="pcfRcZ4" resname="month">
+        <source>month</source>
+        <target state="needs-translation">Month</target>
+      </trans-unit>
+      <trans-unit id="k7MJQ82" resname="label.country">
+        <source>label.country</source>
+        <target state="needs-translation">Country</target>
+      </trans-unit>
+      <trans-unit id="g03c_vw" resname="label.phone">
+        <source>label.phone</source>
+        <target state="needs-translation">Phone</target>
+      </trans-unit>
+      <trans-unit id="otd2FZd" resname="label.currency">
+        <source>label.currency</source>
+        <target state="needs-translation">Currency</target>
+      </trans-unit>
+      <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD">
+        <source>ROLE_TEAMLEAD</source>
+        <target state="needs-translation">Teamlead</target>
+      </trans-unit>
+      <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
+        <source>stats.workingTimeToday</source>
+        <target state="needs-translation">Today, %day%</target>
+      </trans-unit>
+      <trans-unit id="pX_3dNm" resname="stats.revenue">
+        <source>stats.revenue</source>
+        <target state="needs-translation">Revenues</target>
+      </trans-unit>
+      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target state="needs-translation">Revenue this financial year</target>
+      </trans-unit>
+      <trans-unit id="ov4OQOh" resname="invoice.filter">
+        <source>invoice.filter</source>
+        <target state="needs-translation">Filter invoice data</target>
+      </trans-unit>
+      <trans-unit id="7H7P1mE" resname="button.preview">
+        <source>button.preview</source>
+        <target state="needs-translation">Preview</target>
+      </trans-unit>
+      <trans-unit id="Q9ykNhO" resname="invoice.signature_customer">
+        <source>invoice.signature_customer</source>
+        <target state="needs-translation">Confirmation: Date / Customer's name / Signature</target>
+      </trans-unit>
+      <trans-unit id="Uvo1CbP" resname="status.pending">
+        <source>status.pending</source>
+        <target state="needs-translation">Pending</target>
+      </trans-unit>
+      <trans-unit id="ElDyzrx" resname="export.page_of">
+        <source>export.page_of</source>
+        <target state="needs-translation">Page %page% of %pages%</target>
+      </trans-unit>
+      <trans-unit id="_DDecAV" resname="entryState.exported">
+        <source>entryState.exported</source>
+        <target state="needs-translation">Cleared</target>
+      </trans-unit>
+      <trans-unit id="ccCiXyR" resname="entryState.not_exported">
+        <source>entryState.not_exported</source>
+        <target state="needs-translation">Open</target>
+      </trans-unit>
+      <trans-unit id="9Rhadz6" resname="label.budgetType_full">
+        <source>label.budgetType_full</source>
+        <target state="needs-translation">Life cycle</target>
+      </trans-unit>
+      <trans-unit id="Irm6dfx" resname="agendaWeek">
+        <source>agendaWeek</source>
+        <target state="needs-translation">Week</target>
+      </trans-unit>
+      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
+        <source>label.timesheet.daily_stats</source>
+        <target state="needs-translation">Show daily stats in timesheet</target>
+      </trans-unit>
+      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
+        <source>label.timesheet.export_decimal</source>
+        <target state="needs-translation">Use decimal duration in export</target>
+      </trans-unit>
+      <trans-unit id="UVJ5Die" resname="calendar">
+        <source>calendar</source>
+        <target state="needs-translation">Calendar</target>
+      </trans-unit>
+      <trans-unit id="4kQGReV" resname="label.project_end">
+        <source>label.project_end</source>
+        <target state="needs-translation">Project end</target>
+      </trans-unit>
+      <trans-unit id="Dgmh_mv" resname="label.vat_id">
+        <source>label.vat_id</source>
+        <target state="needs-translation">VAT-ID</target>
+      </trans-unit>
+      <trans-unit id="YNGNfGn" resname="label.tax_rate">
+        <source>label.tax_rate</source>
+        <target state="needs-translation">Tax rate</target>
+      </trans-unit>
+      <trans-unit id="0tkOMo1" resname="label.contact">
+        <source>label.contact</source>
+        <target state="needs-translation">Contact</target>
+      </trans-unit>
+      <trans-unit id="eRyhERS" resname="label.fax">
+        <source>label.fax</source>
+        <target state="needs-translation">Fax</target>
+      </trans-unit>
+      <trans-unit id="AawT9pW" resname="label.mobile">
+        <source>label.mobile</source>
+        <target state="needs-translation">Mobile</target>
+      </trans-unit>
+      <trans-unit id="PS9IH_t" resname="label.homepage">
+        <source>label.homepage</source>
+        <target state="needs-translation">Homepage</target>
+      </trans-unit>
+      <trans-unit id="ZlZ20pG" resname="user_permissions.title">
+        <source>user_permissions.title</source>
+        <target state="needs-translation">User permissions</target>
+      </trans-unit>
+      <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _">
+        <source>Allowed character: A-Z and _</source>
+        <target state="needs-translation">Allowed character: A-Z and _</target>
+      </trans-unit>
+      <trans-unit id="8Rfa01v" resname="label.required_version">
+        <source>label.required_version</source>
+        <target state="needs-translation">Compatible with</target>
+      </trans-unit>
+      <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
+        <source>ROLE_SUPER_ADMIN</source>
+        <target state="needs-translation">System-Admin</target>
+      </trans-unit>
+      <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
+        <source>stats.workingTimeWeek</source>
+        <target state="needs-translation">Calendar week %week%</target>
+      </trans-unit>
+      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
+        <source>stats.workingTimeWeekShort</source>
+        <target state="needs-translation">Week %week%</target>
+      </trans-unit>
+      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
+        <source>stats.workingTimeFinancialYear</source>
+        <target state="needs-translation">Financial year</target>
+      </trans-unit>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime">
+        <source>stats.workingTime</source>
+        <target state="needs-translation">Working time</target>
+      </trans-unit>
+      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+        <source>stats.durationToday</source>
+        <target state="needs-translation">Working hours today</target>
+      </trans-unit>
+      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+        <source>stats.durationWeek</source>
+        <target state="needs-translation">Working hours this week</target>
+      </trans-unit>
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+        <source>stats.durationMonth</source>
+        <target state="needs-translation">Working hours this month</target>
+      </trans-unit>
+      <trans-unit id="WqF84KR" resname="stats.durationYear">
+        <source>stats.durationYear</source>
+        <target state="needs-translation">Working hours this year</target>
+      </trans-unit>
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+        <source>stats.durationFinancialYear</source>
+        <target state="needs-translation">Working hours this financial year</target>
+      </trans-unit>
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+        <source>stats.durationTotal</source>
+        <target state="needs-translation">Working hours total</target>
+      </trans-unit>
+      <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
+        <source>stats.yourWorkingHours</source>
+        <target state="needs-translation">My working hours</target>
+      </trans-unit>
+      <trans-unit id="xnJvYAE" resname="stats.amountWeek">
+        <source>stats.amountWeek</source>
+        <target state="needs-translation">Revenue this week</target>
+      </trans-unit>
+      <trans-unit id="ulr3reE" resname="stats.amountMonth">
+        <source>stats.amountMonth</source>
+        <target state="needs-translation">Revenue this month</target>
+      </trans-unit>
+      <trans-unit id="bQZyZaO" resname="stats.amountYear">
+        <source>stats.amountYear</source>
+        <target state="needs-translation">Revenue this year</target>
+      </trans-unit>
+      <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
+        <source>stats.userActiveFinancialYear</source>
+        <target state="needs-translation">Active users this financial year</target>
+      </trans-unit>
+      <trans-unit id="Bor.76M" resname="stats.activityTotal">
+        <source>stats.activityTotal</source>
+        <target state="needs-translation">Activities</target>
+      </trans-unit>
+      <trans-unit id="67uSaR3" resname="stats.projectTotal">
+        <source>stats.projectTotal</source>
+        <target state="needs-translation">Projects</target>
+      </trans-unit>
+      <trans-unit id="tnD6aPj" resname="stats.customerTotal">
+        <source>stats.customerTotal</source>
+        <target state="needs-translation">Customers</target>
+      </trans-unit>
+      <trans-unit id="unC5MXv" resname="stats.percentUsed">
+        <source>stats.percentUsed</source>
+        <target state="needs-translation">%percent%% used</target>
+      </trans-unit>
+      <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
+        <source>stats.percentUsedLeft</source>
+        <target state="needs-translation">%percent%% used (%left% are still open)</target>
+      </trans-unit>
+      <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target state="needs-translation">%percent%% used this month</target>
+      </trans-unit>
+      <trans-unit id="SR2r1Cs" resname="invoices">
+        <source>invoices</source>
+        <target state="needs-translation">Invoices</target>
+      </trans-unit>
+      <trans-unit id="X70dwP8" resname="button.print">
+        <source>button.print</source>
+        <target state="needs-translation">Print</target>
+      </trans-unit>
+      <trans-unit id="W_TXvSi" resname="button.csv">
+        <source>button.csv</source>
+        <target state="needs-translation">CSV</target>
+      </trans-unit>
+      <trans-unit id="vC2IsaP" resname="button.xlsx">
+        <source>button.xlsx</source>
+        <target state="needs-translation">Excel</target>
+      </trans-unit>
+      <trans-unit id="ulYFDIo" resname="button.ods">
+        <source>button.ods</source>
+        <target state="needs-translation">ODS</target>
+      </trans-unit>
+      <trans-unit id="EO57yXg" resname="invoice.tax">
+        <source>invoice.tax</source>
+        <target state="needs-translation">Tax</target>
+      </trans-unit>
+      <trans-unit id="N68vyvo" resname="invoice.total">
+        <source>invoice.total</source>
+        <target state="needs-translation">Total</target>
+      </trans-unit>
+      <trans-unit id="MF3MdTu" resname="label.unit_price">
+        <source>label.unit_price</source>
+        <target state="needs-translation">Unit price</target>
+      </trans-unit>
+      <trans-unit id="c3d6p33" resname="invoice.total_working_time">
+        <source>invoice.total_working_time</source>
+        <target state="needs-translation">Total duration</target>
+      </trans-unit>
+      <trans-unit id="BS00SS7" resname="label.orderNumber">
+        <source>label.orderNumber</source>
+        <target state="needs-translation">Order number</target>
+      </trans-unit>
+      <trans-unit id="as948k9" resname="label.orderDate">
+        <source>label.orderDate</source>
+        <target state="needs-translation">Order date</target>
+      </trans-unit>
+      <trans-unit id="RRj6PYN" resname="label.invoice_tax_number">
+        <source>label.invoice_tax_number</source>
+        <target state="needs-translation">VAT no.:</target>
+      </trans-unit>
+      <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
+        <source>label.invoice_bank_account</source>
+        <target state="needs-translation">Bank account</target>
+      </trans-unit>
+      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
+        <source>label.decimalDuration</source>
+        <target state="needs-translation">Display duration as decimal number</target>
+      </trans-unit>
+      <trans-unit id="hzhzbqw" resname="label.status">
+        <source>label.status</source>
+        <target state="needs-translation">Status</target>
+      </trans-unit>
+      <trans-unit id="X_NRsed" resname="status.new">
+        <source>status.new</source>
+        <target state="needs-translation">New</target>
+      </trans-unit>
+      <trans-unit id="PHJwR4w" resname="status.paid">
+        <source>status.paid</source>
+        <target state="needs-translation">Paid</target>
+      </trans-unit>
+      <trans-unit id="gT9W2pZ" resname="status.canceled">
+        <source>status.canceled</source>
+        <target state="needs-translation">Canceled</target>
+      </trans-unit>
+      <trans-unit id="crrlEUA" resname="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target state="needs-translation">Skipped preview of %rows% more rows …</target>
+      </trans-unit>
+      <trans-unit id="F6Jmro7" resname="export.title">
+        <source>export.title</source>
+        <target state="needs-translation">Export</target>
+      </trans-unit>
+      <trans-unit id="vjmoQGo" resname="export.period">
+        <source>export.period</source>
+        <target state="needs-translation">Period</target>
+      </trans-unit>
+      <trans-unit id="3CQ7A2m" resname="export.document_title">
+        <source>export.document_title</source>
+        <target state="needs-translation">Export of timesheets</target>
+      </trans-unit>
+      <trans-unit id="d5wyWRD" resname="export.full_list">
+        <source>export.full_list</source>
+        <target state="needs-translation">Full list</target>
+      </trans-unit>
+      <trans-unit id="N778uJ6" resname="export.summary">
+        <source>export.summary</source>
+        <target state="needs-translation">Summary</target>
+      </trans-unit>
+      <trans-unit id="W92QGbY" resname="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target state="needs-translation">Your search leads to %count% results. If the export fails, you have to narrow down your search further.</target>
+      </trans-unit>
+      <trans-unit id="pnGDFmf" resname="label.type">
+        <source>label.type</source>
+        <target state="needs-translation">Type</target>
+      </trans-unit>
+      <trans-unit id="OxdYMR3" resname="active.entries">
+        <source>active.entries</source>
+        <target state="needs-translation">Your active time measurements</target>
+      </trans-unit>
+      <trans-unit id="e7XS97t" resname="timesheet.all">
+        <source>timesheet.all</source>
+        <target state="needs-translation">Show all records</target>
+      </trans-unit>
+      <trans-unit id="dTHY7Mw" resname="timesheet.start">
+        <source>timesheet.start</source>
+        <target state="needs-translation">Create new time-record</target>
+      </trans-unit>
+      <trans-unit id="MPimOps" resname="label.pageSize">
+        <source>label.pageSize</source>
+        <target state="needs-translation">Page size</target>
+      </trans-unit>
+      <trans-unit id="KhyA_PW" resname="label.entryState">
+        <source>label.entryState</source>
+        <target state="needs-translation">Records</target>
+      </trans-unit>
+      <trans-unit id="do7fP0q" resname="entryState.all">
+        <source>entryState.all</source>
+        <target state="needs-translation">All</target>
+      </trans-unit>
+      <trans-unit id="spHpd_I" resname="entryState.stopped">
+        <source>entryState.stopped</source>
+        <target state="needs-translation">Stopped</target>
+      </trans-unit>
+      <trans-unit id="BhsaLxX" resname="export.clear_all">
+        <source>export.clear_all</source>
+        <target state="needs-translation">Mark all shown records as open?</target>
+      </trans-unit>
+      <trans-unit id="qtjPKUT" resname="export.mark_all">
+        <source>export.mark_all</source>
+        <target state="needs-translation">Mark all shown records as cleared?</target>
+      </trans-unit>
+      <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">
+        <source>label.batch_meta_fields</source>
+        <target state="needs-translation">Additional fields</target>
+      </trans-unit>
+      <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields">
+        <source>help.batch_meta_fields</source>
+        <target state="needs-translation">Fields that are to be updated must first be activated by clicking on the associated checkbox.</target>
+      </trans-unit>
+      <trans-unit id="csF1D35" resname="label.not_invoiced">
+        <source>label.not_invoiced</source>
+        <target state="needs-translation">Not billed</target>
+      </trans-unit>
+      <trans-unit id="cHfLJtL" resname="label.budgetType_month">
+        <source>label.budgetType_month</source>
+        <target state="needs-translation">Monthly</target>
+      </trans-unit>
+      <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target state="needs-translation">Currently %records% time-records exists, which sum up to a total duration of %duration%.</target>
+      </trans-unit>
+      <trans-unit id="tp.gIrE" resname="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target state="needs-translation">Add a new user to the team by selecting it from the list. Afterwards you can decide if the user should become a teamlead.</target>
+      </trans-unit>
+      <trans-unit id="yNWIi5U" resname="default_value_new">
+        <source>default_value_new</source>
+        <target state="needs-translation">Default values for new entries</target>
+      </trans-unit>
+      <trans-unit id="PCEFPeg" resname="updated_at">
+        <source>Updated at</source>
+        <target state="needs-translation">Updated at</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+        <source>invoice_document.max_reached</source>
+        <target state="needs-translation">Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
+      </trans-unit>
+      <trans-unit id="Q0Zip02" resname="agendaDay">
+        <source>agendaDay</source>
+        <target state="needs-translation">Day</target>
+      </trans-unit>
+      <trans-unit id="UrRn8xj" resname="label.title">
+        <source>label.title</source>
+        <target state="needs-translation">Title</target>
+      </trans-unit>
+      <trans-unit id="KtTP.Sh" resname="label.active">
+        <source>label.active</source>
+        <target state="needs-translation">Active</target>
+      </trans-unit>
+      <trans-unit id="G.GEdlk" resname="user_role.title">
+        <source>user_role.title</source>
+        <target state="needs-translation">User role</target>
+      </trans-unit>
+      <trans-unit id="d75KAlJ" resname="label.version">
+        <source>label.version</source>
+        <target state="needs-translation">Version</target>
+      </trans-unit>
+      <trans-unit id="iwWaUoa" resname="export.filter">
+        <source>export.filter</source>
+        <target state="needs-translation">Filter data for export</target>
+      </trans-unit>
+      <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth">
+        <source>stats.workingTimeMonth</source>
+        <target state="needs-translation">%month% %year%</target>
+      </trans-unit>
+      <trans-unit id="JnUFsNi" resname="stats.workingTimeYear">
+        <source>stats.workingTimeYear</source>
+        <target state="needs-translation">Full year %year%</target>
+      </trans-unit>
+      <trans-unit id="023M9Ta" resname="stats.amountToday">
+        <source>stats.amountToday</source>
+        <target state="needs-translation">Revenue today</target>
+      </trans-unit>
+      <trans-unit id="Z0fz23v" resname="stats.amountTotal">
+        <source>stats.amountTotal</source>
+        <target state="needs-translation">Total revenue</target>
+      </trans-unit>
+      <trans-unit id="xyiadv3" resname="stats.userActiveToday">
+        <source>stats.userActiveToday</source>
+        <target state="needs-translation">Active users today</target>
+      </trans-unit>
+      <trans-unit id="knMHaeO" resname="stats.userActiveWeek">
+        <source>stats.userActiveWeek</source>
+        <target state="needs-translation">Active users this week</target>
+      </trans-unit>
+      <trans-unit id="adzVDgb" resname="stats.userActiveMonth">
+        <source>stats.userActiveMonth</source>
+        <target state="needs-translation">Active users this month</target>
+      </trans-unit>
+      <trans-unit id="AswjFvh" resname="stats.userActiveYear">
+        <source>stats.userActiveYear</source>
+        <target state="needs-translation">Active users this year</target>
+      </trans-unit>
+      <trans-unit id="dLTb1Po" resname="stats.userActiveTotal">
+        <source>stats.userActiveTotal</source>
+        <target state="needs-translation">Active users ever</target>
+      </trans-unit>
+      <trans-unit id="lEW82ex" resname="stats.activeRecordings">
+        <source>stats.activeRecordings</source>
+        <target state="needs-translation">Active records</target>
+      </trans-unit>
+      <trans-unit id="t5eIWp8" resname="stats.userTotal">
+        <source>stats.userTotal</source>
+        <target state="needs-translation">Users</target>
+      </trans-unit>
+      <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target state="needs-translation">%percent%% used (%left% are still open this month)</target>
+      </trans-unit>
+      <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
+        <source>admin_invoice_template.title</source>
+        <target state="needs-translation">Invoice template</target>
+      </trans-unit>
+      <trans-unit id="IQ9DUOW" resname="button.preview_print">
+        <source>button.preview_print</source>
+        <target state="needs-translation">Print preview</target>
+      </trans-unit>
+      <trans-unit id="7J7G3Vr" resname="label.mark_as_exported">
+        <source>label.mark_as_exported</source>
+        <target state="needs-translation">Mark as exported</target>
+      </trans-unit>
+      <trans-unit id="p0IprAw" resname="label.template">
+        <source>label.template</source>
+        <target state="needs-translation">Template</target>
+      </trans-unit>
+      <trans-unit id="zfIRxJh" resname="label.due_days">
+        <source>label.due_days</source>
+        <target state="needs-translation">Payment term in days</target>
+      </trans-unit>
+      <trans-unit id="4XKFnWh" resname="invoice.from">
+        <source>invoice.from</source>
+        <target state="needs-translation">From</target>
+      </trans-unit>
+      <trans-unit id="hx7vsMA" resname="invoice.to">
+        <source>invoice.to</source>
+        <target state="needs-translation">To</target>
+      </trans-unit>
+      <trans-unit id="x_W5sV4" resname="invoice.number">
+        <source>invoice.number</source>
+        <target state="needs-translation">Invoice number</target>
+      </trans-unit>
+      <trans-unit id="86KyrKO" resname="invoice.subtotal">
+        <source>invoice.subtotal</source>
+        <target state="needs-translation">Subtotal</target>
+      </trans-unit>
+      <trans-unit id="TPzFWUs" resname="invoice.service_date">
+        <source>invoice.service_date</source>
+        <target state="needs-translation">Service date</target>
+      </trans-unit>
+      <trans-unit id="6x24VVR" resname="label.amount">
+        <source>label.amount</source>
+        <target state="needs-translation">Quantity</target>
+      </trans-unit>
+      <trans-unit id="g7EpaPY" resname="label.total_rate">
+        <source>label.total_rate</source>
+        <target state="needs-translation">Total price</target>
+      </trans-unit>
+      <trans-unit id="vKY0tof" resname="export.date_copyright">
+        <source>export.date_copyright</source>
+        <target state="needs-translation">Created %date% with %kimai%</target>
+      </trans-unit>
+      <trans-unit id="X3JM9wj" resname="label.exported">
+        <source>label.exported</source>
+        <target state="needs-translation">Exported</target>
+      </trans-unit>
+      <trans-unit id="z_YHoZn" resname="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target state="needs-translation">Show entries without bookings</target>
+      </trans-unit>
+      <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
+        <source>label.includeBudgetType_full</source>
+        <target state="needs-translation">Show entries with "life cycle" budget</target>
+      </trans-unit>
+      <trans-unit id="Zif614Q" resname="add_user.label">
+        <source>add_user.label</source>
+        <target state="needs-translation">Add user</target>
+      </trans-unit>
+      <trans-unit id="f8oNzSP" resname="quick_entry.title">
+        <source>quick_entry.title</source>
+        <target state="needs-translation">Weekly working hours</target>
+      </trans-unit>
+      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
+        <source>theme.update_browser_title</source>
+        <target state="needs-translation">Update browser title</target>
+      </trans-unit>
+      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target state="needs-translation">If you want to delete an entry, you must drag it onto the button.</target>
+      </trans-unit>
+      <trans-unit id="yLOqEX_" resname="label.project_start">
+        <source>label.project_start</source>
+        <target state="needs-translation">Project start</target>
+      </trans-unit>
+      <trans-unit id="39AtPxQ" resname="label.number">
+        <source>label.number</source>
+        <target state="needs-translation">Account</target>
+      </trans-unit>
+      <trans-unit id="7jfRn_1" resname="label.company">
+        <source>label.company</source>
+        <target state="needs-translation">Company name</target>
+      </trans-unit>
+      <trans-unit id="GOStgLi" resname="label.vat">
+        <source>label.vat</source>
+        <target state="needs-translation">Tax</target>
+      </trans-unit>
+      <trans-unit id="c9W5AO4" resname="label.address">
+        <source>label.address</source>
+        <target state="needs-translation">Address</target>
+      </trans-unit>
+      <trans-unit id="dmtPdwq" resname="label.timezone">
+        <source>label.timezone</source>
+        <target state="needs-translation">Timezone</target>
+      </trans-unit>
+      <trans-unit id="TRDzmCV" resname="label.alias">
+        <source>label.alias</source>
+        <target state="needs-translation">Name</target>
+      </trans-unit>
+      <trans-unit id="nWMH_Nr" resname="label.avatar">
+        <source>label.avatar</source>
+        <target state="needs-translation">Profile image (URL)</target>
+      </trans-unit>
+      <trans-unit id="iD6CNOO" resname="label.roles">
+        <source>label.roles</source>
+        <target state="needs-translation">Role</target>
+      </trans-unit>
+      <trans-unit id="718iPw6" resname="ROLE_ADMIN">
+        <source>ROLE_ADMIN</source>
+        <target state="needs-translation">Administrator</target>
+      </trans-unit>
+      <trans-unit id="aAa5uRR" resname="button.pdf">
+        <source>button.pdf</source>
+        <target state="needs-translation">PDF</target>
+      </trans-unit>
+      <trans-unit id="zPcx3O_" resname="invoice_print">
+        <source>invoice_print</source>
+        <target state="needs-translation">Invoice</target>
+      </trans-unit>
+      <trans-unit id="rAJrxSK" resname="invoice.due_days">
+        <source>invoice.due_days</source>
+        <target state="needs-translation">Payment target</target>
+      </trans-unit>
+      <trans-unit id="Xij3oQl" resname="invoice.payment_date">
+        <source>invoice.payment_date</source>
+        <target state="needs-translation">Payment date</target>
+      </trans-unit>
+      <trans-unit id="77aZC3r" resname="label.payment_terms">
+        <source>label.payment_terms</source>
+        <target state="needs-translation">Terms of payment</target>
+      </trans-unit>
+      <trans-unit id="9p2KQag" resname="invoice.signature_user">
+        <source>invoice.signature_user</source>
+        <target state="needs-translation">Confirmation: Date / Consultant's name / Signature</target>
+      </trans-unit>
+      <trans-unit id="WVU_S.A" resname="recent.activities">
+        <source>recent.activities</source>
+        <target state="needs-translation">Restart one of your last activities</target>
+      </trans-unit>
+      <trans-unit id="SLV47Uu" resname="recent.activities.format">
+        <source>recent.activities.format</source>
+        <target state="needs-translation">%activity% in %project% for %customer%</target>
+      </trans-unit>
+      <trans-unit id="xm7mqoK" resname="entryState.running">
+        <source>entryState.running</source>
+        <target state="needs-translation">Active</target>
+      </trans-unit>
+      <trans-unit id="3zn5T5e" resname="label.not_exported">
+        <source>label.not_exported</source>
+        <target state="needs-translation">Not exported</target>
+      </trans-unit>
+      <trans-unit id="AJ6dwR." resname="label.last_record_before">
+        <source>label.last_record_before</source>
+        <target state="needs-translation">No time booking since</target>
+      </trans-unit>
+      <trans-unit id="qDnURk7" resname="label.last_record">
+        <source>label.last_record</source>
+        <target state="needs-translation">Last entry</target>
+      </trans-unit>
+      <trans-unit id="LXdqaTH" resname="label.account_number">
+        <source>label.account_number</source>
+        <target state="needs-translation">Staff number</target>
+      </trans-unit>
+      <trans-unit id="PoF7hD8" resname="label.budgetType">
+        <source>label.budgetType</source>
+        <target state="needs-translation">Budget-Type</target>
+      </trans-unit>
+      <trans-unit id="rvO5ZXf" resname="ROLE_USER">
+        <source>ROLE_USER</source>
+        <target state="needs-translation">User</target>
+      </trans-unit>
+      <trans-unit id="61p_ckr" resname="label.hours_24">
+        <source>label.hours_24</source>
+        <target state="needs-translation">24 hours</target>
+      </trans-unit>
+      <trans-unit id="B.Dbbob" resname="label.includeNoBudget">
+        <source>label.includeNoBudget</source>
+        <target state="needs-translation">Show entries without budget</target>
+      </trans-unit>
+      <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
+        <source>label.includeBudgetType_month</source>
+        <target state="needs-translation">Show entries with "monthly" budget</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

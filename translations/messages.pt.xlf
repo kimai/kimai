@@ -1255,8 +1255,8 @@
         <target>Atualizado em</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
-        <source>error.directory_missing</source>
-        <target>O diretório "%dir%" não existe e não pôde ser criado.</target>
+        <source>The directory “%dir%” does not exist and could not be created.</source>
+        <target>O diretório «%dir%» não existe e não pôde ser criado.</target>
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
@@ -1264,7 +1264,7 @@
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
-        <target>O diretório "%dir%" está protegido contra gravação.</target>
+        <target>O diretório «%dir%» está protegido contra gravação.</target>
       </trans-unit>
       <trans-unit id="sdfgsdfgsdfg" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>

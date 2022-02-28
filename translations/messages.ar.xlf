@@ -1104,6 +1104,158 @@
         <source>label.includeNoBudget</source>
         <target>إظهار الإدخالات التي ليس لها ميزانية</target>
       </trans-unit>
+      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
+        <source>label.calendar.initial_view</source>
+        <target state="needs-translation">Initial calendar view</target>
+      </trans-unit>
+      <trans-unit id="J258iS6" resname="update_multiple">
+        <source>update_multiple</source>
+        <target state="needs-translation">%action% %count% entries?</target>
+      </trans-unit>
+      <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
+        <source>stats.workingTimeWeek</source>
+        <target state="needs-translation">Calendar week %week%</target>
+      </trans-unit>
+      <trans-unit id="7J7G3Vr" resname="label.mark_as_exported">
+        <source>label.mark_as_exported</source>
+        <target state="needs-translation">Mark as exported</target>
+      </trans-unit>
+      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
+        <source>label.decimalDuration</source>
+        <target state="needs-translation">Display duration as decimal number</target>
+      </trans-unit>
+      <trans-unit id="BhsaLxX" resname="export.clear_all">
+        <source>export.clear_all</source>
+        <target state="needs-translation">Mark all shown records as open?</target>
+      </trans-unit>
+      <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
+        <source>Display of entries in selection lists</source>
+        <target state="needs-translation">Display of entries in selection lists</target>
+      </trans-unit>
+      <trans-unit id=".ndupSK" resname="registration.check_email">
+        <source>registration.check_email</source>
+        <target state="needs-translation">An email has been sent to %email%. It contains an activation link you must click to activate your account.</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target state="needs-translation">Directory "%dir%" is write protected.</target>
+      </trans-unit>
+      <trans-unit id="vTY9SUk" resname="label.plus_more">
+        <source>label.plus_more</source>
+        <target state="needs-translation">+%count% more</target>
+      </trans-unit>
+      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
+        <source>stats.amountFinancialYear</source>
+        <target state="needs-translation">Revenue this financial year</target>
+      </trans-unit>
+      <trans-unit id="unC5MXv" resname="stats.percentUsed">
+        <source>stats.percentUsed</source>
+        <target state="needs-translation">%percent%% used</target>
+      </trans-unit>
+      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
+        <source>label.timesheet.daily_stats</source>
+        <target state="needs-translation">Show daily stats in timesheet</target>
+      </trans-unit>
+      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
+        <source>calendar.drag_and_drop.delete</source>
+        <target state="needs-translation">If you want to delete an entry, you must drag it onto the button.</target>
+      </trans-unit>
+      <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
+        <source>stats.percentUsedLeft</source>
+        <target state="needs-translation">%percent%% used (%left% are still open)</target>
+      </trans-unit>
+      <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
+        <source>stats.percentUsed_month</source>
+        <target state="needs-translation">%percent%% used this month</target>
+      </trans-unit>
+      <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
+        <source>stats.percentUsedLeft_month</source>
+        <target state="needs-translation">%percent%% used (%left% are still open this month)</target>
+      </trans-unit>
+      <trans-unit id="as948k9" resname="label.orderDate">
+        <source>label.orderDate</source>
+        <target state="needs-translation">Order date</target>
+      </trans-unit>
+      <trans-unit id="crrlEUA" resname="preview.skipped_rows">
+        <source>preview.skipped_rows</source>
+        <target state="needs-translation">Skipped preview of %rows% more rows …</target>
+      </trans-unit>
+      <trans-unit id="WVU_S.A" resname="recent.activities">
+        <source>recent.activities</source>
+        <target state="needs-translation">Restart one of your last activities</target>
+      </trans-unit>
+      <trans-unit id="_DDecAV" resname="entryState.exported">
+        <source>entryState.exported</source>
+        <target state="needs-translation">Cleared</target>
+      </trans-unit>
+      <trans-unit id="ccCiXyR" resname="entryState.not_exported">
+        <source>entryState.not_exported</source>
+        <target state="needs-translation">Open</target>
+      </trans-unit>
+      <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields">
+        <source>help.batch_meta_fields</source>
+        <target state="needs-translation">Fields that are to be updated must first be activated by clicking on the associated checkbox.</target>
+      </trans-unit>
+      <trans-unit id="z_YHoZn" resname="label.includeNoWork">
+        <source>label.includeNoWork</source>
+        <target state="needs-translation">Show entries without bookings</target>
+      </trans-unit>
+      <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
+        <source>label.includeBudgetType_month</source>
+        <target state="needs-translation">Show entries with "monthly" budget</target>
+      </trans-unit>
+      <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
+        <source>label.includeBudgetType_full</source>
+        <target state="needs-translation">Show entries with "life cycle" budget</target>
+      </trans-unit>
+      <trans-unit id="9Rhadz6" resname="label.budgetType_full">
+        <source>label.budgetType_full</source>
+        <target state="needs-translation">Life cycle</target>
+      </trans-unit>
+      <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
+        <source>delete_warning.short_stats</source>
+        <target state="needs-translation">Currently %records% time-records exists, which sum up to a total duration of %duration%.</target>
+      </trans-unit>
+      <trans-unit id="tp.gIrE" resname="team.add_user.help">
+        <source>team.add_user.help</source>
+        <target state="needs-translation">Add a new user to the team by selecting it from the list. Afterwards you can decide if the user should become a teamlead.</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+        <source>invoice_document.max_reached</source>
+        <target state="needs-translation">Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
+      </trans-unit>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target state="needs-translation">An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</target>
+      </trans-unit>
+      <trans-unit id="pX_3dNm" resname="stats.revenue">
+        <source>stats.revenue</source>
+        <target state="needs-translation">Revenues</target>
+      </trans-unit>
+      <trans-unit id="ElDyzrx" resname="export.page_of">
+        <source>export.page_of</source>
+        <target state="needs-translation">Page %page% of %pages%</target>
+      </trans-unit>
+      <trans-unit id="vKY0tof" resname="export.date_copyright">
+        <source>export.date_copyright</source>
+        <target state="needs-translation">Created %date% with %kimai%</target>
+      </trans-unit>
+      <trans-unit id="W92QGbY" resname="export.warn_result_amount">
+        <source>export.warn_result_amount</source>
+        <target state="needs-translation">Your search leads to %count% results. If the export fails, you have to narrow down your search further.</target>
+      </trans-unit>
+      <trans-unit id="pnGDFmf" resname="label.type">
+        <source>label.type</source>
+        <target state="needs-translation">Type</target>
+      </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>The directory “%dir%” does not exist and could not be created.</source>
+        <target state="needs-translation">The directory “%dir%” does not exist and could not be created.</target>
+      </trans-unit>
+      <trans-unit id="X3JM9wj" resname="label.exported">
+        <source>label.exported</source>
+        <target state="needs-translation">Exported</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
