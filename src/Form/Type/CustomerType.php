@@ -60,9 +60,9 @@ class CustomerType extends AbstractType
     {
         $name = $this->getPattern();
         $name = str_replace(self::PATTERN_NAME, $customer->getName(), $name);
-        $name = str_replace(self::PATTERN_COMMENT, $customer->getComment(), $name);
-        $name = str_replace(self::PATTERN_NUMBER, $customer->getNumber(), $name);
-        $name = str_replace(self::PATTERN_COMPANY, $customer->getCompany() ?? $customer->getName(), $name);
+        $name = str_replace(self::PATTERN_COMMENT, $customer->getComment() ?? '', $name);
+        $name = str_replace(self::PATTERN_NUMBER, $customer->getNumber() ?? '', $name);
+        $name = str_replace(self::PATTERN_COMPANY, $customer->getCompany() ?? '', $name);
 
         $name = ltrim($name, self::SPACER);
         $name = rtrim($name, self::SPACER);
@@ -71,7 +71,7 @@ class CustomerType extends AbstractType
             $name = $customer->getName();
         }
 
-        return $name;
+        return substr($name, 0, 110);
     }
 
     public function getChoiceAttributes(Customer $customer, $key, $value): array
