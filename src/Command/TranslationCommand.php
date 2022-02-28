@@ -109,24 +109,25 @@ class TranslationCommand extends Command
                     $name = $parts[0];
                     $fileLocale = $parts[1];
                     $fromLocale = 'en';
-                    if (array_key_exists($fileLocale, $translateFrom)) {
+                    if (\array_key_exists($fileLocale, $translateFrom)) {
                         $fromLocale = $translateFrom[$fileLocale];
                     }
 
-                    if (!array_key_exists($fromLocale, $translations)) {
+                    if (!\array_key_exists($fromLocale, $translations)) {
                         $translations[$fromLocale] = [];
                     }
 
-                    if (!array_key_exists($name, $translations[$fromLocale])) {
+                    if (!\array_key_exists($name, $translations[$fromLocale])) {
                         $fromLocaleName = str_replace('.' . $fileLocale . '.', '.' . $fromLocale . '.', $file);
                         if (!file_exists($fromLocaleName)) {
                             $io->error('Could not find translation file: ' . $fromLocaleName);
+
                             return 1;
                         }
                         $translations[$fromLocale][$name] = $this->getTranslations($fromLocaleName);
                     }
 
-                    if (stripos($base, '.'.$fromLocale.'.xlf') !== false || stripos($base, '.'.$fromLocale.'.xliff') !== false) {
+                    if (stripos($base, '.' . $fromLocale . '.xlf') !== false || stripos($base, '.' . $fromLocale . '.xliff') !== false) {
                         continue;
                     }
 
@@ -411,11 +412,11 @@ class TranslationCommand extends Command
             $key = (string) $unit['resname'];
 
             $translation = (string) $unit->target;
-            if (strlen($translation) > 0) {
+            if (\strlen($translation) > 0) {
                 continue;
             }
 
-            if (!array_key_exists($key, $translations)) {
+            if (!\array_key_exists($key, $translations)) {
                 throw new \Exception(
                     sprintf('Missing english translation for key: %s in file %s', $key, $file)
                 );
