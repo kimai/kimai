@@ -40,20 +40,20 @@
     <div class="btn-group me-auto">
         {% if form.vars.data.bookmark %}
             <button type="submit" id="setDefaultQuery" name="setDefaultQuery" class="btn btn-outline-secondary" data-toggle="tooltip" title="{{ 'label.set_as_default'|trans }}">
-                {{ icon('bookmarked') }}
+                {{ icon('bookmarked', true) }}
                 {{ 'action.save'|trans }}
             </button>
             <a class="btn btn-icon btn-outline-warning" href="?_token={{ csrf_token('search') }}&removeDefaultQuery={{ form.vars.data.bookmark.name }}"  data-toggle="tooltip" title="{{ 'label.remove_default'|trans }}" id="removeDefaultQuery">
-                {{ icon('delete') }}
+                {{ icon('delete', true) }}
             </a>
         {% else %}
             <button type="submit" id="setDefaultQuery" name="setDefaultQuery" class="btn btn-outline-secondary" data-toggle="tooltip" title="{{ 'label.set_as_default'|trans }}">
-                {{ icon('bookmark') }}
+                {{ icon('bookmark', true) }}
                 {{ 'action.save'|trans }}
             </button>
         {% endif %}
         {% if form.vars.data.countFilter() > 0 and not form.vars.data.isBookmarkSearch() %}
-            <button type="submit" id="resetSearchFilter" name="resetSearchFilter" class="btn btn-icon btn-outline-secondary" data-toggle="tooltip" title="{{ 'label.remove_filter'|trans }}">{{ icon('cancel') }}</button>
+            <button type="submit" id="resetSearchFilter" name="resetSearchFilter" class="btn btn-icon btn-outline-secondary" data-toggle="tooltip" title="{{ 'label.remove_filter'|trans }}">{{ icon('cancel', true) }}</button>
         {% endif %}
     </div>
     <button type="submit" name="performSearch" value="performSearch" class="performSearch btn btn-primary ms-auto" data-type="submit">{{ 'search'|trans }}</button>

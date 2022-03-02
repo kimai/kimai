@@ -3,7 +3,7 @@
 {# Adds the help icon, including a link to the documentation #}
 {% block form_label %}
     {% if form.vars.docu_chapter is defined and form.vars.docu_chapter is not empty %}
-        <a class="ps-2 float-end" href="{{ form.vars.docu_chapter|docu_link }}" target="_blank"><i class="text-secondary {{ 'docu_chapter'|icon(false) }}"></i></a>
+        <a class="ps-2 float-end" href="{{ form.vars.docu_chapter|docu_link }}" target="_blank"><i class="text-secondary {{ 'docu_chapter'|icon }}"></i></a>
     {% endif %}
     {{ parent() }}
 {% endblock %}
@@ -81,7 +81,7 @@
                         </div>
                     </div>
                     <div class="ms-auto">
-                        <button class="btn btn-icon" onclick="jQuery(this).parent().parent().parent().remove();return false;">{{ icon('trash') }}</button>
+                        <button class="btn btn-icon" onclick="jQuery(this).parent().parent().parent().remove();return false;">{{ icon('trash', true) }}</button>
                     </div>
                 </div>
             </label>
@@ -139,7 +139,7 @@
     {% if icon is not empty %}
     <div class="input-group">
         <div class="input-group-text">
-            <i class="{{ icon|icon(false) }}"></i>
+            <i class="{{ icon|icon(false, icon) }}"></i>
         </div>
         {{ block('form_widget_simple') }}
     </div>

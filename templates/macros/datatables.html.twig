@@ -92,7 +92,7 @@
                             <th data-field="{{ title }}" {% if not headerOptions.orderBy is same as(false) %}data-order="{{ headerOptions.orderBy }}" {% endif %}class="{{ headerClass }}">
                             {% if title is not empty and title == 'actions' and columnModal is not same as (false) %}
                                 <a class="link-secondary" href="#" data-bs-toggle="modal" data-bs-target="#modal_{{ tableName }}" data-toggle="tooltip" data-bs-placement="top" title="{{ 'modal.columns.title'|trans }}">
-                                    {{ icon('columns') }}
+                                    {{ icon('columns', true) }}
                                 </a>
                             {% else %}
                                 {% if headerOptions.html_before is defined %}

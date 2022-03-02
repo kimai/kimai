@@ -26,7 +26,7 @@
                         </div>
                         <div class="col-auto align-self-center">
                             {% if route_pin is not null %}
-                                <a href="{{ path(route_pin, {'id': comment.id, 'token': csrf_pin}) }}" class="btn btn-ghost-secondary btn-icon {% if comment.pinned %}active{% endif %}">{{ icon('pin') }}</a>
+                                <a href="{{ path(route_pin, {'id': comment.id, 'token': csrf_pin}) }}" class="btn{% if not comment.pinned %} btn-ghost-secondary{% else %} btn-ghost-info{% endif%} btn-icon {% if comment.pinned %}active{% endif %}">{{ icon('pin') }}</a>
                             {% elseif comment.pinned %}
                                 {{ icon('pin') }}
                             {% endif %}

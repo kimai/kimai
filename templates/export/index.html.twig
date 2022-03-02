@@ -124,10 +124,10 @@
                         {% if showToggleButton %}
                             <button id="toggle-button" class="btn ms-auto">
                                 {% if form.exported.vars.value == '5' %}
-                                    {{ icon('off') }}
+                                    {{ icon('off', true) }}
                                     {{ 'label.mark_as_exported'|trans }}
                                 {% elseif form.exported.vars.value == '4' %}
-                                    {{ icon('on') }}
+                                    {{ icon('on', true) }}
                                     {{ 'label.mark_as_open'|trans }}
                                 {% endif %}
                             </button>
