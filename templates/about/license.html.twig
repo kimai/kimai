@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 {% import "about/actions.html.twig" as actions %}
-{% import "macros/widgets.html.twig" as macros %}
 
 {% block page_title %}{{ 'about.title'|trans({}, 'about') }}{% endblock %}
 {% block page_actions %}{{ actions.about('index') }}{% endblock %}
@@ -25,21 +24,21 @@
                 </div>
                 <div class="d-flex">
                     <a href="{{ ''|docu_link }}" target="_blank" class="card-btn">
-                        <i class="me-2 text-muted {{ 'help'|icon }}"></i>
+                        <i class="me-2 text-muted {{ 'help'|icon(false) }}"></i>
                         {{ 'help'|trans({}, 'about') }}
                     </a>
                     <a href="{{ constant('App\\Constants::GITHUB') }}" target="_blank" class="card-btn">
-                        <i class="me-2 text-muted {{ 'fab fa-github'|icon }}"></i>
+                        <i class="me-2 text-muted {{ 'fab fa-github'|icon(false) }}"></i>
                         {{ 'support'|trans({}, 'about') }}
                     </a>
                 </div>
                 <div class="d-flex">
                     <a href="{{ constant('App\\Constants::HOMEPAGE') }}" target="_blank" class="card-btn">
-                        <i class="me-2 text-muted {{ 'home'|icon }}"></i>
+                        <i class="me-2 text-muted {{ 'home'|icon(false) }}"></i>
                         {{ 'website'|trans({}, 'about') }}
                     </a>
                     <a href="{{ constant('App\\Constants::HOMEPAGE') }}/donate/" target="_blank" class="card-btn">
-                        <i class="me-2 text-muted {{ 'fas fa-hand-holding-heart'|icon }}"></i>
+                        <i class="me-2 text-muted {{ 'fas fa-hand-holding-heart'|icon(false) }}"></i>
                         {{ 'donate'|trans({}, 'about') }}
                     </a>
                 </div>
@@ -111,19 +110,19 @@
                     </div>
                     <h4>Permissions</h4>
                     <ul class="list-unstyled space-y-1">
-                        <li><i class="{{ 'success'|icon }} text-green"></i> Commercial use</li>
-                        <li><i class="{{ 'success'|icon }} text-green"></i> Modification</li>
-                        <li><i class="{{ 'success'|icon }} text-green"></i> Distribution</li>
-                        <li><i class="{{ 'success'|icon }} text-green"></i> Private use</li>
+                        <li><i class="{{ 'success'|icon(false) }} text-green"></i> Commercial use</li>
+                        <li><i class="{{ 'success'|icon(false) }} text-green"></i> Modification</li>
+                        <li><i class="{{ 'success'|icon(false) }} text-green"></i> Distribution</li>
+                        <li><i class="{{ 'success'|icon(false) }} text-green"></i> Private use</li>
                     </ul>
                     <h4>Limitations</h4>
                     <ul class="list-unstyled space-y-1">
-                        <li><i class="{{ 'failure'|icon }} text-red"></i> Liability</li>
-                        <li><i class="{{ 'failure'|icon }} text-red"></i> Warranty</li>
+                        <li><i class="{{ 'failure'|icon(false) }} text-red"></i> Liability</li>
+                        <li><i class="{{ 'failure'|icon(false) }} text-red"></i> Warranty</li>
                     </ul>
                     <h4>Conditions</h4>
                     <ul class="list-unstyled space-y-1">
-                        <li><i class="{{ 'details'|icon }} text-blue"></i> License and copyright notice</li>
+                        <li><i class="{{ 'details'|icon(false) }} text-blue"></i> License and copyright notice</li>
                     </ul>
                 </div>
                 <div class="card-footer">

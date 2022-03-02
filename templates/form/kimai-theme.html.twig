@@ -3,7 +3,7 @@
 {# Adds the help icon, including a link to the documentation #}
 {% block form_label %}
     {% if form.vars.docu_chapter is defined and form.vars.docu_chapter is not empty %}
-        <a class="ps-2 float-end" href="{{ form.vars.docu_chapter|docu_link }}" target="_blank"><i class="fa-1x text-secondary {{ 'docu_chapter'|icon }} fa-1x"></i></a>
+        <a class="ps-2 float-end" href="{{ form.vars.docu_chapter|docu_link }}" target="_blank"><i class="text-secondary {{ 'docu_chapter'|icon(false) }}"></i></a>
     {% endif %}
     {{ parent() }}
 {% endblock %}
@@ -139,7 +139,7 @@
     {% if icon is not empty %}
     <div class="input-group">
         <div class="input-group-text">
-            <i class="{{ icon|icon }}"></i>
+            <i class="{{ icon|icon(false) }}"></i>
         </div>
         {{ block('form_widget_simple') }}
     </div>
@@ -218,7 +218,7 @@
 {% block report_sum_widget %}
     <div class="dropdown"{% if form.vars.choices|length <= 1 %} style="display: none"{% endif %}>
         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ icon('display') }}
+            {{ icon('display', true) }}
         </button>
         <ul class="dropdown-menu checkbox-menu">
             {% for option in form.children %}

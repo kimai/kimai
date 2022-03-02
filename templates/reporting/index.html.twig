@@ -15,7 +15,7 @@
         <div class="col-md-6 col-lg-3">
             <div class="card">
                 <div class="card-body p-4 text-center">
-                    <span class="avatar avatar-xl mb-3 avatar-rounded"><i class="{{ report.reportIcon|icon(report.reportIcon, false) }}" style="color: {{ null|colorize(report.reportIcon) }}"></i></span>
+                    <span class="avatar avatar-xl mb-3 avatar-rounded"><i class="{{ report.reportIcon|icon(false, report.reportIcon) }}" style="color: {{ null|colorize(report.reportIcon) }}"></i></span>
                 </div>
                 <div class="d-flex">
                     <a href="{{ path(report.route) }}" class="card-btn">{{ report.label|trans({}, 'reporting') }}</a>

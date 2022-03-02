@@ -22,34 +22,11 @@
                                     {{ user.title }}
                                 </div>
                                 {% endif %}
-                                {#
-                                <div class="small mt-1">
-                                    <span class="badge bg-green"></span> Online
-                                </div>
-                                #}
                             </div>
                             <div class="col-auto">
-                                <a class="btn" href="mailto:{{ user.email }}" title="{{ 'label.email'|trans }}">
-                                    {{ icon('mail') }}
-                                    {{ 'label.email'|trans }}
-                                </a>
+                                {% from '@theme/components/buttons.html.twig' import link_button %}
+                                {{ link_button('label.email'|trans, ('mailto:' ~ user.email), 'mail', 'default') }}
                             </div>
-                            {#
-                            <div class="col-auto">
-                                <div class="dropdown">
-                                    <a href="#" class="card-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <!-- Download SVG icon from http://tabler-icons.io/i/dots-vertical -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle><circle cx="12" cy="5" r="1"></circle></svg>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <a href="#" class="dropdown-item">Import</a>
-                                        <a href="#" class="dropdown-item">Export</a>
-                                        <a href="#" class="dropdown-item">Download</a>
-                                        <a href="#" class="dropdown-item">Another action</a>
-                                    </div>
-                                </div>
-                            </div>
-                            #}
                         </div>
                     </div>
                 </div>

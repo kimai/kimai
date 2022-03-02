@@ -13,13 +13,13 @@
         {% set entry = active_timesheets[0] %}
         <div class="messages-menu" data-api="{{ path('active_timesheet') }}" data-href="{{ path('stop_timesheet', {'id' : '000'}) }}" style="{% if not hasActiveRecords %}display:none{% endif %}">
             <a data-replacer="url" class="api-link ticktac-running ticktac-stop btn {{ class }}" href="{{ path('stop_timesheet', {'id' : entry.id}) }}" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success">
-                <i class="icon text-red {{ 'stop-small'|icon }}"></i>
+                <i class="icon text-red {{ 'stop-small'|icon(true) }}"></i>
                 <span data-replacer="duration" data-title="true" data-since="{{ entry.begin is null ? '' : entry.begin|date_format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</span>
             </a>
         </div>
         <div class="messages-menu-empty" style="{% if hasActiveRecords %}display:none{% endif %}">
             <a href="{{ path('timesheet_create') }}" class="modal-ajax-form ticktac-start btn {{ class }}">
-                <i class="icon text-green {{ 'start'|icon }}"></i>
+                <i class="icon text-green {{ 'start'|icon(true) }}"></i>
                 <span>{{ 0|duration }}</span>
             </a>
         </div>

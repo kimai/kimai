@@ -21,7 +21,7 @@
         {% block box_title %}File permissions{% endblock %}
         {% block box_body %}
             <p>
-                If you see a warning icon <i class="{{ 'warning'|icon }} text-red"></i> in the list below, you should talk to your administrator.
+                If you see a warning icon <i class="{{ 'warning'|icon(false) }} text-red"></i> in the list below, you should talk to your administrator.
                 The path is either not readable or not writable and Kimai might not work as expected.
             </p>
             <table class="table">
@@ -30,9 +30,9 @@
                         <th style="width:15%">{{ name }}</th>
                         <td>
                             {% if value is same as (false) %}
-                                <i class="{{ 'warning'|icon }} text-red"></i>
+                                <i class="{{ 'warning'|icon(false) }} text-red"></i>
                             {% else %}
-                                <i class="{{ 'success'|icon }} text-green"></i>
+                                <i class="{{ 'success'|icon(false) }} text-green"></i>
                             {% endif %}
                         </td>
                     </tr>
@@ -52,7 +52,7 @@
         {% block box_title %}Required PHP extensions{% endblock %}
         {% block box_body %}
             <p>
-                If you see a warning icon <i class="{{ 'warning'|icon }} text-red"></i> in the list below, you should talk to your administrator. 
+                If you see a warning icon <i class="{{ 'warning'|icon(false) }} text-red"></i> in the list below, you should talk to your administrator.
                 There is a missing PHP extension and Kimai might not work as expected.
             </p>
             <table class="table">
@@ -61,9 +61,9 @@
                         <th style="width:15%">{{ name }}</th>
                         <td>
                             {% if value is same as (false) %}
-                                <i class="{{ 'warning'|icon }} text-red"></i>
+                                <i class="{{ 'warning'|icon(false) }} text-red"></i>
                             {% else %}
-                                <i class="{{ 'success'|icon }} text-green"></i>
+                                <i class="{{ 'success'|icon(false) }} text-green"></i>
                             {% endif %}
                         </td>
                     </tr>

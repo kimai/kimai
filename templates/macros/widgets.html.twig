@@ -3,10 +3,6 @@
     {{ breadcrumb(breadcrumbs) }}
 {% endmacro %}
 
-{% macro icon(icon) %}
-<i class="{{ icon|icon(icon) }}"></i>
-{% endmacro %}
-
 {%- macro page_actions(actions) -%}
     {% set large = true %}
     {% set btnClasses = 'btn-primary' %}
@@ -30,7 +26,7 @@
                     {% if values.children is defined and values.children|length > 0 %}
                             <div class="dropdown">
                                 <button type="button" class="btn {{ btnClasses}} dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ icon(icon) }}{% if large %} {{ icon|trans({}, 'actions') }}{% endif %}
+                                    {{ icon(icon, true) }}{% if large %} {{ icon|trans({}, 'actions') }}{% endif %}
                                 </button>
                                 <div class="dropdown-menu">
                                 {%- for icon, values in values.children %}
@@ -191,12 +187,6 @@
     {% endapply %}
 {% endmacro %}
 
-{% macro color_dot(color, tooltip) %}
-    <span class="label-color" data-toggle="tooltip" data-placement="top" title="{{ tooltip }}">
-        <i class="dot {{ 'dot'|icon }} fa-fw"{% if color is not empty %} style="background-color:{{ color }}"{% endif %}></i>
-    </span>
-{% endmacro %}
-
 {% macro badge_team_access(teams) %}
     {% if teams|length > 0 %}
         {{ _self.badge_counter(teams|length) }}
@@ -266,7 +256,9 @@
 
 {% macro form_type_value(type, value, entity) %}
     {% if '\\ColorPickerType' in type %}
-        {{ _self.color_dot(value, value) }}
+        <span class="label-color" data-toggle="tooltip" data-placement="top" title="{{ value }}">
+            <i class="dot {{ 'dot'|icon(true) }} fa-fw"{% if value is not empty %} style="color:{{ value }}"{% endif %}></i>
+        </span>
     {% elseif '\\DurationType' in type %}
         {{ value|duration }}
     {% elseif '\\YesNoType' in type or '\\CheckBoxType' in type %}
