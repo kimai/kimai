@@ -333,7 +333,7 @@
                         {% endif %}
                         {% set counter = counter + 1 %}
                         {% if userTeamCount > (collapseAt + 1) and counter == (collapseAt - 1) and loop.index != userTeamCount %}
-                            <a href="#" onclick="$(this).parent().append($('#{{ teamHiddenId }}').contents());$('#{{ teamHiddenId }}').remove();$(this).remove();return false;" class="badge bg-gray">{{ 'label.plus_more'|trans({'%count%': (userTeamCount - collapseAt)}) }}</a>
+                            <a href="#" onclick="jQuery(this).parent().append(jQuery('#{{ teamHiddenId }}').contents());jQuery('#{{ teamHiddenId }}').remove();jQuery(this).remove();return false;" class="badge bg-gray">{{ 'label.plus_more'|trans({'%count%': (userTeamCount - collapseAt)}) }}</a>
                             <span class="d-none" id="{{ teamHiddenId }}">
                             {% set counter = counter + 1 %}
                         {% endif %}

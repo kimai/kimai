@@ -81,7 +81,7 @@ class ProjectType extends AbstractType
 
         $name = $this->getPattern();
         $name = str_replace(self::PATTERN_NAME, $project->getName(), $name);
-        $name = str_replace(self::PATTERN_COMMENT, $project->getComment(), $name);
+        $name = str_replace(self::PATTERN_COMMENT, $project->getComment() ?? '', $name);
         $name = str_replace(self::PATTERN_ORDERNUMBER, $project->getOrderNumber(), $name);
         $name = str_replace(self::PATTERN_START, $start, $name);
         $name = str_replace(self::PATTERN_END, $end, $name);
@@ -94,7 +94,7 @@ class ProjectType extends AbstractType
             $name = $project->getName();
         }
 
-        return $name;
+        return substr($name, 0, 110);
     }
 
     /**

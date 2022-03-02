@@ -102,7 +102,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      * @var string|null
      *
      * @Serializer\Expose()
-     * @Serializer\Groups({"Activity_Entity"})
+     * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="label.comment")
      *

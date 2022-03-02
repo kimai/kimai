@@ -239,8 +239,8 @@
         <target>Allowed colors</target>
       </trans-unit>
       <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
-        <source>help.theme.color_choices</source>
-        <target>Comma separated list of HTML color codes. Color names can be set by prefixing the color code with a name and the | delimiter, eg.: White|#ffffff,Black|#000000.</target>
+        <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
+        <target>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</target>
       </trans-unit>
       <trans-unit id="udkGKEU" resname="authentication">
         <source>authentication</source>

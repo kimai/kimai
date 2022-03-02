@@ -255,7 +255,7 @@
         <target>Die Anfrage konnte nicht verarbeitet werden. Es wurden zu viele Ergebnisse gefunden.</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
-        <source>error.directory_missing</source>
+        <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>Das Verzeichnis „%dir%“ existiert nicht und konnte auch nicht erstellt werden.</target>
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">

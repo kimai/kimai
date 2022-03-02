@@ -3,7 +3,7 @@
     "app": {
       "js": [
         "build/runtime.fb9c99a2.js",
-        "build/app.edd87a78.js"
+        "build/app.29289741.js"
       ],
       "css": [
         "build/app.ffbe0133.css"
@@ -36,7 +36,7 @@
     "calendar": {
       "js": [
         "build/runtime.fb9c99a2.js",
-        "build/calendar.a15babda.js"
+        "build/calendar.c392c607.js"
       ],
       "css": [
         "build/calendar.9f5b3d41.css"

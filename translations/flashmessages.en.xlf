@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="en" datatype="plaintext" original="flashmessages.en.xlf">
     <body>
@@ -23,8 +23,8 @@
         <target>Time recording could not be started</target>
       </trans-unit>
       <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target>The limit of active time records has been reached, please stop at least one running time measurement first.</target>
+        <source>The limit of active time records has been reached. Please stop at least one running time measurement first.</source>
+        <target>The limit of active time records has been reached. Please stop at least one running time measurement first.</target>
       </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>

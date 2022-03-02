@@ -5,10 +5,10 @@
 As announced in the [README](README.md) I only support the latest available release and master.
 
 | Version | Supported          |
-|---------| ------------------ |
+|---------|--------------------|
 | master  | :white_check_mark: |
-| 1.17    | :white_check_mark: |
-| < 1.17  | :x:                |
+| 1.18    | :white_check_mark: |
+| < 1.18  | :x:                |
 
 ## Reporting a Vulnerability
 
@@ -20,5 +20,5 @@ Depending on the size of the required fixes, this might take a couple of hours o
 
 You can expect that your message will be answered ASAP. 
 
-If your issue is valid and after I verified and fixed it, you will be mentioned in the release notes. 
+You will be mentioned in the release notes if your issue is valid and after it was fixed. 
 I am grateful for any (discrete) disclosure of vulnerabilities!

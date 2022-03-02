@@ -379,6 +379,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'color' => '@string',
                     'number' => '@string',
+                    'comment' => '@string',
                 ];
 
             // if a list of customers is loaded
@@ -389,6 +390,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'boolean',
                     'color' => '@string',
                     'number' => '@string',
+                    'comment' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'currency' => 'string', // since 1.10
@@ -430,6 +432,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'color' => '@string',
                     'customer' => 'int',
+                    'comment' => '@string',
                 ];
 
             // if a project is embedded in an expanded collection (here timesheet)
@@ -440,6 +443,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'color' => '@string',
                     'customer' => ['result' => 'object', 'type' => 'Customer'],
+                    'comment' => '@string',
                 ];
 
             // if a collection of projects is loaded
@@ -455,6 +459,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'start' => '@datetime',
                     'end' => '@datetime',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
+                    'comment' => '@string',
                 ];
 
             // if a project is explicitly loaded
@@ -486,6 +491,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'project' => '@int',
                     'color' => '@string',
+                    'comment' => '@string',
                 ];
 
             case 'ActivityExpanded':
@@ -495,6 +501,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'visible' => 'bool',
                     'project' => ['result' => 'object', 'type' => '@ProjectExpanded'],
                     'color' => '@string',
+                    'comment' => '@string',
                 ];
 
             // collection of activities
@@ -507,6 +514,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'color' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'parentTitle' => '@string',
+                    'comment' => '@string',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                 ];
 

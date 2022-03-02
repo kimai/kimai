@@ -1217,7 +1217,7 @@
         <target>24 ore</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
-        <source>error.directory_missing</source>
+        <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>La directory «%dir%» non esiste e non può essere creata.</target>
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
@@ -1235,6 +1235,10 @@
       <trans-unit id="PCEFPeg" resname="updated_at">
         <source>Updated at</source>
         <target>Aggiornato il</target>
+      </trans-unit>
+      <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
+        <source>Display of entries in selection lists</source>
+        <target state="needs-translation">Display of entries in selection lists</target>
       </trans-unit>
     </body>
   </file>

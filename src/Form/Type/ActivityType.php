@@ -57,7 +57,7 @@ class ActivityType extends AbstractType
     {
         $name = $this->getPattern();
         $name = str_replace(self::PATTERN_NAME, $activity->getName(), $name);
-        $name = str_replace(self::PATTERN_COMMENT, $activity->getComment(), $name);
+        $name = str_replace(self::PATTERN_COMMENT, $activity->getComment() ?? '', $name);
 
         $name = ltrim($name, self::SPACER);
         $name = rtrim($name, self::SPACER);
@@ -66,7 +66,7 @@ class ActivityType extends AbstractType
             $name = $activity->getName();
         }
 
-        return $name;
+        return substr($name, 0, 110);
     }
 
     /**

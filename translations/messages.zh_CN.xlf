@@ -1207,11 +1207,11 @@
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
-        <target>目录 "%dir%" 被写入保护。</target>
+        <target>目录 “%dir%” 被写入保护。</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
-        <source>error.directory_missing</source>
-        <target>目录 "%dir%" 不存在且不能被创建。</target>
+        <source>The directory “%dir%” does not exist and could not be created.</source>
+        <target>目录 “%dir%” 不存在且不能被创建。</target>
       </trans-unit>
       <trans-unit id="W92QGbY" resname="export.warn_result_amount">
         <source>export.warn_result_amount</source>
@@ -1256,6 +1256,10 @@
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
         <target>已达到%max%发票单据的最大金额。删除一个后，可以添加更多。</target>
+      </trans-unit>
+      <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
+        <source>Display of entries in selection lists</source>
+        <target state="needs-translation">Display of entries in selection lists</target>
       </trans-unit>
     </body>
   </file>

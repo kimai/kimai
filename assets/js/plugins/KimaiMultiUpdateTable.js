@@ -48,7 +48,7 @@ export default class KimaiMultiUpdateTable extends KimaiPlugin {
     {
         let ids = [];
         jQuery('.multi_update_single:checked').each(function(i){
-            ids[i] = $(this).val();
+            ids[i] = jQuery(this).val();
         });
 
         return ids;

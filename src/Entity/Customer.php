@@ -79,7 +79,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      * @var string|null
      *
      * @Serializer\Expose()
-     * @Serializer\Groups({"Customer_Entity"})
+     * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="label.comment")
      *

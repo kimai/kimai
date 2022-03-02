@@ -172,7 +172,7 @@
             // prevent multiple open popovers
             jQuery('html').on('click', function(e) {
                 jQuery('.popover').each(function() {
-                    if(jQuery(e.target).parents(".fc-time-grid-event").get(0) !== $(this).prev().get(0)) {
+                    if(jQuery(e.target).parents(".fc-time-grid-event").get(0) !== jQuery(this).prev().get(0)) {
                         jQuery(this).popover('hide');
                     }
                 });

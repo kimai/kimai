@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fo" datatype="plaintext" original="system-configuration.en.xlf">
+    <body>
+      <trans-unit id="ycErWZK" resname="timesheet">
+        <source>Time tracking</source>
+        <target state="needs-translation">Time tracking</target>
+      </trans-unit>
+      <trans-unit id="PLggHn." resname="theme">
+        <source>theme</source>
+        <target state="needs-translation">Theme</target>
+      </trans-unit>
+      <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
+        <source>label.theme.markdown_content</source>
+        <target state="needs-translation">Allow markdown-formattings in descriptions and comments</target>
+      </trans-unit>
+      <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
+        <source>label.theme.tags_create</source>
+        <target state="needs-translation">Tags: use auto-complete search and allow tag creation</target>
+      </trans-unit>
+      <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
+        <source>label.theme.avatar_url</source>
+        <target state="needs-translation">Allow the use of URLs for avatar images</target>
+      </trans-unit>
+      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
+        <source>label.theme.random_colors</source>
+        <target state="needs-translation">Use random colors for objects without assigned color</target>
+      </trans-unit>
+      <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
+        <source>label.timesheet.mode</source>
+        <target state="needs-translation">Timetracking mode</target>
+      </trans-unit>
+      <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
+        <source>label.timesheet.mode_default</source>
+        <target state="needs-translation">[Default] start and end times can be edited</target>
+      </trans-unit>
+      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
+        <source>label.timesheet.mode_duration_only</source>
+        <target state="needs-translation">[Duration] replaces the end time with a duration input-field</target>
+      </trans-unit>
+      <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
+        <source>label.timesheet.mode_duration_fixed_begin</source>
+        <target state="needs-translation">[Duration] configurable fixed start-time, only duration can be changed</target>
+      </trans-unit>
+      <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
+        <source>label.timesheet.mode_punch</source>
+        <target state="needs-translation">[Time-clock] user can start and stop records, but not edit the times or duration</target>
+      </trans-unit>
+      <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
+        <source>label.timesheet.rules.allow_future_times</source>
+        <target state="needs-translation">Allow time entries in the future</target>
+      </trans-unit>
+      <trans-unit id="VAAaL2t" resname="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target state="needs-translation">Allow overbooking of stored budgets</target>
+      </trans-unit>
+      <trans-unit id=".NE5mGi" resname="label.timesheet.rules.allow_overlapping_records">
+        <source>label.timesheet.rules.allow_overlapping_records</source>
+        <target state="needs-translation">Allow overlapping time entries</target>
+      </trans-unit>
+      <trans-unit id="tuPXa0S" resname="lockdown_period">
+        <source>lockdown_period</source>
+        <target state="needs-translation">Lockdown period</target>
+      </trans-unit>
+      <trans-unit id="HeDzoVE" resname="label.timesheet.rules.lockdown_period_timezone">
+        <source>label.timesheet.rules.lockdown_period_timezone</source>
+        <target state="needs-translation">Time zone (if empty, time zone of the respective user is used)</target>
+      </trans-unit>
+      <trans-unit id="yVBJECt" resname="label.timesheet.rules.lockdown_period_start">
+        <source>label.timesheet.rules.lockdown_period_start</source>
+        <target state="needs-translation">Lockdown period start (PHP relative date to now)</target>
+      </trans-unit>
+      <trans-unit id=".es2tyO" resname="label.timesheet.rules.lockdown_period_end">
+        <source>label.timesheet.rules.lockdown_period_end</source>
+        <target state="needs-translation">Lockdown period end (PHP relative date to now)</target>
+      </trans-unit>
+      <trans-unit id="y2i0PU3" resname="label.timesheet.rules.lockdown_grace_period">
+        <source>label.timesheet.rules.lockdown_grace_period</source>
+        <target state="needs-translation">Lockdown grace period end (PHP relative date to lockdown period end)</target>
+      </trans-unit>
+      <trans-unit id="oIueXaX" resname="label.timesheet.active_entries.hard_limit">
+        <source>label.timesheet.active_entries.hard_limit</source>
+        <target state="needs-translation">Permitted number of simultaneously running time entries</target>
+      </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target state="needs-translation">Number of entries taken over from previous weeks</target>
+      </trans-unit>
+      <trans-unit id="iZLna_g" resname="label.theme.autocomplete_chars">
+        <source>label.theme.autocomplete_chars</source>
+        <target state="needs-translation">Minimum number of letters to start auto-completion</target>
+      </trans-unit>
+      <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
+        <source>label.calendar.week_numbers</source>
+        <target state="needs-translation">Display week numbers</target>
+      </trans-unit>
+      <trans-unit id="NULxaYp" resname="label.calendar.weekends">
+        <source>label.calendar.weekends</source>
+        <target state="needs-translation">Display weekends</target>
+      </trans-unit>
+      <trans-unit id="AMCb58W" resname="label.calendar.businessHours.begin">
+        <source>label.calendar.businessHours.begin</source>
+        <target state="needs-translation">Start of normal business hours (will be highlighted)</target>
+      </trans-unit>
+      <trans-unit id="3nfAkqy" resname="label.calendar.businessHours.end">
+        <source>label.calendar.businessHours.end</source>
+        <target state="needs-translation">End of normal business hours (will be highlighted)</target>
+      </trans-unit>
+      <trans-unit id="Yl4Ztfv" resname="label.calendar.visibleHours.begin">
+        <source>label.calendar.visibleHours.begin</source>
+        <target state="needs-translation">Start of visible time range</target>
+      </trans-unit>
+      <trans-unit id="UJGYdCt" resname="label.calendar.visibleHours.end">
+        <source>label.calendar.visibleHours.end</source>
+        <target state="needs-translation">End of visible time range</target>
+      </trans-unit>
+      <trans-unit id="AlBuZhv" resname="label.calendar.slot_duration">
+        <source>label.calendar.slot_duration</source>
+        <target state="needs-translation">Slot duration for week- and day view (format: hh:mm:ss)</target>
+      </trans-unit>
+      <trans-unit id="nwuLBP4" resname="branding">
+        <source>branding</source>
+        <target state="needs-translation">My company</target>
+      </trans-unit>
+      <trans-unit id="m5dLCoB" resname="label.theme.branding.logo">
+        <source>label.theme.branding.logo</source>
+        <target state="needs-translation">Logo URL (replaces the company name in login screen)</target>
+      </trans-unit>
+      <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
+        <source>label.theme.branding.company</source>
+        <target state="needs-translation">Company name</target>
+      </trans-unit>
+      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
+        <source>label.theme.branding.mini</source>
+        <target state="needs-translation">Mini Logo (collapsed sidebar)</target>
+      </trans-unit>
+      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
+        <source>label.theme.branding.title</source>
+        <target state="needs-translation">Browser Title</target>
+      </trans-unit>
+      <trans-unit id=".CeyZwj" resname="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target state="needs-translation">Financial year</target>
+      </trans-unit>
+      <trans-unit id="Gdb5M4w" resname="rounding">
+        <source>rounding</source>
+        <target state="needs-translation">Time rounding</target>
+      </trans-unit>
+      <trans-unit id="0wyl4Bb" resname="label.timesheet.rounding.default.begin">
+        <source>label.timesheet.rounding.default.begin</source>
+        <target state="needs-translation">Rounding of the start time in minutes (0 = deactivated)</target>
+      </trans-unit>
+      <trans-unit id="Jx6bTVr" resname="label.timesheet.rounding.default.end">
+        <source>label.timesheet.rounding.default.end</source>
+        <target state="needs-translation">Rounding of the end time in minutes (0 = deactivated)</target>
+      </trans-unit>
+      <trans-unit id="Hnl7Jxt" resname="label.timesheet.rounding.default.duration">
+        <source>label.timesheet.rounding.default.duration</source>
+        <target state="needs-translation">Rounding of the duration in minutes (0 = deactivated)</target>
+      </trans-unit>
+      <trans-unit id="aenIpDV" resname="label.timesheet.rounding.default.mode">
+        <source>label.timesheet.rounding.default.mode</source>
+        <target state="needs-translation">Rounding mode</target>
+      </trans-unit>
+      <trans-unit id="D1NSPl5" resname="label.timesheet.rounding.default.days">
+        <source>label.timesheet.rounding.default.days</source>
+        <target state="needs-translation">Days of the week when rounding will be applied</target>
+      </trans-unit>
+      <trans-unit id="agDfwdy" resname="Monday">
+        <source>Monday</source>
+        <target state="needs-translation">Monday</target>
+      </trans-unit>
+      <trans-unit id="fYrx3hJ" resname="Tuesday">
+        <source>Tuesday</source>
+        <target state="needs-translation">Tuesday</target>
+      </trans-unit>
+      <trans-unit id="wKbMgpz" resname="Wednesday">
+        <source>Wednesday</source>
+        <target state="needs-translation">Wednesday</target>
+      </trans-unit>
+      <trans-unit id=".CZiBi." resname="Thursday">
+        <source>Thursday</source>
+        <target state="needs-translation">Thursday</target>
+      </trans-unit>
+      <trans-unit id="4h8.Nyp" resname="Friday">
+        <source>Friday</source>
+        <target state="needs-translation">Friday</target>
+      </trans-unit>
+      <trans-unit id="2_Ncc2P" resname="Saturday">
+        <source>Saturday</source>
+        <target state="needs-translation">Saturday</target>
+      </trans-unit>
+      <trans-unit id="hz.vdg5" resname="Sunday">
+        <source>Sunday</source>
+        <target state="needs-translation">Sunday</target>
+      </trans-unit>
+      <trans-unit id="jmsE4EY" resname="Ceil">
+        <source>Ceil</source>
+        <target state="needs-translation">Ceil: begin, end and duration will be rounded up</target>
+      </trans-unit>
+      <trans-unit id="Y_qmsDz" resname="Closest">
+        <source>Closest</source>
+        <target state="needs-translation">Closest: mathematical rounding to the nearest value</target>
+      </trans-unit>
+      <trans-unit id="IbERy.5" resname="Default">
+        <source>Default</source>
+        <target state="needs-translation">Standard: begin will be rounded down, end and duration up</target>
+      </trans-unit>
+      <trans-unit id="0mjJxEk" resname="Floor">
+        <source>Floor</source>
+        <target state="needs-translation">Floor: begin, end and duration will be rounded down</target>
+      </trans-unit>
+      <trans-unit id="DY_cM92" resname="label.timesheet.default_begin">
+        <source>label.timesheet.default_begin</source>
+        <target state="needs-translation">Default start-time (not used in all timetracking modes)</target>
+      </trans-unit>
+      <trans-unit id="cRbnwyP" resname="label.simple_form">
+        <source>label.simple_form</source>
+        <target state="needs-translation">Simple search</target>
+      </trans-unit>
+      <trans-unit id="HrEBLUr" resname="label.invoice.number_format">
+        <source>label.invoice.number_format</source>
+        <target state="needs-translation">Invoice number format</target>
+      </trans-unit>
+      <trans-unit id="6CSB6iM" resname="first_weekday">
+        <source>first_weekday</source>
+        <target state="needs-translation">First day of the week</target>
+      </trans-unit>
+      <trans-unit id="40i4Xlr" resname="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target state="needs-translation">Minute selection for Duration</target>
+      </trans-unit>
+      <trans-unit id="x3AfnWn" resname="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target state="needs-translation">Minute selection for From &amp; To</target>
+      </trans-unit>
+      <trans-unit id="9C1qkmD" resname="increment_rounding">
+        <source>increment_rounding</source>
+        <target state="needs-translation">Use configured value of the rounding rule</target>
+      </trans-unit>
+      <trans-unit id="tNxm3eg" resname="off">
+        <source>off</source>
+        <target state="needs-translation">Off</target>
+      </trans-unit>
+      <trans-unit id="QHVk7AA" resname="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target state="needs-translation">Limit color choices</target>
+      </trans-unit>
+      <trans-unit id="scCc2Xm" resname="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target state="needs-translation">Allowed colors</target>
+      </trans-unit>
+      <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
+        <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
+        <target state="needs-translation">Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target state="needs-translation">Authentication</target>
+      </trans-unit>
+      <trans-unit id="CCXeSFj" resname="label.user_auth_login">
+        <source>label.user_auth_login</source>
+        <target state="needs-translation">Login form</target>
+      </trans-unit>
+      <trans-unit id=".zZ_MeA" resname="label.user_auth_registration">
+        <source>label.user_auth_registration</source>
+        <target state="needs-translation">User registration</target>
+      </trans-unit>
+      <trans-unit id="t2zKRp5" resname="label.user_auth_password_reset">
+        <source>label.user_auth_password_reset</source>
+        <target state="needs-translation">Forgot password</target>
+      </trans-unit>
+      <trans-unit id="ufoC1qF" resname="label.user_auth_password_reset_retry_ttl">
+        <source>label.user_auth_password_reset_retry_ttl</source>
+        <target state="needs-translation">Forgotten password - seconds before a user can request the next e-mail</target>
+      </trans-unit>
+      <trans-unit id="0Tj.NhS" resname="label.user_auth_password_reset_token_ttl">
+        <source>label.user_auth_password_reset_token_ttl</source>
+        <target state="needs-translation">Forgotten password - seconds before a reset link expires</target>
+      </trans-unit>
+      <trans-unit id="71FjFMp" resname="label.ldap_activate">
+        <source>label.ldap_activate</source>
+        <target state="needs-translation">LDAP login</target>
+      </trans-unit>
+      <trans-unit id="A3HPT4p" resname="label.saml_activate">
+        <source>label.saml_activate</source>
+        <target state="needs-translation">SAML login</target>
+      </trans-unit>
+      <trans-unit id="jLG6z.w" resname="label.timesheet.rules.break_warning_duration">
+        <source>label.timesheet.rules.break_warning_duration</source>
+        <target state="needs-translation">Maximum duration of a timesheet record in minutes before a "break warning" will be displayed (0 = deactivated)</target>
+      </trans-unit>
+      <trans-unit id="h4bhOny" resname="label.timesheet.rules.long_running_duration">
+        <source>label.timesheet.rules.long_running_duration</source>
+        <target state="needs-translation">Maximum duration of a timesheet record in minutes before saving is rejected (0 = deactivated)</target>
+      </trans-unit>
+      <trans-unit id="ZUTc3eH" resname="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target state="needs-translation">Amount of entries for drag&amp;drop (0 = deactivated)</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

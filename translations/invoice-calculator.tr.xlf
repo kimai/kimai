@@ -34,6 +34,10 @@
         <source>weekly</source>
         <target>Haftalık: haftada bir kayıt (başlangıç tarihini kullanır)</target>
       </trans-unit>
+      <trans-unit id="aDtTH0H" resname="price">
+        <source>price</source>
+        <target>Fiyat: her fiyat için bir kayıt</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

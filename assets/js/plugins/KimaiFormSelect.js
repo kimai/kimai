@@ -233,15 +233,17 @@ export default class KimaiFormSelect extends KimaiPlugin {
             title = title.replace(new RegExp('{' + field + '}', 'g'), value ?? '');
         }
         title = title.replace(/- \?-\?/, '');
+        title = title.replace(/\r\n|\r|\n/g, ' ');
+        title = title.substr(0, 110);
 
         const chars = '- ';
         let start = 0, end = title.length;
 
-        while(start < end && chars.indexOf(title[start]) >= 0) {
+        while (start < end && chars.indexOf(title[start]) >= 0) {
             ++start;
         }
 
-        while(end > start && chars.indexOf(title[end - 1]) >= 0) {
+        while (end > start && chars.indexOf(title[end - 1]) >= 0) {
             --end;
         }
 

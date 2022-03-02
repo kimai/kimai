@@ -1239,7 +1239,7 @@
         <target>Semaine %week%</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
-        <source>error.directory_missing</source>
+        <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>Le répertoire « %dir% » n'existe pas et n'a pas pu être créé.</target>
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">

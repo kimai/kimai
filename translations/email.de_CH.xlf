@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="de-CH" datatype="plaintext" original="email.en.xlf">
+    <body>
+      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
+        <source>button_copy_url_to_browser</source>
+        <target state="needs-translation">Falls der Button nicht funktioniert, kopieren Sie bitte die folgende URL in Ihren Browser: %url%</target>
+      </trans-unit>
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
+        <source>automated_email_dont_answer</source>
+        <target state="needs-translation">Dies ist eine automatisch generierte E-Mail. Bitte antworten Sie nicht, die Adresse wird nicht gelesen.</target>
+      </trans-unit>
+      <trans-unit id="pjr3FDv" resname="registration.subject">
+        <source>registration.subject</source>
+        <target state="needs-translation">Benutzerkonto aktivieren</target>
+      </trans-unit>
+      <trans-unit id="QtcznHC" resname="registration.title">
+        <source>registration.title</source>
+        <target state="needs-translation">Willkommen %username%</target>
+      </trans-unit>
+      <trans-unit id="YMLel3P" resname="registration.button">
+        <source>registration.button</source>
+        <target state="needs-translation">Aktivieren Sie Ihren Zugang</target>
+      </trans-unit>
+      <trans-unit id="IkjnHoP" resname="registration.intro">
+        <source>registration.intro</source>
+        <target state="needs-translation">Sie haben sich für die Kimai-Zeiterfassung mit der E-Mail-Adresse %email% registriert. Bitte klicken Sie den Link in den nächsten Stunden an, bevor er keine Gültigkeit mehr hat.</target>
+      </trans-unit>
+      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+        <source>reset.subject</source>
+        <target state="needs-translation">Passwort zurücksetzen</target>
+      </trans-unit>
+      <trans-unit id="G2mhn_2" resname="reset.title">
+        <source>reset.title</source>
+        <target state="needs-translation">Das kann passieren …</target>
+      </trans-unit>
+      <trans-unit id="qbt.84Y" resname="reset.button">
+        <source>reset.button</source>
+        <target state="needs-translation">Passwort zurücksetzen</target>
+      </trans-unit>
+      <trans-unit id="rhkMAep" resname="reset.intro">
+        <source>reset.intro</source>
+        <target state="needs-translation">… Du hast also dein Passwort vergessen? Keine Sorge: Kimai wird dir dabei helfen, ein neues zu erstellen:</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

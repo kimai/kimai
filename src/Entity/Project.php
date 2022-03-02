@@ -176,7 +176,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * @var string|null
      *
      * @Serializer\Expose()
-     * @Serializer\Groups({"Project_Entity"})
+     * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="label.comment")
      *
