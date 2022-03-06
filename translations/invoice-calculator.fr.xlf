@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target>Par défaut : une entrée par enregistrement horaire</target>
+        <target>Par défaut : une seule entrée par enregistrement horaire</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target>Date : une participation par jour (utilise la date de début)</target>
+        <target>Date : une seule entrée par jour (utilise la date de début)</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>

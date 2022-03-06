@@ -34,6 +34,10 @@
         <source>weekly</source>
         <target>Datum: jedan unos po tjednu (koristi se datum početka)</target>
       </trans-unit>
+      <trans-unit id="aDtTH0H" resname="price">
+        <source>price</source>
+        <target>Cijena: jedan unos po cijeni</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
