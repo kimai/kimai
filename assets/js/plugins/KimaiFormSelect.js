@@ -118,8 +118,12 @@ export default class KimaiFormSelect extends KimaiPlugin {
         options = {...options, ...{
             language: this.getConfiguration('locale').replace('_', '-'),
             theme: "bootstrap",
-            matcher: this.matcher
+            matcher: this.matcher,
+            dropdownAutoWidth: true,
+            width: "resolve"
         }};
+
+        const element = jQuery(node);
 
         if (node.dataset['renderer'] !== undefined && node.dataset['renderer'] === 'color') {
             const templateResultFunc = function (state) {
@@ -131,10 +135,20 @@ export default class KimaiFormSelect extends KimaiPlugin {
                 templateResult: templateResultFunc
             }};
 
-            jQuery(node).select2(colorOptions);
+            element.select2(colorOptions);
         } else {
-            jQuery(node).select2(options);
+            element.select2(options);
         }
+
+        // this is a bugfix for safari, which does render the dropdown only with correct width upon the second opening
+        // see https://github.com/select2/select2/issues/4678
+        element.on('select2:open', function (ev) {
+            if (element.data('performing-reopen') === undefined || element.data('performing-reopen') === null) {
+                element.data('performing-reopen', true);
+                element.select2('close');
+                element.select2('open');
+            }
+        });
     }
 
     activateSelectPicker(selector, container) {
