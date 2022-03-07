@@ -21,7 +21,7 @@ class Constants
     /**
      * The current release: major * 10000 + minor * 100 + patch
      */
-    public const VERSION_ID = 11801;
+    public const VERSION_ID = 11802;
     /**
      * The current release status, either "stable" or "dev"
      */

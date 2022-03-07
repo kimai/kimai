@@ -21,3 +21,9 @@
 .select2-container--bootstrap .select2-results__option {
     min-height: 30px;
 }
+
+/* Fixes the size on quick-entry form */
+.select2-container--bootstrap {
+    display: table;
+    table-layout: fixed;
+}
