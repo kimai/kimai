@@ -29,6 +29,11 @@ final class StringHelper
 
     public static function sanitizeDDE(string $text): string
     {
+        // see #3189
+        if (\strlen($text) === 0) {
+            return $text;
+        }
+
         $sanitize = false;
 
         if (\in_array($text[0], self::DDE_PAYLOADS)) {
