@@ -74,7 +74,7 @@ class VersionCommand extends Command
         }
 
         if ($input->getOption('number')) {
-            $io->writeln(Constants::VERSION_ID);
+            $io->writeln((string) Constants::VERSION_ID);
 
             return 0;
         }
