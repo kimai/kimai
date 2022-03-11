@@ -611,11 +611,11 @@
       </trans-unit>
       <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>
-        <target>Jeder Zeiteintrag bekommt den gleichen Wert, unabhängig von seiner Dauer</target>
+        <target>Jeder Eintrag bekommt den gleichen Preis, unabhängig von seiner Dauer</target>
       </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
-        <target>Festbetrag</target>
+        <target>Festpreis</target>
       </trans-unit>
       <trans-unit id="EbfIoLp" resname="modal.columns.description">
         <source>modal.columns.description</source>
@@ -735,19 +735,19 @@
       </trans-unit>
       <trans-unit id="uz4SmfP" resname="help.rate_internal">
         <source>help.rate_internal</source>
-        <target>Interner Verrechnungswert (wenn dieser nicht angegeben ist, wird der normale Satz verwendet)</target>
+        <target>Wenn dieser nicht angegeben ist, wird der normale Preis verwendet</target>
       </trans-unit>
       <trans-unit id="QzvjNwg" resname="label.rate_internal">
         <source>label.rate_internal</source>
-        <target>Interner Lohn</target>
+        <target>Interner Preis</target>
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">
         <source>help.rate</source>
-        <target>Zu berechnender Stundensatz</target>
+        <target>Zu berechnender Preis pro Stunde bzw. pro Eintrag bei Festpreisen</target>
       </trans-unit>
       <trans-unit id="Ih3IFXj" resname="label.rate">
         <source>label.rate</source>
-        <target>Lohn</target>
+        <target>Preis</target>
       </trans-unit>
       <trans-unit id="w8T34A6" resname="label.hours">
         <source>label.hours</source>
@@ -763,11 +763,11 @@
       </trans-unit>
       <trans-unit id="IQ.tlua" resname="label.hourly_rate">
         <source>label.hourly_rate</source>
-        <target>Stundenlohn</target>
+        <target>Preis pro Stunde</target>
       </trans-unit>
       <trans-unit id="VAbtieW" resname="label.hourlyRate">
         <source>label.hourlyRate</source>
-        <target>Stundenlohn</target>
+        <target>Preis pro Stunde</target>
       </trans-unit>
       <trans-unit id="ijQyGRo" resname="label.tags">
         <source>label.tags</source>
@@ -935,11 +935,11 @@
       </trans-unit>
       <trans-unit id="mflwMcX" resname="rates.title">
         <source>rates.title</source>
-        <target>Gebühren</target>
+        <target>Preise</target>
       </trans-unit>
       <trans-unit id="0M_Gylq" resname="rates.empty">
         <source>rates.empty</source>
-        <target>Es wurden noch keine Stundensätze hinterlegt.</target>
+        <target>Es wurden noch keine Preise hinterlegt.</target>
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments">
         <source>attachments</source>

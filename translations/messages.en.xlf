@@ -106,11 +106,11 @@
       </trans-unit>
       <trans-unit id="0M_Gylq" resname="rates.empty">
         <source>rates.empty</source>
-        <target>No hourly rates have yet been configured.</target>
+        <target>No prices have been configured.</target>
       </trans-unit>
       <trans-unit id="mflwMcX" resname="rates.title">
         <source>rates.title</source>
-        <target>Fees</target>
+        <target>Prices</target>
       </trans-unit>
       <trans-unit id="zFfl7jw" resname="sum.total">
         <source>sum.total</source>
@@ -335,11 +335,11 @@
       </trans-unit>
       <trans-unit id="VAbtieW" resname="label.hourlyRate">
         <source>label.hourlyRate</source>
-        <target>Hourly rate</target>
+        <target>Hourly price</target>
       </trans-unit>
       <trans-unit id="IQ.tlua" resname="label.hourly_rate">
         <source>label.hourly_rate</source>
-        <target>Hourly rate</target>
+        <target>Hourly price</target>
       </trans-unit>
       <trans-unit id="dezCZWf" resname="label.skin">
         <source>label.skin</source>
@@ -355,23 +355,23 @@
       </trans-unit>
       <trans-unit id="Ih3IFXj" resname="label.rate">
         <source>label.rate</source>
-        <target>Rate</target>
+        <target>Price</target>
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">
         <source>help.rate</source>
-        <target>Hourly rate to be charged</target>
+        <target>Hourly price to be charged</target>
       </trans-unit>
       <trans-unit id="QzvjNwg" resname="label.rate_internal">
         <source>label.rate_internal</source>
-        <target>Internal rate</target>
+        <target>Internal price</target>
       </trans-unit>
       <trans-unit id="uz4SmfP" resname="help.rate_internal">
         <source>help.rate_internal</source>
-        <target>Internal costs (if this is not specified, the normal rate is used)</target>
+        <target>If this is not specified, the normal price is used</target>
       </trans-unit>
       <trans-unit id="v72sA1c" resname="label.recalculate_rates">
         <source>label.recalculate_rates</source>
-        <target>Recalculate rates</target>
+        <target>Recalculate prices</target>
       </trans-unit>
       <trans-unit id="foM2o5T" resname="label.language">
         <source>label.language</source>
@@ -515,11 +515,11 @@
       </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
-        <target>Fixed rate</target>
+        <target>Fixed price</target>
       </trans-unit>
       <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>
-        <target>Each time record gets the same value, regardless of its duration</target>
+        <target>Each record gets the same price, regardless of its duration</target>
       </trans-unit>
       <trans-unit id="YTSS_Q1" resname="label.color">
         <source>label.color</source>

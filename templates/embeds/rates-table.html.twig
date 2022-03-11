@@ -2,7 +2,7 @@
     {% import "macros/widgets.html.twig" as widgets %}
     {% block box_attributes %}id="{{ id }}"{% endblock %}
     {% block box_title %}
-        {{ 'label.hourlyRate'|trans }}
+        {{ 'rates.title'|trans }}
     {% endblock %}
     {% block box_tools %}
         {{ widgets.card_tool_button('create', {'class': 'modal-ajax-form open-edit', 'title': 'create', 'url': create_url}) }}
