@@ -9,7 +9,6 @@
 
 namespace App\Utils;
 
-use Symfony\Bundle\FrameworkBundle\Translation\Translator as BaseTranslator;
 use Symfony\Component\Translation\Exception\InvalidArgumentException;
 use Symfony\Component\Translation\MessageCatalogueInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;
@@ -19,15 +18,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleAwareInterface
 {
     /**
-     * @var BaseTranslator
+     * @var TranslatorInterface
      */
     private $translator;
     /**
      * @var array
      */
-    private $localDomains = [];
+    private $localDomains;
 
-    public function __construct(BaseTranslator $translator, array $localDomains = [])
+    public function __construct(TranslatorInterface $translator, array $localDomains = [])
     {
         $this->translator = $translator;
         $this->localDomains = $localDomains;
@@ -51,8 +50,6 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
 
     protected function hasLocalOverwrite($id, $domain, $locale = null): bool
     {
-        $found = false;
-
         $catalogue = $this->getCatalogue($locale);
         while (false === ($found = $catalogue->defines($id, $domain))) {
             if ($cat = $catalogue->getFallbackCatalogue()) {
