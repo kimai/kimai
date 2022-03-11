@@ -9,6 +9,7 @@
 
 namespace App\Utils;
 
+use Symfony\Bundle\FrameworkBundle\Translation\Translator as BaseTranslator;
 use Symfony\Component\Translation\Exception\InvalidArgumentException;
 use Symfony\Component\Translation\MessageCatalogueInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;
@@ -18,7 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleAwareInterface
 {
     /**
-     * @var TranslatorInterface
+     * @var BaseTranslator
      */
     private $translator;
     /**
@@ -26,7 +27,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
      */
     private $localDomains;
 
-    public function __construct(TranslatorInterface $translator, array $localDomains = [])
+    public function __construct(BaseTranslator $translator, array $localDomains = [])
     {
         $this->translator = $translator;
         $this->localDomains = $localDomains;
