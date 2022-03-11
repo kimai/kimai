@@ -19,280 +19,287 @@
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/utilities";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
 
-body.invoice_print {
-    background-color: #eee;
+body {
+    font-family: $font-family-sans-serif;
+    
+    &.invoice_print {
+        background-color: #eee;
 
-    .table.no-border, .table.no-border td, .table.no-border th {
-        border: 0;
-    }
-
-    h1, h2, h3 {
-        font-family: 'Source Sans Pro', sans-serif;
-    }
-
-    .invoice {
-        margin: 105px auto 30px auto;
-        padding: 50px 65px;
-        min-height: 297mm;
-        position: relative;
-        max-width: 210mm;
-        box-shadow: 0 0 20px rgba(80,80,80,0.7);
-        background: #fff;
-        border: none;
-    }
-
-    .page-header {
-        margin: 10px 0 20px 0;
-        font-size: 22px;
-        >small {
-            color: #666;
-            display: block;
-            margin-top: 5px;
+        .table.no-border, .table.no-border td, .table.no-border th {
+            border: 0;
         }
-        h3 {
-            border-color: #ddd;
+
+        h1, h2, h3 {
+            font-family: $font-family-sans-serif;
         }
-    }
-    /*
-    .page-header {
-        margin: 10px 0 20px 0;
-        font-size: 22px;
-    }
-*/
-    div.invoice-address {
-        margin-top: 30px;
-        margin-bottom: 30px;
-    }
 
-    table.invoice-meta th {
-        padding-right: 40px;
-    }
-    table.invoice-sum th {
-        width: 70%;
-    }
-    table.invoice-sum th, table.invoice-sum td  {
-        text-align: right;
-    }
+        .invoice {
+            margin: 105px auto 30px auto;
+            padding: 50px 65px;
+            min-height: 297mm;
+            position: relative;
+            max-width: 210mm;
+            box-shadow: 0 0 20px rgba(80, 80, 80, 0.7);
+            background: #fff;
+            border: none;
+        }
 
-    .invoice-items {
-        margin-top: 2em;
-        margin-bottom: 3em;
+        .page-header {
+            margin: 10px 0 20px 0;
+            font-size: 22px;
 
-        .table {
-            thead th {
-                font-weight: bold;
-                border-bottom: 1px solid #ddd;
-                padding-bottom: 15px
+            > small {
+                color: #666;
+                display: block;
+                margin-top: 5px;
             }
-            tfoot {
-                border-top: 1px solid #ddd;
 
-                tr:first-child th,
-                tr:first-child td {
-                    padding-top: 15px
+            h3 {
+                border-color: #ddd;
+            }
+        }
+
+        div.invoice-address {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        table.invoice-meta th {
+            padding-right: 40px;
+        }
+
+        table.invoice-sum th {
+            width: 70%;
+        }
+
+        table.invoice-sum th, table.invoice-sum td {
+            text-align: right;
+        }
+
+        .invoice-items {
+            margin-top: 2em;
+            margin-bottom: 3em;
+
+            .table {
+                thead th {
+                    font-weight: bold;
+                    border-bottom: 1px solid #ddd;
+                    padding-bottom: 15px
                 }
-                tr {
-                    th,td {
-                        border:none;
-                        padding: 4px 8px;
+
+                tfoot {
+                    border-top: 1px solid #ddd;
+
+                    tr:first-child th,
+                    tr:first-child td {
+                        padding-top: 15px
+                    }
+
+                    tr {
+                        th, td {
+                            border: none;
+                            padding: 4px 8px;
+                        }
                     }
                 }
             }
-        }
 
-    }
-
-    .footer {
-        border-top: 1px solid #ccc;
-        margin-top: 50px;
-        font-size: 0.8em;
-        padding-top: 10px;
-        width: 100%;
-    }
-
-    /* ================================ FREELANCER INVOICE ================================ */
-
-    #freelancer-invoice {
-
-        box-sizing: border-box;
-
-        h1 {
-            font: bold 100% sans-serif;
-            letter-spacing: 0.5em;
-            text-align: center;
-            text-transform: uppercase;
-        }
-
-        h2 {
-            font: bold 1.5em sans-serif;
-            margin-bottom: 1em;
-        }
-
-        /* table */
-
-        table {
-            width: 100%;
-        }
-
-        table {
-            border-collapse: separate;
-            border-spacing: 0;
-        }
-
-        /* header */
-
-        header {
-            &:after {
-                clear: both;
-                content: "";
-                display: table;
-                font-size: 1em;
-            }
-
-            address {
-                float: left;
-                font-style: normal;
-                line-height: 1.25;
-                margin: 0 1em 1em 0;
-                font-size: 0.7em;
-            }
-        }
-
-        article address {
-            font-size: 1em;
-            float: left;
-        }
-
-        article.address {
-            margin:1em 0 1.5em 0;
-        }
-
-        /* article */
-
-        article:after {
-            clear: both;
-            content: "";
-            display: table;
-        }
-
-        article h1 {
-            clip: rect(0 0 0 0);
-            position: absolute;
-        }
-
-        article p {
-            margin-bottom: 20px;
-        }
-
-        /* table meta & balance */
-
-        table.meta:after, table.balance:after {
-            clear: both;
-            content: "";
-            display: table;
-        }
-
-        /* table meta */
-
-        table.meta {
-            float: right;
-            width: 50%;
-            font-size: 85%;
-
-            th {
-                text-align: right;
-                font-weight: normal;
-            }
-
-            td {
-                width: 120px;
-                text-align: right;
-            }
-        }
-
-        /* table balance */
-
-        table.balance {
-            float: right;
-            margin-top: 1em;
-            th {
-                text-align: right;
-                font-weight: normal;
-            }
-
-            td {
-                width: 140px;
-                text-align: right;
-                line-height: 22px;
-            }
-
-            .total {
-                font-weight: bold;
-            }
-        }
-
-        /* table items */
-
-        table.inventory {
-            clear: both;
-            width: 100%;
-            margin-top: 2em;
-            border-bottom: 1px solid #000;
-        }
-
-        table.inventory th,
-        table.inventory td {
-            padding: 5px;
-        }
-
-        table.inventory thead th {
-            font-weight: bold;
-            border-width: 0 0 1px 0;
-            border-bottom: 1px solid #000;
-            padding-bottom: 15px
-        }
-
-        table.inventory tbody tr:first-child td {
-            padding-top: 15px
-        }
-
-        table.inventory tbody tr:last-child td {
-            padding-bottom: 15px
         }
 
         .footer {
-            border-color: #000;
+            border-top: 1px solid #ccc;
+            margin-top: 50px;
+            font-size: 0.8em;
+            padding-top: 10px;
+            width: 100%;
         }
-    }
 
-    /* ================================ PRINTING RULES ================================ */
+        /* ================================ FREELANCER INVOICE ================================ */
 
-    @media print {
-        * {
-            -webkit-print-color-adjust: exact;
-        }
-        body, .wrapper {
-            margin: 0;
-            padding: 0;
-            background-color: white;
-        }
         #freelancer-invoice {
-            span:empty {
-                display: none;
+
+            box-sizing: border-box;
+
+            h1 {
+                font: bold 100% sans-serif;
+                letter-spacing: 0.5em;
+                text-align: center;
+                text-transform: uppercase;
             }
-            .add, .cut {
-                display: none;
+
+            h2 {
+                font: bold 1.5em sans-serif;
+                margin-bottom: 1em;
+            }
+
+            /* table */
+
+            table {
+                width: 100%;
+            }
+
+            table {
+                border-collapse: separate;
+                border-spacing: 0;
+            }
+
+            /* header */
+
+            header {
+                &:after {
+                    clear: both;
+                    content: "";
+                    display: table;
+                    font-size: 1em;
+                }
+
+                address {
+                    float: left;
+                    font-style: normal;
+                    line-height: 1.25;
+                    margin: 0 1em 1em 0;
+                    font-size: 0.7em;
+                }
+            }
+
+            article address {
+                font-size: 1em;
+                float: left;
+            }
+
+            article.address {
+                margin: 1em 0 1.5em 0;
+            }
+
+            /* article */
+
+            article:after {
+                clear: both;
+                content: "";
+                display: table;
+            }
+
+            article h1 {
+                clip: rect(0 0 0 0);
+                position: absolute;
+            }
+
+            article p {
+                margin-bottom: 20px;
+            }
+
+            /* table meta & balance */
+
+            table.meta:after, table.balance:after {
+                clear: both;
+                content: "";
+                display: table;
+            }
+
+            /* table meta */
+
+            table.meta {
+                float: right;
+                width: 50%;
+                font-size: 85%;
+
+                th {
+                    text-align: right;
+                    font-weight: normal;
+                }
+
+                td {
+                    width: 120px;
+                    text-align: right;
+                }
+            }
+
+            /* table balance */
+
+            table.balance {
+                float: right;
+                margin-top: 1em;
+
+                th {
+                    text-align: right;
+                    font-weight: normal;
+                }
+
+                td {
+                    width: 140px;
+                    text-align: right;
+                    line-height: 22px;
+                }
+
+                .total {
+                    font-weight: bold;
+                }
+            }
+
+            /* table items */
+
+            table.inventory {
+                clear: both;
+                width: 100%;
+                margin-top: 2em;
+                border-bottom: 1px solid #000;
+            }
+
+            table.inventory th,
+            table.inventory td {
+                padding: 5px;
+            }
+
+            table.inventory thead th {
+                font-weight: bold;
+                border-width: 0 0 1px 0;
+                border-bottom: 1px solid #000;
+                padding-bottom: 15px
+            }
+
+            table.inventory tbody tr:first-child td {
+                padding-top: 15px
+            }
+
+            table.inventory tbody tr:last-child td {
+                padding-bottom: 15px
+            }
+
+            .footer {
+                border-color: #000;
             }
         }
-        .invoice {
-            margin: 1em 2em;
-            font-size: 90%;
-            width: unset;
-            padding: 0;
-            min-height: unset;
-            position: unset;
-            max-width: unset;
-            box-shadow: unset;
+
+        /* ================================ PRINTING RULES ================================ */
+
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact;
+            }
+            body, .wrapper {
+                margin: 0;
+                padding: 0;
+                background-color: white;
+            }
+            #freelancer-invoice {
+                span:empty {
+                    display: none;
+                }
+
+                .add, .cut {
+                    display: none;
+                }
+            }
+            .invoice {
+                margin: 1em 2em;
+                font-size: 90%;
+                width: unset;
+                padding: 0;
+                min-height: unset;
+                position: unset;
+                max-width: unset;
+                box-shadow: unset;
+            }
         }
     }
 }
