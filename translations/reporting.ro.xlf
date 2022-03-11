@@ -42,6 +42,10 @@
         <source>report_weekly_users</source>
         <target>Vizualizare săptămânală pentru toți utilizatorii</target>
       </trans-unit>
+      <trans-unit id="3JLmvfB" resname="report_user_year">
+        <source>report_user_year</source>
+        <target>Vizualizare anuală pentru un utilizator</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
