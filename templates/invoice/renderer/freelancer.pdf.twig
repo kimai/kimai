@@ -18,6 +18,9 @@
         <tr>
             <td class="text-small">
                 {{ model.template.company }} &ndash; {{ model.template.address|nl2str(' &ndash; ') }}
+                {% if model.template.vatId is not empty %}
+                    &ndash; {{ 'label.vat_id'|trans }}: {{ model.template.vatId }}
+                {% endif %}
             </td>
             <td class="text-small text-right">
                 {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
@@ -56,39 +59,43 @@ mpdf-->
             <td>
                 <strong>{{ model.customer.company|default(model.customer.name) }}</strong><br>
                 {{ model.customer.address|nl2br }}
-                {% if model.customer.vatId is not empty %}
-                    <br>
-                    {{ 'label.vat_id'|trans }}: {{ model.customer.vatId }}
-                {% endif %}
             </td>
             <td class="text-right">
+                {% set classLeft = 'text-left' %}
+                {% set classRight = 'text-right text-nowrap padding-left' %}
                 <table style="width: 240px">
                     <tr>
-                        <td>{{ 'label.date'|trans }}:</td>
-                        <td class="text-nowrap padding-left">{{ model.invoiceDate|date_short }}</td>
+                        <td class="{{ classLeft }}">{{ 'label.date'|trans }}</td>
+                        <td class="{{ classRight }}">{{ model.invoiceDate|date_short }}</td>
                     </tr>
                     <tr>
-                        <td>{{ 'invoice.service_date'|trans }}:</td>
-                        <td class="text-nowrap padding-left">{{ model.query.end|month_name }} {{ model.query.end|date('Y') }}</td>
+                        <td class="{{ classLeft }}">{{ 'invoice.service_date'|trans }}</td>
+                        <td class="{{ classRight }}">{{ model.query.end|month_name }} {{ model.query.end|date('Y') }}</td>
                     </tr>
                     <tr>
-                        <td>{{ 'invoice.number'|trans }}:</td>
-                        <td class="text-nowrap padding-left">{{ model.invoiceNumber }}</td>
+                        <td class="{{ classLeft }}">{{ 'invoice.number'|trans }}</td>
+                        <td class="{{ classRight }}">{{ model.invoiceNumber }}</td>
                     </tr>
                     <tr>
-                        <td>{{ 'invoice.due_days'|trans }}:</td>
-                        <td class="text-nowrap padding-left">{{ model.dueDate|date_short }}</td>
+                        <td class="{{ classLeft }}">{{ 'invoice.due_days'|trans }}</td>
+                        <td class="{{ classRight }}">{{ model.dueDate|date_short }}</td>
                     </tr>
-                    {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
+                    {% if model.customer.number is not empty %}
                         <tr>
-                            <td>{{ 'label.orderNumber'|trans }}</td>
-                            <td class="text-nowrap padding-left">{{ model.query.project.orderNumber }}</td>
+                            <td class="{{ classLeft }}">{{ 'label.number'|trans }}</td>
+                            <td class="{{ classRight }}">{{ model.customer.number }}</td>
                         </tr>
                     {% endif %}
-                    {% if model.template.vatId is not empty %}
+                    {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
                         <tr>
-                            <td>{{ 'label.vat_id'|trans }}:</td>
-                            <td class="text-nowrap padding-left">{{ model.template.vatId }}</td>
+                            <td class="{{ classLeft }}">{{ 'label.orderNumber'|trans }}</td>
+                            <td class="{{ classRight }}">{{ model.query.project.orderNumber }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if model.customer.vatId is not empty %}
+                        <tr>
+                            <td class="{{ classLeft }}">{{ 'label.vat_id'|trans }}</td>
+                            <td class="{{ classRight }}">{{ model.customer.vatId }}</td>
                         </tr>
                     {% endif %}
                 </table>

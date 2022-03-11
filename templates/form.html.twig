@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
-<head></head>
+<head>
+    <title>{% block page_title %}{{- get_title() -}}{% endblock %}</title>
+</head>
 <body class="ajax-forms">
 <div id="ajax-messages">
     {{ include('@AdminLTE/Partials/_flash_messages.html.twig') }}

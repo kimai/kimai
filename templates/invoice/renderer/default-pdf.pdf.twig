@@ -47,7 +47,7 @@ mpdf-->
 <div class="wrapper">
     <table class="addresses">
         <tr>
-            <td width="60%">
+            <td style="width:60%">
                 {{ 'invoice.to'|trans }}
                 <br>
                 <strong>{{ model.customer.company|default(model.customer.name) }}</strong>
@@ -56,14 +56,6 @@ mpdf-->
                 {% if model.customer.vatId is not empty %}
                     <br>
                     {{ 'label.vat_id'|trans }}: {{ model.customer.vatId }}
-                {% endif %}
-                {% if model.customer.number is not empty %}
-                    <br>
-                    {{ 'label.number'|trans }}: {{ model.customer.number }}
-                {% endif %}
-                {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
-                    <br>
-                    {{ 'label.orderNumber'|trans }}: {{ model.query.project.orderNumber }}
                 {% endif %}
             </td>
             <td>
@@ -82,12 +74,24 @@ mpdf-->
     </table>
 
     <p>
-        <strong>{{ 'invoice.number'|trans }}:</strong>
+        {{ 'invoice.number'|trans }}:
         {{ model.invoiceNumber }}
 
         <br>
-        <strong>{{ 'invoice.due_days'|trans }}:</strong>
+        {{ 'invoice.due_days'|trans }}:
         {{ model.dueDate|date_short }}
+
+        {% if model.customer.number is not empty %}
+            <br>
+            {{ 'label.number'|trans }}:
+            {{ model.customer.number }}
+        {% endif %}
+
+        {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
+            <br>
+            {{ 'label.orderNumber'|trans }}:
+            {{ model.query.project.orderNumber }}
+        {% endif %}
     </p>
 
     <table class="items">
