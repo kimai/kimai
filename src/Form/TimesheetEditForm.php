@@ -169,7 +169,7 @@ class TimesheetEditForm extends AbstractType
     {
         $durationOptions = [
             'required' => false,
-            'docu_chapter' => 'timesheet.html#duration-format',
+            'docu_chapter' => 'duration-format.html',
             'attr' => [
                 'placeholder' => '0:00',
             ],
