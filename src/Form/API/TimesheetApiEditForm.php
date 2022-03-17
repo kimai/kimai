@@ -10,12 +10,22 @@
 namespace App\Form\API;
 
 use App\Form\TimesheetEditForm;
+use App\Form\Type\BillableType;
 use App\Form\Type\TagsInputType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TimesheetApiEditForm extends TimesheetEditForm
 {
+    protected function addBillable(FormBuilderInterface $builder, array $options)
+    {
+        if (!$options['include_billable']) {
+            return;
+        }
+
+        $builder->add('billable', BillableType::class, []);
+    }
+
     /**
      * {@inheritdoc}
      */

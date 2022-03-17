@@ -22,6 +22,7 @@ use App\Form\Type\UserType;
 use App\Form\Type\YesNoType;
 use App\Repository\CustomerRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -265,7 +266,56 @@ class TimesheetEditForm extends AbstractType
             return;
         }
 
-        $builder->add('billable', TimesheetBillableType::class, []);
+        $builder->add('billableMode', TimesheetBillableType::class, []);
+        $builder->addModelTransformer(new CallbackTransformer(
+            function (Timesheet $record) {
+                switch ($record->getBillableMode()) {
+                    case Timesheet::BILLABLE_DEFAULT:
+                        if ($record->isBillable()) {
+                            $record->setBillableMode(Timesheet::BILLABLE_YES);
+                        } else {
+                            $record->setBillableMode(Timesheet::BILLABLE_NO);
+                        }
+                        break;
+                }
+
+                return $record;
+            },
+            function (Timesheet $record) {
+                switch ($record->getBillableMode()) {
+                    case Timesheet::BILLABLE_NO:
+                        $record->setBillable(false);
+                        break;
+                    case Timesheet::BILLABLE_YES:
+                        $record->setBillable(true);
+                        break;
+                    case Timesheet::BILLABLE_AUTOMATIC:
+                        $billable = true;
+
+                        $activity = $record->getActivity();
+                        if ($activity !== null && !$activity->isBillable()) {
+                            $billable = false;
+                        }
+
+                        $project = $record->getProject();
+                        if ($billable && $project !== null && !$project->isBillable()) {
+                            $billable = false;
+                        }
+
+                        if ($billable && $project !== null) {
+                            $customer = $project->getCustomer();
+                            if ($customer !== null && !$customer->isBillable()) {
+                                $billable = false;
+                            }
+                        }
+
+                        $record->setBillable($billable);
+                        break;
+                }
+
+                return $record;
+            }
+        ));
     }
 
     /**

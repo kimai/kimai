@@ -9,6 +9,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Timesheet;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,9 +27,9 @@ class TimesheetBillableType extends AbstractType
         $resolver->setDefaults([
             'label' => 'label.billable',
             'choices' => [
-                'automatic' => null,
-                'yes' => true,
-                'no' => false,
+                'automatic' => Timesheet::BILLABLE_AUTOMATIC,
+                'yes' => Timesheet::BILLABLE_YES,
+                'no' => Timesheet::BILLABLE_NO,
             ],
         ]);
     }

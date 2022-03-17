@@ -98,6 +98,11 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      */
     public const OVERTIME = 'overtime';
 
+    public const BILLABLE_AUTOMATIC = 'auto';
+    public const BILLABLE_YES = 'yes';
+    public const BILLABLE_NO = 'no';
+    public const BILLABLE_DEFAULT = 'default';
+
     /**
      * @var int|null
      *
@@ -269,6 +274,11 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      * @Assert\NotNull()
      */
     private $billable = true;
+    /**
+     * Internal property used to determine whether the billable field should be calculated automatically.
+     * @var string
+     */
+    private $billableMode = self::BILLABLE_DEFAULT;
     /**
      * @var string
      *
@@ -649,16 +659,26 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         return $this->billable;
     }
 
-    public function getBillable(): ?bool
+    public function getBillable(): bool
     {
         return $this->billable;
     }
 
-    public function setBillable(?bool $billable): Timesheet
+    public function setBillable(bool $billable): Timesheet
     {
         $this->billable = $billable;
 
         return $this;
+    }
+
+    public function getBillableMode(): string
+    {
+        return $this->billableMode;
+    }
+
+    public function setBillableMode(string $billableMode): void
+    {
+        $this->billableMode = $billableMode;
     }
 
     public function getFixedRate(): ?float

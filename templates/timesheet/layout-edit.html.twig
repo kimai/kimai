@@ -87,6 +87,8 @@
             {% endif %}
             {% if form.billable is defined %}
                 {% set colWidth = colWidth + 1 %}
+            {% elseif form.billableMode is defined %}
+                {% set colWidth = colWidth + 1 %}
             {% endif %}
             {% if colWidth > 0 %}
             <div class="row">
@@ -103,6 +105,10 @@
                 {% if form.billable is defined %}
                     <div class="col-md-{{ 12 / colWidth }}">
                         {{ form_row(form.billable, {'row_attr': {'class': 'timesheet_edit_form_row_billable'}}) }}
+                    </div>
+                {% elseif form.billableMode is defined %}
+                    <div class="col-md-{{ 12 / colWidth }}">
+                        {{ form_row(form.billableMode, {'row_attr': {'class': 'timesheet_edit_form_row_billable'}}) }}
                     </div>
                 {% endif %}
             </div>
