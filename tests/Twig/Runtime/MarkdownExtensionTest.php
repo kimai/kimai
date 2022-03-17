@@ -74,15 +74,19 @@ class MarkdownExtensionTest extends TestCase
             $sut->commentContent("- test\n- foo", false)
         );
 
-        $loremIpsum = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.';
+        $loremIpsum = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.';
+        $loremIpsumShort = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut l &hellip;';
 
         $this->assertEquals('', $sut->commentContent(null));
         $this->assertEquals('', $sut->commentContent(''));
-        $this->assertEquals('# foobar', $sut->commentContent('# foobar'));
-        $this->assertEquals('## foobar', $sut->commentContent('## foobar'));
-        $this->assertEquals('### foobar', $sut->commentContent('### foobar'));
+        $this->assertEquals('# foobar', $sut->commentContent('# foobar', false));
+        $this->assertEquals('<p># foobar</p>', $sut->commentContent('# foobar', true));
+        $this->assertEquals('<p># foobar</p>', $sut->commentContent('# foobar'));
+        $this->assertEquals('## foobar', $sut->commentContent('## foobar', false));
+        $this->assertEquals('### foobar', $sut->commentContent('### foobar', false));
         $this->assertEquals('<p>' . $loremIpsum . '</p>', $sut->commentContent($loremIpsum, true));
-        $this->assertEquals('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut l &hellip;', $sut->commentContent($loremIpsum));
+        $this->assertEquals('<p>' . $loremIpsum . '</p>', $sut->commentContent($loremIpsum));
+        $this->assertEquals($loremIpsumShort, $sut->commentContent($loremIpsum, false));
 
         $config = new SystemConfiguration($loader, ['timesheet' => ['markdown_content' => true]]);
         $sut = new MarkdownExtension(new Markdown(), $config);
