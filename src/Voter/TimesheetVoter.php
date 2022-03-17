@@ -44,6 +44,7 @@ final class TimesheetVoter extends Voter
         self::VIEW_RATE,
         self::EDIT_RATE,
         self::EDIT_EXPORT,
+        'edit_billable',
         'duplicate'
     ];
 
@@ -130,6 +131,7 @@ final class TimesheetVoter extends Voter
             case self::VIEW:
             case self::EXPORT:
             case self::EDIT_EXPORT:
+            case 'edit_billable':
                 $permission .= $attribute;
                 break;
 

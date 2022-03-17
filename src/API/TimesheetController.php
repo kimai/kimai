@@ -317,6 +317,7 @@ class TimesheetController extends BaseApiController
         $form = $this->createForm(TimesheetApiEditForm::class, $timesheet, [
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
+            'include_billable' => $this->isGranted('edit_billable', $timesheet),
             'include_user' => $this->isGranted('create_other_timesheet'),
             'allow_begin_datetime' => $mode->canUpdateTimesWithAPI(),
             'allow_end_datetime' => $mode->canUpdateTimesWithAPI(),
@@ -394,6 +395,7 @@ class TimesheetController extends BaseApiController
         $form = $this->createForm(TimesheetApiEditForm::class, $timesheet, [
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
+            'include_billable' => $this->isGranted('edit_billable', $timesheet),
             'include_user' => $this->isGranted('edit', $timesheet),
             'allow_begin_datetime' => $mode->canUpdateTimesWithAPI(),
             'allow_end_datetime' => $mode->canUpdateTimesWithAPI(),
@@ -614,12 +616,10 @@ class TimesheetController extends BaseApiController
                 @trigger_error('Setting the "copy" attribute in "restart timesheet" API to something else then "all" is deprecated', E_USER_DEPRECATED);
             }
 
-            $copyTimesheet
-                ->setHourlyRate($timesheet->getHourlyRate())
-                ->setFixedRate($timesheet->getFixedRate())
-                ->setDescription($timesheet->getDescription())
-                ->setBillable($timesheet->isBillable())
-                ;
+            $copyTimesheet->setHourlyRate($timesheet->getHourlyRate());
+            $copyTimesheet->setFixedRate($timesheet->getFixedRate());
+            $copyTimesheet->setDescription($timesheet->getDescription());
+            $copyTimesheet->setBillable($timesheet->isBillable());
 
             foreach ($timesheet->getTags() as $tag) {
                 $copyTimesheet->addTag($tag);

@@ -265,7 +265,7 @@ class TimesheetMultiUpdate extends AbstractType
             'include_user' => false,
             'include_rate' => false,
             'include_exported' => false,
-            'include_billable' => true,
+            'include_billable' => false,
         ]);
     }
 }

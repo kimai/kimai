@@ -124,6 +124,18 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      */
     private $visible = true;
     /**
+     * @var bool
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     *
+     * @Exporter\Expose(label="label.billable", type="boolean")
+     *
+     * @ORM\Column(name="billable", type="boolean", nullable=false)
+     * @Assert\NotNull()
+     */
+    private $billable = true;
+    /**
      * Meta fields
      *
      * All visible meta (custom) fields registered with this activity
@@ -225,6 +237,16 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     public function isVisible(): bool
     {
         return $this->visible;
+    }
+
+    public function setBillable(bool $billable): void
+    {
+        $this->billable = $billable;
+    }
+
+    public function isBillable(): bool
+    {
+        return $this->billable;
     }
 
     /**

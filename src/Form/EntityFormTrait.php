@@ -9,6 +9,7 @@
 
 namespace App\Form;
 
+use App\Form\Type\BillableType;
 use App\Form\Type\BudgetType;
 use App\Form\Type\DurationType;
 use App\Form\Type\MetaFieldsCollectionType;
@@ -48,7 +49,9 @@ trait EntityFormTrait
         $builder
             ->add('visible', YesNoType::class, [
                 'label' => 'label.visible',
-            ]);
+            ])
+            ->add('billable', BillableType::class)
+        ;
     }
 
     /**

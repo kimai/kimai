@@ -10,7 +10,6 @@
 namespace App\Form;
 
 use App\Entity\Timesheet;
-use App\Form\Type\BillableType;
 use App\Form\Type\DateTimePickerType;
 use App\Form\Type\DescriptionType;
 use App\Form\Type\DurationType;
@@ -18,6 +17,7 @@ use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
 use App\Form\Type\MetaFieldsCollectionType;
 use App\Form\Type\TagsType;
+use App\Form\Type\TimesheetBillableType;
 use App\Form\Type\UserType;
 use App\Form\Type\YesNoType;
 use App\Repository\CustomerRepository;
@@ -265,7 +265,7 @@ class TimesheetEditForm extends AbstractType
             return;
         }
 
-        $builder->add('billable', BillableType::class, []);
+        $builder->add('billable', TimesheetBillableType::class, []);
     }
 
     /**

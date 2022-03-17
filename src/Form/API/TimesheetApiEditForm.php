@@ -49,6 +49,7 @@ class TimesheetApiEditForm extends TimesheetEditForm
             // because the docs are cached without these fields otherwise
             'include_user' => true,
             'include_exported' => true,
+            'include_billable' => true,
             'include_rate' => true,
         ]);
     }

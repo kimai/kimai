@@ -78,14 +78,33 @@
                 {% endif %}
                 </div>
             {% endif %}
-            {% if form.fixedRate is defined and form.hourlyRate is defined %}
+            {% set colWidth = 0 %}
+            {% if form.fixedRate is defined %}
+                {% set colWidth = colWidth + 1 %}
+            {% endif %}
+            {% if form.hourlyRate is defined %}
+                {% set colWidth = colWidth + 1 %}
+            {% endif %}
+            {% if form.billable is defined %}
+                {% set colWidth = colWidth + 1 %}
+            {% endif %}
+            {% if colWidth > 0 %}
             <div class="row">
-                <div class="col-md-6">
-                    {{ form_row(form.fixedRate, {'row_attr': {'class': 'timesheet_edit_form_row_fixedRate'}}) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_row(form.hourlyRate, {'row_attr': {'class': 'timesheet_edit_form_row_hourlyRate'}}) }}
-                </div>
+                {% if form.fixedRate is defined %}
+                    <div class="col-md-{{ 12 / colWidth }}">
+                        {{ form_row(form.fixedRate, {'row_attr': {'class': 'timesheet_edit_form_row_fixedRate'}}) }}
+                    </div>
+                {% endif %}
+                {% if form.hourlyRate is defined %}
+                    <div class="col-md-{{ 12 / colWidth }}">
+                        {{ form_row(form.hourlyRate, {'row_attr': {'class': 'timesheet_edit_form_row_hourlyRate'}}) }}
+                    </div>
+                {% endif %}
+                {% if form.billable is defined %}
+                    <div class="col-md-{{ 12 / colWidth }}">
+                        {{ form_row(form.billable, {'row_attr': {'class': 'timesheet_edit_form_row_billable'}}) }}
+                    </div>
+                {% endif %}
             </div>
             {% endif %}
             {% if form.metaFields is defined and form.metaFields is not empty %}
@@ -93,19 +112,11 @@
                     {{ form_row(meta) }}
                 {% endfor %}
             {% endif %}
-            {% if form.exported is defined or form.billable is defined %}
-                {% set ebLength = (form.exported is defined and form.billable is defined) ? 6 : 12 %}
+            {% if form.exported is defined %}
                 <div class="row">
-                    {% if form.exported is defined %}
-                    <div class="col-md-{{ ebLength }}">
+                    <div class="col-md-12">
                         {{ form_row(form.exported, {'row_attr': {'class': 'timesheet_edit_form_row_exported'}}) }}
                     </div>
-                    {% endif %}
-                    {% if form.billable is defined %}
-                    <div class="col-md-{{ ebLength }}">
-                        {{ form_row(form.billable, {'row_attr': {'class': 'timesheet_edit_form_row_billable'}}) }}
-                    </div>
-                    {% endif %}
                 </div>
             {% endif %}
             {{ form_widget(form) }}

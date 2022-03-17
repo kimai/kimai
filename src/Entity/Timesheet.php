@@ -649,11 +649,14 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         return $this->billable;
     }
 
-    public function setBillable(bool $billable): Timesheet
+    public function getBillable(): ?bool
+    {
+        return $this->billable;
+    }
+
+    public function setBillable(?bool $billable): void
     {
         $this->billable = $billable;
-
-        return $this;
     }
 
     public function getFixedRate(): ?float

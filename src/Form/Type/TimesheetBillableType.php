@@ -10,12 +10,13 @@
 namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Custom form field type to select if something is billable.
+ * Custom form field type to select if a timesheet is billable.
  */
-class BillableType extends AbstractType
+class TimesheetBillableType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -24,6 +25,11 @@ class BillableType extends AbstractType
     {
         $resolver->setDefaults([
             'label' => 'label.billable',
+            'choices' => [
+                'automatic' => null,
+                'yes' => true,
+                'no' => false,
+            ],
         ]);
     }
 
@@ -32,6 +38,6 @@ class BillableType extends AbstractType
      */
     public function getParent()
     {
-        return YesNoType::class;
+        return ChoiceType::class;
     }
 }
