@@ -10,7 +10,8 @@
 table.dataTable.table > tbody > tr > td {
     vertical-align: middle;
     .img-circle {
-        max-width: 30px;
+        width: 30px;
+        height: 30px;
         margin-right: 0;
         &.teamlead {
             box-shadow: 0 0 5px 3px $gray-lte;
