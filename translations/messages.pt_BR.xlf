@@ -1273,6 +1273,18 @@
         <source>Display of entries in selection lists</source>
         <target>Exibe as entradas nas listas de seleção</target>
       </trans-unit>
+      <trans-unit id="O40d_3K" resname="theme.layout" approved="no">
+        <source>Display: layout</source>
+        <target state="translated">Visualização: layout</target>
+      </trans-unit>
+      <trans-unit id="keE.KO." resname="Only global" approved="no">
+        <source>Only global</source>
+        <target state="translated">Apenas global</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>Automático</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
