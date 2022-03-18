@@ -996,7 +996,7 @@
       </trans-unit>
       <trans-unit id="42BRM3Q" resname="label.theme.layout">
         <source>label.theme.layout</source>
-        <target>Tema: disposição</target>
+        <target>Visualização: layout</target>
       </trans-unit>
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">
         <source>error.no_comments_found</source>
@@ -1269,6 +1269,10 @@
       <trans-unit id="sdfgsdfgsdfg" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
         <target>Aparência das entradas nas listas de seleção</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>Automático</target>
       </trans-unit>
     </body>
   </file>

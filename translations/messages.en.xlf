@@ -1193,8 +1193,8 @@
         <source>export.mark_all</source>
         <target>Mark all shown records as cleared?</target>
       </trans-unit>
-      <trans-unit id="keE.KO." resname="Only global">
-        <source>Only global</source>
+      <trans-unit id="S0vT92U" resname="label.globalsOnly">
+        <source>label.globalsOnly</source>
         <target>Only global</target>
       </trans-unit>
       <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">
