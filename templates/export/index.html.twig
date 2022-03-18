@@ -84,14 +84,18 @@
                     <div class="btn-group" id="export-buttons" role="group">
                         {% for group in buttons %}
                             {% set button = group.0 %}
+                            {% set btnTitle = ('button.' ~ button.title)|trans %}
+                            {% if btnTitle == ('button.' ~ button.title) %}
+                                {% set btnTitle = button.title  %}
+                            {% endif %}
                             {% if group|length == 1 %}
                                 <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
-                                    {{ ('button.' ~ button.title)|trans }}
+                                    {{ btnTitle }}
                                 </button>
                             {% elseif group|length > 1 %}
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        {{ ('button.' ~ button.title)|trans }} <span class="caret"></span>
+                                        {{ btnTitle }} <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu">
                                         {% for button in group %}

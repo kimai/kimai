@@ -44,13 +44,13 @@ final class MarkdownExtension implements RuntimeExtensionInterface
     }
 
     /**
-     * Transforms the entities comment (customer, project, activity ...) into HTML.
+     * Transforms entity and user comments (customer, project, activity ...) into HTML.
      *
      * @param string|null $content
      * @param bool $fullLength
      * @return string
      */
-    public function commentContent(?string $content, bool $fullLength = false): string
+    public function commentContent(?string $content, bool $fullLength = true): string
     {
         if (empty($content)) {
             return '';
