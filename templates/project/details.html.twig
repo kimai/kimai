@@ -49,6 +49,14 @@
                     </td>
                 </tr>
                 {% if is_granted('details', project) %}
+                    {% if not project.billable %}
+                        <tr>
+                            <th>{{ 'label.billable'|trans }}</th>
+                            <td colspan="3">
+                                {{ widgets.label_boolean(project.billable) }}
+                            </td>
+                        </tr>
+                    {% endif %}
                     {% if project.orderNumber is not empty %}
                     <tr>
                         <th>{{ 'label.orderNumber'|trans }}</th>

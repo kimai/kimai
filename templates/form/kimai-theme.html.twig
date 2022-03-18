@@ -149,8 +149,9 @@
 {%- endblock text_widget %}
 
 {% block yearpicker_widget -%}
+    {%- set functionName = 'year_' ~ form.vars.id %}
     <div class="btn-group">
-        <a class="btn btn-left btn-icon" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ previousYear|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ previousYear|date_short }}">
+        <a class="btn btn-left btn-icon" href="#" onclick="{{ functionName }}('{{ previousYear|report_date }}')" data-toggle="tooltip" data-placement="top" title="{{ previousYear|date_short }}">
             {{ icon('left') }}
         </a>
         <a class="btn" href="#" onclick="return false;">
@@ -162,31 +163,51 @@
                 {% endif %}
             </span>
         </a>
-        <a class="btn btn-right btn-icon" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ nextYear|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ nextYear|date_short }}">
+        <a class="btn btn-right btn-icon" href="#" onclick="{{ functionName }}('{{ nextYear|report_date }}')" data-toggle="tooltip" data-placement="top" title="{{ nextYear|date_short }}">
             {{ icon('right') }}
         </a>
     </div>
-    {{ block('hidden_widget') }}
+    {%- set required = false -%}
+    <input type="hidden" {{ block('widget_attributes') }} value="{{ value }}" />
+    <script>
+        function {{ functionName }}(date) {
+            const element = document.getElementById('{{ form.vars.id }}');
+            element.value = date;
+            element.dispatchEvent(new Event('change'));
+            element.form.dispatchEvent(new Event('change'));
+        }
+    </script>
 {%- endblock yearpicker_widget %}
 
 {% block monthpicker_widget -%}
+    {%- set functionName = 'month_' ~ form.vars.id %}
     <div class="btn-group">
-        <a class="btn btn-left btn-icon" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ previousMonth|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ previousMonth|month_name(true) }}">
+        <a class="btn btn-left btn-icon" href="#" onclick="{{ functionName }}('{{ previousMonth|report_date }}')" data-toggle="tooltip" data-placement="top" title="{{ previousMonth|month_name(true) }}">
             {{ icon('left') }}
         </a>
         <a class="btn" href="#" onclick="return false;">
             <span id="{{ form.vars.id }}_month_name">{{ month|month_name(true) }}</span>
         </a>
-        <a class="btn btn-right btn-icon" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ nextMonth|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ nextMonth|month_name(true) }}">
+        <a class="btn btn-right btn-icon" href="#" onclick="{{ functionName }}('{{ nextMonth|report_date }}')" data-toggle="tooltip" data-placement="top" title="{{ nextMonth|month_name(true) }}">
             {{ icon('right') }}
         </a>
     </div>
-    {{ block('hidden_widget') }}
+    {%- set required = false -%}
+    <input type="hidden" {{ block('widget_attributes') }} value="{{ value }}" />
+    <script>
+        function {{ functionName }}(date) {
+            const element = document.getElementById('{{ form.vars.id }}');
+            element.value = date;
+            element.dispatchEvent(new Event('change'));
+            element.form.dispatchEvent(new Event('change'));
+        }
+    </script>
 {%- endblock monthpicker_widget %}
 
 {% block weekpicker_widget -%}
+    {%- set functionName = 'week_' ~ form.vars.id %}
     <div class="btn-group week-picker-btn-group {{ attr.class ?? '' }}">
-        <a class="btn btn-left btn-icon" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ previousWeek|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': previousWeek|date_format('W')}) }}">
+        <a class="btn btn-left btn-icon" href="#" onclick="{{ functionName }}('{{ previousWeek|report_date }}')" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': previousWeek|date_format('W')}) }}">
             {{ icon('left') }}
         </a>
         <a class="btn btn-default" href="#" onclick="return false;">
@@ -196,11 +217,20 @@
                 {{ 'stats.workingTimeWeekShort'|trans({'%week%': week|date_format('W')}) }}
             </span>
         </a>
-        <a class="btn btn-right btn-icon" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ nextWeek|report_date }}').change()" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': nextWeek|date_format('W')}) }}">
+        <a class="btn btn-right btn-icon" href="#" onclick="{{ functionName }}('{{ nextWeek|report_date }}')" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': nextWeek|date_format('W')}) }}">
             {{ icon('right') }}
         </a>
     </div>
-    {{ block('hidden_widget') }}
+    {%- set required = false -%}
+    <input type="hidden" {{ block('widget_attributes') }} value="{{ value }}" />
+    <script>
+        function {{ functionName }}(date) {
+            const element = document.getElementById('{{ form.vars.id }}');
+            element.value = date;
+            element.dispatchEvent(new Event('change'));
+            element.form.dispatchEvent(new Event('change'));
+        }
+    </script>
 {%- endblock weekpicker_widget %}
 
 {% block tags_widget %}

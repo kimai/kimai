@@ -32,6 +32,7 @@ class StringHelperTest extends TestCase
     public function getDdeAttackStrings()
     {
         yield ['DDE ("cmd";"/C calc";"!A0")A0'];
+        yield [' DDE ("cmd";"/C calc";"!A0")A0'];
         yield ["@SUM(1+9)*cmd|' /C calc'!A0"];
         yield ["-10+20+cmd|' /C calc'!A0"];
         yield ["+10+20+cmd|' /C calc'!A0"];
@@ -53,5 +54,19 @@ class StringHelperTest extends TestCase
     public function testSanitizeDde(string $input)
     {
         self::assertEquals("' " . $input, StringHelper::sanitizeDDE($input));
+    }
+
+    public function getNonDdeAttackStrings()
+    {
+        yield [''];
+        yield [' '];
+    }
+
+    /**
+     * @dataProvider getNonDdeAttackStrings
+     */
+    public function testSanitizeDdeWithCorrectStrings(string $input)
+    {
+        self::assertEquals($input, StringHelper::sanitizeDDE($input));
     }
 }

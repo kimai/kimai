@@ -457,6 +457,7 @@ abstract class TimesheetAbstractController extends AbstractController
             'action' => $this->generateUrl($this->getMultiUpdateRoute(), []),
             'method' => 'POST',
             'include_exported' => $this->isGranted($this->getPermissionEditExport()),
+            'include_billable' => $this->isGranted($this->getPermissionEditBillable()),
             'include_rate' => $this->isGranted($this->getPermissionEditRate()),
             'include_user' => $this->includeUserInForms('multi'),
         ]);
@@ -484,6 +485,7 @@ abstract class TimesheetAbstractController extends AbstractController
             'action' => $action,
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_exported' => $this->isGranted('edit_export', $entry),
+            'include_billable' => $this->isGranted('edit_billable', $entry),
             'include_user' => $this->includeUserInForms('create'),
             'allow_begin_datetime' => $mode->canEditBegin(),
             'allow_end_datetime' => $mode->canEditEnd(),
@@ -512,6 +514,7 @@ abstract class TimesheetAbstractController extends AbstractController
             ]),
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_exported' => $this->isGranted('edit_export', $entry),
+            'include_billable' => $this->isGranted('edit_billable', $entry),
             'include_user' => $this->includeUserInForms('edit'),
             'allow_begin_datetime' => $mode->canEditBegin(),
             'allow_end_datetime' => $mode->canEditEnd(),
@@ -549,6 +552,11 @@ abstract class TimesheetAbstractController extends AbstractController
     protected function getPermissionEditExport(): string
     {
         return 'edit_export_own_timesheet';
+    }
+
+    protected function getPermissionEditBillable(): string
+    {
+        return 'edit_billable_own_timesheet';
     }
 
     protected function getPermissionEditRate(): string

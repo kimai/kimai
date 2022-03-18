@@ -25,7 +25,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
     /**
      * @var array
      */
-    private $localDomains = [];
+    private $localDomains;
 
     public function __construct(BaseTranslator $translator, array $localDomains = [])
     {
@@ -51,8 +51,6 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
 
     protected function hasLocalOverwrite($id, $domain, $locale = null): bool
     {
-        $found = false;
-
         $catalogue = $this->getCatalogue($locale);
         while (false === ($found = $catalogue->defines($id, $domain))) {
             if ($cat = $catalogue->getFallbackCatalogue()) {

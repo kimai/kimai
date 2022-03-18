@@ -383,10 +383,6 @@ final class SystemConfigurationController extends AbstractController
                         ->setConstraints([
                             new GreaterThanOrEqual(['value' => 0])
                         ]),
-                    (new Configuration())
-                        ->setName('defaults.timesheet.billable')
-                        ->setType(YesNoType::class)
-                        ->setOptions(['help' => 'default_value_new', 'label' => 'label.billable']),
                 ]),
             (new SystemConfigurationModel('quick_entry'))
                 ->setTranslation('quick_entry.title')

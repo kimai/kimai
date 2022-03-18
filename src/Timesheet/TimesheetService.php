@@ -110,7 +110,7 @@ final class TimesheetService
         $mode = $this->trackingModeService->getActiveMode();
         $mode->create($timesheet, $request);
 
-        $timesheet->setBillable($this->configuration->getTimesheetDefaultBillable());
+        $timesheet->setBillableMode(Timesheet::BILLABLE_AUTOMATIC);
 
         return $timesheet;
     }
@@ -118,6 +118,7 @@ final class TimesheetService
     /**
      * @param Timesheet $timesheet
      * @param Timesheet $copyFrom
+     * @return Timesheet
      * @throws ValidationFailedException for invalid timesheets or running timesheets that should be stopped
      * @throws InvalidArgumentException for already persisted timesheets
      * @throws AccessDeniedException if user is not allowed to start timesheet

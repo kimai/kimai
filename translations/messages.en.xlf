@@ -21,6 +21,10 @@
         <source>both</source>
         <target>Both</target>
       </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>Automatic</target>
+      </trans-unit>
       <trans-unit id="KLIuHvt" resname="This is a mandatory field">
         <source>This is a mandatory field</source>
         <target>Mandatory</target>
@@ -345,9 +349,9 @@
         <source>label.skin</source>
         <target>Display: colors</target>
       </trans-unit>
-      <trans-unit id="O40d_3K" resname="theme.layout">
-        <source>Display: layout</source>
-        <target state="needs-translation">Display: layout</target>
+      <trans-unit id="O40d_3K" resname="label.theme.layout">
+        <source>label.theme.layout</source>
+        <target>Display: layout</target>
       </trans-unit>
       <trans-unit id="w8T34A6" resname="label.hours">
         <source>label.hours</source>
@@ -1241,9 +1245,9 @@
         <source>export.mark_all</source>
         <target>Mark all shown records as cleared?</target>
       </trans-unit>
-      <trans-unit id="keE.KO." resname="Only global">
-        <source>Only global</source>
-        <target state="needs-translation">Only global</target>
+      <trans-unit id="S0vT92U" resname="label.globalsOnly">
+        <source>label.globalsOnly</source>
+        <target>Only global</target>
       </trans-unit>
       <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">
         <source>label.batch_meta_fields</source>

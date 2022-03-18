@@ -157,7 +157,7 @@
                     {% endfor %}
                 </tr>
                 {% set yearTotal = 0 %}
-                {% for userYearStat in userYearStats|sort((a, b) => a.duration <= b.duration) %}
+                {% for userYearStat in userYearStats|sort((a, b) => b.duration <=> a.duration) %}
                     {% set user = userYearStat.user %}
                     {% set userYear = userYearStat.year %}
                     {% set userTotal = userYearStat.duration %}
@@ -215,7 +215,7 @@
     <div class="row">
         <div class="col-xs-12 col-sm-9 col-md-8 col-lg-6">
             <table class="table table-hover dataTable">
-                {% for stat in activities|sort((a, b) => a.duration <= b.duration) %}
+                {% for stat in activities|sort((a, b) => b.duration <=> a.duration) %}
                     {% set dataset = dataset|merge([{'value': stat.duration, 'name': stat.name, 'color': stat.activity.color|colorize(stat.activity.name), 'duration': stat.duration|duration, 'rate': stat.rate|money(currency)}]) %}
                     {% set percentage = 0 %}
                     {% if totalDuration > 0 and stat.duration > 0 %}
@@ -420,7 +420,7 @@
                             {% set totalDuration = 0 %}
                             {% set datasets = [] %}
                             {% set labels = [] %}
-                            {% for userStat in project_details.userStats|sort((a, b) => a.duration <= b.duration) %}
+                            {% for userStat in project_details.userStats|sort((a, b) => b.duration <=> a.duration) %}
                                 {% set user = userStat.user %}
                                 {% set color = user.color|colorize(user.displayName) %}
                                 {% set rateTotal = rateTotal + userStat.rate %}

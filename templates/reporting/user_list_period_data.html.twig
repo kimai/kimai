@@ -30,7 +30,7 @@
         </tr>
     </thead>
     <tbody>
-    {% for userPeriod in stats|filter(row => row.user is not null) %}
+    {% for userPeriod in stats|filter(row => row.user is not null)|sort((a,b) => a.user.displayName|lower <=> b.user.displayName|lower) %}
         {% set usersTotalDuration = 0 %}
         {% set usersTotalInternalRate = 0 %}
         {% set usersTotalRate = 0 %}

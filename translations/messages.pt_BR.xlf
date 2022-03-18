@@ -803,7 +803,7 @@
       </trans-unit>
       <trans-unit id="S0vT92U" resname="label.globalsOnly">
         <source>label.globalsOnly</source>
-        <target>Somente global</target>
+        <target>Apenas global</target>
       </trans-unit>
       <trans-unit id="0M_Gylq" resname="rates.empty">
         <source>rates.empty</source>
@@ -1035,7 +1035,7 @@
       </trans-unit>
       <trans-unit id="42BRM3Q" resname="label.theme.layout">
         <source>label.theme.layout</source>
-        <target>Exibição: layout</target>
+        <target>Visualização: layout</target>
       </trans-unit>
       <trans-unit id="zFfl7jw" resname="sum.total">
         <source>sum.total</source>
@@ -1260,6 +1260,10 @@
       <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
         <target>Exibe as entradas nas listas de seleção</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>Automático</target>
       </trans-unit>
     </body>
   </file>

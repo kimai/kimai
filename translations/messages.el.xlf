@@ -177,7 +177,7 @@
       </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
-        <target>Δελτία ωρών</target>
+        <target>Χρονοδιαγράμματα</target>
       </trans-unit>
       <trans-unit id="IeshU90" resname="customers">
         <source>customers</source>
@@ -1259,7 +1259,7 @@
       </trans-unit>
       <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
+        <target state="translated">Προβολή των καταχωρίσεων στις λίστες επιλογών</target>
       </trans-unit>
     </body>
   </file>

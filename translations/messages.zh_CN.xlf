@@ -1259,7 +1259,7 @@
       </trans-unit>
       <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
+        <target state="translated">显示选择列表中的条目</target>
       </trans-unit>
     </body>
   </file>

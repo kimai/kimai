@@ -22,4 +22,14 @@ class ConsoleApplication extends Application
     {
         return Constants::VERSION;
     }
+
+    /**
+     * Overwritten to prevent unwanted SF core messages to show up here.
+     *
+     * @return string
+     */
+    public function getLongVersion()
+    {
+        return sprintf('%s <info>%s</info> (env: <comment>%s</>, debug: <comment>%s</>)', $this->getName(), $this->getVersion(), $this->getKernel()->getEnvironment(), $this->getKernel()->isDebug() ? 'true' : 'false');
+    }
 }

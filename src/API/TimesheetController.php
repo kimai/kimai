@@ -123,6 +123,7 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only records before this date will be included (format: HTML5)")
      * @Rest\QueryParam(name="exported", requirements="0|1", strict=true, nullable=true, description="Use this flag if you want to filter for export state. Allowed values: 0=not exported, 1=exported (default: all)")
      * @Rest\QueryParam(name="active", requirements="0|1", strict=true, nullable=true, description="Filter for running/active records. Allowed values: 0=stopped, 1=active (default: all)")
+     * @Rest\QueryParam(name="billable", requirements="0|1", strict=true, nullable=true, description="Filter for non-/billable records. Allowed values: 0=non-billable, 1=billable (default: all)")
      * @Rest\QueryParam(name="full", requirements="true", strict=true, nullable=true, description="Allows to fetch fully serialized objects including subresources. Allowed values: true (default: false)")
      * @Rest\QueryParam(name="term", description="Free search term")
      * @Rest\QueryParam(name="modified_after", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only records changed after this date will be included (format: HTML5). Available since Kimai 1.10 and works only for records that were created/updated since then.")
@@ -216,6 +217,15 @@ class TimesheetController extends BaseApiController
                 $query->setState(TimesheetQuery::STATE_RUNNING);
             } elseif ($active === 0) {
                 $query->setState(TimesheetQuery::STATE_STOPPED);
+            }
+        }
+
+        if (null !== ($billable = $paramFetcher->get('billable'))) {
+            $billable = (int) $billable;
+            if ($billable === 1) {
+                $query->setBillable(true);
+            } elseif ($billable === 0) {
+                $query->setBillable(false);
             }
         }
 
@@ -317,6 +327,7 @@ class TimesheetController extends BaseApiController
         $form = $this->createForm(TimesheetApiEditForm::class, $timesheet, [
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
+            'include_billable' => $this->isGranted('edit_billable', $timesheet),
             'include_user' => $this->isGranted('create_other_timesheet'),
             'allow_begin_datetime' => $mode->canUpdateTimesWithAPI(),
             'allow_end_datetime' => $mode->canUpdateTimesWithAPI(),
@@ -394,6 +405,7 @@ class TimesheetController extends BaseApiController
         $form = $this->createForm(TimesheetApiEditForm::class, $timesheet, [
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
+            'include_billable' => $this->isGranted('edit_billable', $timesheet),
             'include_user' => $this->isGranted('edit', $timesheet),
             'allow_begin_datetime' => $mode->canUpdateTimesWithAPI(),
             'allow_end_datetime' => $mode->canUpdateTimesWithAPI(),
@@ -614,12 +626,10 @@ class TimesheetController extends BaseApiController
                 @trigger_error('Setting the "copy" attribute in "restart timesheet" API to something else then "all" is deprecated', E_USER_DEPRECATED);
             }
 
-            $copyTimesheet
-                ->setHourlyRate($timesheet->getHourlyRate())
-                ->setFixedRate($timesheet->getFixedRate())
-                ->setDescription($timesheet->getDescription())
-                ->setBillable($timesheet->isBillable())
-                ;
+            $copyTimesheet->setHourlyRate($timesheet->getHourlyRate());
+            $copyTimesheet->setFixedRate($timesheet->getFixedRate());
+            $copyTimesheet->setDescription($timesheet->getDescription());
+            $copyTimesheet->setBillable($timesheet->isBillable());
 
             foreach ($timesheet->getTags() as $tag) {
                 $copyTimesheet->addTag($tag);

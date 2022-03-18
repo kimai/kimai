@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ro" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target>Implicit: o intrare pentru fiecare înregistrare</target>
+        <target>Predefinit: o intrare pentru fiecare înregistrare a timpului</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
@@ -29,6 +29,14 @@
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Data: câte o intrare pe zi (se folosește data de pornire)</target>
+      </trans-unit>
+      <trans-unit id="aDtTH0H" resname="price">
+        <source>price</source>
+        <target>Preț: o intrare pentru fiecare preț</target>
+      </trans-unit>
+      <trans-unit id="iFDs7Zh" resname="weekly">
+        <source>weekly</source>
+        <target>Săptămânal: o intrare pe săptămână (folosește data de început)</target>
       </trans-unit>
     </body>
   </file>

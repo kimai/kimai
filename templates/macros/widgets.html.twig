@@ -324,7 +324,7 @@
                 <td class="avatars">
                     {% set teamHiddenId = 'team_' ~ team.id ~ '_hiddenUser' ~ random() %}
                     {% set counter = 0  %}
-                    {% for member in members|sort((a, b) => a.teamlead < b.teamlead) %}
+                    {% for member in members|sort((a, b) => b.teamlead <=> a.teamlead) %}
                         {% set user = member.user %}
                         {% if member.teamlead %}
                             {{ _self.user_avatar(user, ('label.teamlead'|trans ~ ': ' ~ user.displayName), 'teamlead') }}
