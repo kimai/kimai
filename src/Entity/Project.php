@@ -48,7 +48,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  *
- * @Exporter\Order({"id", "name", "customer", "orderNumber", "orderDate", "start", "end", "budget", "timeBudget", "budgetType", "color", "visible", "teams", "comment"})
+ * @Exporter\Order({"id", "name", "customer", "orderNumber", "orderDate", "start", "end", "budget", "timeBudget", "budgetType", "color", "visible", "teams", "comment", "billable"})
  * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
  * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams().toArray()", type="array")
  */
@@ -196,6 +196,18 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      */
     private $visible = true;
     /**
+     * @var bool
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     *
+     * @Exporter\Expose(label="label.billable", type="boolean")
+     *
+     * @ORM\Column(name="billable", type="boolean", nullable=false)
+     * @Assert\NotNull()
+     */
+    private $billable = true;
+    /**
      * Meta fields
      *
      * All visible meta (custom) fields registered with this project
@@ -292,6 +304,16 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     public function isVisible(): bool
     {
         return $this->visible;
+    }
+
+    public function setBillable(bool $billable): void
+    {
+        $this->billable = $billable;
+    }
+
+    public function isBillable(): bool
+    {
+        return $this->billable;
     }
 
     public function getOrderNumber(): ?string

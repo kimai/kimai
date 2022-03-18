@@ -72,6 +72,7 @@ class EntityWithMetaFieldsExporterTest extends TestCase
         self::assertEquals('#ababab', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
         self::assertFalse($worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
         self::assertEquals('Lorem Ipsum', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
+        self::assertTrue($worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
         self::assertEquals('some magic', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
         self::assertEquals('is happening', $worksheet->getCellByColumnAndRow(++$i, 2)->getValue());
     }

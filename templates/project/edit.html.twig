@@ -52,7 +52,14 @@
                 </div>
             </div>
             {% endif %}
-            {{ form_row(form.visible) }}
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.visible) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.billable) }}
+                </div>
+            </div>
             {% if form.metaFields is defined and form.metaFields is not empty %}
                 {% for meta in form.metaFields|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
                     {{ form_row(meta) }}

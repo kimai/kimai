@@ -31,6 +31,7 @@ class CustomerTest extends AbstractEntityTest
         self::assertNull($sut->getNumber());
         self::assertNull($sut->getComment());
         self::assertTrue($sut->isVisible());
+        self::assertTrue($sut->isBillable());
 
         self::assertNull($sut->getCompany());
         self::assertNull($sut->getVatId());
@@ -70,6 +71,11 @@ class CustomerTest extends AbstractEntityTest
 
         self::assertInstanceOf(Customer::class, $sut->setVisible(false));
         self::assertFalse($sut->isVisible());
+
+        $sut->setVisible(false);
+        self::assertFalse($sut->isVisible());
+        $sut->setVisible(true);
+        self::assertTrue($sut->isVisible());
 
         self::assertInstanceOf(Customer::class, $sut->setComment('hello world'));
         self::assertEquals('hello world', $sut->getComment());
@@ -198,6 +204,7 @@ class CustomerTest extends AbstractEntityTest
             ['label.color', 'string'],
             ['label.visible', 'boolean'],
             ['label.comment', 'string'],
+            ['label.billable', 'boolean'],
         ];
 
         self::assertCount(\count($expected), $columns);

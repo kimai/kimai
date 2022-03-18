@@ -32,6 +32,7 @@ class ActivityTest extends AbstractEntityTest
         $this->assertNull($sut->getName());
         $this->assertNull($sut->getComment());
         $this->assertTrue($sut->isVisible());
+        $this->assertTrue($sut->isBillable());
         $this->assertTrue($sut->isGlobal());
         $this->assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
@@ -56,6 +57,11 @@ class ActivityTest extends AbstractEntityTest
 
         $this->assertInstanceOf(Activity::class, $sut->setVisible(false));
         $this->assertFalse($sut->isVisible());
+
+        $sut->setVisible(false);
+        self::assertFalse($sut->isVisible());
+        $sut->setVisible(true);
+        self::assertTrue($sut->isVisible());
 
         $this->assertInstanceOf(Activity::class, $sut->setComment('hello world'));
         $this->assertEquals('hello world', $sut->getComment());
@@ -145,6 +151,7 @@ class ActivityTest extends AbstractEntityTest
             ['label.color', 'string'],
             ['label.visible', 'boolean'],
             ['label.comment', 'string'],
+            ['label.billable', 'boolean'],
         ];
 
         self::assertCount(\count($expected), $columns);

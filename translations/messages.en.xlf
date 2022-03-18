@@ -21,6 +21,10 @@
         <source>both</source>
         <target>Both</target>
       </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>Automatic</target>
+      </trans-unit>
       <trans-unit id="KLIuHvt" resname="This is a mandatory field">
         <source>This is a mandatory field</source>
         <target>Mandatory</target>
