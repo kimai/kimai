@@ -1195,7 +1195,7 @@
       </trans-unit>
       <trans-unit id="keE.KO." resname="Only global">
         <source>Only global</source>
-        <target state="needs-translation">Only global</target>
+        <target>Only global</target>
       </trans-unit>
       <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">
         <source>label.batch_meta_fields</source>
