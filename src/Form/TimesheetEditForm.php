@@ -262,21 +262,18 @@ class TimesheetEditForm extends AbstractType
 
     protected function addBillable(FormBuilderInterface $builder, array $options)
     {
-        if (!$options['include_billable']) {
-            return;
+        if ($options['include_billable']) {
+            $builder->add('billableMode', TimesheetBillableType::class, []);
         }
 
-        $builder->add('billableMode', TimesheetBillableType::class, []);
         $builder->addModelTransformer(new CallbackTransformer(
             function (Timesheet $record) {
-                switch ($record->getBillableMode()) {
-                    case Timesheet::BILLABLE_DEFAULT:
-                        if ($record->isBillable()) {
-                            $record->setBillableMode(Timesheet::BILLABLE_YES);
-                        } else {
-                            $record->setBillableMode(Timesheet::BILLABLE_NO);
-                        }
-                        break;
+                if ($record->getBillableMode() === Timesheet::BILLABLE_DEFAULT) {
+                    if ($record->isBillable()) {
+                        $record->setBillableMode(Timesheet::BILLABLE_YES);
+                    } else {
+                        $record->setBillableMode(Timesheet::BILLABLE_NO);
+                    }
                 }
 
                 return $record;
