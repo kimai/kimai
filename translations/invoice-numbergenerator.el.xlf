@@ -4,15 +4,15 @@
     <body>
       <trans-unit id="7zreGwV" resname="label.invoice_number_generator">
         <source>label.invoice_number_generator</source>
-        <target state="needs-translation">Invoicenumber-Generator</target>
+        <target state="translated">Γεννήτρια Αριθμού Απόδειξης</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="needs-translation">Date</target>
+        <target state="translated">Ημερομηνία</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="needs-translation">Configured format</target>
+        <target state="translated">Διαμορφωμένη Μορφή</target>
       </trans-unit>
     </body>
   </file>
