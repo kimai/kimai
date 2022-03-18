@@ -345,9 +345,9 @@
         <source>label.skin</source>
         <target>Display: colors</target>
       </trans-unit>
-      <trans-unit id="O40d_3K" resname="theme.layout">
-        <source>Display: layout</source>
-        <target state="needs-translation">Display: layout</target>
+      <trans-unit id="O40d_3K" resname="label.theme.layout">
+        <source>label.theme.layout</source>
+        <target>Display: layout</target>
       </trans-unit>
       <trans-unit id="w8T34A6" resname="label.hours">
         <source>label.hours</source>
