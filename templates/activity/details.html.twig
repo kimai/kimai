@@ -41,6 +41,14 @@
                         </td>
                     </tr>
                 {% endif %}
+                {% if not activity.billable %}
+                    <tr>
+                        <th>{{ 'label.billable'|trans }}</th>
+                        <td colspan="3">
+                            {{ widgets.label_boolean(activity.billable) }}
+                        </td>
+                    </tr>
+                {% endif %}
                 {% if not activity.global %}
                     <tr {{ widgets.customer_row_attr(activity.project.customer, now) }}>
                         <th>{{ 'label.customer'|trans }}</th>

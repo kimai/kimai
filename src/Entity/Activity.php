@@ -47,7 +47,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  *
- * @Exporter\Order({"id", "name", "project", "budget", "timeBudget", "budgetType", "color", "visible", "comment"})
+ * @Exporter\Order({"id", "name", "project", "budget", "timeBudget", "budgetType", "color", "visible", "comment", "billable"})
  * @Exporter\Expose("project", label="label.project", exp="object.getProject() === null ? null : object.getProject().getName()")
  */
 class Activity implements EntityWithMetaFields, EntityWithBudget
@@ -123,6 +123,18 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      * @Assert\NotNull()
      */
     private $visible = true;
+    /**
+     * @var bool
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     *
+     * @Exporter\Expose(label="label.billable", type="boolean")
+     *
+     * @ORM\Column(name="billable", type="boolean", nullable=false)
+     * @Assert\NotNull()
+     */
+    private $billable = true;
     /**
      * Meta fields
      *
@@ -225,6 +237,16 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     public function isVisible(): bool
     {
         return $this->visible;
+    }
+
+    public function setBillable(bool $billable): void
+    {
+        $this->billable = $billable;
+    }
+
+    public function isBillable(): bool
+    {
+        return $this->billable;
     }
 
     /**

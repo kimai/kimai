@@ -36,6 +36,7 @@ class ProjectTest extends AbstractEntityTest
         self::assertNull($sut->getEnd());
         self::assertNull($sut->getComment());
         self::assertTrue($sut->isVisible());
+        self::assertTrue($sut->isBillable());
         self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
@@ -96,6 +97,11 @@ class ProjectTest extends AbstractEntityTest
 
         self::assertInstanceOf(Project::class, $sut->setVisible(false));
         self::assertFalse($sut->isVisible());
+
+        $sut->setVisible(false);
+        self::assertFalse($sut->isVisible());
+        $sut->setVisible(true);
+        self::assertTrue($sut->isVisible());
     }
 
     public function testMetaFields()
@@ -173,6 +179,7 @@ class ProjectTest extends AbstractEntityTest
             ['label.color', 'string'],
             ['label.visible', 'boolean'],
             ['label.comment', 'string'],
+            ['label.billable', 'boolean'],
         ];
 
         self::assertCount(\count($expected), $columns);

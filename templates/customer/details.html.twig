@@ -34,6 +34,14 @@
                         <td>{{ widgets.label_boolean(customer.visible) }}</td>
                     </tr>
                 {% endif %}
+                {% if not customer.billable %}
+                    <tr>
+                        <th>{{ 'label.billable'|trans }}</th>
+                        <td colspan="3">
+                            {{ widgets.label_boolean(customer.billable) }}
+                        </td>
+                    </tr>
+                {% endif %}
                 {% if customer.address is not empty %}
                     <tr>
                         <th>{{ 'label.address'|trans }}</th>

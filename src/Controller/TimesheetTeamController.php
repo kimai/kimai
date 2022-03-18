@@ -153,8 +153,9 @@ class TimesheetTeamController extends TimesheetAbstractController
 
         return $this->createForm(TimesheetMultiUserEditForm::class, $entry, [
             'action' => $this->generateUrl('admin_timesheet_create_multiuser'),
-            'include_rate' => $this->isGranted('edit_rate', $entry),
-            'include_exported' => $this->isGranted('edit_export', $entry),
+            'include_rate' => $this->isGranted($this->getPermissionEditRate()),
+            'include_exported' => $this->isGranted($this->getPermissionEditExport()),
+            'include_billable' => $this->isGranted($this->getPermissionEditBillable()),
             'include_user' => $this->includeUserInForms('create'),
             'allow_begin_datetime' => $mode->canEditBegin(),
             'allow_end_datetime' => $mode->canEditEnd(),
@@ -203,6 +204,11 @@ class TimesheetTeamController extends TimesheetAbstractController
     protected function getPermissionEditExport(): string
     {
         return 'edit_export_other_timesheet';
+    }
+
+    protected function getPermissionEditBillable(): string
+    {
+        return 'edit_billable_other_timesheet';
     }
 
     protected function getPermissionEditRate(): string
