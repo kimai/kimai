@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="xovWV.Y" resname="timesheet.filter">
         <source>Filter timesheets</source>
-        <target>Δελτία ωρών</target>
+        <target>Φιλτράρισμα χρονοδιαγραμμάτων</target>
       </trans-unit>
       <trans-unit id="U7.woIo" resname="customer.filter">
         <source>Filter customers</source>

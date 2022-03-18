@@ -345,9 +345,9 @@
         <source>label.skin</source>
         <target>Display: colors</target>
       </trans-unit>
-      <trans-unit id="O40d_3K" resname="theme.layout">
+      <trans-unit id="O40d_3K" resname="theme.layout" approved="yes">
         <source>Display: layout</source>
-        <target state="needs-translation">Display: layout</target>
+        <target state="final">Display: layout</target>
       </trans-unit>
       <trans-unit id="w8T34A6" resname="label.hours">
         <source>label.hours</source>
@@ -1193,9 +1193,9 @@
         <source>export.mark_all</source>
         <target>Mark all shown records as cleared?</target>
       </trans-unit>
-      <trans-unit id="keE.KO." resname="Only global">
+      <trans-unit id="keE.KO." resname="Only global" approved="yes">
         <source>Only global</source>
-        <target state="needs-translation">Only global</target>
+        <target state="final">Only global</target>
       </trans-unit>
       <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">
         <source>label.batch_meta_fields</source>
