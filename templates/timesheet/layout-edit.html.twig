@@ -43,29 +43,29 @@
             </div>
             {% endif %}
             {% if form.customer is defined %}
-                {{ form_row(form.customer, {'row_attr': {'class': 'timesheet_edit_form_row_customer'}}) }}
+                {{ form_row(form.customer, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_customer'}}) }}
             {% endif %}
             {% if form.project is defined %}
-                {{ form_row(form.project, {'row_attr': {'class': 'timesheet_edit_form_row_project'}}) }}
+                {{ form_row(form.project, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_project'}}) }}
             {% endif %}
             {% if form.activity is defined %}
-                {{ form_row(form.activity, {'row_attr': {'class': 'timesheet_edit_form_row_activity'}}) }}
+                {{ form_row(form.activity, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_activity'}}) }}
             {% endif %}
             {% if form.description is defined %}
-                {{ form_row(form.description, {'row_attr': {'class': 'timesheet_edit_form_row_description'}}) }}
+                {{ form_row(form.description, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_description'}}) }}
             {% endif %}
             {% if form.tags is defined %}
-                {{ form_row(form.tags, {'row_attr': {'class': 'timesheet_edit_form_row_tags'}}) }}
+                {{ form_row(form.tags, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_tags'}}) }}
             {% endif %}
             {% if form.user is defined %}
-                {{ form_row(form.user, {'row_attr': {'class': 'timesheet_edit_form_row_user'}}) }}
+                {{ form_row(form.user, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_user'}}) }}
             {% endif %}
             {% if form.users is defined or form.teams is defined %}
                 {% set uLength = 12 %}
                 {% if form.users is defined and form.teams is defined %}
                     {% set uLength = 6 %}
                 {% endif %}
-                <div class="row">
+                <div class="row mb-3">
                 {% if form.users is defined %}
                     <div class="col-md-{{ uLength }}">
                         {{ form_row(form.users) }}
@@ -91,7 +91,7 @@
                 {% set colWidth = colWidth + 1 %}
             {% endif %}
             {% if colWidth > 0 %}
-            <div class="row">
+            <div class="row mb-3">
                 {% if form.fixedRate is defined %}
                     <div class="col-md-{{ 12 / colWidth }}">
                         {{ form_row(form.fixedRate, {'row_attr': {'class': 'timesheet_edit_form_row_fixedRate'}}) }}
@@ -119,7 +119,7 @@
                 {% endfor %}
             {% endif %}
             {% if form.exported is defined %}
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col-md-12">
                         {{ form_row(form.exported, {'row_attr': {'class': 'timesheet_edit_form_row_exported'}}) }}
                     </div>
