@@ -98,8 +98,8 @@
             });
             {% endif %}
 
-            jQuery('#{{ form.date.vars.id }}').on('change', function(ev) {
-                location.href = '{{ path('quick_entry', {'begin': '__BEGIN__'}) }}'.replace('__BEGIN__', jQuery(this).val());
+            document.getElementById('{{ form.date.vars.id }}').addEventListener('change', function(ev) {
+                location.href = '{{ path('quick_entry', {'begin': '__BEGIN__'}) }}'.replace('__BEGIN__', ev.target.value);
             });
 
             jQuery('body').on('change', '.duration-input', recalculateTotals);
