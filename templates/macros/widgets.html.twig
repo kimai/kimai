@@ -99,9 +99,9 @@
     {% if user.avatar is not empty and kimai_config.themeAllowAvatarUrls %}
         {% set avatar = asset(user.avatar, 'avatars') %}
         {% if tooltip is same as (false) %}
-        <img src="{{ avatar }}" class="rounded-circle{% if class is not empty %} {{ class }}{% endif %}" alt="{{ user.displayName }}" />
+        <img src="{{ avatar }}" class="avatar{% if class is not empty %} {{ class }}{% endif %}" alt="{{ user.displayName }}" />
         {% else %}
-        <img src="{{ avatar }}" class="rounded-circle{% if class is not empty %} {{ class }}{% endif %}" data-toggle="tooltip" data-placement="top" alt="{{ user.displayName }}" title="{{ tooltip|default(user.displayName) }}" />
+        <img src="{{ avatar }}" class="avatar{% if class is not empty %} {{ class }}{% endif %}" data-toggle="tooltip" data-placement="top" alt="{{ user.displayName }}" title="{{ tooltip|default(user.displayName) }}" />
         {% endif %}
     {% else %}
         {% set color = user.color|colorize(user.displayName) %}
