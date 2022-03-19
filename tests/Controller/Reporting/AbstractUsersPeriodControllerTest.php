@@ -45,7 +45,7 @@ abstract class AbstractUsersPeriodControllerTest extends ControllerBaseTest
         return [
             ['duration', 'Working hours total'],
             ['rate', 'Total revenue'],
-            ['internalRate', 'Internal rate'],
+            ['internalRate', 'Internal price'],
         ];
     }
 
