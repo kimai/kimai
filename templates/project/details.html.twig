@@ -134,6 +134,10 @@
         {{ include('embeds/budgets.html.twig', {'entity': project, 'stats': stats, 'currency': project.customer.currency}) }}
     {% endif %}
 
+    {% for controller in boxes %}
+        {{ render(controller(controller, {'project': project, 'page': 1})) }}
+    {% endfor %}
+
     {% if can_edit %}
         {{ include('embeds/rates-table.html.twig', {'id': 'project_rates_box', 'entity': project, 'create_url': path('admin_project_rate_add', {'id': project.id}), 'delete_route': 'delete_project_rate', 'currency': project.customer.currency}) }}
     {% endif %}
