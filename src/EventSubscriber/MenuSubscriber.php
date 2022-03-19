@@ -153,6 +153,10 @@ final class MenuSubscriber implements EventSubscriberInterface
             $menu->addChild($teams);
         }
 
+        if ($menu->hasChildren()) {
+            $menu->addChild(MenuItemModel::createDivider());
+        }
+
         if ($auth->isGranted('plugins')) {
             $menu->addChild(
                 new MenuItemModel('plugins', 'menu.plugin', 'plugins', [], 'plugin')
