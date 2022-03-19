@@ -1,0 +1,39 @@
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/*
+    ----------- This file contains rules that only page to certain pages -----------
+ */
+
+/* weekly working times AKA quick-entries form */
+section.quick-entry-page {
+
+    #quick_entry_form {
+        display: none;
+    }
+
+    /* shrinks the dropdown elements for project and activity to fit into the table, instead of adjusting to the longest option element */
+    .ts-wrapper {
+        display: table;
+        table-layout: fixed;
+    }
+
+    /* make the duration field and dropdown smaller */
+    #quick_entry_box {
+        .duration-widget {
+            .input-group {
+                min-width: 85px;
+            }
+            .btn-duration-preset {
+                padding: 7px 8px 7px 5px;
+            }
+            input {
+                padding: 7px 3px 7px 7px;
+            }
+        }
+    }
+}
