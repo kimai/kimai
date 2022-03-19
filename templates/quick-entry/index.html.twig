@@ -4,6 +4,8 @@
 {% block page_title %}{{ 'quick_entry.title'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.quickEntries('index') }}{% endblock %}
 
+{% block page_class %}quick-entry-page{% endblock %}
+
 {% block main %}
     {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
