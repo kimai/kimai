@@ -30,10 +30,8 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        document.addEventListener('kimai.initialized', function() {
-            jQuery('#user-list-filter-form').on('change', function(ev) {
-                jQuery(this).submit();
-            });
+        document.getElementById('user-list-filter-form').addEventListener('change', function(event) {
+            event.currentTarget.submit();
         });
     </script>
 {% endblock %}
