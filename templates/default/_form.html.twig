@@ -9,7 +9,7 @@
     <div class="card-header">
         <h3 class="card-title">
             {% if form.vars.docu_chapter is defined and form.vars.docu_chapter is not empty %}
-                <a class="btn btn-icon btn-outline-secondary me-2" href="{{ form.vars.docu_chapter|docu_link }}" target="_blank">{{ icon('docu_chapter') }}</a>
+                <a class="btn btn-icon btn-outline-secondary me-2" href="{{ form.vars.docu_chapter|docu_link }}" target="_blank">{{ icon('docu_chapter', true) }}</a>
             {% endif %}
             {{ title }}
         </h3>
