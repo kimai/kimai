@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{{ model.invoiceNumber }}-{{ model.customer.company|default(model.customer.name)|u.snake }}{% endblock %}</title>
-    <style type="text/css">
+    <style>
         {{ encore_entry_css_source('invoice-pdf')|raw }}
     </style>
 </head>
@@ -18,8 +18,11 @@
         <tr>
             <td class="text-small">
                 {{ model.template.company }} &ndash; {{ model.template.address|nl2str(' &ndash; ') }}
+                {% if model.template.vatId is not empty %}
+                    &ndash; {{ 'label.vat_id'|trans }}: {{ model.template.vatId }}
+                {% endif %}
             </td>
-            <td class="text-small text-end">
+            <td class="text-small text-right">
                 {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
             </td>
         </tr>
@@ -40,7 +43,7 @@
                 <br>
                 {{ model.template.paymentDetails|nl2br }}
             </td>
-            <td class="text-end" style="width: 33%">
+            <td class="text-right" style="width: 33%">
                 <strong>{{ 'label.contact'|trans }}</strong>
                 <br>
                 {{ model.template.contact|nl2br }}
@@ -50,45 +53,48 @@
 </htmlpagefooter>
 <sethtmlpagefooter page="ALL" value="on" name="footer" show-this-page="1" />
 mpdf-->
-<div class="wrapper">
     <table class="addresses">
         <tr>
             <td>
                 <strong>{{ model.customer.company|default(model.customer.name) }}</strong><br>
                 {{ model.customer.address|nl2br }}
-                {% if model.customer.vatId is not empty %}
-                    <br>
-                    {{ 'label.vat_id'|trans }}: {{ model.customer.vatId }}
-                {% endif %}
             </td>
-            <td class="text-end">
+            <td class="text-right">
+                {% set classLeft = 'text-left' %}
+                {% set classRight = 'text-right text-nowrap padding-left' %}
                 <table style="width: 240px">
                     <tr>
-                        <td>{{ 'label.date'|trans }}:</td>
-                        <td class="text-nowrap padding-left">{{ model.invoiceDate|date_short }}</td>
+                        <td class="{{ classLeft }}">{{ 'label.date'|trans }}</td>
+                        <td class="{{ classRight }}">{{ model.invoiceDate|date_short }}</td>
                     </tr>
                     <tr>
-                        <td>{{ 'invoice.service_date'|trans }}:</td>
-                        <td class="text-nowrap padding-left">{{ model.query.end|month_name }} {{ model.query.end|date('Y') }}</td>
+                        <td class="{{ classLeft }}">{{ 'invoice.service_date'|trans }}</td>
+                        <td class="{{ classRight }}">{{ model.query.end|month_name }} {{ model.query.end|date('Y') }}</td>
                     </tr>
                     <tr>
-                        <td>{{ 'invoice.number'|trans }}:</td>
-                        <td class="text-nowrap padding-left">{{ model.invoiceNumber }}</td>
+                        <td class="{{ classLeft }}">{{ 'invoice.number'|trans }}</td>
+                        <td class="{{ classRight }}">{{ model.invoiceNumber }}</td>
                     </tr>
                     <tr>
-                        <td>{{ 'invoice.due_days'|trans }}:</td>
-                        <td class="text-nowrap padding-left">{{ model.dueDate|date_short }}</td>
+                        <td class="{{ classLeft }}">{{ 'invoice.due_days'|trans }}</td>
+                        <td class="{{ classRight }}">{{ model.dueDate|date_short }}</td>
                     </tr>
-                    {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
+                    {% if model.customer.number is not empty %}
                         <tr>
-                            <td>{{ 'label.orderNumber'|trans }}</td>
-                            <td class="text-nowrap padding-left">{{ model.query.project.orderNumber }}</td>
+                            <td class="{{ classLeft }}">{{ 'label.number'|trans }}</td>
+                            <td class="{{ classRight }}">{{ model.customer.number }}</td>
                         </tr>
                     {% endif %}
-                    {% if model.template.vatId is not empty %}
+                    {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
                         <tr>
-                            <td>{{ 'label.vat_id'|trans }}:</td>
-                            <td class="text-nowrap padding-left">{{ model.template.vatId }}</td>
+                            <td class="{{ classLeft }}">{{ 'label.orderNumber'|trans }}</td>
+                            <td class="{{ classRight }}">{{ model.query.project.orderNumber }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if model.customer.vatId is not empty %}
+                        <tr>
+                            <td class="{{ classLeft }}">{{ 'label.vat_id'|trans }}</td>
+                            <td class="{{ classRight }}">{{ model.customer.vatId }}</td>
                         </tr>
                     {% endif %}
                 </table>
@@ -102,9 +108,9 @@ mpdf-->
         <thead>
             <tr>
                 <th class="first">{{ 'label.description'|trans }}</th>
-                <th class="text-end">{{ 'label.unit_price'|trans }}</th>
-                <th class="text-end">{{ 'label.amount'|trans }}</th>
-                <th class="last text-end">{{ 'label.total_rate'|trans }}</th>
+                <th class="text-right">{{ 'label.unit_price'|trans }}</th>
+                <th class="text-right">{{ 'label.amount'|trans }}</th>
+                <th class="last text-right">{{ 'label.total_rate'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -126,30 +132,30 @@ mpdf-->
                         {% if entry.activity is not null %}{{ entry.activity.name }} / {% endif %}{{ entry.project.name }}
                     {% endif %}
                 </td>
-                <td class="text-end text-nowrap">{{ rate|money(currency) }}</td>
-                <td class="text-end text-nowrap">{{ duration }}</td>
-                <td class="last text-end text-nowrap">{{ entry.rate|money(currency) }}</td>
+                <td class="text-right text-nowrap">{{ rate|money(currency) }}</td>
+                <td class="text-right text-nowrap">{{ duration }}</td>
+                <td class="last text-right text-nowrap">{{ entry.rate|money(currency) }}</td>
             </tr>
         {% endfor %}
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="3" class="text-end">
+                <td colspan="3" class="text-right">
                     {{ 'invoice.subtotal'|trans }}
                 </td>
-                <td class="last text-end">{{ model.calculator.subtotal|money(currency) }}</td>
+                <td class="last text-right">{{ model.calculator.subtotal|money(currency) }}</td>
             </tr>
             <tr>
-                <td colspan="3" class="text-end">
+                <td colspan="3" class="text-right">
                     {{ 'invoice.tax'|trans }} ({{ model.calculator.vat }}%)
                 </td>
-                <td class="last text-end">{{ model.calculator.tax|money(currency) }}</td>
+                <td class="last text-right">{{ model.calculator.tax|money(currency) }}</td>
             </tr>
             <tr>
-                <td colspan="3" class="text-end text-nowrap">
+                <td colspan="3" class="text-right text-nowrap">
                     <strong>{{ 'invoice.total'|trans }}</strong>
                 </td>
-                <td class="last text-end">
+                <td class="last text-right">
                     <strong>{{ model.calculator.total|money(currency) }}</strong>
                 </td>
             </tr>
@@ -161,6 +167,5 @@ mpdf-->
             {{ model.template.paymentTerms|md2html }}
         </p>
     {% endif %}
-</div>
 </body>
 </html>
