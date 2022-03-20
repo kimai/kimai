@@ -176,7 +176,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
         let emptyOpts = [];
         let options = [];
         let titlePattern = null;
-        if (select[0].dataset['optionPattern'] !== undefined) {
+        if (select[0] !== undefined && select[0].dataset !== undefined && select[0].dataset['optionPattern'] !== undefined) {
             titlePattern = select[0].dataset['optionPattern'];
         }
         if (titlePattern === null || titlePattern === '') {
