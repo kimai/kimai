@@ -52,6 +52,10 @@ table.dataTable thead > tr > th.hw-min {
     width: 1%;
     white-space: normal;
 }
+/* If a table column contains ONLY avatar <img> it will collapse, so make it a defined width */
+.w-avatar {
+    width: 40px;
+}
 
 .list-group-item{
     /* !important rules, because dark theme overwrites list-group-item */

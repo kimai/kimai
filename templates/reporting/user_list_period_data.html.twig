@@ -16,7 +16,7 @@
     <thead>
         <tr>
             {% if with_avatar %}
-            <th class="w-min"></th>
+            <th class="w-avatar"></th>
             {% endif %}
             <th>&nbsp;</th>
             <th class="text-center reportDataTypeTitle">{{ dataTypeTitle|trans }}</th>
@@ -36,7 +36,7 @@
         {% set usersTotalRate = 0 %}
         <tr class="user">
             {% if with_avatar %}
-                <td class="w-min text-nowrap">
+                <td class="w-avatar">
                     {% from "macros/widgets.html.twig" import user_avatar %}
                     {{ user_avatar(userPeriod.user) }}
                 </td>
