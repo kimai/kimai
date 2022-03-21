@@ -4,15 +4,47 @@
     <body>
       <trans-unit id="XV3FBpu" resname="report_user_week">
         <source>report_user_week</source>
-        <target>사용자에 대한 주별 보기</target>
+        <target>사용자 1명의 주간 보기</target>
       </trans-unit>
       <trans-unit id="Ng47B75" resname="report_user_month">
         <source>report_user_month</source>
-        <target>사용자에 대한 월별 보기</target>
+        <target>사용자 1명의 월간 보기</target>
       </trans-unit>
       <trans-unit id="zk30bmP" resname="report_monthly_users">
         <source>report_monthly_users</source>
-        <target>모든 사용자에 대한 월별 보기</target>
+        <target>모든 사용자의 월간 보기</target>
+      </trans-unit>
+      <trans-unit id="VD98UBN" resname="report_yearly_users">
+        <source>report_yearly_users</source>
+        <target>모든 사용자의 연간 보기</target>
+      </trans-unit>
+      <trans-unit id="R.9yUkf" resname="report_project_view">
+        <source>report_project_view</source>
+        <target>프로젝트 개요</target>
+      </trans-unit>
+      <trans-unit id="q_A4AHD" resname="report_weekly_users">
+        <source>report_weekly_users</source>
+        <target>모든 사용자의 주간 보기</target>
+      </trans-unit>
+      <trans-unit id="BQAsynV" resname="report_project_daterange">
+        <source>report_project_daterange</source>
+        <target>월별 보고서</target>
+      </trans-unit>
+      <trans-unit id="1gBKwGH" resname="report_inactive_project">
+        <source>report_inactive_project</source>
+        <target>비활성 프로젝트</target>
+      </trans-unit>
+      <trans-unit id="ns_jU13" resname="reporting.initial_view">
+        <source>reporting.initial_view</source>
+        <target>초기 보고서</target>
+      </trans-unit>
+      <trans-unit id="3JLmvfB" resname="report_user_year">
+        <source>report_user_year</source>
+        <target>사용자 1명의 연간 보기</target>
+      </trans-unit>
+      <trans-unit id="518eY_l" resname="report_project_details">
+        <source>report_project_details</source>
+        <target>프로젝트 세부정보</target>
       </trans-unit>
     </body>
   </file>

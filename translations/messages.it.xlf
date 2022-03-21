@@ -376,7 +376,7 @@
       </trans-unit>
       <trans-unit id="3PYadzb" resname="dashboard.subtitle">
         <source>dashboard.subtitle</source>
-        <target>Benvenuto!</target>
+        <target>Benvenuto/a!</target>
       </trans-unit>
       <trans-unit id="yEa1Yz3" resname="dashboard.all">
         <source>dashboard.all</source>
@@ -391,7 +391,7 @@
       </trans-unit>
       <trans-unit id="4iliLZT" resname="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
-        <target>Mostra menù</target>
+        <target>Mostra il menù</target>
       </trans-unit>
       <trans-unit id="f3KMQJh" resname="label.my_teams">
         <source>label.my_teams</source>
@@ -1250,7 +1250,11 @@
       </trans-unit>
       <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
+        <target state="translated">Visualizzazione delle voci nelle liste di selezione</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>Automatico</target>
       </trans-unit>
     </body>
   </file>

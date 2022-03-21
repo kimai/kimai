@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
-        <target state="translated">키마이에 대하여</target>
+        <target state="translated">Kimai 정보</target>
       </trans-unit>
       <trans-unit id="oYYDCG5" resname="support">
         <source>support</source>
@@ -20,11 +20,11 @@
       </trans-unit>
       <trans-unit id="mz4ieCN" resname="donate">
         <source>donate</source>
-        <target state="translated">키마이를 위한 기부</target>
+        <target state="translated">Kimai의 미래를 위해 기부하기</target>
       </trans-unit>
       <trans-unit id="DwbowBh" resname="published_under">
         <source>published_under</source>
-        <target state="translated">%kimai% 게시됨 </target>
+        <target state="translated">%kimai%는 아래에 게시됩니다</target>
       </trans-unit>
       <trans-unit id="A0nWoXZ" resname="special_thanks">
         <source>special_thanks</source>
@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="L7cff3Q" resname="library_authors">
         <source>library_authors</source>
-        <target state="translated">… 소프트웨어 라이브러리의 작성자, 키마이는 당신의 도움없이는 가능하지 않습니다 👍</target>
+        <target state="translated">… 다음 소프트웨어 라이브러리의 작성자, Kimai는 당신이 없었다면 불가능했을 것입니다 👍</target>
       </trans-unit>
     </body>
   </file>

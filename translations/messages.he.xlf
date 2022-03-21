@@ -1209,6 +1209,10 @@
         <source>Display of entries in selection lists</source>
         <target>הצגת רשומות ברשימות הבחירה</target>
       </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>אוטומטית</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

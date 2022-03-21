@@ -3,16 +3,20 @@
   <file source-language="en" target-language="ko" datatype="plaintext" original="export.en.xlf">
     <body>
       <trans-unit id="oRRnhwf" resname="default.pdf.twig">
-        <source>default.pdf.twig</source>
-        <target>기준</target>
+        <source>Default</source>
+        <target>기본값</target>
       </trans-unit>
       <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig">
-        <source>default-budget.pdf.twig</source>
-        <target>남은 예산</target>
+        <source>With remaining budget</source>
+        <target>남은 예산 포함</target>
       </trans-unit>
       <trans-unit id="AuhL8Sb" resname="default-internal.pdf.twig">
-        <source>default-internal.pdf.twig</source>
-        <target>내부 수익률</target>
+        <source>With internal rates</source>
+        <target>내부 수익률 포함</target>
+      </trans-unit>
+      <trans-unit id="bTIKMV." resname="timesheet.pdf.twig">
+        <source>Timesheet</source>
+        <target>근무 시간 기록표</target>
       </trans-unit>
     </body>
   </file>

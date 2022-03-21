@@ -1273,6 +1273,10 @@
         <source>Display of entries in selection lists</source>
         <target>Seçim listelerindeki kayıtların görüntülenmesi</target>
       </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>Otomatik</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

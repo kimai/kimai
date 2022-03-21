@@ -634,7 +634,7 @@
       </trans-unit>
       <trans-unit id="SR2r1Cs" resname="invoices">
         <source>invoices</source>
-        <target state="translated">인보이스</target>
+        <target state="translated">청구서</target>
       </trans-unit>
       <trans-unit id="X70dwP8" resname="button.print">
         <source>button.print</source>
@@ -658,7 +658,7 @@
       </trans-unit>
       <trans-unit id="zPcx3O_" resname="invoice_print">
         <source>invoice_print</source>
-        <target state="translated">인보이스</target>
+        <target state="translated">청구서</target>
       </trans-unit>
       <trans-unit id="p0IprAw" resname="label.template">
         <source>label.template</source>
@@ -738,7 +738,7 @@
       </trans-unit>
       <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
-        <target state="translated">계좌 번호</target>
+        <target state="translated">은행 계좌 번호</target>
       </trans-unit>
       <!--
               Export
@@ -1015,7 +1015,7 @@
       </trans-unit>
       <trans-unit id="ov4OQOh" resname="invoice.filter">
         <source>invoice.filter</source>
-        <target>인보이스 정보 필터링</target>
+        <target>청구서 데이터 필터링</target>
       </trans-unit>
       <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
@@ -1075,7 +1075,7 @@
       </trans-unit>
       <trans-unit id="csF1D35" resname="label.not_invoiced">
         <source>label.not_invoiced</source>
-        <target>미청구</target>
+        <target>청구되지 않음</target>
       </trans-unit>
       <trans-unit id="3zn5T5e" resname="label.not_exported">
         <source>label.not_exported</source>
@@ -1095,7 +1095,7 @@
       </trans-unit>
       <trans-unit id="Xij3oQl" resname="invoice.payment_date">
         <source>invoice.payment_date</source>
-        <target>지급일자</target>
+        <target>결제일</target>
       </trans-unit>
       <trans-unit id="YNGNfGn" resname="label.tax_rate">
         <source>label.tax_rate</source>
@@ -1227,7 +1227,7 @@
       </trans-unit>
       <trans-unit id="9Rhadz6" resname="label.budgetType_full">
         <source>label.budgetType_full</source>
-        <target>라이프 사이클</target>
+        <target>생활 주기</target>
       </trans-unit>
       <trans-unit id="Zif614Q" resname="add_user.label">
         <source>add_user.label</source>
@@ -1243,7 +1243,7 @@
       </trans-unit>
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
-        <target>주 근무 시간</target>
+        <target>주간 근무 시간</target>
       </trans-unit>
       <trans-unit id="PoF7hD8" resname="label.budgetType">
         <source>label.budgetType</source>
@@ -1255,7 +1255,7 @@
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
-        <target>Directory "%dir%" is write protected.</target>
+        <target>"%dir%" 디렉토리는 쓰기 금지되어 있습니다.</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>error.directory_missing</source>
@@ -1263,15 +1263,19 @@
       </trans-unit>
       <trans-unit id="PCEFPeg" resname="updated_at">
         <source>Updated at</source>
-        <target state="needs-translation">Updated at</target>
+        <target state="translated">갱신일</target>
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
-        <target state="needs-translation">Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
+        <target state="translated">최대 %max% 청구서 문서 양에 도달했습니다. 하나를 제거한 후 더 추가할 수 있습니다.</target>
       </trans-unit>
       <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
+        <target state="translated">선택 목록의 항목 표시</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>자동</target>
       </trans-unit>
     </body>
   </file>
