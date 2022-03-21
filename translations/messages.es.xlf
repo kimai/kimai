@@ -317,7 +317,7 @@
       </trans-unit>
       <trans-unit id="3PYadzb" resname="dashboard.subtitle">
         <source>dashboard.subtitle</source>
-        <target>Le damos la bienvenida</target>
+        <target>¡Le damos la bienvenida!</target>
       </trans-unit>
       <trans-unit id="yEa1Yz3" resname="dashboard.all">
         <source>dashboard.all</source>
@@ -1240,35 +1240,39 @@
       </trans-unit>
       <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
+        <target state="translated">Visualización de las entradas en las listas de selección</target>
       </trans-unit>
       <trans-unit id="9Rhadz6" resname="label.budgetType_full">
         <source>label.budgetType_full</source>
-        <target state="needs-translation">Life cycle</target>
+        <target state="translated">Ciclo de vida</target>
       </trans-unit>
       <trans-unit id="61p_ckr" resname="label.hours_24">
         <source>label.hours_24</source>
-        <target state="needs-translation">24 hours</target>
+        <target state="translated">24 horas</target>
       </trans-unit>
       <trans-unit id="PCEFPeg" resname="updated_at">
         <source>Updated at</source>
-        <target state="needs-translation">Updated at</target>
+        <target state="translated">Actualizado en</target>
       </trans-unit>
       <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
         <source>label.includeBudgetType_full</source>
-        <target state="needs-translation">Show entries with "life cycle" budget</target>
+        <target state="translated">Mostrar entradas con presupuesto «ciclo de vida»</target>
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
-        <target state="needs-translation">Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
+        <target state="translated">Se ha alcanzado la cantidad máxima de documentos de factura %max%. Puedes añadir más después de eliminar uno.</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
-        <target state="needs-translation">Week %week%</target>
+        <target state="translated">Semana %week%.</target>
       </trans-unit>
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
-        <target state="needs-translation">Weekly working hours</target>
+        <target state="translated">Horas de trabajo semanal</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>Automático</target>
       </trans-unit>
     </body>
   </file>

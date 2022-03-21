@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="translated">Ημερομηνία: μια καταχώριση ανα μέρα (χρησιμοποιεί ημέρα έναρξης)</target>
+        <target state="translated">Ημερομηνία: μια καταχώριση ανα ημέρα (χρησιμοποιεί ημέρα έναρξης)</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>

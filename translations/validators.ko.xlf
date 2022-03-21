@@ -4,15 +4,15 @@
     <body>
       <trans-unit id="IkNxbBI" resname="This value is not a valid role.">
         <source>This value is not a valid role.</source>
-        <target state="translated">이 값은 유효한 값이 아닙니다.</target>
+        <target state="translated">이 값은 유효한 역할이 아닙니다.</target>
       </trans-unit>
       <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
         <source>End date must not be earlier then start date.</source>
-        <target state="translated">종료 시각은 시작 시각보다 빠를 수 없습니다.</target>
+        <target state="translated">종료 날짜는 시작 날짜보다 이전일 수 없습니다.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
-        <target state="translated">시작 시각은 미래가 될 수 없습니다. </target>
+        <target state="translated">시작 날짜는 미래 날짜일 수 없습니다.</target>
       </trans-unit>
       <trans-unit id="VJSZSD0" resname="The given value is not a valid time.">
         <source>The given value is not a valid time.</source>
@@ -23,16 +23,60 @@
         <target>이 시간에 대한 항목이 이미 있습니다.</target>
       </trans-unit>
       <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date.">
-        <source>This period is locked, please choose a later date.</source>
-        <target>이 기간은 잠겨 있으니, 후일로 선택하시길 바랍니다.</target>
+        <source>This period is locked. Please choose a later date.</source>
+        <target>이 기간은 잠겨 있습니다. 이후 날짜를 선택하십시오.</target>
       </trans-unit>
       <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again.">
-        <source>This invoice document cannot be used, please rename the file and upload it again.</source>
-        <target>이 인보이스 문서는 사용할 수 없으니, 파일 이름을 변경하고 다시 업로드를 해야 합니다.</target>
+        <source>This invoice document cannot be used. Please rename the file and upload it again.</source>
+        <target>이 청구서 문서는 사용할 수 없습니다. 파일 이름을 변경하고 다시 업로드하십시오.</target>
       </trans-unit>
       <trans-unit id="1V6BsD_" resname="You must select at least one user or team.">
         <source>You must select at least one user or team.</source>
-        <target>하나 이상의 사용자 혹은 팀을 선택해야 합니다.</target>
+        <target>사용자 또는 팀을 한 명 이상 선택해야 합니다.</target>
+      </trans-unit>
+      <trans-unit id="ekO5eXI" resname="An equal username is already used.">
+        <source>An equal username is already used.</source>
+        <target>동일한 사용자 이름이 이미 사용 중입니다.</target>
+      </trans-unit>
+      <trans-unit id="6u6oCwB" resname="The email is already used.">
+        <source>The email is already used.</source>
+        <target>이메일이 이미 사용 중입니다.</target>
+      </trans-unit>
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target>팀에 최소한 한 명의 팀 리더가 지정되어야 합니다.</target>
+      </trans-unit>
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target>입력한 비밀번호가 일치하지 않습니다.</target>
+      </trans-unit>
+      <trans-unit id="S14XECA" resname="The username is already used.">
+        <source>The username is already used.</source>
+        <target>사용자 이름이 이미 사용 중입니다.</target>
+      </trans-unit>
+      <trans-unit id="INlaCgW" resname="An equal email is already used.">
+        <source>An equal email is already used.</source>
+        <target>동일한 이메일이 이미 사용 중입니다.</target>
+      </trans-unit>
+      <trans-unit id="1oKCOa5" resname="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target>예산이 소진되었습니다. 현재 사용 가능한 총 %budget% 예산 중, %used%가 예약되었으며, %free%는 여전히 사용할 수 있습니다.</target>
+      </trans-unit>
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target>이 타임시트는 이미 내보내졌습니다.</target>
+      </trans-unit>
+      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target>최대 {{ value }}시간이 허용됩니다.</target>
+      </trans-unit>
+      <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
+        <source>An activity needs to be selected.</source>
+        <target>활동을 선택해야 합니다.</target>
+      </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target>프로젝트를 선택해야 합니다.</target>
       </trans-unit>
     </body>
   </file>

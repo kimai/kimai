@@ -285,7 +285,7 @@
       </trans-unit>
       <trans-unit id="3PYadzb" resname="dashboard.subtitle">
         <source>dashboard.subtitle</source>
-        <target>Bienvenue !</target>
+        <target>Bienvenue !</target>
       </trans-unit>
       <trans-unit id="yEa1Yz3" resname="dashboard.all">
         <source>dashboard.all</source>
@@ -1269,6 +1269,10 @@
       <trans-unit id="sdfgsdfgsdfg" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
         <target>Affichage des entrées dans les listes de sélection</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>Automatique</target>
       </trans-unit>
     </body>
   </file>
