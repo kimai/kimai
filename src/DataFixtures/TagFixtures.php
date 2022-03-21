@@ -43,11 +43,9 @@ class TagFixtures extends Fixture
             $tag = new Tag();
 
             $tagName = null;
-            if ($i % 2 == 9) {
-                $tagName = $faker->companyEmail;
-            } elseif ($i % 2 == 8) {
+            if ($i % 18 == 0) {
                 $tagName = $faker->firstName;
-            } elseif ($i % 2 == 7) {
+            } elseif ($i % 7 == 0) {
                 $tagName = $faker->lastName;
             } elseif ($i % 5 == 0) {
                 $tagName = $faker->city;
