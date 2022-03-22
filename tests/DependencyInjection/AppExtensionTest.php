@@ -103,26 +103,6 @@ class AppExtensionTest extends TestCase
                     'time' => 'H:i',
                 ],
             ],
-            'kimai.calendar' => [
-                'week_numbers' => true,
-                'day_limit' => 4,
-                'slot_duration' => '00:30:00',
-                'businessHours' => [
-                    'days' => [1, 2, 3, 4, 5],
-                    'begin' => '08:00',
-                    'end' => '20:00',
-                ],
-                'visibleHours' => [
-                    'begin' => '00:00',
-                    'end' => '23:59',
-                ],
-                'google' => [
-                    'api_key' => null,
-                    'sources' => [],
-                ],
-                'weekends' => true,
-                'dragdrop_amount' => 10,
-            ],
             'kimai.dashboard' => [
                 'PaginatedWorkingTimeChart',
                 'UserTeams',
@@ -151,75 +131,6 @@ class AppExtensionTest extends TestCase
             'kimai.invoice.documents' => [
                 'var/invoices/',
                 'templates/invoice/renderer/',
-            ],
-            'kimai.defaults' => [
-                'timesheet' => [
-                    'billable' => true,
-                ],
-                'customer' => [
-                    'timezone' => null,
-                    'country' => 'DE',
-                    'currency' => 'EUR',
-                ],
-                'user' => [
-                    'timezone' => null,
-                    'language' => 'en',
-                    'theme' => 'default',
-                    'currency' => 'EUR',
-                ]
-            ],
-            'kimai.theme' => [
-                'show_about' => true,
-                'chart' => [
-                    'background_color' => '#3c8dbc',
-                    'border_color' => '#3b8bba',
-                    'grid_color' => 'rgba(0,0,0,.05)',
-                    'height' => '300'
-                ],
-                'branding' => [
-                    'logo' => null,
-                    'mini' => null,
-                    'company' => null,
-                    'title' => null,
-                ],
-                'calendar' => [
-                    'background_color' => '#d2d6de',
-                ],
-                'colors_limited' => true,
-                'color_choices' => 'Silver|#c0c0c0,Gray|#808080,Black|#000000,Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,Gold|#ffd700,Yellow|#ffff00,Peach|#ffdab9,Khaki|#f0e68c,Olive|#808000,Lime|#00ff00,Jelly|#9acd32,Green|#008000,Teal|#008080,Aqua|#00ffff,LightBlue|#add8e6,DeepSky|#00bfff,Dodger|#1e90ff,Blue|#0000ff,Navy|#000080,Purple|#800080,Fuchsia|#ff00ff,Violet|#ee82ee,Rose|#ffe4e1,Lavender|#E6E6FA',
-                'random_colors' => true,
-                'avatar_url' => false,
-            ],
-            'kimai.timesheet' => [
-                'mode' => 'default',
-                'markdown_content' => false,
-                'rounding' => [
-                    'default' => [
-                        'begin' => 1,
-                        'end' => 1,
-                        'duration' => 0,
-                        'mode' => 'default',
-                        'days' => 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'
-                    ]
-                ],
-                'rates' => [],
-                'active_entries' => [
-                    'hard_limit' => 1,
-                ],
-                'rules' => [
-                    'allow_future_times' => true,
-                    'allow_overlapping_records' => true,
-                    'lockdown_period_start' => null,
-                    'lockdown_period_end' => null,
-                    'lockdown_grace_period' => null,
-                    'allow_overbooking_budget' => true,
-                    'lockdown_period_timezone' => null,
-                    'break_warning_duration' => 0,
-                    'long_running_duration' => 0,
-                ],
-                'default_begin' => 'now',
-                'duration_increment' => null,
-                'time_increment' => null,
             ],
             'kimai.timesheet.rates' => [],
             'kimai.timesheet.rounding' => [

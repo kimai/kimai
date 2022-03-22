@@ -54,15 +54,11 @@ class AppExtension extends Extension
         $this->setLanguageFormats($config['languages'], $container);
         unset($config['languages']);
 
-        $container->setParameter('kimai.calendar', $config['calendar']); // @deprecated since 1.13
         $container->setParameter('kimai.dashboard', $config['dashboard']['widgets']);
         $container->setParameter('kimai.invoice.documents', $config['invoice']['documents']);
         $container->setParameter('kimai.export.documents', $config['export']['documents']);
-        $container->setParameter('kimai.defaults', $config['defaults']); // @deprecated since 1.13
 
         $this->createPermissionParameter($config['permissions'], $container);
-        $container->setParameter('kimai.theme', $config['theme']); // @deprecated since 1.15
-        $container->setParameter('kimai.timesheet', $config['timesheet']); // @deprecated since 1.13
         $container->setParameter('kimai.timesheet.rates', $config['timesheet']['rates']);
         $container->setParameter('kimai.timesheet.rounding', $config['timesheet']['rounding']);
 
@@ -77,9 +73,6 @@ class AppExtension extends Extension
             }
             $config['ldap']['connection']['accountFilterFormat'] = '(&' . $filter . '(' . $config['ldap']['user']['usernameAttribute'] . '=%s))';
         }
-
-        // @deprecated since 1.15
-        $container->setParameter('kimai.ldap', $config['ldap']);
 
         // this should happen always at the end, so bundles do not mess with the base configuration
         /* @phpstan-ignore-next-line */
