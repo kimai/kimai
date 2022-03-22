@@ -25,7 +25,6 @@ class TimesheetConfigTest extends TestCase
         $this->assertInstanceOf(TimesheetConfig::class, $sut->setIsAllowOverlapping(false));
         $this->assertInstanceOf(TimesheetConfig::class, $sut->setDefaultBeginTime('08:00'));
         $this->assertInstanceOf(TimesheetConfig::class, $sut->setTrackingMode('punch'));
-        $this->assertInstanceOf(TimesheetConfig::class, $sut->setActiveEntriesSoftLimit(2));
         $this->assertInstanceOf(TimesheetConfig::class, $sut->setActiveEntriesHardLimit(3));
     }
 }

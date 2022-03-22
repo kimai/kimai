@@ -45,7 +45,6 @@ class SystemConfigurationTest extends TestCase
                 'markdown_content' => false,
                 'active_entries' => [
                     'hard_limit' => 99,
-                    'soft_limit' => 15,
                 ],
                 'default_begin' => 'now',
                 'duration_increment' => 10,
@@ -255,15 +254,6 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals(10, $sut->getTimesheetIncrementDuration());
         $this->assertEquals(5, $sut->getTimesheetIncrementBegin());
         $this->assertEquals(5, $sut->getTimesheetIncrementEnd());
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testDeprecatedSettingsWithoutLoader()
-    {
-        $sut = $this->getSut($this->getDefaultSettings(), []);
-        $this->assertEquals(99, $sut->getTimesheetActiveEntriesSoftLimit());
     }
 
     public function testTimesheetWithLoader()

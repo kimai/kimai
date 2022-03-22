@@ -52,17 +52,6 @@ final class TimesheetConfig
      */
     private $activeEntriesHardLimit = 1;
     /**
-     * How many running timesheets a user is allowed before a warning is shown
-     *
-     * @var int
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     * @Serializer\Type(name="integer")
-     * @phpstan-ignore-next-line
-     */
-    private $activeEntriesSoftLimit = 1;
-    /**
      * Whether entries for future times are allowed
      *
      * @var bool
@@ -102,13 +91,6 @@ final class TimesheetConfig
     public function setActiveEntriesHardLimit(int $activeEntriesHardLimit): TimesheetConfig
     {
         $this->activeEntriesHardLimit = $activeEntriesHardLimit;
-
-        return $this;
-    }
-
-    public function setActiveEntriesSoftLimit(int $activeEntriesSoftLimit): TimesheetConfig
-    {
-        $this->activeEntriesSoftLimit = $activeEntriesSoftLimit;
 
         return $this;
     }

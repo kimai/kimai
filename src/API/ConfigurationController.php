@@ -100,7 +100,6 @@ final class ConfigurationController extends BaseApiController
             ->setTrackingMode($configuration->getTimesheetTrackingMode())
             ->setDefaultBeginTime($configuration->getTimesheetDefaultBeginTime())
             ->setActiveEntriesHardLimit($configuration->getTimesheetActiveEntriesHardLimit())
-            ->setActiveEntriesSoftLimit($configuration->getTimesheetActiveEntriesSoftLimit())
             ->setIsAllowFutureTimes($configuration->isTimesheetAllowFutureTimes())
             ->setIsAllowOverlapping($configuration->isTimesheetAllowOverlappingRecords())
         ;

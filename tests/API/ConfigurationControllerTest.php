@@ -62,7 +62,7 @@ class ConfigurationControllerTest extends APIControllerBaseTest
 
     protected function assertTimesheetStructure(array $result)
     {
-        $expectedKeys = ['activeEntriesHardLimit', 'activeEntriesSoftLimit', 'defaultBeginTime', 'isAllowFutureTimes', 'isAllowOverlapping', 'trackingMode'];
+        $expectedKeys = ['activeEntriesHardLimit', 'defaultBeginTime', 'isAllowFutureTimes', 'isAllowOverlapping', 'trackingMode'];
         $actual = array_keys($result);
         sort($actual);
         sort($expectedKeys);

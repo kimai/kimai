@@ -62,10 +62,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>العدد المسموح به من إدخال وقت التشغيل في وقت واحد</target>
       </trans-unit>
-      <trans-unit id="ebLK9d2" resname="label.timesheet.active_entries.soft_limit">
-        <source>label.timesheet.active_entries.soft_limit</source>
-        <target>عدد إدخال وقت التشغيل التي يتم من خلالها عرض تحذير</target>
-      </trans-unit>
       <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>
         <target>عرض أرقام الأسبوع</target>

@@ -65,11 +65,6 @@ class TimesheetConfiguration implements SystemBundleConfiguration
         return $this->configuration->getTimesheetActiveEntriesHardLimit();
     }
 
-    public function getActiveEntriesSoftLimit(): int
-    {
-        return $this->configuration->getTimesheetActiveEntriesSoftLimit();
-    }
-
     public function getDefaultRoundingDays(): string
     {
         return $this->configuration->getTimesheetDefaultRoundingDays();

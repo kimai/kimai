@@ -204,7 +204,6 @@ class AppExtensionTest extends TestCase
                 ],
                 'rates' => [],
                 'active_entries' => [
-                    'soft_limit' => 1,
                     'hard_limit' => 1,
                 ],
                 'rules' => [
