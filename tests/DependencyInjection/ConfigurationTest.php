@@ -346,7 +346,6 @@ class ConfigurationTest extends TestCase
                 'dragdrop_amount' => 10,
             ],
             'theme' => [
-                'active_warning' => 3,
                 'box_color' => 'blue',
                 'select_type' => 'selectpicker',
                 'show_about' => true,

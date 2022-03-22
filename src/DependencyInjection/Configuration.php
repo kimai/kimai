@@ -428,10 +428,6 @@ class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
-                ->integerNode('active_warning')
-                    ->defaultValue(3)
-                    ->setDeprecated('The node "%node%" at path "%path%" is deprecated, please use "kimai.timesheet.active_entries.soft_limit" instead.')
-                ->end()
                 ->scalarNode('box_color')
                     ->defaultValue('blue')
                     ->setDeprecated('The node "%node%" at path "%path%" was removed, please delete it from your config.')
