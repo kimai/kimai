@@ -428,10 +428,6 @@ class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
-                ->scalarNode('box_color')
-                    ->defaultValue('blue')
-                    ->setDeprecated('The node "%node%" at path "%path%" was removed, please delete it from your config.')
-                ->end()
                 ->scalarNode('select_type')
                     ->defaultValue('selectpicker')
                     ->setDeprecated()

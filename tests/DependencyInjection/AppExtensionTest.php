@@ -169,7 +169,6 @@ class AppExtensionTest extends TestCase
                 ]
             ],
             'kimai.theme' => [
-                'box_color' => 'blue',
                 'select_type' => 'selectpicker',
                 'show_about' => true,
                 'chart' => [

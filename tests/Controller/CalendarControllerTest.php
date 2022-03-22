@@ -83,7 +83,6 @@ class CalendarControllerTest extends ControllerBaseTest
     {
         return [
             'theme' => [
-                'box_color' => 'blue',
                 'select_type' => 'selectpicker',
                 'show_about' => true,
                 'chart' => [

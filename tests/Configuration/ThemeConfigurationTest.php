@@ -33,7 +33,6 @@ class ThemeConfigurationTest extends TestCase
     protected function getDefaultSettings()
     {
         return [
-            'box_color' => 'green',
             'select_type' => null,
             'show_about' => true,
             'chart' => [

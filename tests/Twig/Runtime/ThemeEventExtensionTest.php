@@ -34,7 +34,6 @@ class ThemeEventExtensionTest extends TestCase
     {
         return [
             'theme' => [
-                'box_color' => 'green',
                 'select_type' => null,
                 'show_about' => true,
                 'chart' => [
