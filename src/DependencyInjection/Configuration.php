@@ -61,7 +61,6 @@ class Configuration implements ConfigurationInterface
                 ->append($this->getCalendarNode())
                 ->append($this->getThemeNode())
                 ->append($this->getCompanyNode())
-                ->append($this->getIndustryNode())
                 ->append($this->getDashboardNode())
                 ->append($this->getWidgetsNode())
                 ->append($this->getDefaultsNode())
@@ -498,9 +497,6 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('title')
                             ->defaultNull()
                         ->end()
-                        ->scalarNode('translation')
-                            ->defaultNull()
-                        ->end()
                     ->end()
                 ->end()
                 ->booleanNode('random_colors')
@@ -509,22 +505,6 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('avatar_url')
                     ->defaultFalse()
                 ->end()
-            ->end()
-        ;
-
-        return $node;
-    }
-
-    private function getIndustryNode(): ArrayNodeDefinition
-    {
-        $builder = new TreeBuilder('industry');
-        /** @var ArrayNodeDefinition $node */
-        $node = $builder->getRootNode();
-
-        $node
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->scalarNode('translation')->defaultNull()->end()
             ->end()
         ;
 

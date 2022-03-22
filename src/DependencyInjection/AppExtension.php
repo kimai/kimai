@@ -88,16 +88,6 @@ class AppExtension extends Extension
         // @deprecated since 1.15
         $container->setParameter('kimai.ldap', $config['ldap']);
 
-        // translation files, which can overwrite the default kimai translations
-        $localTranslations = [];
-        if (null !== $config['theme']['branding']['translation']) {
-            $localTranslations[] = $config['theme']['branding']['translation'];
-        }
-        if (null !== $config['industry']['translation']) {
-            $localTranslations[] = $config['industry']['translation'];
-        }
-        $container->setParameter('kimai.i18n_domains', $localTranslations);
-
         // this should happen always at the end, so bundles do not mess with the base configuration
         /* @phpstan-ignore-next-line */
         if ($container->hasParameter('kimai.bundles.config')) {
