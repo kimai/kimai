@@ -79,7 +79,6 @@ class AppExtensionTest extends TestCase
                     'date_time' => 'm-d H:i',
                     'duration' => '%%h:%%m h',
                     'time' => 'H:i',
-                    '24_hours' => true,
                 ],
                 'de' => [
                     'date_time_type' => 'yyyy-MM-dd HH:mm',
@@ -88,7 +87,6 @@ class AppExtensionTest extends TestCase
                     'date_time' => 'm-d H:i',
                     'duration' => '%%h:%%m h',
                     'time' => 'H:i',
-                    '24_hours' => true,
                 ],
                 'tr' => [
                     'date_time_type' => 'yyyy-MM-dd HH:mm',
@@ -99,7 +97,6 @@ class AppExtensionTest extends TestCase
                     'date_time' => 'm-d H:i',
                     'duration' => '%%h:%%m h',
                     'time' => 'H:i',
-                    '24_hours' => true,
                 ],
                 'zh_CN' => [
                     'date_time_type' => 'yyyy-MM-dd HH:mm',
@@ -108,7 +105,6 @@ class AppExtensionTest extends TestCase
                     'date_time' => 'm-d H:i',
                     'duration' => '%%h:%%m h',
                     'time' => 'H:i',
-                    '24_hours' => true,
                 ],
             ],
             'kimai.calendar' => [

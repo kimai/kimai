@@ -349,10 +349,6 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('date_time')->defaultValue('m-d H:i')->end()                   // for display via twig
                     ->scalarNode('duration')->defaultValue('%%h:%%m h')->end()                  // for display via twig
                     ->scalarNode('time')->defaultValue('H:i')->end()                            // for display via twig
-                    ->booleanNode('24_hours')                                                   // for DateTimeType JS component
-                        ->defaultTrue()
-                        ->setDeprecated('24_hours is deprecated since 1.16 and a user configuration now')
-                    ->end()
                 ->end()
             ->end()
         ;
