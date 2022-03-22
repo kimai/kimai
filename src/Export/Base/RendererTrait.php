@@ -165,6 +165,8 @@ trait RendererTrait
                     'money' => $project->getBudget(),
                     'time_left' => null,
                     'money_left' => null,
+                    'time_left_total' => null,
+                    'money_left_total' => null,
                 ];
             }
         }
@@ -177,10 +179,12 @@ trait RendererTrait
             $project = $statisticModel->getProject();
             $id = $project->getCustomer()->getId() . '_' . $projectId;
             if ($statisticModel->hasTimeBudget()) {
-                $summary[$id]['time_left'] = $statisticModel->getTimeBudgetOpen();
+                $summary[$id]['time_left'] = $statisticModel->getTimeBudgetOpenRelative();
+                $summary[$id]['time_left_total'] = $statisticModel->getTimeBudgetOpen();
             }
             if ($statisticModel->hasBudget()) {
-                $summary[$id]['money_left'] = $statisticModel->getBudgetOpen();
+                $summary[$id]['money_left'] = $statisticModel->getBudgetOpenRelative();
+                $summary[$id]['money_left_total'] = $statisticModel->getBudgetOpen();
             }
         }
 
