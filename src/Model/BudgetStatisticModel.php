@@ -108,14 +108,14 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
     {
         $value = $this->getTimeBudget() - $this->getDurationBillable();
 
-        return $value > 0 ? $value : 0;
+        return max($value, 0);
     }
 
     public function getTimeBudgetOpenRelative(): int
     {
         $value = $this->getTimeBudget() - $this->getDurationBillableRelative();
 
-        return $value > 0 ? $value : 0;
+        return max($value, 0);
     }
 
     public function getTimeBudgetSpent(): int
@@ -137,14 +137,14 @@ class BudgetStatisticModel implements BudgetStatisticModelInterface
     {
         $value = $this->getBudget() - $this->getRateBillable();
 
-        return $value > 0 ? $value : 0;
+        return max($value, 0);
     }
 
     public function getBudgetOpenRelative(): float
     {
         $value = $this->getBudget() - $this->getRateBillableRelative();
 
-        return $value > 0 ? $value : 0;
+        return max($value, 0);
     }
 
     public function getBudgetSpent(): float
