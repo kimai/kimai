@@ -71,7 +71,6 @@ class AppExtensionTest extends TestCase
 
         $expected = [
             'kimai.data_dir' => '/tmp/',
-            'kimai.plugin_dir' => realpath(__DIR__ . '/../../') . '/var/plugins',
             'kimai.languages' => [
                 'en' => [
                     'date_time_type' => 'yyyy-MM-dd HH:mm',
@@ -305,21 +304,6 @@ class AppExtensionTest extends TestCase
         $minConfig['kimai']['timesheet']['mode'] = 'punch';
 
         $this->extension->load($minConfig, $container = $this->getContainer());
-    }
-
-    /**
-     * @expectedDeprecation Changing the plugin directory via "kimai.plugin_dir" is not supported since 1.9
-     * @group legacy
-     */
-    public function testChangingPluginsIsIgnoredAndTriggersDeprecation()
-    {
-        $minConfig = $this->getMinConfig();
-        $minConfig['kimai']['plugin_dir'] = '/tmp/';
-        $expected = realpath(__DIR__ . '/../../') . '/var/plugins';
-
-        $this->extension->load($minConfig, $container = $this->getContainer());
-
-        $this->assertEquals($expected, $container->getParameter('kimai.plugin_dir'), 'Invalid config: kimai.plugin_dir');
     }
 
     public function testLdapDefaultValues()

@@ -69,9 +69,7 @@ class TranslationCommand extends Command
 
         $bases = [
             'core' => $this->projectDirectory . '/translations/*.xlf',
-            'core_xliff' => $this->projectDirectory . '/translations/*.xliff',
             'plugins' => $this->projectDirectory . Kernel::PLUGIN_DIRECTORY . '/*/Resources/translations/*.xlf',
-            'plugins_xliff' => $this->projectDirectory . Kernel::PLUGIN_DIRECTORY . '/*/Resources/translations/*.xliff',
         ];
 
         if ($input->getOption('delete-resname')) {

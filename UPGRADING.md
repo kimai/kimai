@@ -16,7 +16,10 @@ Perform EACH version specific task between your version and the new one, otherwi
 **ATTENTION**
 
 - This release bumps the minimum required PHP version to 8.0
-- local.yaml is not compatible with old version (dashboard default config, theme.branding.translation)
+- local.yaml is not compatible with old version, best is to remove it before the update and then re-create it after everything works 
+  - dashboard default config
+  - removed: theme.branding.translation
+  - removed: kimai.plugin_dir
 
 ## [1.16](https://github.com/kevinpapst/kimai2/releases/tag/1.16)
 

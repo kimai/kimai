@@ -51,21 +51,6 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($this->getMinConfig('sdfsdfsdfds'), []);
     }
 
-    /**
-     * @expectedDeprecation Changing the plugin directory via "kimai.plugin_dir" is not supported since 1.9
-     * @group legacy
-     */
-    public function testValidatePluginDir()
-    {
-        $config = $this->getMinConfig();
-        $config['plugin_dir'] = '/tmp/';
-
-        $finalizedConfig = $this->getCompiledConfig($config);
-        $finalizedConfig['plugin_dir'] = '/tmp/';
-
-        $this->assertConfig($config, $finalizedConfig);
-    }
-
     public function testValidateLdapConfigUserBaseDn()
     {
         $this->expectException(InvalidConfigurationException::class);
