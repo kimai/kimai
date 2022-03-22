@@ -346,7 +346,6 @@ class ConfigurationTest extends TestCase
                 'dragdrop_amount' => 10,
             ],
             'theme' => [
-                'select_type' => 'selectpicker',
                 'show_about' => true,
                 'chart' => [
                     'background_color' => '#3c8dbc',

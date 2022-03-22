@@ -34,7 +34,6 @@ class ThemeEventExtensionTest extends TestCase
     {
         return [
             'theme' => [
-                'select_type' => null,
                 'show_about' => true,
                 'chart' => [
                     'background_color' => 'rgba(0,115,183,0.7)',

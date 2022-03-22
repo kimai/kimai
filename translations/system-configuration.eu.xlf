@@ -42,10 +42,6 @@
         <source>label.timesheet.active_entries.hard_limit</source>
         <target>Gehinezko sarrera kopurua aldi berean</target>
       </trans-unit>
-      <trans-unit id="PPlNAzB" resname="label.theme.select_type">
-        <source>label.theme.select_type</source>
-        <target>Formulariotako aukeraketa kutxa mota</target>
-      </trans-unit>
       <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>
         <target>Aste zenbakia erakutsi</target>

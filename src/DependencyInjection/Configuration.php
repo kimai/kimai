@@ -428,10 +428,6 @@ class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
-                ->scalarNode('select_type')
-                    ->defaultValue('selectpicker')
-                    ->setDeprecated()
-                ->end()
                 ->booleanNode('show_about')
                     ->defaultTrue()
                 ->end()

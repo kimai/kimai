@@ -277,7 +277,6 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
 
         $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertFalse($configService->find('timesheet.markdown_content'));
-        $this->assertEquals('selectpicker', $configService->find('theme.select_type'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_theme]')->form();
         $client->submit($form, [
@@ -294,7 +293,6 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertHasFlashSaveSuccess($client);
 
         $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
-        $this->assertEquals('selectpicker', $configService->find('theme.select_type'));
         $this->assertTrue($configService->find('timesheet.markdown_content'));
     }
 

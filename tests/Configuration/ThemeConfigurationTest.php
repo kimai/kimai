@@ -33,7 +33,6 @@ class ThemeConfigurationTest extends TestCase
     protected function getDefaultSettings()
     {
         return [
-            'select_type' => null,
             'show_about' => true,
             'chart' => [
                 'background_color' => 'rgba(0,115,183,0.7)',
