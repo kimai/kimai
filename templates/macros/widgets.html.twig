@@ -364,7 +364,7 @@
     <tr class="{{ class_customer_row(customer, now) }}">
 #}
 {% macro class_customer_row(customer, now) %}
-    {%- if not customer.visible %}warning{% endif -%}
+    {%- if not customer.visible %}bg-orange-lt{% endif -%}
 {% endmacro %}
 
 {#
@@ -386,7 +386,7 @@
     <tr class="{{ class_project_row(project, now) }}">
 #}
 {% macro class_project_row(project, now) %}
-    {%- if not project.visible or (project.end is not null and project.end < now) %}warning{% endif -%}
+    {%- if not project.visible or (project.end is not null and project.end < now) %}bg-orange-lt{% endif -%}
 {% endmacro %}
 
 {#
@@ -408,7 +408,7 @@
     <tr {{ class_activity_row(activity, now) }}>
 #}
 {% macro class_activity_row(activity, now) %}
-    {%- if not activity.visible %}warning{% endif -%}
+    {%- if not activity.visible %}bg-orange-lt{% endif -%}
 {% endmacro %}
 
 {#
@@ -430,7 +430,7 @@
     <tr class="{{ class_user_row(user, now) }}">
 #}
 {% macro class_user_row(user) %}
-    {%- if not user.enabled %}warning{% endif -%}
+    {%- if not user.enabled %}bg-orange-lt{% endif -%}
 {% endmacro %}
 
 {#
