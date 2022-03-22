@@ -34,15 +34,7 @@ class AppExtension extends Extension
             throw $e;
         }
 
-        // @deprecated since 0.9, duration_only will be removed with 2.0
-        if (isset($config['timesheet']['duration_only'])) {
-            @trigger_error('Configuration "kimai.timesheet.duration_only" is deprecated, please remove it', E_USER_DEPRECATED);
-            if (true === $config['timesheet']['duration_only'] && 'duration_only' !== $config['timesheet']['mode']) {
-                trigger_error('Found ambiguous configuration: remove "kimai.timesheet.duration_only" and set "kimai.timesheet.mode" instead.');
-            }
-        }
-
-        // we use a comma sepearated string internally, to be able to use it in combination with the database configuration system
+        // we use a comma separated string internally, to be able to use it in combination with the database configuration system
         foreach ($config['timesheet']['rounding'] as $name => $settings) {
             $config['timesheet']['rounding'][$name]['days'] = implode(',', $settings['days']);
         }

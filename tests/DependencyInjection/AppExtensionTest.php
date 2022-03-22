@@ -279,22 +279,6 @@ class AppExtensionTest extends TestCase
         }
     }
 
-    /**
-     * @expectedDeprecation Configuration "kimai.timesheet.duration_only" is deprecated, please remove it
-     * @group legacy
-     */
-    public function testDurationOnlyDeprecationIsTriggered()
-    {
-        $this->expectNotice();
-        $this->expectExceptionMessage('Found ambiguous configuration: remove "kimai.timesheet.duration_only" and set "kimai.timesheet.mode" instead.');
-
-        $minConfig = $this->getMinConfig();
-        $minConfig['kimai']['timesheet']['duration_only'] = true;
-        $minConfig['kimai']['timesheet']['mode'] = 'punch';
-
-        $this->extension->load($minConfig, $container = $this->getContainer());
-    }
-
     public function testLdapDefaultValues()
     {
         $minConfig = $this->getMinConfig();
