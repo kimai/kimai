@@ -73,7 +73,6 @@ class AppExtensionTest extends TestCase
             'kimai.data_dir' => '/tmp/',
             'kimai.languages' => [
                 'en' => [
-                    'date_time_type' => 'yyyy-MM-dd HH:mm',
                     'date_type' => 'dd. MM. yyyy',
                     'date' => 'A-m-d',
                     'date_time' => 'm-d H:i',
@@ -81,7 +80,6 @@ class AppExtensionTest extends TestCase
                     'time' => 'H:i',
                 ],
                 'de' => [
-                    'date_time_type' => 'yyyy-MM-dd HH:mm',
                     'date_type' => 'dd. MM. yyyy',
                     'date' => 'A-m-d',
                     'date_time' => 'm-d H:i',
@@ -89,7 +87,6 @@ class AppExtensionTest extends TestCase
                     'time' => 'H:i',
                 ],
                 'tr' => [
-                    'date_time_type' => 'yyyy-MM-dd HH:mm',
                     // this value if pre-filled by the Configuration object, as "tr" is defined in the min config
                     // and the other languages (not defined in min config) are "only" copied during runtime from "en"
                     'date_type' => 'yyyy-MM-dd',
@@ -99,7 +96,6 @@ class AppExtensionTest extends TestCase
                     'time' => 'H:i',
                 ],
                 'zh_CN' => [
-                    'date_time_type' => 'yyyy-MM-dd HH:mm',
                     'date_type' => 'dd. MM. yyyy',
                     'date' => 'A-m-d',
                     'date_time' => 'm-d H:i',
