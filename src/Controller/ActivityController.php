@@ -17,6 +17,7 @@ use App\Entity\ActivityRate;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Entity\Team;
+use App\Event\ActivityDetailControllerEvent;
 use App\Event\ActivityMetaDefinitionEvent;
 use App\Event\ActivityMetaDisplayEvent;
 use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
@@ -140,6 +141,11 @@ final class ActivityController extends AbstractController
             $teams = $activity->getTeams();
         }
 
+        // additional boxes by plugins
+        $event = new ActivityDetailControllerEvent($activity);
+        $this->dispatcher->dispatch($event);
+        $boxes = $event->getController();
+
         return $this->render('activity/details.html.twig', [
             'activity' => $activity,
             'stats' => $stats,
@@ -147,6 +153,7 @@ final class ActivityController extends AbstractController
             'team' => $defaultTeam,
             'teams' => $teams,
             'now' => $now,
+            'boxes' => $boxes
         ]);
     }
 

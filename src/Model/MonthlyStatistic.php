@@ -17,7 +17,7 @@ use DateTimeInterface;
 final class MonthlyStatistic implements DateStatisticInterface
 {
     /**
-     * @var array<string, array<int, StatisticDate>>
+     * @var array<string|int, array<int<1, 12>, StatisticDate>>
      */
     private $years = [];
     private $begin;

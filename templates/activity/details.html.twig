@@ -93,6 +93,10 @@
         {{ include('embeds/budgets.html.twig', {'entity': activity, 'stats': stats, 'currency': currency}) }}
     {% endif %}
 
+    {% for controller in boxes %}
+        {{ render(controller(controller, {'activity': activity, 'page': 1})) }}
+    {% endfor %}
+
     {% if can_edit %}
         {{ include('embeds/rates-table.html.twig', {'id': 'activity_rates_box', 'entity': activity, 'create_url': path('admin_activity_rate_add', {'id': activity.id}), 'delete_route': 'delete_activity_rate', 'currency': currency}) }}
     {% endif %}

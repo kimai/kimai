@@ -16,6 +16,7 @@ use App\Entity\CustomerComment;
 use App\Entity\CustomerRate;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Team;
+use App\Event\CustomerDetailControllerEvent;
 use App\Event\CustomerMetaDefinitionEvent;
 use App\Event\CustomerMetaDisplayEvent;
 use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
@@ -304,7 +305,6 @@ final class CustomerController extends AbstractController
         $attachments = [];
         $comments = null;
         $teams = null;
-        $projects = null;
         $rates = [];
         $now = $this->getDateTimeFactory()->createDateTime();
 
@@ -335,6 +335,11 @@ final class CustomerController extends AbstractController
             $teams = $customer->getTeams();
         }
 
+        // additional boxes by plugins
+        $event = new CustomerDetailControllerEvent($customer);
+        $this->dispatcher->dispatch($event);
+        $boxes = $event->getController();
+
         return $this->render('customer/details.html.twig', [
             'customer' => $customer,
             'comments' => $comments,
@@ -346,6 +351,7 @@ final class CustomerController extends AbstractController
             'customer_now' => new \DateTime('now', $timezone),
             'rates' => $rates,
             'now' => $now,
+            'boxes' => $boxes
         ]);
     }
 

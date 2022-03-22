@@ -62,7 +62,7 @@
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
-        <target state="translated">Δελτίο Απασχόλησης</target>
+        <target state="translated">Χρονοδιάγραμμα</target>
       </trans-unit>
       <trans-unit id="M82JFjR" resname="freelancer">
         <source>freelancer</source>

@@ -1261,6 +1261,10 @@
         <source>Display of entries in selection lists</source>
         <target state="translated">Προβολή των καταχωρίσεων στις λίστες επιλογών</target>
       </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>Αυτόματα</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
