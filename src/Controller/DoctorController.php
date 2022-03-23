@@ -11,7 +11,6 @@ namespace App\Controller;
 
 use App\Utils\FileHelper;
 use Composer\InstalledVersions;
-use PackageVersions\Versions;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -118,35 +117,27 @@ class DoctorController extends AbstractController
     {
         $versions = [];
 
-        if (class_exists(InstalledVersions::class)) {
+        if (!class_exists(InstalledVersions::class)) {
             $rootPackage = InstalledVersions::getRootPackage()['name'];
             foreach (InstalledVersions::getInstalledPackages() as $package) {
                 $versions[$package] = InstalledVersions::getPrettyVersion($package);
             }
-        } else {
-            @trigger_error('Please upgrade your Composer to 2.x', E_USER_DEPRECATED);
 
-            // @deprecated since 1.14, will be removed with 2.0
-            $rootPackage = Versions::rootPackageName();
-            foreach (Versions::VERSIONS as $name => $version) {
-                $versions[$name] = explode('@', $version)[0];
-            }
+            // remove kimai from the package list
+            $versions = array_filter($versions, function ($version, $name) use ($rootPackage) {
+                if ($name === $rootPackage) {
+                    return false;
+                }
+
+                if ($version === null || $version === '*') {
+                    return false;
+                }
+
+                return true;
+            }, ARRAY_FILTER_USE_BOTH);
+
+            ksort($versions);
         }
-
-        // remove kimai from the package list
-        $versions = array_filter($versions, function ($version, $name) use ($rootPackage) {
-            if ($name === $rootPackage) {
-                return false;
-            }
-
-            if ($version === null || $version === '*') {
-                return false;
-            }
-
-            return true;
-        }, ARRAY_FILTER_USE_BOTH);
-
-        ksort($versions);
 
         return $versions;
     }

@@ -105,17 +105,22 @@
     {% endembed %}
 
     {% embed '@theme/embeds/card.html.twig' with {collapsed: true} %}
+        {% import "macros/widgets.html.twig" as widgets %}
         {% block box_title %}Composer packages{% endblock %}
-        {% block box_body_class %}p-0{% endblock %}
+        {% block box_body_class %}{% if composer|length > 0 %}p-0{% endif %}{% endblock %}
         {% block box_body %}
-            <table class="table table-hover">
-                {% for name, value in composer %}
-                    <tr>
-                        <th class="text-nowrap w-min">{{ name }}</th>
-                        <td class="text-break">{{ value }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
+            {% if composer|length == 0 %}
+                {{ widgets.alert('warning', 'Could not detect installed composer packages, please upgrade your Composer installation to version 2.x.') }}
+            {% else %}
+                <table class="table table-hover">
+                    {% for name, value in composer %}
+                        <tr>
+                            <th class="text-nowrap w-min">{{ name }}</th>
+                            <td class="text-break">{{ value }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
         {% endblock %}
     {% endembed %}
     

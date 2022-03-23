@@ -14,9 +14,7 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
-use App\Form\Type\DescriptionType;
 use App\Form\Type\ProjectType;
-use App\Form\Type\TagsType;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectFormTypeQuery;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,7 +33,7 @@ trait FormTrait
         $builder->add('customer', CustomerType::class, [
             'query_builder_for_user' => true,
             'customers' => $customer,
-            'data' => $customer ? $customer : '',
+            'data' => $customer ?: '',
             'required' => false,
             'placeholder' => '',
             'mapped' => false,
@@ -115,32 +113,5 @@ trait FormTrait
                 $event->getForm()->add('activity', ActivityType::class, $options);
             }
         );
-    }
-
-    /**
-     * @deprecated since 1.13
-     */
-    protected function addDescription(FormBuilderInterface $builder)
-    {
-        @trigger_error('FormTrait::addDescription() is deprecated and will be removed with 2.0, use DescriptionType instead', E_USER_DEPRECATED);
-
-        $builder->add('description', DescriptionType::class, [
-            'required' => false,
-            'attr' => [
-                'autofocus' => 'autofocus'
-            ]
-        ]);
-    }
-
-    /**
-     * @deprecated since 1.14
-     */
-    protected function addTags(FormBuilderInterface $builder)
-    {
-        @trigger_error('FormTrait::addTags() is deprecated and will be removed with 2.0, use TagsType instead', E_USER_DEPRECATED);
-
-        $builder->add('tags', TagsType::class, [
-            'required' => false,
-        ]);
     }
 }

@@ -35,7 +35,6 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Validator\Constraints\Choice;
 
 /**
  * Defines the base form used for all toolbars.
@@ -354,21 +353,6 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
-    protected function addHiddenOrder(FormBuilderInterface $builder)
-    {
-        @trigger_error('addHiddenOrder() is deprecated and will be removed with 2.0, use the new search modal instead', E_USER_DEPRECATED);
-
-        $builder->add('order', HiddenType::class, [
-            'documentation' => [
-                'type' => 'string',
-                'description' => 'The order for returned items',
-            ],
-            'constraints' => [
-                new Choice(['choices' => [BaseQuery::ORDER_ASC, BaseQuery::ORDER_DESC]])
-            ]
-        ]);
-    }
-
     protected function addOrder(FormBuilderInterface $builder)
     {
         $builder->add('order', ChoiceType::class, [
@@ -381,17 +365,6 @@ abstract class AbstractToolbarForm extends AbstractType
                 'label.desc' => BaseQuery::ORDER_DESC
             ],
             'search' => false,
-        ]);
-    }
-
-    protected function addHiddenOrderBy(FormBuilderInterface $builder, array $allowedColumns)
-    {
-        @trigger_error('addHiddenOrderBy() is deprecated and will be removed with 2.0, use the new search modal instead', E_USER_DEPRECATED);
-
-        $builder->add('orderBy', HiddenType::class, [
-            'constraints' => [
-                new Choice(['choices' => $allowedColumns])
-            ]
         ]);
     }
 
