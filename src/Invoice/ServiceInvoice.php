@@ -257,23 +257,6 @@ final class ServiceInvoice
     /**
      * @param InvoiceQuery $query
      * @return InvoiceItemInterface[]
-     * @deprecated since 1.14 and will be removed with 2.0
-     */
-    public function findInvoiceItems(InvoiceQuery $query): array
-    {
-        @trigger_error('Using findInvoiceItems() is deprecated since 1.14 and will be removed with 2.0', E_USER_DEPRECATED);
-
-        // customer needs to be defined, as we need the currency for the invoice
-        if (!$query->hasCustomers()) {
-            return [];
-        }
-
-        return $this->getInvoiceItems($query);
-    }
-
-    /**
-     * @param InvoiceQuery $query
-     * @return InvoiceItemInterface[]
      */
     public function getInvoiceItems(InvoiceQuery $query): array
     {
@@ -462,7 +445,7 @@ final class ServiceInvoice
 
         if (null === $template->getLanguage()) {
             $template->setLanguage(Constants::DEFAULT_LOCALE);
-            @trigger_error('Using invoice templates without a language is is deprecated and trigger and will throw an exception with 2.0', E_USER_DEPRECATED);
+            @trigger_error('Using invoice templates without a language is deprecated and will throw an exception with 2.0', E_USER_DEPRECATED);
         }
 
         $formatter = new DefaultInvoiceFormatter($this->formatter, $template->getLanguage());

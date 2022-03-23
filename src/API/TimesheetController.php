@@ -592,7 +592,7 @@ class TimesheetController extends BaseApiController
      *      required=true,
      * )
      *
-     * @Rest\RequestParam(name="copy", requirements="all|tags|rates|meta|description", strict=true, nullable=true, description="Whether data should be copied to the new entry. Allowed values: all, tags (deprecated), rates (deprecated), description (deprecated), meta (deprecated) (default: nothing is copied)")
+     * @Rest\RequestParam(name="copy", requirements="all", strict=true, nullable=true, description="Whether data should be copied to the new entry. Allowed values: all (default: nothing is copied)")
      * @Rest\RequestParam(name="begin", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Changes the restart date to the given one (default: now)")
      *
      * @ApiSecurity(name="apiUser")
@@ -622,10 +622,6 @@ class TimesheetController extends BaseApiController
         ;
 
         if (null !== ($copy = $paramFetcher->get('copy'))) {
-            if ($copy !== 'all') {
-                @trigger_error('Setting the "copy" attribute in "restart timesheet" API to something else then "all" is deprecated', E_USER_DEPRECATED);
-            }
-
             $copyTimesheet->setHourlyRate($timesheet->getHourlyRate());
             $copyTimesheet->setFixedRate($timesheet->getFixedRate());
             $copyTimesheet->setDescription($timesheet->getDescription());

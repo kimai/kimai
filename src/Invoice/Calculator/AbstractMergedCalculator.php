@@ -20,16 +20,6 @@ abstract class AbstractMergedCalculator extends AbstractCalculator
     public const CATEGORY_MIXED = 'mixed';
 
     /**
-     * @deprecated since 1.3 - will be removed with 2.0
-     */
-    protected function mergeTimesheets(InvoiceItem $invoiceItem, Timesheet $entry)
-    {
-        @trigger_error('mergeTimesheets() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-
-        $this->mergeInvoiceItems($invoiceItem, $entry);
-    }
-
-    /**
      * @param InvoiceItem $invoiceItem
      * @param InvoiceItemInterface $entry
      * @return void

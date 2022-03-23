@@ -205,18 +205,6 @@ class CustomerRepository extends EntityRepository
     }
 
     /**
-     * @deprecated since 1.1 - use getQueryBuilderForFormType() instead - will be removed with 2.0
-     * @codeCoverageIgnore
-     */
-    public function builderForEntityType($customer)
-    {
-        $query = new CustomerFormTypeQuery();
-        $query->addCustomer($customer);
-
-        return $this->getQueryBuilderForFormType($query);
-    }
-
-    /**
      * Returns a query builder that is used for CustomerType and your own 'query_builder' option.
      *
      * @param CustomerFormTypeQuery $query

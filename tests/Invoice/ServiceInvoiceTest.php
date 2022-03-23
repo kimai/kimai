@@ -144,33 +144,6 @@ class ServiceInvoiceTest extends TestCase
         self::assertEquals('en', $model->getTemplate()->getLanguage());
     }
 
-    /**
-     * @group legacy
-     */
-    public function testFindInvoiceItemsWithoutCustomer()
-    {
-        $sut = $this->getSut([]);
-
-        $query = new InvoiceQuery();
-
-        $items = $sut->findInvoiceItems($query);
-        self::assertEquals([], $items);
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testFindInvoiceItemsWithCustomer()
-    {
-        $sut = $this->getSut([]);
-
-        $query = new InvoiceQuery();
-        $query->setCustomers([new Customer(), new Customer()]);
-
-        $items = $sut->findInvoiceItems($query);
-        self::assertEquals([], $items);
-    }
-
     public function testCreateModelUsesTemplateLanguage()
     {
         $template = new InvoiceTemplate();

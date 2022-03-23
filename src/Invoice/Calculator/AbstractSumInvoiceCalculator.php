@@ -63,11 +63,7 @@ abstract class AbstractSumInvoiceCalculator extends AbstractMergedCalculator imp
      * @param InvoiceItemInterface $entry
      * @return void
      */
-    protected function mergeSumInvoiceItem(InvoiceItem $invoiceItem, InvoiceItemInterface $entry) /* : void */
+    protected function mergeSumInvoiceItem(InvoiceItem $invoiceItem, InvoiceItemInterface $entry): void
     {
-        if (method_exists($this, 'mergeSumTimesheet')) {
-            @trigger_error('mergeSumTimesheet() is deprecated and will be removed with 2.0 - use mergeSumInvoiceItem() instead', E_USER_DEPRECATED);
-            $this->mergeSumTimesheet($invoiceItem, $entry);
-        }
     }
 }

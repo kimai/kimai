@@ -386,12 +386,6 @@ class TimesheetRepository extends EntityRepository
 
             if ($firstEntry !== null) {
                 $stats->setFirstEntry(new DateTime($firstEntry, $timezone));
-            } else {
-                @trigger_error(
-                    'TimesheetStatistic::getFirstEntry() returns a wrong result for users without record and will be removed with 2.0',
-                    E_USER_DEPRECATED
-                );
-                $stats->setFirstEntry(new DateTime('now', $timezone));
             }
         }
 

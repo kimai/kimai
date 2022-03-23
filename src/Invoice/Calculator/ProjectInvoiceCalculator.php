@@ -27,7 +27,7 @@ class ProjectInvoiceCalculator extends AbstractSumInvoiceCalculator implements C
         return (string) $invoiceItem->getProject()->getId();
     }
 
-    protected function mergeSumInvoiceItem(InvoiceItem $invoiceItem, InvoiceItemInterface $entry)
+    protected function mergeSumInvoiceItem(InvoiceItem $invoiceItem, InvoiceItemInterface $entry): void
     {
         $invoiceItem->setProject($entry->getProject());
         $invoiceItem->setDescription($entry->getProject()->getName());

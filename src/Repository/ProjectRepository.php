@@ -239,19 +239,6 @@ class ProjectRepository extends EntityRepository
     }
 
     /**
-     * @deprecated since 1.1 - use getQueryBuilderForFormType() istead - will be removed with 2.0
-     * @codeCoverageIgnore
-     */
-    public function builderForEntityType($project, $customer)
-    {
-        $query = new ProjectFormTypeQuery();
-        $query->addProject($project);
-        $query->addCustomer($customer);
-
-        return $this->getQueryBuilderForFormType($query);
-    }
-
-    /**
      * Returns a query builder that is used for ProjectType and your own 'query_builder' option.
      *
      * @param ProjectFormTypeQuery $query
