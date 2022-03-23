@@ -3,6 +3,7 @@
 {% set language = model.template.language|default(fallback) %}
 {% set isDecimal = model.template.decimalDuration|default(false) %}
 {% set currency = model.currency %}
+{% set project = model.query.project %}
 <html lang="{{ language }}">
 <head>
     <meta charset="UTF-8">
@@ -86,10 +87,10 @@ mpdf-->
             {{ model.customer.number }}
         {% endif %}
 
-        {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
+        {% if project is not null and project.orderNumber is not empty %}
             <br>
             {{ 'label.orderNumber'|trans }}:
-            {{ model.query.project.orderNumber }}
+            {{ project.orderNumber }}
         {% endif %}
     </p>
 

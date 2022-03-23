@@ -76,7 +76,7 @@ abstract class BaseFormTypeQuery
      * @param Project|int $project
      * @return self
      */
-    public function addProject(Project|int $project): self
+    public function addProject($project): self
     {
         if (null !== $project) {
             $this->projects[] = $project;

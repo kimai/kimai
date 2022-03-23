@@ -3,6 +3,8 @@
 
 {% block invoice %}
     {% set isDecimal = model.template.decimalDuration|default(false) %}
+    {% set project = model.query.project %}
+    {% set activity = model.query.activity %}
     <div class="row">
         <div class="col-xs-12">
             <h2 class="page-header">
@@ -41,22 +43,22 @@
                         {{ model.customer.name }}{% if model.customer.contact is not empty %} / {{ model.customer.contact }}{% endif %}
                     </td>
                 </tr>
-                {% if model.query.project is not empty %}
+                {% if project is not null %}
                     <tr>
                         <th>{{ 'label.project'|trans }}</th>
                         <td contenteditable="true">
-                            {{ model.query.project.name }}
-                            {% if model.query.project.orderNumber is not empty %}
-                                ({{ 'label.orderNumber'|trans }}: {{ model.query.project.orderNumber }})
+                            {{ project.name }}
+                            {% if project.orderNumber is not empty %}
+                                ({{ 'label.orderNumber'|trans }}: {{ project.orderNumber }})
                             {% endif %}
                         </td>
                     </tr>
                 {% endif %}
-                {% if model.query.activity is not empty %}
+                {% if activity is not null %}
                     <tr>
                         <th>{{ 'label.activity'|trans }}</th>
                         <td contenteditable="true">
-                            {{ model.query.activity.name }}
+                            {{ activity.name }}
                         </td>
                     </tr>
                 {% endif %}

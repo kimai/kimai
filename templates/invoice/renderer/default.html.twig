@@ -3,6 +3,7 @@
 {% block invoice %}
 {% set isDecimal = model.template.decimalDuration|default(false) %}
 {% set currency = model.currency %}
+{% set project = model.query.project %}
 <div class="row">
     <div class="col-xs-12">
         <h2 class="page-header">
@@ -26,9 +27,9 @@
                 <br>
                 {{ 'label.number'|trans }}: {{ model.customer.number }}
             {% endif %}
-            {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
+            {% if project is not null and project.orderNumber is not empty %}
                 <br>
-                {{ 'label.orderNumber'|trans }}: {{ model.query.project.orderNumber }}
+                {{ 'label.orderNumber'|trans }}: {{ project.orderNumber }}
             {% endif %}
         </address>
     </div>
