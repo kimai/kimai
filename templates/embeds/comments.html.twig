@@ -48,7 +48,7 @@
             {{ form_start(form) }}
             {{ form_widget(form.message, {'attr': {'rows': '3', 'placeholder': 'placeholder.type_message'|trans, 'style': 'margin-bottom: 5px'}}) }}
             <button type="submit" class="btn btn-primary">
-                {{ icon('comment') }}
+                {{ icon('comment', true) }}
                 {{ 'label.comment'|trans }}
             </button>
             {{ form_widget(form) }}
