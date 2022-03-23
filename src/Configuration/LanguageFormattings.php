@@ -13,14 +13,8 @@ use App\Utils\MomentFormatConverter;
 
 final class LanguageFormattings
 {
-    /**
-     * @var array
-     */
-    private $settings;
-    /**
-     * @var MomentFormatConverter
-     */
-    private $momentFormatter;
+    private array $settings;
+    private MomentFormatConverter $momentFormatter;
 
     public function __construct(array $languageSettings)
     {

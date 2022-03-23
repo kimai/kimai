@@ -125,20 +125,6 @@ final class InvoiceModel
     }
 
     /**
-     * @deprecated since 1.3 - will be removed with 2.0
-     * @param InvoiceItemInterface[] $entries
-     * @return InvoiceModel
-     */
-    public function setEntries(array $entries): InvoiceModel
-    {
-        @trigger_error('setEntries() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-
-        $this->entries = $entries;
-
-        return $this;
-    }
-
-    /**
      * @param InvoiceItemInterface[] $entries
      * @return InvoiceModel
      */
@@ -233,14 +219,6 @@ final class InvoiceModel
         $this->generator->setModel($this);
 
         return $this;
-    }
-
-    /**
-     * @deprecated since 1.9 - will be removed with 2.0 - use getInvoiceNumber() instead
-     */
-    public function getNumberGenerator(): ?NumberGeneratorInterface
-    {
-        return $this->generator;
     }
 
     public function setCalculator(CalculatorInterface $calculator): InvoiceModel

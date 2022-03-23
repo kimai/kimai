@@ -54,7 +54,7 @@ final class ProfileController extends AbstractController
     public function indexAction(User $profile, TimesheetRepository $repository, TimesheetStatisticService $statisticService): Response
     {
         $dateFactory = $this->getDateTimeFactory();
-        $userStats = $repository->getUserStatistics($profile, false);
+        $userStats = $repository->getUserStatistics($profile);
         $firstEntry = $statisticService->findFirstRecordDate($profile);
 
         $begin = $firstEntry ?? $dateFactory->getStartOfMonth();

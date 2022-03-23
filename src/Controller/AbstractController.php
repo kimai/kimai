@@ -29,11 +29,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 abstract class AbstractController extends BaseAbstractController implements ServiceSubscriberInterface
 {
-    /**
-     * @deprecated since 1.6, will be removed with 2.0
-     */
-    public const ROLE_ADMIN = User::ROLE_ADMIN;
-
     protected function getTranslator(): TranslatorInterface
     {
         return $this->container->get('translator');

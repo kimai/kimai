@@ -210,18 +210,11 @@ class BaseQueryTest extends TestCase
 
     protected function assertActivity(TimesheetQuery $sut)
     {
-        $this->assertNull($sut->getActivity());
         $this->assertEquals([], $sut->getActivities());
         $this->assertFalse($sut->hasActivities());
 
         $expected = new Activity();
         $expected->setName('foo-bar');
-
-        $sut->setActivity($expected);
-        $this->assertEquals($expected, $sut->getActivity());
-
-        $sut->setActivities([]);
-        $this->assertEquals([], $sut->getActivities());
 
         $sut->addActivity($expected);
         $this->assertEquals([$expected], $sut->getActivities());
@@ -233,30 +226,22 @@ class BaseQueryTest extends TestCase
         $sut->addActivity($expected2);
         $this->assertEquals([$expected, $expected2], $sut->getActivities());
 
-        $sut->setActivity(null);
-        $this->assertNull($sut->getActivity());
+        $sut->setActivities([]);
+        $this->assertEquals([], $sut->getActivities());
         $this->assertFalse($sut->hasActivities());
 
         // make sure int is allowed as well
         $sut->setActivities([99]);
-        $this->assertEquals(99, $sut->getActivity());
         $this->assertEquals([99], $sut->getActivities());
     }
 
     protected function assertCustomer(ProjectQuery $sut)
     {
-        $this->assertNull($sut->getCustomer());
         $this->assertEquals([], $sut->getCustomers());
         $this->assertFalse($sut->hasCustomers());
 
         $expected = new Customer();
         $expected->setName('foo-bar');
-
-        $sut->setCustomer($expected);
-        $this->assertEquals($expected, $sut->getCustomer());
-
-        $sut->setCustomers([]);
-        $this->assertEquals([], $sut->getCustomers());
 
         $sut->addCustomer($expected);
         $this->assertEquals([$expected], $sut->getCustomers());
@@ -268,27 +253,22 @@ class BaseQueryTest extends TestCase
         $sut->addCustomer($expected2);
         $this->assertEquals([$expected, $expected2], $sut->getCustomers());
 
-        $sut->setCustomer(null);
-        $this->assertNull($sut->getCustomer());
+        $sut->setCustomers([]);
+        $this->assertEquals([], $sut->getCustomers());
         $this->assertFalse($sut->hasCustomers());
 
         // make sure int is allowed as well
         $sut->setCustomers([99]);
-        $this->assertEquals(99, $sut->getCustomer());
         $this->assertEquals([99], $sut->getCustomers());
     }
 
     protected function assertProject(ActivityQuery $sut)
     {
-        $this->assertNull($sut->getProject());
         $this->assertEquals([], $sut->getProjects());
         $this->assertFalse($sut->hasProjects());
 
         $expected = new Project();
         $expected->setName('foo-bar');
-
-        $sut->setProject($expected);
-        $this->assertEquals($expected, $sut->getProject());
 
         $sut->setProjects([]);
         $this->assertEquals([], $sut->getProjects());
@@ -303,13 +283,11 @@ class BaseQueryTest extends TestCase
         $sut->addProject($expected2);
         $this->assertEquals([$expected, $expected2], $sut->getProjects());
 
-        $sut->setProject(null);
-        $this->assertNull($sut->getProject());
+        $sut->setProjects([]);
         $this->assertFalse($sut->hasProjects());
 
         // make sure int is allowed as well
         $sut->setProjects([99]);
-        $this->assertEquals(99, $sut->getProject());
         $this->assertEquals([99], $sut->getProjects());
     }
 

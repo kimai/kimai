@@ -334,12 +334,7 @@ class TimesheetRepository extends EntityRepository
         return empty($result) ? 0 : $result;
     }
 
-    /**
-     * @param User $user
-     * @param bool $bcSafe will be removed with 2.0
-     * @return TimesheetStatistic
-     */
-    public function getUserStatistics(User $user, bool $bcSafe = true): TimesheetStatistic
+    public function getUserStatistics(User $user): TimesheetStatistic
     {
         $stats = new TimesheetStatistic();
 
@@ -375,19 +370,6 @@ class TimesheetRepository extends EntityRepository
 
         $billableMonth = $this->getStatistic(self::STATS_QUERY_RATE, $begin, $end, $user, true);
         $stats->setRateThisMonthBillable($billableMonth);
-
-        if ($bcSafe) {
-            $firstEntry = $this->getEntityManager()
-                ->createQuery('SELECT MIN(t.begin) FROM ' . Timesheet::class . ' t WHERE t.user = :user')
-                ->setParameter('user', $user)
-                ->getSingleScalarResult();
-
-            $timezone = new \DateTimeZone($user->getTimezone());
-
-            if ($firstEntry !== null) {
-                $stats->setFirstEntry(new DateTime($firstEntry, $timezone));
-            }
-        }
 
         return $stats;
     }

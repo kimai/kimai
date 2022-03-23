@@ -136,19 +136,6 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
         return $this;
     }
 
-    /**
-     * @return Activity|int|null
-     * @deprecated since 1.9 - use getActivities() instead - will be removed with 2.0
-     */
-    public function getActivity()
-    {
-        if (\count($this->activities) > 0) {
-            return $this->activities[0];
-        }
-
-        return null;
-    }
-
     public function getActivities(): array
     {
         return $this->activities;

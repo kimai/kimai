@@ -18,19 +18,11 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class UserPreferenceEvent extends Event
 {
-    /**
-     * @deprecated since 1.4, will be removed with 2.0
-     */
-    public const CONFIGURE = UserPreferenceEvent::class;
-
-    /**
-     * @var User
-     */
-    private $user;
+    private User $user;
     /**
      * @var UserPreference[]
      */
-    private $preferences = [];
+    private array $preferences = [];
 
     /**
      * @param User $user

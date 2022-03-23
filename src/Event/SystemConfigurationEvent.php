@@ -18,11 +18,6 @@ use Symfony\Contracts\EventDispatcher\Event;
 final class SystemConfigurationEvent extends Event
 {
     /**
-     * @deprecated since 1.4, will be removed with 2.0
-     */
-    public const CONFIGURE = SystemConfigurationEvent::class;
-
-    /**
      * @var SystemConfiguration[]
      */
     protected $preferences;
@@ -38,7 +33,7 @@ final class SystemConfigurationEvent extends Event
     /**
      * @return SystemConfiguration[]
      */
-    public function getConfigurations()
+    public function getConfigurations(): array
     {
         return $this->preferences;
     }

@@ -143,12 +143,6 @@ class LocaleFormatsTest extends TestCase
         $this->assertEquals('YYYY-MM-DD', $sut->getDatePickerFormat());
     }
 
-    public function testGetDateTimeTypeFormat()
-    {
-        $sut = $this->getSut('en', $this->getDefaultSettings());
-        $this->assertEquals('yyyy-MM-dd HH:mm', $sut->getDateTimeTypeFormat());
-    }
-
     public function testGetTimeFormat()
     {
         $sut = $this->getSut('en', $this->getDefaultSettings());

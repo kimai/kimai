@@ -14,14 +14,12 @@ use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Model\ActivityStatistic;
 use App\Repository\Loader\ActivityLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
 use Doctrine\DBAL\ParameterType;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Query;
@@ -106,60 +104,6 @@ class ActivityRepository extends EntityRepository
         }
 
         return $this->count([]);
-    }
-
-    /**
-     * @deprecated since 1.15 use ActivityStatisticService::getActivityStatistics() instead - will be removed with 2.0
-     * @codeCoverageIgnore
-     *
-     * @param Activity $activity
-     * @return ActivityStatistic
-     */
-    public function getActivityStatistics(Activity $activity): ActivityStatistic
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb
-            ->from(Timesheet::class, 't')
-            ->addSelect('COUNT(t.id) as amount')
-            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
-            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
-            ->addSelect('COALESCE(SUM(t.internalRate), 0) as internal_rate')
-            ->where('t.activity = :activity')
-            ->setParameter('activity', $activity)
-        ;
-
-        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
-
-        $stats = new ActivityStatistic();
-
-        if (null !== $timesheetResult) {
-            $stats->setCounter($timesheetResult['amount']);
-            $stats->setRecordDuration($timesheetResult['duration']);
-            $stats->setRecordRate($timesheetResult['rate']);
-            $stats->setRecordInternalRate($timesheetResult['internal_rate']);
-        }
-
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb
-            ->from(Timesheet::class, 't')
-            ->addSelect('COUNT(t.id) as amount')
-            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
-            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
-            ->where('t.activity = :activity')
-            ->andWhere('t.billable = :billable')
-            ->setParameter('activity', $activity)
-            ->setParameter('billable', true, Types::BOOLEAN)
-        ;
-
-        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
-
-        if (null !== $timesheetResult) {
-            $stats->setDurationBillable($timesheetResult['duration']);
-            $stats->setRateBillable($timesheetResult['rate']);
-            $stats->setRecordAmountBillable($timesheetResult['amount']);
-        }
-
-        return $stats;
     }
 
     private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [], bool $globalsOnly = false): void

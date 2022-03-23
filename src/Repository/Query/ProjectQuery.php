@@ -47,39 +47,10 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
     }
 
     /**
-     * @return Customer|int|null
-     * @deprecated since 1.9 - use getCustomers() instead - will be removed with 2.0
-     */
-    public function getCustomer()
-    {
-        if (\count($this->customers) > 0) {
-            return $this->customers[0];
-        }
-
-        return null;
-    }
-
-    /**
-     * @param Customer|int|null $customer
-     * @return $this
-     * @deprecated since 1.9 - use setCustomers() or addCustomer() instead - will be removed with 2.0
-     */
-    public function setCustomer($customer = null)
-    {
-        if (null === $customer) {
-            $this->customers = [];
-        } else {
-            $this->customers = [$customer];
-        }
-
-        return $this;
-    }
-
-    /**
      * @param Customer|int $customer
      * @return $this
      */
-    public function addCustomer($customer)
+    public function addCustomer(Customer|int $customer)
     {
         $this->customers[] = $customer;
 

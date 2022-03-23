@@ -9,14 +9,11 @@
 
 namespace App\Repository;
 
-use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\Project;
 use App\Entity\Team;
-use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Model\CustomerStatistic;
 use App\Repository\Loader\CustomerLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
@@ -73,88 +70,6 @@ class CustomerRepository extends EntityRepository
         }
 
         return $this->count([]);
-    }
-
-    /**
-     * @deprecated since 1.15 use CustomerStatisticService::getCustomerStatistics() instead - will be removed with 2.0
-     * @codeCoverageIgnore
-     *
-     * @param Customer $customer
-     * @return CustomerStatistic
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function getCustomerStatistics(Customer $customer): CustomerStatistic
-    {
-        $stats = new CustomerStatistic();
-
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb
-            ->from(Timesheet::class, 't')
-            ->join(Project::class, 'p', Query\Expr\Join::WITH, 't.project = p.id')
-            ->addSelect('COUNT(t.id) as amount')
-            ->addSelect('t.billable as billable')
-            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
-            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
-            ->addSelect('COALESCE(SUM(t.internalRate), 0) as internal_rate')
-            ->andWhere('p.customer = :customer')
-            ->setParameter('customer', $customer)
-            ->groupBy('billable')
-        ;
-
-        $timesheetResult = $qb->getQuery()->getResult();
-
-        if (null !== $timesheetResult) {
-            $amount = 0;
-            $duration = 0;
-            $rate = 0.00;
-            $rateInternal = 0.00;
-            foreach ($timesheetResult as $resultRow) {
-                $amount += $resultRow['amount'];
-                $duration += $resultRow['duration'];
-                $rate += $resultRow['rate'];
-                $rateInternal += $resultRow['internal_rate'];
-                if ($resultRow['billable']) {
-                    $stats->setDurationBillable($resultRow['duration']);
-                    $stats->setRateBillable($resultRow['rate']);
-                    $stats->setRecordAmountBillable($resultRow['amount']);
-                }
-            }
-            $stats->setCounter($amount);
-            $stats->setRecordDuration($duration);
-            $stats->setRecordRate($rate);
-            $stats->setRecordInternalRate($rateInternal);
-        }
-
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb
-            ->select('COUNT(a.id) as amount')
-            ->from(Activity::class, 'a')
-            ->join(Project::class, 'p', Query\Expr\Join::WITH, 'a.project = p.id')
-            ->andWhere('a.project = p.id')
-            ->andWhere('p.customer = :customer')
-            ->setParameter('customer', $customer)
-        ;
-
-        $activityResult = $qb->getQuery()->getOneOrNullResult();
-
-        if (null !== $activityResult) {
-            $stats->setActivityAmount($activityResult['amount']);
-        }
-
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('COUNT(p.id) as amount')
-            ->from(Project::class, 'p')
-            ->andWhere('p.customer = :customer')
-            ->setParameter('customer', $customer)
-        ;
-
-        $projectResult = $qb->getQuery()->getOneOrNullResult();
-
-        if (null !== $projectResult) {
-            $stats->setProjectAmount($projectResult['amount']);
-        }
-
-        return $stats;
     }
 
     private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = [])

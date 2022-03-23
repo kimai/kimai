@@ -9,7 +9,6 @@
 
 namespace App\Invoice\Calculator;
 
-use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceModel;
 
@@ -28,7 +27,7 @@ abstract class AbstractCalculator
     /**
      * @return InvoiceItem[]
      */
-    abstract public function getEntries();
+    abstract public function getEntries(): array;
 
     /**
      * @return string
@@ -38,7 +37,7 @@ abstract class AbstractCalculator
     /**
      * @param InvoiceModel $model
      */
-    public function setModel(InvoiceModel $model)
+    public function setModel(InvoiceModel $model): void
     {
         $this->model = $model;
     }
@@ -85,20 +84,6 @@ abstract class AbstractCalculator
     public function getTotal(): float
     {
         return $this->getSubtotal() + $this->getTax();
-    }
-
-    /**
-     * @deprecated since 1.8 will be removed with 2.0
-     * @return string
-     */
-    public function getCurrency(): string
-    {
-        @trigger_error(
-            sprintf('%s::getCurrency() is deprecated and will be removed with 2.0', CalculatorInterface::class),
-            E_USER_DEPRECATED
-        );
-
-        return $this->model->getCurrency();
     }
 
     /**

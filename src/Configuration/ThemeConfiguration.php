@@ -10,7 +10,7 @@
 namespace App\Configuration;
 
 /**
- * @internal might be deprecated in the future, use SystemConfiguration instead
+ * @internal use SystemConfiguration as access point in your code - in Twig use config('theme.branding.company') instead
  */
 final class ThemeConfiguration implements \ArrayAccess
 {
@@ -26,10 +26,7 @@ final class ThemeConfiguration implements \ArrayAccess
         return $this->systemConfiguration->has('theme.' . $offset);
     }
 
-    /**
-     * @return mixed
-     */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->systemConfiguration->find('theme.' . $offset);
     }
@@ -51,18 +48,5 @@ final class ThemeConfiguration implements \ArrayAccess
     public function offsetUnset($offset): void
     {
         throw new \BadMethodCallException('ThemeConfiguration does not support offsetUnset()');
-    }
-
-    /**
-     * @deprecated since 1.15
-     */
-    public function getTitle(): ?string
-    {
-        $title = $this->offsetGet('branding.title');
-        if (null === $title) {
-            return null;
-        }
-
-        return (string) $title;
     }
 }

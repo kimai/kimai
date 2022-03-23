@@ -15,7 +15,6 @@ use App\Entity\ProjectComment;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Model\ProjectStatistic;
 use App\Repository\Loader\ProjectLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
@@ -23,7 +22,6 @@ use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\ProjectQuery;
 use DateTime;
 use Doctrine\DBAL\ParameterType;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Query;
@@ -99,89 +97,6 @@ class ProjectRepository extends EntityRepository
         }
 
         return $this->count([]);
-    }
-
-    /**
-     * @deprecated since 1.15 use ProjectStatisticService::getProjectStatistics() instead - will be removed with 2.0
-     * @codeCoverageIgnore
-     *
-     * @param Project $project
-     * @param DateTime|null $begin
-     * @param DateTime|null $end
-     * @return ProjectStatistic
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function getProjectStatistics(Project $project, ?DateTime $begin = null, ?DateTime $end = null): ProjectStatistic
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb
-            ->from(Timesheet::class, 't')
-            ->addSelect('COUNT(t.id) as amount')
-            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
-            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
-            ->addSelect('COALESCE(SUM(t.internalRate), 0) as internal_rate')
-            ->andWhere('t.project = :project')
-            ->setParameter('project', $project)
-        ;
-
-        // to calculate a budget at a certain point in time
-        if (null !== $end) {
-            $qb->andWhere($qb->expr()->lte('t.end', ':end'))
-                ->setParameter('end', $end);
-        }
-
-        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
-
-        $stats = new ProjectStatistic();
-
-        if (null !== $timesheetResult) {
-            $stats->setCounter($timesheetResult['amount']);
-            $stats->setRecordDuration($timesheetResult['duration']);
-            $stats->setRecordRate($timesheetResult['rate']);
-            $stats->setRecordInternalRate($timesheetResult['internal_rate']);
-        }
-
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb
-            ->from(Timesheet::class, 't')
-            ->addSelect('COUNT(t.id) as amount')
-            ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
-            ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
-            ->andWhere('t.project = :project')
-            ->andWhere('t.billable = :billable')
-            ->setParameter('project', $project)
-            ->setParameter('billable', true, Types::BOOLEAN)
-        ;
-
-        // to calculate a budget at a certain point in time
-        if (null !== $end) {
-            $qb->andWhere($qb->expr()->lte('t.end', ':end'))
-                ->setParameter('end', $end);
-        }
-
-        $timesheetResult = $qb->getQuery()->getOneOrNullResult();
-
-        if (null !== $timesheetResult) {
-            $stats->setDurationBillable($timesheetResult['duration']);
-            $stats->setRateBillable($timesheetResult['rate']);
-            $stats->setRecordAmountBillable($timesheetResult['amount']);
-        }
-
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb
-            ->from(Activity::class, 'a')
-            ->select('COUNT(a.id) as amount')
-            ->andWhere('a.project = :project')
-            ->setParameter('project', $project)
-        ;
-
-        $resultActivities = $qb->getQuery()->getOneOrNullResult();
-
-        if (null !== $resultActivities) {
-            $stats->setActivityAmount($resultActivities['amount']);
-        }
-
-        return $stats;
     }
 
     public function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): void

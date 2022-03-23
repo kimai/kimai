@@ -73,17 +73,6 @@ class LocaleFormats
     }
 
     /**
-     * Returns the format which is used by the form component to handle datetime values.
-     *
-     * @deprecated since 1.16
-     * @return string
-     */
-    public function getDateTimeTypeFormat(): string
-    {
-        return $this->formats->getDateTypeFormat($this->getLocale()) . ' HH:mm';
-    }
-
-    /**
      * Returns the locale specific date format, which should be used in combination with the twig filter "|date".
      *
      * @return string

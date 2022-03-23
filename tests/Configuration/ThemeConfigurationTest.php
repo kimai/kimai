@@ -41,20 +41,19 @@ class ThemeConfigurationTest extends TestCase
                 'height' => '200'
             ],
             'branding' => [
-                'logo' => null,
-                'mini' => null,
-                'company' => null,
+                'logo' => 'Logooooo',
+                'mini' => 'Mini2',
+                'company' => 'Super Kimai',
                 'title' => null,
             ],
         ];
     }
 
-    /**
-     * @group legacy
-     */
-    public function testDeprecations()
+    public function testConfig()
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);
-        $this->assertNull($sut->getTitle());
+        $this->assertEquals('Super Kimai', $sut->offsetGet('branding.company'));
+        $this->assertEquals('Logooooo', $sut->offsetGet('branding.logo'));
+        $this->assertEquals('Mini2', $sut->offsetGet('branding.mini'));
     }
 }

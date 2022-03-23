@@ -15,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Configuration\SystemConfiguration
- * @covers \App\Configuration\StringAccessibleConfigTrait
  */
 class SystemConfigurationTest extends TestCase
 {

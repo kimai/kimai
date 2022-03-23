@@ -14,7 +14,6 @@ use App\Form\Type\BudgetType;
 use App\Form\Type\DurationType;
 use App\Form\Type\MetaFieldsCollectionType;
 use App\Form\Type\YesNoType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -52,18 +51,5 @@ trait EntityFormTrait
             ])
             ->add('billable', BillableType::class)
         ;
-    }
-
-    /**
-     * @deprecated since 1.15
-     * @param FormBuilderInterface $builder
-     */
-    public function addCreateMore(FormBuilderInterface $builder): void
-    {
-        $builder->add('create_more', CheckboxType::class, [
-            'label' => 'label.create_more',
-            'required' => false,
-            'mapped' => false,
-        ]);
     }
 }

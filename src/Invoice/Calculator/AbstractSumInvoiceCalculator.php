@@ -34,7 +34,7 @@ abstract class AbstractSumInvoiceCalculator extends AbstractMergedCalculator imp
     /**
      * @return InvoiceItem[]
      */
-    public function getEntries()
+    public function getEntries(): array
     {
         $entries = $this->model->getEntries();
         if (empty($entries)) {

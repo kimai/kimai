@@ -62,14 +62,6 @@ final class InvoiceDocumentRepository
         @unlink(realpath($invoiceDocument->getFilename()));
     }
 
-    /**
-     * @deprecated since 1.10 - will be removed with 2.0 - use getUploadDirectory() instead
-     */
-    public function getCustomInvoiceDirectory(): string
-    {
-        return $this->getUploadDirectory();
-    }
-
     public function getUploadDirectory(): string
     {
         // reverse the array, as bundles can register invoice directories a well (as prepend extensions)

@@ -22,14 +22,8 @@ class ActivityQuery extends ProjectQuery
      * @var array<Project|int>
      */
     private $projects = [];
-    /**
-     * @var bool
-     */
-    private $globalsOnly = false;
-    /**
-     * @var bool
-     */
-    private $excludeGlobals = false;
+    private bool $globalsOnly = false;
+    private bool $excludeGlobals = false;
 
     public function __construct()
     {
@@ -54,50 +48,21 @@ class ActivityQuery extends ProjectQuery
      * @param bool $globalsOnly
      * @return self
      */
-    public function setGlobalsOnly($globalsOnly): self
+    public function setGlobalsOnly(bool $globalsOnly): self
     {
-        $this->globalsOnly = (bool) $globalsOnly;
+        $this->globalsOnly = $globalsOnly;
 
         return $this;
     }
 
     public function isExcludeGlobals(): bool
     {
-        return (bool) $this->excludeGlobals;
+        return $this->excludeGlobals;
     }
 
     public function setExcludeGlobals(bool $excludeGlobals): self
     {
-        $this->excludeGlobals = (bool) $excludeGlobals;
-
-        return $this;
-    }
-
-    /**
-     * @return Project|int|null
-     * @deprecated since 1.9 - use getProjects() instead - will be removed with 2.0
-     */
-    public function getProject()
-    {
-        if (\count($this->projects) > 0) {
-            return $this->projects[0];
-        }
-
-        return null;
-    }
-
-    /**
-     * @param Project|int|null $project
-     * @return self
-     * @deprecated since 1.9 - use setProjects() or addProject() instead - will be removed with 2.0
-     */
-    public function setProject($project = null): self
-    {
-        if (null === $project) {
-            $this->projects = [];
-        } else {
-            $this->projects = [$project];
-        }
+        $this->excludeGlobals = $excludeGlobals;
 
         return $this;
     }
@@ -106,7 +71,7 @@ class ActivityQuery extends ProjectQuery
      * @param Project|int $project
      * @return self
      */
-    public function addProject($project): self
+    public function addProject(Project|int $project): self
     {
         $this->projects[] = $project;
 
