@@ -13,8 +13,8 @@ jms_serializer:
         warmup:
             paths:
                 included:
-                    - "%kernel.root_dir%/Entity/"
-                    - "%kernel.root_dir%/API/Model/"
+                    - "%kernel.project_dir%/src/Entity/"
+                    - "%kernel.project_dir%/src/API/Model/"
                 excluded: []
     property_naming:
         id: 'jms_serializer.identical_property_naming_strategy'
