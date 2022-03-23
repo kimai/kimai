@@ -17,7 +17,6 @@ use App\Entity\User;
 use App\Repository\Loader\UserLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
-use App\Repository\Query\BaseQuery;
 use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
 use Doctrine\DBAL\ParameterType;
@@ -95,28 +94,6 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         }
 
         return $this->count([]);
-    }
-
-    /**
-     * @param UserQuery $query
-     * @return array|\Doctrine\ORM\QueryBuilder|\Pagerfanta\Pagerfanta
-     * @deprecated since 1.4, use getUsersForQuery() instead
-     */
-    public function findByQuery(UserQuery $query)
-    {
-        @trigger_error('UserRepository::findByQuery() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-
-        if (BaseQuery::RESULT_TYPE_PAGER === $query->getResultType()) {
-            return $this->getPagerfantaForQuery($query);
-        }
-
-        $qb = $this->getQueryBuilderForQuery($query);
-
-        if (BaseQuery::RESULT_TYPE_OBJECTS === $query->getResultType()) {
-            return $qb->getQuery()->execute();
-        }
-
-        return $qb;
     }
 
     /**

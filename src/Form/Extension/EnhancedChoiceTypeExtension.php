@@ -21,11 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * @deprecated since 1.7 will be removed with 2.0
-     */
-    public const TYPE_SELECTPICKER = 'selectpicker';
-
     public static function getExtendedTypes(): iterable
     {
         return [EntityType::class, ChoiceType::class];

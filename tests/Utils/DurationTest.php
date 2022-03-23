@@ -27,19 +27,6 @@ class DurationTest extends TestCase
     }
 
     /**
-     * @group legacy
-     */
-    public function testParseDurationStringSpecials()
-    {
-        $sut = new Duration();
-        $this->assertEquals(0, $sut->parseDuration('-1', Duration::FORMAT_SECONDS));
-        $this->assertEquals(0, $sut->parseDuration('0', Duration::FORMAT_SECONDS));
-        $this->assertEquals(3600, $sut->parseDuration('3600', Duration::FORMAT_SECONDS));
-        $this->assertEquals(0, $sut->parseDuration('', Duration::FORMAT_SECONDS));
-        $this->assertEquals(0, $sut->parseDuration('-12', Duration::FORMAT_SECONDS));
-    }
-
-    /**
      * @dataProvider getParseDurationTestData
      */
     public function testParseDurationString($expected, $duration, $mode)

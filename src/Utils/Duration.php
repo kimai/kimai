@@ -18,11 +18,6 @@ class Duration
     public const FORMAT_NATURAL = 'natural';
     public const FORMAT_DECIMAL = 'decimal';
 
-    /**
-     * @deprecated since 1.13
-     */
-    public const FORMAT_SECONDS = 'seconds';
-
     public const FORMAT_WITH_SECONDS = '%h:%m:%s';
     public const FORMAT_NO_SECONDS = '%h:%m';
 
@@ -102,11 +97,6 @@ class Duration
 
             case self::FORMAT_DECIMAL:
                 $seconds = $this->parseDecimalFormat($duration);
-                break;
-
-            case self::FORMAT_SECONDS:
-                @trigger_error('Duration format FORMAT_SECONDS is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-                $seconds = (int) $duration;
                 break;
 
             default:

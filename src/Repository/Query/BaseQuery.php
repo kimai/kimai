@@ -22,23 +22,7 @@ class BaseQuery
 {
     public const ORDER_ASC = 'ASC';
     public const ORDER_DESC = 'DESC';
-
     public const DEFAULT_PAGESIZE = 50;
-    /** @deprecated since 1.14 */
-    public const DEFAULT_PAGE = 1;
-
-    /**
-     * @deprecated since 1.4, will be removed with 2.0
-     */
-    public const RESULT_TYPE_OBJECTS = 'Objects';
-    /**
-     * @deprecated since 1.4, will be removed with 2.0
-     */
-    public const RESULT_TYPE_PAGER = 'PagerFanta';
-    /**
-     * @deprecated since 1.4, will be removed with 2.0
-     */
-    public const RESULT_TYPE_QUERYBUILDER = 'QueryBuilder';
 
     private $defaults = [
         'page' => 1,
@@ -67,11 +51,6 @@ class BaseQuery
      * @var array<string, string>
      */
     private $orderGroups = [];
-    /**
-     * @var string
-     * @deprecated since 1.4, will be removed with 2.0
-     */
-    private $resultType = self::RESULT_TYPE_PAGER;
     /**
      * @var User
      */
@@ -224,17 +203,6 @@ class BaseQuery
         }
 
         return $this->orderGroups;
-    }
-
-    /**
-     * @deprecated since 1.0
-     * @return string
-     */
-    public function getResultType()
-    {
-        @trigger_error('BaseQuery::getResultType() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-
-        return $this->resultType;
     }
 
     public function hasSearchTerm(): bool

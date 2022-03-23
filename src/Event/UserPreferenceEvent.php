@@ -74,14 +74,4 @@ final class UserPreferenceEvent extends Event
         }
         $this->preferences[] = $preference;
     }
-
-    /**
-     * @param UserPreference $preference
-     * @deprecated since 1.4, will be removed with 2.0
-     */
-    public function addUserPreference(UserPreference $preference)
-    {
-        @trigger_error('addUserPreference() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-        $this->addPreference($preference);
-    }
 }

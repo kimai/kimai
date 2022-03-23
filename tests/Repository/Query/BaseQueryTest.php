@@ -39,16 +39,6 @@ class BaseQueryTest extends TestCase
         $this->assertFilter(new BaseQuery());
     }
 
-    /**
-     * @expectedDeprecation BaseQuery::getResultType() is deprecated and will be removed with 2.0
-     * @group legacy
-     */
-    public function testDeprecations()
-    {
-        $sut = new BaseQuery();
-        $sut->getResultType();
-    }
-
     protected function assertResetByFormError(BaseQuery $sut, $orderBy = 'id', $order = 'ASC')
     {
         $sut->setOrder('ASK');

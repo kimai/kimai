@@ -62,7 +62,6 @@ final class LocaleFormatExtensions extends AbstractExtension
             new TwigFilter('date_format', [$this, 'dateFormat']),
             new TwigFilter('date_weekday', [$this, 'dateWeekday']),
             new TwigFilter('time', [$this, 'time']),
-            new TwigFilter('hour24', [$this, 'hour24']),
             new TwigFilter('duration', [$this, 'duration']),
             new TwigFilter('chart_duration', [$this, 'durationChart']),
             new TwigFilter('duration_decimal', [$this, 'durationDecimal']),
@@ -103,7 +102,6 @@ final class LocaleFormatExtensions extends AbstractExtension
     {
         return [
             new TwigFunction('javascript_configurations', [$this, 'getJavascriptConfiguration']),
-            new TwigFunction('get_format_duration', [$this, 'getDurationFormat']),
             new TwigFunction('create_date', [$this, 'createDate']),
             new TwigFunction('locales', [$this, 'getLocales']),
             new TwigFunction('month_names', [$this, 'getMonthNames']),
@@ -249,25 +247,6 @@ final class LocaleFormatExtensions extends AbstractExtension
         return $this->getFormatter()->dayName($dateTime, $short);
     }
 
-    /**
-     * @param mixed $twentyFour
-     * @param mixed $twelveHour
-     * @return mixed
-     */
-    public function hour24($twentyFour, $twelveHour)
-    {
-        @trigger_error('Twig filter "hour24" is deprecated, use app.user.is24Hour() instead', E_USER_DEPRECATED);
-
-        /** @var User|null $user */
-        $user = $this->security->getUser();
-
-        if (null === $user) {
-            return true;
-        }
-
-        return $user->is24Hour();
-    }
-
     public function getJavascriptConfiguration(User $user): array
     {
         $converter = new MomentFormatConverter();
@@ -280,13 +259,6 @@ final class LocaleFormatExtensions extends AbstractExtension
             'twentyFourHours' => $user->is24Hour(),
             'updateBrowserTitle' => (bool) $user->getPreferenceValue('theme.update_browser_title'),
         ];
-    }
-
-    public function getDurationFormat(): string
-    {
-        @trigger_error('Twig function "get_format_duration()" is deprecated, use "javascript_configurations()" instead.', E_USER_DEPRECATED);
-
-        return $this->getLocaleFormats()->getDurationFormat();
     }
 
     /**
