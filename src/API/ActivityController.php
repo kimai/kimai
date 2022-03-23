@@ -87,7 +87,6 @@ class ActivityController extends BaseApiController
      * @Rest\QueryParam(name="projects", requirements="[\d|,]+", strict=true, nullable=true, description="Comma separated list of project IDs to filter activities")
      * @Rest\QueryParam(name="visible", requirements="1|2|3", strict=true, nullable=true, description="Visibility status to filter activities. Allowed values: 1=visible, 2=hidden, 3=all (default: 1)")
      * @Rest\QueryParam(name="globals", requirements="true", strict=true, nullable=true, description="Use if you want to fetch only global activities. Allowed values: true (default: false)")
-     * @Rest\QueryParam(name="globalsFirst", requirements="true|false", strict=true, nullable=true, description="Deprecated parameter, value is not used any more")
      * @Rest\QueryParam(name="orderBy", requirements="id|name|project", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name, project (default: name)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
      * @Rest\QueryParam(name="term", description="Free search term")
@@ -113,10 +112,6 @@ class ActivityController extends BaseApiController
 
         if (null !== $paramFetcher->get('globals')) {
             $query->setGlobalsOnly(true);
-        }
-
-        if (null !== $paramFetcher->get('globalsFirst')) {
-            @trigger_error('API parameter globalsFirst is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
         }
 
         if (!empty($projects = $paramFetcher->get('projects'))) {

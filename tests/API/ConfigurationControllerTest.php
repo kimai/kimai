@@ -56,13 +56,8 @@ class ConfigurationControllerTest extends APIControllerBaseTest
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(6, \count($result));
-        $this->assertTimesheetStructure($result);
-    }
-
-    protected function assertTimesheetStructure(array $result)
-    {
         $expectedKeys = ['activeEntriesHardLimit', 'defaultBeginTime', 'isAllowFutureTimes', 'isAllowOverlapping', 'trackingMode'];
+        $this->assertCount(\count($expectedKeys), $result);
         $actual = array_keys($result);
         sort($actual);
         sort($expectedKeys);
