@@ -1,4 +1,10 @@
 {
+    "async-aws/core": {
+        "version": "1.14.0"
+    },
+    "async-aws/ses": {
+        "version": "1.4.1"
+    },
     "beberlei/doctrineextensions": {
         "version": "v1.2.0"
     },
@@ -146,9 +152,6 @@
     },
     "gedmo/doctrine-extensions": {
         "version": "v2.4.36"
-    },
-    "handcraftedinthealps/rest-routing-bundle": {
-        "version": "1.0.0"
     },
     "jeroendesloovere/vcard": {
         "version": "v1.7.3"
@@ -309,6 +312,9 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/event-dispatcher": {
+        "version": "1.0.0"
+    },
     "psr/http-client": {
         "version": "1.0.1"
     },
@@ -423,9 +429,6 @@
     "symfony/css-selector": {
         "version": "v4.0.4"
     },
-    "symfony/debug": {
-        "version": "v4.0.3"
-    },
     "symfony/debug-bundle": {
         "version": "3.3",
         "recipe": {
@@ -510,9 +513,6 @@
     "symfony/http-kernel": {
         "version": "v4.0.3"
     },
-    "symfony/inflector": {
-        "version": "v4.0.3"
-    },
     "symfony/intl": {
         "version": "v4.0.3"
     },
@@ -573,6 +573,9 @@
     "symfony/options-resolver": {
         "version": "v4.0.3"
     },
+    "symfony/password-hasher": {
+        "version": "v5.4.3"
+    },
     "symfony/phpunit-bridge": {
         "version": "3.3",
         "recipe": {
@@ -596,9 +599,6 @@
     },
     "symfony/polyfill-intl-normalizer": {
         "version": "v1.13.1"
-    },
-    "symfony/polyfill-php73": {
-        "version": "v1.11.0"
     },
     "symfony/polyfill-php80": {
         "version": "v1.17.1"
