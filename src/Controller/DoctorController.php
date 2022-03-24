@@ -263,7 +263,7 @@ class DoctorController extends AbstractController
         $settings = [];
         foreach ($ini as $name) {
             try {
-                $settings[$name] = ini_get($name);
+                $settings[$name] = \ini_get($name);
             } catch (\Exception $ex) {
                 $settings[$name] = "Couldn't load ini setting: " . $ex->getMessage();
             }

@@ -70,7 +70,7 @@ class MPdfConverter implements HtmlToPdfConverter
         $mpdf->creator = Constants::SOFTWARE;
 
         // some OS do not follow the PHP default settings
-        if ((int) ini_get('pcre.backtrack_limit') < 1000000) {
+        if ((int) \ini_get('pcre.backtrack_limit') < 1000000) {
             @ini_set('pcre.backtrack_limit', '1000000');
         }
 
