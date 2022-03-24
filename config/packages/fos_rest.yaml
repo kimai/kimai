@@ -39,12 +39,3 @@ fos_rest:
             - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json ] }
     zone:
         - { path: ^/api/* }
-
-handcraftedinthealps_rest_routing:
-    routing_loader:
-        default_format: 'json'
-        prefix_methods: true
-        include_format: false
-        formats:
-            json: true
-            xml: false

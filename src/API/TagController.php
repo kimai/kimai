@@ -18,16 +18,16 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use HandcraftedInTheAlps\RestRoutingBundle\Controller\Annotations\RouteResource;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @RouteResource("Tag")
+ * @Route(path="/tags")
  * @SWG\Tag(name="Tag")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
@@ -38,14 +38,8 @@ final class TagController extends BaseApiController
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Tag'];
     public const GROUPS_FORM = ['Default', 'Entity', 'Tag'];
 
-    /**
-     * @var TagRepository
-     */
-    private $repository;
-    /**
-     * @var ViewHandlerInterface
-     */
-    private $viewHandler;
+    private TagRepository $repository;
+    private ViewHandlerInterface $viewHandler;
 
     public function __construct(ViewHandlerInterface $viewHandler, TagRepository $repository)
     {
@@ -66,6 +60,8 @@ final class TagController extends BaseApiController
      * )
      *
      * @Rest\QueryParam(name="name", strict=true, nullable=true, description="Search term to filter tag list")
+     *
+     * @Rest\Get(name="get_tags")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -99,6 +95,7 @@ final class TagController extends BaseApiController
      *      required=true,
      *      @SWG\Schema(ref="#/definitions/TagEditForm")
      * )
+     * @Rest\Post(name="post_tag")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -146,6 +143,7 @@ final class TagController extends BaseApiController
      *      description="Tag ID to delete",
      *      required=true,
      * )
+     * @Rest\Delete(path="/{id}", name="delete_tag")
      *
      * @Security("is_granted('delete_tag')")
      *

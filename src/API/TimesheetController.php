@@ -29,7 +29,6 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use HandcraftedInTheAlps\RestRoutingBundle\Controller\Annotations\RouteResource;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -38,11 +37,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @RouteResource("Timesheet")
+ * @Route(path="/timesheets")
  * @SWG\Tag(name="Timesheet")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
@@ -127,6 +127,8 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="full", requirements="true", strict=true, nullable=true, description="Allows to fetch fully serialized objects including subresources. Allowed values: true (default: false)")
      * @Rest\QueryParam(name="term", description="Free search term")
      * @Rest\QueryParam(name="modified_after", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only records changed after this date will be included (format: HTML5). Available since Kimai 1.10 and works only for records that were created/updated since then.")
+     *
+     * @Rest\Get(path="", name="get_timesheets")
      *
      * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
      *
@@ -276,6 +278,8 @@ class TimesheetController extends BaseApiController
      *      required=true,
      * )
      *
+     * @Rest\Get(path="/{id}", name="get_timesheet")
+     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      *
@@ -309,6 +313,8 @@ class TimesheetController extends BaseApiController
      * )
      *
      * @Rest\QueryParam(name="full", requirements="true", strict=true, nullable=true, description="Allows to fetch fully serialized objects including subresources (TimesheetEntityExpanded). Allowed values: true (default: false)")
+     *
+     * @Rest\Post(path="", name="post_timesheet")
      *
      * @Security("is_granted('create_own_timesheet')")
      *
@@ -388,6 +394,7 @@ class TimesheetController extends BaseApiController
      *      required=true,
      *      @SWG\Schema(ref="#/definitions/TimesheetEditForm")
      * )
+     * @Rest\Patch(path="/{id}", name="patch_timesheet")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -446,6 +453,7 @@ class TimesheetController extends BaseApiController
      *      description="Timesheet record ID to delete",
      *      required=true,
      * )
+     * @Rest\Delete(path="/{id}", name="delete_timesheet")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -476,6 +484,8 @@ class TimesheetController extends BaseApiController
      * @Rest\QueryParam(name="user", requirements="\d+|all", strict=true, nullable=true, description="User ID to filter timesheets. Needs permission 'view_other_timesheet', pass 'all' to fetch data for all user (default: current user)")
      * @Rest\QueryParam(name="begin", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only records after this date will be included. Default: today - 1 year (format: HTML5)")
      * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries (default: 10)")
+     *
+     * @Rest\Get(path="/recent", name="recent_timesheet")
      *
      * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
      *
@@ -527,6 +537,8 @@ class TimesheetController extends BaseApiController
      *      )
      * )
      *
+     * @Rest\Get(path="/active", name="active_timesheet")
+     *
      * @Security("is_granted('view_own_timesheet')")
      *
      * @ApiSecurity(name="apiUser")
@@ -560,6 +572,7 @@ class TimesheetController extends BaseApiController
      *      description="Timesheet record ID to stop",
      *      required=true,
      * )
+     * @Rest\Patch(path="/{id}/stop", name="stop_timesheet")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -594,6 +607,8 @@ class TimesheetController extends BaseApiController
      *
      * @Rest\RequestParam(name="copy", requirements="all", strict=true, nullable=true, description="Whether data should be copied to the new entry. Allowed values: all (default: nothing is copied)")
      * @Rest\RequestParam(name="begin", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Changes the restart date to the given one (default: now)")
+     *
+     * @Rest\Patch(path="/{id}/restart", name="restart_timesheet")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -666,6 +681,7 @@ class TimesheetController extends BaseApiController
      *      description="Timesheet record ID to duplicate",
      *      required=true,
      * )
+     * @Rest\Patch(path="/{id}/duplicate", name="duplicate_timesheet")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -702,6 +718,7 @@ class TimesheetController extends BaseApiController
      *      description="Timesheet record ID to switch export state",
      *      required=true,
      * )
+     * @Rest\Patch(path="/{id}/export", name="export_timesheet")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -743,6 +760,8 @@ class TimesheetController extends BaseApiController
      * )
      * @Rest\RequestParam(name="name", strict=true, nullable=false, description="The meta-field name")
      * @Rest\RequestParam(name="value", strict=true, nullable=false, description="The meta-field value")
+     *
+     * @Rest\Patch(path="/{id}/meta")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")

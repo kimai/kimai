@@ -24,16 +24,16 @@ use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use HandcraftedInTheAlps\RestRoutingBundle\Controller\Annotations\RouteResource;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @RouteResource("Team")
+ * @Route(path="/teams")
  * @SWG\Tag(name="Team")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")

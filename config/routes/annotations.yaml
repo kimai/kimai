@@ -8,8 +8,8 @@ controllers:
         _locale: '%locale%'
 
 app.api:
-    resource: '../src/API/'
-    type: rest
+    resource: '../../src/API/'
+    type: annotation
     prefix: /api
 
 auth:

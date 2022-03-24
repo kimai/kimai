@@ -25,7 +25,6 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use HandcraftedInTheAlps\RestRoutingBundle\Controller\Annotations\RouteResource;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Swagger\Annotations as SWG;
@@ -33,9 +32,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @RouteResource("Customer")
+ * @Route(path="/customers")
  * @SWG\Tag(name="Customer")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
@@ -90,6 +90,8 @@ class CustomerController extends BaseApiController
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
+     *
+     * @Route(path="", name="get_customers", methods={"GET"})
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
