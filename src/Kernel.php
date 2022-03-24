@@ -63,12 +63,12 @@ class Kernel extends BaseKernel
     public const TAG_TIMESHEET_ROUNDING_MODE = 'timesheet.rounding_mode';
     public const TAG_PROJECT_VALIDATOR = 'project.validator';
 
-    public function getCacheDir()
+    public function getCacheDir(): string
     {
         return $this->getProjectDir() . '/var/cache/' . $this->environment;
     }
 
-    public function getLogDir()
+    public function getLogDir(): string
     {
         return $this->getProjectDir() . '/var/log';
     }
@@ -96,7 +96,7 @@ class Kernel extends BaseKernel
         $extension->addSecurityListenerFactory(new SamlFactory());
     }
 
-    public function registerBundles()
+    public function registerBundles(): iterable
     {
         $contents = require $this->getProjectDir() . '/config/bundles.php';
         foreach ($contents as $class => $envs) {
@@ -226,7 +226,7 @@ class Kernel extends BaseKernel
         $routes->import($confDir . '/routes' . self::CONFIG_EXTS, '/', 'glob');
 
         foreach ($this->bundles as $bundle) {
-            if (strpos(\get_class($bundle), 'KimaiPlugin\\') !== false) {
+            if (str_contains(\get_class($bundle), 'KimaiPlugin\\')) {
                 if (is_dir($bundle->getPath() . '/Resources/config/')) {
                     $routes->import($bundle->getPath() . '/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
                 } elseif (is_dir($bundle->getPath() . '/config/')) {
