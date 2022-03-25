@@ -48,7 +48,7 @@ final class UserMonthController extends AbstractUserReportController
         $values->setUser($currentUser);
         $values->setDate($dateTimeFactory->getStartOfMonth());
 
-        $form = $this->createForm(MonthByUserForm::class, $values, [
+        $form = $this->createFormForGetRequest(MonthByUserForm::class, $values, [
             'include_user' => $canChangeUser,
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
             'start_date' => $values->getDate(),

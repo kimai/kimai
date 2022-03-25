@@ -7,8 +7,6 @@ includes:
 
 parameters:
     tmpDir: %rootDir%/../../../var/cache/phpstan
-    ignoreErrors:
-        - '#Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required.#'
     excludePaths:
         - %rootDir%/../../../src/Ldap/LdapDriver.php
     treatPhpDocTypesAsCertain: false
@@ -16,4 +14,4 @@ parameters:
     doctrine:
         objectManagerLoader: %rootDir%/../../../tests/phpstan-doctrine.php
     symfony:
-        containerXmlPath: %rootDir%/../../../var/cache/dev/srcApp_KernelDevDebugContainer.xml
+        containerXmlPath: %rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml

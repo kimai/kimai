@@ -46,14 +46,14 @@ class Bookmark
      * @var string
      * @ORM\Column(name="type", type="string", length=20, nullable=false)
      * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=20, allowEmptyString=false)
+     * @Assert\Length(min=2, max=20)
      */
     private $type;
     /**
      * @var string
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
      * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=50, allowEmptyString=false)
+     * @Assert\Length(min=2, max=50)
      */
     private $name;
     /**

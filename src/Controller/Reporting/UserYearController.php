@@ -58,7 +58,7 @@ final class UserYearController extends AbstractUserReportController
 
         $values->setDate(clone $defaultDate);
 
-        $form = $this->createForm(YearByUserForm::class, $values, [
+        $form = $this->createFormForGetRequest(YearByUserForm::class, $values, [
             'include_user' => $canChangeUser,
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
             'start_date' => $values->getDate(),

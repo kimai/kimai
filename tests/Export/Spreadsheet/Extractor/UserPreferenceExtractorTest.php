@@ -31,6 +31,8 @@ class UserPreferenceExtractorTest extends TestCase
             $event->addPreference((new UserPreference())->setName('foo')->setEnabled(true));
             $event->addPreference((new UserPreference())->setName('no')->setEnabled(false));
             $event->addPreference((new UserPreference())->setName('bar')->setEnabled(true));
+
+            return $event;
         });
 
         $sut = new UserPreferenceExtractor($dispatcher);

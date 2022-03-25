@@ -91,10 +91,10 @@ class ActivityController extends BaseApiController
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
      * @Rest\QueryParam(name="term", description="Free search term")
      *
+     * @Rest\Get(path="", name="get_activities")
+     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
-     *
-     * @Route(path="", name="get_activities", methods={"GET"})
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
@@ -157,19 +157,14 @@ class ActivityController extends BaseApiController
      *      description="Activity ID to fetch",
      *      required=true,
      * )
+     * @Rest\Get(path="/{id}", name="get_activity", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
-    public function getAction(int $id): Response
+    public function getAction(Activity $id): Response
     {
-        $data = $this->repository->find($id);
-
-        if (null === $data) {
-            throw new NotFoundException();
-        }
-
-        $view = new View($data, 200);
+        $view = new View($id, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
@@ -192,6 +187,7 @@ class ActivityController extends BaseApiController
      *      required=true,
      *      @SWG\Schema(ref="#/definitions/ActivityEditForm")
      * )
+     * @Rest\Post(path="", name="post_activity")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -252,6 +248,7 @@ class ActivityController extends BaseApiController
      *      description="Activity ID to update",
      *      required=true,
      * )
+     * @Rest\Patch(path="/{id}", name="patch_activity", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -311,6 +308,8 @@ class ActivityController extends BaseApiController
      * @Rest\RequestParam(name="name", strict=true, nullable=false, description="The meta-field name")
      * @Rest\RequestParam(name="value", strict=true, nullable=false, description="The meta-field value")
      *
+     * @Rest\Patch(path="/{id}/meta", requirements={"id": "\d+"})
+     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
@@ -364,6 +363,7 @@ class ActivityController extends BaseApiController
      *      description="The activity whose rates will be returned",
      *      required=true,
      * )
+     * @Rest\Get(path="/{id}/rates", name="get_activity_rates", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -412,6 +412,7 @@ class ActivityController extends BaseApiController
      *      description="The rate to remove",
      *      required=true,
      * )
+     * @Rest\Delete(path="/{id}/rates/{rateId}", name="delete_activity_rate", requirements={"id": "\d+", "rateId": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -466,6 +467,7 @@ class ActivityController extends BaseApiController
      *      required=true,
      *      @SWG\Schema(ref="#/definitions/ActivityRateForm")
      * )
+     * @Rest\Post(path="/{id}/rates", name="post_activity_rate", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")

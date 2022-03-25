@@ -14,6 +14,7 @@ use App\Repository\UserRepository;
 use Exception;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -30,24 +31,29 @@ final class DoctrineUserProvider implements UserProviderInterface, PasswordUpgra
         $this->repository = $repository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function loadUserByUsername($username)
+    public function loadUserByIdentifier(string $identifier): UserInterface
     {
         $user = null;
 
         try {
             /** @var User|null $user */
-            $user = $this->repository->loadUserByUsername($username);
+            $user = $this->repository->loadUserByUsername($identifier);
         } catch (\Exception $ex) {
         }
 
         if (null === $user) {
-            throw new UsernameNotFoundException(sprintf('User "%s" not found.', $username));
+            throw new UserNotFoundException(sprintf('User "%s" not found.', $identifier));
         }
 
         return $user;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function loadUserByUsername(string $username): UserInterface
+    {
+        return $this->loadUserByIdentifier($username);
     }
 
     /**

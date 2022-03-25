@@ -67,6 +67,6 @@ final class LoginManager
 
     private function createToken(string $firewall, User $user): UsernamePasswordToken
     {
-        return new UsernamePasswordToken($user, null, $firewall, $user->getRoles());
+        return new UsernamePasswordToken($user, $firewall, $user->getRoles());
     }
 }

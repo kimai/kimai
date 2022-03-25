@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TimesheetExportToolbarForm extends AbstractToolbarForm
 {
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'export';
     }

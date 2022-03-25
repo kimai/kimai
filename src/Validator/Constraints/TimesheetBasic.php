@@ -43,7 +43,7 @@ class TimesheetBasic extends TimesheetConstraint
 
     public $message = 'This timesheet has invalid settings.';
 
-    public function getTargets()
+    public function getTargets(): string|array
     {
         return self::CLASS_CONSTRAINT;
     }

@@ -147,7 +147,7 @@
         }
 
         let changeHandler = function(event, delta, revertFunc) {
-            let updateUrl = '{{ path('patch_timesheet', {id: '-XX-'}) }}'.replace('-XX-', event.id);
+            let updateUrl = '{{ path('patch_timesheet', {id: 1}) }}'.replace('1', event.id);
             let API = kimai.getPlugin('api');
             let ALERT = kimai.getPlugin('alert');
 
@@ -430,7 +430,7 @@
                             jsEvent.preventDefault();
                             return;
                         }
-                        let editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', eventObj.id);
+                        let editUrl = '{{ path('timesheet_edit', {id: 1}) }}'.replace('1', eventObj.id);
                         kimai.getPlugin('modal').openUrlInModal(editUrl);
                     },
                     {% if not is_punch_mode %}
@@ -447,7 +447,7 @@
                                 if (jsEvent.pageX >= offset.left && jsEvent.pageX<= (offset.left + trash.outerWidth(true)) &&
                                     jsEvent.pageY >= offset.top && jsEvent.pageY <= (offset.top + trash.outerHeight(true))) {
                                     API.delete(
-                                        '{{ path('delete_timesheet', {'id': '__xxx__'}) }}'.replace('__xxx__', event.id),
+                                        '{{ path('delete_timesheet', {id: 1}) }}'.replace('1', event.id),
                                         function () {
                                             kimai.getPlugin('alert').success('action.delete.success');
                                             jQuery('{{ calendarSelector }}').fullCalendar('removeEvents', event._id);

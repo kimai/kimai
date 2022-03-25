@@ -12,6 +12,7 @@ namespace App\Tests\Ldap;
 use App\Configuration\LdapConfiguration;
 use App\Configuration\SystemConfiguration;
 use App\Entity\User;
+use App\Ldap\LdapDriverException;
 use App\Ldap\LdapUserHydrator;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\Security\RoleServiceFactory;
@@ -40,10 +41,36 @@ class LdapUserHydratorTest extends TestCase
         $config = new LdapConfiguration($systemConfig);
 
         $sut = new LdapUserHydrator($config, (new RoleServiceFactory($this))->create([]));
+        $user = $sut->hydrate(['dn' => 'blub', 'foo' => ['blub']]);
+        self::assertInstanceOf(User::class, $user);
+        self::assertEquals('blub', $user->getUserIdentifier());
+        self::assertEquals('blub', $user->getUsername());
+        self::assertEquals('blub', $user->getEmail());
+    }
+
+    public function testEmptyHydrateThrowsException()
+    {
+        $this->expectException(LdapDriverException::class);
+        $this->expectExceptionMessage('Missing username in LDAP hydration');
+
+        $ldapConfig = [
+            'activate' => true,
+            'connection' => [
+                'host' => '1.1.1.1'
+            ],
+            'user' => [
+                'usernameAttribute' => 'foo',
+                'attributes' => []
+            ],
+            'role' => [],
+        ];
+        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
+
+        $config = new LdapConfiguration($systemConfig);
+
+        $sut = new LdapUserHydrator($config, (new RoleServiceFactory($this))->create([]));
         $user = $sut->hydrate(['dn' => 'blub']);
         self::assertInstanceOf(User::class, $user);
-        self::assertEmpty($user->getUsername());
-        self::assertEmpty($user->getEmail());
     }
 
     public function testHydrate()

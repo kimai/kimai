@@ -34,7 +34,7 @@ class TimesheetVoterTest extends AbstractVoterTest
 
     protected function assertVote(User $user, $subject, $attribute, $result)
     {
-        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(TimesheetVoter::class);
 
         $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
@@ -110,7 +110,7 @@ class TimesheetVoterTest extends AbstractVoterTest
         $timesheet->setBegin($begin);
         $timesheet->setUser($user);
 
-        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getLockdownVoter($lockdownBegin, $lockdownEnd, $lockdownGrace);
 
         self::assertEquals($expected, $sut->vote($token, $timesheet, [$permission]));

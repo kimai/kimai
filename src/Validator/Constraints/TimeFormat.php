@@ -21,7 +21,7 @@ class TimeFormat extends Constraint
 
     public $message = 'This time format is invalid.';
 
-    public function getTargets()
+    public function getTargets(): string|array
     {
         return self::PROPERTY_CONSTRAINT;
     }

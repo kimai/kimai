@@ -140,8 +140,11 @@ class SamlUserFactoryTest extends TestCase
             'avatar' => ['http://www.example.com/test.jpg'],
         ];
 
+        $user = new User();
+        $user->setUsername('foo@example.com');
+
         $token = new SamlToken();
-        $token->setUser('foo@example.com');
+        $token->setUser($user);
         $token->setAttributes($attributes);
 
         $sut = $this->createUserFactory($mapping);
@@ -178,8 +181,11 @@ class SamlUserFactoryTest extends TestCase
             'avatar' => ['http://www.example.com/test.jpg'],
         ];
 
+        $user = new User();
+        $user->setUsername('foo@example.com');
+
         $token = new SamlToken();
-        $token->setUser('foo@example.com');
+        $token->setUser($user);
         $token->setAttributes($attributes);
 
         $sut = $this->createUserFactory($mapping);

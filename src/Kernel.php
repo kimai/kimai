@@ -39,7 +39,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
-use Symfony\Component\Routing\RouteCollectionBuilder;
+use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 class Kernel extends BaseKernel
 {
@@ -208,29 +208,28 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new WidgetCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
     }
 
-    protected function configureRoutes(RouteCollectionBuilder $routes)
+    /** @phpstan-ignore-next-line */
+    private function configureRoutes(RoutingConfigurator $routes): void
     {
-        $confDir = $this->getProjectDir() . '/config';
+        $configDir = $this->getConfigDir();
 
-        // load bundle specific route files
-        if (is_dir($confDir . '/routes/')) {
-            $routes->import($confDir . '/routes/*' . self::CONFIG_EXTS, '/', 'glob');
-        }
+        // load application specific route files
+        $routes->import($configDir . '/routes/*.yaml');
 
-        // load environment specific route files
-        if (is_dir($confDir . '/routes/' . $this->environment)) {
-            $routes->import($confDir . '/routes/' . $this->environment . '/**/*' . self::CONFIG_EXTS, '/', 'glob');
+        // load environment specific route files if available
+        if (is_dir($configDir . '/routes/' . $this->environment)) {
+            $routes->import($configDir . '/routes/' . $this->environment . '/*.yaml');
         }
 
         // load application routes
-        $routes->import($confDir . '/routes' . self::CONFIG_EXTS, '/', 'glob');
+        $routes->import($configDir . '/routes.yaml');
 
-        foreach ($this->bundles as $bundle) {
+        foreach ($this->getBundles() as $bundle) {
             if (str_contains(\get_class($bundle), 'KimaiPlugin\\')) {
                 if (is_dir($bundle->getPath() . '/Resources/config/')) {
-                    $routes->import($bundle->getPath() . '/Resources/config/routes' . self::CONFIG_EXTS, '/', 'glob');
+                    $routes->import($bundle->getPath() . '/Resources/config/routes' . self::CONFIG_EXTS);
                 } elseif (is_dir($bundle->getPath() . '/config/')) {
-                    $routes->import($bundle->getPath() . '/config/routes' . self::CONFIG_EXTS, '/', 'glob');
+                    $routes->import($bundle->getPath() . '/config/routes' . self::CONFIG_EXTS);
                 }
             }
         }

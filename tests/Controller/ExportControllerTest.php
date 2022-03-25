@@ -238,7 +238,9 @@ class ExportControllerTest extends ControllerBaseTest
         $this->assertEquals(1, $node->count());
 
         // poor mans assertions ;-)
-        $this->assertStringContainsString('export_print', $node->getIterator()[0]->getAttribute('class'));
+        /** @var \DOMElement $element */
+        $element = $node->getIterator()[0];
+        $this->assertStringContainsString('export_print', $element->getAttribute('class'));
         $this->assertStringContainsString('<h2 id="doc-title" contenteditable="true"', $content);
         $this->assertStringContainsString('<h3 class="card-title" id="doc-summary" contenteditable="true" data-original="Summary">Summary</h3>', $content);
 

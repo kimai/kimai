@@ -9,12 +9,10 @@
 
 namespace App\Tests\Controller;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\ActivityRate;
 use App\Entity\Project;
-use App\Entity\ProjectComment;
 use App\Entity\ProjectMeta;
 use App\Entity\ProjectRate;
 use App\Entity\Team;
@@ -203,7 +201,6 @@ class ProjectControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=project_rate_form]')->form();
         $client->submit($form, [
             'project_rate_form' => [
-                'user' => null,
                 'rate' => $rate,
             ]
         ]);
@@ -245,7 +242,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $em->persist($rate);
         $em->flush();
 
-        $token = self::$container->get('security.csrf.token_manager')->getToken('project.duplicate');
+        $token = $this->getCsrfToken($client, 'project.duplicate');
 
         $this->request($client, '/admin/project/1/duplicate/' . $token);
         $this->assertIsRedirect($client, '/details');
@@ -291,9 +288,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
         self::assertStringContainsString('A beautiful and long comment **with some** markdown formatting', $node->html());
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
-        $configService->offsetSet('timesheet.markdown_content', true);
+        $this->setSystemConfiguration('timesheet.markdown_content', true);
         $this->assertAccessIsGranted($client, '/admin/project/1/details');
         $node = $client->getCrawler()->filter('div.card#comments_box .direct-chat-text');
         self::assertStringContainsString('<p>A beautiful and long comment <strong>with some</strong> markdown formatting</p>', $node->html());
@@ -313,15 +308,9 @@ class ProjectControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
         self::assertStringContainsString('Foo bar blub', $node->html());
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.confirmation-link');
+        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.delete-comment-link');
 
-        $comments = $this->getEntityManager()->getRepository(ProjectComment::class)->findAll();
-        $id = $comments[0]->getId();
-
-        $token = self::$container->get('security.csrf.token_manager')->getToken('project.delete_comment');
-
-        self::assertEquals($this->createUrl('/admin/project/' . $id . '/comment_delete/' . $token), $node->attr('href'));
-        $this->request($client, '/admin/project/' . $id . '/comment_delete/' . $token);
+        $this->request($client, $node->attr('href'));
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
@@ -342,22 +331,18 @@ class ProjectControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
         self::assertStringContainsString('Foo bar blub', $node->html());
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.btn.active');
+        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link.active');
         self::assertEquals(0, $node->count());
 
-        $comments = $this->getEntityManager()->getRepository(ProjectComment::class)->findAll();
-        $id = $comments[0]->getId();
-
-        $token = self::$container->get('security.csrf.token_manager')->getToken('project.pin_comment');
-
-        $this->request($client, '/admin/project/' . $id . '/comment_pin/' . $token);
+        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link');
+        self::assertEquals(1, $node->count());
+        $this->request($client, $node->attr('href'));
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
         $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.btn.active');
-        $token2 = self::$container->get('security.csrf.token_manager')->getToken('project.pin_comment');
+        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link.active');
         self::assertEquals(1, $node->count());
-        self::assertEquals($this->createUrl('/admin/project/' . $id . '/comment_pin/' . $token2), $node->attr('href'));
-        self::assertNotEquals($token, $token2);
+        self::assertStringContainsString('/admin/project/', $node->attr('href'));
+        self::assertStringContainsString('/comment_pin/', $node->attr('href'));
     }
 
     public function testCreateDefaultTeamAction()

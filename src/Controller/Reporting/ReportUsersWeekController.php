@@ -70,7 +70,7 @@ final class ReportUsersWeekController extends AbstractController
         $values = new WeeklyUserList();
         $values->setDate($dateTimeFactory->getStartOfWeek());
 
-        $form = $this->createForm(WeeklyUserListForm::class, $values, [
+        $form = $this->createFormForGetRequest(WeeklyUserListForm::class, $values, [
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
             'start_date' => $values->getDate(),
         ]);

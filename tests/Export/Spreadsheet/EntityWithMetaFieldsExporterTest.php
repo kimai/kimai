@@ -35,6 +35,8 @@ class EntityWithMetaFieldsExporterTest extends TestCase
             $event->addField((new ProjectMeta())->setName('foo meta')->setIsVisible(true));
             $event->addField((new ProjectMeta())->setName('hidden meta')->setIsVisible(false));
             $event->addField((new ProjectMeta())->setName('bar meta')->setIsVisible(true));
+
+            return $event;
         });
 
         $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class));

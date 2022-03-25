@@ -220,7 +220,7 @@ final class ProfileController extends AbstractController
      * @Route(path="/{username}/prefs", name="user_profile_preferences", methods={"GET", "POST"})
      * @Security("is_granted('preferences', profile)")
      */
-    public function preferencesAction(User $profile, Request $request, EventDispatcherInterface $dispatcher): Response
+    public function preferencesAction(User $profile, Request $request, EventDispatcherInterface $dispatcher, UserRepository $userRepository): Response
     {
         // we need to prepare the user preferences, which is done via an EventSubscriber
         $event = new PrepareUserEvent($profile);
@@ -236,7 +236,6 @@ final class ProfileController extends AbstractController
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
                 $preferences = $profile->getPreferences();
 
                 // do not allow to add unknown preferences
@@ -246,16 +245,15 @@ final class ProfileController extends AbstractController
                     }
                 }
 
-                // but allow to delete already saved settings
+                // but allow deleting already saved settings
                 foreach ($original as $name => $preference) {
                     if (false === $profile->getPreferences()->contains($preference)) {
-                        $entityManager->remove($preference);
+                        $userRepository->deleteUserPreference($preference);
                     }
                 }
 
                 $profile->setPreferences($preferences);
-                $entityManager->persist($profile);
-                $entityManager->flush();
+                $userRepository->saveUser($profile);
 
                 $this->flashSuccess('action.update.success');
 

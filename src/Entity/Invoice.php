@@ -168,7 +168,7 @@ class Invoice implements EntityWithMetaFields
      *
      * @ORM\Column(name="invoice_filename", type="string", length=150, nullable=false)
      * @Assert\NotNull()
-     * @Assert\Length(min=1, max=150, allowEmptyString=false)
+     * @Assert\Length(min=1, max=150)
      */
     private $invoiceFilename;
     /**

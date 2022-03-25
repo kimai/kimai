@@ -9,6 +9,7 @@
 
 namespace App\Tests\Saml\Security;
 
+use App\Entity\User;
 use App\Saml\Security\SamlAuthenticationSuccessHandler;
 use App\Saml\Token\SamlToken;
 use PHPUnit\Framework\TestCase;
@@ -80,9 +81,12 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
 
     private function getSamlToken()
     {
+        $user = new User();
+        $user->setUsername('admin');
+
         $token = new SamlToken([]);
         $token->setAttributes(['foo' => 'bar']);
-        $token->setUser('admin');
+        $token->setUser($user);
 
         return $token;
     }

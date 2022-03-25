@@ -38,7 +38,7 @@ class Role
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
      * @Assert\NotNull()
      * @Assert\NotBlank()
-     * @Assert\Length(min=5, max=50, allowEmptyString=false)
+     * @Assert\Length(min=5, max=50)
      */
     private $name;
 

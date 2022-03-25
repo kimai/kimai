@@ -20,7 +20,6 @@ use App\Saml\User\SamlUserFactory;
 use App\Security\DoctrineUserProvider;
 use App\Tests\Configuration\TestConfigLoader;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\ChainUserProvider;
@@ -68,8 +67,7 @@ class SamlProviderTest extends TestCase
     public function testSupportsToken()
     {
         $sut = $this->getSamlProvider();
-        self::assertFalse($sut->supports(new AnonymousToken('ads', 'ads')));
-        self::assertFalse($sut->supports(new UsernamePasswordToken('ads', 'ads', 'asd')));
+        self::assertFalse($sut->supports(new UsernamePasswordToken(new User(), 'ads')));
         self::assertTrue($sut->supports(new SamlToken([])));
     }
 
@@ -77,9 +75,10 @@ class SamlProviderTest extends TestCase
     {
         $user = new User();
         $user->setAuth(User::AUTH_SAML);
+        $user->setUsername('foo1@example.com');
 
         $token = new SamlToken([]);
-        $token->setUser('foo1@example.com');
+        $token->setUser($user);
         $token->setAttributes([
             'Email' => ['foo@example.com'],
             'title' => ['Tralalala'],
@@ -102,8 +101,11 @@ class SamlProviderTest extends TestCase
 
     public function testAuthenticatCreatesNewUser()
     {
+        $user = new User();
+        $user->setUsername('foo1@example.com');
+
         $token = new SamlToken([]);
-        $token->setUser('foo1@example.com');
+        $token->setUser($user);
         $token->setAttributes([
             'Email' => ['foo@example.com'],
             'title' => ['Tralalala'],
@@ -130,9 +132,10 @@ class SamlProviderTest extends TestCase
 
         $user = new User();
         $user->setAuth(User::AUTH_SAML);
+        $user->setUsername('foo1@example.com');
 
         $token = new SamlToken([]);
-        $token->setUser('foo1@example.com');
+        $token->setUser($user);
         $token->setAttributes([
             'Chicken' => ['foo@example.com'],
         ]);

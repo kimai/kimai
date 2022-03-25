@@ -62,15 +62,8 @@ class LastLoginSubscriberTest extends TestCase
         $user = new User();
         self::assertNull($user->getLastLogin());
 
-        $event = new InteractiveLoginEvent(new Request(), new UsernamePasswordToken($user, [], 'sdf'));
+        $event = new InteractiveLoginEvent(new Request(), new UsernamePasswordToken($user, 'sdf'));
         $sut->onSecurityInteractiveLogin($event);
         self::assertNotNull($user->getLastLogin());
-
-        $user = new User();
-        self::assertNull($user->getLastLogin());
-
-        $event = new InteractiveLoginEvent(new Request(), new UsernamePasswordToken('foo', 'bar', 'sdf'));
-        $sut->onSecurityInteractiveLogin($event);
-        self::assertNull($user->getLastLogin());
     }
 }

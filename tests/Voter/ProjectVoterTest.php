@@ -24,7 +24,7 @@ class ProjectVoterTest extends AbstractVoterTest
 {
     protected function assertVote(User $user, $subject, $attribute, $result)
     {
-        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(ProjectVoter::class);
 
         if ($subject instanceof Project && null === $subject->getCustomer()) {

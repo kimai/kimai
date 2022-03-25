@@ -36,7 +36,6 @@ class UserTest extends TestCase
         self::assertInstanceOf(UserInterface::class, $user);
         $this->assertInstanceOf(ArrayCollection::class, $user->getPreferences());
         self::assertNull($user->getTitle());
-        self::assertNull($user->getDisplayName());
         self::assertNull($user->getAvatar());
         self::assertNull($user->getAlias());
         self::assertNull($user->getId());
@@ -50,6 +49,14 @@ class UserTest extends TestCase
         self::assertFalse($user->isSmallLayout());
         self::assertFalse($user->isExportDecimal());
         self::assertTrue($user->is24Hour());
+
+        $user->setUsername('foo');
+        self::assertEquals('foo', $user->getUsername());
+        self::assertEquals('foo', $user->getUserIdentifier());
+        self::assertEquals('foo', $user->getIdentifier());
+        self::assertEquals('foo', $user->getDisplayName());
+        $user->setAlias('BAR');
+        self::assertEquals('BAR', $user->getDisplayName());
 
         $user->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y');
         self::assertEquals('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y', $user->getAvatar());
@@ -371,6 +378,7 @@ class UserTest extends TestCase
     public function testEqualsTo()
     {
         $sut = new User();
+        $sut->setUsername('foo');
 
         $user = new TestUserEntity();
         self::assertFalse($sut->isEqualTo($user));

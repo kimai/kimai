@@ -108,7 +108,7 @@ class LdapManagerTest extends TestCase
     public function testFindUserByUsernameOnValidResult()
     {
         $expected = [
-            0 => ['dn' => 'foo'],
+            0 => ['dn' => 'foo', 'uid' => ['foo']],
             'count' => 1,
         ];
 
@@ -168,7 +168,7 @@ class LdapManagerTest extends TestCase
     public function testFindUserByOnValidResult()
     {
         $expected = [
-            0 => ['dn' => 'foo'],
+            0 => ['dn' => 'foo', 'uid' => ['foo']],
             'count' => 1,
         ];
 
@@ -208,7 +208,7 @@ class LdapManagerTest extends TestCase
         $user->setPreferenceValue('ldap.dn', 'fooooooooooo');
         $expected = [
             [
-                0 => ['dn' => 'blub'],
+                0 => ['dn' => 'blub', 'uid' => ['blub']],
                 'count' => 1,
             ],
             [
@@ -247,7 +247,7 @@ class LdapManagerTest extends TestCase
 
         $expected = [
             [
-                0 => ['dn' => 'blub'],
+                0 => ['dn' => 'blub', 'uid' => ['blub']],
                 'count' => 1,
             ],
             [
@@ -281,11 +281,11 @@ class LdapManagerTest extends TestCase
 
         $expected = [
             [
-                0 => ['dn' => 'blub'],
+                0 => ['dn' => 'blub', 'uid' => ['blub']],
                 'count' => 1,
             ],
             [
-                0 => ['dn' => 'blub-updated'],
+                0 => ['dn' => 'blub-updated', 'uid' => ['foobar']],
                 'count' => 1,
             ],
         ];
@@ -391,7 +391,7 @@ class LdapManagerTest extends TestCase
     public function testUpdateUserOnValidResultWithRolesResult(array $expectedUsers, array $groupConfig, string $expectedGroupQuery)
     {
         $expected = [
-            0 => ['dn' => 'blub'],
+            0 => ['dn' => 'blub', 'uid' => ['blub']],
             'count' => 1,
         ];
 

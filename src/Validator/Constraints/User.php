@@ -32,7 +32,7 @@ class User extends Constraint
 
     public $message = 'The user has invalid settings.';
 
-    public function getTargets()
+    public function getTargets(): string|array
     {
         return self::CLASS_CONSTRAINT;
     }

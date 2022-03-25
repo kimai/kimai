@@ -26,7 +26,7 @@ class Project extends Constraint
 
     public $message = 'This project has invalid settings.';
 
-    public function getTargets()
+    public function getTargets(): string|array
     {
         return self::CLASS_CONSTRAINT;
     }

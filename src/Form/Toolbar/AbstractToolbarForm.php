@@ -43,14 +43,11 @@ use Symfony\Component\Form\FormEvents;
  */
 abstract class AbstractToolbarForm extends AbstractType
 {
-    /**
-     * Dirty hack to enable easy handling of GET form in controller and javascript.
-     * Cleans up the name of all form elements (and unfortunately of the form itself).
-     *
-     * @return null|string
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
+        // FIXME empty block prefix
+        // Dirty hack to enable easy handling of GET form in controller and javascript.
+        // Cleans up the name of all form elements (and unfortunately of the form itself).
         return '';
     }
 

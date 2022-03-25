@@ -33,7 +33,7 @@ class ActivityVoterTest extends AbstractVoterTest
 
     protected function assertVote(User $user, $subject, $attribute, $result)
     {
-        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(ActivityVoter::class);
 
         $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));

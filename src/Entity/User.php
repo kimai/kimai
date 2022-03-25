@@ -23,6 +23,7 @@ use KevinPapst\TablerBundle\Model\UserInterface as ThemeUserInterface;
 use Swagger\Annotations as SWG;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -42,7 +43,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @Exporter\Order({"id", "username", "alias", "title", "email", "last_login", "language", "timezone", "active", "registeredAt", "roles", "teams", "color", "accountNumber"})
  * @Exporter\Expose("email", label="label.email", exp="object.getEmail()")
- * @Exporter\Expose("username", label="label.username", exp="object.getUsername()")
+ * @Exporter\Expose("username", label="label.username", exp="object.getUserIdentifier()")
  * @Exporter\Expose("timezone", label="label.timezone", exp="object.getTimezone()")
  * @Exporter\Expose("language", label="label.language", exp="object.getLanguage()")
  * @Exporter\Expose("last_login", label="label.lastLogin", exp="object.getLastLogin()", type="datetime")
@@ -50,7 +51,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams()", type="array")
  * @Exporter\Expose("active", label="label.active", exp="object.isEnabled()", type="boolean")
  */
-class User implements UserInterface, EquatableInterface, \Serializable, ThemeUserInterface
+class User implements UserInterface, EquatableInterface, \Serializable, ThemeUserInterface, PasswordAuthenticatedUserInterface
 {
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
@@ -212,7 +213,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ThemeUse
      *
      * @var string|null
      * @ORM\Column(name="account", type="string", length=30, nullable=true)
-     * @Assert\Length(allowEmptyString=true, max="30", groups={"Registration", "UserCreate", "Profile"})
+     * @Assert\Length(max="30", groups={"Registration", "UserCreate", "Profile"})
      */
     private $accountNumber;
     /**
@@ -797,7 +798,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ThemeUse
             return $this->getAlias();
         }
 
-        return $this->getUsername();
+        return $this->getUserIdentifier();
     }
 
     public function getAuth(): ?string
@@ -849,26 +850,40 @@ class User implements UserInterface, EquatableInterface, \Serializable, ThemeUse
         $this->plainPassword = null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getUsername()
+    public function hasUsername(): bool
+    {
+        return $this->username !== null;
+    }
+
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getEmail()
+    public function getIdentifier(): string
+    {
+        return $this->username;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
+    }
+
+    public function getEmail(): ?string
     {
         return $this->email;
+    }
+
+    public function hasEmail(): bool
+    {
+        return $this->email !== null;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -896,7 +911,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ThemeUse
     /**
      * {@inheritdoc}
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = $this->roles;
 
@@ -1028,7 +1043,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ThemeUse
         return $this;
     }
 
-    public function isEqualTo(UserInterface $user)
+    public function isEqualTo(UserInterface $user): bool
     {
         if (!$user instanceof self) {
             return false;
@@ -1038,7 +1053,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ThemeUse
             return false;
         }
 
-        if ($this->username !== $user->getUsername()) {
+        if ($this->username !== $user->getUserIdentifier()) {
             return false;
         }
 
@@ -1083,7 +1098,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ThemeUse
     /**
      * {@inheritdoc}
      */
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return null;
     }
@@ -1148,11 +1163,6 @@ class User implements UserInterface, EquatableInterface, \Serializable, ThemeUse
     public function setAccountNumber(?string $accountNumber): void
     {
         $this->accountNumber = $accountNumber;
-    }
-
-    public function getIdentifier(): string
-    {
-        return $this->getUsername();
     }
 
     public function getName(): string

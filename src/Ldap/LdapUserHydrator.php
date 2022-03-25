@@ -65,11 +65,6 @@ class LdapUserHydrator
 
         /** @var string|array|null $email */
         $email = $user->getEmail();
-
-        if (\is_array($email)) {
-            $user->setEmail($email[0]);
-        }
-
         if (null === $email) {
             $user->setEmail($user->getUsername());
         }
@@ -130,6 +125,7 @@ class LdapUserHydrator
 
     protected function hydrateUserWithAttributesMap(UserInterface $user, array $ldapUserAttributes, array $attributeMap)
     {
+        $sawUsername = false;
         /** @var array $attr */
         foreach ($attributeMap as $attr) {
             if (!\array_key_exists($attr['ldap_attr'], $ldapUserAttributes)) {
@@ -148,7 +144,19 @@ class LdapUserHydrator
                 $value = $ldapValue;
             }
 
+            if ($attr['user_method'] === 'setEmail') {
+                if (\is_array($value)) {
+                    $value = $value[0];
+                }
+            } elseif ($attr['user_method'] === 'setUsername') {
+                $sawUsername = true;
+            }
+
             $user->{$attr['user_method']}($value);
+        }
+
+        if (!$sawUsername) {
+            throw new LdapDriverException('Missing username in LDAP hydration');
         }
     }
 }

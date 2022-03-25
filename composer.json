@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "8.0.*||8.1.*",
+        "php": "^8.0.2||8.1.*",
         "ext-gd": "*",
         "ext-intl": "*",
         "ext-json": "*",
@@ -39,14 +39,15 @@
         "pagerfanta/pagerfanta": "^2.1",
         "phpoffice/phpspreadsheet": "^1.16",
         "phpoffice/phpword": "^0.18",
-        "psr/log": "^1.1",
+        "psr/container": "^1.0",
+        "psr/log": "^2.0",
         "sensio/framework-extra-bundle": "^6.0",
         "symfony/amazon-mailer": "^5.4",
         "symfony/asset": "^5.4",
         "symfony/console": "^5.4",
         "symfony/dotenv": "^5.4",
         "symfony/expression-language": "^5.4",
-        "symfony/flex": "^1.0",
+        "symfony/flex": "^2",
         "symfony/form": "^5.4",
         "symfony/framework-bundle": "^5.4",
         "symfony/google-mailer": "^5.4",
@@ -57,6 +58,7 @@
         "symfony/mailgun-mailer": "^5.4",
         "symfony/monolog-bundle": "^3.4",
         "symfony/postmark-mailer": "^5.4",
+        "symfony/runtime": "^5.4",
         "symfony/security-bundle": "^5.4",
         "symfony/security-csrf": "^5.4",
         "symfony/sendgrid-mailer": "^5.4",
@@ -100,17 +102,19 @@
         }
     ],
     "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "symfony/flex": true,
+            "symfony/runtime": true
+        },
+        "optimize-autoloader": true,
         "platform": {
-            "php": "8.0"
+            "php": "8.0.2"
         },
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true,
-        "allow-plugins": {
-            "composer/package-versions-deprecated": true,
-            "symfony/flex": true
-        }
+        "sort-packages": true
     },
     "autoload": {
         "psr-4": {

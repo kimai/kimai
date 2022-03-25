@@ -43,6 +43,9 @@ class CustomerServiceTest extends TestCase
 
         if ($dispatcher === null) {
             $dispatcher = $this->createMock(EventDispatcherInterface::class);
+            $dispatcher->method('dispatch')->willReturnCallback(function ($event) {
+                return $event;
+            });
         }
 
         if ($validator === null) {
@@ -105,6 +108,8 @@ class CustomerServiceTest extends TestCase
             } else {
                 $this->fail('Invalid event received');
             }
+
+            return $event;
         });
 
         $sut = $this->getSut($dispatcher);
@@ -123,6 +128,8 @@ class CustomerServiceTest extends TestCase
             } else {
                 $this->fail('Invalid event received');
             }
+
+            return $event;
         });
 
         $sut = $this->getSut($dispatcher);
@@ -146,6 +153,8 @@ class CustomerServiceTest extends TestCase
             } else {
                 $this->fail('Invalid event received');
             }
+
+            return $event;
         });
 
         $sut = $this->getSut($dispatcher);

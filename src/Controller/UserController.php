@@ -109,7 +109,7 @@ final class UserController extends AbstractController
      * @Route(path="/create", name="admin_user_create", methods={"GET", "POST"})
      * @Security("is_granted('create_user')")
      */
-    public function createAction(Request $request, SystemConfiguration $config): Response
+    public function createAction(Request $request, SystemConfiguration $config, UserRepository $userRepository): Response
     {
         $user = $this->createNewDefaultUser($config);
         $editForm = $this->getCreateUserForm($user);
@@ -120,9 +120,7 @@ final class UserController extends AbstractController
             $password = $this->encoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $userRepository->saveUser($user);
 
             $this->flashSuccess('action.update.success');
 

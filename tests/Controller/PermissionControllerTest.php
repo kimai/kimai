@@ -13,7 +13,6 @@ use App\DataFixtures\UserFixtures;
 use App\Entity\Role;
 use App\Entity\RolePermission;
 use App\Entity\User;
-use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @group integration
@@ -134,9 +133,11 @@ class PermissionControllerTest extends ControllerBaseTest
         $user = $this->getUserByName(UserFixtures::USERNAME_USER);
         $this->assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'TEST_ROLE', 'ROLE_USER'], $user->getRoles());
 
-        /** @var CsrfToken $token */
-        $token = static::$kernel->getContainer()->get('security.csrf.token_manager')->getToken('user_role_permissions');
-        $this->request($client, '/admin/permissions/roles/' . $id . '/delete/' . $token->getValue());
+        $this->request($client, '/admin/permissions');
+        $node = $client->getCrawler()->filter('table.dataTable thead th a.confirmation-link');
+        self::assertEquals(1, $node->count());
+
+        $this->request($client, $node->attr('href'));
         $this->assertIsRedirect($client, $this->createUrl('/admin/permissions'));
         $client->followRedirect();
 
@@ -185,17 +186,17 @@ class PermissionControllerTest extends ControllerBaseTest
             }
         }
 
-        // create the permission
-        $token = static::$kernel->getContainer()->get('security.csrf.token_manager')->getToken('user_role_permissions');
-        $this->request($client, '/admin/permissions/roles/' . $id . '/view_user/1/' . $token->getValue(), 'POST');
+        $token = $client->getCrawler()->filter('div#permission-token')->attr('data-value');
 
+        // create the permission
+        $this->request($client, '/admin/permissions/roles/' . $id . '/view_user/1/' . $token, 'POST');
         self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
         self::assertIsArray($result);
         self::assertArrayHasKey('token', $result);
 
         $rolePermissions = $em->getRepository(RolePermission::class)->findAll();
-        $this->assertEquals(1, \count($rolePermissions));
+        $this->assertCount(1, $rolePermissions);
         $permission = $rolePermissions[0];
         self::assertInstanceOf(RolePermission::class, $permission);
         self::assertEquals('view_user', $permission->getPermission());
@@ -207,8 +208,7 @@ class PermissionControllerTest extends ControllerBaseTest
         $em->clear();
 
         // update the permission
-        $token = static::$kernel->getContainer()->get('security.csrf.token_manager')->getToken('user_role_permissions');
-        $this->request($client, '/admin/permissions/roles/' . $id . '/view_user/0/' . $token->getValue(), 'POST');
+        $this->request($client, '/admin/permissions/roles/' . $id . '/view_user/0/' . $result['token'], 'POST');
 
         self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);

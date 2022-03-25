@@ -21,7 +21,7 @@ class DateTimeFormat extends Constraint
 
     public $message = 'This datetime format is invalid.';
 
-    public function getTargets()
+    public function getTargets(): string|array
     {
         return self::PROPERTY_CONSTRAINT;
     }

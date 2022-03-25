@@ -22,6 +22,7 @@ use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
@@ -70,6 +71,7 @@ final class TeamController extends BaseApiController
      *          @SWG\Items(ref="#/definitions/TeamCollection")
      *      )
      * )
+     * @Rest\Get(path="", name="get_teams")
      *
      * @Security("is_granted('view_team')")
      *
@@ -94,21 +96,16 @@ final class TeamController extends BaseApiController
      *      description="Returns one team entity",
      *      @SWG\Schema(ref="#/definitions/Team"),
      * )
+     * @Rest\Get(path="/{id}", name="get_team", requirements={"id": "\d+"})
      *
      * @Security("is_granted('view_team')")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
-    public function getAction(int $id): Response
+    public function getAction(Team $id): Response
     {
-        $data = $this->repository->find($id);
-
-        if (null === $data) {
-            throw new NotFoundException();
-        }
-
-        $view = new View($data, 200);
+        $view = new View($id, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
@@ -131,20 +128,16 @@ final class TeamController extends BaseApiController
      *      required=true,
      * )
      *
+     * @Rest\Delete(path="/{id}", name="delete_team", requirements={"id": "\d+"})
+     *
      * @Security("is_granted('delete_team')")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
-    public function deleteAction(int $id): Response
+    public function deleteAction(Team $id): Response
     {
-        $team = $this->repository->find($id);
-
-        if (null === $team) {
-            throw new NotFoundException();
-        }
-
-        $this->repository->deleteTeam($team);
+        $this->repository->deleteTeam($id);
 
         $view = new View(null, Response::HTTP_NO_CONTENT);
 
@@ -168,6 +161,7 @@ final class TeamController extends BaseApiController
      *      required=true,
      *      @SWG\Schema(ref="#/definitions/TeamEditForm")
      * )
+     * @Rest\Post(path="", name="post_team")
      *
      * @Security("is_granted('create_team')")
      *
@@ -220,6 +214,7 @@ final class TeamController extends BaseApiController
      *      description="Team ID to update",
      *      required=true,
      * )
+     * @Rest\Patch(path="/{id}", name="patch_team", requirements={"id": "\d+"})
      *
      * @Security("is_granted('edit_team')")
      *
@@ -286,6 +281,7 @@ final class TeamController extends BaseApiController
      *      description="The team member to add (User ID)",
      *      required=true,
      * )
+     * @Rest\Post(path="/{id}/members/{userId}", name="post_team_member", requirements={"id": "\d+", "userId": "\d+"})
      *
      * @Security("is_granted('edit_team')")
      *
@@ -345,6 +341,7 @@ final class TeamController extends BaseApiController
      *      description="The team member to remove (User ID)",
      *      required=true,
      * )
+     * @Rest\Delete(path="/{id}/members/{userId}", name="delete_team_member", requirements={"id": "\d+", "userId": "\d+"})
      *
      * @Security("is_granted('edit_team')")
      *
@@ -408,6 +405,7 @@ final class TeamController extends BaseApiController
      *      description="The customer to grant acecess to (Customer ID)",
      *      required=true,
      * )
+     * @Rest\Post(path="/{id}/customers/{customerId}", name="post_team_customer", requirements={"id": "\d+", "customerId": "\d+"})
      *
      * @Security("is_granted('edit_team')")
      *
@@ -467,6 +465,7 @@ final class TeamController extends BaseApiController
      *      description="The customer to remove (Customer ID)",
      *      required=true,
      * )
+     * @Rest\Delete(path="/{id}/customers/{customerId}", name="delete_team_customer", requirements={"id": "\d+", "customerId": "\d+"})
      *
      * @Security("is_granted('edit_team')")
      *
@@ -526,6 +525,7 @@ final class TeamController extends BaseApiController
      *      description="The project to grant acecess to (Project ID)",
      *      required=true,
      * )
+     * @Rest\Post(path="/{id}/projects/{projectId}", name="post_team_project", requirements={"id": "\d+", "projectId": "\d+"})
      *
      * @Security("is_granted('edit_team')")
      *
@@ -585,6 +585,7 @@ final class TeamController extends BaseApiController
      *      description="The project to remove (Project ID)",
      *      required=true,
      * )
+     * @Rest\Delete(path="/{id}/projects/{projectId}", name="delete_team_project", requirements={"id": "\d+", "projectId": "\d+"})
      *
      * @Security("is_granted('edit_team')")
      *
@@ -644,6 +645,7 @@ final class TeamController extends BaseApiController
      *      description="The activity to grant acecess to (Activity ID)",
      *      required=true,
      * )
+     * @Rest\Post(path="/{id}/activities/{activityId}", name="post_team_activity", requirements={"id": "\d+", "activityId": "\d+"})
      *
      * @Security("is_granted('edit_team')")
      *
@@ -703,6 +705,7 @@ final class TeamController extends BaseApiController
      *      description="The activity to remove (Activity ID)",
      *      required=true,
      * )
+     * @Rest\Delete(path="/{id}/activities/{activityId}", name="delete_team_activity", requirements={"id": "\d+", "activityId": "\d+"})
      *
      * @Security("is_granted('edit_team')")
      *

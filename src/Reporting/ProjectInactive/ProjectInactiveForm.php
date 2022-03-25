@@ -17,16 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ProjectInactiveForm extends AbstractType
 {
     /**
-     * Simplify cross linking between pages by removing the block prefix.
-     *
-     * @return null|string
-     */
-    public function getBlockPrefix()
-    {
-        return null;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)

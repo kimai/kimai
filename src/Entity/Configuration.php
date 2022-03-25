@@ -37,14 +37,14 @@ class Configuration
      *
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
      * @Assert\NotNull()
-     * @Assert\Length(min=2, max=100, allowEmptyString=false)
+     * @Assert\Length(min=2, max=100)
      */
     private $name;
     /**
      * @var string|null
      *
      * @ORM\Column(name="value", type="string", length=1024, nullable=true)
-     * @Assert\Length(max=1024, allowEmptyString=true)
+     * @Assert\Length(max=1024)
      */
     private $value;
 

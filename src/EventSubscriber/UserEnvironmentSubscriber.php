@@ -43,7 +43,7 @@ final class UserEnvironmentSubscriber implements EventSubscriberInterface
     public function prepareEnvironment(RequestEvent $event): void
     {
         // ignore sub-requests
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 

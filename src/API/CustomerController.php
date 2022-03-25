@@ -88,10 +88,10 @@ class CustomerController extends BaseApiController
      * @Rest\QueryParam(name="orderBy", requirements="id|name", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name (default: name)")
      * @Rest\QueryParam(name="term", description="Free search term")
      *
+     * @Rest\Get(path="", name="get_customers")
+     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
-     *
-     * @Route(path="", name="get_customers", methods={"GET"})
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
@@ -132,19 +132,14 @@ class CustomerController extends BaseApiController
      *      description="Returns one customer entity",
      *      @SWG\Schema(ref="#/definitions/CustomerEntity"),
      * )
+     * @Rest\Get(path="/{id}", name="get_customer", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
-    public function getAction(int $id): Response
+    public function getAction(Customer $id): Response
     {
-        $data = $this->repository->find($id);
-
-        if (null === $data) {
-            throw new NotFoundException();
-        }
-
-        $view = new View($data, 200);
+        $view = new View($id, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
@@ -167,6 +162,7 @@ class CustomerController extends BaseApiController
      *      required=true,
      *      @SWG\Schema(ref="#/definitions/CustomerEditForm")
      * )
+     * @Rest\Post(path="", name="post_customer")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -227,6 +223,7 @@ class CustomerController extends BaseApiController
      *      description="Customer ID to update",
      *      required=true,
      * )
+     * @Rest\Patch(path="/{id}", name="patch_customer", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -286,6 +283,8 @@ class CustomerController extends BaseApiController
      * @Rest\RequestParam(name="name", strict=true, nullable=false, description="The meta-field name")
      * @Rest\RequestParam(name="value", strict=true, nullable=false, description="The meta-field value")
      *
+     * @Rest\Patch(path="/{id}/meta", requirements={"id": "\d+"})
+     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
@@ -339,6 +338,7 @@ class CustomerController extends BaseApiController
      *      description="The customer whose rates will be returned",
      *      required=true,
      * )
+     * @Rest\Get(path="/{id}/rates", name="get_customer_rates", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -365,7 +365,7 @@ class CustomerController extends BaseApiController
     }
 
     /**
-     * Deletes one rate for an customer
+     * Deletes one rate for a customer
      *
      * @SWG\Delete(
      *      @SWG\Response(
@@ -387,6 +387,7 @@ class CustomerController extends BaseApiController
      *      description="The rate to remove",
      *      required=true,
      * )
+     * @Rest\Delete(path="/{id}/rates/{rateId}", name="delete_customer_rate", requirements={"id": "\d+", "rateId": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -441,6 +442,7 @@ class CustomerController extends BaseApiController
      *      required=true,
      *      @SWG\Schema(ref="#/definitions/CustomerRateForm")
      * )
+     * @Rest\Post(path="/{id}/rates", name="post_customer_rate", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")

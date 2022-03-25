@@ -38,7 +38,7 @@ final class TagsType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         if ($this->repository->count([]) > TagRepository::MAX_AMOUNT_SELECT) {
             return TagsInputType::class;

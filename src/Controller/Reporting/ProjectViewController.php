@@ -29,7 +29,7 @@ final class ProjectViewController extends AbstractController
         $user = $this->getUser();
 
         $query = new ProjectViewQuery($dateFactory->createDateTime(), $user);
-        $form = $this->createForm(ProjectViewForm::class, $query);
+        $form = $this->createFormForGetRequest(ProjectViewForm::class, $query);
         $form->submit($request->query->all(), false);
 
         $projects = $service->findProjectsForView($query);

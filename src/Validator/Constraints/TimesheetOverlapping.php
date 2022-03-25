@@ -19,7 +19,7 @@ final class TimesheetOverlapping extends TimesheetConstraint
 
     public $message = 'You already have an entry for this time.';
 
-    public function getTargets()
+    public function getTargets(): string|array
     {
         return self::CLASS_CONSTRAINT;
     }

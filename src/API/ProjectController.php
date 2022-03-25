@@ -100,10 +100,10 @@ class ProjectController extends BaseApiController
      * @Rest\QueryParam(name="orderBy", requirements="id|name|customer", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name, customer (default: name)")
      * @Rest\QueryParam(name="term", description="Free search term")
      *
+     * @Rest\Get(path="", name="get_projects")
+     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
-     *
-     * @Route(path="", name="get_projects", methods={"GET"})
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
@@ -177,19 +177,14 @@ class ProjectController extends BaseApiController
      *      description="Returns one project entity",
      *      @SWG\Schema(ref="#/definitions/ProjectEntity"),
      * )
+     * @Rest\Get(path="/{id}", name="get_project", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
-    public function getAction(int $id): Response
+    public function getAction(Project $id): Response
     {
-        $data = $this->repository->find($id);
-
-        if (null === $data) {
-            throw new NotFoundException();
-        }
-
-        $view = new View($data, 200);
+        $view = new View($id, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
@@ -212,6 +207,7 @@ class ProjectController extends BaseApiController
      *      required=true,
      *      @SWG\Schema(ref="#/definitions/ProjectEditForm")
      * )
+     * @Rest\Post(path="", name="post_project")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -271,6 +267,7 @@ class ProjectController extends BaseApiController
      *      description="Project ID to update",
      *      required=true,
      * )
+     * @Rest\Patch(path="/{id}", name="patch_project", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -332,6 +329,8 @@ class ProjectController extends BaseApiController
      * @Rest\RequestParam(name="name", strict=true, nullable=false, description="The meta-field name")
      * @Rest\RequestParam(name="value", strict=true, nullable=false, description="The meta-field value")
      *
+     * @Rest\Patch(path="/{id}/meta", requirements={"id": "\d+"})
+     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
@@ -385,6 +384,7 @@ class ProjectController extends BaseApiController
      *      description="The project whose rates will be returned",
      *      required=true,
      * )
+     * @Rest\Get(path="/{id}/rates", name="get_project_rates", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -411,7 +411,7 @@ class ProjectController extends BaseApiController
     }
 
     /**
-     * Deletes one rate for an project
+     * Deletes one rate for a project
      *
      * @SWG\Delete(
      *      @SWG\Response(
@@ -433,6 +433,7 @@ class ProjectController extends BaseApiController
      *      description="The rate to remove",
      *      required=true,
      * )
+     * @Rest\Delete(path="/{id}/rates/{rateId}", name="delete_project_rate", requirements={"id": "\d+", "rateId": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -465,7 +466,7 @@ class ProjectController extends BaseApiController
     }
 
     /**
-     * Adds a new rate to an project
+     * Adds a new rate to a project
      *
      * @SWG\Post(
      *  @SWG\Response(
@@ -487,6 +488,7 @@ class ProjectController extends BaseApiController
      *      required=true,
      *      @SWG\Schema(ref="#/definitions/ProjectRateForm")
      * )
+     * @Rest\Post(path="/{id}/rates", name="post_project_rate", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")

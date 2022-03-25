@@ -22,7 +22,7 @@ final class TimesheetLongRunning extends TimesheetConstraint
     public $message = 'Maximum duration of {{ value }} hours exceeded.';
     public $maximumMessage = 'Maximum duration exceeded.';
 
-    public function getTargets()
+    public function getTargets(): string|array
     {
         return self::CLASS_CONSTRAINT;
     }

@@ -278,7 +278,7 @@ class TimesheetController extends BaseApiController
      *      required=true,
      * )
      *
-     * @Rest\Get(path="/{id}", name="get_timesheet")
+     * @Rest\Get(path="/{id}", name="get_timesheet", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -287,8 +287,7 @@ class TimesheetController extends BaseApiController
      */
     public function getAction(Timesheet $id): Response
     {
-        $timesheet = $id; // cannot be changed due to BC reasons, routes use 'id'
-        $view = new View($timesheet, 200);
+        $view = new View($id, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
@@ -394,7 +393,7 @@ class TimesheetController extends BaseApiController
      *      required=true,
      *      @SWG\Schema(ref="#/definitions/TimesheetEditForm")
      * )
-     * @Rest\Patch(path="/{id}", name="patch_timesheet")
+     * @Rest\Patch(path="/{id}", name="patch_timesheet", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -453,7 +452,7 @@ class TimesheetController extends BaseApiController
      *      description="Timesheet record ID to delete",
      *      required=true,
      * )
-     * @Rest\Delete(path="/{id}", name="delete_timesheet")
+     * @Rest\Delete(path="/{id}", name="delete_timesheet", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -572,7 +571,7 @@ class TimesheetController extends BaseApiController
      *      description="Timesheet record ID to stop",
      *      required=true,
      * )
-     * @Rest\Patch(path="/{id}/stop", name="stop_timesheet")
+     * @Rest\Patch(path="/{id}/stop", name="stop_timesheet", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -608,7 +607,7 @@ class TimesheetController extends BaseApiController
      * @Rest\RequestParam(name="copy", requirements="all", strict=true, nullable=true, description="Whether data should be copied to the new entry. Allowed values: all (default: nothing is copied)")
      * @Rest\RequestParam(name="begin", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Changes the restart date to the given one (default: now)")
      *
-     * @Rest\Patch(path="/{id}/restart", name="restart_timesheet")
+     * @Rest\Patch(path="/{id}/restart", name="restart_timesheet", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -681,7 +680,7 @@ class TimesheetController extends BaseApiController
      *      description="Timesheet record ID to duplicate",
      *      required=true,
      * )
-     * @Rest\Patch(path="/{id}/duplicate", name="duplicate_timesheet")
+     * @Rest\Patch(path="/{id}/duplicate", name="duplicate_timesheet", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -718,7 +717,7 @@ class TimesheetController extends BaseApiController
      *      description="Timesheet record ID to switch export state",
      *      required=true,
      * )
-     * @Rest\Patch(path="/{id}/export", name="export_timesheet")
+     * @Rest\Patch(path="/{id}/export", name="export_timesheet", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -761,7 +760,7 @@ class TimesheetController extends BaseApiController
      * @Rest\RequestParam(name="name", strict=true, nullable=false, description="The meta-field name")
      * @Rest\RequestParam(name="value", strict=true, nullable=false, description="The meta-field value")
      *
-     * @Rest\Patch(path="/{id}/meta")
+     * @Rest\Patch(path="/{id}/meta", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")

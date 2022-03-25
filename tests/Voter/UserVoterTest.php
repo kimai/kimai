@@ -25,7 +25,7 @@ class UserVoterTest extends AbstractVoterTest
      */
     public function testVote(User $user, $subject, $attribute, $result)
     {
-        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(UserVoter::class);
 
         $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
@@ -117,7 +117,7 @@ class UserVoterTest extends AbstractVoterTest
         $userMock = $this->createMock(User::class);
         $userMock->method('getId')->willReturn(1);
         $user = new User();
-        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(UserVoter::class);
 
         $this->assertEquals(VoterInterface::ACCESS_GRANTED, $sut->vote($token, $user, ['view_team_member']));

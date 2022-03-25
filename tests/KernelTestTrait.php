@@ -26,7 +26,10 @@ trait KernelTestTrait
             throw new \Exception('KernelTestTrait can only be used in a KernelTestCase');
         }
 
-        return $this::$container->get('doctrine.orm.entity_manager');
+        /** @var EntityManagerInterface $em */
+        $em = self::getContainer()->get('doctrine.orm.entity_manager');
+
+        return $em;
     }
 
     protected function importFixture(TestFixture $fixture): array

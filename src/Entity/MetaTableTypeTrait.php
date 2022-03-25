@@ -39,7 +39,7 @@ trait MetaTableTypeTrait
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
      * @Assert\NotNull()
-     * @Assert\Length(min=2, max=50, allowEmptyString=false)
+     * @Assert\Length(min=2, max=50)
      */
     private $name;
     /**
@@ -51,7 +51,7 @@ trait MetaTableTypeTrait
      * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="value", type="text", length=65535, nullable=true)
-     * @Assert\Length(max=65535, allowEmptyString=true)
+     * @Assert\Length(max=65535)
      */
     private $value;
     /**

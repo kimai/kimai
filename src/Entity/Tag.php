@@ -51,7 +51,7 @@ class Tag
      *
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
      * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=100, allowEmptyString=false, normalizer="trim")
+     * @Assert\Length(min=2, max=100, normalizer="trim")
      * @Assert\Regex(pattern="/,/",match=false,message="Tag name cannot contain comma")
      */
     private $name;

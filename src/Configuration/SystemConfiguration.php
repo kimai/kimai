@@ -52,7 +52,7 @@ class SystemConfiguration
         $this->initialized = true;
     }
 
-    private function setConfiguration(array $keys, ?string $value): void
+    private function setConfiguration(array $keys, null|string|int|bool $value): void
     {
         $array = &$this->settings;
         if ($keys[0] === $this->getPrefix()) {

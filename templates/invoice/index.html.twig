@@ -119,6 +119,8 @@
                         {% endfor %}
                     </tbody>
                 </table>
+                <div style="display: none" id="create-token" data-value="{{ csrf_token('invoice.create') }}"></div>
+                <div style="display: none" id="preview-token" data-value="{{ csrf_token('invoice.preview') }}"></div>
             {% endblock %}
         {% endembed %}
 

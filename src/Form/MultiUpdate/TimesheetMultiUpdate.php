@@ -32,14 +32,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TimesheetMultiUpdate extends AbstractType
 {
-    /**
-     * @var TimesheetRepository
-     */
-    private $timesheet;
-    /**
-     * @var CustomerRepository
-     */
-    private $customers;
+    private TimesheetRepository $timesheet;
+    private CustomerRepository $customers;
 
     public function __construct(TimesheetRepository $timesheet, CustomerRepository $customer)
     {
@@ -65,7 +59,7 @@ class TimesheetMultiUpdate extends AbstractType
 
             $activity = $entry->getActivity();
             $project = $entry->getProject();
-            $customer = null === $project ? null : $project->getCustomer();
+            $customer = $project?->getCustomer();
 
             if (null === $project && null !== $activity) {
                 $project = $activity->getProject();
@@ -80,7 +74,7 @@ class TimesheetMultiUpdate extends AbstractType
             ->add('customer', CustomerType::class, [
                 'query_builder_for_user' => true,
                 'customers' => $customer,
-                'data' => $customer ? $customer : '',
+                'data' => $customer ?: null,
                 'required' => false,
                 'placeholder' => '',
                 'mapped' => false,

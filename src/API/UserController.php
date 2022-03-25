@@ -87,6 +87,8 @@ final class UserController extends BaseApiController
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
      * @Rest\QueryParam(name="term", description="Free search term")
      *
+     * @Rest\Get(path="", name="get_users")
+     *
      * @Security("is_granted('view_user')")
      *
      * @ApiSecurity(name="apiUser")
@@ -135,6 +137,7 @@ final class UserController extends BaseApiController
      *      description="User ID to fetch",
      *      required=true,
      * )
+     * @Rest\Get(path="/{id}", name="get_user", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -170,7 +173,7 @@ final class UserController extends BaseApiController
      *      @SWG\Schema(ref="#/definitions/UserEntity"),
      * )
      *
-     * @Rest\Get(path="/users/me")
+     * @Rest\Get(path="/me", name="me_user")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -200,6 +203,7 @@ final class UserController extends BaseApiController
      *      required=true,
      *      @SWG\Schema(ref="#/definitions/UserCreateForm")
      * )
+     * @Rest\Post(path="", name="post_user")
      *
      * @Security("is_granted('create_user')")
      *
@@ -264,6 +268,7 @@ final class UserController extends BaseApiController
      *      description="User ID to update",
      *      required=true,
      * )
+     * @Rest\Patch(path="/{id}", name="patch_user", requirements={"id": "\d+"})
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")

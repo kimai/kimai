@@ -261,7 +261,7 @@
             const API = kimai.getPlugin('api');
 
             API.patch(
-                '{{ path('export_timesheet', {id: '-s-'}) }}'.replace('-s-', id),
+                '{{ path('export_timesheet', {id: 1}) }}'.replace('1', id),
                 {},
                 function(data) {
                     const table = node.closest('table')

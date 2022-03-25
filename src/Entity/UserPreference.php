@@ -61,7 +61,7 @@ class UserPreference
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
      * @Assert\NotNull()
-     * @Assert\Length(min=2, max=50, allowEmptyString=false)
+     * @Assert\Length(min=2, max=50)
      */
     private $name;
     /**

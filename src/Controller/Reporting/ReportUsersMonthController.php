@@ -70,7 +70,7 @@ final class ReportUsersMonthController extends AbstractController
         $values = new MonthlyUserList();
         $values->setDate($dateTimeFactory->getStartOfMonth());
 
-        $form = $this->createForm(MonthlyUserListForm::class, $values, [
+        $form = $this->createFormForGetRequest(MonthlyUserListForm::class, $values, [
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
             'start_date' => $values->getDate(),
         ]);

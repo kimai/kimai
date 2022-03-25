@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Test\Constraint as ResponseConstraint;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * ControllerBaseTest adds some useful functions for writing integration tests.
@@ -45,7 +46,7 @@ abstract class ControllerBaseTest extends WebTestCase
      */
     protected function getPrivateService(string $service)
     {
-        return self::$container->get($service);
+        return self::getContainer()->get($service);
     }
 
     protected function loadUserFromDatabase(string $username)
@@ -121,7 +122,13 @@ abstract class ControllerBaseTest extends WebTestCase
 
     protected function createUrl(string $url): string
     {
-        return '/' . self::DEFAULT_LANGUAGE . '/' . ltrim($url, '/');
+        $prefix = '/' . self::DEFAULT_LANGUAGE;
+
+        if (!str_starts_with($url, $prefix)) {
+            $url = $prefix . '/' . ltrim($url, '/');
+        }
+
+        return $url;
     }
 
     /**
@@ -132,9 +139,14 @@ abstract class ControllerBaseTest extends WebTestCase
      * @param string $content
      * @return \Symfony\Component\DomCrawler\Crawler
      */
-    protected function request(HttpKernelBrowser $client, string $url, $method = 'GET', array $parameters = [], string $content = null)
+    public function request(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], string $content = null)
     {
         return $client->request($method, $this->createUrl($url), $parameters, [], [], $content);
+    }
+
+    public function requestPure(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], string $content = null)
+    {
+        return $client->request($method, $url, $parameters, [], [], $content);
     }
 
     /**
@@ -392,7 +404,7 @@ abstract class ControllerBaseTest extends WebTestCase
      * @param HttpKernelBrowser $client
      * @param string $url
      */
-    protected function assertIsRedirect(HttpKernelBrowser $client, $url = null)
+    protected function assertIsRedirect(HttpKernelBrowser $client, ?string $url = null, bool $endsWith = true)
     {
         self::assertResponseRedirects();
 
@@ -400,10 +412,10 @@ abstract class ControllerBaseTest extends WebTestCase
             return;
         }
 
-        $this->assertRedirectUrl($client, $url);
+        $this->assertRedirectUrl($client, $url, $endsWith);
     }
 
-    protected function assertRedirectUrl(HttpKernelBrowser $client, $url = null, $endsWith = true)
+    protected function assertRedirectUrl(HttpKernelBrowser $client, ?string $url = null, bool $endsWith = true)
     {
         self::assertTrue($client->getResponse()->headers->has('Location'), 'Could not find "Location" header');
         $location = $client->getResponse()->headers->get('Location');
@@ -434,5 +446,13 @@ abstract class ControllerBaseTest extends WebTestCase
         $this->assertRedirectUrl($client, $expectedRedirect);
         $client->followRedirect();
         $this->assertHasFlashError($client, 'The action could not be performed: invalid security token.');
+    }
+
+    protected function getCsrfToken(HttpKernelBrowser $client, string $name): CsrfToken
+    {
+        //return $client->getContainer()->get('security.csrf.token_manager')->getToken($name);
+
+        return static::$kernel->getContainer()->get('security.csrf.token_manager')->getToken($name);
+        //return static::getContainer()->get('security.csrf.token_manager')->getToken($name);
     }
 }

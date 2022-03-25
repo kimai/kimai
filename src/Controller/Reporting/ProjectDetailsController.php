@@ -30,7 +30,7 @@ final class ProjectDetailsController extends AbstractController
         $user = $this->getUser();
 
         $query = new ProjectDetailsQuery($dateFactory->createDateTime(), $user);
-        $form = $this->createForm(ProjectDetailsForm::class, $query);
+        $form = $this->createFormForGetRequest(ProjectDetailsForm::class, $query);
         $form->submit($request->query->all(), false);
 
         $projectView = null;

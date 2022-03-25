@@ -85,7 +85,7 @@ final class ReportUsersYearController extends AbstractController
         $values = new YearlyUserList();
         $values->setDate(clone $defaultDate);
 
-        $form = $this->createForm(YearlyUserListForm::class, $values, [
+        $form = $this->createFormForGetRequest(YearlyUserListForm::class, $values, [
             'timezone' => $dateTimeFactory->getTimezone()->getName(),
             'start_date' => $values->getDate(),
         ]);

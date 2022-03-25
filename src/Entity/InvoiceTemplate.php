@@ -37,7 +37,7 @@ class InvoiceTemplate
      *
      * @ORM\Column(name="name", type="string", length=60, nullable=false)
      * @Assert\NotBlank()
-     * @Assert\Length(min=1, max=60, allowEmptyString=false)
+     * @Assert\Length(min=1, max=60)
      */
     private $name;
     /**

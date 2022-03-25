@@ -138,7 +138,7 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         if ($this->isLimitedColors()) {
             return ChoiceType::class;

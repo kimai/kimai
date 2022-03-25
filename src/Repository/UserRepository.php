@@ -14,6 +14,7 @@ use App\Entity\Role;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Entity\UserPreference;
 use App\Repository\Loader\UserLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
@@ -31,6 +32,15 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
  */
 class UserRepository extends EntityRepository implements UserLoaderInterface
 {
+    public function deleteUserPreference(UserPreference $preference, bool $flush = false): void
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($preference);
+        if ($flush) {
+            $entityManager->flush();
+        }
+    }
+
     /**
      * @param User $user
      * @throws ORMException

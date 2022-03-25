@@ -18,8 +18,10 @@ use App\Timesheet\DateTimeFactory;
 use App\Utils\LocaleFormats;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseAbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -37,6 +39,13 @@ abstract class AbstractController extends BaseAbstractController implements Serv
     private function getLogger(): LoggerInterface
     {
         return $this->container->get('logger');
+    }
+
+    public function createFormForGetRequest(string $type = FormType::class, $data = null, array $options = []): FormInterface
+    {
+        return $this->container
+            ->get('form.factory')
+            ->createNamed('', $type, $data, $options);
     }
 
     /**
@@ -143,6 +152,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         return array_merge(parent::getSubscribedServices(), [
             'translator' => TranslatorInterface::class,
             'logger' => LoggerInterface::class,
+            BookmarkRepository::class => BookmarkRepository::class,
             LanguageFormattings::class => LanguageFormattings::class,
         ]);
     }
@@ -161,23 +171,33 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         return new LocaleFormats($this->container->get(LanguageFormattings::class), $locale);
     }
 
-    private function getLastSearch(BaseQuery $query): ?array
+    /**
+     * TODO method injection ?
+     *
+     * @return BookmarkRepository
+     */
+    private function getBookmark(): BookmarkRepository
+    {
+        return $this->get(BookmarkRepository::class);
+    }
+
+    private function getLastSearch(SessionInterface $session, BaseQuery $query): ?array
     {
         $name = 'search_' . $this->getSearchName($query);
 
-        if (!$this->get('session')->has($name)) {
+        if (!$session->has($name)) {
             return null;
         }
 
-        return $this->get('session')->get($name);
+        return $session->get($name);
     }
 
-    private function removeLastSearch(BaseQuery $query): void
+    private function removeLastSearch(SessionInterface $session, BaseQuery $query): void
     {
         $name = 'search_' . $this->getSearchName($query);
 
-        if ($this->get('session')->has($name)) {
-            $this->get('session')->remove($name);
+        if ($session->has($name)) {
+            $session->remove($name);
         }
     }
 
@@ -217,7 +237,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
 
         if ($request->query->has('resetSearchFilter')) {
             $data->resetFilter();
-            $this->removeLastSearch($data);
+            $this->removeLastSearch($request->getSession(), $data);
 
             return true;
         }
@@ -231,7 +251,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         $searchName = $this->getSearchName($data);
 
         /** @var BookmarkRepository $bookmarkRepo */
-        $bookmarkRepo = $this->getDoctrine()->getRepository(Bookmark::class);
+        $bookmarkRepo = $this->getBookmark();
         $bookmark = $bookmarkRepo->getSearchDefaultOptions($this->getUser(), $searchName);
 
         if ($bookmark !== null) {
@@ -247,7 +267,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
 
         // apply persisted search data ONLY if search form was not submitted manually
         if (!$request->query->has('performSearch')) {
-            $sessionSearch = $this->getLastSearch($data);
+            $sessionSearch = $this->getLastSearch($request->getSession(), $data);
             if ($sessionSearch !== null) {
                 $submitData = array_merge($sessionSearch, $submitData);
             } elseif ($bookmark !== null && !$request->query->has('setDefaultQuery')) {
@@ -285,7 +305,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         }
 
         if ($request->query->has('performSearch')) {
-            $this->get('session')->set('search_' . $searchName, $params);
+            $request->getSession()->set('search_' . $searchName, $params);
         }
 
         // filter stuff, that does not belong in a bookmark
@@ -297,7 +317,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         }
 
         if ($request->query->has('setDefaultQuery')) {
-            $this->removeLastSearch($data);
+            $this->removeLastSearch($request->getSession(), $data);
             if ($bookmark === null) {
                 $bookmark = new Bookmark();
                 $bookmark->setType(Bookmark::SEARCH_DEFAULT);

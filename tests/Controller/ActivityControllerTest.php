@@ -176,7 +176,6 @@ class ActivityControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=activity_rate_form]')->form();
         $client->submit($form, [
             'activity_rate_form' => [
-                'user' => null,
                 'rate' => 123.45,
             ]
         ]);

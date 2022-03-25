@@ -65,7 +65,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->clearInvoiceFiles();
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $container = self::$container;
+        $container = self::getContainer();
 
         $this->application->add(new InvoiceCreateCommand(
             $container->get(ServiceInvoice::class),

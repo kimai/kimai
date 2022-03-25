@@ -97,6 +97,8 @@ class ActivityServiceTest extends TestCase
             } else {
                 $this->fail('Invalid event received');
             }
+
+            return $event;
         });
 
         $sut = $this->getSut($dispatcher);
@@ -115,6 +117,8 @@ class ActivityServiceTest extends TestCase
             } else {
                 $this->fail('Invalid event received');
             }
+
+            return $event;
         });
 
         $sut = $this->getSut($dispatcher);
@@ -136,6 +140,8 @@ class ActivityServiceTest extends TestCase
             } else {
                 $this->fail('Invalid event received');
             }
+
+            return $event;
         });
 
         $sut = $this->getSut($dispatcher);

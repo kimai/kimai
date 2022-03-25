@@ -50,7 +50,7 @@ class SamlLogoutHandlerTest extends TestCase
 
         $request = new Request();
         $response = new Response();
-        $token = new UsernamePasswordToken(new User(), [], 'test');
+        $token = new UsernamePasswordToken(new User(), 'test');
 
         $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
         $factory->expects($this->never())->method('create');

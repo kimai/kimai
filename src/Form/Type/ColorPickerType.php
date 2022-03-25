@@ -66,7 +66,7 @@ class ColorPickerType extends AbstractType implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return ColorType::class;
     }

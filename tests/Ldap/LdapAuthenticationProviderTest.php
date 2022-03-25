@@ -59,7 +59,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
 
-        $token = new UsernamePasswordToken('foo', 'bar', $providerKey);
+        $token = new UsernamePasswordToken(new User(), $providerKey);
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $result = $sut->supports($token);
@@ -74,7 +74,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
 
-        $token = new UsernamePasswordToken('foo', 'bar', $providerKey);
+        $token = new UsernamePasswordToken(new User(), $providerKey);
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $result = $sut->supports($token);
@@ -92,8 +92,8 @@ class LdapAuthenticationProviderTest extends TestCase
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
 
-        $user = (new User())->setUsername('foo')->setEnabled(true);
-        $token = new UsernamePasswordToken($user, '', $providerKey);
+        $user = (new User())->setUsername('foo')->setPlainPassword('sdfsdf')->setEnabled(true);
+        $token = new UsernamePasswordToken($user, $providerKey);
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $actual = $sut->authenticate($token);
@@ -104,14 +104,14 @@ class LdapAuthenticationProviderTest extends TestCase
         $this->expectException(BadCredentialsException::class);
         $this->expectExceptionMessage('The presented password cannot be empty.');
 
-        $user = (new User())->setUsername('foo')->setEnabled(true);
+        $user = (new User())->setUsername('foo')->setEnabled(true)->setPassword('sdf');
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->getMock();
         $config = $this->getConfiguration(true);
         $userProvider = $this->getUserProvider($user);
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
 
-        $token = new UsernamePasswordToken('foo', '', $providerKey);
+        $token = new UsernamePasswordToken($user, $providerKey);
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $actual = $sut->authenticate($token);
@@ -130,7 +130,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
 
-        $token = new UsernamePasswordToken('foo', 'sdfsdf', $providerKey);
+        $token = new UsernamePasswordToken($user, $providerKey);
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $actual = $sut->authenticate($token);
@@ -150,7 +150,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
 
-        $token = new UsernamePasswordToken($user, 'sdfsdf', $providerKey);
+        $token = new UsernamePasswordToken($user, $providerKey);
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $actual = $sut->authenticate($token);
@@ -170,7 +170,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
 
-        $token = new UsernamePasswordToken('foo', 'test', $providerKey);
+        $token = new UsernamePasswordToken($user, $providerKey);
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $token = $sut->authenticate($token);
@@ -192,7 +192,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
 
-        $token = new UsernamePasswordToken($user, 'test', $providerKey);
+        $token = new UsernamePasswordToken($user, $providerKey);
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $token = $sut->authenticate($token);
@@ -211,7 +211,8 @@ class LdapAuthenticationProviderTest extends TestCase
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
 
-        $token = new UsernamePasswordToken('foo', 'test', $providerKey);
+        $user = (new User())->setUsername('foo')->setEnabled(true);
+        $token = new UsernamePasswordToken($user, $providerKey);
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $sut->authenticate($token);
@@ -230,7 +231,8 @@ class LdapAuthenticationProviderTest extends TestCase
         $providerKey = 'secured_area';
         $userChecker = new UserChecker();
 
-        $token = new UsernamePasswordToken('foo', 'test', $providerKey);
+        $user = (new User())->setUsername('foo')->setEnabled(true);
+        $token = new UsernamePasswordToken($user, $providerKey);
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $sut->authenticate($token);

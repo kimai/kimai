@@ -93,7 +93,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      *
      * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=150, allowEmptyString=false)
+     * @Assert\Length(min=2, max=150)
      */
     private $name;
     /**

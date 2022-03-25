@@ -190,6 +190,8 @@ class TimesheetServiceTest extends TestCase
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->method('dispatch')->willReturnCallback(function ($event) {
             self::assertInstanceOf(TimesheetRestartPreEvent::class, $event);
+
+            return $event;
         });
 
         $sut = $this->getSut(null, $dispatcher);
@@ -223,6 +225,8 @@ class TimesheetServiceTest extends TestCase
                     self::assertInstanceOf(TimesheetRestartPostEvent::class, $event);
                     break;
             }
+
+            return $event;
         });
 
         $sut = $this->getSut($authorizationChecker, $dispatcher);
@@ -265,6 +269,8 @@ class TimesheetServiceTest extends TestCase
             self::assertInstanceOf(TimesheetDeletePreEvent::class, $event);
             /* @var TimesheetDeletePreEvent $event */
             self::assertSame($timesheet, $event->getTimesheet());
+
+            return $event;
         });
 
         $sut = $this->getSut(null, $dispatcher);
@@ -281,6 +287,8 @@ class TimesheetServiceTest extends TestCase
             self::assertInstanceOf(TimesheetDeleteMultiplePreEvent::class, $event);
             /* @var TimesheetDeleteMultiplePreEvent $event */
             self::assertSame($timesheets, $event->getTimesheets());
+
+            return $event;
         });
 
         $sut = $this->getSut(null, $dispatcher);

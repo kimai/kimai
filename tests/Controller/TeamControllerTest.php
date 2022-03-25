@@ -207,7 +207,7 @@ class TeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $token = self::$container->get('security.csrf.token_manager')->getToken('team.duplicate');
+        $token = $this->getCsrfToken($client, 'team.duplicate');
 
         $this->request($client, '/admin/teams/1/duplicate/' . $token);
         $this->assertIsRedirect($client, '/edit');

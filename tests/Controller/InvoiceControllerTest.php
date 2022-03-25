@@ -17,7 +17,6 @@ use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\InvoiceTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @group integration
@@ -191,13 +190,11 @@ class InvoiceControllerTest extends ControllerBaseTest
             'markAsExported' => 1,
         ];
 
-        /** @var CsrfToken $token */
-        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.create');
+        $token = $client->getCrawler()->filter('div#create-token')->attr('data-value');
 
-        $action = '/invoice/save-invoice/1/' . $template->getId() . '/' . $token->getValue() . '?' . http_build_query($urlParams);
+        $action = '/invoice/save-invoice/1/' . $template->getId() . '/' . $token . '?' . http_build_query($urlParams);
         $this->request($client, $action);
-        $this->assertIsRedirect($client);
-        $this->assertRedirectUrl($client, '/invoice/show?id=', false);
+        $this->assertIsRedirect($client, '/invoice/show?id=', false);
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertDataTableRowCount($client, 'datatable_invoices', 1);
@@ -247,9 +244,6 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        /** @var CsrfToken $token */
-        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.preview');
-
         $params = [
             'daterange' => $dateRange,
             'projects' => [1],
@@ -257,12 +251,17 @@ class InvoiceControllerTest extends ControllerBaseTest
             'customers[]' => 1
         ];
 
-        $action = '/invoice/preview/1/' . $token->getValue() . '?' . http_build_query($params);
+        $token = $client->getCrawler()->filter('div#preview-token')->attr('data-value');
+        $action = '/invoice/preview/1/' . $token . '?' . http_build_query($params);
+
         $this->request($client, $action);
         $this->assertTrue($client->getResponse()->isSuccessful());
         $node = $client->getCrawler()->filter('body');
         $this->assertEquals(1, $node->count());
-        $this->assertEquals('invoice_print', $node->getIterator()[0]->getAttribute('class'));
+
+        /** @var \DOMElement $element */
+        $element = $node->getIterator()[0];
+        $this->assertEquals('invoice_print', $element->getAttribute('class'));
     }
 
     public function testCreateActionAsAdminWithDownloadAndStatusChange()
@@ -306,11 +305,11 @@ class InvoiceControllerTest extends ControllerBaseTest
         // but the datatable with all timesheets
         $this->assertDataTableRowCount($client, 'datatable_invoice', 20);
 
-        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.create');
+        $token = $client->getCrawler()->filter('div#create-token')->attr('data-value');
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/?createInvoice=true&token=' . $token->getValue()));
+        $node->setAttribute('action', $this->createUrl('/invoice/?createInvoice=true&token=' . $token));
         $node->setAttribute('method', 'GET');
         $client->submit($form, [
             'template' => $template->getId(),
@@ -320,12 +319,13 @@ class InvoiceControllerTest extends ControllerBaseTest
             'markAsExported' => 1,
         ]);
 
-        $invoices = $this->getEntityManager()->getRepository(Invoice::class)->findAll();
-        $id = $invoices[0]->getId();
-
-        $this->assertIsRedirect($client, '/invoice/show?id=' . $id);
+        $this->assertIsRedirect($client, '/invoice/show?id=', false);
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $invoices = $this->getEntityManager()->getRepository(Invoice::class)->findAll();
+        self::assertCount(1, $invoices);
+        $id = $invoices[0]->getId();
 
         $this->assertHasFlashSuccess($client);
 
@@ -339,20 +339,23 @@ class InvoiceControllerTest extends ControllerBaseTest
         self::assertInstanceOf(BinaryFileResponse::class, $response);
         self::assertFileExists($response->getFile());
 
-        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.status');
-        $this->request($client, '/invoice/change-status/' . $id . '/pending/' . $token->getValue());
+        $this->request($client, '/invoice/show');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $link = $client->getCrawler()->selectLink('Waiting for payment');
+
+        $this->request($client, $link->attr('href'));
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.status');
-        $this->request($client, '/invoice/change-status/' . $id . '/paid/' . $token->getValue());
+        $link = $client->getCrawler()->selectLink('Invoice paid');
+        $url = $link->attr('href');
+        $this->request($client, $url);
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.status');
         $this->assertHasValidationError(
             $client,
-            '/invoice/change-status/' . $id . '/paid/' . $token->getValue(),
+            $url,
             'form[name=invoice_edit_form]',
             [
                 'invoice_edit_form' => [
@@ -375,7 +378,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.status');
+        $token = $this->getCsrfToken($client, 'invoice.status');
         $this->request($client, '/invoice/change-status/' . $id . '/new/' . $token->getValue());
         $this->assertIsRedirect($client, '/invoice/show');
         $client->followRedirect();
@@ -417,7 +420,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $template = $this->importFixture($fixture);
         $id = $template[0]->getId();
 
-        $token = self::$container->get('security.csrf.token_manager')->getToken('invoice.delete_template');
+        $token = $this->getCsrfToken($client, 'invoice.delete_template');
 
         $this->request($client, '/invoice/template/' . $id . '/delete/' . $token);
         $this->assertIsRedirect($client, '/invoice/template');

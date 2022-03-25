@@ -176,7 +176,7 @@ class CustomerControllerTest extends APIControllerBaseTest
 
     public function testNotFound()
     {
-        $this->assertEntityNotFound(User::ROLE_USER, '/api/customers/2');
+        $this->assertEntityNotFound(User::ROLE_USER, '/api/customers/' . PHP_INT_MAX, 'GET', 'App\\Entity\\Customer object not found by the @ParamConverter annotation.');
     }
 
     public function testPostAction()

@@ -50,7 +50,7 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
     public function setThemeOptions(KernelEvent $event): void
     {
         // Ignore sub-requests
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 

@@ -44,7 +44,7 @@ final class UserProfileSubscriber implements EventSubscriberInterface
     public function prepareUserProfile(KernelEvent $event): void
     {
         // ignore sub-requests
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 

@@ -25,7 +25,7 @@ class RolePermissionVoterTest extends AbstractVoterTest
      */
     public function testVote(User $user, $subject, $attribute, $result)
     {
-        $token = new UsernamePasswordToken($user, 'foo', 'bar', $user->getRoles());
+        $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(RolePermissionVoter::class);
 
         $actual = $sut->vote($token, $subject, [$attribute]);

@@ -47,10 +47,7 @@ class PasswordResetForm extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'password_resetting';
     }
