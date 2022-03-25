@@ -13,48 +13,22 @@ use KevinPapst\TablerBundle\Model\MenuItemInterface;
 
 class MenuItemModel implements MenuItemInterface
 {
-    /**
-     * @var string
-     */
-    private $identifier;
-    /**
-     * @var string
-     */
-    private $label;
-    /**
-     * @var string|null
-     */
-    private $route;
-    /**
-     * @var array|null
-     */
-    private $routeArgs;
-    /**
-     * @var bool
-     */
-    private $isActive = false;
+    private string $identifier;
+    private string $label;
+    private ?string $route;
+    private array $routeArgs;
+    private bool $isActive = false;
     /**
      * @var array<MenuItemInterface>
      */
-    private $children = [];
-    /**
-     * @var string|null
-     */
-    private $icon;
-    /**
-     * @var MenuItemInterface
-     */
-    private $parent = null;
-    /**
-     * @var string|null
-     */
-    private $badge;
-    /**
-     * @var string|null
-     */
-    private $badgeColor;
+    private array $children = [];
+    private ?string $icon;
+    private ?MenuItemInterface $parent = null;
+    private ?string $badge;
+    private ?string $badgeColor;
     private static $dividerId = 0;
-    private $divider = false;
+    private bool $divider = false;
+    private bool $lastWasDivider = false;
 
     public function __construct(
         string $id,
@@ -185,6 +159,17 @@ class MenuItemModel implements MenuItemInterface
 
     public function addChild(MenuItemInterface $child): void
     {
+        // first item should not be a divider
+        if (!$this->hasChildren() && $child->isDivider()) {
+            return;
+        }
+
+        // two divider should not be added as direct siblings
+        if ($this->lastWasDivider && $child->isDivider()) {
+            return;
+        }
+        $this->lastWasDivider = $child->isDivider();
+
         $child->setParent($this);
         $this->children[] = $child;
     }
