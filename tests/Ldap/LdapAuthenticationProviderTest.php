@@ -20,8 +20,8 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Exception\AuthenticationServiceException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\Security\Core\User\UserChecker;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
+use Symfony\Component\Security\Core\User\InMemoryUserChecker;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
@@ -31,14 +31,14 @@ class LdapAuthenticationProviderTest extends TestCase
 {
     public const USER_PROVIDER_CLASS = LdapUserProvider::class;
 
-    private function getUserProvider(?User $user = null): UserProviderInterface
+    private function getUserProvider(?User $user = null, int $expected = 1): UserProviderInterface
     {
         if ($user === null) {
             return new LdapUserProvider($this->createMock(LdapManager::class));
         }
 
         $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
-        $userProvider->expects($this->once())->method('loadUserByUsername')->willReturn($user);
+        $userProvider->expects($this->exactly($expected))->method('loadUserByUsername')->willReturn($user);
 
         return $userProvider;
     }
@@ -57,7 +57,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $config = $this->getConfiguration(false);
         $userProvider = $this->getUserProvider();
         $providerKey = 'secured_area';
-        $userChecker = new UserChecker();
+        $userChecker = new InMemoryUserChecker();
 
         $token = new UsernamePasswordToken(new User(), $providerKey);
 
@@ -72,9 +72,9 @@ class LdapAuthenticationProviderTest extends TestCase
         $config = $this->getConfiguration(true);
         $userProvider = $this->getUserProvider();
         $providerKey = 'secured_area';
-        $userChecker = new UserChecker();
+        $userChecker = new InMemoryUserChecker();
 
-        $token = new UsernamePasswordToken(new User(), $providerKey);
+        $token = new UsernamePasswordToken(new User(), $providerKey, 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $result = $sut->supports($token);
@@ -90,10 +90,10 @@ class LdapAuthenticationProviderTest extends TestCase
         $config = $this->getConfiguration(true);
         $userProvider = $this->getUserProvider();
         $providerKey = 'secured_area';
-        $userChecker = new UserChecker();
+        $userChecker = new InMemoryUserChecker();
 
         $user = (new User())->setUsername('foo')->setPlainPassword('sdfsdf')->setEnabled(true);
-        $token = new UsernamePasswordToken($user, $providerKey);
+        $token = new UsernamePasswordToken($user, '', 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $actual = $sut->authenticate($token);
@@ -104,14 +104,14 @@ class LdapAuthenticationProviderTest extends TestCase
         $this->expectException(BadCredentialsException::class);
         $this->expectExceptionMessage('The presented password cannot be empty.');
 
-        $user = (new User())->setUsername('foo')->setEnabled(true)->setPassword('sdf');
+        $user = (new User())->setUsername('foo')->setEnabled(true)->setPassword('');
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->getMock();
         $config = $this->getConfiguration(true);
         $userProvider = $this->getUserProvider($user);
         $providerKey = 'secured_area';
-        $userChecker = new UserChecker();
+        $userChecker = new InMemoryUserChecker();
 
-        $token = new UsernamePasswordToken($user, $providerKey);
+        $token = new UsernamePasswordToken('foo', '', 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $actual = $sut->authenticate($token);
@@ -128,9 +128,9 @@ class LdapAuthenticationProviderTest extends TestCase
         $config = $this->getConfiguration(true);
         $userProvider = $this->getUserProvider($user);
         $providerKey = 'secured_area';
-        $userChecker = new UserChecker();
+        $userChecker = new InMemoryUserChecker();
 
-        $token = new UsernamePasswordToken($user, $providerKey);
+        $token = new UsernamePasswordToken('$user', 'sdf', 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $actual = $sut->authenticate($token);
@@ -148,9 +148,9 @@ class LdapAuthenticationProviderTest extends TestCase
         $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
         $userProvider->expects($this->never())->method('loadUserByUsername');
         $providerKey = 'secured_area';
-        $userChecker = new UserChecker();
+        $userChecker = new InMemoryUserChecker();
 
-        $token = new UsernamePasswordToken($user, $providerKey);
+        $token = new UsernamePasswordToken($user, $providerKey, 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $actual = $sut->authenticate($token);
@@ -166,11 +166,11 @@ class LdapAuthenticationProviderTest extends TestCase
             self::assertSame($updateUser, $user);
         });
         $config = $this->getConfiguration(true);
-        $userProvider = $this->getUserProvider($user);
+        $userProvider = $this->getUserProvider($user, 0);
         $providerKey = 'secured_area';
-        $userChecker = new UserChecker();
+        $userChecker = new InMemoryUserChecker();
 
-        $token = new UsernamePasswordToken($user, $providerKey);
+        $token = new UsernamePasswordToken($user, $providerKey, 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $token = $sut->authenticate($token);
@@ -190,9 +190,9 @@ class LdapAuthenticationProviderTest extends TestCase
         $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
         $userProvider->expects($this->never())->method('loadUserByUsername');
         $providerKey = 'secured_area';
-        $userChecker = new UserChecker();
+        $userChecker = new InMemoryUserChecker();
 
-        $token = new UsernamePasswordToken($user, $providerKey);
+        $token = new UsernamePasswordToken($user, $providerKey, 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $token = $sut->authenticate($token);
@@ -201,18 +201,18 @@ class LdapAuthenticationProviderTest extends TestCase
 
     public function testAuthenticateThrowsExceptionOnLdapNotFound()
     {
-        $this->expectException(UsernameNotFoundException::class);
+        $this->expectException(UserNotFoundException::class);
         $this->expectExceptionMessage('blub foo bar');
 
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->getMock();
         $config = $this->getConfiguration(true);
         $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
-        $userProvider->expects($this->once())->method('loadUserByUsername')->willThrowException(new UsernameNotFoundException('blub foo bar'));
+        $userProvider->expects($this->once())->method('loadUserByUsername')->willThrowException(new UserNotFoundException('blub foo bar'));
         $providerKey = 'secured_area';
-        $userChecker = new UserChecker();
+        $userChecker = new InMemoryUserChecker();
 
         $user = (new User())->setUsername('foo')->setEnabled(true);
-        $token = new UsernamePasswordToken($user, $providerKey);
+        $token = new UsernamePasswordToken('$user', $providerKey, 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $sut->authenticate($token);
@@ -229,10 +229,10 @@ class LdapAuthenticationProviderTest extends TestCase
         $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
         $userProvider->expects($this->once())->method('loadUserByUsername')->willThrowException(new \Exception('server away', 1234));
         $providerKey = 'secured_area';
-        $userChecker = new UserChecker();
+        $userChecker = new InMemoryUserChecker();
 
         $user = (new User())->setUsername('foo')->setEnabled(true);
-        $token = new UsernamePasswordToken($user, $providerKey);
+        $token = new UsernamePasswordToken('$user', $providerKey, 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
         $sut->authenticate($token);

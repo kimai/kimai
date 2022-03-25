@@ -12,7 +12,7 @@ namespace App\Ldap;
 use App\Entity\User;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -44,7 +44,7 @@ class LdapUserProvider implements UserProviderInterface
                 'username' => $username,
                 'result' => 'not found',
             ]);
-            $ex = new UsernameNotFoundException(sprintf('User "%s" not found', $username));
+            $ex = new UserNotFoundException(sprintf('User "%s" not found', $username));
             $ex->setUsername($username);
 
             throw $ex;

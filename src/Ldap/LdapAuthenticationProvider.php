@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Exception\AuthenticationServiceException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -60,9 +60,8 @@ class LdapAuthenticationProvider extends UserAuthenticationProvider
             // only first-time logins from LDAP user (not yet existing in local user database)
             // will actually hit the LdapUserProvider
             $user = $this->userProvider->loadUserByUsername($username);
-
             // do not update the user here from LDAP, as we don't know if the user can be authenticated
-        } catch (UsernameNotFoundException $notFound) {
+        } catch (UserNotFoundException $notFound) {
             throw $notFound;
             /* @phpstan-ignore-next-line */
         } catch (\Exception $repositoryProblem) {
