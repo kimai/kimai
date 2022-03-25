@@ -74,6 +74,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $providerKey = 'secured_area';
         $userChecker = new InMemoryUserChecker();
 
+        /* @phpstan-ignore-next-line */
         $token = new UsernamePasswordToken(new User(), $providerKey, 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
@@ -93,6 +94,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $userChecker = new InMemoryUserChecker();
 
         $user = (new User())->setUsername('foo')->setPlainPassword('sdfsdf')->setEnabled(true);
+        /* @phpstan-ignore-next-line */
         $token = new UsernamePasswordToken($user, '', 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
@@ -111,6 +113,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $providerKey = 'secured_area';
         $userChecker = new InMemoryUserChecker();
 
+        /* @phpstan-ignore-next-line */
         $token = new UsernamePasswordToken('foo', '', 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
@@ -130,6 +133,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $providerKey = 'secured_area';
         $userChecker = new InMemoryUserChecker();
 
+        /* @phpstan-ignore-next-line */
         $token = new UsernamePasswordToken('$user', 'sdf', 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
@@ -150,6 +154,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $providerKey = 'secured_area';
         $userChecker = new InMemoryUserChecker();
 
+        /* @phpstan-ignore-next-line */
         $token = new UsernamePasswordToken($user, $providerKey, 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
@@ -170,6 +175,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $providerKey = 'secured_area';
         $userChecker = new InMemoryUserChecker();
 
+        /* @phpstan-ignore-next-line */
         $token = new UsernamePasswordToken($user, $providerKey, 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
@@ -192,6 +198,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $providerKey = 'secured_area';
         $userChecker = new InMemoryUserChecker();
 
+        /* @phpstan-ignore-next-line */
         $token = new UsernamePasswordToken($user, $providerKey, 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
@@ -212,6 +219,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $userChecker = new InMemoryUserChecker();
 
         $user = (new User())->setUsername('foo')->setEnabled(true);
+        /* @phpstan-ignore-next-line */
         $token = new UsernamePasswordToken('$user', $providerKey, 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
@@ -232,6 +240,7 @@ class LdapAuthenticationProviderTest extends TestCase
         $userChecker = new InMemoryUserChecker();
 
         $user = (new User())->setUsername('foo')->setEnabled(true);
+        /* @phpstan-ignore-next-line */
         $token = new UsernamePasswordToken('$user', $providerKey, 'secured_area');
 
         $sut = new LdapAuthenticationProvider($userChecker, $providerKey, $userProvider, $manager, $config, false);
