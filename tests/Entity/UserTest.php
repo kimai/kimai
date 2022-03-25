@@ -31,7 +31,6 @@ class UserTest extends TestCase
     public function testDefaultValues()
     {
         $user = new User();
-        self::assertInstanceOf(\Serializable::class, $user);
         self::assertInstanceOf(EquatableInterface::class, $user);
         self::assertInstanceOf(UserInterface::class, $user);
         $this->assertInstanceOf(ArrayCollection::class, $user->getPreferences());
