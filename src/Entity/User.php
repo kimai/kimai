@@ -51,7 +51,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams()", type="array")
  * @Exporter\Expose("active", label="label.active", exp="object.isEnabled()", type="boolean")
  */
-class User implements UserInterface, EquatableInterface, \Serializable, ThemeUserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface
 {
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
@@ -1060,33 +1060,19 @@ class User implements UserInterface, EquatableInterface, \Serializable, ThemeUse
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function serialize()
+    public function __serialize(): array
     {
-        return serialize([
+        return [
             $this->password,
             $this->username,
             $this->enabled,
             $this->id,
             $this->email,
-        ]);
+        ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function unserialize($serialized)
+    public function __unserialize(array $data): void
     {
-        $data = unserialize($serialized);
-
-        // unserialize a user object from <= 1.14
-        if (8 === \count($data)) {
-            unset($data[1], $data[2], $data[7]);
-            $data = array_values($data);
-        }
-
         list(
             $this->password,
             $this->username,
@@ -1095,17 +1081,11 @@ class User implements UserInterface, EquatableInterface, \Serializable, ThemeUse
             $this->email) = $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSalt(): ?string
     {
         return null;
     }
 
-    /**
-     * @return string
-     */
     public function __toString()
     {
         return $this->getDisplayName();
