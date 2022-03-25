@@ -74,7 +74,7 @@ class TimesheetMultiUpdate extends AbstractType
             ->add('customer', CustomerType::class, [
                 'query_builder_for_user' => true,
                 'customers' => $customer,
-                'data' => $customer ?: null,
+                'data' => $customer,
                 'required' => false,
                 'placeholder' => '',
                 'mapped' => false,

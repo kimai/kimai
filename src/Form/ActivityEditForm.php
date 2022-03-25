@@ -43,7 +43,7 @@ class ActivityEditForm extends AbstractType
                 $customer = $project->getCustomer();
                 $options['currency'] = $customer->getCurrency();
             } else {
-                $isGlobal = null === $entry->getProject();
+                $isGlobal = $entry->isGlobal();
             }
 
             $new = $entry->getId() === null;
