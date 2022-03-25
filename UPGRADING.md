@@ -20,6 +20,7 @@ Perform EACH version specific task between your version and the new one, otherwi
   - dashboard default config
   - removed: theme.branding.translation
   - removed: kimai.plugin_dir
+- API: upgraded to [Open API specification v3](https://blog.readme.com/an-example-filled-guide-to-swagger-3-2/)
 - API: config/timesheet removed activeEntriesSoftLimit
 
 ## [1.16](https://github.com/kevinpapst/kimai2/releases/tag/1.16)

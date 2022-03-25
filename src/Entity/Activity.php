@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -75,7 +75,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Subresource", "Expanded"})
-     * @SWG\Property(ref="#/definitions/Project")
+     * @OA\Property(ref="#/components/schemas/Project")
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Project")
      * @ORM\JoinColumn(onDelete="CASCADE")
@@ -160,7 +160,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Team"))
+     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Team"))
      *
      * @ORM\ManyToMany(targetEntity="Team", cascade={"persist"}, inversedBy="activities")
      * @ORM\JoinTable(

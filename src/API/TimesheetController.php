@@ -30,9 +30,9 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
+use OpenApi\Annotations as OA;
 use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -43,7 +43,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @Route(path="/timesheets")
- * @SWG\Tag(name="Timesheet")
+ * @OA\Tag(name="Timesheet")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
@@ -98,12 +98,12 @@ class TimesheetController extends BaseApiController
     /**
      * Returns a collection of timesheet records
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns a collection of timesheets records. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601.",
-     *      @SWG\Schema(
+     *      @OA\JsonContent(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/TimesheetCollection")
+     *          @OA\Items(ref="#/components/schemas/TimesheetCollection")
      *      )
      * )
      *
@@ -265,15 +265,14 @@ class TimesheetController extends BaseApiController
     /**
      * Returns one timesheet record
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns one timesheet record. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601.",
-     *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
+     *      @OA\JsonContent(ref="#/components/schemas/TimesheetEntity")
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Timesheet record ID to fetch",
      *      required=true,
      * )
@@ -296,19 +295,17 @@ class TimesheetController extends BaseApiController
     /**
      * Creates a new timesheet record
      *
-     * @SWG\Post(
+     * @OA\Post(
      *      description="Creates a new timesheet record for the current user and returns it afterwards.",
-     *      @SWG\Response(
+     *      @OA\Response(
      *          response=200,
      *          description="Returns the new created timesheet",
-     *          @SWG\Schema(ref="#/definitions/TimesheetEntity"),
+     *          @OA\JsonContent(ref="#/components/schemas/TimesheetEntity"),
      *      )
      * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
+     * @OA\RequestBody(
      *      required=true,
-     *      @SWG\Schema(ref="#/definitions/TimesheetEditForm")
+     *      @OA\JsonContent(ref="#/components/schemas/TimesheetEditForm"),
      * )
      *
      * @Rest\QueryParam(name="full", requirements="true", strict=true, nullable=true, description="Allows to fetch fully serialized objects including subresources (TimesheetEntityExpanded). Allowed values: true (default: false)")
@@ -372,26 +369,23 @@ class TimesheetController extends BaseApiController
     /**
      * Update an existing timesheet record
      *
-     * @SWG\Patch(
+     * @OA\Patch(
      *      description="Update an existing timesheet record, you can pass all or just a subset of the attributes.",
-     *      @SWG\Response(
+     *      @OA\Response(
      *          response=200,
      *          description="Returns the updated timesheet",
-     *          @SWG\Schema(ref="#/definitions/TimesheetEntity")
+     *          @OA\JsonContent(ref="#/components/schemas/TimesheetEntity")
      *      )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Timesheet record ID to update",
      *      required=true,
      * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
+     * @OA\RequestBody(
      *      required=true,
-     *      @SWG\Schema(ref="#/definitions/TimesheetEditForm")
+     *      @OA\JsonContent(ref="#/components/schemas/TimesheetEditForm"),
      * )
      * @Rest\Patch(path="/{id}", name="patch_timesheet", requirements={"id": "\d+"})
      *
@@ -439,16 +433,15 @@ class TimesheetController extends BaseApiController
     /**
      * Delete an existing timesheet record
      *
-     * @SWG\Delete(
-     *      @SWG\Response(
+     * @OA\Delete(
+     *      @OA\Response(
      *          response=204,
      *          description="Delete one timesheet record"
      *      ),
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Timesheet record ID to delete",
      *      required=true,
      * )
@@ -471,12 +464,12 @@ class TimesheetController extends BaseApiController
     /**
      * Returns the collection of recent user activities
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns the collection of recent user activities (always the latest entry of a unique working set grouped by customer, project and activity)",
-     *      @SWG\Schema(
+     *      @OA\JsonContent(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/TimesheetCollectionExpanded")
+     *          @OA\Items(ref="#/components/schemas/TimesheetCollectionExpanded")
      *      )
      * )
      *
@@ -527,12 +520,12 @@ class TimesheetController extends BaseApiController
     /**
      * Returns the collection of active timesheet records
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns the collection of active timesheet records for the current user",
-     *      @SWG\Schema(
+     *      @OA\JsonContent(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/TimesheetCollectionExpanded")
+     *          @OA\Items(ref="#/components/schemas/TimesheetCollectionExpanded")
      *      )
      * )
      *
@@ -559,15 +552,14 @@ class TimesheetController extends BaseApiController
     /**
      * Stops an active timesheet record
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Stops an active timesheet record and returns it afterwards.",
-     *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
+     *      @OA\JsonContent(ref="#/components/schemas/TimesheetEntity")
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Timesheet record ID to stop",
      *      required=true,
      * )
@@ -591,15 +583,14 @@ class TimesheetController extends BaseApiController
     /**
      * Restarts a previously stopped timesheet record for the current user
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Restarts a timesheet record for the same customer, project, activity combination. The current user will be the owner of the new record. Kimai tries to stop running records, which is expected to fail depending on the configured rules. Data will be copied from the original record if requested.",
-     *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
+     *      @OA\JsonContent(ref="#/components/schemas/TimesheetEntity")
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Timesheet record ID to restart",
      *      required=true,
      * )
@@ -668,15 +659,14 @@ class TimesheetController extends BaseApiController
     /**
      * Duplicates an existing timesheet record
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Duplicates a timesheet record, resetting the export state only.",
-     *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
+     *      @OA\JsonContent(ref="#/components/schemas/TimesheetEntity")
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Timesheet record ID to duplicate",
      *      required=true,
      * )
@@ -705,15 +695,14 @@ class TimesheetController extends BaseApiController
     /**
      * Switch the export state of a timesheet record to (un-)lock it
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Switches the exported state on the record and therefor locks / unlocks it for further updates. Needs edit_export_*_timesheet permission.",
-     *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
+     *      @OA\JsonContent(ref="#/components/schemas/TimesheetEntity")
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Timesheet record ID to switch export state",
      *      required=true,
      * )
@@ -745,15 +734,14 @@ class TimesheetController extends BaseApiController
     /**
      * Sets the value of a meta-field for an existing timesheet.
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.",
-     *      @SWG\Schema(ref="#/definitions/TimesheetEntity")
+     *      @OA\JsonContent(ref="#/components/schemas/TimesheetEntity")
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Timesheet record ID to set the meta-field value for",
      *      required=true,
      * )

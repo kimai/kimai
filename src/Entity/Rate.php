@@ -11,7 +11,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
 trait Rate
@@ -32,7 +32,7 @@ trait Rate
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     * @SWG\Property(ref="#/definitions/User")
+     * @OA\Property(ref="#/components/schemas/User")
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=true)

@@ -26,8 +26,8 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -35,7 +35,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route(path="/teams")
- * @SWG\Tag(name="Team")
+ * @OA\Tag(name="Team")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
@@ -63,12 +63,12 @@ final class TeamController extends BaseApiController
     /**
      * Fetch all existing teams
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns the collection of all existing teams",
-     *      @SWG\Schema(
+     *      @OA\JsonContent(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/TeamCollection")
+     *          @OA\Items(ref="#/components/schemas/TeamCollection")
      *      )
      * )
      * @Rest\Get(path="", name="get_teams")
@@ -91,10 +91,10 @@ final class TeamController extends BaseApiController
     /**
      * Returns one team
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns one team entity",
-     *      @SWG\Schema(ref="#/definitions/Team"),
+     *      @OA\JsonContent(ref="#/components/schemas/Team"),
      * )
      * @Rest\Get(path="/{id}", name="get_team", requirements={"id": "\d+"})
      *
@@ -114,16 +114,15 @@ final class TeamController extends BaseApiController
     /**
      * Delete a team
      *
-     * @SWG\Delete(
-     *      @SWG\Response(
+     * @OA\Delete(
+     *      @OA\Response(
      *          response=204,
      *          description="Delete one team"
      *      ),
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Team ID to delete",
      *      required=true,
      * )
@@ -147,19 +146,17 @@ final class TeamController extends BaseApiController
     /**
      * Creates a new team
      *
-     * @SWG\Post(
+     * @OA\Post(
      *      description="Creates a new team and returns it afterwards",
-     *      @SWG\Response(
+     *      @OA\Response(
      *          response=200,
      *          description="Returns the new created team",
-     *          @SWG\Schema(ref="#/definitions/Team"),
+     *          @OA\JsonContent(ref="#/components/schemas/Team"),
      *      )
      * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
+     * @OA\RequestBody(
      *      required=true,
-     *      @SWG\Schema(ref="#/definitions/TeamEditForm")
+     *      @OA\JsonContent(ref="#/components/schemas/TeamEditForm"),
      * )
      * @Rest\Post(path="", name="post_team")
      *
@@ -193,24 +190,21 @@ final class TeamController extends BaseApiController
     /**
      * Update an existing team
      *
-     * @SWG\Patch(
+     * @OA\Patch(
      *      description="Update an existing team, you can pass all or just a subset of all attributes (passing members will replace all existing ones)",
-     *      @SWG\Response(
+     *      @OA\Response(
      *          response=200,
      *          description="Returns the updated team",
-     *          @SWG\Schema(ref="#/definitions/Team")
+     *          @OA\JsonContent(ref="#/components/schemas/Team")
      *      )
      * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
+     * @OA\RequestBody(
      *      required=true,
-     *      @SWG\Schema(ref="#/definitions/TeamEditForm")
+     *      @OA\JsonContent(ref="#/components/schemas/TeamEditForm"),
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Team ID to update",
      *      required=true,
      * )
@@ -260,24 +254,22 @@ final class TeamController extends BaseApiController
     /**
      * Add a new member to a team
      *
-     * @SWG\Post(
-     *  @SWG\Response(
+     * @OA\Post(
+     *  @OA\Response(
      *      response=200,
      *      description="Adds a new user to a team.",
-     *      @SWG\Schema(ref="#/definitions/Team")
+     *      @OA\JsonContent(ref="#/components/schemas/Team")
      *  )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="The team which will receive the new member",
      *      required=true,
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="userId",
      *      in="path",
-     *      type="integer",
      *      description="The team member to add (User ID)",
      *      required=true,
      * )
@@ -320,24 +312,22 @@ final class TeamController extends BaseApiController
     /**
      * Removes a member from the team
      *
-     * @SWG\Delete(
-     *      @SWG\Response(
+     * @OA\Delete(
+     *      @OA\Response(
      *          response=200,
      *          description="Removes a user from the team. The teamlead cannot be removed.",
-     *          @SWG\Schema(ref="#/definitions/Team")
+     *          @OA\JsonContent(ref="#/components/schemas/Team")
      *      )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="The team from which the member will be removed",
      *      required=true,
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="userId",
      *      in="path",
-     *      type="integer",
      *      description="The team member to remove (User ID)",
      *      required=true,
      * )
@@ -384,24 +374,22 @@ final class TeamController extends BaseApiController
     /**
      * Grant the team access to a customer
      *
-     * @SWG\Post(
-     *  @SWG\Response(
+     * @OA\Post(
+     *  @OA\Response(
      *      response=200,
      *      description="Adds a new customer to a team.",
-     *      @SWG\Schema(ref="#/definitions/Team")
+     *      @OA\JsonContent(ref="#/components/schemas/Team")
      *  )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="The team that is granted access",
      *      required=true,
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="customerId",
      *      in="path",
-     *      type="integer",
      *      description="The customer to grant acecess to (Customer ID)",
      *      required=true,
      * )
@@ -444,24 +432,22 @@ final class TeamController extends BaseApiController
     /**
      * Revokes access for a customer from a team
      *
-     * @SWG\Delete(
-     *      @SWG\Response(
+     * @OA\Delete(
+     *      @OA\Response(
      *          response=200,
      *          description="Removes a customer from the team.",
-     *          @SWG\Schema(ref="#/definitions/Team")
+     *          @OA\JsonContent(ref="#/components/schemas/Team")
      *      )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="The team whose permission will be revoked",
      *      required=true,
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="customerId",
      *      in="path",
-     *      type="integer",
      *      description="The customer to remove (Customer ID)",
      *      required=true,
      * )
@@ -504,24 +490,22 @@ final class TeamController extends BaseApiController
     /**
      * Grant the team access to a project
      *
-     * @SWG\Post(
-     *  @SWG\Response(
+     * @OA\Post(
+     *  @OA\Response(
      *      response=200,
      *      description="Adds a new project to a team.",
-     *      @SWG\Schema(ref="#/definitions/Team")
+     *      @OA\JsonContent(ref="#/components/schemas/Team")
      *  )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="The team that is granted access",
      *      required=true,
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="projectId",
      *      in="path",
-     *      type="integer",
      *      description="The project to grant acecess to (Project ID)",
      *      required=true,
      * )
@@ -564,24 +548,22 @@ final class TeamController extends BaseApiController
     /**
      * Revokes access for a project from a team
      *
-     * @SWG\Delete(
-     *      @SWG\Response(
+     * @OA\Delete(
+     *      @OA\Response(
      *          response=200,
      *          description="Removes a project from the team.",
-     *          @SWG\Schema(ref="#/definitions/Team")
+     *          @OA\JsonContent(ref="#/components/schemas/Team")
      *      )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="The team whose permission will be revoked",
      *      required=true,
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="projectId",
      *      in="path",
-     *      type="integer",
      *      description="The project to remove (Project ID)",
      *      required=true,
      * )
@@ -624,24 +606,22 @@ final class TeamController extends BaseApiController
     /**
      * Grant the team access to an activity
      *
-     * @SWG\Post(
-     *  @SWG\Response(
+     * @OA\Post(
+     *  @OA\Response(
      *      response=200,
      *      description="Adds a new activity to a team.",
-     *      @SWG\Schema(ref="#/definitions/Team")
+     *      @OA\JsonContent(ref="#/components/schemas/Team")
      *  )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="The team that is granted access",
      *      required=true,
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="activityId",
      *      in="path",
-     *      type="integer",
      *      description="The activity to grant acecess to (Activity ID)",
      *      required=true,
      * )
@@ -684,24 +664,22 @@ final class TeamController extends BaseApiController
     /**
      * Revokes access for an activity from a team
      *
-     * @SWG\Delete(
-     *      @SWG\Response(
+     * @OA\Delete(
+     *      @OA\Response(
      *          response=200,
      *          description="Removes a activity from the team.",
-     *          @SWG\Schema(ref="#/definitions/Team")
+     *          @OA\JsonContent(ref="#/components/schemas/Team")
      *      )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="The team whose permission will be revoked",
      *      required=true,
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="activityId",
      *      in="path",
-     *      type="integer",
      *      description="The activity to remove (Activity ID)",
      *      required=true,
      * )

@@ -24,8 +24,8 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Swagger\Annotations as SWG;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +35,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route(path="/users")
- * @SWG\Tag(name="User")
+ * @OA\Tag(name="User")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
@@ -73,12 +73,12 @@ final class UserController extends BaseApiController
     /**
      * Returns the collection of all registered users
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns the collection of all registered users. Required permission: view_user",
-     *      @SWG\Schema(
+     *      @OA\JsonContent(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/UserCollection")
+     *          @OA\Items(ref="#/components/schemas/UserCollection")
      *      )
      * )
      *
@@ -125,15 +125,14 @@ final class UserController extends BaseApiController
     /**
      * Return one user entity
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Return one user entity.",
-     *      @SWG\Schema(ref="#/definitions/UserEntity"),
+     *      @OA\JsonContent(ref="#/components/schemas/UserEntity"),
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="User ID to fetch",
      *      required=true,
      * )
@@ -167,10 +166,10 @@ final class UserController extends BaseApiController
     /**
      * Return the current user entity
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Return the current user entity.",
-     *      @SWG\Schema(ref="#/definitions/UserEntity"),
+     *      @OA\JsonContent(ref="#/components/schemas/UserEntity"),
      * )
      *
      * @Rest\Get(path="/me", name="me_user")
@@ -189,19 +188,17 @@ final class UserController extends BaseApiController
     /**
      * Creates a new user
      *
-     * @SWG\Post(
+     * @OA\Post(
      *      description="Creates a new user and returns it afterwards",
-     *      @SWG\Response(
+     *      @OA\Response(
      *          response=200,
      *          description="Returns the new created user",
-     *          @SWG\Schema(ref="#/definitions/UserEntity",),
+     *          @OA\JsonContent(ref="#/components/schemas/UserEntity",),
      *      )
      * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
+     * @OA\RequestBody(
      *      required=true,
-     *      @SWG\Schema(ref="#/definitions/UserCreateForm")
+     *      @OA\JsonContent(ref="#/components/schemas/UserCreateForm"),
      * )
      * @Rest\Post(path="", name="post_user")
      *
@@ -247,24 +244,21 @@ final class UserController extends BaseApiController
     /**
      * Update an existing user
      *
-     * @SWG\Patch(
+     * @OA\Patch(
      *      description="Update an existing user, you can pass all or just a subset of all attributes (passing roles will replace all existing ones)",
-     *      @SWG\Response(
+     *      @OA\Response(
      *          response=200,
      *          description="Returns the updated user",
-     *          @SWG\Schema(ref="#/definitions/UserEntity")
+     *          @OA\JsonContent(ref="#/components/schemas/UserEntity")
      *      )
      * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
+     * @OA\RequestBody(
      *      required=true,
-     *      @SWG\Schema(ref="#/definitions/UserEditForm")
+     *      @OA\JsonContent(ref="#/components/schemas/UserEditForm"),
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="User ID to update",
      *      required=true,
      * )

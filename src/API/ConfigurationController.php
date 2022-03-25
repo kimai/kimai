@@ -21,12 +21,12 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @SWG\Tag(name="Default")
+ * @OA\Tag(name="Default")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
@@ -45,10 +45,10 @@ final class ConfigurationController extends BaseApiController
     /**
      * Returns the user specific locale configuration
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns the locale specific configurations for this user",
-     *      @SWG\Schema(ref=@Model(type=I18nConfig::class))
+     *      @OA\JsonContent(ref=@Model(type=I18nConfig::class))
      * )
      *
      * @Rest\Get(path="/config/i18n")
@@ -82,10 +82,10 @@ final class ConfigurationController extends BaseApiController
     /**
      * Returns the timesheet configuration
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns the instance specific timesheet configuration",
-     *      @SWG\Schema(ref=@Model(type=TimesheetConfig::class))
+     *      @OA\JsonContent(ref=@Model(type=TimesheetConfig::class))
      * )
      *
      * @Rest\Get(path="/config/timesheet")

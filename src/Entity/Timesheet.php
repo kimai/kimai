@@ -18,7 +18,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as Serializer;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -187,7 +187,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Subresource", "Expanded"})
-     * @SWG\Property(ref="#/definitions/ActivityExpanded")
+     * @OA\Property(ref="#/components/schemas/ActivityExpanded")
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Activity")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
@@ -199,7 +199,7 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Subresource", "Expanded"})
-     * @SWG\Property(ref="#/definitions/ProjectExpanded")
+     * @OA\Property(ref="#/components/schemas/ProjectExpanded")
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Project")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)

@@ -19,12 +19,12 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @SWG\Tag(name="Default")
+ * @OA\Tag(name="Default")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
@@ -43,10 +43,10 @@ class StatusController extends BaseApiController
     /**
      * A testing route for the API
      *
-     * @SWG\Response(
+     * @OA\Response(
      *     response=200,
      *     description="A simple route that returns a 'pong', which you can use for testing the API",
-     *     examples={"{'message': 'pong'}"}
+     *     @OA\JsonContent(example="{'message': 'pong'}")
      * )
      *
      * @Rest\Get(path="/ping")
@@ -64,10 +64,10 @@ class StatusController extends BaseApiController
     /**
      * Returns information about the Kimai release
      *
-     * @SWG\Response(
+     * @OA\Response(
      *     response=200,
      *     description="Returns version information about the current release",
-     *      @SWG\Schema(ref=@Model(type=Version::class))
+     *     @OA\JsonContent(ref=@Model(type=Version::class))
      * )
      *
      * @Rest\Get(path="/version")
@@ -83,12 +83,12 @@ class StatusController extends BaseApiController
     /**
      * Returns information about installed Plugins
      *
-     * @SWG\Response(
+     * @OA\Response(
      *     response=200,
      *     description="Returns a list of plugin names and versions",
-     *      @SWG\Schema(
+     *      @OA\JsonContent(
      *          type="array",
-     *          @SWG\Items(ref=@Model(type=Plugin::class))
+     *          @OA\Items(ref=@Model(type=Plugin::class))
      *      )
      * )
      *

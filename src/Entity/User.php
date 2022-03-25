@@ -20,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use JMS\Serializer\Annotation as Serializer;
 use KevinPapst\TablerBundle\Model\UserInterface as ThemeUserInterface;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -163,7 +163,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"User_Entity"})
-     * @SWG\Property(ref="#/definitions/TeamMembership")
+     * @OA\Property(ref="#/components/schemas/TeamMembership")
      *
      * @ORM\OneToMany(targetEntity="App\Entity\TeamMember", mappedBy="user", fetch="LAZY", cascade={"persist"}, orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="CASCADE")
@@ -363,7 +363,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("preferences"),
      * @Serializer\Groups({"User_Entity"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/UserPreference"))
+     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/UserPreference"))
      *
      * @internal only for API usage
      * @return UserPreference[]
@@ -471,7 +471,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("language"),
      * @Serializer\Groups({"User_Entity"})
-     * @SWG\Property(type="string")
+     * @OA\Property(type="string")
      *
      * @return string
      */
@@ -484,7 +484,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("timezone"),
      * @Serializer\Groups({"User_Entity"})
-     * @SWG\Property(type="string")
+     * @OA\Property(type="string")
      *
      * @return string
      */
@@ -687,7 +687,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("teams"),
      * @Serializer\Groups({"User_Entity"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Team"))
+     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Team"))
      *
      * @return Team[]
      */
@@ -1095,7 +1095,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("initials"),
      * @Serializer\Groups({"Default"})
-     * @SWG\Property(type="string")
+     * @OA\Property(type="string")
      *
      * @return string
      */

@@ -26,8 +26,8 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Swagger\Annotations as SWG;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +36,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route(path="/customers")
- * @SWG\Tag(name="Customer")
+ * @OA\Tag(name="Customer")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
@@ -75,12 +75,12 @@ class CustomerController extends BaseApiController
     /**
      * Returns a collection of customers
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns a collection of customer entities",
-     *      @SWG\Schema(
+     *      @OA\JsonContent(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/CustomerCollection")
+     *          @OA\Items(ref="#/components/schemas/CustomerCollection")
      *      )
      * )
      * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter activities (1=visible, 2=hidden, 3=both)")
@@ -127,10 +127,10 @@ class CustomerController extends BaseApiController
     /**
      * Returns one customer
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns one customer entity",
-     *      @SWG\Schema(ref="#/definitions/CustomerEntity"),
+     *      @OA\JsonContent(ref="#/components/schemas/CustomerEntity"),
      * )
      * @Rest\Get(path="/{id}", name="get_customer", requirements={"id": "\d+"})
      *
@@ -148,19 +148,17 @@ class CustomerController extends BaseApiController
     /**
      * Creates a new customer
      *
-     * @SWG\Post(
+     * @OA\Post(
      *      description="Creates a new customer and returns it afterwards",
-     *      @SWG\Response(
+     *      @OA\Response(
      *          response=200,
      *          description="Returns the new created customer",
-     *          @SWG\Schema(ref="#/definitions/CustomerEntity"),
+     *          @OA\JsonContent(ref="#/components/schemas/CustomerEntity"),
      *      )
      * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
+     * @OA\RequestBody(
      *      required=true,
-     *      @SWG\Schema(ref="#/definitions/CustomerEditForm")
+     *      @OA\JsonContent(ref="#/components/schemas/CustomerEditForm"),
      * )
      * @Rest\Post(path="", name="post_customer")
      *
@@ -202,24 +200,21 @@ class CustomerController extends BaseApiController
     /**
      * Update an existing customer
      *
-     * @SWG\Patch(
+     * @OA\Patch(
      *      description="Update an existing customer, you can pass all or just a subset of all attributes",
-     *      @SWG\Response(
+     *      @OA\Response(
      *          response=200,
      *          description="Returns the updated customer",
-     *          @SWG\Schema(ref="#/definitions/CustomerEntity")
+     *          @OA\JsonContent(ref="#/components/schemas/CustomerEntity")
      *      )
      * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
+     * @OA\RequestBody(
      *      required=true,
-     *      @SWG\Schema(ref="#/definitions/CustomerEditForm")
+     *      @OA\JsonContent(ref="#/components/schemas/CustomerEditForm"),
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Customer ID to update",
      *      required=true,
      * )
@@ -268,15 +263,14 @@ class CustomerController extends BaseApiController
     /**
      * Sets the value of a meta-field for an existing customer
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.",
-     *      @SWG\Schema(ref="#/definitions/CustomerEntity")
+     *      @OA\JsonContent(ref="#/components/schemas/CustomerEntity")
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Customer record ID to set the meta-field value for",
      *      required=true,
      * )
@@ -323,18 +317,17 @@ class CustomerController extends BaseApiController
     /**
      * Returns a collection of all rates for one customer
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns a collection of customer rate entities",
-     *      @SWG\Schema(
+     *      @OA\JsonContent(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/CustomerRate")
+     *          @OA\Items(ref="#/components/schemas/CustomerRate")
      *      )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="The customer whose rates will be returned",
      *      required=true,
      * )
@@ -367,23 +360,21 @@ class CustomerController extends BaseApiController
     /**
      * Deletes one rate for a customer
      *
-     * @SWG\Delete(
-     *      @SWG\Response(
+     * @OA\Delete(
+     *      @OA\Response(
      *          response=204,
      *          description="Returns no content: 204 on successful delete"
      *      )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="The customer whose rate will be removed",
      *      required=true,
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="rateId",
      *      in="path",
-     *      type="integer",
      *      description="The rate to remove",
      *      required=true,
      * )
@@ -422,25 +413,22 @@ class CustomerController extends BaseApiController
     /**
      * Adds a new rate to a customer
      *
-     * @SWG\Post(
-     *  @SWG\Response(
+     * @OA\Post(
+     *  @OA\Response(
      *      response=200,
      *      description="Returns the new created rate",
-     *      @SWG\Schema(ref="#/definitions/CustomerRate")
+     *      @OA\JsonContent(ref="#/components/schemas/CustomerRate")
      *  )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="The customer to add the rate for",
      *      required=true,
      * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
+     * @OA\RequestBody(
      *      required=true,
-     *      @SWG\Schema(ref="#/definitions/CustomerRateForm")
+     *      @OA\JsonContent(ref="#/components/schemas/CustomerRateForm"),
      * )
      * @Rest\Post(path="/{id}/rates", name="post_customer_rate", requirements={"id": "\d+"})
      *

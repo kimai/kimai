@@ -19,8 +19,8 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -28,7 +28,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route(path="/tags")
- * @SWG\Tag(name="Tag")
+ * @OA\Tag(name="Tag")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
@@ -50,12 +50,12 @@ final class TagController extends BaseApiController
     /**
      * Fetch all existing tags
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns the collection of all existing tags as string array",
-     *      @SWG\Schema(
+     *      @OA\JsonContent(
      *          type="array",
-     *          @SWG\Items(type="string")
+     *          @OA\Items(type="string")
      *      )
      * )
      *
@@ -81,19 +81,17 @@ final class TagController extends BaseApiController
     /**
      * Creates a new tag
      *
-     * @SWG\Post(
+     * @OA\Post(
      *      description="Creates a new tag and returns it afterwards",
-     *      @SWG\Response(
+     *      @OA\Response(
      *          response=200,
      *          description="Returns the new created tag",
-     *          @SWG\Schema(ref="#/definitions/TagEntity"),
+     *          @OA\JsonContent(ref="#/components/schemas/TagEntity"),
      *      )
      * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
+     * @OA\RequestBody(
      *      required=true,
-     *      @SWG\Schema(ref="#/definitions/TagEditForm")
+     *      @OA\JsonContent(ref="#/components/schemas/TagEditForm"),
      * )
      * @Rest\Post(name="post_tag")
      *
@@ -130,16 +128,15 @@ final class TagController extends BaseApiController
     /**
      * Delete a tag
      *
-     * @SWG\Delete(
-     *      @SWG\Response(
+     * @OA\Delete(
+     *      @OA\Response(
      *          response=204,
      *          description="HTTP code 204 for a successful delete"
      *      ),
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Tag ID to delete",
      *      required=true,
      * )

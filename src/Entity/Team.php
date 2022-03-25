@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -63,7 +63,7 @@ class Team
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/TeamMember"))
+     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/TeamMember"))
      *
      * @ORM\OneToMany(targetEntity="App\Entity\TeamMember", mappedBy="team", fetch="LAZY", cascade={"persist"}, orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="CASCADE")
@@ -77,7 +77,7 @@ class Team
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Customer"))
+     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Customer"))
      *
      * @ORM\ManyToMany(targetEntity="Customer", mappedBy="teams", fetch="EXTRA_LAZY")
      */
@@ -89,7 +89,7 @@ class Team
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity", "Expanded"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Project"))
+     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Project"))
      *
      * @ORM\ManyToMany(targetEntity="Project", mappedBy="teams", fetch="EXTRA_LAZY")
      */
@@ -101,7 +101,7 @@ class Team
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity", "Expanded"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/Activity"))
+     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Activity"))
      *
      * @ORM\ManyToMany(targetEntity="Activity", mappedBy="teams", fetch="EXTRA_LAZY")
      */
@@ -203,7 +203,7 @@ class Team
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("teamlead"),
      * @Serializer\Groups({"Team_Entity"})
-     * @SWG\Property(ref="#/definitions/User")
+     * @OA\Property(ref="#/components/schemas/User")
      *
      * @deprecated since 1.15 - will be removed with 2.0
      * @return User|null
@@ -329,7 +329,7 @@ class Team
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("users"),
      * @Serializer\Groups({"Team_Entity"})
-     * @SWG\Property(type="array", @SWG\Items(ref="#/definitions/User"))
+     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/User"))
      *
      * @return User[]
      */

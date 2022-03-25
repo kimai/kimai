@@ -26,8 +26,8 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Swagger\Annotations as SWG;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +36,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route(path="/activities")
- * @SWG\Tag(name="Activity")
+ * @OA\Tag(name="Activity")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
@@ -75,12 +75,12 @@ class ActivityController extends BaseApiController
     /**
      * Returns a collection of activities
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns a collection of activity entities",
-     *      @SWG\Schema(
+     *      @OA\JsonContent(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/ActivityCollection")
+     *          @OA\Items(ref="#/components/schemas/ActivityCollection")
      *      )
      * )
      * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter activities")
@@ -145,15 +145,14 @@ class ActivityController extends BaseApiController
     /**
      * Returns one activity
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns one activity entity",
-     *      @SWG\Schema(ref="#/definitions/ActivityEntity"),
+     *      @OA\JsonContent(ref="#/components/schemas/ActivityEntity"),
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Activity ID to fetch",
      *      required=true,
      * )
@@ -173,19 +172,17 @@ class ActivityController extends BaseApiController
     /**
      * Creates a new activity
      *
-     * @SWG\Post(
+     * @OA\Post(
      *      description="Creates a new activity and returns it afterwards",
-     *      @SWG\Response(
+     *      @OA\Response(
      *          response=200,
      *          description="Returns the new created activity",
-     *          @SWG\Schema(ref="#/definitions/ActivityEntity"),
+     *          @OA\JsonContent(ref="#/components/schemas/ActivityEntity"),
      *      )
      * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
+     * @OA\RequestBody(
      *      required=true,
-     *      @SWG\Schema(ref="#/definitions/ActivityEditForm")
+     *      @OA\JsonContent(ref="#/components/schemas/ActivityEditForm"),
      * )
      * @Rest\Post(path="", name="post_activity")
      *
@@ -227,24 +224,21 @@ class ActivityController extends BaseApiController
     /**
      * Update an existing activity
      *
-     * @SWG\Patch(
+     * @OA\Patch(
      *      description="Update an existing activity, you can pass all or just a subset of all attributes",
-     *      @SWG\Response(
+     *      @OA\Response(
      *          response=200,
      *          description="Returns the updated activity",
-     *          @SWG\Schema(ref="#/definitions/ActivityEntity")
+     *          @OA\JsonContent(ref="#/components/schemas/ActivityEntity")
      *      )
      * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
+     * @OA\RequestBody(
      *      required=true,
-     *      @SWG\Schema(ref="#/definitions/ActivityEditForm")
+     *      @OA\JsonContent(ref="#/components/schemas/ActivityEditForm"),
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Activity ID to update",
      *      required=true,
      * )
@@ -293,15 +287,14 @@ class ActivityController extends BaseApiController
     /**
      * Sets the value of a meta-field for an existing activity
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.",
-     *      @SWG\Schema(ref="#/definitions/ActivityEntity")
+     *      @OA\JsonContent(ref="#/components/schemas/ActivityEntity")
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Activity record ID to set the meta-field value for",
      *      required=true,
      * )
@@ -348,18 +341,17 @@ class ActivityController extends BaseApiController
     /**
      * Returns a collection of all rates for one activity
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns a collection of activity rate entities",
-     *      @SWG\Schema(
+     *      @OA\JsonContent(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/ActivityRate")
+     *          @OA\Items(ref="#/components/schemas/ActivityRate")
      *      )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="The activity whose rates will be returned",
      *      required=true,
      * )
@@ -392,23 +384,21 @@ class ActivityController extends BaseApiController
     /**
      * Deletes one rate for an activity
      *
-     * @SWG\Delete(
-     *      @SWG\Response(
+     * @OA\Delete(
+     *      @OA\Response(
      *          response=204,
      *          description="Returns no content: 204 on successful delete"
      *      )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="The activity whose rate will be removed",
      *      required=true,
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="rateId",
      *      in="path",
-     *      type="integer",
      *      description="The rate to remove",
      *      required=true,
      * )
@@ -447,25 +437,22 @@ class ActivityController extends BaseApiController
     /**
      * Adds a new rate to an activity
      *
-     * @SWG\Post(
-     *  @SWG\Response(
+     * @OA\Post(
+     *  @OA\Response(
      *      response=200,
      *      description="Returns the new created rate",
-     *      @SWG\Schema(ref="#/definitions/ActivityRate")
+     *      @OA\JsonContent(ref="#/components/schemas/ActivityRate")
      *  )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="The activity to add the rate for",
      *      required=true,
      * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
+     * @OA\RequestBody(
      *      required=true,
-     *      @SWG\Schema(ref="#/definitions/ActivityRateForm")
+     *      @OA\JsonContent(ref="#/components/schemas/ActivityRateForm"),
      * )
      * @Rest\Post(path="/{id}/rates", name="post_activity_rate", requirements={"id": "\d+"})
      *

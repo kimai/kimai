@@ -27,8 +27,8 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Swagger\Annotations as SWG;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,7 +38,7 @@ use Symfony\Component\Validator\Constraints;
 
 /**
  * @Route(path="/projects")
- * @SWG\Tag(name="Project")
+ * @OA\Tag(name="Project")
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
@@ -82,12 +82,12 @@ class ProjectController extends BaseApiController
     /**
      * Returns a collection of projects.
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns a collection of project entities",
-     *      @SWG\Schema(
+     *      @OA\JsonContent(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/ProjectCollection")
+     *          @OA\Items(ref="#/components/schemas/ProjectCollection")
      *      )
      * )
      * @Rest\QueryParam(name="customer", requirements="\d+", strict=true, nullable=true, description="Customer ID to filter projects")
@@ -172,10 +172,10 @@ class ProjectController extends BaseApiController
     /**
      * Returns one project
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns one project entity",
-     *      @SWG\Schema(ref="#/definitions/ProjectEntity"),
+     *      @OA\JsonContent(ref="#/components/schemas/ProjectEntity"),
      * )
      * @Rest\Get(path="/{id}", name="get_project", requirements={"id": "\d+"})
      *
@@ -193,19 +193,17 @@ class ProjectController extends BaseApiController
     /**
      * Creates a new project
      *
-     * @SWG\Post(
+     * @OA\Post(
      *      description="Creates a new project and returns it afterwards",
-     *      @SWG\Response(
+     *      @OA\Response(
      *          response=200,
      *          description="Returns the new created project",
-     *          @SWG\Schema(ref="#/definitions/ProjectEntity"),
+     *          @OA\JsonContent(ref="#/components/schemas/ProjectEntity"),
      *      )
      * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
+     * @OA\RequestBody(
      *      required=true,
-     *      @SWG\Schema(ref="#/definitions/ProjectEditForm")
+     *      @OA\JsonContent(ref="#/components/schemas/ProjectEditForm"),
      * )
      * @Rest\Post(path="", name="post_project")
      *
@@ -246,24 +244,21 @@ class ProjectController extends BaseApiController
     /**
      * Update an existing project
      *
-     * @SWG\Patch(
+     * @OA\Patch(
      *      description="Update an existing project, you can pass all or just a subset of all attributes",
-     *      @SWG\Response(
+     *      @OA\Response(
      *          response=200,
      *          description="Returns the updated project",
-     *          @SWG\Schema(ref="#/definitions/ProjectEntity")
+     *          @OA\JsonContent(ref="#/components/schemas/ProjectEntity")
      *      )
      * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
+     * @OA\RequestBody(
      *      required=true,
-     *      @SWG\Schema(ref="#/definitions/ProjectEditForm")
+     *      @OA\JsonContent(ref="#/components/schemas/ProjectEditForm"),
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Project ID to update",
      *      required=true,
      * )
@@ -314,15 +309,14 @@ class ProjectController extends BaseApiController
     /**
      * Sets the value of a meta-field for an existing project
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.",
-     *      @SWG\Schema(ref="#/definitions/ProjectEntity")
+     *      @OA\JsonContent(ref="#/components/schemas/ProjectEntity")
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="Project record ID to set the meta-field value for",
      *      required=true,
      * )
@@ -369,18 +363,17 @@ class ProjectController extends BaseApiController
     /**
      * Returns a collection of all rates for one project
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="Returns a collection of project rate entities",
-     *      @SWG\Schema(
+     *      @OA\JsonContent(
      *          type="array",
-     *          @SWG\Items(ref="#/definitions/ProjectRate")
+     *          @OA\Items(ref="#/components/schemas/ProjectRate")
      *      )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="The project whose rates will be returned",
      *      required=true,
      * )
@@ -413,23 +406,21 @@ class ProjectController extends BaseApiController
     /**
      * Deletes one rate for a project
      *
-     * @SWG\Delete(
-     *      @SWG\Response(
+     * @OA\Delete(
+     *      @OA\Response(
      *          response=204,
      *          description="Returns no content: 204 on successful delete"
      *      )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="The project whose rate will be removed",
      *      required=true,
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="rateId",
      *      in="path",
-     *      type="integer",
      *      description="The rate to remove",
      *      required=true,
      * )
@@ -468,25 +459,22 @@ class ProjectController extends BaseApiController
     /**
      * Adds a new rate to a project
      *
-     * @SWG\Post(
-     *  @SWG\Response(
+     * @OA\Post(
+     *  @OA\Response(
      *      response=200,
      *      description="Returns the new created rate",
-     *      @SWG\Schema(ref="#/definitions/ProjectRate")
+     *      @OA\JsonContent(ref="#/components/schemas/ProjectRate")
      *  )
      * )
-     * @SWG\Parameter(
+     * @OA\Parameter(
      *      name="id",
      *      in="path",
-     *      type="integer",
      *      description="The project to add the rate for",
      *      required=true,
      * )
-     * @SWG\Parameter(
-     *      name="body",
-     *      in="body",
+     * @OA\RequestBody(
      *      required=true,
-     *      @SWG\Schema(ref="#/definitions/ProjectRateForm")
+     *      @OA\JsonContent(ref="#/components/schemas/ProjectRateForm"),
      * )
      * @Rest\Post(path="/{id}/rates", name="post_project_rate", requirements={"id": "\d+"})
      *

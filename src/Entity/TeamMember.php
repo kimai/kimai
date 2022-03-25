@@ -11,7 +11,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -39,7 +39,7 @@ class TeamMember
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default", "Entity", "Team_Entity"})
-     * @SWG\Property(ref="#/definitions/User")
+     * @OA\Property(ref="#/components/schemas/User")
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="memberships")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
@@ -51,7 +51,7 @@ class TeamMember
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default", "Entity", "User_Entity"})
-     * @SWG\Property(ref="#/definitions/Team")
+     * @OA\Property(ref="#/components/schemas/Team")
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="members")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)

@@ -32,7 +32,7 @@
         "league/csv": "^9.4",
         "league/html-to-markdown": "^5.0",
         "mpdf/mpdf": "^8.0",
-        "nelmio/api-doc-bundle": "^3.2",
+        "nelmio/api-doc-bundle": "^4.0",
         "nelmio/cors-bundle": "^2.0",
         "onelogin/php-saml": "^4.0",
         "pagerfanta/pagerfanta": "^3.0",
