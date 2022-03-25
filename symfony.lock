@@ -123,9 +123,6 @@
     "erusev/parsedown": {
         "version": "1.6.4"
     },
-    "exsyst/swagger": {
-        "version": "v0.4.1"
-    },
     "ezyang/htmlpurifier": {
         "version": "v4.13.0"
     },
