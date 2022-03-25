@@ -30,8 +30,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route(path="/users")
@@ -45,28 +45,16 @@ final class UserController extends BaseApiController
     public const GROUPS_FORM = ['Default', 'Entity', 'User', 'User_Entity'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'User'];
 
-    /**
-     * @var UserRepository
-     */
-    private $repository;
-    /**
-     * @var ViewHandlerInterface
-     */
-    private $viewHandler;
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $encoder;
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
+    private UserRepository $repository;
+    private ViewHandlerInterface $viewHandler;
+    private UserPasswordHasherInterface $passwordHasher;
+    private SystemConfiguration $configuration;
 
-    public function __construct(ViewHandlerInterface $viewHandler, UserRepository $repository, UserPasswordEncoderInterface $encoder, SystemConfiguration $config)
+    public function __construct(ViewHandlerInterface $viewHandler, UserRepository $repository, UserPasswordHasherInterface $passwordHasher, SystemConfiguration $config)
     {
         $this->viewHandler = $viewHandler;
         $this->repository = $repository;
-        $this->encoder = $encoder;
+        $this->passwordHasher = $passwordHasher;
         $this->configuration = $config;
     }
 
@@ -224,7 +212,7 @@ final class UserController extends BaseApiController
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $password = $this->encoder->encodePassword($user, $user->getPlainPassword());
+            $password = $this->passwordHasher->hashPassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
             $this->repository->saveUser($user);

@@ -21,7 +21,7 @@ use App\Repository\UserRepository;
 use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -29,19 +29,19 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class UserService
 {
-    private $repository;
-    private $dispatcher;
-    private $validator;
-    private $configuration;
-    private $encoderFactory;
+    private UserRepository $repository;
+    private EventDispatcherInterface $dispatcher;
+    private ValidatorInterface $validator;
+    private SystemConfiguration $configuration;
+    private UserPasswordHasherInterface $passwordHasher;
 
-    public function __construct(UserRepository $repository, EventDispatcherInterface $dispatcher, ValidatorInterface $validator, SystemConfiguration $configuration, UserPasswordEncoderInterface $encoderFactory)
+    public function __construct(UserRepository $repository, EventDispatcherInterface $dispatcher, ValidatorInterface $validator, SystemConfiguration $configuration, UserPasswordHasherInterface $passwordHasher)
     {
         $this->repository = $repository;
         $this->dispatcher = $dispatcher;
         $this->validator = $validator;
         $this->configuration = $configuration;
-        $this->encoderFactory = $encoderFactory;
+        $this->passwordHasher = $passwordHasher;
     }
 
     public function createNewUser(): User
@@ -148,7 +148,7 @@ class UserService
             return;
         }
 
-        $password = $this->encoderFactory->encodePassword($user, $plain);
+        $password = $this->passwordHasher->hashPassword($user, $plain);
         $user->setPassword($password);
         $user->eraseCredentials();
     }
@@ -161,7 +161,7 @@ class UserService
             return;
         }
 
-        $password = $this->encoderFactory->encodePassword($user, $plain);
+        $password = $this->passwordHasher->hashPassword($user, $plain);
         $user->setApiToken($password);
         $user->eraseCredentials();
     }

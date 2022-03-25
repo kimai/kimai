@@ -41,7 +41,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -60,26 +60,10 @@ final class KimaiImporterCommand extends Command
 
     public const BATCH_SIZE = 200;
 
-    /**
-     * Create the user default passwords
-     * @var UserPasswordEncoderInterface
-     */
-    private $encoder;
-    /**
-     * Validates the entities before they will be created
-     * @var ValidatorInterface
-     */
-    private $validator;
-    /**
-     * Connection to the Kimai v2 database to write imported data to
-     * @var ManagerRegistry
-     */
-    private $doctrine;
-    /**
-     * Connection to the old database to import data from
-     * @var Connection
-     */
-    private $connection;
+    private UserPasswordHasherInterface $passwordHasher;
+    private ValidatorInterface $validator;
+    private ManagerRegistry $doctrine;
+    private Connection $connection;
     /**
      * Prefix for the v1 database tables.
      * @var string
@@ -142,9 +126,9 @@ final class KimaiImporterCommand extends Command
 
     private $options = [];
 
-    public function __construct(UserPasswordEncoderInterface $encoder, ManagerRegistry $registry, ValidatorInterface $validator)
+    public function __construct(UserPasswordHasherInterface $passwordHasher, ManagerRegistry $registry, ValidatorInterface $validator)
     {
-        $this->encoder = $encoder;
+        $this->passwordHasher = $passwordHasher;
         $this->doctrine = $registry;
         $this->validator = $validator;
 
@@ -883,7 +867,7 @@ final class KimaiImporterCommand extends Command
                 $user->setAlias($oldUser['alias']);
             }
 
-            $pwd = $this->encoder->encodePassword($user, $user->getPlainPassword());
+            $pwd = $this->passwordHasher->hashPassword($user, $user->getPlainPassword());
             $user->setPassword($pwd);
 
             if (!$this->validateImport($io, $user)) {
@@ -1570,7 +1554,7 @@ final class KimaiImporterCommand extends Command
                     ->setRoles([USER::ROLE_USER])
                 ;
 
-                $pwd = $this->encoder->encodePassword($user, $user->getPlainPassword());
+                $pwd = $this->passwordHasher->hashPassword($user, $user->getPlainPassword());
                 $user->setPassword($pwd);
 
                 if (!$this->validateImport($io, $user)) {

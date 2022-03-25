@@ -32,7 +32,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * This command can change anytime, don't rely on its API for the future!
@@ -65,14 +65,14 @@ class ImportTimesheetCommand extends Command
         'Fixed rate',
     ];
 
-    private $customers;
-    private $projects;
-    private $activities;
-    private $users;
-    private $tagRepository;
-    private $timesheets;
-    private $configuration;
-    private $encoder;
+    private CustomerRepository $customers;
+    private ProjectRepository $projects;
+    private ActivityRepository $activities;
+    private UserRepository $users;
+    private TagRepository $tagRepository;
+    private TimesheetRepository $timesheets;
+    private SystemConfiguration $configuration;
+    private UserPasswordHasherInterface $passwordHasher;
 
     /**
      * @var Customer
@@ -124,7 +124,7 @@ class ImportTimesheetCommand extends Command
         TagRepository $tagRepository,
         TimesheetRepository $timesheets,
         SystemConfiguration $configuration,
-        UserPasswordEncoderInterface $encoder
+        UserPasswordHasherInterface $passwordHasher
     ) {
         parent::__construct();
         $this->customers = $customers;
@@ -134,7 +134,7 @@ class ImportTimesheetCommand extends Command
         $this->tagRepository = $tagRepository;
         $this->timesheets = $timesheets;
         $this->configuration = $configuration;
-        $this->encoder = $encoder;
+        $this->passwordHasher = $passwordHasher;
     }
 
     /**
@@ -461,7 +461,7 @@ class ImportTimesheetCommand extends Command
             $email = $username;
         }
         $user->setEmail($email);
-        $user->setPassword($this->encoder->encodePassword($user, $password));
+        $user->setPassword($this->passwordHasher->hashPassword($user, $password));
 
         $this->users->saveUser($user);
         $this->createdUsers++;

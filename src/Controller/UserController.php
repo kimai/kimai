@@ -27,8 +27,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Controller used to manage users in the admin part of the site.
@@ -38,22 +38,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 final class UserController extends AbstractController
 {
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $encoder;
-    /**
-     * @var UserRepository
-     */
-    private $repository;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
+    private UserPasswordHasherInterface $passwordHasher;
+    private UserRepository $repository;
+    private EventDispatcherInterface $dispatcher;
 
-    public function __construct(UserPasswordEncoderInterface $encoder, UserRepository $repository, EventDispatcherInterface $dispatcher)
+    public function __construct(UserPasswordHasherInterface $passwordHasher, UserRepository $repository, EventDispatcherInterface $dispatcher)
     {
-        $this->encoder = $encoder;
+        $this->passwordHasher = $passwordHasher;
         $this->repository = $repository;
         $this->dispatcher = $dispatcher;
     }
@@ -117,7 +108,7 @@ final class UserController extends AbstractController
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $password = $this->encoder->encodePassword($user, $user->getPlainPassword());
+            $password = $this->passwordHasher->hashPassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
             $userRepository->saveUser($user);

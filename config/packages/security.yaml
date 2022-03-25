@@ -1,4 +1,6 @@
 security:
+#    enable_authenticator_manager: true
+
     encoders:
         App\Entity\User: auto
 
@@ -27,6 +29,9 @@ security:
             guard:
                 authenticators:
                     - App\Security\TokenAuthenticator
+
+#            custom_authenticators:
+#                - App\Security\ApiAuthenticator
 
             remember_me:
                 secret:   '%kernel.secret%'

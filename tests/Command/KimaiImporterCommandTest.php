@@ -13,7 +13,7 @@ use App\Command\KimaiImporterCommand;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -33,7 +33,7 @@ class KimaiImporterCommandTest extends KernelTestCase
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
 
-        $encoder = $this->createMock(UserPasswordEncoderInterface::class);
+        $encoder = $this->createMock(UserPasswordHasherInterface::class);
         $registry = $this->createMock(ManagerRegistry::class);
         $validator = $this->createMock(ValidatorInterface::class);
 

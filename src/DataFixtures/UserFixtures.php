@@ -15,7 +15,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * Defines the sample data to load in the database when running the unit and
@@ -42,17 +42,11 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
     public const MIN_RATE = 30;
     public const MAX_RATE = 120;
 
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $encoder;
+    private UserPasswordHasherInterface $passwordHasher;
 
-    /**
-     * @param UserPasswordEncoderInterface $encoder
-     */
-    public function __construct(UserPasswordEncoderInterface $encoder)
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
-        $this->encoder = $encoder;
+        $this->passwordHasher = $passwordHasher;
     }
 
     public static function getGroups(): array
@@ -76,8 +70,6 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
      */
     private function loadDefaultAccounts(ObjectManager $manager)
     {
-        $passwordEncoder = $this->encoder;
-
         $allUsers = $this->getUserDefinition();
         foreach ($allUsers as $userData) {
             $user = new User();
@@ -89,8 +81,8 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
                 ->setRoles([$userData[4]])
                 ->setAvatar($userData[5])
                 ->setEnabled($userData[6])
-                ->setPassword($passwordEncoder->encodePassword($user, self::DEFAULT_PASSWORD))
-                ->setApiToken($passwordEncoder->encodePassword($user, self::DEFAULT_API_TOKEN))
+                ->setPassword($this->passwordHasher->hashPassword($user, self::DEFAULT_PASSWORD))
+                ->setApiToken($this->passwordHasher->hashPassword($user, self::DEFAULT_API_TOKEN))
             ;
             $manager->persist($user);
 
@@ -138,7 +130,6 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
      */
     private function loadTestUsers(ObjectManager $manager)
     {
-        $passwordEncoder = $this->encoder;
         $faker = Factory::create();
         $existingName = [];
         $existingEmail = [];
@@ -166,7 +157,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
                 ->setEmail($email)
                 ->setRoles([User::ROLE_USER])
                 ->setEnabled(true)
-                ->setPassword($passwordEncoder->encodePassword($user, self::DEFAULT_PASSWORD))
+                ->setPassword($this->passwordHasher->hashPassword($user, self::DEFAULT_PASSWORD))
             ;
             $manager->persist($user);
 

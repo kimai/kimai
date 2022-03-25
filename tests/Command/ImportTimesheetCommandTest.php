@@ -19,7 +19,7 @@ use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * @covers \App\Command\ImportTimesheetCommand
@@ -45,7 +45,7 @@ class ImportTimesheetCommandTest extends KernelTestCase
         $tagRepository = $this->createMock(TagRepository::class);
         $timesheets = $this->createMock(TimesheetRepository::class);
         $configuration = $this->createMock(SystemConfiguration::class);
-        $encoder = $this->createMock(UserPasswordEncoderInterface::class);
+        $encoder = $this->createMock(UserPasswordHasherInterface::class);
 
         $this->application->add(new ImportTimesheetCommand($customers, $projects, $activities, $users, $tagRepository, $timesheets, $configuration, $encoder));
     }
