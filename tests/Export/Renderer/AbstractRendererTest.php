@@ -92,15 +92,17 @@ abstract class AbstractRendererTest extends KernelTestCase
         $activity->setProject($project);
         $activity->setMetaField((new ActivityMeta())->setName('activity-foo')->setValue('activity-bar')->setIsVisible(true));
 
-        $userMethods = ['getId', 'getPreferenceValue', 'getUsername'];
+        $userMethods = ['getId', 'getPreferenceValue', 'getUsername', 'getUserIdentifier'];
         $user1 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
         $user1->method('getId')->willReturn(1);
         $user1->method('getPreferenceValue')->willReturn('50');
         $user1->method('getUsername')->willReturn('foo-bar');
+        $user1->method('getUserIdentifier')->willReturn('foo-bar');
 
         $user2 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
         $user2->method('getId')->willReturn(2);
         $user2->method('getUsername')->willReturn('hello-world');
+        $user2->method('getUserIdentifier')->willReturn('hello-world');
 
         $timesheet = new Timesheet();
         $timesheet
