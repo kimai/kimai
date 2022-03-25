@@ -9,11 +9,12 @@
 
 namespace App\Utils;
 
+use Pagerfanta\View\Template\TemplateInterface;
 use Pagerfanta\View\TwitterBootstrap5View;
 
 class PaginationView extends TwitterBootstrap5View
 {
-    protected function createDefaultTemplate()
+    protected function createDefaultTemplate(): TemplateInterface
     {
         return new PaginationTemplate();
     }

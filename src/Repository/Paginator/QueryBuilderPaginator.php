@@ -14,14 +14,8 @@ use Doctrine\ORM\QueryBuilder;
 
 final class QueryBuilderPaginator implements PaginatorInterface
 {
-    /**
-     * @var QueryBuilder
-     */
-    private $query;
-    /**
-     * @var int
-     */
-    private $results = 0;
+    private QueryBuilder $query;
+    private int $results;
 
     public function __construct(QueryBuilder $query, int $results)
     {
@@ -29,18 +23,12 @@ final class QueryBuilderPaginator implements PaginatorInterface
         $this->results = $results;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getNbResults()
+    public function getNbResults(): int
     {
         return $this->results;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSlice($offset, $length)
+    public function getSlice(int $offset, int $length): iterable
     {
         $query = $this->query
             ->getQuery()
