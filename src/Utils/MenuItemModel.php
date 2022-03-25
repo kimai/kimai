@@ -15,7 +15,7 @@ class MenuItemModel implements MenuItemInterface
 {
     private string $identifier;
     private string $label;
-    private ?string $route;
+    private ?string $route = null;
     private array $routeArgs;
     private bool $isActive = false;
     /**
@@ -24,8 +24,8 @@ class MenuItemModel implements MenuItemInterface
     private array $children = [];
     private ?string $icon;
     private ?MenuItemInterface $parent = null;
-    private ?string $badge;
-    private ?string $badgeColor;
+    private ?string $badge = null;
+    private ?string $badgeColor = null;
     private static $dividerId = 0;
     private bool $divider = false;
     private bool $lastWasDivider = false;
