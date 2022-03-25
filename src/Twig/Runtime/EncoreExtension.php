@@ -31,7 +31,7 @@ final class EncoreExtension implements RuntimeExtensionInterface, ServiceSubscri
         $this->publicDir = $projectDirectory . '/public';
     }
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return [
             EntrypointLookupInterface::class,

@@ -147,7 +147,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         $this->getLogger()->critical($ex->getMessage());
     }
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return array_merge(parent::getSubscribedServices(), [
             'translator' => TranslatorInterface::class,
