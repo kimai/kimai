@@ -97,7 +97,7 @@ class PaginationExtensionTest extends TestCase
     {
         $expected =
             '<ul class="pagination pagination-sm inline">' .
-            '<li class="page-item prev disabled"><span class="page-link pagination-link"><i class="fas fa-chevron-left"></i></span></li>' .
+            '<li class="page-item  disabled"><span class="page-link pagination-link"><i class="fas fa-chevron-left"></i></span></li>' .
             '<li class="page-item active"><a class="page-link pagination-link" href="project_activities?id=137&page=1">1</a></li>' .
             '<li class="page-item"><a class="page-link pagination-link" href="project_activities?id=137&page=2">2</a></li>' .
             '<li class="page-item"><a class="page-link pagination-link" href="project_activities?id=137&page=3">3</a></li>' .
@@ -107,7 +107,7 @@ class PaginationExtensionTest extends TestCase
             '<li class="page-item"><a class="page-link pagination-link" href="project_activities?id=137&page=7">7</a></li>' .
             '<li class="page-item disabled"><span class="page-link pagination-link">&hellip;</span></li>' .
             '<li class="page-item"><a class="page-link pagination-link" href="project_activities?id=137&page=16">16</a></li>' .
-            '<li class="page-item next"><a class="page-link pagination-link" href="project_activities?id=137&page=2" rel="next"><i class="fas fa-chevron-right"></i></a></li>' .
+            '<li class="page-item"><a class="page-link pagination-link" href="project_activities?id=137&page=2" rel="next"><i class="fas fa-chevron-right"></i></a></li>' .
             '</ul>';
 
         self::assertEquals($expected, $result);

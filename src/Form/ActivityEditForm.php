@@ -37,13 +37,12 @@ class ActivityEditForm extends AbstractType
         if (isset($options['data'])) {
             /** @var Activity $entry */
             $entry = $options['data'];
+            $isGlobal = $entry->isGlobal();
 
-            if (null !== $entry->getProject()) {
+            if (!$isGlobal) {
                 $project = $entry->getProject();
                 $customer = $project->getCustomer();
                 $options['currency'] = $customer->getCurrency();
-            } else {
-                $isGlobal = $entry->isGlobal();
             }
 
             $new = $entry->getId() === null;
