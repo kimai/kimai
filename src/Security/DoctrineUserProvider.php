@@ -13,7 +13,6 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Exception;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -21,10 +20,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 final class DoctrineUserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
-    /**
-     * @var UserRepository
-     */
-    private $repository;
+    private UserRepository $repository;
 
     public function __construct(UserRepository $repository)
     {
@@ -48,18 +44,12 @@ final class DoctrineUserProvider implements UserProviderInterface, PasswordUpgra
         return $user;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function loadUserByUsername(string $username): UserInterface
     {
         return $this->loadUserByIdentifier($username);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
         if (!$user instanceof User) {
             throw new UnsupportedUserException(sprintf('Expected an instance of %s, but got "%s".', User::class, \get_class($user)));
@@ -69,25 +59,22 @@ final class DoctrineUserProvider implements UserProviderInterface, PasswordUpgra
         $reloadedUser = $this->repository->getUserById($user->getId());
 
         if (null === $reloadedUser) {
-            throw new UsernameNotFoundException(sprintf('User with ID "%s" could not be reloaded.', $user->getId()));
+            throw new UserNotFoundException(sprintf('User with ID "%s" could not be reloaded.', $user->getId()));
         }
 
         return $reloadedUser;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
         return $class === User::class;
     }
 
-    public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
+    public function upgradePassword(UserInterface $user, string $newHashedPassword): void
     {
         if ($user instanceof User) {
             try {
-                $user->setPassword($newEncodedPassword);
+                $user->setPassword($newHashedPassword);
                 $this->repository->saveUser($user);
             } catch (Exception $e) {
             }

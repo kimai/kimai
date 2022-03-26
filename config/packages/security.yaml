@@ -8,10 +8,11 @@ security:
         chain_provider:
             chain:
                 providers: [kimai_internal,kimai_ldap]
+        kimai_internal:
+            entity:
+                class: App\Entity\User
         kimai_ldap:
             id: App\Ldap\LdapUserProvider
-        kimai_internal:
-            id: App\Security\DoctrineUserProvider
 
     firewalls:
         dev:

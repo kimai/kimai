@@ -12,7 +12,7 @@ namespace App\Tests\Security;
 use App\Security\TokenAuthenticator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * @covers \App\Security\TokenAuthenticator
@@ -21,7 +21,7 @@ class TokenAuthenticatorTest extends TestCase
 {
     public function testRememberMe()
     {
-        $factory = $this->createMock(EncoderFactoryInterface::class);
+        $factory = $this->createMock(UserPasswordHasherInterface::class);
         $sut = new TokenAuthenticator($factory);
 
         self::assertFalse($sut->supportsRememberMe());
@@ -29,7 +29,7 @@ class TokenAuthenticatorTest extends TestCase
 
     public function testSupports()
     {
-        $factory = $this->createMock(EncoderFactoryInterface::class);
+        $factory = $this->createMock(UserPasswordHasherInterface::class);
         $sut = new TokenAuthenticator($factory);
 
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => 'dfghj/api/doc/dfghj']);
@@ -44,7 +44,7 @@ class TokenAuthenticatorTest extends TestCase
 
     public function testGetCredentials()
     {
-        $factory = $this->createMock(EncoderFactoryInterface::class);
+        $factory = $this->createMock(UserPasswordHasherInterface::class);
         $sut = new TokenAuthenticator($factory);
 
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/api/fooo', 'HTTP_X-AUTH-SESSION' => true]);

@@ -25,8 +25,8 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class LdapUserProvider implements UserProviderInterface
 {
-    private $ldapManager;
-    private $logger;
+    private LdapManager $ldapManager;
+    private LoggerInterface $logger;
 
     public function __construct(LdapManager $ldapManager, LoggerInterface $logger = null)
     {
@@ -39,18 +39,18 @@ class LdapUserProvider implements UserProviderInterface
         $user = $this->ldapManager->findUserByUsername($username);
 
         if (empty($user)) {
-            $this->logInfo('User {username} {result} on LDAP', [
+            $this->logDebug('User {username} {result} on LDAP', [
                 'action' => 'loadUserByUsername',
                 'username' => $username,
                 'result' => 'not found',
             ]);
             $ex = new UserNotFoundException(sprintf('User "%s" not found', $username));
-            $ex->setUsername($username);
+            $ex->setUserIdentifier($username);
 
             throw $ex;
         }
 
-        $this->logInfo('User {username} {result} on LDAP', [
+        $this->logDebug('User {username} {result} on LDAP', [
             'action' => 'loadUserByUsername',
             'username' => $username,
             'result' => 'found',
@@ -88,15 +88,12 @@ class LdapUserProvider implements UserProviderInterface
         return $class === User::class;
     }
 
-    /**
-     * Log a message into the logger if this exists.
-     */
-    private function logInfo(string $message, array $context = []): void
+    private function logDebug(string $message, array $context = []): void
     {
         if (!$this->logger) {
             return;
         }
 
-        $this->logger->info($message, $context);
+        $this->logger->debug($message, $context);
     }
 }

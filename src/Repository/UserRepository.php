@@ -10,7 +10,6 @@
 namespace App\Repository;
 
 use App\Entity\Invoice;
-use App\Entity\Role;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
@@ -26,6 +25,7 @@ use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<User>
@@ -99,13 +99,18 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         return $this->count([]);
     }
 
+    public function loadUserByIdentifier(string $identifier): ?UserInterface
+    {
+        return $this->loadUserByUsername($identifier);
+    }
+
     /**
      * @param string $username
      * @return null|User
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function loadUserByUsername($username)
+    public function loadUserByUsername($username): ?UserInterface
     {
         /** @var User|null $user */
         $user = $this->createQueryBuilder('u')

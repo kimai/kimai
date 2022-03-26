@@ -20,18 +20,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class LdapDriver
 {
-    /**
-     * @var Ldap
-     */
-    private $driver;
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-    /**
-     * @var LdapConfiguration
-     */
-    private $config;
+    private Ldap $driver;
+    private ?LoggerInterface $logger;
+    private LdapConfiguration $config;
 
     public function __construct(LdapConfiguration $config, LoggerInterface $logger = null)
     {
@@ -54,7 +45,7 @@ class LdapDriver
      * @return Ldap
      * @throws \Exception
      */
-    protected function getDriver()
+    protected function getDriver(): Ldap
     {
         if (null === $this->driver) {
             if (!class_exists('Laminas\Ldap\Ldap')) {
@@ -145,17 +136,11 @@ class LdapDriver
         }
     }
 
-    /**
-     * Log debug messages if the logger is set.
-     *
-     * @param string $message
-     * @param array $context
-     */
     private function logDebug(string $message, array $context = []): void
     {
         if (null === $this->logger) {
             return;
         }
-        $this->logger->debug($message, $context);
+        $this->logger->error($message, $context);
     }
 }

@@ -17,12 +17,11 @@ use App\Saml\Provider\SamlProvider;
 use App\Saml\SamlTokenFactory;
 use App\Saml\Token\SamlToken;
 use App\Saml\User\SamlUserFactory;
-use App\Security\DoctrineUserProvider;
 use App\Tests\Configuration\TestConfigLoader;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\User\ChainUserProvider;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * @covers \App\Saml\Provider\SamlProvider
@@ -54,11 +53,12 @@ class SamlProviderTest extends TestCase
 
         $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['saml' => ['activate' => true]]);
 
+        $userProvider = $this->createMock(UserProviderInterface::class);
         $repository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
         if ($user !== null) {
-            $repository->expects($this->once())->method('loadUserByUsername')->willReturn($user);
+            $userProvider->method('loadUserByUsername')->willReturn($user);
         }
-        $userProvider = new ChainUserProvider([new DoctrineUserProvider($repository)]);
+
         $provider = new SamlProvider($repository, $userProvider, new SamlTokenFactory(), $userFactory, $systemConfig);
 
         return $provider;
