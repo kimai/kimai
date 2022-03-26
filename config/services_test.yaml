@@ -29,7 +29,7 @@ services:
 
     App\User\UserService:
         public: true
-        arguments: ['@App\Repository\UserRepository', '@event_dispatcher', '@validator', '@App\Configuration\SystemConfiguration', '@security.password_encoder']
+        arguments: ['@App\Repository\UserRepository', '@event_dispatcher', '@validator', '@App\Configuration\SystemConfiguration', '@security.user_password_hasher']
 
     App\Plugin\PluginManager:
         public: true
