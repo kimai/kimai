@@ -22,8 +22,7 @@ class SamlAuthFactory
     public function __construct(
         private RequestStack $request,
         private SamlConfiguration $configuration
-    )
-    {
+    ) {
     }
 
     public function create(): Auth
