@@ -20,9 +20,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class LdapDriver
 {
+    private LdapConfiguration $config;
     private Ldap $driver;
     private ?LoggerInterface $logger;
-    private LdapConfiguration $config;
 
     public function __construct(LdapConfiguration $config, LoggerInterface $logger = null)
     {

@@ -9,6 +9,8 @@
 
 namespace App\Tests\Ldap;
 
+use App\Configuration\LdapConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Ldap\LdapDriver;
 use Laminas\Ldap\Exception\LdapException;
@@ -28,6 +30,13 @@ class LdapDriverTest extends TestCase
         }
     }
 
+    private function getTestLdapDriver(Ldap $ldap): TestLdapDriver
+    {
+        $config = $this->createMock(SystemConfiguration::class);
+
+        return new TestLdapDriver(new LdapConfiguration($config), $ldap);
+    }
+
     public function testBindSuccess()
     {
         $zendLdap = $this->getMockBuilder(Ldap::class)->disableOriginalConstructor()->onlyMethods(['bind'])->getMock();
@@ -35,7 +44,7 @@ class LdapDriverTest extends TestCase
 
         $user = new User();
         $user->setUsername('foo');
-        $sut = new TestLdapDriver($zendLdap);
+        $sut = $this->getTestLdapDriver($zendLdap);
         $result = $sut->bind($user, 'test123');
         self::assertTrue($result);
     }
@@ -47,7 +56,7 @@ class LdapDriverTest extends TestCase
 
         $user = new User();
         $user->setUsername('foo');
-        $sut = new TestLdapDriver($zendLdap);
+        $sut = $this->getTestLdapDriver($zendLdap);
         $result = $sut->bind($user, 'test123');
         self::assertFalse($result);
     }
@@ -58,7 +67,7 @@ class LdapDriverTest extends TestCase
         $zendLdap->expects($this->once())->method('bind');
         $zendLdap->expects($this->once())->method('searchEntries')->willReturn([1, 2, 3]);
 
-        $sut = new TestLdapDriver($zendLdap);
+        $sut = $this->getTestLdapDriver($zendLdap);
         $result = $sut->search('', '', []);
         self::assertEquals(['count' => 3, 1, 2, 3], $result);
     }
@@ -66,14 +75,15 @@ class LdapDriverTest extends TestCase
 
 class TestLdapDriver extends LdapDriver
 {
-    private $testDriver;
+    private Ldap $testDriver;
 
-    public function __construct(Ldap $ldap)
+    public function __construct(LdapConfiguration $config, Ldap $ldap)
     {
+        parent::__construct($config);
         $this->testDriver = $ldap;
     }
 
-    protected function getDriver()
+    protected function getDriver(): Ldap
     {
         return $this->testDriver;
     }

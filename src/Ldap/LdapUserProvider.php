@@ -26,7 +26,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class LdapUserProvider implements UserProviderInterface
 {
     private LdapManager $ldapManager;
-    private LoggerInterface $logger;
+    private ?LoggerInterface $logger;
 
     public function __construct(LdapManager $ldapManager, LoggerInterface $logger = null)
     {
@@ -90,7 +90,7 @@ class LdapUserProvider implements UserProviderInterface
 
     private function logDebug(string $message, array $context = []): void
     {
-        if (!$this->logger) {
+        if ($this->logger === null) {
             return;
         }
 

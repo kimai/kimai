@@ -11,15 +11,15 @@ namespace App\Model;
 
 class TimesheetCountedStatistic implements \JsonSerializable
 {
-    private $counter = 0;
-    private $recordDuration = 0;
-    private $recordRate = 0.0;
-    private $recordInternalRate = 0.0;
+    private int $counter = 0;
+    private int $recordDuration = 0;
+    private float $recordRate = 0.0;
+    private float $recordInternalRate = 0.0;
 
-    private $counterBillable = 0;
-    private $recordDurationBillable = 0;
-    private $recordRateBillable = 0.0;
-    private $internalRateBillable = 0.0;
+    private int $counterBillable = 0;
+    private int $recordDurationBillable = 0;
+    private float $recordRateBillable = 0.0;
+    private float $internalRateBillable = 0.0;
 
     /**
      * For unified access, used in frontend.
@@ -227,7 +227,7 @@ class TimesheetCountedStatistic implements \JsonSerializable
         $this->recordRateBillable = $recordRate;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return [
             'duration' => $this->recordDuration,
