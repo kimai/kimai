@@ -30,9 +30,6 @@ class UserDetailsSubscriber implements EventSubscriberInterface
         $this->security = $security;
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [

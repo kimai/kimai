@@ -171,16 +171,36 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals('2020-03-27', $sut->getFinancialYearStart());
     }
 
+    public function testOffsetUnsetThrowsException()
+    {
+        $this->expectException(\BadMethodCallException::class);
+        $this->expectExceptionMessage('SystemBundleConfiguration does not support offsetUnset()');
+
+        $sut = $this->getSut($this->getDefaultSettings(), []);
+        $sut->offsetUnset('dfsdf');
+    }
+
     public function testUnknownConfigs()
     {
         $sut = $this->getSut($this->getDefaultSettings(), [
             (new Configuration())->setName('timesheet.foo')->setValue('hello'),
         ]);
         $this->assertEquals('hello', $sut->find('timesheet.foo'));
+        $this->assertEquals('hello', $sut->offsetGet('timesheet.foo'));
         $this->assertTrue($sut->has('timesheet.foo'));
+        $this->assertTrue($sut->offsetExists('timesheet.foo'));
         $this->assertFalse($sut->has('timesheet.yyyyyyyyy'));
+        $this->assertFalse($sut->offsetExists('timesheet.yyyyyyyyy'));
         $this->assertFalse($sut->has('xxxxxxxx.yyyyyyyyy'));
+        $this->assertFalse($sut->offsetExists('xxxxxxxx.yyyyyyyyy'));
         $this->assertNull($sut->find('xxxxxxxx.yyyyyyyyy'));
+        $this->assertNull($sut->offsetGet('xxxxxxxx.yyyyyyyyy'));
+
+        $sut->offsetSet('xxxxxxxx.yyyyyyyyy', 'foooo-bar!');
+        $this->assertTrue($sut->has('xxxxxxxx.yyyyyyyyy'));
+        $this->assertTrue($sut->offsetExists('xxxxxxxx.yyyyyyyyy'));
+        $this->assertEquals('foooo-bar!', $sut->find('xxxxxxxx.yyyyyyyyy'));
+        $this->assertEquals('foooo-bar!', $sut->offsetGet('xxxxxxxx.yyyyyyyyy'));
     }
 
     public function testCalendarWithoutLoader()
