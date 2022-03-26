@@ -177,6 +177,8 @@ class SystemConfigurationTest extends TestCase
             (new Configuration())->setName('timesheet.foo')->setValue('hello'),
         ]);
         $this->assertEquals('hello', $sut->find('timesheet.foo'));
+        $this->assertTrue($sut->has('timesheet.foo'));
+        $this->assertFalse($sut->has('timesheet.yyyyyyyyy'));
         $this->assertFalse($sut->has('xxxxxxxx.yyyyyyyyy'));
         $this->assertNull($sut->find('xxxxxxxx.yyyyyyyyy'));
     }

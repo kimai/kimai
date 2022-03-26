@@ -55,5 +55,26 @@ class ThemeConfigurationTest extends TestCase
         $this->assertEquals('Super Kimai', $sut->offsetGet('branding.company'));
         $this->assertEquals('Logooooo', $sut->offsetGet('branding.logo'));
         $this->assertEquals('Mini2', $sut->offsetGet('branding.mini'));
+
+        self::assertTrue($sut->offsetExists('branding.mini'));
+        self::assertFalse($sut->offsetExists('xxxx.yyyyy'));
+    }
+
+    public function testOffsetSetThrowsException()
+    {
+        $this->expectException(\BadMethodCallException::class);
+        $this->expectExceptionMessage('ThemeConfiguration does not support offsetSet()');
+
+        $sut = $this->getSut($this->getDefaultSettings(), []);
+        $sut->offsetSet('dfsdf', 'sdfsdf');
+    }
+
+    public function testOffsetUnsetThrowsException()
+    {
+        $this->expectException(\BadMethodCallException::class);
+        $this->expectExceptionMessage('ThemeConfiguration does not support offsetUnset()');
+
+        $sut = $this->getSut($this->getDefaultSettings(), []);
+        $sut->offsetUnset('dfsdf');
     }
 }

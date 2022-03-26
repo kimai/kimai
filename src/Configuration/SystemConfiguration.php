@@ -133,10 +133,16 @@ class SystemConfiguration
         $key = $this->prepareSearchKey($key);
 
         $keys = explode('.', $key);
-        $search = array_shift($keys);
 
-        if (!\array_key_exists($search, $this->settings)) {
-            return false;
+        $settings = $this->settings;
+        while (\count($keys) > 0 && \is_array($settings)) {
+            $search = array_shift($keys);
+
+            if (!\array_key_exists($search, $settings)) {
+                return false;
+            }
+
+            $settings = $settings[$search];
         }
 
         return true;
