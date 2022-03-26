@@ -33,8 +33,8 @@ final class LocaleSettings extends LocaleFormats
             $locale = \Locale::getDefault();
 
             // request is null in a console command
-            if (null !== $this->requestStack->getMasterRequest()) {
-                $locale = $this->requestStack->getMasterRequest()->getLocale();
+            if (null !== $this->requestStack->getMainRequest()) {
+                $locale = $this->requestStack->getMainRequest()->getLocale();
             }
             $this->locale = $locale;
         }

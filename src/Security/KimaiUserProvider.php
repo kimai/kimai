@@ -61,15 +61,20 @@ class KimaiUserProvider implements UserProviderInterface, PasswordUpgraderInterf
     /**
      * {@inheritdoc}
      */
-    public function loadUserByUsername($username)
+    public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        return $this->getInternalProvider()->loadUserByUsername($username);
+        return $this->getInternalProvider()->loadUserByIdentifier($identifier);
+    }
+
+    public function loadUserByUsername($username): UserInterface
+    {
+        return $this->loadUserByIdentifier($username);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
         return $this->getInternalProvider()->refreshUser($user);
     }
@@ -77,7 +82,7 @@ class KimaiUserProvider implements UserProviderInterface, PasswordUpgraderInterf
     /**
      * {@inheritdoc}
      */
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
         return $this->getInternalProvider()->supportsClass($class);
     }

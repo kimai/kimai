@@ -95,7 +95,7 @@ class ChangePasswordCommandTest extends KernelTestCase
         $container = self::$kernel->getContainer();
         /** @var UserRepository $userRepository */
         $userRepository = $container->get('doctrine')->getRepository(User::class);
-        $user = $userRepository->loadUserByUsername('john_user');
+        $user = $userRepository->loadUserByIdentifier('john_user');
         self::assertInstanceOf(User::class, $user);
 
         $container = self::$kernel->getContainer();

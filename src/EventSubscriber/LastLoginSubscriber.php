@@ -26,10 +26,7 @@ class LastLoginSubscriber implements EventSubscriberInterface
         $this->repository = $repository;
     }
 
-    /**
-     * @return array
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             UserInteractiveLoginEvent::class => 'onImplicitLogin',

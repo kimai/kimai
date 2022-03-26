@@ -54,7 +54,7 @@ abstract class ControllerBaseTest extends WebTestCase
         $container = self::$kernel->getContainer();
         /** @var UserRepository $userRepository */
         $userRepository = $container->get('doctrine')->getRepository(User::class);
-        $user = $userRepository->loadUserByUsername($username);
+        $user = $userRepository->loadUserByIdentifier($username);
         self::assertInstanceOf(User::class, $user);
 
         return $user;

@@ -79,7 +79,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     public function findOneBy(array $criteria, array $orderBy = null)
     {
         if (\count($criteria) == 1 && isset($criteria['username'])) {
-            return $this->loadUserByUsername($criteria['username']);
+            return $this->loadUserByIdentifier($criteria['username']);
         }
 
         return parent::findOneBy($criteria, $orderBy);
@@ -99,9 +99,28 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         return $this->count([]);
     }
 
+    /**
+     * @param string $identifier
+     * @return User|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function loadUserByIdentifier(string $identifier): ?UserInterface
     {
-        return $this->loadUserByUsername($identifier);
+        /** @var User|null $user */
+        $user = $this->createQueryBuilder('u')
+            ->select('u')
+            ->where('u.username = :username')
+            ->orWhere('u.email = :username')
+            ->setParameter('username', $identifier)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if ($user !== null) {
+            $loader = new UserLoader($this->getEntityManager(), true);
+            $loader->loadResults([$user]);
+        }
+
+        return $user;
     }
 
     /**
@@ -112,21 +131,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
      */
     public function loadUserByUsername($username): ?UserInterface
     {
-        /** @var User|null $user */
-        $user = $this->createQueryBuilder('u')
-            ->select('u')
-            ->where('u.username = :username')
-            ->orWhere('u.email = :username')
-            ->setParameter('username', $username)
-            ->getQuery()
-            ->getOneOrNullResult();
-
-        if ($user !== null) {
-            $loader = new UserLoader($this->getEntityManager(), true);
-            $loader->loadResults([$user]);
-        }
-
-        return $user;
+        return $this->loadUserByIdentifier($username);
     }
 
     public function getQueryBuilderForFormType(UserFormTypeQuery $query): QueryBuilder

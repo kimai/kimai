@@ -125,7 +125,7 @@ class InvoiceCreateCommand extends Command
             return 1;
         }
 
-        $user = $this->userRepository->loadUserByUsername($username);
+        $user = $this->userRepository->loadUserByIdentifier($username);
         if (null === $user) {
             $io->error(
                 sprintf('The given username "%s" could not be resolved', $username)

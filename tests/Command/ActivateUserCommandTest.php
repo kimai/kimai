@@ -80,7 +80,7 @@ class ActivateUserCommandTest extends KernelTestCase
         $container = self::$kernel->getContainer();
         /** @var UserRepository $userRepository */
         $userRepository = $container->get('doctrine')->getRepository(User::class);
-        $user = $userRepository->loadUserByUsername('chris_user');
+        $user = $userRepository->loadUserByIdentifier('chris_user');
         self::assertInstanceOf(User::class, $user);
         self::assertTrue($user->isEnabled());
     }
