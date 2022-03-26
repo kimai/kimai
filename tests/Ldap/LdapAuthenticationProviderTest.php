@@ -37,8 +37,8 @@ class LdapAuthenticationProviderTest extends TestCase
             return new LdapUserProvider($this->createMock(LdapManager::class));
         }
 
-        $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
-        $userProvider->expects($this->exactly($expected))->method('loadUserByUsername')->willReturn($user);
+        $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByIdentifier'])->getMock();
+        $userProvider->expects($this->exactly($expected))->method('loadUserByIdentifier')->willReturn($user);
 
         return $userProvider;
     }
@@ -149,8 +149,8 @@ class LdapAuthenticationProviderTest extends TestCase
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->onlyMethods(['bind'])->getMock();
         $manager->expects($this->once())->method('bind')->willReturn(false);
         $config = $this->getConfiguration(true);
-        $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
-        $userProvider->expects($this->never())->method('loadUserByUsername');
+        $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByIdentifier'])->getMock();
+        $userProvider->expects($this->never())->method('loadUserByIdentifier');
         $providerKey = 'secured_area';
         $userChecker = new InMemoryUserChecker();
 
@@ -193,8 +193,8 @@ class LdapAuthenticationProviderTest extends TestCase
             self::assertSame($updateUser, $user);
         });
         $config = $this->getConfiguration(true);
-        $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
-        $userProvider->expects($this->never())->method('loadUserByUsername');
+        $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByIdentifier'])->getMock();
+        $userProvider->expects($this->never())->method('loadUserByIdentifier');
         $providerKey = 'secured_area';
         $userChecker = new InMemoryUserChecker();
 
@@ -213,8 +213,8 @@ class LdapAuthenticationProviderTest extends TestCase
 
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->getMock();
         $config = $this->getConfiguration(true);
-        $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
-        $userProvider->expects($this->once())->method('loadUserByUsername')->willThrowException(new UserNotFoundException('blub foo bar'));
+        $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByIdentifier'])->getMock();
+        $userProvider->expects($this->once())->method('loadUserByIdentifier')->willThrowException(new UserNotFoundException('blub foo bar'));
         $providerKey = 'secured_area';
         $userChecker = new InMemoryUserChecker();
 
@@ -234,8 +234,8 @@ class LdapAuthenticationProviderTest extends TestCase
 
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->getMock();
         $config = $this->getConfiguration(true);
-        $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByUsername'])->getMock();
-        $userProvider->expects($this->once())->method('loadUserByUsername')->willThrowException(new \Exception('server away', 1234));
+        $userProvider = $this->getMockBuilder(self::USER_PROVIDER_CLASS)->disableOriginalConstructor()->onlyMethods(['loadUserByIdentifier'])->getMock();
+        $userProvider->expects($this->once())->method('loadUserByIdentifier')->willThrowException(new \Exception('server away', 1234));
         $providerKey = 'secured_area';
         $userChecker = new InMemoryUserChecker();
 

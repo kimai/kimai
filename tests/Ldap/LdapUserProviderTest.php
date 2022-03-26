@@ -31,7 +31,7 @@ class LdapUserProviderTest extends TestCase
         $manager->expects($this->once())->method('findUserByUsername')->willReturn(null);
 
         $sut = new LdapUserProvider($manager);
-        $sut->loadUserByUsername('test');
+        $sut->loadUserByIdentifier('test');
     }
 
     public function testLoadUserByUsernameReturnsUser()
@@ -43,7 +43,7 @@ class LdapUserProviderTest extends TestCase
         $manager->expects($this->once())->method('findUserByUsername')->willReturn($user);
 
         $sut = new LdapUserProvider($manager);
-        $actual = $sut->loadUserByUsername('test');
+        $actual = $sut->loadUserByIdentifier('test');
         self::assertInstanceOf(User::class, $actual);
         self::assertSame($user, $actual);
     }

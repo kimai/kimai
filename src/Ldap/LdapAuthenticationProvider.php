@@ -26,9 +26,9 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class LdapAuthenticationProvider extends UserAuthenticationProvider
 {
-    private $userProvider;
-    private $ldapManager;
-    private $config;
+    private UserProviderInterface $userProvider;
+    private LdapManager $ldapManager;
+    private LdapConfiguration $config;
 
     public function __construct(UserCheckerInterface $userChecker, $providerKey, UserProviderInterface $userProvider, LdapManager $ldapManager, LdapConfiguration $config, $hideUserNotFoundExceptions = true)
     {
@@ -39,7 +39,7 @@ class LdapAuthenticationProvider extends UserAuthenticationProvider
         $this->userProvider = $userProvider;
     }
 
-    public function supports(TokenInterface $token)
+    public function supports(TokenInterface $token): bool
     {
         if (!$this->config->isActivated()) {
             return false;
@@ -59,11 +59,10 @@ class LdapAuthenticationProvider extends UserAuthenticationProvider
             // this will always query the internal database first...
             // only first-time logins from LDAP user (not yet existing in local user database)
             // will actually hit the LdapUserProvider
-            $user = $this->userProvider->loadUserByUsername($username);
+            $user = $this->userProvider->loadUserByIdentifier($username);
             // do not update the user here from LDAP, as we don't know if the user can be authenticated
         } catch (UserNotFoundException $notFound) {
             throw $notFound;
-            /* @phpstan-ignore-next-line */
         } catch (\Exception $repositoryProblem) {
             $e = new AuthenticationServiceException($repositoryProblem->getMessage(), (int) $repositoryProblem->getCode(), $repositoryProblem);
             $e->setToken($token);

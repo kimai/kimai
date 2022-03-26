@@ -34,32 +34,37 @@ class LdapUserProvider implements UserProviderInterface
         $this->logger = $logger;
     }
 
-    public function loadUserByUsername($username)
+    public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        $user = $this->ldapManager->findUserByUsername($username);
+        $user = $this->ldapManager->findUserByUsername($identifier);
 
         if (empty($user)) {
             $this->logDebug('User {username} {result} on LDAP', [
-                'action' => 'loadUserByUsername',
-                'username' => $username,
+                'action' => 'loadUserByIdentifier',
+                'username' => $identifier,
                 'result' => 'not found',
             ]);
-            $ex = new UserNotFoundException(sprintf('User "%s" not found', $username));
-            $ex->setUserIdentifier($username);
+            $ex = new UserNotFoundException(sprintf('User "%s" not found', $identifier));
+            $ex->setUserIdentifier($identifier);
 
             throw $ex;
         }
 
         $this->logDebug('User {username} {result} on LDAP', [
-            'action' => 'loadUserByUsername',
-            'username' => $username,
+            'action' => 'loadUserByIdentifier',
+            'username' => $identifier,
             'result' => 'found',
         ]);
 
         return $user;
     }
 
-    public function refreshUser(UserInterface $user)
+    public function loadUserByUsername($username): UserInterface
+    {
+        return $this->loadUserByIdentifier($username);
+    }
+
+    public function refreshUser(UserInterface $user): UserInterface
     {
         if (!($user instanceof User) || !$this->supportsClass(\get_class($user))) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
@@ -83,7 +88,7 @@ class LdapUserProvider implements UserProviderInterface
         return $user;
     }
 
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
         return $class === User::class;
     }
