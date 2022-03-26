@@ -11,14 +11,14 @@ namespace App\Tests\Saml\Logout;
 
 use App\Entity\User;
 use App\Saml\Logout\SamlLogoutHandler;
+use App\Saml\SamlAuthenticatedToken;
 use App\Saml\SamlAuthFactory;
-use App\Saml\Token\SamlToken;
 use OneLogin\Saml2\Auth;
 use OneLogin\Saml2\Error;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\LogoutEvent;
 
 /**
  * @covers \App\Saml\Logout\SamlLogoutHandler
@@ -32,14 +32,13 @@ class SamlLogoutHandlerTest extends TestCase
         $auth->expects($this->once())->method('getSLOurl')->willReturn('');
 
         $request = new Request();
-        $response = new Response();
-        $token = new SamlToken([]);
+        $token = new SamlAuthenticatedToken(new User(), 'secured_area', []);
 
         $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
         $factory->expects($this->once())->method('create')->willReturn($auth);
 
         $sut = new SamlLogoutHandler($factory);
-        $sut->logout($request, $response, $token);
+        $sut->logout(new LogoutEvent($request, $token));
     }
 
     public function testLogoutWithWrongTokenWillNotCallMethods()
@@ -49,14 +48,13 @@ class SamlLogoutHandlerTest extends TestCase
         $auth->expects($this->never())->method('getSLOurl');
 
         $request = new Request();
-        $response = new Response();
         $token = new UsernamePasswordToken(new User(), 'test');
 
         $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
         $factory->expects($this->never())->method('create');
 
         $sut = new SamlLogoutHandler($factory);
-        $sut->logout($request, $response, $token);
+        $sut->logout(new LogoutEvent($request, $token));
     }
 
     public function testLogoutWithLogoutUrl()
@@ -73,15 +71,14 @@ class SamlLogoutHandlerTest extends TestCase
         });
 
         $request = new Request();
-        $response = new Response();
-        $token = new SamlToken([]);
-        $token->setUser((new User())->setUsername('tony'));
+        $user = (new User())->setUsername('tony');
+        $token = new SamlAuthenticatedToken($user, 'secured_area', []);
         $token->setAttribute('sessionIndex', 'foo-bar');
 
         $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
         $factory->expects($this->once())->method('create')->willReturn($auth);
 
         $sut = new SamlLogoutHandler($factory);
-        $sut->logout($request, $response, $token);
+        $sut->logout(new LogoutEvent($request, $token));
     }
 }

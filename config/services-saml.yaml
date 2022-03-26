@@ -4,15 +4,8 @@
 
 services:
 
-    kimai.saml_listener:
-        class: App\Saml\Firewall\SamlListener
-        parent: security.authentication.listener.abstract
-        abstract: true
-        calls:
-            - [setAuth, ['@App\Saml\SamlAuthFactory']]
-
     App\Saml\Provider\SamlProvider:
-        arguments: ['@App\Repository\UserRepository', '', '@App\Saml\SamlTokenFactory', '@App\Saml\User\SamlUserFactory', '@App\Configuration\SystemConfiguration']
+        arguments: ['@App\Repository\UserRepository', '@security.user.provider.concrete.kimai_internal', '@App\Configuration\SamlConfiguration']
 
     App\Saml\Security\SamlAuthenticationSuccessHandler:
         parent: security.authentication.success_handler

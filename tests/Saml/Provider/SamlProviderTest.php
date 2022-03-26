@@ -14,12 +14,9 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Saml\Provider\SamlProvider;
-use App\Saml\SamlTokenFactory;
-use App\Saml\Token\SamlToken;
-use App\Saml\User\SamlUserFactory;
+use App\Saml\SamlLoginAttributes;
 use App\Tests\Configuration\TestConfigLoader;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -28,7 +25,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class SamlProviderTest extends TestCase
 {
-    protected function getSamlProvider(array $mapping = null, ?User $user = null, ?SamlUserFactory $userFactory = null): SamlProvider
+    protected function getSamlProvider(array $mapping = null, ?User $user = null): SamlProvider
     {
         if (null === $mapping) {
             $mapping = [
@@ -43,84 +40,65 @@ class SamlProviderTest extends TestCase
             ];
         }
 
-        if (null === $userFactory) {
-            $configuration = new SystemConfiguration(new TestConfigLoader([]), [
-                'saml' => $mapping
-            ]);
+        $configuration = new SystemConfiguration(new TestConfigLoader([]), [
+            'saml' => $mapping
+        ]);
+        $samlConfig = new SamlConfiguration($configuration);
 
-            $userFactory = new SamlUserFactory(new SamlConfiguration($configuration));
-        }
+        // can be replaced, once loadUserByIdentifier is in the interface with SF6?
+        $userProvider = $this->getMockBuilder(UserProviderInterface::class)->disableOriginalConstructor();
+        $userProvider->addMethods(['loadUserByIdentifier']);
+        $userProvider->onlyMethods(['refreshUser', 'supportsClass', 'loadUserByUsername']);
+        $userProvider = $userProvider->getMock();
 
-        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['saml' => ['activate' => true]]);
-
-        $userProvider = $this->createMock(UserProviderInterface::class);
         $repository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
         if ($user !== null) {
-            $userProvider->method('loadUserByUsername')->willReturn($user);
+            $userProvider->method('loadUserByIdentifier')->willReturn($user);
         }
 
-        $provider = new SamlProvider($repository, $userProvider, new SamlTokenFactory(), $userFactory, $systemConfig);
+        $provider = new SamlProvider($repository, $userProvider, $samlConfig);
 
         return $provider;
     }
 
-    public function testSupportsToken()
-    {
-        $sut = $this->getSamlProvider();
-        self::assertFalse($sut->supports(new UsernamePasswordToken(new User(), 'ads')));
-        self::assertTrue($sut->supports(new SamlToken([])));
-    }
-
-    public function testAuthenticateHydratesUser()
+    public function testFindUserHydratesUser()
     {
         $user = new User();
-        $user->setAuth(User::AUTH_SAML);
+        $user->setAuth(User::AUTH_INTERNAL);
         $user->setUsername('foo1@example.com');
+        $user->setTitle('jagfkjhsgf');
 
-        $token = new SamlToken([]);
-        $token->setUser($user);
+        $token = new SamlLoginAttributes();
+        $token->setUserIdentifier($user->getUserIdentifier());
         $token->setAttributes([
             'Email' => ['foo@example.com'],
             'title' => ['Tralalala'],
         ]);
-        self::assertFalse($token->isAuthenticated());
 
         $sut = $this->getSamlProvider(null, $user);
-        $authToken = $sut->authenticate($token);
-
-        self::assertTrue($authToken->isAuthenticated());
-
-        /** @var User $tokenUser */
-        $tokenUser = $authToken->getUser();
+        $tokenUser = $sut->findUser($token);
 
         self::assertSame($user, $tokenUser);
+        self::assertTrue($tokenUser->isSamlUser());
         self::assertEquals('foo1@example.com', $tokenUser->getUsername());
         self::assertEquals('Tralalala', $tokenUser->getTitle());
         self::assertEquals('foo@example.com', $tokenUser->getEmail());
     }
 
-    public function testAuthenticatCreatesNewUser()
+    public function testFindUserCreatesNewUser()
     {
-        $user = new User();
-        $user->setUsername('foo1@example.com');
-
-        $token = new SamlToken([]);
-        $token->setUser($user);
+        $token = new SamlLoginAttributes();
+        $token->setUserIdentifier('foo2@example.com');
         $token->setAttributes([
             'Email' => ['foo@example.com'],
             'title' => ['Tralalala'],
         ]);
-        self::assertFalse($token->isAuthenticated());
 
         $sut = $this->getSamlProvider(null);
-        $authToken = $sut->authenticate($token);
+        $tokenUser = $sut->findUser($token);
 
-        self::assertTrue($authToken->isAuthenticated());
-
-        /** @var User $tokenUser */
-        $tokenUser = $authToken->getUser();
-
-        self::assertEquals('foo1@example.com', $tokenUser->getUsername());
+        self::assertTrue($tokenUser->isSamlUser());
+        self::assertEquals('foo2@example.com', $tokenUser->getUsername());
         self::assertEquals('Tralalala', $tokenUser->getTitle());
         self::assertEquals('foo@example.com', $tokenUser->getEmail());
     }
@@ -134,13 +112,13 @@ class SamlProviderTest extends TestCase
         $user->setAuth(User::AUTH_SAML);
         $user->setUsername('foo1@example.com');
 
-        $token = new SamlToken([]);
-        $token->setUser($user);
+        $token = new SamlLoginAttributes();
+        $token->setUserIdentifier($user->getUserIdentifier());
         $token->setAttributes([
             'Chicken' => ['foo@example.com'],
         ]);
 
         $sut = $this->getSamlProvider(null, $user);
-        $sut->authenticate($token);
+        $sut->findUser($token);
     }
 }

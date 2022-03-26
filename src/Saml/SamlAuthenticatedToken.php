@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Saml\Token;
+namespace App\Saml;
 
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken;
 
-interface SamlTokenInterface extends TokenInterface
+class SamlAuthenticatedToken extends PostAuthenticationToken
 {
 }

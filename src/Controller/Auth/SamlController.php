@@ -9,7 +9,7 @@
 
 namespace App\Controller\Auth;
 
-use App\Configuration\SystemConfiguration;
+use App\Configuration\SamlConfiguration;
 use App\Saml\SamlAuthFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,13 +22,8 @@ use Symfony\Component\Security\Core\Security;
  */
 final class SamlController extends AbstractController
 {
-    private $authFactory;
-    private $systemConfiguration;
-
-    public function __construct(SamlAuthFactory $authFactory, SystemConfiguration $systemConfiguration)
+    public function __construct(private SamlAuthFactory $authFactory, private SamlConfiguration $samlConfiguration)
     {
-        $this->authFactory = $authFactory;
-        $this->systemConfiguration = $systemConfiguration;
     }
 
     /**
@@ -36,7 +31,7 @@ final class SamlController extends AbstractController
      */
     public function loginAction(Request $request)
     {
-        if (!$this->systemConfiguration->isSamlActive()) {
+        if (!$this->samlConfiguration->isActivated()) {
             throw $this->createNotFoundException('SAML deactivated');
         }
 
@@ -67,7 +62,7 @@ final class SamlController extends AbstractController
      */
     public function metadataAction()
     {
-        if (!$this->systemConfiguration->isSamlActive()) {
+        if (!$this->samlConfiguration->isActivated()) {
             throw $this->createNotFoundException('SAML deactivated');
         }
 
@@ -84,7 +79,7 @@ final class SamlController extends AbstractController
      */
     public function assertionConsumerServiceAction()
     {
-        if (!$this->systemConfiguration->isSamlActive()) {
+        if (!$this->samlConfiguration->isActivated()) {
             throw $this->createNotFoundException('SAML deactivated');
         }
 
@@ -96,7 +91,7 @@ final class SamlController extends AbstractController
      */
     public function logoutAction()
     {
-        if (!$this->systemConfiguration->isSamlActive()) {
+        if (!$this->samlConfiguration->isActivated()) {
             throw $this->createNotFoundException('SAML deactivated');
         }
 

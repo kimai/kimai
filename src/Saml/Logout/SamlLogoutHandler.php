@@ -9,38 +9,30 @@
 
 namespace App\Saml\Logout;
 
+use App\Saml\SamlAuthenticatedToken;
 use App\Saml\SamlAuthFactory;
-use App\Saml\Token\SamlTokenInterface;
 use OneLogin\Saml2\Error;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Http\Logout\LogoutHandlerInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Http\Event\LogoutEvent;
 
-final class SamlLogoutHandler implements LogoutHandlerInterface
+final class SamlLogoutHandler implements EventSubscriberInterface
 {
-    /**
-     * @var SamlAuthFactory
-     */
-    private $samlAuth;
-
-    public function __construct(SamlAuthFactory $samlAuth)
+    public function __construct(private SamlAuthFactory $samlAuth)
     {
-        $this->samlAuth = $samlAuth;
     }
 
-    /**
-     * This method is called by the LogoutListener when a user has requested
-     * to be logged out. Usually, you would unset session variables, or remove
-     * cookies, etc.
-     *
-     * @param Request $request
-     * @param Response $response
-     * @param TokenInterface $token
-     */
-    public function logout(Request $request, Response $response, TokenInterface $token)
+    public static function getSubscribedEvents(): array
     {
-        if (!$token instanceof SamlTokenInterface) {
+        return [
+            LogoutEvent::class => 'logout',
+        ];
+    }
+
+    public function logout(LogoutEvent $event)
+    {
+        $token = $event->getToken();
+
+        if (!$token instanceof SamlAuthenticatedToken) {
             return;
         }
 
@@ -51,7 +43,7 @@ final class SamlLogoutHandler implements LogoutHandlerInterface
         } catch (Error $e) {
             if (!empty($samlAuth->getSLOurl())) {
                 $sessionIndex = $token->hasAttribute('sessionIndex') ? $token->getAttribute('sessionIndex') : null;
-                $samlAuth->logout(null, [], $token->getUsername(), $sessionIndex);
+                $samlAuth->logout(null, [], $token->getUserIdentifier(), $sessionIndex);
             }
         }
     }

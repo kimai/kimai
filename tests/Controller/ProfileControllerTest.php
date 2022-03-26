@@ -209,10 +209,16 @@ class ProfileControllerTest extends ControllerBaseTest
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/password'));
-        $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        // cannot follow redirect here, because the password was changed and the user/password registered in the client
+        // are the old ones, so following the redirect would fail with "Unauthorized".
 
-        $this->assertHasFlashSuccess($client);
+        $this->tearDown();
+        $client = self::createClient([], [
+            'PHP_AUTH_USER' => UserFixtures::USERNAME_USER,
+            'PHP_AUTH_PW' => 'test1234',
+        ]);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/password');
+        $this->assertTrue($client->getResponse()->isSuccessful());
 
         $user = $this->getUserByRole(User::ROLE_USER);
 

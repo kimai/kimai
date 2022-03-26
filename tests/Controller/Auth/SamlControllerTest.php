@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller\Auth;
 
+use App\Configuration\SamlConfiguration;
 use App\Configuration\SystemConfiguration;
 use App\Controller\Auth\SamlController;
 use App\Saml\SamlAuthFactory;
@@ -65,7 +66,7 @@ class SamlControllerTest extends TestCase
 
         $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
 
-        $sut = new SamlController($factory, $this->getSystemConfiguration());
+        $sut = new SamlController($factory, new SamlConfiguration($this->getSystemConfiguration()));
         $sut->assertionConsumerServiceAction();
     }
 
@@ -76,7 +77,7 @@ class SamlControllerTest extends TestCase
 
         $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
 
-        $sut = new SamlController($factory, $this->getSystemConfiguration());
+        $sut = new SamlController($factory, new SamlConfiguration($this->getSystemConfiguration()));
         $sut->logoutAction();
     }
 
@@ -111,7 +112,7 @@ EOD;
         $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
         $factory->expects($this->once())->method('create')->willReturn($oauth);
 
-        $sut = new SamlController($factory, $this->getSystemConfiguration());
+        $sut = new SamlController($factory, new SamlConfiguration($this->getSystemConfiguration()));
         $result = $sut->metadataAction();
 
         self::assertInstanceOf(Response::class, $result);
@@ -140,7 +141,7 @@ EOD;
 
         $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
 
-        $sut = new SamlController($factory, $this->getSystemConfiguration());
+        $sut = new SamlController($factory, new SamlConfiguration($this->getSystemConfiguration()));
         $sut->loginAction($request);
     }
 
@@ -151,7 +152,7 @@ EOD;
 
         $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
 
-        $sut = new SamlController($factory, $this->getSystemConfiguration(false));
+        $sut = new SamlController($factory, new SamlConfiguration($this->getSystemConfiguration(false)));
         $sut->loginAction(new Request());
     }
 
@@ -162,7 +163,7 @@ EOD;
 
         $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
 
-        $sut = new SamlController($factory, $this->getSystemConfiguration(false));
+        $sut = new SamlController($factory, new SamlConfiguration($this->getSystemConfiguration(false)));
         $sut->metadataAction();
     }
 
@@ -173,7 +174,7 @@ EOD;
 
         $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
 
-        $sut = new SamlController($factory, $this->getSystemConfiguration(false));
+        $sut = new SamlController($factory, new SamlConfiguration($this->getSystemConfiguration(false)));
         $sut->logoutAction();
     }
 
@@ -184,7 +185,7 @@ EOD;
 
         $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
 
-        $sut = new SamlController($factory, $this->getSystemConfiguration(false));
+        $sut = new SamlController($factory, new SamlConfiguration($this->getSystemConfiguration(false)));
         $sut->assertionConsumerServiceAction();
     }
 }

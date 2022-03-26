@@ -24,7 +24,6 @@ use App\Invoice\RendererInterface as InvoiceRendererInterface;
 use App\Ldap\FormLoginLdapFactory;
 use App\Plugin\PluginInterface;
 use App\Plugin\PluginMetadata;
-use App\Saml\Security\SamlFactory;
 use App\Timesheet\CalculatorInterface as TimesheetCalculator;
 use App\Timesheet\Rounding\RoundingInterface;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
@@ -93,7 +92,6 @@ class Kernel extends BaseKernel
         /** @var SecurityExtension $extension */
         $extension = $container->getExtension('security');
         $extension->addSecurityListenerFactory(new FormLoginLdapFactory());
-        $extension->addSecurityListenerFactory(new SamlFactory());
     }
 
     public function registerBundles(): iterable

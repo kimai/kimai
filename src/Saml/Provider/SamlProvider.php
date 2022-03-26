@@ -9,75 +9,136 @@
 
 namespace App\Saml\Provider;
 
-use App\Configuration\SystemConfiguration;
+use App\Configuration\SamlConfiguration;
 use App\Entity\User;
 use App\Repository\UserRepository;
-use App\Saml\SamlTokenFactory;
-use App\Saml\Token\SamlTokenInterface;
-use App\Saml\User\SamlUserFactory;
-use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use App\Saml\SamlLoginAttributes;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-final class SamlProvider implements AuthenticationProviderInterface
+final class SamlProvider
 {
-    private $userProvider;
-    private $userFactory;
-    private $tokenFactory;
-    private $repository;
-    private $configuration;
-
-    public function __construct(UserRepository $repository, UserProviderInterface $userProvider, SamlTokenFactory $tokenFactory, SamlUserFactory $userFactory, SystemConfiguration $configuration)
-    {
-        $this->repository = $repository;
-        $this->userProvider = $userProvider;
-        $this->tokenFactory = $tokenFactory;
-        $this->userFactory = $userFactory;
-        $this->configuration = $configuration;
+    public function __construct(
+        private UserRepository $repository,
+        private UserProviderInterface $userProvider,
+        private SamlConfiguration $configuration
+    ) {
     }
 
-    /**
-     * @param SamlTokenInterface $token
-     * @return SamlTokenInterface
-     */
-    public function authenticate(TokenInterface $token)
+    public function findUser(SamlLoginAttributes $token): User
     {
         $user = null;
 
         try {
             /** @var User $user */
-            $user = $this->userProvider->loadUserByUsername($token->getUsername());
-        } catch (UsernameNotFoundException $e) {
+            $user = $this->userProvider->loadUserByIdentifier($token->getUserIdentifier());
+        } catch (UserNotFoundException $e) {
         }
 
         try {
             if (null === $user) {
-                $user = $this->userFactory->createUser($token);
+                $user = $this->createUser($token);
             } else {
-                $this->userFactory->hydrateUser($user, $token);
+                $this->hydrateUser($user, $token);
             }
 
             $this->repository->saveUser($user);
         } catch (\Exception $ex) {
             throw new AuthenticationException(
-                sprintf('Failed creating or hydrating user "%s": %s', $token->getUsername(), $ex->getMessage())
+                sprintf('Failed creating or hydrating user "%s": %s', $token->getUserIdentifier(), $ex->getMessage())
             );
         }
 
-        $authenticatedToken = $this->tokenFactory->createToken($user, $token->getAttributes(), $user->getRoles());
-        $authenticatedToken->setAuthenticated(true);
-
-        return $authenticatedToken;
+        return $user;
     }
 
-    public function supports(TokenInterface $token)
+    private function createUser(SamlLoginAttributes $token): User
     {
-        if (!$this->configuration->isSamlActive()) {
-            return false;
+        // Not using UserService: user settings should be set via SAML attributes
+        $user = new User();
+        $user->setEnabled(true);
+        $user->setUsername($token->getUserIdentifier());
+        $user->setPassword('');
+
+        $this->hydrateUser($user, $token);
+
+        return $user;
+    }
+
+    private function hydrateUser(User $user, SamlLoginAttributes $token): void
+    {
+        $groupAttribute = $this->configuration->getRolesAttribute();
+        $groupMapping = $this->configuration->getRolesMapping();
+
+        // extract user roles from a special saml attribute
+        if (!empty($groupAttribute) && $token->hasAttribute($groupAttribute)) {
+            $groupMap = [];
+            foreach ($groupMapping as $mapping) {
+                $field = $mapping['kimai'];
+                $attribute = $mapping['saml'];
+                $groupMap[$attribute] = $field;
+            }
+
+            $roles = [];
+            $samlGroups = $token->getAttribute($groupAttribute);
+            foreach ($samlGroups as $groupName) {
+                if (\array_key_exists($groupName, $groupMap)) {
+                    $roles[] = $groupMap[$groupName];
+                }
+            }
+            $user->setRoles($roles);
         }
 
-        return $token instanceof SamlTokenInterface;
+        $mappingConfig = $this->configuration->getAttributeMapping();
+
+        foreach ($mappingConfig as $mapping) {
+            $field = $mapping['kimai'];
+            $attribute = $mapping['saml'];
+            $value = $this->getPropertyValue($token, $attribute);
+            $setter = 'set' . ucfirst($field);
+            if (method_exists($user, $setter)) {
+                $user->$setter($value);
+            } else {
+                throw new \RuntimeException('Invalid mapping field given: ' . $field);
+            }
+        }
+
+        // fill them after hydrating account, so they can't be overwritten
+        // by the mapping attributes
+        if ($user->getId() === null) {
+            $user->setPassword('');
+        }
+        $user->setUsername($token->getUserIdentifier());
+        $user->setAuth(User::AUTH_SAML);
+    }
+
+    private function getPropertyValue(SamlLoginAttributes $token, $attribute)
+    {
+        $results = [];
+        $attributes = $token->getAttributes();
+
+        $parts = explode(' ', $attribute);
+        foreach ($parts as $part) {
+            if (empty(trim($part))) {
+                continue;
+            }
+            if ($part[0] === '$') {
+                $key = substr($part, 1);
+                if (!isset($attributes[$key])) {
+                    throw new \RuntimeException('Missing user attribute: ' . $key);
+                }
+
+                $results[] = $attributes[$key][0];
+            } else {
+                $results[] = $part;
+            }
+        }
+
+        if (!empty($results)) {
+            return implode(' ', $results);
+        }
+
+        return $attribute;
     }
 }

@@ -1,5 +1,5 @@
 security:
-#    enable_authenticator_manager: true
+    enable_authenticator_manager: true
 
     password_hashers:
         App\Entity\User: auto
@@ -7,12 +7,13 @@ security:
     providers:
         chain_provider:
             chain:
-                providers: [kimai_internal,kimai_ldap]
+                providers: [kimai_internal]
+#                providers: [kimai_internal,kimai_ldap]
         kimai_internal:
             entity:
                 class: App\Entity\User
-        kimai_ldap:
-            id: App\Ldap\LdapUserProvider
+#        kimai_ldap:
+#            id: App\Ldap\LdapUserProvider
 
     firewalls:
         dev:
@@ -20,19 +21,16 @@ security:
             security: false
 
         secured_area:
-            kimai_saml: ~
-            kimai_ldap: ~
+#            kimai_ldap: ~
             pattern: ^/
             user_checker: App\Security\UserChecker
-            anonymous: true
             stateless: false
 
-            guard:
-                authenticators:
-                    - App\Security\TokenAuthenticator
+            entry_point: form_login
 
-#            custom_authenticators:
-#                - App\Security\ApiAuthenticator
+            custom_authenticators:
+                - App\Security\ApiAuthenticator
+                - App\Saml\SamlAuthenticator
 
             remember_me:
                 secret:   '%kernel.secret%'
@@ -45,7 +43,7 @@ security:
             form_login:
                 check_path: security_check
                 login_path: login
-                csrf_token_generator: security.csrf.token_manager
+                enable_csrf: true
 
             logout:
                 path: logout
