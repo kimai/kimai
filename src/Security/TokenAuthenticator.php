@@ -13,8 +13,8 @@ use App\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -26,11 +26,11 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     public const HEADER_TOKEN = 'X-AUTH-TOKEN';
     public const HEADER_JAVASCRIPT = 'X-AUTH-SESSION';
 
-    private $encoderFactory;
+    private UserPasswordHasherInterface $passwordHasher;
 
-    public function __construct(EncoderFactoryInterface $encoderFactory)
+    public function __construct(UserPasswordHasherInterface $encoderFactory)
     {
-        $this->encoderFactory = $encoderFactory;
+        $this->passwordHasher = $encoderFactory;
     }
 
     /**
@@ -92,9 +92,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
         $token = $credentials['token'];
 
         if (!empty($token) && $user instanceof User && !empty($user->getApiToken())) {
-            $encoder = $this->encoderFactory->getEncoder($user);
-
-            return $encoder->isPasswordValid($user->getApiToken(), $token, $user->getSalt());
+            return $this->passwordHasher->isPasswordValid($user->getApiToken(), $token, $user->getSalt());
         }
 
         return false;

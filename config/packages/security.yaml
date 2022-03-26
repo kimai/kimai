@@ -1,7 +1,7 @@
 security:
 #    enable_authenticator_manager: true
 
-    encoders:
+    password_hashers:
         App\Entity\User: auto
 
     providers:
