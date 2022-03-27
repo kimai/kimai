@@ -135,13 +135,6 @@ services:
             $permissions: '%kimai.permissions%'
 
     # ================================================================================
-    # LDAP
-    # ================================================================================
-
-    App\Ldap\LdapAuthenticationProvider:
-        arguments: ['@App\Security\UserChecker', '', '', '', '@App\Configuration\LdapConfiguration']
-
-    # ================================================================================
     # SAML Services
     # ================================================================================
     App\Saml\SamlProvider:

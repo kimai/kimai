@@ -91,7 +91,7 @@ class Kernel extends BaseKernel
 
         /** @var SecurityExtension $extension */
         $extension = $container->getExtension('security');
-        $extension->addSecurityListenerFactory(new FormLoginLdapFactory());
+        $extension->addAuthenticatorFactory(new FormLoginLdapFactory());
     }
 
     public function registerBundles(): iterable
@@ -197,7 +197,6 @@ class Kernel extends BaseKernel
         }
         $loader->load($confDir . '/packages/local' . self::CONFIG_EXTS, 'glob');
         $loader->load($confDir . '/services' . self::CONFIG_EXTS, 'glob');
-        $loader->load($confDir . '/services-*' . self::CONFIG_EXTS, 'glob');
         $loader->load($confDir . '/services_' . $this->environment . self::CONFIG_EXTS, 'glob');
 
         $container->addCompilerPass(new TwigContextCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);

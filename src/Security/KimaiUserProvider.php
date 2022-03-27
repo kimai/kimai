@@ -38,6 +38,9 @@ class KimaiUserProvider implements UserProviderInterface, PasswordUpgraderInterf
             $activated = [];
             foreach ($this->providers as $provider) {
                 if ($provider instanceof LdapUserProvider) {
+                    if (!class_exists('Laminas\Ldap\Ldap')) {
+                        continue;
+                    }
                     if (!$this->configuration->isLdapActive()) {
                         continue;
                     }

@@ -13,15 +13,11 @@ use App\Configuration\LdapConfiguration;
 use Laminas\Ldap\Exception\LdapException;
 use Laminas\Ldap\Ldap;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
- */
 class LdapDriver
 {
     private LdapConfiguration $config;
-    private Ldap $driver;
+    private ?Ldap $driver = null;
     private ?LoggerInterface $logger;
 
     public function __construct(LdapConfiguration $config, LoggerInterface $logger = null)
@@ -30,21 +26,6 @@ class LdapDriver
         $this->logger = $logger;
     }
 
-    /**
-     * Do not initialize in the constructor, as it is called in some situations from the Symfony DI container,
-     * even if not actively used.
-     *
-     * So users without LDAP run into the exception which is thrown below if the package is not installed.
-     *
-     * To test the problematic behaviour:
-     * - switch to "dev" env
-     * - login as any user
-     * - change the user ID in the database
-     * - reload the page and see the exception
-     *
-     * @return Ldap
-     * @throws \Exception
-     */
     protected function getDriver(): Ldap
     {
         if (null === $this->driver) {
@@ -54,7 +35,6 @@ class LdapDriver
                     'or deactivate LDAP, see https://www.kimai.org/documentation/ldap.html'
                 );
             }
-
             $this->driver = new Ldap($this->config->getConnectionParameters());
         }
 
@@ -96,11 +76,9 @@ class LdapDriver
         return $entries;
     }
 
-    public function bind(UserInterface $user, string $password): bool
+    public function bind(string $bindDn, string $password): bool
     {
         $driver = $this->getDriver();
-
-        $bindDn = $user->getUsername();
 
         try {
             $this->logDebug('{action}({bindDn}, ****)', [

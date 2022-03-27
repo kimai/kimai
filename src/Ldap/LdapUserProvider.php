@@ -17,21 +17,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
- * Overwritten to be able to deactivate LDAP via config switch.
- *
- * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
- *
  * @final
  */
 class LdapUserProvider implements UserProviderInterface
 {
-    private LdapManager $ldapManager;
-    private ?LoggerInterface $logger;
-
-    public function __construct(LdapManager $ldapManager, LoggerInterface $logger = null)
+    public function __construct(private LdapManager $ldapManager, private ?LoggerInterface $logger = null)
     {
-        $this->ldapManager = $ldapManager;
-        $this->logger = $logger;
     }
 
     public function loadUserByIdentifier(string $identifier): UserInterface
@@ -66,7 +57,7 @@ class LdapUserProvider implements UserProviderInterface
 
     public function refreshUser(UserInterface $user): UserInterface
     {
-        if (!($user instanceof User) || !$this->supportsClass(\get_class($user))) {
+        if (!($user instanceof User)) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
         }
 
