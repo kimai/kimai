@@ -77,7 +77,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
      */
     protected function assertResponseIsSecured(Response $response, string $url)
     {
-        $data = ['message' => 'Authentication required, missing headers: X-AUTH-USER, X-AUTH-TOKEN'];
+        $data = ['message' => 'Authentication required, missing user header: X-AUTH-USER'];
 
         self::assertEquals(
             $data,
