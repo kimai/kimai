@@ -38,7 +38,7 @@ class ActivityRepository extends EntityRepository
      * @param null $lockVersion
      * @return Activity|null
      */
-    public function find($id, $lockMode = null, $lockVersion = null)
+    public function find($id, $lockMode = null, $lockVersion = null): ?Activity
     {
         /** @var Activity|null $activity */
         $activity = parent::find($id, $lockMode, $lockVersion);

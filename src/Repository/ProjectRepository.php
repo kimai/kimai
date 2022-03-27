@@ -40,7 +40,7 @@ class ProjectRepository extends EntityRepository
      * @param null $lockVersion
      * @return Project|null
      */
-    public function find($id, $lockMode = null, $lockVersion = null)
+    public function find($id, $lockMode = null, $lockVersion = null): ?Project
     {
         /** @var Project|null $project */
         $project = parent::find($id, $lockMode, $lockVersion);

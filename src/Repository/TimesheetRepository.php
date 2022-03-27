@@ -85,7 +85,7 @@ class TimesheetRepository extends EntityRepository
      * @param null $lockVersion
      * @return Timesheet|null
      */
-    public function find($id, $lockMode = null, $lockVersion = null)
+    public function find($id, $lockMode = null, $lockVersion = null): ?Timesheet
     {
         /** @var Timesheet|null $timesheet */
         $timesheet = parent::find($id, $lockMode, $lockVersion);
