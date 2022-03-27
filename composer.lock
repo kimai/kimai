@@ -2435,26 +2435,26 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "2d410f8c443588264fbd204c3bcdde1b8c6b461a"
+                "reference": "6587c37c0c815768a1328288073d08ea2ab6c2f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/2d410f8c443588264fbd204c3bcdde1b8c6b461a",
-                "reference": "2d410f8c443588264fbd204c3bcdde1b8c6b461a",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/6587c37c0c815768a1328288073d08ea2ab6c2f5",
+                "reference": "6587c37c0c815768a1328288073d08ea2ab6c2f5",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.4|^8.0",
-                "symfony/asset": "^4.4|^5.0",
-                "symfony/config": "^4.4|^5.0",
-                "symfony/dependency-injection": "^4.4|^5.0",
-                "symfony/event-dispatcher": "^4.4|^5.0",
-                "symfony/http-foundation": "^4.4|^5.0",
-                "symfony/http-kernel": "^4.4|^5.0",
-                "symfony/options-resolver": "^4.4|^5.0",
-                "symfony/security-core": "^4.4|^5.0",
-                "symfony/translation": "^4.4|^5.0",
-                "symfony/twig-bridge": "^4.4|^5.0",
+                "symfony/asset": "^4.4|^5.0|^6.0",
+                "symfony/config": "^4.4|^5.0|^6.0",
+                "symfony/dependency-injection": "^4.4|^5.0|^6.0",
+                "symfony/event-dispatcher": "^4.4|^5.0|^6.0",
+                "symfony/http-foundation": "^4.4|^5.0|^6.0",
+                "symfony/http-kernel": "^4.4|^5.0|^6.0",
+                "symfony/options-resolver": "^4.4|^5.0|^6.0",
+                "symfony/security-core": "^4.4|^5.0|^6.0",
+                "symfony/translation": "^4.4|^5.0|^6.0",
+                "symfony/twig-bridge": "^4.4|^5.0|^6.0",
                 "twig/twig": "^3.0"
             },
             "require-dev": {
@@ -2465,7 +2465,7 @@
                 "phpstan/phpstan-phpunit": "^1.0",
                 "phpstan/phpstan-symfony": "^1.0",
                 "phpunit/phpunit": "^8.0",
-                "symfony/framework-bundle": "^4.4|^5.0"
+                "symfony/framework-bundle": "^4.4|^5.0|^6.0"
             },
             "suggest": {
                 "knplabs/knp-menu-bundle": "Allows easy menu integration"
@@ -2490,7 +2490,7 @@
             "description": "Admin/Backend theme bundle for Symfony based on Tabler.io",
             "support": {
                 "issues": "https://github.com/kevinpapst/TablerBundle/issues",
-                "source": "https://github.com/kevinpapst/TablerBundle/tree/main"
+                "source": "https://github.com/kevinpapst/TablerBundle/tree/0.3"
             },
             "funding": [
                 {
@@ -2502,7 +2502,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-03-02T17:13:57+00:00"
+            "time": "2022-03-26T19:02:50+00:00"
         },
         {
             "name": "laminas/laminas-code",
