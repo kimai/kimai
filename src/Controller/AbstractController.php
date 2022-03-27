@@ -171,14 +171,9 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         return new LocaleFormats($this->container->get(LanguageFormattings::class), $locale);
     }
 
-    /**
-     * TODO method injection ?
-     *
-     * @return BookmarkRepository
-     */
     private function getBookmark(): BookmarkRepository
     {
-        return $this->get(BookmarkRepository::class);
+        return $this->container->get(BookmarkRepository::class);
     }
 
     private function getLastSearch(SessionInterface $session, BaseQuery $query): ?array

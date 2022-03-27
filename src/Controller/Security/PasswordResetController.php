@@ -33,15 +33,12 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 final class PasswordResetController extends AbstractController
 {
-    private $eventDispatcher;
-    private $userService;
-    private $configuration;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher, UserService $userService, SystemConfiguration $configuration)
+    public function __construct(
+        private EventDispatcherInterface $eventDispatcher,
+        private UserService $userService,
+        private SystemConfiguration $configuration
+    )
     {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->userService = $userService;
-        $this->configuration = $configuration;
     }
 
     /**

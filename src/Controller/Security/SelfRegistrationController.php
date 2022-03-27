@@ -34,17 +34,13 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class SelfRegistrationController extends AbstractController
 {
-    private $eventDispatcher;
-    private $userService;
-    private $tokenStorage;
-    private $configuration;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher, UserService $userService, TokenStorageInterface $tokenStorage, SystemConfiguration $configuration)
+    public function __construct(
+        private EventDispatcherInterface $eventDispatcher,
+        private UserService $userService,
+        private TokenStorageInterface $tokenStorage,
+        private SystemConfiguration $configuration
+    )
     {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->userService = $userService;
-        $this->tokenStorage = $tokenStorage;
-        $this->configuration = $configuration;
     }
 
     /**
