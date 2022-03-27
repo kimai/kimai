@@ -25,12 +25,14 @@ use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<User>
  */
-class UserRepository extends EntityRepository implements UserLoaderInterface
+class UserRepository extends EntityRepository implements UserLoaderInterface, PasswordUpgraderInterface
 {
     public function deleteUserPreference(UserPreference $preference, bool $flush = false): void
     {
@@ -51,6 +53,20 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         $entityManager = $this->getEntityManager();
         $entityManager->persist($user);
         $entityManager->flush();
+    }
+
+    public function upgradePassword(PasswordAuthenticatedUserInterface|UserInterface $user, string $newHashedPassword): void
+    {
+        if (!($user instanceof User)) {
+            return;
+        }
+
+        try {
+            $user->setPassword($newHashedPassword);
+            $this->saveUser($user);
+        } catch (\Exception $ex) {
+            // happens during login: if it fails, ignore it!
+        }
     }
 
     /**

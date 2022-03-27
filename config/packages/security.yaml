@@ -29,7 +29,7 @@ security:
             entry_point: form_login
 
             custom_authenticators:
-                - App\Security\ApiAuthenticator
+                - App\API\Authentication\ApiAuthenticator
                 - App\Saml\SamlAuthenticator
 
             remember_me:
