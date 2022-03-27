@@ -10,7 +10,7 @@
 namespace App\Tests\Saml\Security;
 
 use App\Entity\User;
-use App\Saml\SamlAuthenticatedToken;
+use App\Saml\SamlToken;
 use App\Saml\Security\SamlAuthenticationSuccessHandler;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -84,7 +84,7 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
         $user = new User();
         $user->setUsername('admin');
 
-        $token = new SamlAuthenticatedToken($user, 'secured_area', []);
+        $token = new SamlToken($user, 'secured_area', []);
         $token->setAttributes(['foo' => 'bar']);
 
         return $token;

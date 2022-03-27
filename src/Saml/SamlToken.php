@@ -11,6 +11,6 @@ namespace App\Saml;
 
 use Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken;
 
-class SamlAuthenticatedToken extends PostAuthenticationToken
+class SamlToken extends PostAuthenticationToken
 {
 }

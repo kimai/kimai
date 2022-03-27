@@ -7,15 +7,13 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Saml\Logout;
+namespace App\Saml;
 
-use App\Saml\SamlAuthenticatedToken;
-use App\Saml\SamlAuthFactory;
 use OneLogin\Saml2\Error;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
 
-final class SamlLogoutHandler implements EventSubscriberInterface
+final class SamlLogoutSubscriber implements EventSubscriberInterface
 {
     public function __construct(private SamlAuthFactory $samlAuth)
     {
@@ -32,7 +30,7 @@ final class SamlLogoutHandler implements EventSubscriberInterface
     {
         $token = $event->getToken();
 
-        if (!$token instanceof SamlAuthenticatedToken) {
+        if (!$token instanceof SamlToken) {
             return;
         }
 

@@ -7,12 +7,11 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Saml\Provider;
+namespace App\Saml;
 
 use App\Configuration\SamlConfiguration;
 use App\Entity\User;
 use App\Repository\UserRepository;
-use App\Saml\SamlLoginAttributes;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;

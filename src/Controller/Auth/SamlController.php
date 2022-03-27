@@ -85,16 +85,4 @@ final class SamlController extends AbstractController
 
         throw new \RuntimeException('You must configure the check path in your firewall.');
     }
-
-    /**
-     * @Route(path="/logout", name="saml_logout")
-     */
-    public function logoutAction()
-    {
-        if (!$this->samlConfiguration->isActivated()) {
-            throw $this->createNotFoundException('SAML deactivated');
-        }
-
-        throw new \RuntimeException('You must configure the logout path in your firewall.');
-    }
 }

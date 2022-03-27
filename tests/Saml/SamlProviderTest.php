@@ -7,21 +7,21 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Saml\Provider;
+namespace App\Tests\Saml;
 
 use App\Configuration\SamlConfiguration;
 use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Repository\UserRepository;
-use App\Saml\Provider\SamlProvider;
 use App\Saml\SamlLoginAttributes;
+use App\Saml\SamlProvider;
 use App\Tests\Configuration\TestConfigLoader;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
- * @covers \App\Saml\Provider\SamlProvider
+ * @covers \App\Saml\SamlProvider
  */
 class SamlProviderTest extends TestCase
 {

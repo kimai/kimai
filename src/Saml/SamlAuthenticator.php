@@ -9,8 +9,7 @@
 
 namespace App\Saml;
 
-use App\Configuration\SystemConfiguration;
-use App\Saml\Provider\SamlProvider;
+use App\Configuration\SamlConfiguration;
 use App\Saml\Security\SamlAuthenticationFailureHandler;
 use App\Saml\Security\SamlAuthenticationSuccessHandler;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,13 +40,13 @@ class SamlAuthenticator extends AbstractAuthenticator
         private SamlAuthenticationFailureHandler $failureHandler,
         private SamlAuthFactory $samlAuthFactory,
         private SamlProvider $samlProvider,
-        private SystemConfiguration $configuration
+        private SamlConfiguration $configuration
     ) {
     }
 
     public function supports(Request $request): bool
     {
-        if (!$this->configuration->isSamlActive()) {
+        if (!$this->configuration->isActivated()) {
             return false;
         }
 
@@ -62,7 +61,7 @@ class SamlAuthenticator extends AbstractAuthenticator
     {
         $user = $passport->getUser();
 
-        $token = new SamlAuthenticatedToken($user, $firewallName, $user->getRoles());
+        $token = new SamlToken($user, $firewallName, $user->getRoles());
         $token->setUser($user);
 
         foreach ($passport->getBadges() as $badge) {
