@@ -9,23 +9,14 @@
 
 namespace App\Ldap;
 
-/**
- * Inspired by https://github.com/Maks3w/FR3DLdapBundle @ MIT License
- */
-class SanitizingException extends \Exception
+final class SanitizingException extends \Exception
 {
-    protected $actualException;
-    protected $secret;
-
-    public function __construct(\Exception $actualException, $secret)
+    public function __construct(private \Exception $actualException, private string $secret)
     {
         parent::__construct(
             $this->stripSecret($actualException->getMessage(), $secret),
             $actualException->getCode()
         );
-
-        $this->actualException = $actualException;
-        $this->secret = $secret;
     }
 
     protected function stripSecret(string $message, string $secret)
