@@ -15,22 +15,12 @@ use App\Repository\RoleRepository;
 final class RoleService
 {
     /**
-     * @var array
-     */
-    private $roles;
-    /**
      * @var string[]
      */
-    private $roleNames = [];
-    /**
-     * @var RoleRepository
-     */
-    private $repository;
+    private array $roleNames = [];
 
-    public function __construct(RoleRepository $repository, array $roles)
+    public function __construct(private RoleRepository $repository, private array $roles)
     {
-        $this->repository = $repository;
-        $this->roles = $roles;
     }
 
     private function cacheNames()

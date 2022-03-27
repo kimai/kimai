@@ -14,11 +14,8 @@ namespace App\Configuration;
  */
 final class ThemeConfiguration implements \ArrayAccess
 {
-    private $systemConfiguration;
-
-    public function __construct(SystemConfiguration $systemConfiguration)
+    public function __construct(private SystemConfiguration $systemConfiguration)
     {
-        $this->systemConfiguration = $systemConfiguration;
     }
 
     public function offsetExists($offset): bool

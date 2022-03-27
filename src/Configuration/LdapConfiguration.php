@@ -11,11 +11,8 @@ namespace App\Configuration;
 
 final class LdapConfiguration
 {
-    private $configuration;
-
-    public function __construct(SystemConfiguration $configuration)
+    public function __construct(private SystemConfiguration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     public function isActivated(): bool
