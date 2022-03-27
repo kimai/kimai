@@ -70,17 +70,6 @@ class SamlControllerTest extends TestCase
         $sut->assertionConsumerServiceAction();
     }
 
-    public function testLogoutAction()
-    {
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('You must configure the logout path in your firewall.');
-
-        $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
-
-        $sut = new SamlController($factory, new SamlConfiguration($this->getSystemConfiguration()));
-        $sut->logoutAction();
-    }
-
     public function testMetadataAction()
     {
         $expectedXmlString = <<<EOD
@@ -165,17 +154,6 @@ EOD;
 
         $sut = new SamlController($factory, new SamlConfiguration($this->getSystemConfiguration(false)));
         $sut->metadataAction();
-    }
-
-    public function testLogoutActionThrowsExceptionOnDisabledSaml()
-    {
-        $this->expectException(NotFoundHttpException::class);
-        $this->expectExceptionMessage('SAML deactivated');
-
-        $factory = $this->getMockBuilder(SamlAuthFactory::class)->disableOriginalConstructor()->getMock();
-
-        $sut = new SamlController($factory, new SamlConfiguration($this->getSystemConfiguration(false)));
-        $sut->logoutAction();
     }
 
     public function testAcsActionThrowsExceptionOnDisabledSaml()
