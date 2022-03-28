@@ -28,7 +28,7 @@
         {{ widgets.nothing_found() }}
     {% else %}
         {% if form is defined %}
-            {{ widgets.callout('warning', 'dashboard.edit_mode') }}
+            {{ widgets.alert('warning', 'dashboard.edit_mode') }}
 
             {{ form_start(form, {'attr': {'style': 'display: none', 'id': 'dashboard-widgets'}}) }}
             {{ form_end(form) }}
