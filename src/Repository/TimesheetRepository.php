@@ -618,10 +618,11 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * @param User $user
-     * @return Timesheet[]|null
+     * @param User|null $user
+     * @param bool $ticktac
+     * @return Timesheet[]
      */
-    public function getActiveEntries(User $user = null)
+    public function getActiveEntries(User $user = null, bool $ticktac = false): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -634,6 +635,12 @@ class TimesheetRepository extends EntityRepository
         if (null !== $user) {
             $qb->andWhere('t.user = :user');
             $qb->setParameter('user', $user);
+        }
+
+        if ($ticktac) {
+            $qb->setMaxResults(1);
+
+            return $qb->getQuery()->getResult();
         }
 
         return $this->getHydratedResultsByQuery($qb, false);

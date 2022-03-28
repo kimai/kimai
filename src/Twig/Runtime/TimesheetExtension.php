@@ -15,18 +15,12 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 final class TimesheetExtension implements RuntimeExtensionInterface
 {
-    /**
-     * @var TimesheetRepository
-     */
-    private $repository;
-
-    public function __construct(TimesheetRepository $repository)
+    public function __construct(private TimesheetRepository $repository)
     {
-        $this->repository = $repository;
     }
 
-    public function activeEntries(User $user): array
+    public function activeEntries(User $user, bool $ticktac = true): array
     {
-        return $this->repository->getActiveEntries($user);
+        return $this->repository->getActiveEntries($user, $ticktac);
     }
 }
