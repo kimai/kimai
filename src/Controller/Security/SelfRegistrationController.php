@@ -39,8 +39,7 @@ class SelfRegistrationController extends AbstractController
         private UserService $userService,
         private TokenStorageInterface $tokenStorage,
         private SystemConfiguration $configuration
-    )
-    {
+    ) {
     }
 
     /**

@@ -9,7 +9,6 @@
 
 namespace App\Security;
 
-use App\Entity\Role;
 use App\Repository\RoleRepository;
 
 final class RoleService
@@ -36,7 +35,6 @@ final class RoleService
                 }
             }
 
-            /** @var Role $item */
             foreach ($this->repository->findAll() as $item) {
                 $roles[] = $item->getName();
             }

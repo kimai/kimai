@@ -25,14 +25,11 @@ final class RolePermissionManager
         'view_user'
     ];
 
-    /**
-     * @var array
-     */
-    private $permissions = [];
+    private array $permissions = [];
     /**
      * @var string[]
      */
-    private $knownPermissions = [];
+    private array $knownPermissions = [];
 
     public function __construct(RolePermissionRepository $repository, array $permissions)
     {
@@ -90,7 +87,7 @@ final class RolePermissionManager
         return \in_array($permission, $this->permissions[$role]);
     }
 
-    public function hasRolePermission(User $user, string $permission)
+    public function hasRolePermission(User $user, string $permission): bool
     {
         foreach ($user->getRoles() as $role) {
             if ($this->hasPermission($role, $permission)) {
