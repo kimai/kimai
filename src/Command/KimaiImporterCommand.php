@@ -239,10 +239,7 @@ final class KimaiImporterCommand extends Command
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -761,7 +758,7 @@ final class KimaiImporterCommand extends Command
         // workaround when importing multiple instances at once: search if the user exists by unique values
         foreach ($this->users as $tmpUserId => $tmpUser) {
             $newEmail = strtolower($tmpUser->getEmail());
-            $newName = strtolower($tmpUser->getUsername());
+            $newName = strtolower($tmpUser->getUserIdentifier());
             $oldEmail = strtolower($oldUser['mail']);
             $oldName = strtolower($oldUser['name']);
             if ($newEmail !== $oldEmail && $newName !== $oldName) {
@@ -854,12 +851,11 @@ final class KimaiImporterCommand extends Command
             $role = (1 == $oldUser['globalRoleID']) ? User::ROLE_SUPER_ADMIN : User::DEFAULT_ROLE;
 
             $user = new User();
-            $user->setUsername($oldUser['name'])
-                ->setEmail($oldUser['mail'])
-                ->setPlainPassword($password)
-                ->setEnabled($isActive)
-                ->setRoles([$role])
-            ;
+            $user->setUserIdentifier($oldUser['name']);
+            $user->setEmail($oldUser['mail']);
+            $user->setPlainPassword($password);
+            $user->setEnabled($isActive);
+            $user->setRoles([$role]);
 
             if ($this->options['alias-as-account-number']) {
                 $user->setAccountNumber(mb_substr($oldUser['alias'], 0, 30));
@@ -871,7 +867,7 @@ final class KimaiImporterCommand extends Command
             $user->setPassword($pwd);
 
             if (!$this->validateImport($io, $user)) {
-                throw new Exception('Failed to validate user: ' . $user->getUsername());
+                throw new Exception('Failed to validate user: ' . $user->getUserIdentifier());
             }
 
             // find and migrate user preferences
@@ -917,11 +913,11 @@ final class KimaiImporterCommand extends Command
                 $entityManager->persist($user);
                 $entityManager->flush();
                 if ($this->debug) {
-                    $io->success('Created user: ' . $user->getUsername());
+                    $io->success('Created user: ' . $user->getUserIdentifier());
                 }
                 ++$counter;
             } catch (Exception $ex) {
-                $io->error('Failed to create user: ' . $user->getUsername());
+                $io->error('Failed to create user: ' . $user->getUserIdentifier());
                 $io->error('Reason: ' . $ex->getMessage());
             }
 
@@ -1546,13 +1542,12 @@ final class KimaiImporterCommand extends Command
                 $tempPassword = uniqid() . uniqid();
 
                 $user = new User();
-                $user->setUsername($tempUserName)
-                    ->setAlias('Import: ' . $tempUserName)
-                    ->setEmail($tempUserName . '@example.com')
-                    ->setPlainPassword($tempPassword)
-                    ->setEnabled(false)
-                    ->setRoles([USER::ROLE_USER])
-                ;
+                $user->setUserIdentifier($tempUserName);
+                $user->setAlias('Import: ' . $tempUserName);
+                $user->setEmail($tempUserName . '@example.com');
+                $user->setPlainPassword($tempPassword);
+                $user->setEnabled(false);
+                $user->setRoles([USER::ROLE_USER]);
 
                 $pwd = $this->passwordHasher->hashPassword($user, $user->getPlainPassword());
                 $user->setPassword($pwd);
@@ -1567,11 +1562,11 @@ final class KimaiImporterCommand extends Command
                     $entityManager->persist($user);
                     $entityManager->flush();
                     if ($this->debug) {
-                        $io->success('Created deactivated user: ' . $user->getUsername());
+                        $io->success('Created deactivated user: ' . $user->getUserIdentifier());
                     }
                     $userCounter++;
                 } catch (Exception $ex) {
-                    $io->error('Failed to create user: ' . $user->getUsername());
+                    $io->error('Failed to create user: ' . $user->getUserIdentifier());
                     $io->error('Reason: ' . $ex->getMessage());
                     $failed++;
                     continue;

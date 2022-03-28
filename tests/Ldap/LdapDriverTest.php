@@ -43,7 +43,7 @@ class LdapDriverTest extends TestCase
         $zendLdap->expects($this->once())->method('bind')->willReturnSelf();
 
         $user = new User();
-        $user->setUsername('foo');
+        $user->setUserIdentifier('foo');
         $sut = $this->getTestLdapDriver($zendLdap);
         $result = $sut->bind($user->getUserIdentifier(), 'test123');
         self::assertTrue($result);
@@ -55,7 +55,7 @@ class LdapDriverTest extends TestCase
         $zendLdap->expects($this->once())->method('bind')->willThrowException(new LdapException());
 
         $user = new User();
-        $user->setUsername('foo');
+        $user->setUserIdentifier('foo');
         $sut = $this->getTestLdapDriver($zendLdap);
         $result = $sut->bind($user->getUserIdentifier(), 'test123');
         self::assertFalse($result);

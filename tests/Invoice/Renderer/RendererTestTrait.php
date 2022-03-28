@@ -86,7 +86,7 @@ trait RendererTestTrait
     protected function getInvoiceModel(): InvoiceModel
     {
         $user = new User();
-        $user->setUsername('one-user');
+        $user->setUserIdentifier('one-user');
         $user->setTitle('user title');
         $user->setAlias('genious alias');
         $user->setEmail('fantastic@four');
@@ -193,11 +193,14 @@ trait RendererTestTrait
             ->setMetaField((new TimesheetMeta())->setName('foo-timesheet3')->setValue('bluuuub')->setIsVisible(true))
         ;
 
+        $userKevin = new User();
+        $userKevin->setUserIdentifier('kevin');
+
         $timesheet5 = new Timesheet();
         $timesheet5
             ->setDuration(400)
             ->setFixedRate(84)
-            ->setUser((new User())->setUsername('kevin'))
+            ->setUser($userKevin)
             ->setActivity($activity)
             ->setProject($project)
             ->setBegin(new \DateTime())
@@ -254,7 +257,7 @@ trait RendererTestTrait
     protected function getInvoiceModelOneEntry(): InvoiceModel
     {
         $user = new User();
-        $user->setUsername('one-user');
+        $user->setUserIdentifier('one-user');
         $user->setTitle('user title');
         $user->setAlias('genious alias');
         $user->setEmail('fantastic@four');
@@ -280,11 +283,11 @@ trait RendererTestTrait
         $activity->setProject($project);
         $activity->setMetaField((new ActivityMeta())->setName('foo-activity')->setValue('bar-activity')->setIsVisible(true));
 
-        $userMethods = ['getId', 'getPreferenceValue', 'getUsername'];
-        $user1 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
+        $user1 = $this->createMock(User::class);
         $user1->method('getId')->willReturn(1);
         $user1->method('getPreferenceValue')->willReturn('50');
         $user1->method('getUsername')->willReturn('foo-bar');
+        $user1->method('getUserIdentifier')->willReturn('foo-bar');
 
         $timesheet = new Timesheet();
         $timesheet

@@ -21,7 +21,7 @@ use Twig\TwigFunction;
  */
 class PaginationExtensionTest extends TestCase
 {
-    private function getUrlGenerator()
+    private function getUrlGenerator(): UrlGeneratorInterface
     {
         $urlGenerator = $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
         $urlGenerator
@@ -59,27 +59,7 @@ class PaginationExtensionTest extends TestCase
         }
     }
 
-    /**
-     * @group legacy
-     */
-    public function testDeprecatedRenderPagerfanta()
-    {
-        $sut = $this->getSut();
-
-        $values = array_fill(0, 151, 'blub');
-        $pagerfanta = new Pagerfanta(new ArrayAdapter($values));
-        $result = $sut->renderPagination($pagerfanta, [
-            'css_container_class' => 'pagination pagination-sm inline',
-            'routeName' => 'project_activities',
-            'routeParams' => ['id' => 137]
-        ]);
-        $this->assertPaginationHtml($result);
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testDeprecatedRenderPagerfantaWithoutTemplateName()
+    public function testRenderPaginationWithoutTemplateName()
     {
         $sut = $this->getSut();
 

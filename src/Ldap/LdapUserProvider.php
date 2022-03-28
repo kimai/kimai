@@ -50,11 +50,6 @@ class LdapUserProvider implements UserProviderInterface
         return $user;
     }
 
-    public function loadUserByUsername($username): UserInterface
-    {
-        return $this->loadUserByIdentifier($username);
-    }
-
     public function refreshUser(UserInterface $user): UserInterface
     {
         if (!($user instanceof User)) {
@@ -62,7 +57,7 @@ class LdapUserProvider implements UserProviderInterface
         }
 
         if (!$user->isLdapUser() && null === $user->getPreferenceValue('ldap.dn')) {
-            throw new UnsupportedUserException(sprintf('Account "%s" is not a registered LDAP user.', $user->getUsername()));
+            throw new UnsupportedUserException(sprintf('Account "%s" is not a registered LDAP user.', $user->getUserIdentifier()));
         }
 
         try {
@@ -73,7 +68,7 @@ class LdapUserProvider implements UserProviderInterface
                 $user->setAuth(User::AUTH_LDAP);
             }
         } catch (LdapDriverException $ex) {
-            throw new UnsupportedUserException(sprintf('Failed to refresh user "%s", probably DN is expired.', $user->getUsername()));
+            throw new UnsupportedUserException(sprintf('Failed to refresh user "%s", probably DN is expired.', $user->getUserIdentifier()));
         }
 
         return $user;

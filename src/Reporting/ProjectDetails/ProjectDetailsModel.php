@@ -99,8 +99,8 @@ final class ProjectDetailsModel
                     $userStat = new UserStatistic($userYear->getUser());
                     $users[$id] = $userStat;
                 }
-                $userStat->setRecordDuration($userStat->getRecordDuration() + $userYear->getDuration());
-                $userStat->setRecordRate($userStat->getRecordRate() + $userYear->getRate());
+                $userStat->setDuration($userStat->getDuration() + $userYear->getDuration());
+                $userStat->setRate($userStat->getRate() + $userYear->getRate());
             }
         }
 

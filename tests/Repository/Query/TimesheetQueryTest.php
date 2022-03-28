@@ -63,7 +63,7 @@ class TimesheetQueryTest extends BaseQueryTest
         self::assertNull($sut->getUser());
 
         $expected = new User();
-        $expected->setUsername('foo-bar');
+        $expected->setUserIdentifier('foo-bar');
         self::assertInstanceOf(TimesheetQuery::class, $sut->setUser($expected));
         self::assertEquals($expected, $sut->getUser());
     }

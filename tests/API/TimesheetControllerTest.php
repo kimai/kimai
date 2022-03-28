@@ -1132,7 +1132,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $timesheets = $this->importFixtureForUser(User::ROLE_USER);
         $id = $timesheets[0]->getId();
-        static::$container->get('event_dispatcher')->addSubscriber(new TimesheetTestMetaFieldSubscriberMock());
+        static::getContainer()->get('event_dispatcher')->addSubscriber(new TimesheetTestMetaFieldSubscriberMock());
 
         $data = [
             'name' => 'metatestmock',

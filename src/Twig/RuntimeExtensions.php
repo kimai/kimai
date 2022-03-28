@@ -24,7 +24,7 @@ class RuntimeExtensions extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('trigger', [ThemeExtension::class, 'trigger'], ['needs_environment' => true]),
@@ -42,7 +42,7 @@ class RuntimeExtensions extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('md2html', [MarkdownExtension::class, 'markdownToHtml'], ['pre_escape' => 'html', 'is_safe' => ['html']]),

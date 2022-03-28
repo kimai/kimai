@@ -71,7 +71,8 @@ class SamlLogoutSubscriberTest extends TestCase
         });
 
         $request = new Request();
-        $user = (new User())->setUsername('tony');
+        $user = new User();
+        $user->setUserIdentifier('tony');
         $token = new SamlToken($user, 'secured_area', []);
         $token->setAttribute('sessionIndex', 'foo-bar');
 

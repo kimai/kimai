@@ -64,11 +64,11 @@ class ExportFilenameTest extends TestCase
         self::assertEquals($datePrefix . '-ss_n_--Demo_ProjecT1', $sut->getFilename());
 
         $user = new User();
-        $user->setUsername('thorsten');
+        $user->setUserIdentifier('ayumi');
         $query->addUser($user);
 
         $sut = new ExportFilename($query);
-        self::assertEquals($datePrefix . '-ss_n_--Demo_ProjecT1-thorsten', $sut->getFilename());
+        self::assertEquals($datePrefix . '-ss_n_--Demo_ProjecT1-ayumi', $sut->getFilename());
         $user->setAlias('Martin Müller-Lüdenscheidt');
 
         $sut = new ExportFilename($query);

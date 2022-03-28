@@ -82,7 +82,7 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
     private function getSamlToken()
     {
         $user = new User();
-        $user->setUsername('admin');
+        $user->setUserIdentifier('admin');
 
         $token = new SamlToken($user, 'secured_area', []);
         $token->setAttributes(['foo' => 'bar']);

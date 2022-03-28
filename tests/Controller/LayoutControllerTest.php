@@ -35,9 +35,9 @@ class LayoutControllerTest extends ControllerBaseTest
         $content = $client->getResponse()->getContent();
 
         $this->assertStringContainsString('data-bs-toggle="dropdown" aria-label="Open user menu"', $content);
-        $this->assertStringContainsString('href="/en/profile/' . $user->getUsername() . '"', $content);
-        $this->assertStringContainsString('href="/en/profile/' . $user->getUsername() . '/edit"', $content);
-        $this->assertStringContainsString('href="/en/profile/' . $user->getUsername() . '/prefs"', $content);
+        $this->assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '"', $content);
+        $this->assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '/edit"', $content);
+        $this->assertStringContainsString('href="/en/profile/' . $user->getUserIdentifier() . '/prefs"', $content);
         $this->assertStringContainsString('href="/en/logout"', $content);
     }
 

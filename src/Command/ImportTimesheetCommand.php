@@ -165,12 +165,7 @@ class ImportTimesheetCommand extends Command
         ;
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int|null
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -453,7 +448,7 @@ class ImportTimesheetCommand extends Command
     private function createUser($username, $domain, $password): User
     {
         $user = new User();
-        $user->setUsername($username);
+        $user->setUserIdentifier($username);
         if (stripos($username, '@') === false) {
             $email = preg_replace('/[[:^print:]]/', '', $username) . '@' . $domain;
             $email = strtolower($email);

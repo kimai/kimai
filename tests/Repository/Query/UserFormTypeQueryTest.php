@@ -29,7 +29,10 @@ class UserFormTypeQueryTest extends BaseFormTypeQueryTest
     {
         $sut = new UserFormTypeQuery();
 
-        $users = [(new User())->setUsername('foo'), new User(), new User()];
+        $user = new User();
+        $user->setUserIdentifier('foo');
+
+        $users = [$user, new User(), new User()];
 
         self::assertEquals([], $sut->getUsersAlwaysIncluded());
         self::assertInstanceOf(UserFormTypeQuery::class, $sut->setUsersAlwaysIncluded($users));

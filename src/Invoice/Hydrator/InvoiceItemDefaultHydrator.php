@@ -87,7 +87,7 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.week' => \intval($begin->format('W')),
             'entry.weekyear' => $begin->format('o'),
             'entry.user_id' => $user->getId(),
-            'entry.user_name' => $user->getUsername(),
+            'entry.user_name' => $user->getUserIdentifier(),
             'entry.user_title' => $user->getTitle(),
             'entry.user_alias' => $user->getAlias(),
         ];

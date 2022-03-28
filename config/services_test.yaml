@@ -6,7 +6,7 @@ services:
     _defaults:
         public: true
 
-    test.PasswordEncoder: "@security.encoder_factory"
+    test.PasswordEncoder: "@security.password_hasher_factory"
 
     App\Configuration\SystemConfiguration:
         arguments: ['@App\Repository\ConfigurationRepository', "%kimai.config%"]

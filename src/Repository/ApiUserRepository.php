@@ -26,11 +26,6 @@ class ApiUserRepository implements UserLoaderInterface, PasswordUpgraderInterfac
         return $this->userRepository->loadUserByIdentifier($identifier);
     }
 
-    public function loadUserByUsername(string $username): ?UserInterface
-    {
-        return $this->loadUserByIdentifier($username);
-    }
-
     public function upgradePassword(PasswordAuthenticatedUserInterface|UserInterface $user, string $newHashedPassword): void
     {
         if (!($user instanceof User)) {

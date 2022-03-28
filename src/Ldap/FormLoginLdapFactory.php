@@ -71,19 +71,4 @@ class FormLoginLdapFactory extends AbstractFactory implements AuthenticatorFacto
 
         return $ldapAuthenticatorId;
     }
-
-    protected function createAuthProvider(ContainerBuilder $container, string $id, array $config, string $userProviderId)
-    {
-        return '';
-    }
-
-    protected function getListenerId()
-    {
-        return '';
-    }
-
-    public function getPosition()
-    {
-        return 'form';
-    }
 }

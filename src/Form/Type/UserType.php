@@ -46,7 +46,7 @@ class UserType extends AbstractType
                 return [
                     'data-color' => $this->theme->getUserColor($user),
                     'data-title' => $user->getTitle(),
-                    'data-username' => $user->getUsername(),
+                    'data-username' => $user->getUserIdentifier(),
                     'data-alias' => $user->getAlias(),
                     'data-initials' => $user->getInitials(),
                     'data-accountNumber' => $user->getAccountNumber(),

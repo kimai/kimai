@@ -260,6 +260,20 @@ class TimesheetServiceTest extends TestCase
         self::assertSame($dateTime->getTimestamp(), $timesheet->getEnd()->getTimestamp());
     }
 
+    public function testStopSetsEnd()
+    {
+        $dateTime = new \DateTime('-2 hours');
+        $timesheet = new Timesheet();
+        $timesheet->setBegin($dateTime);
+
+        $sut = $this->getSut();
+        self::assertNull($timesheet->getEnd());
+
+        $sut->stopTimesheet($timesheet);
+
+        self::assertNotNull($timesheet->getEnd());
+    }
+
     public function testDeleteDispatchesEvent()
     {
         $timesheet = new Timesheet();

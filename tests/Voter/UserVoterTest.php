@@ -92,11 +92,11 @@ class UserVoterTest extends AbstractVoterTest
     public function testPasswordIsDeniedForNonInternalUser(string $authType, int $result)
     {
         $user = new User();
-        $user->setUsername('admin');
+        $user->setUserIdentifier('admin');
         $user->addRole('ROLE_SUPER_ADMIN');
 
         $subject = new User();
-        $subject->setUsername('foo');
+        $subject->setUserIdentifier('foo');
         $subject->addRole('ROLE_USER');
         $subject->setAuth($authType);
 

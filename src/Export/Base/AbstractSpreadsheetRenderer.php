@@ -313,7 +313,7 @@ abstract class AbstractSpreadsheetRenderer
                 $columns['username']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
                     $username = '';
                     if (null !== $entity->getUser()) {
-                        $username = $entity->getUser()->getUsername();
+                        $username = $entity->getUser()->getUserIdentifier();
                     }
                     $sheet->setCellValueByColumnAndRow($column, $row, $username);
                 };

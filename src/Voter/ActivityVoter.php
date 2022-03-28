@@ -44,7 +44,7 @@ final class ActivityVoter extends Voter
      * @param Activity $subject
      * @return bool
      */
-    protected function supports($attribute, $subject)
+    protected function supports(string $attribute, mixed $subject): bool
     {
         if (!($subject instanceof Activity)) {
             return false;
@@ -63,7 +63,7 @@ final class ActivityVoter extends Voter
      * @param TokenInterface $token
      * @return bool
      */
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
 

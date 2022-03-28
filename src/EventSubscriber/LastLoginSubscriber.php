@@ -13,17 +13,13 @@ use App\Entity\User;
 use App\Event\UserInteractiveLoginEvent;
 use App\Repository\UserRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
 
 class LastLoginSubscriber implements EventSubscriberInterface
 {
-    private $repository;
-
-    public function __construct(UserRepository $repository)
+    public function __construct(private UserRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     public static function getSubscribedEvents(): array
@@ -44,12 +40,6 @@ class LastLoginSubscriber implements EventSubscriberInterface
 
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {
-        // do not count API calls as logins
-        // this point could be used to add API rate limitation in the future
-        if ($event->getAuthenticationToken() instanceof PostAuthenticationGuardToken) {
-            return;
-        }
-
         $user = $event->getAuthenticationToken()->getUser();
 
         if ($user instanceof User) {

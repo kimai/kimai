@@ -34,7 +34,7 @@ class PaginationExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('pagination', [$this, 'renderPagination'], ['is_safe' => ['html']]),

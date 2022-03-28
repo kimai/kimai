@@ -31,16 +31,16 @@ class UserSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('view', $user)) {
-            $event->addAction('profile-stats', ['icon' => 'avatar', 'url' => $this->path('user_profile', ['username' => $user->getUsername()]), 'translation_domain' => 'actions', 'title' => 'profile-stats']);
+            $event->addAction('profile-stats', ['icon' => 'avatar', 'url' => $this->path('user_profile', ['username' => $user->getUserIdentifier()]), 'translation_domain' => 'actions', 'title' => 'profile-stats']);
             $event->addDivider();
         }
 
         if ($this->isGranted('edit', $user)) {
-            $event->addAction('edit', ['url' => $this->path('user_profile_edit', ['username' => $user->getUsername()]), 'title' => 'edit', 'translation_domain' => 'actions']);
+            $event->addAction('edit', ['url' => $this->path('user_profile_edit', ['username' => $user->getUserIdentifier()]), 'title' => 'edit', 'translation_domain' => 'actions']);
         }
 
         if ($this->isGranted('preferences', $user)) {
-            $event->addAction('settings', ['title' => 'settings', 'translation_domain' => 'actions', 'url' => $this->path('user_profile_preferences', ['username' => $user->getUsername()])]);
+            $event->addAction('settings', ['title' => 'settings', 'translation_domain' => 'actions', 'url' => $this->path('user_profile_preferences', ['username' => $user->getUserIdentifier()])]);
         }
 
         $viewOther = $this->isGranted('view_other_timesheet');

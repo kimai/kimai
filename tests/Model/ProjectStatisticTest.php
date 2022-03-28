@@ -10,7 +10,6 @@
 namespace App\Tests\Model;
 
 use App\Model\CustomerStatistic;
-use App\Model\ProjectStatistic;
 
 /**
  * @covers \App\Model\ProjectStatistic
@@ -30,17 +29,5 @@ class ProjectStatisticTest extends AbstractTimesheetCountedStatisticTest
     public function testJsonSerialize()
     {
         $this->assertJsonSerialize(new CustomerStatistic());
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testAdditionalSetter()
-    {
-        $sut = new ProjectStatistic();
-
-        self::assertEquals(0, $sut->getActivityAmount());
-        $sut->setActivityAmount(13);
-        self::assertEquals(13, $sut->getActivityAmount());
     }
 }

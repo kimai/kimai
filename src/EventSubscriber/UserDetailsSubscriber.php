@@ -49,19 +49,19 @@ class UserDetailsSubscriber implements EventSubscriberInterface
 
         if ($this->auth->isGranted('view', $user)) {
             $event->addLink(
-                new MenuItemModel('user_profile', 'my.profile', 'user_profile', ['username' => $user->getUsername()], 'fas fa-tachometer-alt')
+                new MenuItemModel('user_profile', 'my.profile', 'user_profile', ['username' => $user->getUserIdentifier()], 'fas fa-tachometer-alt')
             );
         }
 
         if ($this->auth->isGranted('edit', $user)) {
             $event->addLink(
-                new MenuItemModel('user_profile_edit', 'action.edit', 'user_profile_edit', ['username' => $user->getUsername()], 'fas fa-tachometer-alt')
+                new MenuItemModel('user_profile_edit', 'action.edit', 'user_profile_edit', ['username' => $user->getUserIdentifier()], 'fas fa-tachometer-alt')
             );
         }
 
         if ($this->auth->isGranted('preferences', $user)) {
             $event->addLink(
-                new MenuItemModel('user_profile_preferences', 'profile.preferences', 'user_profile_preferences', ['username' => $user->getUsername()], 'fas fa-tachometer-alt')
+                new MenuItemModel('user_profile_preferences', 'profile.preferences', 'user_profile_preferences', ['username' => $user->getUserIdentifier()], 'fas fa-tachometer-alt')
             );
         }
     }

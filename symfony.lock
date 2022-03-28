@@ -546,15 +546,6 @@
             "ref": "91bc9c127983c37808481733bcf83b7651b1f941"
         }
     },
-    "symfony/maker-bundle": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
-        }
-    },
     "symfony/mime": {
         "version": "v4.3.3"
     },
@@ -599,9 +590,6 @@
     },
     "symfony/polyfill-intl-normalizer": {
         "version": "v1.13.1"
-    },
-    "symfony/polyfill-php80": {
-        "version": "v1.17.1"
     },
     "symfony/polyfill-php81": {
         "version": "v1.23.0"
@@ -657,9 +645,6 @@
     },
     "symfony/security-csrf": {
         "version": "v4.0.4"
-    },
-    "symfony/security-guard": {
-        "version": "v4.3.3"
     },
     "symfony/security-http": {
         "version": "v4.3.3"

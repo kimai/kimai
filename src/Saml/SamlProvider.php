@@ -57,7 +57,7 @@ final class SamlProvider
         // Not using UserService: user settings should be set via SAML attributes
         $user = new User();
         $user->setEnabled(true);
-        $user->setUsername($token->getUserIdentifier());
+        $user->setUserIdentifier($token->getUserIdentifier());
         $user->setPassword('');
 
         $this->hydrateUser($user, $token);
@@ -108,7 +108,7 @@ final class SamlProvider
         if ($user->getId() === null) {
             $user->setPassword('');
         }
-        $user->setUsername($token->getUserIdentifier());
+        $user->setUserIdentifier($token->getUserIdentifier());
         $user->setAuth(User::AUTH_SAML);
     }
 

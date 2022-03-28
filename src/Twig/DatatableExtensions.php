@@ -36,7 +36,7 @@ class DatatableExtensions extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('is_visible_column', [$this, 'isColumnVisible']),

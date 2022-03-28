@@ -30,7 +30,7 @@ class AllowedHtmlTags extends Constraint
     /**
      * {@inheritdoc}
      */
-    public function getDefaultOption()
+    public function getDefaultOption(): ?string
     {
         return 'tags';
     }
@@ -38,7 +38,7 @@ class AllowedHtmlTags extends Constraint
     /**
      * {@inheritdoc}
      */
-    public function getRequiredOptions()
+    public function getRequiredOptions(): array
     {
         return ['tags'];
     }

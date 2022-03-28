@@ -41,33 +41,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class TimesheetAbstractController extends AbstractController
 {
-    /**
-     * @var TimesheetRepository
-     */
-    protected $repository;
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $dispatcher;
-    /**
-     * @var TimesheetService
-     */
-    protected $service;
-    /**
-     * @var SystemConfiguration
-     */
-    protected $configuration;
-
     public function __construct(
-        TimesheetRepository $repository,
-        EventDispatcherInterface $dispatcher,
-        TimesheetService $timesheetService,
-        SystemConfiguration $configuration
+        protected TimesheetRepository $repository,
+        protected EventDispatcherInterface $dispatcher,
+        protected TimesheetService $service,
+        protected SystemConfiguration $configuration,
+        protected TagRepository $tagRepository
     ) {
-        $this->repository = $repository;
-        $this->dispatcher = $dispatcher;
-        $this->service = $timesheetService;
-        $this->configuration = $configuration;
     }
 
     protected function getTrackingMode(): TrackingModeInterface
@@ -84,11 +64,9 @@ abstract class TimesheetAbstractController extends AbstractController
 
         $tags = $query->getTags(true);
         if (!empty($tags)) {
-            /** @var TagRepository $tagRepo */
-            $tagRepo = $this->getDoctrine()->getRepository(Tag::class);
             $query->setTags(
                 new ArrayCollection(
-                    $tagRepo->findIdsByTagNameList(implode(',', $tags))
+                    $this->tagRepository->findIdsByTagNameList(implode(',', $tags))
                 )
             );
         }

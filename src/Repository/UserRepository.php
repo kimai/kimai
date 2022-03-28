@@ -92,7 +92,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Pa
      * Overwritten to fetch preferences when using the Profile controller actions.
      * Depends on the query, some magic mechanisms like the ParamConverter will use this method to fetch the user.
      */
-    public function findOneBy(array $criteria, array $orderBy = null)
+    public function findOneBy(array $criteria, array $orderBy = null): ?object
     {
         if (\count($criteria) == 1 && isset($criteria['username'])) {
             return $this->loadUserByIdentifier($criteria['username']);
@@ -137,17 +137,6 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Pa
         }
 
         return $user;
-    }
-
-    /**
-     * @param string $username
-     * @return null|User
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function loadUserByUsername($username): ?UserInterface
-    {
-        return $this->loadUserByIdentifier($username);
     }
 
     public function getQueryBuilderForFormType(UserFormTypeQuery $query): QueryBuilder

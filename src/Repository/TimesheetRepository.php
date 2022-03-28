@@ -132,29 +132,6 @@ class TimesheetRepository extends EntityRepository
         }
     }
 
-    /**
-     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
-     * @codeCoverageIgnore
-     */
-    public function add(Timesheet $timesheet, int $maxRunningEntries)
-    {
-        $em = $this->getEntityManager();
-        $em->beginTransaction();
-
-        try {
-            if (null === $timesheet->getEnd()) {
-                $this->stopActiveEntries($timesheet->getUser(), $maxRunningEntries, false);
-            }
-
-            $em->persist($timesheet);
-            $em->flush();
-            $em->commit();
-        } catch (Exception $ex) {
-            $em->rollback();
-            throw $ex;
-        }
-    }
-
     public function begin()
     {
         $this->getEntityManager()->beginTransaction();
@@ -202,39 +179,6 @@ class TimesheetRepository extends EntityRepository
             $em->rollback();
             throw $ex;
         }
-    }
-
-    /**
-     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
-     * @codeCoverageIgnore
-     *
-     * @param Timesheet $entry
-     * @param bool $flush
-     * @return bool
-     * @throws RepositoryException
-     * @throws \Doctrine\ORM\Exception\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function stopRecording(Timesheet $entry, bool $flush = true)
-    {
-        if (null !== $entry->getEnd()) {
-            throw new RepositoryException('Timesheet entry already stopped');
-        }
-
-        // seems to be necessary so Doctrine will recognize a changed timestamp
-        $begin = clone $entry->getBegin();
-        $end = new DateTime('now', $begin->getTimezone());
-
-        $entry->setBegin($begin);
-        $entry->setEnd($end);
-
-        $entityManager = $this->getEntityManager();
-        $entityManager->persist($entry);
-        if ($flush) {
-            $entityManager->flush();
-        }
-
-        return true;
     }
 
     /**
@@ -693,46 +637,6 @@ class TimesheetRepository extends EntityRepository
         }
 
         return $this->getHydratedResultsByQuery($qb, false);
-    }
-
-    /**
-     * @deprecated since 1.11 use TimesheetService::stopTimesheet() instead
-     * @codeCoverageIgnore
-     *
-     * @param User $user
-     * @param int $hardLimit
-     * @param bool $flush
-     * @return int
-     * @throws RepositoryException
-     * @throws \Doctrine\ORM\Exception\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function stopActiveEntries(User $user, int $hardLimit, bool $flush = true)
-    {
-        $counter = 0;
-        $activeEntries = $this->getActiveEntries($user);
-
-        // reduce limit by one:
-        // this method is only called when a new entry is started
-        // -> all entries, including the new one must not exceed the $limit
-        $limit = $hardLimit - 1;
-
-        if (\count($activeEntries) > $limit) {
-            $i = 1;
-            foreach ($activeEntries as $activeEntry) {
-                if ($i > $limit) {
-                    if ($hardLimit > 1) {
-                        throw new Exception('timesheet.start.exceeded_limit');
-                    }
-
-                    $this->stopRecording($activeEntry, $flush);
-                    $counter++;
-                }
-                $i++;
-            }
-        }
-
-        return $counter;
     }
 
     /**

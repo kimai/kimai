@@ -36,7 +36,7 @@ class DurationStringToSecondsTransformer implements DataTransformerInterface
      * @param int $intToFormat
      * @return string|null
      */
-    public function transform($intToFormat)
+    public function transform(mixed $intToFormat): mixed
     {
         try {
             return $this->formatter->format($intToFormat);
@@ -49,7 +49,7 @@ class DurationStringToSecondsTransformer implements DataTransformerInterface
      * @param string|null $formatToInt
      * @return int|null
      */
-    public function reverseTransform($formatToInt)
+    public function reverseTransform(mixed $formatToInt): mixed
     {
         if (null === $formatToInt) {
             return null;

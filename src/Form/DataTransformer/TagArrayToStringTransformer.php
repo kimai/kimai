@@ -32,7 +32,7 @@ class TagArrayToStringTransformer implements DataTransformerInterface
      * @param Tag[]|null $tags
      * @return string
      */
-    public function transform($tags)
+    public function transform(mixed $tags): mixed
     {
         if (empty($tags)) {
             return '';
@@ -50,7 +50,7 @@ class TagArrayToStringTransformer implements DataTransformerInterface
      * @return Tag[]
      * @throws TransformationFailedException
      */
-    public function reverseTransform($stringOfTags)
+    public function reverseTransform(mixed $stringOfTags): mixed
     {
         // check for empty tag list
         if ('' === $stringOfTags || null === $stringOfTags) {

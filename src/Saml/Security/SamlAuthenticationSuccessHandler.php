@@ -22,7 +22,7 @@ final class SamlAuthenticationSuccessHandler extends DefaultAuthenticationSucces
         'use_referer' => false,
     ];
 
-    protected function determineTargetUrl(Request $request)
+    protected function determineTargetUrl(Request $request): string
     {
         if ($this->options['always_use_default_target_path']) {
             return $this->options['default_target_path'];

@@ -89,9 +89,9 @@ class LdapManager
         }
 
         // always look up the users current DN first, as the cached DN might have been renamed in LDAP
-        $userFresh = $this->findUserByUsername($user->getUsername());
+        $userFresh = $this->findUserByUsername($user->getUserIdentifier());
         if (null === $userFresh || null === ($baseDn = $userFresh->getPreferenceValue('ldap.dn'))) {
-            throw new LdapDriverException(sprintf('Failed fetching user DN for %s', $user->getUsername()));
+            throw new LdapDriverException(sprintf('Failed fetching user DN for %s', $user->getUserIdentifier()));
         }
         $user->setPreferenceValue('ldap.dn', $baseDn);
 
@@ -164,7 +164,7 @@ class LdapManager
         $attributeMap = $userParams['attributes'];
         $attributeMap = array_merge(
             [
-                ['ldap_attr' => $userParams['usernameAttribute'], 'user_method' => 'setUsername'],
+                ['ldap_attr' => $userParams['usernameAttribute'], 'user_method' => 'setUserIdentifier'],
             ],
             $attributeMap
         );
@@ -174,7 +174,7 @@ class LdapManager
         /** @var string|array|null $email */
         $email = $user->getEmail();
         if (null === $email) {
-            $user->setEmail($user->getUsername());
+            $user->setEmail($user->getUserIdentifier());
         }
 
         // fill them after hydrating account, so they can't be overwritten
@@ -252,11 +252,17 @@ class LdapManager
                 $value = $ldapValue;
             }
 
+            // BC layer for 2.0
+            if ($attr['user_method'] === 'setUsername') {
+                @trigger_error('Your LDAP configuration is deprecated: change the attribute mapping from "setUsername" to "setUserIdentifier".', E_USER_DEPRECATED);
+                $attr['user_method'] = 'setUserIdentifier';
+            }
+
             if ($attr['user_method'] === 'setEmail') {
                 if (\is_array($value)) {
                     $value = $value[0];
                 }
-            } elseif ($attr['user_method'] === 'setUsername') {
+            } elseif ($attr['user_method'] === 'setUserIdentifier') {
                 $sawUsername = true;
             }
 

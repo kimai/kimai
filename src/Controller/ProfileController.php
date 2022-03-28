@@ -44,7 +44,7 @@ final class ProfileController extends AbstractController
      */
     public function profileAction(): Response
     {
-        return $this->redirectToRoute('user_profile', ['username' => $this->getUser()->getUsername()]);
+        return $this->redirectToRoute('user_profile', ['username' => $this->getUser()->getUserIdentifier()]);
     }
 
     /**
@@ -89,7 +89,7 @@ final class ProfileController extends AbstractController
 
             $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile_edit', ['username' => $profile->getUsername()]);
+            return $this->redirectToRoute('user_profile_edit', ['username' => $profile->getUserIdentifier()]);
         }
 
         return $this->render('user/profile.html.twig', [
@@ -113,7 +113,7 @@ final class ProfileController extends AbstractController
 
             $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile_password', ['username' => $profile->getUsername()]);
+            return $this->redirectToRoute('user_profile_password', ['username' => $profile->getUserIdentifier()]);
         }
 
         return $this->render('user/form.html.twig', [
@@ -137,7 +137,7 @@ final class ProfileController extends AbstractController
 
             $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile_api_token', ['username' => $profile->getUsername()]);
+            return $this->redirectToRoute('user_profile_api_token', ['username' => $profile->getUserIdentifier()]);
         }
 
         return $this->render('user/api-token.html.twig', [
@@ -169,7 +169,7 @@ final class ProfileController extends AbstractController
 
             $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile_roles', ['username' => $profile->getUsername()]);
+            return $this->redirectToRoute('user_profile_roles', ['username' => $profile->getUserIdentifier()]);
         }
 
         return $this->render('user/form.html.twig', [
@@ -206,7 +206,7 @@ final class ProfileController extends AbstractController
 
             $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile_teams', ['username' => $profile->getUsername()]);
+            return $this->redirectToRoute('user_profile_teams', ['username' => $profile->getUserIdentifier()]);
         }
 
         return $this->render('user/form.html.twig', [
@@ -265,7 +265,7 @@ final class ProfileController extends AbstractController
 
                 return $this->redirectToRoute('user_profile_preferences', [
                     '_locale' => $locale,
-                    'username' => $profile->getUsername()
+                    'username' => $profile->getUserIdentifier()
                 ]);
             } else {
                 $this->flashError('action.update.error', ['%reason%' => 'Validation failed']);
@@ -302,7 +302,7 @@ final class ProfileController extends AbstractController
             UserPreferencesForm::class,
             $user,
             [
-                'action' => $this->generateUrl('user_profile_preferences', ['username' => $user->getUsername()]),
+                'action' => $this->generateUrl('user_profile_preferences', ['username' => $user->getUserIdentifier()]),
                 'method' => 'POST'
             ]
         );
@@ -314,7 +314,7 @@ final class ProfileController extends AbstractController
             UserEditType::class,
             $user,
             [
-                'action' => $this->generateUrl('user_profile_edit', ['username' => $user->getUsername()]),
+                'action' => $this->generateUrl('user_profile_edit', ['username' => $user->getUserIdentifier()]),
                 'method' => 'POST',
                 'include_active_flag' => ($user->getId() !== $this->getUser()->getId()),
                 'include_preferences' => false,
@@ -328,7 +328,7 @@ final class ProfileController extends AbstractController
             UserRolesType::class,
             $user,
             [
-                'action' => $this->generateUrl('user_profile_roles', ['username' => $user->getUsername()]),
+                'action' => $this->generateUrl('user_profile_roles', ['username' => $user->getUserIdentifier()]),
                 'method' => 'POST',
             ]
         );
@@ -340,7 +340,7 @@ final class ProfileController extends AbstractController
             UserTeamsType::class,
             $user,
             [
-                'action' => $this->generateUrl('user_profile_teams', ['username' => $user->getUsername()]),
+                'action' => $this->generateUrl('user_profile_teams', ['username' => $user->getUserIdentifier()]),
                 'method' => 'POST',
             ]
         );
@@ -352,7 +352,7 @@ final class ProfileController extends AbstractController
             UserPasswordType::class,
             $user,
             [
-                'action' => $this->generateUrl('user_profile_password', ['username' => $user->getUsername()]),
+                'action' => $this->generateUrl('user_profile_password', ['username' => $user->getUserIdentifier()]),
                 'method' => 'POST'
             ]
         );
@@ -364,7 +364,7 @@ final class ProfileController extends AbstractController
             UserApiTokenType::class,
             $user,
             [
-                'action' => $this->generateUrl('user_profile_api_token', ['username' => $user->getUsername()]),
+                'action' => $this->generateUrl('user_profile_api_token', ['username' => $user->getUserIdentifier()]),
                 'method' => 'POST'
             ]
         );

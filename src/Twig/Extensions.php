@@ -25,7 +25,7 @@ class Extensions extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('report_date', [$this, 'formatReportDate']),
@@ -41,7 +41,7 @@ class Extensions extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('class_name', [$this, 'getClassName']),
@@ -50,7 +50,7 @@ class Extensions extends AbstractExtension
         ];
     }
 
-    public function getTests()
+    public function getTests(): array
     {
         return [
             new TwigTest('number', function ($value) {

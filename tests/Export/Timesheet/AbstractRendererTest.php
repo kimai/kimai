@@ -53,7 +53,7 @@ abstract class AbstractRendererTest extends KernelTestCase
         ];
 
         $user = new User();
-        $user->setUsername('ssdf');
+        $user->setUserIdentifier('ssdf');
 
         $security = $this->createMock(Security::class);
         $security->expects($this->any())->method('getUser')->willReturn($user);
@@ -151,11 +151,14 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->addTag((new Tag())->setName('foo'))
         ;
 
+        $user = new User();
+        $user->setUserIdentifier('kevin');
+
         $timesheet5 = new Timesheet();
         $timesheet5
             ->setDuration(400)
             ->setFixedRate(84)
-            ->setUser((new User())->setUsername('kevin'))
+            ->setUser($user)
             ->setActivity($activity)
             ->setProject($project)
             ->setBegin(new \DateTime('2019-06-16 12:00:00'))

@@ -49,10 +49,8 @@ class UserTest extends TestCase
         self::assertFalse($user->isExportDecimal());
         self::assertTrue($user->is24Hour());
 
-        $user->setUsername('foo');
-        self::assertEquals('foo', $user->getUsername());
+        $user->setUserIdentifier('foo');
         self::assertEquals('foo', $user->getUserIdentifier());
-        self::assertEquals('foo', $user->getIdentifier());
         self::assertEquals('foo', $user->getDisplayName());
         $user->setAlias('BAR');
         self::assertEquals('BAR', $user->getDisplayName());
@@ -178,13 +176,34 @@ class UserTest extends TestCase
     {
         $user = new User();
 
-        $user->setUsername('bar');
+        $user->setUserIdentifier('bar');
         self::assertEquals('bar', $user->getDisplayName());
-        self::assertEquals('bar', $user->getUsername());
+        self::assertEquals('bar', $user->getUserIdentifier());
         self::assertEquals('bar', (string) $user);
 
         $user->setAlias('foo');
         self::assertEquals('foo', $user->getAlias());
+        self::assertEquals('bar', $user->getUserIdentifier());
+        self::assertEquals('foo', $user->getDisplayName());
+        self::assertEquals('foo', (string) $user);
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testGetUsername()
+    {
+        $user = new User();
+
+        $user->setUsername('bar');
+        self::assertEquals('bar', $user->getUsername());
+        self::assertEquals('bar', $user->getDisplayName());
+        self::assertEquals('bar', $user->getUserIdentifier());
+        self::assertEquals('bar', (string) $user);
+
+        $user->setAlias('foo');
+        self::assertEquals('foo', $user->getAlias());
+        self::assertEquals('bar', $user->getUserIdentifier());
         self::assertEquals('bar', $user->getUsername());
         self::assertEquals('foo', $user->getDisplayName());
         self::assertEquals('foo', (string) $user);
@@ -377,7 +396,7 @@ class UserTest extends TestCase
     public function testEqualsTo()
     {
         $sut = new User();
-        $sut->setUsername('foo');
+        $sut->setUserIdentifier('foo');
 
         $user = new TestUserEntity();
         self::assertFalse($sut->isEqualTo($user));
@@ -395,11 +414,11 @@ class UserTest extends TestCase
         self::assertTrue($sut->isEqualTo($sut2));
         self::assertTrue($sut2->isEqualTo($sut));
 
-        $sut->setUsername('12345678');
+        $sut->setUserIdentifier('12345678');
         self::assertFalse($sut->isEqualTo($sut2));
         self::assertFalse($sut2->isEqualTo($sut));
 
-        $sut2->setUsername('12345678');
+        $sut2->setUserIdentifier('12345678');
         self::assertTrue($sut->isEqualTo($sut2));
         self::assertTrue($sut2->isEqualTo($sut));
     }
@@ -408,7 +427,7 @@ class UserTest extends TestCase
     {
         $sut = new User();
         $sut->setPassword('ABC-1234567890');
-        $sut->setUsername('foo-BAR');
+        $sut->setUserIdentifier('foo-BAR');
         $sut->setEmail('hello@world.com');
         $sut->setEnabled(false);
 

@@ -1,7 +1,7 @@
 # this configuration simplifies testing URLs protected by the security mechanism
 # See https://symfony.com/doc/current/cookbook/testing/http_authentication.html
 security:
-    encoders:
+    password_hashers:
         App\Entity\User: { algorithm: auto }
 
     firewalls:

@@ -21,7 +21,7 @@ class SamlTokenTest extends TestCase
     public function testConstruct()
     {
         $user = new User();
-        $user->setUsername('foo');
+        $user->setUserIdentifier('foo');
         $sut = new SamlToken($user, 'firewallName', []);
         self::assertEquals('foo', $sut->getUserIdentifier());
     }

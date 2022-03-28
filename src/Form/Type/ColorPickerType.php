@@ -46,7 +46,7 @@ class ColorPickerType extends AbstractType implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function transform($data)
+    public function transform(mixed $data): mixed
     {
         if (empty($data)) {
             return self::DEFAULT_COLOR;
@@ -58,9 +58,9 @@ class ColorPickerType extends AbstractType implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function reverseTransform($data)
+    public function reverseTransform(mixed $value): mixed
     {
-        return null === $data ? self::DEFAULT_COLOR : $data;
+        return null === $value ? self::DEFAULT_COLOR : $value;
     }
 
     /**

@@ -401,9 +401,9 @@ class ProjectStatisticService
         foreach ($qb1->getQuery()->getResult() as $tmp) {
             $activity = new ActivityStatistic();
             $activity->setActivity($tmp['activity']);
-            $activity->setRecordRate($tmp['rate']);
-            $activity->setRecordDuration($tmp['duration']);
-            $activity->setRecordInternalRate($tmp['internalRate']);
+            $activity->setRate($tmp['rate']);
+            $activity->setDuration($tmp['duration']);
+            $activity->setInternalRate($tmp['internalRate']);
             $activity->setCounter($tmp['count']);
             $model->addActivity($activity);
         }
@@ -475,9 +475,9 @@ class ProjectStatisticService
             foreach ($qb2->getQuery()->getResult() as $tmp) {
                 $activity = new ActivityStatistic();
                 $activity->setActivity($tmp['activity']);
-                $activity->setRecordRate($tmp['rate']);
-                $activity->setRecordDuration($tmp['duration']);
-                $activity->setRecordInternalRate($tmp['internalRate']);
+                $activity->setRate($tmp['rate']);
+                $activity->setDuration($tmp['duration']);
+                $activity->setInternalRate($tmp['internalRate']);
                 $activity->setCounter($tmp['count']);
                 $model->addYearActivity($tmp['year'], $activity);
             }

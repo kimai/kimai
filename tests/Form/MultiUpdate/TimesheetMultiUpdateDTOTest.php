@@ -89,7 +89,8 @@ class TimesheetMultiUpdateDTOTest extends TestCase
         $sut->setReplaceTags(true);
         self::assertTrue($sut->isReplaceTags());
 
-        $user = (new User())->setUsername('sdfsdfsd');
+        $user = new User();
+        $user->setUserIdentifier('sdfsdfsd');
         $sut->setUser($user);
         self::assertSame($user, $sut->getUser());
 

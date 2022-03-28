@@ -51,10 +51,7 @@ final class CreateUserCommand extends AbstractUserCommand
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new CommandStyle($input, $output);
 
@@ -71,7 +68,7 @@ final class CreateUserCommand extends AbstractUserCommand
         $role = $role ?: User::DEFAULT_ROLE;
 
         $user = $this->userService->createNewUser();
-        $user->setUsername($username);
+        $user->setUserIdentifier($username);
         $user->setPlainPassword($password);
         $user->setEmail($email);
         $user->setEnabled(true);

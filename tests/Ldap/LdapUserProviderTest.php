@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Exception\UserNotFoundException;
  */
 class LdapUserProviderTest extends TestCase
 {
-    public function testLoadUserByUsernameReturnsNull()
+    public function testLoadUserByIdentifierReturnsNull()
     {
         $this->expectException(UserNotFoundException::class);
         $this->expectExceptionMessage('User "test" not found');
@@ -34,10 +34,10 @@ class LdapUserProviderTest extends TestCase
         $sut->loadUserByIdentifier('test');
     }
 
-    public function testLoadUserByUsernameReturnsUser()
+    public function testLoadUserByIdentifierReturnsUser()
     {
         $user = new User();
-        $user->setUsername('foobar');
+        $user->setUserIdentifier('foobar');
 
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->onlyMethods(['findUserByUsername'])->getMock();
         $manager->expects($this->once())->method('findUserByUsername')->willReturn($user);
@@ -51,7 +51,7 @@ class LdapUserProviderTest extends TestCase
     public function testRefreshUserReturnsUser()
     {
         $user = new User();
-        $user->setUsername('foobar');
+        $user->setUserIdentifier('foobar');
         $user->setPreferenceValue('ldap.dn', 'sdfdsf');
         self::assertFalse($user->isLdapUser());
 
@@ -71,7 +71,7 @@ class LdapUserProviderTest extends TestCase
         $this->expectExceptionMessage('Account "foobar" is not a registered LDAP user.');
 
         $user = new User();
-        $user->setUsername('foobar');
+        $user->setUserIdentifier('foobar');
 
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->onlyMethods(['updateUser'])->getMock();
 
@@ -85,7 +85,7 @@ class LdapUserProviderTest extends TestCase
         $this->expectExceptionMessage('Failed to refresh user "foobar", probably DN is expired.');
 
         $user = new User();
-        $user->setUsername('foobar');
+        $user->setUserIdentifier('foobar');
         $user->setPreferenceValue('ldap.dn', 'sdfdsf');
 
         $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->onlyMethods(['updateUser'])->getMock();

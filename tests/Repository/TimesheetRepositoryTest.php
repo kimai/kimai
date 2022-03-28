@@ -17,9 +17,7 @@ use App\Entity\User;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
-use App\Repository\RepositoryException;
 use App\Repository\TimesheetRepository;
-use App\Tests\DataFixtures\TimesheetFixtures;
 use Pagerfanta\Pagerfanta;
 
 /**
@@ -41,62 +39,6 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
 
         $result = $repository->getTimesheetsForQuery($query);
         $this->assertIsArray($result);
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testStoppedEntriesCannotBeStoppedAgain()
-    {
-        $em = $this->getEntityManager();
-        $user = $this->getUserByRole(User::ROLE_USER);
-        /** @var TimesheetRepository $repository */
-        $repository = $em->getRepository(Timesheet::class);
-
-        $fixtures = new TimesheetFixtures();
-        $fixtures->setUser($user);
-        $fixtures->setAmount(1);
-
-        $this->importFixture($fixtures);
-
-        $query = new TimesheetQuery();
-        $query->setUser($user);
-        $query->setState(TimesheetQuery::STATE_STOPPED);
-
-        /** @var array $entities */
-        $entities = $repository->getTimesheetsForQuery($query);
-
-        $this->assertCount(1, $entities);
-        $this->assertInstanceOf(Timesheet::class, $entities[0]);
-
-        $this->expectException(RepositoryException::class);
-        $this->expectExceptionMessage('Timesheet entry already stopped');
-
-        $repository->stopRecording($entities[0]);
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testStopRecording()
-    {
-        $em = $this->getEntityManager();
-        $user = $this->getUserByRole(User::ROLE_USER);
-        /** @var TimesheetRepository $repository */
-        $repository = $em->getRepository(Timesheet::class);
-
-        $fixture = new TimesheetFixtures();
-        $fixture->setUser($user);
-        $fixture->setAmountRunning(1);
-        $timesheets = $this->importFixture($fixture);
-
-        $timesheet = $timesheets[0];
-        $this->assertInstanceOf(Timesheet::class, $timesheet);
-        $this->assertNull($timesheet->getEnd());
-
-        $result = $repository->stopRecording($timesheet);
-        $this->assertTrue($result);
-        $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
     }
 
     public function testSave()

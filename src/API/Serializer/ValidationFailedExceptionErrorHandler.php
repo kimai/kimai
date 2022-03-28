@@ -36,7 +36,7 @@ class ValidationFailedExceptionErrorHandler implements SubscribingHandlerInterfa
         $this->exceptionHandler = $exceptionHandler;
     }
 
-    public static function getSubscribingMethods()
+    public static function getSubscribingMethods(): array
     {
         return [[
             'direction' => GraphNavigatorInterface::DIRECTION_SERIALIZATION,

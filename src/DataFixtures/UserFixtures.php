@@ -73,17 +73,15 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
         $allUsers = $this->getUserDefinition();
         foreach ($allUsers as $userData) {
             $user = new User();
-            $user
-                ->setAlias($userData[0])
-                ->setTitle($userData[1])
-                ->setUsername($userData[2])
-                ->setEmail($userData[3])
-                ->setRoles([$userData[4]])
-                ->setAvatar($userData[5])
-                ->setEnabled($userData[6])
-                ->setPassword($this->passwordHasher->hashPassword($user, self::DEFAULT_PASSWORD))
-                ->setApiToken($this->passwordHasher->hashPassword($user, self::DEFAULT_API_TOKEN))
-            ;
+            $user->setAlias($userData[0]);
+            $user->setTitle($userData[1]);
+            $user->setUserIdentifier($userData[2]);
+            $user->setEmail($userData[3]);
+            $user->setRoles([$userData[4]]);
+            $user->setAvatar($userData[5]);
+            $user->setEnabled($userData[6]);
+            $user->setPassword($this->passwordHasher->hashPassword($user, self::DEFAULT_PASSWORD));
+            $user->setApiToken($this->passwordHasher->hashPassword($user, self::DEFAULT_API_TOKEN));
             $manager->persist($user);
 
             $prefs = $this->getUserPreferences($user, $userData[7]);
@@ -150,15 +148,13 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
             $existingEmail[] = $email;
 
             $user = new User();
-            $user
-                ->setAlias($faker->name)
-                ->setTitle(substr($faker->jobTitle, 0, 49))
-                ->setUsername($username)
-                ->setEmail($email)
-                ->setRoles([User::ROLE_USER])
-                ->setEnabled(true)
-                ->setPassword($this->passwordHasher->hashPassword($user, self::DEFAULT_PASSWORD))
-            ;
+            $user->setAlias($faker->name);
+            $user->setTitle(substr($faker->jobTitle, 0, 49));
+            $user->setUserIdentifier($username);
+            $user->setEmail($email);
+            $user->setRoles([User::ROLE_USER]);
+            $user->setEnabled(true);
+            $user->setPassword($this->passwordHasher->hashPassword($user, self::DEFAULT_PASSWORD));
             $manager->persist($user);
 
             $prefs = $this->getUserPreferences($user);

@@ -184,7 +184,8 @@ class LdapManagerTest extends TestCase
 
     public function testBind()
     {
-        $user = (new User())->setUsername('foobar');
+        $user = new User();
+        $user->setUserIdentifier('foobar');
 
         $driver = $this->getMockBuilder(LdapDriver::class)->disableOriginalConstructor()->onlyMethods(['bind'])->getMock();
         $driver->expects($this->once())->method('bind')->willReturnCallback(function ($bindUser, $password) {
@@ -201,7 +202,9 @@ class LdapManagerTest extends TestCase
 
     public function testUpdateUserOnZeroResults()
     {
-        $user = (new User())->setUsername('foobar');
+        $user = new User();
+        $user->setUserIdentifier('foobar');
+
         $user->setPreferenceValue('ldap.dn', 'fooooooooooo');
         $expected = [
             [
@@ -239,7 +242,8 @@ class LdapManagerTest extends TestCase
         $this->expectException(LdapDriverException::class);
         $this->expectExceptionMessage('This search must only return a single user');
 
-        $user = (new User())->setUsername('foobar');
+        $user = new User();
+        $user->setUserIdentifier('foobar');
         $user->setPreferenceValue('ldap.dn', 'xxxxxxx');
 
         $expected = [
@@ -273,7 +277,8 @@ class LdapManagerTest extends TestCase
 
     public function testUpdateUserOnValidResultWithEmptyRoleBaseDn()
     {
-        $user = (new User())->setUsername('foobar');
+        $user = new User();
+        $user->setUserIdentifier('foobar');
         $user->setPreferenceValue('ldap.dn', 'sssssss');
 
         $expected = [
@@ -444,7 +449,8 @@ class LdapManagerTest extends TestCase
 
         $sut = $this->getLdapManager($driver, $groupConfig);
 
-        $user = (new User())->setUsername('Karl-Heinz');
+        $user = new User();
+        $user->setUserIdentifier('Karl-Heinz');
         $user->setPreferenceValue('ldap.dn', 'blub');
         $userOrig = clone $user;
         $userOrig->setEmail('Karl-Heinz')->setRoles(['ROLE_TEAMLEAD', 'ROLE_ADMIN'])->setAuth(User::AUTH_LDAP);
@@ -475,7 +481,7 @@ class LdapManagerTest extends TestCase
         $user = $sut->hydrate(['dn' => 'blub', 'foo' => ['blub']]);
         self::assertInstanceOf(User::class, $user);
         self::assertEquals('blub', $user->getUserIdentifier());
-        self::assertEquals('blub', $user->getUsername());
+        self::assertEquals('blub', $user->getUserIdentifier());
         self::assertEquals('blub', $user->getEmail());
     }
 
@@ -513,7 +519,7 @@ class LdapManagerTest extends TestCase
             'user' => [
                 'usernameAttribute' => 'foo',
                 'attributes' => [
-                    ['ldap_attr' => 'uid', 'user_method' => 'setUsername'],
+                    ['ldap_attr' => 'uid', 'user_method' => 'setUserIdentifier'],
                     ['ldap_attr' => 'foo', 'user_method' => 'setAlias'],
                     ['ldap_attr' => 'bar', 'user_method' => 'setTitle'],
                     ['ldap_attr' => 'roles', 'user_method' => 'setRoles'],
@@ -541,7 +547,55 @@ class LdapManagerTest extends TestCase
         $user = $sut->hydrate($ldapEntry);
 
         self::assertInstanceOf(User::class, $user);
-        self::assertEquals('Karl-Heinz', $user->getUsername());
+        self::assertEquals('Karl-Heinz', $user->getUserIdentifier());
+        self::assertEquals('bar', $user->getAlias());
+        self::assertEquals('foo', $user->getTitle());
+        self::assertEquals(['ROLE_TEAMLEAD', 'ROLE_ADMIN', 'ROLE_USER'], $user->getRoles());
+        self::assertEquals('https://www.example.com', $user->getAvatar());
+        self::assertEquals('Karl-Heinz', $user->getEmail());
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testHydrateWithDepercatedSetter()
+    {
+        $ldapConfig = [
+            'connection' => [
+                'host' => '1.1.1.1'
+            ],
+            'user' => [
+                'usernameAttribute' => 'foo',
+                'attributes' => [
+                    ['ldap_attr' => 'uid', 'user_method' => 'setUsername'], // use setUsername here for BC reasons!
+                    ['ldap_attr' => 'foo', 'user_method' => 'setAlias'],
+                    ['ldap_attr' => 'bar', 'user_method' => 'setTitle'],
+                    ['ldap_attr' => 'roles', 'user_method' => 'setRoles'],
+                    ['ldap_attr' => 'xxxxxxxx', 'user_method' => 'setAvatar'],
+                    ['ldap_attr' => 'blubXX', 'user_method' => 'setAvatar'],
+                ]
+            ],
+            'role' => [],
+        ];
+        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
+        $config = new LdapConfiguration($systemConfig);
+
+        $ldapEntry = [
+            'uid' => ['Karl-Heinz'],
+            'blub' => ['dfsdfsdf'],
+            'foo' => ['count' => 1, 0 => 'bar'],
+            'bar' => ['foo'],
+            'roles' => ['count' => 2, 0 => 'ROLE_TEAMLEAD', 1 => 'ROLE_ADMIN'],
+            'xxxxxxxx' => ['https://www.example.com'],
+            'blub1' => ['dfsdfsdf'],
+            'dn' => 'blub',
+        ];
+
+        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]));
+        $user = $sut->hydrate($ldapEntry);
+
+        self::assertInstanceOf(User::class, $user);
+        self::assertEquals('Karl-Heinz', $user->getUserIdentifier());
         self::assertEquals('bar', $user->getAlias());
         self::assertEquals('foo', $user->getTitle());
         self::assertEquals(['ROLE_TEAMLEAD', 'ROLE_ADMIN', 'ROLE_USER'], $user->getRoles());
@@ -558,7 +612,7 @@ class LdapManagerTest extends TestCase
             'user' => [
                 'usernameAttribute' => 'foo',
                 'attributes' => [
-                    ['ldap_attr' => 'uid', 'user_method' => 'setUsername'],
+                    ['ldap_attr' => 'uid', 'user_method' => 'setUserIdentifier'],
                     ['ldap_attr' => 'email', 'user_method' => 'setEmail'],
                     ['ldap_attr' => 'foo', 'user_method' => 'setAlias'],
                     ['ldap_attr' => 'bar', 'user_method' => 'setTitle'],
@@ -586,7 +640,7 @@ class LdapManagerTest extends TestCase
         $user = new User();
         $user->setPassword('foobar');
         $sut->hydrateUser($user, $ldapEntry);
-        self::assertEquals('Karl-Heinz', $user->getUsername());
+        self::assertEquals('Karl-Heinz', $user->getUserIdentifier());
         self::assertEquals('bar', $user->getAlias());
         self::assertEquals('foo', $user->getTitle());
         self::assertEquals('https://www.example.com', $user->getAvatar());

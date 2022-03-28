@@ -15,18 +15,13 @@ use Twig\TwigFunction;
 
 final class Configuration extends AbstractExtension
 {
-    private $configuration;
     private $cache = [];
 
-    public function __construct(SystemConfiguration $configuration)
+    public function __construct(private SystemConfiguration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('config', [$this, 'get']),

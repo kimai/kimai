@@ -49,7 +49,7 @@ class ActivityRateTest extends TestCase
 
         $user = new User();
         $user->setAlias('foo');
-        $user->setUsername('bar');
+        $user->setUserIdentifier('bar');
         self::assertInstanceOf(ActivityRate::class, $sut->setUser($user));
         self::assertSame($user, $sut->getUser());
         $sut->setUser(null);

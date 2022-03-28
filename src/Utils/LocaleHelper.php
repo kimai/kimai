@@ -61,19 +61,19 @@ final class LocaleHelper
     /**
      * Only used in twig filter |amount and invoice templates
      *
-     * @param string|float $amount
+     * @param int|float $amount
      * @return bool|false|string
      */
-    public function amount($amount)
+    public function amount(null|int|float $amount): bool|string
     {
+        if ($amount === null) {
+            return '0';
+        }
+
         return $this->getNumberFormatter()->format($amount);
     }
 
-    /**
-     * @param string $currency
-     * @return string
-     */
-    public function currency($currency)
+    public function currency(string $currency): string
     {
         try {
             return Currencies::getSymbol(strtoupper($currency), $this->locale);
@@ -83,11 +83,7 @@ final class LocaleHelper
         return $currency;
     }
 
-    /**
-     * @param string $language
-     * @return string
-     */
-    public function language(string $language)
+    public function language(string $language): string
     {
         try {
             return Languages::getName(strtolower($language), $this->locale);
@@ -97,11 +93,7 @@ final class LocaleHelper
         return $language;
     }
 
-    /**
-     * @param string $country
-     * @return string
-     */
-    public function country(string $country)
+    public function country(string $country): string
     {
         try {
             return Countries::getName(strtoupper($country), $this->locale);
@@ -117,14 +109,18 @@ final class LocaleHelper
      * @param bool $withCurrency
      * @return string
      */
-    public function money($amount, ?string $currency = null, bool $withCurrency = true)
+    public function money(null|int|float $amount, ?string $currency = null, bool $withCurrency = true)
     {
         if (null === $currency) {
             $withCurrency = false;
         }
 
+        if ($amount === null) {
+            $amount = 0;
+        }
+
         if (false === $withCurrency) {
-            return $this->getMoneyFormatter($withCurrency)->format($amount, NumberFormatter::TYPE_DEFAULT);
+            return $this->getMoneyFormatter(false)->format($amount, NumberFormatter::TYPE_DEFAULT);
         }
 
         return $this->getMoneyFormatter($withCurrency)->formatCurrency($amount, $currency);

@@ -11,17 +11,16 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ## [2.0](https://github.com/kevinpapst/kimai2/releases/tag/2.0)
 
+**!! This release requires minimum PHP version to 8.1 !!**
+
 - Removed support for custom translation files (use TranslationBundle instead or write your own plugin)
-
-**ATTENTION**
-
-- This release bumps the minimum required PHP version to 8.0
 - local.yaml is not compatible with old version, best is to remove it before the update and then re-create it after everything works 
   - dashboard default config
   - removed: theme.branding.translation
   - removed: kimai.plugin_dir
 - API: upgraded to [Open API specification v3](https://blog.readme.com/an-example-filled-guide-to-swagger-3-2/)
 - API: config/timesheet removed activeEntriesSoftLimit
+- All deprecated code was removed
 
 ## [1.16](https://github.com/kevinpapst/kimai2/releases/tag/1.16)
 

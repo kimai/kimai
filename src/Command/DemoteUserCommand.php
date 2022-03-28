@@ -41,7 +41,7 @@ EOT
      */
     protected function executeRoleCommand(UserService $manipulator, SymfonyStyle $output, User $user, bool $super, $role)
     {
-        $username = $user->getUsername();
+        $username = $user->getUserIdentifier();
         if ($super) {
             if ($user->isSuperAdmin()) {
                 $user->setSuperAdmin(false);

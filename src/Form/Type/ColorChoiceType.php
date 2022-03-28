@@ -114,7 +114,7 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function transform($data)
+    public function transform(mixed $data): mixed
     {
         if (empty($data) && !$this->isLimitedColors()) {
             return self::DEFAULT_COLOR;
@@ -126,13 +126,13 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function reverseTransform($data)
+    public function reverseTransform(mixed $value): mixed
     {
-        if (null === $data && !$this->isLimitedColors()) {
+        if (null === $value && !$this->isLimitedColors()) {
             return self::DEFAULT_COLOR;
         }
 
-        return null === $data ? null : $data;
+        return $value;
     }
 
     /**

@@ -21,7 +21,7 @@ class SearchTermTransformer implements DataTransformerInterface
      * @param SearchTerm|null $searchTerm
      * @return string
      */
-    public function transform($searchTerm)
+    public function transform(mixed $searchTerm): mixed
     {
         if (empty($searchTerm) || !($searchTerm instanceof SearchTerm)) {
             return '';
@@ -37,7 +37,7 @@ class SearchTermTransformer implements DataTransformerInterface
      * @return SearchTerm|null
      * @throws TransformationFailedException if object (issue) is not found
      */
-    public function reverseTransform($searchTerm)
+    public function reverseTransform(mixed $searchTerm): mixed
     {
         if (empty($searchTerm)) {
             return null;

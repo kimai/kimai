@@ -27,6 +27,10 @@ class DateTimeFormatValidator extends ConstraintValidator
 
         $valid = true;
 
+        if ($value === null) {
+            return;
+        }
+
         try {
             $test = new \DateTime($value);
         } catch (\Exception $ex) {

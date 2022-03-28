@@ -51,7 +51,7 @@ final class LocaleFormatExtensions extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('month_name', [$this, 'monthName']),
@@ -73,7 +73,7 @@ final class LocaleFormatExtensions extends AbstractExtension
         ];
     }
 
-    public function getTests()
+    public function getTests(): array
     {
         return [
             new TwigTest('weekend', function ($dateTime) {
@@ -98,7 +98,7 @@ final class LocaleFormatExtensions extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('javascript_configurations', [$this, 'getJavascriptConfiguration']),

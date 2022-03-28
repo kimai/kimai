@@ -20,18 +20,10 @@ use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
  */
 final class AnnotationExtractor implements ExtractorInterface
 {
-    /**
-     * @var ExpressionLanguage
-     */
-    private $expressionLanguage;
-    /**
-     * @var Reader
-     */
-    private $annotationReader;
+    private ExpressionLanguage $expressionLanguage;
 
-    public function __construct(Reader $annotationReader)
+    public function __construct(private Reader $annotationReader)
     {
-        $this->annotationReader = $annotationReader;
         $this->expressionLanguage = new ExpressionLanguage();
     }
 

@@ -47,13 +47,14 @@ class SamlProviderTest extends TestCase
 
         // can be replaced, once loadUserByIdentifier is in the interface with SF6?
         $userProvider = $this->getMockBuilder(UserProviderInterface::class)->disableOriginalConstructor();
-        $userProvider->addMethods(['loadUserByIdentifier']);
-        $userProvider->onlyMethods(['refreshUser', 'supportsClass', 'loadUserByUsername']);
+        $userProvider->onlyMethods(['refreshUser', 'supportsClass', 'loadUserByIdentifier']);
         $userProvider = $userProvider->getMock();
 
         $repository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
         if ($user !== null) {
             $userProvider->method('loadUserByIdentifier')->willReturn($user);
+        } else {
+            $userProvider->method('loadUserByIdentifier')->willReturn(new User());
         }
 
         $provider = new SamlProvider($repository, $userProvider, $samlConfig);
@@ -65,7 +66,7 @@ class SamlProviderTest extends TestCase
     {
         $user = new User();
         $user->setAuth(User::AUTH_INTERNAL);
-        $user->setUsername('foo1@example.com');
+        $user->setUserIdentifier('foo1@example.com');
         $user->setTitle('jagfkjhsgf');
 
         $token = new SamlLoginAttributes();
@@ -80,7 +81,7 @@ class SamlProviderTest extends TestCase
 
         self::assertSame($user, $tokenUser);
         self::assertTrue($tokenUser->isSamlUser());
-        self::assertEquals('foo1@example.com', $tokenUser->getUsername());
+        self::assertEquals('foo1@example.com', $tokenUser->getUserIdentifier());
         self::assertEquals('Tralalala', $tokenUser->getTitle());
         self::assertEquals('foo@example.com', $tokenUser->getEmail());
     }
@@ -98,7 +99,7 @@ class SamlProviderTest extends TestCase
         $tokenUser = $sut->findUser($token);
 
         self::assertTrue($tokenUser->isSamlUser());
-        self::assertEquals('foo2@example.com', $tokenUser->getUsername());
+        self::assertEquals('foo2@example.com', $tokenUser->getUserIdentifier());
         self::assertEquals('Tralalala', $tokenUser->getTitle());
         self::assertEquals('foo@example.com', $tokenUser->getEmail());
     }
@@ -110,7 +111,7 @@ class SamlProviderTest extends TestCase
 
         $user = new User();
         $user->setAuth(User::AUTH_SAML);
-        $user->setUsername('foo1@example.com');
+        $user->setUserIdentifier('foo1@example.com');
 
         $token = new SamlLoginAttributes();
         $token->setUserIdentifier($user->getUserIdentifier());

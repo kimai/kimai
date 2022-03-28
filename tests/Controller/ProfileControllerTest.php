@@ -16,7 +16,7 @@ use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
 /**
  * @group integration
@@ -123,7 +123,7 @@ class ProfileControllerTest extends ControllerBaseTest
         /** @var User $user */
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
+        $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
         $this->assertEquals('John Doe', $user->getAlias());
         $this->assertEquals('Developer', $user->getTitle());
         $this->assertEquals('john_user@example.com', $user->getEmail());
@@ -146,7 +146,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
+        $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
         $this->assertEquals('Johnny', $user->getAlias());
         $this->assertEquals('Code Monkey', $user->getTitle());
         $this->assertEquals('updated@example.com', $user->getEmail());
@@ -176,7 +176,7 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
+        $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
         $this->assertEquals('Johnny', $user->getAlias());
         $this->assertEquals('Code Monkey', $user->getTitle());
         $this->assertEquals('updated@example.com', $user->getEmail());
@@ -191,12 +191,12 @@ class ProfileControllerTest extends ControllerBaseTest
         /** @var User $user */
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        /** @var EncoderFactoryInterface $passwordEncoder */
+        /** @var PasswordHasherFactoryInterface $passwordEncoder */
         $passwordEncoder = static::$kernel->getContainer()->get('test.PasswordEncoder');
 
-        $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getPassword(), UserFixtures::DEFAULT_PASSWORD, $user->getSalt()));
-        $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getPassword(), 'test123', $user->getSalt()));
-        $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
+        $this->assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), UserFixtures::DEFAULT_PASSWORD));
+        $this->assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), 'test123'));
+        $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
 
         $form = $client->getCrawler()->filter('form[name=user_password]')->form();
         $client->submit($form, [
@@ -222,8 +222,8 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getPassword(), UserFixtures::DEFAULT_PASSWORD, $user->getSalt()));
-        $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getPassword(), 'test1234', $user->getSalt()));
+        $this->assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), UserFixtures::DEFAULT_PASSWORD));
+        $this->assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), 'test1234'));
     }
 
     public function testPasswordActionFailsIfPasswordLengthToShort()
@@ -251,12 +251,12 @@ class ProfileControllerTest extends ControllerBaseTest
 
         /** @var User $user */
         $user = $this->getUserByRole(User::ROLE_USER);
-        /** @var EncoderFactoryInterface $passwordEncoder */
+        /** @var PasswordHasherFactoryInterface $passwordEncoder */
         $passwordEncoder = static::$kernel->getContainer()->get('test.PasswordEncoder');
 
-        $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN, $user->getSalt()));
-        $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), 'test1234', $user->getSalt()));
-        $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUsername());
+        $this->assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN));
+        $this->assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), 'test1234'));
+        $this->assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
 
         $form = $client->getCrawler()->filter('form[name=user_api_token]')->form();
         $client->submit($form, [
@@ -276,8 +276,8 @@ class ProfileControllerTest extends ControllerBaseTest
 
         $user = $this->getUserByRole(User::ROLE_USER);
 
-        $this->assertFalse($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN, $user->getSalt()));
-        $this->assertTrue($passwordEncoder->getEncoder($user)->isPasswordValid($user->getApiToken(), 'test1234', $user->getSalt()));
+        $this->assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN));
+        $this->assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), 'test1234'));
     }
 
     public function testApiTokenActionFailsIfPasswordLengthToShort()

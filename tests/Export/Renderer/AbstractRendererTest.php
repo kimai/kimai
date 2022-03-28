@@ -150,11 +150,14 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->addTag((new Tag())->setName('foo'))
         ;
 
+        $userKevin = new User();
+        $userKevin->setUserIdentifier('kevin');
+
         $timesheet5 = new Timesheet();
         $timesheet5
             ->setDuration(400)
             ->setFixedRate(84)
-            ->setUser((new User())->setUsername('kevin'))
+            ->setUser($userKevin)
             ->setActivity($activity)
             ->setProject($project)
             ->setBegin(new \DateTime('2019-06-16 12:00:00'))
@@ -165,11 +168,14 @@ abstract class AbstractRendererTest extends KernelTestCase
             ->setMetaField((new TimesheetMeta())->setName('foo2')->setValue('meta-bar2')->setIsVisible(true))
         ;
 
+        $userNivek = new User();
+        $userNivek->setUserIdentifier('nivek');
+
         $timesheet6 = new Timesheet();
         $timesheet6
             ->setDuration(400)
             ->setFixedRate(-100.92)
-            ->setUser((new User())->setUsername('nivek'))
+            ->setUser($userNivek)
             ->setActivity($activity)
             ->setProject($project)
             ->setBegin(new \DateTime('2019-06-16 12:00:00'))

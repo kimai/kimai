@@ -855,11 +855,19 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->username !== null;
     }
 
+    /**
+     * @return string
+     * @deprecated use getUserIdentifier()
+     */
     public function getUsername(): string
     {
         return $this->username;
     }
 
+    /**
+     * @return string
+     * @deprecated use getUserIdentifier()
+     */
     public function getIdentifier(): string
     {
         return $this->username;
@@ -950,11 +958,21 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setUsername($username): User
+    /**
+     * @param string $username
+     * @return $this
+     * @deprecated since 2.0 use setUserIdentifier() instead
+     */
+    public function setUsername(string $username): User
     {
         $this->username = $username;
 
         return $this;
+    }
+
+    public function setUserIdentifier(string $identifier): void
+    {
+        $this->username = $identifier;
     }
 
     public function setEmail($email): User
@@ -1079,11 +1097,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             $this->enabled,
             $this->id,
             $this->email) = $data;
-    }
-
-    public function getSalt(): ?string
-    {
-        return null;
     }
 
     public function __toString()

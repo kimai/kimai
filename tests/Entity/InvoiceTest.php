@@ -139,7 +139,7 @@ class InvoiceTest extends TestCase
     protected function getInvoiceModel(\DateTime $created): InvoiceModel
     {
         $user = new User();
-        $user->setUsername('one-user');
+        $user->setUserIdentifier('one-user');
         $user->setTitle('user title');
         $user->setAlias('genious alias');
         $user->setEmail('fantastic@four');

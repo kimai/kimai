@@ -19,7 +19,7 @@ jobs:
                 options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
         strategy:
             matrix:
-                php: ['8.0', '8.1']
+                php: ['8.1']
 
         name: Integration (${{ matrix.php }})
         steps:
