@@ -12,12 +12,14 @@ doctrine:
 
 services:
     doctrine.result_cache_provider:
-        class: Symfony\Component\Cache\DoctrineProvider
+        factory: [ 'Doctrine\Common\Cache\Psr6\DoctrineProvider', 'wrap' ]
+        class: Doctrine\Common\Cache\Psr6\DoctrineProvider
         public: false
         arguments:
             - '@doctrine.result_cache_pool'
     doctrine.system_cache_provider:
-        class: Symfony\Component\Cache\DoctrineProvider
+        factory: [ 'Doctrine\Common\Cache\Psr6\DoctrineProvider', 'wrap' ]
+        class: Doctrine\Common\Cache\Psr6\DoctrineProvider
         public: false
         arguments:
             - '@doctrine.system_cache_pool'
