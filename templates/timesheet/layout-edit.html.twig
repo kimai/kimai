@@ -3,7 +3,7 @@
 
 {% block main %}
     {% if timesheet.exported %}
-        {{ widgets.callout('warning', ('timesheet.locked.warning'|trans({}, 'flashmessages')), null, 'warning') }}
+        {{ widgets.alert('warning', ('timesheet.locked.warning'|trans({}, 'flashmessages')), null, 'warning') }}
     {% endif %}
     {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {

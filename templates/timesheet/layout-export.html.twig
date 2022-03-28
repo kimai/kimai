@@ -5,7 +5,7 @@
 
 {% block main %}
     {% if stats.count > 1000 %}
-        {{ widgets.callout('warning', ('export.warn_result_amount'|trans({'%count%': stats.count})), null, 'warning') }}
+        {{ widgets.alert('warning', ('export.warn_result_amount'|trans({'%count%': stats.count})), null, 'warning') }}
     {% endif %}
     {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
