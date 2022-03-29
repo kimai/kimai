@@ -111,7 +111,7 @@
             -->
       <trans-unit id="H1qEi4d" resname="label.date">
         <source>label.date</source>
-        <target>تاريخ</target>
+        <target>التاريخ</target>
       </trans-unit>
       <trans-unit id="eJPDE76" resname="label.starttime">
         <source>label.starttime</source>
@@ -1106,15 +1106,15 @@
       </trans-unit>
       <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
         <source>label.calendar.initial_view</source>
-        <target state="needs-translation">Initial calendar view</target>
+        <target state="translated">المظهر الإفتراضي للتقويم</target>
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target state="needs-translation">%action% %count% entries?</target>
+        <target state="translated">%action% %count% إدخالات؟</target>
       </trans-unit>
       <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
-        <target state="needs-translation">Calendar week %week%</target>
+        <target state="translated">التقويم الأسبوعي %week%</target>
       </trans-unit>
       <trans-unit id="7J7G3Vr" resname="label.mark_as_exported">
         <source>label.mark_as_exported</source>
@@ -1122,7 +1122,7 @@
       </trans-unit>
       <trans-unit id="9VxfLLy" resname="label.decimalDuration">
         <source>label.decimalDuration</source>
-        <target state="needs-translation">Display duration as decimal number</target>
+        <target state="translated">عرض المدة كرقم عشري</target>
       </trans-unit>
       <trans-unit id="BhsaLxX" resname="export.clear_all">
         <source>export.clear_all</source>
@@ -1134,7 +1134,7 @@
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
-        <target state="needs-translation">An email has been sent to %email%. It contains an activation link you must click to activate your account.</target>
+        <target state="translated">تم إرسال بريد إلكتروني إلى %email% يحتوي على رابط تنشيط يجب النقر فوقه لتنشيط حسابك.</target>
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
@@ -1146,19 +1146,19 @@
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
-        <target state="needs-translation">Revenue this financial year</target>
+        <target state="translated">إيرادات هذه السنة المالية</target>
       </trans-unit>
       <trans-unit id="unC5MXv" resname="stats.percentUsed">
         <source>stats.percentUsed</source>
-        <target state="needs-translation">%percent%% used</target>
+        <target state="translated">تم استخدام %percent%%</target>
       </trans-unit>
       <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
         <source>label.timesheet.daily_stats</source>
-        <target state="needs-translation">Show daily stats in timesheet</target>
+        <target state="translated">إظهار الإحصائيات اليومية في ورقة التوقيت</target>
       </trans-unit>
       <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
         <source>calendar.drag_and_drop.delete</source>
-        <target state="needs-translation">If you want to delete an entry, you must drag it onto the button.</target>
+        <target state="translated">إن أردت حذف إدخال، فيجب عليك سحبه إلى الزر.</target>
       </trans-unit>
       <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
@@ -1174,7 +1174,7 @@
       </trans-unit>
       <trans-unit id="as948k9" resname="label.orderDate">
         <source>label.orderDate</source>
-        <target state="needs-translation">Order date</target>
+        <target state="translated">تاريخ الطلب</target>
       </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
@@ -1182,15 +1182,15 @@
       </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
-        <target state="needs-translation">Restart one of your last activities</target>
+        <target state="translated">العودة لمواصلة إحدى نشاطاتك الحديثة</target>
       </trans-unit>
       <trans-unit id="_DDecAV" resname="entryState.exported">
         <source>entryState.exported</source>
-        <target state="needs-translation">Cleared</target>
+        <target state="translated">مُغلَق</target>
       </trans-unit>
       <trans-unit id="ccCiXyR" resname="entryState.not_exported">
         <source>entryState.not_exported</source>
-        <target state="needs-translation">Open</target>
+        <target state="translated">مفتوح</target>
       </trans-unit>
       <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields">
         <source>help.batch_meta_fields</source>
@@ -1210,7 +1210,7 @@
       </trans-unit>
       <trans-unit id="9Rhadz6" resname="label.budgetType_full">
         <source>label.budgetType_full</source>
-        <target state="needs-translation">Life cycle</target>
+        <target state="translated">دورة الحياة</target>
       </trans-unit>
       <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
         <source>delete_warning.short_stats</source>
@@ -1218,7 +1218,7 @@
       </trans-unit>
       <trans-unit id="tp.gIrE" resname="team.add_user.help">
         <source>team.add_user.help</source>
-        <target state="needs-translation">Add a new user to the team by selecting it from the list. Afterwards you can decide if the user should become a teamlead.</target>
+        <target state="translated">قم بإضافة مستخدم جديد إلى الفريق عن طريق انتقائه من القائمة. بعد ذلك يمكنك أن تقرر إن وجب على المستخدم أن يصبح قائد فريق.</target>
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
@@ -1234,11 +1234,11 @@
       </trans-unit>
       <trans-unit id="ElDyzrx" resname="export.page_of">
         <source>export.page_of</source>
-        <target state="needs-translation">Page %page% of %pages%</target>
+        <target state="translated">الصفحة %page% مِن %pages%</target>
       </trans-unit>
       <trans-unit id="vKY0tof" resname="export.date_copyright">
         <source>export.date_copyright</source>
-        <target state="needs-translation">Created %date% with %kimai%</target>
+        <target state="translated">تم توليده يوم %date% بفضل %kimai%</target>
       </trans-unit>
       <trans-unit id="W92QGbY" resname="export.warn_result_amount">
         <source>export.warn_result_amount</source>
@@ -1246,15 +1246,19 @@
       </trans-unit>
       <trans-unit id="pnGDFmf" resname="label.type">
         <source>label.type</source>
-        <target state="needs-translation">Type</target>
+        <target state="translated">النوع</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
-        <target state="needs-translation">The directory “%dir%” does not exist and could not be created.</target>
+        <target state="translated">إنّ المجلد "%dir%" غير موجود ولا يمكن إنشاؤه.</target>
       </trans-unit>
       <trans-unit id="X3JM9wj" resname="label.exported">
         <source>label.exported</source>
-        <target state="needs-translation">Exported</target>
+        <target state="translated">تم تصديره</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>تلقائي</target>
       </trans-unit>
     </body>
   </file>
