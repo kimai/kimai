@@ -79,7 +79,7 @@ class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
         $timesheet = new Timesheet();
         $timesheet->setBegin(new \DateTime());
         $timesheet->setEnd(new \DateTime());
-        $timesheet->setDuration(31536001);
+        $timesheet->setDuration(31536060);
 
         $this->validator->validate($timesheet, new TimesheetLongRunning());
 
