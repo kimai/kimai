@@ -4,6 +4,7 @@
 {%- set totalsDuration = {} -%}
 {%- set totalsInternalRate = {} -%}
 {%- set totalsRate = {} -%}
+{%- set showAccountNumber = showAccountNumber is defined ? showAccountNumber : false -%}
 {% if dataType == 'rate' %}
     {% set dataTypeTitle = 'stats.amountTotal' %}
 {% elseif dataType == 'internalRate' %}
@@ -15,6 +16,9 @@
     <thead>
         <tr>
             <th>&nbsp;</th>
+            {% if showAccountNumber %}
+            <th>{{ 'label.account_number'|trans }}</th>
+            {% endif %}
             <th class="text-center reportDataTypeTitle">{{ dataTypeTitle|trans }}</th>
             {% for column in stats.0.getDateTimes() %}
                 {% block period_name %}{% endblock %}
@@ -37,6 +41,9 @@
                     {{ label_dot(userPeriod.user.displayName, userPeriod.user.color) }}
                 {% endblock %}
             </td>
+            {% if showAccountNumber %}
+                <td>{{ userPeriod.user.accountNumber }}</td>
+            {% endif %}
             {% for period in attribute(userPeriod, period_attribute) %}
                 {% if period.totalDuration > 0 %}
                     {% set usersTotalDuration = usersTotalDuration + period.totalDuration %}
@@ -55,7 +62,7 @@
                 {% set totalsInternalRate = totalsInternalRate|merge({(reportDateKey): (totalsInternalRate[reportDateKey] + period.totalInternalRate)}) %}
                 {% set totalsRate = totalsRate|merge({(reportDateKey): (totalsRate[reportDateKey] + period.totalRate)}) %}
             {% endfor %}
-            <th class="text-nowrap text-center total{% block user_total_cell_class %}{% endblock %}"{% block user_total_cell_attribute %}{% endblock %}>
+            <td class="text-nowrap text-center total{% block user_total_cell_class %}{% endblock %}"{% block user_total_cell_attribute %}{% endblock %}>
                 {% if dataType == 'rate' %}
                     {% block total_rate_user %}{% endblock %}
                 {% elseif dataType == 'internalRate' %}
@@ -63,7 +70,7 @@
                 {% else %}
                     {% block total_duration_user %}{% endblock %}
                 {% endif %}
-            </th>
+            </td>
             {% for period in attribute(userPeriod, period_attribute) %}
                 <td class="text-nowrap text-center day-total{% block period_cell_class %}{% endblock %}"{% block period_cell_attribute %}{% endblock %}>
                     {% if period.totalDuration > 0 or period.totalRate > 0 or period.totalInternalRate > 0 %}
@@ -82,7 +89,10 @@
     </tbody>
     <tfoot>
         <tr class="summary">
-        <td>{{ dataTypeTitle|trans }}</td>
+            <td>{{ dataTypeTitle|trans }}</td>
+            {% if showAccountNumber %}
+                <td></td>
+            {% endif %}
             <td class="text-center text-nowrap{% block total_period_cell_class %}{% endblock %}"{% block total_period_cell_attribute %}{% endblock %}>
                 {% if dataType == 'rate' %}
                     {% block total_rate %}
