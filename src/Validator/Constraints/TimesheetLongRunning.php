@@ -20,7 +20,6 @@ final class TimesheetLongRunning extends TimesheetConstraint
     ];
 
     public $message = 'Maximum duration of {{ value }} hours exceeded.';
-    public $maximumMessage = 'Maximum duration exceeded.';
 
     public function getTargets()
     {
