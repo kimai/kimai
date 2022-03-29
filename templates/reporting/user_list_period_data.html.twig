@@ -5,6 +5,7 @@
 {%- set totalsDuration = {} -%}
 {%- set totalsInternalRate = {} -%}
 {%- set totalsRate = {} -%}
+{%- set showAccountNumber = showAccountNumber is defined ? showAccountNumber : false -%}
 {% if dataType == 'rate' %}
     {% set dataTypeTitle = 'stats.amountTotal' %}
 {% elseif dataType == 'internalRate' %}
@@ -19,6 +20,9 @@
             <th class="w-avatar"></th>
             {% endif %}
             <th>&nbsp;</th>
+            {% if showAccountNumber %}
+            <th>{{ 'label.account_number'|trans }}</th>
+            {% endif %}
             <th class="text-center reportDataTypeTitle">{{ dataTypeTitle|trans }}</th>
             {% for column in stats.0.getDateTimes() %}
                 {% block period_name %}{% endblock %}
@@ -44,6 +48,9 @@
             <td class="text-nowrap"{% block user_column_cell_attribute %}{% endblock %}>
                 {{ userPeriod.user.displayName }}
             </td>
+            {% if showAccountNumber %}
+                <td>{{ userPeriod.user.accountNumber }}</td>
+            {% endif %}
             {% for period in attribute(userPeriod, period_attribute) %}
                 {% if period.totalDuration > 0 %}
                     {% set usersTotalDuration = usersTotalDuration + period.totalDuration %}
@@ -90,6 +97,9 @@
     <tfoot>
         <tr class="summary">
             <td{% if with_avatar %} colspan="2"{% endif %}>{{ dataTypeTitle|trans }}</td>
+            {% if showAccountNumber %}
+                <td></td>
+            {% endif %}
             <td class="text-center text-nowrap{% block total_period_cell_class %}{% endblock %}"{% block total_period_cell_attribute %}{% endblock %}>
                 {% if dataType == 'rate' %}
                     {% block total_rate %}

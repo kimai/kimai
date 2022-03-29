@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="ycErWZK" resname="timesheet">
         <source>Time tracking</source>
-        <target>时间跟踪</target>
+        <target>时间追踪</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
@@ -257,6 +257,34 @@
       <trans-unit id="40i4Xlr" resname="label.timesheet.duration_increment">
         <source>label.timesheet.duration_increment</source>
         <target>持续时间的分钟选择</target>
+      </trans-unit>
+      <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
+        <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
+        <target>以逗号分隔的HTML颜色代码列表。颜色名称可以通过在颜色代码前加上名称和"|"分隔符来设置，例如。White|#ffffff,Black|#000000。</target>
+      </trans-unit>
+      <trans-unit id="x3AfnWn" resname="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target>分钟选择从&amp; 到</target>
+      </trans-unit>
+      <trans-unit id="tNxm3eg" resname="off">
+        <source>off</source>
+        <target>关</target>
+      </trans-unit>
+      <trans-unit id="h4bhOny" resname="label.timesheet.rules.long_running_duration">
+        <source>label.timesheet.rules.long_running_duration</source>
+        <target>在拒绝保存之前，记录的最大持续时间（分钟）（0=停用）</target>
+      </trans-unit>
+      <trans-unit id="ZUTc3eH" resname="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target>用于拖放的条目数量（0=停用）</target>
+      </trans-unit>
+      <trans-unit id="9C1qkmD" resname="increment_rounding">
+        <source>increment_rounding</source>
+        <target>使用四舍五入规则的配置值</target>
+      </trans-unit>
+      <trans-unit id="jLG6z.w" resname="label.timesheet.rules.break_warning_duration">
+        <source>label.timesheet.rules.break_warning_duration</source>
+        <target>在显示 "休息警告 "之前，记录的最大持续时间（分钟）（0=停用）</target>
       </trans-unit>
     </body>
   </file>
