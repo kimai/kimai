@@ -21,6 +21,7 @@ use App\Form\Type\TimesheetBillableType;
 use App\Form\Type\UserType;
 use App\Form\Type\YesNoType;
 use App\Repository\CustomerRepository;
+use App\Timesheet\Calculator\BillableCalculator;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -279,36 +280,8 @@ class TimesheetEditForm extends AbstractType
                 return $record;
             },
             function (Timesheet $record) {
-                switch ($record->getBillableMode()) {
-                    case Timesheet::BILLABLE_NO:
-                        $record->setBillable(false);
-                        break;
-                    case Timesheet::BILLABLE_YES:
-                        $record->setBillable(true);
-                        break;
-                    case Timesheet::BILLABLE_AUTOMATIC:
-                        $billable = true;
-
-                        $activity = $record->getActivity();
-                        if ($activity !== null && !$activity->isBillable()) {
-                            $billable = false;
-                        }
-
-                        $project = $record->getProject();
-                        if ($billable && $project !== null && !$project->isBillable()) {
-                            $billable = false;
-                        }
-
-                        if ($billable && $project !== null) {
-                            $customer = $project->getCustomer();
-                            if ($customer !== null && !$customer->isBillable()) {
-                                $billable = false;
-                            }
-                        }
-
-                        $record->setBillable($billable);
-                        break;
-                }
+                $billable = new BillableCalculator();
+                $billable->calculate($record);
 
                 return $record;
             }
