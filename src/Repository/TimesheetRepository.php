@@ -1238,9 +1238,7 @@ class TimesheetRepository extends EntityRepository
 
         try {
             $result = (int) $qb->getQuery()->getSingleScalarResult();
-        } catch (NoResultException $ex) {
-            return false;
-        } catch (NonUniqueResultException $ex) {
+        } catch (Exception $ex) {
             return true;
         }
 
