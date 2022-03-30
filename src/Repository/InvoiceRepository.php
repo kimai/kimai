@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\Customer;
 use App\Entity\Invoice;
+use App\Entity\InvoiceMeta;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\Loader\InvoiceLoader;
@@ -26,6 +27,8 @@ use Pagerfanta\Pagerfanta;
  */
 class InvoiceRepository extends EntityRepository
 {
+    use RepositorySearchTrait;
+
     public function saveInvoice(Invoice $invoice)
     {
         $entityManager = $this->getEntityManager();
@@ -222,37 +225,28 @@ class InvoiceRepository extends EntityRepository
 
         if ($query->hasSearchTerm()) {
             $qb->leftJoin('i.customer', 'customer');
-            $searchAnd = $qb->expr()->andX();
-            $searchTerm = $query->getSearchTerm();
-
-            foreach ($searchTerm->getSearchFields() as $metaName => $metaValue) {
-                $qb->leftJoin('customer.meta', 'meta');
-                $searchAnd->add(
-                    $qb->expr()->andX(
-                        $qb->expr()->eq('meta.name', ':metaName'),
-                        $qb->expr()->like('meta.value', ':metaValue')
-                    )
-                );
-                $qb->setParameter('metaName', $metaName);
-                $qb->setParameter('metaValue', '%' . $metaValue . '%');
-            }
-
-            if ($searchTerm->hasSearchTerm()) {
-                $searchAnd->add(
-                    $qb->expr()->orX(
-                        $qb->expr()->like('customer.name', ':searchTerm'),
-                        $qb->expr()->like('customer.company', ':searchTerm')
-                    )
-                );
-                $qb->setParameter('searchTerm', '%' . $searchTerm->getSearchTerm() . '%');
-            }
-
-            if ($searchAnd->count() > 0) {
-                $qb->andWhere($searchAnd);
-            }
+            $this->addSearchTerm($qb, $query);
         }
 
         return $qb;
+    }
+
+    private function getMetaFieldClass(): string
+    {
+        return InvoiceMeta::class;
+    }
+
+    private function getMetaFieldName(): string
+    {
+        return 'invoice';
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getSearchableFields(): array
+    {
+        return ['i.comment', 'customer.name', 'customer.company'];
     }
 
     public function countInvoicesForQuery(InvoiceArchiveQuery $query): int

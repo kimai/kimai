@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
+use App\Entity\CustomerMeta;
 use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\Timesheet;
@@ -34,6 +35,8 @@ use Pagerfanta\Pagerfanta;
  */
 class CustomerRepository extends EntityRepository
 {
+    use RepositorySearchTrait;
+
     /**
      * @param mixed $id
      * @param null $lockMode
@@ -292,45 +295,27 @@ class CustomerRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
-        if ($query->hasSearchTerm()) {
-            $searchAnd = $qb->expr()->andX();
-            $searchTerm = $query->getSearchTerm();
-
-            foreach ($searchTerm->getSearchFields() as $metaName => $metaValue) {
-                $qb->leftJoin('c.meta', 'meta');
-                $searchAnd->add(
-                    $qb->expr()->andX(
-                        $qb->expr()->eq('meta.name', ':metaName'),
-                        $qb->expr()->like('meta.value', ':metaValue')
-                    )
-                );
-                $qb->setParameter('metaName', $metaName);
-                $qb->setParameter('metaValue', '%' . $metaValue . '%');
-            }
-
-            if ($searchTerm->hasSearchTerm()) {
-                $searchAnd->add(
-                    $qb->expr()->orX(
-                        $qb->expr()->like('c.name', ':searchTerm'),
-                        $qb->expr()->like('c.comment', ':searchTerm'),
-                        $qb->expr()->like('c.company', ':searchTerm'),
-                        $qb->expr()->like('c.vatId', ':searchTerm'),
-                        $qb->expr()->like('c.number', ':searchTerm'),
-                        $qb->expr()->like('c.contact', ':searchTerm'),
-                        $qb->expr()->like('c.phone', ':searchTerm'),
-                        $qb->expr()->like('c.email', ':searchTerm'),
-                        $qb->expr()->like('c.address', ':searchTerm')
-                    )
-                );
-                $qb->setParameter('searchTerm', '%' . $searchTerm->getSearchTerm() . '%');
-            }
-
-            if ($searchAnd->count() > 0) {
-                $qb->andWhere($searchAnd);
-            }
-        }
+        $this->addSearchTerm($qb, $query);
 
         return $qb;
+    }
+
+    private function getMetaFieldClass(): string
+    {
+        return CustomerMeta::class;
+    }
+
+    private function getMetaFieldName(): string
+    {
+        return 'customer';
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getSearchableFields(): array
+    {
+        return ['c.name', 'c.comment', 'c.company', 'c.vatId', 'c.number', 'c.contact', 'c.phone', 'c.email', 'c.address'];
     }
 
     public function getPagerfantaForQuery(CustomerQuery $query): Pagerfanta

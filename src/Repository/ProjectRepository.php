@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\ProjectComment;
+use App\Entity\ProjectMeta;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
@@ -35,6 +36,8 @@ use Pagerfanta\Pagerfanta;
  */
 class ProjectRepository extends EntityRepository
 {
+    use RepositorySearchTrait;
+
     /**
      * @param mixed $id
      * @param null $lockMode
@@ -378,39 +381,27 @@ class ProjectRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser());
 
-        if ($query->hasSearchTerm()) {
-            $searchAnd = $qb->expr()->andX();
-            $searchTerm = $query->getSearchTerm();
-
-            foreach ($searchTerm->getSearchFields() as $metaName => $metaValue) {
-                $qb->leftJoin('p.meta', 'meta');
-                $searchAnd->add(
-                    $qb->expr()->andX(
-                        $qb->expr()->eq('meta.name', ':metaName'),
-                        $qb->expr()->like('meta.value', ':metaValue')
-                    )
-                );
-                $qb->setParameter('metaName', $metaName);
-                $qb->setParameter('metaValue', '%' . $metaValue . '%');
-            }
-
-            if ($searchTerm->hasSearchTerm()) {
-                $searchAnd->add(
-                    $qb->expr()->orX(
-                        $qb->expr()->like('p.name', ':searchTerm'),
-                        $qb->expr()->like('p.comment', ':searchTerm'),
-                        $qb->expr()->like('p.orderNumber', ':searchTerm')
-                    )
-                );
-                $qb->setParameter('searchTerm', '%' . $searchTerm->getSearchTerm() . '%');
-            }
-
-            if ($searchAnd->count() > 0) {
-                $qb->andWhere($searchAnd);
-            }
-        }
+        $this->addSearchTerm($qb, $query);
 
         return $qb;
+    }
+
+    private function getMetaFieldClass(): string
+    {
+        return ProjectMeta::class;
+    }
+
+    private function getMetaFieldName(): string
+    {
+        return 'project';
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getSearchableFields(): array
+    {
+        return ['p.name', 'p.comment', 'p.orderNumber'];
     }
 
     private function addProjectStartAndEndDate(QueryBuilder $qb, ?DateTime $begin, ?DateTime $end): Andx
