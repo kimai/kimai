@@ -32,6 +32,7 @@ use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
@@ -1227,10 +1228,18 @@ class TimesheetRepository extends EntityRepository
             ->andWhere($qb->expr()->isNotNull('t.end'))
             ->andWhere($or)
             ->setParameter('begin', $begin)
+            ->setParameter('user', $timesheet->getUser()->getId())
         ;
+
+        // if we edit an existing entry, make sure we do not find "the same entry" when only updating eg. the description
+        if ($timesheet->getId() !== null) {
+            $qb->andWhere($qb->expr()->neq('t.id', $timesheet->getId()));
+        }
 
         try {
             $result = (int) $qb->getQuery()->getSingleScalarResult();
+        } catch (NoResultException $ex) {
+            return false;
         } catch (NonUniqueResultException $ex) {
             return true;
         }
