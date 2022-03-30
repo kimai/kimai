@@ -1196,6 +1196,11 @@ class TimesheetRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
+        $qb
+            ->select($qb->expr()->count('t.id'))
+            ->from(Timesheet::class, 't')
+        ;
+
         $or = $qb->expr()->orX(
             $qb->expr()->between(':begin', 't.begin', 't.end')
         );
@@ -1216,8 +1221,7 @@ class TimesheetRepository extends EntityRepository
         $begin = clone $timesheet->getBegin();
         $begin->add(new DateInterval('PT1S'));
 
-        $qb->select($qb->expr()->count('t.id'))
-            ->from(Timesheet::class, 't')
+        $qb
             ->andWhere($qb->expr()->eq('t.user', ':user'))
             ->andWhere($qb->expr()->isNotNull('t.end'))
             ->andWhere($or)
