@@ -127,7 +127,6 @@ export default class KimaiFormSelect extends KimaiPlugin {
             matcher: this.matcher,
             dropdownAutoWidth: true,
             width: "resolve",
-            matcher: this.matcher,
             templateSelection: templateFunc,
             templateResult: templateFunc
         }};

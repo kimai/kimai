@@ -31,6 +31,7 @@
 // add a colored square in front of an option if the color attribute is set
 .select2-container--bootstrap .colored-option {
     display: flex;
+
     &:before {
         $size: 20px;
         background-color: var(--color);
@@ -40,7 +41,8 @@
         margin-right: 10px;
         width: $size;
     }
-// add a colored dot in front of an option if the color attribute is set
+}
+// add a colored dot spacing in table
 .select2-container--bootstrap .color-dot {
     margin-right: 5px;
 }
