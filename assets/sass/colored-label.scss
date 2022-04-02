@@ -1,0 +1,25 @@
+@import "variables";
+
+.color-dot {
+  $size: 9px;
+  background-color: var(--color, $gray-lte);
+  border-radius: $size / 2;
+  display: inline-block;
+  flex-shrink: 0;
+  height: $size;
+  width: $size;
+}
+
+.box-title {
+  --label-alignment: center;
+  --color-dot-margin: 7px;
+}
+
+.colored-label {
+  display: flex;
+  align-items: var(--label-alignment, baseline);
+
+  .color-dot {
+    margin-right: var(--color-dot-margin, 5px);
+  }
+}

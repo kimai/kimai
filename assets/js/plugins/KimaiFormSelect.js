@@ -118,7 +118,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
         // wrap option with color information, if the attribute is set
         const templateFunc = function (data) {
             const color = data.element?.dataset?.color ?? null;
-            return color ? jQuery(`<span><i class="color-dot" style="--color: ${color}"></i> ${data.text}</span>`) : data.text;
+            return color ? jQuery(`<span class="colored-label"><i class="color-dot" style="--color: ${color}"></i> <span>${data.text}</span></span>`) : data.text;
         };
 
         options = {...options, ...{

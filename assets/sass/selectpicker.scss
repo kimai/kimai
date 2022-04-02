@@ -28,21 +28,7 @@
     table-layout: fixed;
 }
 
-// add a colored square in front of an option if the color attribute is set
-.select2-container--bootstrap .colored-option {
+// align the choice option with the colored label
+.select2-selection--multiple .select2-selection__choice {
     display: flex;
-
-    &:before {
-        $size: 20px;
-        background-color: var(--color);
-        content: '';
-        display: inline-block;
-        height: $size;
-        margin-right: 10px;
-        width: $size;
-    }
-}
-// add a colored dot spacing in table
-.select2-container--bootstrap .color-dot {
-    margin-right: 5px;
 }

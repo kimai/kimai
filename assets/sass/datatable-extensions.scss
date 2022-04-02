@@ -19,21 +19,6 @@ table.dataTable.table > tbody > tr > td {
     }
 }
 
-span.label-color,
-span.label-meta,
-span.label-tag,
-span.label-user,
-span.label-activity,
-span.label-project,
-span.label-customer {
-    display: flex;
-    align-items: baseline;
-
-    .color-dot {
-        margin-right: 3px;
-    }
-}
-
 table.dataTable {
     /* action column */
     .actions {

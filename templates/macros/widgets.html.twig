@@ -155,7 +155,7 @@
 {# for @internal use only #}
 {% macro label_color_dot(type, isVisible, name, url, color) %}
     {% apply spaceless %}
-    <span class="label-{{ type }}{{ isVisible is same as (false) ? ' label-invisible' : '' }}">
+    <span class="colored-label label-{{ type }}{{ isVisible is same as (false) ? ' label-invisible' : '' }}">
         {{ _self.color_dot_icon(color) }}
         <span>
         {%- if url is not empty -%}
