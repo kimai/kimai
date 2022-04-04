@@ -43,8 +43,7 @@ class Configuration
     /**
      * @var string|null
      *
-     * @ORM\Column(name="value", type="string", length=1024, nullable=true)
-     * @Assert\Length(max=1024, allowEmptyString=true)
+     * @ORM\Column(name="value", type="text", nullable=true)
      */
     private $value;
 
