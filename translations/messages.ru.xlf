@@ -1258,7 +1258,11 @@
       </trans-unit>
       <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
+        <target state="translated">Отображение записей в списках выбора</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>Автоматический</target>
       </trans-unit>
     </body>
   </file>

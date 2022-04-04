@@ -987,7 +987,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>Diese Daten werden ebenfalls mit gelöscht! Alternativ können Sie einen Eintrag auswählen, auf den alle existierenden Daten umgebucht werden:</target>
+        <target>Diese Daten werden ebenfalls gelöscht! Alternativ können Sie einen Eintrag auswählen, auf den alle existierenden Daten umgebucht werden:</target>
       </trans-unit>
       <trans-unit id="_ohHsMM" resname="create">
         <source>create</source>
