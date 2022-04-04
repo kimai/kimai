@@ -54,37 +54,11 @@ trait StringAccessibleConfigTrait
             return;
         }
 
-        // this foreach should be replaced by a better piece of code,
-        // especially the pointers could be a problem in the future
         foreach ($this->getConfigurations($this->repository) as $configuration) {
-            $temp = explode('.', $configuration->getName());
-            $this->setConfiguration($temp, $configuration->getValue());
+            $this->set($configuration->getName(), $configuration->getValue());
         }
 
         $this->initialized = true;
-    }
-
-    private function setConfiguration(array $keys, ?string $value): void
-    {
-        $array = &$this->settings;
-        if ($keys[0] === $this->getPrefix()) {
-            $keys = \array_slice($keys, 1);
-        }
-        foreach ($keys as $key2) {
-            if (!\array_key_exists($key2, $array)) {
-                $array[$key2] = $value;
-                continue;
-            }
-            if (\is_array($array[$key2])) {
-                $array = &$array[$key2];
-            } elseif (\is_bool($array[$key2])) {
-                $array[$key2] = (bool) $value;
-            } elseif (\is_int($array[$key2])) {
-                $array[$key2] = (int) $value;
-            } else {
-                $array[$key2] = $value;
-            }
-        }
     }
 
     /**
@@ -186,7 +160,7 @@ trait StringAccessibleConfigTrait
      */
     public function offsetSet($offset, $value)
     {
-        $this->setConfiguration(explode('.', $offset), $value);
+        $this->set($offset, $value);
     }
 
     /**
@@ -196,5 +170,44 @@ trait StringAccessibleConfigTrait
     public function offsetUnset($offset)
     {
         throw new \BadMethodCallException('SystemBundleConfiguration does not support offsetUnset()');
+    }
+
+    /**
+     * Set an array item to a given value using "dot" notation.
+     *
+     * If no key is given to the method, the entire array will be replaced.
+     *
+     * @see https://github.com/divineomega/array_undot
+     * @param string $key
+     * @param mixed $value
+     *
+     * @return array
+     */
+    private function set(string $key, $value): array
+    {
+        $array = &$this->settings;
+        $keys = explode('.', $key);
+        while (\count($keys) > 1) {
+            $key = array_shift($keys);
+            if (!isset($array[$key]) || !\is_array($array[$key])) {
+                $array[$key] = [];
+            }
+
+            $array = &$array[$key];
+        }
+
+        $k = array_shift($keys);
+
+        if (\array_key_exists($k, $array)) {
+            if (\is_bool($array[$k])) {
+                $value = (bool) $value;
+            } elseif (\is_int($array[$k])) {
+                $value = (int) $value;
+            }
+        }
+
+        $array[$k] = $value;
+
+        return $array;
     }
 }

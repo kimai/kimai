@@ -78,7 +78,7 @@ The best way to start is to [open a new issue](https://github.com/kevinpapst/kim
 
 In case you want to contribute, but you wouldn't know how, here are some suggestions:
 
-- Spread the word: More user means more people testing and contributing to Kimai - which in turn means better stability and more and better features. Please vote for Kimai on platforms lie Slant, Product Hunt, Softpedia or AlternativeTo, you can tweet about it, share it on LinkedIn, reddit or any of your favorite social media platforms. Every little bit helps!
+- Spread the word: More user means more people testing and contributing to Kimai - which in turn means better stability and more and better features. Please vote for Kimai on platforms like Slant, Product Hunt, Softpedia or AlternativeTo, you can tweet about it, share it on LinkedIn, reddit or any of your favorite social media platforms. Every bit helps!
 - Answer questions: You know the answer to another user's problem? Share your knowledge!
 - Make a feature request: Something can be done better? Something essential missing? Let us know!
 - Report bugs

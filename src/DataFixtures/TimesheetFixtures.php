@@ -38,7 +38,6 @@ class TimesheetFixtures extends Fixture implements FixtureGroupInterface
     public const MIN_TIMESHEETS_PER_USER = 50;
     public const MAX_TIMESHEETS_PER_USER = 500;
     public const MAX_TIMESHEETS_TOTAL = 200;
-    public const MAX_RUNNING_TIMESHEETS_PER_USER = 1;
     public const MIN_MINUTES_PER_ENTRY = 15;
     public const MAX_MINUTES_PER_ENTRY = 840; // 14h
     public const MAX_DESCRIPTION_LENGTH = 200;
@@ -87,7 +86,7 @@ class TimesheetFixtures extends Fixture implements FixtureGroupInterface
                 if ($i % 3 === 0) {
                     $description = $faker->realText($faker->numberBetween(10, self::MAX_DESCRIPTION_LENGTH));
                 } elseif ($i % 7 === 0) {
-                    $description = substr($faker->text, 0, self::MAX_DESCRIPTION_LENGTH);
+                    $description = substr($faker->text(), 0, self::MAX_DESCRIPTION_LENGTH);
                 }
 
                 $entry = $this->createTimesheetEntry(
@@ -109,8 +108,7 @@ class TimesheetFixtures extends Fixture implements FixtureGroupInterface
             }
 
             // create active recordings for test user
-            $activeEntries = rand(0, self::MAX_RUNNING_TIMESHEETS_PER_USER);
-            for ($i = 0; $i < $activeEntries; $i++) {
+            if (rand(0, 10) >= 5) {
                 $entry = $this->createTimesheetEntry(
                     $user,
                     $activities[array_rand($activities)],
