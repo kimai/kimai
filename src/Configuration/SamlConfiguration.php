@@ -9,7 +9,7 @@
 
 namespace App\Configuration;
 
-final class SamlConfiguration
+final class SamlConfiguration implements SamlConfigurationInterface
 {
     private $configuration;
 
