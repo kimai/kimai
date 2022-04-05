@@ -9,6 +9,9 @@
 
 namespace App\Configuration;
 
+/**
+ * @CloudRequired
+ */
 final class SamlConfiguration implements SamlConfigurationInterface
 {
     private $configuration;
