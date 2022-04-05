@@ -9,7 +9,7 @@
 
 namespace App\Saml\User;
 
-use App\Configuration\SamlConfiguration;
+use App\Configuration\SamlConfigurationInterface;
 use App\Entity\User;
 use App\Saml\Token\SamlTokenInterface;
 
@@ -17,7 +17,7 @@ final class SamlUserFactory
 {
     private $configuration;
 
-    public function __construct(SamlConfiguration $configuration)
+    public function __construct(SamlConfigurationInterface $configuration)
     {
         $this->configuration = $configuration;
     }

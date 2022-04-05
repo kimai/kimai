@@ -9,7 +9,7 @@
 
 namespace App\Saml;
 
-use App\Configuration\SamlConfiguration;
+use App\Configuration\SamlConfigurationInterface;
 use OneLogin\Saml2\Auth;
 use OneLogin\Saml2\Utils;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -22,7 +22,7 @@ class SamlAuthFactory
     private $request;
     private $configuration;
 
-    public function __construct(RequestStack $request, SamlConfiguration $configuration)
+    public function __construct(RequestStack $request, SamlConfigurationInterface $configuration)
     {
         $this->request = $request;
         $this->configuration = $configuration;
