@@ -975,7 +975,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $this->username = $identifier;
     }
 
-    public function setEmail(string $email): User
+    public function setEmail(?string $email): User
     {
         $this->email = $email;
 
