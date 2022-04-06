@@ -24,7 +24,6 @@ class UserValidationTest extends KernelTestCase
     {
         return [
             ['', ''],
-            [null, null],
             ['x', 'test@'], // too short username
             [str_pad('#', 61, '-'), 'test@x.'], // too long username
         ];
