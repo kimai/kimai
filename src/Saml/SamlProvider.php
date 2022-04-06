@@ -9,7 +9,7 @@
 
 namespace App\Saml;
 
-use App\Configuration\SamlConfiguration;
+use App\Configuration\SamlConfigurationInterface;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -21,7 +21,7 @@ final class SamlProvider
     public function __construct(
         private UserRepository $repository,
         private UserProviderInterface $userProvider,
-        private SamlConfiguration $configuration
+        private SamlConfigurationInterface $configuration
     ) {
     }
 
