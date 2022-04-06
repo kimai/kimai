@@ -46,7 +46,7 @@ class HtmlRendererTest extends AbstractRendererTest
     {
         $kernel = self::bootKernel();
         /** @var Environment $twig */
-        $twig = $kernel->getContainer()->get('twig');
+        $twig = self::getContainer()->get('twig');
 
         $token = $this->createMock(TokenInterface::class);
         $token->expects($this->any())->method('getUser')->willReturn(new User());
@@ -57,7 +57,7 @@ class HtmlRendererTest extends AbstractRendererTest
         $app = $twig->getGlobals()['app'];
         $twig->addGlobal('app', $app);
         $app->setTokenStorage($tokenStorage);
-        $stack = $kernel->getContainer()->get('request_stack');
+        $stack = self::getContainer()->get('request_stack');
         $request = new Request();
         $request->setLocale('en');
         $stack->push($request);

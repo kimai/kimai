@@ -192,7 +192,7 @@ class ProfileControllerTest extends ControllerBaseTest
         $user = $this->getUserByRole(User::ROLE_USER);
 
         /** @var PasswordHasherFactoryInterface $passwordEncoder */
-        $passwordEncoder = static::$kernel->getContainer()->get('test.PasswordEncoder');
+        $passwordEncoder = self::getContainer()->get('security.password_hasher_factory');
 
         $this->assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), UserFixtures::DEFAULT_PASSWORD));
         $this->assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), 'test123'));
@@ -252,7 +252,7 @@ class ProfileControllerTest extends ControllerBaseTest
         /** @var User $user */
         $user = $this->getUserByRole(User::ROLE_USER);
         /** @var PasswordHasherFactoryInterface $passwordEncoder */
-        $passwordEncoder = static::$kernel->getContainer()->get('test.PasswordEncoder');
+        $passwordEncoder = self::getContainer()->get('security.password_hasher_factory');
 
         $this->assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN));
         $this->assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), 'test1234'));

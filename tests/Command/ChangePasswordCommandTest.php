@@ -17,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
 /**
  * @covers \App\Command\ChangePasswordCommand
@@ -92,15 +93,14 @@ class ChangePasswordCommandTest extends KernelTestCase
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString('[OK] Changed password for user "john_user".', $output);
 
-        $container = self::$kernel->getContainer();
         /** @var UserRepository $userRepository */
-        $userRepository = $container->get('doctrine')->getRepository(User::class);
+        $userRepository = self::getContainer()->get('doctrine')->getRepository(User::class);
         $user = $userRepository->loadUserByIdentifier('john_user');
         self::assertInstanceOf(User::class, $user);
 
-        $container = self::$kernel->getContainer();
-        $encoderService = $container->get('security.password_encoder');
-        self::assertTrue($encoderService->isPasswordValid($user, '0987654321'));
+        /** @var PasswordHasherFactoryInterface $passwordEncoder */
+        $passwordEncoder = self::getContainer()->get('security.password_hasher_factory');
+        self::assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), '0987654321'));
     }
 
     public function testWithMissingUsername()

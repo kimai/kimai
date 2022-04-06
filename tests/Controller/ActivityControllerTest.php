@@ -215,7 +215,7 @@ class ActivityControllerTest extends ControllerBaseTest
     public function testCreateActionShowsMetaFields()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        static::$kernel->getContainer()->get('event_dispatcher')->addSubscriber(new ActivityTestMetaFieldSubscriberMock());
+        self::getContainer()->get('event_dispatcher')->addSubscriber(new ActivityTestMetaFieldSubscriberMock());
         $this->assertAccessIsGranted($client, '/admin/activity/create');
         $this->assertTrue($client->getResponse()->isSuccessful());
 

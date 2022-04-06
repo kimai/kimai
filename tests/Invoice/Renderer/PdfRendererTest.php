@@ -44,8 +44,8 @@ class PdfRendererTest extends KernelTestCase
     {
         $kernel = self::bootKernel();
         /** @var Environment $twig */
-        $twig = $kernel->getContainer()->get('twig');
-        $stack = $kernel->getContainer()->get('request_stack');
+        $twig = self::getContainer()->get('twig');
+        $stack = self::getContainer()->get('request_stack');
         $cacheDir = $kernel->getContainer()->getParameter('kernel.cache_dir');
 
         $request = new Request();

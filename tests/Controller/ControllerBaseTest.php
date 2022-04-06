@@ -51,9 +51,8 @@ abstract class ControllerBaseTest extends WebTestCase
 
     protected function loadUserFromDatabase(string $username)
     {
-        $container = self::$kernel->getContainer();
         /** @var UserRepository $userRepository */
-        $userRepository = $container->get('doctrine')->getRepository(User::class);
+        $userRepository = self::getContainer()->get('doctrine')->getRepository(User::class);
         $user = $userRepository->loadUserByIdentifier($username);
         self::assertInstanceOf(User::class, $user);
 
@@ -62,7 +61,7 @@ abstract class ControllerBaseTest extends WebTestCase
 
     protected function setSystemConfiguration(string $name, $value): void
     {
-        $repository = static::$kernel->getContainer()->get(ConfigurationRepository::class);
+        $repository = self::getContainer()->get(ConfigurationRepository::class);
 
         $entity = $repository->findOneBy(['name' => $name]);
         if ($entity === null) {
@@ -77,7 +76,7 @@ abstract class ControllerBaseTest extends WebTestCase
     protected function clearConfigCache()
     {
         /** @var ConfigurationRepository $repository */
-        $repository = static::$kernel->getContainer()->get(ConfigurationRepository::class);
+        $repository = self::getContainer()->get(ConfigurationRepository::class);
         $repository->clearCache();
     }
 
@@ -450,9 +449,6 @@ abstract class ControllerBaseTest extends WebTestCase
 
     protected function getCsrfToken(HttpKernelBrowser $client, string $name): CsrfToken
     {
-        //return $client->getContainer()->get('security.csrf.token_manager')->getToken($name);
-
-        return static::$kernel->getContainer()->get('security.csrf.token_manager')->getToken($name);
-        //return static::getContainer()->get('security.csrf.token_manager')->getToken($name);
+        return self::getContainer()->get('security.csrf.token_manager')->getToken($name);
     }
 }
