@@ -32,6 +32,10 @@ final class SecurityController extends AbstractController
      */
     public function loginAction(Request $request): Response
     {
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('homepage');
+        }
+
         /** @var SessionInterface $session */
         $session = $request->getSession();
 

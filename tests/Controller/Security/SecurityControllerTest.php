@@ -10,6 +10,7 @@
 namespace App\Tests\Controller\Security;
 
 use App\Controller\Security\SecurityController;
+use App\Entity\User;
 use App\Tests\Controller\ControllerBaseTest;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
@@ -66,6 +67,21 @@ class SecurityControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client); // redirect to root URL
         $client->followRedirect();
+
+        $this->assertIsRedirect($client, '/homepage'); // redirect to homepage
+        $client->followRedirect();
+
+        $this->assertIsRedirect($client, '/timesheet/'); // redirect to configured start page
+        $client->followRedirect();
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
+
+    public function testLoginAlreadyLoggedIn()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $this->request($client, '/login');
 
         $this->assertIsRedirect($client, '/homepage'); // redirect to homepage
         $client->followRedirect();
