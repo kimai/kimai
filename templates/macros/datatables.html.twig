@@ -167,29 +167,23 @@
     {% if (route is not empty and entries is not null) or multi_update_form is not null%}
     <div class="card-footer d-flex align-items-center">
         {% if multi_update_form is not null %}
-            <div id="multi_update_form" style="display: none" class="col">
-                {{ form_start(multi_update_form, {'attr': {'data-question': 'update_multiple'|trans}}) }}
-                    {% for formChild in multi_update_form.children %}
-                        {{ form_widget(formChild) }}
-                    {% endfor %}
-                {{ form_end(multi_update_form) }}
-            </div>
+            {{ form_start(multi_update_form, {'attr': {'id': 'multi_update_form', 'style': 'display:none', 'data-question': 'update_multiple'|trans}}) }}
+                {% for formChild in multi_update_form.children %}
+                    {{ form_widget(formChild) }}
+                {% endfor %}
+            {{ form_end(multi_update_form) }}
         {% endif %}
         {% if route is not empty and entries is not null %}
-            <div class="col multi_update_form_hide">
-                <p class="m-0 text-muted">
-                    {{ 'pagination'|trans({'%start%': entries.getCurrentPageOffsetStart(), '%end%': entries.getCurrentPageOffsetEnd(), '%total%': entries.getNbResults()}) }}
-                </p>
-            </div>
-            <div class="col-auto">
-                {% set options = { 'css_container_class': 'pagination m-0 ms-auto d-print-none' } %}
-                {% if route is iterable %}
-                    {% set options = options|merge(route) %}
-                {% else %}
-                    {% set options = options|merge({routeName: route}) %}
-                {% endif %}
-                {{ pagination(entries, options) }}
-            </div>
+            <p class="d-none d-sm-block m-0 text-muted multi_update_form_hide">
+                {{ 'pagination'|trans({'%start%': entries.getCurrentPageOffsetStart(), '%end%': entries.getCurrentPageOffsetEnd(), '%total%': entries.getNbResults()}) }}
+            </p>
+            {% set options = { 'css_container_class': 'pagination m-0 ms-auto d-print-none' } %}
+            {% if route is iterable %}
+                {% set options = options|merge(route) %}
+            {% else %}
+                {% set options = options|merge({routeName: route}) %}
+            {% endif %}
+            {{ pagination(entries, options) }}
         {% endif %}
     </div>
     {% endif %}

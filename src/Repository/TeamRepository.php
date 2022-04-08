@@ -17,10 +17,10 @@ use App\Repository\Loader\TeamLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TeamQuery;
+use App\Utils\Pagination;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Pagerfanta;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<Team>
@@ -107,9 +107,9 @@ class TeamRepository extends EntityRepository
         return $qb;
     }
 
-    public function getPagerfantaForQuery(TeamQuery $query): Pagerfanta
+    public function getPagerfantaForQuery(TeamQuery $query): Pagination
     {
-        $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
+        $paginator = new Pagination($this->getPaginatorForQuery($query));
         $paginator->setMaxPerPage($query->getPageSize());
         $paginator->setCurrentPage($query->getPage());
 

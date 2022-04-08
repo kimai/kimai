@@ -13,8 +13,8 @@ use App\Entity\Timesheet;
 use App\Repository\Loader\TimesheetLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Query\TimesheetQuery;
+use App\Utils\Pagination;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Pagerfanta;
 
 final class TimesheetResult
 {
@@ -78,12 +78,12 @@ final class TimesheetResult
         return $this->resultCache;
     }
 
-    public function getPagerfanta(bool $fullyHydrated = false): Pagerfanta
+    public function getPagerfanta(bool $fullyHydrated = false): Pagination
     {
         $qb = clone $this->queryBuilder;
 
         $loader = new LoaderPaginator(new TimesheetLoader($qb->getEntityManager(), $fullyHydrated), $qb, $this->getStatistic()->getCount());
-        $paginator = new Pagerfanta($loader);
+        $paginator = new Pagination($loader);
         $paginator->setMaxPerPage($this->query->getPageSize());
         $paginator->setCurrentPage($this->query->getPage());
 

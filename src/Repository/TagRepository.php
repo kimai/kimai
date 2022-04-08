@@ -13,10 +13,10 @@ use App\Entity\Tag;
 use App\Repository\Paginator\QueryBuilderPaginator;
 use App\Repository\Query\TagFormTypeQuery;
 use App\Repository\Query\TagQuery;
+use App\Utils\Pagination;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Pagerfanta;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<Tag>
@@ -109,9 +109,9 @@ class TagRepository extends EntityRepository
      * - amount
      *
      * @param TagQuery $query
-     * @return Pagerfanta
+     * @return Pagination
      */
-    public function getTagCount(TagQuery $query)
+    public function getTagCount(TagQuery $query): Pagination
     {
         $qb = $this->getQueryBuilderForQuery($query);
         $qb
@@ -125,11 +125,11 @@ class TagRepository extends EntityRepository
 
         $paginator = new QueryBuilderPaginator($qb, $counter);
 
-        $pagerfanta = new Pagerfanta($paginator);
-        $pagerfanta->setMaxPerPage($query->getPageSize());
-        $pagerfanta->setCurrentPage($query->getPage());
+        $pager = new Pagination($paginator);
+        $pager->setMaxPerPage($query->getPageSize());
+        $pager->setCurrentPage($query->getPage());
 
-        return $pagerfanta;
+        return $pager;
     }
 
     private function getQueryBuilderForQuery(TagQuery $query): QueryBuilder

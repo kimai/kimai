@@ -9,6 +9,7 @@
 
 namespace App\Twig;
 
+use App\Utils\Pagination;
 use App\Utils\PaginationView;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
@@ -20,15 +21,10 @@ use Twig\TwigFunction;
 
 class PaginationExtension extends AbstractExtension
 {
-    /**
-     * @var ViewInterface
-     */
-    private $view;
-    private $router;
+    private ?ViewInterface $view = null;
 
-    public function __construct(UrlGeneratorInterface $router)
+    public function __construct(private UrlGeneratorInterface $router)
     {
-        $this->router = $router;
     }
 
     /**
@@ -50,14 +46,18 @@ class PaginationExtension extends AbstractExtension
         return $this->view;
     }
 
-    public function renderPagination(Pagerfanta $pagerfanta, array $options = [])
+    public function renderPagination(Pagerfanta|Pagination $pager, array $options = []): string
     {
+        if (!($pager instanceof Pagination)) {
+            @trigger_error('Twig function pagination() needs an instanceof Pagination, Pagerfanta given', E_USER_DEPRECATED);
+        }
+
         $routeGenerator = $this->createRouteGenerator($options);
 
-        return $this->getView()->render($pagerfanta, $routeGenerator, $options);
+        return $this->getView()->render($pager, $routeGenerator, $options);
     }
 
-    private function createRouteGenerator(array $options = [])
+    private function createRouteGenerator(array $options = []): \Closure
     {
         $options = array_replace([
             'routeName' => null,

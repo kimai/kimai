@@ -18,9 +18,9 @@ use App\Repository\Loader\InvoiceLoader;
 use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\InvoiceArchiveQuery;
+use App\Utils\Pagination;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Pagerfanta;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<Invoice>
@@ -283,9 +283,9 @@ class InvoiceRepository extends EntityRepository
         return new LoaderPaginator(new InvoiceLoader($qb->getEntityManager()), $qb, $counter);
     }
 
-    public function getPagerfantaForQuery(InvoiceArchiveQuery $query): Pagerfanta
+    public function getPagerfantaForQuery(InvoiceArchiveQuery $query): Pagination
     {
-        $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
+        $paginator = new Pagination($this->getPaginatorForQuery($query));
         $paginator->setMaxPerPage($query->getPageSize());
         $paginator->setCurrentPage($query->getPage());
 

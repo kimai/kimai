@@ -57,14 +57,18 @@ export default class KimaiMultiUpdateTable extends KimaiPlugin {
     toggleForm() 
     {
         const ids = this.getSelectedIds();
-        jQuery('#multi_update_table_entities').val(ids.join(','));
+        document.getElementById('multi_update_table_entities').value = ids.join(',');
 
         if (ids.length > 0) {
-            jQuery('.multi_update_form_hide').hide();
-            jQuery('#multi_update_form').show();
+            for (const element of document.getElementsByClassName('multi_update_form_hide')) {
+                element.style.setProperty('display', 'none', 'important');
+            }
+            document.getElementById('multi_update_form').style.display = null;//'block';
         } else {
-            jQuery('#multi_update_form').hide();
-            jQuery('.multi_update_form_hide').show();
+            document.getElementById('multi_update_form').style.setProperty('display', 'none', 'important');
+            for (const element of document.getElementsByClassName('multi_update_form_hide')) {
+                element.style.display = null;
+            }
         }
     }
     

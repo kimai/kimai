@@ -18,7 +18,6 @@ class PaginationTemplate extends TwitterBootstrap5Template
         return array_merge(
             parent::getDefaultOptions(),
             [
-                'proximity' => 1,
                 //'prev_message' = '←',
                 //'next_message' = '→',
                 'prev_message' => '<i class="fas fa-chevron-left"></i>',

@@ -38,7 +38,6 @@ use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\TeamRepository;
-use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -297,7 +296,6 @@ final class ProjectController extends AbstractController
         $query->addOrderGroup('visible', ActivityQuery::ORDER_DESC);
         $query->addOrderGroup('name', ActivityQuery::ORDER_ASC);
 
-        /* @var $entries Pagerfanta */
         $entries = $activityRepository->getPagerfantaForQuery($query);
 
         return $this->render('project/embed_activities.html.twig', [

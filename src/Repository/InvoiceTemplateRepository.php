@@ -13,9 +13,9 @@ use App\Entity\InvoiceTemplate;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Paginator\QueryBuilderPaginator;
 use App\Repository\Query\BaseQuery;
+use App\Utils\Pagination;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Pagerfanta;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<InvoiceTemplate>
@@ -57,9 +57,9 @@ class InvoiceTemplateRepository extends EntityRepository
         return new QueryBuilderPaginator($qb, $counter);
     }
 
-    public function getPagerfantaForQuery(BaseQuery $query): Pagerfanta
+    public function getPagerfantaForQuery(BaseQuery $query): Pagination
     {
-        $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
+        $paginator = new Pagination($this->getPaginatorForQuery($query));
         $paginator->setMaxPerPage($query->getPageSize());
         $paginator->setCurrentPage($query->getPage());
 

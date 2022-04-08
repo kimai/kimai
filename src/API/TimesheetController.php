@@ -31,7 +31,6 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Annotations as OA;
-use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -248,7 +247,6 @@ class TimesheetController extends BaseApiController
             $query->setModifiedAfter($factory->createDateTime($modifiedAfter));
         }
 
-        /** @var Pagerfanta $data */
         $data = $this->repository->getPagerfantaForQuery($query);
         $data = (array) $data->getCurrentPageResults();
 

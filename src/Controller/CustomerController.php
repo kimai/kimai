@@ -36,7 +36,6 @@ use App\Repository\Query\ProjectQuery;
 use App\Repository\TeamRepository;
 use App\Utils\FileHelper;
 use JeroenDesloovere\VCard\VCard;
-use Pagerfanta\Pagerfanta;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -278,7 +277,6 @@ final class CustomerController extends AbstractController
         $query->addOrderGroup('visible', ProjectQuery::ORDER_DESC);
         $query->addOrderGroup('name', ProjectQuery::ORDER_ASC);
 
-        /* @var $entries Pagerfanta */
         $entries = $projectRepository->getPagerfantaForQuery($query);
 
         return $this->render('customer/embed_projects.html.twig', [

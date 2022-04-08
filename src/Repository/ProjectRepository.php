@@ -21,6 +21,7 @@ use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\ProjectQuery;
+use App\Utils\Pagination;
 use DateTime;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityRepository;
@@ -28,7 +29,6 @@ use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Pagerfanta;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<Project>
@@ -359,9 +359,9 @@ class ProjectRepository extends EntityRepository
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
-    public function getPagerfantaForQuery(ProjectQuery $query): Pagerfanta
+    public function getPagerfantaForQuery(ProjectQuery $query): Pagination
     {
-        $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
+        $paginator = new Pagination($this->getPaginatorForQuery($query));
         $paginator->setMaxPerPage($query->getPageSize());
         $paginator->setCurrentPage($query->getPage());
 

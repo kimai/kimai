@@ -14,6 +14,16 @@ use Pagerfanta\View\TwitterBootstrap5View;
 
 class PaginationView extends TwitterBootstrap5View
 {
+    public function __construct(TemplateInterface $template = null)
+    {
+        parent::__construct($template);
+    }
+
+    protected function getDefaultProximity(): int
+    {
+        return 2;
+    }
+
     protected function createDefaultTemplate(): TemplateInterface
     {
         return new PaginationTemplate();

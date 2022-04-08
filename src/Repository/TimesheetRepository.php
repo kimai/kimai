@@ -27,6 +27,7 @@ use App\Repository\Paginator\LoaderPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\Result\TimesheetResult;
+use App\Utils\Pagination;
 use DateInterval;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
@@ -35,7 +36,6 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
 use InvalidArgumentException;
-use Pagerfanta\Pagerfanta;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<Timesheet>
@@ -704,9 +704,9 @@ class TimesheetRepository extends EntityRepository
         return true;
     }
 
-    public function getPagerfantaForQuery(TimesheetQuery $query): Pagerfanta
+    public function getPagerfantaForQuery(TimesheetQuery $query): Pagination
     {
-        $paginator = new Pagerfanta($this->getPaginatorForQuery($query));
+        $paginator = new Pagination($this->getPaginatorForQuery($query));
         $paginator->setMaxPerPage($query->getPageSize());
         $paginator->setCurrentPage($query->getPage());
 
