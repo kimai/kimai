@@ -55,6 +55,7 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
         $menuEvent = new ConfigureMainMenuEvent(
             $request,
             new MenuItemModel('main', 'menu.root'),
+            new MenuItemModel('apps', 'menu.apps', '', [], 'applications'),
             new MenuItemModel('admin', 'menu.admin', '', [], 'administration'),
             new MenuItemModel('system', 'menu.system', '', [], 'configuration')
         );
@@ -71,6 +72,9 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
             $event->addItem($child);
         }
 
+        if ($menuEvent->getAppsMenu()->hasChildren()) {
+            $event->addItem($menuEvent->getAppsMenu());
+        }
         if ($menuEvent->getAdminMenu()->hasChildren()) {
             $event->addItem($menuEvent->getAdminMenu());
         }

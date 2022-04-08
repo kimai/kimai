@@ -19,11 +19,11 @@ class MenuItemModel implements MenuItemInterface
     private array $routeArgs;
     private bool $isActive = false;
     /**
-     * @var array<MenuItemInterface>
+     * @var array<MenuItemModel>
      */
     private array $children = [];
     private ?string $icon;
-    private ?MenuItemInterface $parent = null;
+    private ?MenuItemModel $parent = null;
     private ?string $badge = null;
     private ?string $badgeColor = null;
     private static $dividerId = 0;
@@ -49,7 +49,7 @@ class MenuItemModel implements MenuItemInterface
         return $this->children;
     }
 
-    public function getChild(string $id): ?MenuItemInterface
+    public function getChild(string $id): ?MenuItemModel
     {
         foreach ($this->children as $child) {
             if ($child->getIdentifier() === $id) {
@@ -102,13 +102,16 @@ class MenuItemModel implements MenuItemInterface
         return $this->parent !== null;
     }
 
-    public function getParent(): ?MenuItemInterface
+    public function getParent(): ?MenuItemModel
     {
         return $this->parent;
     }
 
-    public function setParent($parent): void
+    public function setParent(MenuItemInterface|MenuItemModel $parent): void
     {
+        if (!($parent instanceof MenuItemModel)) {
+            throw new \Exception('MenuItemModel::setParent() expects a MenuItemModel');
+        }
         $this->parent = $parent;
     }
 
@@ -157,8 +160,12 @@ class MenuItemModel implements MenuItemInterface
         return false;
     }
 
-    public function addChild(MenuItemInterface $child): void
+    public function addChild(MenuItemInterface|MenuItemModel $child): void
     {
+        if (!($child instanceof MenuItemModel)) {
+            throw new \Exception('MenuItemModel::addChild() expects a MenuItemModel');
+        }
+
         // first item should not be a divider
         if (!$this->hasChildren() && $child->isDivider()) {
             return;
@@ -174,14 +181,18 @@ class MenuItemModel implements MenuItemInterface
         $this->children[] = $child;
     }
 
-    public function removeChild(MenuItemInterface $child): void
+    public function removeChild(MenuItemInterface|MenuItemModel $child): void
     {
+        if (!($child instanceof MenuItemModel)) {
+            throw new \Exception('MenuItemModel::removeChild() expects a MenuItemModel');
+        }
+
         if (false !== ($key = array_search($child, $this->children))) {
             unset($this->children[$key]);
         }
     }
 
-    public function getActiveChild(): ?MenuItemInterface
+    public function getActiveChild(): ?MenuItemModel
     {
         foreach ($this->children as $child) {
             if ($child->isActive()) {
@@ -217,7 +228,7 @@ class MenuItemModel implements MenuItemInterface
         return $this->badgeColor;
     }
 
-    private $childRoutes = [];
+    private array $childRoutes = [];
 
     public function setChildRoutes(array $routes): MenuItemModel
     {

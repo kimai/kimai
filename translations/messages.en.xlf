@@ -179,6 +179,10 @@
         <source>menu.homepage</source>
         <target>Dashboard</target>
       </trans-unit>
+      <trans-unit id="234UoOv6mx" resname="menu.apps">
+        <source>Apps</source>
+        <target>Applications</target>
+      </trans-unit>
       <trans-unit id="wvvYSw_" resname="menu.admin">
         <source>menu.admin</source>
         <target>Administration</target>

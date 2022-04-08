@@ -18,17 +18,8 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class ConfigureMainMenuEvent extends Event
 {
-    private $request;
-    private $menu;
-    private $admin;
-    private $system;
-
-    public function __construct(Request $request, MenuItemModel $mainMenu, MenuItemModel $admin, MenuItemModel $system)
+    public function __construct(private Request $request, private MenuItemModel $menu, private MenuItemModel $apps, private MenuItemModel $admin, private MenuItemModel $system)
     {
-        $this->request = $request;
-        $this->menu = $mainMenu;
-        $this->admin = $admin;
-        $this->system = $system;
     }
 
     public function getRequest(): Request
@@ -39,6 +30,26 @@ final class ConfigureMainMenuEvent extends Event
     public function getMenu(): MenuItemModel
     {
         return $this->menu;
+    }
+
+    public function getTimesheetMenu(): ?MenuItemModel
+    {
+        return $this->menu->getChild('timesheet');
+    }
+
+    public function getInvoiceMenu(): ?MenuItemModel
+    {
+        return $this->menu->getChild('invoice');
+    }
+
+    public function getReportingMenu(): ?MenuItemModel
+    {
+        return $this->menu->getChild('reporting');
+    }
+
+    public function getAppsMenu(): MenuItemModel
+    {
+        return $this->apps;
     }
 
     public function getAdminMenu(): MenuItemModel
