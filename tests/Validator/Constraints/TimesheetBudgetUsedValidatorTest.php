@@ -190,66 +190,72 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
     {
         return [
             // activity: violations ----------------------------------------------------------------------
-            //        previously logged                          available budgets                       expected violation                              duration            entry currently in database
-            'a_a' => [1230, null, null, null, null, null,       3600, null, null, null, null, null,     '00:20', '00:39', '01:00', 'activity',          '+3600 seconds'],
-            'a_b' => [null, 1001.0, null, null, null, null,     null, 1000.0, null, null, null, null,   '€1,001.00', '€0.00', '€1,000.00', 'activity',  '+3600 seconds'],
+            //        previously logged                         available budgets                                           expected violation                              duration            entry currently in database
+            'a_a' => [1230, null, null, null, null, null,       null, 3600, null, null, null, null, null, null, null,       '00:20', '00:39', '01:00', 'activity',          '+3600 seconds'],
+            'a_b' => [null, 1001.0, null, null, null, null,     null, null, 1000.0, null, null, null, null, null, null,     '€1,001.00', '€0.00', '€1,000.00', 'activity',  '+3600 seconds'],
 
             // activity: no violations
-            'a_c' => [1230, null, null, null, null, null,       null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds'],
-            'a_d' => [null, 1001.0, null, null, null, null,     null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds'],
-            'a_e' => [1230, 1001.0, null, null, null, null,     null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds'],
+            'a_c' => [1230, null, null, null, null, null,       null, null, null, null, null, null, null, null, null,       null, null, null, null,                         '+3600 seconds'],
+            'a_d' => [null, 1001.0, null, null, null, null,     null, null, null, null, null, null, null, null, null,       null, null, null, null,                         '+3600 seconds'],
+            'a_e' => [1230, 1001.0, null, null, null, null,     null, null, null, null, null, null, null, null, null,       null, null, null, null,                         '+3600 seconds'],
 
-            //        previously logged                          available budgets                       expected violation                              duration            entry currently in database
-            'a_f1' => [1320, null, null, null, null, null,       3600, null, null, null, null, null,     '00:22', '00:38', '01:00', 'activity',          '+3600 seconds',    ['rate' => 1.0, 'duration' => 1000]],
-            'a_h1' => [7200, null, null, null, null, null,       7200, null, null, null, null, null,     '02:00', '00:00', '02:00', 'activity',          '+3601 seconds',    ['rate' => 1.0, 'duration' => 3600]],
-            'a_h2' => [3601, null, null, null, null, null,       3600, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 3601]],
-            'a_g0' => [null, 1002.0, null, null, null, null,     null, 1000.0, null, null, null, null,   '1,002.00', '0.00', '1,000.00', 'activity',     '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
-            'a_g1' => [null, 1002.0, null, null, null, null,     null, 1000.0, null, null, null, null,   null, null, null, null,                         '+3600 seconds',    ['rate' => 2.0, 'duration' => 0]],
+            //        previously logged                         available budgets                                           expected violation                              duration            entry currently in database
+            'a_f1' => [1320, null, null, null, null, null,      null, 3600, null, null, null, null, null, null, null,       '00:22', '00:38', '01:00', 'activity',          '+3600 seconds',    ['rate' => 1.0, 'duration' => 1000]],
+            'a_h1' => [7200, null, null, null, null, null,      null, 7200, null, null, null, null, null, null, null,       '02:00', '00:00', '02:00', 'activity',          '+3601 seconds',    ['rate' => 1.0, 'duration' => 3600]],
+            'a_h2' => [3601, null, null, null, null, null,      null, 3600, null, null, null, null, null, null, null,       null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 3601]],
+            'a_g0' => [null, 1002.0, null, null, null, null,    null, null, 1000.0, null, null, null, null, null, null,     '1,002.00', '0.00', '1,000.00', 'activity',     '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
+            'a_g1' => [null, 1002.0, null, null, null, null,    null, null, 1000.0, null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds',    ['rate' => 2.0, 'duration' => 0]],
             // nothing changed => no violation
-            'a_x1' => [3600, 1000.0, null, null, null, null,     3600, 1000.0, null, null, null, null,   null, null, null, null,                         '+3600 seconds',    ['rate' => 1000.0, 'duration' => 3600], new Rate(1000.0, 0.00)],
+            'a_x1' => [3600, 1000.0, null, null, null, null,    null, 3600, 1000.0, null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds',    ['rate' => 1000.0, 'duration' => 3600], new Rate(1000.0, 0.00)],
+            // date changed => violation
+            'a_x2' => [3600, 1000.0, null, null, null, null,    'month', 3600, 1000.0, null, null, null, null, null, null,  '1,000.00', '0.00', '1,000.00', 'activity',     '+3600 seconds',    ['rate' => 999.0, 'duration' => 3599, 'begin' => new DateTime('2021-03-17 16:15:00'), 'end' => new DateTime('2021-03-17 17:15:01'), 'billable' => true], new Rate(1000.0, 0.00)],
+            // date changed but not violation was raised
+            'a_x3' => [3600, 1000.0, null, null, null, null,    'month', 3600, 1000.0, null, null, null, null, null, null,  null, null, null, null,                         '+3600 seconds',    ['rate' => 999.0, 'duration' => 3599, 'begin' => new DateTime('2021-03-17 16:15:00'), 'end' => new DateTime('2021-03-17 17:15:01'), 'billable' => false], new Rate(1000.0, 0.00)],
+            'a_x4' => [3600, 1000.0, null, null, null, null,    'month', 3600, 1000.0, null, null, null, null, null, null,  null, null, null, null,                         '+3600 seconds',    ['rate' => 1000.0, 'duration' => 3600, 'begin' => new DateTime('2021-03-17 16:15:00'), 'end' => new DateTime('2021-03-17 17:15:01'), 'billable' => true], new Rate(1000.0, 0.00)],
+            'a_x5' => [3600, 1000.0, null, null, null, null,    'month', 3600, 1000.0, null, null, null, null, null, null,  null, null, null, null,                         '+3600 seconds',    ['rate' => 1000.0, 'duration' => 3600, 'begin' => new DateTime('2021-03-17 16:15:00'), 'end' => new DateTime('2021-03-17 17:15:01'), 'billable' => false], new Rate(1000.0, 0.00)],
 
             // project: violations ----------------------------------------------------------------------
-            'p_j' => [null, null, 1230, null, null, null,       null, null, 3600, null, null, null,     '00:20', '00:39', '01:00', 'project',           '+3600 seconds'],
-            'p_k' => [null, null, null, 1001.0, null, null,     null, null, null, 1000.0, null, null,   '€1,001.00', '€0.00', '€1,000.00', 'project',   '+3600 seconds'],
+            'p_j' => [null, null, 1230, null, null, null,       null, null, null, null, 3600, null, null, null, null,       '00:20', '00:39', '01:00', 'project',           '+3600 seconds'],
+            'p_k' => [null, null, null, 1001.0, null, null,     null, null, null, null, null, 1000.0, null, null, null,     '€1,001.00', '€0.00', '€1,000.00', 'project',   '+3600 seconds'],
 
-            //        previously logged                          available budgets                       expected violation                              duration            entry currently in database
-            'p_f1' => [null, null, 1320, null, null, null,       null, null, 3600, null, null, null,     '00:22', '00:38', '01:00', 'project',           '+3600 seconds',    ['rate' => 1.0, 'duration' => 1000]],
-            'p_h1' => [null, null, 7200, null, null, null,       null, null, 7200, null, null, null,     '02:00', '00:00', '02:00', 'project',           '+3601 seconds',    ['rate' => 1.0, 'duration' => 3600]],
-            'p_h2' => [null, null, 3601, null, null, null,       null, null, 3600, null, null, null,     null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 3601]],
-            'p_g0' => [null, null, null, 1002.0, null, null,     null, null, null, 1000.0, null, null,   '1,002.00', '0.00', '1,000.00', 'project',      '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
-            'p_g1' => [null, null, null, 1002.0, null, null,     null, null, null, 1000.0, null, null,   null, null, null, null,                         '+3600 seconds',    ['rate' => 2.0, 'duration' => 0]],
+            //        previously logged                         available budgets                                           expected violation                              duration            entry currently in database
+            'p_f1' => [null, null, 1320, null, null, null,      null, null, null, null, 3600, null, null, null, null,       '00:22', '00:38', '01:00', 'project',           '+3600 seconds',    ['rate' => 1.0, 'duration' => 1000]],
+            'p_h1' => [null, null, 7200, null, null, null,      null, null, null, null, 7200, null, null, null, null,       '02:00', '00:00', '02:00', 'project',           '+3601 seconds',    ['rate' => 1.0, 'duration' => 3600]],
+            'p_h2' => [null, null, 3601, null, null, null,      null, null, null, null, 3600, null, null, null, null,       null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 3601]],
+            'p_g0' => [null, null, null, 1002.0, null, null,    null, null, null, null, null, 1000.0, null, null, null,     '1,002.00', '0.00', '1,000.00', 'project',      '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
+            'p_g1' => [null, null, null, 1002.0, null, null,    null, null, null, null, null, 1000.0, null, null, null,     null, null, null, null,                         '+3600 seconds',    ['rate' => 2.0, 'duration' => 0]],
 
             // project: no violations
-            'p_n' => [null, null, 1230, null, null, null,       null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds'],
-            'p_o' => [null, null, null, 1001.0, null, null,     null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds'],
-            'p_p' => [null, null, 1230, 1001, null, null,       null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds'],
+            'p_n' => [null, null, 1230, null, null, null,       null, null, null, null, null, null, null, null, null,       null, null, null, null,                         '+3600 seconds'],
+            'p_o' => [null, null, null, 1001.0, null, null,     null, null, null, null, null, null, null, null, null,       null, null, null, null,                         '+3600 seconds'],
+            'p_p' => [null, null, 1230, 1001, null, null,       null, null, null, null, null, null, null, null, null,       null, null, null, null,                         '+3600 seconds'],
 
-            'p_q' => [1230, null, 1230, null, null, null,       null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds'],
-            'p_r' => [1230, 1001.0, 1230, null, null, null,     null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds'],
-            'p_s' => [null, 1001.0, null, 1001.0, null, null,   null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds'],
-            'p_t' => [null, 1001.0, 1230, 1001.0, null, null,   null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds'],
-            'p_u' => [1230, 1001.0, 1230, 1001.0, null, null,   null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds'],
+            'p_q' => [1230, null, 1230, null, null, null,       null, null, null, null, null, null, null, null, null,       null, null, null, null,                         '+3600 seconds'],
+            'p_r' => [1230, 1001.0, 1230, null, null, null,     null, null, null, null, null, null, null, null, null,       null, null, null, null,                         '+3600 seconds'],
+            'p_s' => [null, 1001.0, null, 1001.0, null, null,   null, null, null, null, null, null, null, null, null,       null, null, null, null,                         '+3600 seconds'],
+            'p_t' => [null, 1001.0, 1230, 1001.0, null, null,   null, null, null, null, null, null, null, null, null,       null, null, null, null,                         '+3600 seconds'],
+            'p_u' => [1230, 1001.0, 1230, 1001.0, null, null,   null, null, null, null, null, null, null, null, null,       null, null, null, null,                         '+3600 seconds'],
 
             // customer: violations ----------------------------------------------------------------------
-            'c_v' => [null, null, null, null, 1230, null,       null, null, null, null, 3600, null,     '00:20', '00:39', '01:00', 'customer',          '+3600 seconds'],
-            'c_w' => [null, null, null, null, null, 1001.0,     null, null, null, null, null, 1000.0,   '€1,001.00', '€0.00', '€1,000.00', 'customer',  '+3600 seconds'],
+            'c_v' => [null, null, null, null, 1230, null,       null, null, null, null, null, null, null, 3600, null,       '00:20', '00:39', '01:00', 'customer',          '+3600 seconds'],
+            'c_w' => [null, null, null, null, null, 1001.0,     null, null, null, null, null, null, null, null, 1000.0,     '€1,001.00', '€0.00', '€1,000.00', 'customer',  '+3600 seconds'],
 
-            //        previously logged                          available budgets                       expected violation                              duration            entry currently in database
-            'c_f1' => [null, null, null, null, 1320, null,       null, null, null, null, 3600, null,     '00:22', '00:38', '01:00', 'customer',          '+3600 seconds',    ['rate' => 1.0, 'duration' => 1000]],
-            'c_h1' => [null, null, null, null, 7200, null,       null, null, null, null, 7200, null,     '02:00', '00:00', '02:00', 'customer',          '+3601 seconds',    ['rate' => 1.0, 'duration' => 3600]],
-            'c_h2' => [null, null, null, null, 3601, null,       null, null, null, null, 3600, null,     null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 3601]],
-            'c_g0' => [null, null, null, null, null, 1002.0,     null, null, null, null, null, 1000.0,   '1,002.00', '0.00', '1,000.00', 'customer',     '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
-            'c_g1' => [null, null, null, null, null, 1002.0,     null, null, null, null, null, 1000.0,   null, null, null, null,                         '+3600 seconds',    ['rate' => 2.0, 'duration' => 0]],
+            //        previously logged                         available budgets                                           expected violation                              duration            entry currently in database
+            'c_f1' => [null, null, null, null, 1320, null,      null, null, null, null, null, null, null, 3600, null,       '00:22', '00:38', '01:00', 'customer',          '+3600 seconds',    ['rate' => 1.0, 'duration' => 1000]],
+            'c_h1' => [null, null, null, null, 7200, null,      null, null, null, null, null, null, null, 7200, null,       '02:00', '00:00', '02:00', 'customer',          '+3601 seconds',    ['rate' => 1.0, 'duration' => 3600]],
+            'c_h2' => [null, null, null, null, 3601, null,      null, null, null, null, null, null, null, 3600, null,       null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 3601]],
+            'c_g0' => [null, null, null, null, null, 1002.0,    null, null, null, null, null, null, null, null, 1000.0,     '1,002.00', '0.00', '1,000.00', 'customer',     '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
+            'c_g1' => [null, null, null, null, null, 1002.0,    null, null, null, null, null, null, null, null, 1000.0,     null, null, null, null,                         '+3600 seconds',    ['rate' => 2.0, 'duration' => 0]],
 
             // customer: no violations
-            'c_z' => [null, null, null, null, 1230, null,       null, null, null, null, null, null,     null, null, null, null, '+3600 seconds'],
-            'c_1' => [null, null, null, null, null, 1001.0,     null, null, null, null, null, null,     null, null, null, null, '+3600 seconds'],
-            'c_2' => [null, null, null, null, 1230, 1001.0,     null, null, null, null, null, null,     null, null, null, null, '+3600 seconds'],
-            'c_3' => [1230, null, 1230, null, 1230, null,       null, null, null, null, null, null,     null, null, null, null, '+3600 seconds'],
-            'c_4' => [1230, 1001.0, 1230, null, null, 1001.0,   null, null, null, null, null, null,     null, null, null, null, '+3600 seconds'],
-            'c_5' => [null, 1001.0, null, 1001.0, 1230, 1001.0, null, null, null, null, null, null,     null, null, null, null, '+3600 seconds'],
-            'c_6' => [null, 1001.0, 1230, 1001.0, 1230, null,   null, null, null, null, null, null,     null, null, null, null, '+3600 seconds'],
-            'c_7' => [1230, 1001.0, 1230, 1001.0, null, 1001.0, null, null, null, null, null, null,     null, null, null, null, '+3600 seconds'],
+            'c_z' => [null, null, null, null, 1230, null,       null, null, null, null, null, null, null, null, null,       null, null, null, null, '+3600 seconds'],
+            'c_1' => [null, null, null, null, null, 1001.0,     null, null, null, null, null, null, null, null, null,       null, null, null, null, '+3600 seconds'],
+            'c_2' => [null, null, null, null, 1230, 1001.0,     null, null, null, null, null, null, null, null, null,       null, null, null, null, '+3600 seconds'],
+            'c_3' => [1230, null, 1230, null, 1230, null,       null, null, null, null, null, null, null, null, null,       null, null, null, null, '+3600 seconds'],
+            'c_4' => [1230, 1001.0, 1230, null, null, 1001.0,   null, null, null, null, null, null, null, null, null,       null, null, null, null, '+3600 seconds'],
+            'c_5' => [null, 1001.0, null, 1001.0, 1230, 1001.0, null, null, null, null, null, null, null, null, null,       null, null, null, null, '+3600 seconds'],
+            'c_6' => [null, 1001.0, 1230, 1001.0, 1230, null,   null, null, null, null, null, null, null, null, null,       null, null, null, null, '+3600 seconds'],
+            'c_7' => [1230, 1001.0, 1230, 1001.0, null, 1001.0, null, null, null, null, null, null, null, null, null,       null, null, null, null, '+3600 seconds'],
         ];
     }
 
@@ -263,10 +269,13 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         ?float $projectRate,
         ?int $customerDuration,
         ?float $customerRate,
+        ?string $activityBudgetType,
         ?int $activityTimeBudget,
         ?float $activityBudget,
+        ?string $projectBudgetType,
         ?int $projectTimeBudget,
         ?float $projectBudget,
+        ?string $customerBudgetType,
         ?int $customerTimeBudget,
         ?float $customerBudget,
         ?string $used,
@@ -334,9 +343,19 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             if (!\array_key_exists('duration', $rawData)) {
                 $rawData['duration'] = 0;
             }
+            if (!\array_key_exists('begin', $rawData)) {
+                $rawData['begin'] = clone $begin;
+            }
+            if (!\array_key_exists('end', $rawData)) {
+                $rawData['end'] = clone $end;
+            }
             $activity = $this->createMock(Activity::class);
             $activity->method('getId')->willReturn($rawData['activity']);
             $activity->method('isMonthlyBudget')->willReturn(false);
+            if ($activityBudgetType !== null) {
+                $activity->method('getBudgetType')->willReturn($activityBudgetType);
+                $activity->method('isMonthlyBudget')->willReturn($activityBudgetType === 'month');
+            }
             if ($activityTimeBudget !== null) {
                 $activity->method('getTimeBudget')->willReturn($activityTimeBudget);
                 $activity->method('hasTimeBudget')->willReturn(true);
@@ -351,6 +370,10 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             $customer = $this->createMock(Customer::class);
             $customer->method('getId')->willReturn($rawData['customer']);
             $customer->method('isMonthlyBudget')->willReturn(false);
+            if ($customerBudgetType !== null) {
+                $customer->method('getBudgetType')->willReturn($customerBudgetType);
+                $customer->method('isMonthlyBudget')->willReturn($customerBudgetType === 'month');
+            }
             if ($customerTimeBudget !== null) {
                 $customer->method('getTimeBudget')->willReturn($customerTimeBudget);
                 $customer->method('hasTimeBudget')->willReturn(true);
@@ -366,6 +389,10 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             $project->method('getId')->willReturn($rawData['project']);
             $project->method('getCustomer')->willReturn($customer);
             $project->method('isMonthlyBudget')->willReturn(false);
+            if ($projectBudgetType !== null) {
+                $project->method('getBudgetType')->willReturn($projectBudgetType);
+                $project->method('isMonthlyBudget')->willReturn($projectBudgetType === 'month');
+            }
             if ($projectTimeBudget !== null) {
                 $project->method('getTimeBudget')->willReturn($projectTimeBudget);
                 $project->method('hasTimeBudget')->willReturn(true);
@@ -376,7 +403,6 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
                 $project->method('hasBudget')->willReturn(true);
                 $project->method('hasBudgets')->willReturn(true);
             }
-
             $timesheet = $this->createMock(Timesheet::class);
             $timesheet->method('getId')->willReturn(1);
             $timesheet->method('getRate')->willReturn($rawData['rate']);
