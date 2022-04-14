@@ -35,7 +35,7 @@ class SystemConfigurationTest extends TestCase
         self::assertInstanceOf(SystemConfiguration::class, $sut->setConfiguration([]));
         self::assertEquals([], $sut->getConfiguration());
 
-        $config = new Configuration();
+        $config = new Configuration('1');
         self::assertInstanceOf(SystemConfiguration::class, $sut->setConfiguration([$config]));
         self::assertEquals([$config], $sut->getConfiguration());
 
@@ -45,12 +45,10 @@ class SystemConfigurationTest extends TestCase
         self::assertInstanceOf(SystemConfiguration::class, $sut->addConfiguration($config));
         self::assertEquals([$config, $config, $config], $sut->getConfiguration());
 
-        $config = new Configuration();
-        $config->setName('foo');
+        $config = new Configuration('foo');
         $sut->addConfiguration($config);
 
-        $config2 = new Configuration();
-        $config2->setName('bar');
+        $config2 = new Configuration('bar');
         $sut->addConfiguration($config2);
 
         self::assertSame($config, $sut->getConfigurationByName('foo'));

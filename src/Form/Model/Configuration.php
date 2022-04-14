@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Constraint;
 
 final class Configuration
 {
-    private string $name;
     private ?string $label = null;
     private string $translationDomain = 'messages';
     private string|int|null|bool|array $value = null;
@@ -28,16 +27,13 @@ final class Configuration
      */
     private array $constraints = [];
 
-    public function getName(): ?string
+    public function __construct(private string $name)
     {
-        return $this->name;
     }
 
-    public function setName(string $name): Configuration
+    public function getName(): string
     {
-        $this->name = $name;
-
-        return $this;
+        return $this->name;
     }
 
     public function getValue(): string|int|null|bool|object

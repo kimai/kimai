@@ -27,8 +27,8 @@ class SystemConfigurationEventTest extends TestCase
         self::assertInstanceOf(SystemConfigurationEvent::class, $sut->addConfiguration(new SystemConfiguration()));
         self::assertCount(1, $sut->getConfigurations());
 
-        $config = new Configuration();
-        $config->setName('foo')->setValue('bar');
+        $config = new Configuration('foo');
+        $config->setValue('bar');
         $sysConfig = new SystemConfiguration();
         $sysConfig->setConfiguration([$config]);
         $sut = new SystemConfigurationEvent([$sysConfig]);
