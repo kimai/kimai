@@ -42,11 +42,11 @@
         <source>You must select at least one user or team.</source>
         <target>You must select at least one user or team.</target>
       </trans-unit>
-      <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again.">
+      <trans-unit id="FacJOAm" resname="This invoice document cannot be used, please rename the file and upload it again.">
         <source>This invoice document cannot be used. Please rename the file and upload it again.</source>
         <target>This invoice document cannot be used. Please rename the file and upload it again.</target>
       </trans-unit>
-      <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date.">
+      <trans-unit id="2I4cGPH" resname="This period is locked, please choose a later date.">
         <source>This period is locked. Please choose a later date.</source>
         <target>This period is locked. Please choose a later date.</target>
       </trans-unit>

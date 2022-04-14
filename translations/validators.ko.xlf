@@ -22,11 +22,11 @@
         <source>You already have an entry for this time.</source>
         <target>이 시간에 대한 항목이 이미 있습니다.</target>
       </trans-unit>
-      <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date.">
+      <trans-unit id="2I4cGPH" resname="This period is locked, please choose a later date.">
         <source>This period is locked. Please choose a later date.</source>
         <target>이 기간은 잠겨 있습니다. 이후 날짜를 선택하십시오.</target>
       </trans-unit>
-      <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again.">
+      <trans-unit id="FacJOAm" resname="This invoice document cannot be used, please rename the file and upload it again.">
         <source>This invoice document cannot be used. Please rename the file and upload it again.</source>
         <target>이 청구서 문서는 사용할 수 없습니다. 파일 이름을 변경하고 다시 업로드하십시오.</target>
       </trans-unit>

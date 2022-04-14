@@ -250,7 +250,7 @@
         <source>label.theme.color_choices</source>
         <target>Tillate farger</target>
       </trans-unit>
-      <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
+      <trans-unit id="d.2_w8h" resname="help.theme.color_choices">
         <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
         <target state="needs-translation">Kommainndelt liste over HTML-fargekoder. Fargenavn kan settes ved å innlede fargekoden med et navn og «|»-skilletegn, f.eks. Hvit|#ffffff,Svart|#000000.</target>
       </trans-unit>

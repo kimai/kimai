@@ -179,7 +179,7 @@
         <source>menu.homepage</source>
         <target>Dashboard</target>
       </trans-unit>
-      <trans-unit id="234UoOv6mx" resname="menu.apps">
+      <trans-unit id="id10hEL" resname="menu.apps">
         <source>Apps</source>
         <target>Applications</target>
       </trans-unit>
@@ -262,7 +262,7 @@
         <source>error.too_many_entries</source>
         <target>The request could not be processed. Too many results were found.</target>
       </trans-unit>
-      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+      <trans-unit id="qQ5QmH2" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>The directory “%dir%” does not exist and could not be created.</target>
       </trans-unit>
@@ -353,7 +353,7 @@
         <source>label.skin</source>
         <target>Display: colors</target>
       </trans-unit>
-      <trans-unit id="O40d_3K" resname="label.theme.layout">
+      <trans-unit id="42BRM3Q" resname="label.theme.layout">
         <source>label.theme.layout</source>
         <target>Display: layout</target>
       </trans-unit>

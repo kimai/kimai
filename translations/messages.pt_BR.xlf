@@ -1249,7 +1249,7 @@
         <source>invoice_document.max_reached</source>
         <target>Atingiu o valor máximo de %max% documentos da nota fiscal. É possível adicionar mais depois de remover um.</target>
       </trans-unit>
-      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+      <trans-unit id="qQ5QmH2" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>O diretório “%dir%” não existe e não pôde ser criado.</target>
       </trans-unit>

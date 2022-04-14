@@ -22,7 +22,7 @@
         <source>timesheet.start.error</source>
         <target state="translated">시간 기록을 시작할 수 없습니다</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
+      <trans-unit id="OvX_TWM" resname="timesheet.start.exceeded_limit">
         <source>The limit of active time records has been reached. Please stop at least one running time measurement first.</source>
         <target state="translated">활성 시간 기록의 제한에 도달했습니다. 먼저 적어도 하나의 실행 시간 측정을 중지하십시오.</target>
       </trans-unit>

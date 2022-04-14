@@ -202,7 +202,7 @@
         <source>label.calendar.dragdrop_amount</source>
         <target>끌어서 놓기 항목 수 (0 = 비활성화됨)</target>
       </trans-unit>
-      <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
+      <trans-unit id="d.2_w8h" resname="help.theme.color_choices">
         <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
         <target>쉼표로 구분된 HTML 색상 코드 목록입니다. 색상 이름은 색상 코드 앞에 이름과 "|"를 붙여서 설정할 수 있습니다. 구분 기호, 예: 흰색|#ffffff, 검은색|#000000.</target>
       </trans-unit>

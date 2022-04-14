@@ -1196,7 +1196,7 @@
         <source>label.budgetType_full</source>
         <target>Жизненный цикл</target>
       </trans-unit>
-      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+      <trans-unit id="qQ5QmH2" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>Каталог «%dir%» не существует и не может быть создан.</target>
       </trans-unit>

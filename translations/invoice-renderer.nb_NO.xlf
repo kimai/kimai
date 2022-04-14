@@ -19,11 +19,11 @@
         <source>Html</source>
         <target>HTML (for utskrift via nettleser)</target>
       </trans-unit>
-      <trans-unit id="4NNx9U." resname="Docx">
+      <trans-unit id="S_G2jvB" resname="Docx">
         <source>Microsoft Word (DOCX)</source>
         <target>Microsoft Word (DOCX)</target>
       </trans-unit>
-      <trans-unit id="sXlZPOC" resname="Xls">
+      <trans-unit id="unF9ggH" resname="Xls">
         <source>Microsoft Excel (XLS)</source>
         <target>Microsoft Excel (XLS)</target>
       </trans-unit>
@@ -31,7 +31,7 @@
         <source>Ods</source>
         <target state="needs-translation">LibreOffice (regneark)</target>
       </trans-unit>
-      <trans-unit id="sjwwrr8" resname="Xlsx">
+      <trans-unit id="ypZ5OzU" resname="Xlsx">
         <source>Microsoft Excel (XLSX)</source>
         <target>Microsoft</target>
       </trans-unit>

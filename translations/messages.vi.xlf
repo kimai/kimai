@@ -1053,7 +1053,7 @@
         <source>stats.activeUsersFinancialYear</source>
         <target>Người dùng tích cực trong năm tài chính này</target>
       </trans-unit>
-      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+      <trans-unit id="qQ5QmH2" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>Thư mục “%dir%” không tồn tại và không thể tạo được.</target>
       </trans-unit>

@@ -1209,7 +1209,7 @@
         <source>export.warn_result_amount</source>
         <target>Twoje wyszukiwanie prowadzi do %count% wyników. Jeżeli eksport zawiedzie, musisz zawęzić wyszukiwanie.</target>
       </trans-unit>
-      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+      <trans-unit id="qQ5QmH2" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>Katalog „%dir%” nie istnieje i nie może zostać stworzony.</target>
       </trans-unit>
