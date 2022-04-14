@@ -59,18 +59,6 @@ final class SystemConfiguration
         return $this->section;
     }
 
-    /**
-     * @deprecated since 1.16.10
-     * @param string|null $section
-     * @return $this
-     */
-    public function setSection(?string $section): SystemConfiguration
-    {
-        $this->section = $section;
-
-        return $this;
-    }
-
     public function setTranslation(string $translation): SystemConfiguration
     {
         $this->translation = $translation;

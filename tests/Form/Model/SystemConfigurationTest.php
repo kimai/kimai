@@ -28,9 +28,8 @@ class SystemConfigurationTest extends TestCase
 
     public function testSetterAndGetter()
     {
-        $sut = new SystemConfiguration();
+        $sut = new SystemConfiguration('foo');
 
-        self::assertInstanceOf(SystemConfiguration::class, $sut->setSection('foo'));
         self::assertEquals('foo', $sut->getSection());
 
         self::assertInstanceOf(SystemConfiguration::class, $sut->setConfiguration([]));
