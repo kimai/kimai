@@ -43,7 +43,7 @@
                 {{ icon('bookmarked', true) }}
                 {{ 'action.save'|trans }}
             </button>
-            <a class="btn btn-icon btn-outline-warning" href="?_token={{ csrf_token('search') }}&removeDefaultQuery={{ form.vars.data.bookmark.name }}"  data-toggle="tooltip" title="{{ 'label.remove_default'|trans }}" id="removeDefaultQuery">
+            <a class="btn btn-icon btn-outline-warning" href="?_token={{ csrf_token('search') }}&removeDefaultQuery={{ form.vars.data.bookmark.name }}" data-toggle="tooltip" title="{{ 'label.remove_default'|trans }}" id="removeDefaultQuery">
                 {{ icon('delete', true) }}
             </a>
         {% else %}

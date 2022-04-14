@@ -24,12 +24,14 @@ class ConfigureMainMenuEventTest extends TestCase
         $request = new Request();
         $menu = new MenuItemModel('main', 'menu.root');
         $admin = new MenuItemModel('admin', 'admin', 'admin');
+        $apps = new MenuItemModel('apps', 'apps', 'apps');
         $system = new MenuItemModel('system', 'system', 'system');
-        $sut = new ConfigureMainMenuEvent($request, $menu, $admin, $system);
+        $sut = new ConfigureMainMenuEvent($request, $menu, $apps, $admin, $system);
 
         self::assertSame($request, $sut->getRequest());
         self::assertSame($menu, $sut->getMenu());
         self::assertSame($admin, $sut->getAdminMenu());
+        self::assertSame($apps, $sut->getAppsMenu());
         self::assertSame($system, $sut->getSystemMenu());
     }
 }
