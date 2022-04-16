@@ -42,6 +42,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -367,16 +368,30 @@ final class ProjectController extends AbstractController
     }
 
     /**
+     * @Route(path="/{id}/rate/{rate}", name="admin_project_rate_edit", methods={"GET", "POST"})
+     * @Security("is_granted('edit', project)")
+     */
+    public function editRateAction(Project $project, ProjectRate $rate, Request $request, ProjectRateRepository $repository): Response
+    {
+        return $this->rateFormAction($project, $rate, $request, $repository, $this->generateUrl('admin_project_rate_edit', ['id' => $project->getId(), 'rate' => $rate->getId()]));
+    }
+
+    /**
      * @Route(path="/{id}/rate", name="admin_project_rate_add", methods={"GET", "POST"})
      * @Security("is_granted('edit', project)")
      */
-    public function addRateAction(Project $project, Request $request, ProjectRateRepository $repository)
+    public function addRateAction(Project $project, Request $request, ProjectRateRepository $repository): Response
     {
         $rate = new ProjectRate();
         $rate->setProject($project);
 
+        return $this->rateFormAction($project, $rate, $request, $repository, $this->generateUrl('admin_project_rate_add', ['id' => $project->getId()]));
+    }
+
+    private function rateFormAction(Project $project, ProjectRate $rate, Request $request, ProjectRateRepository $repository, string $formUrl): Response
+    {
         $form = $this->createForm(ProjectRateForm::class, $rate, [
-            'action' => $this->generateUrl('admin_project_rate_add', ['id' => $project->getId()]),
+            'action' => $formUrl,
             'method' => 'POST',
         ]);
 

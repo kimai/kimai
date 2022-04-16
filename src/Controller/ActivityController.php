@@ -37,6 +37,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -158,16 +159,30 @@ final class ActivityController extends AbstractController
     }
 
     /**
+     * @Route(path="/{id}/rate/{rate}", name="admin_activity_rate_edit", methods={"GET", "POST"})
+     * @Security("is_granted('edit', activity)")
+     */
+    public function editRateAction(Activity $activity, ActivityRate $rate, Request $request, ActivityRateRepository $repository): Response
+    {
+        return $this->rateFormAction($activity, $rate, $request, $repository, $this->generateUrl('admin_activity_rate_edit', ['id' => $activity->getId(), 'rate' => $rate->getId()]));
+    }
+
+    /**
      * @Route(path="/{id}/rate", name="admin_activity_rate_add", methods={"GET", "POST"})
      * @Security("is_granted('edit', activity)")
      */
-    public function addRateAction(Activity $activity, Request $request, ActivityRateRepository $repository)
+    public function addRateAction(Activity $activity, Request $request, ActivityRateRepository $repository): Response
     {
         $rate = new ActivityRate();
         $rate->setActivity($activity);
 
+        return $this->rateFormAction($activity, $rate, $request, $repository, $this->generateUrl('admin_activity_rate_add', ['id' => $activity->getId()]));
+    }
+
+    private function rateFormAction(Activity $activity, ActivityRate $rate, Request $request, ActivityRateRepository $repository, string $formUrl): Response
+    {
         $form = $this->createForm(ActivityRateForm::class, $rate, [
-            'action' => $this->generateUrl('admin_activity_rate_add', ['id' => $activity->getId()]),
+            'action' => $formUrl,
             'method' => 'POST',
         ]);
 

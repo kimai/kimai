@@ -409,16 +409,30 @@ final class CustomerController extends AbstractController
     }
 
     /**
+     * @Route(path="/{id}/rate/{rate}", name="admin_customer_rate_edit", methods={"GET", "POST"})
+     * @Security("is_granted('edit', customer)")
+     */
+    public function editRateAction(Customer $customer, CustomerRate $rate, Request $request, CustomerRateRepository $repository): Response
+    {
+        return $this->rateFormAction($customer, $rate, $request, $repository, $this->generateUrl('admin_customer_rate_edit', ['id' => $customer->getId(), 'rate' => $rate->getId()]));
+    }
+
+    /**
      * @Route(path="/{id}/rate", name="admin_customer_rate_add", methods={"GET", "POST"})
      * @Security("is_granted('edit', customer)")
      */
-    public function addRateAction(Customer $customer, Request $request, CustomerRateRepository $repository)
+    public function addRateAction(Customer $customer, Request $request, CustomerRateRepository $repository): Response
     {
         $rate = new CustomerRate();
         $rate->setCustomer($customer);
 
+        return $this->rateFormAction($customer, $rate, $request, $repository, $this->generateUrl('admin_customer_rate_add', ['id' => $customer->getId()]));
+    }
+
+    private function rateFormAction(Customer $customer, CustomerRate $rate, Request $request, CustomerRateRepository $repository, string $formUrl): Response
+    {
         $form = $this->createForm(CustomerRateForm::class, $rate, [
-            'action' => $this->generateUrl('admin_customer_rate_add', ['id' => $customer->getId()]),
+            'action' => $formUrl,
             'method' => 'POST',
         ]);
 
