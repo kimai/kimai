@@ -369,7 +369,7 @@ class TimesheetControllerTest extends ControllerBaseTest
             'system_configuration_form_timesheet' => [
                 'configuration' => [
                     ['name' => 'timesheet.mode', 'value' => 'default'],
-                    ['name' => 'timesheet.active_entries.default_begin', 'value' => '08:00'],
+                    ['name' => 'timesheet.default_begin', 'value' => '08:00'],
                     ['name' => 'timesheet.rules.allow_future_times', 'value' => true],
                     ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => false],
                     ['name' => 'timesheet.rules.allow_overbooking_budget', 'value' => true],

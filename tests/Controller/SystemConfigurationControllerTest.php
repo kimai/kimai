@@ -105,7 +105,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             'system_configuration_form_timesheet' => [
                 'configuration' => [
                     ['name' => 'timesheet.mode', 'value' => 'duration_only'],
-                    ['name' => 'timesheet.active_entries.default_begin', 'value' => '23:59'],
+                    ['name' => 'timesheet.default_begin', 'value' => '23:59'],
                     ['name' => 'timesheet.rules.allow_future_times', 'value' => false],
                     ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => false],
                     ['name' => 'timesheet.rules.allow_overbooking_budget', 'value' => false],
@@ -171,7 +171,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 'system_configuration_form_timesheet' => [
                     'configuration' => [
                         ['name' => 'timesheet.mode', 'value' => 'foo'],
-                        ['name' => 'timesheet.active_entries.default_begin', 'value' => '23:59'],
+                        ['name' => 'timesheet.default_begin', 'value' => '23:59'],
                         ['name' => 'timesheet.rules.allow_future_times', 'value' => 1],
                         ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => 1],
                         ['name' => 'timesheet.rules.allow_overbooking_budget', 'value' => 1],
