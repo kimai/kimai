@@ -335,7 +335,7 @@ final class TimesheetStatisticService
      * @param DateTime $begin
      * @param DateTime $end
      * @param User[] $users
-     * @return DailyStatistic[]
+     * @return array
      */
     public function getGroupedByCustomerProjectActivityUser(DateTime $begin, DateTime $end, array $users): array
     {
