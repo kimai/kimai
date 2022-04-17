@@ -18,6 +18,7 @@ use App\Timesheet\DateTimeFactory;
 use App\Utils\LocaleFormats;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseAbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
@@ -37,6 +38,13 @@ abstract class AbstractController extends BaseAbstractController implements Serv
     protected function getTranslator(): TranslatorInterface
     {
         return $this->container->get('translator');
+    }
+
+    public function createFormForGetRequest(string $type = FormType::class, $data = null, array $options = []): FormInterface
+    {
+        return $this->container
+            ->get('form.factory')
+            ->createNamed('', $type, $data, $options);
     }
 
     private function getLogger(): LoggerInterface

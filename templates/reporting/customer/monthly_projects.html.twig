@@ -1,0 +1,52 @@
+{% extends 'reporting/layout.html.twig' %}
+
+{% block report_title %}{{ report_title|trans({}, 'reporting') }}{% endblock %}
+
+{% block report %}
+
+    {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+        {% from "macros/widgets.html.twig" import nothing_found %}
+        {% block box_before %}
+            {{ form_start(form, {'attr': {'class': 'form-inline form-reporting', 'id': 'report-toolbar-form'}}) }}
+        {% endblock %}
+        {% block box_after %}
+            {{ form_end(form) }}
+        {% endblock %}
+        {% block box_title %}
+            {{ form_widget(form.date) }}
+            {% if form.sumType.vars.choices|length > 1 %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="{{ 'display'|icon }}"></i> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu checkbox-menu">
+                        <li>
+                            {{ form_widget(form.sumType) }}
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+            <button class="btn btn-primary" formaction="{{ path(export_route) }}" type="submit"><i class="{{ 'download'|icon }}"></i></button>
+        {% endblock %}
+        {% block box_body_class %} table-responsive {% if stats is not empty %}no-padding{% endif %}{% endblock %}
+        {% block box_body %}
+            {% if stats is empty %}
+                {{ nothing_found() }}
+            {% else %}
+                {% embed 'reporting/customer/monthly_projects_data.html.twig' with {'dataTypeFormat': null, 'stats': stats, 'dataType': dataType, 'decimal': decimal} only %}
+                    {% set rowspanStyle = 'vertical-align: middle' %}
+                {% endembed %}
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        jQuery('#report-toolbar-form').on('change', function(ev) {
+            jQuery(this).submit();
+        });
+    </script>
+{% endblock %}
