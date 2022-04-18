@@ -97,7 +97,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             // if an existing entry was updated, but "duration", "rate" and "billable" were not changed:
             // do not validate! this could for example happen when export flag is changed OR if "prevent overbooking"
             // config was recently activated and this is an old entry
-            if ($duration === $rawData['duration'] && $rate === $rawData['rate'] && $timesheet->isBillable() === $rawData['billable']) {
+            if ($duration === $rawData['duration'] && $rate === $rawData['rate'] && $timesheet->isBillable() === $rawData['billable'] && $timesheet->getBegin()->format('Y.m.d') === $rawData['begin']->format('Y.m.d')) {
                 return;
             }
 
@@ -174,12 +174,12 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
 
     private function addBudgetViolation(TimesheetBudgetUsed $constraint, Timesheet $timesheet, string $field, float $budget, float $rate)
     {
-        // using the locale of the assigned user is not the best solution, but allows to be independent from the request stack
+        // using the locale of the assigned user is not the best solution, but allows to be independent of the request stack
         $helper = new LocaleHelper($timesheet->getUser()->getLanguage());
         $currency = $timesheet->getProject()->getCustomer()->getCurrency();
 
         $free = $budget - $rate;
-        $free = $free > 0 ? $free : 0;
+        $free = max($free, 0);
 
         $this->context->buildViolation($constraint->messageRate)
             ->atPath($field)
@@ -198,7 +198,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         $durationFormat = new Duration();
 
         $free = $budget - $duration;
-        $free = $free > 0 ? $free : 0;
+        $free = max($free, 0);
 
         $this->context->buildViolation($constraint->messageTime)
             ->atPath($field)

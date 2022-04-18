@@ -60,6 +60,9 @@ final class ReportingService
                 $event->addReport(new Report('daterange_projects', 'report_project_daterange', 'report_project_daterange', 'project'));
                 $event->addReport(new Report('inactive_projects', 'report_project_inactive', 'report_inactive_project', 'project'));
             }
+            if ($this->security->isGranted('view_other_reporting') && $this->security->isGranted('view_other_timesheet')) {
+                $event->addReport(new Report('report_customer_monthly_projects', 'report_customer_monthly_projects', 'report_customer_monthly_projects', 'customer'));
+            }
 
             $this->dispatcher->dispatch($event);
         }
