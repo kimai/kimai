@@ -46,6 +46,10 @@
         <source>report_user_year</source>
         <target>תצוגה שנתית של משתמש בודד</target>
       </trans-unit>
+      <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects">
+        <source>report_customer_monthly_projects</source>
+        <target>מיזמים לפי חודש, פעילות ומשתמש</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

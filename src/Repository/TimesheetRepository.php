@@ -55,7 +55,7 @@ class TimesheetRepository extends EntityRepository
     public const STATS_QUERY_MONTHLY = 'monthly';
 
     /**
-     * Fetches the raw data of an timesheet, to allow comparison eg. of submitted and previously stored data.
+     * Fetches the raw data of a timesheet, to allow comparison e.g. of submitted and previously stored data.
      *
      * @param Timesheet $id
      * @return array
@@ -66,6 +66,8 @@ class TimesheetRepository extends EntityRepository
         $qb
             ->select([
                 't.rate',
+                't.begin',
+                't.end',
                 't.duration',
                 't.hourlyRate',
                 't.billable',
