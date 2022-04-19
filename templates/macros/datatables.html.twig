@@ -46,8 +46,6 @@
         {% set orderBy = false %}
         {% set order = false %}
     {% endif %}
-    {% set striped = options.striped ?? false %}
-    {% set bordered = options.bordered ?? false %}
     {% set reloadEvent = options.reload|default('') %}
     {% set translationDomain = options.translationDomain|default('messages') %}
     {% set translationPrefix = options.translationPrefix ?? 'label.' %}
@@ -56,8 +54,8 @@
 
     <div class="{{ boxClass }} datatable_{{ tableName }}">
         <div class="card-body p-0">
-            <div class="dataTables_wrapper form-inline dt-bootstrap">
-                <table class="table {% if striped %}table-striped {% endif %}{% if bordered %}table-bordered {% endif %}table-hover dataTable" role="grid" data-reload-event="kimai.reset_column_visibility {{ reloadEvent }}">
+            <div class="dataTables_wrapper form-inline">
+                <table class="table table-hover dataTable" role="grid" data-reload-event="kimai.reset_column_visibility {{ reloadEvent }}">
                     <thead class="sticky-top">
                         <tr>
                         {%- for title, headerOptions in columns -%}

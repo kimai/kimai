@@ -4,8 +4,78 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 @import "variables";
+
+table.dataTable {
+    clear: both;
+    margin-bottom: 0 !important;
+    max-width: none !important;
+
+    thead .sorting,
+    thead .sorting_asc,
+    thead .sorting_desc {
+        cursor: pointer;
+        position: relative;
+    }
+
+    thead .sorting_asc,
+    thead .sorting_desc {
+        font-weight: bold;
+    }
+
+    thead .sorting:after,
+    thead .sorting_asc:after,
+    thead .sorting_desc:after {
+        padding-left: 5px;
+        font-family: 'Font Awesome 5 Free';
+        opacity: 0.5;
+        font-size: 12px;
+    }
+    thead .sorting:after {
+        opacity: 0.2;
+        content: "\f0dc"; /* sort */
+    }
+    thead .sorting_asc:after {
+        content: "\f062";
+    }
+    thead .sorting_desc:after {
+        content: "\f063";
+    }
+
+    thead > tr > th {
+        vertical-align: top;
+        white-space: nowrap;
+    }
+
+    th:active {
+        outline: none;
+    }
+}
+
+table.table-bordered {
+    thead th,
+    thead td {
+        border-left-width: 0;
+        border-top-width: 0;
+    }
+
+    tbody th,
+    tbody td {
+        border-left-width: 0;
+        border-bottom-width: 0;
+    }
+
+    tfoot th,
+    tfoot td {
+        border-left-width: 0;
+        border-bottom-width: 0;
+    }
+
+    th:last-child,
+    td:last-child {
+        border-right-width: 0;
+    }
+}
 
 table.dataTable.table > tbody > tr > td {
     vertical-align: middle;
