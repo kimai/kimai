@@ -26,12 +26,9 @@ final class SecurityController extends AbstractController
      */
     public function loginAction(AuthenticationUtils $authenticationUtils): Response
     {
-        // FIXME testing!!!
-        /*
         if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('homepage');
         }
-        */
 
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();

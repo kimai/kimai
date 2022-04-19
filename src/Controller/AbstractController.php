@@ -43,18 +43,6 @@ abstract class AbstractController extends BaseAbstractController implements Serv
             ->createNamed('', $type, $data, $options);
     }
 
-    private function getLogger(): LoggerInterface
-    {
-        return $this->container->get('logger');
-    }
-
-    public function createFormForGetRequest(string $type = FormType::class, $data = null, array $options = []): FormInterface
-    {
-        return $this->container
-            ->get('form.factory')
-            ->createNamed('', $type, $data, $options);
-    }
-
     /**
      * Adds a "successful" flash message to the stack.
      *
@@ -151,7 +139,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
 
     protected function logException(\Exception $ex): void
     {
-        $this->getLogger()->critical($ex->getMessage());
+        $this->container->get('logger')->critical($ex->getMessage());
     }
 
     public static function getSubscribedServices(): array
