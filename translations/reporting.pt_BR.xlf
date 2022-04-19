@@ -46,6 +46,10 @@
         <source>report_user_year</source>
         <target>Visualização anual para um usuário</target>
       </trans-unit>
+      <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects">
+        <source>report_customer_monthly_projects</source>
+        <target>Projetos por mês, por atividade e por usuário</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1122,55 +1122,55 @@
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
-        <target state="needs-translation">Directory "%dir%" is write protected.</target>
+        <target state="translated">Priečinok "%dir%" je chráneny voči úpravám.</target>
       </trans-unit>
       <trans-unit id="Xij3oQl" resname="invoice.payment_date">
         <source>invoice.payment_date</source>
-        <target state="needs-translation">Payment date</target>
+        <target state="translated">Datum splatnosti</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
-        <target state="needs-translation">The directory “%dir%” does not exist and could not be created.</target>
+        <target state="translated">Priečinok “%dir%” neexistuje a nepodarilo sa ho vytvoriť.</target>
       </trans-unit>
       <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
+        <target state="translated">Zobrazenie poloziek vo vybere</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>resetting.check_email</source>
-        <target state="needs-translation">An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</target>
+        <target state="translated">Bol vám zaslaný email. Obsahuje odkaz, na ktory musite kliknúť pre obnovu hesla. Poznámka : O nové heslo môžete požidat raz za %tokenLifetime% hodín. V prípade ak vám email nepríde, skontrolujte si spamovú poštu.</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>
-        <target state="needs-translation">The request could not be processed. Too many results were found.</target>
+        <target state="translated">Vaša požiadavka nemohla byť spracovaná. Bolo nájdených príliš veľa výsledkov</target>
       </trans-unit>
       <trans-unit id="jdbtx6z" resname="action.add">
         <source>action.add</source>
-        <target state="needs-translation">Add</target>
+        <target state="translated">Pridať</target>
       </trans-unit>
       <trans-unit id="9hpJPiG" resname="action.save_all">
         <source>action.save_all</source>
-        <target state="needs-translation">Save all</target>
+        <target state="translated">Uložiť všetko</target>
       </trans-unit>
       <trans-unit id="YNGNfGn" resname="label.tax_rate">
         <source>label.tax_rate</source>
-        <target state="needs-translation">Tax rate</target>
+        <target state="translated">Daňová sadzba</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
-        <target state="needs-translation">Financial year</target>
+        <target state="translated">Finančný rok</target>
       </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime">
         <source>stats.workingTime</source>
-        <target state="needs-translation">Working time</target>
+        <target state="translated">Pracovná doba</target>
       </trans-unit>
       <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>
-        <target state="needs-translation">%percent%% used this month</target>
+        <target state="translated">%percent%% použitých tento mesiac</target>
       </trans-unit>
       <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
         <source>stats.percentUsedLeft_month</source>
-        <target state="needs-translation">%percent%% used (%left% are still open this month)</target>
+        <target state="translated">%percent%% použitých (%left% ešte ostáva tento mesiac)</target>
       </trans-unit>
       <trans-unit id="W92QGbY" resname="export.warn_result_amount">
         <source>export.warn_result_amount</source>
@@ -1242,7 +1242,7 @@
       </trans-unit>
       <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
         <source>theme.update_browser_title</source>
-        <target state="needs-translation">Update browser title</target>
+        <target state="translated">Obnoviť titul prehliadača</target>
       </trans-unit>
       <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
         <source>calendar.drag_and_drop.delete</source>
@@ -1250,7 +1250,7 @@
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
-        <target state="needs-translation">Week %week%</target>
+        <target state="translated">Týždeň %week%</target>
       </trans-unit>
       <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
@@ -1258,31 +1258,31 @@
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>
-        <target state="needs-translation">Revenues</target>
+        <target state="translated">Tržby</target>
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
         <source>stats.durationFinancialYear</source>
-        <target state="needs-translation">Working hours this financial year</target>
+        <target state="translated">Pracovné hodiny tento finančný rok</target>
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
-        <target state="needs-translation">Revenue this financial year</target>
+        <target state="translated">Obrat tento finančný rok</target>
       </trans-unit>
       <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
         <source>stats.userActiveFinancialYear</source>
-        <target state="needs-translation">Active users this financial year</target>
+        <target state="translated">Aktívny užívatelia tento finančny rok</target>
       </trans-unit>
       <trans-unit id="Uvo1CbP" resname="status.pending">
         <source>status.pending</source>
-        <target state="needs-translation">Pending</target>
+        <target state="translated">Prebieh</target>
       </trans-unit>
       <trans-unit id="gT9W2pZ" resname="status.canceled">
         <source>status.canceled</source>
-        <target state="needs-translation">Canceled</target>
+        <target state="translated">Zrušené</target>
       </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target state="needs-translation">Skipped preview of %rows% more rows …</target>
+        <target state="translated">Preskočený náhľad %rows% ďalších riadkov …</target>
       </trans-unit>
       <trans-unit id="pnGDFmf" resname="label.type">
         <source>label.type</source>
@@ -1311,6 +1311,10 @@
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
         <target state="needs-translation">Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>Automaticky</target>
       </trans-unit>
     </body>
   </file>
