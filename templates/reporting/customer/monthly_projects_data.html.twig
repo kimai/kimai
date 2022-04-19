@@ -31,7 +31,7 @@
     {% set customer = null %}
     {% set maxLength = (stats.activities|length) * 3 + 2 %}
     <tbody>
-    {% for project in stats.stats %}
+    {% for project in stats.stats|sort((a, b) => (a.customer ~ '_'  ~ a.customer_id) <=> (b.customer ~ '_'  ~ b.customer_id)) %}
         {% set activityId = null %}
         {% set rowspan = project['max_users'] %}
         {% set currency = stats.projects[project.id]['currency'] %}
@@ -43,57 +43,57 @@
         {% endif %}
 
         {% for i in 1..rowspan %}
-        <tr>
-            {% if loop.first %}
-            <th{% if rowspan > 1 %} rowspan="{{ rowspan }}" style="{{ rowspanStyle }}"{% endif %}>{{ project.name }}</th>
-            {% endif %}
-            {% for activity in stats.activities %}
-                {% if project.activities[activity.id] is defined and i <= project.activities[activity.id]['users']|length %}
-                    {% set user = project.activities[activity.id]['users']|slice(-i) %}
-                    <td>{{ user.0.name }}</td>
-                    <td class="text-center"{% if dataTypeFormat is not null %} data-format="{{ dataTypeFormat }}"{% endif %}>
-                        {% set value = user.0[dataType] %}
-                        {% block user_activity %}
-                            {% if dataType == 'rate' or dataType == 'internalRate' %}
-                                {{ value|money(currency) }}
-                            {% else %}
-                                {{ value|duration(decimal) }}
-                            {% endif %}
-                        {% endblock %}
-                    </td>
-                    {% if loop.parent.loop.first %}
-                    <td{% if rowspan > 1 %} rowspan="{{ rowspan }}"{% endif %} class="text-center text-nowrap"{% if dataTypeFormat is not null %} data-format="{{ dataTypeFormat }}"{% endif %}>
-                        {% set value = project.activities[activity.id][dataType] %}
-                        {% block project_activity %}
-                            {% if dataType == 'rate' or dataType == 'internalRate' %}
-                                {{ value|money(currency) }}
-                            {% else %}
-                                {{ value|duration(decimal) }}
-                            {% endif %}
-                        {% endblock %}
-                    </td>
-                    {% endif %}
-                {% else %}
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                    {% if loop.parent.loop.first %}
-                    <td{% if rowspan > 1 %} rowspan="{{ rowspan }}"{% endif %}></td>
-                    {% endif %}
+            <tr>
+                {% if loop.first %}
+                    <th{% if rowspan > 1 %} rowspan="{{ rowspan }}" style="{{ rowspanStyle }}"{% endif %}>{{ project.name }}</th>
                 {% endif %}
-            {% endfor %}
-            {% if loop.first %}
-                <th{% if rowspan > 1 %} rowspan="{{ rowspan }}" style="{{ rowspanStyle }}"{% endif %} class="text-center text-nowrap"{% if dataTypeFormat is not null %} data-format="{{ dataTypeFormat }}"{% endif %}>
-                    {% set value = project[dataType] %}
-                    {% block project_total %}
-                        {% if dataType == 'rate' or dataType == 'internalRate' %}
-                            {{ value|money(currency) }}
-                        {% else %}
-                            {{ value|duration(decimal) }}
+                {% for activity in stats.activities %}
+                    {% if project.activities[activity.id] is defined and i <= project.activities[activity.id]['users']|length %}
+                        {% set user = project.activities[activity.id]['users']|slice(-i) %}
+                        <td>{{ user.0.name }}</td>
+                        <td class="text-center"{% if dataTypeFormat is not null %} data-format="{{ dataTypeFormat }}"{% endif %}>
+                            {% set value = user.0[dataType] %}
+                            {% block user_activity %}
+                                {% if dataType == 'rate' or dataType == 'internalRate' %}
+                                    {{ value|money(currency) }}
+                                {% else %}
+                                    {{ value|duration(decimal) }}
+                                {% endif %}
+                            {% endblock %}
+                        </td>
+                        {% if loop.parent.loop.first %}
+                            <td{% if rowspan > 1 %} rowspan="{{ rowspan }}"{% endif %} class="text-center text-nowrap"{% if dataTypeFormat is not null %} data-format="{{ dataTypeFormat }}"{% endif %}>
+                                {% set value = project.activities[activity.id][dataType] %}
+                                {% block project_activity %}
+                                    {% if dataType == 'rate' or dataType == 'internalRate' %}
+                                        {{ value|money(currency) }}
+                                    {% else %}
+                                        {{ value|duration(decimal) }}
+                                    {% endif %}
+                                {% endblock %}
+                            </td>
                         {% endif %}
-                    {% endblock %}
-                </th>
-            {% endif %}
-        </tr>
+                    {% else %}
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        {% if loop.parent.loop.first %}
+                            <td{% if rowspan > 1 %} rowspan="{{ rowspan }}"{% endif %}></td>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                {% if loop.first %}
+                    <th{% if rowspan > 1 %} rowspan="{{ rowspan }}" style="{{ rowspanStyle }}"{% endif %} class="text-center text-nowrap"{% if dataTypeFormat is not null %} data-format="{{ dataTypeFormat }}"{% endif %}>
+                        {% set value = project[dataType] %}
+                        {% block project_total %}
+                            {% if dataType == 'rate' or dataType == 'internalRate' %}
+                                {{ value|money(currency) }}
+                            {% else %}
+                                {{ value|duration(decimal) }}
+                            {% endif %}
+                        {% endblock %}
+                    </th>
+                {% endif %}
+            </tr>
         {% endfor %}
     {% endfor %}
     </tbody>
