@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kimai version="{{ constant('App\\Constants::VERSION') }}">
-{% for key, value in model.toArray %}
+{% for key, value in invoice %}
     <{{ key }}{% if value is empty %}/>{% else %}>{{ value|escape }}</{{ key }}>{% endif %}
 
 {% endfor %}
     <items>
-        {%- for entry in model.calculator.entries %}
+        {%- for entry in entries %}
 
         <item>
-{% for key, value in model.itemToArray(entry) %}
+{% for key, value in entry %}
             <{{ key }}{% if value is empty %}/>{% else %}>{{ value|escape }}</{{ key }}>{% endif %}
 
 {% endfor %}
