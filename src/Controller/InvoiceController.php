@@ -171,11 +171,11 @@ final class InvoiceController extends AbstractController
                 return $this->service->renderInvoiceWithModel($model, $this->dispatcher);
             } catch (Exception $ex) {
                 $this->logException($ex);
-                $this->flashError('action.update.error', ['%reason%' => 'Failed generating invoice preview: ' . $ex->getMessage()]);
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
             }
+        } else {
+            $this->flashFormError($form);
         }
-
-        $this->flashFormError($form);
 
         return $this->redirectToRoute('invoice');
     }
