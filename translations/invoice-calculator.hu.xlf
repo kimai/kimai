@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="hu" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
@@ -21,6 +21,18 @@
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
         <target>Tevékenységenként csoportosítva - egy bejegyzés tevékenységenként</target>
+      </trans-unit>
+      <trans-unit id="JEIQ5IQ" resname="project">
+        <source>project</source>
+        <target>Projekt: projektenként egy nevezés</target>
+      </trans-unit>
+      <trans-unit id="DodjLNR" resname="date">
+        <source>date</source>
+        <target>Dátum: napi egy bejegyzés (a kezdési dátumot használja)</target>
+      </trans-unit>
+      <trans-unit id="iFDs7Zh" resname="weekly">
+        <source>weekly</source>
+        <target>Hetente: heti egy bejegyzés (a kezdési dátumot használja)</target>
       </trans-unit>
     </body>
   </file>
