@@ -226,7 +226,6 @@ trait RendererTrait
         foreach ($exportItems as $exportItem) {
             $customerId = 'none';
             $projectId = 'none';
-            $customer = null;
             $project = null;
             $activity = null;
 
@@ -261,6 +260,8 @@ trait RendererTrait
                     'money' => $activity->getBudget(),
                     'time_left' => null,
                     'money_left' => null,
+                    'time_left_total' => null,
+                    'money_left_total' => null,
                 ];
             }
         }
@@ -273,10 +274,12 @@ trait RendererTrait
             $project = $statisticModel->getActivity()->getProject();
             $id = $project->getCustomer()->getId() . '_' . $project->getId();
             if ($statisticModel->hasTimeBudget()) {
-                $summary[$id][$activityId]['time_left'] = $statisticModel->getTimeBudgetOpen();
+                $summary[$id][$activityId]['time_left'] = $statisticModel->getTimeBudgetOpenRelative();
+                $summary[$id][$activityId]['time_left_total'] = $statisticModel->getTimeBudgetOpen();
             }
             if ($statisticModel->hasBudget()) {
-                $summary[$id][$activityId]['money_left'] = $statisticModel->getBudgetOpen();
+                $summary[$id][$activityId]['money_left'] = $statisticModel->getBudgetOpenRelative();
+                $summary[$id][$activityId]['money_left_total'] = $statisticModel->getBudgetOpen();
             }
         }
 
