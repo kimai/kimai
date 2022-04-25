@@ -23,7 +23,6 @@ class CalendarTitlePatternType extends AbstractType
     public const PATTERN_PROJECT = '{project}';
     public const PATTERN_ACTIVITY = '{activity}';
     public const PATTERN_DESCRIPTION = '{description}';
-    public const SPACER = ' - ';
 
     private $translator;
 
@@ -38,7 +37,6 @@ class CalendarTitlePatternType extends AbstractType
         $project = $this->translator->trans('label.project');
         $activity = $this->translator->trans('label.activity');
         $description = $this->translator->trans('label.description');
-        $spacer = CustomerType::SPACER;
 
         $resolver->setDefaults([
             'label' => 'label.choice_pattern',
