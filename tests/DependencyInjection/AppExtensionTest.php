@@ -131,6 +131,7 @@ class AppExtensionTest extends TestCase
                 ],
                 'weekends' => true,
                 'dragdrop_amount' => 10,
+                'title_pattern' => '{activity}',
             ],
             'kimai.dashboard' => [],
             'kimai.widgets' => [],
