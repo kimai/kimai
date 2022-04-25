@@ -28,6 +28,7 @@ trait RendererTrait
             $customerId = 'none';
             $projectId = 'none';
             $activityId = 'none';
+            $userId = 'none';
             $customer = null;
             $project = null;
             $activity = null;
@@ -42,6 +43,10 @@ trait RendererTrait
 
             if (null !== ($activity = $exportItem->getActivity())) {
                 $activityId = $exportItem->getActivity()->getId();
+            }
+
+            if (null !== ($user = $exportItem->getUser())) {
+                $userId = $user->getId();
             }
 
             $id = $customerId . '_' . $projectId;
@@ -59,6 +64,7 @@ trait RendererTrait
                     'duration' => 0,
                     'type' => [],
                     'types' => [],
+                    'users' => []
                 ];
 
                 if ($project !== null) {
@@ -90,6 +96,7 @@ trait RendererTrait
                     'rate' => 0,
                     'rate_internal' => 0,
                     'duration' => 0,
+                    'users' => []
                 ];
 
                 if ($activity !== null) {
@@ -97,31 +104,57 @@ trait RendererTrait
                 }
             }
 
+            if (!isset($summary[$id]['users'][$userId])) {
+                $summary[$id]['users'][$userId] = [
+                    'user' => $user,
+                    'rate' => 0,
+                    'rate_internal' => 0,
+                    'duration' => 0,
+                ];
+            }
+            if (!isset($summary[$id]['activities'][$activityId]['users'][$userId])) {
+                $summary[$id]['activities'][$activityId]['users'][$userId] = [
+                    'user' => $user,
+                    'rate' => 0,
+                    'rate_internal' => 0,
+                    'duration' => 0,
+                ];
+            }
+
             $duration = $exportItem->getDuration();
             if (null === $duration) {
                 $duration = 0;
             }
 
-            $summary[$id]['rate'] += $exportItem->getRate();
-            $summary[$id]['type'][$type]['rate'] += $exportItem->getRate();
-            $summary[$id]['types'][$type][$category]['rate'] += $exportItem->getRate();
-
+            $rate = $exportItem->getRate();
+            $internalRate = $rate;
             if (method_exists($exportItem, 'getInternalRate')) {
-                $summary[$id]['rate_internal'] += $exportItem->getInternalRate();
-                $summary[$id]['type'][$type]['rate_internal'] += $exportItem->getInternalRate();
-                $summary[$id]['types'][$type][$category]['rate_internal'] += $exportItem->getInternalRate();
-            } else {
-                $summary[$id]['rate_internal'] += $exportItem->getRate();
-                $summary[$id]['type'][$type]['rate_internal'] += $exportItem->getRate();
-                $summary[$id]['types'][$type][$category]['rate_internal'] += $exportItem->getRate();
+                $internalRate = $exportItem->getInternalRate();
             }
 
+            // rate
+            $summary[$id]['rate'] += $rate;
+            $summary[$id]['type'][$type]['rate'] += $rate;
+            $summary[$id]['types'][$type][$category]['rate'] += $rate;
+            $summary[$id]['users'][$userId]['rate'] += $rate;
+            $summary[$id]['activities'][$activityId]['rate'] += $rate;
+            $summary[$id]['activities'][$activityId]['users'][$userId]['rate'] += $rate;
+
+            // internal rate
+            $summary[$id]['rate_internal'] += $internalRate;
+            $summary[$id]['type'][$type]['rate_internal'] += $internalRate;
+            $summary[$id]['types'][$type][$category]['rate_internal'] += $internalRate;
+            $summary[$id]['users'][$userId]['rate_internal'] += $internalRate;
+            $summary[$id]['activities'][$activityId]['rate_internal'] += $internalRate;
+            $summary[$id]['activities'][$activityId]['users'][$userId]['rate_internal'] += $internalRate;
+
+            // duration
             $summary[$id]['duration'] += $duration;
             $summary[$id]['type'][$type]['duration'] += $duration;
             $summary[$id]['types'][$type][$category]['duration'] += $duration;
-
-            $summary[$id]['activities'][$activityId]['rate'] += $exportItem->getRate();
+            $summary[$id]['users'][$userId]['duration'] += $duration;
             $summary[$id]['activities'][$activityId]['duration'] += $duration;
+            $summary[$id]['activities'][$activityId]['users'][$userId]['duration'] += $duration;
         }
 
         asort($summary);
