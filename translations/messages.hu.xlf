@@ -1171,47 +1171,47 @@
       </trans-unit>
       <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
+        <target state="translated">Bejegyzések megjelenítése a kiválasztási listákban</target>
       </trans-unit>
       <trans-unit id="jdbtx6z" resname="action.add">
         <source>action.add</source>
-        <target state="needs-translation">Add</target>
+        <target state="translated">Hozzáadás</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
-        <target state="needs-translation">Week %week%</target>
+        <target state="translated">hét %week%</target>
       </trans-unit>
       <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
         <source>label.includeBudgetType_month</source>
-        <target state="needs-translation">Show entries with "monthly" budget</target>
+        <target state="translated">A "havi" költségvetésű bejegyzések megjelenítése</target>
       </trans-unit>
       <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
         <source>label.includeBudgetType_full</source>
-        <target state="needs-translation">Show entries with "life cycle" budget</target>
+        <target state="translated">Az "életciklus” költségvetésű bejegyzések megjelenítése</target>
       </trans-unit>
       <trans-unit id="csF1D35" resname="label.not_invoiced">
         <source>label.not_invoiced</source>
-        <target state="needs-translation">Not billed</target>
+        <target state="translated">Nincs számlázva</target>
       </trans-unit>
       <trans-unit id="AJ6dwR." resname="label.last_record_before">
         <source>label.last_record_before</source>
-        <target state="needs-translation">No time booking since</target>
+        <target state="translated">Azóta nincs időfoglalás</target>
       </trans-unit>
       <trans-unit id="LXdqaTH" resname="label.account_number">
         <source>label.account_number</source>
-        <target state="needs-translation">Staff number</target>
+        <target state="translated">A személyzet száma</target>
       </trans-unit>
       <trans-unit id="PoF7hD8" resname="label.budgetType">
         <source>label.budgetType</source>
-        <target state="needs-translation">Budget-Type</target>
+        <target state="translated">Költségvetés-típus</target>
       </trans-unit>
       <trans-unit id="cHfLJtL" resname="label.budgetType_month">
         <source>label.budgetType_month</source>
-        <target state="needs-translation">Monthly</target>
+        <target state="translated">Havonta</target>
       </trans-unit>
       <trans-unit id="9Rhadz6" resname="label.budgetType_full">
         <source>label.budgetType_full</source>
-        <target state="needs-translation">Life cycle</target>
+        <target state="translated">Életciklus</target>
       </trans-unit>
       <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
         <source>delete_warning.short_stats</source>
@@ -1243,35 +1243,39 @@
       </trans-unit>
       <trans-unit id="qDnURk7" resname="label.last_record">
         <source>label.last_record</source>
-        <target state="needs-translation">Last entry</target>
+        <target state="translated">Utolsó bejegyzés</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
-        <target state="needs-translation">The directory “%dir%” does not exist and could not be created.</target>
+        <target state="translated">A „%dir%” könyvtár nem létezik, és nem hozható létre.</target>
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
-        <target state="needs-translation">Directory "%dir%" is write protected.</target>
+        <target state="translated">A "%dir%" könyvtár írásvédett.</target>
       </trans-unit>
       <trans-unit id="gT9W2pZ" resname="status.canceled">
         <source>status.canceled</source>
-        <target state="needs-translation">Canceled</target>
+        <target state="translated">Törölve</target>
       </trans-unit>
       <trans-unit id="z_YHoZn" resname="label.includeNoWork">
         <source>label.includeNoWork</source>
-        <target state="needs-translation">Show entries without bookings</target>
+        <target state="translated">Bejegyzések megjelenítése foglalás nélkül</target>
       </trans-unit>
       <trans-unit id="B.Dbbob" resname="label.includeNoBudget">
         <source>label.includeNoBudget</source>
-        <target state="needs-translation">Show entries without budget</target>
+        <target state="translated">Bejegyzések megjelenítése költségvetés nélkül</target>
       </trans-unit>
       <trans-unit id="3zn5T5e" resname="label.not_exported">
         <source>label.not_exported</source>
-        <target state="needs-translation">Not exported</target>
+        <target state="translated">Nincs exportálva</target>
       </trans-unit>
       <trans-unit id="Zif614Q" resname="add_user.label">
         <source>add_user.label</source>
         <target state="needs-translation">Add user</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>Automatikus</target>
       </trans-unit>
     </body>
   </file>
