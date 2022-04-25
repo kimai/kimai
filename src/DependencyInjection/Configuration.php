@@ -429,6 +429,10 @@ class Configuration implements ConfigurationInterface
                         ->thenInvalid('The dragdrop_amount must be between 0 and 20')
                     ->end()
                 ->end()
+                ->enumNode('title_pattern')
+                    ->values(['{activity}', '{project}', '{customer}', '{description}'])
+                    ->defaultValue('{activity}')
+                ->end()
             ->end()
         ;
 

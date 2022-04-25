@@ -360,6 +360,7 @@ class ConfigurationTest extends TestCase
                 ],
                 'weekends' => true,
                 'dragdrop_amount' => 10,
+                'title_pattern' => '{activity}',
             ],
             'theme' => [
                 'active_warning' => 3,

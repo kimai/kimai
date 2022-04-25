@@ -298,6 +298,10 @@
         <source>label.calendar.dragdrop_amount</source>
         <target>Anzahl an Einträgen für Drag&amp;Drop (0 = deaktiviert)</target>
       </trans-unit>
+      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
+        <source>label.calendar.title_pattern</source>
+        <target>Darstellung der Titel von Kalender Einträgen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
