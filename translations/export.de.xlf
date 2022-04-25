@@ -14,7 +14,7 @@
         <source>default-internal.pdf.twig</source>
         <target>Inkl. interner Kosten</target>
       </trans-unit>
-      <trans-unit id="bTIKMV." resname="timesheet.pdf.twig">
+      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig">
         <source>Timesheet</source>
         <target>Stundennachweis</target>
       </trans-unit>

@@ -2,7 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fo" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="ycErWZK" resname="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Time tracking</source>
         <target state="needs-translation">Time tracking</target>
       </trans-unit>

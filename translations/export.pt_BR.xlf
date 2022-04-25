@@ -2,7 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="pt-BR" datatype="plaintext" original="export.en.xlf">
     <body>
-      <trans-unit id="IbERy.5" resname="default.pdf.twig">
+      <trans-unit id="oRRnhwf" resname="default.pdf.twig">
         <source>Default</source>
         <target>Padrão</target>
       </trans-unit>
@@ -14,7 +14,7 @@
         <source>default-internal.pdf.twig</source>
         <target>Com as taxas internas</target>
       </trans-unit>
-      <trans-unit id="bTIKMV." resname="timesheet.pdf.twig">
+      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig">
         <source>Timesheet</source>
         <target>Planilha de horários</target>
       </trans-unit>
