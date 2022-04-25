@@ -98,6 +98,10 @@
         <source>filter</source>
         <target>Adatok szűrése</target>
       </trans-unit>
+      <trans-unit id="SEyZupT" resname="invoice.cancel">
+        <source>invoice.cancel</source>
+        <target>Törölje a számlát</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

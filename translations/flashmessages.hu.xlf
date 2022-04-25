@@ -54,6 +54,10 @@
         <source>action.upload.error</source>
         <target>A fájlt nem lehetett feltölteni vagy menteni ezért: %reason%</target>
       </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R">
+        <source>action.csrf.error</source>
+        <target>A művelet nem hajtható végre: érvénytelen biztonsági token.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

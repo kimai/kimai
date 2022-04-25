@@ -14,6 +14,42 @@
         <source>report_monthly_users</source>
         <target>Összes felhasználó havi nézete</target>
       </trans-unit>
+      <trans-unit id="ns_jU13" resname="reporting.initial_view">
+        <source>reporting.initial_view</source>
+        <target>Kezdeti jelentés</target>
+      </trans-unit>
+      <trans-unit id="VD98UBN" resname="report_yearly_users">
+        <source>report_yearly_users</source>
+        <target>Éves nézet minden felhasználó számára</target>
+      </trans-unit>
+      <trans-unit id="q_A4AHD" resname="report_weekly_users">
+        <source>report_weekly_users</source>
+        <target>Heti nézet minden felhasználó számára</target>
+      </trans-unit>
+      <trans-unit id="518eY_l" resname="report_project_details">
+        <source>report_project_details</source>
+        <target>Projekt részletei</target>
+      </trans-unit>
+      <trans-unit id="1gBKwGH" resname="report_inactive_project">
+        <source>report_inactive_project</source>
+        <target>Inaktív projektek</target>
+      </trans-unit>
+      <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects">
+        <source>report_customer_monthly_projects</source>
+        <target>Projektek hónap, tevékenység és felhasználó szerint</target>
+      </trans-unit>
+      <trans-unit id="3JLmvfB" resname="report_user_year">
+        <source>report_user_year</source>
+        <target>Éves megtekintés egy felhasználó számára</target>
+      </trans-unit>
+      <trans-unit id="R.9yUkf" resname="report_project_view">
+        <source>report_project_view</source>
+        <target>A projekt áttekintése</target>
+      </trans-unit>
+      <trans-unit id="BQAsynV" resname="report_project_daterange">
+        <source>report_project_daterange</source>
+        <target>Havi jelentés</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
