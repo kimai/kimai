@@ -1116,7 +1116,7 @@
         <source>invoice.payment_date</source>
         <target state="translated">Datum splatnosti</target>
       </trans-unit>
-      <trans-unit id="qQ5QmH2" resname="error.directory_missing">
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target state="translated">Priečinok “%dir%” neexistuje a nepodarilo sa ho vytvoriť.</target>
       </trans-unit>

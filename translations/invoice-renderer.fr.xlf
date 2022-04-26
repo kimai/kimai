@@ -34,7 +34,7 @@
         <source>company</source>
         <target>Facture de la société</target>
       </trans-unit>
-      <trans-unit id="unF9ggH" resname="Xls">
+      <trans-unit id="sXlZPOC" resname="Xls">
         <source>Microsoft Excel (XLS)</source>
         <target state="translated">Microsoft Excel (XLS)</target>
       </trans-unit>
@@ -42,7 +42,7 @@
         <source>Html</source>
         <target>HTML (pour l'impression via le navigateur)</target>
       </trans-unit>
-      <trans-unit id="S_G2jvB" resname="Docx">
+      <trans-unit id="4NNx9U." resname="Docx">
         <source>Microsoft Word (DOCX)</source>
         <target state="translated">Microsoft Word (DOCX)</target>
       </trans-unit>
@@ -54,7 +54,7 @@
         <source>programmatic</source>
         <target>Pour la suite du traitement</target>
       </trans-unit>
-      <trans-unit id="ypZ5OzU" resname="Xlsx">
+      <trans-unit id="sjwwrr8" resname="Xlsx">
         <source>Microsoft Excel (XLSX)</source>
         <target state="translated">Microsoft Excel (XLSX)</target>
       </trans-unit>

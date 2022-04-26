@@ -1193,7 +1193,7 @@
         <source>invoice_document.max_reached</source>
         <target>A fost atinsă cantitatea maximă de documente de facturare %max%. Puteți adăuga mai multe după ce ați eliminat unul.</target>
       </trans-unit>
-      <trans-unit id="qQ5QmH2" resname="error.directory_missing">
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>Directorul „%dir%” nu există și nu a putut fi creat.</target>
       </trans-unit>

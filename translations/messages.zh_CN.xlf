@@ -1209,7 +1209,7 @@
         <source>error.directory_protected</source>
         <target>目录 “%dir%” 被写入保护。</target>
       </trans-unit>
-      <trans-unit id="qQ5QmH2" resname="error.directory_missing">
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>目录 “%dir%” 不存在且不能被创建。</target>
       </trans-unit>

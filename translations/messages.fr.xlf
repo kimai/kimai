@@ -1238,7 +1238,7 @@
         <source>stats.workingTimeWeekShort</source>
         <target>Semaine %week%</target>
       </trans-unit>
-      <trans-unit id="qQ5QmH2" resname="error.directory_missing">
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>Le répertoire « %dir% » n'existe pas et n'a pas pu être créé.</target>
       </trans-unit>

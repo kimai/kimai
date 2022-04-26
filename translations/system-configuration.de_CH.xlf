@@ -250,7 +250,7 @@
         <source>label.theme.color_choices</source>
         <target state="needs-translation">Erlaubte Farben</target>
       </trans-unit>
-      <trans-unit id="d.2_w8h" resname="help.theme.color_choices">
+      <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
         <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
         <target state="needs-translation">Kommagetrennte Liste von HTML Farbcodes. Farbnamen können festgelegt werden, indem dem Farbcode ein Name und das Trennzeichen | vorangestellt wird, z. B.: White|#ffffff,Black|#000000.</target>
       </trans-unit>

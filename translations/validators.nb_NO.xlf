@@ -58,7 +58,7 @@
         <source>You already have an entry for this time.</source>
         <target>Du har allerede en oppføring for dette tidspunktet.</target>
       </trans-unit>
-      <trans-unit id="FacJOAm" resname="This invoice document cannot be used, please rename the file and upload it again.">
+      <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again.">
         <source>This invoice document cannot be used. Please rename the file and upload it again.</source>
         <target state="needs-translation">Dette fakturadokumentet kan ikke brukes. Gi filen et nytt navn og last den opp igjen.</target>
       </trans-unit>
@@ -74,7 +74,7 @@
         <source>The budget is completely used.</source>
         <target state="needs-translation">Budsjettet er oppbrukt. Av tilgjengelige %budget%, har %used% blitt booket så langt. %free% kan fremdeles brukes.</target>
       </trans-unit>
-      <trans-unit id="2I4cGPH" resname="This period is locked, please choose a later date.">
+      <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date.">
         <source>This period is locked. Please choose a later date.</source>
         <target state="needs-translation">Denne perioden er låst. Velg en senere dato.</target>
       </trans-unit>

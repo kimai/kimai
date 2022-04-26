@@ -1236,7 +1236,7 @@
         <source>label.type</source>
         <target state="translated">النوع</target>
       </trans-unit>
-      <trans-unit id="qQ5QmH2" resname="error.directory_missing">
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target state="translated">إنّ المجلد "%dir%" غير موجود ولا يمكن إنشاؤه.</target>
       </trans-unit>

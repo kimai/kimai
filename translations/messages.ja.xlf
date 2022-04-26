@@ -1089,7 +1089,7 @@
         <source>quick_entry.title</source>
         <target state="needs-translation">Weekly working hours</target>
       </trans-unit>
-      <trans-unit id="qQ5QmH2" resname="error.directory_missing">
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target state="needs-translation">The directory “%dir%” does not exist and could not be created.</target>
       </trans-unit>

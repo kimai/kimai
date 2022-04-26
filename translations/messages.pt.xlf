@@ -1242,7 +1242,7 @@
         <source>Updated at</source>
         <target>Atualizado em</target>
       </trans-unit>
-      <trans-unit id="qQ5QmH2" resname="error.directory_missing">
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>O diretório «%dir%» não existe e não pôde ser criado.</target>
       </trans-unit>

@@ -22,7 +22,7 @@
         <source>timesheet.start.error</source>
         <target state="needs-translation">Zeitmessung konnte nicht gestartet werden</target>
       </trans-unit>
-      <trans-unit id="OvX_TWM" resname="timesheet.start.exceeded_limit">
+      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
         <source>The limit of active time records has been reached. Please stop at least one running time measurement first.</source>
         <target state="needs-translation">Das Limit aktiver Zeitmessungen wurde erreicht, bitte stoppen Sie mindestens eine laufende Zeitmessung.</target>
       </trans-unit>

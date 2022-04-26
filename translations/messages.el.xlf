@@ -1249,7 +1249,7 @@
         <source>Updated at</source>
         <target>Ενημερώθηκε την</target>
       </trans-unit>
-      <trans-unit id="qQ5QmH2" resname="error.directory_missing">
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>Ο φάκελος «%dir%» δεν υπάρχει και δεν μπόρεσε να δημιουργηθεί.</target>
       </trans-unit>

@@ -1233,7 +1233,7 @@
         <source>label.last_record</source>
         <target state="translated">Utolsó bejegyzés</target>
       </trans-unit>
-      <trans-unit id="qQ5QmH2" resname="error.directory_missing">
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target state="translated">A „%dir%” könyvtár nem létezik, és nem hozható létre.</target>
       </trans-unit>

@@ -179,7 +179,7 @@
         <source>menu.homepage</source>
         <target>Dashboard</target>
       </trans-unit>
-      <trans-unit id="id10hEL" resname="menu.apps">
+      <trans-unit id="Eq2E_Rd" resname="menu.apps">
         <source>Apps</source>
         <target>Anwendungen</target>
       </trans-unit>
@@ -262,7 +262,7 @@
         <source>error.too_many_entries</source>
         <target>Die Anfrage konnte nicht verarbeitet werden. Es wurden zu viele Ergebnisse gefunden.</target>
       </trans-unit>
-      <trans-unit id="qQ5QmH2" resname="error.directory_missing">
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>Das Verzeichnis „%dir%“ existiert nicht und konnte auch nicht erstellt werden.</target>
       </trans-unit>

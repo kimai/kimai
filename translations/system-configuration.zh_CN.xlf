@@ -258,7 +258,7 @@
         <source>label.timesheet.duration_increment</source>
         <target>持续时间的分钟选择</target>
       </trans-unit>
-      <trans-unit id="d.2_w8h" resname="help.theme.color_choices">
+      <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
         <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
         <target>以逗号分隔的HTML颜色代码列表。颜色名称可以通过在颜色代码前加上名称和"|"分隔符来设置，例如。White|#ffffff,Black|#000000。</target>
       </trans-unit>

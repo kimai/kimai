@@ -22,7 +22,7 @@
         <source>timesheet.start.error</source>
         <target>Kunne ikke starte tidssporing</target>
       </trans-unit>
-      <trans-unit id="OvX_TWM" resname="timesheet.start.exceeded_limit">
+      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
         <source>The limit of active time records has been reached. Please stop at least one running time measurement first.</source>
         <target state="needs-translation">Grensen for aktive tidsoppføringer er nådd. Stopp minst én kjørende tidsmåling først.</target>
       </trans-unit>
