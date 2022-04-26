@@ -1228,7 +1228,7 @@
         <source>label.hours_24</source>
         <target>24 часа</target>
       </trans-unit>
-      <trans-unit id="PCEFPeg" resname="updated_at">
+      <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target>Обновлено в</target>
       </trans-unit>
@@ -1244,7 +1244,7 @@
         <source>invoice_document.max_reached</source>
         <target>Достигнуто максимальное количество документов счета-фактуры %max%. Вы можете добавить больше после удаления одного документа.</target>
       </trans-unit>
-      <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
+      <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
         <target state="translated">Отображение записей в списках выбора</target>
       </trans-unit>

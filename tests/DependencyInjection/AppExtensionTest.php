@@ -103,6 +103,27 @@ class AppExtensionTest extends TestCase
                     'time' => 'H:i',
                 ],
             ],
+            'kimai.calendar' => [
+                'week_numbers' => true,
+                'day_limit' => 4,
+                'slot_duration' => '00:30:00',
+                'businessHours' => [
+                    'days' => [1, 2, 3, 4, 5],
+                    'begin' => '08:00',
+                    'end' => '20:00',
+                ],
+                'visibleHours' => [
+                    'begin' => '00:00',
+                    'end' => '23:59',
+                ],
+                'google' => [
+                    'api_key' => null,
+                    'sources' => [],
+                ],
+                'weekends' => true,
+                'dragdrop_amount' => 10,
+                'title_pattern' => '{activity}',
+            ],
             'kimai.dashboard' => [
                 'PaginatedWorkingTimeChart',
                 'UserTeams',

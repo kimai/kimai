@@ -16,6 +16,7 @@ use App\Form\Model\SystemConfiguration as SystemConfigurationModel;
 use App\Form\SystemConfigurationForm;
 use App\Form\Type\ActivityTypePatternType;
 use App\Form\Type\ArrayToCommaStringType;
+use App\Form\Type\CalendarTitlePatternType;
 use App\Form\Type\CustomerTypePatternType;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\DateTimeTextType;
@@ -556,6 +557,10 @@ final class SystemConfigurationController extends AbstractController
                         ->setTranslationDomain('system-configuration')
                         ->setType(IntegerType::class)
                         ->setConstraints([new Range(['min' => 0, 'max' => 20]), new NotNull()]),
+                    (new Configuration())
+                        ->setName('calendar.title_pattern')
+                        ->setTranslationDomain('system-configuration')
+                        ->setType(CalendarTitlePatternType::class),
                 ]),
             (new SystemConfigurationModel('branding'))
                 ->setConfiguration([

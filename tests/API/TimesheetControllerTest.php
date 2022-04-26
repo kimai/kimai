@@ -393,7 +393,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
-            'hourlyRate' => 127
+            'hourlyRate' => 127,
+            'billable' => false
         ];
         $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -404,6 +405,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result['id']);
         $this->assertTrue($result['duration'] == 28800 || $result['duration'] == 28860); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);
+        $this->assertFalse($result['billable']);
     }
 
     public function testPostActionWithFullExpandedResponse()
@@ -417,7 +419,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
-            'hourlyRate' => 127
+            'hourlyRate' => 127,
+            'billable' => true
         ];
         $this->request($client, '/api/timesheets?full=true', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -428,6 +431,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result['id']);
         $this->assertTrue($result['duration'] == 28800 || $result['duration'] == 28860); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);
+        $this->assertTrue($result['billable']);
     }
 
     public function testPostActionForDifferentUser()
@@ -446,8 +450,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'begin' => ($dateTime->createDateTime('- 8 hours'))->format('Y-m-d H:m:0'),
             'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
             'description' => 'foo',
-            'fixedRate' => 2016,
-            'hourlyRate' => 127
         ];
         $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -458,6 +460,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result['id']);
         $this->assertEquals($user->getId(), $result['user']);
         $this->assertNotEquals($admin->getId(), $result['user']);
+        $this->assertTrue($result['billable']);
     }
 
     // check for project, as this is a required field. It will not be included in the select, as it is
@@ -481,8 +484,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m:s'),
             'end' => (new \DateTime())->format('Y-m-d H:m:s'),
             'description' => 'foo',
-            'fixedRate' => 2016,
-            'hourlyRate' => 127
         ];
         $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
         $this->assertApiCallValidationError($client->getResponse(), ['project']);
@@ -509,11 +510,71 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m'),
             'end' => (new \DateTime())->format('Y-m-d H:m'),
             'description' => 'foo',
-            'fixedRate' => 2016,
-            'hourlyRate' => 127
         ];
         $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
         $this->assertApiCallValidationError($client->getResponse(), ['activity']);
+    }
+
+    public function testPostActionWithNonBillableCustomer()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $em = $this->getEntityManager();
+        $customer = (new Customer())->setName('foo-bar-1')->setCountry('DE')->setTimezone('Europe/Berlin');
+        $customer->setBillable(false);
+        $em->persist($customer);
+        $project = (new Project())->setName('foo-bar-2')->setCustomer($customer);
+        $em->persist($project);
+        $activity = (new Activity())->setName('foo-bar-3');
+        $em->persist($activity);
+        $em->flush();
+
+        $data = [
+            'activity' => $activity->getId(),
+            'project' => $project->getId(),
+            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m'),
+            'end' => (new \DateTime())->format('Y-m-d H:m'),
+            'description' => 'foo',
+        ];
+        $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        $this->assertFalse($result['billable']);
+    }
+
+    public function testPostActionWithNonBillableCustomerExplicit()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $em = $this->getEntityManager();
+        $customer = (new Customer())->setName('foo-bar-1')->setCountry('DE')->setTimezone('Europe/Berlin');
+        $customer->setBillable(false);
+        $em->persist($customer);
+        $project = (new Project())->setName('foo-bar-2')->setCustomer($customer);
+        $em->persist($project);
+        $activity = (new Activity())->setName('foo-bar-3');
+        $em->persist($activity);
+        $em->flush();
+
+        $data = [
+            'activity' => $activity->getId(),
+            'project' => $project->getId(),
+            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m'),
+            'end' => (new \DateTime())->format('Y-m-d H:m'),
+            'description' => 'foo',
+            'billable' => true,
+        ];
+        $this->request($client, '/api/timesheets', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        // explicit overwritten values win!
+        $this->assertTrue($result['billable']);
     }
 
     public function testPatchAction()

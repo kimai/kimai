@@ -2,7 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="hu" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="ycErWZK" resname="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Time tracking</source>
         <target>Rögzített órák</target>
       </trans-unit>
@@ -201,6 +201,70 @@
       <trans-unit id="40i4Xlr" resname="label.timesheet.duration_increment">
         <source>label.timesheet.duration_increment</source>
         <target>Perc kiválasztása Időtartamhoz</target>
+      </trans-unit>
+      <trans-unit id="jLG6z.w" resname="label.timesheet.rules.break_warning_duration">
+        <source>label.timesheet.rules.break_warning_duration</source>
+        <target>Egy munkaidő-nyilvántartási rekord maximális időtartama percekben, mielőtt a „szünetfigyelmeztetés” megjelenik (0 = deaktiválva)</target>
+      </trans-unit>
+      <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
+        <source>label.theme.avatar_url</source>
+        <target>Engedélyezze az URL-ek használatát az avatarképekhez</target>
+      </trans-unit>
+      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
+        <source>label.theme.random_colors</source>
+        <target>Véletlenszerű színeket használjon a hozzárendelt szín nélküli objektumokhoz</target>
+      </trans-unit>
+      <trans-unit id=".CeyZwj" resname="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target>Pénzügyi év</target>
+      </trans-unit>
+      <trans-unit id="ufoC1qF" resname="label.user_auth_password_reset_retry_ttl">
+        <source>label.user_auth_password_reset_retry_ttl</source>
+        <target>Elfelejtett jelszó – másodpercek azelőtt, hogy a felhasználó kérhetné a következő e-mailt</target>
+      </trans-unit>
+      <trans-unit id=".zZ_MeA" resname="label.user_auth_registration">
+        <source>label.user_auth_registration</source>
+        <target>Felhasználó regisztráció</target>
+      </trans-unit>
+      <trans-unit id="scCc2Xm" resname="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target>Engedélyezett színek</target>
+      </trans-unit>
+      <trans-unit id="VAAaL2t" resname="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target>A tárolt költségvetések túlfoglalásának engedélyezése</target>
+      </trans-unit>
+      <trans-unit id="tuPXa0S" resname="lockdown_period">
+        <source>lockdown_period</source>
+        <target>Lezárási időszak</target>
+      </trans-unit>
+      <trans-unit id="HeDzoVE" resname="label.timesheet.rules.lockdown_period_timezone">
+        <source>label.timesheet.rules.lockdown_period_timezone</source>
+        <target>Időzóna (ha üres, az adott felhasználó időzónája van használva)</target>
+      </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target>Az előző hetekből átvett bejegyzések száma</target>
+      </trans-unit>
+      <trans-unit id="QHVk7AA" resname="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target>Korlátozza a színválasztást</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target>Hitelesítés</target>
+      </trans-unit>
+      <trans-unit id="CCXeSFj" resname="label.user_auth_login">
+        <source>label.user_auth_login</source>
+        <target>Bejelentkezési űrlap</target>
+      </trans-unit>
+      <trans-unit id="t2zKRp5" resname="label.user_auth_password_reset">
+        <source>label.user_auth_password_reset</source>
+        <target>Elfelejtett jelszó</target>
+      </trans-unit>
+      <trans-unit id="0Tj.NhS" resname="label.user_auth_password_reset_token_ttl">
+        <source>label.user_auth_password_reset_token_ttl</source>
+        <target>Elfelejtett jelszó – másodpercek a visszaállítási hivatkozás lejárta előtt</target>
       </trans-unit>
     </body>
   </file>

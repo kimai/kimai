@@ -18,7 +18,21 @@
         {% form_theme form 'form/search-form.html.twig' %}
         {% block modal_size %}{% endblock %}
         {% block form_body %}
+            {% set orderHasError = form.orderBy.vars.errors|length > 0 or form.order.vars.errors|length > 0 %}
+            {% set orderBy = form_widget(form.orderBy) %}
+            {% set order = form_widget(form.order) %}
             {{ form_widget(form) }}
+            <div class="form-group{% if orderHasError %} has-error{% endif %}">
+                {{ form_label(form.orderBy) }}
+                <div class="col-sm-5 col-xs-5">
+                    {{ orderBy|raw }}
+                    {{ form_errors(form.orderBy) }}
+                </div>
+                <div class="col-sm-4 col-xs-3">
+                    {{ order|raw }}
+                    {{ form_errors(form.order) }}
+                </div>
+            </div>
         {% endblock %}
         {% block submit_button %}
             <div class="btn-group pull-left" role="group">

@@ -861,7 +861,7 @@
         <source>menu.admin_team</source>
         <target state="needs-translation">Teams</target>
       </trans-unit>
-      <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
+      <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
         <target state="needs-translation">Display of entries in selection lists</target>
       </trans-unit>
@@ -1009,7 +1009,7 @@
         <source>default_value_new</source>
         <target state="needs-translation">Default values for new entries</target>
       </trans-unit>
-      <trans-unit id="PCEFPeg" resname="updated_at">
+      <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target state="needs-translation">Updated at</target>
       </trans-unit>
@@ -1035,7 +1035,7 @@
       </trans-unit>
       <trans-unit id="BytPihM" resname="label.set_as_default">
         <source>label.set_as_default</source>
-        <target state="needs-translation">Save setting as search favourite</target>
+        <target state="translated">設定をお気に入りに保存</target>
       </trans-unit>
       <trans-unit id="NNKq04n" resname="label.remove_default">
         <source>label.remove_default</source>

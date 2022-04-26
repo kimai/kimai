@@ -124,7 +124,7 @@
         <source>modal.dirty</source>
         <target>The form has changed. Please click "Save" to save the changes or "Close" to cancel.</target>
       </trans-unit>
-      <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
+      <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
         <target>Display of entries in selection lists</target>
       </trans-unit>
@@ -1340,7 +1340,7 @@
         <source>label.hours_24</source>
         <target>24 hours</target>
       </trans-unit>
-      <trans-unit id="PCEFPeg" resname="updated_at">
+      <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target>Updated at</target>
       </trans-unit>

@@ -378,6 +378,8 @@ final class TimesheetStatisticService
             if (!isset($stats[$projectId])) {
                 $stats[$projectId] = [
                     'id' => $projectId,
+                    'customer' => '',
+                    'customer_id' => null,
                     'name' => null,
                     'activities' => [],
                     'duration' => 0,
@@ -451,6 +453,8 @@ final class TimesheetStatisticService
 
         foreach (array_keys($stats) as $pid) {
             $stats[$pid]['name'] = $projects[$pid]['name'];
+            $stats[$pid]['customer'] = $projects[$pid]['customer'];
+            $stats[$pid]['customer_id'] = $projects[$pid]['customer_id'];
             foreach (array_keys($stats[$pid]['activities']) as $aid) {
                 $stats[$pid]['activities'][$aid]['name'] = $activities[$aid]['name'];
                 foreach (array_keys($stats[$pid]['activities'][$aid]['users']) as $uid) {

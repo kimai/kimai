@@ -13,6 +13,7 @@ use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
 use App\Entity\MetaTableTypeInterface;
+use App\Event\InvoiceCreatedMultipleEvent;
 use App\Event\InvoiceDocumentsEvent;
 use App\Event\InvoiceMetaDefinitionEvent;
 use App\Event\InvoiceMetaDisplayEvent;
@@ -168,11 +169,11 @@ final class InvoiceController extends AbstractController
                 return $this->service->renderInvoiceWithModel($model, $this->dispatcher);
             } catch (Exception $ex) {
                 $this->logException($ex);
-                $this->flashError('action.update.error', ['%reason%' => 'Failed generating invoice preview: ' . $ex->getMessage()]);
+                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
             }
+        } else {
+            $this->flashFormError($form);
         }
-
-        $this->flashFormError($form);
 
         return $this->redirectToRoute('invoice');
     }
@@ -613,6 +614,8 @@ final class InvoiceController extends AbstractController
 
             if (\count($invoices) === 1) {
                 return $this->redirectToRoute('admin_invoice_list', ['id' => $invoices[0]->getId()]);
+            } elseif (\count($invoices) > 1) {
+                $this->dispatcher->dispatch(new InvoiceCreatedMultipleEvent($invoices));
             }
 
             return $this->redirectToRoute('admin_invoice_list');

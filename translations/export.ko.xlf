@@ -14,7 +14,7 @@
         <source>With internal rates</source>
         <target>내부 수익률 포함</target>
       </trans-unit>
-      <trans-unit id="bTIKMV." resname="timesheet.pdf.twig">
+      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig">
         <source>Timesheet</source>
         <target>근무 시간 기록표</target>
       </trans-unit>

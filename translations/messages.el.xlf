@@ -1245,7 +1245,7 @@
         <source>error.directory_protected</source>
         <target>Ο φάκελος «%dir%» έχει προστασία εγγραφής.</target>
       </trans-unit>
-      <trans-unit id="PCEFPeg" resname="updated_at">
+      <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target>Ενημερώθηκε την</target>
       </trans-unit>
@@ -1257,7 +1257,7 @@
         <source>invoice_document.max_reached</source>
         <target>Επιτεύχθη τo μέγιστο όριο %max% των τιμολογίων. Μπορείτε να προσθέσετε περισότερρα εφόσον αφαιρέσεται κάποιο.</target>
       </trans-unit>
-      <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
+      <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
         <target state="translated">Προβολή των καταχωρίσεων στις λίστες επιλογών</target>
       </trans-unit>

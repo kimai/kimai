@@ -33,7 +33,7 @@ jobs:
                     php-version: ${{ matrix.php }}
                     coverage: none
                     extensions: mbstring, xml, ctype, iconv, intl, mysql, zip, gd, ldap
-                    tools: cs2pr:1.1.0
+                    tools: cs2pr:1.1.0, symfony-cli
 
             -   name: Determine composer cache directory
                 id: composer-cache
@@ -65,6 +65,9 @@ jobs:
 
             -   name: Lint codebase
                 run: composer linting
+
+            -   name: Check for security issues in packages
+                run: symfony security:check
 
             -   name: Install LDAP package
                 run: composer require laminas/laminas-ldap

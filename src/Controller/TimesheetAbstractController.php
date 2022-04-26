@@ -223,6 +223,7 @@ abstract class TimesheetAbstractController extends AbstractController
     protected function export(Request $request, ServiceExport $serviceExport): Response
     {
         $query = $this->createDefaultQuery();
+        $query->setOrder(TimesheetQuery::ORDER_ASC);
 
         $form = $this->getExportForm($query);
 
