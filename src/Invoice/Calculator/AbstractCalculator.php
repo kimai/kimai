@@ -29,22 +29,13 @@ abstract class AbstractCalculator
      */
     abstract public function getEntries(): array;
 
-    /**
-     * @return string
-     */
     abstract public function getId(): string;
 
-    /**
-     * @param InvoiceModel $model
-     */
     public function setModel(InvoiceModel $model): void
     {
         $this->model = $model;
     }
 
-    /**
-     * @return float
-     */
     public function getSubtotal(): float
     {
         $amount = 0;
@@ -55,17 +46,11 @@ abstract class AbstractCalculator
         return round($amount, 2);
     }
 
-    /**
-     * @return float
-     */
-    public function getVat(): ?float
+    public function getVat(): float
     {
         return $this->model->getTemplate()->getVat();
     }
 
-    /**
-     * @return float
-     */
     public function getTax(): float
     {
         $vat = $this->getVat();
@@ -78,9 +63,6 @@ abstract class AbstractCalculator
         return round($this->getSubtotal() * $percent, 2);
     }
 
-    /**
-     * @return float
-     */
     public function getTotal(): float
     {
         return $this->getSubtotal() + $this->getTax();

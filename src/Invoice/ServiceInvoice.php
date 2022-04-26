@@ -11,6 +11,7 @@ namespace App\Invoice;
 
 use App\Configuration\LanguageFormattings;
 use App\Constants;
+use App\Entity\ExportableItem;
 use App\Entity\Invoice;
 use App\Entity\InvoiceDocument;
 use App\Event\InvoiceCreatedEvent;
@@ -256,7 +257,7 @@ final class ServiceInvoice
 
     /**
      * @param InvoiceQuery $query
-     * @return InvoiceItemInterface[]
+     * @return ExportableItem[]
      */
     public function getInvoiceItems(InvoiceQuery $query): array
     {
@@ -283,7 +284,7 @@ final class ServiceInvoice
     }
 
     /**
-     * @param InvoiceItemInterface[] $entries
+     * @param ExportableItem[] $entries
      */
     private function markEntriesAsExported(array $entries)
     {

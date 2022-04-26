@@ -10,6 +10,7 @@
 namespace App\Export\Base;
 
 use App\Activity\ActivityStatisticService;
+use App\Entity\ExportableItem;
 use App\Entity\MetaTableTypeInterface;
 use App\Event\ActivityMetaDisplayEvent;
 use App\Event\CustomerMetaDisplayEvent;
@@ -17,7 +18,6 @@ use App\Event\MetaDisplayEventInterface;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
-use App\Export\ExportItemInterface;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
@@ -77,7 +77,7 @@ class HtmlRenderer
     }
 
     /**
-     * @param ExportItemInterface[] $timesheets
+     * @param ExportableItem[] $timesheets
      * @param TimesheetQuery $query
      * @return Response
      * @throws \Twig\Error\LoaderError

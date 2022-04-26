@@ -10,7 +10,7 @@
 namespace App\Export\Base;
 
 use App\Activity\ActivityStatisticService;
-use App\Invoice\InvoiceItemInterface;
+use App\Entity\ExportableItem;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
 
@@ -19,7 +19,7 @@ trait RendererTrait
     /**
      * FIXME use statistic events to calculate budgets and do NOT iterate all results!
      *
-     * @param InvoiceItemInterface[] $exportItems
+     * @param ExportableItem[] $exportItems
      * @return array
      */
     protected function calculateSummary(array $exportItems)
@@ -126,7 +126,7 @@ trait RendererTrait
     }
 
     /**
-     * @param InvoiceItemInterface[] $exportItems
+     * @param ExportableItem[] $exportItems
      * @param TimesheetQuery $query
      * @param ProjectStatisticService $projectStatisticService
      * @return array
@@ -209,7 +209,7 @@ trait RendererTrait
     }
 
     /**
-     * @param InvoiceItemInterface[] $exportItems
+     * @param ExportableItem[] $exportItems
      * @param TimesheetQuery $query
      * @param ActivityStatisticService $activityStatisticService
      * @return array

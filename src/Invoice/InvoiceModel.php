@@ -12,6 +12,7 @@ namespace App\Invoice;
 use App\Activity\ActivityStatisticService;
 use App\Customer\CustomerStatisticService;
 use App\Entity\Customer;
+use App\Entity\ExportableItem;
 use App\Entity\InvoiceTemplate;
 use App\Entity\User;
 use App\Invoice\Hydrator\InvoiceItemDefaultHydrator;
@@ -38,7 +39,7 @@ final class InvoiceModel
      */
     private $query;
     /**
-     * @var InvoiceItemInterface[]
+     * @var ExportableItem[]
      */
     private $entries = [];
     /**
@@ -117,7 +118,7 @@ final class InvoiceModel
      *
      * Do not use this method for rendering the invoice, use getItems() instead.
      *
-     * @return InvoiceItemInterface[]
+     * @return ExportableItem[]
      */
     public function getEntries(): array
     {
@@ -125,7 +126,7 @@ final class InvoiceModel
     }
 
     /**
-     * @param InvoiceItemInterface[] $entries
+     * @param ExportableItem[] $entries
      * @return InvoiceModel
      */
     public function addEntries(array $entries): InvoiceModel

@@ -9,7 +9,6 @@
 
 namespace App\Entity;
 
-use App\Export\ExportItemInterface;
 use App\Validator\Constraints as Constraints;
 use DateTime;
 use DateTimeZone;
@@ -75,7 +74,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  */
-class Timesheet implements EntityWithMetaFields, ExportItemInterface
+class Timesheet implements EntityWithMetaFields, ExportableItem
 {
     /**
      * Category: Normal work-time (default category)

@@ -9,21 +9,16 @@
 
 namespace App\Invoice\Calculator;
 
+use App\Entity\ExportableItem;
 use App\Entity\Timesheet;
 use App\Invoice\InvoiceItem;
-use App\Invoice\InvoiceItemInterface;
 
 abstract class AbstractMergedCalculator extends AbstractCalculator
 {
     public const TYPE_MIXED = 'mixed';
     public const CATEGORY_MIXED = 'mixed';
 
-    /**
-     * @param InvoiceItem $invoiceItem
-     * @param InvoiceItemInterface $entry
-     * @return void
-     */
-    protected function mergeInvoiceItems(InvoiceItem $invoiceItem, InvoiceItemInterface $entry) /* : void */
+    protected function mergeInvoiceItems(InvoiceItem $invoiceItem, ExportableItem $entry): void
     {
         $duration = $invoiceItem->getDuration();
         if (null !== $entry->getDuration()) {

@@ -9,16 +9,16 @@
 
 namespace App\Invoice\Calculator;
 
+use App\Entity\ExportableItem;
 use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceItem;
-use App\Invoice\InvoiceItemInterface;
 
 /**
  * A calculator that sums up the invoice item records by project.
  */
 class ProjectInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
 {
-    protected function calculateSumIdentifier(InvoiceItemInterface $invoiceItem): string
+    protected function calculateSumIdentifier(ExportableItem $invoiceItem): string
     {
         if (null === $invoiceItem->getProject()->getId()) {
             throw new \Exception('Cannot handle un-persisted projects');
@@ -27,7 +27,7 @@ class ProjectInvoiceCalculator extends AbstractSumInvoiceCalculator implements C
         return (string) $invoiceItem->getProject()->getId();
     }
 
-    protected function mergeSumInvoiceItem(InvoiceItem $invoiceItem, InvoiceItemInterface $entry): void
+    protected function mergeSumInvoiceItem(InvoiceItem $invoiceItem, ExportableItem $entry): void
     {
         $invoiceItem->setProject($entry->getProject());
         $invoiceItem->setDescription($entry->getProject()->getName());

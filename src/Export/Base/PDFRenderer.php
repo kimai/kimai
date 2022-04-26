@@ -9,9 +9,9 @@
 
 namespace App\Export\Base;
 
+use App\Entity\ExportableItem;
 use App\Export\ExportContext;
 use App\Export\ExportFilename;
-use App\Export\ExportItemInterface;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
 use App\Utils\FileHelper;
@@ -71,7 +71,7 @@ class PDFRenderer
     }
 
     /**
-     * @param ExportItemInterface[] $timesheets
+     * @param ExportableItem[] $timesheets
      * @param TimesheetQuery $query
      * @return Response
      * @throws \Twig\Error\LoaderError

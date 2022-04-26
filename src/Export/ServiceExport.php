@@ -9,6 +9,7 @@
 
 namespace App\Export;
 
+use App\Entity\ExportableItem;
 use App\Event\ExportItemsQueryEvent;
 use App\Repository\Query\ExportQuery;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -92,7 +93,7 @@ final class ServiceExport
 
     /**
      * @param ExportQuery $query
-     * @return ExportItemInterface[]
+     * @return ExportableItem[]
      * @throws TooManyItemsExportException
      */
     public function getExportItems(ExportQuery $query)

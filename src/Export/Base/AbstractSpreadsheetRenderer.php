@@ -9,6 +9,7 @@
 
 namespace App\Export\Base;
 
+use App\Entity\ExportableItem;
 use App\Entity\MetaTableTypeInterface;
 use App\Event\ActivityMetaDisplayEvent;
 use App\Event\CustomerMetaDisplayEvent;
@@ -17,7 +18,6 @@ use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
 use App\Export\ExportFilename;
-use App\Export\ExportItemInterface;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\LocaleFormatExtensions;
@@ -236,7 +236,7 @@ abstract class AbstractSpreadsheetRenderer
     }
 
     /**
-     * @param ExportItemInterface[] $exportItems
+     * @param ExportableItem[] $exportItems
      * @param TimesheetQuery $query
      * @param array $columns
      * @return array
@@ -251,31 +251,31 @@ abstract class AbstractSpreadsheetRenderer
         $showRates = $this->isRenderRate($query);
 
         if (isset($columns['date']) && !isset($columns['date']['render'])) {
-            $columns['date']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+            $columns['date']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                 $this->setFormattedDate($sheet, $column, $row, $entity->getBegin());
             };
         }
 
         if (isset($columns['begin']) && !isset($columns['begin']['render'])) {
-            $columns['begin']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+            $columns['begin']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                 $this->setFormattedTime($sheet, $column, $row, $entity->getBegin());
             };
         }
 
         if (isset($columns['end']) && !isset($columns['end']['render'])) {
-            $columns['end']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+            $columns['end']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                 $this->setFormattedTime($sheet, $column, $row, $entity->getEnd());
             };
         }
 
         if (isset($columns['duration']) && !isset($columns['duration']['render'])) {
-            $columns['duration']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+            $columns['duration']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                 $this->setDuration($sheet, $column, $row, $entity->getDuration());
             };
         }
 
         if ($showRates && isset($columns['rate']) && !isset($columns['rate']['render'])) {
-            $columns['rate']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+            $columns['rate']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                 $currency = '';
                 if (null !== $entity->getProject()) {
                     $currency = $entity->getProject()->getCustomer()->getCurrency();
@@ -285,7 +285,7 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if ($showRates && isset($columns['rate_internal']) && !isset($columns['rate_internal']['render'])) {
-            $columns['rate_internal']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+            $columns['rate_internal']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                 $currency = '';
                 if (null !== $entity->getProject()) {
                     $currency = $entity->getProject()->getCustomer()->getCurrency();
@@ -295,7 +295,7 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if (isset($columns['user']) && !isset($columns['user']['render'])) {
-            $columns['user']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+            $columns['user']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                 $user = '';
                 if (null !== $entity->getUser()) {
                     $user = $entity->getUser()->getDisplayName();
@@ -306,7 +306,7 @@ abstract class AbstractSpreadsheetRenderer
 
         if (isset($columns['username'])) {
             if (!isset($columns['username']['render'])) {
-                $columns['username']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $columns['username']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                     $username = '';
                     if (null !== $entity->getUser()) {
                         $username = $entity->getUser()->getUserIdentifier();
@@ -324,7 +324,7 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if (isset($columns['customer']) && !isset($columns['customer']['render'])) {
-            $columns['customer']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+            $columns['customer']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                 $customer = '';
                 if (null !== $entity->getProject()) {
                     $customer = $entity->getProject()->getCustomer()->getName();
@@ -334,7 +334,7 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if (isset($columns['project']) && !isset($columns['project']['render'])) {
-            $columns['project']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+            $columns['project']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                 $project = '';
                 if (null !== $entity->getProject()) {
                     $project = $entity->getProject()->getName();
@@ -344,7 +344,7 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if (isset($columns['activity']) && !isset($columns['activity']['render'])) {
-            $columns['activity']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+            $columns['activity']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                 $activity = '';
                 if (null !== $entity->getActivity()) {
                     $activity = $entity->getActivity()->getName();
@@ -362,7 +362,7 @@ abstract class AbstractSpreadsheetRenderer
             // It needs to be executed once, so we use this as a flag on when to skip it.
             $isColumnFormatted = false;
 
-            $columns['description']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use (&$isColumnFormatted, $maxWidth, $wrapText, $sanitizeText) {
+            $columns['description']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) use (&$isColumnFormatted, $maxWidth, $wrapText, $sanitizeText) {
                 $cell = $sheet->getCellByColumnAndRow($column, $row);
                 $desc = $entity->getDescription();
 
@@ -388,27 +388,27 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if (isset($columns['exported']) && !isset($columns['exported']['render'])) {
-            $columns['exported']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+            $columns['exported']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                 $exported = $entity->isExported() ? 'yes' : 'no';
                 $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans($exported));
             };
         }
 
         if (isset($columns['billable']) && !isset($columns['billable']['render'])) {
-            $columns['billable']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+            $columns['billable']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                 $exported = $entity->isBillable() ? 'yes' : 'no';
                 $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans($exported));
             };
         }
 
         if (isset($columns['tags']) && !isset($columns['tags']['render'])) {
-            $columns['tags']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+            $columns['tags']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                 $sheet->setCellValueByColumnAndRow($column, $row, implode(',', $entity->getTagsAsArray()));
             };
         }
 
         if ($showRates && isset($columns['hourlyRate']) && !isset($columns['hourlyRate']['render'])) {
-            $columns['hourlyRate']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+            $columns['hourlyRate']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                 $currency = '';
                 if (null !== $entity->getProject()) {
                     $currency = $entity->getProject()->getCustomer()->getCurrency();
@@ -418,7 +418,7 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if ($showRates && isset($columns['fixedRate']) && !isset($columns['fixedRate']['render'])) {
-            $columns['fixedRate']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+            $columns['fixedRate']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                 $currency = '';
                 if (null !== $entity->getProject()) {
                     $currency = $entity->getProject()->getCustomer()->getCurrency();
@@ -438,7 +438,7 @@ abstract class AbstractSpreadsheetRenderer
 
                     return \count($timesheetMetaFields);
                 },
-                'render' => function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use ($timesheetMetaFields) {
+                'render' => function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) use ($timesheetMetaFields) {
                     foreach ($timesheetMetaFields as $metaField) {
                         $metaFieldValue = '';
                         $metaField = $entity->getMetaField($metaField->getName());
@@ -466,7 +466,7 @@ abstract class AbstractSpreadsheetRenderer
 
                     return \count($customerMetaFields);
                 },
-                'render' => function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use ($customerMetaFields) {
+                'render' => function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) use ($customerMetaFields) {
                     foreach ($customerMetaFields as $metaField) {
                         $metaFieldValue = '';
                         if (null !== $entity->getProject()) {
@@ -493,7 +493,7 @@ abstract class AbstractSpreadsheetRenderer
 
                     return \count($projectMetaFields);
                 },
-                'render' => function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use ($projectMetaFields) {
+                'render' => function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) use ($projectMetaFields) {
                     foreach ($projectMetaFields as $metaField) {
                         $metaFieldValue = '';
                         if (null !== $entity->getProject()) {
@@ -520,7 +520,7 @@ abstract class AbstractSpreadsheetRenderer
 
                     return \count($activityMetaFields);
                 },
-                'render' => function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use ($activityMetaFields) {
+                'render' => function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) use ($activityMetaFields) {
                     foreach ($activityMetaFields as $metaField) {
                         $metaFieldValue = '';
                         if (null !== $entity->getActivity()) {
@@ -549,7 +549,7 @@ abstract class AbstractSpreadsheetRenderer
 
                     return \count($userPreferences);
                 },
-                'render' => function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) use ($userPreferences) {
+                'render' => function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) use ($userPreferences) {
                     foreach ($userPreferences as $preference) {
                         $metaFieldValue = '';
                         if (null !== $entity->getUser()) {
@@ -567,13 +567,13 @@ abstract class AbstractSpreadsheetRenderer
         }
 
         if (isset($columns['type']) && !isset($columns['type']['render'])) {
-            $columns['type']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+            $columns['type']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                 $sheet->setCellValueByColumnAndRow($column, $row, $entity->getType());
             };
         }
 
         if (isset($columns['category']) && !isset($columns['category']['render'])) {
-            $columns['category']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+            $columns['category']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                 $sheet->setCellValueByColumnAndRow($column, $row, $entity->getCategory());
             };
         }
@@ -588,7 +588,7 @@ abstract class AbstractSpreadsheetRenderer
             }
 
             if (!isset($columns['customer_number']['render'])) {
-                $columns['customer_number']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $columns['customer_number']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                     $customerId = '';
                     if (null !== $entity->getProject()) {
                         $customerId = $entity->getProject()->getCustomer()->getNumber();
@@ -608,7 +608,7 @@ abstract class AbstractSpreadsheetRenderer
             }
 
             if (!isset($columns['customer_vat']['render'])) {
-                $columns['customer_vat']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $columns['customer_vat']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                     $customerVat = '';
                     if (null !== $entity->getProject()) {
                         $customerVat = $entity->getProject()->getCustomer()->getVatId();
@@ -628,7 +628,7 @@ abstract class AbstractSpreadsheetRenderer
             }
 
             if (!isset($columns['order_number']['render'])) {
-                $columns['order_number']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
+                $columns['order_number']['render'] = function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) {
                     $orderNumber = '';
                     if (null !== $entity->getProject()) {
                         $orderNumber = $entity->getProject()->getOrderNumber();
@@ -651,7 +651,7 @@ abstract class AbstractSpreadsheetRenderer
     }
 
     /**
-     * @param ExportItemInterface[] $exportItems
+     * @param ExportableItem[] $exportItems
      * @param TimesheetQuery $query
      * @return Spreadsheet
      * @throws \PhpOffice\PhpSpreadsheet\Exception
@@ -748,7 +748,7 @@ abstract class AbstractSpreadsheetRenderer
     }
 
     /**
-     * @param ExportItemInterface[] $exportItems
+     * @param ExportableItem[] $exportItems
      * @param TimesheetQuery $query
      * @return Response
      * @throws \PhpOffice\PhpSpreadsheet\Exception

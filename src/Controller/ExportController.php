@@ -9,7 +9,7 @@
 
 namespace App\Controller;
 
-use App\Export\ExportItemInterface;
+use App\Entity\ExportableItem;
 use App\Export\ServiceExport;
 use App\Export\TooManyItemsExportException;
 use App\Form\Toolbar\ExportToolbarForm;
@@ -140,7 +140,7 @@ class ExportController extends AbstractController
 
     /**
      * @param ExportQuery $query
-     * @return ExportItemInterface[]
+     * @return ExportableItem[]
      * @throws TooManyItemsExportException
      */
     protected function getEntries(ExportQuery $query): array

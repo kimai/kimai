@@ -9,6 +9,7 @@
 
 namespace App\Export;
 
+use App\Entity\ExportableItem;
 use App\Repository\Query\ExportQuery;
 
 interface ExportRepositoryInterface
@@ -17,20 +18,20 @@ interface ExportRepositoryInterface
      * This method will receive ALL exported items, loaded from all repositories.
      * Be careful to only handle the ones, which belong to your repository.
      *
-     * @param ExportItemInterface[] $items
+     * @param ExportableItem[] $items
      * @return void
      */
     public function setExported(array $items): void;
 
     /**
      * @param ExportQuery $query
-     * @return ExportItemInterface[]
+     * @return ExportableItem[]
      */
     public function getExportItemsForQuery(ExportQuery $query): iterable;
 
     /**
      * Returns the type of this repository.
-     * Must match the value returned by your entities via ExportItemInterface::getType().
+     * Must match the value returned by your entities via ExportableItem::getType().
      *
      * @return string
      */

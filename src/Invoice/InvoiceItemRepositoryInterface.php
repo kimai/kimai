@@ -9,19 +9,20 @@
 
 namespace App\Invoice;
 
+use App\Entity\ExportableItem;
 use App\Repository\Query\InvoiceQuery;
 
 interface InvoiceItemRepositoryInterface
 {
     /**
-     * @param InvoiceItemInterface[] $invoiceItems
+     * @param ExportableItem[] $invoiceItems
      * @return void
      */
     public function setExported(array $invoiceItems) /* : void */;
 
     /**
      * @param InvoiceQuery $query
-     * @return InvoiceItemInterface[]
+     * @return ExportableItem[]
      */
     public function getInvoiceItemsForQuery(InvoiceQuery $query): iterable;
 }
