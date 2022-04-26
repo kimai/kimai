@@ -306,7 +306,7 @@ class TimesheetController extends BaseApiController
      *      @OA\JsonContent(ref="#/components/schemas/TimesheetEditForm"),
      * )
      *
-     * @Rest\QueryParam(name="full", requirements="true", strict=true, nullable=true, description="Allows to fetch fully serialized objects including subresources (TimesheetEntityExpanded). Allowed values: true (default: false)")
+     * @Rest\QueryParam(name="full", requirements="true", strict=true, nullable=true, description="Allows to fetch fully serialized objects including subresources (TimesheetExpanded). Allowed values: true (default: false)")
      *
      * @Rest\Post(path="", name="post_timesheet")
      *

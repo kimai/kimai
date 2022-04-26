@@ -424,7 +424,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $result = json_decode($client->getResponse()->getContent(), true);
         $this->assertIsArray($result);
-        self::assertApiResponseTypeStructure('TimesheetEntityFull', $result);
+        self::assertApiResponseTypeStructure('TimesheetExpanded', $result);
         $this->assertNotEmpty($result['id']);
         $this->assertTrue($result['duration'] == 28800 || $result['duration'] == 28860); // 1 minute rounding might be applied
         $this->assertEquals(2016, $result['rate']);

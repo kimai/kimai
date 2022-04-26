@@ -564,10 +564,10 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'billable' => 'bool',
                     'fixedRate' => '@float',
                     'hourlyRate' => '@float',
-                    // TODO new fields: billable, category
+                    // TODO new fields: category
                 ];
 
-            case 'TimesheetEntityFull':
+            case 'TimesheetExpanded':
                 return [
                     'id' => 'int',
                     'begin' => 'DateTime',
@@ -578,14 +578,14 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'activity' => ['result' => 'object', 'type' => 'ActivityExpanded'],
                     'project' => ['result' => 'object', 'type' => 'ProjectExpanded'],
                     'tags' => ['result' => 'array', 'type' => 'string'],
-                    'user' => 'int',
+                    'user' => ['result' => 'object', 'type' => 'User'],
                     'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
                     'internalRate' => 'float',
                     'exported' => 'bool',
                     'billable' => 'bool',
                     'fixedRate' => '@float',
                     'hourlyRate' => '@float',
-                    // TODO new fields: billable, category
+                    // TODO new fields: category
                 ];
 
             case 'TimesheetCollection':
@@ -617,7 +617,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'activity' => ['result' => 'object', 'type' => 'Activity'],
                     'project' => ['result' => 'object', 'type' => 'ProjectExpanded'],
                     'tags' => ['result' => 'array', 'type' => 'string'],
-                    'user' => 'int',
+                    'user' => ['result' => 'object', 'type' => 'User'],
                     'metaFields' => ['result' => 'array', 'type' => 'TimesheetMeta'],
                     'internalRate' => 'float',
                     'exported' => 'bool',

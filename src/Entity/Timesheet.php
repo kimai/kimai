@@ -62,7 +62,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      options={
  *          @Serializer\SerializedName("user"),
  *          @Serializer\Type(name="integer"),
- *          @Serializer\Groups({"Default"})
+ *          @Serializer\Groups({"Not_Expanded"})
  *      }
  * )
  * @Serializer\VirtualProperty(
@@ -176,6 +176,10 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
     private $duration = 0;
     /**
      * @var User
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Subresource", "Expanded"})
+     * @OA\Property(ref="#/components/schemas/User")
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(name="`user`", referencedColumnName="id", onDelete="CASCADE", nullable=false)
