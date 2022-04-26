@@ -34,19 +34,19 @@
         <source>settings</source>
         <target state="needs-translation">Preferences</target>
       </trans-unit>
-      <trans-unit id="xovWV.Y" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter">
         <source>Filter timesheets</source>
         <target state="needs-translation">Filter timesheets</target>
       </trans-unit>
-      <trans-unit id="U7.woIo" resname="customer.filter">
+      <trans-unit id="xY9_cU2" resname="customer.filter">
         <source>Filter customers</source>
         <target state="needs-translation">Filter customers</target>
       </trans-unit>
-      <trans-unit id="j9gsVnq" resname="project.filter">
+      <trans-unit id="UFgOnc6" resname="project.filter">
         <source>Filter projects</source>
         <target state="needs-translation">Filter projects</target>
       </trans-unit>
-      <trans-unit id="xl_5l3y" resname="activity.filter">
+      <trans-unit id="5G3QNHA" resname="activity.filter">
         <source>Filter activities</source>
         <target state="needs-translation">Filter activities</target>
       </trans-unit>

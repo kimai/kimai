@@ -45,6 +45,8 @@ class TimesheetExportToolbarForm extends AbstractToolbarForm
         $this->addTimesheetStateChoice($builder);
         $this->addBillableChoice($builder);
         $this->addExportStateChoice($builder);
+        $this->addOrder($builder);
+        $this->addOrderBy($builder, TimesheetQuery::TIMESHEET_ORDER_ALLOWED);
     }
 
     /**

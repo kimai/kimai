@@ -1238,7 +1238,7 @@
         <source>error.directory_protected</source>
         <target>El directorio «%dir%» está protegido contra escritura.</target>
       </trans-unit>
-      <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
+      <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
         <target state="translated">Visualización de las entradas en las listas de selección</target>
       </trans-unit>
@@ -1250,7 +1250,7 @@
         <source>label.hours_24</source>
         <target state="translated">24 horas</target>
       </trans-unit>
-      <trans-unit id="PCEFPeg" resname="updated_at">
+      <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target state="translated">Actualizado en</target>
       </trans-unit>

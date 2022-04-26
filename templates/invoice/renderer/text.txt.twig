@@ -1,13 +1,12 @@
-{% for key, value in model.toArray %}
+{% for key, value in invoice %}
 {{ key }}
 {% if value is not empty %}
 {{ value|multiline_indent('	') }}
 {% endif %}
 {% endfor %}
-{% for entry in model.calculator.entries %}
+{% for entry in entries %}
 ---
-{% set items = model.itemToArray(entry) %}
-{% for key, value in items %}
+{% for key, value in entry %}
 {{ key }}
 {% if value is not empty %}
 {{ value|multiline_indent('	') }}

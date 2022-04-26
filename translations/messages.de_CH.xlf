@@ -1202,7 +1202,7 @@
         <source>label.hours_24</source>
         <target state="translated">24 Stunden</target>
       </trans-unit>
-      <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
+      <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
         <target state="translated">Darstellung der Einträge in Auswahllisten</target>
       </trans-unit>
@@ -1210,7 +1210,7 @@
         <source>invoice_document.max_reached</source>
         <target state="translated">Maximale Anzahl von %max% Rechnungsdokumenten erreicht. Um weitere hinzufügen müssen Sie zunächst eins löschen.</target>
       </trans-unit>
-      <trans-unit id="PCEFPeg" resname="updated_at">
+      <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target state="translated">Aktualisiert am</target>
       </trans-unit>

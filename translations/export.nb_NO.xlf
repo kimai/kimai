@@ -2,19 +2,19 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="nb-NO" datatype="plaintext" original="export.en.xlf">
     <body>
-      <trans-unit id="IbERy.5" resname="default.pdf.twig">
+      <trans-unit id="oRRnhwf" resname="default.pdf.twig">
         <source>Default</source>
         <target>Forvalg</target>
       </trans-unit>
-      <trans-unit id="Xvh5B5U" resname="default-budget.pdf.twig">
+      <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig">
         <source>With remaining budget</source>
         <target>Med restbudsjett</target>
       </trans-unit>
-      <trans-unit id="rok3rBO" resname="default-internal.pdf.twig">
+      <trans-unit id="AuhL8Sb" resname="default-internal.pdf.twig">
         <source>With internal rates</source>
         <target>Med intern takst</target>
       </trans-unit>
-      <trans-unit id="bTIKMV." resname="timesheet.pdf.twig">
+      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig">
         <source>Timesheet</source>
         <target>Timeseddel</target>
       </trans-unit>

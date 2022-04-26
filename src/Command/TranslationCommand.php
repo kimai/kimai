@@ -388,7 +388,7 @@ class TranslationCommand extends Command
             if (!isset($unit['resname'])) {
                 $unit['resname'] = $source;
             }
-            $unit['id'] = $this->generateId($source);
+            $unit['id'] = $this->generateId($unit['resname']);
         }
 
         $xmlDocument = new \DOMDocument('1.0');

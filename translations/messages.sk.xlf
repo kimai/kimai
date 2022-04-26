@@ -1132,7 +1132,7 @@
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target state="translated">Priečinok “%dir%” neexistuje a nepodarilo sa ho vytvoriť.</target>
       </trans-unit>
-      <trans-unit id="Yxxu2tG" resname="label.choice_pattern">
+      <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
         <target state="translated">Zobrazenie poloziek vo vybere</target>
       </trans-unit>
@@ -1228,7 +1228,7 @@
         <source>label.hours_24</source>
         <target state="needs-translation">24 hours</target>
       </trans-unit>
-      <trans-unit id="PCEFPeg" resname="updated_at">
+      <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target state="needs-translation">Updated at</target>
       </trans-unit>

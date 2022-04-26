@@ -1262,7 +1262,7 @@
         <source>stats.workingTimeWeekShort</source>
         <target>Tjedan %week%</target>
       </trans-unit>
-      <trans-unit id="PCEFPeg" resname="updated_at">
+      <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target>Aktualizirano</target>
       </trans-unit>
@@ -1270,7 +1270,7 @@
         <source>invoice_document.max_reached</source>
         <target>Dosegnut je maksimalni broj od %max% dokumenta računa. Nakon uklanjanja jednoga možeš dodati još.</target>
       </trans-unit>
-      <trans-unit id="sdfgsdfgsdfg" resname="label.choice_pattern">
+      <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
         <target>Prikaz unosa u izbornim popisima</target>
       </trans-unit>

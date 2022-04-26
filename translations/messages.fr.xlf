@@ -1262,11 +1262,11 @@
         <source>invoice_document.max_reached</source>
         <target>La quantité maximale de %max% documents de facturation a été atteinte. Vous pouvez en ajouter après en avoir supprimé un.</target>
       </trans-unit>
-      <trans-unit id="PCEFPeg" resname="updated_at">
+      <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target>Mis à jour le</target>
       </trans-unit>
-      <trans-unit id="sdfgsdfgsdfg" resname="label.choice_pattern">
+      <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
         <target>Affichage des entrées dans les listes de sélection</target>
       </trans-unit>
