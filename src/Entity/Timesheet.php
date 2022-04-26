@@ -640,6 +640,11 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
         return 'timesheet';
     }
 
+    public function getAmount(): float
+    {
+        return 1.0;
+    }
+
     public function getCategory(): string
     {
         return $this->category;
