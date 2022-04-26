@@ -396,7 +396,7 @@ abstract class AbstractSpreadsheetRenderer
 
         if (isset($columns['billable']) && !isset($columns['billable']['render'])) {
             $columns['billable']['render'] = function (Worksheet $sheet, int $row, int $column, ExportItemInterface $entity) {
-                $exported = (method_exists($entity, 'isBillable') && !$entity->isBillable()) ? 'no' : 'yes';
+                $exported = $entity->isBillable() ? 'yes' : 'no';
                 $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans($exported));
             };
         }
