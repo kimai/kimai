@@ -25,18 +25,6 @@ class PDFRenderer
     use RendererTrait;
 
     /**
-     * @var Environment
-     */
-    private $twig;
-    /**
-     * @var HtmlToPdfConverter
-     */
-    private $converter;
-    /**
-     * @var ProjectStatisticService
-     */
-    private $projectStatisticService;
-    /**
      * @var string
      */
     private $id = 'pdf';
@@ -49,11 +37,8 @@ class PDFRenderer
      */
     private $pdfOptions = [];
 
-    public function __construct(Environment $twig, HtmlToPdfConverter $converter, ProjectStatisticService $projectStatisticService)
+    public function __construct(private Environment $twig, private HtmlToPdfConverter $converter, private ProjectStatisticService $projectStatisticService)
     {
-        $this->twig = $twig;
-        $this->converter = $converter;
-        $this->projectStatisticService = $projectStatisticService;
     }
 
     protected function getTemplate(): string
