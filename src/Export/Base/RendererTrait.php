@@ -108,15 +108,9 @@ trait RendererTrait
             $summary[$id]['type'][$type]['rate'] += $exportItem->getRate();
             $summary[$id]['types'][$type][$category]['rate'] += $exportItem->getRate();
 
-            if (method_exists($exportItem, 'getInternalRate')) {
-                $summary[$id]['rate_internal'] += $exportItem->getInternalRate();
-                $summary[$id]['type'][$type]['rate_internal'] += $exportItem->getInternalRate();
-                $summary[$id]['types'][$type][$category]['rate_internal'] += $exportItem->getInternalRate();
-            } else {
-                $summary[$id]['rate_internal'] += $exportItem->getRate();
-                $summary[$id]['type'][$type]['rate_internal'] += $exportItem->getRate();
-                $summary[$id]['types'][$type][$category]['rate_internal'] += $exportItem->getRate();
-            }
+            $summary[$id]['rate_internal'] += $exportItem->getInternalRate();
+            $summary[$id]['type'][$type]['rate_internal'] += $exportItem->getInternalRate();
+            $summary[$id]['types'][$type][$category]['rate_internal'] += $exportItem->getInternalRate();
 
             $summary[$id]['duration'] += $duration;
             $summary[$id]['type'][$type]['duration'] += $duration;

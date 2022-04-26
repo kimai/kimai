@@ -290,11 +290,7 @@ abstract class AbstractSpreadsheetRenderer
                 if (null !== $entity->getProject()) {
                     $currency = $entity->getProject()->getCustomer()->getCurrency();
                 }
-                $rate = $entity->getRate();
-                if (method_exists($entity, 'getInternalRate')) {
-                    $rate = $entity->getInternalRate();
-                }
-                $this->setRate($sheet, $column, $row, $rate, $currency);
+                $this->setRate($sheet, $column, $row, $entity->getInternalRate(), $currency);
             };
         }
 
