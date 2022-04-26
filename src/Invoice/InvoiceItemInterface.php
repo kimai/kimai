@@ -16,6 +16,13 @@ use App\Entity\User;
 
 interface InvoiceItemInterface
 {
+    /**
+     * Returns the amount for this item.
+     *
+     * @return float
+     */
+    public function getAmount(): float;
+
     public function getActivity(): ?Activity;
 
     public function getProject(): ?Project;
