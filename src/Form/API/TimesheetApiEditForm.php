@@ -9,10 +9,14 @@
 
 namespace App\Form\API;
 
+use App\Entity\Timesheet;
 use App\Form\TimesheetEditForm;
 use App\Form\Type\BillableType;
 use App\Form\Type\TagsInputType;
+use App\Form\Type\TimesheetBillableType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TimesheetApiEditForm extends TimesheetEditForm
@@ -24,6 +28,22 @@ class TimesheetApiEditForm extends TimesheetEditForm
         }
 
         $builder->add('billable', BillableType::class, []);
+
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) {
+                $data = $event->getData();
+                if (array_key_exists('billable', $data)) {
+                    $event->getForm()->add('billableMode', TimesheetBillableType::class, []);
+                    if ($data['billable'] === true) {
+                        $data['billableMode'] = Timesheet::BILLABLE_YES;
+                    } elseif ($data['billable'] === false) {
+                        $data['billableMode'] = Timesheet::BILLABLE_NO;
+                    }
+                }
+                $event->setData($data);
+            }
+        );
     }
 
     /**
