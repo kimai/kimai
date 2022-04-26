@@ -40,6 +40,9 @@ translations/branding.*.xlf
 
 /var/sessions/*
 !var/sessions/.gitkeep
+
+# symfony-cli
+.php-version
 # ========== KIMAI ==========
 
 ###> symfony/framework-bundle ###
@@ -65,7 +68,6 @@ translations/branding.*.xlf
 
 ###> symfony/phpunit-bridge ###
 .phpunit
-/phpunit.xml
 ###< symfony/phpunit-bridge ###
 
 ###> symfony/webpack-encore-bundle ###
