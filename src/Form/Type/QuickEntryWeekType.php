@@ -111,7 +111,7 @@ class QuickEntryWeekType extends AbstractType
             ],
             'allow_add' => true,
             'constraints' => [
-                new Valid(),
+                // having "new Valid()," here will trigger constraint violations on activity and project for completely empty rows
                 new All(['constraints' => [new QuickEntryTimesheet()]])
             ],
         ]);
