@@ -86,6 +86,10 @@ abstract class AbstractUserReportController extends AbstractController
                 /** @var StatisticDate $date */
                 foreach ($activityValues['data']->getData() as $date) {
                     $statisticDate = $dailyProjectStatistic->getByDateTime($date->getDate());
+                    if ($statisticDate === null) {
+                        // this should not happen, but sometimes it does ...
+                        continue;
+                    }
                     $statisticDate->setTotalDuration($statisticDate->getTotalDuration() + $date->getTotalDuration());
                     $statisticDate->setTotalRate($statisticDate->getTotalRate() + $date->getTotalRate());
                     $statisticDate->setTotalInternalRate($statisticDate->getTotalInternalRate() + $date->getTotalInternalRate());
