@@ -27,14 +27,14 @@ It is built with modern technologies such as [Symfony](https://github.com/symfon
 
 ### Requirements
 
-- PHP 7.4 or higher (PHP 8 supported, PHP 8.1 does not support LDAP yet)
+- PHP 7.4, 8.0 or 8.1
 - MariaDB or MySQL
 - A webserver and subdomain
 - PHP extensions: `gd`, `intl`, `json`, `mbstring`, `pdo`, `xsl`, `zip`
 
 ### About
 
-This is the new version of the open source time tracker Kimai. It is stable and production ready, ships
+This is the remake of open source (project) time tracker Kimai. It is stable and production ready, ships
 with many advanced features, including but not limited to: 
 
 JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user and multi-timezones, 
@@ -63,7 +63,7 @@ user specific rates, advanced search & filtering, money and time budgets, report
 You can see a rough development roadmap in the [Milestones](https://github.com/kevinpapst/kimai2/milestones) sections.
 It is open for changes and input from the community, your [ideas and questions](https://github.com/kevinpapst/kimai2/issues) are welcome.
 
-> Kimai 2 uses a rolling release concept for delivering updates.
+> Kimai uses a rolling release concept for delivering updates.
 > You can upgrade Kimai at any time, you don't need to wait for the next official release.
 > The master branch is always deployable, release tags are only snapshots of the current development version.
 
