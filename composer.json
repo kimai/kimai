@@ -26,7 +26,7 @@
         "doctrine/orm": "^2.8",
         "erusev/parsedown": "^1.6",
         "friendsofsymfony/rest-bundle": "^3.0",
-        "gedmo/doctrine-extensions": "^3.0",
+        "gedmo/doctrine-extensions": "^3.6",
         "handcraftedinthealps/rest-routing-bundle": "^1.0",
         "jms/metadata": "^2.0",
         "jms/serializer-bundle": "^3.9",
