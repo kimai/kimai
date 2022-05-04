@@ -204,6 +204,23 @@ export default class KimaiFormSelect extends KimaiPlugin {
         // if available, re-select the previous selected option (mostly usable for global activities)
         select.val(selectedValue);
 
+        // pre-select an option if it is the only available one
+        if (select.val() === '') {
+            const allOptions = select.find('option');
+            const optionLength = allOptions.length;
+            let selectOption = '';
+
+            if (optionLength === 1) {
+                selectOption = allOptions[0].value;
+            } else if (optionLength === 2 && emptyOption.length === 1) {
+                selectOption = allOptions[1].value;
+            }
+
+            if (selectOption !== '') {
+                select.val(selectOption);
+            }
+        }
+
         // if we don't trigger the change, the other selects won't reset
         select.trigger('change');
 
