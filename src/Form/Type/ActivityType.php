@@ -9,8 +9,9 @@
 
 namespace App\Form\Type;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
+use App\Form\Helper\ActivityHelper;
+use App\Form\Helper\ProjectHelper;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityFormTypeQuery;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -25,48 +26,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ActivityType extends AbstractType
 {
-    public const PATTERN_NAME = '{name}';
-    public const PATTERN_COMMENT = '{comment}';
-    public const PATTERN_SPACER = '{spacer}';
-    public const SPACER = ' - ';
+    private $activityHelper;
+    private $projectHelper;
 
-    private $configuration;
-    private $pattern;
-
-    public function __construct(SystemConfiguration $configuration)
+    public function __construct(ActivityHelper $activityHelper, ProjectHelper $projectHelper)
     {
-        $this->configuration = $configuration;
-    }
-
-    private function getPattern(): string
-    {
-        if ($this->pattern === null) {
-            $this->pattern = $this->configuration->find('activity.choice_pattern');
-
-            if ($this->pattern === null || stripos($this->pattern, '{') === false || stripos($this->pattern, '}') === false) {
-                $this->pattern = self::PATTERN_NAME;
-            }
-
-            $this->pattern = str_replace(self::PATTERN_SPACER, self::SPACER, $this->pattern);
-        }
-
-        return $this->pattern;
+        $this->activityHelper = $activityHelper;
+        $this->projectHelper = $projectHelper;
     }
 
     public function getChoiceLabel(Activity $activity): string
     {
-        $name = $this->getPattern();
-        $name = str_replace(self::PATTERN_NAME, $activity->getName(), $name);
-        $name = str_replace(self::PATTERN_COMMENT, $activity->getComment() ?? '', $name);
-
-        $name = ltrim($name, self::SPACER);
-        $name = rtrim($name, self::SPACER);
-
-        if ($name === '' || $name === self::SPACER) {
-            $name = $activity->getName();
-        }
-
-        return substr($name, 0, 110);
+        return $this->activityHelper->getChoiceLabel($activity);
     }
 
     /**
@@ -78,7 +49,7 @@ class ActivityType extends AbstractType
             return null;
         }
 
-        return $activity->getProject()->getName();
+        return $this->projectHelper->getChoiceLabel($activity->getProject());
     }
 
     /**
@@ -141,7 +112,7 @@ class ActivityType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['attr'] = array_merge($view->vars['attr'], [
-            'data-option-pattern' => $this->getPattern(),
+            'data-option-pattern' => $this->activityHelper->getChoicePattern(),
         ]);
     }
 

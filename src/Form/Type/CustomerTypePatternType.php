@@ -9,6 +9,7 @@
 
 namespace App\Form\Type;
 
+use App\Form\Helper\CustomerHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -35,22 +36,22 @@ class CustomerTypePatternType extends AbstractType
         $company = $this->translator->trans('label.company');
         $number = $this->translator->trans('label.number');
         $comment = $this->translator->trans('label.description');
-        $spacer = CustomerType::SPACER;
+        $spacer = CustomerHelper::SPACER;
 
         $resolver->setDefaults([
             'label' => 'label.choice_pattern',
             'choices' => [
-                $name => CustomerType::PATTERN_NAME,
-                $company => CustomerType::PATTERN_COMPANY,
-                $number => CustomerType::PATTERN_NUMBER,
-                $comment => CustomerType::PATTERN_COMMENT,
-                $name . $spacer . $company => CustomerType::PATTERN_NAME . CustomerType::PATTERN_SPACER . CustomerType::PATTERN_COMPANY,
-                $name . $spacer . $number => CustomerType::PATTERN_NAME . CustomerType::PATTERN_SPACER . CustomerType::PATTERN_NUMBER,
-                $name . $spacer . $comment => CustomerType::PATTERN_NAME . CustomerType::PATTERN_SPACER . CustomerType::PATTERN_COMMENT,
-                $number . $spacer . $name => CustomerType::PATTERN_NUMBER . CustomerType::PATTERN_SPACER . CustomerType::PATTERN_NAME,
-                $number . $spacer . $company => CustomerType::PATTERN_NUMBER . CustomerType::PATTERN_SPACER . CustomerType::PATTERN_COMPANY,
-                $number . $spacer . $comment => CustomerType::PATTERN_NUMBER . CustomerType::PATTERN_SPACER . CustomerType::PATTERN_COMMENT,
-                $company . $spacer . $comment => CustomerType::PATTERN_COMPANY . CustomerType::PATTERN_SPACER . CustomerType::PATTERN_COMMENT,
+                $name => CustomerHelper::PATTERN_NAME,
+                $company => CustomerHelper::PATTERN_COMPANY,
+                $number => CustomerHelper::PATTERN_NUMBER,
+                $comment => CustomerHelper::PATTERN_COMMENT,
+                $name . $spacer . $company => CustomerHelper::PATTERN_NAME . CustomerHelper::PATTERN_SPACER . CustomerHelper::PATTERN_COMPANY,
+                $name . $spacer . $number => CustomerHelper::PATTERN_NAME . CustomerHelper::PATTERN_SPACER . CustomerHelper::PATTERN_NUMBER,
+                $name . $spacer . $comment => CustomerHelper::PATTERN_NAME . CustomerHelper::PATTERN_SPACER . CustomerHelper::PATTERN_COMMENT,
+                $number . $spacer . $name => CustomerHelper::PATTERN_NUMBER . CustomerHelper::PATTERN_SPACER . CustomerHelper::PATTERN_NAME,
+                $number . $spacer . $company => CustomerHelper::PATTERN_NUMBER . CustomerHelper::PATTERN_SPACER . CustomerHelper::PATTERN_COMPANY,
+                $number . $spacer . $comment => CustomerHelper::PATTERN_NUMBER . CustomerHelper::PATTERN_SPACER . CustomerHelper::PATTERN_COMMENT,
+                $company . $spacer . $comment => CustomerHelper::PATTERN_COMPANY . CustomerHelper::PATTERN_SPACER . CustomerHelper::PATTERN_COMMENT,
             ]
         ]);
     }
