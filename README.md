@@ -34,12 +34,13 @@ It is built with modern technologies such as [Symfony](https://github.com/symfon
 
 ### About
 
-This is the remake of open source (project) time tracker Kimai. It is stable and production ready, ships
+The evolution of the most known(?) open source project time-tracker Kimai. It is stable, production ready and ships
 with many advanced features, including but not limited to: 
 
 JSON API, invoicing, data exports, multi-timer and punch-in punch-out mode, tagging, multi-user and multi-timezones, 
 authentication via SAML/LDAP/Database, customizable role and team permissions, responsive and ready for your mobile device, 
-user specific rates, advanced search & filtering, money and time budgets, reporting, support for plugins and many more.
+user/customer/project specific rates, advanced search & filtering, money and time budgets, reporting, support for plugins 
+and so many more.
 
 ## Installation
 
@@ -64,8 +65,8 @@ You can see a rough development roadmap in the [Milestones](https://github.com/k
 It is open for changes and input from the community, your [ideas and questions](https://github.com/kevinpapst/kimai2/issues) are welcome.
 
 > Kimai uses a rolling release concept for delivering updates.
-> You can upgrade Kimai at any time, you don't need to wait for the next official release.
-> The master branch is always deployable, release tags are only snapshots of the current development version.
+> You don't have to wait for the next official release, upgrade it at any time from the master branch, 
+> which is always deployable - release tags are simple snapshots of the development version.
 
 Release versions will be created on a regular base (approx. one release every 2 months).
 Every code change, whether it's a new feature or a bugfix, will be done on the master branch. 
@@ -82,7 +83,7 @@ In case you want to contribute, but you wouldn't know how, here are some suggest
 - Answer questions: You know the answer to another user's problem? Share your knowledge!
 - Make a feature request: Something can be done better? Something essential missing? Let us know!
 - Report bugs
-- Contribute: You don't have to be programmer to help. The documentation and translation could use some love as well.
-- Sponsor the project
+- You don't have to be programmer to help. The documentation and translation could use some love as well.
+- Sponsor the project, free software still costs money
 
 There is one simple rule in our "Code of conduct": Don't be an ass! 
