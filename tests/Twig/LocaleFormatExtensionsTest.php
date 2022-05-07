@@ -12,6 +12,7 @@ namespace App\Tests\Twig;
 use App\Configuration\LanguageFormattings;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Entity\UserPreference;
 use App\Twig\LocaleFormatExtensions;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Intl\Util\IntlTestHelper;
@@ -35,9 +36,10 @@ class LocaleFormatExtensionsTest extends TestCase
     /**
      * @param string|array $locale
      * @param array|string $dateSettings
+     * @param bool $fdowSunday
      * @return LocaleFormatExtensions
      */
-    protected function getSut($locale, $dateSettings)
+    protected function getSut($locale, $dateSettings, $fdowSunday = false)
     {
         $language = $locale;
         if (\is_array($locale)) {
@@ -45,8 +47,10 @@ class LocaleFormatExtensionsTest extends TestCase
             $dateSettings = $locale;
         }
 
+        $user = new User();
+        $user->setPreferenceValue(UserPreference::FIRST_WEEKDAY, ($fdowSunday ? 'sunday' : 'monday'));
         $security = $this->createMock(Security::class);
-        $security->expects($this->any())->method('getUser')->willReturn(new User());
+        $security->expects($this->any())->method('getUser')->willReturn($user);
 
         $sut = new LocaleFormatExtensions(new LanguageFormattings($dateSettings), $security);
         $sut->setLocale($language);
@@ -519,9 +523,8 @@ class LocaleFormatExtensionsTest extends TestCase
         $this->assertEquals('0.00', $sut->durationDecimal(null));
     }
 
-    private function getTest(string $name): TwigTest
+    private function getTest(LocaleFormatExtensions $sut, string $name): TwigTest
     {
-        $sut = $this->getSut('en', $this->localeEn);
         foreach ($sut->getTests() as $test) {
             if ($test->getName() === $name) {
                 return $test;
@@ -533,7 +536,8 @@ class LocaleFormatExtensionsTest extends TestCase
 
     public function testIsToday()
     {
-        $test = $this->getTest('today');
+        $sut = $this->getSut('en', $this->localeEn);
+        $test = $this->getTest($sut, 'today');
         self::assertTrue(\call_user_func($test->getCallable(), new \DateTime()));
         self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('-1 day')));
         self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('+1 day')));
@@ -543,11 +547,27 @@ class LocaleFormatExtensionsTest extends TestCase
 
     public function testIsWeekend()
     {
-        $test = $this->getTest('weekend');
+        $sut = $this->getSut('en', $this->localeEn, false);
+        $test = $this->getTest($sut, 'weekend');
+        self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('first monday this month')));
+        self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('first tuesday this month')));
+        self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('first wednesday this month')));
+        self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('first thursday this month')));
+        self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('first friday this month')));
         self::assertTrue(\call_user_func($test->getCallable(), new \DateTime('first saturday this month')));
         self::assertTrue(\call_user_func($test->getCallable(), new \DateTime('first sunday this month')));
+        self::assertFalse(\call_user_func($test->getCallable(), new \stdClass()));
+        self::assertFalse(\call_user_func($test->getCallable(), null));
+
+        $sut = $this->getSut('en', $this->localeEn, true);
+        $test = $this->getTest($sut, 'weekend');
         self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('first monday this month')));
-        self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('first friday this month')));
+        self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('first tuesday this month')));
+        self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('first wednesday this month')));
+        self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('first thursday this month')));
+        self::assertTrue(\call_user_func($test->getCallable(), new \DateTime('first friday this month')));
+        self::assertTrue(\call_user_func($test->getCallable(), new \DateTime('first saturday this month')));
+        self::assertFalse(\call_user_func($test->getCallable(), new \DateTime('first sunday this month')));
         self::assertFalse(\call_user_func($test->getCallable(), new \stdClass()));
         self::assertFalse(\call_user_func($test->getCallable(), null));
     }

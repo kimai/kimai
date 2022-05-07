@@ -96,6 +96,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTest
 
         $result = $repository->stopRecording($timesheet);
         $this->assertTrue($result);
+        /* @phpstan-ignore-next-line */
         $this->assertInstanceOf(\DateTime::class, $timesheet->getEnd());
     }
 

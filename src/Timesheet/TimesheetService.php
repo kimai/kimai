@@ -223,10 +223,11 @@ final class TimesheetService
      * But also to check that all required data is set.
      *
      * @param Timesheet $timesheet
+     * @param bool $validate
      * @throws ValidationException for already stopped timesheets
      * @throws ValidationFailedException
      */
-    public function stopTimesheet(Timesheet $timesheet): void
+    public function stopTimesheet(Timesheet $timesheet, bool $validate = true): void
     {
         if (null !== $timesheet->getEnd()) {
             // timesheet already stopped, nothing to do. in previous version, this method did throw a:
@@ -242,7 +243,9 @@ final class TimesheetService
         $timesheet->setBegin($begin);
         $timesheet->setEnd($now);
 
-        $this->validateTimesheet($timesheet);
+        if ($validate) {
+            $this->validateTimesheet($timesheet);
+        }
 
         $this->dispatcher->dispatch(new TimesheetStopPreEvent($timesheet));
         $this->repository->save($timesheet);
@@ -327,5 +330,18 @@ final class TimesheetService
     public function getActiveTrackingMode(): TrackingModeInterface
     {
         return $this->trackingModeService->getActiveMode();
+    }
+
+    public function stopAll(): int
+    {
+        $activeEntries = $this->repository->getActiveEntries();
+        $counter = 0;
+
+        foreach ($activeEntries as $timesheet) {
+            $this->stopTimesheet($timesheet, false);
+            $counter++;
+        }
+
+        return $counter;
     }
 }

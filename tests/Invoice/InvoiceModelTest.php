@@ -88,6 +88,7 @@ class InvoiceModelTest extends TestCase
         self::assertNull($sut->getDueDate());
         self::assertInstanceOf(InvoiceModel::class, $sut->setTemplate($template));
         self::assertSame($template, $sut->getTemplate());
+        /* @phpstan-ignore-next-line */
         self::assertInstanceOf(\DateTime::class, $sut->getDueDate());
     }
 

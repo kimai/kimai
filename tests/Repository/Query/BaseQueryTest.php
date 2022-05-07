@@ -341,10 +341,8 @@ class BaseQueryTest extends TestCase
         $dateRange->setEnd($end);
 
         self::assertSame($begin, $sut->getDateRange()->getBegin());
-        /* @phpstan-ignore-next-line */
         self::assertSame($begin, $sut->getBegin());
         self::assertSame($end, $sut->getDateRange()->getEnd());
-        /* @phpstan-ignore-next-line */
         self::assertSame($end, $sut->getEnd());
     }
 }

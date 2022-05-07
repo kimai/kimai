@@ -9,6 +9,7 @@
 
 namespace App\Form\Type;
 
+use App\Form\Helper\ActivityHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,14 +34,14 @@ class ActivityTypePatternType extends AbstractType
     {
         $name = $this->translator->trans('label.name');
         $comment = $this->translator->trans('label.description');
-        $spacer = ActivityType::SPACER;
+        $spacer = ActivityHelper::SPACER;
 
         $resolver->setDefaults([
             'label' => 'label.choice_pattern',
             'choices' => [
-                $name => ActivityType::PATTERN_NAME,
-                $comment => ActivityType::PATTERN_COMMENT,
-                $name . $spacer . $comment => ActivityType::PATTERN_NAME . ActivityType::PATTERN_SPACER . ActivityType::PATTERN_COMMENT,
+                $name => ActivityHelper::PATTERN_NAME,
+                $comment => ActivityHelper::PATTERN_COMMENT,
+                $name . $spacer . $comment => ActivityHelper::PATTERN_NAME . ActivityHelper::PATTERN_SPACER . ActivityHelper::PATTERN_COMMENT,
             ]
         ]);
     }

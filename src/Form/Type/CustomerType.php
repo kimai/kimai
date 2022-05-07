@@ -9,8 +9,8 @@
 
 namespace App\Form\Type;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
+use App\Form\Helper\CustomerHelper;
 use App\Repository\CustomerRepository;
 use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\ProjectQuery;
@@ -26,52 +26,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CustomerType extends AbstractType
 {
-    public const PATTERN_NAME = '{name}';
-    public const PATTERN_NUMBER = '{number}';
-    public const PATTERN_COMPANY = '{company}';
-    public const PATTERN_COMMENT = '{comment}';
-    public const PATTERN_SPACER = '{spacer}';
-    public const SPACER = ' - ';
+    private $customerHelper;
 
-    private $configuration;
-    private $pattern;
-
-    public function __construct(SystemConfiguration $configuration)
+    public function __construct(CustomerHelper $customerHelper)
     {
-        $this->configuration = $configuration;
-    }
-
-    private function getPattern(): string
-    {
-        if ($this->pattern === null) {
-            $this->pattern = $this->configuration->find('customer.choice_pattern');
-
-            if ($this->pattern === null || stripos($this->pattern, '{') === false || stripos($this->pattern, '}') === false) {
-                $this->pattern = self::PATTERN_NAME;
-            }
-
-            $this->pattern = str_replace(self::PATTERN_SPACER, self::SPACER, $this->pattern);
-        }
-
-        return $this->pattern;
+        $this->customerHelper = $customerHelper;
     }
 
     public function getChoiceLabel(Customer $customer): string
     {
-        $name = $this->getPattern();
-        $name = str_replace(self::PATTERN_NAME, $customer->getName(), $name);
-        $name = str_replace(self::PATTERN_COMMENT, $customer->getComment() ?? '', $name);
-        $name = str_replace(self::PATTERN_NUMBER, $customer->getNumber() ?? '', $name);
-        $name = str_replace(self::PATTERN_COMPANY, $customer->getCompany() ?? '', $name);
-
-        $name = ltrim($name, self::SPACER);
-        $name = rtrim($name, self::SPACER);
-
-        if ($name === '' || $name === self::SPACER) {
-            $name = $customer->getName();
-        }
-
-        return substr($name, 0, 110);
+        return $this->customerHelper->getChoiceLabel($customer);
     }
 
     public function getChoiceAttributes(Customer $customer, $key, $value): array
@@ -158,7 +122,7 @@ class CustomerType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['attr'] = array_merge($view->vars['attr'], [
-            'data-option-pattern' => $this->getPattern(),
+            'data-option-pattern' => $this->customerHelper->getChoicePattern(),
         ]);
     }
 

@@ -29,6 +29,10 @@ final class LocaleFormatExtensions extends AbstractExtension
     private $security;
 
     /**
+     * @var bool|null
+     */
+    private $fdowSunday = null;
+    /**
      * @var LocaleFormats|null
      */
     private $localeFormats;
@@ -77,14 +81,7 @@ final class LocaleFormatExtensions extends AbstractExtension
     public function getTests()
     {
         return [
-            new TwigTest('weekend', function ($dateTime) {
-                if (!$dateTime instanceof \DateTime) {
-                    return false;
-                }
-                $day = (int) $dateTime->format('w');
-
-                return ($day === 0 || $day === 6);
-            }),
+            new TwigTest('weekend', [$this, 'isWeekend']),
             new TwigTest('today', function ($dateTime) {
                 if (!$dateTime instanceof \DateTime) {
                     return false;
@@ -147,6 +144,35 @@ final class LocaleFormatExtensions extends AbstractExtension
         }
 
         return $this->locale;
+    }
+
+    /**
+     * @param DateTime $dateTime
+     * @return bool
+     */
+    public function isWeekend($dateTime): bool
+    {
+        if (!$dateTime instanceof \DateTime) {
+            return false;
+        }
+
+        $day = (int) $dateTime->format('w');
+
+        if ($this->fdowSunday === null) {
+            /** @var User|null $user */
+            $user = $this->security->getUser();
+            if ($user !== null) {
+                $this->fdowSunday = $user->isFirstDayOfWeekSunday();
+            } else {
+                $this->fdowSunday = false;
+            }
+        }
+
+        if ($this->fdowSunday) {
+            return ($day === 5 || $day === 6);
+        }
+
+        return ($day === 0 || $day === 6);
     }
 
     /**
