@@ -338,10 +338,6 @@ final class TimesheetService
         $counter = 0;
 
         foreach ($activeEntries as $timesheet) {
-            if (null !== $timesheet->getEnd()) {
-                continue;
-            }
-
             $this->stopTimesheet($timesheet, false);
             $counter++;
         }

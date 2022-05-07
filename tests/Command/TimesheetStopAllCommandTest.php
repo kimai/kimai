@@ -13,6 +13,7 @@ use App\Command\TimesheetStopAllCommand;
 use App\Tests\Mocks\TimesheetServiceFactory;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @covers \App\Command\TimesheetStopAllCommand
@@ -40,5 +41,18 @@ class TimesheetStopAllCommandTest extends KernelTestCase
     {
         $command = $this->application->find('kimai:timesheet:stop-all');
         self::assertInstanceOf(TimesheetStopAllCommand::class, $command);
+    }
+
+    public function testRun()
+    {
+        $command = $this->application->find('kimai:timesheet:stop-all');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute(['command' => $command->getName()]);
+
+        $result = $commandTester->getDisplay();
+
+        self::assertStringContainsString('[OK] Stopped 0 timesheet records.', $result);
+
+        self::assertEquals(0, $commandTester->getStatusCode());
     }
 }

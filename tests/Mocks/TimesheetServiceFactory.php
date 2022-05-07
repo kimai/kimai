@@ -23,6 +23,7 @@ class TimesheetServiceFactory extends AbstractMockFactory
     {
         $configuration = $this->createMock(SystemConfiguration::class);
         $repository = $this->createMock(TimesheetRepository::class);
+        $repository->method('getActiveEntries')->willReturn([]);
         $service = new TrackingModeService($configuration, []);
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $security = $this->createMock(AuthorizationCheckerInterface::class);
