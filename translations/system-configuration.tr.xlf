@@ -298,6 +298,10 @@
         <source>label.quick_entry.recent_activities</source>
         <target>Önceki haftalardan alınan kayıt sayısı</target>
       </trans-unit>
+      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
+        <source>label.calendar.title_pattern</source>
+        <target>Takvim kayıtlarının başlıklarının görüntülenmesi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

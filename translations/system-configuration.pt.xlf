@@ -298,6 +298,10 @@
         <source>label.quick_entry.recent_activities</source>
         <target>Quantidade de entradas retomadas das semanas anteriores</target>
       </trans-unit>
+      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
+        <source>label.calendar.title_pattern</source>
+        <target>Mostra os títulos das entradas do calendário</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
