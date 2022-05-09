@@ -86,6 +86,14 @@
         <source>label.quick_entry.recent_activities</source>
         <target>Anzahl übernommener Einträge aus Vorwochen</target>
       </trans-unit>
+      <trans-unit id="QxQOG3e" resname="label.quick_entry.recent_activity_weeks">
+        <source>label.quick_entry.recent_activity_weeks</source>
+        <target>Verwende Einträge aus den letzten X Wochen (leer oder 0 für gesamte Zeit)</target>
+      </trans-unit>
+      <trans-unit id="7Efrrn5" resname="label.quick_entry.minimum_rows">
+        <source>label.quick_entry.minimum_rows</source>
+        <target>Minimale Anzahl an Zeilen</target>
+      </trans-unit>
       <trans-unit id="iZLna_g" resname="label.theme.autocomplete_chars">
         <source>label.theme.autocomplete_chars</source>
         <target>Minimale Anzahl Buchstaben für den Start der Autovervollständigung</target>
