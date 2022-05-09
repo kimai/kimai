@@ -101,7 +101,7 @@ class QuickEntryController extends AbstractController
         $amount = $this->configuration->getQuickEntriesRecentAmount();
         $startFrom = null;
         $takeOverWeeks = $this->configuration->find('quick_entry.recent_activity_weeks');
-        if ($takeOverWeeks !== null && intval($takeOverWeeks) > 0) {
+        if ($takeOverWeeks !== null && \intval($takeOverWeeks) > 0) {
             $startFrom = clone $startWeek;
             $startFrom->modify(sprintf('-%s weeks', $takeOverWeeks));
         }
@@ -151,7 +151,7 @@ class QuickEntryController extends AbstractController
         }
 
         // add empty rows for simpler starting
-        $minRows = intval($this->configuration->find('quick_entry.minimum_rows'));
+        $minRows = \intval($this->configuration->find('quick_entry.minimum_rows'));
         if (\count($models) < $minRows) {
             $newRows = $minRows - \count($models);
             for ($a = 0; $a < $newRows; $a++) {
