@@ -169,10 +169,6 @@ final class SystemConfigurationController extends AbstractController
             }
         }
 
-        if ($single) {
-            return $this->redirectToRoute('system_configuration_section', ['section' => $section]);
-        }
-
         $configSettings = $this->getInitializedConfigurations();
 
         $configurations = [];
