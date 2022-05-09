@@ -4,15 +4,15 @@
     <body>
       <trans-unit id="7zreGwV" resname="label.invoice_number_generator">
         <source>label.invoice_number_generator</source>
-        <target state="needs-translation">Gerador de Números de Fatura</target>
+        <target state="translated">Gerador de números de faturas</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="needs-translation">Data</target>
+        <target state="translated">Data</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="needs-translation">Formato configurado</target>
+        <target state="translated">Formato configurado</target>
       </trans-unit>
     </body>
   </file>

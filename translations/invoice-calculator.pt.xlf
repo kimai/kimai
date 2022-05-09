@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="1inO2IF" resname="label.invoice_calculator">
         <source>label.invoice_calculator</source>
-        <target state="needs-translation">Cálculo da soma</target>
+        <target state="translated">Cálculo da soma</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>

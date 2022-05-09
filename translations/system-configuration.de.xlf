@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet" approved="yes">
         <source>Time tracking</source>
-        <target state="translated">Zeiterfassung</target>
+        <target state="final">Zeiterfassung</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
@@ -306,9 +306,9 @@
         <source>label.calendar.dragdrop_amount</source>
         <target>Anzahl an Einträgen für Drag&amp;Drop (0 = deaktiviert)</target>
       </trans-unit>
-      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
+      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern" approved="yes">
         <source>label.calendar.title_pattern</source>
-        <target>Darstellung der Titel von Kalender Einträgen</target>
+        <target>Darstellung der Titel von Kalendereinträgen</target>
       </trans-unit>
     </body>
   </file>
