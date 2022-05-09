@@ -42,6 +42,7 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -114,7 +115,7 @@ final class SystemConfigurationController extends AbstractController
 
             $configurations[] = [
                 'model' => $configModel,
-                'form' => $this->createConfigurationsForm($configModel)->createView(),
+                'form' => $this->createConfigurationsForm($configModel, true)->createView(),
             ];
         }
 
@@ -124,13 +125,14 @@ final class SystemConfigurationController extends AbstractController
     }
 
     /**
-     * @Route(path="/update/{section}", name="system_configuration_update", methods={"POST"})
+     * @Route(path="/update/{section}/{single}", name="system_configuration_update", methods={"POST"})
      *
+     * @internal do not link directly to this route
      * @param Request $request
      * @param string $section
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function configUpdate(Request $request, string $section)
+    public function configUpdate(Request $request, string $section, bool $single)
     {
         $configModel = null;
         $configSettings = $this->getInitializedConfigurations();
@@ -145,7 +147,7 @@ final class SystemConfigurationController extends AbstractController
             throw $this->createNotFoundException('Could not find config model: ' . $section);
         }
 
-        $form = $this->createConfigurationsForm($configModel);
+        $form = $this->createConfigurationsForm($configModel, $single);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
@@ -157,18 +159,30 @@ final class SystemConfigurationController extends AbstractController
                     $this->flashUpdateException($ex);
                 }
 
+                if ($single) {
+                    return $this->redirectToRoute('system_configuration_section', ['section' => $section]);
+                }
+
                 return $this->redirectToRoute('system_configuration');
             } else {
                 $this->flashError('action.update.error', ['%reason%' => 'Validation problem']);
             }
         }
 
+        if ($single) {
+            return $this->redirectToRoute('system_configuration_section', ['section' => $section]);
+        }
+
         $configSettings = $this->getInitializedConfigurations();
 
         $configurations = [];
         foreach ($configSettings as $configModel) {
+            if ($single && $section !== $configModel->getSection()) {
+                continue;
+            }
+
             if ($section !== $configModel->getSection()) {
-                $form2 = $this->createConfigurationsForm($configModel);
+                $form2 = $this->createConfigurationsForm($configModel, $single);
             } else {
                 $form2 = $form;
             }
@@ -183,14 +197,10 @@ final class SystemConfigurationController extends AbstractController
         ]);
     }
 
-    /**
-     * @param SystemConfigurationModel $configuration
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    private function createConfigurationsForm(SystemConfigurationModel $configuration)
+    private function createConfigurationsForm(SystemConfigurationModel $configuration, bool $isSingleSection = false): FormInterface
     {
         $options = [
-            'action' => $this->generateUrl('system_configuration_update', ['section' => $configuration->getSection()]),
+            'action' => $this->generateUrl('system_configuration_update', ['section' => $configuration->getSection(), 'single' => $isSingleSection ? '1' : '0']),
             'method' => 'POST',
         ];
 
@@ -396,6 +406,21 @@ final class SystemConfigurationController extends AbstractController
                         ->setRequired(false)
                         ->setConstraints([
                             new Range(['min' => 0, 'max' => 20]),
+                        ]),
+                    (new Configuration())
+                        ->setName('quick_entry.recent_activity_weeks')
+                        ->setType(IntegerType::class)
+                        ->setTranslationDomain('system-configuration')
+                        ->setRequired(false)
+                        ->setConstraints([
+                            new Range(['min' => 0, 'max' => 20]),
+                        ]),
+                    (new Configuration())
+                        ->setName('quick_entry.minimum_rows')
+                        ->setType(IntegerType::class)
+                        ->setTranslationDomain('system-configuration')
+                        ->setConstraints([
+                            new Range(['min' => 1, 'max' => 5]),
                         ]),
                 ]),
             (new SystemConfigurationModel('lockdown_period'))
