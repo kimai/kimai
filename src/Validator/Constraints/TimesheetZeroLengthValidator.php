@@ -40,7 +40,7 @@ final class TimesheetZeroLengthValidator extends ConstraintValidator
         if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
             throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
         }
-        
+
         if ($this->configuration->isTimesheetAllowZeroLength()) {
             return;
         }
