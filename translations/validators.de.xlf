@@ -38,6 +38,10 @@
         <source>The begin date cannot be in the future.</source>
         <target>Das Startdatum darf nicht in der Zukunft liegen.</target>
       </trans-unit>
+      <trans-unit id="ePrqiLN" resname="Duration cannot be zero.">
+        <source>Duration cannot be zero.</source>
+        <target>Die Dauer darf nicht null betragen.</target>
+      </trans-unit>
       <trans-unit id="1V6BsD_" resname="You must select at least one user or team.">
         <source>You must select at least one user or team.</source>
         <target>Sie müssen mindestens einen Benutzer oder ein Team auswählen.</target>

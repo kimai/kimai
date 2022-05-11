@@ -46,7 +46,7 @@ final class TimesheetZeroLengthValidator extends ConstraintValidator
         }
 
         if ($timesheet->getDuration() == 0) {
-            $this->context->buildViolation('The duration cannot be zero.')
+            $this->context->buildViolation($constraint->message)
                 ->atPath('duration')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetZeroLength::ZERO_LENGTH_ERROR)
