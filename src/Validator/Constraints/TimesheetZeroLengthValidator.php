@@ -9,7 +9,6 @@
 
 namespace App\Validator\Constraints;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet as TimesheetEntity;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -17,16 +16,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetZeroLengthValidator extends ConstraintValidator
 {
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
-
-    public function __construct(SystemConfiguration $configuration)
-    {
-        $this->configuration = $configuration;
-    }
-
     /**
      * @param TimesheetEntity $timesheet
      * @param Constraint $constraint
