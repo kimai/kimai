@@ -339,7 +339,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(CheckboxType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())
-                        ->setName('timesheet.rules.allow_zero_length')
+                        ->setName('timesheet.rules.allow_zero_duration')
                         ->setType(CheckboxType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration())

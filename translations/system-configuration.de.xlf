@@ -50,8 +50,8 @@
         <source>label.timesheet.rules.allow_future_times</source>
         <target>Erlaube Zeiteinträge in der Zukunft</target>
       </trans-unit>
-      <trans-unit id="z4tQEPb" resname="label.timesheet.rules.allow_zero_length">
-        <source>label.timesheet.rules.allow_zero_length</source>
+      <trans-unit id="z4tQEPb" resname="label.timesheet.rules.allow_zero_duration">
+        <source>label.timesheet.rules.allow_zero_duration</source>
         <target>Erlaube Zeiteinträge mit einer Dauer von null</target>
       </trans-unit>
       <trans-unit id="VAAaL2t" resname="label.timesheet.rules.allow_overbooking_budget">

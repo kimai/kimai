@@ -9,12 +9,12 @@
 
 namespace App\Validator\Constraints;
 
-final class TimesheetZeroLength extends TimesheetConstraint
+final class TimesheetZeroDuration extends TimesheetConstraint
 {
-    public const ZERO_LENGTH_ERROR = 'kimai-timesheet-zero-length-01';
+    public const ZERO_DURATION_ERROR = 'kimai-timesheet-zero-duration-01';
 
     protected static $errorNames = [
-        self::ZERO_LENGTH_ERROR => 'Duration cannot be zero.',
+        self::ZERO_DURATION_ERROR => 'Duration cannot be zero.',
     ];
 
     public $message = 'Duration cannot be zero.';

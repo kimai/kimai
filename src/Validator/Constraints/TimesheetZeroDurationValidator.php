@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-final class TimesheetZeroLengthValidator extends ConstraintValidator
+final class TimesheetZeroDurationValidator extends ConstraintValidator
 {
     /**
      * @var SystemConfiguration
@@ -33,15 +33,15 @@ final class TimesheetZeroLengthValidator extends ConstraintValidator
      */
     public function validate($timesheet, Constraint $constraint)
     {
-        if (!($constraint instanceof TimesheetZeroLength)) {
-            throw new UnexpectedTypeException($constraint, TimesheetZeroLength::class);
+        if (!($constraint instanceof TimesheetZeroDuration)) {
+            throw new UnexpectedTypeException($constraint, TimesheetZeroDuration::class);
         }
 
         if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
             throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
         }
 
-        if ($this->configuration->isTimesheetAllowZeroLength()) {
+        if ($this->configuration->isTimesheetAllowZeroDuration()) {
             return;
         }
 
@@ -49,7 +49,7 @@ final class TimesheetZeroLengthValidator extends ConstraintValidator
             $this->context->buildViolation($constraint->message)
                 ->atPath('duration')
                 ->setTranslationDomain('validators')
-                ->setCode(TimesheetZeroLength::ZERO_LENGTH_ERROR)
+                ->setCode(TimesheetZeroDuration::ZERO_DURATION_ERROR)
                 ->addViolation();
         }
     }

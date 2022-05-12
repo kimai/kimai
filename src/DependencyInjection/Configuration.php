@@ -243,7 +243,7 @@ class Configuration implements ConfigurationInterface
                         ->booleanNode('allow_future_times')
                             ->defaultTrue()
                         ->end()
-                        ->booleanNode('allow_zero_length')
+                        ->booleanNode('allow_zero_duration')
                             ->defaultTrue()
                         ->end()
                         ->booleanNode('allow_overbooking_budget')
