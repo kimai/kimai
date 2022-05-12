@@ -59,7 +59,7 @@ class TimesheetZeroDurationValidatorTest extends ConstraintValidatorTestCase
 
     private function prepareTimesheet() {
         // creates Timesheet with same begin and endtime
-        $begin = new Datetime();
+        $begin = new \DateTime();
         $timesheet = new Timesheet();
         $timesheet->setBegin($begin);
         $timesheet->setEnd($begin);
@@ -84,7 +84,7 @@ class TimesheetZeroDurationValidatorTest extends ConstraintValidatorTestCase
         $this->validator = $this->createMyValidator(true);
         $this->validator->initialize($this->context);
 
-        $timesheet = prepareTimesheet();
+        $timesheet = $this->prepareTimesheet();
 
         $this->validator->validate($timesheet, new TimesheetZeroDuration(['message' => 'myMessage']));
 

@@ -93,6 +93,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $configService = static::$kernel->getContainer()->get(SystemConfiguration::class);
         $this->assertEquals('default', $configService->find('timesheet.mode'));
         $this->assertTrue($configService->find('timesheet.rules.allow_future_times'));
+        $this->assertTrue($configService->find('timesheet.rules.allow_zero_duration'));
         $this->assertEquals(1, $configService->find('timesheet.active_entries.hard_limit'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_timesheet]')->form();
