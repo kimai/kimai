@@ -57,12 +57,19 @@ class TimesheetZeroDurationValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate(new NotBlank(), new TimesheetZeroDuration(['message' => 'myMessage']));
     }
 
-    public function testZeroDurationIsDisallowed()
-    {
+    private function prepareTimesheet() {
+        // creates Timesheet with same begin and endtime
         $begin = new Datetime();
         $timesheet = new Timesheet();
         $timesheet->setBegin($begin);
         $timesheet->setEnd($begin);
+
+        return $timesheet;
+    }
+
+    public function testZeroDurationIsDisallowed()
+    {
+        $timesheet = prepareTimesheet();
 
         $this->validator->validate($timesheet, new TimesheetZeroDuration(['message' => 'myMessage']));
 
@@ -74,10 +81,7 @@ class TimesheetZeroDurationValidatorTest extends ConstraintValidatorTestCase
 
     public function testZeroDurationIsAllowed()
     {
-        $begin = new Datetime();
-        $timesheet = new Timesheet();
-        $timesheet->setBegin($begin);
-        $timesheet->setEnd($begin);
+        $timesheet = prepareTimesheet();
 
         $this->validator->validate($timesheet, new TimesheetZeroDuration(['message' => 'myMessage']));
 
