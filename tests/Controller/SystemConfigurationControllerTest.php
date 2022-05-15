@@ -179,7 +179,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             ],
             [
                 '#system_configuration_form_timesheet_configuration_0_value', // mode
-                '#system_configuration_form_timesheet_configuration_5_value', // hard_limit
+                '#system_configuration_form_timesheet_configuration_6_value', // hard_limit
             ],
             true
         );
