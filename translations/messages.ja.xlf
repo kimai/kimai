@@ -1067,7 +1067,7 @@
       </trans-unit>
       <trans-unit id="0M_Gylq" resname="rates.empty">
         <source>rates.empty</source>
-        <target state="needs-translation">No hourly rates have yet been configured.</target>
+        <target state="translated">時間単価はまだ設定されていません。</target>
       </trans-unit>
       <trans-unit id="mflwMcX" resname="rates.title">
         <source>rates.title</source>

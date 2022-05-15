@@ -1231,11 +1231,11 @@
       </trans-unit>
       <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
+        <target state="translated">Wyświetlenie pozycji w listach wybieralnych</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
-        <target state="needs-translation">Week %week%</target>
+        <target state="translated">Tydzień %week%</target>
       </trans-unit>
       <trans-unit id="gT9W2pZ" resname="status.canceled">
         <source>status.canceled</source>
@@ -1243,11 +1243,11 @@
       </trans-unit>
       <trans-unit id="pnGDFmf" resname="label.type">
         <source>label.type</source>
-        <target state="needs-translation">Type</target>
+        <target state="translated">Typ</target>
       </trans-unit>
       <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
         <source>label.includeBudgetType_month</source>
-        <target state="needs-translation">Show entries with "monthly" budget</target>
+        <target state="translated">Pokaż pozycję z budżetem "miesięcznym"</target>
       </trans-unit>
       <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
         <source>label.includeBudgetType_full</source>
@@ -1259,11 +1259,11 @@
       </trans-unit>
       <trans-unit id="yNWIi5U" resname="default_value_new">
         <source>default_value_new</source>
-        <target state="needs-translation">Default values for new entries</target>
+        <target state="translated">Wartości domyślne dla nowych pozycji</target>
       </trans-unit>
       <trans-unit id="61p_ckr" resname="label.hours_24">
         <source>label.hours_24</source>
-        <target state="needs-translation">24 hours</target>
+        <target state="translated">24 godziny</target>
       </trans-unit>
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
@@ -1279,7 +1279,11 @@
       </trans-unit>
       <trans-unit id="jdbtx6z" resname="action.add">
         <source>action.add</source>
-        <target state="needs-translation">Add</target>
+        <target state="translated">Dodaj</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>Automatycznie</target>
       </trans-unit>
     </body>
   </file>
