@@ -37,7 +37,7 @@ kimai:
         # mode: default
 
         # The default time to pre-fill the "create timesheet" form (in some cases).
-        # This setting is only respected by some timetracking modes and not in all situations.
+        # This setting is only respected by some time-tracking modes and not in all situations.
         #
         # Accepted formats, see
         # - https://www.php.net/manual/en/datetime.formats.php
@@ -244,6 +244,10 @@ kimai:
             date: 'Y-m-d'
             date_time: 'm-d H:i'
             duration: '%%h:%%m h'
+        en_GB:
+            date_type: 'dd/MM/yyyy'
+            date: 'd-m-Y'
+            date_time: 'd-m H:i'
         es:
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
@@ -275,6 +279,10 @@ kimai:
             date: 'd.m.Y'
             date_time: 'd.m. H:i'
             duration: '%%hu%%m'
+        pt:
+            date_type: 'dd/MM/yyyy'
+            date: 'd/m/Y'
+            date_time: 'd-m H:i'
         pt_BR:
             date_type: 'dd-MM-yyyy'
             date: 'd-m-Y'
