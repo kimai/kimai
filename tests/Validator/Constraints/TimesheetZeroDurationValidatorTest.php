@@ -62,8 +62,9 @@ class TimesheetZeroDurationValidatorTest extends ConstraintValidatorTestCase
         // creates Timesheet with same begin and endtime
         $begin = new \DateTime();
         $timesheet = new Timesheet();
-        $timesheet->setBegin($begin);
-        $timesheet->setEnd($begin);
+        $timesheet->setBegin(clone $begin);
+        $timesheet->setEnd(clone $begin);
+        $timesheet->setDuration(0);
 
         return $timesheet;
     }
