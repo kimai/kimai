@@ -37,6 +37,7 @@ class SystemConfigurationTest extends TestCase
             'timesheet' => [
                 'rules' => [
                     'allow_future_times' => false,
+                    'allow_zero_duration' => true,
                     'lockdown_period_start' => null,
                     'lockdown_period_end' => null,
                     'lockdown_grace_period' => null,

@@ -370,6 +370,7 @@ class TimesheetControllerTest extends ControllerBaseTest
                     ['name' => 'timesheet.mode', 'value' => 'default'],
                     ['name' => 'timesheet.active_entries.default_begin', 'value' => '08:00'],
                     ['name' => 'timesheet.rules.allow_future_times', 'value' => true],
+                    ['name' => 'timesheet.rules.allow_zero_duration', 'value' => true],
                     ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => false],
                     ['name' => 'timesheet.rules.allow_overbooking_budget', 'value' => true],
                     ['name' => 'timesheet.active_entries.hard_limit', 'value' => 1],
@@ -455,6 +456,59 @@ class TimesheetControllerTest extends ControllerBaseTest
                 ]
             ],
             ['#timesheet_edit_form_activity']
+        );
+    }
+
+    public function testCreateActionWithEmptyDuration()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $fixture = new ActivityFixtures();
+        $fixture->setAmount(1);
+        $fixture->setIsGlobal(true);
+        $fixture->setIsVisible(true);
+        $fixture->setCallback(function (Activity $activity) {
+            $activity->setBudget(1000);
+            $activity->setTimeBudget(3600);
+        });
+        $activities = $this->importFixture($fixture);
+        /** @var Activity $activity */
+        $activity = $activities[0];
+
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(1);
+        $fixture->setActivities([$activity]);
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
+        $timesheets = $this->importFixture($fixture);
+        $id = $timesheets[0]->getId();
+
+        $this->request($client, '/timesheet/' . $id . '/edit');
+
+        $response = $client->getResponse();
+        $this->assertTrue($response->isSuccessful());
+
+        /** @var ConfigurationRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Configuration::class);
+        $config = new Configuration();
+        $config->setName('timesheet.rules.allow_zero_duration');
+        $config->setValue(false);
+        $repository->saveConfiguration($config);
+
+        $this->assertHasValidationError(
+            $client,
+            '/timesheet/' . $id . '/edit',
+            'form[name=timesheet_edit_form]',
+            [
+                'timesheet_edit_form' => [
+                    'hourlyRate' => 100,
+                    'begin' => '2020-02-18 01:00',
+                    'end' => '2020-02-18 01:00',
+                    'duration' => '00:00',
+                    'project' => 1,
+                    'activity' => $activity->getId(),
+                ]
+            ],
+            ['#timesheet_edit_form_duration']
         );
     }
 
