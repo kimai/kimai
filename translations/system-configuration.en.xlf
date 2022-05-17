@@ -52,7 +52,7 @@
       </trans-unit>
       <trans-unit id="z4tQEPb" resname="label.timesheet.rules.allow_zero_duration">
         <source>label.timesheet.rules.allow_zero_duration</source>
-        <target>Allow time entries to have a duration of zero</target>
+        <target>Allow time entries with an empty duration</target>
       </trans-unit>
       <trans-unit id="VAAaL2t" resname="label.timesheet.rules.allow_overbooking_budget">
         <source>label.timesheet.rules.allow_overbooking_budget</source>

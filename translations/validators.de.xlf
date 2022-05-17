@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="ePrqiLN" resname="Duration cannot be zero.">
         <source>Duration cannot be zero.</source>
-        <target>Die Dauer darf nicht null betragen.</target>
+        <target>Eine leere Dauer ist nicht erlaubt.</target>
       </trans-unit>
       <trans-unit id="1V6BsD_" resname="You must select at least one user or team.">
         <source>You must select at least one user or team.</source>
