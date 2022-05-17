@@ -202,6 +202,7 @@ class AppExtensionTest extends TestCase
                 ],
                 'rules' => [
                     'allow_future_times' => true,
+                    'allow_zero_duration' => true,
                     'allow_overlapping_records' => true,
                     'lockdown_period_start' => null,
                     'lockdown_period_end' => null,
