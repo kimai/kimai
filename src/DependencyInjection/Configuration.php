@@ -88,6 +88,12 @@ class Configuration implements ConfigurationInterface
                 ->integerNode('recent_activities')
                     ->defaultValue(5)
                 ->end()
+                ->integerNode('recent_activity_weeks')
+                    ->defaultNull()
+                ->end()
+                ->integerNode('minimum_rows')
+                    ->defaultValue(3)
+                ->end()
             ->end()
         ;
 
