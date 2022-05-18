@@ -17,9 +17,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetZeroDurationValidator extends ConstraintValidator
 {
-    /**
-     * @var SystemConfiguration
-     */
     private $configuration;
 
     public function __construct(SystemConfiguration $configuration)
@@ -45,7 +42,16 @@ final class TimesheetZeroDurationValidator extends ConstraintValidator
             return;
         }
 
-        if ($timesheet->getDuration() == 0) {
+        if ($timesheet->isRunning()) {
+            return;
+        }
+
+        $duration = 0;
+        if ($timesheet->getEnd() !== null && $timesheet->getBegin() !== null) {
+            $duration = $timesheet->getEnd()->getTimestamp() - $timesheet->getBegin()->getTimestamp();
+        }
+
+        if ($duration <= 0) {
             $this->context->buildViolation($constraint->message)
                 ->atPath('duration')
                 ->setTranslationDomain('validators')
