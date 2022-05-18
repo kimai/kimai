@@ -53,7 +53,9 @@
                     {{ form_row(form.exported) }}
                 {% endif %}
                 {{ form_row(form.template) }}
-                {{ form_row(form.markAsExported) }}
+                {% if form.markAsExported is defined %}
+                    {{ form_row(form.markAsExported) }}
+                {% endif %}
             {% endblock %}
             {% block box_footer%}
                 {{ search.searchButton(form) }}
