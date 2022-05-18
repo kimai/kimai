@@ -10,8 +10,8 @@
 namespace App\Form\Toolbar;
 
 use App\Form\Type\InvoiceTemplateType;
+use App\Form\Type\MarkAsExportedType;
 use App\Repository\Query\InvoiceQuery;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,10 +29,9 @@ class InvoiceToolbarSimpleForm extends AbstractToolbarForm
         $this->addDateRange($builder, ['timezone' => $options['timezone']]);
         $this->addCustomerMultiChoice($builder, ['required' => false, 'start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true, 'placeholder' => ''], true);
         $this->addProjectMultiChoice($builder, ['ignore_date' => true], true, true);
-        $builder->add('markAsExported', CheckboxType::class, [
-            'label' => 'label.mark_as_exported',
-            'required' => false,
-        ]);
+        if ($options['include_export']) {
+            $builder->add('markAsExported', MarkAsExportedType::class);
+        }
     }
 
     protected function addTemplateChoice(FormBuilderInterface $builder)
@@ -52,6 +51,7 @@ class InvoiceToolbarSimpleForm extends AbstractToolbarForm
             'data_class' => InvoiceQuery::class,
             'csrf_protection' => false,
             'include_user' => true,
+            'include_export' => true,
             'timezone' => date_default_timezone_get(),
         ]);
     }
