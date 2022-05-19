@@ -13,9 +13,6 @@ use App\Entity\Timesheet;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Export\ServiceExport;
 use App\Form\TimesheetEditForm;
-use App\Repository\ActivityRepository;
-use App\Repository\ProjectRepository;
-use App\Repository\TagRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -90,9 +87,9 @@ class TimesheetController extends TimesheetAbstractController
      * @Route(path="/create", name="timesheet_create", methods={"GET", "POST"})
      * @Security("is_granted('create_own_timesheet')")
      */
-    public function createAction(Request $request, ProjectRepository $projectRepository, ActivityRepository $activityRepository, TagRepository $tagRepository): Response
+    public function createAction(Request $request): Response
     {
-        return $this->create($request, 'timesheet/edit.html.twig', $projectRepository, $activityRepository, $tagRepository);
+        return $this->create($request, 'timesheet/edit.html.twig');
     }
 
     protected function getCreateForm(Timesheet $entry): FormInterface

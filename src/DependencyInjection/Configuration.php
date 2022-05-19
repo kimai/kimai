@@ -75,6 +75,12 @@ class Configuration implements ConfigurationInterface
                 ->integerNode('recent_activities')
                     ->defaultValue(5)
                 ->end()
+                ->integerNode('recent_activity_weeks')
+                    ->defaultNull()
+                ->end()
+                ->integerNode('minimum_rows')
+                    ->defaultValue(3)
+                ->end()
             ->end()
         ;
 
@@ -215,6 +221,9 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->booleanNode('allow_future_times')
+                            ->defaultTrue()
+                        ->end()
+                        ->booleanNode('allow_zero_duration')
                             ->defaultTrue()
                         ->end()
                         ->booleanNode('allow_overbooking_budget')

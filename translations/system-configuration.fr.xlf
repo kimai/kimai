@@ -286,6 +286,10 @@
         <source>label.quick_entry.recent_activities</source>
         <target>Nombre d'entrées prises les semaines précédentes</target>
       </trans-unit>
+      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
+        <source>label.calendar.title_pattern</source>
+        <target>Affichage des titres des entrées du calendrier</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

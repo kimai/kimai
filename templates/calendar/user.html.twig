@@ -11,8 +11,17 @@
 {% block main %}
     <div class="row">
         {% set hasDragAndDrop = (config.dragDropAmount > 0 and dragAndDrop is not empty and (dragAndDrop|filter(s => s.entries|length > 0)|length > 0)) %}
-        {% if hasDragAndDrop %}
+        {% if hasDragAndDrop or form is not null %}
         <div class="col-md-4 col-lg-3 d-none d-md-block">
+            {% if form is not null %}
+                {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+                    {% block box_body %}
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        {{ form_end(form) }}
+                    {% endblock %}
+                {% endembed %}
+            {% endif %}
             {% for source in dragAndDrop|filter(s => s.entries|length > 0) %}
                 {% embed '@theme/embeds/card.html.twig' %}
                     {% block box_title %}{{ source.title|trans }}{% endblock %}
@@ -62,6 +71,19 @@
 
 {% block javascripts %}
     {% set calendarSelector = '#timesheet_calendar' %}
+    {% set createParams = '' %}
+    {% set createRoute = 'timesheet_create' %}
+    {% set canDelete = is_granted('delete_own_timesheet') %}
+    {% set canCreate = is_granted('create_own_timesheet') %}
+    {% set canEdit = is_granted('edit_own_timesheet') %}
+    {% if user != app.user %}
+        {% set createParams = '&user=' ~ user.id %}
+        {% set createRoute = 'admin_timesheet_create' %}
+        {% set canDelete = is_granted('delete_other_timesheet') %}
+        {% set canCreate = is_granted('create_other_timesheet') %}
+        {% set canEdit = is_granted('edit_other_timesheet') %}
+    {% endif %}
+
     {{ parent() }}
     <script>
         activatePopover();
@@ -228,7 +250,7 @@
                 googleCalendarApiKey: '{{ google.apiKey }}',
                 {% endif %}
                 header    : {
-                    left  : 'prev,next today{% if is_granted('delete_own_timesheet') %} deleteButton{% endif %}',
+                    left  : 'prev,next today{% if canDelete %} deleteButton{% endif %}',
                     center: 'title',
                     right : 'month,agendaWeek,agendaDay'
                 },
@@ -338,7 +360,7 @@
                         events: function(start, end, timezone, callback) {
                             let from = moment(start.format()).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
                             let to = moment(end.format()).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
-                            API.get('{{ path('get_timesheets') }}?size=1000&full=true&begin='+from+'&end='+to, {}, function(result) {
+                            API.get('{{ path('get_timesheets') }}?user={{ user.id }}&size=1000&full=true&begin='+from+'&end='+to, {}, function(result) {
                                 let apiEvents = [];
                                 for (const record of result) {
                                     apiEvents.push(convertApiTimesheetToCalendar(record));
@@ -427,7 +449,7 @@
                     $element.data('ids', event.id + ' ' + ids);
                     $element.text(DATES.formatSeconds(duration));
                 },
-                {% if not is_punch_mode and is_granted('create_own_timesheet') %}
+                {% if not is_punch_mode and canCreate %}
                     dayClick: function(date, jsEvent, view) {
                         {#
                            Day-clicks are always triggered, unless a selection was created.
@@ -438,7 +460,7 @@
                             return;
                         }
 
-                        let createUrl = '{{ path('timesheet_create') }}?begin=' + date.format();
+                        let createUrl = '{{ path(createRoute) }}?begin=' + date.format() + '{{ createParams|raw }}';
                         kimai.getPlugin('modal').openUrlInModal(createUrl);
                     },
                     selectable: true,
@@ -450,11 +472,11 @@
                             #}
                             return;
                         }
-                        let createUrl = '{{ path('timesheet_create') }}' + '?from=' + start.format() + '&to=' + end.format();
+                        let createUrl = '{{ path(createRoute) }}' + '?from=' + start.format() + '&to=' + end.format() + '{{ createParams|raw }}';
                         kimai.getPlugin('modal').openUrlInModal(createUrl);
                     },
                 {% endif %}
-                {% if is_granted('edit_own_timesheet') %}
+                {% if canEdit %}
                     eventClick: function(eventObj, jsEvent, view) {
                         if (eventObj.source.ajaxSettings !== undefined) {
                             jsEvent.preventDefault();
@@ -470,7 +492,7 @@
                         },
                         eventDragStop: function(event, jsEvent, ui, view) {
                             activatePopover();
-                            {% if is_granted('delete_own_timesheet') %}
+                            {% if canDelete %}
                                 var trash = jQuery('.fc-deleteButton-button');
                                 var offset = trash.offset();
 

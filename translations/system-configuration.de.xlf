@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet" approved="yes">
         <source>Time tracking</source>
-        <target state="translated">Zeiterfassung</target>
+        <target state="final">Zeiterfassung</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
@@ -46,6 +46,10 @@
         <source>label.timesheet.rules.allow_future_times</source>
         <target>Erlaube Zeiteinträge in der Zukunft</target>
       </trans-unit>
+      <trans-unit id="z4tQEPb" resname="label.timesheet.rules.allow_zero_duration">
+        <source>label.timesheet.rules.allow_zero_duration</source>
+        <target>Erlaube Zeiteinträge mit einer leeren Dauer</target>
+      </trans-unit>
       <trans-unit id="VAAaL2t" resname="label.timesheet.rules.allow_overbooking_budget">
         <source>label.timesheet.rules.allow_overbooking_budget</source>
         <target>Überbuchung hinterlegter Budgets erlauben</target>
@@ -81,6 +85,18 @@
       <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
         <source>label.quick_entry.recent_activities</source>
         <target>Anzahl übernommener Einträge aus Vorwochen</target>
+      </trans-unit>
+      <trans-unit id="QxQOG3e" resname="label.quick_entry.recent_activity_weeks">
+        <source>label.quick_entry.recent_activity_weeks</source>
+        <target>Verwende Einträge aus den letzten X Wochen (leer oder 0 für gesamte Zeit)</target>
+      </trans-unit>
+      <trans-unit id="7Efrrn5" resname="label.quick_entry.minimum_rows">
+        <source>label.quick_entry.minimum_rows</source>
+        <target>Minimale Anzahl an Zeilen</target>
+      </trans-unit>
+      <trans-unit id="iZLna_g" resname="label.theme.autocomplete_chars">
+        <source>label.theme.autocomplete_chars</source>
+        <target>Minimale Anzahl Buchstaben für den Start der Autovervollständigung</target>
       </trans-unit>
       <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>
@@ -286,9 +302,9 @@
         <source>label.calendar.dragdrop_amount</source>
         <target>Anzahl an Einträgen für Drag&amp;Drop (0 = deaktiviert)</target>
       </trans-unit>
-      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
+      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern" approved="yes">
         <source>label.calendar.title_pattern</source>
-        <target>Darstellung der Titel von Kalender Einträgen</target>
+        <target>Darstellung der Titel von Kalendereinträgen</target>
       </trans-unit>
     </body>
   </file>

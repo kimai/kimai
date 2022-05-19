@@ -74,19 +74,19 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
     public function getTestDataForms()
     {
         return [
-            ['form[name=system_configuration_form_timesheet]', $this->createUrl('/admin/system-config/update/timesheet')],
-            ['form[name=system_configuration_form_quick_entry]', $this->createUrl('/admin/system-config/update/quick_entry')],
-            ['form[name=system_configuration_form_lockdown_period]', $this->createUrl('/admin/system-config/update/lockdown_period')],
-            ['form[name=system_configuration_form_invoice]', $this->createUrl('/admin/system-config/update/invoice')],
-            ['form[name=system_configuration_form_authentication]', $this->createUrl('/admin/system-config/update/authentication')],
-            ['form[name=system_configuration_form_rounding]', $this->createUrl('/admin/system-config/update/rounding')],
-            ['form[name=system_configuration_form_customer]', $this->createUrl('/admin/system-config/update/customer')],
-            ['form[name=system_configuration_form_project]', $this->createUrl('/admin/system-config/update/project')],
-            ['form[name=system_configuration_form_activity]', $this->createUrl('/admin/system-config/update/activity')],
-            ['form[name=system_configuration_form_user]', $this->createUrl('/admin/system-config/update/user')],
-            ['form[name=system_configuration_form_theme]', $this->createUrl('/admin/system-config/update/theme')],
-            ['form[name=system_configuration_form_calendar]', $this->createUrl('/admin/system-config/update/calendar')],
-            ['form[name=system_configuration_form_branding]', $this->createUrl('/admin/system-config/update/branding')],
+            ['form[name=system_configuration_form_timesheet]', $this->createUrl('/admin/system-config/update/timesheet/0')],
+            ['form[name=system_configuration_form_quick_entry]', $this->createUrl('/admin/system-config/update/quick_entry/0')],
+            ['form[name=system_configuration_form_lockdown_period]', $this->createUrl('/admin/system-config/update/lockdown_period/0')],
+            ['form[name=system_configuration_form_invoice]', $this->createUrl('/admin/system-config/update/invoice/0')],
+            ['form[name=system_configuration_form_authentication]', $this->createUrl('/admin/system-config/update/authentication/0')],
+            ['form[name=system_configuration_form_rounding]', $this->createUrl('/admin/system-config/update/rounding/0')],
+            ['form[name=system_configuration_form_customer]', $this->createUrl('/admin/system-config/update/customer/0')],
+            ['form[name=system_configuration_form_project]', $this->createUrl('/admin/system-config/update/project/0')],
+            ['form[name=system_configuration_form_activity]', $this->createUrl('/admin/system-config/update/activity/0')],
+            ['form[name=system_configuration_form_user]', $this->createUrl('/admin/system-config/update/user/0')],
+            ['form[name=system_configuration_form_theme]', $this->createUrl('/admin/system-config/update/theme/0')],
+            ['form[name=system_configuration_form_calendar]', $this->createUrl('/admin/system-config/update/calendar/0')],
+            ['form[name=system_configuration_form_branding]', $this->createUrl('/admin/system-config/update/branding/0')],
         ];
     }
 
@@ -98,6 +98,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $configService = $this->getSystemConfiguration();
         $this->assertEquals('default', $configService->find('timesheet.mode'));
         $this->assertTrue($configService->find('timesheet.rules.allow_future_times'));
+        $this->assertTrue($configService->find('timesheet.rules.allow_zero_duration'));
         $this->assertEquals(1, $configService->find('timesheet.active_entries.hard_limit'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_timesheet]')->form();
@@ -107,6 +108,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                     ['name' => 'timesheet.mode', 'value' => 'duration_only'],
                     ['name' => 'timesheet.default_begin', 'value' => '23:59'],
                     ['name' => 'timesheet.rules.allow_future_times', 'value' => false],
+                    ['name' => 'timesheet.rules.allow_zero_duration', 'value' => true],
                     ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => false],
                     ['name' => 'timesheet.rules.allow_overbooking_budget', 'value' => false],
                     ['name' => 'timesheet.active_entries.hard_limit', 'value' => 99],
@@ -173,6 +175,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                         ['name' => 'timesheet.mode', 'value' => 'foo'],
                         ['name' => 'timesheet.default_begin', 'value' => '23:59'],
                         ['name' => 'timesheet.rules.allow_future_times', 'value' => 1],
+                        ['name' => 'timesheet.rules.allow_zero_duration', 'value' => 1],
                         ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => 1],
                         ['name' => 'timesheet.rules.allow_overbooking_budget', 'value' => 1],
                         ['name' => 'timesheet.active_entries.hard_limit', 'value' => -1],
@@ -181,7 +184,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             ],
             [
                 '#system_configuration_form_timesheet_configuration_0_value', // mode
-                '#system_configuration_form_timesheet_configuration_5_value', // hard_limit
+                '#system_configuration_form_timesheet_configuration_6_value', // hard_limit
             ],
             true
         );
@@ -222,7 +225,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
     public function testUpdateUserConfig()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/system-config/');
+        $this->assertAccessIsGranted($client, '/admin/system-config/edit/user');
 
         $configService = $this->getSystemConfiguration();
         $this->assertNull($configService->find('defaults.user.timezone'));
@@ -240,7 +243,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
             ]
         ]);
 
-        $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/'));
+        $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/edit/user'));
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);

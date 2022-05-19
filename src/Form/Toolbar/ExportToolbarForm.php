@@ -9,6 +9,7 @@
 
 namespace App\Form\Toolbar;
 
+use App\Form\Type\MarkAsExportedType;
 use App\Repository\Query\ExportQuery;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,10 +38,14 @@ class ExportToolbarForm extends AbstractToolbarForm
         $this->addActivityMultiChoice($builder, [], true);
         $this->addExportRenderer($builder);
         $this->addTagInputField($builder);
-        $builder->add('markAsExported', HiddenType::class, [
-            'label' => 'label.mark_as_exported',
-            'required' => false,
-        ]);
+        // FIXME same for invoice form as well !!!
+        if ($options['include_export']) {
+            $builder->add('markAsExported', MarkAsExportedType::class);
+            $builder->add('markAsExported', HiddenType::class, [
+                'label' => 'label.mark_as_exported',
+                'required' => false,
+            ]);
+        }
     }
 
     /**
@@ -60,6 +65,7 @@ class ExportToolbarForm extends AbstractToolbarForm
             'data_class' => ExportQuery::class,
             'csrf_protection' => false,
             'include_user' => true,
+            'include_export' => true,
             'timezone' => date_default_timezone_get(),
         ]);
     }

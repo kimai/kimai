@@ -55,7 +55,9 @@
             {{ form_row(form.billable) }}
             {{ form_row(form.exported) }}
             {{ form_row(form.state) }}
-            {{ form_row(form.markAsExported) }}
+            {% if form.markAsExported is defined %}
+                {{ form_row(form.markAsExported) }}
+            {% endif %}
         {% endblock %}
         {% block box_footer%}
             {{ search.searchButton(form) }}

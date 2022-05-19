@@ -99,7 +99,13 @@ class QuickEntryController extends AbstractController
 
         // attach recent activities
         $amount = $this->configuration->getQuickEntriesRecentAmount();
-        $timesheets = $this->repository->getRecentActivities($this->getUser(), null, $amount);
+        $startFrom = null;
+        $takeOverWeeks = $this->configuration->find('quick_entry.recent_activity_weeks');
+        if ($takeOverWeeks !== null && \intval($takeOverWeeks) > 0) {
+            $startFrom = clone $startWeek;
+            $startFrom->modify(sprintf('-%s weeks', $takeOverWeeks));
+        }
+        $timesheets = $this->repository->getRecentActivities($this->getUser(), $startFrom, $amount);
         foreach ($timesheets as $timesheet) {
             $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId();
             if (\array_key_exists($id, $rows)) {
@@ -145,7 +151,7 @@ class QuickEntryController extends AbstractController
         }
 
         // add empty rows for simpler starting
-        $minRows = 3;
+        $minRows = \intval($this->configuration->find('quick_entry.minimum_rows'));
         if (\count($models) < $minRows) {
             $newRows = $minRows - \count($models);
             for ($a = 0; $a < $newRows; $a++) {

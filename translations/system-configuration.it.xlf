@@ -286,6 +286,10 @@
         <source>label.quick_entry.recent_activities</source>
         <target>Numero di voci riprese dalle settimane precedenti</target>
       </trans-unit>
+      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
+        <source>label.calendar.title_pattern</source>
+        <target>Visualizzazione dei titoli delle voci del calendario</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
