@@ -280,10 +280,6 @@
         <source>label.teamlead</source>
         <target>Holdleder</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>Opret yderligere indlæg</target>
-      </trans-unit>
       <!--
               Buttons & Actions
             -->

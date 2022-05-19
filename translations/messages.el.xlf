@@ -357,10 +357,6 @@
         <source>label.teamlead</source>
         <target>Επικεφαλής ομάδας</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>Δημιουργία περαιτέρω καταχωρήσεων</target>
-      </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
         <target>Πληκτρολογήσετε το μήνυμα σας…</target>

@@ -248,10 +248,6 @@
         <source>label.email</source>
         <target>電子メール</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>未来時間の明細を作成する</target>
-      </trans-unit>
       <!--
               Buttons & Actions
             -->

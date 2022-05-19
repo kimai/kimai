@@ -61,14 +61,6 @@ class UserCreateType extends UserEditType
                     'required' => false,
                 ]);
         }
-
-        if ($options['include_add_more'] === true) {
-            $builder->add('create_more', CheckboxType::class, [
-                'label' => 'label.create_more',
-                'required' => false,
-                'mapped' => false,
-            ]);
-        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -77,7 +69,6 @@ class UserCreateType extends UserEditType
 
         $resolver->setDefaults([
             'validation_groups' => ['UserCreate', 'Registration'],
-            'include_add_more' => false,
             'include_roles' => false,
             'include_teams' => false,
         ]);

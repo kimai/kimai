@@ -197,10 +197,6 @@
         <source>label.email</source>
         <target>Эл. почта</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>Cоздать новые записи</target>
-      </trans-unit>
       <!--
               Buttons & Actions
             -->

@@ -260,10 +260,6 @@
         <source>label.teamlead</source>
         <target>Vedoucí teamu</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>Vytvořit další položku</target>
-      </trans-unit>
       <!--
               Buttons & Actions
             -->

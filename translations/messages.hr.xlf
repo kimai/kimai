@@ -369,10 +369,6 @@
         <source>label.teamlead</source>
         <target>Voditelj tima</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>Stvori dodatne unose</target>
-      </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
         <target>Upiši poruku …</target>

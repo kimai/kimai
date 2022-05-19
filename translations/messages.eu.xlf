@@ -285,10 +285,6 @@
         <source>label.teamlead</source>
         <target>Talde Leaderra</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>Gehiago sortu</target>
-      </trans-unit>
       <!--
               Buttons & Actions
             -->

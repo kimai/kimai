@@ -197,10 +197,6 @@
         <source>label.email</source>
         <target>البريد الإلكتروني</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>إنشاء بيانات أخرى</target>
-      </trans-unit>
       <!--
               Buttons & Actions
             -->

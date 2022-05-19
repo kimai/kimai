@@ -401,10 +401,6 @@
         <source>label.teamlead</source>
         <target>Teamlead</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>Create further entries</target>
-      </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
         <target>Type your message…</target>

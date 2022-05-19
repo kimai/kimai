@@ -280,10 +280,6 @@
         <source>label.teamlead</source>
         <target>团队领导</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>创建更多条目</target>
-      </trans-unit>
       <!--
               Buttons & Actions
             -->

@@ -292,10 +292,6 @@
         <source>label.teamlead</source>
         <target>Zarządzanie zespołem</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>Utwórz więcej wpisów</target>
-      </trans-unit>
       <!--
               Buttons & Actions
             -->

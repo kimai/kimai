@@ -256,10 +256,6 @@
         <source>label.team</source>
         <target state="translated">팀 </target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target state="translated">추가 항목 생성</target>
-      </trans-unit>
       <!--
               Buttons & Actions
             -->

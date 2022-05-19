@@ -273,10 +273,6 @@
         <source>label.teamlead</source>
         <target>Supervisor</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>Crear más registros</target>
-      </trans-unit>
       <!--
               Buttons & Actions
             -->

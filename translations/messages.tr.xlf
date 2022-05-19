@@ -276,10 +276,6 @@
         <source>label.teamlead</source>
         <target state="translated">Takım lideri</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target state="translated">Kayıtlar oluşturmaya devam et</target>
-      </trans-unit>
       <!--
               Buttons & Actions
             -->

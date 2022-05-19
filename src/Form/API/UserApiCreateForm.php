@@ -52,7 +52,6 @@ class UserApiCreateForm extends UserCreateType
         $resolver->setDefaults([
             'csrf_protection' => false,
             'include_roles' => true,
-            'include_add_more' => false,
         ]);
     }
 }

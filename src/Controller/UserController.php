@@ -112,22 +112,9 @@ final class UserController extends AbstractController
             $user->setPassword($password);
 
             $userRepository->saveUser($user);
-
             $this->flashSuccess('action.update.success');
 
-            if ($editForm->has('create_more') && $editForm->get('create_more')->getData() !== true) {
-                return $this->redirectToRoute('user_profile_edit', ['username' => $user->getUserIdentifier()]);
-            }
-
-            $firstUser = $user;
-            $user = $this->createNewDefaultUser($config);
-            $user->setLanguage($firstUser->getLanguage());
-            $user->setTimezone($firstUser->getTimezone());
-
-            $editForm = $this->getCreateUserForm($user);
-            if ($editForm->has('create_more')) {
-                $editForm->get('create_more')->setData(true);
-            }
+            return $this->redirectToRoute('user_profile_edit', ['username' => $user->getUserIdentifier()]);
         }
 
         return $this->render('user/create.html.twig', [
@@ -231,7 +218,6 @@ final class UserController extends AbstractController
             'method' => 'POST',
             'include_active_flag' => true,
             'include_preferences' => $this->isGranted('preferences', $user),
-            'include_add_more' => true,
             'include_teams' => $this->isGranted('teams_other_profile'),
             'include_roles' => $this->isGranted('roles_other_profile'),
         ]);

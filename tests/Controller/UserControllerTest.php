@@ -105,8 +105,6 @@ class UserControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/user/create');
         $form = $client->getCrawler()->filter('form[name=user_create]')->form();
-        $this->assertTrue($form->has('user_create[create_more]'));
-        $this->assertFalse($form->get('user_create[create_more]')->hasValue());
         $client->submit($form, [
             'user_create' => [
                 'username' => $username,
@@ -121,29 +119,6 @@ class UserControllerTest extends ControllerBaseTest
 
         $form = $client->getCrawler()->filter('form[name=user_edit]')->form();
         $this->assertEquals($username, $form->get('user_edit[alias]')->getValue());
-    }
-
-    public function testCreateActionWithCreateMore()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/user/create');
-        $form = $client->getCrawler()->filter('form[name=user_create]')->form();
-        $this->assertTrue($form->has('user_create[create_more]'));
-        $client->submit($form, [
-            'user_create' => [
-                'username' => 'foobar@example.com',
-                'plainPassword' => ['first' => 'abcdef', 'second' => 'abcdef'],
-                'email' => 'foobar@example.com',
-                'enabled' => 1,
-                'create_more' => true,
-            ]
-        ]);
-        $this->assertFalse($client->getResponse()->isRedirect());
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $form = $client->getCrawler()->filter('form[name=user_create]')->form();
-        $this->assertTrue($form->has('user_create[create_more]'));
-        $this->assertTrue($form->get('user_create[create_more]')->hasValue());
-        $this->assertEquals(1, $form->get('user_create[create_more]')->getValue());
     }
 
     public function testDeleteAction()

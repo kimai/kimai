@@ -907,10 +907,6 @@
         <source>modal.columns.title</source>
         <target>Broyt sjónligheit av súlu</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>Stovna fleiri innlegg</target>
-      </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">
         <source>help.rate</source>
         <target>Tímaprísur ið skal broytast</target>

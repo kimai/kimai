@@ -624,10 +624,6 @@
         <source>help.rate_internal</source>
         <target>Interne kostnader (hvis dette ikke er angitt bruker normal sats)</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>Opprett flere oppføringer</target>
-      </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
         <target>Skriv meldingen din …</target>

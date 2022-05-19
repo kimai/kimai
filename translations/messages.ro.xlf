@@ -289,10 +289,6 @@
         <source>label.teamlead</source>
         <target>Șef de echipă</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>Crează intrări noi</target>
-      </trans-unit>
       <trans-unit id="zldXQq6" resname="label.actions">
         <source>label.actions</source>
         <target>Acțiuni</target>

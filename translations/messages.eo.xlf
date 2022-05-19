@@ -304,10 +304,6 @@
         <source>label.teamlead</source>
         <target>Teamgvidanto</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>Krei pliajn elementojn</target>
-      </trans-unit>
       <!--
               Buttons & Actions
             -->

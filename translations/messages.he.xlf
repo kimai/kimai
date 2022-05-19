@@ -301,10 +301,6 @@
         <source>label.teamlead</source>
         <target>ראש צוות</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>יצירת רשומות נוספות</target>
-      </trans-unit>
       <trans-unit id="vkHr9AP" resname="label.billable">
         <source>label.billable</source>
         <target>להחזר</target>

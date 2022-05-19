@@ -705,10 +705,6 @@
         <source>placeholder.type_message</source>
         <target>Schreibe deine Nachricht …</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>Weitere Einträge erstellen</target>
-      </trans-unit>
       <trans-unit id="Zpj9UB4" resname="label.teamlead">
         <source>label.teamlead</source>
         <target>Teamleiter</target>

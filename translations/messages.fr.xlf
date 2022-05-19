@@ -245,10 +245,6 @@
         <source>label.email</source>
         <target>Courriel</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>Créer des entrées supplémentaires</target>
-      </trans-unit>
       <!--
               Buttons & Actions
             -->

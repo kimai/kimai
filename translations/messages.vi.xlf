@@ -316,10 +316,6 @@
         <source>label.teamlead</source>
         <target>Đồng đội</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>Tạo các mục tiếp theo</target>
-      </trans-unit>
       <!--
               Buttons & Actions
             -->

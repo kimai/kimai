@@ -207,10 +207,6 @@
         <source>placeholder.type_message</source>
         <target>پیام خود را تایپ کنید …</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
-        <target>ورودی های بیشتری ایجاد کنید</target>
-      </trans-unit>
       <trans-unit id="Ss2xe99" resname="label.team">
         <source>label.team</source>
         <target>تیم</target>
