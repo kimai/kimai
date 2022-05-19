@@ -14,7 +14,7 @@
         {% if hasDragAndDrop or form is not null %}
         <div class="col-md-4 col-lg-3 d-none d-md-block">
             {% if form is not null %}
-                {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
+                {% embed '@theme/embeds/card.html.twig' %}
                     {% block box_body %}
                         {{ form_start(form) }}
                         {{ form_widget(form) }}

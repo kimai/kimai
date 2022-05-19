@@ -11,7 +11,6 @@ namespace App\Form;
 
 use App\Form\Type\TeamType;
 use App\Form\Type\UserRoleType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;

@@ -11,7 +11,6 @@ namespace App\Controller;
 
 use App\Configuration\SystemConfiguration;
 use App\Entity\MetaTableTypeInterface;
-use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Event\TimesheetDuplicatePostEvent;
 use App\Event\TimesheetDuplicatePreEvent;
