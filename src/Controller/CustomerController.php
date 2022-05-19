@@ -39,7 +39,6 @@ use JeroenDesloovere\VCard\VCard;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -125,7 +124,7 @@ final class CustomerController extends AbstractController
         $customer->setCurrency($configuration->getCustomerDefaultCurrency());
         $customer->setTimezone($timezone);
 
-        return $this->renderCustomerForm($customer, $request);
+        return $this->renderCustomerForm($customer, $request, true);
     }
 
     /**
@@ -536,12 +535,7 @@ final class CustomerController extends AbstractController
         return $writer->getFileResponse($spreadsheet);
     }
 
-    /**
-     * @param Customer $customer
-     * @param Request $request
-     * @return RedirectResponse|Response
-     */
-    private function renderCustomerForm(Customer $customer, Request $request)
+    private function renderCustomerForm(Customer $customer, Request $request, bool $create = false): Response
     {
         $editForm = $this->createEditForm($customer);
 
@@ -551,6 +545,10 @@ final class CustomerController extends AbstractController
             try {
                 $this->repository->saveCustomer($customer);
                 $this->flashSuccess('action.update.success');
+
+                if ($create) {
+                    return $this->redirectToRouteAfterCreate('customer_details', ['id' => $customer->getId()]);
+                }
 
                 return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
             } catch (\Exception $ex) {

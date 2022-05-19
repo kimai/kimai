@@ -48,29 +48,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 final class ActivityController extends AbstractController
 {
-    /**
-     * @var ActivityRepository
-     */
-    private $repository;
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-    /**
-     * @var ActivityService
-     */
-    private $activityService;
-
-    public function __construct(ActivityRepository $repository, SystemConfiguration $configuration, EventDispatcherInterface $dispatcher, ActivityService $activityService)
+    public function __construct(private ActivityRepository $repository, private SystemConfiguration $configuration, private EventDispatcherInterface $dispatcher, private ActivityService $activityService)
     {
-        $this->repository = $repository;
-        $this->configuration = $configuration;
-        $this->dispatcher = $dispatcher;
-        $this->activityService = $activityService;
     }
 
     /**
@@ -210,7 +189,7 @@ final class ActivityController extends AbstractController
      * @Route(path="/create/{project}", name="admin_activity_create_with_project", methods={"GET", "POST"})
      * @Security("is_granted('create_activity')")
      */
-    public function createAction(Request $request, ?Project $project = null)
+    public function createAction(Request $request, ?Project $project = null): Response
     {
         $activity = $this->activityService->createNewActivity($project);
 
@@ -225,7 +204,7 @@ final class ActivityController extends AbstractController
                 $this->activityService->saveNewActivity($activity);
                 $this->flashSuccess('action.update.success');
 
-                return $this->redirectToRoute('admin_activity');
+                return $this->redirectToRouteAfterCreate('activity_details', ['id' => $activity->getId()]);
             } catch (Exception $ex) {
                 $this->flashUpdateException($ex);
             }
@@ -241,7 +220,7 @@ final class ActivityController extends AbstractController
      * @Route(path="/{id}/permissions", name="admin_activity_permissions", methods={"GET", "POST"})
      * @Security("is_granted('permissions', activity)")
      */
-    public function teamPermissionsAction(Activity $activity, Request $request)
+    public function teamPermissionsAction(Activity $activity, Request $request): Response
     {
         $form = $this->createForm(ActivityTeamPermissionForm::class, $activity, [
             'action' => $this->generateUrl('admin_activity_permissions', ['id' => $activity->getId()]),
@@ -275,7 +254,7 @@ final class ActivityController extends AbstractController
      * @Route(path="/{id}/create_team", name="activity_team_create", methods={"GET"})
      * @Security("is_granted('create_team') and is_granted('permissions', activity)")
      */
-    public function createDefaultTeamAction(Activity $activity, TeamRepository $teamRepository)
+    public function createDefaultTeamAction(Activity $activity, TeamRepository $teamRepository): Response
     {
         $defaultTeam = $teamRepository->findOneBy(['name' => $activity->getName()]);
         if (null !== $defaultTeam) {
@@ -302,7 +281,7 @@ final class ActivityController extends AbstractController
      * @Route(path="/{id}/edit", name="admin_activity_edit", methods={"GET", "POST"})
      * @Security("is_granted('edit', activity)")
      */
-    public function editAction(Activity $activity, Request $request)
+    public function editAction(Activity $activity, Request $request): Response
     {
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
@@ -331,7 +310,7 @@ final class ActivityController extends AbstractController
      * @Route(path="/{id}/delete", name="admin_activity_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', activity)")
      */
-    public function deleteAction(Activity $activity, Request $request, ActivityStatisticService $statisticService)
+    public function deleteAction(Activity $activity, Request $request, ActivityStatisticService $statisticService): Response
     {
         $stats = $statisticService->getActivityStatistics($activity);
 
@@ -380,7 +359,7 @@ final class ActivityController extends AbstractController
     /**
      * @Route(path="/export", name="activity_export", methods={"GET"})
      */
-    public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter)
+    public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter): Response
     {
         $query = new ActivityQuery();
         $query->setCurrentUser($this->getUser());

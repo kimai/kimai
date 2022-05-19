@@ -55,29 +55,8 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  */
 final class ProjectController extends AbstractController
 {
-    /**
-     * @var ProjectRepository
-     */
-    private $repository;
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-    /**
-     * @var ProjectService
-     */
-    private $projectService;
-
-    public function __construct(ProjectRepository $repository, SystemConfiguration $configuration, EventDispatcherInterface $dispatcher, ProjectService $projectService)
+    public function __construct(private ProjectRepository $repository, private SystemConfiguration $configuration, private EventDispatcherInterface $dispatcher, private ProjectService $projectService)
     {
-        $this->repository = $repository;
-        $this->configuration = $configuration;
-        $this->dispatcher = $dispatcher;
-        $this->projectService = $projectService;
     }
 
     /**
@@ -169,7 +148,7 @@ final class ProjectController extends AbstractController
                 $this->projectService->saveNewProject($project);
                 $this->flashSuccess('action.update.success');
 
-                return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
+                return $this->redirectToRouteAfterCreate('project_details', ['id' => $project->getId()]);
             } catch (\Exception $ex) {
                 $this->flashUpdateException($ex);
             }

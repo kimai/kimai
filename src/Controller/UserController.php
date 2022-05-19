@@ -38,23 +38,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 final class UserController extends AbstractController
 {
-    private UserPasswordHasherInterface $passwordHasher;
-    private UserRepository $repository;
-    private EventDispatcherInterface $dispatcher;
-
-    public function __construct(UserPasswordHasherInterface $passwordHasher, UserRepository $repository, EventDispatcherInterface $dispatcher)
+    public function __construct(private UserPasswordHasherInterface $passwordHasher, private UserRepository $repository, private EventDispatcherInterface $dispatcher)
     {
-        $this->passwordHasher = $passwordHasher;
-        $this->repository = $repository;
-        $this->dispatcher = $dispatcher;
-    }
-
-    /**
-     * @return UserRepository
-     */
-    protected function getRepository()
-    {
-        return $this->repository;
     }
 
     /**
@@ -72,7 +57,7 @@ final class UserController extends AbstractController
             return $this->redirectToRoute('admin_user');
         }
 
-        $entries = $this->getRepository()->getPagerfantaForQuery($query);
+        $entries = $this->repository->getPagerfantaForQuery($query);
 
         $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::USERS);
         $this->dispatcher->dispatch($event);
@@ -114,7 +99,7 @@ final class UserController extends AbstractController
             $userRepository->saveUser($user);
             $this->flashSuccess('action.update.success');
 
-            return $this->redirectToRoute('user_profile_edit', ['username' => $user->getUserIdentifier()]);
+            return $this->redirectToRouteAfterCreate('user_profile_edit', ['username' => $user->getUserIdentifier()]);
         }
 
         return $this->render('user/create.html.twig', [
@@ -157,7 +142,7 @@ final class UserController extends AbstractController
 
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
             try {
-                $this->getRepository()->deleteUser($userToDelete, $deleteForm->get('user')->getData());
+                $this->repository->deleteUser($userToDelete, $deleteForm->get('user')->getData());
                 $this->flashSuccess('action.delete.success');
             } catch (\Exception $ex) {
                 $this->flashDeleteException($ex);
@@ -190,7 +175,7 @@ final class UserController extends AbstractController
             $query->resetByFormError($form->getErrors());
         }
 
-        $entries = $this->getRepository()->getUsersForQuery($query);
+        $entries = $this->repository->getUsersForQuery($query);
 
         $spreadsheet = $exporter->export(
             $entries,

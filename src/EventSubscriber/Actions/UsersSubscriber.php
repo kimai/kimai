@@ -31,7 +31,7 @@ class UsersSubscriber extends AbstractActionsSubscriber
         $event->addQuickExport($this->path('user_export'));
 
         if ($this->isGranted('create_user')) {
-            $event->addCreate($this->path('admin_user_create'), false);
+            $event->addCreate($this->path('admin_user_create'), true);
         }
 
         if ($this->isGranted('view_reporting') && $this->isGranted('view_other_reporting') && $this->isGranted('view_other_timesheet')) {

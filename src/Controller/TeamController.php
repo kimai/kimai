@@ -31,14 +31,8 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  */
 final class TeamController extends AbstractController
 {
-    /**
-     * @var TeamRepository
-     */
-    private $repository;
-
-    public function __construct(TeamRepository $repository)
+    public function __construct(private TeamRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**
@@ -79,7 +73,7 @@ final class TeamController extends AbstractController
      */
     public function createTeam(Request $request)
     {
-        return $this->renderEditScreen(new Team(), $request);
+        return $this->renderEditScreen(new Team(), $request, true);
     }
 
     /**
@@ -150,7 +144,7 @@ final class TeamController extends AbstractController
         ]);
     }
 
-    private function renderEditScreen(Team $team, Request $request): Response
+    private function renderEditScreen(Team $team, Request $request, bool $create = false): Response
     {
         $customerForm = null;
         $projectForm = null;
@@ -172,6 +166,10 @@ final class TeamController extends AbstractController
             try {
                 $this->repository->saveTeam($team);
                 $this->flashSuccess('action.update.success');
+
+                if ($create) {
+                    return $this->redirectToRouteAfterCreate('admin_team_edit', ['id' => $team->getId()]);
+                }
 
                 return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
             } catch (\Exception $ex) {

@@ -20,6 +20,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseAbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
@@ -41,6 +42,18 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         return $this->container
             ->get('form.factory')
             ->createNamed('', $type, $data, $options);
+    }
+
+    /**
+     * Returns a RedirectResponse to the given route with the given parameters.
+     */
+    protected function redirectToRouteAfterCreate(string $route, array $parameters = [], int $status = 201): RedirectResponse
+    {
+        $url = $this->generateUrl($route, $parameters);
+        $response = new RedirectResponse($url, $status);
+        $response->headers->set('Modal-Redirect', $url);
+
+        return $response;
     }
 
     /**

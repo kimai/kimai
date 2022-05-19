@@ -29,7 +29,7 @@ class TeamsSubscriber extends AbstractActionsSubscriber
         $event->addSearchToggle($query);
 
         if ($this->isGranted('create_team')) {
-            $event->addCreate($this->path('admin_team_create'), false);
+            $event->addCreate($this->path('admin_team_create'));
         }
 
         $event->addHelp($this->documentationLink('teams.html'));
