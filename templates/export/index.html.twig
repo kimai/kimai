@@ -19,7 +19,7 @@
 {% set editExported = is_granted('edit_exported_timesheet') %}
 {% set showMarkAsExportedButton = false %}
 {% set showToggleButton = false %}
-{% if entries is not empty and is_granted('edit_export_other_timesheet') %}
+{% if entries is not empty and form.markAsExported is defined %}
     {% set showMarkAsExportedButton = form.exported.vars.value != constant('App\\Repository\\Query\\TimesheetQuery::STATE_EXPORTED') %}
     {% set showToggleButton = preview_show and form.exported.vars.value != constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') %}
 {% endif %}
