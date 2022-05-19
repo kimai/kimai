@@ -3,7 +3,7 @@ includes:
     - %rootDir%/../phpstan-symfony/rules.neon
     - %rootDir%/../phpstan-doctrine/extension.neon
     - %rootDir%/../phpstan-doctrine/rules.neon
-#    - %rootDir%/../phpstan/conf/bleedingEdge.neon
+    - %rootDir%/../phpstan/conf/bleedingEdge.neon
 
 parameters:
     tmpDir: %rootDir%/../../../var/cache/phpstan

@@ -18,7 +18,7 @@
             {% for activity in stats.activities %}
                 <th colspan="3" class="text-center">{{ activity.name }}</th>
             {% endfor %}
-            <th rowspan="2" style="{{ rowspanStyle }}">{{ dataTypeTitle|trans }}</th>
+            <th rowspan="2" style="{{ rowspanStyle }}" class="text-center">{{ dataTypeTitle|trans }}</th>
         </tr>
         <tr>
             {% for activity in stats.activities %}

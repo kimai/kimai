@@ -25,7 +25,7 @@
         "doctrine/orm": "^2.8",
         "erusev/parsedown": "^1.6",
         "friendsofsymfony/rest-bundle": "^3.0",
-        "gedmo/doctrine-extensions": "^3.0",
+        "gedmo/doctrine-extensions": "^3.6",
         "jeroendesloovere/vcard": "^1.7",
         "jms/serializer-bundle": "^4.0",
         "kevinpapst/tabler-bundle": "dev-main",

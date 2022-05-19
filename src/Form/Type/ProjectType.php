@@ -9,12 +9,12 @@
 
 namespace App\Form\Type;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\Project;
+use App\Form\Helper\CustomerHelper;
+use App\Form\Helper\ProjectHelper;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ProjectFormTypeQuery;
-use App\Utils\LocaleSettings;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
@@ -27,74 +27,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ProjectType extends AbstractType
 {
-    public const PATTERN_NAME = '{name}';
-    public const PATTERN_COMMENT = '{comment}';
-    public const PATTERN_ORDERNUMBER = '{ordernumber}';
-    public const PATTERN_DATERANGE = '{daterange}';
-    public const PATTERN_START = '{start}';
-    public const PATTERN_END = '{end}';
-    public const PATTERN_SPACER = '{spacer}';
-    public const SPACER = ' - ';
-
-    private $configuration;
-    private $localeSettings;
-    private $dateFormat;
-    private $pattern;
-
-    public function __construct(SystemConfiguration $configuration, LocaleSettings $localeSettings)
+    public function __construct(private ProjectHelper $projectHelper, private CustomerHelper $customerHelper)
     {
-        $this->configuration = $configuration;
-        $this->localeSettings = $localeSettings;
-    }
-
-    private function getPattern(): string
-    {
-        if ($this->pattern === null) {
-            $this->pattern = $this->configuration->find('project.choice_pattern');
-
-            if ($this->pattern === null || stripos($this->pattern, '{') === false || stripos($this->pattern, '}') === false) {
-                $this->pattern = self::PATTERN_NAME;
-            }
-
-            $this->pattern = str_replace(self::PATTERN_DATERANGE, self::PATTERN_START . '-' . self::PATTERN_END, $this->pattern);
-            $this->pattern = str_replace(self::PATTERN_SPACER, self::SPACER, $this->pattern);
-        }
-
-        return $this->pattern;
     }
 
     public function getChoiceLabel(Project $project): string
     {
-        if ($this->dateFormat === null) {
-            $this->dateFormat = $this->localeSettings->getDateFormat();
-        }
-
-        $start = '?';
-        if ($project->getStart() !== null) {
-            $start = $project->getStart()->format($this->dateFormat);
-        }
-
-        $end = '?';
-        if ($project->getEnd() !== null) {
-            $end = $project->getEnd()->format($this->dateFormat);
-        }
-
-        $name = $this->getPattern();
-        $name = str_replace(self::PATTERN_NAME, $project->getName(), $name);
-        $name = str_replace(self::PATTERN_COMMENT, $project->getComment() ?? '', $name);
-        $name = str_replace(self::PATTERN_ORDERNUMBER, $project->getOrderNumber() ?? '', $name);
-        $name = str_replace(self::PATTERN_START, $start, $name);
-        $name = str_replace(self::PATTERN_END, $end, $name);
-
-        $name = ltrim($name, self::SPACER);
-        $name = rtrim($name, self::SPACER);
-        $name = str_replace('- ?-?', '', $name);
-
-        if ($name === '' || $name === self::SPACER) {
-            $name = $project->getName();
-        }
-
-        return substr($name, 0, 110);
+        return $this->projectHelper->getChoiceLabel($project);
     }
 
     /**
@@ -112,10 +51,7 @@ class ProjectType extends AbstractType
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             // documentation is for NelmioApiDocBundle
@@ -128,7 +64,7 @@ class ProjectType extends AbstractType
             'choice_label' => [$this, 'getChoiceLabel'],
             'choice_attr' => [$this, 'getChoiceAttributes'],
             'group_by' => function (Project $project, $key, $index) {
-                return $project->getCustomer()->getName();
+                return $this->customerHelper->getChoiceLabel($project->getCustomer());
             },
             'query_builder_for_user' => true,
             'activity_enabled' => false,
@@ -194,16 +130,13 @@ class ProjectType extends AbstractType
         });
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['attr'] = array_merge($view->vars['attr'], [
-            'data-option-pattern' => $this->getPattern(),
+            'data-option-pattern' => $this->projectHelper->getChoicePattern(),
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent(): ?string
     {
         return EntityType::class;

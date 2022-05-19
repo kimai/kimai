@@ -10,7 +10,6 @@
 namespace App\Utils;
 
 use App\Configuration\LanguageFormattings;
-use App\Constants;
 
 /**
  * Use this class, when you want information about formats for a locale.

@@ -25,27 +25,14 @@ use Twig\TwigTest;
 
 final class LocaleFormatExtensions extends AbstractExtension
 {
-    private $formats;
-    private $security;
+    private ?bool $fdowSunday = null;
+    private ?LocaleFormats $localeFormats = null;
+    private ?LocaleFormatter $formatter = null;
+    private ?string $locale = null;
+    private ?string $userFormat = null;
 
-    /**
-     * @var LocaleFormats|null
-     */
-    private $localeFormats;
-    /**
-     * @var LocaleFormatter|null
-     */
-    private $formatter;
-    /**
-     * @var string
-     */
-    private $locale;
-    private $userFormat;
-
-    public function __construct(LanguageFormattings $formats, Security $security)
+    public function __construct(private LanguageFormattings $formats, private Security $security)
     {
-        $this->formats = $formats;
-        $this->security = $security;
     }
 
     /**
@@ -76,14 +63,7 @@ final class LocaleFormatExtensions extends AbstractExtension
     public function getTests(): array
     {
         return [
-            new TwigTest('weekend', function ($dateTime) {
-                if (!$dateTime instanceof \DateTime) {
-                    return false;
-                }
-                $day = (int) $dateTime->format('w');
-
-                return ($day === 0 || $day === 6);
-            }),
+            new TwigTest('weekend', [$this, 'isWeekend']),
             new TwigTest('today', function ($dateTime) {
                 if (!$dateTime instanceof \DateTime) {
                     return false;
@@ -145,6 +125,35 @@ final class LocaleFormatExtensions extends AbstractExtension
         }
 
         return $this->locale;
+    }
+
+    /**
+     * @param DateTime $dateTime
+     * @return bool
+     */
+    public function isWeekend($dateTime): bool
+    {
+        if (!$dateTime instanceof \DateTime) {
+            return false;
+        }
+
+        $day = (int) $dateTime->format('w');
+
+        if ($this->fdowSunday === null) {
+            /** @var User|null $user */
+            $user = $this->security->getUser();
+            if ($user !== null) {
+                $this->fdowSunday = $user->isFirstDayOfWeekSunday();
+            } else {
+                $this->fdowSunday = false;
+            }
+        }
+
+        if ($this->fdowSunday) {
+            return ($day === 5 || $day === 6);
+        }
+
+        return ($day === 0 || $day === 6);
     }
 
     /**

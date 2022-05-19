@@ -29,6 +29,11 @@ abstract class AbstractMockFactory
         return $this->testCase;
     }
 
+    protected function createMock(string $className)
+    {
+        return $this->getMockBuilder($className)->disableOriginalConstructor()->getMock();
+    }
+
     protected function getMockBuilder(string $className): MockBuilder
     {
         return new MockBuilder($this->testCase, $className);
