@@ -17,7 +17,6 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
 
     init() {
         this.registerGlobalAjaxErrorHandler();
-        this.registerAutomaticAlertRemove('div.alert-success', 5000);
 
         // the tooltip do not use data-bs-toggle="tooltip" so they can be mixed with data-toggle="modal"
         const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'));
@@ -109,32 +108,4 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
             }
         });
     }
-
-    /**
-     * auto hide success messages, as they are just meant as user feedback and not as a permanent information
-     *
-     * @param {string} selector
-     * @param {number} interval
-     */
-    registerAutomaticAlertRemove(selector, interval) {
-        const self = this;
-        this._alertRemoveHandler = setInterval(
-            function() {
-                self.hideAlert(selector);
-            },
-            interval
-        );
-    }
-
-    unregisterAutomaticAlertRemove() {
-        clearInterval(this._alertRemoveHandler);
-    }
-
-    /**
-     * @param {string} selector
-     */
-    hideAlert(selector) {
-        jQuery(selector).alert('close');
-    }
-
 }
