@@ -10,8 +10,8 @@
 namespace App\Form\Toolbar;
 
 use App\Form\Type\InvoiceTemplateType;
+use App\Form\Type\MarkAsExportedType;
 use App\Repository\Query\InvoiceQuery;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,19 +20,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class InvoiceToolbarForm extends AbstractToolbarForm
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addTemplateChoice($builder);
         $this->addDateRange($builder, ['timezone' => $options['timezone']]);
         $this->addCustomerMultiChoice($builder, ['required' => false, 'start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true, 'placeholder' => ''], true);
         $this->addProjectMultiChoice($builder, ['ignore_date' => true], false, true);
-        $builder->add('markAsExported', CheckboxType::class, [
-            'label' => 'label.mark_as_exported',
-            'required' => false,
-        ]);
+        if ($options['include_export']) {
+            $builder->add('markAsExported', MarkAsExportedType::class);
+        }
         $this->addSearchTermInputField($builder);
         if ($options['include_user']) {
             $this->addUsersChoice($builder);
@@ -42,7 +38,7 @@ class InvoiceToolbarForm extends AbstractToolbarForm
         $this->addExportStateChoice($builder);
     }
 
-    protected function addTemplateChoice(FormBuilderInterface $builder)
+    protected function addTemplateChoice(FormBuilderInterface $builder): void
     {
         $builder->add('template', InvoiceTemplateType::class, [
             'required' => true,
@@ -50,15 +46,13 @@ class InvoiceToolbarForm extends AbstractToolbarForm
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => InvoiceQuery::class,
             'csrf_protection' => false,
             'include_user' => true,
+            'include_export' => true,
             'timezone' => date_default_timezone_get(),
         ]);
     }
