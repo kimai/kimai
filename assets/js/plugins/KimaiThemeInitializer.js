@@ -17,6 +17,7 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
 
     init() {
         this.registerGlobalAjaxErrorHandler();
+        this.registerGlobalAjaxSuccessHandler();
 
         // the tooltip do not use data-bs-toggle="tooltip" so they can be mixed with data-toggle="modal"
         const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'));
@@ -104,6 +105,20 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
                             window.location.replace(loginUrl);
                         }
                     });
+                }
+            }
+        });
+    }
+
+    /**
+     * listen for a project specific header, that is only set after an entity was created
+     */
+    registerGlobalAjaxSuccessHandler() {
+        jQuery(document).ajaxSuccess(function(event, jqxhr, settings, data) {
+            if (jqxhr.status !== undefined && jqxhr.status === 201) {
+                const successRedirect = jqxhr.getResponseHeader('modal-redirect');
+                if (successRedirect !== null) {
+                    window.location = successRedirect;
                 }
             }
         });
