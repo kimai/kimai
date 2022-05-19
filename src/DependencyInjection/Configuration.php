@@ -319,11 +319,12 @@ class Configuration implements ConfigurationInterface
             ->useAttributeAsKey('name', false) // see https://github.com/symfony/symfony/issues/18988
             ->arrayPrototype()
                 ->children()
-                    ->scalarNode('date_type')->defaultValue('yyyy-MM-dd')->end()                // for DateType
-                    ->scalarNode('date')->defaultValue('Y-m-d')->end()                          // for display via twig
-                    ->scalarNode('date_time')->defaultValue('m-d H:i')->end()                   // for display via twig
-                    ->scalarNode('duration')->defaultValue('%%h:%%m h')->end()                  // for display via twig
-                    ->scalarNode('time')->defaultValue('H:i')->end()                            // for display via twig
+                    ->scalarNode('date_type')->defaultValue('dd.MM.yyyy')->end()        // for DateType
+                    ->scalarNode('date')->defaultValue('d.m.Y')->end()                  // for display via twig
+                    ->scalarNode('date_time')->defaultValue('d.m. H:i')->end()          // for display via twig
+                    ->scalarNode('duration')->defaultValue('%%h:%%m h')->end()          // for display via twig
+                    ->scalarNode('time')->defaultValue('H:i')->end()                    // for display via twig
+                    ->scalarNode('rtl')->defaultFalse()->end()                          // for template direction
                 ->end()
             ->end()
         ;

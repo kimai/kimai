@@ -16,19 +16,8 @@ use App\Configuration\LanguageFormattings;
  */
 class LocaleFormats
 {
-    /**
-     * @var LanguageFormattings
-     */
-    private $formats;
-    /**
-     * @var string
-     */
-    private $locale = Constants::DEFAULT_LOCALE;
-
-    public function __construct(LanguageFormattings $formats, string $locale)
+    public function __construct(private LanguageFormattings $formats, private string $locale)
     {
-        $this->formats = $formats;
-        $this->locale = $locale;
     }
 
     /**
@@ -109,5 +98,10 @@ class LocaleFormats
     public function getDurationFormat(): string
     {
         return $this->formats->getDurationFormat($this->getLocale());
+    }
+
+    public function isRightToLeft(): bool
+    {
+        return $this->formats->isRightToLeft($this->getLocale());
     }
 }

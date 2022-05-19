@@ -11,6 +11,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\User;
 use App\Entity\UserPreference;
+use App\Utils\LocaleSettings;
 use KevinPapst\TablerBundle\Helper\ContextHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
@@ -22,24 +23,10 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 final class ThemeOptionsSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var TokenStorageInterface
-     */
-    private $storage;
-    /**
-     * @var ContextHelper
-     */
-    private $helper;
-
-    public function __construct(TokenStorageInterface $storage, ContextHelper $helper)
+    public function __construct(private TokenStorageInterface $storage, private ContextHelper $helper, private LocaleSettings $localeSettings)
     {
-        $this->storage = $storage;
-        $this->helper = $helper;
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -54,6 +41,10 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
             return;
         }
 
+        if ($this->localeSettings->isRightToLeft()) {
+            $this->helper->setIsRightToLeft(true);
+        }
+
         // ignore events like the toolbar where we do not have a token
         if (null === $this->storage->getToken()) {
             return;
@@ -64,13 +55,15 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
         if (!($user instanceof User)) {
             return;
         }
-        //$this->helper->setIsRightToLeft(true);
+
         /** @var UserPreference $ref */
         foreach ($user->getPreferences() as $ref) {
             $name = $ref->getName();
             switch ($name) {
                 case UserPreference::SKIN:
-                    $this->helper->setIsDarkMode($ref->getValue() === 'dark');
+                    if ($ref->getValue() === 'dark') {
+                        $this->helper->setIsDarkMode(true);
+                    }
                     break;
 
                 case 'theme.layout':
@@ -84,5 +77,7 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
                     break;
             }
         }
+
+        $this->helper->setIsNavbarOverlapping(!$this->helper->isDarkMode());
     }
 }

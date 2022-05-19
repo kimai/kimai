@@ -98,12 +98,12 @@ final class LanguageFormattings
         return $this->getConfig('duration', $locale);
     }
 
-    /**
-     * @param string $key
-     * @param string $locale
-     * @return string
-     */
-    private function getConfig(string $key, string $locale): string
+    public function isRightToLeft(string $locale): bool
+    {
+        return $this->getConfig('rtl', $locale);
+    }
+
+    private function getConfig(string $key, string $locale): string|bool
     {
         if (!isset($this->settings[$locale])) {
             throw new \InvalidArgumentException(sprintf('Unknown locale given: %s', $locale));

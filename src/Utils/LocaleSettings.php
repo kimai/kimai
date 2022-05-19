@@ -18,8 +18,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 final class LocaleSettings extends LocaleFormats
 {
-    private $requestStack;
-    private $locale;
+    private RequestStack $requestStack;
+    private ?string $locale = null;
 
     public function __construct(RequestStack $requestStack, LanguageFormattings $formats)
     {

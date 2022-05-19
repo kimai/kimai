@@ -204,6 +204,8 @@ kimai:
 # LANGUAGES
 # --------------------------------------------------------------------------------
     languages:
+        ar:
+            rtl: true
         cs:
             date_type: 'dd.MM.yyyy'
             date: 'd.m.Y'
@@ -251,6 +253,7 @@ kimai:
             date: 'd/m/Y'
             date_time: 'd/m H:i'
             duration: '%%h:%%m'
+            rtl: true
         hu:
             date_type: 'yyyy.MM.dd.'
             date: 'Y.m.d.'

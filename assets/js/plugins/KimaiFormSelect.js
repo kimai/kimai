@@ -175,7 +175,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
         let emptyOpts = [];
         let options = [];
         let titlePattern = null;
-        if (node !== undefined && node.dataset !== undefined && node.dataset['optionPattern'] !== undefined) {
+        if (node.dataset !== undefined && node.dataset['optionPattern'] !== undefined) {
             titlePattern = node.dataset['optionPattern'];
         }
         if (titlePattern === null || titlePattern === '') {
@@ -221,7 +221,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
         }
 
         // this will update the attached javascript component
-        node.dispatchEvent(new CustomEvent('data-reloaded', {detail: selectedValue}));
+        node.dispatchEvent(new CustomEvent('data-reloaded', {detail: node.value}));
         // if we don't trigger the change, the other selects won't reset
         node.dispatchEvent(new Event('change'));
     }
