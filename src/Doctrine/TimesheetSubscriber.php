@@ -23,7 +23,11 @@ class TimesheetSubscriber implements EventSubscriber
     /**
      * @var CalculatorInterface[]
      */
-    protected $calculator;
+    private $calculator;
+    /**
+     * @var CalculatorInterface[]
+     */
+    private $sorted;
 
     /**
      * @param CalculatorInterface[] $calculators
@@ -33,20 +37,14 @@ class TimesheetSubscriber implements EventSubscriber
         $this->calculator = $calculators;
     }
 
-    /**
-     * @return array
-     */
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             Events::onFlush,
         ];
     }
 
-    /**
-     * @param OnFlushEventArgs $args
-     */
-    public function onFlush(OnFlushEventArgs $args)
+    public function onFlush(OnFlushEventArgs $args): void
     {
         $em = $args->getEntityManager();
         $uow = $em->getUnitOfWork();
@@ -57,7 +55,7 @@ class TimesheetSubscriber implements EventSubscriber
                 continue;
             }
 
-            $this->calculateFields($entity);
+            $this->calculateFields($entity, $uow->getEntityChangeSet($entity));
             $uow->recomputeSingleEntityChangeSet($meta, $entity);
         }
 
@@ -71,13 +69,31 @@ class TimesheetSubscriber implements EventSubscriber
         }
     }
 
-    /**
-     * @param Timesheet $entity
-     */
-    protected function calculateFields(Timesheet $entity)
+    protected function calculateFields(Timesheet $entity, array $changes = []): void
     {
-        foreach ($this->calculator as $calculator) {
-            $calculator->calculate($entity);
+        if ($this->sorted === null) {
+            $this->sorted = [];
+
+            foreach ($this->calculator as $calculator) {
+                $i = 0;
+                $prio = 1000;
+                if (method_exists($calculator, 'getPriority')) {
+                    $prio = $calculator->getPriority();
+                }
+
+                do {
+                    $key = $prio + $i++;
+                } while (\array_key_exists($key, $this->sorted));
+
+                $this->sorted[$key] = $calculator;
+            }
+
+            ksort($this->sorted);
+        }
+
+        foreach ($this->sorted as $calculator) {
+            /* @phpstan-ignore-next-line */
+            $calculator->calculate($entity, $changes);
         }
     }
 }

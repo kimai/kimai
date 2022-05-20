@@ -50,4 +50,9 @@ class BillableCalculator implements CalculatorInterface
                 break;
         }
     }
+
+    public function getPriority(): int
+    {
+        return 100;
+    }
 }
