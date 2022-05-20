@@ -270,6 +270,10 @@ trait RendererTrait
                 continue;
             }
 
+            if ($activity->isGlobal()) {
+                continue;
+            }
+
             $activities[] = $activity;
 
             if (null !== ($project = $exportItem->getProject())) {
