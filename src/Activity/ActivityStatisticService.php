@@ -155,6 +155,7 @@ class ActivityStatisticService
                     $statistic->setCounterBillable($statistic->getCounterBillable() + $resultRow['counter']);
                     if ($resultRow['exported']) {
                         $statistic->setDurationBillableExported($statistic->getDurationBillableExported() + $resultRow['duration']);
+                        $statistic->setRateBillableExported($statistic->getRateBillableExported() + $resultRow['rate']);
                     }
                 }
                 if ($resultRow['exported']) {

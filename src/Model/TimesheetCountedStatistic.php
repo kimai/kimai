@@ -21,6 +21,7 @@ class TimesheetCountedStatistic implements \JsonSerializable
     private $recordRateBillable = 0.0;
     private $internalRateBillable = 0.0;
 
+    private $recordRateBillableExported = 0.0;
     private $recordDurationBillableExported = 0;
 
     private $counterExported = 0;
@@ -264,6 +265,16 @@ class TimesheetCountedStatistic implements \JsonSerializable
         $this->recordRateBillable = $recordRate;
     }
 
+    public function getRateBillableExported(): float
+    {
+        return $this->recordRateBillableExported;
+    }
+
+    public function setRateBillableExported(float $recordRate): void
+    {
+        $this->recordRateBillableExported = $recordRate;
+    }
+
     public function getDurationExported(): int
     {
         return $this->recordDurationExported;
@@ -294,6 +305,7 @@ class TimesheetCountedStatistic implements \JsonSerializable
             'rate' => $this->recordRate,
             'rate_billable' => $this->recordRateBillable,
             'rate_exported' => $this->recordRateExported,
+            'rate_billable_exported' => $this->recordRateBillableExported,
             'rate_internal' => $this->recordInternalRate,
             'rate_internal_exported' => $this->internalRateExported,
             'amount' => $this->counter,
