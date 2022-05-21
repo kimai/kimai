@@ -42,4 +42,9 @@ final class DurationCalculator implements CalculatorInterface
 
         $this->roundings->applyRoundings($record);
     }
+
+    public function getPriority(): int
+    {
+        return 200;
+    }
 }

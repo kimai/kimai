@@ -44,4 +44,9 @@ class RateCalculator implements CalculatorInterface
             $record->setFixedRate($rate->getFixedRate());
         }
     }
+
+    public function getPriority(): int
+    {
+        return 300;
+    }
 }
