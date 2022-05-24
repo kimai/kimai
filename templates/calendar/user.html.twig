@@ -10,8 +10,8 @@
 
 {% block main %}
     <div class="row">
-        {% set hasDragAndDrop = (config.dragDropAmount > 0 and dragAndDrop is not empty and (dragAndDrop|filter(s => s.entries|length > 0)|length > 0)) %}
-        {% if hasDragAndDrop or form is not null %}
+        {% set hasTwoColumns = (config.dragDropAmount > 0 and dragAndDrop is not empty and (dragAndDrop|filter(s => s.entries|length > 0)|length > 0)) or form is not null %}
+        {% if hasTwoColumns %}
         <div class="hidden-xs col-sm-5 col-md-4 col-lg-3 no-print">
             {% if form is not null %}
                 {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
@@ -44,7 +44,7 @@
         </div>
         {% endif %}
 
-        <div class="col-xs-12 {% if hasDragAndDrop %}col-sm-7 col-md-8 col-lg-9 col-print-12{% endif %}">
+        <div class="col-xs-12 {% if hasTwoColumns %}col-sm-7 col-md-8 col-lg-9 col-print-12{% endif %}">
             {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
                 {% block box_body_class %}no-padding{% endblock %}
                 {% block box_body %}
