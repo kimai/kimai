@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target>חשבונית (ברירת מחדל)</target>
+        <target>חשבונית</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="sjwwrr8" resname="Xlsx">
         <source>Microsoft Excel (XLSX)</source>
-        <target state="needs-translation">Microsoft Excel (Xlsx)</target>
+        <target state="translated">Microsoft Excel (XLSX)</target>
       </trans-unit>
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>
@@ -52,7 +52,7 @@
       </trans-unit>
       <trans-unit id="QqvUWFt" resname="Ods">
         <source>Ods</source>
-        <target>Open Office (Spreadsheet)</target>
+        <target>Open Office (גיליון נתונים)</target>
       </trans-unit>
       <trans-unit id="kLKl8xE" resname="Pdf">
         <source>Pdf</source>
@@ -76,11 +76,11 @@
       </trans-unit>
       <trans-unit id="4NNx9U." resname="Docx">
         <source>Microsoft Word (DOCX)</source>
-        <target state="needs-translation">Microsoft Word (Docx)</target>
+        <target state="translated">Microsoft Word (DOCX)</target>
       </trans-unit>
       <trans-unit id="sXlZPOC" resname="Xls">
         <source>Microsoft Excel (XLS)</source>
-        <target state="needs-translation">Microsoft Excel (Xls)</target>
+        <target state="translated">Microsoft Excel (XLS)</target>
       </trans-unit>
     </body>
   </file>
