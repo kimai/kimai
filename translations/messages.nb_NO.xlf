@@ -1236,6 +1236,14 @@
         <source>label.budgetType_full</source>
         <target state="needs-translation">Livssyklus</target>
       </trans-unit>
+      <trans-unit id="42BRM3Q" resname="label.theme.layout">
+        <source>label.theme.layout</source>
+        <target state="needs-translation">Vist: oppsettet</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target>Automatisk</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
