@@ -293,7 +293,7 @@
         <source>label.description</source>
         <target>Description</target>
       </trans-unit>
-      <trans-unit id="sdf4cEApe1" resname="label.invoiceText">
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
         <source>label.invoiceText</source>
         <target>Invoice text</target>
       </trans-unit>
