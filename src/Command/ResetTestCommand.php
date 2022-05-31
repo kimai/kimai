@@ -15,6 +15,7 @@ use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Entity\UserPreference;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -27,6 +28,14 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ResetTestCommand extends AbstractResetCommand
 {
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        parent::__construct();
+        $this->entityManager = $entityManager;
+    }
+
     protected function getEnvName(): string
     {
         return 'test';

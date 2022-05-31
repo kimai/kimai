@@ -9,8 +9,8 @@
 
 namespace App\Command;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -26,26 +26,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 abstract class AbstractResetCommand extends Command
 {
-    /**
-     * @var string
-     */
-    private $environment;
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
-
-    public function __construct(string $kernelEnvironment, EntityManagerInterface $entityManager)
-    {
-        $this->environment = $kernelEnvironment;
-        $this->entityManager = $entityManager;
-        parent::__construct();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('kimai:reset:' . $this->getEnvName())
@@ -61,23 +42,21 @@ EOT
         ;
     }
 
-    /**
-     * Make sure that this command CANNOT be executed in production.
-     * It can't work, as the fixtures bundle is not available in production.
-     *
-     * @return bool
-     */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
-        return $this->environment !== 'prod';
+        return $this->getEnv() !== 'prod';
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int|null
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    private function getEnv(): string
+    {
+        /** @var Application $application */
+        $application = $this->getApplication();
+        $kernel = $application->getKernel();
+
+        return $kernel->getEnvironment();
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -155,14 +134,7 @@ EOT
         return 0;
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @param string $question
-     * @param bool $default
-     * @return bool
-     */
-    private function askConfirmation(InputInterface $input, OutputInterface $output, $question, $default = false)
+    private function askConfirmation(InputInterface $input, OutputInterface $output, string $question): bool
     {
         if (!$input->isInteractive()) {
             return true;
@@ -170,7 +142,7 @@ EOT
 
         /** @var QuestionHelper $questionHelper */
         $questionHelper = $this->getHelperSet()->get('question');
-        $question = new ConfirmationQuestion('<question>' . $question . '</question>', $default);
+        $question = new ConfirmationQuestion('<question>' . $question . '</question>', false);
 
         return $questionHelper->ask($input, $output, $question);
     }
