@@ -205,7 +205,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
         select.val(selectedValue);
 
         // pre-select an option if it is the only available one
-        if (select.val() === '') {
+        if (select.val() === '' || select.val() === null) {
             const allOptions = select.find('option');
             const optionLength = allOptions.length;
             let selectOption = '';
