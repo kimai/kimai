@@ -29,12 +29,6 @@ class ProjectInvoiceCalculator extends AbstractSumInvoiceCalculator implements C
 
     protected function mergeSumInvoiceItem(InvoiceItem $invoiceItem, InvoiceItemInterface $entry)
     {
-        if (null === $entry->getActivity()) {
-            return;
-        }
-
-        $invoiceItem->setProject($entry->getProject());
-
         if ($entry->getProject()->getInvoiceText() !== null) {
             $invoiceItem->setDescription($entry->getProject()->getInvoiceText());
         } else {
