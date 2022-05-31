@@ -298,6 +298,22 @@
         <source>label.calendar.dragdrop_amount</source>
         <target state="needs-translation">Mengde oppføringer for dra-og-slipp (0 = avskrudd)</target>
       </trans-unit>
+      <trans-unit id="z4tQEPb" resname="label.timesheet.rules.allow_zero_duration">
+        <source>label.timesheet.rules.allow_zero_duration</source>
+        <target>Tillat tidsoppføringer uten varighet</target>
+      </trans-unit>
+      <trans-unit id="QxQOG3e" resname="label.quick_entry.recent_activity_weeks">
+        <source>label.quick_entry.recent_activity_weeks</source>
+        <target state="needs-translation">Ta over oppføringer fra de siste X ukene (tom eller 0 siden begynnelsen)</target>
+      </trans-unit>
+      <trans-unit id="7Efrrn5" resname="label.quick_entry.minimum_rows">
+        <source>label.quick_entry.minimum_rows</source>
+        <target>Min. antall rader</target>
+      </trans-unit>
+      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
+        <source>label.calendar.title_pattern</source>
+        <target>Vis kalenderoppføringsnavn</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

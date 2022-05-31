@@ -78,6 +78,10 @@
         <source>A project needs to be selected.</source>
         <target>Un projet doit être sélectionné.</target>
       </trans-unit>
+      <trans-unit id="ePrqiLN" resname="Duration cannot be zero.">
+        <source>Duration cannot be zero.</source>
+        <target>Une durée vide n'est pas autorisée.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
