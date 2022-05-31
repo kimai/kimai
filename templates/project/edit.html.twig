@@ -52,6 +52,9 @@
                 </div>
             </div>
             {% endif %}
+            {% if form.invoiceText is defined %}
+                {{ form_row(form.invoiceText) }}
+            {% endif %}
             <div class="row">
                 <div class="col-md-6">
                     {{ form_row(form.visible) }}

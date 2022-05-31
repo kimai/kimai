@@ -174,6 +174,12 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      * )
      */
     private $teams;
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="invoice_text", type="text", nullable=true)
+     */
+    private $invoiceText;
 
     public function __construct()
     {
@@ -336,6 +342,16 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     public function getTeams(): Collection
     {
         return $this->teams;
+    }
+
+    public function getInvoiceText(): ?string
+    {
+        return $this->invoiceText;
+    }
+
+    public function setInvoiceText(?string $invoiceText): void
+    {
+        $this->invoiceText = $invoiceText;
     }
 
     /**
