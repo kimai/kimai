@@ -67,6 +67,10 @@ class ProjectEditForm extends AbstractType
                 'label' => 'label.description',
                 'required' => false,
             ])
+            ->add('invoiceText', TextareaType::class, [
+                'label' => 'label.invoiceText',
+                'required' => false,
+            ])
             ->add('orderNumber', TextType::class, [
                 'label' => 'label.orderNumber',
                 'required' => false,
