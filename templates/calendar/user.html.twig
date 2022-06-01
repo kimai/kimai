@@ -69,12 +69,14 @@
     {% set calendarSelector = '#timesheet_calendar' %}
     {% set createParams = '' %}
     {% set createRoute = 'timesheet_create' %}
+    {% set editRoute = 'timesheet_edit' %}
     {% set canDelete = is_granted('delete_own_timesheet') %}
     {% set canCreate = is_granted('create_own_timesheet') %}
     {% set canEdit = is_granted('edit_own_timesheet') %}
     {% if user != app.user %}
         {% set createParams = '&user=' ~ user.id %}
         {% set createRoute = 'admin_timesheet_create' %}
+        {% set editRoute = 'admin_timesheet_edit' %}
         {% set canDelete = is_granted('delete_other_timesheet') %}
         {% set canCreate = is_granted('create_other_timesheet') %}
         {% set canEdit = is_granted('edit_other_timesheet') %}
@@ -491,7 +493,7 @@
                             jsEvent.preventDefault();
                             return;
                         }
-                        let editUrl = '{{ path('timesheet_edit', {id: '-XX-'}) }}'.replace('-XX-', eventObj.id);
+                        let editUrl = '{{ path(editRoute, {id: '-XX-'}) }}'.replace('-XX-', eventObj.id);
                         kimai.getPlugin('modal').openUrlInModal(editUrl);
                     },
                     {% if not is_punch_mode %}
