@@ -46,6 +46,10 @@
         <source>report_user_year</source>
         <target>Godišnji prikaz za jednog korisnika</target>
       </trans-unit>
+      <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects">
+        <source>report_customer_monthly_projects</source>
+        <target>Projekti po mjesecu, aktivnosti i korisniku</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

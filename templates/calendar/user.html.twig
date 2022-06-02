@@ -10,8 +10,8 @@
 
 {% block main %}
     <div class="row">
-        {% set hasDragAndDrop = (config.dragDropAmount > 0 and dragAndDrop is not empty and (dragAndDrop|filter(s => s.entries|length > 0)|length > 0)) %}
-        {% if hasDragAndDrop or form is not null %}
+        {% set hasTwoColumns = (config.dragDropAmount > 0 and dragAndDrop is not empty and (dragAndDrop|filter(s => s.entries|length > 0)|length > 0)) or form is not null %}
+        {% if hasTwoColumns %}
         <div class="col-md-4 col-lg-3 d-none d-md-block">
             {% if form is not null %}
                 {% embed '@theme/embeds/card.html.twig' %}
@@ -48,7 +48,7 @@
         </div>
         {% endif %}
 
-        <div class="col-xs-12 {% if hasDragAndDrop %}col-md-8 col-lg-9 col-print-12{% endif %}">
+        <div class="col-xs-12 {% if hasTwoColumns %}col-md-8 col-lg-9 col-print-12{% endif %}">
             {% embed '@theme/embeds/card.html.twig' %}
                 {% block box_body_class %}p-3{% endblock %}
                 {% block box_body %}

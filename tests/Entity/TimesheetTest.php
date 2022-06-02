@@ -157,6 +157,26 @@ class TimesheetTest extends TestCase
         self::assertTrue($sut->isBillable());
     }
 
+    public function testResetRates()
+    {
+        $sut = new Timesheet();
+        self::assertSame(0.00, $sut->getRate());
+        self::assertNull($sut->getFixedRate());
+        self::assertNull($sut->getInternalRate());
+        self::assertNull($sut->getHourlyRate());
+
+        $sut->setRate(123.45);
+        $sut->setFixedRate(42.32);
+        $sut->setInternalRate(212);
+        $sut->setHourlyRate(123);
+        $sut->resetRates();
+
+        self::assertSame(0.00, $sut->getRate());
+        self::assertNull($sut->getFixedRate());
+        self::assertNull($sut->getInternalRate());
+        self::assertNull($sut->getHourlyRate());
+    }
+
     public function testCategory()
     {
         $sut = new Timesheet();

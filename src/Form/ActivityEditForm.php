@@ -59,6 +59,10 @@ class ActivityEditForm extends AbstractType
                 'label' => 'label.description',
                 'required' => false,
             ])
+            ->add('invoiceText', TextareaType::class, [
+                'label' => 'label.invoiceText',
+                'required' => false,
+            ])
         ;
 
         if ($new || !$isGlobal) {

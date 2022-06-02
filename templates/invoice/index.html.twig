@@ -34,26 +34,26 @@
             {% block box_body %}
                 {{ form_errors(form) }}
                 {% if form.searchTerm is defined %}
-                    {{ form_row(form.searchTerm) }}
+                    {{ form_row(form.searchTerm, {'row_attr': {'class': 'invoice_search_form_row_searchTerm'}}) }}
                 {% endif %}
-                {{ form_row(form.daterange) }}
-                {{ form_row(form.customers) }}
-                {{ form_row(form.projects) }}
+                {{ form_row(form.daterange, {'row_attr': {'class': 'invoice_search_form_row_daterange'}}) }}
+                {{ form_row(form.customers, {'row_attr': {'class': 'invoice_search_form_row_customers'}}) }}
+                {{ form_row(form.projects, {'row_attr': {'class': 'invoice_search_form_row_projects'}}) }}
                 {% if form.activities is defined %}
-                    {{ form_row(form.activities) }}
+                    {{ form_row(form.activities, {'row_attr': {'class': 'invoice_search_form_row_activities'}}) }}
                 {% endif %}
                 {% if form.tags is defined %}
-                    {{ form_row(form.tags) }}
+                    {{ form_row(form.tags, {'row_attr': {'class': 'invoice_search_form_row_tags'}}) }}
                 {% endif %}
                 {% if form.users is defined %}
-                    {{ form_row(form.users) }}
+                    {{ form_row(form.users, {'row_attr': {'class': 'invoice_search_form_row_users'}}) }}
                 {% endif %}
                 {% if form.exported is defined %}
-                    {{ form_row(form.exported) }}
+                    {{ form_row(form.exported, {'row_attr': {'class': 'invoice_search_form_row_exported'}}) }}
                 {% endif %}
-                {{ form_row(form.template) }}
+                {{ form_row(form.template, {'row_attr': {'class': 'invoice_search_form_row_template'}}) }}
                 {% if form.markAsExported is defined %}
-                    {{ form_row(form.markAsExported) }}
+                    {{ form_row(form.markAsExported, {'row_attr': {'class': 'invoice_search_form_row_markAsExported'}}) }}
                 {% endif %}
             {% endblock %}
             {% block box_footer%}

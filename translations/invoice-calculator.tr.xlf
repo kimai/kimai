@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="translated">Varsayılan: her zaman kaydı için bir kayıt</target>
+        <target state="translated">Öntanımlı: her zaman kaydı için bir kayıt</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target state="translated">Aktivite: her aktivite için bir kayıt</target>
+        <target state="translated">Etkinlik: her etkinlik için bir kayıt</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>

@@ -35,6 +35,7 @@ class ProjectTest extends AbstractEntityTest
         self::assertNull($sut->getStart());
         self::assertNull($sut->getEnd());
         self::assertNull($sut->getComment());
+        self::assertNull($sut->getInvoiceText());
         self::assertTrue($sut->isVisible());
         self::assertTrue($sut->isBillable());
         self::assertNull($sut->getColor());
@@ -85,6 +86,9 @@ class ProjectTest extends AbstractEntityTest
 
         self::assertInstanceOf(Project::class, $sut->setComment('a comment'));
         self::assertEquals('a comment', $sut->getComment());
+
+        $sut->setInvoiceText('very long invoice text comment 12324');
+        self::assertEquals('very long invoice text comment 12324', $sut->getInvoiceText());
 
         self::assertFalse($sut->hasColor());
         $sut->setColor('#fffccc');

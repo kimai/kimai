@@ -301,6 +301,10 @@
         <source>label.description</source>
         <target>Description</target>
       </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target>Invoice text</target>
+      </trans-unit>
       <trans-unit id="ysOvPSq" resname="label.name">
         <source>label.name</source>
         <target>Name</target>

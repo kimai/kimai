@@ -339,7 +339,12 @@ final class ServiceInvoice
 
         foreach ($this->getRenderer() as $renderer) {
             if ($renderer->supports($document)) {
-                $dispatcher->dispatch(new InvoicePreRenderEvent($model, $document, $renderer));
+                $preEvent = new InvoicePreRenderEvent($model, $document, $renderer);
+                $dispatcher->dispatch($preEvent);
+
+                if ($preEvent->isPropagationStopped()) {
+                    continue;
+                }
 
                 if ($this->invoiceRepository->hasInvoice($model->getInvoiceNumber())) {
                     throw new DuplicateInvoiceNumberException($model->getInvoiceNumber());

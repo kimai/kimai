@@ -11,6 +11,7 @@ namespace App\Export\Base;
 
 use App\Activity\ActivityStatisticService;
 use App\Entity\ExportableItem;
+use App\Model\TimesheetCountedStatistic;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
 
@@ -171,6 +172,7 @@ trait RendererTrait
     {
         $summary = [];
         $projects = [];
+        $empty = new TimesheetCountedStatistic();
 
         foreach ($exportItems as $exportItem) {
             $customer = null;
@@ -182,15 +184,14 @@ trait RendererTrait
                 $customer = $project->getCustomer();
                 $customerId = $customer->getId();
                 $projectId = $project->getId();
-                if ($project->hasBudgets()) {
-                    $projects[] = $project;
-                }
+                $projects[] = $project;
             }
 
             $id = $customerId . '_' . $projectId;
 
             if (!isset($summary[$id])) {
                 $summary[$id] = [
+                    'totals' => $empty->jsonSerialize(),
                     'time' => $project->getTimeBudget(),
                     'money' => $project->getBudget(),
                     'time_left' => null,
@@ -208,6 +209,8 @@ trait RendererTrait
         foreach ($allBudgets as $projectId => $statisticModel) {
             $project = $statisticModel->getProject();
             $id = $project->getCustomer()->getId() . '_' . $projectId;
+            $total = $statisticModel->getStatisticTotal();
+            $summary[$id]['totals'] = $total->jsonSerialize();
             if ($statisticModel->hasTimeBudget()) {
                 $summary[$id]['time_left'] = $statisticModel->getTimeBudgetOpenRelative();
                 $summary[$id]['time_left_total'] = $statisticModel->getTimeBudgetOpen();
@@ -254,6 +257,7 @@ trait RendererTrait
     {
         $summary = [];
         $activities = [];
+        $empty = new TimesheetCountedStatistic();
 
         foreach ($exportItems as $exportItem) {
             $customerId = 'none';
@@ -269,9 +273,7 @@ trait RendererTrait
                 continue;
             }
 
-            if ($activity->hasBudgets()) {
-                $activities[] = $activity;
-            }
+            $activities[] = $activity;
 
             if (null !== ($project = $exportItem->getProject())) {
                 $projectId = $project->getId();
@@ -288,6 +290,7 @@ trait RendererTrait
 
             if (!isset($summary[$id][$activityId])) {
                 $summary[$id][$activityId] = [
+                    'totals' => $empty->jsonSerialize(),
                     'time' => $activity->getTimeBudget(),
                     'money' => $activity->getBudget(),
                     'time_left' => null,
@@ -305,6 +308,8 @@ trait RendererTrait
         foreach ($allBudgets as $activityId => $statisticModel) {
             $project = $statisticModel->getActivity()->getProject();
             $id = $project->getCustomer()->getId() . '_' . $project->getId();
+            $total = $statisticModel->getStatisticTotal();
+            $summary[$id][$activityId]['totals'] = $total->jsonSerialize();
             if ($statisticModel->hasTimeBudget()) {
                 $summary[$id][$activityId]['time_left'] = $statisticModel->getTimeBudgetOpenRelative();
                 $summary[$id][$activityId]['time_left_total'] = $statisticModel->getTimeBudgetOpen();

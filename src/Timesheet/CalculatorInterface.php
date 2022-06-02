@@ -22,6 +22,18 @@ interface CalculatorInterface
      * The methods return value will not be evaluated.
      *
      * @param Timesheet $record
+     * @ param array<string, array<mixed, mixed>> $changeset
+     * @return void
      */
-    public function calculate(Timesheet $record);
+    public function calculate(Timesheet $record/*, array $changeset*/);
+
+    /*
+     * FIXME use with Kimai 2.0
+     *
+     * Default priority is 1000 (after all system Calculator were executed).
+     * The higher the priority the later it will be executed.
+     *
+     * @return int
+     */
+    //public function getPriority(): int;
 }

@@ -662,6 +662,14 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
         return $this;
     }
 
+    public function resetRates(): void
+    {
+        $this->rate = 0.00;
+        $this->internalRate = null;
+        $this->hourlyRate = null;
+        $this->fixedRate = null;
+    }
+
     public function isBillable(): bool
     {
         return $this->billable;

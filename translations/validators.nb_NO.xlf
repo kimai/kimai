@@ -78,6 +78,10 @@
         <source>This period is locked. Please choose a later date.</source>
         <target state="needs-translation">Denne perioden er låst. Velg en senere dato.</target>
       </trans-unit>
+      <trans-unit id="ePrqiLN" resname="Duration cannot be zero.">
+        <source>Duration cannot be zero.</source>
+        <target state="needs-translation">Varighet må angis.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

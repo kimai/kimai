@@ -27,7 +27,10 @@
 {% endif %}
 {% set columns = columns|merge({'duration': {'class': 'text-end text-nowrap'}}) %}
 {% if canSeeRate %}
-    {% set columns = columns|merge({'rate': {'class': 'text-end'}}) %}
+    {% set columns = columns|merge({
+        'hourlyRate': {'class': 'text-end d-none'},
+        'rate': {'class': 'text-end'}
+    }) %}
 {% endif %}
 {% set columns = columns|merge({
     'customer': {'class': 'd-none d-lg-table-cell'},
@@ -38,7 +41,7 @@
 }) %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
-        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none', 'orderBy': false}
+        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none mf_' ~	field.name, 'orderBy': false}
     }) %}
 {% endfor %}
 {% if canSeeUsername %}
@@ -75,17 +78,20 @@
         {% set day = null %}
         {% set dayDuration = 0 %}
         {% set dayRate = {} %}
+        {% set dayHourlyRate = 0 %}
         {% set lastEntry = null %}
         {% for entry in entries %}
             {%- set customerCurrency = entry.project.customer.currency -%}
+            {%- set entryHourlyRate = entry.hourlyRate|money(customerCurrency) -%}
             {%- if day is same as(null) -%}
                 {% set day = entry.begin|date_short %}
             {% endif %}
             {%- if showSummary and day is not same as(entry.begin|date_short) -%}
-                {{ _self.summary(day, dayDuration, dayRate, columns, canSeeRate, canSeeUsername, showStartEndTime, tableName, metaColumns) }}
+                {{ _self.summary(day, dayDuration, dayHourlyRate, dayRate, columns, canSeeRate, canSeeUsername, showStartEndTime, tableName, metaColumns) }}
                 {% set day = entry.begin|date_short %}
                 {% set dayDuration = 0 %}
                 {% set dayRate = {} %}
+                {% set dayHourlyRate = 0 %}
             {%- endif -%}
             {% set class = '' %}
             {% if checkOverlappingDesc or checkOverlappingAsc %}
@@ -128,11 +134,14 @@
                 {% endif %}
 
                 {% if canSeeRate %}
+                    <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'hourlyRate') }}">
+                        {{ entryHourlyRate }}
+                    </td>
                     <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'rate') }}">
                         {% if not entry.end or not is_granted('view_rate', entry) %}
                             &dash;
                         {% else %}
-                            {{ entry.rate|money(entry.project.customer.currency) }}
+                            {{ entry.rate|money(customerCurrency) }}
                         {% endif %}
                     </td>
                 {% endif %}
@@ -156,7 +165,7 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'tags') }}">{{ widgets.tag_list(entry.tags) }}</td>
 
                 {% for field in metaColumns %}
-                    <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
                         {{ tables.datatable_meta_column(entry, field) }}
                     </td>
                 {% endfor %}
@@ -183,12 +192,19 @@
                 {% endif %}
                 {% set dayRate = dayRate|merge({(customerCurrency): dayRate[customerCurrency] + entry.rate}) %}
             {%- endif -%}
+            {% if dayHourlyRate is not null %}
+                {% if dayHourlyRate == 0 %}
+                    {% set dayHourlyRate = entryHourlyRate %}
+                {% elseif dayHourlyRate != entryHourlyRate %}
+                    {% set dayHourlyRate = null %}
+                {% endif %}
+            {% endif %}
             {%- set dayDuration = dayDuration + entry.duration -%}
             {% set lastEntry = entry %}
         {% endfor %}
 
         {% if showSummary %}
-            {{ _self.summary(day, dayDuration, dayRate, columns, canSeeRate, canSeeUsername, showStartEndTime, tableName, metaColumns) }}
+            {{ _self.summary(day, dayDuration, dayHourlyRate, dayRate, columns, canSeeRate, canSeeUsername, showStartEndTime, tableName, metaColumns) }}
         {% endif %}
 
         {{ tables.data_table_footer(entries, paginationRoute, multiUpdateForm) }}
@@ -196,7 +212,7 @@
 
 {% endblock %}
 
-{% macro summary(day, duration, dayRates, columns, canSeeRate, canSeeUsername, showStartEndTime, tableName, metaColumns) %}
+{% macro summary(day, duration, dayHourlyRate, dayRates, columns, canSeeRate, canSeeUsername, showStartEndTime, tableName, metaColumns) %}
     {% import "macros/datatables.html.twig" as tables %}
     <tr class="summary info">
         <td></td>
@@ -207,6 +223,11 @@
         {% endif %}
         <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'duration') }}">{{ duration|duration }}</td>
         {% if canSeeRate %}
+            <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'hourlyRate') }}">
+                {% if dayHourlyRate is not null and dayHourlyRate != 0 %}
+                    {{ dayHourlyRate }}
+                {% endif %}
+            </td>
             <td class="text-nowrap {{ tables.data_table_column_class(tableName, columns, 'rate') }}">
                 {% for currency, rate in dayRates %}
                     {{ rate|money(currency) }}

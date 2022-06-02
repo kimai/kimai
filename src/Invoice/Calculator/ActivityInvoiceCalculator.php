@@ -33,7 +33,11 @@ class ActivityInvoiceCalculator extends AbstractSumInvoiceCalculator implements 
             return;
         }
 
-        $invoiceItem->setDescription($entry->getActivity()->getName());
+        if ($entry->getActivity()->getInvoiceText() !== null) {
+            $invoiceItem->setDescription($entry->getActivity()->getInvoiceText());
+        } else {
+            $invoiceItem->setDescription($entry->getActivity()->getName());
+        }
     }
 
     /**

@@ -15,7 +15,7 @@
 } %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
-        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none', 'orderBy': false}
+        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none mf_' ~ field.name, 'orderBy': false}
     }) %}
 {% endfor %}
 {% set columns = columns|merge({

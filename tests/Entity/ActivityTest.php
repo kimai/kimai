@@ -31,6 +31,7 @@ class ActivityTest extends AbstractEntityTest
         $this->assertNull($sut->getProject());
         $this->assertNull($sut->getName());
         $this->assertNull($sut->getComment());
+        $this->assertNull($sut->getInvoiceText());
         $this->assertTrue($sut->isVisible());
         $this->assertTrue($sut->isBillable());
         $this->assertTrue($sut->isGlobal());
@@ -65,6 +66,9 @@ class ActivityTest extends AbstractEntityTest
 
         $this->assertInstanceOf(Activity::class, $sut->setComment('hello world'));
         $this->assertEquals('hello world', $sut->getComment());
+
+        $sut->setInvoiceText('very long invoice text comment 12324');
+        self::assertEquals('very long invoice text comment 12324', $sut->getInvoiceText());
 
         self::assertFalse($sut->hasColor());
         $sut->setColor('#fffccc');
