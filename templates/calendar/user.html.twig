@@ -305,6 +305,7 @@
                     let source = entry.parentElement;
                     let plainData = entry.dataset.entry;
                     let data = JSON.parse(plainData);
+                    data.user = {{ user.id }};
                     let urlReplacer = JSON.parse(source.dataset.routeReplacer);
                     let apiUrl = source.dataset.route;
 
