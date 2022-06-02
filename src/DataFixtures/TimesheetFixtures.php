@@ -10,6 +10,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Activity;
+use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
@@ -35,17 +36,15 @@ use Faker\Factory;
  */
 class TimesheetFixtures extends Fixture implements FixtureGroupInterface
 {
-    public const MIN_TIMESHEETS_PER_USER = 50;
-    public const MAX_TIMESHEETS_PER_USER = 500;
-    public const MAX_TIMESHEETS_TOTAL = 200;
+    public const MIN_TIMESHEETS_PER_USER = 100;
+    public const MAX_TIMESHEETS_PER_USER = 1000;
+    public const MAX_TIMESHEETS_TOTAL = 10000;
     public const MIN_MINUTES_PER_ENTRY = 15;
     public const MAX_MINUTES_PER_ENTRY = 840; // 14h
     public const MAX_DESCRIPTION_LENGTH = 200;
 
     public const ADD_TAGS_MAX_ENTRIES = 1000;
     public const MAX_TAG_PER_ENTRY = 3;
-
-    public const BATCH_SIZE = 100;
 
     public static function getGroups(): array
     {
@@ -60,23 +59,24 @@ class TimesheetFixtures extends Fixture implements FixtureGroupInterface
     /**
      * {@inheritdoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
+        $results = $this->findRandom($manager, Customer::class, 50);
+
         $allUser = $this->getAllUsers($manager);
-        $activities = $this->getAllActivities($manager);
-        $projects = $this->getAllProjects($manager);
-        $allTags = $this->getAllTags($manager);
 
         $faker = Factory::create();
-
-        // by using array_pop we make sure that at least one activity has NO entry!
-        array_pop($activities);
 
         $all = 0;
 
         foreach ($allUser as $user) {
+            $user = $manager->find(User::class, $user->getId());
             // random amount of timesheet entries for every user
             $timesheetForUser = rand(self::MIN_TIMESHEETS_PER_USER, self::MAX_TIMESHEETS_PER_USER);
+
+            $activities = $this->getAllActivities($manager);
+            $projects = $this->getAllProjects($manager);
+
             for ($i = 1; $i <= $timesheetForUser; $i++) {
                 if ($all > self::MAX_TIMESHEETS_TOTAL && $i > self::MIN_TIMESHEETS_PER_USER) {
                     break;
@@ -96,19 +96,13 @@ class TimesheetFixtures extends Fixture implements FixtureGroupInterface
                     $description,
                     true
                 );
-
                 $all++;
 
                 $manager->persist($entry);
-
-                if ($all % self::BATCH_SIZE === 0) {
-                    $manager->flush();
-                    $manager->clear(Timesheet::class);
-                }
             }
 
-            // create active recordings for test user
-            if (rand(0, 10) >= 5) {
+            // create active records
+            if ($all % 3 === 0) {
                 $entry = $this->createTimesheetEntry(
                     $user,
                     $activities[array_rand($activities)],
@@ -122,11 +116,11 @@ class TimesheetFixtures extends Fixture implements FixtureGroupInterface
             }
 
             $manager->flush();
-            $manager->clear(Timesheet::class);
+            $manager->clear();
         }
-        $manager->flush();
 
-        $entries = $manager->getRepository(Timesheet::class)->findBy([], [], min($all, self::ADD_TAGS_MAX_ENTRIES));
+        $allTags = $this->getAllTags($manager);
+        $entries = $this->findRandom($manager, Timesheet::class, min($all, self::ADD_TAGS_MAX_ENTRIES));
         foreach ($entries as $temp) {
             $tagAmount = rand(0, self::MAX_TAG_PER_ENTRY);
             for ($iTag = 0; $iTag < $tagAmount; $iTag++) {
@@ -136,10 +130,34 @@ class TimesheetFixtures extends Fixture implements FixtureGroupInterface
                 }
             }
         }
-        $manager->flush();
 
-        $manager->clear(Timesheet::class);
-        $manager->clear(Tag::class);
+        $manager->flush();
+        $manager->clear();
+    }
+
+    private function findRandom(ObjectManager $manager, string $class, int $amount)
+    {
+        $qb = $manager->getRepository($class)->createQueryBuilder('entity');
+        $limits = $qb
+            ->select('MIN(entity.id)', 'MAX(entity.id)')
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        $ids = [];
+        for ($i = 0; $i < $amount; $i++) {
+            $rand = rand($limits[1], $limits[2]);
+            if (!in_array($rand, $ids)) {
+                $ids[] = $rand;
+            }
+        }
+
+        $qb = $manager->getRepository($class)->createQueryBuilder('entity');
+
+        return $qb
+            ->where($qb->expr()->in('entity.id', $ids))
+            ->setMaxResults($amount)
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -148,14 +166,7 @@ class TimesheetFixtures extends Fixture implements FixtureGroupInterface
      */
     protected function getAllTags(ObjectManager $manager): array
     {
-        $all = [];
-        /** @var Tag[] $entries */
-        $entries = $manager->getRepository(Tag::class)->findAll();
-        foreach ($entries as $temp) {
-            $all[$temp->getId()] = $temp;
-        }
-
-        return $all;
+        return $this->findRandom($manager, Tag::class, 50);
     }
 
     /**
@@ -180,14 +191,7 @@ class TimesheetFixtures extends Fixture implements FixtureGroupInterface
      */
     protected function getAllProjects(ObjectManager $manager): array
     {
-        $all = [];
-        /** @var Project[] $entries */
-        $entries = $manager->getRepository(Project::class)->findAll();
-        foreach ($entries as $temp) {
-            $all[$temp->getId()] = $temp;
-        }
-
-        return $all;
+        return $this->findRandom($manager, Project::class, 50);
     }
 
     /**
@@ -196,14 +200,7 @@ class TimesheetFixtures extends Fixture implements FixtureGroupInterface
      */
     protected function getAllActivities(ObjectManager $manager): array
     {
-        $all = [];
-        /** @var Activity[] $entries */
-        $entries = $manager->getRepository(Activity::class)->findAll();
-        foreach ($entries as $temp) {
-            $all[$temp->getId()] = $temp;
-        }
-
-        return $all;
+        return $this->findRandom($manager, Activity::class, 50);
     }
 
     private function createTimesheetEntry(User $user, Activity $activity, Project $project, ?string $description, bool $setEndDate)

@@ -91,8 +91,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
         }
 
         $manager->flush();
-        $manager->clear(User::class);
-        $manager->clear(UserPreference::class);
+        $manager->clear();
     }
 
     /**
@@ -163,8 +162,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
         }
 
         $manager->flush();
-        $manager->clear(User::class);
-        $manager->clear(UserPreference::class);
+        $manager->clear();
     }
 
     /**

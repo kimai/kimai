@@ -69,7 +69,7 @@ class CustomerFixtures extends Fixture
             }
 
             $manager->flush();
-            $manager->clear(Activity::class);
+            $manager->clear();
         }
 
         $amountGlobalActivities = rand(self::MIN_GLOBAL_ACTIVITIES, self::MAX_GLOBAL_ACTIVITIES);
@@ -80,17 +80,10 @@ class CustomerFixtures extends Fixture
         }
 
         $manager->flush();
-        $manager->clear(Activity::class);
-        $manager->clear(Project::class);
-        $manager->clear(Customer::class);
+        $manager->clear();
     }
 
-    /**
-     * @param Generator $faker
-     * @param bool $visible
-     * @return Customer
-     */
-    private function createCustomer(Generator $faker, $visible)
+    private function createCustomer(Generator $faker, bool $visible): Customer
     {
         $entry = new Customer();
         $entry
@@ -117,13 +110,7 @@ class CustomerFixtures extends Fixture
         return $entry;
     }
 
-    /**
-     * @param Generator $faker
-     * @param Customer $customer
-     * @param bool $visible
-     * @return Project
-     */
-    private function createProject(Generator $faker, Customer $customer, $visible)
+    private function createProject(Generator $faker, Customer $customer, bool $visible): Project
     {
         $entry = new Project();
 
@@ -149,13 +136,7 @@ class CustomerFixtures extends Fixture
         return $entry;
     }
 
-    /**
-     * @param Generator $faker
-     * @param Project|null $project
-     * @param bool $visible
-     * @return Activity
-     */
-    private function createActivity(Generator $faker, ?Project $project, $visible)
+    private function createActivity(Generator $faker, ?Project $project, bool $visible): Activity
     {
         /** @var string $name */
         $name = $faker->words(2, true);

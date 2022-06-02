@@ -28,8 +28,10 @@ class AllFixtures extends Fixture implements DependentFixtureInterface
         return [
             UserFixtures::class,
             CustomerFixtures::class,
+            TeamFixtures::class,
             TagFixtures::class,
             TimesheetFixtures::class,
+            InvoiceFixtures::class,
         ];
     }
 

@@ -119,6 +119,6 @@ class TeamFixtures extends Fixture
         }
 
         $manager->flush();
-        $manager->clear(Team::class);
+        $manager->clear();
     }
 }

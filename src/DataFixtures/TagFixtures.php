@@ -70,10 +70,10 @@ class TagFixtures extends Fixture
 
             if ($i % self::BATCH_SIZE === 0) {
                 $manager->flush();
-                $manager->clear(Tag::class);
+                $manager->clear();
             }
         }
         $manager->flush();
-        $manager->clear(Tag::class);
+        $manager->clear();
     }
 }
