@@ -14,13 +14,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class ActivityLoader implements LoaderInterface
 {
-    private $entityManager;
-    private $fullyHydrated;
-
-    public function __construct(EntityManagerInterface $entityManager, bool $fullyHydrated = false)
+    public function __construct(private EntityManagerInterface $entityManager, private bool $fullyHydrated = false)
     {
-        $this->entityManager = $entityManager;
-        $this->fullyHydrated = $fullyHydrated;
     }
 
     /**

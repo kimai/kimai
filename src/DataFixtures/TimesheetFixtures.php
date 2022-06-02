@@ -146,7 +146,7 @@ class TimesheetFixtures extends Fixture implements FixtureGroupInterface
         $ids = [];
         for ($i = 0; $i < $amount; $i++) {
             $rand = rand($limits[1], $limits[2]);
-            if (!in_array($rand, $ids)) {
+            if (!\in_array($rand, $ids)) {
                 $ids[] = $rand;
             }
         }

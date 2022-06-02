@@ -20,21 +20,16 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 final class TimesheetIdLoader implements LoaderInterface
 {
-    private $entityManager;
-    private $fullyHydrated;
-
-    public function __construct(EntityManagerInterface $entityManager, bool $fullyHydrated = false)
+    public function __construct(private EntityManagerInterface $entityManager, private bool $fullyHydrated = false)
     {
-        $this->entityManager = $entityManager;
-        $this->fullyHydrated = $fullyHydrated;
     }
 
     /**
-     * @param int[] $ids
+     * @param int[] $results
      */
-    public function loadResults(array $ids): void
+    public function loadResults(array $results): void
     {
-        if (empty($ids)) {
+        if (empty($results)) {
             return;
         }
 
@@ -44,7 +39,7 @@ final class TimesheetIdLoader implements LoaderInterface
         $timesheets = $qb->select('PARTIAL t.{id}', 'project')
             ->from(Timesheet::class, 't')
             ->leftJoin('t.project', 'project')
-            ->andWhere($qb->expr()->in('t.id', $ids))
+            ->andWhere($qb->expr()->in('t.id', $results))
             ->getQuery()
             ->execute();
 
@@ -88,7 +83,7 @@ final class TimesheetIdLoader implements LoaderInterface
         $qb->select('PARTIAL t.{id}', 'activity')
             ->from(Timesheet::class, 't')
             ->leftJoin('t.activity', 'activity')
-            ->andWhere($qb->expr()->in('t.id', $ids))
+            ->andWhere($qb->expr()->in('t.id', $results))
             ->getQuery()
             ->execute();
 
@@ -110,7 +105,7 @@ final class TimesheetIdLoader implements LoaderInterface
         $qb->select('PARTIAL t.{id}', 'user')
             ->from(Timesheet::class, 't')
             ->leftJoin('t.user', 'user')
-            ->andWhere($qb->expr()->in('t.id', $ids))
+            ->andWhere($qb->expr()->in('t.id', $results))
             ->getQuery()
             ->execute();
 
@@ -118,7 +113,7 @@ final class TimesheetIdLoader implements LoaderInterface
         $qb->select('PARTIAL t.{id}', 'tags')
             ->from(Timesheet::class, 't')
             ->leftJoin('t.tags', 'tags')
-            ->andWhere($qb->expr()->in('t.id', $ids))
+            ->andWhere($qb->expr()->in('t.id', $results))
             ->getQuery()
             ->execute();
 
@@ -126,7 +121,7 @@ final class TimesheetIdLoader implements LoaderInterface
         $qb->select('PARTIAL t.{id}', 'meta')
             ->from(Timesheet::class, 't')
             ->leftJoin('t.meta', 'meta')
-            ->andWhere($qb->expr()->in('t.id', $ids))
+            ->andWhere($qb->expr()->in('t.id', $results))
             ->getQuery()
             ->execute();
     }

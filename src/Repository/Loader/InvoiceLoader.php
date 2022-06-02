@@ -14,21 +14,18 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class InvoiceLoader implements LoaderInterface
 {
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     /**
-     * @param Invoice[] $invoices
+     * @param Invoice[] $results
      */
-    public function loadResults(array $invoices): void
+    public function loadResults(array $results): void
     {
         $ids = array_map(function (Invoice $invoice) {
             return $invoice->getId();
-        }, $invoices);
+        }, $results);
 
         $loader = new InvoiceIdLoader($this->entityManager);
         $loader->loadResults($ids);

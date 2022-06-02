@@ -14,23 +14,18 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class UserLoader implements LoaderInterface
 {
-    private $entityManager;
-    private $fullyHydrated;
-
-    public function __construct(EntityManagerInterface $entityManager, bool $fullyHydrated = false)
+    public function __construct(private EntityManagerInterface $entityManager, private bool $fullyHydrated = false)
     {
-        $this->entityManager = $entityManager;
-        $this->fullyHydrated = $fullyHydrated;
     }
 
     /**
-     * @param User[] $users
+     * @param User[] $results
      */
-    public function loadResults(array $users): void
+    public function loadResults(array $results): void
     {
         $ids = array_map(function (User $user) {
             return $user->getId();
-        }, $users);
+        }, $results);
 
         $loader = new UserIdLoader($this->entityManager, $this->fullyHydrated);
         $loader->loadResults($ids);

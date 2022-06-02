@@ -14,21 +14,18 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class TeamLoader implements LoaderInterface
 {
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     /**
-     * @param Team[] $teams
+     * @param Team[] $results
      */
-    public function loadResults(array $teams): void
+    public function loadResults(array $results): void
     {
         $ids = array_map(function (Team $team) {
             return $team->getId();
-        }, $teams);
+        }, $results);
 
         $loader = new TeamIdLoader($this->entityManager);
         $loader->loadResults($ids);

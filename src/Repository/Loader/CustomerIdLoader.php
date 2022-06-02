@@ -18,21 +18,16 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 final class CustomerIdLoader implements LoaderInterface
 {
-    private $entityManager;
-    private $fullyHydrated;
-
-    public function __construct(EntityManagerInterface $entityManager, bool $fullyHydrated = false)
+    public function __construct(private EntityManagerInterface $entityManager, private bool $fullyHydrated = false)
     {
-        $this->entityManager = $entityManager;
-        $this->fullyHydrated = $fullyHydrated;
     }
 
     /**
-     * @param int[] $ids
+     * @param int[] $results
      */
-    public function loadResults(array $ids): void
+    public function loadResults(array $results): void
     {
-        if (empty($ids)) {
+        if (empty($results)) {
             return;
         }
 
@@ -43,7 +38,7 @@ final class CustomerIdLoader implements LoaderInterface
         $customers = $qb->select('PARTIAL c.{id}', 'meta')
             ->from(Customer::class, 'c')
             ->leftJoin('c.meta', 'meta')
-            ->andWhere($qb->expr()->in('c.id', $ids))
+            ->andWhere($qb->expr()->in('c.id', $results))
             ->getQuery()
             ->execute();
 
@@ -51,7 +46,7 @@ final class CustomerIdLoader implements LoaderInterface
         $qb->select('PARTIAL c.{id}', 'teams')
             ->from(Customer::class, 'c')
             ->leftJoin('c.teams', 'teams')
-            ->andWhere($qb->expr()->in('c.id', $ids))
+            ->andWhere($qb->expr()->in('c.id', $results))
             ->getQuery()
             ->execute();
 

@@ -14,23 +14,18 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class TimesheetLoader implements LoaderInterface
 {
-    private $entityManager;
-    private $fullyHydrated;
-
-    public function __construct(EntityManagerInterface $entityManager, bool $fullyHydrated = false)
+    public function __construct(private EntityManagerInterface $entityManager, private bool $fullyHydrated = false)
     {
-        $this->entityManager = $entityManager;
-        $this->fullyHydrated = $fullyHydrated;
     }
 
     /**
-     * @param Timesheet[] $timesheets
+     * @param Timesheet[] $results
      */
-    public function loadResults(array $timesheets): void
+    public function loadResults(array $results): void
     {
         $ids = array_map(function (Timesheet $timesheet) {
             return $timesheet->getId();
-        }, $timesheets);
+        }, $results);
 
         $loader = new TimesheetIdLoader($this->entityManager, $this->fullyHydrated);
         $loader->loadResults($ids);

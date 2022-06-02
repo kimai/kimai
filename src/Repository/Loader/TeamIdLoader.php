@@ -17,19 +17,16 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 final class TeamIdLoader implements LoaderInterface
 {
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     /**
-     * @param int[] $teamIds
+     * @param int[] $results
      */
-    public function loadResults(array $teamIds): void
+    public function loadResults(array $results): void
     {
-        if (empty($teamIds)) {
+        if (empty($results)) {
             return;
         }
 
@@ -40,7 +37,7 @@ final class TeamIdLoader implements LoaderInterface
             ->from(Team::class, 'team')
             ->leftJoin('team.members', 'members')
             ->leftJoin('members.user', 'user')
-            ->andWhere($qb->expr()->in('team.id', $teamIds))
+            ->andWhere($qb->expr()->in('team.id', $results))
             ->getQuery()
             ->execute();
 
@@ -48,7 +45,7 @@ final class TeamIdLoader implements LoaderInterface
         $qb->select('PARTIAL team.{id}', 'projects')
             ->from(Team::class, 'team')
             ->leftJoin('team.projects', 'projects')
-            ->andWhere($qb->expr()->in('team.id', $teamIds))
+            ->andWhere($qb->expr()->in('team.id', $results))
             ->getQuery()
             ->execute();
     }

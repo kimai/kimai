@@ -20,21 +20,16 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 final class ActivityIdLoader implements LoaderInterface
 {
-    private $entityManager;
-    private $fullyHydrated;
-
-    public function __construct(EntityManagerInterface $entityManager, bool $fullyHydrated = false)
+    public function __construct(private EntityManagerInterface $entityManager, private bool $fullyHydrated = false)
     {
-        $this->entityManager = $entityManager;
-        $this->fullyHydrated = $fullyHydrated;
     }
 
     /**
-     * @param int[] $ids
+     * @param int[] $results
      */
-    public function loadResults(array $ids): void
+    public function loadResults(array $results): void
     {
-        if (empty($ids)) {
+        if (empty($results)) {
             return;
         }
 
@@ -46,7 +41,7 @@ final class ActivityIdLoader implements LoaderInterface
             ->from(Activity::class, 'a')
             ->leftJoin('a.project', 'project')
             ->andWhere($qb->expr()->isNotNull('a.project'))
-            ->andWhere($qb->expr()->in('a.id', $ids))
+            ->andWhere($qb->expr()->in('a.id', $results))
             ->getQuery()
             ->execute();
 
@@ -54,7 +49,7 @@ final class ActivityIdLoader implements LoaderInterface
         $qb->select('PARTIAL a.{id}', 'meta')
             ->from(Activity::class, 'a')
             ->leftJoin('a.meta', 'meta')
-            ->andWhere($qb->expr()->in('a.id', $ids))
+            ->andWhere($qb->expr()->in('a.id', $results))
             ->getQuery()
             ->execute();
 
@@ -105,7 +100,7 @@ final class ActivityIdLoader implements LoaderInterface
         $qb->select('PARTIAL a.{id}', 'teams')
             ->from(Activity::class, 'a')
             ->leftJoin('a.teams', 'teams')
-            ->andWhere($qb->expr()->in('a.id', $ids))
+            ->andWhere($qb->expr()->in('a.id', $results))
             ->getQuery()
             ->execute();
 

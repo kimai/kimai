@@ -17,22 +17,16 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 final class InvoiceIdLoader implements LoaderInterface
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     /**
-     * @param int[] $ids
+     * @param int[] $results
      */
-    public function loadResults(array $ids): void
+    public function loadResults(array $results): void
     {
-        if (empty($ids)) {
+        if (empty($results)) {
             return;
         }
 
@@ -56,7 +50,7 @@ final class InvoiceIdLoader implements LoaderInterface
         $qb->select('PARTIAL i.{id}', 'meta')
             ->from(Invoice::class, 'i')
             ->leftJoin('i.meta', 'meta')
-            ->andWhere($qb->expr()->in('i.id', $ids))
+            ->andWhere($qb->expr()->in('i.id', $results))
             ->getQuery()
             ->execute();
     }

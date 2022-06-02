@@ -18,21 +18,16 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 final class UserIdLoader implements LoaderInterface
 {
-    private $entityManager;
-    private $fullyHydrated;
-
-    public function __construct(EntityManagerInterface $entityManager, bool $fullyHydrated = false)
+    public function __construct(private EntityManagerInterface $entityManager, private bool $fullyHydrated = false)
     {
-        $this->entityManager = $entityManager;
-        $this->fullyHydrated = $fullyHydrated;
     }
 
     /**
-     * @param int[] $ids
+     * @param int[] $results
      */
-    public function loadResults(array $ids): void
+    public function loadResults(array $results): void
     {
-        if (empty($ids)) {
+        if (empty($results)) {
             return;
         }
 
@@ -44,7 +39,7 @@ final class UserIdLoader implements LoaderInterface
             ->from(User::class, 'user')
             ->leftJoin('user.memberships', 'memberships')
             ->leftJoin('memberships.team', 'team')
-            ->andWhere($qb->expr()->in('user.id', $ids))
+            ->andWhere($qb->expr()->in('user.id', $results))
             ->getQuery()
             ->execute();
 
@@ -52,7 +47,7 @@ final class UserIdLoader implements LoaderInterface
         $qb->select('PARTIAL user.{id}', 'preferences')
             ->from(User::class, 'user')
             ->leftJoin('user.preferences', 'preferences')
-            ->andWhere($qb->expr()->in('user.id', $ids))
+            ->andWhere($qb->expr()->in('user.id', $results))
             ->getQuery()
             ->execute();
 

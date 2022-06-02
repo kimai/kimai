@@ -19,21 +19,16 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 final class ProjectIdLoader implements LoaderInterface
 {
-    private $entityManager;
-    private $fullyHydrated;
-
-    public function __construct(EntityManagerInterface $entityManager, bool $fullyHydrated = false)
+    public function __construct(private EntityManagerInterface $entityManager, private bool $fullyHydrated = false)
     {
-        $this->entityManager = $entityManager;
-        $this->fullyHydrated = $fullyHydrated;
     }
 
     /**
-     * @param int[] $ids
+     * @param int[] $results
      */
-    public function loadResults(array $ids): void
+    public function loadResults(array $results): void
     {
-        if (empty($ids)) {
+        if (empty($results)) {
             return;
         }
 
@@ -44,7 +39,7 @@ final class ProjectIdLoader implements LoaderInterface
         $projects = $qb->select('PARTIAL project.{id}', 'customer')
             ->from(Project::class, 'project')
             ->leftJoin('project.customer', 'customer')
-            ->andWhere($qb->expr()->in('project.id', $ids))
+            ->andWhere($qb->expr()->in('project.id', $results))
             ->getQuery()
             ->execute();
 
@@ -52,7 +47,7 @@ final class ProjectIdLoader implements LoaderInterface
         $qb->select('PARTIAL project.{id}', 'meta')
             ->from(Project::class, 'project')
             ->leftJoin('project.meta', 'meta')
-            ->andWhere($qb->expr()->in('project.id', $ids))
+            ->andWhere($qb->expr()->in('project.id', $results))
             ->getQuery()
             ->execute();
 
@@ -60,7 +55,7 @@ final class ProjectIdLoader implements LoaderInterface
         $qb->select('PARTIAL project.{id}', 'teams')
             ->from(Project::class, 'project')
             ->leftJoin('project.teams', 'teams')
-            ->andWhere($qb->expr()->in('project.id', $ids))
+            ->andWhere($qb->expr()->in('project.id', $results))
             ->getQuery()
             ->execute();
 
