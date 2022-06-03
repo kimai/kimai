@@ -970,7 +970,7 @@
             -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
-        <target>Rechnungsvorlagen</target>
+        <target>Vorlagen</target>
       </trans-unit>
       <trans-unit id="SR2r1Cs" resname="invoices">
         <source>invoices</source>
