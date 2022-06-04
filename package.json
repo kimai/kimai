@@ -33,7 +33,6 @@
     "gridstack": "^5.0.0",
     "jquery": "<3.6",
     "jquery-ui": "^1.12",
-    "js-cookie": "^2.2",
     "moment": "^2.29",
     "node-sass": "^7.0",
     "sass-loader": "^11.0",

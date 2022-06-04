@@ -377,10 +377,6 @@
         <source>modal.columns.title</source>
         <target>Zutabe bista aldatu</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>Gorde ondoren egiaztatu gabeko zutabeak ezkutatu egingo dira eta ezarpen hau arakatzailearen cookie batean gordeko da. Zure cookieak ezabatzen badituzu, ezarpenak alderantzikatu egingo dira.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Tarifa finkoa</target>

@@ -424,10 +424,6 @@
         <source>modal.columns.title</source>
         <target state="translated">Muuta sarakkeen näkyvyyttä</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target state="translated">Tallentamisen jälkeen merkitsemättömät sarakkeet piilotetaan ja nämä asetukset tallennetaan selaimen evästeeseen. Jos poistat evästeesi, asetukset palautuvat alkuperäisiksi.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target state="translated">Kiinteä korko</target>

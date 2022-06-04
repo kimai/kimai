@@ -365,10 +365,6 @@
         <source>modal.columns.title</source>
         <target>Cambiar visibilidad de columna</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>Las columnas sin seleccionar se ocultarán al guardar la configuración, la cual se guardará en una «cookie» del navegador. Si elimina las «cookies», se restablecerá a la configuración predeterminada.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Tarifa fija</target>

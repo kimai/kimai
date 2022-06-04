@@ -372,10 +372,6 @@
         <source>modal.columns.title</source>
         <target>Ændr kolonne synlighed</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>Når der gemmes, vil alle umarkerede kolonner blive skjult, og denne indstilling vil blive gemt i en cookie. Hvis du sletter dine cookies, vil denne indstilling blive ændret tilbage.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Fast sats</target>

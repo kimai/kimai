@@ -385,10 +385,6 @@
         <source>modal.columns.title</source>
         <target>שינוי עמודות מוצגות</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>לאחר השמירה, כל העמודות הלא מסומנות תוסתרנה. הגדרה זו תישמר בעוגיה בדפדפן. מחיקת עוגיות מהדפדפן שלך תבטל את ההגדרה הזו.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>תעריף קבוע</target>

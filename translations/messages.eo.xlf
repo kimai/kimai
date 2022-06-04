@@ -396,10 +396,6 @@
         <source>modal.columns.title</source>
         <target>Ŝanĝi videblecon de kolumnoj</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>Post la koservado, la neelektitaj kolumnoj estos kaŝitaj kaj tiu ĉi agordo estos konservita en retumila kuketo. Se vi forigos viajn kuketojn, la agordoj estos restarigitaj.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Fiksita kotizo</target>

@@ -320,10 +320,6 @@
         <source>modal.columns.title</source>
         <target>列の公開状態を変更する</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>保存すると、チェックされていない列が非表示になります。この設定はブラウザの Cookie に保存されます。Cookie を削除すると、設定は初期化されます。</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>固定給</target>

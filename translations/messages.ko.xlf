@@ -332,10 +332,6 @@
         <source>modal.columns.title</source>
         <target state="translated">열 표시 변경하기</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target state="translated">확인하지 않은 열을 저장하면 브라우저 쿠키에 저장됩니다. 쿠키를 삭제하면 설정이 취소됩니다.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target state="translated">고정값</target>

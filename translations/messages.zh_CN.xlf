@@ -372,10 +372,6 @@
         <source>modal.columns.title</source>
         <target>改变列的可见性</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>保存后，未选中的列将被隐藏，并且此设置将存储在浏览器缓冲内容中。 如果删除缓冲内容，则该设置将被撤消。</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>固定时薪</target>

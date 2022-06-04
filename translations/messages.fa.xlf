@@ -541,11 +541,6 @@
         <source>label.fixedRate</source>
         <target>نرخ ثابت</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>ذخیره ستون های علامت گذاری نشده مخفی خواهد بود و این تنظیمات در کوکی مرورگر ذخیره می‌شود.
-اگر کوکی ها را پاک کنید تنظیمات به حالت اولیه بازمیگردند.</target>
-      </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry">
         <source>profile.first_entry</source>
         <target>کار میکند از تاریخ</target>

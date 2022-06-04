@@ -473,10 +473,6 @@
         <source>modal.columns.title</source>
         <target>Promijeni vidljivost stupaca</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>Nakon spremanja neoznačeni stupci bit će skriveni, a ta će postavka biti spremljena u kolačić preglednika. Ako izbrišeš kolačiće, postavke će se poništiti.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Fiksna cijena</target>

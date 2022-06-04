@@ -461,10 +461,6 @@
         <source>modal.columns.title</source>
         <target>Αλλαγή ορατότητας στηλών</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>Κατά την αποθήκευση, οι μη επιλεγμένες στήλες θα αποκρυφτούν, αυτή ή ρύθμιση θα αποθηκευτεί σε ένα cookie του προγράμματος περιήγησης. Εάν διαγράψετε τα cookies, οι ρυθμίσεις θα επαναφερθούν στις προεπιλεγμένες.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Σταθερή χρέωση</target>

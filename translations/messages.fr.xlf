@@ -317,10 +317,6 @@
         <source>modal.columns.title</source>
         <target>Modifier la visibilité des colonnes</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>Lors de l'enregistrement, les colonnes non cochées seront masquées. Ces paramètres seront stockés dans un cookie du navigateur. Si vous supprimez vos cookies, ils seront réinitialisés.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Taux fixe</target>

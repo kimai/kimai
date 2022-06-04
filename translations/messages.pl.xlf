@@ -384,10 +384,6 @@
         <source>modal.columns.title</source>
         <target>Ukryj - pokaż kolumny</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>Po zapisaniu kolumny nie zaznaczone będą ukryte a to ustawienie przechowywane w cookie przeglądarki. Po usunięciu cookie ustawienia będa przywrócone do domyślnych.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Stała stawka</target>

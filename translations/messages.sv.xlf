@@ -316,10 +316,6 @@
         <source>modal.columns.title</source>
         <target state="translated">Ändra kolumnns synlighet</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target state="translated">När du sparar de kolumner som inte är markerade kommer de att döljas och den här inställningen lagras i en webbläsarkaka. Om du tar bort dina cookies kommer inställningarna att återställas.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target state="translated">Fast pris</target>

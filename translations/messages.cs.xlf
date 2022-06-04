@@ -336,10 +336,6 @@
         <source>modal.columns.title</source>
         <target>Změnit viditelnost sloubce</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>Po uložení budou nezaškrtnuté sloupce skryté a toto nastavení bude uloženo do souboru cookie prohlížeče. Pokud cookies smažete, nastavení se zruší.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Fixní sazba</target>

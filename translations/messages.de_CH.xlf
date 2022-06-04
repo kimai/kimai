@@ -617,10 +617,6 @@
         <source>label.fixedRate</source>
         <target>Festpreis</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>Beim Speichern werden die nicht ausgewählten Spalten ausgeblendet und diese Einstellungen in einem Browser Cookie hinterlegt. Sollten Sie Ihre Cookies löschen, werden die Einstellungen rückgängig gemacht.</target>
-      </trans-unit>
       <trans-unit id="UbnqJLn" resname="modal.columns.title">
         <source>modal.columns.title</source>
         <target>Ändere Spalten-Sichtbarkeit</target>

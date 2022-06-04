@@ -684,10 +684,6 @@
         <source>timesheet.title</source>
         <target>Min timeseddel</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>Ved lagring vil kolonner som ikke er valgt bli skjult og innstillingen vil bli lagret i en nettleserkake. Hvis du sletter kakene dine vil innstillingene bli endret tilbake.</target>
-      </trans-unit>
       <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>
         <target>Hver tidsoppføring får samme verdi, uavhengig av varighet</target>

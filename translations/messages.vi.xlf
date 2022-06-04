@@ -408,10 +408,6 @@
         <source>modal.columns.title</source>
         <target>Thay đổi mức độ hiển thị của cột</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>Khi lưu các cột chưa được kiểm tra sẽ bị ẩn và cài đặt này sẽ được lưu trong cookie trình duyệt. Nếu bạn xóa cookie, các cài đặt sẽ trở về mặc định.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Tỷ lệ cố định</target>

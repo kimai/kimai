@@ -265,10 +265,6 @@
         <source>modal.columns.title</source>
         <target>Изменить видимость столбцов</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>При сохранении не выбранные столбцы будут скрыты и данные установки будет сохранены в браузере „cookie“. При удалении cookies, Ваши установки изменятся.</target>
-      </trans-unit>
       <!--
               User profile
             -->

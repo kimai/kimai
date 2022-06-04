@@ -1,5 +1,6 @@
 
 {% macro data_table_column_modal(name, columns) %}
+{% set visibility = initialize_datatable(app.user, name, columns) %}
 <div class="modal modal-blur fade" data-bs-backdrop="static" id="modal_{{ name }}" data-column-visibility="{{ name }}" tabindex="-1" role="dialog" aria-labelledby="data_table_modal_label">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -8,7 +9,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'action.close'|trans }}"></button>
             </div>
             <div class="modal-body">
-                <form name="{{ name }}_visibility" class="mb-3">
+                <form name="{{ name }}_visibility" method="post" action="{{ path('bookmark_save_datatable') }}" class="mb-3">
                     {%- for title, headerOptions in columns -%}
                         {% if not headerOptions is iterable %}
                             {% set headerOptions = {'class': headerOptions} %}
@@ -20,17 +21,18 @@
                         {% endif %}
                         {% if 'alwaysVisible' not in headerOptions.class %}
                             <label class="form-check">
-                                <input class="form-check-input" type="checkbox" id="column_{{ title }}" name="{{ title }}"{% if is_visible_column(name, title, columns) %} checked="checked"{% endif %}>
+                                <input class="form-check-input" type="checkbox" id="column_{{ title }}" name="{{ title }}">
                                 <span class="form-check-label">{{ headerTitle }}</span>
                             </label>
                         {% endif %}
                     {% endfor %}
+                    <input type="hidden" name="datatable_name" value="{{ name }}" />
+                    <input type="hidden" name="datatable_token" value="{{ csrf_token(constant('\\App\\Controller\\BookmarkController::DATATABLE_TOKEN')) }}" />
                 </form>
-                <p>{{ 'modal.columns.description'|trans }}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-danger me-auto" data-type="reset">{{ 'action.delete'|trans }}</button>
-                <button type="button" class="btn btn-primary" data-type="save">{{ 'action.save'|trans }}</button>
+                <button type="submit" formaction="{{ path('bookmark_delete') }}" class="btn btn-outline-danger me-auto" data-type="reset">{{ 'action.delete'|trans }}</button>
+                <button type="submit" class="btn btn-primary" data-type="save">{{ 'action.save'|trans }}</button>
                 <button type="button" class="btn" data-bs-dismiss="modal">{{ 'action.close'|trans }}</button>
             </div>
         </div>
@@ -39,6 +41,7 @@
 {% endmacro %}
 
 {% macro datatable_header(tableName, columns, query, options) %}
+    {% set visibility = initialize_datatable(app.user, tableName, columns) %}
     {% if query is not null %}
         {% set orderBy = options.orderBy|default(query.orderBy) %}
         {% set order = query.order|lower %}
@@ -109,52 +112,7 @@
 {% endmacro %}
 
 {% macro data_table_column_class(name, columns, column) %}
-{% apply spaceless %}
-    {% set class = '' %}
-    {% set always = false %}
-
-    {% if columns[column] is defined %}
-        {% set classes = columns[column] %}
-        {# change the next if, once data_table_header_options() will be deleted #}
-        {% if classes is iterable %}
-            {% set classes = classes.class %}
-            {% if columns[column].columnClass is defined %}
-                {% set classes = classes ~ ' ' ~ columns[column].columnClass %}
-            {% endif %}
-        {% endif %}
-        {% if 'alwaysVisible' in classes %}
-            {# as this column should always be visible, we remove every class that includes 'none' #}
-            {% for tmp in classes|split(' ') %}
-                {% if '-none' not in tmp %}
-                    {% set class = class ~ ' ' ~ tmp %}
-                {% endif %}
-            {% endfor %}
-        {% else %}
-            {% if not is_visible_column(name, column, columns) %}
-                {% set classes = classes ~ ' d-none' %}
-            {% elseif not is_datatable_configured(name) %}
-                {# needs to be a foreach, as classes like "d-xs-none" would match in: if 'none' in classes #}
-                {% for tmp in classes|split(' ') %}
-                    {% if '-none' == tmp %}
-                        {% set classes = classes|replace({(tmp): ''}) %}
-                    {% endif %}
-                {% endfor %}
-            {% else %}
-                {# needs to be a foreach, as classes like "d-xs-none" would match in: if 'none' in classes #}
-                {% for tmp in classes|split(' ') %}
-                    {% if '-none' in tmp %}
-                        {% set classes = classes|replace({(tmp): ''}) %}
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-            {% set class = classes %}
-        {% endif %}
-    {% endif %}
-
-    {% if not class is empty %}
-        {{ class }}
-    {% endif %}
-{% endapply %}
+{{- datatable_column_class(name, column) -}}
 {% endmacro %}
 
 {% macro data_table_footer(entries, route, multi_update_form) %}

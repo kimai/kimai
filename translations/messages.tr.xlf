@@ -368,10 +368,6 @@
         <source>modal.columns.title</source>
         <target state="translated">Sütün görünürlüğünü değiştir</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target state="translated">Seçili olmayan sütunları kaydettiğinizde sütunlar gizlenir ve bu tarayıcı çerezlerinde saklanır. Çerezlerinizi temizlediğinizde ayarlarınız geri yüklenir.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target state="translated">Sabit ücret</target>

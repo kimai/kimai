@@ -18,7 +18,7 @@ export default class KimaiReloadPageWidget {
 
         const reloadPage = function (event) {
             if (fullReload) {
-                document.location.reload(true);
+                document.location.reload();
             } else {
                 self.loadPage(document.location);
             }

@@ -320,10 +320,6 @@
         <source>modal.columns.title</source>
         <target>Megjelenítendő oszlopok kiválasztása</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>A megjelenítendő oszlopok egy böngésző sütiben lesznek tárolva. Ha törlöd az oldalhoz tartozó sütiket, akkor ez a beállítás visszaáll az alapértelmezett értékre.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Fix bér</target>

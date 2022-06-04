@@ -369,10 +369,6 @@
         <source>modal.columns.title</source>
         <target>Modifică vizibilitatea coloanelor</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>După salvare, coloanele ne-selectate vor fi ascunse. Setările vor fi stocate într-un cookie de browser. Daca ștergi cookie-urile, setările vor fi pierdute.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Tarif fix</target>

@@ -424,10 +424,6 @@
         <source>modal.columns.title</source>
         <target>Cambia visibilità colonna</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>Salvando, le colonne non selezionate saranno nascoste e questo verrà salvato nei cookie. Cancellando i cookie, i settaggi saranno ripristinati.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Tasso fisso</target>

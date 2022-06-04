@@ -10,8 +10,6 @@
  */
 
 import KimaiPlugin from "../KimaiPlugin";
-import KimaiCookies from "../widgets/KimaiCookies";
-import { Modal } from 'bootstrap';
 
 export default class KimaiDatatableColumnView extends KimaiPlugin {
 
@@ -31,73 +29,80 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
         }
         this.id = dataTable.getAttribute(this.dataAttribute);
         this.modal = document.getElementById('modal_' + this.id);
+        this.modal.addEventListener('show.bs.modal', event => {
+            this.evaluateCheckboxes();
+        });
         this.bindButtons();
     }
 
+    evaluateCheckboxes() {
+        const form = this.modal.getElementsByTagName('form')[0];
+        const table = document.getElementsByClassName('datatable_' + this.id)[0];
+        for (let columnElement of table.getElementsByTagName('th')) {
+            const fieldName = columnElement.getAttribute('data-field');
+            if (fieldName === null) {
+                continue;
+            }
+            const checkbox = form.querySelector('input[name=' + fieldName + ']');
+            if (checkbox === null) {
+                continue;
+            }
+            checkbox.checked = window.getComputedStyle(columnElement).display !== 'none';
+        }
+    }
+
     bindButtons() {
-        let self = this;
-        this.modal.querySelector('button[data-type=save]').addEventListener('click', function() {
-            self.saveVisibility();
+        this.modal.querySelector('button[data-type=save]').addEventListener('click', event => {
+            this.saveVisibility();
         });
-        this.modal.querySelector('button[data-type=reset]').addEventListener('click', function() {
-            self.resetVisibility();
+        this.modal.querySelector('button[data-type=reset]').addEventListener('click', event => {
+            this.resetVisibility(event.currentTarget);
         });
         for (let checkbox of this.modal.querySelectorAll('form input[type=checkbox]')) {
-            checkbox.addEventListener('change', function () {
-                self.changeVisibility(checkbox.getAttribute('name'), checkbox.checked);
+            checkbox.addEventListener('change', event =>  {
+                this.changeVisibility(checkbox.getAttribute('name'), checkbox.checked);
             });
         }
     }
 
     saveVisibility() {
         const form = this.modal.getElementsByTagName('form')[0];
-        let settings = {};
-        for (let checkbox of form.querySelectorAll('input[type=checkbox]')) {
-            settings[checkbox.getAttribute('name')] = checkbox.checked;
-        }
-        KimaiCookies.set(form.getAttribute('name'), JSON.stringify(settings), {expires: 365, SameSite: 'Strict'});
-        Modal.getInstance(this.modal).hide();
+
+        fetch(form.getAttribute('action'), {
+            method: form.getAttribute('method'),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: this.getPlugin('form').convertFormDataToQueryString(form),
+        })
+        .then(data => {
+            document.location.reload();
+        })
+        .catch((error) => {
+            form.submit();
+        });
     }
 
-    resetVisibility() {
+    resetVisibility(button) {
         const form = this.modal.getElementsByTagName('form')[0];
-        KimaiCookies.remove(form.getAttribute('name'));
-        this.getPlugin('event').trigger('kimai.reset_column_visibility', {'datatable': this.id})
-        Modal.getInstance(this.modal).hide();
+
+        fetch(button.getAttribute('formaction'), {
+            method: form.getAttribute('method'),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: this.getPlugin('form').convertFormDataToQueryString(form),
+        })
+        .then(data => {
+            document.location.reload();
+        })
+        .catch((error) => {
+            form.setAttribute('action', button.getAttribute('formaction'));
+            form.submit();
+        });
     }
 
     changeVisibility(columnName, checked) {
-        const tables = document.getElementsByClassName('datatable_' + this.id);
-        for (let tableBox of tables) {
-            let column = 0;
-            let foundColumn = false;
-            let table = tableBox.getElementsByClassName('dataTable')[0];
-            for (let columnElement of table.getElementsByTagName('th')) {
-                if (columnElement.getAttribute('data-field') === columnName) {
-                    foundColumn = true;
-                    break;
-                }
-
-                if (columnElement.getAttribute('colspan') !== null) {
-                    console.log('Tables with colspans are not supported!');
-                }
-
-                column++;
-            }
-
-            if (!foundColumn) {
-                console.log('Could not find column: ' + columnName);
-                return;
-            }
-
+        for (const tableBox of document.getElementsByClassName('datatable_' + this.id)) {
             let targetClasses = null;
-
-            for (let rowElement of table.getElementsByTagName('tr')) {
-                if (rowElement.children[column] === undefined) {
-                    continue;
-                }
-
-
+            for (let element of tableBox.getElementsByClassName('col_' + columnName)) {
+                // only calculate that once and re-use the cached class list
                 if (targetClasses === null) {
                     let removeClass = '-none';
                     let addClass = 'd-table-cell';
@@ -107,9 +112,8 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
                         addClass = 'd-none';
                     }
 
-                    const list = rowElement.children[column].classList;
                     targetClasses = '';
-                    list.forEach(
+                    element.classList.forEach(
                         function (name, index, listObj) {
                             if (name.indexOf(removeClass) === -1) {
                                 targetClasses += ' ' + name;
@@ -122,7 +126,7 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
                     }
                 }
 
-                rowElement.children[column].className = targetClasses;
+                element.className = targetClasses;
             }
         }
     }

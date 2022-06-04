@@ -317,10 +317,6 @@
         <source>modal.columns.title</source>
         <target>Alterar a visibilidade da coluna</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>Ao guardar, as colunas desmarcadas serão ocultadas e essa configuração será armazenada num cookie do navegador. Se eliminar os seus cookies, as configurações serão revertidas.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Taxa fixa</target>

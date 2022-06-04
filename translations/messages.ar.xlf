@@ -265,10 +265,6 @@
         <source>modal.columns.title</source>
         <target>تغيير عرض الخانة</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>عند حفظ الخانات غير المحددة سيتم إخفاؤها وسيتم تخزين هذا الإعداد في ملف تعريف ارتباط المتصفح. إذا قمت بحذف ملفات تعريف الارتباط الخاصة بك ، سيتم عكس الإعدادات.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>معدل ثابت</target>

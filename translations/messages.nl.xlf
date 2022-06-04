@@ -365,10 +365,6 @@
         <source>modal.columns.title</source>
         <target>Selecteer zichtbare kolommen</target>
       </trans-unit>
-      <trans-unit id="EbfIoLp" resname="modal.columns.description">
-        <source>modal.columns.description</source>
-        <target>Deze instellingen worden opgeslagen in een cookie. Als u uw cookies wist, verdwijnt uw kolomselectie.</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Vast bedrag</target>
