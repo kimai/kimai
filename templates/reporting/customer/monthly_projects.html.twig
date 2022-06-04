@@ -1,7 +1,5 @@
 {% extends 'reporting/layout.html.twig' %}
 
-{% block report_title %}{{ report_title|trans({}, 'reporting') }}{% endblock %}
-
 {% block report_form %}
     {{ form_start(form, {'attr': {'class': 'form-reporting', 'id': 'report-toolbar-form'}}) }}
     <div class="btn-list">
