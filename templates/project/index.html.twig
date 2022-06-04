@@ -7,7 +7,7 @@
 {% set columns = {
     'name': {'class': 'alwaysVisible'},
     'customer': {'class': 'd-none d-sm-table-cell'},
-    'comment': {'class': 'd-none d-xl-table-cell', 'title': 'label.description'|trans},
+    'comment': {'class': 'd-none d-xxl-table-cell', 'title': 'label.description'|trans},
     'orderNumber': {'class': 'd-none'},
     'orderDate': {'class': 'd-none'},
     'project_start': {'class': 'd-none d-xxl-table-cell'},
@@ -15,7 +15,7 @@
 } %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
-        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none d-xxl-table-cell mf_' ~ field.name, 'orderBy': false}
+        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none d-xxl-table-cell', 'orderBy': false}
     }) %}
 {% endfor %}
 {% set columns = columns|merge({

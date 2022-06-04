@@ -9,11 +9,11 @@
     'date': {'class': 'alwaysVisible text-nowrap'},
     'user': {'class': 'd-none text-nowrap d-none', 'orderBy': false},
     'customer': {'class': 'd-none d-sm-table-cell text-nowrap', 'orderBy': false},
-    'comment': {'class': 'd-none d-xl-table-cell', 'title': 'label.description'|trans},
+    'comment': {'class': 'd-none d-xxl-table-cell', 'title': 'label.description'|trans},
 } %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
-        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none d-xxl-table-cell mf_' ~ field.name, 'orderBy': false}
+        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none d-xxl-table-cell', 'orderBy': false}
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
