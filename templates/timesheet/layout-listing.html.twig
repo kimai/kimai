@@ -41,7 +41,7 @@
 }) %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
-        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none mf_' ~	field.name, 'orderBy': false}
+        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none d-xxl-table-cell mf_' ~	field.name, 'orderBy': false}
     }) %}
 {% endfor %}
 {% if canSeeUsername %}

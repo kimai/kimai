@@ -21,7 +21,7 @@
                     <th>
                         {{ 'label.hourlyRate'|trans }}
                     </th>
-                    <th>
+                    <th class="d-none d-sm-table-cell">
                         {{ 'label.rate_internal'|trans }}
                     </th>
                     <th>
@@ -43,7 +43,7 @@
                         <td>
                             {{ rate.rate|money(currency) }}
                         </td>
-                        <td>
+                        <td class="d-none d-sm-table-cell">
                             {{ rate.internalRate|money(currency) }}
                         </td>
                         <td>

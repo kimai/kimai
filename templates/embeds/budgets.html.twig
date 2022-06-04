@@ -8,8 +8,8 @@
     {% block box_attributes %}id="time_budget_box"{% endblock %}
     {% block box_body %}
         {% set durationTrans = entity.isMonthlyBudget() ? 'stats.durationMonth' : 'stats.durationTotal' %}
-        <div class="d-flex">
-            <div class="col-xs-12 col-sm-6">
+        <div class="row">
+            <div class="col-12 col-md-6 order-1 order-md-0">
                 <table class="table table-hover dataTable">
                     <tr>
                         <td>{{ 'label.timeBudget'|trans }}</td>
@@ -59,7 +59,7 @@
                     {% endif %}
                 </table>
             </div>
-            <div class="col-xs-12 col-sm-6 p-3">
+            <div class="col-12 col-md-6 order-0 order-md-1 p-3">
                 {% if entity.timeBudget > 0 %}
                     <div class="mb-3">{{ progress.progressbar(entity.timeBudget, stats.durationBillable, durationTrans|trans, stats.durationBillable|duration ~ ' / ' ~ entity.timeBudget|duration) }}</div>
                 {% endif %}
@@ -78,8 +78,8 @@
     {% block box_attributes %}id="budget_box"{% endblock %}
     {% block box_body %}
         {% set rateTrans = entity.isMonthlyBudget() ? 'stats.amountMonth' : 'stats.amountTotal' %}
-        <div class="d-flex">
-            <div class="col-xs-12 col-sm-6">
+        <div class="row">
+            <div class="col-12 col-md-6 order-1 order-md-0">
                 <table class="table table-hover dataTable">
                     <tr>
                         <td>{{ 'label.budget'|trans }}</td>
@@ -138,7 +138,7 @@
                     {% endif %}
                 </table>
             </div>
-            <div class="col-xs-12 col-sm-6 p-3">
+            <div class="col-12 col-md-6 order-0 order-md-1 p-3">
                 {% if entity.budget > 0 %}
                     <div class="mb-3">{{ progress.progressbar(entity.budget, stats.rateBillable, rateTrans|trans, stats.rateBillable|money(currency) ~ ' / ' ~ entity.budget|money(currency)) }}</div>
                 {% endif %}

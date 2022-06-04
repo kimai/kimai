@@ -4,11 +4,11 @@
 
 {% set columns = {
     'date': {'class': 'alwaysVisible text-nowrap', 'orderBy': false},
-    'user': {'class': 'd-xs-none d-sm-none', 'orderBy': false},
-    'project': {'class': 'd-xs-none d-sm-none', 'orderBy': false},
-    'activity': {'class': 'd-xs-none d-sm-none d-md-none', 'orderBy': false},
-    'description': {'class': 'd-xs-none d-sm-none d-md-none timesheet-description', 'orderBy': false},
-    'unit_price': {'class': 'text-end d-none d-xs-none text-nowrap', 'orderBy': false},
+    'user': {'class': 'd-none d-md-table-cell', 'orderBy': false},
+    'project': {'class': 'd-none d-sm-table-cell', 'orderBy': false},
+    'activity': {'class': 'd-none', 'orderBy': false},
+    'description': {'class': 'd-none d-xl-table-cell timesheet-description', 'orderBy': false},
+    'unit_price': {'class': 'd-none text-nowrap text-end', 'orderBy': false},
     'duration': {'class': 'text-end text-nowrap', 'orderBy': false},
     'rate_internal': {'class': 'text-end d-none text-nowrap', 'orderBy': false},
     'total_rate': {'class': 'text-end text-nowrap', 'orderBy': false},
@@ -128,7 +128,7 @@
                             {% endfor %}
                         </div>
                         {% if showToggleButton %}
-                            <button id="toggle-button" class="btn ms-auto">
+                            <button id="toggle-button" class="btn ms-auto d-none d-sm-inline-flex">
                                 {% if form.exported.vars.value == '5' %}
                                     {{ icon('off', true) }}
                                     {{ 'label.mark_as_exported'|trans }}
@@ -145,7 +145,7 @@
                         <thead>
                         <tr>
                             <th>{{ 'label.customer'|trans }}</th>
-                            <th class="w-min text-end d-xs-none">{{ 'label.duration'|trans }}</th>
+                            <th class="w-min text-end d-none d-sm-table-cell">{{ 'label.duration'|trans }}</th>
                             <th class="w-min text-end">{{ 'label.total_rate'|trans }}</th>
                         </tr>
                         </thead>
@@ -156,7 +156,7 @@
                                 <td>
                                     {{ widgets.label_customer(row.customer) }}
                                 </td>
-                                <td class="w-min text-end d-xs-none">
+                                <td class="w-min text-end d-none d-sm-table-cell">
                                     {{ row.duration|duration(decimal) }}
                                 </td>
                                 <td class="w-min text-end">

@@ -309,7 +309,7 @@
         <thead>
             <tr>
                 <th class="hw-min">{{ 'label.team'|trans }}</th>
-                <th>{{ 'label.user'|trans }}</th>
+                <th class="d-none d-sm-table-cell">{{ 'label.user'|trans }}</th>
             </tr>
         </thead>
         {% endif %}
@@ -321,7 +321,7 @@
                 <td class="{{ nameClass }}">
                     {{ _self.label_color_dot('color', true, team.name, null, team.color|colorize(team.name)) }}
                 </td>
-                <td class="avatars">
+                <td class="d-none d-sm-table-cell avatars">
                     {% set teamHiddenId = 'team_' ~ team.id ~ '_hiddenUser' ~ random() %}
                     {% set counter = 0  %}
                     {% for member in members|sort((a, b) => b.teamlead <=> a.teamlead) %}
