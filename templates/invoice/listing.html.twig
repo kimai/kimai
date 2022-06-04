@@ -7,23 +7,23 @@
 
 {% set columns = {
     'date': {'class': 'alwaysVisible text-nowrap'},
-    'user': {'class': 'd-xs-none d-sm-none text-nowrap d-none', 'orderBy': false},
-    'customer': {'class': 'd-xs-none d-sm-none text-nowrap', 'orderBy': false},
-    'comment': {'class': 'd-xs-none d-sm-none', 'title': 'label.description'|trans},
+    'user': {'class': 'd-none text-nowrap d-none', 'orderBy': false},
+    'customer': {'class': 'd-none d-sm-table-cell text-nowrap', 'orderBy': false},
+    'comment': {'class': 'd-none d-xl-table-cell', 'title': 'label.description'|trans},
 } %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
-        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'hidden-xs hidden-sm mf_' ~ field.name, 'orderBy': false}
+        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none d-lg-table-cell mf_' ~ field.name, 'orderBy': false}
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
-    'invoice_number': {'class': 'd-xs-none d-sm-none w-min', 'title': 'invoice.number'|trans, 'orderBy': false},
-    'due_date': {'class': 'd-xs-none w-min', 'title': 'invoice.due_days'|trans, 'orderBy': false},
-    'payment_date': {'class': 'd-xs-none d-none w-min', 'title': 'invoice.payment_date'|trans, 'orderBy': false},
+    'invoice_number': {'class': 'd-none d-md-table-cell w-min', 'title': 'invoice.number'|trans, 'orderBy': false},
+    'due_date': {'class': 'd-none d-xxl-table-cell w-min', 'title': 'invoice.due_days'|trans, 'orderBy': false},
+    'payment_date': {'class': 'd-none d-xl-table-cell w-min', 'title': 'invoice.payment_date'|trans, 'orderBy': false},
     'status': {'class': 'alwaysVisible w-min', 'orderBy': false},
-    'subtotal': {'class': 'd-xs-none text-end w-min d-none', 'title': 'invoice.subtotal'|trans, 'orderBy': false},
-    'tax': {'class': 'd-xs-none text-end w-min d-none', 'title': 'invoice.tax'|trans},
-    'total_rate': {'class': 'd-xs-none text-end w-min'},
+    'subtotal': {'class': 'd-none text-end w-min', 'title': 'invoice.subtotal'|trans, 'orderBy': false},
+    'tax': {'class': 'd-none text-end w-min', 'title': 'invoice.tax'|trans},
+    'total_rate': {'class': 'd-none d-md-table-cell text-end w-min'},
     'actions': {'class': 'actions alwaysVisible', 'orderBy': false},
 }) %}
 

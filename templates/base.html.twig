@@ -85,6 +85,8 @@
     {% endif %}
 {% endblock %}
 
+{% block page_actions_class %}col-auto ms-auto d-print-none{% endblock %}
+
 {% block logo_large %}
     {% set company = config('theme.branding.company') %}
     {% if company is not empty %}
