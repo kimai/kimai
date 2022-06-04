@@ -26,16 +26,9 @@ use Symfony\Component\HttpClient\HttpClient;
  */
 class TranslationCommand extends Command
 {
-    private $projectDirectory;
-    private $environment;
-    private $languageService;
-
-    public function __construct(string $projectDirectory, string $kernelEnvironment, LanguageService $languageService)
+    public function __construct(private string $projectDirectory, private string $kernelEnvironment, private LanguageService $languageService)
     {
         parent::__construct();
-        $this->projectDirectory = $projectDirectory;
-        $this->environment = $kernelEnvironment;
-        $this->languageService = $languageService;
     }
 
     /**
@@ -60,7 +53,7 @@ class TranslationCommand extends Command
 
     public function isEnabled(): bool
     {
-        return $this->environment !== 'prod';
+        return $this->kernelEnvironment !== 'prod';
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
