@@ -64,7 +64,7 @@ class CalendarController extends AbstractController
             $form = $form->createView();
 
             // hide if the current user is the only available one
-            if (count($form->offsetGet('user')->vars['choices']) < 2) {
+            if (\count($form->offsetGet('user')->vars['choices']) < 2) {
                 $form = null;
                 $profile = $this->getUser();
             }
