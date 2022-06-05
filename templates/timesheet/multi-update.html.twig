@@ -7,11 +7,9 @@
 {% endblock %}
 
 {% block subtitle %}
-    {% block report_title %}
-        {% from "macros/widgets.html.twig" import breadcrumb %}
-        {{ breadcrumb({
-            ('timesheet.title'|trans): path('timesheet_multi_update'),
-            ('edit'|trans({}, 'actions')): '#'
-        }) }}
-    {% endblock %}
+    {% from "macros/widgets.html.twig" import breadcrumb %}
+    {{ breadcrumb({
+        ('timesheet.title'|trans): path('timesheet_multi_update'),
+        ('edit'|trans({}, 'actions')): '#'
+    }) }}
 {% endblock %}

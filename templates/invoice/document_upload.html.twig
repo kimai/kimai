@@ -6,14 +6,12 @@
 {% block page_actions %}{{ actions.invoice_upload('index') }}{% endblock %}
 
 {% block subtitle %}
-    {% block report_title %}
-        {% if is_granted('manage_invoice_template') %}
-            {{ widgets.breadcrumb({
-                ('admin_invoice_template.title'|trans): path('admin_invoice_template'),
-                ('label.invoice_renderer'|trans({}, 'invoice-renderer')): '#'
-            }) }}
-        {% endif %}
-    {% endblock %}
+    {% if is_granted('manage_invoice_template') %}
+        {{ widgets.breadcrumb({
+            ('admin_invoice_template.title'|trans): path('admin_invoice_template'),
+            ('label.invoice_renderer'|trans({}, 'invoice-renderer')): '#'
+        }) }}
+    {% endif %}
 {% endblock %}
 
 {% block main %}
