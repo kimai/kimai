@@ -9,13 +9,14 @@
 
 namespace App\Security;
 
+use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
 class SessionHandler extends PdoSessionHandler
 {
-    public function __construct($pdoOrDsn = null)
+    public function __construct(Connection $connection)
     {
-        parent::__construct($pdoOrDsn, [
+        parent::__construct($connection->getNativeConnection(), [
             'db_table' => 'kimai2_sessions',
             'db_id_col' => 'id',
             'db_data_col' => 'data',

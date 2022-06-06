@@ -101,11 +101,6 @@ services:
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
 
-    # store and retrieve sessions in and from database
-    App\Security\SessionHandler:
-        arguments:
-            - '%env(DATABASE_URL)%'
-
     # ================================================================================
     # TIMESHEET RECORD CALCULATOR
     # ================================================================================
