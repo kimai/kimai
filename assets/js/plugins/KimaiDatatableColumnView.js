@@ -32,7 +32,37 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
         this.modal.addEventListener('show.bs.modal', event => {
             this.evaluateCheckboxes();
         });
-        this.bindButtons();
+        this.modal.querySelector('button[data-type=save]').addEventListener('click', event => {
+            this.saveVisibility();
+        });
+        this.modal.querySelector('button[data-type=reset]').addEventListener('click', event => {
+            this.resetVisibility(event.currentTarget);
+        });
+        this.modal.querySelectorAll('input[name=datatable_profile]').forEach(element => {
+            element.addEventListener('change', event => {
+                const form = this.modal.getElementsByTagName('form')[0];
+                fetch(element.getAttribute('data-href'), {
+                    method: form.getAttribute('method'),
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    body: this.getPlugin('form').convertFormDataToQueryString(form),
+                })
+                .then(data => {
+                    // the local storage is read in the login screen to set a cookie,
+                    // which triggers the session switch in ProfileSubscriber
+                    localStorage.setItem('kimai_profile', element.getAttribute('value'));
+                    document.location.reload();
+                })
+                .catch((error) => {
+                    form.setAttribute('action', element.getAttribute('data-href'));
+                    form.submit();
+                });
+            });
+        });
+        for (let checkbox of this.modal.querySelectorAll('form input[type=checkbox]')) {
+            checkbox.addEventListener('change', event =>  {
+                this.changeVisibility(checkbox.getAttribute('name'), checkbox.checked);
+            });
+        }
     }
 
     evaluateCheckboxes() {
@@ -48,20 +78,6 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
                 continue;
             }
             checkbox.checked = window.getComputedStyle(columnElement).display !== 'none';
-        }
-    }
-
-    bindButtons() {
-        this.modal.querySelector('button[data-type=save]').addEventListener('click', event => {
-            this.saveVisibility();
-        });
-        this.modal.querySelector('button[data-type=reset]').addEventListener('click', event => {
-            this.resetVisibility(event.currentTarget);
-        });
-        for (let checkbox of this.modal.querySelectorAll('form input[type=checkbox]')) {
-            checkbox.addEventListener('change', event =>  {
-                this.changeVisibility(checkbox.getAttribute('name'), checkbox.checked);
-            });
         }
     }
 

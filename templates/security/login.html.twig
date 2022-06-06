@@ -20,6 +20,27 @@
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::JAVASCRIPT')) %}
+    <script>
+        let profile = localStorage.getItem('kimai_profile');
+        if (profile === null) {
+            {#
+                screen.width = real screen width
+                screen.availWidth = screen minus e.g. OS elements
+                window.screen.width * window.devicePixelRatio = screen resolution is not relevant
+                window.innerWidth = browser screen width minus browser elements (doesn’t include scroll bars and borders)
+                window.visualViewport.width = window.innerWidth - border(?) => only a couple of pixels smaller
+
+                See https://getbootstrap.com/docs/5.0/layout/breakpoints/ for the min width, as of v5 this is 576px
+            #}
+            profile = '{{ constant('\\App\\Utils\\ProfileManager::PROFILE_DESKTOP') }}'
+            const size = window.visualViewport !== undefined ? window.visualViewport.width : window.innerWidth;
+            if (size < 576) {
+                profile = '{{ constant('\\App\\Utils\\ProfileManager::PROFILE_MOBILE') }}';
+            }
+            localStorage.setItem('kimai_profile', profile);
+        }
+        document.cookie = "{{ constant('\\App\\Utils\\ProfileManager::COOKIE_PROFILE') }}="+profile+"; expires=; SameSite=Strict; Secure";
+    </script>
     {{ event.content|raw }}
 {% endblock %}
 

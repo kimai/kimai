@@ -11,6 +11,7 @@ namespace App\Tests\Twig;
 
 use App\Repository\BookmarkRepository;
 use App\Twig\DatatableExtensions;
+use App\Utils\ProfileManager;
 use PHPUnit\Framework\TestCase;
 use Twig\TwigFunction;
 
@@ -23,7 +24,7 @@ class DatatableExtensionsTest extends TestCase
     {
         $repository = $this->createMock(BookmarkRepository::class);
 
-        return new DatatableExtensions($repository);
+        return new DatatableExtensions($repository, new ProfileManager());
     }
 
     public function testGetFunctions()

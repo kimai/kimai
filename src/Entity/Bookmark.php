@@ -25,7 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Bookmark
 {
     public const SEARCH_DEFAULT = 'search-default';
-    public const COLUMN_VISIBILITY = 'column-visibility';
+    public const COLUMN_VISIBILITY = 'columns';
     public const TIMESHEET = 'timesheet';
 
     /**

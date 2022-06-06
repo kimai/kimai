@@ -9,8 +9,11 @@
 
 namespace App\Twig;
 
+use App\Entity\Bookmark;
 use App\Entity\User;
 use App\Repository\BookmarkRepository;
+use App\Utils\ProfileManager;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -20,8 +23,10 @@ class DatatableExtensions extends AbstractExtension
      * @var array<string, array<string, array<string, string|bool>>>
      */
     private array $dataTables = [];
+    private array $tableNames = [];
+    private ?string $prefix = null;
 
-    public function __construct(private BookmarkRepository $bookmarkRepository)
+    public function __construct(private BookmarkRepository $bookmarkRepository, private ProfileManager $profileManager)
     {
     }
 
@@ -33,8 +38,22 @@ class DatatableExtensions extends AbstractExtension
         ];
     }
 
-    public function initializeDatatable(User $user, string $dataTable, array $defaultColumns): array
+    private function getDatatableName(string $dataTable): string
     {
+        if (!\array_key_exists($dataTable, $this->tableNames)) {
+            $this->tableNames[$dataTable] = $this->profileManager->getDatatableName($dataTable, $this->prefix);
+        }
+
+        return $this->tableNames[$dataTable];
+    }
+
+    public function initializeDatatable(User $user, Session $session, string $dataTable, array $defaultColumns): array
+    {
+        if ($this->prefix === null) {
+            $this->prefix = $this->profileManager->getProfileFromSession($session);
+            $dataTable = $this->getDatatableName($dataTable);
+        }
+
         if (!\array_key_exists($dataTable, $this->dataTables)) {
             $columns = [];
             foreach ($defaultColumns as $key => $settings) {
@@ -43,15 +62,17 @@ class DatatableExtensions extends AbstractExtension
                     'class' => \array_key_exists($key, $defaultColumns) ? $this->getClass($settings) : ''
                 ];
                 // add an auto-generated class
-                $columns[$key]['class'] .= ' col_' . $key;
+                $columns[$key]['class'] = trim($columns[$key]['class'] . ' col_' . $key);
             }
 
-            $bookmark = $this->bookmarkRepository->findBookmark($user, 'datatable', $dataTable);
+            $bookmark = $this->bookmarkRepository->findBookmark($user, Bookmark::COLUMN_VISIBILITY, $dataTable);
             if ($bookmark !== null) {
                 $content = $bookmark->getContent();
                 foreach ($content as $key => $value) {
                     if (!\array_key_exists($key, $columns)) {
-                        $columns[$key] = [];
+                        // if a column does not exist any longer, it needs to be skipped, otherwise an error will
+                        // be raised while accessing the visible/class keys
+                        continue;
                     }
                     $columns[$key]['visible'] = (bool) $value;
                 }
@@ -81,6 +102,12 @@ class DatatableExtensions extends AbstractExtension
 
     public function getDatatableColumnClass(string $dataTable, string $column): string
     {
+        $dataTable = $this->getDatatableName($dataTable);
+
+        if (!\array_key_exists($dataTable, $this->dataTables)) {
+            return '';
+        }
+
         if (!\array_key_exists($column, $this->dataTables[$dataTable])) {
             return '';
         }
