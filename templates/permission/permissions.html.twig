@@ -3,12 +3,17 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "permission/actions.html.twig" as actions %}
 
+{% set roles = roles|reverse %}
 {% set columns = {
     'label.name': 'alwaysVisible',
 } %}
 {% set canEditPermissions = is_granted('role_permissions') %}
 {% for role in roles %}
-    {% set options = {'class': 'alwaysVisible text-center'} %}
+    {% set class = 'alwaysVisible text-center' %}
+    {% if role.name == 'ROLE_SUPER_ADMIN' %}
+        {% set class = class ~ ' bg-orange-lt' %}
+    {% endif %}
+    {% set options = {'class': class} %}
     {% if canEditPermissions and role.name not in system_roles|keys %}
         {% set widget %}
             &nbsp;<a href="{{ path('admin_user_role_delete', {'id': role.id, 'csrfToken': token}) }}" class="confirmation-link" data-question="confirm.delete">{{ icon('trash') }}</a>
@@ -16,7 +21,7 @@
         {% set options = options|merge({'html_after': widget}) %}
     {% endif %}
     {% set columns = columns|merge({
-        (role.name|trans): options,
+        (role.name): options,
     }) %}
 {% endfor %}
 
@@ -26,7 +31,7 @@
 {% block page_actions %}{{ actions.user_permissions('index') }}{% endblock %}
 
 {% block main %}
-    {{ tables.datatable_header(tableName, columns, null, {'reload': 'kimai.userRoleUpdate', 'translationPrefix': ''}) }}
+    {{ tables.datatable_header(tableName, columns, null, {'reload': 'kimai.userRoleUpdate', 'translationPrefix': '', 'responsive': true}) }}
     
     {% set colspan = 1 + (roles|length) %}
 
@@ -40,7 +45,7 @@
                     <td>{{ permission }}</td>
                     {% for role in roles %}
                         {% set value = manager.permission(role.name, permission) %}
-                        <td class="text-center">
+                        <td class="{{ tables.data_table_column_class(tableName, columns, role.name) }}">
                             {# see RolePermissionManager for this special case #}
                             {% if role.name == 'ROLE_SUPER_ADMIN' and permission in always_apply_superadmin %}
                                 {% if value %}
