@@ -13,8 +13,7 @@ use App\Entity\User;
 use App\Event\UserInteractiveLoginEvent;
 use App\Repository\UserRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Symfony\Component\Security\Http\SecurityEvents;
+use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
 class LastLoginSubscriber implements EventSubscriberInterface
 {
@@ -25,8 +24,10 @@ class LastLoginSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
+            // triggered for programmatic logins like "password reset" or "registration"
             UserInteractiveLoginEvent::class => 'onImplicitLogin',
-            SecurityEvents::INTERACTIVE_LOGIN => 'onSecurityInteractiveLogin',
+            // We do not use the InteractiveLoginEvent because it is not triggered e.g. for SAML
+            LoginSuccessEvent::class => 'onFormLogin',
         ];
     }
 
@@ -38,9 +39,9 @@ class LastLoginSubscriber implements EventSubscriberInterface
         $this->repository->saveUser($user);
     }
 
-    public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
+    public function onFormLogin(LoginSuccessEvent $event)
     {
-        $user = $event->getAuthenticationToken()->getUser();
+        $user = $event->getUser();
 
         if ($user instanceof User) {
             $user->setLastLogin(new \DateTime());
