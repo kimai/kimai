@@ -35,7 +35,7 @@ class LastLoginSubscriber implements EventSubscriberInterface
     {
         $user = $event->getUser();
 
-        $user->setLastLogin(new \DateTime());
+        $user->setLastLogin(new \DateTime('now', new \DateTimeZone($user->getTimezone())));
         $this->repository->saveUser($user);
     }
 
@@ -44,7 +44,7 @@ class LastLoginSubscriber implements EventSubscriberInterface
         $user = $event->getUser();
 
         if ($user instanceof User) {
-            $user->setLastLogin(new \DateTime());
+            $user->setLastLogin(new \DateTime('now', new \DateTimeZone($user->getTimezone())));
             $this->repository->saveUser($user);
         }
     }
