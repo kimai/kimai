@@ -55,19 +55,8 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  */
 final class CustomerController extends AbstractController
 {
-    /**
-     * @var CustomerRepository
-     */
-    private $repository;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-
-    public function __construct(CustomerRepository $repository, EventDispatcherInterface $dispatcher)
+    public function __construct(private CustomerRepository $repository, private EventDispatcherInterface $dispatcher)
     {
-        $this->repository = $repository;
-        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -546,6 +535,7 @@ final class CustomerController extends AbstractController
                 $this->repository->saveCustomer($customer);
                 $this->flashSuccess('action.update.success');
 
+                return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
                 if ($create) {
                     return $this->redirectToRouteAfterCreate('customer_details', ['id' => $customer->getId()]);
                 }
