@@ -47,7 +47,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
     /**
      * Returns a RedirectResponse to the given route with the given parameters.
      */
-    protected function redirectToRouteAfterCreate(string $route, array $parameters = [], int $status = 201): RedirectResponse
+    protected function redirectToRouteAfterCreate(string $route, array $parameters = [], int $status = 302): RedirectResponse
     {
         $url = $this->generateUrl($route, $parameters);
         $response = new RedirectResponse($url, $status);
