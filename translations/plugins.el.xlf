@@ -6,10 +6,6 @@
         <source>plugin.none_installed</source>
         <target>Δεν έχετε εγκαταστήσει πρόσθετα, ακόμη.</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target>Περίπτερο εμπορίας λογισμικών για το Kimai</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

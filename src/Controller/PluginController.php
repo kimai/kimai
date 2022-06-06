@@ -23,19 +23,10 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class PluginController extends AbstractController
 {
-    private $client;
-    private $cache;
-
-    public function __construct(HttpClientInterface $client, CacheInterface $cache)
-    {
-        $this->client = $client;
-        $this->cache = $cache;
-    }
-
     /**
      * @Route(path="/", name="plugins", methods={"GET"})
      */
-    public function indexAction(PluginManager $manager): Response
+    public function indexAction(PluginManager $manager, HttpClientInterface $client, CacheInterface $cache): Response
     {
         $installed = [];
         $plugins = $manager->getPlugins();
@@ -47,16 +38,14 @@ class PluginController extends AbstractController
         return $this->render('plugin/index.html.twig', [
             'plugins' => $plugins,
             'installed' => $installed,
-            'extensions' => $this->getPluginInformation()
+            'extensions' => $this->getPluginInformation($client, $cache)
         ]);
     }
 
-    private function getPluginInformation(): array
+    private function getPluginInformation(HttpClientInterface $client, CacheInterface $cache): array
     {
-        $this->cache->delete('kimai.marketplace_extensions');
-
-        return $this->cache->get('kimai.marketplace_extensions', function (ItemInterface $item) {
-            $response = $this->client->request('GET', 'https://www.kimai.org/plugins.json');
+        return $cache->get('kimai.marketplace_extensions', function (ItemInterface $item) use ($client) {
+            $response = $client->request('GET', 'https://www.kimai.org/plugins.json');
 
             if ($response->getStatusCode() !== 200) {
                 return [];

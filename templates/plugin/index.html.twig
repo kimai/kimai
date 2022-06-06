@@ -19,7 +19,7 @@
             {% block box_body %}
                 {% set columns = {
                     'name': {'class': 'alwaysVisible'},
-                    'description': {'class': 'd-none d-sm-table-cell'},
+                    'description': {'class': 'd-none d-md-table-cell'},
                     'version': {'class': 'text-center w-min'},
                     'actions': {'class': 'actions alwaysVisible'},
                 } %}
@@ -53,12 +53,12 @@
 
     {% if extensions|length > 0 %}
         {% embed '@theme/embeds/card.html.twig' %}
-            {% block box_title %}{{ 'plugin.marketplace'|trans }}{% endblock %}
+            {% block box_title %}{{ 'plugin.marketplace'|trans({}, 'plugins') }}{% endblock %}
             {% block box_body_class %}p-0{% endblock %}
             {% block box_body %}
                 {% set columns = {
                     'name': {'class': 'alwaysVisible'},
-                    'description': {'class': 'd-none d-sm-table-cell'},
+                    'description': {'class': 'd-none d-md-table-cell'},
                     'actions': {'class': 'actions alwaysVisible'},
                 } %}
 
@@ -74,7 +74,11 @@
                         </td>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ extension.description }}</td>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
-                            {{ widgets.table_actions({'home': {'url': extension.url, 'target': '_blank'}}) }}
+                            {% set actions = {'home': {'url': extension.url, 'target': '_blank'}} %}
+                            {% if extension.buy is defined and extension.buy is not empty %}
+                                {% set actions = actions|merge({'buy': {'translation_domain': 'plugins', 'url': extension.buy, 'target': '_blank'}}) %}
+                            {% endif %}
+                            {{ widgets.table_actions(actions) }}
                         </td>
                     </tr>
                 {% endfor %}

@@ -6,10 +6,6 @@
         <source>plugin.none_installed</source>
         <target state="translated">Du har inga plugin installerade än.</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target state="translated">Kimai marknadsplats</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

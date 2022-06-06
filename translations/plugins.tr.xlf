@@ -6,10 +6,6 @@
         <source>plugin.none_installed</source>
         <target state="translated">Henüz kurulu eklentiniz bulunmamaktadır.</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target state="translated">Kimai market</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

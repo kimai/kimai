@@ -6,10 +6,6 @@
         <source>plugin.none_installed</source>
         <target>Egy bővítmény sincs telepítve még.</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target>Kimai piactér</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

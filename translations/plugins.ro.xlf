@@ -6,10 +6,6 @@
         <source>plugin.none_installed</source>
         <target>Nu există nici un plugin instalat.</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target>Magazinul Kimai</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>
