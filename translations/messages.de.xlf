@@ -2,9 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <!--
-              Global template keys
-            -->
+      <!-- Global template keys -->
       <trans-unit id="N7mikjJ" resname="time_tracking">
         <source>time_tracking</source>
         <target>Zeiterfassung</target>
@@ -128,9 +126,7 @@
         <source>Display of entries in selection lists</source>
         <target>Darstellung der Einträge in Auswahllisten</target>
       </trans-unit>
-      <!--
-              Login / Security
-            -->
+      <!-- Login / Security -->
       <trans-unit id="9pvowqn" resname="label.password">
         <source>label.password</source>
         <target>Passwort</target>
@@ -172,9 +168,7 @@
           Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.
         </target>
       </trans-unit>
-      <!--
-              Menu / Navbar items
-            -->
+      <!-- Menu / Navbar items -->
       <trans-unit id="UoOv6mx" approved="yes" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Dashboard</target>
@@ -247,9 +241,7 @@
         <source>menu.doctor</source>
         <target>Doktor</target>
       </trans-unit>
-      <!--
-              Error templates
-            -->
+      <!-- Error templates -->
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target>Anhand ihrer ausgewählten Filter wurden keine Einträge gefunden.</target>
@@ -270,9 +262,7 @@
         <source>error.directory_protected</source>
         <target>Das Verzeichnis „%dir%“ ist schreibgeschützt.</target>
       </trans-unit>
-      <!--
-              General labels
-            -->
+      <!-- General labels -->
       <trans-unit id="H1qEi4d" resname="label.date">
         <source>label.date</source>
         <target>Datum</target>
@@ -413,9 +403,7 @@
         <source>label.billable</source>
         <target>Abrechenbar</target>
       </trans-unit>
-      <!--
-              Buttons & Actions
-            -->
+      <!-- Buttons & Actions -->
       <trans-unit id="zldXQq6" resname="label.actions">
         <source>label.actions</source>
         <target>Aktionen</target>
@@ -452,9 +440,7 @@
         <source>action.close</source>
         <target>Schließen</target>
       </trans-unit>
-      <!--
-              Dashboard
-            -->
+      <!-- Dashboard -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Dashboard</target>
@@ -467,9 +453,7 @@
         <source>dashboard.edit_mode</source>
         <target>Sie können Ihre Widgets per Drag &amp; Drop neu anordnen. Das Hinzufügen und Entfernen von Widgets speichert ausstehende Änderungen.</target>
       </trans-unit>
-      <!--
-              Widgets
-            -->
+      <!-- Widgets -->
       <trans-unit id="4iliLZT" resname="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
         <target>Menü anzeigen</target>
@@ -490,9 +474,7 @@
         <source>label.plus_more</source>
         <target>+%count% weitere</target>
       </trans-unit>
-      <!--
-              Timesheet
-            -->
+      <!-- Timesheet -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Meine Zeiten</target>
@@ -512,10 +494,6 @@
       <trans-unit id="egaNXjp" resname="label.daterange">
         <source>label.daterange</source>
         <target>Zeitraum</target>
-      </trans-unit>
-      <trans-unit id="UbnqJLn" resname="modal.columns.title">
-        <source>modal.columns.title</source>
-        <target>Ändere Spalten-Sichtbarkeit</target>
       </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
@@ -537,9 +515,28 @@
         <source>label.appendTags</source>
         <target>Schlagworte hinzufügen</target>
       </trans-unit>
-      <!--
-              User profile
-            -->
+      <!-- Column modal -->
+      <trans-unit id="UbnqJLn" resname="modal.columns.title">
+        <source>modal.columns.title</source>
+        <target>Darstellung anpassen</target>
+      </trans-unit>
+      <trans-unit id="LDsHBXd" resname="modal.columns.label">
+        <source>modal.columns.label</source>
+        <target>Sichtbare Spalten</target>
+      </trans-unit>
+      <trans-unit id="WOAx9yz" resname="modal.columns.profile">
+        <source>modal.columns.profile</source>
+        <target>Profil</target>
+      </trans-unit>
+      <trans-unit id="aGk9Aqt" resname="desktop">
+        <source>desktop</source>
+        <target>Desktop</target>
+      </trans-unit>
+      <trans-unit id="1STBoIE" resname="mobile">
+        <source>mobile</source>
+        <target>Mobil</target>
+      </trans-unit>
+      <!-- User profile -->
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target>Benutzerprofil</target>
@@ -621,9 +618,7 @@
         <source>theme.update_browser_title</source>
         <target>Browser Titel aktualisieren</target>
       </trans-unit>
-      <!--
-        User timesheet calendar
-      -->
+      <!-- User timesheet calendar -->
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Kalender</target>
@@ -632,12 +627,7 @@
         <source>calendar.drag_and_drop.delete</source>
         <target>Wenn Sie einen Eintrag löschen wollen, müssen Sie ihn auf die Schaltfläche ziehen.</target>
       </trans-unit>
-      <!--
-        Admin: Timesheet
-      -->
-      <!--
-        Admin: Projects
-      -->
+      <!-- Projects -->
       <trans-unit id="yLOqEX_" resname="label.project_start">
         <source>label.project_start</source>
         <target>Projekt Start</target>
@@ -646,9 +636,7 @@
         <source>label.project_end</source>
         <target>Projekt Ende</target>
       </trans-unit>
-      <!--
-        Admin: Customer
-      -->
+      <!-- Customer -->
       <trans-unit id="39AtPxQ" resname="label.number">
         <source>label.number</source>
         <target>Kundennummer</target>
@@ -705,9 +693,7 @@
         <source>label.currency</source>
         <target>Währung</target>
       </trans-unit>
-      <!--
-              Admin: User
-            -->
+      <!-- Admin: User -->
       <trans-unit id="TRDzmCV" resname="label.alias">
         <source>label.alias</source>
         <target>Name</target>
@@ -740,9 +726,7 @@
         <source>Allowed character: A-Z and _</source>
         <target>Erlaubte Zeichen: A-Z und _</target>
       </trans-unit>
-      <!--
-              Admin: Plugins
-            -->
+      <!-- Admin: Plugins -->
       <trans-unit id="d75KAlJ" resname="label.version">
         <source>label.version</source>
         <target>Version</target>
@@ -751,13 +735,7 @@
         <source>plugin.installed</source>
         <target>Installierte Erweiterungen</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target>Neue Erweiterungen aus dem Marktplatz</target>
-      </trans-unit>
-      <!--
-              ROLES
-            -->
+      <!-- ROLES -->
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
         <target>System-Admin</target>
@@ -774,9 +752,7 @@
         <source>ROLE_USER</source>
         <target>Benutzer</target>
       </trans-unit>
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
+      <!-- Statistics data for Dashboard & Users profile -->
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
         <target>Heute, %day%</target>
@@ -961,9 +937,7 @@
         <source>stats.percentUsedLeft_month</source>
         <target>%percent%% verwendet (noch %left% diesen Monat offen)</target>
       </trans-unit>
-      <!--
-              Invoice
-            -->
+      <!-- Invoice -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target>Vorlagen</target>
@@ -1136,9 +1110,7 @@
         <source>preview.skipped_rows</source>
         <target>Überspringe Vorschau von %rows% weiteren Zeilen …</target>
       </trans-unit>
-      <!--
-              Export
-            -->
+      <!-- Export -->
       <trans-unit id="F6Jmro7" resname="export.title">
         <source>export.title</source>
         <target>Export</target>
@@ -1179,9 +1151,7 @@
         <source>label.type</source>
         <target>Typ</target>
       </trans-unit>
-      <!--
-             Navbar - recent entries and activities
-            -->
+      <!-- Navbar - recent entries and activities -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Ihre aktiven Zeitmessungen</target>
@@ -1202,9 +1172,7 @@
         <source>timesheet.start</source>
         <target>Neue Zeitmessung starten</target>
       </trans-unit>
-      <!--
-              TOOLBARS
-            -->
+      <!-- TOOLBARS -->
       <trans-unit id="MPimOps" resname="label.pageSize">
         <source>label.pageSize</source>
         <target>Ergebnisse</target>
@@ -1325,9 +1293,7 @@
         <source>default_value_new</source>
         <target>Standardwert für neue Einträge</target>
       </trans-unit>
-      <!--
-          QUICK ENTRIES
-      -->
+      <!-- QUICK ENTRIES -->
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
         <target>Wochen-Arbeitsstunden</target>
