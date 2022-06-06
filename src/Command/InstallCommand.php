@@ -138,14 +138,19 @@ final class InstallCommand extends Command
 
     protected function createDatabase(SymfonyStyle $io, InputInterface $input, OutputInterface $output)
     {
-        if ($this->connection->isConnected()) {
-            $io->note(sprintf('Database is existing and connection could be established'));
+        try {
+            if ($this->connection->isConnected()) {
+                $io->note(sprintf('Database is existing and connection could be established'));
 
-            return;
-        }
+                return;
+            }
 
-        if (!$this->askConfirmation($input, $output, sprintf('Create the database "%s" (yes) or skip (no)?', $this->connection->getDatabase()), true)) {
-            throw new \Exception('Skipped database creation, aborting installation');
+            if (!$this->askConfirmation($input, $output, sprintf('Create the database "%s" (yes) or skip (no)?', $this->connection->getDatabase()), true)) {
+                throw new \Exception('Skipped database creation, aborting installation');
+            }
+        } catch (\Exception $exception) {
+            // this likely means that the database does not exist. the latest doctrine release
+            // changed the behavior: in previous version this code did not throw an exception.
         }
 
         $options = ['--if-not-exists' => true];
