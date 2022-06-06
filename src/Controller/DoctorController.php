@@ -25,7 +25,7 @@ class DoctorController extends AbstractController
 {
     /**
      * PHP extensions which Kimai needs for runtime.
-     * Some are not a hard requiremenet, but some functions might not work as expected.
+     * Some are not a hard requirement, but some functions might not work as expected.
      */
     public const REQUIRED_EXTENSIONS = [
         'gd',
@@ -46,15 +46,8 @@ class DoctorController extends AbstractController
         'var/log/',
     ];
 
-    private $projectDirectory;
-    private $environment;
-    private $fileHelper;
-
-    public function __construct(string $projectDirectory, string $kernelEnvironment, FileHelper $fileHelper)
+    public function __construct(private string $projectDirectory, private string $kernelEnvironment, private FileHelper $fileHelper)
     {
-        $this->projectDirectory = $projectDirectory;
-        $this->environment = $kernelEnvironment;
-        $this->fileHelper = $fileHelper;
     }
 
     /**
@@ -100,7 +93,7 @@ class DoctorController extends AbstractController
         return $this->render('doctor/index.html.twig', array_merge(
             [
                 'modules' => get_loaded_extensions(),
-                'environment' => $this->environment,
+                'environment' => $this->kernelEnvironment,
                 'info' => $this->getPhpInfo(),
                 'settings' => $this->getIniSettings(),
                 'extensions' => $this->getLoadedExtensions(),
@@ -118,7 +111,7 @@ class DoctorController extends AbstractController
     {
         $versions = [];
 
-        if (!class_exists(InstalledVersions::class)) {
+        if (class_exists(InstalledVersions::class)) {
             $rootPackage = InstalledVersions::getRootPackage()['name'];
             foreach (InstalledVersions::getInstalledPackages() as $package) {
                 $versions[$package] = InstalledVersions::getPrettyVersion($package);
@@ -166,7 +159,7 @@ class DoctorController extends AbstractController
 
     private function getLogFilename(): string
     {
-        $logfileName = 'var/log/' . $this->environment . '.log';
+        $logfileName = 'var/log/' . $this->kernelEnvironment . '.log';
 
         return $this->projectDirectory . '/' . $logfileName;
     }

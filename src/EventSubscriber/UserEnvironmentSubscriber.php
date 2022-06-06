@@ -18,19 +18,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class UserEnvironmentSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var TokenStorageInterface
-     */
-    private $storage;
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $auth;
-
-    public function __construct(TokenStorageInterface $tokenStorage, AuthorizationCheckerInterface $auth)
+    public function __construct(private TokenStorageInterface $tokenStorage, private AuthorizationCheckerInterface $auth)
     {
-        $this->storage = $tokenStorage;
-        $this->auth = $auth;
     }
 
     public static function getSubscribedEvents(): array
@@ -51,7 +40,7 @@ final class UserEnvironmentSubscriber implements EventSubscriberInterface
         \Locale::setDefault($event->getRequest()->getLocale());
 
         // ignore events like the toolbar where we do not have a token
-        if (null === ($token = $this->storage->getToken())) {
+        if (null === ($token = $this->tokenStorage->getToken())) {
             return;
         }
 
