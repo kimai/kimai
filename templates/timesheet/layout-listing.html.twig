@@ -33,15 +33,15 @@
     }) %}
 {% endif %}
 {% set columns = columns|merge({
-    'customer': {'class': 'd-none d-lg-table-cell'},
+    'customer': {'class': 'd-none d-md-table-cell'},
     'project': {'class': 'd-none d-lg-table-cell'},
-    'activity': {'class': 'd-none d-md-table-cell'},
+    'activity': {'class': 'd-none d-xl-table-cell'},
     'description': {'class': 'd-none'},
     'tags': {'class': 'd-none badges', 'orderBy': false},
 }) %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
-        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none d-xxl-table-cell', 'orderBy': false}
+        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none', 'orderBy': false}
     }) %}
 {% endfor %}
 {% if canSeeUsername %}

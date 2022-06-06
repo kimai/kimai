@@ -5,16 +5,16 @@
 
 {% set columns = {
     'name': {'class': 'alwaysVisible', 'orderBy': false},
-    'title': {'class': 'd-none d-md-table-cell text-nowrap', 'orderBy': false},
-    'company': {'class': 'd-none d-xl-table-cell', 'orderBy': false},
-    'vat_id': {'class': 'd-none d-xxl-table-cell text-nowrap', 'orderBy': false},
-    'tax_rate': {'class': 'd-none d-md-table-cell text-nowrap', 'orderBy': false},
-    'due_days': {'class': 'd-none d-lg-table-cell text-nowrap', 'orderBy': false},
+    'title': {'class': 'd-none text-nowrap', 'orderBy': false},
+    'company': {'class': 'd-none', 'orderBy': false},
+    'vat_id': {'class': 'd-none text-nowrap', 'orderBy': false},
+    'tax_rate': {'class': 'd-none text-nowrap', 'orderBy': false},
+    'due_days': {'class': 'd-none text-nowrap', 'orderBy': false},
     'address': {'class': 'd-none', 'orderBy': false},
     'contact': {'class': 'd-none', 'orderBy': false},
     'calculator': {'title': 'label.invoice_calculator'|trans({}, 'invoice-calculator'), 'class': 'd-none', 'orderBy': false},
     'renderer': {'title': 'label.invoice_renderer'|trans({}, 'invoice-renderer'), 'class': 'd-none', 'orderBy': false},
-    'language': {'class': 'd-none d-sm-table-cell text-nowrap', 'orderBy': false},
+    'language': {'class': 'd-none text-nowrap', 'orderBy': false},
     'actions': {'class': 'actions alwaysVisible', 'orderBy': false},
 } %}
 

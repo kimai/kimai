@@ -6,21 +6,22 @@
 {% import "invoice/macros.html.twig" as macros %}
 
 {% set columns = {
-    'date': {'class': 'alwaysVisible text-nowrap'},
-    'user': {'class': 'd-none text-nowrap d-none', 'orderBy': false},
-    'customer': {'class': 'd-none d-sm-table-cell text-nowrap', 'orderBy': false},
-    'comment': {'class': 'd-none d-xxl-table-cell', 'title': 'label.description'|trans},
+    'avatar': {'class': 'text-nowrap w-avatar d-none d-md-table-cell', 'title': false, 'orderBy': false},
+    'date': {'class': 'd-none d-sm-table-cell text-nowrap w-min'},
+    'user': {'class': 'd-none text-nowrap w-min', 'orderBy': false},
+    'customer': {'class': 'alwaysVisible text-nowrap', 'orderBy': false},
+    'comment': {'class': 'd-none', 'title': 'label.description'|trans},
 } %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
-        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none d-xxl-table-cell', 'orderBy': false}
+        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none', 'orderBy': false}
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
     'invoice_number': {'class': 'd-none d-md-table-cell w-min', 'title': 'invoice.number'|trans, 'orderBy': false},
-    'due_date': {'class': 'd-none d-xxl-table-cell w-min', 'title': 'invoice.due_days'|trans, 'orderBy': false},
-    'payment_date': {'class': 'd-none d-xl-table-cell w-min', 'title': 'invoice.payment_date'|trans, 'orderBy': false},
-    'status': {'class': 'alwaysVisible w-min', 'orderBy': false},
+    'due_date': {'class': 'd-none w-min', 'title': 'invoice.due_days'|trans, 'orderBy': false},
+    'payment_date': {'class': 'd-none w-min', 'title': 'invoice.payment_date'|trans, 'orderBy': false},
+    'status': {'class': 'd-none d-sm-table-cell w-min', 'orderBy': false},
     'subtotal': {'class': 'd-none text-end w-min', 'title': 'invoice.subtotal'|trans, 'orderBy': false},
     'tax': {'class': 'd-none text-end w-min', 'title': 'invoice.tax'|trans},
     'total_rate': {'class': 'd-none d-md-table-cell text-end w-min'},
@@ -45,8 +46,9 @@
         {{ tables.datatable_header(tableName, columns, query, {}) }}
         {% for entry in entries %}
             <tr class="modal-ajax-form open-edit{% if entry.canceled %} warning text-muted{% endif %}" data-href="{{ path('admin_invoice_edit', {'id': entry.id}) }}">
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'avatar') }}">{{ widgets.user_avatar(entry.user) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.createdAt|date_short }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">{{ widgets.user_avatar(entry.user) }} {{ widgets.username(entry.user) }}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">{{ widgets.label_user(entry.user) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">{{ widgets.label_customer(entry.customer) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment }}</td>
                 {% for field in metaColumns %}

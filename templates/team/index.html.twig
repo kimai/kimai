@@ -4,9 +4,24 @@
 {% import "macros/search.html.twig" as search %}
 {% import "team/actions.html.twig" as actions %}
 
+{% set columns = {
+    'name': {'class': 'alwaysVisible'},
+    'teamlead': {'class': 'd-none badges', 'orderBy': false},
+    'teamlead_avatar': {'title': 'label.teamlead'|trans, 'class': 'd-none d-lg-table-cell avatars', 'orderBy': false},
+    'user': {'class': 'd-none badges', 'orderBy': false},
+    'user_avatar': {'title': 'label.user'|trans, 'class': 'd-none d-xl-table-cell avatars', 'orderBy': false},
+    'actions': {'class': 'actions alwaysVisible'},
+} %}
+
+{% set tableName = 'admin_teams' %}
+
 {% block page_title %}{{ 'teams.title'|trans({}, 'teams') }}{% endblock %}
 {% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
 {% block page_actions %}{{ actions.teams('index', query) }}{% endblock %}
+
+{% block main_before %}
+    {{ tables.data_table_column_modal(tableName, columns) }}
+{% endblock %}
 
 {% block main %}
 
@@ -14,16 +29,7 @@
         {{ widgets.nothing_found('kimai.teamUpdate') }}
     {% else %}
 
-        {% set columns = {
-            'name': {'class': 'w-25'},
-            'teamlead': {'class': 'badges', 'orderBy': false},
-            'user': {'class': 'd-none d-sm-table-cell badges', 'orderBy': false},
-            'actions': {'class': 'actions alwaysVisible'},
-        } %}
-
-        {% set tableName = 'admin_teams' %}
-
-        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.teamUpdate', columnConfig: false}) }}
+        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.teamUpdate'}) }}
         {% for team in teams %}
             <tr{% if is_granted('edit', team) %} class="open-edit alternative-link" data-href="{{ path('admin_team_edit', {'id': team.id}) }}"{% endif %}>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
@@ -36,10 +42,24 @@
                         {% endif %}
                     {% endfor %}
                 </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'teamlead_avatar') }}">
+                    {% for member in team.members %}
+                        {% if member.teamlead %}
+                            {{ widgets.user_avatar(member.user) }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">
                     {% for member in team.members %}
                         {% if not member.teamlead %}
                             {{ widgets.label_user(member.user) }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'user_avatar') }}">
+                    {% for member in team.members %}
+                        {% if not member.teamlead %}
+                            {{ widgets.user_avatar(member.user) }}
                         {% endif %}
                     {% endfor %}
                 </td>
