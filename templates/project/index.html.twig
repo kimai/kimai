@@ -6,21 +6,21 @@
 
 {% set columns = {
     'name': {'class': 'alwaysVisible'},
-    'customer': {'class': 'd-none d-sm-table-cell'},
-    'comment': {'class': 'd-none d-xxl-table-cell', 'title': 'label.description'|trans},
+    'customer': {'class': 'd-none'},
+    'comment': {'class': 'd-none', 'title': 'label.description'|trans},
     'orderNumber': {'class': 'd-none'},
     'orderDate': {'class': 'd-none'},
-    'project_start': {'class': 'd-none d-xxl-table-cell'},
-    'project_end': {'class': 'd-none d-xxl-table-cell'},
+    'project_start': {'class': 'd-none'},
+    'project_end': {'class': 'd-none'},
 } %}
 {% for field in metaColumns %}
     {% set columns = columns|merge({
-        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none d-xxl-table-cell', 'orderBy': false}
+        ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none', 'orderBy': false}
     }) %}
 {% endfor %}
 {% set columns = columns|merge({
-    'budget': {'class': 'd-none d-xl-table-cell text-end w-min', 'title': 'label.budget'|trans},
-    'timeBudget': {'class': 'd-none d-xl-table-cell text-end w-min', 'title': 'label.timeBudget'|trans},
+    'budget': {'class': 'd-none text-end w-min', 'title': 'label.budget'|trans},
+    'timeBudget': {'class': 'd-none text-end w-min', 'title': 'label.timeBudget'|trans},
     'team': {'class': 'text-center w-min', 'orderBy': false},
     'visible': {'class': 'd-none text-center w-min'},
     'actions': {'class': 'actions alwaysVisible'},
