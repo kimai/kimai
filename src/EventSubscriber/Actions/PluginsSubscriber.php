@@ -21,7 +21,7 @@ class PluginsSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        $event->addAction('shop', ['url' => Constants::HOMEPAGE . '/store/', 'target' => '_blank']);
+        $event->addAction('shop', ['title' => 'shop', 'translation_domain' => 'plugins', 'url' => Constants::HOMEPAGE . '/store/', 'target' => '_blank']);
         $event->addHelp($this->documentationLink('plugins.html'));
     }
 }
