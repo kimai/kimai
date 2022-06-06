@@ -10,6 +10,7 @@
 namespace App\Tests\Security;
 
 use App\Security\SessionHandler;
+use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,7 +20,7 @@ class SessionHandlerTest extends TestCase
 {
     public function testConstruct()
     {
-        $sut = new SessionHandler(null);
+        $sut = new SessionHandler($this->createMock(Connection::class));
 
         self::assertFalse($sut->isSessionExpired());
     }
