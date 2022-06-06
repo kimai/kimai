@@ -323,9 +323,6 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/customer/create');
         $form = $client->getCrawler()->filter('form[name=customer_edit_form]')->form();
 
-        $kernel = self::bootKernel();
-        $container = $kernel->getContainer();
-
         $editForm = $client->getCrawler()->filter('form[name=customer_edit_form]')->form();
         $this->assertEquals(date_default_timezone_get(), $editForm->get('customer_edit_form[timezone]')->getValue());
 

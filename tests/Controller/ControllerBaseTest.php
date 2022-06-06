@@ -419,6 +419,10 @@ abstract class ControllerBaseTest extends WebTestCase
         self::assertTrue($client->getResponse()->headers->has('Location'), 'Could not find "Location" header');
         $location = $client->getResponse()->headers->get('Location');
 
+        if ($url === null) {
+            return;
+        }
+
         if ($endsWith) {
             self::assertStringEndsWith($url, $location, 'Redirect URL does not match');
         } else {

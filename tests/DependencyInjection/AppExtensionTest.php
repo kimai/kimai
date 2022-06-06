@@ -18,10 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class AppExtensionTest extends TestCase
 {
-    /**
-     * @var AppExtension
-     */
-    private $extension;
+    private ?AppExtension $extension = null;
 
     protected function setUp(): void
     {
@@ -29,13 +26,10 @@ class AppExtensionTest extends TestCase
         $this->extension = new AppExtension();
     }
 
-    /**
-     * @return ContainerBuilder
-     */
-    private function getContainer()
+    private function getContainer(): ContainerBuilder
     {
         $container = new ContainerBuilder();
-        $container->setParameter('app_locales', 'de|en|tr|zh_CN');
+        $container->setParameter('app_locales', 'de|en|he|tr|zh_CN');
         $container->setParameter('kernel.project_dir', realpath(__DIR__ . '/../../'));
 
         return $container;
@@ -69,60 +63,52 @@ class AppExtensionTest extends TestCase
 
         $this->extension->load($minConfig, $container = $this->getContainer());
 
+        // these value list represents the default values with unmerged kimai.yaml
         $expected = [
             'kimai.data_dir' => '/tmp/',
             'kimai.languages' => [
                 'en' => [
                     'date_type' => 'dd. MM. yyyy',
                     'date' => 'A-m-d',
-                    'date_time' => 'm-d H:i',
+                    'date_time' => 'd.m. H:i',
                     'duration' => '%%h:%%m h',
                     'time' => 'H:i',
+                    'rtl' => false,
                 ],
                 'de' => [
                     'date_type' => 'dd. MM. yyyy',
                     'date' => 'A-m-d',
-                    'date_time' => 'm-d H:i',
+                    'date_time' => 'd.m. H:i',
                     'duration' => '%%h:%%m h',
                     'time' => 'H:i',
+                    'rtl' => false,
+                ],
+                'he' => [
+                    'date_type' => 'dd. MM. yyyy',
+                    'date' => 'A-m-d',
+                    'date_time' => 'd.m. H:i',
+                    'duration' => '%%h:%%m h',
+                    'time' => 'H:i',
+                    'rtl' => false,
                 ],
                 'tr' => [
                     // this value if pre-filled by the Configuration object, as "tr" is defined in the min config
                     // and the other languages (not defined in min config) are "only" copied during runtime from "en"
-                    'date_type' => 'yyyy-MM-dd',
+                    'date_type' => 'dd.MM.yyyy',
                     'date' => 'X-m-d',
-                    'date_time' => 'm-d H:i',
+                    'date_time' => 'd.m. H:i',
                     'duration' => '%%h:%%m h',
                     'time' => 'H:i',
+                    'rtl' => false,
                 ],
                 'zh_CN' => [
                     'date_type' => 'dd. MM. yyyy',
                     'date' => 'A-m-d',
-                    'date_time' => 'm-d H:i',
+                    'date_time' => 'd.m. H:i',
                     'duration' => '%%h:%%m h',
                     'time' => 'H:i',
+                    'rtl' => false,
                 ],
-            ],
-            'kimai.calendar' => [
-                'week_numbers' => true,
-                'day_limit' => 4,
-                'slot_duration' => '00:30:00',
-                'businessHours' => [
-                    'days' => [1, 2, 3, 4, 5],
-                    'begin' => '08:00',
-                    'end' => '20:00',
-                ],
-                'visibleHours' => [
-                    'begin' => '00:00',
-                    'end' => '23:59',
-                ],
-                'google' => [
-                    'api_key' => null,
-                    'sources' => [],
-                ],
-                'weekends' => true,
-                'dragdrop_amount' => 10,
-                'title_pattern' => '{activity}',
             ],
             'kimai.dashboard' => [
                 'PaginatedWorkingTimeChart',
