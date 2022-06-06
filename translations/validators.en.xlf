@@ -38,7 +38,7 @@
         <source>The begin date cannot be in the future.</source>
         <target>The begin date cannot be in the future.</target>
       </trans-unit>
-      <trans-unit id="ePrqiLN" resname="Duration cannot be zero.">
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
         <source>Duration cannot be zero.</source>
         <target>An empty duration is not allowed.</target>
       </trans-unit>
