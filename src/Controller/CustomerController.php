@@ -535,7 +535,6 @@ final class CustomerController extends AbstractController
                 $this->repository->saveCustomer($customer);
                 $this->flashSuccess('action.update.success');
 
-                return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
                 if ($create) {
                     return $this->redirectToRouteAfterCreate('customer_details', ['id' => $customer->getId()]);
                 }
