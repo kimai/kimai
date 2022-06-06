@@ -67,6 +67,9 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
             $sheetValues = false;
             foreach ($row->getCellIterator() as $cell) {
                 $value = $cell->getValue();
+                if ($value === null) {
+                    continue;
+                }
                 $replacer = null;
                 $firstReplacerPos = stripos($value, '${');
                 if ($firstReplacerPos === false) {
@@ -134,7 +137,7 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
             $cellCounter = 0;
             foreach ($row->getCellIterator() as $cell) {
                 $value = $cell->getValue();
-                if (stripos($value, '${entry.') !== false) {
+                if ($value !== null && stripos($value, '${entry.') !== false) {
                     $startRow = $row->getRowIndex();
                     $worksheet->insertNewRowBefore($startRow + 1, $invoiceItemCount - 1);
                     break 2;

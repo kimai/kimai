@@ -10,8 +10,8 @@
 namespace App\Tests\Twig;
 
 use App\Twig\PaginationExtension;
+use App\Utils\Pagination;
 use Pagerfanta\Adapter\ArrayAdapter;
-use Pagerfanta\Pagerfanta;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\TwigFunction;
@@ -64,7 +64,7 @@ class PaginationExtensionTest extends TestCase
         $sut = $this->getSut();
 
         $values = array_fill(0, 151, 'blub');
-        $pagerfanta = new Pagerfanta(new ArrayAdapter($values));
+        $pagerfanta = new Pagination(new ArrayAdapter($values));
         $result = $sut->renderPagination($pagerfanta, [
             'css_container_class' => 'pagination pagination-sm inline',
             'routeName' => 'project_activities',
@@ -97,7 +97,7 @@ class PaginationExtensionTest extends TestCase
         $sut = $this->getSut();
 
         $values = array_fill(0, 151, 'blub');
-        $pagerfanta = new Pagerfanta(new ArrayAdapter($values));
+        $pagerfanta = new Pagination(new ArrayAdapter($values));
         $result = $sut->renderPagination($pagerfanta, [
             'css_container_class' => 'pagination pagination-sm inline',
             'routeName' => 'project_activities',
@@ -114,7 +114,7 @@ class PaginationExtensionTest extends TestCase
         $sut = $this->getSut();
 
         $values = array_fill(0, 151, 'blub');
-        $pagerfanta = new Pagerfanta(new ArrayAdapter($values));
+        $pagerfanta = new Pagination(new ArrayAdapter($values));
         $result = $sut->renderPagination($pagerfanta, [
             'css_container_class' => 'pagination pagination-sm inline',
             'routeParams' => ['id' => 137]

@@ -19,7 +19,7 @@ final class TimesheetZeroDuration extends TimesheetConstraint
 
     public $message = 'Duration cannot be zero.';
 
-    public function getTargets()
+    public function getTargets(): string|array
     {
         return self::CLASS_CONSTRAINT;
     }
