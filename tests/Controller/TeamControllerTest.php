@@ -86,8 +86,9 @@ class TeamControllerTest extends ControllerBaseTest
         $values['team_edit_form']['members'][0]['teamlead'] = 1;
         $client->request($form->getMethod(), $form->getUri(), $values, $form->getPhpFiles());
 
-        $this->assertIsRedirect($client, '/edit');
-        $client->followRedirect();
+        $location = $this->assertIsModalRedirect($client, '/edit');
+        $this->requestPure($client, $location);
+
         $this->assertHasFlashSuccess($client);
         $this->assertHasCustomerAndProjectPermissionBoxes($client);
     }

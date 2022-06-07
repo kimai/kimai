@@ -114,8 +114,9 @@ class UserControllerTest extends ControllerBaseTest
                 'enabled' => 1,
             ]
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode($username) . '/edit'));
-        $client->followRedirect();
+
+        $location = $this->assertIsModalRedirect($client, '/profile/' . urlencode($username) . '/edit');
+        $this->requestPure($client, $location);
 
         $form = $client->getCrawler()->filter('form[name=user_edit]')->form();
         $this->assertEquals($username, $form->get('user_edit[alias]')->getValue());
