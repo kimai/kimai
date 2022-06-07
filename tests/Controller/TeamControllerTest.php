@@ -218,10 +218,4 @@ class TeamControllerTest extends ControllerBaseTest
         $editForm = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
         $this->assertEquals('Test team (1)', $editForm->get('team_edit_form[name]')->getValue());
     }
-
-    public function testDuplicateActionWithInvalidCsrf()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertInvalidCsrfToken($client, '/admin/teams/1/duplicate/rsetdzfukgli78t6r5uedtjfzkugl', $this->createUrl('/admin/teams/1/edit'));
-    }
 }
