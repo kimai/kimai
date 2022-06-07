@@ -169,6 +169,11 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/project/1/details');
+        $this->assertDetailsPage($client);
+    }
+
+    private function assertDetailsPage(HttpKernelBrowser $client)
+    {
         self::assertHasProgressbar($client);
 
         $node = $client->getCrawler()->filter('div.card#project_details_box');
@@ -404,8 +409,11 @@ class ProjectControllerTest extends ControllerBaseTest
                 'customer' => 1,
             ]
         ]);
-        $this->assertIsRedirect($client, '/details');
-        $client->followRedirect();
+
+        $location = $this->assertIsModalRedirect($client, '/details');
+        $this->requestPure($client, $location);
+
+        $this->assertDetailsPage($client);
         $this->assertHasFlashSuccess($client);
     }
 

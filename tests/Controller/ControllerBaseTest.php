@@ -418,20 +418,25 @@ abstract class ControllerBaseTest extends WebTestCase
         $this->assertRedirectUrl($client, $url, $endsWith);
     }
 
-    protected function assertIsModalRedirect(HttpKernelBrowser $client, ?string $url = null, bool $endsWith = true)
+    protected function assertIsModalRedirect(HttpKernelBrowser $client, ?string $url = null, bool $endsWith = true): string
     {
-        self::assertTrue($client->getResponse()->headers->has('Modal-Redirect'), 'Could not find "Modal-Redirect" header');
-        $location = $client->getResponse()->headers->get('Modal-Redirect');
+        self::assertEquals(201, $client->getResponse()->getStatusCode());
+        self::assertTrue($client->getResponse()->headers->has('x-modal-redirect'), 'Could not find "x-modal-redirect" header');
+        $location = $client->getResponse()->headers->get('x-modal-redirect');
 
-        if ($url === null) {
-            return;
+        // check for meta refresh
+        $expectedMeta = sprintf('<meta http-equiv="refresh" content="0;url=\'%1$s\'" />', $location);
+        self::assertStringContainsString($expectedMeta, $client->getResponse()->getContent());
+
+        if ($url !== null) {
+            if ($endsWith) {
+                self::assertStringEndsWith($url, $location, 'Redirect URL does not match');
+            } else {
+                self::assertStringContainsString($url, $location, 'Redirect URL does not match');
+            }
         }
 
-        if ($endsWith) {
-            self::assertStringEndsWith($url, $location, 'Redirect URL does not match');
-        } else {
-            self::assertStringContainsString($url, $location, 'Redirect URL does not match');
-        }
+        return $location;
     }
 
     protected function assertRedirectUrl(HttpKernelBrowser $client, ?string $url = null, bool $endsWith = true)

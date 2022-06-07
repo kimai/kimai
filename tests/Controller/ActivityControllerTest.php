@@ -207,12 +207,11 @@ class ActivityControllerTest extends ControllerBaseTest
             ]
         ]);
 
-        // unable to use $this->createUrl('/admin/activity/123/details') because we do not know the ID
-        $this->assertIsRedirect($client, '/details');
-        $this->assertIsModalRedirect($client, '/details');
+        $location = $this->assertIsModalRedirect($client, '/details');
+        $this->requestPure($client, $location);
 
-        $client->followRedirect();
         $this->assertDetailsPage($client);
+        $this->assertHasFlashSuccess($client);
 
         $activities = $this->getEntityManager()->getRepository(Activity::class)->findAll();
         $activity = array_pop($activities);
