@@ -253,7 +253,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         $submitData = $request->query->all();
         // allow using forms with block-prefix
         if (!empty($formName = $form->getConfig()->getName()) && $request->request->has($formName)) {
-            $submitData = $request->request->get($formName);
+            $submitData = $request->request->all($formName);
         }
 
         $searchName = $this->getSearchName($data);

@@ -477,7 +477,7 @@ abstract class TimesheetAbstractController extends AbstractController
                 'page' => $query->getPage(),
             ]),
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
-            'method' => 'GET',
+            'method' => Request::METHOD_GET,
             'include_user' => $this->includeUserInForms('toolbar'),
         ]);
     }
