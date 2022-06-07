@@ -9,10 +9,16 @@
 
 namespace App\Widget\Type;
 
+use App\Repository\Loader\UserIdLoader;
 use App\Widget\WidgetInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 class UserTeams extends AbstractWidget
 {
+    public function __construct(private EntityManagerInterface $entityManager)
+    {
+    }
+
     public function getWidth(): int
     {
         return WidgetInterface::WIDTH_HALF;
@@ -48,6 +54,12 @@ class UserTeams extends AbstractWidget
 
     public function getData(array $options = [])
     {
-        return $this->getUser()->getTeams();
+        $user = $this->getUser();
+
+        // without this, every user would be lazy loaded
+        $loader = new UserIdLoader($this->entityManager, true);
+        $loader->loadResults([$user->getId()]);
+
+        return $user->getTeams();
     }
 }
