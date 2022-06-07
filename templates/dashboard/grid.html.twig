@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% import "macros/widgets.html.twig" as widgets %}
+{% from "macros/widgets.html.twig" import nothing_found, alert %}
 
 {% block page_title %}{{ 'dashboard.title'|trans }}{% endblock %}
 {% block subtitle %}{{ 'dashboard.subtitle'|trans }}{% endblock %}
@@ -25,10 +25,10 @@
 {% block main %}
 
     {% if widgets is empty %}
-        {{ widgets.nothing_found() }}
+        {{ nothing_found() }}
     {% else %}
         {% if form is defined %}
-            {{ widgets.alert('warning', 'dashboard.edit_mode') }}
+            {{ alert('warning', 'dashboard.edit_mode') }}
 
             {{ form_start(form, {'attr': {'style': 'display: none', 'id': 'dashboard-widgets'}}) }}
             {{ form_end(form) }}

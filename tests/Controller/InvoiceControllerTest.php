@@ -420,9 +420,11 @@ class InvoiceControllerTest extends ControllerBaseTest
         $template = $this->importFixture($fixture);
         $id = $template[0]->getId();
 
-        $token = $this->getCsrfToken($client, 'invoice.delete_template');
+        $this->request($client, '/invoice/template');
+        $url = $this->createUrl('/invoice/template/' . $id . '/delete/');
+        $links = $client->getCrawler()->filterXPath("//a[starts-with(@href, '" . $url . "')]");
 
-        $this->request($client, '/invoice/template/' . $id . '/delete/' . $token);
+        $this->requestPure($client, $links->attr('href'));
         $this->assertIsRedirect($client, '/invoice/template');
         $client->followRedirect();
 

@@ -216,13 +216,13 @@
 {% endmacro %}
 
 {% macro alert(type, description, title, icon, dismissible) %}
-    {% import '@theme/components/alert.html.twig' as macro %}
-    {{ macro.alert(type, description, title, icon, dismissible) }}
+    {% from '@theme/components/alert.html.twig' import alert %}
+    {{ alert({type: type, description: description, title: title, icon: icon, dismissible: dismissible}) }}
 {% endmacro %}
 
 {% macro callout(type, description, title, icon) %}
-    {% import '@theme/components/callout.html.twig' as macro %}
-    {{ macro.callout(type, description, title, icon, false) }}
+    {% from '@theme/components/alert.html.twig' import alert %}
+    {{ alert({type: type|default('danger'), description: description, title: title, icon: icon, dismissible: false, important: true}) }}
 {% endmacro %}
 
 {% macro table_actions(actions, class) %}
