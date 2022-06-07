@@ -18,18 +18,18 @@ use Doctrine\ORM\QueryBuilder;
 
 final class TimesheetResult
 {
-    private $query;
-    private $queryBuilder;
-    private $statisticCache;
-    private $resultCache;
+    private ?TimesheetResultStatistic $statisticCache = null;
+    private bool $cachedFullyHydrated = false;
+    /**
+     * @var array<Timesheet>|null
+     */
+    private ?array $resultCache = null;
 
     /**
      * @internal
      */
-    public function __construct(TimesheetQuery $query, QueryBuilder $queryBuilder)
+    public function __construct(private TimesheetQuery $query, private QueryBuilder $queryBuilder)
     {
-        $this->query = $query;
-        $this->queryBuilder = $queryBuilder;
     }
 
     public function getStatistic(): TimesheetResultStatistic
@@ -63,15 +63,14 @@ final class TimesheetResult
      */
     public function getResults(bool $fullyHydrated = false): array
     {
-        // TODO if $fullyHydrated = false and then we call this again using deep nested objects in a second turn
-        // it might result in hundreds of lazy loading calls - improve caching
-        if ($this->resultCache === null) {
+        if ($this->resultCache === null || ($fullyHydrated && $this->cachedFullyHydrated === false)) {
             $query = $this->queryBuilder->getQuery();
             $results = $query->getResult();
 
             $loader = new TimesheetLoader($this->queryBuilder->getEntityManager(), $fullyHydrated);
             $loader->loadResults($results);
 
+            $this->cachedFullyHydrated = $fullyHydrated;
             $this->resultCache = $results;
         }
 
