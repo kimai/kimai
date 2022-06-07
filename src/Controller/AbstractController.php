@@ -46,12 +46,17 @@ abstract class AbstractController extends BaseAbstractController implements Serv
 
     /**
      * Returns a RedirectResponse to the given route with the given parameters.
+     *
+     * This needs to be a 201 code and NOT 302 (as usual for redirects) because 302 cannot be handled on
+     * javascript side, as XMLHttpRequests (jQuery.ajax) will auto-redirect these responses.
+     *
+     * Can be changed to 302, once the modal uses vanilla JS fetch() method only!
      */
-    protected function redirectToRouteAfterCreate(string $route, array $parameters = [], int $status = 302): RedirectResponse
+    protected function redirectToRouteAfterCreate(string $route, array $parameters = [], int $status = 201): RedirectResponse
     {
         $url = $this->generateUrl($route, $parameters);
         $response = new RedirectResponse($url, $status);
-        $response->headers->set('Modal-Redirect', $url);
+        $response->headers->set('x-modal-redirect', $url);
 
         return $response;
     }

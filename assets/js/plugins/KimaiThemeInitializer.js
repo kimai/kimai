@@ -116,7 +116,7 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
     registerGlobalAjaxSuccessHandler() {
         jQuery(document).ajaxSuccess(function(event, jqxhr, settings, data) {
             if (jqxhr.status !== undefined && jqxhr.status === 201) {
-                const successRedirect = jqxhr.getResponseHeader('modal-redirect');
+                const successRedirect = jqxhr.getResponseHeader('x-modal-redirect');
                 if (successRedirect !== null) {
                     window.location = successRedirect;
                 }

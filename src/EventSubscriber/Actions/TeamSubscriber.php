@@ -36,7 +36,7 @@ class TeamSubscriber extends AbstractActionsSubscriber
             }
 
             if ($this->isGranted('create_team')) {
-                $event->addAction('copy', ['url' => $this->path('team_duplicate', ['id' => $team->getId(), 'token' => $payload['token']]), 'title' => 'copy', 'translation_domain' => 'actions']);
+                $event->addAction('copy', ['url' => $this->path('team_duplicate', ['id' => $team->getId()]), 'title' => 'copy', 'translation_domain' => 'actions', 'class' => 'modal-ajax-form']);
             }
         }
 

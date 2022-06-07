@@ -14,8 +14,6 @@ use App\Entity\User;
 use App\Tests\DataFixtures\TeamFixtures;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
@@ -208,19 +206,17 @@ class TeamControllerTest extends ControllerBaseTest
     public function testDuplicateAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->request($client, '/admin/teams/');
 
-        // FIXME
-        $client->getRequest()->setSession(new Session(new MockFileSessionStorage()));
+        $this->request($client, '/admin/teams/1/duplicate');
+        $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
 
-        $token = $this->getCsrfToken($client, 'team.duplicate');
+        $client->submit($form);
 
-        $this->request($client, '/admin/teams/1/duplicate/' . $token);
-        $this->assertIsRedirect($client, '/edit');
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('#team_edit_form_name');
-        self::assertEquals(1, $node->count());
-        self::assertEquals('Test team [COPY]', $node->attr('value'));
+        $location = $this->assertIsModalRedirect($client);
+        $this->requestPure($client, $location);
+
+        $editForm = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
+        $this->assertEquals('Test team (1)', $editForm->get('team_edit_form[name]')->getValue());
     }
 
     public function testDuplicateActionWithInvalidCsrf()

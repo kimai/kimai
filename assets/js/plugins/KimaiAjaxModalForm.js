@@ -76,22 +76,28 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
     }
 
     openUrlInModal(url, errorHandler) {
-        const self = this;
+        const headers = new Headers();
+        headers.append('X-Requested-With', 'Kimai-Modal');
 
-        if (errorHandler === undefined) {
-            errorHandler = function(xhr, err) {
-                if (xhr.status === undefined || xhr.status !== 403) {
+        fetch(url, {
+            method: 'GET',
+            redirect: 'follow',
+            headers: headers
+        })
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === undefined || response.status !== 403) {
                     window.location = url;
                 }
-            };
-        }
+                return;
+            }
 
-        jQuery.ajax({
-            url: url,
-            success: function(html) {
-                self._openFormInModal(html);
-            },
-            error: errorHandler
+            return response.text().then(html => {
+                this._openFormInModal(html);
+            });
+        })
+        .catch(error =>  {
+            window.location = url;
         });
     }
 
@@ -200,10 +206,15 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
                 type: form.attr('method'),
                 data: form.serialize(),
                 success: function(html) {
+                    const newDocument = jQuery(html);
                     btn.button('reset');
-                    let hasFieldError = jQuery(html).find('#form_modal .modal-content .is-invalid').length > 0;
-                    let hasFormError = jQuery(html).find('#form_modal .modal-content ul.list-unstyled li.text-danger').length > 0;
-                    let hasFlashError = jQuery(html).find(flashErrorIdentifier).length > 0;
+                    let hasFieldError = newDocument.find('#form_modal .modal-content .is-invalid').length > 0;
+                    if (!hasFieldError) {
+                        // happens when an error occurs for a "hidden or non-classical" form element e.g. creating team without users
+                        newDocument.find('#form_modal .modal-content .invalid-feedback').length > 0;
+                    }
+                    let hasFormError = newDocument.find('#form_modal .modal-content ul.list-unstyled li.text-danger').length > 0;
+                    let hasFlashError = newDocument.find(flashErrorIdentifier).length > 0;
 
                     if (hasFieldError || hasFormError || hasFlashError) {
                         self._openFormInModal(html);
@@ -214,7 +225,7 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
                         let msg = form.attr('data-msg-success');
                         if (msg === null || msg === undefined) {
                             // ... but if none was available, check the response to find server rendered flash-message
-                            let flashMessage = jQuery(html).find('section.content div.row div.alert.alert-success');
+                            let flashMessage = newDocument.find('section.content div.row div.alert.alert-success');
                             if (flashMessage.length > 0) {
                                 let flashContent = flashMessage.contents();
                                 if (flashContent.length === 3) {
