@@ -217,12 +217,12 @@
 
 {% macro alert(type, description, title, icon, dismissible) %}
     {% from '@theme/components/alert.html.twig' import alert %}
-    {{ alert({type: type, description: description, title: title, icon: icon, dismissible: dismissible}) }}
+    {{ alert({type: type, description: description, title: title|trans, icon: icon, dismissible: dismissible}) }}
 {% endmacro %}
 
 {% macro callout(type, description, title, icon) %}
     {% from '@theme/components/alert.html.twig' import alert %}
-    {{ alert({type: type|default('danger'), description: description, title: title, icon: icon, dismissible: false, important: true}) }}
+    {{ alert({type: type|default('danger'), description: description, title: title|trans, icon: icon, dismissible: false, important: true}) }}
 {% endmacro %}
 
 {% macro table_actions(actions, class) %}
