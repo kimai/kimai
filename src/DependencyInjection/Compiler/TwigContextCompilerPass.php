@@ -9,8 +9,8 @@
 
 namespace App\DependencyInjection\Compiler;
 
-use App\Configuration\ThemeConfiguration;
 use App\Twig\Configuration;
+use App\Twig\Context;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -27,7 +27,7 @@ class TwigContextCompilerPass implements CompilerPassInterface
     {
         $twig = $container->getDefinition('twig');
 
-        $theme = $container->getDefinition(ThemeConfiguration::class);
+        $theme = $container->getDefinition(Context::class);
         $twig->addMethodCall('addGlobal', ['kimai_context', $theme]);
 
         $config = $container->getDefinition(Configuration::class);
