@@ -129,11 +129,11 @@ class TimesheetControllerTest extends ControllerBaseTest
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(15);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
-        $fixture->setCallback(function (Timesheet $timesheet){
+        $fixture->setCallback(function (Timesheet $timesheet) {
             $duration = rand(3600, 36000);
             $begin = new \DateTime('-15 days');
             $end = clone $begin;
-            $end->modify('+'.$duration.' seconds');
+            $end->modify('+' . $duration . ' seconds');
             $timesheet->setBegin($begin);
             $timesheet->setEnd($end);
         });
