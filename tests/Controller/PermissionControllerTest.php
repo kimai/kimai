@@ -42,11 +42,16 @@ class PermissionControllerTest extends ControllerBaseTest
         ]);
 
         $content = $client->getResponse()->getContent();
+        $this->assertTableHeader($content);
+    }
+
+    private function assertTableHeader(string $content): void
+    {
         // the english translation instead of the real system user role names
-        self::assertStringContainsString('<th data-field="User" class="alwaysVisible text-center">', $content);
-        self::assertStringContainsString('<th data-field="Teamlead" class="alwaysVisible text-center">', $content);
-        self::assertStringContainsString('<th data-field="Administrator" class="alwaysVisible text-center">', $content);
-        self::assertStringContainsString('<th data-field="System-Admin" class="alwaysVisible text-center">', $content);
+        self::assertStringContainsString('<th data-field="ROLE_USER" class="alwaysVisible text-center col_ROLE_USER">', $content);
+        self::assertStringContainsString('<th data-field="ROLE_TEAMLEAD" class="alwaysVisible text-center col_ROLE_TEAMLEAD">', $content);
+        self::assertStringContainsString('<th data-field="ROLE_ADMIN" class="alwaysVisible text-center col_ROLE_ADMIN">', $content);
+        self::assertStringContainsString('<th data-field="ROLE_SUPER_ADMIN" class="alwaysVisible text-center bg-orange-lt col_ROLE_SUPER_ADMIN">', $content);
     }
 
     public function testCreateRoleIsSecured()
@@ -73,12 +78,7 @@ class PermissionControllerTest extends ControllerBaseTest
         $client->followRedirect();
 
         $content = $client->getResponse()->getContent();
-        // the english translation instead of the real system user role names
-        self::assertStringContainsString('<th data-field="User" class="alwaysVisible text-center">', $content);
-        self::assertStringContainsString('<th data-field="Teamlead" class="alwaysVisible text-center">', $content);
-        self::assertStringContainsString('<th data-field="Administrator" class="alwaysVisible text-center">', $content);
-        self::assertStringContainsString('<th data-field="System-Admin" class="alwaysVisible text-center">', $content);
-        self::assertStringContainsString('<th data-field="TEST_ROLE" class="alwaysVisible text-center">', $content);
+        $this->assertTableHeader($content);
     }
 
     public function testDeleteRoleIsSecured()
@@ -114,7 +114,7 @@ class PermissionControllerTest extends ControllerBaseTest
         }
 
         $content = $client->getResponse()->getContent();
-        self::assertStringContainsString('<th data-field="TEST_ROLE" class="alwaysVisible text-center">', $content);
+        self::assertStringContainsString('<th data-field="TEST_ROLE" class="alwaysVisible text-center col_TEST_ROLE">', $content);
 
         // add user to role
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/roles');

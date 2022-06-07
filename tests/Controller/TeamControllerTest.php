@@ -14,6 +14,8 @@ use App\Entity\User;
 use App\Tests\DataFixtures\TeamFixtures;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
@@ -42,7 +44,7 @@ class TeamControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/teams/');
         $this->assertPageActions($client, [
             'search' => '#',
-            'create' => $this->createUrl('/admin/teams/create'),
+            'create modal-ajax-form' => $this->createUrl('/admin/teams/create'),
             'help' => 'https://www.kimai.org/documentation/teams.html'
         ]);
         $this->assertHasDataTable($client);
@@ -206,6 +208,10 @@ class TeamControllerTest extends ControllerBaseTest
     public function testDuplicateAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/admin/teams/');
+
+        // FIXME
+        $client->getRequest()->setSession(new Session(new MockFileSessionStorage()));
 
         $token = $this->getCsrfToken($client, 'team.duplicate');
 
