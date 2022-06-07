@@ -25,42 +25,46 @@ final class RolePermissionManager
         'view_user'
     ];
 
-    private array $permissions = [];
     /**
      * @var string[]
      */
-    private array $knownPermissions = [];
+    private ?array $knownPermissions = null;
 
-    public function __construct(RolePermissionRepository $repository, array $permissions)
+    public function __construct(private RolePermissionRepository $repository, private array $permissions)
     {
-        $this->permissions = $permissions;
+    }
 
-        foreach ($permissions as $role => $perms) {
-            $this->knownPermissions = array_merge($this->knownPermissions, $perms);
-        }
-        $this->knownPermissions = array_unique($this->knownPermissions);
-
-        $all = $repository->getAllAsArray();
-        foreach ($all as $item) {
-            $perm = $item['permission'];
-            $role = strtoupper($item['role']);
-            $isAllowed = (bool) $item['allowed'];
-
-            // these permissions may not be revoked at any time, because super admin would loose the ability to reactivate any permission
-            if ($role === User::ROLE_SUPER_ADMIN && \in_array($perm, self::SUPER_ADMIN_PERMISSIONS)) {
-                continue;
+    private function init(): void
+    {
+        if ($this->knownPermissions === null) {
+            $this->knownPermissions = [];
+            foreach ($this->permissions as $role => $perms) {
+                $this->knownPermissions = array_merge($this->knownPermissions, $perms);
             }
+            $this->knownPermissions = array_unique($this->knownPermissions);
 
-            if (!\array_key_exists($role, $this->permissions)) {
-                $this->permissions[$role] = [];
-            }
+            $all = $this->repository->getAllAsArray();
+            foreach ($all as $item) {
+                $perm = $item['permission'];
+                $role = strtoupper($item['role']);
+                $isAllowed = (bool) $item['allowed'];
 
-            if (false === $isAllowed) {
-                if (($key = array_search($perm, $this->permissions[$role])) !== false) {
-                    unset($this->permissions[$role][$key]);
+                // these permissions may not be revoked at any time, because super admin would lose the ability to reactivate any permission
+                if ($role === User::ROLE_SUPER_ADMIN && \in_array($perm, self::SUPER_ADMIN_PERMISSIONS)) {
+                    continue;
                 }
-            } else {
-                $this->permissions[$role][] = $perm;
+
+                if (!\array_key_exists($role, $this->permissions)) {
+                    $this->permissions[$role] = [];
+                }
+
+                if (false === $isAllowed) {
+                    if (($key = array_search($perm, $this->permissions[$role])) !== false) {
+                        unset($this->permissions[$role][$key]);
+                    }
+                } else {
+                    $this->permissions[$role][] = $perm;
+                }
             }
         }
     }
@@ -73,11 +77,15 @@ final class RolePermissionManager
      */
     public function isRegisteredPermission(string $permission): bool
     {
+        $this->init();
+
         return \in_array($permission, $this->knownPermissions);
     }
 
     public function hasPermission(string $role, string $permission): bool
     {
+        $this->init();
+
         $role = strtoupper($role);
 
         if (!isset($this->permissions[$role])) {
@@ -89,6 +97,8 @@ final class RolePermissionManager
 
     public function hasRolePermission(User $user, string $permission): bool
     {
+        $this->init();
+
         foreach ($user->getRoles() as $role) {
             if ($this->hasPermission($role, $permission)) {
                 return true;
@@ -105,6 +115,8 @@ final class RolePermissionManager
      */
     public function getPermissions(): array
     {
+        $this->init();
+
         return $this->knownPermissions;
     }
 }
