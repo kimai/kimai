@@ -18,6 +18,10 @@ use App\Tests\KernelTestTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\HttpFoundation\Test\Constraint as ResponseConstraint;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 use Symfony\Component\Security\Csrf\CsrfToken;
@@ -469,6 +473,10 @@ abstract class ControllerBaseTest extends WebTestCase
 
     protected function getCsrfToken(HttpKernelBrowser $client, string $name): CsrfToken
     {
+        $request = new Request();
+        $request->setSession(new Session(new MockArraySessionStorage()));
+        self::getContainer()->get(RequestStack::class)->push($request);
+
         return self::getContainer()->get('security.csrf.token_manager')->getToken($name);
     }
 }
