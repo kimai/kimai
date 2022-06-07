@@ -78,4 +78,16 @@ class ContextTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), ['X-Requested-With' => 'Kimai-Modal']);
         self::assertTrue($sut->isModalRequest());
     }
+
+    public function testIsJavascriptRequest()
+    {
+        $sut = $this->getSut($this->getDefaultSettings());
+        self::assertFalse($sut->isJavascriptRequest());
+
+        $sut = $this->getSut($this->getDefaultSettings(), ['X-Requested-With' => 'XMLHttpRequest']);
+        self::assertTrue($sut->isJavascriptRequest());
+
+        $sut = $this->getSut($this->getDefaultSettings(), ['X-Requested-With' => 'Kimai']);
+        self::assertTrue($sut->isJavascriptRequest());
+    }
 }

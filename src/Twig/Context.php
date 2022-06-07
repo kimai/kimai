@@ -28,6 +28,16 @@ final class Context
         return $request->isXmlHttpRequest() || 'Kimai-Modal' == $request->headers->get('X-Requested-With');
     }
 
+    public function isJavascriptRequest(): bool
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        if ($request === null) {
+            return false;
+        }
+
+        return $request->isXmlHttpRequest() || 'Kimai' == $request->headers->get('X-Requested-With');
+    }
+
     public function getBranding(string $config): mixed
     {
         @trigger_error('Use "kimai_config" instead of "kimai_context" to access system configurations', E_USER_DEPRECATED);
