@@ -182,7 +182,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
         $this->assertEquals(0, $node->count());
         // but the datatable with all timesheets
-        $this->assertDataTableRowCount($client, 'datatable_invoice', 20);
+        $this->assertDataTableRowCount($client, 'datatable_invoice_create', 20);
 
         $urlParams = [
             'daterange' => $dateRange,
@@ -303,7 +303,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $node = $client->getCrawler()->filter('div.callout.callout-warning.lead');
         $this->assertEquals(0, $node->count());
         // but the datatable with all timesheets
-        $this->assertDataTableRowCount($client, 'datatable_invoice', 20);
+        $this->assertDataTableRowCount($client, 'datatable_invoice_create', 20);
 
         $token = $client->getCrawler()->filter('div#create-token')->attr('data-value');
 

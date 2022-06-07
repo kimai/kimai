@@ -232,7 +232,7 @@ abstract class ControllerBaseTest extends WebTestCase
 
     protected function assertMainContentClass(HttpKernelBrowser $client, string $classname)
     {
-        self::assertStringContainsString('<section class="content ' . $classname . '">', $client->getResponse()->getContent());
+        self::assertStringContainsString('<section id="" class="content ' . $classname . '">', $client->getResponse()->getContent());
     }
 
     /**
@@ -412,6 +412,22 @@ abstract class ControllerBaseTest extends WebTestCase
         }
 
         $this->assertRedirectUrl($client, $url, $endsWith);
+    }
+
+    protected function assertIsModalRedirect(HttpKernelBrowser $client, ?string $url = null, bool $endsWith = true)
+    {
+        self::assertTrue($client->getResponse()->headers->has('Modal-Redirect'), 'Could not find "Modal-Redirect" header');
+        $location = $client->getResponse()->headers->get('Modal-Redirect');
+
+        if ($url === null) {
+            return;
+        }
+
+        if ($endsWith) {
+            self::assertStringEndsWith($url, $location, 'Redirect URL does not match');
+        } else {
+            self::assertStringContainsString($url, $location, 'Redirect URL does not match');
+        }
     }
 
     protected function assertRedirectUrl(HttpKernelBrowser $client, ?string $url = null, bool $endsWith = true)

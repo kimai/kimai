@@ -20,6 +20,7 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * @group integration
@@ -157,6 +158,12 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->assertAccessIsGranted($client, '/admin/activity/1/details');
+
+        $this->assertDetailsPage($client);
+    }
+
+    private function assertDetailsPage(HttpKernelBrowser $client)
+    {
         self::assertHasProgressbar($client);
 
         $node = $client->getCrawler()->filter('div.card#activity_details_box');
@@ -199,9 +206,13 @@ class ActivityControllerTest extends ControllerBaseTest
                 'project' => '1',
             ]
         ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/'));
+
+        // unable to use $this->createUrl('/admin/activity/123/details') because we do not know the ID
+        $this->assertIsRedirect($client, '/details');
+        $this->assertIsModalRedirect($client, '/details');
+
         $client->followRedirect();
-        $this->assertHasDataTable($client);
+        $this->assertDetailsPage($client);
 
         $activities = $this->getEntityManager()->getRepository(Activity::class)->findAll();
         $activity = array_pop($activities);
