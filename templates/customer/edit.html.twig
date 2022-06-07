@@ -1,11 +1,11 @@
-{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "customer/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'customers'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.customer(customer, 'edit') }}{% endblock %}
 
 {% block main %}
-    {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+    {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
         'title': (customer.id is null ? 'create'|trans : 'edit'|trans({}, 'actions')),
         'form': form,

@@ -48,7 +48,7 @@
         {% endblock %}
     {% endembed %}
     <script type="text/javascript">
-        {% set eventName = app.request.xmlHttpRequest ? 'kimai.reloadPage' : 'kimai.initialized' %}
+        {% set eventName = kimai_context.javascriptRequest ? 'kimai.reloadPage' : 'kimai.initialized' %}
         document.addEventListener('{{ eventName }}', function() {
             KimaiPaginatedBoxWidget.create('#activity_list_box');
         });

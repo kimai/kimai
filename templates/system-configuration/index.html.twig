@@ -1,4 +1,4 @@
-{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "system-configuration/actions.html.twig" as actions %}
 
 {% block page_title %}{{ 'menu.system_configuration'|trans }}{% endblock %}
@@ -6,7 +6,7 @@
 
 {% block main %}
 
-    {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+    {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
 
     {% for section in sections %}
         {% set title = section.model.translation|trans({}, section.model.translationDomain) %}

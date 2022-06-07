@@ -67,7 +67,7 @@
         </div>
     {% endblock %}
 {% endembed %}
-{% if not app.request.xmlHttpRequest %}
+{% if not kimai_context.javascriptRequest %}
 <script type="text/javascript">
     document.addEventListener('kimai.initialized', function() {
         KimaiPaginatedBoxWidget.create('#PaginatedWorkingTimeChart');

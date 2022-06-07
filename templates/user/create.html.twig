@@ -3,7 +3,7 @@
 {% block page_title %}{{ 'users'|trans }}{% endblock %}
 
 {% block main %}
-    {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+    {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
         'title': 'create'|trans,
         'form': form,

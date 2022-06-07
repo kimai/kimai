@@ -1,4 +1,4 @@
-{% extends app.request.xmlHttpRequest ? 'form.html.twig' : 'base.html.twig' %}
+{% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 
 {% block page_title %}{{ 'menu.export'|trans }}{% endblock %}
@@ -7,7 +7,7 @@
     {% if stats.count > 1000 %}
         {{ widgets.alert('warning', ('export.warn_result_amount'|trans({'%count%': stats.count})), null, 'warning') }}
     {% endif %}
-    {% set formEditTemplate = app.request.xmlHttpRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+    {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
         'title': 'menu.export'|trans,
         'form': form,

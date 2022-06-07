@@ -133,7 +133,7 @@
         myChart.destroy();
     };
     
-    {% if app.request.xmlHttpRequest %}
+    {% if kimai_context.javascriptRequest %}
         paintChart();
     {% else %}
         if (document.getElementById('dashboard-grid-container') !== null) {
