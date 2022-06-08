@@ -11,7 +11,6 @@ namespace App\Tests\API;
 
 use App\Entity\RateInterface;
 use App\Entity\User;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @group integration

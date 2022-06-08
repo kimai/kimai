@@ -193,7 +193,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         $this->assertApiException($response, ['code' => Response::HTTP_INTERNAL_SERVER_ERROR, 'message' => $message]);
     }
 
-    protected function assertBadRequest(HttpKernelBrowser $client, string $url , string $method)
+    protected function assertBadRequest(HttpKernelBrowser $client, string $url, string $method)
     {
         $this->assertExceptionForMethod($client, $url, $method, [], [
             'code' => Response::HTTP_BAD_REQUEST,

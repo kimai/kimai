@@ -21,7 +21,6 @@ use App\Entity\User;
 use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @group integration

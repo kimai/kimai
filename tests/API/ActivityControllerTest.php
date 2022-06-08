@@ -20,7 +20,6 @@ use App\Entity\User;
 use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @group integration
