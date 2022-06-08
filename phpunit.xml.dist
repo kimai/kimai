@@ -8,7 +8,7 @@
         <env name="KERNEL_CLASS" value="App\Kernel" force="true"/>
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
         <env name="APP_ENV" value="test" force="true"/>
-        <env name="APP_DEBUG" value="1" force="true"/>
+        <env name="APP_DEBUG" value="0" force="true"/>
         <env name="APP_SECRET" value="5a79a1c866efef9ca1800f971d689f3e" force="true"/>
         <!--
             CREATE DATABASE IF NOT EXISTS `kimai2_test`;
