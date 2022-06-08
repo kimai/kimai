@@ -1081,22 +1081,21 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function __serialize(): array
     {
         return [
-            $this->password,
-            $this->username,
-            $this->enabled,
-            $this->id,
-            $this->email,
+            'password' => $this->password,
+            'username' => $this->username,
+            'enabled' => $this->enabled,
+            'id' => $this->id,
+            'email' => $this->email,
         ];
     }
 
     public function __unserialize(array $data): void
     {
-        list(
-            $this->password,
-            $this->username,
-            $this->enabled,
-            $this->id,
-            $this->email) = $data;
+        $this->password = $data['password'];
+        $this->username = $data['username'];
+        $this->enabled = $data['enabled'];
+        $this->id = $data['id'];
+        $this->email = $data['email'];
     }
 
     public function __toString()
