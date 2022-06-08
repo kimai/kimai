@@ -57,10 +57,10 @@ jobs:
             -   name: Check codestyles
                 run: vendor/bin/php-cs-fixer fix --dry-run --verbose --config=.php-cs-fixer.dist.php --using-cache=no --show-progress=none --format=checkstyle | cs2pr
 
-            -   name: Run PHPStan
+            -   name: Run PHPStan for application
                 run: vendor/bin/phpstan analyse src -c phpstan.neon --level=5 --no-progress --error-format=checkstyle | cs2pr
 
-            -   name: Run PHPStan on Tests
+            -   name: Run PHPStan for tests
                 run: vendor/bin/phpstan analyse tests -c tests/phpstan.neon --level=5 --no-progress --error-format=checkstyle | cs2pr
 
             -   name: Lint codebase
@@ -69,13 +69,13 @@ jobs:
             -   name: Check for security issues in packages
                 run: symfony security:check
 
-            -   name: Install LDAP package
+            -   name: Install LDAP package (for tests)
                 run: composer require laminas/laminas-ldap
 
-            -   name: Setup problem matchers for PHPUnit
+            -   name: Setup problem matchers (for PHPUnit)
                 run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
-            -   name: Unit tests
+            -   name: Run quick unit-tests
                 run: composer kimai:tests-unit
                 env:
                     DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?serverVersion=5.7
