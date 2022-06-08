@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\HttpFoundation\Test\Constraint as ResponseConstraint;
@@ -216,7 +217,7 @@ abstract class ControllerBaseTest extends WebTestCase
             'Access is not denied for URL: ' . $client->getRequest()->getUri()
         );
         self::assertStringContainsString(
-            'Symfony\Component\Security\Core\Exception\AccessDeniedException',
+            'Page is restricted',
             $client->getResponse()->getContent(),
             'Could not find AccessDeniedException in response'
         );
@@ -231,7 +232,15 @@ abstract class ControllerBaseTest extends WebTestCase
     protected function assertRouteNotFound(HttpKernelBrowser $client)
     {
         self::assertFalse($client->getResponse()->isSuccessful());
-        self::assertEquals(404, $client->getResponse()->getStatusCode());
+        self::assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
+    }
+
+    protected function assert404(Response $response, ?string $message = null)
+    {
+        $message = 'Page not found';
+        self::assertFalse($response->isSuccessful());
+        self::assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());
+        self::assertStringContainsString($message, $response->getContent());
     }
 
     protected function assertMainContentClass(HttpKernelBrowser $client, string $classname)

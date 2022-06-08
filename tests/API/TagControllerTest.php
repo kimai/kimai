@@ -149,6 +149,7 @@ class TagControllerTest extends APIControllerBaseTest
 
     public function testDeleteActionWithUnknownTimesheet()
     {
-        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, '/api/tags/' . PHP_INT_MAX);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertNotFoundForDelete($client, '/api/tags/' . PHP_INT_MAX);
     }
 }

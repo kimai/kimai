@@ -215,10 +215,7 @@ class UserControllerTest extends APIControllerBaseTest
         ];
         $this->request($client, '/api/users', 'POST', [], json_encode($data));
         $response = $client->getResponse();
-        $this->assertFalse($response->isSuccessful());
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $json = json_decode($response->getContent(), true);
-        $this->assertEquals('Access denied.', $json['message']);
+        $this->assertApiResponseAccessDenied($response, 'Access denied.');
     }
 
     public function testPatchAction()

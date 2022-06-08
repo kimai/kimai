@@ -41,7 +41,8 @@ trait RateControllerTestTrait
             'internal_rate' => 6.66,
             'is_fixed' => false
         ];
-        $this->assertEntityNotFoundForPost(User::ROLE_ADMIN, $this->getRateUrl(99), $data, 'Not found');
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertEntityNotFoundForPost($client, $this->getRateUrl(99), $data);
     }
 
     public function testAddRateMissingUserAction()
@@ -71,10 +72,7 @@ trait RateControllerTestTrait
         ];
         $this->request($client, $this->getRateUrl(), 'POST', [], json_encode($data));
         $response = $client->getResponse();
-        $this->assertFalse($response->isSuccessful());
-        $this->assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-        $json = json_decode($response->getContent(), true);
-        $this->assertEquals('Access denied.', $json['message']);
+        $this->assertApiResponseAccessDenied($response, 'Access denied.');
     }
 
     public function testAddRateAction()
@@ -178,12 +176,14 @@ trait RateControllerTestTrait
 
     public function testDeleteRateEntityNotFound()
     {
-        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, $this->getRateUrl(99, 1));
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertNotFoundForDelete($client, $this->getRateUrl(99, 1));
     }
 
     public function testDeleteRateRateNotFound()
     {
-        $this->assertEntityNotFoundForDelete(User::ROLE_ADMIN, $this->getRateUrl(1, 99));
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertNotFoundForDelete($client, $this->getRateUrl(1, 99));
     }
 
     public function testDeleteRateWithInvalidAssignment()

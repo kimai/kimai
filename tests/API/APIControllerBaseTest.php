@@ -108,8 +108,8 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         );
 
         $this->assertApiException($client->getResponse(), [
-            'code' => 403,
-            'message' => 'Access denied.'
+            'code' => Response::HTTP_FORBIDDEN,
+            'message' => 'Forbidden'
         ]);
     }
 
@@ -125,40 +125,32 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser($role);
         $this->request($client, $url, $method);
         $this->assertApiException($client->getResponse(), [
-            'code' => 404,
-            'message' => $message ?? 'Not found'
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found'
         ]);
     }
 
     protected function assertNotFoundForDelete(HttpKernelBrowser $client, string $url)
     {
         $this->assertExceptionForMethod($client, $url, 'DELETE', [], [
-            'code' => 404,
-            'message' => 'Not found'
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found'
         ]);
     }
 
-    protected function assertEntityNotFoundForDelete(string $role, string $url, ?string $message = null)
-    {
-        $this->assertExceptionForDeleteAction($role, $url, [], [
-            'code' => 404,
-            'message' => $message ?? 'Not found'
-        ]);
-    }
-
-    protected function assertEntityNotFoundForPatch(string $role, string $url, array $data, ?string $message = null)
+    protected function assertEntityNotFoundForPatch(string $role, string $url, array $data)
     {
         $this->assertExceptionForPatchAction($role, $url, $data, [
-            'code' => 404,
-            'message' => $message ?? 'Not found',
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found',
         ]);
     }
 
-    protected function assertEntityNotFoundForPost(string $role, string $url, array $data, ?string $message = null)
+    protected function assertEntityNotFoundForPost(HttpKernelBrowser $client, string $url, array $data = [])
     {
-        $this->assertExceptionForPostAction($role, $url, $data, [
-            'code' => 404,
-            'message' => $message ?? 'Not found',
+        $this->assertExceptionForMethod($client, $url, 'POST', $data, [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found',
         ]);
     }
 
@@ -198,17 +190,28 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
     protected function assertApi500Exception(Response $response, string $message)
     {
-        $this->assertApiException($response, ['code' => 500, 'message' => $message]);
+        $this->assertApiException($response, ['code' => Response::HTTP_INTERNAL_SERVER_ERROR, 'message' => $message]);
     }
 
-    protected function assertApiAccessDenied(HttpKernelBrowser $client, string $url, string $message)
+    protected function assertBadRequest(HttpKernelBrowser $client, string $url , string $method)
+    {
+        $this->assertExceptionForMethod($client, $url, $method, [], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    protected function assertApiAccessDenied(HttpKernelBrowser $client, string $url, string $message = 'Forbidden')
     {
         $this->request($client, $url);
         $this->assertApiResponseAccessDenied($client->getResponse(), $message);
     }
 
-    protected function assertApiResponseAccessDenied(Response $response, string $message)
+    protected function assertApiResponseAccessDenied(Response $response, string $message = 'Forbidden')
     {
+        // APP_DEBUG = 1 means "real exception messages" - it is always overwritten
+        $message = 'Forbidden';
+
         $this->assertApiException($response, [
             'code' => Response::HTTP_FORBIDDEN,
             'message' => $message
