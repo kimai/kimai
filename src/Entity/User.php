@@ -1046,6 +1046,17 @@ class User implements UserInterface, EquatableInterface, \Serializable
         return true;
     }
 
+    public function __serialize(): array
+    {
+        return [
+            $this->password,
+            $this->username,
+            $this->enabled,
+            $this->id,
+            $this->email,
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -1058,6 +1069,22 @@ class User implements UserInterface, EquatableInterface, \Serializable
             $this->id,
             $this->email,
         ]);
+    }
+
+    public function __unserialize(array $data): void
+    {
+        // unserialize a user object from <= 1.14
+        if (8 === \count($data)) {
+            unset($data[1], $data[2], $data[7]);
+            $data = array_values($data);
+        }
+
+        list(
+            $this->password,
+            $this->username,
+            $this->enabled,
+            $this->id,
+            $this->email) = $data;
     }
 
     /**
