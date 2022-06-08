@@ -31,7 +31,7 @@ jobs:
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: ${{ matrix.php }}
-                    coverage: none
+                    coverage: pcov
                     extensions: mbstring, xml, ctype, iconv, intl, mysql, zip, gd, ldap
                     tools: cs2pr:1.1.0, symfony-cli
 
@@ -51,13 +51,13 @@ jobs:
             -   name: Validate Composer
                 run: composer validate --strict
 
-            -   name: Warmup cache for PHPStan
+            -   name: Warmup cache
                 run: APP_ENV=dev bin/console kimai:reload -n
 
             -   name: Check codestyles
                 run: vendor/bin/php-cs-fixer fix --dry-run --verbose --config=.php-cs-fixer.dist.php --using-cache=no --show-progress=none --format=checkstyle | cs2pr
 
-            -   name: Run PHPStan on Codebase
+            -   name: Run PHPStan
                 run: vendor/bin/phpstan analyse src -c phpstan.neon --level=5 --no-progress --error-format=checkstyle | cs2pr
 
             -   name: Run PHPStan on Tests
@@ -75,19 +75,27 @@ jobs:
             -   name: Setup problem matchers for PHPUnit
                 run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
-            -   name: Run unit tests
+            -   name: Unit tests
                 run: composer kimai:tests-unit
                 env:
                     DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?serverVersion=5.7
                     APP_ENV: dev
                     MAILER_URL: null://localhost
 
-            -   name: Run integration tests
-                run: composer kimai:tests-integration
+            -   name: Full test-suite with coverage
+                run: vendor/bin/phpunit tests/ --coverage-clover=coverage.xml
                 env:
                     DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?serverVersion=5.7
                     APP_ENV: dev
                     MAILER_URL: null://localhost
+                    TEST_WITH_BUNDLES: 1
+
+            -   name: Upload code coverage
+                uses: codecov/codecov-action@v2
+                with:
+                    token: ${{ secrets.CODECOV_TOKEN }}
+                    files: ./coverage.xml
+                    fail_ci_if_error: true
 
             -   name: Run migrations on MySQL
                 run: |
