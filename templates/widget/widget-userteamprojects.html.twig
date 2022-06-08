@@ -25,10 +25,10 @@
                                 <small>{{ widgets.label_customer(project.customer) }}</small>
                             </td>
                             <td style="width:50%">
-                                {% if row.hasTimeBudget() %}
-                                    {{ progress.progressbar_timebudget(row) }}
-                                {% elseif row.hasBudget() %}
+                                {% if row.hasBudget() and is_granted('budget', row.entity) %}
                                     {{ progress.progressbar_budget(row, row.entity.customer.currency) }}
+                                {% elseif row.hasTimeBudget() and is_granted('time', row.entity) %}
+                                    {{ progress.progressbar_timebudget(row) }}
                                 {% endif %}
                             </td>
                         </tr>

@@ -14,4 +14,5 @@ final class TimesheetBudgetUsed extends TimesheetConstraint
     // same messages, so we can re-use the validation translation!
     public $messageRate = 'The budget is completely used.';
     public $messageTime = 'The budget is completely used.';
+    public $messagePermission = 'Sorry, the budget is used up.';
 }

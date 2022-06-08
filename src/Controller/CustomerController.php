@@ -315,7 +315,7 @@ final class CustomerController extends AbstractController
             $timezone = new \DateTimeZone($customer->getTimezone());
         }
 
-        if ($this->isGranted('budget', $customer)) {
+        if ($this->isGranted('budget', $customer) || $this->isGranted('time', $customer)) {
             $stats = $statisticService->getBudgetStatisticModel($customer, $now);
         }
 
@@ -530,7 +530,8 @@ final class CustomerController extends AbstractController
         return $this->createForm(CustomerEditForm::class, $customer, [
             'action' => $url,
             'method' => 'POST',
-            'include_budget' => $this->isGranted('budget', $customer)
+            'include_budget' => $this->isGranted('budget', $customer),
+            'include_time' => $this->isGranted('time', $customer),
         ]);
     }
 }

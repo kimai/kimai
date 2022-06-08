@@ -28,6 +28,7 @@ final class ProjectVoter extends Voter
         'view',
         'edit',
         'budget',
+        'time',
         'delete',
         'permissions',
         'comments',

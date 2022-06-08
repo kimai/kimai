@@ -22,7 +22,7 @@ final class ProjectDetailsController extends AbstractController
 {
     /**
      * @Route(path="/reporting/project_details", name="report_project_details", methods={"GET"})
-     * @Security("is_granted('view_reporting') and (is_granted('details_project') or is_granted('details_teamlead_project') or is_granted('details_team_project'))")
+     * @Security("is_granted('view_reporting') and is_granted('details', 'project')")
      */
     public function __invoke(Request $request, ProjectStatisticService $service)
     {
