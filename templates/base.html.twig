@@ -14,6 +14,7 @@
         {% block modal_footer %}{% endblock %}
     {% endembed %}
     {% block page_search %}{% endblock %}
+    <div id="toast-container" class="toast-container position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 11"></div>
 {% endblock %}
 
 {% block page_content_class %}{{ parent() }} {% block page_class %}{% endblock %}{% endblock %}
@@ -23,7 +24,7 @@
         {% set domain = 'flashmessages' %}
         <script type="text/javascript">
             document.addEventListener('kimai.initialized', function(options) {
-                var ALERT = options.detail.kimai.getPlugin('alert');
+                const ALERT = options.detail.kimai.getPlugin('alert');
                 {% for type, messages in app.session.flashbag.all %}
                     {% for message in messages %}
                         {% if type == 'error' %}
@@ -138,4 +139,7 @@
     {{ webloader.init_frontend_loader() }}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::JAVASCRIPT')) %}
     {{ event.content|raw }}
+    <script>
+
+    </script>
 {% endblock %}

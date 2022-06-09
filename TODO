@@ -38,17 +38,6 @@ THEME
 
 - Button loadingText etc wird nicht mehr unterstützt
 
-- Rewrite "KimaiAlert" von Sweetalert nach Bootstrap Toasts: getPlugin('alert')
-    https://preview.tabler.io/modals.html
-    https://getbootstrap.com/docs/5.0/components/toasts/#usage
-
-        document.addEventListener('kimai.initialized', function(options) {
-            var ALERT = options.detail.kimai.getPlugin('alert');
-            ALERT.error('ERROR skdfgjlsödkjfgölskdjfgölskjdf');
-            //ALERT.warning('WARNING skdfgjlsödkjfgölskdjfgölskjdf');
-            //ALERT.success('SUCCESS skdfgjlsödkjfgölskdjfgölskjdf');
-            //ALERT.info('INFO skdfgjlsödkjfgölskdjfgölskjdf');
-        });
 ===========================================================================
 
 ===========================================================================

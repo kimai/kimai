@@ -9,7 +9,7 @@
  * [KIMAI] KimaiThemeInitializer: initialize theme functionality
  */
 
-import { Tooltip, Toast } from 'bootstrap';
+import { Tooltip } from 'bootstrap';
 import jQuery from 'jquery';
 import KimaiPlugin from '../KimaiPlugin';
 

@@ -27,6 +27,7 @@ final class ThemeJavascriptTranslationsEvent extends Event
     private $translations = [
         'confirm' => ['confirm', 'messages'],
         'cancel' => ['cancel', 'messages'],
+        'close' => ['action.close', 'messages'],
         'today' => ['daterangepicker.today', 'daterangepicker'],
         'yesterday' => ['daterangepicker.yesterday', 'daterangepicker'],
         'lastWeek' => ['daterangepicker.lastWeek', 'daterangepicker'],
