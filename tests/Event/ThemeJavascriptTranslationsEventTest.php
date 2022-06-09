@@ -21,7 +21,7 @@ class ThemeJavascriptTranslationsEventTest extends TestCase
     {
         $sut = new ThemeJavascriptTranslationsEvent();
 
-        $this->assertCount(24, $sut->getTranslations());
+        $this->assertCount(25, $sut->getTranslations());
     }
 
     public function testGetterAndSetter()
