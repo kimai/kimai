@@ -1049,11 +1049,11 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function __serialize(): array
     {
         return [
-            $this->password,
-            $this->username,
-            $this->enabled,
-            $this->id,
-            $this->email,
+            'id' => $this->id,
+            'username' => $this->username,
+            'enabled' => $this->enabled,
+            'email' => $this->email,
+            'password' => $this->password,
         ];
     }
 
@@ -1073,18 +1073,14 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     public function __unserialize(array $data): void
     {
-        // unserialize a user object from <= 1.14
-        if (8 === \count($data)) {
-            unset($data[1], $data[2], $data[7]);
-            $data = array_values($data);
+        if (!array_key_exists('id', $data)) {
+            return;
         }
-
-        list(
-            $this->password,
-            $this->username,
-            $this->enabled,
-            $this->id,
-            $this->email) = $data;
+        $this->id = $data['id'];
+        $this->username = $data['username'];
+        $this->enabled = $data['enabled'];
+        $this->email = $data['email'];
+        $this->password = $data['password'];
     }
 
     /**
