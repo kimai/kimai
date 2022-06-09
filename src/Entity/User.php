@@ -1091,7 +1091,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function __unserialize(array $data): void
     {
-        if (!array_key_exists('id', $data)) {
+        if (!\array_key_exists('id', $data)) {
             return;
         }
         $this->password = $data['password'];
