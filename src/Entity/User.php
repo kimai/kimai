@@ -1073,7 +1073,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     public function __unserialize(array $data): void
     {
-        if (!array_key_exists('id', $data)) {
+        if (!\array_key_exists('id', $data)) {
             return;
         }
         $this->id = $data['id'];
