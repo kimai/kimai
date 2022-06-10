@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="needs-translation">Padrão: um registro de entrada por tempo</target>
+        <target state="translated">Padrão: um registo de entrada por tempo</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>

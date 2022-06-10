@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ar" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
@@ -17,6 +17,26 @@
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
         <target>تم تجميع المستخدم - إدخال واحد لكل مستخدم</target>
+      </trans-unit>
+      <trans-unit id="aDtTH0H" resname="price">
+        <source>price</source>
+        <target state="needs-translation">السعر: إدخال واحد لكل سعر</target>
+      </trans-unit>
+      <trans-unit id="BlGGO.X" resname="activity">
+        <source>activity</source>
+        <target state="translated">التنشيط: إدخال واحد لكل تنشيط</target>
+      </trans-unit>
+      <trans-unit id="JEIQ5IQ" resname="project">
+        <source>project</source>
+        <target state="needs-translation">المشروع: إدخال واحد لكل مشروع</target>
+      </trans-unit>
+      <trans-unit id="iFDs7Zh" resname="weekly">
+        <source>weekly</source>
+        <target state="needs-translation">أسبوعيا: إدخال واحد في الأسبوع (يستخدم تاريخ البدء)</target>
+      </trans-unit>
+      <trans-unit id="DodjLNR" resname="date">
+        <source>date</source>
+        <target state="needs-translation">التاريخ: إدخال واحد في اليوم (يستخدم تاريخ البدء)</target>
       </trans-unit>
     </body>
   </file>

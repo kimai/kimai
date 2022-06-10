@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target>配置得格式</target>
+        <target state="translated">配置的格式</target>
       </trans-unit>
     </body>
   </file>

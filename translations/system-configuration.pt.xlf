@@ -302,6 +302,18 @@
         <source>label.calendar.title_pattern</source>
         <target>Mostra os títulos das entradas do calendário</target>
       </trans-unit>
+      <trans-unit id="z4tQEPb" resname="label.timesheet.rules.allow_zero_duration">
+        <source>label.timesheet.rules.allow_zero_duration</source>
+        <target state="translated">Permitir entradas de tempo com uma duração vazia</target>
+      </trans-unit>
+      <trans-unit id="QxQOG3e" resname="label.quick_entry.recent_activity_weeks">
+        <source>label.quick_entry.recent_activity_weeks</source>
+        <target state="translated">Assumir as entradas das últimas X semanas (vazias ou 0 para sempre)</target>
+      </trans-unit>
+      <trans-unit id="7Efrrn5" resname="label.quick_entry.minimum_rows">
+        <source>label.quick_entry.minimum_rows</source>
+        <target state="translated">Número mínimo de linhas</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

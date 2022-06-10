@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fi" datatype="plaintext" original="teams.en.xlf">
     <body>
@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id=".yIcFDx" resname="team.visibility_global">
         <source>team.visibility_global</source>
-        <target state="translated">Näkyy kaikille, koska tiimiä ei ole vielä määritetty</target>
+        <target state="translated">Näkyy kaikille, koska tiimiä ei ole vielä määritetty.</target>
       </trans-unit>
       <trans-unit id="hlIIRjb" resname="team.visibility_restricted">
         <source>team.visibility_restricted</source>
@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited">
         <source>team.activity_visibility_inherited</source>
-        <target state="translated">Työtehtävällä on rajoitettu käyttöoikeus, koska tiimin käyttöoikeudet on asetettu projektille ja/tai asiakkaalle</target>
+        <target state="translated">Työtehtävällä on rajoitettu käyttöoikeus, koska tiimin käyttöoikeudet on asetettu projektille ja/tai asiakkaalle.</target>
       </trans-unit>
       <trans-unit id="cZEIdcu" resname="team.create_default">
         <source>team.create_default</source>

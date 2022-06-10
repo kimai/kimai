@@ -1278,6 +1278,10 @@
         <source>automatic</source>
         <target>Automatski</target>
       </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="translated">Tekst računa</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -78,6 +78,10 @@
         <source>This timesheet is already exported.</source>
         <target>Ova je vremenska tablica već izvezena.</target>
       </trans-unit>
+      <trans-unit id="ePrqiLN" resname="Duration cannot be zero.">
+        <source>Duration cannot be zero.</source>
+        <target state="translated">Prazno trajanje nije dozvoljeno.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

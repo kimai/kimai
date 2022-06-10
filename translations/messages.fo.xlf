@@ -1215,6 +1215,10 @@
         <source>label.last_record</source>
         <target state="needs-translation">Last entry</target>
       </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target state="translated">Sjálvvirkandi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
