@@ -62,6 +62,10 @@
         <source>The budget is completely used.</source>
         <target>Das Budget ist aufgebraucht. Von den vorhandenen %budget% wurden bisher %used% gebucht, noch nutzbar sind %free%.</target>
       </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target>Entschuldigung, das Budget ist aufgebraucht.</target>
+      </trans-unit>
       <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
         <source>Maximum duration of {{ value }} hours exceeded.</source>
         <target>Erlaubt sind max. {{ value }} Stunden.</target>

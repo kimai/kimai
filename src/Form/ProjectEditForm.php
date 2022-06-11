@@ -112,6 +112,7 @@ class ProjectEditForm extends AbstractType
             'currency' => Customer::DEFAULT_CURRENCY,
             'date_format' => null,
             'include_budget' => false,
+            'include_time' => false,
             'timezone' => date_default_timezone_get(),
             'time_increment' => 1,
             'attr' => [

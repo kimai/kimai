@@ -3,22 +3,36 @@
 
 {% block report_title %}{{ (title|default('report_project_view'))|trans({}, 'reporting') }}{% endblock %}
 
+{% set showMoneyBudget = is_granted('budget_money', 'project') %}
+{% set showTimeBudget = is_granted('budget_time', 'project') %}
+{% set showBudgets = showMoneyBudget or showTimeBudget %}
+
 {% set availableColumns = {
     'name':             {'class': 'alwaysVisible'},
-    'timeBudget':       {'class': 'hidden-xs', 'title': 'label.timeBudget'|trans},
-    'budget':           {'class': 'hidden-xs', 'title': 'label.budget'|trans},
+} %}
+{% if showMoneyBudget %}
+    {% set availableColumns = availableColumns|merge({
+        'budget':           {'class': 'hidden-xs', 'title': 'label.budget'|trans},
+        'invoiced':         {'class': 'hidden-sm hidden-xs hidden text-center hw-min', 'title': 'label.not_invoiced'|trans, 'columnClass': 'w-min'},
+    }) %}
+{% endif %}
+{% if showTimeBudget %}
+    {% set availableColumns = availableColumns|merge({
+        'timeBudget':       {'class': 'hidden-xs', 'title': 'label.timeBudget'|trans},
+        'exported':         {'class': 'hidden-sm hidden-xs hidden text-center hw-min', 'title': 'label.not_exported'|trans, 'columnClass': 'w-min'},
+    }) %}
+{% endif %}
+{% set availableColumns = availableColumns|merge({
     'lastRecord':       {'class': 'text-center hw-min', 'title': 'label.last_record'|trans, 'columnClass': 'w-min'},
     'today':            {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationToday'|trans},
     'week':             {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationWeek'|trans},
     'month':            {'class': 'hidden hidden-md hidden-sm hidden-xs text-center hw-min', 'title': 'stats.durationMonth'|trans},
     'durationTotal':    {'class': 'text-center hw-min', 'title': 'stats.durationTotal'|trans, 'columnClass': 'w-min'},
-    'exported':         {'class': 'hidden-sm hidden-xs hidden text-center hw-min', 'title': 'label.not_exported'|trans, 'columnClass': 'w-min'},
-    'invoiced':         {'class': 'hidden-sm hidden-xs hidden text-center hw-min', 'title': 'label.not_invoiced'|trans, 'columnClass': 'w-min'},
     'projectStart':     {'class': 'hidden-md hidden-sm hidden-xs hidden text-center w-min', 'title': 'label.project_start'|trans},
     'projectEnd':       {'class': 'hidden-md hidden-sm hidden-xs hidden text-center w-min', 'title': 'label.project_end'|trans},
     'comment':          {'class': 'hidden-md hidden-sm hidden-xs hidden', 'title': 'label.comment'|trans},
     'actions':          {'class': 'actions alwaysVisible'},
-} %}
+}) %}
 {% set tableName = tableName|default('project_view_reporting') %}
 {% set skipColumns = skipColumns is defined ? skipColumns : {} %}
 {% set columns = {} %}
@@ -93,73 +107,71 @@
                         {% set project = entry.project %}
                         {% set budgetStats = entry.getBudgetStatisticModel() %}
                         {% set currency = project.customer.currency %}
-                        {% if is_granted('budget', project) %}
-                            <tr {{ widgets.project_row_attr(project, now) }}>
-                            {% for name, column_config in columns %}
-                                {% if name == 'name' %}
-                                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ widgets.label_project(project) }}</td>
-                                {% elseif name == 'lastRecord' %}
-                                <td class="{{ tables.data_table_column_class(tableName, columns, 'lastRecord') }}">
-                                    {% if entry.lastRecord is not null %}
-                                        {{ entry.lastRecord|date_short }}
-                                    {% else %}
-                                        &ndash;
-                                    {% endif %}
-                                </td>
-                                {% elseif name == 'today' %}
-                                <td class="{{ tables.data_table_column_class(tableName, columns, 'today') }}">{{ entry.durationDay|duration }}</td>
-                                {% elseif name == 'week' %}
-                                <td class="{{ tables.data_table_column_class(tableName, columns, 'week') }}">{{ entry.durationWeek|duration }}</td>
-                                {% elseif name == 'month' %}
-                                <td class="{{ tables.data_table_column_class(tableName, columns, 'month') }}">{{ entry.durationMonth|duration }}</td>
-                                {% elseif name == 'durationTotal' %}
-                                <td class="{{ tables.data_table_column_class(tableName, columns, 'durationTotal') }} w-min">{{ entry.durationTotal|duration }}</td>
-                                {% elseif name == 'timeBudget' %}
-                                <td class="{{ tables.data_table_column_class(tableName, columns, 'timeBudget') }}">
-                                    {% if budgetStats.hasTimeBudget() %}
-                                        {{ progress.progressbar_timebudget(budgetStats) }}
-                                    {% endif %}
-                                </td>
-                                {% elseif name == 'budget' %}
-                                <td class="{{ tables.data_table_column_class(tableName, columns, 'budget') }}">
-                                    {% if project.hasBudget() %}
-                                        {{ progress.progressbar_budget(budgetStats, project.customer.currency) }}
-                                    {% endif %}
-                                </td>
-                                {% elseif name == 'exported' %}
-                                <td class="{{ tables.data_table_column_class(tableName, columns, 'exported') }}">
-                                    {% if is_granted('create_export') %}
-                                        <a href="{{ path('export', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': '', 'preview': true}) }}">
-                                            {{ entry.notExportedDuration|duration }}
-                                        </a>
-                                    {% else %}
-                                        {{ entry.notExportedDuration|duration }}
-                                    {% endif %}
-                                </td>
-                                {% elseif name == 'invoiced' %}
-                                <td class="{{ tables.data_table_column_class(tableName, columns, 'invoiced') }}">
-                                    {% if is_granted('view_invoice') %}
-                                        <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
-                                            {{ entry.notBilledRate|money(currency) }}
-                                        </a>
-                                    {% else %}
-                                        {{ entry.notBilledRate|money(currency) }}
-                                    {% endif %}
-                                </td>
-                                {% elseif name == 'projectStart' %}
-                                <td class="{{ tables.data_table_column_class(tableName, columns, 'projectStart') }}">{% if project.start is not null %}{{ project.start|date_short }}{% endif %}</td>
-                                {% elseif name == 'projectEnd' %}
-                                <td class="{{ tables.data_table_column_class(tableName, columns, 'projectEnd') }}">{% if project.end is not null %}{{ project.end|date_short }}{% endif %}</td>
-                                {% elseif name == 'comment' %}
-                                <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ project.comment }}</td>
-                                {% elseif name == 'actions' %}
-                                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
-                                    {{ projectActions.project(project, 'custom') }}
-                                </td>
+                        <tr {{ widgets.project_row_attr(project, now) }}>
+                        {% for name, column_config in columns %}
+                            {% if name == 'name' %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">{{ widgets.label_project(project) }}</td>
+                            {% elseif name == 'lastRecord' %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'lastRecord') }}">
+                                {% if entry.lastRecord is not null %}
+                                    {{ entry.lastRecord|date_short }}
+                                {% else %}
+                                    &ndash;
                                 {% endif %}
-                            {% endfor %}
-                            </tr>
-                        {% endif %}
+                            </td>
+                            {% elseif name == 'today' %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'today') }}">{{ entry.durationDay|duration }}</td>
+                            {% elseif name == 'week' %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'week') }}">{{ entry.durationWeek|duration }}</td>
+                            {% elseif name == 'month' %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'month') }}">{{ entry.durationMonth|duration }}</td>
+                            {% elseif name == 'durationTotal' %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'durationTotal') }} w-min">{{ entry.durationTotal|duration }}</td>
+                            {% elseif name == 'timeBudget' %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'timeBudget') }}">
+                                {% if budgetStats.hasTimeBudget() and is_granted('time', project) %}
+                                    {{ progress.progressbar_timebudget(budgetStats) }}
+                                {% endif %}
+                            </td>
+                            {% elseif name == 'budget' %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'budget') }}">
+                                {% if project.hasBudget() and is_granted('budget', project) %}
+                                    {{ progress.progressbar_budget(budgetStats, project.customer.currency) }}
+                                {% endif %}
+                            </td>
+                            {% elseif name == 'exported' %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'exported') }}">
+                                {% if is_granted('create_export') %}
+                                    <a href="{{ path('export', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': '', 'preview': true}) }}">
+                                        {{ entry.notExportedDuration|duration }}
+                                    </a>
+                                {% else %}
+                                    {{ entry.notExportedDuration|duration }}
+                                {% endif %}
+                            </td>
+                            {% elseif name == 'invoiced' %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'invoiced') }}">
+                                {% if is_granted('view_invoice') %}
+                                    <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
+                                        {{ entry.notBilledRate|money(currency) }}
+                                    </a>
+                                {% else %}
+                                    {{ entry.notBilledRate|money(currency) }}
+                                {% endif %}
+                            </td>
+                            {% elseif name == 'projectStart' %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'projectStart') }}">{% if project.start is not null %}{{ project.start|date_short }}{% endif %}</td>
+                            {% elseif name == 'projectEnd' %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'projectEnd') }}">{% if project.end is not null %}{{ project.end|date_short }}{% endif %}</td>
+                            {% elseif name == 'comment' %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ project.comment }}</td>
+                            {% elseif name == 'actions' %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
+                                {{ projectActions.project(project, 'custom') }}
+                            </td>
+                            {% endif %}
+                        {% endfor %}
+                        </tr>
                     {% endfor %}
                 {% endfor %}
                 {{ tables.data_table_footer(entries) }}

@@ -75,20 +75,20 @@ kimai:
 # PERMISSIONS
 # --------------------------------------------------------------------------------
     permissions:
-        # mapping complex rule sets of single permissions to named "sets" ("set name" = [array of "permissions and sets"])
+        # mapping complex rule sets of single permissions to named "sets" ("set name" = [array of "permissions and @SETS"])
         sets:
-            ACTIVITIES: ['view_activity','create_activity','edit_activity','budget_activity','delete_activity','permissions_activity']
-            ACTIVITIES_ALL_TEAMLEAD: ['view_teamlead_activity','edit_teamlead_activity','budget_teamlead_activity','permissions_teamlead_activity']
-            ACTIVITIES_ALL_TEAM: ['view_team_activity','edit_team_activity','budget_team_activity']
-            ACTIVITIES_TEAMLEAD: ['view_teamlead_activity','create_activity','edit_teamlead_activity','budget_teamlead_activity']
-            PROJECTS: ['view_project','create_project','edit_project','budget_project','delete_project','permissions_project','comments_project','comments_create_project','details_project']
-            PROJECTS_ALL_TEAMLEAD: ['view_teamlead_project','edit_teamlead_project','budget_teamlead_project','permissions_teamlead_project','comments_teamlead_project','comments_create_teamlead_project','details_teamlead_project']
-            PROJECTS_ALL_TEAM: ['view_team_project','edit_team_project','budget_team_project','comments_team_project','comments_create_team_project','details_team_project']
-            PROJECTS_TEAMLEAD: ['view_teamlead_project','budget_teamlead_project','comments_teamlead_project','comments_create_teamlead_project','details_teamlead_project']
-            CUSTOMERS: ['view_customer','create_customer','edit_customer','budget_customer','delete_customer','permissions_customer','comments_customer','comments_create_customer','details_customer']
-            CUSTOMERS_ALL_TEAMLEAD: ['view_teamlead_customer','edit_teamlead_customer','budget_teamlead_customer','permissions_teamlead_customer','comments_teamlead_customer','comments_create_teamlead_customer','details_teamlead_customer']
-            CUSTOMERS_ALL_TEAM: ['view_team_customer','edit_team_customer','budget_team_customer','comments_team_customer','comments_create_team_customer','details_team_customer']
-            CUSTOMERS_TEAMLEAD: ['view_teamlead_customer','budget_teamlead_customer','comments_teamlead_customer','comments_create_teamlead_customer','details_teamlead_customer']
+            ACTIVITIES: ['view_activity','create_activity','edit_activity','budget_activity','time_activity','delete_activity','permissions_activity']
+            ACTIVITIES_ALL_TEAMLEAD: ['view_teamlead_activity','edit_teamlead_activity','budget_teamlead_activity','time_teamlead_activity','permissions_teamlead_activity']
+            ACTIVITIES_ALL_TEAM: ['view_team_activity','edit_team_activity','budget_team_activity','time_team_activity']
+            ACTIVITIES_TEAMLEAD: ['view_teamlead_activity','create_activity','edit_teamlead_activity','budget_teamlead_activity','time_teamlead_activity']
+            PROJECTS: ['view_project','create_project','edit_project','budget_project','time_project','delete_project','permissions_project','comments_project','comments_create_project','details_project']
+            PROJECTS_ALL_TEAMLEAD: ['view_teamlead_project','edit_teamlead_project','budget_teamlead_project','time_teamlead_project','permissions_teamlead_project','comments_teamlead_project','comments_create_teamlead_project','details_teamlead_project']
+            PROJECTS_ALL_TEAM: ['view_team_project','edit_team_project','budget_team_project','time_team_project','comments_team_project','comments_create_team_project','details_team_project']
+            PROJECTS_TEAMLEAD: ['view_teamlead_project','budget_teamlead_project','time_teamlead_project','comments_teamlead_project','comments_create_teamlead_project','details_teamlead_project']
+            CUSTOMERS: ['view_customer','create_customer','edit_customer','budget_customer','time_customer','delete_customer','permissions_customer','comments_customer','comments_create_customer','details_customer']
+            CUSTOMERS_ALL_TEAMLEAD: ['view_teamlead_customer','edit_teamlead_customer','budget_teamlead_customer','time_teamlead_customer','permissions_teamlead_customer','comments_teamlead_customer','comments_create_teamlead_customer','details_teamlead_customer']
+            CUSTOMERS_ALL_TEAM: ['view_team_customer','edit_team_customer','budget_team_customer','time_team_customer','comments_team_customer','comments_create_team_customer','details_team_customer']
+            CUSTOMERS_TEAMLEAD: ['view_teamlead_customer','budget_teamlead_customer','time_teamlead_customer','comments_teamlead_customer','comments_create_teamlead_customer','details_teamlead_customer']
             INVOICE: ['view_invoice','create_invoice']
             INVOICE_ADMIN: ['manage_invoice_template']
             INVOICE_ALL: ['delete_invoice']
@@ -106,7 +106,7 @@ kimai:
             LOCKDOWN: ['lockdown_grace_timesheet','lockdown_override_timesheet']
             REPORTING: ['view_reporting','view_other_reporting']
             # some single default definitions for roles
-            SINGLE_USER: ['view_team_member','budget_team_project']
+            SINGLE_USER: ['view_team_member','time_team_project']
             SINGLE_TEAMLEAD: ['view_rate_own_timesheet','view_rate_other_timesheet','hourly-rate_own_profile','view_team_member']
             SINGLE_ADMIN: ['hourly-rate_own_profile','edit_exported_timesheet','teams_own_profile','view_team_member','view_all_data']
             SINGLE_SUPER_ADMIN: ['hourly-rate_own_profile','hourly-rate_other_profile','roles_own_profile','system_information','system_configuration','plugins','edit_exported_timesheet','teams_own_profile','view_team_member','upload_invoice_template','view_all_data']

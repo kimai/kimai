@@ -114,6 +114,7 @@ class CustomerEditForm extends AbstractType
             'csrf_token_id' => 'admin_customer_edit',
             'currency' => Customer::DEFAULT_CURRENCY,
             'include_budget' => false,
+            'include_time' => false,
             'attr' => [
                 'data-form-event' => 'kimai.customerUpdate'
             ],
