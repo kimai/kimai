@@ -231,8 +231,8 @@
         <source>help.rate_internal</source>
         <target>هزینه های داخلی (اگر این مشخص نشده باشد ، از نرخ طبیعی استفاده می شود)</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target>نرخ داخلی</target>
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">

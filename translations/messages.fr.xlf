@@ -858,8 +858,8 @@
         <source>help.rate_internal</source>
         <target>Coûts internes (si cela n’est pas spécifié, le taux normal est utilisé)</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target>Taux interne</target>
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">

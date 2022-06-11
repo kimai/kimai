@@ -47,7 +47,7 @@
     'hourlyRate': false,
     'fixedRate': false,
     'duration': 'label.duration',
-    'rate_internal': 'label.rate_internal',
+    'rate_internal': 'label.internalRate',
     'rate': 'label.rate',
 }) %}
 
@@ -363,7 +363,7 @@
                 <div class="{{ formItemClass }}">
                     <label for="summary-rate-internal">
                         <input type="checkbox" id="summary-rate-internal" name="summary-rate-internal" checked>
-                        {{ 'label.rate_internal'|trans }}
+                        {{ 'label.internalRate'|trans }}
                     </label>
                 </div>
                 <div class="{{ formItemClass }}">
@@ -420,7 +420,7 @@
                     <th class="center export-timeBudget">{{ 'label.timeBudget'|trans }}</th>
                     <th class="center export-budget">{{ 'label.budget'|trans }}</th>
                     <th class="duration summary-duration">{{ 'label.duration'|trans }}</th>
-                    <th class="cost summary-rate-internal">{{ 'label.rate_internal'|trans }}</th>
+                    <th class="cost summary-rate-internal">{{ 'label.internalRate'|trans }}</th>
                     <th class="cost summary-rate">{{ 'label.rate'|trans }}</th>
                 </tr>
                 </thead>
@@ -513,7 +513,7 @@
                     <th class="center export-timeBudget">{{ 'label.timeBudget'|trans }}</th>
                     <th class="center export-budget">{{ 'label.budget'|trans }}</th>
                     <th class="duration summary-duration">{{ 'label.duration'|trans }}</th>
-                    <th class="cost summary-rate-internal">{{ 'label.rate_internal'|trans }}</th>
+                    <th class="cost summary-rate-internal">{{ 'label.internalRate'|trans }}</th>
                     <th class="cost summary-rate">{{ 'label.rate'|trans }}</th>
                 </tr>
                 </thead>

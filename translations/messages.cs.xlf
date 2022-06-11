@@ -981,8 +981,8 @@
         <source>help.rate_internal</source>
         <target>Interní náklady (jestli není zadáno, je použita normální sazba)</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target>Interní sazba</target>
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">

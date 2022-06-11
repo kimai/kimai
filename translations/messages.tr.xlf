@@ -989,8 +989,8 @@
         <source>help.rate_internal</source>
         <target>Dahili maliyetler (bu belirtilmemişse, normal ücret kullanılır)</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target>Dahili ücret</target>
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">

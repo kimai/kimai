@@ -1032,8 +1032,8 @@
         <source>menu.reporting</source>
         <target>Raportado</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target>Interna kotizo</target>
       </trans-unit>
       <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">

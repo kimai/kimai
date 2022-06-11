@@ -363,8 +363,8 @@
         <source>help.rate</source>
         <target>Zu berechnender Preis pro Stunde bzw. pro Eintrag bei Festpreisen</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target>Interner Preis</target>
       </trans-unit>
       <trans-unit id="uz4SmfP" resname="help.rate_internal">

@@ -121,7 +121,7 @@
                         {% set percentReached = (stats.internalRate / (stats.rateBillable / 100)) %}
                     {% endif %}
                     <tr>
-                        <td>{{ 'label.rate_internal'|trans }}</td>
+                        <td>{{ 'label.internalRate'|trans }}</td>
                         <td class="text-nowrap text-end">{{ stats.internalRate|money(currency) }}</td>
                         <td class="text-nowrap text-end">{{ percentReached|number_format(2) }}%</td>
                     </tr>
@@ -143,7 +143,7 @@
                     <div class="mb-3">{{ progress.progressbar(entity.budget, stats.rateBillable, rateTrans|trans, stats.rateBillable|money(currency) ~ ' / ' ~ entity.budget|money(currency)) }}</div>
                 {% endif %}
                 <div class="mb-3">{{ progress.progressbar(stats.rate, stats.rateBillable, 'label.billable'|trans, stats.rateBillable|money(currency) ~ ' / ' ~ stats.rate|money(currency), true) }}</div>
-                <div class="mb-3">{{ progress.progressbar(stats.rateBillable, stats.internalRate, 'label.rate_internal'|trans, stats.internalRate|money(currency) ~ ' / ' ~ stats.rateBillable|money(currency)) }}</div>
+                <div class="mb-3">{{ progress.progressbar(stats.rateBillable, stats.internalRate, 'label.internalRate'|trans, stats.internalRate|money(currency) ~ ' / ' ~ stats.rateBillable|money(currency)) }}</div>
             </div>
         </div>
     {% endblock %}

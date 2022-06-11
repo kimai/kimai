@@ -1013,8 +1013,8 @@
         <source>help.rate_internal</source>
         <target>Barne kostuak (ez badira zehazten, tarifa normala erabiliko da)</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target>Barne tasa</target>
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">

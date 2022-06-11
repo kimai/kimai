@@ -908,8 +908,8 @@
         <source>rates.empty</source>
         <target>Er zijn nog geen kosten per uur geconfigureerd.</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target>Intern tarief</target>
       </trans-unit>
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">

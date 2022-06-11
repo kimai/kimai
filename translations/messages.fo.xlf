@@ -187,8 +187,8 @@
         <source>label.rate</source>
         <target>Prísur</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target>Innanhýsis tímaprísur</target>
       </trans-unit>
       <trans-unit id="nWMH_Nr" resname="label.avatar">

@@ -996,8 +996,8 @@
         <source>help.rate_internal</source>
         <target>внутренние затраты (если не указаны, используется обычная ставка)</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target>Внутренняя ставка</target>
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">

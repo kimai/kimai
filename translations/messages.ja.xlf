@@ -869,8 +869,8 @@
         <source>Allowed character: A-Z and _</source>
         <target state="needs-translation">Allowed character: A-Z and _</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target state="needs-translation">Internal rate</target>
       </trans-unit>
       <trans-unit id="uz4SmfP" resname="help.rate_internal">

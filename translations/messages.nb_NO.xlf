@@ -584,8 +584,8 @@
         <source>help.rate</source>
         <target>Timevis sats å fakturere</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target>Intern sats</target>
       </trans-unit>
       <trans-unit id="v72sA1c" resname="label.recalculate_rates">

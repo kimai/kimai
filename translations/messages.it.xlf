@@ -292,8 +292,8 @@
         <source>help.rate</source>
         <target>Tariffa oraria da addebitare</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target>Costo interno</target>
       </trans-unit>
       <trans-unit id="uz4SmfP" resname="help.rate_internal">

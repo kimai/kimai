@@ -1113,8 +1113,8 @@
         <source>help.rate_internal</source>
         <target>内部成本 （如果未指定，则使用正常汇率）</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target>内部汇率</target>
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">

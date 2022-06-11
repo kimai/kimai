@@ -1189,8 +1189,8 @@
         <source>invoice_document.max_reached</source>
         <target state="needs-translation">Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target state="needs-translation">Internal rate</target>
       </trans-unit>
       <trans-unit id="61p_ckr" resname="label.hours_24">

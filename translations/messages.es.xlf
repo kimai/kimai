@@ -962,8 +962,8 @@
         <source>label.recalculate_rates</source>
         <target>Recalcular tarifas</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target>Tasa interna</target>
       </trans-unit>
       <trans-unit id="yLOqEX_" resname="label.project_start">

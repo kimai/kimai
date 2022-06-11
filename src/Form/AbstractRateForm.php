@@ -42,7 +42,7 @@ abstract class AbstractRateForm extends AbstractType
                     'type' => 'number',
                     'description' => 'The internal rate (eg. 10.0 or 10)',
                 ],
-                'label' => 'label.rate_internal',
+                'label' => 'label.internalRate',
                 'currency' => $currency,
                 'required' => false,
                 'help' => 'help.rate_internal',

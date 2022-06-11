@@ -40,7 +40,7 @@ class ReportSumType extends AbstractType
 
             if ($this->authorizationChecker->isGranted('view_rate_other_timesheet')) {
                 $choices['stats.amountTotal'] = 'rate';
-                $choices['label.rate_internal'] = 'internalRate';
+                $choices['label.internalRate'] = 'internalRate';
             }
 
             return $choices;

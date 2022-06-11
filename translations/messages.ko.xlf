@@ -937,8 +937,8 @@
         <source>help.rate_internal</source>
         <target>내부 비용 (지정되지 않은 경우 일반 요율이 사용됨)</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target>내부 수익률</target>
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">

@@ -363,8 +363,8 @@
         <source>help.rate</source>
         <target>Hourly price to be charged</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target>Internal price</target>
       </trans-unit>
       <trans-unit id="uz4SmfP" resname="help.rate_internal">

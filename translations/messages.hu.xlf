@@ -873,8 +873,8 @@
         <source>help.rate_internal</source>
         <target>Belső kiadások (ha nincs beállítva, a normál bér lesz használva)</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.rate_internal">
-        <source>label.rate_internal</source>
+      <trans-unit id="QzvjNwg" resname="label.internalRate">
+        <source>label.internalRate</source>
         <target>Belső bér</target>
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">
