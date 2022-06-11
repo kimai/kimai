@@ -20,6 +20,7 @@ use App\Timesheet\RateServiceInterface;
 use App\Utils\Duration;
 use App\Utils\LocaleHelper;
 use DateTime;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -32,8 +33,9 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
     private $timesheetRepository;
     private $rateService;
     private $configuration;
+    private $security;
 
-    public function __construct(SystemConfiguration $configuration, CustomerStatisticService $customerStatisticService, ProjectStatisticService $projectStatisticService, ActivityStatisticService $activityStatisticService, TimesheetRepository $timesheetRepository, RateServiceInterface $rateService)
+    public function __construct(SystemConfiguration $configuration, CustomerStatisticService $customerStatisticService, ProjectStatisticService $projectStatisticService, ActivityStatisticService $activityStatisticService, TimesheetRepository $timesheetRepository, RateServiceInterface $rateService, AuthorizationCheckerInterface $security)
     {
         $this->configuration = $configuration;
         $this->customerStatisticService = $customerStatisticService;
@@ -41,6 +43,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         $this->activityStatisticService = $activityStatisticService;
         $this->timesheetRepository = $timesheetRepository;
         $this->rateService = $rateService;
+        $this->security = $security;
     }
 
     /**
@@ -181,7 +184,12 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         $free = $budget - $rate;
         $free = max($free, 0);
 
-        $this->context->buildViolation($constraint->messageRate)
+        $message = $constraint->messageRate;
+        if (!$this->security->isGranted('budget_money', $field)) {
+            $message = $constraint->messagePermission;
+        }
+
+        $this->context->buildViolation($message)
             ->atPath($field)
             ->setTranslationDomain('validators')
             ->setParameters([
@@ -200,7 +208,12 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         $free = $budget - $duration;
         $free = max($free, 0);
 
-        $this->context->buildViolation($constraint->messageTime)
+        $message = $constraint->messageTime;
+        if (!$this->security->isGranted('budget_time', $field)) {
+            $message = $constraint->messagePermission;
+        }
+
+        $this->context->buildViolation($message)
             ->atPath($field)
             ->setTranslationDomain('validators')
             ->setParameters([

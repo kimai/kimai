@@ -83,7 +83,10 @@ class UserTeamProjects extends SimpleWidget implements AuthorizedWidget, UserWid
      */
     public function getPermissions(): array
     {
-        return ['budget_team_project', 'budget_teamlead_project', 'budget_project'];
+        return [
+            'budget_team_project', 'budget_teamlead_project', 'budget_project',
+            'time_team_project', 'time_teamlead_project', 'time_project',
+        ];
     }
 
     public function setUser(User $user): void

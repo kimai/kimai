@@ -6,7 +6,7 @@
             id="project_list_box" data-href="{{ path('customer_projects', {'id': customer.id}) }}" data-reload="kimai.projectUpdate kimai.projectDelete"
         {% endblock %}
         {% block box_tools %}
-            {% if is_granted('view_reporting') and is_granted('budget_project') %}
+            {% if is_granted('view_reporting') and is_granted('budget_any', 'project') %}
                 <a class="btn btn-default btn-sm btn-pager" href="{{ path('report_project_view', {'customer': customer.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'report_project_view'|trans({}, 'reporting') }}"><i class="{{ 'reporting'|icon }}"></i></a>
             {% endif %}
             {% if customer.visible and is_granted('create_project') %}

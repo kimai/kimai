@@ -133,7 +133,7 @@ final class ActivityController extends AbstractController
             $rates = $rateRepository->getRatesForActivity($activity);
         }
 
-        if ($this->isGranted('budget', $activity)) {
+        if ($this->isGranted('budget', $activity) || $this->isGranted('time', $activity)) {
             $stats = $statisticService->getBudgetStatisticModel($activity, $now);
         }
 
@@ -424,7 +424,8 @@ final class ActivityController extends AbstractController
             'action' => $url,
             'method' => 'POST',
             'currency' => $currency,
-            'include_budget' => $this->isGranted('budget', $activity)
+            'include_budget' => $this->isGranted('budget', $activity),
+            'include_time' => $this->isGranted('time', $activity),
         ]);
     }
 }

@@ -26,22 +26,30 @@ trait EntityFormTrait
     {
         $this->addColor($builder);
 
-        if ($options['include_budget']) {
-            $builder
-                ->add('budget', MoneyType::class, [
-                    'empty_data' => '0.00',
-                    'label' => 'label.budget',
-                    'required' => false,
-                    'currency' => $options['currency'],
-                ])
-                ->add('timeBudget', DurationType::class, [
-                    'empty_data' => 0,
-                    'label' => 'label.timeBudget',
-                    'icon' => 'clock',
-                    'required' => false,
-                ])
-                ->add('budgetType', BudgetType::class)
-            ;
+        $showMoney = $options['include_budget'];
+        $showTime = $options['include_time'];
+        $showBudget = $showMoney || $showTime;
+
+        if ($showMoney) {
+            $builder->add('budget', MoneyType::class, [
+                'empty_data' => '0.00',
+                'label' => 'label.budget',
+                'required' => false,
+                'currency' => $options['currency'],
+            ]);
+        }
+
+        if ($showTime) {
+            $builder->add('timeBudget', DurationType::class, [
+                'empty_data' => 0,
+                'label' => 'label.timeBudget',
+                'icon' => 'clock',
+                'required' => false,
+            ]);
+        }
+
+        if ($showBudget) {
+            $builder->add('budgetType', BudgetType::class);
         }
 
         $builder->add('metaFields', MetaFieldsCollectionType::class);

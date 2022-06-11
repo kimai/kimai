@@ -31,6 +31,7 @@ use App\Timesheet\RateServiceInterface;
 use App\Validator\Constraints\TimesheetBudgetUsed;
 use App\Validator\Constraints\TimesheetBudgetUsedValidator;
 use DateTime;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
@@ -88,7 +89,9 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             $rateService = new RateService([], $timesheetRepository);
         }
 
-        return new TimesheetBudgetUsedValidator($configuration, $customerRepository, $projectRepository, $activityRepository, $timesheetRepository, $rateService);
+        $auth = $this->createMock(AuthorizationCheckerInterface::class);
+
+        return new TimesheetBudgetUsedValidator($configuration, $customerRepository, $projectRepository, $activityRepository, $timesheetRepository, $rateService, $auth);
     }
 
     public function testConstraintIsInvalid()
@@ -466,7 +469,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         if (null === $used && null === $budget && null === $free && $path === null) {
             $this->assertNoViolation();
         } else {
-            $this->buildViolation('The budget is completely used.')
+            $this->buildViolation('Sorry, the budget is used up.')
                 ->atPath('property.path.' . $path)
                 ->setParameters([
                     '%used%' => $used,

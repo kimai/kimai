@@ -333,7 +333,7 @@ final class ProjectController extends AbstractController
             $rates = $rateRepository->getRatesForProject($project);
         }
 
-        if ($this->isGranted('budget', $project)) {
+        if ($this->isGranted('budget', $project) || $this->isGranted('time', $project)) {
             $stats = $statisticService->getBudgetStatisticModel($project, $now);
         }
 
@@ -563,6 +563,7 @@ final class ProjectController extends AbstractController
             'currency' => $currency,
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'include_budget' => $this->isGranted('budget', $project),
+            'include_time' => $this->isGranted('time', $project),
             'time_increment' => 15,
         ]);
     }

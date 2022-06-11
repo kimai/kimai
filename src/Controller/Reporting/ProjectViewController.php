@@ -21,7 +21,7 @@ final class ProjectViewController extends AbstractController
 {
     /**
      * @Route(path="/reporting/project_view", name="report_project_view", methods={"GET","POST"})
-     * @Security("is_granted('view_reporting') and is_granted('budget_project')")
+     * @Security("is_granted('view_reporting') and is_granted('budget_any', 'project')")
      */
     public function __invoke(Request $request, ProjectStatisticService $service)
     {

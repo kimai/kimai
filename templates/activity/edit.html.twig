@@ -28,18 +28,22 @@
             {% if form.project is defined %}
                 {{ form_row(form.project) }}
             {% endif %}
-            {% if form.budget is defined %}
-            <div class="row">
-                <div class="col-md-4">
-                    {{ form_row(form.budget) }}
+            {% if form.budgetType is defined %}
+                <div class="row">
+                    {% if form.budget is defined %}
+                        <div class="col-md-4">
+                            {{ form_row(form.budget) }}
+                        </div>
+                    {% endif %}
+                    {% if form.timeBudget is defined %}
+                        <div class="col-md-4">
+                            {{ form_row(form.timeBudget) }}
+                        </div>
+                    {% endif %}
+                    <div class="col-md-4">
+                        {{ form_row(form.budgetType) }}
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    {{ form_row(form.timeBudget) }}
-                </div>
-                <div class="col-md-4">
-                    {{ form_row(form.budgetType) }}
-                </div>
-            </div>
             {% endif %}
             {% if form.invoiceText is defined %}
                 {{ form_row(form.invoiceText) }}
