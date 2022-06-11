@@ -266,7 +266,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $this->assertEquals(19, $sut->getVat());
         $this->assertEquals('EUR', $model->getCurrency());
         $this->assertEquals(488.38, $sut->getSubtotal());
-        $this->assertEquals(5400, $sut->getTimeWorked());
+        $this->assertEquals(5800, $sut->getTimeWorked());
         $this->assertEquals(1, \count($sut->getEntries()));
 
         /** @var InvoiceItem $result */

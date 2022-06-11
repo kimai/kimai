@@ -60,6 +60,14 @@ class CalendarController extends AbstractController
                     $profile = $values['user'];
                 }
             }
+
+            $form = $form->createView();
+
+            // hide if the current user is the only available one
+            if (\count($form->offsetGet('user')->vars['choices']) < 2) {
+                $form = null;
+                $profile = $this->getUser();
+            }
         }
 
         $mode = $this->service->getActiveMode();
@@ -80,7 +88,7 @@ class CalendarController extends AbstractController
         }
 
         return $this->render('calendar/user.html.twig', [
-            'form' => ($form === null ? null : $form->createView()),
+            'form' => $form,
             'user' => $profile,
             'config' => $config,
             'dragAndDrop' => $dragAndDrop,
