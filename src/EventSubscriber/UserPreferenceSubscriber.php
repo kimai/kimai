@@ -32,15 +32,8 @@ use Symfony\Component\Validator\Constraints\Range;
 
 final class UserPreferenceSubscriber implements EventSubscriberInterface
 {
-    private $eventDispatcher;
-    private $voter;
-    private $configuration;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher, AuthorizationCheckerInterface $voter, SystemConfiguration $systemConfiguration)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private AuthorizationCheckerInterface $voter, private SystemConfiguration $systemConfiguration)
     {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->voter = $voter;
-        $this->configuration = $systemConfiguration;
     }
 
     public static function getSubscribedEvents(): array
@@ -54,9 +47,9 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
      * @param User $user
      * @return UserPreference[]
      */
-    public function getDefaultPreferences(User $user)
+    public function getDefaultPreferences(User $user): array
     {
-        $timezone = $this->configuration->getUserDefaultTimezone();
+        $timezone = $this->systemConfiguration->getUserDefaultTimezone();
         if (null === $timezone) {
             $timezone = date_default_timezone_get();
         }
@@ -67,7 +60,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
 
         if ($this->voter->isGranted('hourly-rate', $user)) {
             $enableHourlyRate = true;
-            $hourlyRateOptions = ['currency' => $this->configuration->getUserDefaultCurrency()];
+            $hourlyRateOptions = ['currency' => $this->systemConfiguration->getUserDefaultCurrency()];
         }
 
         return [
@@ -88,7 +81,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setSection('rate')
                 ->setType(MoneyType::class)
                 ->setEnabled($enableHourlyRate)
-                ->setOptions(array_merge($hourlyRateOptions, ['label' => 'label.rate_internal', 'required' => false]))
+                ->setOptions(array_merge($hourlyRateOptions, ['label' => 'label.internalRate', 'required' => false]))
                 ->addConstraint(new Range(['min' => 0])),
 
             (new UserPreference())
@@ -100,7 +93,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
 
             (new UserPreference())
                 ->setName(UserPreference::LOCALE)
-                ->setValue($this->configuration->getUserDefaultLanguage())
+                ->setValue($this->systemConfiguration->getUserDefaultLanguage())
                 ->setOrder(250)
                 ->setSection('locale')
                 ->setType(LanguageType::class),
@@ -121,7 +114,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
 
             (new UserPreference())
                 ->setName(UserPreference::SKIN)
-                ->setValue($this->configuration->getUserDefaultTheme())
+                ->setValue($this->systemConfiguration->getUserDefaultTheme())
                 ->setOrder(400)
                 ->setSection('theme')
                 ->setType(SkinType::class),
@@ -185,10 +178,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param PrepareUserEvent $event
-     */
-    public function loadUserPreferences(PrepareUserEvent $event)
+    public function loadUserPreferences(PrepareUserEvent $event): void
     {
         $user = $event->getUser();
 
