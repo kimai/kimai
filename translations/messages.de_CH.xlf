@@ -753,10 +753,6 @@
         <source>label.skin</source>
         <target>Darstellung: Farben</target>
       </trans-unit>
-      <trans-unit id="IQ.tlua" resname="label.hourly_rate">
-        <source>label.hourly_rate</source>
-        <target>Preis pro Stunde</target>
-      </trans-unit>
       <trans-unit id="VAbtieW" resname="label.hourlyRate">
         <source>label.hourlyRate</source>
         <target>Preis pro Stunde</target>

@@ -257,10 +257,6 @@
         <source>label.hourlyRate</source>
         <target>Hodinová sadzba</target>
       </trans-unit>
-      <trans-unit id="IQ.tlua" resname="label.hourly_rate">
-        <source>label.hourly_rate</source>
-        <target>Hodinová sadzba</target>
-      </trans-unit>
       <trans-unit id="dezCZWf" resname="label.skin">
         <source>label.skin</source>
         <target>Farebná téma</target>

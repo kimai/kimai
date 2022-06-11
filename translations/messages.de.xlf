@@ -339,10 +339,6 @@
         <source>label.tags</source>
         <target>Schlagworte</target>
       </trans-unit>
-      <trans-unit id="IQ.tlua" resname="label.hourly_rate">
-        <source>label.hourly_rate</source>
-        <target>Preis pro Stunde</target>
-      </trans-unit>
       <trans-unit id="dezCZWf" resname="label.skin">
         <source>label.skin</source>
         <target>Darstellung: Farben</target>

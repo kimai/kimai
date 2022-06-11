@@ -264,10 +264,6 @@
         <source>label.hourlyRate</source>
         <target>Hora kotizo</target>
       </trans-unit>
-      <trans-unit id="IQ.tlua" resname="label.hourly_rate">
-        <source>label.hourly_rate</source>
-        <target>Hora kotizo</target>
-      </trans-unit>
       <trans-unit id="dezCZWf" resname="label.skin">
         <source>label.skin</source>
         <target>Montri: koloroj</target>

@@ -264,10 +264,6 @@
         <source>label.hourlyRate</source>
         <target>Tỷ lệ hàng giờ</target>
       </trans-unit>
-      <trans-unit id="IQ.tlua" resname="label.hourly_rate">
-        <source>label.hourly_rate</source>
-        <target>Tỷ lệ hàng giờ</target>
-      </trans-unit>
       <trans-unit id="dezCZWf" resname="label.skin">
         <source>label.skin</source>
         <target>Hiển thị: màu sắc</target>

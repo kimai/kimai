@@ -252,10 +252,6 @@
         <source>label.hourlyRate</source>
         <target>Stawka godzinowa</target>
       </trans-unit>
-      <trans-unit id="IQ.tlua" resname="label.hourly_rate">
-        <source>label.hourly_rate</source>
-        <target>Stawka godzinowa</target>
-      </trans-unit>
       <trans-unit id="dezCZWf" resname="label.skin">
         <source>label.skin</source>
         <target>Wyświetlanie: Kolory</target>

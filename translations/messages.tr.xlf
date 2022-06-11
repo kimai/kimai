@@ -240,10 +240,6 @@
         <source>label.hourlyRate</source>
         <target state="translated">Saatlik ücret</target>
       </trans-unit>
-      <trans-unit id="IQ.tlua" resname="label.hourly_rate">
-        <source>label.hourly_rate</source>
-        <target state="translated">Saatlik ücret</target>
-      </trans-unit>
       <trans-unit id="dezCZWf" resname="label.skin">
         <source>label.skin</source>
         <target state="translated">Ekran: renkler</target>
