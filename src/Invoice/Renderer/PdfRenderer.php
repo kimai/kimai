@@ -44,8 +44,8 @@ final class PdfRenderer extends AbstractTwigRenderer
         $context->setOption('filename', $filename->getFilename());
         $context->setOption('setAutoTopMargin', 'pad');
         $context->setOption('setAutoBottomMargin', 'pad');
-        $context->setOption('margin_top', 12);
-        $context->setOption('margin_bottom', 8);
+        $context->setOption('margin_top', '12');
+        $context->setOption('margin_bottom', '8');
 
         $content = $this->renderTwigTemplate($document, $model, ['pdfContext' => $context]);
         $content = $this->converter->convertToPdf($content, $context->getOptions());
