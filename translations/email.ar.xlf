@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
         <source>registration.intro</source>
-        <target state="needs-translation">لقد قمت بالتسجيل في متتبع الوقت Kimai بالبريد الإلكتروني٪email٪. يرجى تفعيل حسابك في الساعات القليلة القادمة ، قبل انتهاء صلاحية الرابط.</target>
+        <target state="needs-translation">لقد قمت بالتسجيل في متتبع الوقت Kimai بالبريد الإلكتروني%email%. يرجى تفعيل حسابك في الساعات القليلة القادمة ، قبل انتهاء صلاحية الرابط.</target>
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>
