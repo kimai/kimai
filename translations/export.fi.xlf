@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fi" datatype="plaintext" original="export.en.xlf">
     <body>
@@ -13,6 +13,10 @@
       <trans-unit id="AuhL8Sb" resname="default-internal.pdf.twig">
         <source>default-internal.pdf.twig</source>
         <target state="translated">Sisäisillä hinnoilla</target>
+      </trans-unit>
+      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig">
+        <source>Timesheet</source>
+        <target state="translated">Kellokortti</target>
       </trans-unit>
     </body>
   </file>

@@ -32,10 +32,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>
-                    הנתון הזה גם כן ימחק!
-                    לחילופין, אתה יכול לבחור רשומה שאליה כל הנתונים יעברו:
-                </target>
+        <target>הנתון הזה גם כן ימחק! לחילופין, אתה יכול לבחור רשומה שאליה כל הנתונים יעברו:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -1212,6 +1209,10 @@
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target>אוטומטית</target>
+      </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="translated">טקסט חשבונית</target>
       </trans-unit>
     </body>
   </file>
