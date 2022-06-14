@@ -73,7 +73,9 @@
     {% set canDelete = is_granted('delete_own_timesheet') %}
     {% set canCreate = is_granted('create_own_timesheet') %}
     {% set canEdit = is_granted('edit_own_timesheet') %}
+    {% set isForeignEdit = false %}
     {% if user != app.user %}
+        {% set isForeignEdit = true %}
         {% set createParams = '&user=' ~ user.id %}
         {% set createRoute = 'admin_timesheet_create' %}
         {% set editRoute = 'admin_timesheet_edit' %}
@@ -305,7 +307,9 @@
                     let source = entry.parentElement;
                     let plainData = entry.dataset.entry;
                     let data = JSON.parse(plainData);
-                    data.user = {{ user.id }};
+                    {% if isForeignEdit and canCreate %}
+                        data.user = {{ user.id }};
+                    {% endif %}
                     let urlReplacer = JSON.parse(source.dataset.routeReplacer);
                     let apiUrl = source.dataset.route;
 
