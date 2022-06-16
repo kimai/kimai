@@ -15,79 +15,64 @@
 {% block profile_content %}
     <div class="card mb-3">
         <div class="card-body">
-            <div class="card-title">{{ 'profile.about_me'|trans }}</div>
-            <div class="mb-2">
-                {{ 'label.username'|trans }}: <strong>{{ user.username }}</strong>
-            </div>
-            {% if user.accountNumber is not empty %}
-                <div class="mb-2">
-                    {{ 'label.account_number'|trans }}: <strong>{{ user.accountNumber }}</strong>
+            <div class="datagrid">
+                <div class="datagrid-item">
+                    <div class="datagrid-title">{{ 'label.username'|trans }}</div>
+                    <div class="datagrid-content">{{ user.userIdentifier }}</div>
                 </div>
-            {% endif %}
-            <div class="mb-2">
-                {{ 'profile.first_entry'|trans }}:
-                <strong>
-                    {% if firstTimesheet is not null %}
-                        {{ firstTimesheet|date_short }}
-                    {% else %}
-                        &ndash;
+                <div class="datagrid-item">
+                    <div class="datagrid-title">{{ 'label.account_number'|trans }}</div>
+                    <div class="datagrid-content">{{ user.accountNumber ?? '&ndash;' }}</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">{{ 'profile.first_entry'|trans }}</div>
+                    <div class="datagrid-content">
+                        {% if firstTimesheet is not null %}
+                            {{ firstTimesheet|date_short }}
+                        {% else %}
+                            &ndash;
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">{{ 'profile.registration_date'|trans }}</div>
+                    <div class="datagrid-content">{{ user.registeredAt|date_short }}</div>
+                </div>
+                {% set seeOwnRate = false %}
+                {% if stats is not null %}
+                    {% set seeOwnRate = is_granted('view_rate_own_timesheet') %}
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'stats.durationTotal'|trans }}</div>
+                        <div class="datagrid-content">{{ stats.durationTotal|duration }}</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'stats.durationMonth'|trans }}</div>
+                        <div class="datagrid-content">{{ stats.durationThisMonth|duration }}</div>
+                    </div>
+                    {% if seeOwnRate %}
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">{{ 'stats.amountMonth'|trans }}</div>
+                            <div class="datagrid-content">{{ stats.rateThisMonthBillable|money }}</div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">{{ 'stats.amountTotal'|trans }}</div>
+                            <div class="datagrid-content">{{ stats.rateTotalBillable|money }}</div>
+                        </div>
                     {% endif %}
-                </strong>
-            </div>
-            <div class="mb-2">
-                {{ 'profile.registration_date'|trans }}: <strong>{{ user.registeredAt|date_short }}</strong>
-            </div>
-            {% if is_granted('hourly-rate', user) and user.preferenceValue('hourly_rate') is not null %}
-                <div>
-                    {{ 'label.hourlyRate'|trans }}: <strong>{{ user.preferenceValue('hourly_rate') }}</strong>
-                </div>
-            {% endif %}
-        </div>
-    </div>
-
-    {# BOX WITH SHORT STATS #}
-    {% if stats is not null %}
-    <div class="card mb-3">
-        <div class="card-body text-center">
-            {% set seeOwnRate = is_granted('view_rate_own_timesheet') %}
-            {% set columnLength = seeOwnRate ? 3 : 6 %}
-            <div class="row">
-                <div class="col-sm-{{ columnLength }} border-right">
-                    <div class="description-block">
-                        <h5 class="description-header">{{ stats.durationThisMonth|duration }}</h5>
-                        <span class="description-text">{{ 'stats.durationMonth'|trans }}</span>
-                    </div>
-                </div>
-                {% if seeOwnRate %}
-                    <div class="col-sm-{{ columnLength }} border-right">
-                        <div class="description-block">
-                            <h5 class="description-header">{{ stats.rateThisMonthBillable|money }}</h5>
-                            <span class="description-text">{{ 'stats.amountMonth'|trans }}</span>
-                        </div>
-                    </div>
                 {% endif %}
-                <div class="col-sm-{{ columnLength }} border-right">
-                    <div class="description-block">
-                        <h5 class="description-header">{{ stats.durationTotal|duration }}</h5>
-                        <span class="description-text">{{ 'stats.durationTotal'|trans }}</span>
+                {% if not seeOwnRate and is_granted('hourly-rate', user) and user.preferenceValue('hourly_rate') is not null %}
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'label.hourlyRate'|trans }}</div>
+                        <div class="datagrid-content">{{ user.preferenceValue('hourly_rate') }}</div>
                     </div>
-                </div>
-                {% if seeOwnRate %}
-                    <div class="col-sm-{{ columnLength }} border-right">
-                        <div class="description-block">
-                            <h5 class="description-header">{{ stats.rateTotalBillable|money }}</h5>
-                            <span class="description-text">{{ 'stats.amountTotal'|trans }}</span>
-                        </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ 'label.internalRate'|trans }}</div>
+                        <div class="datagrid-content">{{ user.preferenceValue('internal_rate') }}</div>
                     </div>
                 {% endif %}
             </div>
         </div>
     </div>
-    {% endif %}
-
-    {% if workMonths is empty %}
-        {{ widgets.nothing_found() }}
-    {% endif %}
 
     {% set monthRoute = null %}
     {% set canSeeReport = user.enabled and is_granted('view_reporting') and (app.user.id == user.id or is_granted('view_other_timesheet')) %}
