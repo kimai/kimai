@@ -1081,11 +1081,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function __serialize(): array
     {
         return [
-            'password' => $this->password,
+            'id' => $this->id,
             'username' => $this->username,
             'enabled' => $this->enabled,
-            'id' => $this->id,
             'email' => $this->email,
+            'password' => $this->password,
         ];
     }
 
@@ -1094,11 +1094,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         if (!\array_key_exists('id', $data)) {
             return;
         }
-        $this->password = $data['password'];
+        $this->id = $data['id'];
         $this->username = $data['username'];
         $this->enabled = $data['enabled'];
-        $this->id = $data['id'];
         $this->email = $data['email'];
+        $this->password = $data['password'];
     }
 
     public function __toString()

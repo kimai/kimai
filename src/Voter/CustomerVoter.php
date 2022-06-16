@@ -29,6 +29,7 @@ final class CustomerVoter extends Voter
         'create',
         'edit',
         'budget',
+        'time',
         'delete',
         'permissions',
         'comments',

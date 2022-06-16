@@ -222,6 +222,7 @@ class ProjectController extends BaseApiController
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'date_format' => self::DATE_FORMAT,
             'include_budget' => $this->isGranted('budget', $project),
+            'include_time' => $this->isGranted('time', $project),
         ]);
 
         $form->submit($request->request->all());
@@ -286,6 +287,7 @@ class ProjectController extends BaseApiController
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'date_format' => self::DATE_FORMAT,
             'include_budget' => $this->isGranted('budget', $project),
+            'include_time' => $this->isGranted('time', $project),
         ]);
 
         $form->setData($project);

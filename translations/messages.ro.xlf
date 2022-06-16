@@ -32,10 +32,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>
-                    Aceste date vor fi, de asemenea, șterse!
-                    Sau poti selecta o intrare către care vor fi transferate toate datele:
-                </target>
+        <target>Aceste date vor fi, de asemenea, șterse! Sau poti selecta o intrare către care vor fi transferate toate datele:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -1188,6 +1185,14 @@
       <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
         <target state="translated">Afișarea intrărilor în listele de selecție</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target state="translated">Automat</target>
+      </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="translated">Textul facturii</target>
       </trans-unit>
     </body>
   </file>

@@ -67,14 +67,18 @@
                     {{ form_row(form.fax) }}
                 </div>
             </div>
-            {% if form.budget is defined %}
+            {% if form.budgetType is defined %}
                 <div class="row">
-                    <div class="col-md-4">
-                        {{ form_row(form.budget) }}
-                    </div>
-                    <div class="col-md-4">
-                        {{ form_row(form.timeBudget) }}
-                    </div>
+                    {% if form.budget is defined %}
+                        <div class="col-md-4">
+                            {{ form_row(form.budget) }}
+                        </div>
+                    {% endif %}
+                    {% if form.timeBudget is defined %}
+                        <div class="col-md-4">
+                            {{ form_row(form.timeBudget) }}
+                        </div>
+                    {% endif %}
                     <div class="col-md-4">
                         {{ form_row(form.budgetType) }}
                     </div>

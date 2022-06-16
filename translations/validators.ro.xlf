@@ -422,6 +422,10 @@
         <source>An activity needs to be selected.</source>
         <target>Trebuie să se selecteze o activitate.</target>
       </trans-unit>
+      <trans-unit id="ePrqiLN" resname="Duration cannot be zero.">
+        <source>Duration cannot be zero.</source>
+        <target state="translated">Nu se admite o durată goală.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

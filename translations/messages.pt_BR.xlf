@@ -35,10 +35,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>
-                    Esses dados também serão excluídos!
-                    Alternativamente, você pode selecionar um registro para qual todos os dados serão transferidos:
-                </target>
+        <target>Esses dados também serão excluídos! Alternativamente, você pode selecionar um registro para qual todos os dados serão transferidos:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -1252,6 +1249,10 @@
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target>Automático</target>
+      </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="translated">Texto da fatura</target>
       </trans-unit>
     </body>
   </file>

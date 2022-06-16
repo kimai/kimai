@@ -26,7 +26,7 @@ class InvoiceQuery extends TimesheetQuery
     /**
      * @var bool
      */
-    private $markAsExported = false;
+    private $markAsExported = true;
 
     public function __construct()
     {
@@ -36,7 +36,7 @@ class InvoiceQuery extends TimesheetQuery
             'exported' => InvoiceQuery::STATE_NOT_EXPORTED,
             'state' => self::STATE_STOPPED,
             'billable' => true,
-            'markAsExported' => false,
+            'markAsExported' => true,
         ]);
     }
 

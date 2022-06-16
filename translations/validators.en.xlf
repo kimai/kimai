@@ -66,6 +66,10 @@
         <source>The budget is completely used.</source>
         <target>The budget is used up. Of the available %budget%, %used% has been booked so far, %free% can still be used.</target>
       </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target>Sorry, the budget is used up.</target>
+      </trans-unit>
       <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
         <source>Maximum duration of {{ value }} hours exceeded.</source>
         <target>Maximum {{ value }} hours allowed.</target>

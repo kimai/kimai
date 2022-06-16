@@ -14,9 +14,17 @@
         ('mf_' ~ field.name): {'title': field.label|trans, 'class': 'd-none', 'orderBy': false}
     }) %}
 {% endfor %}
+{% if is_granted('budget_money', 'activity') %}
+    {% set columns = columns|merge({
+        'budget': {'class': 'd-none text-end w-min', 'title': 'label.budget'|trans},
+    }) %}
+{% endif %}
+{% if is_granted('budget_time', 'activity') %}
+    {% set columns = columns|merge({
+        'timeBudget': {'class': 'd-none text-end w-min', 'title': 'label.timeBudget'|trans},
+    }) %}
+{% endif %}
 {% set columns = columns|merge({
-    'budget': {'class': 'd-none text-end w-min', 'title': 'label.budget'|trans},
-    'timeBudget': {'class': 'd-none text-end w-min', 'title': 'label.timeBudget'|trans},
     'team': {'class': 'text-center w-min', 'orderBy': false},
     'visible': {'class': 'd-none text-center w-min'},
     'actions': {'class': 'actions alwaysVisible'},
@@ -63,14 +71,14 @@
                     </td>
                 {% endfor %}
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'budget') }}">
-                    {% if entry.hasBudget() %}
+                    {% if entry.hasBudget() and is_granted('budget', entry) %}
                         {{ entry.budget|money((entry.project is null ? defaultCurrency : entry.project.customer.currency)) }}
                     {% else %}
                         &ndash;
                     {% endif %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'timeBudget') }}">
-                    {% if entry.hasTimeBudget() %}
+                    {% if entry.hasTimeBudget() and is_granted('time', entry) %}
                         {{ entry.timeBudget|duration }}
                     {% else %}
                         &ndash;

@@ -35,16 +35,43 @@ class ActivityEditFormTest extends TypeTestCase
         self::assertTrue($form->has('color'));
         self::assertTrue($form->has('metaFields'));
         self::assertTrue($form->has('visible'));
+        self::assertFalse($form->has('budget'));
+        self::assertFalse($form->has('timeBudget'));
+        self::assertFalse($form->has('budgetType'));
     }
 
-    public function testWithGlobalNewActivityAndOptions()
+    public function testWithGlobalNewActivityAndOptionsBudget()
     {
         $model = new Activity();
         $form = $this->factory->createBuilder(ActivityEditForm::class, $model, [
-            'include_budget' => true
+            'include_budget' => true,
+        ]);
+        self::assertTrue($form->has('budget'));
+        self::assertFalse($form->has('timeBudget'));
+        self::assertTrue($form->has('budgetType'));
+    }
+
+    public function testWithGlobalNewActivityAndOptionsTimeBudget()
+    {
+        $model = new Activity();
+        $form = $this->factory->createBuilder(ActivityEditForm::class, $model, [
+            'include_time' => true,
+        ]);
+        self::assertFalse($form->has('budget'));
+        self::assertTrue($form->has('timeBudget'));
+        self::assertTrue($form->has('budgetType'));
+    }
+
+    public function testWithGlobalNewActivityAndOptionsAllBudget()
+    {
+        $model = new Activity();
+        $form = $this->factory->createBuilder(ActivityEditForm::class, $model, [
+            'include_budget' => true,
+            'include_time' => true,
         ]);
         self::assertTrue($form->has('budget'));
         self::assertTrue($form->has('timeBudget'));
+        self::assertTrue($form->has('budgetType'));
     }
 
     public function testWithGlobalExistingActivityAndOptions()
@@ -53,11 +80,11 @@ class ActivityEditFormTest extends TypeTestCase
         $model->expects($this->once())->method('getId')->willReturn(1);
         $model->expects($this->atLeast(1))->method('isGlobal')->willReturn(true);
         $form = $this->factory->createBuilder(ActivityEditForm::class, $model, [
-            'include_budget' => true
+            'include_budget' => true,
         ]);
         self::assertFalse($form->has('project'));
         self::assertTrue($form->has('budget'));
-        self::assertTrue($form->has('timeBudget'));
+        self::assertFalse($form->has('timeBudget'));
     }
 
     public function testWithNonGlobalExistingActivityAndOptions()
@@ -70,7 +97,8 @@ class ActivityEditFormTest extends TypeTestCase
         $model->expects($this->any())->method('getId')->willReturn(1);
         $model->expects($this->any())->method('getProject')->willReturn($project);
         $form = $this->factory->createBuilder(ActivityEditForm::class, $model, [
-            'include_budget' => true
+            'include_budget' => true,
+            'include_time' => true,
         ]);
         self::assertTrue($form->has('name'));
         self::assertTrue($form->has('comment'));

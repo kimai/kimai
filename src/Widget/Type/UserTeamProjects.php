@@ -53,7 +53,10 @@ class UserTeamProjects extends AbstractWidget
      */
     public function getPermissions(): array
     {
-        return ['budget_team_project', 'budget_teamlead_project', 'budget_project'];
+        return [
+            'budget_team_project', 'budget_teamlead_project', 'budget_project',
+            'time_team_project', 'time_teamlead_project', 'time_project',
+        ];
     }
 
     public function getId(): string

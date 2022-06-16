@@ -4,7 +4,8 @@
 
 {% set tableName = tableName|default('project_details_reporting') %}
 {% set tableId = 'project-details-form' %}
-{% set view_budget = project_details is not null and is_granted('budget', project_details.project) %}
+{% set showMoneyBudget = project_details is not null and is_granted('budget', project_details.project) %}
+{% set showTimeBudget = project_details is not null and is_granted('time', project_details.project) %}
 {% set view_revenue = project_details is not null and is_granted('view_rate_other_timesheet') %}
 {% set see_users = is_granted('view_other_timesheet') or is_granted('view_other_reporting') %}
 
@@ -67,8 +68,7 @@
     {% if not hasData %}
         {{ widgets.nothing_found() }}
     {% else %}
-        {{ _self.project_details(project, project_view, project_details, view_budget, view_revenue, see_users) }}
-
+        {{ _self.project_details(project, project_view, project_details, showMoneyBudget, showTimeBudget, view_revenue, see_users) }}
         {% set currency = project.customer.currency %}
 
         {%- for yearStat in project_details.years|reverse %}
@@ -244,7 +244,7 @@
     project_view    = ProjectViewModel
     project_details = ProjectDetailsModel
 #}
-{% macro project_details(project, project_view, project_details, view_budget, view_revenue, see_users) %}
+{% macro project_details(project, project_view, project_details, showMoneyBudget, showTimeBudget, view_revenue, see_users) %}
     {% set activities = project_details.activities %}
     {% set years = project_details.years %}
     {% import "macros/progressbar.html.twig" as progress %}
@@ -359,12 +359,12 @@
                         </table>
                     </div>
                 </div>
-                {% if view_budget and (project.timeBudget > 0 or project.budget > 0) %}
+                {% if (showMoneyBudget and project.budget > 0) or (showTimeBudget and project.timeBudget > 0) %}
                     {% set budgetStats = project_details.budgetStatisticModel %}
                     <div class="row">
                         <div class="col-xs-12">
                             <table class="table table-hover dataTable">
-                                {% if project.timeBudget > 0 %}
+                                {% if showTimeBudget and project.timeBudget > 0 %}
                                     <tr>
                                         <th class="w-min">
                                             {{ 'label.timeBudget'|trans }}
@@ -377,7 +377,7 @@
                                         </td>
                                     </tr>
                                 {% endif %}
-                                {% if project.budget > 0 %}
+                                {% if showMoneyBudget and project.budget > 0 %}
                                     <tr>
                                         <th class="w-min">
                                             {{ 'label.budget'|trans }}

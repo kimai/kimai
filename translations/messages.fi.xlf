@@ -35,10 +35,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target state="translated">
-                    Myös tämä data poistetaan!
-                    Vaihtoehtoisesti, voit valita kirjauksen mihin kaikki data siirretään:
-                </target>
+        <target state="translated">Myös tämä data poistetaan! Vaihtoehtoisesti, voit valita kirjauksen mihin kaikki data siirretään:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -897,7 +894,7 @@
       </trans-unit>
       <trans-unit id="RRj6PYN" resname="label.invoice_tax_number">
         <source>label.invoice_tax_number</source>
-        <target state="translated">VAT no.:</target>
+        <target state="translated">ALV-nro:</target>
       </trans-unit>
       <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
@@ -1166,91 +1163,99 @@
       </trans-unit>
       <trans-unit id="jdbtx6z" resname="action.add">
         <source>action.add</source>
-        <target state="needs-translation">Add</target>
+        <target state="translated">Lisää</target>
       </trans-unit>
       <trans-unit id="pnGDFmf" resname="label.type">
         <source>label.type</source>
-        <target state="needs-translation">Type</target>
+        <target state="translated">Tyyppi</target>
       </trans-unit>
       <trans-unit id="AJ6dwR." resname="label.last_record_before">
         <source>label.last_record_before</source>
-        <target state="needs-translation">No time booking since</target>
+        <target state="translated">Ei aikavarausta sen jälkeen</target>
       </trans-unit>
       <trans-unit id="qDnURk7" resname="label.last_record">
         <source>label.last_record</source>
-        <target state="needs-translation">Last entry</target>
+        <target state="translated">Viimeinen merkintä</target>
       </trans-unit>
       <trans-unit id="LXdqaTH" resname="label.account_number">
         <source>label.account_number</source>
-        <target state="needs-translation">Staff number</target>
+        <target state="translated">Henkilökunnan numero</target>
       </trans-unit>
       <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
         <source>delete_warning.short_stats</source>
-        <target state="needs-translation">Currently %records% time-records exists, which sum up to a total duration of %duration%.</target>
+        <target state="translated">Tällä hetkellä on olemassa %records% aikatietueita, joiden yhteenlaskettu kesto on %duration%.</target>
       </trans-unit>
       <trans-unit id="Zif614Q" resname="add_user.label">
         <source>add_user.label</source>
-        <target state="needs-translation">Add user</target>
+        <target state="translated">Lisää käyttäjä</target>
       </trans-unit>
       <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
+        <target state="translated">Merkintöjen näyttäminen valintaluetteloissa</target>
       </trans-unit>
       <trans-unit id="gT9W2pZ" resname="status.canceled">
         <source>status.canceled</source>
-        <target state="needs-translation">Canceled</target>
+        <target state="translated">Peruutettu</target>
       </trans-unit>
       <trans-unit id="PoF7hD8" resname="label.budgetType">
         <source>label.budgetType</source>
-        <target state="needs-translation">Budget-Type</target>
+        <target state="translated">Budjetti-tyyppi</target>
       </trans-unit>
       <trans-unit id="9Rhadz6" resname="label.budgetType_full">
         <source>label.budgetType_full</source>
-        <target state="needs-translation">Life cycle</target>
+        <target state="translated">Elinkaari</target>
       </trans-unit>
       <trans-unit id="tp.gIrE" resname="team.add_user.help">
         <source>team.add_user.help</source>
-        <target state="needs-translation">Add a new user to the team by selecting it from the list. Afterwards you can decide if the user should become a teamlead.</target>
+        <target state="translated">Lisää uusi käyttäjä ryhmään valitsemalla se luettelosta. Jälkeenpäin voit päättää, pitäisikö käyttäjästä tulla tiiminjohtaja.</target>
       </trans-unit>
       <trans-unit id="61p_ckr" resname="label.hours_24">
         <source>label.hours_24</source>
-        <target state="needs-translation">24 hours</target>
+        <target state="translated">24 tuntia</target>
       </trans-unit>
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
-        <target state="needs-translation">Updated at</target>
+        <target state="translated">Päivitetty klo</target>
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
-        <target state="needs-translation">Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
+        <target state="translated">Saavutettu %max% laskutusasiakirjojen enimmäismäärä. Voit lisätä lisää yhden poistamisen jälkeen.</target>
       </trans-unit>
       <trans-unit id="W92QGbY" resname="export.warn_result_amount">
         <source>export.warn_result_amount</source>
-        <target state="needs-translation">Your search leads to %count% results. If the export fails, you have to narrow down your search further.</target>
+        <target state="translated">Hakusi johtaa %count% tulokseen. Jos vienti epäonnistuu, sinun on rajattava hakua edelleen.</target>
       </trans-unit>
       <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
         <source>label.includeBudgetType_month</source>
-        <target state="needs-translation">Show entries with "monthly" budget</target>
+        <target state="translated">Näytä merkinnät, joissa on "kuukausittainen" budjetti</target>
       </trans-unit>
       <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
         <source>label.includeBudgetType_full</source>
-        <target state="needs-translation">Show entries with "life cycle" budget</target>
+        <target state="translated">Näytä merkinnät, joissa on "elinkaari" budjetti</target>
       </trans-unit>
       <trans-unit id="cHfLJtL" resname="label.budgetType_month">
         <source>label.budgetType_month</source>
-        <target state="needs-translation">Monthly</target>
+        <target state="translated">Kuukausittainen</target>
       </trans-unit>
       <trans-unit id="yNWIi5U" resname="default_value_new">
         <source>default_value_new</source>
-        <target state="needs-translation">Default values for new entries</target>
+        <target state="translated">Uusien merkintöjen oletusarvot</target>
       </trans-unit>
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
-        <target state="needs-translation">Weekly working hours</target>
+        <target state="translated">Viikoittainen työaika</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
-        <target state="needs-translation">Week %week%</target>
+        <target state="translated">Viikko %week%</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target state="translated">Automaattinen</target>
+      </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="translated">Laskun teksti</target>
       </trans-unit>
     </body>
   </file>

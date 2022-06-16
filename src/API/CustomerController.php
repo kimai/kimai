@@ -178,6 +178,7 @@ class CustomerController extends BaseApiController
 
         $form = $this->createForm(CustomerApiEditForm::class, $customer, [
             'include_budget' => $this->isGranted('budget', $customer),
+            'include_time' => $this->isGranted('time', $customer),
         ]);
 
         $form->submit($request->request->all());
@@ -240,6 +241,7 @@ class CustomerController extends BaseApiController
 
         $form = $this->createForm(CustomerApiEditForm::class, $customer, [
             'include_budget' => $this->isGranted('budget', $customer),
+            'include_time' => $this->isGranted('time', $customer),
         ]);
 
         $form->setData($customer);

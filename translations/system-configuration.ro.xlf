@@ -286,6 +286,22 @@
         <source>label.quick_entry.recent_activities</source>
         <target>Numărul de înregistrări preluate din săptămânile anterioare</target>
       </trans-unit>
+      <trans-unit id="QxQOG3e" resname="label.quick_entry.recent_activity_weeks">
+        <source>label.quick_entry.recent_activity_weeks</source>
+        <target state="translated">Preia intrările din ultimele X săptămâni (gol sau 0 pentru toate timpurile)</target>
+      </trans-unit>
+      <trans-unit id="7Efrrn5" resname="label.quick_entry.minimum_rows">
+        <source>label.quick_entry.minimum_rows</source>
+        <target state="translated">Numărul minim de rânduri</target>
+      </trans-unit>
+      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
+        <source>label.calendar.title_pattern</source>
+        <target state="translated">Afișarea titlurilor intrărilor din calendar</target>
+      </trans-unit>
+      <trans-unit id="z4tQEPb" resname="label.timesheet.rules.allow_zero_duration">
+        <source>label.timesheet.rules.allow_zero_duration</source>
+        <target state="translated">Permiteți intrările de timp cu o durată goală</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

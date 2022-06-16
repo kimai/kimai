@@ -1236,6 +1236,14 @@
         <source>automatic</source>
         <target>تلقائي</target>
       </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="needs-translation">نص الفاتورة</target>
+      </trans-unit>
+      <trans-unit id="S0vT92U" resname="label.globalsOnly">
+        <source>label.globalsOnly</source>
+        <target state="needs-translation">عالمي فقط</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

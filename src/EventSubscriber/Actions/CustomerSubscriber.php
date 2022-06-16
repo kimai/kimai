@@ -85,7 +85,7 @@ class CustomerSubscriber extends AbstractActionsSubscriber
             $event->addDelete($this->path('admin_customer_delete', ['id' => $customer->getId()]));
         }
 
-        if ($isListingView && $this->isGranted('view_reporting') && $this->isGranted('budget_project')) {
+        if ($isListingView && $this->isGranted('view_reporting') && $this->isGranted('budget_any', 'project')) {
             $event->addAction('report_project_view', ['title' => 'report_project_view', 'url' => $this->path('report_project_view', ['customer' => $customer->getId()]), 'icon' => 'reporting', 'translation_domain' => 'reporting']);
         }
 

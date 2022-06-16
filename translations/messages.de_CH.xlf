@@ -1083,12 +1083,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>resetting.check_email</source>
-        <target>
-          Eine E-Mail wurde verschickt. Diese beinhaltet einen Link zum Zurücksetzen des Passwortes.
-          Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden beantragt werden.
-
-          Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.
-        </target>
+        <target>Eine E-Mail wurde verschickt. Diese beinhaltet einen Link zum Zurücksetzen des Passwortes. Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden beantragt werden. Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>
@@ -1193,6 +1188,10 @@
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target>Automatisch</target>
+      </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="translated">Rechnungstext</target>
       </trans-unit>
     </body>
   </file>

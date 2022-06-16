@@ -202,6 +202,7 @@ class ActivityController extends BaseApiController
 
         $form = $this->createForm(ActivityApiEditForm::class, $activity, [
             'include_budget' => $this->isGranted('budget', $activity),
+            'include_time' => $this->isGranted('time', $activity),
         ]);
 
         $form->submit($request->request->all());
@@ -264,6 +265,7 @@ class ActivityController extends BaseApiController
 
         $form = $this->createForm(ActivityApiEditForm::class, $activity, [
             'include_budget' => $this->isGranted('budget', $activity),
+            'include_time' => $this->isGranted('time', $activity),
         ]);
 
         $form->setData($activity);

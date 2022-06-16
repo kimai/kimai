@@ -58,6 +58,14 @@
         <source>text</source>
         <target>نص</target>
       </trans-unit>
+      <trans-unit id="7mEUv6C" resname="help.upload">
+        <source>help.upload</source>
+        <target state="needs-translation">انتباه: سيتم الكتابة فوق الملفات الموجودة. أنواع الملفات المسموح بها هي: DOCX و ODS و XLSX.</target>
+      </trans-unit>
+      <trans-unit id="E5BwZHT" resname="programmatic">
+        <source>programmatic</source>
+        <target state="translated">لمزيد من المعالجة</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

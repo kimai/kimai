@@ -10,6 +10,7 @@
 namespace App\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
+use App\Export\ExportContext;
 use App\Invoice\InvoiceFilename;
 use App\Invoice\InvoiceModel;
 use App\Utils\HtmlToPdfConverter;
@@ -37,16 +38,23 @@ final class PdfRenderer extends AbstractTwigRenderer
 
     public function render(InvoiceDocument $document, InvoiceModel $model): Response
     {
-        $content = $this->renderTwigTemplate($document, $model);
+        $filename = new InvoiceFilename($model);
 
-        $content = $this->converter->convertToPdf($content, [
-            'setAutoTopMargin' => 'pad',
-            'setAutoBottomMargin' => 'pad',
-            'margin_top' => 12,
-            'margin_bottom' => 8,
-        ]);
+        $context = new ExportContext();
+        $context->setOption('filename', $filename->getFilename());
+        $context->setOption('setAutoTopMargin', 'pad');
+        $context->setOption('setAutoBottomMargin', 'pad');
+        $context->setOption('margin_top', '12');
+        $context->setOption('margin_bottom', '8');
 
-        $filename = (string) new InvoiceFilename($model);
+        $content = $this->renderTwigTemplate($document, $model, ['pdfContext' => $context]);
+        $content = $this->converter->convertToPdf($content, $context->getOptions());
+
+        $filename = $context->getOption('filename');
+        if (empty($filename)) {
+            $filename = new InvoiceFilename($model);
+            $filename = $filename->getFilename();
+        }
 
         $response = new Response($content);
 

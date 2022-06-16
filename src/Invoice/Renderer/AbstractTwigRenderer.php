@@ -32,7 +32,7 @@ abstract class AbstractTwigRenderer implements RendererInterface
         $this->twig = $twig;
     }
 
-    protected function renderTwigTemplate(InvoiceDocument $document, InvoiceModel $model): string
+    protected function renderTwigTemplate(InvoiceDocument $document, InvoiceModel $model, array $options = []): string
     {
         $language = $model->getTemplate()->getLanguage();
         $formatLocale = $model->getFormatter()->getLocale();
@@ -42,14 +42,14 @@ abstract class AbstractTwigRenderer implements RendererInterface
             $entries[] = $model->itemToArray($entry);
         }
 
-        $options = [
+        $options = array_merge([
             // model should not be used in the future, but we can likely not remove it
             'model' => $model,
             // new since 1.16.7 - templates should only use the pre-generated values
             'invoice' => $model->toArray(),
             // new since 1.19.5 - templates should only use the pre-generated values
             'entries' => $entries
-        ];
+        ], $options);
 
         return $this->renderTwigTemplateWithLanguage($this->twig, $template, $options, $language, $formatLocale);
     }

@@ -35,10 +35,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target state="translated">
-                    Bu veriler de silinecek!
-                    Bunun yerine, bu verilerin aktarılacağı kaydı seçebilirsiniz:
-                </target>
+        <target state="translated">Bu veriler de silinecek! Bunun yerine, bu verilerin aktarılacağı kaydı seçebilirsiniz:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -1252,6 +1249,10 @@
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target>Otomatik</target>
+      </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="translated">Fatura metni</target>
       </trans-unit>
     </body>
   </file>

@@ -96,6 +96,7 @@ class ActivityEditForm extends AbstractType
             'customer' => false,
             'currency' => Customer::DEFAULT_CURRENCY,
             'include_budget' => false,
+            'include_time' => false,
             'attr' => [
                 'data-form-event' => 'kimai.activityUpdate'
             ],

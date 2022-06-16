@@ -51,9 +51,9 @@ class InvoiceQueryTest extends TimesheetQueryTest
 
     protected function assertMarkAsExported(InvoiceQuery $sut)
     {
-        self::assertFalse($sut->isMarkAsExported());
-
-        $sut->setMarkAsExported(true);
         self::assertTrue($sut->isMarkAsExported());
+
+        $sut->setMarkAsExported(false);
+        self::assertFalse($sut->isMarkAsExported());
     }
 }

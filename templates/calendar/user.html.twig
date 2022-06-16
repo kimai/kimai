@@ -73,12 +73,16 @@
     {% set calendarSelector = '#timesheet_calendar' %}
     {% set createParams = '' %}
     {% set createRoute = 'timesheet_create' %}
+    {% set editRoute = 'timesheet_edit' %}
     {% set canDelete = is_granted('delete_own_timesheet') %}
     {% set canCreate = is_granted('create_own_timesheet') %}
     {% set canEdit = is_granted('edit_own_timesheet') %}
+    {% set isForeignEdit = false %}
     {% if user != app.user %}
+        {% set isForeignEdit = true %}
         {% set createParams = '&user=' ~ user.id %}
         {% set createRoute = 'admin_timesheet_create' %}
+        {% set editRoute = 'admin_timesheet_edit' %}
         {% set canDelete = is_granted('delete_other_timesheet') %}
         {% set canCreate = is_granted('create_other_timesheet') %}
         {% set canEdit = is_granted('edit_other_timesheet') %}
@@ -294,6 +298,9 @@
                     let source = entry.parentElement;
                     let plainData = entry.dataset.entry;
                     let data = JSON.parse(plainData);
+                    {% if isForeignEdit and canCreate %}
+                        data.user = {{ user.id }};
+                    {% endif %}
                     let urlReplacer = JSON.parse(source.dataset.routeReplacer);
                     let apiUrl = source.dataset.route;
 
@@ -482,7 +489,7 @@
                             jsEvent.preventDefault();
                             return;
                         }
-                        let editUrl = '{{ path('timesheet_edit', {id: 1}) }}'.replace('1', eventObj.id);
+                        let editUrl = '{{ path(editRoute, {id: '-XX-'}) }}'.replace('-XX-', eventObj.id);
                         kimai.getPlugin('modal').openUrlInModal(editUrl);
                     },
                     {% if not is_punch_mode %}

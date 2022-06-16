@@ -54,6 +54,10 @@
         <source>A project needs to be selected.</source>
         <target>يجب تحديد مشروع.</target>
       </trans-unit>
+      <trans-unit id="ekO5eXI" resname="An equal username is already used.">
+        <source>An equal username is already used.</source>
+        <target state="needs-translation">تم استخدام اسم مستخدم مساوٍ بالفعل.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
