@@ -34,11 +34,8 @@ final class EntityMultiRoleVoter extends Voter
         'activity',
     ];
 
-    private $permissionManager;
-
-    public function __construct(RolePermissionManager $permissionManager)
+    public function __construct(private RolePermissionManager $permissionManager)
     {
-        $this->permissionManager = $permissionManager;
     }
 
     /**
@@ -46,7 +43,7 @@ final class EntityMultiRoleVoter extends Voter
      * @param Activity|Project|Customer|string $subject
      * @return bool
      */
-    protected function supports($attribute, $subject)
+    protected function supports(string $attribute, mixed $subject): bool
     {
         if (!\in_array($attribute, self::ALLOWED_ATTRIBUTES)) {
             return false;
@@ -69,7 +66,7 @@ final class EntityMultiRoleVoter extends Voter
      * @param TokenInterface $token
      * @return bool
      */
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
 
