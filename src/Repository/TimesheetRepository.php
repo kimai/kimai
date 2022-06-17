@@ -238,7 +238,7 @@ class TimesheetRepository extends EntityRepository
      * @return int|mixed
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    protected function queryTimeRange($select, ?DateTime $begin, ?DateTime $end, ?User $user, ?bool $billable = null)
+    protected function queryTimeRange(string|array $select, ?DateTime $begin, ?DateTime $end, ?User $user, ?bool $billable = null)
     {
         $selects = $select;
         if (!\is_array($select)) {
@@ -275,9 +275,11 @@ class TimesheetRepository extends EntityRepository
         }
 
         if (\is_array($select)) {
+            /* @phpstan-ignore-next-line */
             return $qb->getQuery()->getOneOrNullResult();
         }
 
+        /* @phpstan-ignore-next-line */
         $result = $qb->getQuery()->getSingleScalarResult();
 
         return empty($result) ? 0 : $result;

@@ -32,7 +32,7 @@ abstract class AbstractVoterTest extends TestCase
      * @param string|null $role
      * @return User
      */
-    protected function getUser($id, ?string $role)
+    protected function getUser(int $id, ?string $role)
     {
         $roles = [];
         if (!empty($role)) {
@@ -41,7 +41,7 @@ abstract class AbstractVoterTest extends TestCase
 
         $user = new User();
         $user->setRoles($roles);
-        $user->setUsername($id);
+        $user->setUsername((string) $id);
 
         $reflection = new \ReflectionClass($user);
         $property = $reflection->getProperty('id');
