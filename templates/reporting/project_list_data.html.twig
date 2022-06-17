@@ -18,15 +18,25 @@
     }) %}
 {% endif %}
 {% set availableColumns = availableColumns|merge({
-    'lastRecord':       {'class': 'd-none d-sm-table-cell text-center hw-min', 'title': 'label.last_record'|trans, 'columnClass': 'w-min'},
-    'today':            {'class': 'd-none text-center hw-min', 'title': 'stats.durationToday'|trans},
-    'week':             {'class': 'd-none text-center hw-min', 'title': 'stats.durationWeek'|trans},
-    'month':            {'class': 'd-none d-lg-table-cell text-center hw-min', 'title': 'stats.durationMonth'|trans},
-    'durationTotal':    {'class': 'text-center hw-min w-min', 'title': 'stats.durationTotal'|trans, 'columnClass': 'w-min'},
-    'exported':         {'class': 'd-none d-xl-table-cell text-center hw-min w-min', 'title': 'label.not_exported'|trans, 'columnClass': 'w-min'},
-    'invoiced':         {'class': 'd-none d-xl-table-cell text-center hw-min', 'title': 'label.not_invoiced'|trans, 'columnClass': 'w-min'},
-    'projectStart':     {'class': 'd-none text-center w-min', 'title': 'label.project_start'|trans},
-    'projectEnd':       {'class': 'd-none text-center w-min', 'title': 'label.project_end'|trans},
+    'lastRecord':       {'class': 'd-none d-sm-table-cell text-start hw-min w-min', 'title': 'label.last_record'|trans, 'columnClass': 'w-min'},
+    'today':            {'class': 'd-none text-end hw-min w-min', 'title': 'stats.durationToday'|trans},
+    'week':             {'class': 'd-none text-end hw-min w-min', 'title': 'stats.durationWeek'|trans},
+    'month':            {'class': 'd-none d-lg-table-cell text-end hw-min w-min', 'title': 'stats.durationMonth'|trans},
+    'durationTotal':    {'class': 'text-end hw-min w-min', 'title': 'stats.durationTotal'|trans, 'columnClass': 'w-min'},
+}) %}
+{% if showTimeBudget and is_granted('create_export') %}
+    {% set availableColumns = availableColumns|merge({
+        'exported':         {'class': 'd-none d-xl-table-cell text-end hw-min w-min', 'title': 'label.not_exported'|trans, 'columnClass': 'w-min'},
+    }) %}
+{% endif %}
+{% if showMoneyBudget and is_granted('view_invoice') %}
+    {% set availableColumns = availableColumns|merge({
+        'invoiced':         {'class': 'd-none d-xl-table-cell text-end hw-min w-min', 'title': 'label.not_invoiced'|trans, 'columnClass': 'w-min'},
+    }) %}
+{% endif %}
+{% set availableColumns = availableColumns|merge({
+    'projectStart':     {'class': 'd-none text-start hw-min w-min', 'title': 'label.project_start'|trans},
+    'projectEnd':       {'class': 'd-none text-start hw-min w-min', 'title': 'label.project_end'|trans},
     'comment':          {'class': 'd-none', 'title': 'label.comment'|trans},
     'actions':          {'class': 'actions alwaysVisible'},
 }) %}
@@ -57,7 +67,7 @@
             {% if not hasData %}
                 {{ widgets.nothing_found() }}
             {% else %}
-                {{ tables.datatable_header(tableName, columns, null, {'boxClass': ''}) }}
+                {{ tables.datatable_header(tableName, columns, null, {boxClass: ''}) }}
 
                 {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
                     <tr class="summary">
@@ -67,63 +77,53 @@
                         {% set project = entry.project %}
                         {% set budgetStats = entry.getBudgetStatisticModel() %}
                         {% set currency = project.customer.currency %}
-                        {% if is_granted('budget', project) %}
-                            <tr {{ widgets.project_row_attr(project, now) }}>
-                            {% for name, column_config in columns %}
-                                <td class="{{ tables.data_table_column_class(tableName, columns, name) }}">
-                                {% if name == 'name' %}
-                                    {{ widgets.label_project(project) }}
-                                {% elseif name == 'lastRecord' %}
-                                    {% if entry.lastRecord is not null %}
-                                        {{ entry.lastRecord|date_short }}
-                                    {% else %}
-                                        &ndash;
-                                    {% endif %}
-                                {% elseif name == 'today' %}
-                                    {{ entry.durationDay|duration }}
-                                {% elseif name == 'week' %}
-                                    {{ entry.durationWeek|duration }}
-                                {% elseif name == 'month' %}
-                                    {{ entry.durationMonth|duration }}
-                                {% elseif name == 'durationTotal' %}
-                                    {{ entry.durationTotal|duration }}
-                                {% elseif name == 'timeBudget' %}
-                                    {% if budgetStats.hasTimeBudget() and is_granted('time', project) %}
-                                        {{ progress.progressbar_timebudget(budgetStats) }}
-                                    {% endif %}
-                                {% elseif name == 'budget' %}
-                                    {% if project.hasBudget() and is_granted('budget', project) %}
-                                        {{ progress.progressbar_budget(budgetStats, project.customer.currency) }}
-                                    {% endif %}
-                                {% elseif name == 'exported' %}
-                                    {% if is_granted('create_export') %}
-                                        <a href="{{ path('export', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': '', 'preview': true}) }}">
-                                            {{ entry.notExportedDuration|duration }}
-                                        </a>
-                                    {% else %}
-                                        {{ entry.notExportedDuration|duration }}
-                                    {% endif %}
-                                {% elseif name == 'invoiced' %}
-                                    {% if is_granted('view_invoice') %}
-                                        <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
-                                            {{ entry.notBilledRate|money(currency) }}
-                                        </a>
-                                    {% else %}
-                                        {{ entry.notBilledRate|money(currency) }}
-                                    {% endif %}
-                                {% elseif name == 'projectStart' %}
-                                    {% if project.start is not null %}{{ project.start|date_short }}{% endif %}
-                                {% elseif name == 'projectEnd' %}
-                                    {% if project.end is not null %}{{ project.end|date_short }}{% endif %}
-                                {% elseif name == 'comment' %}
-                                    {{ project.comment }}
-                                {% elseif name == 'actions' %}
-                                    {{ projectActions.project(project, 'custom') }}
+                        <tr {{ widgets.project_row_attr(project, now) }}>
+                        {% for name, column_config in columns %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, name) }}">
+                            {% if name == 'name' %}
+                                {{ widgets.label_project(project) }}
+                            {% elseif name == 'lastRecord' %}
+                                {% if entry.lastRecord is not null %}
+                                    {{ entry.lastRecord|date_short }}
+                                {% else %}
+                                    &ndash;
                                 {% endif %}
-                                </td>
-                            {% endfor %}
-                            </tr>
-                        {% endif %}
+                            {% elseif name == 'today' %}
+                                {{ entry.durationDay|duration }}
+                            {% elseif name == 'week' %}
+                                {{ entry.durationWeek|duration }}
+                            {% elseif name == 'month' %}
+                                {{ entry.durationMonth|duration }}
+                            {% elseif name == 'durationTotal' %}
+                                {{ entry.durationTotal|duration }}
+                            {% elseif name == 'timeBudget' %}
+                                {% if budgetStats.hasTimeBudget() and is_granted('time', project) %}
+                                    {{ progress.progressbar_timebudget(budgetStats) }}
+                                {% endif %}
+                            {% elseif name == 'budget' %}
+                                {% if project.hasBudget() and is_granted('budget', project) %}
+                                    {{ progress.progressbar_budget(budgetStats, project.customer.currency) }}
+                                {% endif %}
+                            {% elseif name == 'exported' %}
+                                <a href="{{ path('export', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': '', 'preview': true}) }}">
+                                    {{ entry.notExportedDuration|duration }}
+                                </a>
+                            {% elseif name == 'invoiced' %}
+                                <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
+                                    {{ entry.notBilledRate|money(currency) }}
+                                </a>
+                            {% elseif name == 'projectStart' %}
+                                {% if project.start is not null %}{{ project.start|date_short }}{% endif %}
+                            {% elseif name == 'projectEnd' %}
+                                {% if project.end is not null %}{{ project.end|date_short }}{% endif %}
+                            {% elseif name == 'comment' %}
+                                {{ project.comment }}
+                            {% elseif name == 'actions' %}
+                                {{ projectActions.project(project, 'custom') }}
+                            {% endif %}
+                            </td>
+                        {% endfor %}
+                        </tr>
                     {% endfor %}
                 {% endfor %}
                 {{ tables.data_table_footer(entries) }}
