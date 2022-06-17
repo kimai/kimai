@@ -24,6 +24,7 @@
 
     {% endfor %}
     <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
-    {{ form_end(form) }}
+    {{ form_widget(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
 
 {% endblock %}
