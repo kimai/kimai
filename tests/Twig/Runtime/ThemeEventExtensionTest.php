@@ -107,7 +107,7 @@ class ThemeEventExtensionTest extends TestCase
     {
         $sut = $this->getSut();
         $values = $sut->getJavascriptTranslations();
-        self::assertCount(24, $values);
+        self::assertCount(25, $values);
     }
 
     public function getProgressbarColors()

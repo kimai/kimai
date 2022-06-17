@@ -31,7 +31,7 @@ class ThemeJavascriptTranslationsEventTest extends TestCase
         $sut->setTranslation('hello', 'world', 'testing');
 
         $result = $sut->getTranslations();
-        self::assertCount(26, $result);
+        self::assertCount(27, $result);
         self::assertArrayHasKey('foo', $result);
         self::assertEquals(['bar', 'messages'], $result['foo']);
         self::assertArrayHasKey('hello', $result);
