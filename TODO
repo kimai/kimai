@@ -1,21 +1,23 @@
 ===========================================================================
+MIGRATIONS
+
+DELETE FROM kimai2_user_preferences where name = 'reporting.initial_view'
+
+
+===========================================================================
 MIXED
 
 - Remove support for custom translation files (document BC break)
-===========================================================================
 
 ===========================================================================
 KioskBundle:
 
 - Update KioskBundle for layout & full compatibility
-===========================================================================
 
 ===========================================================================
-INVOICES:
+INVOICES
 
 - HTML Rechnungstemplates funktionieren nicht mehr richtig
--
-===========================================================================
 
 ===========================================================================
 THEME
@@ -39,8 +41,6 @@ THEME
 - Button loadingText etc wird nicht mehr unterstützt
 
 ===========================================================================
-
-===========================================================================
 MIXED
 
 - Alle URLs ändern
@@ -52,18 +52,3 @@ MIXED
 - Tags => immer Berechtigung prüfen und "create" option über die VIEW ans Javascript geben
   => den FormType nur ändern zu "AutoComplete" wenn es mehr als 500 Tags sind
   => Übersetzungen (Suche, Erstellen, Keine Ergebnisse) über data attribute ans JS durchreichen
-===========================================================================
-
-===========================================================================
-REPORTS:
-
--  Yearly view for one user (orientiert am financial year)
-
-- Teile die Reports in 2 Bereiche:
-    - Financial Reports
-    - Working Reports
-
-Ist jedoch jemand in der User Rolle angemeldet liest sich Monthly view for one user nicht gut.
-Hier müsste es immer analog zu my times heissen
-My weekly view, my monthly view etc
-===========================================================================

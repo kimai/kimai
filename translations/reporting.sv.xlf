@@ -26,10 +26,6 @@
         <source>report_inactive_project</source>
         <target>Inaktiverade projekt</target>
       </trans-unit>
-      <trans-unit id="ns_jU13" resname="reporting.initial_view">
-        <source>reporting.initial_view</source>
-        <target>Inledande rapport</target>
-      </trans-unit>
       <trans-unit id="518eY_l" resname="report_project_details">
         <source>report_project_details</source>
         <target>Projektdetaljer</target>

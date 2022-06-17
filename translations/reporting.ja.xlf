@@ -42,10 +42,6 @@
         <source>report_inactive_project</source>
         <target state="needs-translation">Inactive projects</target>
       </trans-unit>
-      <trans-unit id="ns_jU13" resname="reporting.initial_view">
-        <source>reporting.initial_view</source>
-        <target state="needs-translation">Initial report</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

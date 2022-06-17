@@ -378,7 +378,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             UserPreference::SKIN,
             'calendar.initial_view',
             'login.initial_view',
-            'reporting.initial_view',
             'theme.collapsed_sidebar',
             'theme.layout',
             'theme.update_browser_title',

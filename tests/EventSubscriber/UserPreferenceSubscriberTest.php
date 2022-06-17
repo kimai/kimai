@@ -34,7 +34,6 @@ class UserPreferenceSubscriberTest extends TestCase
         'theme.layout',
         'theme.update_browser_title',
         'calendar.initial_view',
-        'reporting.initial_view',
         'login.initial_view',
         'timesheet.daily_stats',
         'timesheet.export_decimal',
@@ -67,7 +66,6 @@ class UserPreferenceSubscriberTest extends TestCase
             switch ($pref->getName()) {
                 case UserPreference::HOURLY_RATE:
                 case UserPreference::INTERNAL_RATE:
-                case 'reporting.initial_view':
                     self::assertTrue($pref->isEnabled());
                     break;
 
@@ -98,7 +96,6 @@ class UserPreferenceSubscriberTest extends TestCase
             switch ($pref->getName()) {
                 case UserPreference::HOURLY_RATE:
                 case UserPreference::INTERNAL_RATE:
-                case 'reporting.initial_view':
                     self::assertFalse($pref->isEnabled());
                 break;
 

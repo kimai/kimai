@@ -18,10 +18,6 @@
         <source>report_project_view</source>
         <target>Projekta superrigardo</target>
       </trans-unit>
-      <trans-unit id="ns_jU13" resname="reporting.initial_view">
-        <source>reporting.initial_view</source>
-        <target>Komenca raporto</target>
-      </trans-unit>
       <trans-unit id="1gBKwGH" resname="report_inactive_project">
         <source>report_inactive_project</source>
         <target>Neaktivaj projektoj</target>

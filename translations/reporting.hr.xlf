@@ -38,10 +38,6 @@
         <source>report_inactive_project</source>
         <target>Neaktivni projekti</target>
       </trans-unit>
-      <trans-unit id="ns_jU13" resname="reporting.initial_view">
-        <source>reporting.initial_view</source>
-        <target>Početni izvještaj</target>
-      </trans-unit>
       <trans-unit id="3JLmvfB" resname="report_user_year">
         <source>report_user_year</source>
         <target>Godišnji prikaz za jednog korisnika</target>

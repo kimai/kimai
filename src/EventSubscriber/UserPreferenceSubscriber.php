@@ -18,11 +18,9 @@ use App\Form\Type\CalendarViewType;
 use App\Form\Type\FirstWeekDayType;
 use App\Form\Type\InitialViewType;
 use App\Form\Type\LanguageType;
-use App\Form\Type\ReportType;
 use App\Form\Type\SkinType;
 use App\Form\Type\ThemeLayoutType;
 use App\Form\Type\TimezoneType;
-use App\Reporting\ReportingService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -54,7 +52,6 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
             $timezone = date_default_timezone_get();
         }
 
-        $enableDefaultReport = $this->voter->isGranted('view_reporting');
         $enableHourlyRate = false;
         $hourlyRateOptions = [];
 
@@ -146,14 +143,6 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setOrder(600)
                 ->setSection('behaviour')
                 ->setType(CalendarViewType::class),
-
-            (new UserPreference())
-                ->setName('reporting.initial_view')
-                ->setValue(ReportingService::DEFAULT_VIEW)
-                ->setOrder(650)
-                ->setSection('behaviour')
-                ->setEnabled($enableDefaultReport)
-                ->setType(ReportType::class),
 
             (new UserPreference())
                 ->setName('login.initial_view')

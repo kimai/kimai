@@ -24,19 +24,11 @@ final class ReportingController extends AbstractController
 {
     /**
      * @Route(path="/", name="reporting", methods={"GET"})
-     *
-     * @return Response
      */
     public function defaultReport(ReportingService $reportingService): Response
     {
-        $user = $this->getUser();
-
-        $defaultReport = $user->getPreferenceValue('reporting.initial_view', ReportingService::DEFAULT_VIEW);
-        $allReports = $reportingService->getAvailableReports($user);
-
         return $this->render('reporting/index.html.twig', [
-            'reports' => $allReports,
-            'default' => $defaultReport,
+            'reports' => $reportingService->getAvailableReports($this->getUser()),
         ]);
     }
 }

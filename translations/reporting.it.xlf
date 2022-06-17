@@ -14,10 +14,6 @@
         <source>report_monthly_users</source>
         <target>Vista mensile per tutti gli utenti</target>
       </trans-unit>
-      <trans-unit id="ns_jU13" resname="reporting.initial_view">
-        <source>reporting.initial_view</source>
-        <target>Rapporto iniziale</target>
-      </trans-unit>
       <trans-unit id="R.9yUkf" resname="report_project_view">
         <source>report_project_view</source>
         <target>Panoramica del progetto</target>
