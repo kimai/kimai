@@ -42,7 +42,7 @@ class BillableCalculatorTest extends TestCase
         }
         $timesheet->setBillable($billable);
         $timesheet->setBillableMode($mode);
-        $sut->calculate($timesheet);
+        $sut->calculate($timesheet, []);
         self::assertEquals($mode, $timesheet->getBillableMode());
         self::assertEquals($expected, $timesheet->isBillable());
     }

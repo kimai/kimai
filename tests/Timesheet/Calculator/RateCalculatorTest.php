@@ -48,7 +48,7 @@ class RateCalculatorTest extends TestCase
         $record->setUser($this->getTestUser());
 
         $sut = new RateCalculator(new RateService([], $this->getRateRepositoryMock()));
-        $sut->calculate($record);
+        $sut->calculate($record, []);
         $this->assertEquals(50, $record->getRate());
     }
 
@@ -64,7 +64,7 @@ class RateCalculatorTest extends TestCase
         $record->setUser($this->getTestUser());
 
         $sut = new RateCalculator(new RateService([], $this->getRateRepositoryMock()));
-        $sut->calculate($record);
+        $sut->calculate($record, []);
         $this->assertEquals(10, $record->getRate());
     }
 
@@ -175,7 +175,7 @@ class RateCalculatorTest extends TestCase
         }
 
         $sut = new RateCalculator(new RateService([], $this->getRateRepositoryMock($rates)));
-        $sut->calculate($timesheet);
+        $sut->calculate($timesheet, []);
         $this->assertEquals($expectedRate, $timesheet->getRate());
         $this->assertEquals($expectedInternalRate, $timesheet->getInternalRate());
     }
@@ -204,7 +204,7 @@ class RateCalculatorTest extends TestCase
         $this->assertEquals(0, $record->getRate());
 
         $sut = new RateCalculator(new RateService([], $this->getRateRepositoryMock()));
-        $sut->calculate($record);
+        $sut->calculate($record, []);
         $this->assertEquals(0, $record->getRate());
     }
 
@@ -230,7 +230,7 @@ class RateCalculatorTest extends TestCase
         $record->setEnd($end);
 
         $sut = new RateCalculator(new RateService($rules, $this->getRateRepositoryMock()));
-        $sut->calculate($record);
+        $sut->calculate($record, []);
 
         $this->assertEquals($expectedRate, $record->getRate());
     }

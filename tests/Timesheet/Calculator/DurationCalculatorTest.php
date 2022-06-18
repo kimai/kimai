@@ -27,7 +27,7 @@ class DurationCalculatorTest extends TestCase
         $this->assertEquals(0, $record->getDuration());
 
         $sut = new DurationCalculator((new RoundingServiceFactory($this))->create());
-        $sut->calculate($record);
+        $sut->calculate($record, []);
         $this->assertEquals(0, $record->getDuration());
     }
 
@@ -42,7 +42,7 @@ class DurationCalculatorTest extends TestCase
         $this->assertEquals(0, $record->getDuration());
 
         $sut = new DurationCalculator((new RoundingServiceFactory($this))->create($rules));
-        $sut->calculate($record);
+        $sut->calculate($record, []);
         $this->assertEquals($expectedDuration, $record->getDuration());
     }
 
