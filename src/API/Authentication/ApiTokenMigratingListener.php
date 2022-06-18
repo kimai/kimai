@@ -24,7 +24,7 @@ class ApiTokenMigratingListener implements EventSubscriberInterface
     public function onLoginSuccess(LoginSuccessEvent $event): void
     {
         $passport = $event->getPassport();
-        if (!$passport instanceof Passport || !$passport->hasBadge(ApiTokenUpgradeBadge::class)) {
+        if (!$passport->hasBadge(ApiTokenUpgradeBadge::class)) {
             return;
         }
 
