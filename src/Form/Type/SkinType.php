@@ -19,8 +19,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class SkinType extends AbstractType
 {
     public const THEMES = [
-        'skin.dark' => 'dark',
         'skin.light' => 'default',
+        'skin.dark' => 'dark',
     ];
 
     /**
