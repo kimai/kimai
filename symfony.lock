@@ -1,10 +1,4 @@
 {
-    "async-aws/core": {
-        "version": "1.14.0"
-    },
-    "async-aws/ses": {
-        "version": "1.4.1"
-    },
     "beberlei/doctrineextensions": {
         "version": "v1.2.0"
     },
@@ -396,15 +390,6 @@
     "setasign/fpdi": {
         "version": "1.6.2"
     },
-    "symfony/amazon-mailer": {
-        "version": "4.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.4",
-            "ref": "9648db3ecae5c8a6b1a5f74715d3907124348815"
-        }
-    },
     "symfony/asset": {
         "version": "v4.0.3"
     },
@@ -495,15 +480,6 @@
             "ref": "137a14eeb6b3f5370e7147af8aff6518504f50c7"
         }
     },
-    "symfony/google-mailer": {
-        "version": "4.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.4",
-            "ref": "f8fd4ddb9b477510f8f4bce2b9c054ab428c0120"
-        }
-    },
     "symfony/http-client": {
         "version": "v4.4.5"
     },
@@ -519,15 +495,6 @@
     "symfony/intl": {
         "version": "v4.0.3"
     },
-    "symfony/mailchimp-mailer": {
-        "version": "4.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.4",
-            "ref": "1be490e068472fc87e226cf54bc95fb6f2e49117"
-        }
-    },
     "symfony/mailer": {
         "version": "4.3",
         "recipe": {
@@ -539,15 +506,6 @@
         "files": [
             "config/packages/mailer.yaml"
         ]
-    },
-    "symfony/mailgun-mailer": {
-        "version": "4.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.4",
-            "ref": "91bc9c127983c37808481733bcf83b7651b1f941"
-        }
     },
     "symfony/mime": {
         "version": "v4.3.3"
@@ -597,15 +555,6 @@
     "symfony/polyfill-php81": {
         "version": "v1.23.0"
     },
-    "symfony/postmark-mailer": {
-        "version": "4.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.4",
-            "ref": "84842f6791eaef80618dda244d4e3bbcbbcdf543"
-        }
-    },
     "symfony/process": {
         "version": "v4.0.3"
     },
@@ -648,15 +597,6 @@
     },
     "symfony/security-http": {
         "version": "v4.3.3"
-    },
-    "symfony/sendgrid-mailer": {
-        "version": "4.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.4",
-            "ref": "b46e4f8f1adb2864f0aa9c0ff57aea3324a07199"
-        }
     },
     "symfony/serializer": {
         "version": "v4.1.2"

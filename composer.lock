@@ -4,132 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8404734e71f594cfdc4f24c1419ec3e6",
+    "content-hash": "e08f74a2acd0ea7fd5e35ea150385c47",
     "packages": [
-        {
-            "name": "async-aws/core",
-            "version": "1.15.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/async-aws/core.git",
-                "reference": "40348e9c42405aa5aef0a9c275336af0e3087cf5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/async-aws/core/zipball/40348e9c42405aa5aef0a9c275336af0e3087cf5",
-                "reference": "40348e9c42405aa5aef0a9c275336af0e3087cf5",
-                "shasum": ""
-            },
-            "require": {
-                "ext-hash": "*",
-                "ext-json": "*",
-                "ext-simplexml": "*",
-                "php": "^7.2.5 || ^8.0",
-                "psr/cache": "^1.0 || ^2.0 || ^3.0",
-                "psr/log": "^1.0 || ^2.0 || ^3.0",
-                "symfony/deprecation-contracts": "^2.1 || ^3.0",
-                "symfony/http-client": "^4.4.16 || ^5.1.7,!=5.2.0 || ^6.0",
-                "symfony/http-client-contracts": "^1.1.8 || ^2.0 || ^3.0",
-                "symfony/service-contracts": "^1.0 || ^2.0 || ^3.0"
-            },
-            "conflict": {
-                "async-aws/s3": "<1.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.15-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "AsyncAws\\Core\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Core package to integrate with AWS. This is a lightweight AWS SDK provider by AsyncAws.",
-            "keywords": [
-                "amazon",
-                "async-aws",
-                "aws",
-                "sdk",
-                "sts"
-            ],
-            "support": {
-                "source": "https://github.com/async-aws/core/tree/1.15.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/jderusse",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/nyholm",
-                    "type": "github"
-                }
-            ],
-            "time": "2022-05-27T23:40:14+00:00"
-        },
-        {
-            "name": "async-aws/ses",
-            "version": "1.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/async-aws/ses.git",
-                "reference": "82d7f934776e02e0c61422222abe944a183934fc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/async-aws/ses/zipball/82d7f934776e02e0c61422222abe944a183934fc",
-                "reference": "82d7f934776e02e0c61422222abe944a183934fc",
-                "shasum": ""
-            },
-            "require": {
-                "async-aws/core": "^1.9",
-                "ext-json": "*",
-                "php": "^7.2.5 || ^8.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "AsyncAws\\Ses\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "SES client, part of the AWS SDK provided by AsyncAws.",
-            "keywords": [
-                "amazon",
-                "async-aws",
-                "aws",
-                "sdk",
-                "ses"
-            ],
-            "support": {
-                "source": "https://github.com/async-aws/ses/tree/1.4.1"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/jderusse",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/nyholm",
-                    "type": "github"
-                }
-            ],
-            "time": "2021-10-02T11:41:51+00:00"
-        },
         {
             "name": "beberlei/doctrineextensions",
             "version": "v1.3.0",
@@ -4812,72 +4688,6 @@
             "time": "2021-02-11T11:37:01+00:00"
         },
         {
-            "name": "symfony/amazon-mailer",
-            "version": "v6.0.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/amazon-mailer.git",
-                "reference": "b118bc0de80394177f83ca15b7b96d80f5499ea9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/amazon-mailer/zipball/b118bc0de80394177f83ca15b7b96d80f5499ea9",
-                "reference": "b118bc0de80394177f83ca15b7b96d80f5499ea9",
-                "shasum": ""
-            },
-            "require": {
-                "async-aws/ses": "^1.0",
-                "php": ">=8.0.2",
-                "symfony/mailer": "^5.4|^6.0"
-            },
-            "require-dev": {
-                "symfony/http-client": "^5.4|^6.0"
-            },
-            "type": "symfony-mailer-bridge",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Mailer\\Bridge\\Amazon\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Amazon Mailer Bridge",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/amazon-mailer/tree/v6.0.8"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-04-12T16:27:44+00:00"
-        },
-        {
             "name": "symfony/asset",
             "version": "v6.0.7",
             "source": {
@@ -6435,68 +6245,6 @@
             "time": "2022-05-27T06:30:15+00:00"
         },
         {
-            "name": "symfony/google-mailer",
-            "version": "v6.0.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/google-mailer.git",
-                "reference": "c84224b99e000a9c50591fa05e83852055431509"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/google-mailer/zipball/c84224b99e000a9c50591fa05e83852055431509",
-                "reference": "c84224b99e000a9c50591fa05e83852055431509",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.0.2",
-                "symfony/mailer": "^5.4|^6.0"
-            },
-            "type": "symfony-mailer-bridge",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Mailer\\Bridge\\Google\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Google Mailer Bridge",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/google-mailer/tree/v6.0.8"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-04-12T16:11:42+00:00"
-        },
-        {
             "name": "symfony/http-client",
             "version": "v6.0.9",
             "source": {
@@ -6923,71 +6671,6 @@
             "time": "2022-04-12T16:11:42+00:00"
         },
         {
-            "name": "symfony/mailchimp-mailer",
-            "version": "v6.0.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/mailchimp-mailer.git",
-                "reference": "c8605ce9a766cecffff9f206d79ed0a544bed496"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mailchimp-mailer/zipball/c8605ce9a766cecffff9f206d79ed0a544bed496",
-                "reference": "c8605ce9a766cecffff9f206d79ed0a544bed496",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.0.2",
-                "symfony/mailer": "^5.4|^6.0"
-            },
-            "require-dev": {
-                "symfony/http-client": "^5.4|^6.0"
-            },
-            "type": "symfony-mailer-bridge",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Mailer\\Bridge\\Mailchimp\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Mailchimp Mailer Bridge",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/mailchimp-mailer/tree/v6.0.7"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-03-24T17:11:42+00:00"
-        },
-        {
             "name": "symfony/mailer",
             "version": "v6.0.8",
             "source": {
@@ -7060,71 +6743,6 @@
                 }
             ],
             "time": "2022-04-27T17:10:30+00:00"
-        },
-        {
-            "name": "symfony/mailgun-mailer",
-            "version": "v6.0.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/mailgun-mailer.git",
-                "reference": "f0d032c26683b26f4bc26864e09b1e08fa55226e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mailgun-mailer/zipball/f0d032c26683b26f4bc26864e09b1e08fa55226e",
-                "reference": "f0d032c26683b26f4bc26864e09b1e08fa55226e",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.0.2",
-                "symfony/mailer": "^5.4|^6.0"
-            },
-            "require-dev": {
-                "symfony/http-client": "^5.4|^6.0"
-            },
-            "type": "symfony-mailer-bridge",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Mailer\\Bridge\\Mailgun\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Mailgun Mailer Bridge",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/mailgun-mailer/tree/v6.0.7"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-03-24T17:11:42+00:00"
         },
         {
             "name": "symfony/mime",
@@ -8011,71 +7629,6 @@
             "time": "2022-05-24T11:49:31+00:00"
         },
         {
-            "name": "symfony/postmark-mailer",
-            "version": "v6.0.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/postmark-mailer.git",
-                "reference": "8405569233efb0140e55eb6236c9e55693f058ff"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/postmark-mailer/zipball/8405569233efb0140e55eb6236c9e55693f058ff",
-                "reference": "8405569233efb0140e55eb6236c9e55693f058ff",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.0.2",
-                "symfony/mailer": "^5.4|^6.0"
-            },
-            "require-dev": {
-                "symfony/http-client": "^5.4|^6.0"
-            },
-            "type": "symfony-mailer-bridge",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Mailer\\Bridge\\Postmark\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Postmark Mailer Bridge",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/postmark-mailer/tree/v6.0.7"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-03-24T17:11:42+00:00"
-        },
-        {
             "name": "symfony/property-access",
             "version": "v6.0.8",
             "source": {
@@ -8751,71 +8304,6 @@
                 }
             ],
             "time": "2022-05-14T12:52:12+00:00"
-        },
-        {
-            "name": "symfony/sendgrid-mailer",
-            "version": "v6.0.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/sendgrid-mailer.git",
-                "reference": "0a433d03c89ebe5ee133e4422344b9fa9f71a29b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/sendgrid-mailer/zipball/0a433d03c89ebe5ee133e4422344b9fa9f71a29b",
-                "reference": "0a433d03c89ebe5ee133e4422344b9fa9f71a29b",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.0.2",
-                "symfony/mailer": "^5.4|^6.0"
-            },
-            "require-dev": {
-                "symfony/http-client": "^5.4|^6.0"
-            },
-            "type": "symfony-mailer-bridge",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Mailer\\Bridge\\Sendgrid\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Sendgrid Mailer Bridge",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/sendgrid-mailer/tree/v6.0.7"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-03-24T17:11:42+00:00"
         },
         {
             "name": "symfony/serializer",
@@ -13704,7 +13192,6 @@
     "prefer-lowest": false,
     "platform": {
         "php": "8.1.*",
-        "ext-gd": "*",
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",

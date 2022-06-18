@@ -23,6 +23,13 @@ Perform EACH version specific task between your version and the new one, otherwi
 - All deprecated code was removed
 - User preference constructor has mandatory parameter
 - User preference names cannot contain dots `.` anymore
+- Removed all 3rd party mailer packages, you need to install them manually: 
+  - `symfony/amazon-mailer`
+  - `symfony/google-mailer`
+  - `symfony/mailchimp-mailer`
+  - `symfony/mailgun-mailer`
+  - `symfony/postmark-mailer`
+  - `symfony/sendgrid-mailer`
 
 ## [1.16](https://github.com/kevinpapst/kimai2/releases/tag/1.16)
 
