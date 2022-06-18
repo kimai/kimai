@@ -159,12 +159,10 @@
             "@linting",
             "@tests-unit"
         ],
-        "code-check": "@code-check",
         "code-check":  [
             "@pre-commit",
             "@tests-integration"
         ],
-        "code-lint": "@linting",
         "linting": [
             "composer validate --strict",
             "bin/console lint:container",
@@ -174,17 +172,13 @@
             "bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction"
         ],
         "tests": "vendor/bin/phpunit tests/",
-        "tests": "@tests",
         "tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
         "tests-integration": "vendor/bin/phpunit --group integration tests/",
-        "phpstan": "@phpstan",
         "phpstan": [
             "vendor/bin/phpstan analyse src -c phpstan.neon --level=5",
             "vendor/bin/phpstan analyse tests -c tests/phpstan.neon --level=5"
         ],
-        "codestyle": "@codestyle",
         "codestyle": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none",
-        "codestyle-fix": "@codestyle-fix",
         "codestyle-fix": "vendor/bin/php-cs-fixer fix"
     },
     "conflict": {
