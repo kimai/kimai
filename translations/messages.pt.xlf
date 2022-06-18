@@ -958,8 +958,8 @@
         <source>label.recalculate_rates</source>
         <target>Recalcular as taxas</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target>Custos internos (se isto não for especificado, é utilizada a taxa normal)</target>
       </trans-unit>
       <trans-unit id="QzvjNwg" resname="label.internalRate">

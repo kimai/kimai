@@ -1032,8 +1032,8 @@
         <source>label.recalculate_rates</source>
         <target>Prepočítať sadzby</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target state="translated">Interné náklady (ak nie je uvedené, použije sa bežná sadzba)</target>
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">

@@ -289,8 +289,8 @@
         <source>label.internalRate</source>
         <target>Costo interno</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target>Costi interni (se questo non è specificato, è utilizzata la tariffa oraria)</target>
       </trans-unit>
       <trans-unit id="v72sA1c" resname="label.recalculate_rates">

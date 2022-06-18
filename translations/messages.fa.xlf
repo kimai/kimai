@@ -227,8 +227,8 @@
         <source>label.recalculate_rates</source>
         <target>محاسبه مجدد نرخ ها</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target>هزینه های داخلی (اگر این مشخص نشده باشد ، از نرخ طبیعی استفاده می شود)</target>
       </trans-unit>
       <trans-unit id="QzvjNwg" resname="label.internalRate">

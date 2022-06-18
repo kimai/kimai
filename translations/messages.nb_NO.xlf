@@ -616,8 +616,8 @@
         <source>menu.admin_timesheet</source>
         <target state="needs-translation">Timesedler</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target>Interne kostnader (hvis dette ikke er angitt bruker normal sats)</target>
       </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">

@@ -288,8 +288,8 @@
         <source>label.internalRate</source>
         <target>Tỷ lệ nội bộ</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target>Chi phí nội bộ (nếu không được chỉ định, tỷ lệ thông thường được sử dụng)</target>
       </trans-unit>
       <trans-unit id="foM2o5T" resname="label.language">

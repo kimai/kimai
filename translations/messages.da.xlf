@@ -1217,8 +1217,8 @@
         <source>label.recalculate_rates</source>
         <target state="needs-translation">Recalculate rates</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target state="needs-translation">Internal costs (if this is not specified, the normal rate is used)</target>
       </trans-unit>
       <trans-unit id="b43sCwO" resname="help.fixedRate">

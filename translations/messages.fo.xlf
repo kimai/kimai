@@ -719,8 +719,8 @@
         <source>label.recalculate_rates</source>
         <target>Endurrokna kostnáðir</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target>Innanhýsis tímaprísur (um tómt, verður vanligi tímaprísurin nýttur)</target>
       </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">

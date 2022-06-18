@@ -289,8 +289,8 @@
         <source>label.internalRate</source>
         <target state="translated">Sisäinen hinta</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target state="translated">Sisäiset kulut (käytetään normaali hintoja, jos tätä ei ole määritetty)</target>
       </trans-unit>
       <trans-unit id="v72sA1c" resname="label.recalculate_rates">

@@ -973,8 +973,8 @@
         <source>label.recalculate_rates</source>
         <target>Přepočítat sazby</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target>Interní náklady (jestli není zadáno, je použita normální sazba)</target>
       </trans-unit>
       <trans-unit id="QzvjNwg" resname="label.internalRate">

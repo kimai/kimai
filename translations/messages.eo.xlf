@@ -1008,8 +1008,8 @@
         <source>help.fixedRate</source>
         <target>Ĉiu temporegistraĵo ricevos la saman valoron, sendepende de sia daŭro</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target>Internaj kostoj (se ĉi tio ne estas specifita, uziĝos la normala kotizo)</target>
       </trans-unit>
       <trans-unit id="v72sA1c" resname="label.recalculate_rates">

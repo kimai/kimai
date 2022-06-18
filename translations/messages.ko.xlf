@@ -929,8 +929,8 @@
         <source>label.recalculate_rates</source>
         <target>비용 재계산</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target>내부 비용 (지정되지 않은 경우 일반 요율이 사용됨)</target>
       </trans-unit>
       <trans-unit id="QzvjNwg" resname="label.internalRate">

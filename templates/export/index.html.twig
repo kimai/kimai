@@ -11,7 +11,7 @@
     'description': {'class': 'd-none d-xl-table-cell timesheet-description', 'orderBy': false},
     'unit_price': {'class': 'd-none text-nowrap text-end', 'orderBy': false},
     'duration': {'class': 'text-end text-nowrap', 'orderBy': false},
-    'rate_internal': {'class': 'text-end d-none text-nowrap', 'orderBy': false},
+    'internalRate': {'class': 'text-end d-none text-nowrap', 'orderBy': false},
     'total_rate': {'class': 'text-end text-nowrap', 'orderBy': false},
     'actions': {'class': 'actions alwaysVisible', 'orderBy': false},
 } %}
@@ -212,7 +212,7 @@
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}" data-duration="{{ entry.duration }}">
                         {{ entry.duration|duration(decimal) }}
                     </td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'rate_internal') }}">
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'internalRate') }}">
                         {{ entry.internalRate|money(currency) }}
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }}">

@@ -725,8 +725,8 @@
         <source>label.recalculate_rates</source>
         <target>Preise neu berechnen</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target>Wenn dieser nicht angegeben ist, wird der normale Preis verwendet</target>
       </trans-unit>
       <trans-unit id="QzvjNwg" resname="label.internalRate">

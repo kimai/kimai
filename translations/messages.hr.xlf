@@ -337,8 +337,8 @@
         <source>label.internalRate</source>
         <target>Interna cijena</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target>Interni troškovi (ako nije određeno, koristi se standardna cijena)</target>
       </trans-unit>
       <trans-unit id="v72sA1c" resname="label.recalculate_rates">

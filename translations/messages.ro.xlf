@@ -954,8 +954,8 @@
         <source>label.recalculate_rates</source>
         <target>Recalculează valorile</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target>Preț intern (dacă nu e specificat se folosește prețul normal)</target>
       </trans-unit>
       <trans-unit id="QzvjNwg" resname="label.internalRate">

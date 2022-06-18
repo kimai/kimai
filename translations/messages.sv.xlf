@@ -805,8 +805,8 @@
         <source>label.team</source>
         <target>Lag</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target>Interna kostnader (om detta inte specificeras så kommer normala priset att användas)</target>
       </trans-unit>
       <trans-unit id="v72sA1c" resname="label.recalculate_rates">

@@ -270,8 +270,8 @@
         <source>label.internalRate</source>
         <target>תעריף פנימי</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target>עלויות פנימיות (אם לא מוגדר, זה התעריף הרגיל)</target>
       </trans-unit>
       <trans-unit id="foM2o5T" resname="label.language">

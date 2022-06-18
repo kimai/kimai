@@ -45,7 +45,7 @@ abstract class AbstractRateForm extends AbstractType
                 'label' => 'label.internalRate',
                 'currency' => $currency,
                 'required' => false,
-                'help' => 'help.rate_internal',
+                'help' => 'help.internalRate',
             ])
             ->add('isFixed', YesNoType::class, [
                 'label' => 'label.fixedRate',

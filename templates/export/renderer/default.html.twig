@@ -47,7 +47,7 @@
     'hourlyRate': false,
     'fixedRate': false,
     'duration': 'label.duration',
-    'rate_internal': 'label.internalRate',
+    'internalRate': 'label.internalRate',
     'rate': 'label.rate',
 }) %}
 
@@ -119,8 +119,8 @@
                 }
                 saveVisibility();
             });
-            document.getElementById('summary-rate-internal').addEventListener('click', function(event) {
-                let cells = document.getElementsByClassName('summary-rate-internal');
+            document.getElementById('summary-internalRate').addEventListener('click', function(event) {
+                let cells = document.getElementsByClassName('summary-internalRate');
                 for (let columnCell of cells) {
                     columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
                 }
@@ -268,7 +268,7 @@
         .items th.cost,
         .items td.cost,
         .items th.column-rate,
-        .items th.column-rate_internal,
+        .items th.column-internalRate,
         .items th.column-duration
         {
             text-align: right;
@@ -361,8 +361,8 @@
                     </label>
                 </div>
                 <div class="{{ formItemClass }}">
-                    <label for="summary-rate-internal">
-                        <input type="checkbox" id="summary-rate-internal" name="summary-rate-internal" checked>
+                    <label for="summary-internalRate">
+                        <input type="checkbox" id="summary-internalRate" name="summary-internalRate" checked>
                         {{ 'label.internalRate'|trans }}
                     </label>
                 </div>
@@ -420,7 +420,7 @@
                     <th class="center export-timeBudget">{{ 'label.timeBudget'|trans }}</th>
                     <th class="center export-budget">{{ 'label.budget'|trans }}</th>
                     <th class="duration summary-duration">{{ 'label.duration'|trans }}</th>
-                    <th class="cost summary-rate-internal">{{ 'label.internalRate'|trans }}</th>
+                    <th class="cost summary-internalRate">{{ 'label.internalRate'|trans }}</th>
                     <th class="cost summary-rate">{{ 'label.rate'|trans }}</th>
                 </tr>
                 </thead>
@@ -445,7 +445,7 @@
                             <td class="totals duration summary-duration">
                                 <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                             </td>
-                            <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
+                            <td class="totals cost summary-internalRate">{{ customerInternalRate|money(customerCurrency) }}</td>
                             <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                         </tr>
                         {% set customerCurrency = summary.currency %}
@@ -474,7 +474,7 @@
                             {% set durationDecimal = summary.duration|duration(true) %}
                             <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                         </td>
-                        <td class="cost summary-rate-internal">{{ summary.rate_internal|money(summary.currency) }}</td>
+                        <td class="cost summary-internalRate">{{ summary.rate_internal|money(summary.currency) }}</td>
                         <td class="cost summary-rate">{{ summary.rate|money(summary.currency) }}</td>
                     </tr>
                     {% set customerDuration = customerDuration + summary.duration %}
@@ -491,7 +491,7 @@
                         <td class="totals duration summary-duration">
                             <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                         </td>
-                        <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
+                        <td class="totals cost summary-internalRate">{{ customerInternalRate|money(customerCurrency) }}</td>
                         <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                     </tr>
                 {% endif %}
@@ -513,7 +513,7 @@
                     <th class="center export-timeBudget">{{ 'label.timeBudget'|trans }}</th>
                     <th class="center export-budget">{{ 'label.budget'|trans }}</th>
                     <th class="duration summary-duration">{{ 'label.duration'|trans }}</th>
-                    <th class="cost summary-rate-internal">{{ 'label.internalRate'|trans }}</th>
+                    <th class="cost summary-internalRate">{{ 'label.internalRate'|trans }}</th>
                     <th class="cost summary-rate">{{ 'label.rate'|trans }}</th>
                 </tr>
                 </thead>
@@ -538,7 +538,7 @@
                                 {% set durationDecimal = customerDuration|duration(true) %}
                                 <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                             </td>
-                            <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
+                            <td class="totals cost summary-internalRate">{{ customerInternalRate|money(customerCurrency) }}</td>
                             <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                         </tr>
                         {% set customerCurrency = summary.currency %}
@@ -574,7 +574,7 @@
                                 {% set durationDecimal = activitySummary.duration|duration(true) %}
                                 <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                             </td>
-                            <td class="cost summary-rate-internal">{{ activitySummary.rate_internal|money(activitySummary.currency) }}</td>
+                            <td class="cost summary-internalRate">{{ activitySummary.rate_internal|money(activitySummary.currency) }}</td>
                             <td class="cost summary-rate">{{ activitySummary.rate|money(activitySummary.currency) }}</td>
                         </tr>
                     {% endfor %}
@@ -592,7 +592,7 @@
                             {% set durationDecimal = customerDuration|duration(true) %}
                             <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                         </td>
-                        <td class="totals cost summary-rate-internal">{{ customerInternalRate|money(customerCurrency) }}</td>
+                        <td class="totals cost summary-internalRate">{{ customerInternalRate|money(customerCurrency) }}</td>
                         <td class="totals cost summary-rate">{{ customerRate|money(customerCurrency) }}</td>
                     </tr>
                 {% endif %}
@@ -722,7 +722,7 @@
                             {% set durationDecimal = entry.duration|duration(true) %}
                             <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                         </td>
-                        <td class="cost column-rate_internal text-nowrap" {% if not columns.rate_internal %}style="display: none"{% endif %}>
+                        <td class="cost column-internalRate text-nowrap" {% if not columns.internalRate %}style="display: none"{% endif %}>
                             {% if entry.internalRate is defined %}
                                 {{ entry.internalRate|money(entry.project.customer.currency) }}
                             {% else %}
@@ -737,7 +737,7 @@
                 {# leave in tbody instead of adding it to tfoot, as tfoot will be repeated on each page when printing #}
                 <tr>
                     {% for id, visibility in columns %}
-                        {% if id not in ['duration', 'rate', 'rate_internal'] %}
+                        {% if id not in ['duration', 'rate', 'internalRate'] %}
                             <th class="column-{{ id }}" {% if not visibility %}style="display: none"{% endif %}></th>
                         {% endif %}
                     {% endfor %}
@@ -746,7 +746,7 @@
                         {% set durationDecimal = timeWorked|duration(true) %}
                         <span class="duration-format" data-duration-decimal="{{ durationDecimal }}" data-duration="{{ durationNormal }}">{{ decimal ? durationDecimal : durationNormal }}</span>
                     </th>
-                    <th class="text-nowrap column-rate_internal">
+                    <th class="text-nowrap column-internalRate">
                         {%- if currency is not null and currency is not same as(false) %}
                             {{ rateInternalTotal|money(currency) }}
                         {% else %}

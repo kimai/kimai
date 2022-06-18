@@ -644,8 +644,8 @@
         <source>label.recalculate_rates</source>
         <target>إعادة حساب المعدلات</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target>التكاليف الداخلية (إذا لم يتم تحديد هذا، يتم استخدام المعدل العادي)</target>
       </trans-unit>
       <trans-unit id="QzvjNwg" resname="label.internalRate">

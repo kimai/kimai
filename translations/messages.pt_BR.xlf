@@ -1006,8 +1006,8 @@
         <source>label.team</source>
         <target>Equipe</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
+      <trans-unit id="uz4SmfP" resname="help.internalRate">
+        <source>help.internalRate</source>
         <target>Custos internos (se isso não for especificado, a taxa normal é usada)</target>
       </trans-unit>
       <trans-unit id="QzvjNwg" resname="label.internalRate">
