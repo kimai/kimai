@@ -20,6 +20,7 @@ Perform EACH version specific task between your version and the new one, otherwi
   - removed: kimai.plugin_dir
 - API: upgraded to [Open API specification v3](https://blog.readme.com/an-example-filled-guide-to-swagger-3-2/)
 - API: config/timesheet removed activeEntriesSoftLimit
+- API: Team removed `teamlead` and `users` - access `members` instead
 - All deprecated code was removed
 - User preference constructor has mandatory parameter
 - User preference names cannot contain dots `.` anymore

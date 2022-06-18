@@ -245,7 +245,7 @@ class UserTest extends TestCase
         $team2 = new Team();
         self::assertFalse($sut->isInTeam($team2));
         self::assertFalse($sut->isTeamleadOf($team2));
-        $team2->setTeamLead($sut);
+        $team2->addTeamLead($sut);
         self::assertTrue($sut->isTeamleadOf($team2));
         self::assertTrue($sut->isInTeam($team2));
 

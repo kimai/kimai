@@ -198,28 +198,6 @@ class Team
     }
 
     /**
-     * BE AWARE: this property is deprecated and will be removed with 2.0 - teams can have multiple teamleads since 1.15!
-     *
-     * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("teamlead"),
-     * @Serializer\Groups({"Team_Entity"})
-     * @OA\Property(ref="#/components/schemas/User")
-     *
-     * @deprecated since 1.15 - will be removed with 2.0
-     * @return User|null
-     */
-    public function getTeamlead(): ?User
-    {
-        foreach ($this->members as $member) {
-            if ($member->isTeamlead()) {
-                return $member->getUser();
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * @return User[]
      */
     public function getTeamleads(): array
@@ -241,15 +219,6 @@ class Team
         }
 
         return false;
-    }
-
-    /**
-     * @deprecated since 1.15 - will be removed with 2.0
-     * @param User $teamlead
-     */
-    public function setTeamlead(User $teamlead): void
-    {
-        $this->addTeamlead($teamlead);
     }
 
     public function addTeamlead(User $user): void
@@ -325,11 +294,6 @@ class Team
 
     /**
      * Returns all users in the team, both teamlead and normal member.
-     *
-     * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("users"),
-     * @Serializer\Groups({"Team_Entity"})
-     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/User"))
      *
      * @return User[]
      */

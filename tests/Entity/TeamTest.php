@@ -158,27 +158,6 @@ class TeamTest extends TestCase
         self::assertCount(2, $sut->getTeamleads());
     }
 
-    /**
-     * @group legacy
-     */
-    public function testSetterAndGetterDeprecated()
-    {
-        $sut = new Team();
-
-        self::assertNull($sut->getTeamlead());
-        self::assertIsArray($sut->getUsers());
-        self::assertEmpty($sut->getUsers());
-
-        $user = (new User())->setAlias('Foo!');
-        self::assertCount(0, $sut->getUsers());
-        $sut->setTeamlead($user);
-        self::assertSame($user, $sut->getTeamlead());
-        self::assertTrue($sut->hasTeamleads());
-        self::assertCount(1, $sut->getUsers());
-        self::assertCount(1, $sut->getTeamleads());
-        self::assertCount(1, $sut->getMembers());
-    }
-
     public function testCustomer()
     {
         $customer = new Customer();
