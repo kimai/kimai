@@ -137,7 +137,7 @@ final class TimesheetBasicValidator extends ConstraintValidator
         $timesheetStart = $timesheet->getBegin();
         $timesheetEnd = $timesheet->getEnd();
 
-        if (null !== $timesheetStart && $pathStart !== null) {
+        if (null !== $timesheetStart) {
             if (null !== $projectBegin && $timesheetStart->getTimestamp() < $projectBegin->getTimestamp()) {
                 $context->buildViolation('The project has not started at that time.')
                     ->atPath($pathStart)
@@ -153,7 +153,7 @@ final class TimesheetBasicValidator extends ConstraintValidator
             }
         }
 
-        if (null !== $timesheetEnd && $pathEnd !== null) {
+        if (null !== $timesheetEnd) {
             if (null !== $projectEnd && $timesheetEnd->getTimestamp() > $projectEnd->getTimestamp()) {
                 $context->buildViolation('The project is finished at that time.')
                     ->atPath($pathEnd)

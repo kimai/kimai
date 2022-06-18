@@ -38,7 +38,7 @@ class DocumentationLinkExtension extends AbstractTypeExtension
     /**
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(['docu_chapter']);
         $resolver->setAllowedTypes('docu_chapter', 'string');

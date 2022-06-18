@@ -36,7 +36,7 @@ class InvoiceCalculatorType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $renderer = [];
         foreach ($this->service->getCalculator() as $calculator) {
@@ -54,10 +54,7 @@ class InvoiceCalculatorType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

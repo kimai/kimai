@@ -31,7 +31,7 @@ class InvoiceDocumentUploadForm extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $mimetypes = [
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -83,7 +83,7 @@ class InvoiceDocumentUploadForm extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'csrf_protection' => true,

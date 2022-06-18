@@ -25,7 +25,7 @@ final class MonthPickerType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'widget' => 'single_text',
@@ -49,10 +49,7 @@ final class MonthPickerType extends AbstractType
         $view->vars['nextMonth'] = (clone $date)->modify('+1 month');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return DateType::class;
     }

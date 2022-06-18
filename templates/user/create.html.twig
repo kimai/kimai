@@ -12,25 +12,25 @@
     {% embed formEditTemplate with formOptions %}
         {% block form_body %}
             <div class="row">
-                <div class="col-md-5">
-                    {{ form_row(form.username) }}
+                <div class="col-md-4">
+                    {{ form_row(form.userIdentifier) }}
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                     {{ form_row(form.email) }}
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                     {{ form_row(form.color) }}
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-4">
                     {{ form_row(form.alias) }}
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                     {{ form_row(form.title) }}
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                     {{ form_row(form.accountNumber) }}
                 </div>
             </div>

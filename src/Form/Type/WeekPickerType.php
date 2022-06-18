@@ -25,7 +25,7 @@ final class WeekPickerType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'widget' => 'single_text',
@@ -49,10 +49,7 @@ final class WeekPickerType extends AbstractType
         $view->vars['nextWeek'] = (clone $date)->modify('+1 week');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return DateType::class;
     }

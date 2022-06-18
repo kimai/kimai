@@ -14,10 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class DateTimeTextType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return TextType::class;
     }

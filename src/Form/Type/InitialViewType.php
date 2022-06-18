@@ -67,7 +67,7 @@ class InitialViewType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('required', true);
         $resolver->setDefault('choices', function (Options $options) {
@@ -91,10 +91,7 @@ class InitialViewType extends AbstractType
         });
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

@@ -22,7 +22,7 @@ class TimesheetBillableType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'label' => 'label.billable',
@@ -34,10 +34,7 @@ class TimesheetBillableType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

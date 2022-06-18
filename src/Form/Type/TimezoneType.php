@@ -20,17 +20,14 @@ class TimezoneType extends AbstractType
         return 'timezone_type';
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'intl' => false,
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return BaseTimezoneType::class;
     }

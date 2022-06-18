@@ -30,7 +30,7 @@ class EntityMultiRoleVoterTest extends AbstractVoterTest
         $token = new UsernamePasswordToken($user, 'foo', $user->getRoles());
         $sut = $this->getVoter(EntityMultiRoleVoter::class);
 
-        $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]), 'Failed on permission "' . $attribute . '" for User ' . $user->getUsername());
+        $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]), 'Failed on permission "' . $attribute . '" for User ' . $user->getUserIdentifier());
     }
 
     public function getTestData()

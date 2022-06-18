@@ -23,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MetaFieldsCollectionType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
@@ -50,7 +50,7 @@ class MetaFieldsCollectionType extends AbstractType
         );
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'entry_type' => EntityMetaDefinitionType::class,
@@ -61,10 +61,7 @@ class MetaFieldsCollectionType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return CollectionType::class;
     }

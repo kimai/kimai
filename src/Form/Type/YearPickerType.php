@@ -25,7 +25,7 @@ final class YearPickerType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'widget' => 'single_text',
@@ -51,10 +51,7 @@ final class YearPickerType extends AbstractType
         $view->vars['nextYear'] = (clone $date)->modify('+1 year');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return DateType::class;
     }

@@ -142,22 +142,6 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
     }
 
     /**
-     * @param Activity|int|null $activity
-     * @return $this
-     * @deprecated since 1.9 - use setActivities() or addActivity() instead - will be removed with 2.0
-     */
-    public function setActivity($activity)
-    {
-        if (null === $activity) {
-            $this->activities = [];
-        } else {
-            $this->activities = [$activity];
-        }
-
-        return $this;
-    }
-
-    /**
      * @param Activity|int $activity
      * @return $this
      */

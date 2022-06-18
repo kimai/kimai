@@ -11,31 +11,6 @@ namespace App\Form\Model;
 
 final class SystemConfiguration
 {
-    /** @deprecated since 1.16.10 */
-    public const SECTION_ROUNDING = 'rounding';
-    /** @deprecated since 1.16.10 */
-    public const SECTION_LOCKDOWN = 'lockdown_period';
-    /** @deprecated since 1.16.10 */
-    public const SECTION_TIMESHEET = 'timesheet';
-    /** @deprecated since 1.16.10 */
-    public const SECTION_FORM_INVOICE = 'invoice';
-    /** @deprecated since 1.16.10 */
-    public const SECTION_FORM_CUSTOMER = 'customer';
-    /** @deprecated since 1.16.10 */
-    public const SECTION_FORM_USER = 'user';
-    /** @deprecated since 1.16.10 */
-    public const SECTION_THEME = 'theme';
-    /** @deprecated since 1.16.10 */
-    public const SECTION_AUTHENTICATION = 'authentication';
-    /** @deprecated since 1.16.10 */
-    public const SECTION_CALENDAR = 'calendar';
-    /** @deprecated since 1.16.10 */
-    public const SECTION_BRANDING = 'branding';
-
-    /**
-     * @var string|null
-     */
-    private $section;
     /**
      * @var string|null
      */
@@ -49,9 +24,8 @@ final class SystemConfiguration
      */
     private $configuration = [];
 
-    public function __construct(?string $section = null)
+    public function __construct(private ?string $section = null)
     {
-        $this->section = $section;
     }
 
     public function getSection(): ?string

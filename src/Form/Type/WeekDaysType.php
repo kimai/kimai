@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class WeekDaysType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new CallbackTransformer(
             function ($weekdays) {
@@ -35,7 +35,7 @@ class WeekDaysType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $choices = [
             'Monday' => 'monday',
@@ -53,10 +53,7 @@ class WeekDaysType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

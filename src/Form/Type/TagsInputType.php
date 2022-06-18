@@ -24,19 +24,14 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class TagsInputType extends AbstractType
 {
-    private $transformer;
-    private $router;
-
-    public function __construct(TagArrayToStringTransformer $transformer, UrlGeneratorInterface $router)
+    public function __construct(private TagArrayToStringTransformer $transformer, private UrlGeneratorInterface $router)
     {
-        $this->transformer = $transformer;
-        $this->router = $router;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->addModelTransformer(new CollectionToArrayTransformer(), true)
@@ -46,7 +41,7 @@ class TagsInputType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'documentation' => [
@@ -74,10 +69,7 @@ class TagsInputType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return TextType::class;
     }

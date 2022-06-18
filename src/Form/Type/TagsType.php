@@ -16,29 +16,18 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class TagsType extends AbstractType
 {
-    private $auth;
-    private $repository;
-
-    public function __construct(AuthorizationCheckerInterface $auth, TagRepository $repository)
+    public function __construct(private AuthorizationCheckerInterface $auth, private TagRepository $repository)
     {
-        $this->auth = $auth;
-        $this->repository = $repository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'allow_create' => $this->auth->isGranted('create_tag'),
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         if ($this->repository->count([]) > TagRepository::MAX_AMOUNT_SELECT) {
             return TagsInputType::class;

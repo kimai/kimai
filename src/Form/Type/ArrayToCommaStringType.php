@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class ArrayToCommaStringType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new CallbackTransformer(
             function ($value) {
@@ -32,10 +32,7 @@ class ArrayToCommaStringType extends AbstractType
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return TextType::class;
     }

@@ -41,7 +41,7 @@ abstract class AbstractVoterTest extends TestCase
 
         $user = new User();
         $user->setRoles($roles);
-        $user->setUsername((string) $id);
+        $user->setUserIdentifier((string) $id);
 
         $reflection = new \ReflectionClass($user);
         $property = $reflection->getProperty('id');

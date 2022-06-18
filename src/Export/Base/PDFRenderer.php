@@ -88,8 +88,6 @@ class PDFRenderer
         $content = $this->twig->render($this->getTemplate(), array_merge([
             'entries' => $timesheets,
             'query' => $query,
-            // @deprecated since 1.13
-            'now' => new \DateTime('now', new \DateTimeZone(date_default_timezone_get())),
             'summaries' => $summary,
             'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectStatisticService),
             'decimal' => false,

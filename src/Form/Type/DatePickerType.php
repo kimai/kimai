@@ -31,7 +31,7 @@ class DatePickerType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $pickerFormat = $this->localeSettings->getDatePickerFormat();
         $dateFormat = $this->localeSettings->getDateTypeFormat();
@@ -56,10 +56,7 @@ class DatePickerType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return DateType::class;
     }

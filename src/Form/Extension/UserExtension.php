@@ -32,7 +32,7 @@ final class UserExtension extends AbstractTypeExtension
         return [FormType::class];
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(['user']);
         // null needs to be allowed, as there is no user for anonymous forms (like "forgot password" and "registration")

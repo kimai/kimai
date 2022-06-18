@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TimesheetMultiUserEditForm extends TimesheetAdminEditForm
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $options['allow_begin_datetime'] = true;
         $options['allow_end_datetime'] = true;
@@ -35,7 +35,7 @@ class TimesheetMultiUserEditForm extends TimesheetAdminEditForm
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
     }

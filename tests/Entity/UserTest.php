@@ -185,15 +185,11 @@ class UserTest extends TestCase
         self::assertEquals('foo', (string) $user);
     }
 
-    /**
-     * @group legacy
-     */
     public function testGetUsername()
     {
         $user = new User();
 
-        $user->setUsername('bar');
-        self::assertEquals('bar', $user->getUsername());
+        $user->setUserIdentifier('bar');
         self::assertEquals('bar', $user->getDisplayName());
         self::assertEquals('bar', $user->getUserIdentifier());
         self::assertEquals('bar', (string) $user);
@@ -201,7 +197,6 @@ class UserTest extends TestCase
         $user->setAlias('foo');
         self::assertEquals('foo', $user->getAlias());
         self::assertEquals('bar', $user->getUserIdentifier());
-        self::assertEquals('bar', $user->getUsername());
         self::assertEquals('foo', $user->getDisplayName());
         self::assertEquals('foo', (string) $user);
     }

@@ -29,7 +29,7 @@ final class InvoiceRendererType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $documents = [];
         foreach ($this->service->getDocuments() as $document) {
@@ -73,10 +73,7 @@ final class InvoiceRendererType extends AbstractType
         return ucfirst($type);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

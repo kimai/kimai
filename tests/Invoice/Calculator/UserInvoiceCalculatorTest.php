@@ -103,7 +103,7 @@ class UserInvoiceCalculatorTest extends AbstractCalculatorTest
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];
 
         $query = new InvoiceQuery();
-        $query->setActivity($activity);
+        $query->addActivity($activity);
 
         $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setCustomer($customer);

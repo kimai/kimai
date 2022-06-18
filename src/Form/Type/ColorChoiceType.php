@@ -36,7 +36,7 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addViewTransformer($this);
     }
@@ -53,7 +53,7 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $options = [
             'documentation' => [
@@ -135,10 +135,7 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
         return $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         if ($this->isLimitedColors()) {
             return ChoiceType::class;

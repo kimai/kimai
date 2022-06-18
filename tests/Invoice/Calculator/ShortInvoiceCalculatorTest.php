@@ -89,7 +89,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $entries = [$timesheet, $timesheet2, $timesheet3];
 
         $query = new InvoiceQuery();
-        $query->setActivity($activity);
+        $query->addActivity($activity);
 
         $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setCustomer($customer);
@@ -171,7 +171,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $entries = [$timesheet, $timesheet2, $timesheet3];
 
         $query = new InvoiceQuery();
-        $query->setActivity($activity);
+        $query->addActivity($activity);
 
         $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setCustomer($customer);
@@ -250,7 +250,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $entries = [$timesheet, $timesheet2, $timesheet3];
 
         $query = new InvoiceQuery();
-        $query->setActivity($activity);
+        $query->addActivity($activity);
 
         $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setCustomer($customer);

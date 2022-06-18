@@ -853,18 +853,15 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->username !== null;
     }
 
-    /**
-     * @return string
-     * @deprecated use getUserIdentifier()
-     */
     public function getUsername(): string
     {
+        @trigger_error('Method getUsername() is deprecated since 2.0, switch to getUserIdentifier() instead', E_USER_DEPRECATED);
+
         return $this->username;
     }
 
     /**
-     * @return string
-     * @deprecated use getUserIdentifier()
+     * @internal only here to satisfy the theme interface
      */
     public function getIdentifier(): string
     {
@@ -952,18 +949,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             unset($this->roles[$key]);
             $this->roles = array_values($this->roles);
         }
-
-        return $this;
-    }
-
-    /**
-     * @param string $username
-     * @return $this
-     * @deprecated since 2.0 use setUserIdentifier() instead
-     */
-    public function setUsername(string $username): User
-    {
-        $this->username = $username;
 
         return $this;
     }

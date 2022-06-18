@@ -187,7 +187,7 @@ class InvoiceTest extends TestCase
         $entries = [$timesheet];
 
         $query = new InvoiceQuery();
-        $query->setActivity($activity);
+        $query->addActivity($activity);
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
 

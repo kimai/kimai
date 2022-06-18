@@ -23,7 +23,7 @@ class ColorPickerType extends AbstractType implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addViewTransformer($this);
     }
@@ -31,7 +31,7 @@ class ColorPickerType extends AbstractType implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'documentation' => [
@@ -63,10 +63,7 @@ class ColorPickerType extends AbstractType implements DataTransformerInterface
         return null === $value ? self::DEFAULT_COLOR : $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return ColorType::class;
     }

@@ -38,7 +38,7 @@ class IconExtension extends AbstractTypeExtension
     /**
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(['icon']);
         $resolver->setAllowedTypes('icon', 'string');

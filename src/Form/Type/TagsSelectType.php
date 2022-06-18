@@ -27,7 +27,7 @@ class TagsSelectType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'multiple' => true,
@@ -58,10 +58,7 @@ class TagsSelectType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return EntityType::class;
     }

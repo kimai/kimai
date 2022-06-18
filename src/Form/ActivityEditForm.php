@@ -27,7 +27,7 @@ class ActivityEditForm extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $project = null;
         $customer = null;
@@ -85,15 +85,13 @@ class ActivityEditForm extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Activity::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'admin_activity_edit',
-            // @deprecated not supported since 1.15, which removed the customer select completely
-            'customer' => false,
             'currency' => Customer::DEFAULT_CURRENCY,
             'include_budget' => false,
             'include_time' => false,

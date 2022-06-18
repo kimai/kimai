@@ -36,7 +36,7 @@ class DateTimePickerType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'documentation' => [
@@ -82,10 +82,7 @@ class DateTimePickerType extends AbstractType
         $view->vars['attr'] = $attr;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return DateTimeType::class;
     }

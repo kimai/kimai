@@ -24,17 +24,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserType extends AbstractType
 {
-    private $theme;
-
-    public function __construct(Theme $theme)
+    public function __construct(private Theme $theme)
     {
-        $this->theme = $theme;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'class' => User::class,
@@ -60,7 +57,7 @@ class UserType extends AbstractType
             'ignore_users' => [],
             // an array of users, which will always be included in the result list
             // why? if the base entity could include disabled users, which should not be hidden in/removed from the list
-            // eg. when editing a team that has disabled users, these users would be removed silently
+            // e.g. when editing a team that has disabled users, these users would be removed silently
             // see https://github.com/kevinpapst/kimai2/pull/1841
             'include_users' => [],
             'documentation' => [
@@ -94,10 +91,7 @@ class UserType extends AbstractType
         });
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): ?string
+    public function getParent(): string
     {
         return EntityType::class;
     }

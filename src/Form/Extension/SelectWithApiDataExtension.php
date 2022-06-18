@@ -98,7 +98,7 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
     /**
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(['api_data']);
         $resolver->setAllowedTypes('api_data', 'array');

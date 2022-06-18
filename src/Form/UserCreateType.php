@@ -24,10 +24,10 @@ class UserCreateType extends UserEditType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username', null, [
+            ->add('userIdentifier', null, [
                 'label' => 'label.username',
                 'required' => true,
                 'attr' => [
@@ -62,7 +62,7 @@ class UserCreateType extends UserEditType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
