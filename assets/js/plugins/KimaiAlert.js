@@ -23,23 +23,29 @@ export default class KimaiAlert extends KimaiPlugin {
 
     /**
      * @param {string} title
-     * @param {string|array} message
+     * @param {string|array|undefined} message
      */
     error(title, message) {
         const translation = this.getContainer().getTranslation();
         if (translation.has(title)) {
             title = translation.get(title);
         }
-        if (translation.has(message)) {
-            message = translation.get(message);
-        }
         title = title.replace('%reason%', '');
 
-        if (Array.isArray(message)) {
-            message = message.join('<br>');
+        if (message === undefined) {
+            message = null;
         }
-        const id = 'alert_global_error';
 
+        if (message !== null) {
+            if (translation.has(message)) {
+                message = translation.get(message);
+            }
+            if (Array.isArray(message)) {
+                message = message.join('<br>');
+            }
+        }
+
+        const id = 'alert_global_error';
         const oldModalElement = document.getElementById(id);
         if (oldModalElement !== null) {
             Modal.getOrCreateInstance(oldModalElement).hide();
@@ -53,7 +59,7 @@ export default class KimaiAlert extends KimaiPlugin {
                         <div class="modal-body text-center py-4">
                             <i class="fas fa-exclamation-circle fa-3x mb-3 text-danger"></i>
                             <h2>` + title + `</h2>
-                            <div class="text-muted">` + message + `</div>
+                            ` + (message !== null ? '<div class="text-muted">' + message + '</div>' : '') + `
                         </div>
                         <div class="modal-footer">
                             <div class="w-100">
