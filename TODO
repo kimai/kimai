@@ -1,35 +1,20 @@
 ===========================================================================
-KioskBundle:
 
-- Update KioskBundle for layout & full compatibility
-
-===========================================================================
 INVOICES
 
 - HTML Rechnungstemplates funktionieren nicht mehr richtig
 
 ===========================================================================
+
 THEME
 
 - Update to latest release und angepasstes CSS entfernen
 
-- Fix all datatable columns: hidden-* => d-none
-    - Siehe https://getbootstrap.com/docs/4.0/utilities/display/
-    ALLE SPALTEN SOLLEN WEG, AUSSER DER ABSOLUT RELEVANTEN
-    - d-xs-none => d-none d-md-table-cell
-    - d-md-none => d-none d-md-none d-lg-table-cell
-    - d-sm-none => d-none d-md-table-cell
-
-    .d-{value} for xs
-    .d-{breakpoint}-{value} for sm, md, lg, and xl.
-
-
 - Theme Dark Mode mit Modus "Browser" sollte Standard sein:
     https://github.com/tabler/tabler/issues/892#event-5666309557
 
-- Button loadingText etc wird nicht mehr unterstützt
-
 ===========================================================================
+
 MIXED
 
 - Alle URLs ändern
@@ -41,3 +26,11 @@ MIXED
 - Tags => immer Berechtigung prüfen und "create" option über die VIEW ans Javascript geben
   => den FormType nur ändern zu "AutoComplete" wenn es mehr als 500 Tags sind
   => Übersetzungen (Suche, Erstellen, Keine Ergebnisse) über data attribute ans JS durchreichen
+
+===========================================================================
+
+MIGRATIONS
+
+- rename 2.0 migration once it will be released
+
+===========================================================================

@@ -43,7 +43,7 @@
             <directory suffix=".php">templates/</directory>
         </include>
         <exclude>
-            <directory suffix=".php">src/Migrations/</directory>
+            <directory suffix=".php">migrations/</directory>
             <directory suffix=".php">assets/</directory>
             <directory suffix=".php">bin/</directory>
             <directory suffix=".php">config/</directory>

@@ -1,5 +1,3 @@
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
     app_locales: ar|cs|da|de|de_AT|de_CH|el|en|en_GB|eo|es|eu|fa|fi|fo|fr|he|hr|hu|it|ja|ko|nb_NO|nl|pl|pt|pt_BR|ro|ru|sk|sv|tr|vi|zh_CN
@@ -16,17 +14,16 @@ services:
             $projectDirectory: '%kernel.project_dir%'
             $kernelEnvironment: '%kernel.environment%'
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
+    # make classes in src/ available to be used as services
+    # creates one service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
         exclude:
+            - '../src/API/Model/'
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Event/'
-            - '../src/Migrations/'
             - '../src/Model/'
-            - '../src/Tests/'
             - '../src/Kernel.php'
             - '../src/Constants.php'
 
