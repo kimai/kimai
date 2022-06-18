@@ -32,7 +32,7 @@ jobs:
                 with:
                     php-version: ${{ matrix.php }}
                     coverage: pcov
-                    extensions: mbstring, xml, ctype, iconv, intl, mysql, zip, gd, ldap
+                    extensions: mbstring, xml, ctype, iconv, intl, mysql, zip, ldap
                     tools: cs2pr:1.1.0, symfony-cli
 
             -   name: Determine composer cache directory
