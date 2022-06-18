@@ -34,7 +34,7 @@ class PermissionControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/permissions');
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 133);
+        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 135);
         $this->assertPageActions($client, [
             //'back' => $this->createUrl('/admin/user/'),
             'create modal-ajax-form' => $this->createUrl('/admin/permissions/roles/create'),
@@ -48,7 +48,7 @@ class PermissionControllerTest extends ControllerBaseTest
     private function assertTableHeader(string $content): void
     {
         // the english translation instead of the real system user role names
-        self::assertStringContainsString('<th data-field="ROLE_USER" class="alwaysVisible text-center col_ROLE_USER">', $content);
+        self::assertStringContainsString('<th data-field="ROLE_USER" class="alwaysVisible text-center bg-green-lt col_ROLE_USER">', $content);
         self::assertStringContainsString('<th data-field="ROLE_TEAMLEAD" class="alwaysVisible text-center col_ROLE_TEAMLEAD">', $content);
         self::assertStringContainsString('<th data-field="ROLE_ADMIN" class="alwaysVisible text-center col_ROLE_ADMIN">', $content);
         self::assertStringContainsString('<th data-field="ROLE_SUPER_ADMIN" class="alwaysVisible text-center bg-orange-lt col_ROLE_SUPER_ADMIN">', $content);
