@@ -170,7 +170,7 @@ final class InstallCommand extends Command
      * @param bool $default
      * @return bool
      */
-    private function askConfirmation(InputInterface $input, OutputInterface $output, $question, $default = false)
+    private function askConfirmation(InputInterface $input, OutputInterface $output, $question, $default = false): bool
     {
         /** @var QuestionHelper $questionHelper */
         $questionHelper = $this->getHelperSet()->get('question');

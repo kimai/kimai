@@ -14,21 +14,18 @@ use App\Entity\Customer;
 
 abstract class AbstractCustomerImporter implements CustomerImporterInterface
 {
-    private $customerService;
-
-    public function __construct(CustomerService $repository)
+    public function __construct(private CustomerService $repository)
     {
-        $this->customerService = $repository;
     }
 
     protected function findCustomerByName(string $name): ?Customer
     {
-        return $this->customerService->findCustomerByName($name);
+        return $this->repository->findCustomerByName($name);
     }
 
     protected function findCustomerByNumber(string $number): ?Customer
     {
-        return $this->customerService->findCustomerByNumber($number);
+        return $this->repository->findCustomerByNumber($number);
     }
 
     public function convertEntryToCustomer(array $entry): Customer
@@ -42,7 +39,7 @@ abstract class AbstractCustomerImporter implements CustomerImporterInterface
 
     protected function createNewCustomer(string $name): Customer
     {
-        $customer = $this->customerService->createNewCustomer();
+        $customer = $this->repository->createNewCustomer();
         $customer->setName(substr($name, 0, 149));
 
         return $customer;
@@ -115,7 +112,7 @@ abstract class AbstractCustomerImporter implements CustomerImporterInterface
      *
      * @param Customer $customer
      * @param array $entry
-     * @return mixed
+     * @return Customer
      */
-    abstract protected function mapEntryToCustomer(Customer $customer, array $entry);
+    abstract protected function mapEntryToCustomer(Customer $customer, array $entry): Customer;
 }

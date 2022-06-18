@@ -99,7 +99,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
      * @param string|null $timezone
      * @return array
      */
-    private function getUserPreferences(User $user, string $timezone = null)
+    private function getUserPreferences(User $user, string $timezone = null): array
     {
         $preferences = [];
 
@@ -164,7 +164,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
     /**
      * @return array
      */
-    protected function getUserDefinition()
+    protected function getUserDefinition(): array
     {
         // alias = $userData[0]
         // title = $userData[1]

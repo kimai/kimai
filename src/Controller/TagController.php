@@ -37,7 +37,7 @@ class TagController extends AbstractController
      * @param int $page
      * @return Response
      */
-    public function listTags(TagRepository $repository, Request $request, $page)
+    public function listTags(TagRepository $repository, Request $request, $page): Response
     {
         $query = new TagQuery();
         $query->setPage($page);
@@ -146,7 +146,7 @@ class TagController extends AbstractController
         return $this->redirectToRoute('tags');
     }
 
-    protected function getMultiUpdateForm(TagRepository $repository): ?FormInterface
+    private function getMultiUpdateForm(TagRepository $repository): ?FormInterface
     {
         $dto = new MultiUpdateTableDTO();
         if ($this->isGranted('delete_tag')) {
@@ -164,11 +164,7 @@ class TagController extends AbstractController
         ]);
     }
 
-    /**
-     * @param TagQuery $query
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    protected function getToolbarForm(TagQuery $query)
+    private function getToolbarForm(TagQuery $query): FormInterface
     {
         return $this->createForm(TagToolbarForm::class, $query, [
             'action' => $this->generateUrl('tags', [

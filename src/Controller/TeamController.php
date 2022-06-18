@@ -42,7 +42,7 @@ final class TeamController extends AbstractController
      * @param int $page
      * @return Response
      */
-    public function listTeams(TeamRepository $repository, Request $request, $page)
+    public function listTeams(TeamRepository $repository, Request $request, $page): Response
     {
         $query = new TeamQuery();
         $query->setPage($page);
@@ -67,9 +67,9 @@ final class TeamController extends AbstractController
      * @Security("is_granted('create_team')")
      *
      * @param Request $request
-     * @return RedirectResponse|Response
+     * @return Response
      */
-    public function createTeam(Request $request)
+    public function createTeam(Request $request): Response
     {
         return $this->renderEditScreen(new Team(), $request, true);
     }
@@ -200,8 +200,8 @@ final class TeamController extends AbstractController
         return $this->render('team/edit.html.twig', [
             'team' => $team,
             'form' => $editForm->createView(),
-            'customerForm' => $customerForm ? $customerForm->createView() : null,
-            'projectForm' => $projectForm ? $projectForm->createView() : null,
+            'customerForm' => $customerForm?->createView(),
+            'projectForm' => $projectForm?->createView(),
         ]);
     }
 

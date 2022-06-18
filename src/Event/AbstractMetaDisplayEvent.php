@@ -59,7 +59,7 @@ abstract class AbstractMetaDisplayEvent extends Event implements MetaDisplayEven
      *
      * @param MetaTableTypeInterface $meta
      */
-    public function addField(MetaTableTypeInterface $meta)
+    public function addField(MetaTableTypeInterface $meta): void
     {
         $this->fields[] = $meta;
     }

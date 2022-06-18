@@ -62,7 +62,7 @@ class TagRepository extends EntityRepository
      * @param string $tagNames
      * @return array
      */
-    public function findIdsByTagNameList(string $tagNames)
+    public function findIdsByTagNameList(string $tagNames): array
     {
         $qb = $this
             ->createQueryBuilder('t')
@@ -85,7 +85,7 @@ class TagRepository extends EntityRepository
      * @param string $filter
      * @return array
      */
-    public function findAllTagNames($filter = null)
+    public function findAllTagNames($filter = null): array
     {
         $qb = $this->createQueryBuilder('t');
 

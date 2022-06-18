@@ -69,7 +69,7 @@ class DateRangeType extends AbstractType
      * @param string $string
      * @return string
      */
-    protected function convertArabicPersian($string)
+    protected function convertArabicPersian($string): string
     {
         return strtr(
             $string,

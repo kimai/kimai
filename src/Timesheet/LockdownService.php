@@ -40,7 +40,7 @@ final class LockdownService
      * @param bool $allowEditInGracePeriod
      * @return bool
      */
-    public function isEditable(Timesheet $timesheet, \DateTime $now, bool $allowEditInGracePeriod = false)
+    public function isEditable(Timesheet $timesheet, \DateTime $now, bool $allowEditInGracePeriod = false): bool
     {
         if (!$this->isLockdownActive()) {
             return true;

@@ -637,7 +637,7 @@ class ImportTimesheetCommand extends Command
      * @return bool
      * @throws InvalidFieldsException
      */
-    private function validateRow(array $row)
+    private function validateRow(array $row): bool
     {
         $fields = [];
 

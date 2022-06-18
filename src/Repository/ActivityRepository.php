@@ -59,7 +59,7 @@ class ActivityRepository extends EntityRepository
      * @param Project $project
      * @return Activity[]
      */
-    public function findByProject(Project $project)
+    public function findByProject(Project $project): array
     {
         return $this->findBy(['project' => $project]);
     }
@@ -68,7 +68,7 @@ class ActivityRepository extends EntityRepository
      * @param int[] $activityIds
      * @return Activity[]
      */
-    public function findByIds(array $activityIds)
+    public function findByIds(array $activityIds): array
     {
         $qb = $this->createQueryBuilder('a');
         $qb
@@ -100,7 +100,7 @@ class ActivityRepository extends EntityRepository
      * @param null|bool $visible
      * @return int
      */
-    public function countActivity($visible = null)
+    public function countActivity($visible = null): int
     {
         if (null !== $visible) {
             return $this->count(['visible' => (bool) $visible]);

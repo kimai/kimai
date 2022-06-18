@@ -96,7 +96,7 @@ final class ServiceExport
      * @return ExportableItem[]
      * @throws TooManyItemsExportException
      */
-    public function getExportItems(ExportQuery $query)
+    public function getExportItems(ExportQuery $query): array
     {
         $items = [];
 

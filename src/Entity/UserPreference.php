@@ -230,7 +230,7 @@ class UserPreference
     /**
      * @return Constraint[]
      */
-    public function getConstraints()
+    public function getConstraints(): array
     {
         return $this->constraints;
     }

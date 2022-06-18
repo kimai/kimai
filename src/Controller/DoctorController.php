@@ -268,7 +268,7 @@ class DoctorController extends AbstractController
      * @author https://php.net/manual/en/function.phpinfo.php#117961
      * @return array
      */
-    private function getPhpInfo()
+    private function getPhpInfo(): array
     {
         $plainText = function ($input) {
             return trim(html_entity_decode(strip_tags($input)));

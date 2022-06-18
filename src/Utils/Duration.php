@@ -28,7 +28,7 @@ class Duration
      * @param string $format
      * @return string|null
      */
-    public function format(?int $seconds, string $format = self::FORMAT_NO_SECONDS)
+    public function format(?int $seconds, string $format = self::FORMAT_NO_SECONDS): ?string
     {
         if (null === $seconds) {
             return null;

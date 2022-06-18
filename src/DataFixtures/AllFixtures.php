@@ -23,7 +23,7 @@ class AllFixtures extends Fixture implements DependentFixtureInterface
     /**
      * @return class-string[]
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             UserFixtures::class,

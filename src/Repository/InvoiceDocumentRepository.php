@@ -93,7 +93,7 @@ final class InvoiceDocumentRepository
      *
      * @return InvoiceDocument[]
      */
-    public function findCustom()
+    public function findCustom(): array
     {
         $paths = [];
         foreach ($this->documentDirs as $dir) {
@@ -111,7 +111,7 @@ final class InvoiceDocumentRepository
      *
      * @return InvoiceDocument[]
      */
-    public function findBuiltIn()
+    public function findBuiltIn(): array
     {
         foreach ($this->documentDirs as $dir) {
             if ($dir === self::DEFAULT_DIRECTORY) {
@@ -127,7 +127,7 @@ final class InvoiceDocumentRepository
      *
      * @return InvoiceDocument[]
      */
-    public function findAll()
+    public function findAll(): array
     {
         return $this->findByPaths($this->documentDirs);
     }
@@ -137,7 +137,7 @@ final class InvoiceDocumentRepository
      *
      * @return InvoiceDocument[]
      */
-    private function findByPaths(array $paths)
+    private function findByPaths(array $paths): array
     {
         $base = \dirname(\dirname(__DIR__)) . DIRECTORY_SEPARATOR;
 

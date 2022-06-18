@@ -773,7 +773,7 @@ abstract class AbstractSpreadsheetRenderer
      * @param string $filename
      * @return BinaryFileResponse
      */
-    protected function getFileResponse($file, $filename): Response
+    protected function getFileResponse($file, $filename): BinaryFileResponse
     {
         $response = new BinaryFileResponse($file);
         $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename);

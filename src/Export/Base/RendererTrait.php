@@ -23,7 +23,7 @@ trait RendererTrait
      * @param ExportableItem[] $exportItems
      * @return array
      */
-    protected function calculateSummary(array $exportItems)
+    protected function calculateSummary(array $exportItems): array
     {
         $summary = [];
 
@@ -168,7 +168,7 @@ trait RendererTrait
      * @param ProjectStatisticService $projectStatisticService
      * @return array
      */
-    protected function calculateProjectBudget(array $exportItems, TimesheetQuery $query, ProjectStatisticService $projectStatisticService)
+    protected function calculateProjectBudget(array $exportItems, TimesheetQuery $query, ProjectStatisticService $projectStatisticService): array
     {
         $summary = [];
         $projects = [];
@@ -253,7 +253,7 @@ trait RendererTrait
      * @param ActivityStatisticService $activityStatisticService
      * @return array
      */
-    protected function calculateActivityBudget(array $exportItems, TimesheetQuery $query, ActivityStatisticService $activityStatisticService)
+    protected function calculateActivityBudget(array $exportItems, TimesheetQuery $query, ActivityStatisticService $activityStatisticService): array
     {
         $summary = [];
         $activities = [];

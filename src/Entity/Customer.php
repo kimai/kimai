@@ -608,10 +608,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         return $this->teams;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName();
     }

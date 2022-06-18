@@ -442,10 +442,7 @@ class Team
         return $this->activities;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName();
     }

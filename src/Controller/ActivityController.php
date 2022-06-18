@@ -388,7 +388,7 @@ final class ActivityController extends AbstractController
      * @param ActivityQuery $query
      * @return FormInterface
      */
-    protected function getToolbarForm(ActivityQuery $query)
+    protected function getToolbarForm(ActivityQuery $query): FormInterface
     {
         return $this->createForm(ActivityToolbarForm::class, $query, [
             'action' => $this->generateUrl('admin_activity', [
@@ -402,7 +402,7 @@ final class ActivityController extends AbstractController
      * @param Activity $activity
      * @return FormInterface
      */
-    private function createEditForm(Activity $activity)
+    private function createEditForm(Activity $activity): FormInterface
     {
         $currency = $this->configuration->getCustomerDefaultCurrency();
         $url = $this->generateUrl('admin_activity_create');

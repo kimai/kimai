@@ -14,7 +14,7 @@ use App\Entity\CustomerMeta;
 
 final class DefaultCustomerImporter extends AbstractCustomerImporter
 {
-    protected function mapEntryToCustomer(Customer $customer, array $row)
+    protected function mapEntryToCustomer(Customer $customer, array $row): Customer
     {
         foreach ($row as $name => $value) {
             switch (strtolower($name)) {

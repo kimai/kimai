@@ -43,6 +43,7 @@ use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -60,24 +61,8 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 final class SystemConfigurationController extends AbstractController
 {
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-    /**
-     * @var SystemConfiguration
-     */
-    private $configurations;
-    /**
-     * @var ConfigurationRepository
-     */
-    private $repository;
-
-    public function __construct(EventDispatcherInterface $dispatcher, ConfigurationRepository $repository, SystemConfiguration $config)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private ConfigurationRepository $repository, private SystemConfiguration $systemConfiguration)
     {
-        $this->eventDispatcher = $dispatcher;
-        $this->repository = $repository;
-        $this->configurations = $config;
     }
 
     /**
@@ -130,9 +115,9 @@ final class SystemConfigurationController extends AbstractController
      * @internal do not link directly to this route
      * @param Request $request
      * @param string $section
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
-    public function configUpdate(Request $request, string $section, bool $single)
+    public function configUpdate(Request $request, string $section, bool $single): Response
     {
         $configModel = null;
         $configSettings = $this->getInitializedConfigurations();
@@ -209,7 +194,7 @@ final class SystemConfigurationController extends AbstractController
     /**
      * @return SystemConfigurationModel[]
      */
-    protected function getInitializedConfigurations()
+    private function getInitializedConfigurations(): array
     {
         $types = $this->getConfigurationTypes();
 
@@ -218,11 +203,11 @@ final class SystemConfigurationController extends AbstractController
 
         foreach ($event->getConfigurations() as $configs) {
             foreach ($configs->getConfiguration() as $config) {
-                if (!$this->configurations->has($config->getName())) {
+                if (!$this->systemConfiguration->has($config->getName())) {
                     continue;
                 }
 
-                $configValue = $this->configurations->find($config->getName());
+                $configValue = $this->systemConfiguration->find($config->getName());
                 if (null !== $configValue) {
                     $config->setValue($configValue);
                 }
@@ -235,16 +220,16 @@ final class SystemConfigurationController extends AbstractController
     /**
      * @return SystemConfigurationModel[]
      */
-    protected function getConfigurationTypes()
+    private function getConfigurationTypes(): array
     {
         $lockdownStartHelp = null;
         $lockdownEndHelp = null;
         $lockdownGraceHelp = null;
         $dateFormat = 'D, d M Y H:i:s';
 
-        if ($this->configurations->isTimesheetLockdownActive()) {
+        if ($this->systemConfiguration->isTimesheetLockdownActive()) {
             $userTimezone = $this->getDateTimeFactory()->getTimezone();
-            $timezone = $this->configurations->getTimesheetLockdownTimeZone();
+            $timezone = $this->systemConfiguration->getTimesheetLockdownTimeZone();
 
             if ($timezone !== null) {
                 $timezone = new \DateTimeZone($timezone);
@@ -255,16 +240,16 @@ final class SystemConfigurationController extends AbstractController
             }
 
             try {
-                if (!empty($this->configurations->getTimesheetLockdownPeriodStart())) {
-                    $lockdownStartHelp = new \DateTime($this->configurations->getTimesheetLockdownPeriodStart(), $timezone);
+                if (!empty($this->systemConfiguration->getTimesheetLockdownPeriodStart())) {
+                    $lockdownStartHelp = new \DateTime($this->systemConfiguration->getTimesheetLockdownPeriodStart(), $timezone);
                     $lockdownStartHelp->setTimezone($userTimezone);
                     $lockdownStartHelp = $lockdownStartHelp->format($dateFormat);
                 }
-                if (!empty($this->configurations->getTimesheetLockdownPeriodEnd())) {
-                    $lockdownEndHelp = new \DateTime($this->configurations->getTimesheetLockdownPeriodEnd(), $timezone);
-                    if (!empty($this->configurations->getTimesheetLockdownGracePeriod())) {
+                if (!empty($this->systemConfiguration->getTimesheetLockdownPeriodEnd())) {
+                    $lockdownEndHelp = new \DateTime($this->systemConfiguration->getTimesheetLockdownPeriodEnd(), $timezone);
+                    if (!empty($this->systemConfiguration->getTimesheetLockdownGracePeriod())) {
                         $lockdownGraceHelp = clone $lockdownEndHelp;
-                        $lockdownGraceHelp->modify($this->configurations->getTimesheetLockdownGracePeriod());
+                        $lockdownGraceHelp->modify($this->systemConfiguration->getTimesheetLockdownGracePeriod());
                         $lockdownGraceHelp->setTimezone($userTimezone);
                         $lockdownGraceHelp = $lockdownGraceHelp->format($dateFormat);
                     }
@@ -312,11 +297,11 @@ final class SystemConfigurationController extends AbstractController
                 */
             ]);
 
-        if (!$this->configurations->isSamlActive()) {
+        if (!$this->systemConfiguration->isSamlActive()) {
             $authentication->getConfigurationByName('user.login')->setEnabled(false);
         }
 
-        if (!$this->configurations->isPasswordResetActive()) {
+        if (!$this->systemConfiguration->isPasswordResetActive()) {
             $authentication->getConfigurationByName('user.password_reset_retry_ttl')->setEnabled(false);
             $authentication->getConfigurationByName('user.password_reset_token_ttl')->setEnabled(false);
         }

@@ -61,7 +61,7 @@ class ProjectRepository extends EntityRepository
      * @param int[] $projectIds
      * @return Project[]
      */
-    public function findByIds(array $projectIds)
+    public function findByIds(array $projectIds): array
     {
         $qb = $this->createQueryBuilder('p');
         $qb
@@ -93,7 +93,7 @@ class ProjectRepository extends EntityRepository
      * @param null|bool $visible
      * @return int
      */
-    public function countProject($visible = null)
+    public function countProject($visible = null): int
     {
         if (null !== $visible) {
             return $this->count(['visible' => (bool) $visible]);

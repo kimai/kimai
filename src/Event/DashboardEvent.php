@@ -44,9 +44,9 @@ final class DashboardEvent extends Event
      *
      * @param string $widget
      * @param int|null $position
-     * @return $this
+     * @return void
      */
-    public function addWidget(string $widget, ?int $position = null)
+    public function addWidget(string $widget, ?int $position = null): void
     {
         if ($position === null) {
             $position = 0;
@@ -61,8 +61,6 @@ final class DashboardEvent extends Event
         }
 
         $this->widgets[$position] = $widget;
-
-        return $this;
     }
 
     public function getUser(): User

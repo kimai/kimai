@@ -34,7 +34,7 @@ final class WidgetExtension implements RuntimeExtensionInterface
      * @return string
      * @throws WidgetException
      */
-    public function renderWidget(Environment $environment, $widget, array $options = [])
+    public function renderWidget(Environment $environment, $widget, array $options = []): string
     {
         if (!($widget instanceof WidgetInterface) && !\is_string($widget)) {
             throw new \InvalidArgumentException('Widget must be either a WidgetInterface or a string');

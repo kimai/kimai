@@ -446,7 +446,7 @@ abstract class TimesheetAbstractController extends AbstractController
      * @param int $page
      * @return FormInterface
      */
-    protected function getEditForm(Timesheet $entry, $page)
+    protected function getEditForm(Timesheet $entry, $page): FormInterface
     {
         $mode = $this->getTrackingMode();
 

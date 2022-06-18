@@ -138,7 +138,7 @@ class DateTimeFactory
      * @param null|string $datetime
      * @return bool|DateTime
      */
-    public function createDateTimeFromFormat(string $format, ?string $datetime = 'now')
+    public function createDateTimeFromFormat(string $format, ?string $datetime = 'now'): bool|DateTime
     {
         return DateTime::createFromFormat($format, $datetime ?? 'now', $this->getTimezone());
     }

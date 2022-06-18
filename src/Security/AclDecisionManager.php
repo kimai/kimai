@@ -14,21 +14,15 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
 
 class AclDecisionManager
 {
-    /**
-     * @var AccessDecisionManagerInterface
-     */
-    private $decisionManager;
-
-    public function __construct(AccessDecisionManagerInterface $decisionManager)
+    public function __construct(private AccessDecisionManagerInterface $decisionManager)
     {
-        $this->decisionManager = $decisionManager;
     }
 
     /**
      * @param TokenInterface $token
      * @return bool
      */
-    public function isFullyAuthenticated(TokenInterface $token)
+    public function isFullyAuthenticated(TokenInterface $token): bool
     {
         if ($this->decisionManager->decide($token, ['IS_AUTHENTICATED_FULLY'])) {
             return true;

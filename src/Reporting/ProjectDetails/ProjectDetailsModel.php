@@ -76,7 +76,7 @@ final class ProjectDetailsModel
      * @param string $year
      * @return ActivityStatistic[]
      */
-    public function getYearActivities(string $year): ?array
+    public function getYearActivities(string $year): array
     {
         if (!\array_key_exists($year, $this->yearlyActivities)) {
             return [];
