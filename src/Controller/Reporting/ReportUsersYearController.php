@@ -28,7 +28,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route(path="/reporting/users")
- * @Security("is_granted('view_reporting') and is_granted('view_other_reporting') and is_granted('view_other_timesheet')")
+ * @Security("is_granted('report:other')")
  */
 final class ReportUsersYearController extends AbstractController
 {

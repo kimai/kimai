@@ -75,7 +75,9 @@
     </div>
 
     {% set monthRoute = null %}
-    {% set canSeeReport = user.enabled and is_granted('view_reporting') and (app.user.id == user.id or is_granted('view_other_timesheet')) %}
+    {% set canSeeOwnReport = app.user.id == user.id and is_granted('report:user') %}
+    {% set canSeeOtherReport = app.user.id != user.id and is_granted('report:other') %}
+    {% set canSeeReport = user.enabled and (canSeeOwnReport or canSeeOtherReport) %}
 
     {%- if canSeeReport -%}
         {% set monthRoute = path('report_user_month', {'user': user.id, 'date': '__MONTH__'}) %}

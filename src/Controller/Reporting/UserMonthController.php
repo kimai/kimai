@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @Route(path="/reporting/user")
- * @Security("is_granted('view_reporting')")
+ * @Security("is_granted('report:user')")
  */
 final class UserMonthController extends AbstractUserReportController
 {

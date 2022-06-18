@@ -6,7 +6,7 @@
             id="project_list_box" data-reload="kimai.projectUpdate kimai.projectDelete"
         {% endblock %}
         {% block box_tools %}
-            {%- if is_granted('view_reporting') and is_granted('budget_any', 'project') -%}
+            {%- if is_granted('report:project') and is_granted('budget_any', 'project') -%}
                 {{ widgets.card_tool_button('reporting', {'title': 'report_project_view', 'translation_domain': 'reporting', 'url': path('report_project_view', {'customer': customer.id})}) }}
             {%- endif -%}
             {%- if customer.visible and is_granted('create_project') -%}

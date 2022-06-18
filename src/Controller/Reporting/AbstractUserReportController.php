@@ -21,15 +21,8 @@ use DateTime;
 
 abstract class AbstractUserReportController extends AbstractController
 {
-    protected $statisticService;
-    private $projectRepository;
-    private $activityRepository;
-
-    public function __construct(TimesheetStatisticService $statisticService, ProjectRepository $projectRepository, ActivityRepository $activityRepository)
+    public function __construct(protected TimesheetStatisticService $statisticService, private ProjectRepository $projectRepository, private ActivityRepository $activityRepository)
     {
-        $this->statisticService = $statisticService;
-        $this->projectRepository = $projectRepository;
-        $this->activityRepository = $activityRepository;
     }
 
     protected function canSelectUser(): bool

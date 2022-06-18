@@ -43,15 +43,13 @@ class UserSubscriber extends AbstractActionsSubscriber
             $event->addAction('settings', ['title' => 'settings', 'translation_domain' => 'actions', 'url' => $this->path('user_profile_preferences', ['username' => $user->getUserIdentifier()])]);
         }
 
-        $viewOther = $this->isGranted('view_other_timesheet');
-
-        if ($this->isGranted('view_reporting') && (($viewOther && $this->isGranted('view_other_reporting')) || ($event->getUser()->getId() === $user->getId()))) {
+        if ($this->isGranted('report:other') || ($this->isGranted('report:user') && $event->getUser()->getId() === $user->getId())) {
             $event->addActionToSubmenu('report', 'weekly', ['url' => $this->path('report_user_week', ['user' => $user->getId()]), 'translation_domain' => 'reporting', 'title' => 'report_user_week']);
             $event->addActionToSubmenu('report', 'monthly', ['url' => $this->path('report_user_month', ['user' => $user->getId()]), 'translation_domain' => 'reporting', 'title' => 'report_user_month']);
             $event->addActionToSubmenu('report', 'yearly', ['url' => $this->path('report_user_year', ['user' => $user->getId()]), 'translation_domain' => 'reporting', 'title' => 'report_user_year']);
         }
 
-        if ($viewOther && $user->isEnabled()) {
+        if ($this->isGranted('view_other_timesheet') && $user->isEnabled()) {
             $event->addActionToSubmenu('filter', 'timesheet', ['url' => $this->path('admin_timesheet', ['users[]' => $user->getId()]), 'title' => 'timesheet.filter', 'translation_domain' => 'actions']);
         }
 
