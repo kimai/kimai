@@ -87,7 +87,7 @@ class ProfileControllerTest extends ControllerBaseTest
     {
         $content = $client->getResponse()->getContent();
 
-        $this->assertStringContainsString('<div class="datagrid-content">'.$username.'</div>', $content);
+        $this->assertStringContainsString('<div class="datagrid-content">' . $username . '</div>', $content);
     }
 
     public function getTabTestData()
