@@ -41,7 +41,7 @@ class UserPreferenceType extends AbstractType
                 $constraints = $preference->getConstraints();
 
                 $required = true;
-                if (array_key_exists('required', $options)) {
+                if (\array_key_exists('required', $options)) {
                     $required = (bool) $options['required'];
                     unset($options['required']);
                 }
