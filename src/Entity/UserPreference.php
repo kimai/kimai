@@ -152,11 +152,10 @@ class UserPreference
     public function getValue(): mixed
     {
         return match ($this->type) {
-            YesNoType::class, CheckboxType::class => (bool)$this->value,
-            IntegerType::class => (int)$this->value,
+            YesNoType::class, CheckboxType::class => (bool) $this->value,
+            IntegerType::class => (int) $this->value,
             default => $this->value,
         };
-
     }
 
     /**

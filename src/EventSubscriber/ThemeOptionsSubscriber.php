@@ -65,12 +65,12 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
         if ($skin === 'dark') {
             $this->helper->setIsDarkMode(true);
         }
-/*
-        $sidebar = $user->getPreferenceValue('collapsed_sidebar');
-        if ($sidebar !== null) {
-            $this->helper->setIsCondensedNavbar($ref->getValue());
-        }
-*/
+        /*
+                $sidebar = $user->getPreferenceValue('collapsed_sidebar');
+                if ($sidebar !== null) {
+                    $this->helper->setIsCondensedNavbar($ref->getValue());
+                }
+        */
         $this->helper->setIsNavbarOverlapping(!$this->helper->isDarkMode());
     }
 }
