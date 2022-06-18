@@ -215,6 +215,21 @@
     <span class="badge"{% if color is not null %} style="background-color:{{ color }}; color:{{ color|font_contrast }}"{% endif %}>{{ title }}</span>
 {% endmacro %}
 
+{% macro form_errors(form) %}
+    {% if form.vars.errors|length > 0 %}
+        {% set message = '' %}
+        {% for error in form.vars.errors %}
+            {% set message = message ~ error.message %}
+            {% if not loop.last %}
+                {% set message = message ~ '<br>'  %}
+            {% endif %}
+        {% endfor %}
+        {% if message != '' %}
+            {{ _self.alert('danger', message) }}
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
 {% macro alert(type, description, title, icon, dismissible) %}
     {% from '@theme/components/alert.html.twig' import alert %}
     {{ alert({type: type, description: description|trans, title: title|trans, icon: icon, dismissible: dismissible}) }}
