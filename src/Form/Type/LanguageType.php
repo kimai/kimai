@@ -20,11 +20,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class LanguageType extends AbstractType
 {
-    private $languageService;
-
-    public function __construct(LanguageService $languageService)
+    public function __construct(private LanguageService $languageService)
     {
-        $this->languageService = $languageService;
     }
 
     /**
@@ -41,6 +38,7 @@ class LanguageType extends AbstractType
         $resolver->setDefaults([
             'choices' => $choices,
             'label' => 'label.language',
+            'choice_translation_domain' => false,
         ]);
     }
 
