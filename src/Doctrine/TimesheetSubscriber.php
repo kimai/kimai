@@ -92,7 +92,6 @@ class TimesheetSubscriber implements EventSubscriber
         }
 
         foreach ($this->sorted as $calculator) {
-            /* @phpstan-ignore-next-line */
             $calculator->calculate($entity, $changes);
         }
     }

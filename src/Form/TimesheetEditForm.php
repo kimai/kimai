@@ -281,7 +281,7 @@ class TimesheetEditForm extends AbstractType
             },
             function (Timesheet $record) {
                 $billable = new BillableCalculator();
-                $billable->calculate($record);
+                $billable->calculate($record, []);
 
                 return $record;
             }
