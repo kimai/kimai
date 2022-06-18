@@ -427,8 +427,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $pref = $this->getPreference($name);
 
         if (null === $pref) {
-            $pref = new UserPreference();
-            $pref->setName($name);
+            $pref = new UserPreference($name);
             $this->addPreference($pref);
         }
 

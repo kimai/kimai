@@ -867,9 +867,7 @@ final class KimaiImporterCommand extends Command
             $user->setEnabled($isActive);
             $user->setRoles([$role]);
 
-            $newPref = new UserPreference();
-            $newPref->setName(self::METAFIELD_NAME);
-            $newPref->setValue($oldUser['userID']);
+            $newPref = new UserPreference(self::METAFIELD_NAME, $oldUser['userID']);
             $user->addPreference($newPref);
 
             if ($this->options['alias-as-account-number']) {
@@ -899,9 +897,7 @@ final class KimaiImporterCommand extends Command
                     continue;
                 }
 
-                $newPref = new UserPreference();
-                $newPref->setName($prefsToImport[$key]);
-                $newPref->setValue($pref['value']);
+                $newPref = new UserPreference($prefsToImport[$key], $pref['value']);
                 $user->addPreference($newPref);
             }
 
@@ -916,9 +912,7 @@ final class KimaiImporterCommand extends Command
             // find hourly rate
             foreach ($rates as $ratesRow) {
                 if ($ratesRow['userID'] === $oldUser['userID'] && $ratesRow['activityID'] === null && $ratesRow['projectID'] === null) {
-                    $newPref = new UserPreference();
-                    $newPref->setName(UserPreference::HOURLY_RATE);
-                    $newPref->setValue($ratesRow['rate']);
+                    $newPref = new UserPreference(UserPreference::HOURLY_RATE, $ratesRow['rate']);
                     $user->addPreference($newPref);
                 }
             }

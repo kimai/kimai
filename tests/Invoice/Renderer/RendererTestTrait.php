@@ -90,8 +90,8 @@ trait RendererTestTrait
         $user->setTitle('user title');
         $user->setAlias('genious alias');
         $user->setEmail('fantastic@four');
-        $user->addPreference((new UserPreference())->setName('kitty')->setValue('kat'));
-        $user->addPreference((new UserPreference())->setName('hello')->setValue('world'));
+        $user->addPreference(new UserPreference('kitty', 'kat'));
+        $user->addPreference(new UserPreference('hello', 'world'));
 
         $customer = new Customer();
         $customer->setName('customer,with/special#name');
@@ -261,8 +261,8 @@ trait RendererTestTrait
         $user->setTitle('user title');
         $user->setAlias('genious alias');
         $user->setEmail('fantastic@four');
-        $user->addPreference((new UserPreference())->setName('kitty')->setValue('kat'));
-        $user->addPreference((new UserPreference())->setName('hello')->setValue('world'));
+        $user->addPreference(new UserPreference('kitty', 'kat'));
+        $user->addPreference(new UserPreference('hello', 'world'));
 
         $customer = new Customer();
         $customer->setName('customer,with/special#name');

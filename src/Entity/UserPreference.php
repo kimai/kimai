@@ -99,6 +99,12 @@ class UserPreference
      */
     private $section = 'default';
 
+    public function __construct(string $name, string|int|float|bool|null $value = null)
+    {
+        $this->name = $this->sanitizeName($name);
+        $this->value = $value;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -132,19 +138,12 @@ class UserPreference
         return $this->sanitizeName($this->name);
     }
 
-    public function setName(string $name): UserPreference
-    {
-        $this->name = $this->sanitizeName($name);
-
-        return $this;
-    }
-
     public function matches(string $name): bool
     {
         return $this->sanitizeName($name) === $this->getName();
     }
 
-    public function sanitizeName(string $name): string
+    public function sanitizeName(?string $name): string
     {
         return str_replace(['.', '-'], '_', $name);
     }

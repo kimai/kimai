@@ -103,17 +103,13 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
     {
         $preferences = [];
 
-        $prefHourlyRate = new UserPreference();
-        $prefHourlyRate->setName(UserPreference::HOURLY_RATE);
-        $prefHourlyRate->setValue(rand(self::MIN_RATE, self::MAX_RATE));
-        $prefHourlyRate->setUser($user);
+        $prefHourlyRate = new UserPreference(UserPreference::HOURLY_RATE, rand(self::MIN_RATE, self::MAX_RATE));
+        $user->addPreference($prefHourlyRate);
         $preferences[] = $prefHourlyRate;
 
         if (null !== $timezone) {
-            $prefTimezone = new UserPreference();
-            $prefTimezone->setName(UserPreference::TIMEZONE);
-            $prefTimezone->setValue($timezone);
-            $prefTimezone->setUser($user);
+            $prefTimezone = new UserPreference(UserPreference::TIMEZONE, $timezone);
+            $user->addPreference($prefTimezone);
             $preferences[] = $prefTimezone;
         }
 

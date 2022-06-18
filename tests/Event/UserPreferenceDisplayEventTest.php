@@ -25,8 +25,7 @@ class UserPreferenceDisplayEventTest extends TestCase
         self::assertIsArray($sut->getPreferences());
         self::assertEmpty($sut->getPreferences());
 
-        $preference = new UserPreference();
-        $preference->setName('foo')->setValue('bar');
+        $preference = new UserPreference('foo', 'bar');
         $sut->addPreference($preference);
 
         self::assertEquals([$preference], $sut->getPreferences());

@@ -23,8 +23,7 @@ class UserPreferenceEventTest extends TestCase
     {
         $user = new User();
         $user->setAlias('foo');
-        $pref = new UserPreference();
-        $pref->setName('foo')->setValue('bar');
+        $pref = new UserPreference('foo', 'bar');
 
         $sut = new UserPreferenceEvent($user, []);
 
@@ -42,11 +41,8 @@ class UserPreferenceEventTest extends TestCase
 
         $user = new User();
         $user->setAlias('foo');
-        $pref = new UserPreference();
-        $pref->setName('foo')->setValue('bar');
-
-        $pref2 = new UserPreference();
-        $pref2->setName('foo')->setValue('hello');
+        $pref = new UserPreference('foo', 'bar');
+        $pref2 = new UserPreference('foo', 'hello');
 
         $sut = new UserPreferenceEvent($user, []);
 

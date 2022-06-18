@@ -61,9 +61,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
         }
 
         return [
-            (new UserPreference())
-                ->setName(UserPreference::HOURLY_RATE)
-                ->setValue(0)
+            (new UserPreference(UserPreference::HOURLY_RATE, 0))
                 ->setOrder(100)
                 ->setSection('rate')
                 ->setType(MoneyType::class)
@@ -71,9 +69,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setOptions(array_merge($hourlyRateOptions, ['label' => 'label.hourlyRate']))
                 ->addConstraint(new Range(['min' => 0])),
 
-            (new UserPreference())
-                ->setName(UserPreference::INTERNAL_RATE)
-                ->setValue(null)
+            (new UserPreference(UserPreference::INTERNAL_RATE, null))
                 ->setOrder(101)
                 ->setSection('rate')
                 ->setType(MoneyType::class)
@@ -81,86 +77,62 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setOptions(array_merge($hourlyRateOptions, ['label' => 'label.internalRate', 'required' => false]))
                 ->addConstraint(new Range(['min' => 0])),
 
-            (new UserPreference())
-                ->setName(UserPreference::TIMEZONE)
-                ->setValue($timezone)
+            (new UserPreference(UserPreference::TIMEZONE, $timezone))
                 ->setOrder(200)
                 ->setSection('locale')
                 ->setType(TimezoneType::class),
 
-            (new UserPreference())
-                ->setName(UserPreference::LOCALE)
-                ->setValue($this->systemConfiguration->getUserDefaultLanguage())
+            (new UserPreference(UserPreference::LOCALE, $this->systemConfiguration->getUserDefaultLanguage()))
                 ->setOrder(250)
                 ->setSection('locale')
                 ->setType(LanguageType::class),
 
-            (new UserPreference())
-                ->setName(UserPreference::FIRST_WEEKDAY)
-                ->setValue(User::DEFAULT_FIRST_WEEKDAY)
+            (new UserPreference(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY))
                 ->setOrder(300)
                 ->setSection('locale')
                 ->setType(FirstWeekDayType::class),
 
-            (new UserPreference())
-                ->setName(UserPreference::HOUR_24)
-                ->setValue(true)
+            (new UserPreference(UserPreference::HOUR_24, true))
                 ->setOrder(305)
                 ->setSection('locale')
                 ->setType(CheckboxType::class),
 
-            (new UserPreference())
-                ->setName(UserPreference::SKIN)
-                ->setValue($this->systemConfiguration->getUserDefaultTheme())
+            (new UserPreference(UserPreference::SKIN, $this->systemConfiguration->getUserDefaultTheme()))
                 ->setOrder(400)
                 ->setSection('theme')
                 ->setType(SkinType::class),
 
-            (new UserPreference())
-                ->setName('layout')
-                ->setValue('boxed')
+            (new UserPreference('layout', 'boxed'))
                 ->setOrder(450)
                 ->setSection('theme')
                 ->setType(ThemeLayoutType::class),
 /*
-            (new UserPreference())
-                ->setName('collapsed_sidebar')
-                ->setValue(true)
+            (new UserPreference('collapsed_sidebar', true))
                 ->setOrder(500)
                 ->setSection('theme')
                 ->setType(CheckboxType::class),
 */
-            (new UserPreference())
-                ->setName('update_browser_title')
-                ->setValue(true)
+            (new UserPreference('update_browser_title', true))
                 ->setOrder(550)
                 ->setSection('theme')
                 ->setType(CheckboxType::class),
 
-            (new UserPreference())
-                ->setName('calendar_initial_view')
-                ->setValue(CalendarViewType::DEFAULT_VIEW)
+            (new UserPreference('calendar_initial_view', CalendarViewType::DEFAULT_VIEW))
                 ->setOrder(600)
                 ->setSection('behaviour')
                 ->setType(CalendarViewType::class),
 
-            (new UserPreference())
-                ->setName('login_initial_view')
-                ->setValue(InitialViewType::DEFAULT_VIEW)
+            (new UserPreference('login_initial_view', InitialViewType::DEFAULT_VIEW))
                 ->setOrder(700)
                 ->setSection('behaviour')
                 ->setType(InitialViewType::class),
 
-            (new UserPreference())
-                ->setName('daily_stats')
-                ->setValue(false)
+            (new UserPreference('daily_stats', false))
                 ->setOrder(800)
                 ->setSection('behaviour')
                 ->setType(CheckboxType::class),
 
-            (new UserPreference())
-                ->setName('export_decimal')
-                ->setValue(false)
+            (new UserPreference('export_decimal', false))
                 ->setOrder(900)
                 ->setSection('behaviour')
                 ->setType(CheckboxType::class),

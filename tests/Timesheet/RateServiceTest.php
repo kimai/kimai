@@ -183,13 +183,8 @@ class RateServiceTest extends TestCase
     {
         $user = new User();
 
-        $pref = new UserPreference();
-        $pref->setName(UserPreference::HOURLY_RATE);
-        $pref->setValue($rate);
-
-        $prefInt = new UserPreference();
-        $prefInt->setName(UserPreference::INTERNAL_RATE);
-        $prefInt->setValue($internalRate);
+        $pref = new UserPreference(UserPreference::HOURLY_RATE, $rate);
+        $prefInt = new UserPreference(UserPreference::INTERNAL_RATE, $internalRate);
 
         $user->setPreferences([$pref, $prefInt]);
 

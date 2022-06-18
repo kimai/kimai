@@ -144,10 +144,7 @@ class UserTest extends TestCase
         self::assertNull($user->getMetaFieldValue('test'));
         self::assertEquals('foo', $user->getPreferenceValue('test', 'foo'));
 
-        $preference = new UserPreference();
-        $preference
-            ->setName('test')
-            ->setValue('foobar');
+        $preference = new UserPreference('test', 'foobar');
         $user->addPreference($preference);
         self::assertEquals('foobar', $user->getPreferenceValue('test', 'foo'));
         self::assertEquals('foobar', $user->getMetaFieldValue('test'));
@@ -214,9 +211,7 @@ class UserTest extends TestCase
         $sut = new User();
         self::assertEquals(User::DEFAULT_LANGUAGE, $sut->getLocale());
 
-        $language = new UserPreference();
-        $language->setName(UserPreference::LOCALE);
-        $language->setValue('fr');
+        $language = new UserPreference(UserPreference::LOCALE, 'fr');
         $sut->addPreference($language);
 
         self::assertEquals('fr', $sut->getLocale());
@@ -329,10 +324,7 @@ class UserTest extends TestCase
         // lets keep it, as it occured during the work on SAML authentication
         $sut = new User();
 
-        $preference = new UserPreference();
-        $preference
-            ->setName('test')
-            ->setValue('foobar');
+        $preference = new UserPreference('test', 'foobar');
 
         $property = new \ReflectionProperty(User::class, 'preferences');
         $property->setAccessible(true);
