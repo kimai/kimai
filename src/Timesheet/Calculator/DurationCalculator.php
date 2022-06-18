@@ -18,20 +18,14 @@ use App\Timesheet\RoundingService;
  */
 final class DurationCalculator implements CalculatorInterface
 {
-    /**
-     * @var RoundingService
-     */
-    private $roundings;
-
-    public function __construct(RoundingService $roundings)
+    public function __construct(private RoundingService $roundings)
     {
-        $this->roundings = $roundings;
     }
 
     /**
      * @param Timesheet $record
      */
-    public function calculate(Timesheet $record)
+    public function calculate(Timesheet $record, array $changeset): void
     {
         if (null === $record->getEnd()) {
             return;

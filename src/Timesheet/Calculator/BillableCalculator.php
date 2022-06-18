@@ -17,7 +17,7 @@ use App\Timesheet\CalculatorInterface;
  */
 class BillableCalculator implements CalculatorInterface
 {
-    public function calculate(Timesheet $record)
+    public function calculate(Timesheet $record, array $changeset): void
     {
         switch ($record->getBillableMode()) {
             case Timesheet::BILLABLE_NO:
