@@ -268,8 +268,8 @@
         <source>label.skin</source>
         <target>Hiển thị: màu sắc</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.theme.layout">
-        <source>label.theme.layout</source>
+      <trans-unit id="42BRM3Q" resname="label.layout">
+        <source>label.layout</source>
         <target>Hiển thị: bố cục</target>
       </trans-unit>
       <trans-unit id="w8T34A6" resname="label.hours">
@@ -463,23 +463,23 @@
         <source>profile.preferences</source>
         <target>Sở thích</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
-        <source>label.theme.collapsed_sidebar</source>
+      <trans-unit id="Eq78QrH" resname="label.collapsed_sidebar">
+        <source>label.collapsed_sidebar</source>
         <target>Thu nhỏ thanh bên trái</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
-        <source>label.calendar.initial_view</source>
+      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+        <source>label.calendar_initial_view</source>
         <target>Cấu hình xem lịch</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
-        <source>label.login.initial_view</source>
+      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+        <source>label.login_initial_view</source>
         <target>Chế độ xem ban đầu sau khi đăng nhập</target>
       </trans-unit>
       <trans-unit id="hO7mkmf" resname="label.lastLogin">
         <source>label.lastLogin</source>
         <target>Lần đăng nhập cuôi</target>
       </trans-unit>
-      <!-- Options for user-preference label.calendar.initial_view -->
+      <!-- Options for user-preference label.calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Tháng</target>
@@ -492,12 +492,12 @@
         <source>agendaDay</source>
         <target>Ngày</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
-        <source>label.timesheet.daily_stats</source>
+      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+        <source>label.daily_stats</source>
         <target>Hiển thị số liệu thống kê hàng ngày trong bảng chấm công</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
-        <source>label.timesheet.export_decimal</source>
+      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+        <source>label.export_decimal</source>
         <target>Sử dụng thời lượng thập phân khi xuất</target>
       </trans-unit>
       <!--
@@ -1073,8 +1073,8 @@
         <source>profile.registration_date</source>
         <target>Đăng ký tại</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
-        <source>theme.update_browser_title</source>
+      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+        <source>update_browser_title</source>
         <target>Cập nhật tiêu đề trình duyệt</target>
       </trans-unit>
       <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">

@@ -21,6 +21,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 - API: upgraded to [Open API specification v3](https://blog.readme.com/an-example-filled-guide-to-swagger-3-2/)
 - API: config/timesheet removed activeEntriesSoftLimit
 - All deprecated code was removed
+- User preference names cannot contain dots `.` anymore
 
 ## [1.16](https://github.com/kevinpapst/kimai2/releases/tag/1.16)
 

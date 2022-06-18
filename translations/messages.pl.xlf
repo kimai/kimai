@@ -256,8 +256,8 @@
         <source>label.skin</source>
         <target>Wyświetlanie: Kolory</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.theme.layout">
-        <source>label.theme.layout</source>
+      <trans-unit id="42BRM3Q" resname="label.layout">
+        <source>label.layout</source>
         <target>Wyświetlanie: układ</target>
       </trans-unit>
       <trans-unit id="w8T34A6" resname="label.hours">
@@ -435,19 +435,19 @@
         <source>profile.preferences</source>
         <target>Preferencje</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
-        <source>label.theme.collapsed_sidebar</source>
+      <trans-unit id="Eq78QrH" resname="label.collapsed_sidebar">
+        <source>label.collapsed_sidebar</source>
         <target>Zminimalizuj lewy sidebar</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
-        <source>label.calendar.initial_view</source>
+      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+        <source>label.calendar_initial_view</source>
         <target>Początkowy wygląd kalendarza</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
-        <source>label.login.initial_view</source>
+      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+        <source>label.login_initial_view</source>
         <target>Początkowy widok po zalogowaniu</target>
       </trans-unit>
-      <!-- Options for user-preference label.calendar.initial_view -->
+      <!-- Options for user-preference label.calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Miesiąc</target>
@@ -460,8 +460,8 @@
         <source>agendaDay</source>
         <target>Dzień</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
-        <source>label.timesheet.daily_stats</source>
+      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+        <source>label.daily_stats</source>
         <target>Pokaż dzienne statystyki w ewidencji</target>
       </trans-unit>
       <!--
@@ -993,8 +993,8 @@
         <source>stats.workingTimeToday</source>
         <target>Dzisiaj, %day%</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
-        <source>label.timesheet.export_decimal</source>
+      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+        <source>label.export_decimal</source>
         <target>Użyj dziesiętnego czasu trwania podczas eksportu</target>
       </trans-unit>
       <trans-unit id="hO7mkmf" resname="label.lastLogin">
@@ -1101,8 +1101,8 @@
         <source>calendar.drag_and_drop.delete</source>
         <target>jeśli chcesz usunąć wpis, musisz przeciągnąć go na przycisk.</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
-        <source>theme.update_browser_title</source>
+      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+        <source>update_browser_title</source>
         <target>zaktualizuj tytuł przeglądarki</target>
       </trans-unit>
       <trans-unit id="9hpJPiG" resname="action.save_all">

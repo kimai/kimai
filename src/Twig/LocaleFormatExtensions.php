@@ -266,7 +266,7 @@ final class LocaleFormatExtensions extends AbstractExtension
             'formatDate' => $converter->convert($format),
             'defaultColor' => Constants::DEFAULT_COLOR,
             'twentyFourHours' => $user->is24Hour(),
-            'updateBrowserTitle' => (bool) $user->getPreferenceValue('theme.update_browser_title'),
+            'updateBrowserTitle' => (bool) $user->getPreferenceValue('update_browser_title'),
         ];
     }
 

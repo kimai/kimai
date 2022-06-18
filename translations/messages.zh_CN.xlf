@@ -423,19 +423,19 @@
         <source>profile.preferences</source>
         <target>偏好</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
-        <source>label.theme.collapsed_sidebar</source>
+      <trans-unit id="Eq78QrH" resname="label.collapsed_sidebar">
+        <source>label.collapsed_sidebar</source>
         <target>最小化左侧侧栏</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
-        <source>label.calendar.initial_view</source>
+      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+        <source>label.calendar_initial_view</source>
         <target>初始日历查看</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
-        <source>label.login.initial_view</source>
+      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+        <source>label.login_initial_view</source>
         <target>登录后初始查看</target>
       </trans-unit>
-      <!-- Options for user-preference label.calendar.initial_view -->
+      <!-- Options for user-preference label.calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>月</target>
@@ -448,8 +448,8 @@
         <source>agendaDay</source>
         <target>日</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
-        <source>label.timesheet.daily_stats</source>
+      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+        <source>label.daily_stats</source>
         <target>在时间表中展示每日状态</target>
       </trans-unit>
       <!--
@@ -933,8 +933,8 @@
         <source>placeholder.type_message</source>
         <target>输入您的消息…</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.theme.layout">
-        <source>label.theme.layout</source>
+      <trans-unit id="42BRM3Q" resname="label.layout">
+        <source>label.layout</source>
         <target>显示: 布局</target>
       </trans-unit>
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">
@@ -1077,8 +1077,8 @@
         <source>calendar.drag_and_drop.delete</source>
         <target>如果要删除条目，必须将其拖到按钮上。</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
-        <source>theme.update_browser_title</source>
+      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+        <source>update_browser_title</source>
         <target>更新浏览器标题</target>
       </trans-unit>
       <trans-unit id="hO7mkmf" resname="label.lastLogin">
@@ -1213,8 +1213,8 @@
         <source>add_user.label</source>
         <target>添加用户</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
-        <source>label.timesheet.export_decimal</source>
+      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+        <source>label.export_decimal</source>
         <target>在导出中使用十进制持续时间</target>
       </trans-unit>
       <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">

@@ -56,28 +56,21 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
             return;
         }
 
-        /** @var UserPreference $ref */
-        foreach ($user->getPreferences() as $ref) {
-            $name = $ref->getName();
-            switch ($name) {
-                case UserPreference::SKIN:
-                    if ($ref->getValue() === 'dark') {
-                        $this->helper->setIsDarkMode(true);
-                    }
-                    break;
-
-                case 'theme.layout':
-                    $value = ($ref->getValue() === 'boxed');
-                    $this->helper->setIsBoxedLayout($value);
-                    $this->helper->setIsCondensedUserMenu($value);
-                    break;
-
-                case 'theme.collapsed_sidebar':
-                    //$this->helper->setIsCondensedNavbar($ref->getValue());
-                    break;
-            }
+        if ($user->isSmallLayout()) {
+            $this->helper->setIsBoxedLayout(true);
+            $this->helper->setIsCondensedUserMenu(true);
         }
 
+        $skin = $user->getPreferenceValue(UserPreference::SKIN);
+        if ($skin === 'dark') {
+            $this->helper->setIsDarkMode(true);
+        }
+/*
+        $sidebar = $user->getPreferenceValue('collapsed_sidebar');
+        if ($sidebar !== null) {
+            $this->helper->setIsCondensedNavbar($ref->getValue());
+        }
+*/
         $this->helper->setIsNavbarOverlapping(!$this->helper->isDarkMode());
     }
 }

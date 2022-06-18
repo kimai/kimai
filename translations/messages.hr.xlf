@@ -317,8 +317,8 @@
         <source>label.skin</source>
         <target>Prikaz: boje</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.theme.layout">
-        <source>label.theme.layout</source>
+      <trans-unit id="42BRM3Q" resname="label.layout">
+        <source>label.layout</source>
         <target>Prikaz: raspored</target>
       </trans-unit>
       <trans-unit id="w8T34A6" resname="label.hours">
@@ -532,23 +532,23 @@
         <source>profile.preferences</source>
         <target>Postavke</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
-        <source>label.theme.collapsed_sidebar</source>
+      <trans-unit id="Eq78QrH" resname="label.collapsed_sidebar">
+        <source>label.collapsed_sidebar</source>
         <target>Sklopi lijevu bočnu traku</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
-        <source>label.calendar.initial_view</source>
+      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+        <source>label.calendar_initial_view</source>
         <target>Početni prikaz kalendara</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
-        <source>label.login.initial_view</source>
+      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+        <source>label.login_initial_view</source>
         <target>Početni prikaz nakon prijave</target>
       </trans-unit>
       <trans-unit id="hO7mkmf" resname="label.lastLogin">
         <source>label.lastLogin</source>
         <target>Zadnja prijava</target>
       </trans-unit>
-      <!-- Options for user-preference label.calendar.initial_view -->
+      <!-- Options for user-preference label.calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Mjesec</target>
@@ -561,16 +561,16 @@
         <source>agendaDay</source>
         <target>Dan</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
-        <source>label.timesheet.daily_stats</source>
+      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+        <source>label.daily_stats</source>
         <target>Pokaži dnevne statistike u vremenskoj tablici</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
-        <source>label.timesheet.export_decimal</source>
+      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+        <source>label.export_decimal</source>
         <target>Koristi decimalno trajanje u izvozu</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
-        <source>theme.update_browser_title</source>
+      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+        <source>update_browser_title</source>
         <target>Aktualiziraj naslov preglednika</target>
       </trans-unit>
       <!--

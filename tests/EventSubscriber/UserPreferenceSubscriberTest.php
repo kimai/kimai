@@ -31,12 +31,12 @@ class UserPreferenceSubscriberTest extends TestCase
         'first_weekday',
         'skin',
         'hours_24',
-        'theme.layout',
-        'theme.update_browser_title',
-        'calendar.initial_view',
-        'login.initial_view',
-        'timesheet.daily_stats',
-        'timesheet.export_decimal',
+        'layout',
+        'update_browser_title',
+        'calendar_initial_view',
+        'login_initial_view',
+        'daily_stats',
+        'export_decimal',
     ];
 
     public function testGetSubscribedEvents()

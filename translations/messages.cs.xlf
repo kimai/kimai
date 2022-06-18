@@ -379,19 +379,19 @@
         <source>profile.preferences</source>
         <target>Předvolby</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
-        <source>label.theme.collapsed_sidebar</source>
+      <trans-unit id="Eq78QrH" resname="label.collapsed_sidebar">
+        <source>label.collapsed_sidebar</source>
         <target>Zmenšit postranní panel</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
-        <source>label.calendar.initial_view</source>
+      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+        <source>label.calendar_initial_view</source>
         <target>Počáteční zobrazení kalendáře</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
-        <source>label.login.initial_view</source>
+      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+        <source>label.login_initial_view</source>
         <target>Počáteční zobrazení po přihlášení</target>
       </trans-unit>
-      <!-- Options for user-preference label.calendar.initial_view -->
+      <!-- Options for user-preference label.calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Měsíc</target>
@@ -404,8 +404,8 @@
         <source>agendaDay</source>
         <target>Den</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
-        <source>label.timesheet.daily_stats</source>
+      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+        <source>label.daily_stats</source>
         <target>Zobrazit denní statistiky v pracovním výkaze</target>
       </trans-unit>
       <!--
@@ -921,8 +921,8 @@
         <source>label.vat_id</source>
         <target>IČO</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
-        <source>label.timesheet.export_decimal</source>
+      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+        <source>label.export_decimal</source>
         <target>Použij desítkové trvání v exportu</target>
       </trans-unit>
       <trans-unit id="hO7mkmf" resname="label.lastLogin">
@@ -985,8 +985,8 @@
         <source>help.rate</source>
         <target>Hodinová sazba</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.theme.layout">
-        <source>label.theme.layout</source>
+      <trans-unit id="42BRM3Q" resname="label.layout">
+        <source>label.layout</source>
         <target>Obrazovka: layout</target>
       </trans-unit>
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">
@@ -1229,8 +1229,8 @@
         <source>delete_warning.short_stats</source>
         <target state="needs-translation">Currently %records% time-records exists, which sum up to a total duration of %duration%.</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
-        <source>theme.update_browser_title</source>
+      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+        <source>update_browser_title</source>
         <target state="needs-translation">Update browser title</target>
       </trans-unit>
       <trans-unit id="tp.gIrE" resname="team.add_user.help">

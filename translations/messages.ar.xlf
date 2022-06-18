@@ -656,8 +656,8 @@
         <source>help.rate</source>
         <target>السعر بالساعة الذي سيتم دفعه</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.theme.layout">
-        <source>label.theme.layout</source>
+      <trans-unit id="42BRM3Q" resname="label.layout">
+        <source>label.layout</source>
         <target>العرض: تخطيط</target>
       </trans-unit>
       <trans-unit id="ijQyGRo" resname="label.tags">
@@ -980,8 +980,8 @@
         <source>month</source>
         <target>شهر</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
-        <source>theme.update_browser_title</source>
+      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+        <source>update_browser_title</source>
         <target>تحديث عنوان المتصفح</target>
       </trans-unit>
       <trans-unit id="yLOqEX_" resname="label.project_start">
@@ -1064,12 +1064,12 @@
         <source>label.last_record_before</source>
         <target>لا يوجد حجز للوقت منذ</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
-        <source>label.login.initial_view</source>
+      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+        <source>label.login_initial_view</source>
         <target>طريقة العرض الأولية بعد تسجيل الدخول</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
-        <source>label.timesheet.export_decimal</source>
+      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+        <source>label.export_decimal</source>
         <target>استخدم المدة العشرية في التصدير</target>
       </trans-unit>
       <trans-unit id="UVJ5Die" resname="calendar">
@@ -1080,8 +1080,8 @@
         <source>label.includeNoBudget</source>
         <target>إظهار الإدخالات التي ليس لها ميزانية</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
-        <source>label.calendar.initial_view</source>
+      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+        <source>label.calendar_initial_view</source>
         <target state="translated">المظهر الإفتراضي للتقويم</target>
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
@@ -1128,8 +1128,8 @@
         <source>stats.percentUsed</source>
         <target state="translated">تم استخدام %percent%%</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
-        <source>label.timesheet.daily_stats</source>
+      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+        <source>label.daily_stats</source>
         <target state="translated">إظهار الإحصائيات اليومية في ورقة التوقيت</target>
       </trans-unit>
       <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">

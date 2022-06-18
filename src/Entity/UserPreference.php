@@ -129,35 +129,39 @@ class UserPreference
 
     public function getName(): ?string
     {
-        return $this->name;
+        return $this->sanitizeName($this->name);
     }
 
     public function setName(string $name): UserPreference
     {
-        $this->name = $name;
+        $this->name = $this->sanitizeName($name);
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getValue()
+    public function matches(string $name): bool
     {
-        switch ($this->type) {
-            case YesNoType::class:
-            case CheckboxType::class:
-                return (bool) $this->value;
-            case IntegerType::class:
-                return (int) $this->value;
-        }
+        return $this->sanitizeName($name) === $this->getName();
+    }
 
-        return $this->value;
+    public function sanitizeName(string $name): string
+    {
+        return str_replace(['.', '-'], '_', $name);
+    }
+
+    public function getValue(): mixed
+    {
+        return match ($this->type) {
+            YesNoType::class, CheckboxType::class => (bool)$this->value,
+            IntegerType::class => (int)$this->value,
+            default => $this->value,
+        };
+
     }
 
     /**
      * Given $value will not be serialized before its stored, so it should be one of the types:
-     * integer, string or boolean
+     * integer, float, string, boolean or null
      *
      * @param mixed $value
      * @return UserPreference

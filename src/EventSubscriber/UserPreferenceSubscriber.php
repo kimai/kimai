@@ -117,49 +117,49 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setType(SkinType::class),
 
             (new UserPreference())
-                ->setName('theme.layout')
+                ->setName('layout')
                 ->setValue('boxed')
                 ->setOrder(450)
                 ->setSection('theme')
                 ->setType(ThemeLayoutType::class),
 /*
             (new UserPreference())
-                ->setName('theme.collapsed_sidebar')
+                ->setName('collapsed_sidebar')
                 ->setValue(true)
                 ->setOrder(500)
                 ->setSection('theme')
                 ->setType(CheckboxType::class),
 */
             (new UserPreference())
-                ->setName('theme.update_browser_title')
+                ->setName('update_browser_title')
                 ->setValue(true)
                 ->setOrder(550)
                 ->setSection('theme')
                 ->setType(CheckboxType::class),
 
             (new UserPreference())
-                ->setName('calendar.initial_view')
+                ->setName('calendar_initial_view')
                 ->setValue(CalendarViewType::DEFAULT_VIEW)
                 ->setOrder(600)
                 ->setSection('behaviour')
                 ->setType(CalendarViewType::class),
 
             (new UserPreference())
-                ->setName('login.initial_view')
+                ->setName('login_initial_view')
                 ->setValue(InitialViewType::DEFAULT_VIEW)
                 ->setOrder(700)
                 ->setSection('behaviour')
                 ->setType(InitialViewType::class),
 
             (new UserPreference())
-                ->setName('timesheet.daily_stats')
+                ->setName('daily_stats')
                 ->setValue(false)
                 ->setOrder(800)
                 ->setSection('behaviour')
                 ->setType(CheckboxType::class),
 
             (new UserPreference())
-                ->setName('timesheet.export_decimal')
+                ->setName('export_decimal')
                 ->setValue(false)
                 ->setOrder(900)
                 ->setSection('behaviour')

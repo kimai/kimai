@@ -305,8 +305,8 @@
         <source>label.skin</source>
         <target>Εμφάνιση: Χρωμάτων</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.theme.layout">
-        <source>label.theme.layout</source>
+      <trans-unit id="42BRM3Q" resname="label.layout">
+        <source>label.layout</source>
         <target>Εμφάνιση: διάταξη</target>
       </trans-unit>
       <trans-unit id="w8T34A6" resname="label.hours">
@@ -520,23 +520,23 @@
         <source>profile.preferences</source>
         <target>Προτιμήσεις</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
-        <source>label.theme.collapsed_sidebar</source>
+      <trans-unit id="Eq78QrH" resname="label.collapsed_sidebar">
+        <source>label.collapsed_sidebar</source>
         <target>Ελαχιστοποιήση της αριστερής πλευρικής γραμμής</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
-        <source>label.calendar.initial_view</source>
+      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+        <source>label.calendar_initial_view</source>
         <target>Αρχική προβολή ημερολογίου</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
-        <source>label.login.initial_view</source>
+      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+        <source>label.login_initial_view</source>
         <target>Αρχική προβολή ύστερα από την σύνδεση</target>
       </trans-unit>
       <trans-unit id="hO7mkmf" resname="label.lastLogin">
         <source>label.lastLogin</source>
         <target>Τελευταία σύνδεση</target>
       </trans-unit>
-      <!-- Options for user-preference label.calendar.initial_view -->
+      <!-- Options for user-preference label.calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Μήνας</target>
@@ -549,16 +549,16 @@
         <source>agendaDay</source>
         <target>Ημέρα</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
-        <source>label.timesheet.daily_stats</source>
+      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+        <source>label.daily_stats</source>
         <target>Εμφάνιση ημερήσιων στατιστικών στο δελτίο απασχόλησης</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
-        <source>label.timesheet.export_decimal</source>
+      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+        <source>label.export_decimal</source>
         <target>Παρουσίασε την διάρκεια σε δεκαδική μορφή κατά την εξαγωγή</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
-        <source>theme.update_browser_title</source>
+      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+        <source>update_browser_title</source>
         <target>Ενημέρωση τίτλου προγράμματος περιήγησης</target>
       </trans-unit>
       <!--

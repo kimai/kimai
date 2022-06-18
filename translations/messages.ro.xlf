@@ -250,8 +250,8 @@
         <source>label.skin</source>
         <target>Afișare: culori</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.theme.layout">
-        <source>label.theme.layout</source>
+      <trans-unit id="42BRM3Q" resname="label.layout">
+        <source>label.layout</source>
         <target>Afișare: aranjare</target>
       </trans-unit>
       <trans-unit id="w8T34A6" resname="label.hours">
@@ -414,16 +414,16 @@
         <source>profile.preferences</source>
         <target>Preferințe</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
-        <source>label.theme.collapsed_sidebar</source>
+      <trans-unit id="Eq78QrH" resname="label.collapsed_sidebar">
+        <source>label.collapsed_sidebar</source>
         <target>Minimizați bara laterală din stânga</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
-        <source>label.calendar.initial_view</source>
+      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+        <source>label.calendar_initial_view</source>
         <target>Vizualizare inițială a calendarului</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
-        <source>label.login.initial_view</source>
+      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+        <source>label.login_initial_view</source>
         <target>Vizualizare inițială după autentificare</target>
       </trans-unit>
       <trans-unit id="pcfRcZ4" resname="month">
@@ -438,12 +438,12 @@
         <source>agendaDay</source>
         <target>Zi</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
-        <source>label.timesheet.daily_stats</source>
+      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+        <source>label.daily_stats</source>
         <target>Afișează statisticile zilnice referitoare la pontaj</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
-        <source>label.timesheet.export_decimal</source>
+      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+        <source>label.export_decimal</source>
         <target>Utilizați durata zecimală la export</target>
       </trans-unit>
       <trans-unit id="UVJ5Die" resname="calendar">
@@ -998,8 +998,8 @@
         <source>label.tax_rate</source>
         <target>Rata de impozitare</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
-        <source>theme.update_browser_title</source>
+      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+        <source>update_browser_title</source>
         <target>Actualizarea titlului browserului</target>
       </trans-unit>
       <trans-unit id="9hpJPiG" resname="action.save_all">

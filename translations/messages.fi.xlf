@@ -269,8 +269,8 @@
         <source>label.skin</source>
         <target state="translated">Näyttö: värit</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.theme.layout">
-        <source>label.theme.layout</source>
+      <trans-unit id="42BRM3Q" resname="label.layout">
+        <source>label.layout</source>
         <target state="translated">Näyttö: asettelu</target>
       </trans-unit>
       <trans-unit id="w8T34A6" resname="label.hours">
@@ -480,23 +480,23 @@
         <source>profile.preferences</source>
         <target state="translated">Asetukset</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
-        <source>label.theme.collapsed_sidebar</source>
+      <trans-unit id="Eq78QrH" resname="label.collapsed_sidebar">
+        <source>label.collapsed_sidebar</source>
         <target state="translated">Pienennä vasen sivupalkki</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
-        <source>label.calendar.initial_view</source>
+      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+        <source>label.calendar_initial_view</source>
         <target state="translated">Aloitus kalenterinäkymä</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
-        <source>label.login.initial_view</source>
+      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+        <source>label.login_initial_view</source>
         <target state="translated">Aloitus näkymä kirjautumisen jälkeen</target>
       </trans-unit>
       <trans-unit id="hO7mkmf" resname="label.lastLogin">
         <source>label.lastLogin</source>
         <target state="translated">Viimeksi kirjautunut</target>
       </trans-unit>
-      <!-- Options for user-preference label.calendar.initial_view -->
+      <!-- Options for user-preference label.calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target state="translated">Kuukausi</target>
@@ -509,12 +509,12 @@
         <source>agendaDay</source>
         <target state="translated">Päivä</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
-        <source>label.timesheet.daily_stats</source>
+      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+        <source>label.daily_stats</source>
         <target state="translated">Näytä päivätilastot tuntilomakkeessa</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
-        <source>label.timesheet.export_decimal</source>
+      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+        <source>label.export_decimal</source>
         <target state="translated">Käytä desimaalitarkkuutta viennissä</target>
       </trans-unit>
       <!--
@@ -1101,8 +1101,8 @@
         <source>calendar.drag_and_drop.delete</source>
         <target>Jos tahdot poistaa merkinnän, raahaa se painikkeen päälle.</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
-        <source>theme.update_browser_title</source>
+      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+        <source>update_browser_title</source>
         <target>Päivitä selaimen otsikko</target>
       </trans-unit>
       <trans-unit id="9hpJPiG" resname="action.save_all">

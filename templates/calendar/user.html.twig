@@ -249,7 +249,7 @@
             let DATES = kimai.getPlugin('date');
             jQuery('{{ calendarSelector }}').fullCalendar({
                 themeSystem: 'bootstrap4',
-                defaultView: '{{ app.user.getPreferenceValue('calendar.initial_view') }}',
+                defaultView: '{{ app.user.getPreferenceValue('calendar_initial_view') }}',
                 {% if google is not null %}
                 googleCalendarApiKey: '{{ google.apiKey }}',
                 {% endif %}

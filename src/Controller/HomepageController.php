@@ -32,7 +32,7 @@ class HomepageController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        $userRoute = $user->getPreferenceValue('login.initial_view', InitialViewType::DEFAULT_VIEW);
+        $userRoute = $user->getPreferenceValue('login_initial_view', InitialViewType::DEFAULT_VIEW);
         $userLanguage = $user->getLanguage();
         $requestLanguage = $request->getLocale();
 

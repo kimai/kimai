@@ -375,19 +375,19 @@
         <source>profile.preferences</source>
         <target state="translated">설정</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
-        <source>label.theme.collapsed_sidebar</source>
+      <trans-unit id="Eq78QrH" resname="label.collapsed_sidebar">
+        <source>label.collapsed_sidebar</source>
         <target state="translated">왼쪽 사이드바 최소화</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
-        <source>label.calendar.initial_view</source>
+      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+        <source>label.calendar_initial_view</source>
         <target state="translated">달력 초기화면</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
-        <source>label.login.initial_view</source>
+      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+        <source>label.login_initial_view</source>
         <target state="translated">로그인 후 초기화면</target>
       </trans-unit>
-      <!-- Options for user-preference label.calendar.initial_view -->
+      <!-- Options for user-preference label.calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target state="translated">월</target>
@@ -400,8 +400,8 @@
         <source>agendaDay</source>
         <target state="translated">일</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
-        <source>label.timesheet.daily_stats</source>
+      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+        <source>label.daily_stats</source>
         <target state="translated">일일통계 보기</target>
       </trans-unit>
       <!--
@@ -881,8 +881,8 @@
         <source>label.project_start</source>
         <target>프로젝트 시작</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
-        <source>label.timesheet.export_decimal</source>
+      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+        <source>label.export_decimal</source>
         <target>내보내기에서 소수점 지속시간 사용</target>
       </trans-unit>
       <trans-unit id="hO7mkmf" resname="label.lastLogin">
@@ -941,8 +941,8 @@
         <source>help.rate</source>
         <target>청구되는 시간당 비용</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.theme.layout">
-        <source>label.theme.layout</source>
+      <trans-unit id="42BRM3Q" resname="label.layout">
+        <source>label.layout</source>
         <target>디스플레이: 레이아웃</target>
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
@@ -1081,8 +1081,8 @@
         <source>calendar.drag_and_drop.delete</source>
         <target>항목을 삭제하려면 해당 항목을 단추로 끌어다 놓아야 합니다.</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
-        <source>theme.update_browser_title</source>
+      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+        <source>update_browser_title</source>
         <target>브라우저 제목 업데이트</target>
       </trans-unit>
       <trans-unit id="9hpJPiG" resname="action.save_all">

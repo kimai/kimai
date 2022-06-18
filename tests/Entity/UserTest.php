@@ -163,12 +163,12 @@ class UserTest extends TestCase
         self::assertEquals('I like rain', $user->getPreferenceValue('test2'));
         self::assertEquals('I like rain', $user->getMetaFieldValue('test2'));
 
-        $user->setPreferenceValue('theme.layout', 'boxed');
+        $user->setPreferenceValue('layout', 'boxed');
         self::assertTrue($user->isSmallLayout());
-        $user->setPreferenceValue('theme.layout', '12345');
+        $user->setPreferenceValue('layout', '12345');
         self::assertFalse($user->isSmallLayout());
 
-        $user->setPreferenceValue('timesheet.export_decimal', true);
+        $user->setPreferenceValue('export_decimal', true);
         self::assertTrue($user->isExportDecimal());
     }
 

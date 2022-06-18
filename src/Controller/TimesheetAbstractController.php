@@ -514,7 +514,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
     protected function includeSummary(): bool
     {
-        return (bool) $this->getUser()->getPreferenceValue('timesheet.daily_stats', false);
+        return (bool) $this->getUser()->getPreferenceValue('daily_stats', false);
     }
 
     protected function includeUserInForms(string $formName): bool

@@ -38,7 +38,7 @@ class HomepageControllerTest extends ControllerBaseTest
         $user = $this->getUserByRole(User::ROLE_USER);
 
         $pref = (new UserPreference())
-            ->setName('login.initial_view')
+            ->setName('login_initial_view')
             ->setValue('my_profile')
             ->setType(InitialViewType::class);
 

@@ -376,13 +376,13 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             UserPreference::TIMEZONE,
             UserPreference::LOCALE,
             UserPreference::SKIN,
-            'calendar.initial_view',
-            'login.initial_view',
-            'theme.collapsed_sidebar',
-            'theme.layout',
-            'theme.update_browser_title',
-            'timesheet.daily_stats',
-            'timesheet.export_decimal',
+            'calendar_initial_view',
+            'login_initial_view',
+            'collapsed_sidebar',
+            'layout',
+            'update_browser_title',
+            'daily_stats',
+            'export_decimal',
         ];
 
         $all = [];
@@ -420,7 +420,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     /**
      * @param string $name
-     * @param bool|int|string|null $value
+     * @param bool|int|string|float|null $value
      */
     public function setPreferenceValue(string $name, $value = null)
     {
@@ -444,7 +444,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         }
 
         foreach ($this->preferences as $preference) {
-            if ($preference->getName() === $name) {
+            if ($preference->matches($name)) {
                 return $preference;
             }
         }
@@ -517,12 +517,12 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function isSmallLayout(): bool
     {
-        return $this->getPreferenceValue('theme.layout', 'fixed') === 'boxed';
+        return $this->getPreferenceValue('layout', 'fixed') === 'boxed';
     }
 
     public function isExportDecimal(): bool
     {
-        return (bool) $this->getPreferenceValue('timesheet.export_decimal', false);
+        return (bool) $this->getPreferenceValue('export_decimal', false);
     }
 
     public function setTimezone(?string $timezone)

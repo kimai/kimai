@@ -296,8 +296,8 @@
         <source>profile.preferences</source>
         <target>Настройки</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
-        <source>label.theme.collapsed_sidebar</source>
+      <trans-unit id="Eq78QrH" resname="label.collapsed_sidebar">
+        <source>label.collapsed_sidebar</source>
         <target>Управление статусом левой панели навигации (скрыта или открыта)</target>
       </trans-unit>
       <!--
@@ -836,8 +836,8 @@
         <source>invoice.filter</source>
         <target>Фильтровать данные счетов</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
-        <source>label.timesheet.daily_stats</source>
+      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+        <source>label.daily_stats</source>
         <target>Показать дневную статистику в таблице</target>
       </trans-unit>
       <trans-unit id="Ss2xe99" resname="label.team">
@@ -936,16 +936,16 @@
         <source>label.vat_id</source>
         <target>ИНН</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
-        <source>label.timesheet.export_decimal</source>
+      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+        <source>label.export_decimal</source>
         <target>Использовать десятичную продолжительность при экспорте</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
-        <source>label.login.initial_view</source>
+      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+        <source>label.login_initial_view</source>
         <target>Первоначальный вид после входа в систему</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
-        <source>label.calendar.initial_view</source>
+      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+        <source>label.calendar_initial_view</source>
         <target>Первоначальный вид календаря</target>
       </trans-unit>
       <trans-unit id="DZ7XGML" resname="profile.teams">
@@ -1000,8 +1000,8 @@
         <source>help.rate</source>
         <target>Почасовая ставка, подлежащая оплате</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.theme.layout">
-        <source>label.theme.layout</source>
+      <trans-unit id="42BRM3Q" resname="label.layout">
+        <source>label.layout</source>
         <target>отображение: формат</target>
       </trans-unit>
       <trans-unit id="x8TrOec" resname="label.timeBudget">
@@ -1088,8 +1088,8 @@
         <source>resetting.check_email</source>
         <target>Письмо со ссылкой для сброса пароля отправлено. Примечание: Вы можете запросить сброс пароля не чаще, чем раз в %tokenLifetime% часов. Если Вы не получили письмо - проверьте СПАМ или попробуйте позже.</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
-        <source>theme.update_browser_title</source>
+      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+        <source>update_browser_title</source>
         <target>Обновить заголовок браузера</target>
       </trans-unit>
       <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">

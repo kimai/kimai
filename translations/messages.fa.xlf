@@ -247,8 +247,8 @@
         <source>label.hours</source>
         <target>ساعت ها</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.theme.layout">
-        <source>label.theme.layout</source>
+      <trans-unit id="42BRM3Q" resname="label.layout">
+        <source>label.layout</source>
         <target>نمایش: طرح بندی</target>
       </trans-unit>
       <trans-unit id="dezCZWf" resname="label.skin">
@@ -487,20 +487,20 @@
         <source>profile.preferences</source>
         <target>الویت ها</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
-        <source>label.login.initial_view</source>
+      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+        <source>label.login_initial_view</source>
         <target>نمایه ابتدایی بعد از ورود</target>
       </trans-unit>
       <trans-unit id="hO7mkmf" resname="label.lastLogin">
         <source>label.lastLogin</source>
         <target>آخرین ورود</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
-        <source>label.theme.collapsed_sidebar</source>
+      <trans-unit id="Eq78QrH" resname="label.collapsed_sidebar">
+        <source>label.collapsed_sidebar</source>
         <target>کوچک کردن نوار کناری سمت چپ</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
-        <source>label.calendar.initial_view</source>
+      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+        <source>label.calendar_initial_view</source>
         <target>مشاهده ابتدایی و ساده تقویم</target>
       </trans-unit>
       <trans-unit id="dwEVXUR" resname="timesheet.edit">
@@ -613,12 +613,12 @@
         <source>agendaWeek</source>
         <target state="needs-translation">Week</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
-        <source>label.timesheet.daily_stats</source>
+      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+        <source>label.daily_stats</source>
         <target state="needs-translation">Show daily stats in timesheet</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
-        <source>label.timesheet.export_decimal</source>
+      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+        <source>label.export_decimal</source>
         <target state="needs-translation">Use decimal duration in export</target>
       </trans-unit>
       <trans-unit id="UVJ5Die" resname="calendar">
@@ -1073,8 +1073,8 @@
         <source>quick_entry.title</source>
         <target state="needs-translation">Weekly working hours</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
-        <source>theme.update_browser_title</source>
+      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+        <source>update_browser_title</source>
         <target state="needs-translation">Update browser title</target>
       </trans-unit>
       <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">

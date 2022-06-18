@@ -18,20 +18,12 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class UserPreferenceEvent extends Event
 {
-    private User $user;
-    /**
-     * @var UserPreference[]
-     */
-    private array $preferences = [];
-
     /**
      * @param User $user
      * @param UserPreference[] $preferences
      */
-    public function __construct(User $user, array $preferences)
+    public function __construct(private User $user, private array $preferences)
     {
-        $this->user = $user;
-        $this->preferences = $preferences;
     }
 
     /**
@@ -52,10 +44,7 @@ final class UserPreferenceEvent extends Event
         return $this->preferences;
     }
 
-    /**
-     * @param UserPreference $preference
-     */
-    public function addPreference(UserPreference $preference)
+    public function addPreference(UserPreference $preference): void
     {
         foreach ($this->preferences as $pref) {
             if (strtolower($pref->getName()) === strtolower($preference->getName())) {

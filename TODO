@@ -1,15 +1,4 @@
 ===========================================================================
-MIGRATIONS
-
-DELETE FROM kimai2_user_preferences where name = 'reporting.initial_view'
-
-
-===========================================================================
-MIXED
-
-- Remove support for custom translation files (document BC break)
-
-===========================================================================
 KioskBundle:
 
 - Update KioskBundle for layout & full compatibility
