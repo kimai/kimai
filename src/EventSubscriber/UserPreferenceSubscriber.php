@@ -68,7 +68,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setSection('rate')
                 ->setType(MoneyType::class)
                 ->setEnabled($enableHourlyRate)
-                ->setOptions($hourlyRateOptions)
+                ->setOptions(array_merge($hourlyRateOptions, ['label' => 'label.hourlyRate']))
                 ->addConstraint(new Range(['min' => 0])),
 
             (new UserPreference())
