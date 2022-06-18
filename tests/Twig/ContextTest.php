@@ -59,6 +59,9 @@ class ContextTest extends TestCase
         ];
     }
 
+    /**
+     * @group legacy
+     */
     public function testBranding()
     {
         $sut = $this->getSut($this->getDefaultSettings());

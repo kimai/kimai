@@ -122,6 +122,9 @@ class ServiceInvoiceTest extends TestCase
         $sut->createModel($query);
     }
 
+    /**
+     * @group legacy
+     */
     public function testCreateModelSetsFallbackLanguage()
     {
         $template = new InvoiceTemplate();

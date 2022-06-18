@@ -11,15 +11,13 @@ namespace App\Model\Statistic;
 
 final class Year extends Timesheet
 {
-    private $year;
     /**
      * @var Month[]
      */
     private $months = [];
 
-    public function __construct(string $year)
+    public function __construct(private string $year)
     {
-        $this->year = $year;
     }
 
     public function getYear(): string
