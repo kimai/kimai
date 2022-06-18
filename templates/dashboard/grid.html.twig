@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
-{% from "macros/widgets.html.twig" import nothing_found, alert %}
+{% from "macros/widgets.html.twig" import nothing_found, alert, page_actions %}
 
 {% block page_title %}{{ 'dashboard.title'|trans }}{% endblock %}
 {% block subtitle %}{{ 'dashboard.subtitle'|trans }}{% endblock %}
 {% block page_actions %}
     {% set event = actions(app.user, 'dashboard', (form is defined ? 'edit' : 'dashboard'), {'widgets': widgets, 'available': available}) %}
-    {{ widgets.page_actions(event.actions) }}
+    {{ page_actions(event.actions) }}
 {% endblock %}
 
 {% block page_class %}dashboard{% endblock %}
