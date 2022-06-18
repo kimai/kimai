@@ -32,6 +32,16 @@ class MetaFieldsCollectionType extends AbstractType
                 $collection = $event->getData();
                 foreach ($collection as $collectionItem) {
                     $collection->removeElement($collectionItem);
+
+                    if (!($collectionItem instanceof MetaTableTypeInterface)) {
+                        continue;
+                    }
+
+                    // prevents unconfigured values from showing up in the form
+                    if (null === $collectionItem->getType()) {
+                        continue;
+                    }
+
                     $collection->set($collectionItem->getName(), $collectionItem);
                 }
             },

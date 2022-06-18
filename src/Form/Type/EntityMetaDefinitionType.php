@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 /**
  * Custom form field type to edit entity meta field.
@@ -33,15 +34,6 @@ class EntityMetaDefinitionType extends AbstractType
                 /** @var MetaTableTypeInterface $definition */
                 $definition = $event->getData();
 
-                if (!($definition instanceof MetaTableTypeInterface)) {
-                    return;
-                }
-
-                // prevents unconfigured values from showing up in the form
-                if (null === $definition->getType()) {
-                    return;
-                }
-
                 $attr = ['data-name' => $definition->getName(), 'class' => ''];
                 $options = $definition->getOptions();
 
@@ -50,10 +42,18 @@ class EntityMetaDefinitionType extends AbstractType
                     unset($options['attr']);
                 }
 
+                $required = $definition->isRequired();
+                $constraints = $definition->getConstraints();
+
+                // this will prevent that someone deletes the form element from the DOM and submits the form without
+                if ($required) {
+                    $constraints[] = new NotNull();
+                }
+
                 $event->getForm()->add('value', $definition->getType(), array_merge([
                     'label' => $definition->getLabel(),
-                    'constraints' => $definition->getConstraints(),
-                    'required' => $definition->isRequired(),
+                    'constraints' => $constraints,
+                    'required' => $required,
                     'attr' => $attr,
                     'row_attr' => ['class' => 'p-0'],
                 ], $options));
