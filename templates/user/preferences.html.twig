@@ -1,8 +1,10 @@
 {% extends 'user/layout.html.twig' %}
+{% from "macros/widgets.html.twig" import form_errors %}
 
 {% block profile_content %}
 
     {{ form_start(form) }}
+    {{ form_errors(form) }}
     {% for section in sections %}
 
         {% set show = false %}
@@ -24,7 +26,6 @@
 
     {% endfor %}
     <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
-    {{ form_widget(form._token) }}
-    {{ form_end(form, {'render_rest': false}) }}
+    {{ form_end(form) }}
 
 {% endblock %}

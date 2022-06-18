@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -24,14 +25,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class UserPreferenceType extends AbstractType
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translate;
-
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(private TranslatorInterface $translator)
     {
-        $this->translate = $translator;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -42,20 +37,22 @@ class UserPreferenceType extends AbstractType
                 /** @var UserPreference $preference */
                 $preference = $event->getData();
 
-                if (!($preference instanceof UserPreference)) {
-                    return;
-                }
-
-                // prevents unconfigured values from showing up in the form
-                if ($preference->getType() === null) {
-                    $event->getForm()->remove('name');
-
-                    return;
-                }
+                $options = $preference->getOptions();
+                $constraints = $preference->getConstraints();
 
                 $required = true;
+                if (array_key_exists('required', $options)) {
+                    $required = (bool) $options['required'];
+                    unset($options['required']);
+                }
+
                 if (CheckboxType::class === $preference->getType()) {
                     $required = false;
+                }
+
+                // this will prevent that someone deletes the form element from the DOM and submits the form without
+                if ($required) {
+                    $constraints[] = new NotNull();
                 }
 
                 $type = $preference->getType();
@@ -64,24 +61,23 @@ class UserPreferenceType extends AbstractType
                 }
 
                 $transId = 'label.' . $preference->getName();
-                if ($this->translate->trans($transId) === $transId) {
+                if ($this->translator->trans($transId) === $transId) {
                     $transId = $preference->getName();
                 }
 
                 $options = array_merge(
                     [
                         'label' => $transId,
-                        'constraints' => $preference->getConstraints(),
+                        'constraints' => $constraints,
                         'required' => $required,
                         'disabled' => !$preference->isEnabled(),
                     ],
-                    $preference->getOptions()
+                    $options
                 );
 
                 $event->getForm()->add('value', $type, $options);
             }
         );
-        $builder->add('name', HiddenType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

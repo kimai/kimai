@@ -226,50 +226,24 @@ final class ProfileController extends AbstractController
         $event = new PrepareUserEvent($profile);
         $dispatcher->dispatch($event);
 
-        $original = [];
-        foreach ($profile->getPreferences() as $preference) {
-            $original[$preference->getName()] = $preference;
-        }
-
         $form = $this->createPreferencesForm($profile);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $preferences = $profile->getPreferences();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userRepository->saveUser($profile);
 
-                // do not allow to add unknown preferences
-                foreach ($preferences as $preference) {
-                    if (!isset($original[$preference->getName()])) {
-                        $preferences->removeElement($preference);
-                    }
-                }
+            $this->flashSuccess('action.update.success');
 
-                // but allow deleting already saved settings
-                foreach ($original as $name => $preference) {
-                    if (false === $profile->getPreferences()->contains($preference)) {
-                        $userRepository->deleteUserPreference($preference);
-                    }
-                }
-
-                $profile->setPreferences($preferences);
-                $userRepository->saveUser($profile);
-
-                $this->flashSuccess('action.update.success');
-
-                // switch locale ONLY if updated profile is the current user
-                $locale = $request->getLocale();
-                if ($this->getUser()->getId() === $profile->getId()) {
-                    $locale = $profile->getPreferenceValue('language', $locale);
-                }
-
-                return $this->redirectToRoute('user_profile_preferences', [
-                    '_locale' => $locale,
-                    'username' => $profile->getUserIdentifier()
-                ]);
-            } else {
-                $this->flashError('action.update.error', ['%reason%' => 'Validation failed']);
+            // switch locale ONLY if updated profile is the current user
+            $locale = $request->getLocale();
+            if ($this->getUser()->getId() === $profile->getId()) {
+                $locale = $profile->getPreferenceValue('language', $locale);
             }
+
+            return $this->redirectToRoute('user_profile_preferences', [
+                '_locale' => $locale,
+                'username' => $profile->getUserIdentifier()
+            ]);
         }
 
         // prepare ordered preferences

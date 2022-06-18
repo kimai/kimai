@@ -386,22 +386,22 @@ class ProfileControllerTest extends ControllerBaseTest
     {
         return [
             // assert that the user doesn't have the "hourly-rate_own_profile" permission
-            [User::ROLE_USER, UserFixtures::USERNAME_USER, 82, 82, 'ar', null],
+            [User::ROLE_USER, UserFixtures::USERNAME_USER, 82, 82, 'ar', null, false],
             // teamleads are allowed to update their own hourly rate, but not other peoples hourly rate
-            [User::ROLE_TEAMLEAD, UserFixtures::USERNAME_TEAMLEAD, 35, 37.5, 'ar', 19.54],
+            [User::ROLE_TEAMLEAD, UserFixtures::USERNAME_TEAMLEAD, 35, 37.5, 'ar', 19.54, true],
             // admins are allowed to update their own hourly rate, but not other peoples hourly rate
-            [User::ROLE_ADMIN, UserFixtures::USERNAME_ADMIN, 81, 37.5, 'ar', 19.54],
+            [User::ROLE_ADMIN, UserFixtures::USERNAME_ADMIN, 81, 37.5, 'ar', 19.54, true],
             // super-admins are allowed to update other peoples hourly rate
-            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_ADMIN, 81, 37.5, 'en', 19.54],
+            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_ADMIN, 81, 37.5, 'en', 19.54, true],
             // super-admins are allowed to update their own hourly rate
-            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_SUPER_ADMIN, 46, 37.5, 'ar', 19.54],
+            [User::ROLE_SUPER_ADMIN, UserFixtures::USERNAME_SUPER_ADMIN, 46, 37.5, 'ar', 19.54, true],
         ];
     }
 
     /**
      * @dataProvider getPreferencesTestData
      */
-    public function testPreferencesAction($role, $username, $hourlyRateOriginal, $hourlyRate, $expectedLocale, $expectedInternalRate)
+    public function testPreferencesAction($role, $username, $hourlyRateOriginal, $hourlyRate, string $expectedLocale, float|null $expectedInternalRate, bool $withRateSettings)
     {
         $client = $this->getClientForAuthenticatedUser($role);
         $this->request($client, '/profile/' . $username . '/prefs');
@@ -413,17 +413,23 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertNull($user->getPreferenceValue(UserPreference::INTERNAL_RATE));
         $this->assertEquals('default', $user->getPreferenceValue(UserPreference::SKIN));
 
+        $data = [
+            UserPreference::TIMEZONE => ['value' => 'America/Creston'],
+            UserPreference::LOCALE => ['value' => 'ar'],
+            UserPreference::FIRST_WEEKDAY => ['value' => 'sunday'],
+            UserPreference::HOUR_24 => ['value' => true],
+            UserPreference::SKIN => ['value' => 'dark'],
+        ];
+
+        if ($withRateSettings) {
+            $data[UserPreference::HOURLY_RATE] = ['value' => 37.5];
+            $data[UserPreference::INTERNAL_RATE] = ['value' => 19.54];
+        }
+
         $form = $client->getCrawler()->filter('form[name=user_preferences_form]')->form();
         $client->submit($form, [
             'user_preferences_form' => [
-                'preferences' => [
-                    0 => ['name' => UserPreference::HOURLY_RATE, 'value' => 37.5],
-                    1 => ['name' => UserPreference::INTERNAL_RATE, 'value' => 19.54],
-                    2 => ['name' => UserPreference::TIMEZONE, 'value' => 'America/Creston'],
-                    3 => ['name' => UserPreference::LOCALE, 'value' => 'ar'],
-                    4 => ['name' => UserPreference::FIRST_WEEKDAY, 'value' => 'sunday'],
-                    6 => ['name' => UserPreference::SKIN, 'value' => 'dark'],
-                ]
+                'preferences' => $data
             ]
         ]);
 

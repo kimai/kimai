@@ -10,9 +10,8 @@
 namespace App\Form;
 
 use App\Entity\User;
-use App\Form\Type\UserPreferenceType;
+use App\Form\Type\UserPreferencesCollectionType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,13 +25,7 @@ class UserPreferencesForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('preferences', CollectionType::class, [
-            'entry_type' => UserPreferenceType::class,
-            'entry_options' => ['label' => false],
-            'allow_add' => false,
-            'allow_delete' => false,
-            'label' => false,
-        ]);
+        $builder->add('preferences', UserPreferencesCollectionType::class);
     }
 
     /**
