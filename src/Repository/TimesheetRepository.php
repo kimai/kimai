@@ -18,9 +18,6 @@ use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
-use App\Model\Statistic\Day;
-use App\Model\Statistic\Month;
-use App\Model\Statistic\Year;
 use App\Model\TimesheetStatistic;
 use App\Repository\Loader\TimesheetLoader;
 use App\Repository\Paginator\LoaderPaginator;
@@ -49,10 +46,6 @@ class TimesheetRepository extends EntityRepository
     public const STATS_QUERY_USER = 'users';
     public const STATS_QUERY_AMOUNT = 'amount';
     public const STATS_QUERY_ACTIVE = 'active';
-    /**
-     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead - will be removed with 2.0
-     */
-    public const STATS_QUERY_MONTHLY = 'monthly';
 
     /**
      * Fetches the raw data of a timesheet, to allow comparison e.g. of submitted and previously stored data.
@@ -104,12 +97,7 @@ class TimesheetRepository extends EntityRepository
         return $timesheet;
     }
 
-    /**
-     * @param Timesheet $timesheet
-     * @throws \Doctrine\ORM\Exception\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function delete(Timesheet $timesheet)
+    public function delete(Timesheet $timesheet): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->remove($timesheet);
@@ -137,28 +125,23 @@ class TimesheetRepository extends EntityRepository
         }
     }
 
-    public function begin()
+    public function begin(): void
     {
         $this->getEntityManager()->beginTransaction();
     }
 
-    public function commit()
+    public function commit(): void
     {
         $this->getEntityManager()->flush();
         $this->getEntityManager()->commit();
     }
 
-    public function rollback()
+    public function rollback(): void
     {
         $this->getEntityManager()->rollback();
     }
 
-    /**
-     * @param Timesheet $timesheet
-     * @throws \Doctrine\ORM\Exception\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function save(Timesheet $timesheet)
+    public function save(Timesheet $timesheet): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($timesheet);
@@ -187,7 +170,7 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * @param string $type
+     * @param self::STATS_QUERY_* $type
      * @param DateTime|null $begin
      * @param DateTime|null $end
      * @param User|null $user
@@ -199,13 +182,6 @@ class TimesheetRepository extends EntityRepository
         switch ($type) {
             case self::STATS_QUERY_ACTIVE:
                 return \count($this->getActiveEntries($user));
-
-            case self::STATS_QUERY_MONTHLY:
-                return $this->getMonthlyStats($begin, $end, $user);
-
-            case 'daily':
-                return $this->getDailyStats($user, $begin, $end);
-
             case self::STATS_QUERY_DURATION:
                 $what = 'COALESCE(SUM(t.duration), 0)';
                 break;
@@ -323,305 +299,6 @@ class TimesheetRepository extends EntityRepository
         $stats->setRateThisMonthBillable($billableMonth);
 
         return $stats;
-    }
-
-    /**
-     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead - will be removed with 2.0
-     * @codeCoverageIgnore
-     *
-     * @param DateTime $begin
-     * @param DateTime $end
-     * @param User|null $user
-     * @return Year[]
-     */
-    public function getMonthlyStats(DateTime $begin, DateTime $end, ?User $user = null): array
-    {
-        @trigger_error('TimesheetRepository::getMonthlyStats() is deprecated and will be removed with 2.0', E_USER_DEPRECATED);
-
-        /** @var Year[] $years */
-        $years = [];
-
-        $tmp = clone $begin;
-        while ($tmp < $end) {
-            $curYear = $tmp->format('Y');
-            if (!isset($years[$curYear])) {
-                $year = new Year($curYear);
-                for ($i = 1; $i < 13; $i++) {
-                    $date = clone $begin;
-                    $date->setDate((int) $curYear, $i, (int) $begin->format('d'));
-                    $date->setTime(0, 0, 0);
-                    if ($date < $begin || $date > $end) {
-                        continue;
-                    }
-                    $year->setMonth(new Month((string) $i));
-                }
-                $years[$curYear] = $year;
-            }
-            $tmp->modify('+1 month');
-        }
-
-        $qb = $this->getMonthlyStatsQuery($user, $begin, $end, null);
-        foreach ($qb->getQuery()->execute() as $statRow) {
-            if (!isset($years[$statRow['year']])) {
-                continue;
-            }
-            $month = $years[$statRow['year']]->getMonth((int) $statRow['month']);
-            if (null === $month) {
-                continue;
-            }
-            $month->setTotalDuration((int) $statRow['duration']);
-            $month->setTotalRate((float) $statRow['rate']);
-        }
-
-        $qb = $this->getMonthlyStatsQuery($user, $begin, $end, true);
-        foreach ($qb->getQuery()->execute() as $statRow) {
-            if (!isset($years[$statRow['year']])) {
-                continue;
-            }
-            $month = $years[$statRow['year']]->getMonth((int) $statRow['month']);
-            if (null === $month) {
-                continue;
-            }
-            $month->setBillableDuration((int) $statRow['duration']);
-            $month->setBillableRate((float) $statRow['rate']);
-        }
-
-        return $years;
-    }
-
-    /**
-     * @deprecated since 1.15 - use TimesheetStatisticService::getMonthlyStats() instead - will be removed with 2.0
-     * @codeCoverageIgnore
-     *
-     * @param User|null $user
-     * @param DateTime|null $begin
-     * @param DateTime|null $end
-     * @param bool|null $billable
-     * @return QueryBuilder
-     */
-    private function getMonthlyStatsQuery(User $user = null, ?DateTime $begin = null, ?DateTime $end = null, ?bool $billable = null): QueryBuilder
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $qb->from(Timesheet::class, 't');
-        $qb->select('COALESCE(SUM(t.rate), 0) as rate');
-        $qb->addSelect('COALESCE(SUM(t.duration), 0) as duration');
-        $qb->addSelect('MONTH(t.date) as month');
-        $qb->addSelect('YEAR(t.date) as year');
-
-        if (!empty($begin)) {
-            $qb->andWhere($qb->expr()->gte('t.begin', ':from'));
-            $qb->setParameter('from', $begin);
-        } else {
-            $qb->andWhere($qb->expr()->isNotNull('t.begin'));
-        }
-
-        if (!empty($end)) {
-            $qb->andWhere($qb->expr()->lte('t.end', ':to'));
-            $qb->setParameter('to', $end);
-        } else {
-            $qb->andWhere($qb->expr()->isNotNull('t.end'));
-        }
-
-        if (null !== $user) {
-            $qb->andWhere('t.user = :user');
-            $qb->setParameter('user', $user);
-        }
-
-        if (null !== $billable) {
-            $qb->andWhere('t.billable = :billable');
-            $qb->setParameter('billable', $billable);
-        }
-
-        $qb
-            ->orderBy('year', 'DESC')
-            ->addOrderBy('month', 'ASC')
-            ->groupBy('year')
-            ->addGroupBy('month')
-        ;
-
-        return $qb;
-    }
-
-    /**
-     * In case this method is called with one timezone and the results are from another timezone,
-     * it might return rows outside the time-range.
-     *
-     * @param DateTime $begin
-     * @param DateTime $end
-     * @param User|null $user
-     * @return mixed
-     */
-    protected function getDailyData(DateTime $begin, DateTime $end, ?User $user = null)
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $or = $qb->expr()->orX();
-        $or->add($qb->expr()->between(':begin', 't.begin', 't.end'));
-        $or->add($qb->expr()->between(':end', 't.begin', 't.end'));
-        $or->add($qb->expr()->between('t.begin', ':begin', ':end'));
-        $or->add($qb->expr()->between('t.end', ':begin', ':end'));
-
-        $qb->select('t, p, a, c')
-            ->from(Timesheet::class, 't')
-            ->andWhere($qb->expr()->isNotNull('t.end'))
-            ->andWhere($or)
-            ->orderBy('t.begin', 'DESC')
-            ->setParameter('begin', $begin)
-            ->setParameter('end', $end)
-            ->leftJoin('t.activity', 'a')
-            ->leftJoin('t.project', 'p')
-            ->leftJoin('p.customer', 'c')
-        ;
-
-        if (null !== $user) {
-            $qb
-                ->andWhere($qb->expr()->eq('t.user', ':user'))
-                ->setParameter('user', $user)
-            ;
-        }
-
-        $timesheets = $qb->getQuery()->getResult();
-
-        $results = [];
-        /** @var Timesheet $result */
-        foreach ($timesheets as $result) {
-            /** @var DateTime $beginTmp */
-            $beginTmp = $result->getBegin();
-            /** @var DateTime $endTmp */
-            $endTmp = $result->getEnd();
-            $dateKeyEnd = $endTmp->format('Ymd');
-
-            do {
-                $dateKey = $beginTmp->format('Ymd');
-
-                if ($dateKey !== $dateKeyEnd) {
-                    $newDateBegin = clone $beginTmp;
-                    $newDateBegin->add(new DateInterval('P1D'));
-                    // overlapping records should always start at midnight
-                    $newDateBegin->setTime(0, 0, 0);
-                } else {
-                    $newDateBegin = clone $endTmp;
-                }
-
-                // make sure to exclude entries that are outside the requested time-range:
-                // these entries can exist if you have long running entries that started before $begin
-                // for statistical reasons we have to include everything between $begin and $end while
-                // excluding everything that is outside of that range
-                // --------------------------------------------------------------------------------------
-                // Be aware that this will NOT filter every record, in case there is a timezone mismatch between the
-                // begin/end dates and the ones from the database (eg. recorded in UTC) - which might actually be
-                // before $begin (which happens thanks to the timezone conversion when querying the database)
-                if ($newDateBegin > $begin && $beginTmp < $end) {
-                    if (!isset($results[$dateKey])) {
-                        $results[$dateKey] = [
-                            'rate' => 0,
-                            'duration' => 0,
-                            'billable' => 0, // duration
-                            'month' => $beginTmp->format('n'),
-                            'year' => $beginTmp->format('Y'),
-                            'day' => $beginTmp->format('j'),
-                            'details' => []
-                        ];
-                    }
-                    $duration = $newDateBegin->getTimestamp() - $beginTmp->getTimestamp();
-                    $durationPercent = 0;
-                    if ($result->getDuration() !== null && $result->getDuration() > 0) {
-                        $durationPercent = $duration / $result->getDuration();
-                    }
-                    $rate = $result->getRate() * $durationPercent;
-
-                    $results[$dateKey]['rate'] += $rate;
-                    $results[$dateKey]['duration'] += $duration;
-                    if ($result->isBillable()) {
-                        $results[$dateKey]['billable'] += $duration;
-                    }
-                    $detailsId =
-                        $result->getProject()->getCustomer()->getId()
-                        . '_' . $result->getProject()->getId()
-                        . '_' . $result->getActivity()->getId()
-                    ;
-
-                    if (!isset($results[$dateKey]['details'][$detailsId])) {
-                        $results[$dateKey]['details'][$detailsId] = [
-                            'project' => $result->getProject(),
-                            'activity' => $result->getActivity(),
-                            'duration' => 0,
-                            'rate' => 0,
-                            'billable' => 0, // duration
-                        ];
-                    }
-
-                    $results[$dateKey]['details'][$detailsId]['duration'] += $duration;
-                    $results[$dateKey]['details'][$detailsId]['rate'] += $rate;
-                    if ($result->isBillable()) {
-                        $results[$dateKey]['details'][$detailsId]['billable'] += $duration;
-                    }
-                }
-
-                $beginTmp = $newDateBegin;
-
-                // yes, we only want to compare the day, not the time
-                if ((int) $end->format('Ymd') < (int) $newDateBegin->format('Ymd')) {
-                    break;
-                }
-            } while ($dateKey !== $dateKeyEnd);
-        }
-
-        ksort($results);
-
-        foreach ($results as $key => $value) {
-            $results[$key]['details'] = array_values($results[$key]['details']);
-        }
-        $results = array_values($results);
-
-        return $results;
-    }
-
-    /**
-     * @deprecated since 1.15 - use TimesheetStatisticService::getDailyStatistics() instead
-     * @codeCoverageIgnore
-     *
-     * @param User|null $user
-     * @param DateTime $begin
-     * @param DateTime $end
-     * @return Day[]
-     * @throws Exception
-     */
-    public function getDailyStats(?User $user, DateTime $begin, DateTime $end): array
-    {
-        /** @var Day[] $days */
-        $days = [];
-
-        // prefill the array
-        $tmp = clone $end;
-        $until = (int) $begin->format('Ymd');
-        while ((int) $tmp->format('Ymd') >= $until) {
-            $last = clone $tmp;
-            $days[$last->format('Ymd')] = new Day($last, 0, 0.00);
-            $tmp->modify('-1 day');
-        }
-
-        $results = $this->getDailyData($begin, $end, $user);
-
-        foreach ($results as $statRow) {
-            $dateTime = clone $begin;
-            $dateTime->setDate($statRow['year'], $statRow['month'], $statRow['day']);
-            $dateTime->setTime(0, 0, 0);
-            $day = new Day($dateTime, (int) $statRow['duration'], (float) $statRow['rate']);
-            $day->setTotalDurationBillable($statRow['billable']);
-            $day->setDetails($statRow['details']);
-            $dateKey = $dateTime->format('Ymd');
-            // make sure entries from other timezones are filtered
-            if (!\array_key_exists($dateKey, $days)) {
-                continue;
-            }
-            $days[$dateKey] = $day;
-        }
-
-        ksort($days);
-
-        return array_values($days);
     }
 
     /**

@@ -17,13 +17,8 @@ use DateTime;
 
 final class PaginatedWorkingTimeChart extends AbstractWidget
 {
-    private $repository;
-    private $systemConfiguration;
-
-    public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration)
+    public function __construct(private TimesheetRepository $repository, private SystemConfiguration $systemConfiguration)
     {
-        $this->repository = $repository;
-        $this->systemConfiguration = $systemConfiguration;
     }
 
     public function getWidth(): int
@@ -116,7 +111,7 @@ final class PaginatedWorkingTimeChart extends AbstractWidget
 
         $yearBegin = $dateTimeFactory->createDateTime(sprintf('01 january %s 00:00:00', $year));
         $yearEnd = $dateTimeFactory->createDateTime(sprintf('31 december %s 23:59:59', $year));
-        $yearData = $this->repository->getStatistic('duration', $yearBegin, $yearEnd, $user);
+        $yearData = $this->repository->getStatistic(TimesheetRepository::STATS_QUERY_DURATION, $yearBegin, $yearEnd, $user);
 
         $financialYearData = null;
         $financialYearBegin = null;
@@ -124,19 +119,18 @@ final class PaginatedWorkingTimeChart extends AbstractWidget
         if (null !== ($financialYear = $this->systemConfiguration->getFinancialYearStart())) {
             $financialYearBegin = $dateTimeFactory->createStartOfFinancialYear($financialYear);
             $financialYearEnd = $dateTimeFactory->createEndOfFinancialYear($financialYearBegin);
-            $financialYearData = $this->repository->getStatistic('duration', $financialYearBegin, $financialYearEnd, $user);
+            $financialYearData = $this->repository->getStatistic(TimesheetRepository::STATS_QUERY_DURATION, $financialYearBegin, $financialYearEnd, $user);
         }
 
         return [
             'begin' => clone $weekBegin,
             'end' => clone $weekEnd,
-            'stats' => $this->repository->getDailyStats($user, $weekBegin, $weekEnd),
             'thisMonth' => $thisMonth,
             'lastWeekInYear' => $lastWeekInYear,
             'lastWeekInLastYear' => $lastWeekInLastYear,
-            'day' => $this->repository->getStatistic('duration', $dayBegin, $dayEnd, $user),
-            'week' => $this->repository->getStatistic('duration', $weekBegin, $weekEnd, $user),
-            'month' => $this->repository->getStatistic('duration', $monthBegin, $monthEnd, $user),
+            'day' => $this->repository->getStatistic(TimesheetRepository::STATS_QUERY_DURATION, $dayBegin, $dayEnd, $user),
+            'week' => $this->repository->getStatistic(TimesheetRepository::STATS_QUERY_DURATION, $weekBegin, $weekEnd, $user),
+            'month' => $this->repository->getStatistic(TimesheetRepository::STATS_QUERY_DURATION, $monthBegin, $monthEnd, $user),
             'year' => $yearData,
             'financial' => $financialYearData,
             'financialBegin' => $financialYearBegin,

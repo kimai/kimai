@@ -13,7 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Model\Statistic\Day;
-use App\Repository\TimesheetRepository;
+use App\Widget\DataProvider\DailyWorkingTimeChartProvider;
 use App\Widget\Type\DailyWorkingTimeChart;
 use App\Widget\WidgetInterface;
 use PHPUnit\Framework\TestCase;
@@ -27,7 +27,7 @@ class DailyWorkingTimeChartTest extends TestCase
 {
     public function createSut(): DailyWorkingTimeChart
     {
-        $repository = $this->createMock(TimesheetRepository::class);
+        $repository = $this->createMock(DailyWorkingTimeChartProvider::class);
 
         $sut = new DailyWorkingTimeChart($repository);
         $sut->setUser(new User());
@@ -73,7 +73,7 @@ class DailyWorkingTimeChartTest extends TestCase
         $project = $this->createMock(Project::class);
         $project->method('getId')->willReturn(4711);
 
-        $repository = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->onlyMethods(['getDailyData'])->getMock();
+        $repository = $this->getMockBuilder(DailyWorkingTimeChartProvider::class)->disableOriginalConstructor()->onlyMethods(['getDailyData'])->getMock();
         $repository->expects($this->once())->method('getDailyData')->willReturnCallback(function ($begin, $end, $user) use ($activity, $project) {
             return [
                 [

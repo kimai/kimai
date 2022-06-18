@@ -11,18 +11,18 @@ namespace App\Widget\Type;
 
 use App\Entity\Activity;
 use App\Entity\Project;
-use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
+use App\Widget\DataProvider\DailyWorkingTimeChartProvider;
 use App\Widget\WidgetInterface;
 use DateTime;
 
+/**
+ * This is rendered inside the PaginatedWorkingTimeChart.
+ */
 final class DailyWorkingTimeChart extends AbstractWidget
 {
-    private $repository;
-
-    public function __construct(TimesheetRepository $repository)
+    public function __construct(private DailyWorkingTimeChartProvider $dailyWorkingTimeChartProvider)
     {
-        $this->repository = $repository;
     }
 
     public function getWidth(): int
@@ -83,7 +83,7 @@ final class DailyWorkingTimeChart extends AbstractWidget
         }
 
         $activities = [];
-        $statistics = $this->repository->getDailyStats($user, $begin, $end);
+        $statistics = $this->dailyWorkingTimeChartProvider->getData($user, $begin, $end);
 
         foreach ($statistics as $day) {
             foreach ($day->getDetails() as $entry) {

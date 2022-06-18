@@ -71,28 +71,9 @@ class PaginatedWorkingTimeChartTest extends TestCase
         $project->method('getId')->willReturn(4711);
 
         $repository = $this->createMock(TimesheetRepository::class);
-        $repository->expects($this->once())->method('getDailyStats')->willReturnCallback(function ($user, $begin, $end) use ($activity, $project) {
-            return [
-                [
-                    'year' => $begin->format('Y'),
-                    'month' => $begin->format('n'),
-                    'day' => $begin->format('j'),
-                    'rate' => 13.75,
-                    'duration' => 1234,
-                    'billable' => 1234,
-                    'details' => [
-                        [
-                            'activity' => $activity,
-                            'project' => $project,
-                            'billable' => 1234,
-                        ]
-                    ]
-                ]
-            ];
-        });
 
         $expectedKeys = [
-            'begin', 'end', 'stats', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin'
+            'begin', 'end', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin'
         ];
 
         $configuration = $this->createMock(SystemConfiguration::class);
@@ -119,28 +100,9 @@ class PaginatedWorkingTimeChartTest extends TestCase
         $project->method('getId')->willReturn(4711);
 
         $repository = $this->createMock(TimesheetRepository::class);
-        $repository->expects($this->once())->method('getDailyStats')->willReturnCallback(function ($user, $begin, $end) use ($activity, $project) {
-            return [
-                [
-                    'year' => $begin->format('Y'),
-                    'month' => $begin->format('n'),
-                    'day' => $begin->format('j'),
-                    'rate' => 13.75,
-                    'duration' => 1234,
-                    'billable' => 1234,
-                    'details' => [
-                        [
-                            'activity' => $activity,
-                            'project' => $project,
-                            'billable' => 1234,
-                        ]
-                    ]
-                ]
-            ];
-        });
 
         $expectedKeys = [
-            'begin', 'end', 'stats', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin'
+            'begin', 'end', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin'
         ];
 
         $configuration = $this->createMock(SystemConfiguration::class);

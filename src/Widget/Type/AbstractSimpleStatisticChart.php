@@ -16,11 +16,7 @@ use App\Widget\WidgetInterface;
 abstract class AbstractSimpleStatisticChart extends AbstractWidgetType
 {
     /**
-     * @var TimesheetRepository
-     */
-    private $repository;
-    /**
-     * @var string
+     * @var TimesheetRepository::STATS_QUERY_*
      */
     private $query;
     /**
@@ -36,9 +32,8 @@ abstract class AbstractSimpleStatisticChart extends AbstractWidgetType
      */
     private $queryWithUser = false;
 
-    public function __construct(TimesheetRepository $repository)
+    public function __construct(private TimesheetRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     public function getWidth(): int
@@ -51,11 +46,13 @@ abstract class AbstractSimpleStatisticChart extends AbstractWidgetType
         return WidgetInterface::HEIGHT_SMALL;
     }
 
-    public function setQuery(string $query): self
+    /**
+     * @param TimesheetRepository::STATS_QUERY_* $query
+     * @return void
+     */
+    public function setQuery(string $query): void
     {
         $this->query = $query;
-
-        return $this;
     }
 
     public function setBegin(null|string|\DateTime $begin): self
