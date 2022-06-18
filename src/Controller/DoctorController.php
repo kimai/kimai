@@ -24,11 +24,9 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 class DoctorController extends AbstractController
 {
     /**
-     * PHP extensions which Kimai needs for runtime.
-     * Some are not a hard requirement, but some functions might not work as expected.
+     * Required PHP extensions for Kimai.
      */
     public const REQUIRED_EXTENSIONS = [
-        'gd',
         'intl',
         'json',
         'mbstring',
