@@ -140,7 +140,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     private $apiToken;
     /**
-     * @var string
+     * @var string|null
      * @internal to be set via form, must not be persisted
      * @Assert\NotBlank(groups={"ApiTokenUpdate"})
      * @Assert\Length(min="8", max="60", groups={"ApiTokenUpdate"})
@@ -840,12 +840,10 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         $this->plainPassword = null;
+        $this->plainApiToken = null;
     }
 
     public function hasUsername(): bool

@@ -70,11 +70,11 @@ class SelfRegistrationController extends AbstractController
             // this will finally send the email
             $this->eventDispatcher->dispatch(new EmailEvent($event->getEmail()));
 
-            $request->getSession()->set('fos_user_send_confirmation_email/email', $user->getEmail());
+            $request->getSession()->set('confirmation_email_address', $user->getEmail());
 
             $this->userService->saveNewUser($user);
 
-            return $this->redirectToRoute('fos_user_registration_check_email');
+            return $this->redirectToRoute('user_registration_check_email');
         }
 
         return $this->render('security/self-registration/register.html.twig', [
@@ -85,7 +85,7 @@ class SelfRegistrationController extends AbstractController
     /**
      * Tell the user to check their email provider.
      *
-     * @Route(path="/check-email", name="fos_user_registration_check_email", methods={"GET"})
+     * @Route(path="/check-email", name="user_registration_check_email", methods={"GET"})
      */
     public function checkEmailAction(Request $request): Response
     {
@@ -93,13 +93,13 @@ class SelfRegistrationController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $email = $request->getSession()->get('fos_user_send_confirmation_email/email');
+        $email = $request->getSession()->get('confirmation_email_address');
 
         if (empty($email)) {
             return $this->redirectToRoute('registration_register');
         }
 
-        $request->getSession()->remove('fos_user_send_confirmation_email/email');
+        $request->getSession()->remove('confirmation_email_address');
         $user = $this->userService->findUserByEmail($email);
 
         if (null === $user) {
@@ -165,7 +165,7 @@ class SelfRegistrationController extends AbstractController
     {
         $options = ['validation_groups' => ['Registration', 'Default']];
 
-        return $this->createFormBuilder()->create('fos_user_registration_form', SelfRegistrationForm::class, $options)->getForm();
+        return $this->createFormBuilder()->create('user_registration_form', SelfRegistrationForm::class, $options)->getForm();
     }
 
     private function getTargetUrlFromSession(SessionInterface $session): ?string

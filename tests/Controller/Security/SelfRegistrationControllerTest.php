@@ -58,16 +58,16 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $content = $response->getContent();
         $this->assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
         $this->assertStringContainsString('Register a new account', $content);
-        $this->assertStringContainsString('<form name="fos_user_registration_form" method="post" action="/en/register/" class="fos_user_registration_register">', $content);
+        $this->assertStringContainsString('<form name="user_registration_form" method="post" action="/en/register/"', $content);
         $this->assertStringContainsString('<input type="email"', $content);
-        $this->assertStringContainsString('id="fos_user_registration_form_email" name="fos_user_registration_form[email]" required="required"', $content);
+        $this->assertStringContainsString('id="user_registration_form_email" name="user_registration_form[email]" required="required"', $content);
         $this->assertStringContainsString('<input type="text"', $content);
-        $this->assertStringContainsString('id="fos_user_registration_form_username" name="fos_user_registration_form[username]" required="required" maxlength="60" pattern=".{2,}"', $content);
+        $this->assertStringContainsString('id="user_registration_form_username" name="user_registration_form[username]" required="required" maxlength="60" pattern=".{2,}"', $content);
         $this->assertStringContainsString('<input type="password"', $content);
-        $this->assertStringContainsString('id="fos_user_registration_form_plainPassword_first" name="fos_user_registration_form[plainPassword][first]" required="required"', $content);
-        $this->assertStringContainsString('id="fos_user_registration_form_plainPassword_second" name="fos_user_registration_form[plainPassword][second]" required="required"', $content);
+        $this->assertStringContainsString('id="user_registration_form_plainPassword_first" name="user_registration_form[plainPassword][first]" required="required"', $content);
+        $this->assertStringContainsString('id="user_registration_form_plainPassword_second" name="user_registration_form[plainPassword][second]" required="required"', $content);
         $this->assertStringContainsString('<input type="hidden"', $content);
-        $this->assertStringContainsString('id="fos_user_registration_form__token" name="fos_user_registration_form[_token]"', $content);
+        $this->assertStringContainsString('id="user_registration_form__token" name="user_registration_form[_token]"', $content);
         $this->assertStringContainsString('>Register</button>', $content);
     }
 
@@ -79,9 +79,9 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $response = $client->getResponse();
         $this->assertTrue($response->isSuccessful());
 
-        $form = $client->getCrawler()->filter('form[name=fos_user_registration_form]')->form();
+        $form = $client->getCrawler()->filter('form[name=user_registration_form]')->form();
         $client->submit($form, [
-            'fos_user_registration_form' => [
+            'user_registration_form' => [
                 'email' => $email,
                 'username' => $username,
                 'plainPassword' => [
@@ -171,7 +171,7 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
         $client = self::createClient();
         $this->setSystemConfiguration('user.registration', true);
 
-        $this->assertHasValidationError($client, '/register/', 'form[name=fos_user_registration_form]', $formData, $validationFields);
+        $this->assertHasValidationError($client, '/register/', 'form[name=user_registration_form]', $formData, $validationFields);
     }
 
     public function getValidationTestData()
@@ -180,44 +180,44 @@ class SelfRegistrationControllerTest extends ControllerBaseTest
             [
                 // invalid fields: username, password_second, email
                 [
-                    'fos_user_registration_form' => [
+                    'user_registration_form' => [
                         'username' => '',
                         'plainPassword' => ['first' => 'sdfsdf123'],
                         'email' => '',
                     ]
                 ],
                 [
-                    '#fos_user_registration_form_username',
-                    '#fos_user_registration_form_plainPassword_first',
-                    '#fos_user_registration_form_email',
+                    '#user_registration_form_username',
+                    '#user_registration_form_plainPassword_first',
+                    '#user_registration_form_email',
                 ]
             ],
             // invalid fields: username, password, email
             [
                 [
-                    'fos_user_registration_form' => [
+                    'user_registration_form' => [
                         'username' => 'x',
                         'plainPassword' => ['first' => 'sdfsdf123', 'second' => 'sdfxxxxxxx'],
                         'email' => 'ydfbvsdfgs',
                     ]
                 ],
                 [
-                    '#fos_user_registration_form_username',
-                    '#fos_user_registration_form_plainPassword_first',
-                    '#fos_user_registration_form_email',
+                    '#user_registration_form_username',
+                    '#user_registration_form_plainPassword_first',
+                    '#user_registration_form_email',
                 ]
             ],
             // invalid fields: password (too short)
             [
                 [
-                    'fos_user_registration_form' => [
+                    'user_registration_form' => [
                         'username' => 'test123',
                         'plainPassword' => ['first' => 'test123', 'second' => 'test123'],
                         'email' => 'ydfbvsdfgs@example.com',
                     ]
                 ],
                 [
-                    '#fos_user_registration_form_plainPassword_first',
+                    '#user_registration_form_plainPassword_first',
                 ]
             ],
         ];
