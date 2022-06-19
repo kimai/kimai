@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="nb-NO" datatype="plaintext" original="messages.en.xlf">
+  <file source-language="en" target-language="nb-NO" datatype="plaintext" original="validators.en.xlf">
     <body>
       <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
         <source>At least one team leader must be assigned to the team.</source>
