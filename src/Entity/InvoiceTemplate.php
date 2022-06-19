@@ -135,9 +135,9 @@ class InvoiceTemplate
     /**
      * Used for translations and locale dependent number and date formats.
      *
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="language", type="string", length=6, nullable=true)
+     * @ORM\Column(name="language", type="string", length=6, nullable=false)
      */
     private $language;
 
@@ -316,12 +316,12 @@ class InvoiceTemplate
         return $this;
     }
 
-    public function getLanguage(): ?string
+    public function getLanguage(): string
     {
         return $this->language;
     }
 
-    public function setLanguage(?string $language): InvoiceTemplate
+    public function setLanguage(string $language): InvoiceTemplate
     {
         $this->language = $language;
 

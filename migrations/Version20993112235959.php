@@ -26,37 +26,11 @@ final class Version20993112235959 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        //$this->addSql('UPDATE kimai2_user_preferences SET `value` = "boxed" WHERE `name` = "theme.layout"');
-        //$this->addSql('UPDATE kimai2_user_preferences SET `value` = "default" WHERE `name` = "skin"');
-        //$this->addSql('UPDATE kimai2_user_preferences SET `value` = "1" WHERE `name` = "theme.collapsed_sidebar"');
-        //$this->addSql('UPDATE kimai2_configuration SET `value` = "default" WHERE `name` = "defaults.user.theme"');
-        //$this->addSql('DELETE FROM kimai2_configuration WHERE `name` = "theme.autocomplete_chars"');
-        //$this->addSql('DELETE FROM kimai2_configuration WHERE `name` = "theme.tags_create"');
-
-        //$this->addSql("DELETE FROM kimai2_user_preferences where `name` = 'reporting.initial_view'");
-
-        $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'timesheet_daily_stats' WHERE `name` = 'timesheet.daily_stats'");
-        $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'collapsed_sidebar' WHERE `name` = 'theme.collapsed_sidebar'");
-        $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'layout' WHERE `name` = 'theme.layout'");
-        $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'login_initial_view' WHERE `name` = 'login.initial_view'");
-        $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'calendar_initial_view' WHERE `name` = 'calendar.initial_view'");
-        $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'export_decimal' WHERE `name` = 'timesheet.export_decimal'");
-        $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'update_browser_title' WHERE `name` = 'theme.update_browser_title'");
+        $schema->getTable('kimai2_invoice_templates')->getColumn('language')->setNotnull(true);
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'theme.collapsed_sidebar' WHERE `name` = 'collapsed_sidebar'");
-        $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'theme.layout' WHERE `name` = 'theme_layout'");
-        $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'calendar.initial_view' WHERE `name` = 'calendar_initial_view'");
-        $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'login.initial_view' WHERE `name` = 'login_initial_view'");
-        $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'timesheet.daily_stats' WHERE `name` = 'timesheet_daily_stats'");
-        $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'timesheet.export_decimal' WHERE `name` = 'export_decimal'");
-        $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'theme.update_browser_title' WHERE `name` = 'update_browser_title'");
-
-        $this->addSql('UPDATE kimai2_configuration SET `value` = null WHERE `name` = "defaults.user.theme"');
-        $this->addSql('UPDATE kimai2_user_preferences SET `value` = "fixed" WHERE `name` = "theme.layout"');
-        $this->addSql('UPDATE kimai2_user_preferences SET `value` = null WHERE `name` = "skin"');
-        $this->addSql('UPDATE kimai2_user_preferences SET `value` = "0" WHERE `name` = "theme.collapsed_sidebar"');
+        $schema->getTable('kimai2_invoice_templates')->getColumn('language')->setNotnull(false);
     }
 }

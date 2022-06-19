@@ -10,7 +10,6 @@
 namespace App\Invoice;
 
 use App\Configuration\LanguageFormattings;
-use App\Constants;
 use App\Entity\ExportableItem;
 use App\Entity\Invoice;
 use App\Entity\InvoiceDocument;
@@ -447,11 +446,6 @@ final class ServiceInvoice
 
         if (null === $template) {
             throw new \Exception('Cannot create invoice model without template');
-        }
-
-        if (null === $template->getLanguage()) {
-            $template->setLanguage(Constants::DEFAULT_LOCALE);
-            @trigger_error('Using invoice templates without a language is deprecated and will throw an exception with 2.0', E_USER_DEPRECATED);
         }
 
         $formatter = new DefaultInvoiceFormatter($this->formatter, $template->getLanguage());

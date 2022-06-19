@@ -122,35 +122,11 @@ class ServiceInvoiceTest extends TestCase
         $sut->createModel($query);
     }
 
-    /**
-     * @group legacy
-     */
-    public function testCreateModelSetsFallbackLanguage()
-    {
-        $template = new InvoiceTemplate();
-        $template->setNumberGenerator('date');
-        self::assertNull($template->getLanguage());
-
-        $query = new InvoiceQuery();
-        $query->setCustomers([new Customer()]);
-        $query->setTemplate($template);
-
-        $sut = $this->getSut([]);
-        $sut->addCalculator(new DefaultCalculator());
-        $sut->addNumberGenerator($this->getNumberGeneratorSut());
-
-        $model = $sut->createModel($query);
-
-        self::assertEquals('en', $model->getTemplate()->getLanguage());
-    }
-
     public function testCreateModelUsesTemplateLanguage()
     {
         $template = new InvoiceTemplate();
         $template->setNumberGenerator('date');
-        $template->setLanguage('de');
-
-        self::assertEquals('de', $template->getLanguage());
+        $template->setLanguage('it');
 
         $query = new InvoiceQuery();
         $query->setCustomers([new Customer()]);
@@ -162,7 +138,7 @@ class ServiceInvoiceTest extends TestCase
 
         $model = $sut->createModel($query);
 
-        self::assertEquals('de', $model->getTemplate()->getLanguage());
+        self::assertEquals('it', $model->getTemplate()->getLanguage());
     }
 
     public function testBeginAndEndDateFallback()
@@ -209,8 +185,6 @@ class ServiceInvoiceTest extends TestCase
         $template = new InvoiceTemplate();
         $template->setNumberGenerator('date');
         $template->setLanguage('de');
-
-        self::assertEquals('de', $template->getLanguage());
 
         $query = new InvoiceQuery();
         $query->setCustomers([new Customer(), $customer]);

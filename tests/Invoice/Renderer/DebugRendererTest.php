@@ -69,8 +69,8 @@ class DebugRendererTest extends TestCase
         }
 
         $begin = $model->getQuery()->getBegin();
-        self::assertEquals($begin->format('m'), $data['model']['query.month_number']);
-        self::assertEquals($begin->format('d'), $data['model']['query.day']);
+        self::assertEquals($begin->format('m'), $data['model']['query.begin_month_number']);
+        self::assertEquals($begin->format('d'), $data['model']['query.begin_day']);
         // TODO check values or formats?
     }
 
@@ -105,15 +105,11 @@ class DebugRendererTest extends TestCase
             'template.contact',
             'template.payment_details',
             'query.begin',
-            'query.day',
-            'query.end',
-            'query.month',
-            'query.month_number',
-            'query.year',
             'query.begin_day',
             'query.begin_month',
             'query.begin_month_number',
             'query.begin_year',
+            'query.end',
             'query.end_day',
             'query.end_month',
             'query.end_month_number',

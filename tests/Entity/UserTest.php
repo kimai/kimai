@@ -427,10 +427,11 @@ class UserTest extends TestCase
             'hello@world.com',
         ];
 
+        /** @var User $unserialized */
         $unserialized = unserialize($data);
 
         $actual = [
-            $unserialized->getUsername(),
+            $unserialized->getUserIdentifier(),
             $unserialized->isEnabled(),
             $unserialized->getId(),
             $unserialized->getEmail(),

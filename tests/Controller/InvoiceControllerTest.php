@@ -129,7 +129,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $form = $client->getCrawler()->filter('form[name=invoice_template_form]')->form();
         $values = $form->getPhpValues()['invoice_template_form'];
-        $this->assertEquals('Copy of ' . $template->getName(), $values['name']);
+        $this->assertEquals($template->getName() . ' (1)', $values['name']);
         $this->assertEquals($template->getTitle(), $values['title']);
         $this->assertEquals($template->getDueDays(), $values['dueDays']);
         $this->assertEquals($template->getCalculator(), $values['calculator']);

@@ -73,9 +73,7 @@ class InvoiceTemplateForm extends AbstractType
             ->add('renderer', InvoiceRendererType::class)
             ->add('calculator', InvoiceCalculatorType::class)
             ->add('numberGenerator', InvoiceNumberGeneratorType::class)
-            ->add('language', LanguageType::class, [
-                'required' => false,
-            ])
+            ->add('language', LanguageType::class)
             ->add('decimalDuration', YesNoType::class, [
                 'label' => 'label.decimalDuration'
             ])

@@ -272,6 +272,7 @@ trait RendererTestTrait
         $template = new InvoiceTemplate();
         $template->setTitle('a test invoice template title');
         $template->setVat(19);
+        $template->setLanguage('it');
 
         $project = new Project();
         $project->setName('project name');

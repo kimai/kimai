@@ -547,10 +547,11 @@ final class InvoiceController extends AbstractController
     public function createTemplateAction(Request $request, ?InvoiceTemplate $copyFrom): Response
     {
         $template = new InvoiceTemplate();
+        $template->setLanguage($request->getLocale());
 
         if (null !== $copyFrom) {
             $template = clone $copyFrom;
-            $template->setName('Copy of ' . $copyFrom->getName());
+            $template->setName($copyFrom->getName() . ' (1)');
         }
 
         return $this->renderTemplateForm($template, $request);
@@ -602,11 +603,6 @@ final class InvoiceController extends AbstractController
 
     private function renderInvoice(InvoiceQuery $query, Request $request)
     {
-        // use the current request locale as fallback, if no translation was configured
-        if (null !== $query->getTemplate() && null === $query->getTemplate()->getLanguage()) {
-            $query->getTemplate()->setLanguage($request->getLocale());
-        }
-
         try {
             $invoices = $this->service->createInvoices($query, $this->dispatcher);
 
