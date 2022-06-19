@@ -57,7 +57,7 @@ class PasswordResetControllerTest extends ControllerBaseTest
         $content = $response->getContent();
         $this->assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
         $this->assertStringContainsString('Reset your password', $content);
-        $this->assertStringContainsString('<form class="card-body" action="/en/resetting/send-email" method="post" autocomplete="off">', $content);
+        $this->assertStringContainsString('<form class="card-body security-password-reset" action="/en/resetting/send-email" method="post" autocomplete="off">', $content);
         $this->assertStringContainsString('<input type="text"', $content);
         $this->assertStringContainsString('id="username" name="username" required="required"', $content);
         $this->assertStringContainsString('Reset your password', $content);
