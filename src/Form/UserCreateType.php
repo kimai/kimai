@@ -27,7 +27,7 @@ class UserCreateType extends UserEditType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('userIdentifier', null, [
+            ->add('username', null, [
                 'label' => 'label.username',
                 'required' => true,
                 'attr' => [

@@ -18,11 +18,8 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UserValidator extends ConstraintValidator
 {
-    private $userService;
-
-    public function __construct(UserService $userService)
+    public function __construct(private UserService $userService)
     {
-        $this->userService = $userService;
     }
 
     /**

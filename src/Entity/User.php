@@ -855,8 +855,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function getUsername(): string
     {
-        @trigger_error('Method getUsername() is deprecated since 2.0, switch to getUserIdentifier() instead', E_USER_DEPRECATED);
-
         return $this->username;
     }
 
@@ -865,12 +863,12 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     public function getIdentifier(): string
     {
-        return $this->username;
+        return $this->getUsername();
     }
 
     public function getUserIdentifier(): string
     {
-        return $this->username;
+        return $this->getUsername();
     }
 
     public function getEmail(): ?string
@@ -953,9 +951,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
+    public function setUsername(string $username): void
+    {
+        $this->username = $username;
+    }
+
     public function setUserIdentifier(string $identifier): void
     {
-        $this->username = $identifier;
+        $this->setUsername($identifier);
     }
 
     public function setEmail(?string $email): User

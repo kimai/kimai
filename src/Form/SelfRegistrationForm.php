@@ -26,7 +26,7 @@ class SelfRegistrationForm extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, ['label' => 'label.email'])
-            ->add('userIdentifier', null, ['label' => 'label.username'])
+            ->add('username', null, ['label' => 'label.username'])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'options' => [
