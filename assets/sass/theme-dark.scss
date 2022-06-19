@@ -29,13 +29,13 @@
     }
 
     table.dataTable {
-        th.today, td.today {
-            background-color: $dark-mode-today;
-            color: $dark-mode-text;
-        }
-
         th.weekend, td.weekend {
             background-color: $dark-mode-weekend;
+            color: $dark-mode-text;
+        }
+        /* must be defined after weekend, to overwrite it */
+        th.today, td.today {
+            background-color: $dark-mode-today;
             color: $dark-mode-text;
         }
 

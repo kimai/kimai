@@ -26,5 +26,5 @@ $kimai-default: $gray-lte;
 
 $box-border-radius: 3px;
 
-$dark-mode-today: lighten($dark, 50%) !default;
-$dark-mode-weekend: lighten($dark, 25%) !default;
+$dark-mode-today: var(--tblr-blue);
+$dark-mode-weekend: lighten($dark, 5%) !default;

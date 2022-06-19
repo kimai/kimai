@@ -484,3 +484,11 @@
         {{ 0|number_format(2) }} %
     {% endif %}
 {% endmacro %}
+
+{% macro page_reloader(events, full_reload) %}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            KimaiReloadPageWidget.create('{{ events }}', {% if full_reload is same as true %}true{% else %}false{% endif %});
+        });
+    </script>
+{% endmacro %}

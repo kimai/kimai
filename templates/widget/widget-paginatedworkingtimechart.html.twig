@@ -23,8 +23,8 @@
         {% else %}
             {% set nextWeek = nextWeek + 1 %}
         {% endif %}
-        {{ widgets.card_tool_button('left', {'class': 'pagination-link', 'onclick': 'destroyChart()', 'url': path('widgets_working_time_chart', {'year': prevYear, 'week': prevWeek})}) }}
-        {{ widgets.card_tool_button('right', {'class': 'pagination-link', 'onclick': 'destroyChart()', 'url': path('widgets_working_time_chart', {'year': nextYear, 'week': nextWeek})}) }}
+        {{ widgets.card_tool_button('left', {'class': 'pagination-link', 'onclick': 'myChart.destroy()', 'url': path('widgets_working_time_chart', {'year': prevYear, 'week': prevWeek})}) }}
+        {{ widgets.card_tool_button('right', {'class': 'pagination-link', 'onclick': 'myChart.destroy()', 'url': path('widgets_working_time_chart', {'year': nextYear, 'week': nextWeek})}) }}
     {% endblock %}
     {% block box_body %}
         {{ render_widget('DailyWorkingTimeChart', options|merge({'begin': data.begin, 'end': data.end})) }}

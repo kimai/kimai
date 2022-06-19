@@ -83,7 +83,7 @@
         {% set monthRoute = path('report_user_month', {'user': user.id, 'date': '__MONTH__'}) %}
     {% endif %}
 
-    {{ charts.bar_javascript({'footer': 'footer', 'label': 'tooltip', 'onclick': {'url': monthRoute, 'replacer': {'__MONTH__': 'month'}}}) }}
+    {{ charts.bar_javascript({'legend': {'display': false}, 'footer': 'footer', 'label': 'tooltip', 'onclick': {'url': monthRoute, 'replacer': {'__MONTH__': 'month'}}}) }}
 
     {% for year in workMonths.years|reverse %}
         {% set totalDuration = 0 %}
@@ -109,7 +109,7 @@
                     {% set monthDate = create_date(year ~ '-' ~ month.date.format('m') ~ '-01') %}
                     {% set dataset = dataset|merge([{'value': month.duration|chart_duration, 'tooltip': month.duration|duration, 'footer': ('label.billable'|trans ~ ': ' ~ month.billableDuration|duration), 'month': monthDate|report_date}]) %}
                 {% endfor %}
-                {{ charts.bar_chart('userProfileChart'~year, month_names(), [dataset], {}) }}
+                {{ charts.bar_chart('userProfileChart'~year, month_names(), [dataset]) }}
             {% endblock %}
         {% endembed %}
     {% endfor %}
@@ -128,9 +128,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript">
-        document.addEventListener('kimai.initialized', function() {
-            KimaiReloadPageWidget.create('kimai.teamUpdate', true);
-        });
-    </script>
+    {{ widgets.page_reloader('kimai.teamUpdate', true) }}
 {% endblock %}

@@ -21,32 +21,34 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% set options = {'label': 'duration', 'title': 'name', 'legend': 'false'} %}
+    {% set options = {'label': 'duration', 'title': 'name', 'legend': {'display': false}} %}
     {% if view_revenue %}
         {% set options = options|merge({'footer': 'rate'}) %}
     {% endif %}
     {{ charts.doughnut_javascript(options) }}
-    {{ charts.bar_javascript({'legend': 'false'}) }}
+    {{ charts.bar_javascript({'legend': {'display': false}}) }}
     <script type="text/javascript">
-        document.addEventListener('kimai.initialized', function() {
-            jQuery('#{{ tableId }}').on('change', function(ev) {
-                jQuery(this).submit();
-            });
+        document.getElementById('{{ tableId }}').addEventListener('change', function(event) {
+            event.currentTarget.submit();
         });
 
-        jQuery('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
-            renderChart(e.target.dataset.chart);
-        });
+        const triggerTabList = [].slice.call(document.querySelectorAll('a[data-bs-toggle="tab"]'))
+        triggerTabList.forEach(function (triggerEl) {
+            triggerEl.addEventListener('shown.bs.tab', function (event) {
+                renderChart(event.target.dataset.chart);
+                //event.preventDefault()
+            })
+        })
 
         function renderChart(chartName)
         {
-            var found = false;
+            let found = false;
 
-            Chart.helpers.each(Chart.instances, function(instance){
-                if (instance.chart.canvas.id === chartName) {
+            for (const instance of Object.values(Chart.instances)) {
+                if (instance.canvas.id === chartName) {
                     found = true;
                 }
-            });
+            }
 
             if (!found) {
                 document.dispatchEvent(new Event('render.' + chartName))
@@ -233,7 +235,7 @@
             </table>
         </div>
         <div class="col-xs-12 col-sm-3 col-md-4 col-lg-6">
-            {% set chartOptions = {'height': (dataset|length > 12 ? '600px' : '300px'), 'legend': {'position': (dataset|length > 12 ? 'top' : 'right')}, 'renderEvent': 'render.' ~ chartPrefix ~ 'Activity'} %}
+            {% set chartOptions = {'height': (dataset|length > 12 ? '600px' : '300px'), 'renderEvent': 'render.' ~ chartPrefix ~ 'Activity'} %}
             {{ charts.doughnut_chart(chartPrefix ~ 'Activity', labels, dataset, chartOptions) }}
         </div>
     </div>
@@ -458,7 +460,7 @@
                         </table>
                     </div>
                     <div class="col-xs-12 col-sm-3 col-md-4 col-lg-6">
-                        {% set chartOptions = {'height': (datasets|length > 12 ? '600px' : '300px'), 'legend': {'position': (datasets|length > 12 ? 'top' : 'right')}, 'renderEvent': 'render.' ~ chartPrefix ~ 'User'} %}
+                        {% set chartOptions = {'height': (datasets|length > 12 ? '600px' : '300px'), 'renderEvent': 'render.' ~ chartPrefix ~ 'User'} %}
                         {{ charts.doughnut_chart(chartPrefix ~ 'User', labels, datasets, chartOptions) }}
                     </div>
                 </div>

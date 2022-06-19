@@ -186,7 +186,7 @@
                     }
                 } catch (e) {
                     // ignore error in restoring
-                    console.log('Failed to restore settings, clearing all up: ', e);
+                    console.log('Failed to restore settings, removing invalid settings', e);
                     localStorage.removeItem('{{ storageItemName }}');
                 }
             }

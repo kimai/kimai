@@ -25,7 +25,7 @@ document.addEventListener('kimai.initialized', function() {
         document.getElementById('timeChart').getContext('2d'), {
             type: '{{ type }}',
             data: {
-                labels: moment.months(),
+                labels: {{ month_names()|json_encode|raw }},
                 datasets: [
                 {% for yearName, year in data %}
                     {% set yearBackgroundColor = backgroundColor %}
@@ -71,26 +71,28 @@ document.addEventListener('kimai.initialized', function() {
                 maintainAspectRatio: true,
                 responsive: true,
                 scales: {
-                    xAxes: [{
+                    x: {
                         gridLines: {
                             display: false
                         }
-                    }],
-                    yAxes: [{
+                    },
+                    y: {
                         gridLines: {
                             display: true,
                             color: '{{ gridColor }}',
                             lineWidth: 1
                         }
-                    }]
+                    }
                 },
-                tooltips: {
-                    callbacks: {
-                        label: function(tooltipItem, data) {
-                            return data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.dataset.realData[tooltipItem.dataIndex];
+                            }
                         }
                     }
-                }
+                },
             }
         }
     );
