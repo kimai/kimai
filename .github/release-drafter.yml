@@ -9,6 +9,9 @@ categories:
     - title: 'Fixed bugs'
       labels:
           - 'bug'
+    - title: 'Infrastructure'
+      labels:
+          - 'infrastructure'
 exclude-labels:
     - 'duplicate'
     - 'invalid'
