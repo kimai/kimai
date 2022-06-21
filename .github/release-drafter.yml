@@ -1,5 +1,5 @@
-name-template: 'v$RESOLVED_VERSION'
-tag-template: 'v$RESOLVED_VERSION'
+name-template: '$RESOLVED_VERSION'
+tag-template: '$RESOLVED_VERSION'
 categories:
     - title: 'Enhancements'
       labels:
@@ -35,7 +35,7 @@ version-resolver:
             - 'translation'
     default: patch
 template: |
-  [Upgrade guide](https://www.kimai.org/documentation/updates.html) - [Installation docs](https://www.kimai.org/documentation/installation.html) - [Docker docs](https://tobybatch.github.io/kimai2/) - [Docker Hub](https://hub.docker.com/r/kimai/kimai2)
+  [Upgrade Kimai](https://www.kimai.org/documentation/updates.html) - [Install Kimai](https://www.kimai.org/documentation/installation.html) - [Docker](https://tobybatch.github.io/kimai2/) & [Hub](https://hub.docker.com/r/kimai/kimai2)
 
   **PHP Version compatibility:**
     - PHP 7.3 is [end-of-life](https://www.php.net/supported-versions.php): you need to update now
