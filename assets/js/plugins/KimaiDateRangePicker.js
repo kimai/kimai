@@ -87,7 +87,6 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
     destroyDateRangePicker(selector) {
         jQuery(selector + ' ' + this.selector).each(function(index) {
             if (jQuery(this).data('daterangepicker') !== undefined) {
-                jQuery(this).daterangepicker('destroy');
                 jQuery(this).data('daterangepicker').remove();
             }
         });
