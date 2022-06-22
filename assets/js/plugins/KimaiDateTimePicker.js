@@ -67,7 +67,6 @@ export default class KimaiDateTimePicker extends KimaiPlugin {
     destroyDateTimePicker(selector) {
         jQuery(selector + ' ' + this.selector).each(function(index) {
             if (jQuery(this).data('daterangepicker') !== undefined) {
-                jQuery(this).daterangepicker('destroy');
                 jQuery(this).data('daterangepicker').remove();
             }
         });
