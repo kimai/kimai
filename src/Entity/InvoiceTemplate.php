@@ -139,7 +139,7 @@ class InvoiceTemplate
      *
      * @ORM\Column(name="language", type="string", length=6, nullable=false)
      */
-    private $language;
+    private $language = 'en';
 
     public function getId(): ?int
     {

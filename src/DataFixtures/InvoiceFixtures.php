@@ -47,6 +47,7 @@ class InvoiceFixtures extends Fixture
                 ->setVat($invoiceConfig[6])
                 ->setDueDays($invoiceConfig[7])
                 ->setPaymentTerms($invoiceConfig[8])
+                ->setLanguage('de')
                 ->setAddress($this->generateAddress($faker))
                 ->setContact($this->generateContact($faker))
                 ->setPaymentDetails($this->generatePaymentDetails($faker))
