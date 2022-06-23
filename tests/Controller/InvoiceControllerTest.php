@@ -448,4 +448,16 @@ class InvoiceControllerTest extends ControllerBaseTest
         self::assertEquals(1, $node->count(), 'Could not find upload form');
         // we do not test the upload here, just make sure that the action can be rendered properly
     }
+
+    public function testExportIsSecureForRole()
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/invoice/export');
+    }
+
+    public function testExportAction()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->assertAccessIsGranted($client, '/invoice/export');
+        $this->assertExcelExportResponse($client, 'kimai-invoices_');
+    }
 }

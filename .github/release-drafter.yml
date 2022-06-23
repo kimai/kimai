@@ -1,0 +1,46 @@
+name-template: '$RESOLVED_VERSION'
+tag-template: '$RESOLVED_VERSION'
+categories:
+    - title: 'Enhancements'
+      labels:
+          - 'feature request'
+          - 'technical debt'
+          - 'translation'
+    - title: 'Fixed bugs'
+      labels:
+          - 'bug'
+    - title: 'Infrastructure'
+      labels:
+          - 'infrastructure'
+exclude-labels:
+    - 'duplicate'
+    - 'invalid'
+    - 'wontfix'
+exclude-contributors:
+    - 'dependabot'
+    - 'weblate'
+change-template: '- $TITLE (#$NUMBER) @$AUTHOR'
+change-title-escapes: '\<*_&`#@'
+version-resolver:
+    major:
+        labels:
+            - 'release'
+    minor:
+        labels:
+            - 'feature request'
+    patch:
+        labels:
+            - 'technical debt'
+            - 'bug'
+            - 'translation'
+    default: patch
+template: |
+  [Upgrade Kimai](https://www.kimai.org/documentation/updates.html) - [Install Kimai](https://www.kimai.org/documentation/installation.html) - [Docker](https://tobybatch.github.io/kimai2/) & [Hub](https://hub.docker.com/r/kimai/kimai2)
+
+  **PHP Version compatibility:**
+    - PHP 7.3 is [end-of-life](https://www.php.net/supported-versions.php): you need to update now
+    - PHP 7.4, PHP 8 and PHP 8.1 are supported
+  
+  $CHANGES
+
+  Thanks to $CONTRIBUTORS
