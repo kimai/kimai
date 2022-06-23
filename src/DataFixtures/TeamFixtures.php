@@ -92,7 +92,7 @@ class TeamFixtures extends Fixture
             $projectCount = mt_rand(0, $maxProjects);
 
             $team = new Team();
-            $team->setName($faker->company . ' ' . $i);
+            $team->setName($faker->company() . ' ' . $i);
             $team->addTeamlead($allUsers[array_rand($allUsers)]);
 
             if ($userCount > 0) {

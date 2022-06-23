@@ -44,17 +44,17 @@ class TagFixtures extends Fixture
 
             $tagName = null;
             if ($i % 18 == 0) {
-                $tagName = $faker->firstName;
+                $tagName = $faker->firstName();
             } elseif ($i % 7 == 0) {
-                $tagName = $faker->lastName;
+                $tagName = $faker->lastName();
             } elseif ($i % 5 == 0) {
-                $tagName = $faker->city;
+                $tagName = $faker->city();
             } elseif ($i % 4 == 0) {
-                $tagName = $faker->word;
+                $tagName = $faker->word();
             } elseif ($i % 3 == 0) {
-                $tagName = $faker->streetName;
+                $tagName = $faker->streetName();
             } elseif ($i % 2 == 0) {
-                $tagName = $faker->colorName;
+                $tagName = $faker->colorName();
             } else {
                 $tagName = $faker->text(rand(5, 10));
             }

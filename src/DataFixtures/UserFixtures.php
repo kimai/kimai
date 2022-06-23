@@ -128,8 +128,8 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
         $existingEmail = [];
 
         for ($i = 1; $i <= self::AMOUNT_EXTRA_USER; $i++) {
-            $username = $faker->userName;
-            $email = $faker->email;
+            $username = $faker->userName();
+            $email = $faker->email();
 
             if (\in_array($username, $existingName)) {
                 continue;
@@ -143,8 +143,8 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
             $existingEmail[] = $email;
 
             $user = new User();
-            $user->setAlias($faker->name);
-            $user->setTitle(substr($faker->jobTitle, 0, 49));
+            $user->setAlias($faker->name());
+            $user->setTitle(substr($faker->jobTitle(), 0, 49));
             $user->setUserIdentifier($username);
             $user->setEmail($email);
             $user->setRoles([User::ROLE_USER]);
