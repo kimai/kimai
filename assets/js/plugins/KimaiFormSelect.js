@@ -11,26 +11,30 @@
 
 import KimaiPlugin from "../KimaiPlugin";
 import TomSelect from 'tom-select';
+import jQuery from "jquery";
 
 export default class KimaiFormSelect extends KimaiPlugin {
 
-    constructor(selector) {
+    constructor(selector, apiSelects)
+    {
         super();
         this.selector = selector;
+        this.apiSelects = apiSelects;
     }
 
-    getId() {
+    getId()
+    {
         return 'form-select';
     }
 
-    init() {
-        const self = this;
+    init()
+    {
         // selects the original value inside dropdowns, as the "reset" event (the updated option)
         // is not automatically catched by the JS element
         document.addEventListener('reset', (event) => {
             if (event.target.tagName.toUpperCase() === 'FORM') {
-                setTimeout(function() {
-                    const fields = event.target.querySelectorAll(self.selector);
+                setTimeout(() => {
+                    const fields = event.target.querySelectorAll(this.selector);
                     for (let field of fields) {
                         if (field.tagName.toUpperCase() === 'SELECT') {
                             field.dispatchEvent(new Event('data-reloaded'));
@@ -41,7 +45,11 @@ export default class KimaiFormSelect extends KimaiPlugin {
         });
     }
 
-    activateSelectPickerByElement(node, container) {
+    /**
+     * @param {HTMLFormElement} node
+     */
+    activateSelectPickerByElement(node)
+    {
         let plugins = ['change_listener'];
 
         const isMultiple = node.multiple !== undefined && node.multiple === true;
@@ -141,23 +149,42 @@ export default class KimaiFormSelect extends KimaiPlugin {
         });
     }
 
-    activateSelectPicker(selector, container) {
+    /**
+     * @param {string} selector
+     */
+    activateSelectPicker(selector)
+    {
         const fields = document.querySelectorAll(selector + ' ' + this.selector);
         for (const field of fields) {
-            this.activateSelectPickerByElement(field, container);
+            this.activateSelectPickerByElement(field);
         }
+        this._activateApiSelects(selector + ' ' + this.apiSelects);
     }
 
-    destroySelectPicker(selector) {
+    /**
+     * @param {string} selector
+     */
+    destroySelectPicker(selector)
+    {
         const node = document.querySelector(selector);
         if (node.tomselect) {
             node.tomselect.destroy();
         }
     }
 
-    updateOptions(selectIdentifier, data) {
+    /**
+     * @param {string} selectIdentifier
+     * @param {object} data
+     * @private
+     */
+    _updateOptions(selectIdentifier, data)
+    {
         let emptyOption = null;
         const node = document.querySelector(selectIdentifier);
+        if (node === null) {
+            console.log('Missing select: ' + selectIdentifier);
+            return;
+        }
         const selectedValue = node.value;
 
         for (let i = 0; i < node.options.length; i++) {
@@ -174,6 +201,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
 
         let emptyOpts = [];
         let options = [];
+        /** @type {string|null} titlePattern */
         let titlePattern = null;
         if (node.dataset !== undefined && node.dataset['optionPattern'] !== undefined) {
             titlePattern = node.dataset['optionPattern'];
@@ -231,14 +259,16 @@ export default class KimaiFormSelect extends KimaiPlugin {
      * @param {array} entity
      * @private
      */
-    _getTitleFromPattern(pattern, entity) {
-        const DATE_UTILS = this.getPlugin('date');
+    _getTitleFromPattern(pattern, entity)
+    {
+        const DATE_UTILS = this.getDateUtils();
         const regexp = new RegExp('{[^}]*?}','g');
         let title = pattern;
         let match = null;
 
         while ((match = regexp.exec(pattern)) !== null) {
-            const field = match[0].substr(1, match[0].length - 2);
+            // cutting a string like "{name}" into "name"
+            const field = match[0].slice(1, -1);
             let value = entity[field] === undefined ? null : entity[field];
             if ((field === 'start' || field === 'end')) {
                 if (value === null) {
@@ -252,7 +282,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
         }
         title = title.replace(/- \?-\?/, '');
         title = title.replace(/\r\n|\r|\n/g, ' ');
-        title = title.substr(0, 110);
+        title = title.substring(0, 110);
 
         const chars = '- ';
         let start = 0, end = title.length;
@@ -274,7 +304,8 @@ export default class KimaiFormSelect extends KimaiPlugin {
      * @returns {HTMLElement}
      * @private
      */
-    _createOption(label, value) {
+    _createOption(label, value)
+    {
         let option = document.createElement('option');
         option.innerText = label;
         option.value = value;
@@ -286,9 +317,153 @@ export default class KimaiFormSelect extends KimaiPlugin {
      * @returns {HTMLElement}
      * @private
      */
-    _createOptgroup(label) {
+    _createOptgroup(label)
+    {
         let optGroup = document.createElement('optgroup');
         optGroup.label = label;
         return optGroup;
+    }
+
+    /**
+     * @param {string} selector
+     * @private
+     */
+    _activateApiSelects(selector)
+    {
+        /** @type {KimaiAPI} API */
+        const API = this.getContainer().getPlugin('api');
+
+        jQuery('body').on('change', selector, (event) => {
+            const apiSelect = event.currentTarget;
+            const targetSelectId = '#' + apiSelect.dataset['relatedSelect'];
+            /** @type {HTMLSelectElement} targetSelect */
+            const targetSelect = document.getElementById(apiSelect.dataset['relatedSelect']);
+
+            // if the related target select does not exist, we do not need to load the related data
+            if (targetSelect === null) {
+                return;
+            }
+
+            let formPrefix = apiSelect.dataset['formPrefix'];
+            if (formPrefix === undefined || formPrefix === null) {
+                formPrefix = '';
+            } else if (formPrefix.length > 0) {
+                formPrefix += '_';
+            }
+
+            let newApiUrl = this._buildUrlWithFormFields(apiSelect.dataset['apiUrl'], formPrefix);
+
+            const selectValue = apiSelect.value;
+
+            // Problem: select a project with activities and then select a customer that has no project
+            // results in a wrong URL, it triggers "activities?project=" instead of using the "emptyUrl"
+            if (selectValue === undefined || selectValue === null || selectValue === '' || (Array.isArray(selectValue) && selectValue.length === 0)) {
+                if (apiSelect.dataset['emptyUrl'] === undefined) {
+                    this._updateSelect(targetSelectId, {});
+                    targetSelect.disabled = true;
+                    return;
+                }
+                newApiUrl = this._buildUrlWithFormFields(apiSelect.dataset['emptyUrl'], formPrefix);
+            }
+
+            targetSelect.disabled = false;
+
+            API.get(newApiUrl, {}, (data) => {
+                this._updateSelect(targetSelectId, data);
+            });
+        });
+    }
+
+    /**
+     * @param {string} apiUrl
+     * @param {string} formPrefix
+     * @return {string}
+     * @private
+     */
+    _buildUrlWithFormFields(apiUrl, formPrefix)
+    {
+        let newApiUrl = apiUrl;
+
+        apiUrl.split('?')[1].split('&').forEach(item => {
+            const [key, value] = item.split('=');
+            const decoded = decodeURIComponent(value);
+            const test = decoded.match(/%(.*)%/);
+            if (test !== null) {
+                const targetField = document.getElementById(formPrefix + test[1]);
+                let newValue = '';
+                if (targetField === null) {
+                    // happens for example:
+                    // - in duration only mode, when the end field is not found
+                    // console.log('ERROR: Cannot find field with name "' + test[1] + '" by selector: #' + formPrefix + test[1]);
+                } else {
+                    if (targetField.value !== null) {
+                        newValue = targetField.value;
+
+                        if (newValue !== '') {
+                            // we need it for now, because the daterangepicker relies on it!
+                            const $targetField = jQuery(targetField);
+                            // having that special case here is far from being perfect... but for now it works ;-)
+                            // used for the project start & end date in the timesheet edit form
+                            if ($targetField.data('daterangepicker') !== undefined) {
+                                if (key === 'begin' || key === 'start' || $targetField.data('daterangepicker').singleDatePicker) {
+                                    newValue = this.getDateUtils().formatForAPI($targetField.data('daterangepicker').startDate.toDate(), true);
+                                } else if (key === 'end') {
+                                    newValue = this.getDateUtils().formatForAPI($targetField.data('daterangepicker').endDate.toDate(), true);
+                                }
+                            } else if (targetField.dataset['format'] !== undefined) {
+                                // find out when this else branch is triggered and document!
+
+                                if (this.getDateUtils().isValidDateTime(newValue, targetField.dataset['format'])) {
+                                    newValue = this.getDateUtils().format(targetField.dataset['format'], newValue);
+                                }
+                            }
+                        } else {
+                            // happens for example:
+                            // - when the end date is not set on a timesheet record and the project list is loaded (as the URL contains the %end% replacer)
+                            // console.log('Empty value found for field with name "' + test[1] + '" by selector: #' + formPrefix + test[1]);
+                        }
+                    } else {
+                        // happens for example:
+                        // - when a customer without projects is selected
+                        // console.log('ERROR: Empty field with name "' + test[1] + '" by selector: #' + formPrefix + test[1]);
+                    }
+                }
+
+                if (Array.isArray(newValue)) {
+                    newValue = newValue.join(',');
+                }
+
+                newApiUrl = newApiUrl.replace(value, newValue);
+            }
+        });
+
+        return newApiUrl;
+    }
+
+    /**
+     * @param selectName
+     * @param data
+     * @private
+     */
+    _updateSelect(selectName, data)
+    {
+        const options = {};
+        for (const apiData of data) {
+            let title = '__empty__';
+            if (apiData.hasOwnProperty('parentTitle') && apiData.parentTitle !== null) {
+                title = apiData.parentTitle;
+            }
+            if (!options.hasOwnProperty(title)) {
+                options[title] = [];
+            }
+            options[title].push(apiData);
+        }
+
+        const ordered = {};
+        Object.keys(options).sort().forEach(function(key) {
+            ordered[key] = options[key];
+        });
+
+        this._updateOptions(selectName, ordered);
     }
 }

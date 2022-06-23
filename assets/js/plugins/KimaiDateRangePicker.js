@@ -11,7 +11,6 @@
 
 import jQuery from 'jquery';
 import KimaiPlugin from '../KimaiPlugin';
-import moment from 'moment';
 
 export default class KimaiDateRangePicker extends KimaiPlugin {
 
@@ -25,26 +24,12 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
     }
 
     activateDateRangePicker(selector) {
-        const TRANSLATE = this.getContainer().getTranslation();
-        const DATE_UTILS = this.getContainer().getPlugin('date');
-        const firstDow = this.getConfiguration('first_dow_iso') % 7;
+        const TRANSLATE = this.getTranslation();
+        const DATE_UTILS = this.getDateUtils();
+        const firstDow = this.getConfigurations().getFirstDayOfWeek(false);
 
         jQuery(selector + ' ' + this.selector).each(function(index) {
-            let localeFormat = jQuery(this).data('format');
-            let separator = jQuery(this).data('separator');
-            let rangesList = {};
-
-            rangesList[TRANSLATE.get('yesterday')] = [moment().subtract(1, 'days'), moment().subtract(1, 'days')];
-            rangesList[TRANSLATE.get('thisWeek')] = [moment().startOf('isoWeek'), moment().endOf('isoWeek')];
-            rangesList[TRANSLATE.get('lastWeek')] = [moment().subtract(1, 'week').startOf('isoWeek'), moment().subtract(1, 'week').endOf('isoWeek')];
-            if (firstDow === 0) { // sunday = 0
-                rangesList[TRANSLATE.get('thisWeek')] = [moment().startOf('isoWeek').subtract(1, 'day'), moment().endOf('isoWeek').subtract(1, 'day')];
-                rangesList[TRANSLATE.get('lastWeek')] = [moment().subtract(1, 'week').startOf('isoWeek').subtract(1, 'day'), moment().subtract(1, 'week').endOf('isoWeek').subtract(1, 'day')];
-            }
-            rangesList[TRANSLATE.get('thisMonth')] = [moment().startOf('month'), moment().endOf('month')];
-            rangesList[TRANSLATE.get('lastMonth')] = [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')];
-            rangesList[TRANSLATE.get('thisYear')] = [moment().startOf('year'), moment().endOf('year')];
-            rangesList[TRANSLATE.get('lastYear')] = [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')];
+            const localeFormat = jQuery(this).data('format');
 
             jQuery(this).daterangepicker({
                 showDropdowns: true,
@@ -53,7 +38,7 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
                 linkedCalendars: true,
                 drops: 'down',
                 locale: {
-                    separator: separator,
+                    separator: jQuery(this).data('separator'),
                     format: localeFormat,
                     firstDay: firstDow,
                     applyLabel: TRANSLATE.get('confirm'),
@@ -62,7 +47,7 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
                     daysOfWeek: DATE_UTILS.getWeekDaysShort(),
                     monthNames: DATE_UTILS.getMonthNames(),
                 },
-                ranges: rangesList,
+                ranges: DATE_UTILS.getFormDateRangeList(),
                 alwaysShowCalendars: true
             });
 
@@ -86,7 +71,6 @@ export default class KimaiDateRangePicker extends KimaiPlugin {
     destroyDateRangePicker(selector) {
         jQuery(selector + ' ' + this.selector).each(function(index) {
             if (jQuery(this).data('daterangepicker') !== undefined) {
-                jQuery(this).daterangepicker('destroy');
                 jQuery(this).data('daterangepicker').remove();
             }
         });

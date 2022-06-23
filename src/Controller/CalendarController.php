@@ -27,15 +27,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CalendarController extends AbstractController
 {
-    private $calendarService;
-    private $configuration;
-    private $service;
-
-    public function __construct(CalendarService $calendarService, SystemConfiguration $configuration, TrackingModeService $service)
+    public function __construct(private CalendarService $calendarService, private SystemConfiguration $configuration, private TrackingModeService $service)
     {
-        $this->calendarService = $calendarService;
-        $this->configuration = $configuration;
-        $this->service = $service;
     }
 
     /**
@@ -72,7 +65,13 @@ class CalendarController extends AbstractController
 
         $mode = $this->service->getActiveMode();
         $factory = $this->getDateTimeFactory();
-        $defaultStart = $factory->createDateTime($this->configuration->getTimesheetDefaultBeginTime());
+
+        // if now is default time, we do not pass it on, so it can be re-calculated for each new entry
+        $defaultStart = null;
+        if ($this->configuration->getTimesheetDefaultBeginTime() !== 'now') {
+            $defaultStart = $factory->createDateTime($this->configuration->getTimesheetDefaultBeginTime());
+            $defaultStart = $defaultStart->format('h:i:s');
+        }
 
         $config = $this->calendarService->getConfiguration();
 
@@ -94,7 +93,7 @@ class CalendarController extends AbstractController
             'dragAndDrop' => $dragAndDrop,
             'google' => $this->calendarService->getGoogleSources($profile),
             'now' => $factory->createDateTime(),
-            'defaultStartTime' => $defaultStart->format('h:i:s'),
+            'defaultStartTime' => $defaultStart,
             'is_punch_mode' => $isPunchMode,
             'can_edit_begin' => $mode->canEditBegin(),
             'can_edit_end' => $mode->canEditBegin(),

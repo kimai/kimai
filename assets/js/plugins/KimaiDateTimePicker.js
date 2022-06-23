@@ -24,13 +24,13 @@ export default class KimaiDateTimePicker extends KimaiPlugin {
     }
 
     activateDateTimePicker(selector) {
-        const TRANSLATE = this.getContainer().getTranslation();
-        const DATE_UTILS = this.getContainer().getPlugin('date');
-        const firstDow = this.getConfiguration('first_dow_iso') % 7;
-        const is24hours = this.getConfiguration('twentyFourHours');
+        const TRANSLATE = this.getTranslation();
+        const DATE_UTILS = this.getDateUtils();
+        const firstDow = this.getConfigurations().getFirstDayOfWeek(false);
+        const is24hours = this.getConfigurations().is24Hours();
 
         jQuery(selector + ' ' + this.selector).each(function(index) {
-            let localeFormat = jQuery(this).data('format');
+            const localeFormat = jQuery(this).data('format');
             jQuery(this).daterangepicker({
                 singleDatePicker: true,
                 timePicker: true,
@@ -67,7 +67,6 @@ export default class KimaiDateTimePicker extends KimaiPlugin {
     destroyDateTimePicker(selector) {
         jQuery(selector + ' ' + this.selector).each(function(index) {
             if (jQuery(this).data('daterangepicker') !== undefined) {
-                jQuery(this).daterangepicker('destroy');
                 jQuery(this).data('daterangepicker').remove();
             }
         });

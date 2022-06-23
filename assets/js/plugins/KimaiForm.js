@@ -13,24 +13,84 @@ import KimaiPlugin from "../KimaiPlugin";
 
 export default class KimaiForm extends KimaiPlugin {
 
-    getId() {
+    getId()
+    {
         return 'form';
     }
 
-    activateForm(formSelector, container) {
-        this.getContainer().getPlugin('date-range-picker').activateDateRangePicker(formSelector);
-        this.getContainer().getPlugin('date-time-picker').activateDateTimePicker(formSelector);
-        this.getContainer().getPlugin('date-picker').activateDatePicker(formSelector);
-        this.getContainer().getPlugin('autocomplete').activateAutocomplete(formSelector);
-        this.getContainer().getPlugin('form-select').activateSelectPicker(formSelector, container);
+    activateForm(formSelector)
+    {
+        const form = document.querySelector(formSelector);
+        if (form === null) {
+            return;
+        }
+
+        // do not init in init(), but just in case there is a page which does not have a form
+        if (this.dateTimeWidgetHandler === undefined) {
+            this.dateTimeWidgetHandler = (event) => {
+                let linkTarget = event.target;
+
+                // the HTML structure is <a href="" data-format="HH:MM" data-target="formElementId"><i class="icon"></i></a>
+                if (linkTarget.tagName.toUpperCase() === 'I') {
+                    linkTarget = linkTarget.parentElement;
+                }
+
+                const formElement = document.getElementById(linkTarget.dataset.target);
+                if (!formElement.disabled) {
+                    formElement.value = this.getDateUtils().format(linkTarget.dataset.format, null);
+                    formElement.dispatchEvent(new Event('change'));
+                }
+
+                return false;
+            };
+        }
+
+        [].slice.call(document.querySelectorAll(formSelector + ' a.kimai-date-widget')).map((element) => {
+            element.addEventListener('click', this.dateTimeWidgetHandler);
+        });
+
+        // TODO do not register them as global plugins, but only as plugins for each form inside this class
+        this.getPlugin('date-range-picker').activateDateRangePicker(formSelector);
+        this.getPlugin('date-time-picker').activateDateTimePicker(formSelector);
+        this.getPlugin('date-picker').activateDatePicker(formSelector);
+        this.getPlugin('autocomplete').activateAutocomplete(formSelector);
+        this.getPlugin('form-select').activateSelectPicker(formSelector);
+
+        switch (form.name) {
+            case 'timesheet_edit_form':
+            case 'timesheet_admin_edit_form':
+                this.getPlugin('edit-timesheet-form').activateForm(form);
+                break;
+        }
     }
-    
-    destroyForm(formSelector) {
-        this.getContainer().getPlugin('form-select').destroySelectPicker(formSelector);
-        this.getContainer().getPlugin('autocomplete').destroyAutocomplete(formSelector);
-        this.getContainer().getPlugin('date-picker').destroyDatePicker(formSelector);
-        this.getContainer().getPlugin('date-time-picker').destroyDateTimePicker(formSelector);
-        this.getContainer().getPlugin('date-range-picker').destroyDateRangePicker(formSelector);
+
+    destroyForm(formSelector)
+    {
+        const form = document.querySelector(formSelector);
+        if (form === null) {
+            return;
+        }
+
+        if (this.dateTimeWidgetHandler !== undefined) {
+            [].slice.call(document.querySelectorAll(formSelector + ' a.kimai-date-widget')).map((element) => {
+                element.removeEventListener('click', this.dateTimeWidgetHandler);
+            });
+
+            delete this.dateTimeWidgetHandler;
+        }
+
+        this.getPlugin('form-select').destroySelectPicker(formSelector);
+        this.getPlugin('autocomplete').destroyAutocomplete(formSelector);
+        this.getPlugin('date-picker').destroyDatePicker(formSelector);
+        this.getPlugin('date-time-picker').destroyDateTimePicker(formSelector);
+        this.getPlugin('date-range-picker').destroyDateRangePicker(formSelector);
+
+        switch (form.name) {
+            case 'timesheet_edit_form':
+            case 'timesheet_admin_edit_form':
+                this.getPlugin('edit-timesheet-form').destroyForm(form);
+                break;
+        }
     }
 
     /**

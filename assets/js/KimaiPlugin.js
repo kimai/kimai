@@ -59,6 +59,20 @@ export default class KimaiPlugin {
     }
 
     /**
+     * @return {KimaiConfiguration}
+     */
+    getConfigurations() {
+        return this.getContainer().getConfiguration();
+    }
+
+    /**
+     * @returns {KimaiDateUtils}
+     */
+    getDateUtils() {
+        return this.getPlugin('date');
+    }
+
+    /**
      * @param {string} name
      * @returns {KimaiPlugin}
      */
@@ -67,10 +81,25 @@ export default class KimaiPlugin {
     }
 
     /**
+     * @returns {KimaiTranslation}
+     */
+    getTranslation() {
+        return this.getContainer().getTranslation();
+    }
+
+    /**
      * @param {string} title
      * @returns {string}
      */
     escape(title) {
         return this.getPlugin('escape').escapeForHtml(title);
+    }
+
+    /**
+     * @param {string} name
+     * @param {string} details
+     */
+    trigger(name, details) {
+        this.getPlugin('event').trigger(name, details);
     };
 }

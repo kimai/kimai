@@ -53,9 +53,6 @@ Encore
 
     .autoProvidejQuery()
 
-    // prevent that unused moment locales will be included
-    .addPlugin(new webpack.IgnorePlugin({resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/}))
-
     .configureBabel(null, {
         useBuiltIns: 'usage',
         corejs: 3,

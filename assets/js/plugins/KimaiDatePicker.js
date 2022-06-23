@@ -24,9 +24,9 @@ export default class KimaiDatePicker extends KimaiPlugin {
     }
 
     activateDatePicker(selector) {
-        const TRANSLATE = this.getContainer().getTranslation();
-        const DATE_UTILS = this.getContainer().getPlugin('date');
-        const firstDow = this.getConfiguration('first_dow_iso') % 7;
+        const TRANSLATE = this.getTranslation();
+        const DATE_UTILS = this.getDateUtils();
+        const firstDow = this.getConfigurations().getFirstDayOfWeek(false);
 
         jQuery(selector + ' ' + this.selector).each(function(index) {
             let localeFormat = jQuery(this).data('format');
@@ -64,7 +64,6 @@ export default class KimaiDatePicker extends KimaiPlugin {
     destroyDatePicker(selector) {
         jQuery(selector + ' ' + this.selector).each(function(index) {
             if (jQuery(this).data('daterangepicker') !== undefined) {
-                jQuery(this).daterangepicker('destroy');
                 jQuery(this).data('daterangepicker').remove();
             }
         });

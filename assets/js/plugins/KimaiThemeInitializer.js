@@ -20,14 +20,15 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
         this.registerGlobalAjaxSuccessHandler();
 
         // the tooltip do not use data-bs-toggle="tooltip" so they can be mixed with data-toggle="modal"
-        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'));
-        tooltipTriggerList.map(function (tooltipTriggerEl) {
+        [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]')).map(function (tooltipTriggerEl) {
             return new Tooltip(tooltipTriggerEl);
         });
 
         // activate all form plugins
-        this.getContainer().getPlugin('form').activateForm('div.page-wrapper form', 'body');
-        this.getContainer().getPlugin('form').activateForm('form.searchform', 'body');
+        /** @type {KimaiForm} FORMS */
+        const FORMS = this.getContainer().getPlugin('form');
+        FORMS.activateForm('div.page-wrapper form');
+        FORMS.activateForm('form.searchform');
 
         this.registerModalAutofocus('#modal_search');
         this.registerModalAutofocus('#remote_form_modal');
@@ -95,7 +96,7 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
     registerGlobalAjaxErrorHandler() {
         const loginUrl = this.getConfiguration('login');
         const alert = this.getContainer().getPlugin('alert');
-        const translation = this.getContainer().getTranslation().get('login.required');
+        const translation = this.getTranslation().get('login.required');
         jQuery(document).ajaxError(function(event, jqxhr, settings, thrownError) {
             if (jqxhr.status !== undefined && jqxhr.status === 403) {
                 const loginRequired = jqxhr.getResponseHeader('login-required');

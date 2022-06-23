@@ -44,6 +44,8 @@ final class Version20993112235958 extends AbstractMigration
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'calendar_initial_view' WHERE `name` = 'calendar.initial_view'");
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'export_decimal' WHERE `name` = 'timesheet.export_decimal'");
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'update_browser_title' WHERE `name` = 'theme.update_browser_title'");
+
+        // TODO user configuration calendar first day agendaDay = day / agendaMonth = month
     }
 
     public function down(Schema $schema): void

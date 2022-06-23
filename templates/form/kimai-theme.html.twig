@@ -109,7 +109,7 @@
         <button type="button" class="btn dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
         <div class="dropdown-menu dropdown-menu-right pre-scrollable">
             {% for value in form.vars.duration_presets %}
-                <a class="dropdown-item" href="#" onclick="jQuery('#{{ form.vars.id }}').val('{{ value }}').trigger('change');return false;">{{ value }}</a>
+                <a class="dropdown-item" href="#" onclick="document.getElementById('{{ form.vars.id }}').value = '{{ value }}';document.getElementById('{{ form.vars.id }}').dispatchEvent(new Event('change'));return false;">{{ value }}</a>
             {% endfor %}
         </div>
     </div>
@@ -122,7 +122,7 @@
 {% block datetime_widget -%}
     <div class="input-group">
         <div class="input-group-text">
-            <a href="#" onclick="if (!jQuery('#{{ id }}').is(':disabled')) { jQuery('#{{ id }}').val(moment().format('{{ attr['data-format'] }}')).change(); }return false;">{{ icon('calendar') }}</a>
+            <a href="#" class="kimai-date-widget" data-format="{{ attr['data-format'] }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
         </div>
         {{ block('form_widget_simple') }}
     </div>
@@ -131,7 +131,7 @@
 {% block date_widget -%}
     <div class="input-group">
         <div class="input-group-text">
-            <a href="#" onclick="if (!jQuery('#{{ id }}').is(':disabled')) { jQuery('#{{ id }}').val(moment().format('{{ attr['data-format'] }}')).change(); }return false;">{{ icon('calendar') }}</a>
+            <a href="#" class="kimai-date-widget" data-format="{{ attr['data-format'] }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
         </div>
         {{ block('form_widget_simple') }}
     </div>

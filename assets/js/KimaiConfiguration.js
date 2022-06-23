@@ -23,4 +23,23 @@ export default class KimaiConfiguration {
         return name in this._configurations;
     }
 
+    is24Hours() {
+        return !!this.get('twentyFourHours');
+    }
+
+    /**
+     * @param {boolean} iso
+     * @return {number}
+     */
+    getFirstDayOfWeek(iso) {
+        if (iso === undefined) {
+            iso = true;
+        }
+        let config = this.get('first_dow_iso');
+        if (!iso) {
+            config = config % 7;
+        }
+        return config;
+    }
+
 }

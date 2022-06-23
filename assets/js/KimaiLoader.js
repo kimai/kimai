@@ -9,7 +9,7 @@
  * [KIMAI] KimaiLoader: bootstrap the application and all plugins
  */
 
-import moment from 'moment';
+import { Settings } from 'luxon';
 import KimaiTranslation from "./KimaiTranslation";
 import KimaiConfiguration from "./KimaiConfiguration";
 import KimaiContainer from "./KimaiContainer";
@@ -20,7 +20,6 @@ import KimaiDateRangePicker from "./plugins/KimaiDateRangePicker";
 import KimaiDatatable from "./plugins/KimaiDatatable";
 import KimaiToolbar from "./plugins/KimaiToolbar";
 import KimaiAPI from "./plugins/KimaiAPI";
-import KimaiSelectDataAPI from "./plugins/KimaiSelectDataAPI";
 import KimaiDateTimePicker from "./plugins/KimaiDateTimePicker";
 import KimaiAlternativeLinks from "./plugins/KimaiAlternativeLinks";
 import KimaiAjaxModalForm from "./plugins/KimaiAjaxModalForm";
@@ -37,12 +36,13 @@ import KimaiConfirmationLink from "./plugins/KimaiConfirmationLink";
 import KimaiMultiUpdateTable from "./plugins/KimaiMultiUpdateTable";
 import KimaiDateUtils from "./plugins/KimaiDateUtils";
 import KimaiEscape from "./plugins/KimaiEscape";
+import KimaiEditTimesheetForm from "./plugins/KimaiEditTimesheetForm";
 
 export default class KimaiLoader {
 
     constructor(configurations, translations) {
         // set the current locale for all javascript components
-        moment.locale(configurations['locale'].replace('_', '-').toLowerCase());
+        Settings.defaultLocale = configurations['locale'].replace('_', '-').toLowerCase();
 
         const kimai = new KimaiContainer(
             new KimaiConfiguration(configurations),
@@ -54,7 +54,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiAPI());
         kimai.registerPlugin(new KimaiAlert());
         kimai.registerPlugin(new KimaiDateUtils());
-        kimai.registerPlugin(new KimaiFormSelect('.selectpicker'));
+        kimai.registerPlugin(new KimaiFormSelect('.selectpicker', 'select[data-related-select]'));
         kimai.registerPlugin(new KimaiConfirmationLink('confirmation-link'));
         kimai.registerPlugin(new KimaiActiveRecordsDuration());
         kimai.registerPlugin(new KimaiDatatableColumnView('data-column-visibility'));
@@ -63,7 +63,6 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiDatePicker('input[data-datepickerenable="on"]'));
         kimai.registerPlugin(new KimaiDatatable('section.content', 'table.dataTable'));
         kimai.registerPlugin(new KimaiToolbar('form.searchform', 'toolbar-action'));
-        kimai.registerPlugin(new KimaiSelectDataAPI('select[data-related-select]'));
         kimai.registerPlugin(new KimaiAlternativeLinks('.alternative-link'));
         kimai.registerPlugin(new KimaiAjaxModalForm('.modal-ajax-form'));
         kimai.registerPlugin(new KimaiRecentActivities('.notifications-menu'));
@@ -73,15 +72,18 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiForm());
         kimai.registerPlugin(new KimaiThemeInitializer());
         kimai.registerPlugin(new KimaiMultiUpdateTable());
+        kimai.registerPlugin(new KimaiEditTimesheetForm());
 
         // notify all listeners that Kimai plugins can now be registered
-        kimai.getPlugin('event').trigger('kimai.pluginRegister', {'kimai': kimai});
+        /** @type {KimaiEvent} EVENT */
+        const EVENT = kimai.getPlugin('event');
+        EVENT.trigger('kimai.pluginRegister', {'kimai': kimai});
 
         // initialize all plugins
         kimai.getPlugins().map(plugin => { plugin.init(); });
 
         // notify all listeners that Kimai is now ready to be used
-        kimai.getPlugin('event').trigger('kimai.initialized', {'kimai': kimai});
+        EVENT.trigger('kimai.initialized', {'kimai': kimai});
 
         this.kimai = kimai;
     }
