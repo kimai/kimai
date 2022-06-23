@@ -32,13 +32,12 @@
             event.currentTarget.submit();
         });
 
-        const triggerTabList = [].slice.call(document.querySelectorAll('a[data-bs-toggle="tab"]'))
-        triggerTabList.forEach(function (triggerEl) {
+        [].slice.call(document.querySelectorAll('a[data-bs-toggle="tab"]')).forEach(function (triggerEl) {
             triggerEl.addEventListener('shown.bs.tab', function (event) {
                 renderChart(event.target.dataset.chart);
                 //event.preventDefault()
-            })
-        })
+            });
+        });
 
         function renderChart(chartName)
         {
@@ -263,6 +262,8 @@
         {% set rates = rates|merge([{'label': year.rate|money(currency), 'value': year.rate}]) %}
         {% set durations = durations|merge([{'label': year.duration|duration, 'value': year.duration|chart_duration}]) %}
     {% endfor -%}
+    {% set showTotalDurationChart = project_view.durationTotal > 0 and years|length > 1 %}
+    {% set showTotalRevenueChart = view_revenue and project_view.rateTotal > 0 and years|length > 1 %}
 
     <div class="card mb-3">
         <div class="card-header">
@@ -278,10 +279,10 @@
         </div>
         <ul class="nav nav-tabs" data-bs-toggle="tabs">
             <li class="nav-item"><a class="nav-link active" href="#details-chart" data-bs-toggle="tab">{{ 'report_project_details'|trans({}, 'reporting') }}</a></li>
-            {% if project_view.durationTotal > 0 %}
+            {% if showTotalDurationChart %}
                 <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Duration" href="#time-chart" data-bs-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
             {% endif %}
-            {% if view_revenue and project_view.rateTotal > 0 %}
+            {% if showTotalRevenueChart  %}
                 <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-bs-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
             {% endif %}
             {% if see_users and project_details.userStats|length > 0 %}
@@ -398,15 +399,15 @@
                 {% endif %}
 
             </div>
-            {% if view_revenue and project_view.rateTotal > 0 %}
+            {% if showTotalDurationChart %}
+            <div class="chart tab-pane" id="time-chart">
+                {{ charts.bar_chart(chartPrefix ~ 'Duration', labels, [durations], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix ~ 'Duration'}) }}
+            </div>
+            {% if showTotalRevenueChart %}
             <div class="chart tab-pane" id="revenue-chart">
                 {{ charts.bar_chart(chartPrefix ~ 'Rate', labels, [rates], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix ~ 'Rate'}) }}
             </div>
             {% endif %}
-            {% if project_view.durationTotal > 0 %}
-            <div class="chart tab-pane" id="time-chart">
-                {{ charts.bar_chart(chartPrefix ~ 'Duration', labels, [durations], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix ~ 'Duration'}) }}
-            </div>
             {% endif %}
             {% if activities is not empty %}
             <div class="chart tab-pane" id="activity-chart">
