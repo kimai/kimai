@@ -24,11 +24,10 @@ export default class KimaiAutocomplete extends KimaiPlugin {
     }
 
     activateAutocomplete(selector) {
-        const self = this;
-        const API = self.getContainer().getPlugin('api');
+        const API = this.getContainer().getPlugin('api');
 
         const elementList = [].slice.call(document.querySelectorAll(selector + ' ' + this.selector));
-        elementList.map(function (node) {
+        elementList.map((node) => {
             const apiUrl = node.dataset['autocompleteUrl'];
             let minChars = 3;
             if (node.dataset['minimumCharacter'] !== undefined) {
@@ -75,7 +74,7 @@ export default class KimaiAutocomplete extends KimaiPlugin {
 
     destroyAutocomplete(selector) {
         const elementList = [].slice.call(document.querySelectorAll(selector + ' ' + this.selector));
-        elementList.map(function (node) {
+        elementList.map((node) => {
             if (node.tomselect) {
                 node.tomselect.destroy();
             }

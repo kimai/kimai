@@ -68,7 +68,7 @@ class QuickEntryController extends AbstractController
         $query->setBegin($startWeek);
         $query->setEnd($endWeek);
         $query->setName('quickEntryForm');
-        $query->setUser($this->getUser());
+        $query->setUser($user);
 
         $result = $this->repository->getTimesheetResult($query);
 
@@ -105,7 +105,7 @@ class QuickEntryController extends AbstractController
             $startFrom = clone $startWeek;
             $startFrom->modify(sprintf('-%s weeks', $takeOverWeeks));
         }
-        $timesheets = $this->repository->getRecentActivities($this->getUser(), $startFrom, $amount);
+        $timesheets = $this->repository->getRecentActivities($user, $startFrom, $amount);
         foreach ($timesheets as $timesheet) {
             $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId();
             if (\array_key_exists($id, $rows)) {

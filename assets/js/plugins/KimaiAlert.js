@@ -26,7 +26,7 @@ export default class KimaiAlert extends KimaiPlugin {
      * @param {string|array|undefined} message
      */
     error(title, message) {
-        const translation = this.getContainer().getTranslation();
+        const translation = this.getTranslation();
         if (translation.has(title)) {
             title = translation.get(title);
         }
@@ -121,7 +121,7 @@ export default class KimaiAlert extends KimaiPlugin {
      * @private
      */
     _show(type, message) {
-        const translation = this.getContainer().getTranslation();
+        const translation = this.getTranslation();
 
         if (translation.has(message)) {
             message = translation.get(message);
@@ -172,7 +172,7 @@ export default class KimaiAlert extends KimaiPlugin {
      * @private
      */
     _toast(type, message) {
-        const translation = this.getContainer().getTranslation();
+        const translation = this.getTranslation();
 
         if (translation.has(message)) {
             message = translation.get(message);
@@ -219,7 +219,7 @@ export default class KimaiAlert extends KimaiPlugin {
      * @param callback
      */
     question(message, callback) {
-        const translation = this.getContainer().getTranslation();
+        const translation = this.getTranslation();
 
         if (translation.has(message)) {
             message = translation.get(message);

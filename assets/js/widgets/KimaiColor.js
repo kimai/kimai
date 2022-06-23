@@ -11,6 +11,10 @@
 
 export default class KimaiColor {
 
+    /**
+     * @param {string} hexcolor
+     * @return {string}
+     */
     static calculateContrastColor(hexcolor)
     {
         if (hexcolor.slice(0, 1) === '#') {
@@ -21,10 +25,12 @@ export default class KimaiColor {
             hexcolor = hexcolor.split('').map(function (hex) { return hex + hex; }).join('');
         }
 
-        let r = parseInt(hexcolor.substr(0,2),16);
-        let g = parseInt(hexcolor.substr(2,2),16);
-        let b = parseInt(hexcolor.substr(4,2),16);
-        let yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+        const r = parseInt(hexcolor.substring(0,2),16);
+        const g = parseInt(hexcolor.substring(2,4),16);
+        const b = parseInt(hexcolor.substring(4,6),16);
+
+        // https://gomakethings.com/dynamically-changing-the-text-color-based-on-background-color-contrast-with-vanilla-js/
+        const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
 
         return (yiq >= 128) ? '#000000' : '#ffffff';
     }

@@ -22,6 +22,10 @@ export default class KimaiEscape extends KimaiPlugin {
      * @returns {string}
      */
     escapeForHtml(title) {
+        if (title === undefined || title === null) {
+            return '';
+        }
+
         const tagsToReplace = {
             '&': '&amp;',
             '<': '&lt;',

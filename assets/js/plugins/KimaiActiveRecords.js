@@ -92,7 +92,7 @@ export default class KimaiActiveRecords extends KimaiPlugin {
     }
 
     _replaceInNode(node, timesheet) {
-        const date = this.getContainer().getPlugin('date');
+        const date = this.getDateUtils();
         const allReplacer = node.querySelectorAll('[data-replacer]');
         for (let node of allReplacer) {
             const replacerName = node.dataset['replacer'];

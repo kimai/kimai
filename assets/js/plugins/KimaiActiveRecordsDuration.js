@@ -20,8 +20,7 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
     init() {
         this.updateBrowserTitle = !!this.getConfiguration('updateBrowserTitle');
         this.updateRecords();
-        const self = this;
-        const handle = function() { self.updateRecords(); };
+        const handle = () => { this.updateRecords(); };
         this._updatesHandler = setInterval(handle, 10000);
         // this will probably not work as expected, as other event-handler might need longer to update the DOM
         document.addEventListener('kimai.timesheetUpdate', handle);
@@ -46,11 +45,10 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
             return;
         }
 
-        const DATE = this.getPlugin('date');
+        const DATE = this.getDateUtils();
 
-        for (let record of activeRecords) {
-            const since = record.dataset['since'];
-            const duration = DATE.formatDuration(since);
+        for (const record of activeRecords) {
+            const duration = DATE.formatDuration(record.dataset['since']);
             // only use the ones from the menu for the title
             if (record.dataset['replacer'] !== undefined && record.dataset['title'] !== null && duration !== '?') {
                 durations.push(duration);
@@ -68,10 +66,9 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
         }
 
         let title = durations.shift();
-        let prefix = ' | ';
 
-        for (let duration of durations.slice(0, 2)) {
-            title += prefix + duration;
+        for (const duration of durations.slice(0, 2)) {
+            title += ' | ' + duration;
         }
         document.title = title;
     }
