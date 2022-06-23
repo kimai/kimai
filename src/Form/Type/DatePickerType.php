@@ -11,7 +11,9 @@ namespace App\Form\Type;
 
 use App\Utils\LocaleSettings;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,11 +23,32 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DatePickerType extends AbstractType
 {
-    private $localeSettings;
-
-    public function __construct(LocaleSettings $localeSettings)
+    public function __construct(private LocaleSettings $localeSettings)
     {
-        $this->localeSettings = $localeSettings;
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder->addModelTransformer(new CallbackTransformer(
+            function ($transform) use ($options) {
+                return $transform;
+            },
+            function ($reverseTransform) use ($options) {
+                if ($reverseTransform === null) {
+                    return null;
+                }
+
+                if ($reverseTransform instanceof \DateTime && $options['force_time']) {
+                    if ($options['force_time'] === 'start') {
+                        $reverseTransform->setTime(0, 0, 0);
+                    } elseif ($options['force_time'] === 'end') {
+                        $reverseTransform->setTime(23, 59, 59);
+                    }
+                }
+
+                return $reverseTransform;
+            }
+        ));
     }
 
     /**
@@ -43,6 +66,7 @@ class DatePickerType extends AbstractType
             'format_picker' => $pickerFormat,
             'model_timezone' => date_default_timezone_get(),
             'view_timezone' => date_default_timezone_get(),
+            'force_time' => null,
         ]);
     }
 

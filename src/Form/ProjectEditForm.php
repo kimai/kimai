@@ -12,7 +12,7 @@ namespace App\Form;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\Type\CustomerType;
-use App\Form\Type\DateTimePickerType;
+use App\Form\Type\DatePickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -75,20 +75,20 @@ class ProjectEditForm extends AbstractType
                 'label' => 'label.orderNumber',
                 'required' => false,
             ])
-            ->add('orderDate', DateTimePickerType::class, array_merge($dateTimeOptions, [
+            ->add('orderDate', DatePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'label.orderDate',
                 'required' => false,
-                'time_increment' => $timeIncrement,
+                'force_time' => 'start',
             ]))
-            ->add('start', DateTimePickerType::class, array_merge($dateTimeOptions, [
+            ->add('start', DatePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'label.project_start',
                 'required' => false,
-                'time_increment' => $timeIncrement,
+                'force_time' => 'start',
             ]))
-            ->add('end', DateTimePickerType::class, array_merge($dateTimeOptions, [
+            ->add('end', DatePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'label.project_end',
                 'required' => false,
-                'time_increment' => $timeIncrement,
+                'force_time' => 'end',
             ]))
             ->add('customer', CustomerType::class, [
                 'placeholder' => (null === $id && null === $customer) ? '' : false,
