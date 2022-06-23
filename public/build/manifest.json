@@ -1,13 +1,13 @@
 {
   "build/app.css": "build/app.370ddaa3.css",
-  "build/app.js": "build/app.2219bfd0.js",
+  "build/app.js": "build/app.01db95a7.js",
   "build/invoice.css": "build/invoice.7abcff08.css",
   "build/invoice.js": "build/invoice.c8ae95ad.js",
   "build/invoice-pdf.css": "build/invoice-pdf.48504f5f.css",
   "build/invoice-pdf.js": "build/invoice-pdf.d86b82ee.js",
   "build/chart.js": "build/chart.8ce4ee3e.js",
-  "build/calendar.css": "build/calendar.9f5b3d41.css",
-  "build/calendar.js": "build/calendar.c392c607.js",
+  "build/calendar.css": "build/calendar.4fb82b57.css",
+  "build/calendar.js": "build/calendar.c0753d74.js",
   "build/dashboard.css": "build/dashboard.484de6cd.css",
   "build/dashboard.js": "build/dashboard.cf749c05.js",
   "build/runtime.js": "build/runtime.fb9c99a2.js"
