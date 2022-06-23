@@ -136,10 +136,8 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        document.addEventListener('kimai.initialized', function() {
-            jQuery('#project-view-form').on('change', function(ev) {
-                jQuery(this).submit();
-            });
+        document.getElementById('report-form').addEventListener('change', function(event) {
+            event.currentTarget.submit();
         });
     </script>
 {% endblock %}

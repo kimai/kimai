@@ -1,7 +1,7 @@
 {% extends 'reporting/layout.html.twig' %}
 
 {% block report_form %}
-    {{ form_start(form, {'attr': {'class': 'form-reporting', 'id': 'report-toolbar-form'}}) }}
+    {{ form_start(form, {'attr': {'class': 'form-reporting', 'id': 'report-form'}}) }}
     <div class="btn-list">
         {{ form_widget(form.date) }}
         {{ form_widget(form.sumType) }}
@@ -16,7 +16,7 @@
     {% embed '@theme/embeds/card.html.twig' %}
         {% from "macros/widgets.html.twig" import nothing_found %}
         {% block box_before %}
-            {{ form_start(form, {'attr': {'class': 'form-reporting', 'id': 'report-toolbar-form'}}) }}
+            {{ form_start(form, {'attr': {'class': 'form-reporting', 'id': 'report-form'}}) }}
         {% endblock %}
         {% block box_after %}
             {{ form_end(form) }}
@@ -38,8 +38,8 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        jQuery('#report-toolbar-form').on('change', function(ev) {
-            jQuery(this).submit();
+        document.getElementById('report-form').addEventListener('change', function(event) {
+            event.currentTarget.submit();
         });
     </script>
 {% endblock %}

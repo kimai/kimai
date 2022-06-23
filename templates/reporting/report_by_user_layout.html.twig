@@ -2,7 +2,7 @@
 {% import "macros/widgets.html.twig" as widgets %}
 
 {% block report_form %}
-    {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': 'user-filter-form'}}) }}
+    {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': 'report-form'}}) }}
     <div class="btn-list w-100">
         {% if form.user is defined %}
             {{ form_row(form.user, {'label': false, 'row_attr': {'class': 'w-25'}}) }}
@@ -30,7 +30,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        document.getElementById('user-filter-form').addEventListener('change', function(event) {
+        document.getElementById('report-form').addEventListener('change', function(event) {
             event.currentTarget.submit();
         });
     </script>

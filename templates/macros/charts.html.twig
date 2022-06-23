@@ -69,7 +69,7 @@
     <script type="text/javascript">
         document.addEventListener('{{ options.renderEvent|default('kimai.initialized') }}', function() {
             new Chart(
-                jQuery("#{{ id }}").get(0).getContext("2d"), {
+                document.getElementById("{{ id }}").getContext("2d"), {
                     type: 'doughnut',
                     data: {
                         {% if labels is not empty %}

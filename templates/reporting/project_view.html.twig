@@ -1,7 +1,7 @@
 {% extends 'reporting/project_list_data.html.twig' %}
 
 {% block report_form %}
-    {{ form_start(form, {'attr': {'id': 'project-view-form'}}) }}
+    {{ form_start(form, {'attr': {'id': 'report-form'}}) }}
     <div class="btn-list w-100">
         {{ form_row(form.customer, {'label': false, 'placeholder': 'please_choose', 'row_attr': {'class': 'w-50'}}) }}
         <div class="dropdown">

@@ -36,7 +36,7 @@
 {% endblock %}
 
 {% block report_form %}
-    {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': 'project-daterange-form'}}) }}
+    {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': 'report-form'}}) }}
     <div class="btn-list w-100">
         {{ form_row(form.customer, {'label': false, 'placeholder': 'please_choose', 'row_attr': {'class': 'w-50'}}) }}
         {{ form_row(form.month, {'label': false}) }}
@@ -120,10 +120,8 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        document.addEventListener('kimai.initialized', function() {
-            jQuery('#project-daterange-form').on('change', function(ev) {
-                jQuery(this).submit();
-            });
+        document.getElementById('report-form').addEventListener('change', function(event) {
+            event.currentTarget.submit();
         });
     </script>
 {% endblock %}

@@ -28,7 +28,7 @@
     {{ charts.doughnut_javascript(options) }}
     {{ charts.bar_javascript({'legend': {'display': false}}) }}
     <script type="text/javascript">
-        document.getElementById('{{ tableId }}').addEventListener('change', function(event) {
+        document.getElementById('report-form').addEventListener('change', function(event) {
             event.currentTarget.submit();
         });
 
@@ -59,7 +59,7 @@
 
 {% block report_form %}
     {% form_theme form '@theme/layout/form-theme-horizontal.html.twig' %}
-    {{ form_start(form, {'attr': {'id': tableId}}) }}
+    {{ form_start(form, {'attr': {'id': 'report-form'}}) }}
     {{ form_row(form.project, {'placeholder': 'please_choose', 'row_attr': {'class': 'w-100'}}) }}
     {{ form_end(form) }}
 {% endblock %}

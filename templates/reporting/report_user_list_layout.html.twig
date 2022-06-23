@@ -1,7 +1,7 @@
 {% extends 'reporting/layout.html.twig' %}
 
 {% block report_form %}
-    {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': 'user-list-filter-form'}}) }}
+    {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': 'report-form'}}) }}
     <div class="btn-list">
         {{ form_widget(form.date) }}
         {{ form_widget(form.sumType) }}
@@ -30,7 +30,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        document.getElementById('user-list-filter-form').addEventListener('change', function(event) {
+        document.getElementById('report-form').addEventListener('change', function(event) {
             event.currentTarget.submit();
         });
     </script>

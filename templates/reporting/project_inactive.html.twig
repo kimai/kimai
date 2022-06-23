@@ -2,7 +2,7 @@
 
 {% block report_form %}
     {% form_theme form '@theme/layout/form-theme-horizontal.html.twig' %}
-    {{ form_start(form, {'attr': {'id': 'project-view-form'}}) }}
+    {{ form_start(form, {'attr': {'id': 'report-form'}}) }}
     {{ form_row(form.lastChange, {'placeholder': 'please_choose', 'row_attr': {'class': 'w-100'}}) }}
     {{ form_end(form) }}
 {% endblock %}
