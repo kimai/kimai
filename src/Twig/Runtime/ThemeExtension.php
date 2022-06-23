@@ -24,17 +24,8 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 final class ThemeExtension implements RuntimeExtensionInterface
 {
-    private $eventDispatcher;
-    private $translator;
-    private $configuration;
-    private $theme;
-
-    public function __construct(EventDispatcherInterface $dispatcher, TranslatorInterface $translator, SystemConfiguration $configuration, Theme $theme)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private TranslatorInterface $translator, private SystemConfiguration $configuration, private Theme $theme)
     {
-        $this->eventDispatcher = $dispatcher;
-        $this->translator = $translator;
-        $this->configuration = $configuration;
-        $this->theme = $theme;
     }
 
     /**
@@ -78,7 +69,12 @@ final class ThemeExtension implements RuntimeExtensionInterface
 
         $this->eventDispatcher->dispatch($event);
 
-        return $event->getTranslations();
+        $all = [];
+        foreach ($event->getTranslations() as $key => $translation) {
+            $all[$key] = $this->translator->trans($translation[0], [], $translation[1]);
+        }
+
+        return $all;
     }
 
     public function getProgressbarClass(float $percent, ?bool $reverseColors = false): string
