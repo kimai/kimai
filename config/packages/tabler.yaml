@@ -81,6 +81,7 @@ tabler:
         invoice: fas fa-file-contract
         invoice-template: fas fa-file-signature
         left: fas fa-chevron-left
+        left2: fas fa-angle-double-left
         list: fas fa-list
         locked: fas fa-lock
         login: fas fa-sign-in-alt
@@ -108,6 +109,7 @@ tabler:
         reporting: far fa-chart-bar
         report: far fa-chart-bar
         right: fas fa-chevron-right
+        right2: fas fa-angle-double-right
         roles: fas fa-user-shield
         save: far fa-save
         search: fas fa-search
