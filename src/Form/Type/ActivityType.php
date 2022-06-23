@@ -104,7 +104,7 @@ class ActivityType extends AbstractType
         });
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['attr'] = array_merge($view->vars['attr'], [
             'data-option-pattern' => $this->activityHelper->getChoicePattern(),

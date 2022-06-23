@@ -35,7 +35,7 @@ final class MonthPickerType extends AbstractType
         ]);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         /** @var \DateTime|null $date */
         $date = $form->getData();

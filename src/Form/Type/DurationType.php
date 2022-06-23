@@ -36,7 +36,7 @@ class DurationType extends AbstractType
         ]);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $class = 'duration-input';
         if (isset($view->vars['attr']['class'])) {

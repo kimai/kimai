@@ -30,7 +30,7 @@ class DocumentationLinkExtension extends AbstractTypeExtension
      * @param FormInterface $form
      * @param array $options
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['docu_chapter'] = $options['docu_chapter'] ?? null;
     }

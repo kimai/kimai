@@ -31,7 +31,7 @@ final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
      * @param FormInterface $form
      * @param array $options
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if (isset($options['selectpicker']) && false === $options['selectpicker']) {
             return;

@@ -30,7 +30,7 @@ class DatePickerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new CallbackTransformer(
-            function ($transform) use ($options) {
+            function ($transform) {
                 return $transform;
             },
             function ($reverseTransform) use ($options) {
@@ -51,9 +51,6 @@ class DatePickerType extends AbstractType
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $pickerFormat = $this->localeSettings->getDatePickerFormat();
@@ -70,7 +67,7 @@ class DatePickerType extends AbstractType
         ]);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['attr'] = array_merge($view->vars['attr'], [
             'data-datepickerenable' => 'on',
