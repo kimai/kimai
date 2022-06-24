@@ -50,6 +50,7 @@ class UserApiCreateForm extends UserCreateType
                 'type' => 'string',
                 'description' => 'Plain API token',
             ],
+            'required' => false,
         ]);
 
         if ($options['include_roles']) {
