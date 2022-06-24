@@ -30,6 +30,7 @@ class ProjectEditForm extends AbstractType
     {
         $customer = null;
         $id = null;
+        $options['currency'] = null;
 
         if (isset($options['data'])) {
             /** @var Project $entry */
