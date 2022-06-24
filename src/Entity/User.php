@@ -156,8 +156,9 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     private $apiToken;
     /**
-     * @var string
+     * @var string|null
      * @internal to be set via form, must not be persisted
+     *
      * @Assert\NotBlank(groups={"ApiTokenUpdate"})
      * @Assert\Length(min="8", max="60", groups={"ApiTokenUpdate"})
      */
@@ -848,6 +849,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function eraseCredentials()
     {
         $this->plainPassword = null;
+        $this->plainApiToken = null;
     }
 
     /**
