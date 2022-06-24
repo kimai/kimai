@@ -33,6 +33,7 @@ class ActivityEditForm extends AbstractType
         $customer = null;
         $new = true;
         $isGlobal = false;
+        $options['currency'] = null;
 
         if (isset($options['data'])) {
             /** @var Activity $entry */
