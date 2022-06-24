@@ -12,6 +12,7 @@ namespace App\Form\API;
 use App\Form\Type\UserRoleType;
 use App\Form\UserCreateType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -24,7 +25,9 @@ class UserApiCreateForm extends UserCreateType
     {
         parent::buildForm($builder, $options);
 
-        $builder->remove('plainPassword');
+        if ($builder->has('plainPassword')) {
+            $builder->remove('plainPassword');
+        }
 
         $builder->add('plainPassword', PasswordType::class, [
             'required' => true,
@@ -32,6 +35,20 @@ class UserApiCreateForm extends UserCreateType
             'documentation' => [
                 'type' => 'string',
                 'description' => 'Plain text password',
+            ],
+        ]);
+
+        if ($builder->has('plainApiToken')) {
+            $builder->remove('plainApiToken');
+        }
+
+        $builder->add('plainApiToken', RepeatedType::class, [
+            'type' => PasswordType::class,
+            'first_options' => ['label' => 'label.api_token'],
+            'second_options' => ['label' => 'label.api_token_repeat'],
+            'documentation' => [
+                'type' => 'string',
+                'description' => 'Plain API token',
             ],
         ]);
 
