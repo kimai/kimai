@@ -246,7 +246,7 @@ kimai:
             duration: '%%h:%%m h'
         en_GB:
             date_type: 'dd/MM/yyyy'
-            date: 'd-m-Y'
+            date: 'd/m/Y'
             date_time: 'd-m H:i'
         es:
             date_type: 'dd.MM.yyyy'
