@@ -426,6 +426,10 @@
         <source>Duration cannot be zero.</source>
         <target state="translated">Nu se admite o durată goală.</target>
       </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">Ne pare rău, bugetul este epuizat.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

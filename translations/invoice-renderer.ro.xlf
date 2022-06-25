@@ -8,11 +8,11 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target>Factură (implicit)</target>
+        <target state="translated">Factură</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
-        <target>Pontaj</target>
+        <target state="translated">Pontajul</target>
       </trans-unit>
       <trans-unit id="M82JFjR" resname="freelancer">
         <source>freelancer</source>
@@ -60,7 +60,7 @@
       </trans-unit>
       <trans-unit id="QqvUWFt" resname="Ods">
         <source>Ods</source>
-        <target>Open Office (Spreadsheet)</target>
+        <target state="translated">Open Office (Foaie de calcul)</target>
       </trans-unit>
       <trans-unit id="kLKl8xE" resname="Pdf">
         <source>Pdf</source>
