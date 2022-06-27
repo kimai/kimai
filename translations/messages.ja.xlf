@@ -1061,10 +1061,6 @@
         <source>registration.check_email</source>
         <target state="needs-translation">An email has been sent to %email%. It contains an activation link you must click to activate your account.</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="label.hours_24">
-        <source>label.hours_24</source>
-        <target state="needs-translation">24 hours</target>
-      </trans-unit>
       <trans-unit id="7H7P1mE" resname="button.preview">
         <source>button.preview</source>
         <target state="needs-translation">Preview</target>

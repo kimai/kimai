@@ -1169,10 +1169,6 @@
         <source>quick_entry.title</source>
         <target state="needs-translation">Weekly working hours</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="label.hours_24">
-        <source>label.hours_24</source>
-        <target state="needs-translation">24 hours</target>
-      </trans-unit>
       <trans-unit id="NNKq04n" resname="label.remove_default">
         <source>label.remove_default</source>
         <target state="needs-translation">Delete search favourite</target>

@@ -26,7 +26,7 @@ export default class KimaiEvent extends KimaiPlugin {
             return;
         }
 
-        for (let event of name.split(' ')) {
+        for (const event of name.split(' ')) {
             let triggerEvent = new Event(event);
             if (details !== undefined) {
                 triggerEvent = new CustomEvent(event, {detail: details});

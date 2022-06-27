@@ -122,6 +122,24 @@ export default class KimaiDateUtils extends KimaiPlugin {
     }
 
     /**
+     * @param {string|null} date
+     * @param {string|null} time
+     * @return {DateTime}
+     */
+    fromHtml5Input(date, time)
+    {
+        if (date === '' && time === '') {
+            return DateTime.invalid('Empty date and time given');
+        }
+
+        if (date !== '' && time !== '') {
+            date = date + 'T' + time;
+        }
+
+        return DateTime.fromISO(date);
+    }
+
+    /**
      * @param {string} date
      * @param {string} format
      * @return {boolean}
@@ -280,36 +298,6 @@ export default class KimaiDateUtils extends KimaiPlugin {
         }
 
         return luxonDuration;
-    }
-
-    getFormDateRangeList()
-    {
-        const TRANSLATE = this.getTranslation();
-
-        const now = DateTime.now();
-        const yesterday = now.minus({days: 1});
-        const lastWeek = now.minus({week: 1});
-        const lastMonth = now.minus({month: 1});
-        const lastYear = now.minus({year: 1});
-
-        let rangesList = {};
-        rangesList[TRANSLATE.get('yesterday')] = [yesterday.toJSDate(), yesterday.toJSDate()];
-
-        // sunday = 0
-        if (this.getConfigurations().getFirstDayOfWeek(false) === 0) {
-            rangesList[TRANSLATE.get('thisWeek')] = [now.startOf('week').minus({days: 1}).toJSDate(), now.endOf('week').minus({days: 1}).toJSDate()];
-            rangesList[TRANSLATE.get('lastWeek')] = [lastWeek.startOf('week').minus({days: 1}).toJSDate(), lastWeek.endOf('week').minus({days: 1}).toJSDate()];
-        } else {
-            rangesList[TRANSLATE.get('thisWeek')] = [now.startOf('week').toJSDate(), now.endOf('week').toJSDate()];
-            rangesList[TRANSLATE.get('lastWeek')] = [lastWeek.startOf('week').toJSDate(), lastWeek.endOf('week').toJSDate()];
-        }
-
-        rangesList[TRANSLATE.get('thisMonth')] = [now.startOf('month').toJSDate(), now.endOf('month').toJSDate()];
-        rangesList[TRANSLATE.get('lastMonth')] = [lastMonth.startOf('month').toJSDate(), lastMonth.endOf('month').toJSDate()];
-        rangesList[TRANSLATE.get('thisYear')] = [now.startOf('year').toJSDate(), now.endOf('year').toJSDate()];
-        rangesList[TRANSLATE.get('lastYear')] = [lastYear.startOf('year').toJSDate(), lastYear.endOf('year').toJSDate()];
-
-        return rangesList;
     }
 
 }

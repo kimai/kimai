@@ -95,6 +95,7 @@ class InvoiceTemplateForm extends AbstractType
                 'data-msg-success' => 'action.update.success',
                 'data-msg-error' => 'action.update.error',
             ],
+            'docu_chapter' => 'invoices.html',
         ]);
     }
 }

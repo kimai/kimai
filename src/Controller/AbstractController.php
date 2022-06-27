@@ -9,13 +9,11 @@
 
 namespace App\Controller;
 
-use App\Configuration\LanguageFormattings;
 use App\Entity\Bookmark;
 use App\Entity\User;
 use App\Repository\BookmarkRepository;
 use App\Repository\Query\BaseQuery;
 use App\Timesheet\DateTimeFactory;
-use App\Utils\LocaleFormats;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseAbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -166,7 +164,6 @@ abstract class AbstractController extends BaseAbstractController implements Serv
             'translator' => TranslatorInterface::class,
             'logger' => LoggerInterface::class,
             BookmarkRepository::class => BookmarkRepository::class,
-            LanguageFormattings::class => LanguageFormattings::class,
         ]);
     }
 
@@ -177,11 +174,6 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         }
 
         return DateTimeFactory::createByUser($user);
-    }
-
-    protected function getLocaleFormats(string $locale): LocaleFormats
-    {
-        return new LocaleFormats($this->container->get(LanguageFormattings::class), $locale);
     }
 
     private function getBookmark(): BookmarkRepository

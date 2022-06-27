@@ -45,7 +45,7 @@
             <td class="{{ tables.data_table_column_class(tableName, columns, 'contact') }}">{{ entry.contact|nl2br }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'calculator') }}">{{ entry.calculator|trans({}, 'invoice-calculator') }}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'renderer') }}">{{ entry.renderer|trans({}, 'invoice-renderer') }}</td>
-            <td class="{{ tables.data_table_column_class(tableName, columns, 'language') }}">{% if entry.language is not empty %}{{ entry.language|language }}{% endif %}</td>
+            <td class="{{ tables.data_table_column_class(tableName, columns, 'language') }}">{% if entry.language is not empty %}{{ entry.language|locale_name }}{% endif %}</td>
             <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
                 {{- actions.invoice_template(entry, 'index') -}}
             </td>

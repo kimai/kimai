@@ -1221,10 +1221,6 @@
         <source>status.canceled</source>
         <target>Ακυρώθηκε</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="label.hours_24">
-        <source>label.hours_24</source>
-        <target>24 ώρες</target>
-      </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
         <target>Εμβδομάδα %week%</target>

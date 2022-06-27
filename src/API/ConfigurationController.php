@@ -11,11 +11,8 @@ declare(strict_types=1);
 
 namespace App\API;
 
-use App\API\Model\I18nConfig;
 use App\API\Model\TimesheetConfig;
-use App\Configuration\LanguageFormattings;
 use App\Configuration\SystemConfiguration;
-use App\Entity\User;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
@@ -32,51 +29,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class ConfigurationController extends BaseApiController
 {
-    /**
-     * @var ViewHandlerInterface
-     */
-    private $viewHandler;
-
-    public function __construct(ViewHandlerInterface $viewHandler)
+    public function __construct(private ViewHandlerInterface $viewHandler)
     {
-        $this->viewHandler = $viewHandler;
-    }
-
-    /**
-     * Returns the user specific locale configuration
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns the locale specific configurations for this user",
-     *      @OA\JsonContent(ref=@Model(type=I18nConfig::class))
-     * )
-     *
-     * @Rest\Get(path="/config/i18n")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
-     */
-    public function i18nAction(LanguageFormattings $formats): Response
-    {
-        /** @var User $user */
-        $user = $this->getUser();
-        $locale = $user->getLocale();
-
-        $model = new I18nConfig();
-        $model
-            ->setFormDate($formats->getDateTypeFormat($locale))
-            ->setDateTime($formats->getDateTimeFormat($locale))
-            ->setDate($formats->getDateFormat($locale))
-            ->setDuration($formats->getDurationFormat($locale))
-            ->setTime($formats->getTimeFormat($locale))
-            ->setIs24hours($user->is24Hour())
-            ->setNow($this->getDateTimeFactory()->createDateTime())
-        ;
-
-        $view = new View($model, 200);
-        $view->getContext()->setGroups(['Default', 'Config']);
-
-        return $this->viewHandler->handle($view);
     }
 
     /**

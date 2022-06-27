@@ -281,13 +281,13 @@
     {% elseif '\\DatePickerType' in type %}
         {{ value|date_short }}
     {% elseif '\\DateTimePickerType' in type %}
-        {{ value|date_full }}
+        {{ value|date_time }}
     {% elseif '\\CountryType' in type %}
-        {{ value|country }}
+        {{ value|country_name }}
     {% elseif '\\CurrencyType' in type %}
-        {{ value|currency }}
+        {{ value|currency_name }}
     {% elseif '\\LanguageType' in type %}
-        {{ value|language }}
+        {{ value|locale_name }}
     {% elseif '\\MoneyType' in type  %}
         {% set classname = class_name(entity) %}
         {% if entity is null %}

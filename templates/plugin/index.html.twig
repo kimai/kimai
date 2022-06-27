@@ -70,15 +70,13 @@
                 {% for extension in extensions|filter(e => e.bundle is not null and e.bundle not in installed) %}
                     <tr>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
-                            {{ extension.name }}
+                            <a href="{{ extension.url }}" title="{{ 'label.homepage'|trans }}" target="_blank">{{ extension.name }}</a>
                         </td>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ extension.description }}</td>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
-                            {% set actions = {'home': {'url': extension.url, 'target': '_blank'}} %}
                             {% if extension.buy is defined and extension.buy is not empty %}
-                                {% set actions = actions|merge({'buy': {'translation_domain': 'plugins', 'url': extension.buy, 'target': '_blank'}}) %}
+                                <a class="btn btn-outline-secondary" href="{{ extension.buy }}" title="{{ 'buy'|trans({}, 'plugins') }}" target="_blank">{{ icon('shop') }}</a>
                             {% endif %}
-                            {{ widgets.table_actions(actions) }}
                         </td>
                     </tr>
                 {% endfor %}

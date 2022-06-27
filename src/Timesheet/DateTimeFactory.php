@@ -15,14 +15,8 @@ use DateTimeZone;
 
 class DateTimeFactory
 {
-    /**
-     * @var DateTimeZone
-     */
-    private $timezone;
-    /**
-     * @var bool
-     */
-    private $startOnSunday;
+    private DateTimeZone $timezone;
+    private bool $startOnSunday = false;
 
     public static function createByUser(User $user): self
     {
@@ -34,13 +28,8 @@ class DateTimeFactory
         if (null === $timezone) {
             $timezone = new \DateTimeZone(date_default_timezone_get());
         }
-        $this->setTimezone($timezone);
-        $this->startOnSunday = $startOnSunday;
-    }
-
-    protected function setTimezone(DateTimeZone $timezone)
-    {
         $this->timezone = $timezone;
+        $this->startOnSunday = $startOnSunday;
     }
 
     public function getTimezone(): DateTimeZone
@@ -48,13 +37,9 @@ class DateTimeFactory
         return $this->timezone;
     }
 
-    public function getStartOfMonth(?DateTime $date = null): DateTime
+    public function getStartOfMonth(DateTime|string|null $date = null): DateTime
     {
-        if (null === $date) {
-            $date = $this->createDateTime();
-        } else {
-            $date = clone $date;
-        }
+        $date = $this->getDate($date);
 
         $date->modify('first day of this month');
         $date->setTime(0, 0, 0);
@@ -62,14 +47,22 @@ class DateTimeFactory
         return $date;
     }
 
-    public function getStartOfWeek(?DateTime $date = null): DateTime
+    private function getDate(DateTime|string|null $date = null): DateTime
     {
-        if (null === $date) {
-            $date = $this->createDateTime('now');
-        } else {
-            $date = clone $date;
+        if ($date === null) {
+            $date = 'now';
         }
 
+        if (\is_string($date)) {
+            return $this->createDateTime($date);
+        }
+
+        return clone $date;
+    }
+
+    public function getStartOfWeek(DateTime|string|null $date = null): DateTime
+    {
+        $date = $this->getDate($date);
         $firstDay = 1;
 
         if ($this->startOnSunday) {
@@ -84,14 +77,9 @@ class DateTimeFactory
         return $this->createWeekDateTime($date->format('o'), $date->format('W'), $firstDay, 0, 0, 0);
     }
 
-    public function getEndOfWeek(?DateTime $date = null): DateTime
+    public function getEndOfWeek(DateTime|string|null $date = null): DateTime
     {
-        if (null === $date) {
-            $date = $this->createDateTime();
-        } else {
-            $date = clone $date;
-        }
-
+        $date = $this->getDate($date);
         $lastDay = 7;
 
         if ($this->startOnSunday) {
@@ -106,13 +94,10 @@ class DateTimeFactory
         return $this->createWeekDateTime($date->format('o'), $date->format('W'), $lastDay, 23, 59, 59);
     }
 
-    public function getEndOfMonth(?DateTime $date = null): DateTime
+    public function getEndOfMonth(DateTime|string|null $date = null): DateTime
     {
-        if (null === $date) {
-            $date = $this->createDateTime();
-        }
+        $date = $this->getDate($date);
 
-        $date = clone $date;
         $date = $date->modify('last day of this month');
         $date->setTime(23, 59, 59);
 
@@ -143,26 +128,18 @@ class DateTimeFactory
         return DateTime::createFromFormat($format, $datetime ?? 'now', $this->getTimezone());
     }
 
-    public function createStartOfYear(?DateTime $date = null): DateTime
+    public function createStartOfYear(DateTime|string|null $date = null): DateTime
     {
-        if (null === $date) {
-            $date = $this->createDateTime();
-        } else {
-            $date = clone $date;
-        }
+        $date = $this->getDate($date);
 
         $date->modify('first day of january 00:00:00');
 
         return $date;
     }
 
-    public function createEndOfYear(?DateTime $date = null): DateTime
+    public function createEndOfYear(DateTime|string|null $date = null): DateTime
     {
-        if (null === $date) {
-            $date = $this->createDateTime();
-        } else {
-            $date = clone $date;
-        }
+        $date = $this->getDate($date);
 
         $date->modify('last day of december 23:59:59');
 

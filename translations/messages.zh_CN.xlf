@@ -1165,10 +1165,6 @@
         <source>action.add</source>
         <target>添加</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="label.hours_24">
-        <source>label.hours_24</source>
-        <target>24 小时</target>
-      </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
         <target>跳过 %rows% 多行的预览…</target>

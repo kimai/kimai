@@ -1237,10 +1237,6 @@
         <source>default_value_new</source>
         <target state="translated">Wartości domyślne dla nowych pozycji</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="label.hours_24">
-        <source>label.hours_24</source>
-        <target state="translated">24 godziny</target>
-      </trans-unit>
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target state="needs-translation">Updated at</target>

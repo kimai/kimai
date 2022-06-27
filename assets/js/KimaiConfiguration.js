@@ -23,6 +23,14 @@ export default class KimaiConfiguration {
         return name in this._configurations;
     }
 
+    isRTL() {
+        return this.get('direction') === 'rtl';
+    }
+
+    getLanguage() {
+        return this.get('locale').replace('_', '-');
+    }
+
     is24Hours() {
         return !!this.get('twentyFourHours');
     }
@@ -31,7 +39,7 @@ export default class KimaiConfiguration {
      * @param {boolean} iso
      * @return {number}
      */
-    getFirstDayOfWeek(iso) {
+    getFirstDayOfWeek(iso = true) {
         if (iso === undefined) {
             iso = true;
         }

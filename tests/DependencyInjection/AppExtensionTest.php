@@ -41,7 +41,6 @@ class AppExtensionTest extends TestCase
             'kimai' => [
                 'languages' => [
                     'en' => [
-                        'date_type' => 'dd. MM. yyyy',
                         'date' => 'A-m-d'
                     ],
                     'tr' => [
@@ -68,45 +67,33 @@ class AppExtensionTest extends TestCase
             'kimai.data_dir' => '/tmp/',
             'kimai.languages' => [
                 'en' => [
-                    'date_type' => 'dd. MM. yyyy',
-                    'date' => 'A-m-d',
-                    'date_time' => 'd.m. H:i',
-                    'duration' => '%%h:%%m h',
-                    'time' => 'H:i',
+                    'date' => 'M/d/yy',
+                    'duration' => '%%h:%%m',
+                    'time' => 'h:mm a',
                     'rtl' => false,
                 ],
                 'de' => [
-                    'date_type' => 'dd. MM. yyyy',
-                    'date' => 'A-m-d',
-                    'date_time' => 'd.m. H:i',
-                    'duration' => '%%h:%%m h',
-                    'time' => 'H:i',
+                    'date' => 'dd.MM.yy',
+                    'duration' => '%%h:%%m',
+                    'time' => 'HH:mm',
                     'rtl' => false,
                 ],
                 'he' => [
-                    'date_type' => 'dd. MM. yyyy',
-                    'date' => 'A-m-d',
-                    'date_time' => 'd.m. H:i',
-                    'duration' => '%%h:%%m h',
-                    'time' => 'H:i',
+                    'date' => 'd.M.y',
+                    'duration' => '%%h:%%m',
+                    'time' => 'H:mm',
                     'rtl' => false,
                 ],
                 'tr' => [
-                    // this value if pre-filled by the Configuration object, as "tr" is defined in the min config
-                    // and the other languages (not defined in min config) are "only" copied during runtime from "en"
-                    'date_type' => 'dd.MM.yyyy',
-                    'date' => 'X-m-d',
-                    'date_time' => 'd.m. H:i',
-                    'duration' => '%%h:%%m h',
-                    'time' => 'H:i',
+                    'date' => 'd.MM.y',
+                    'duration' => '%%h:%%m',
+                    'time' => 'HH:mm',
                     'rtl' => false,
                 ],
                 'zh_CN' => [
-                    'date_type' => 'dd. MM. yyyy',
-                    'date' => 'A-m-d',
-                    'date_time' => 'd.m. H:i',
-                    'duration' => '%%h:%%m h',
-                    'time' => 'H:i',
+                    'date' => 'y/M/d',
+                    'duration' => '%%h:%%m',
+                    'time' => 'HH:mm',
                     'rtl' => false,
                 ],
             ],

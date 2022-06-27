@@ -2,8 +2,6 @@
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 
-require('daterangepicker');
-
 require('./sass/app.scss');
 
 // ------ Kimai itself ------

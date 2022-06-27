@@ -9,7 +9,7 @@
 
 namespace App\Tests\Invoice;
 
-use App\Configuration\LanguageFormattings;
+use App\Configuration\LocaleService;
 use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\InvoiceDocument;
@@ -39,12 +39,12 @@ class ServiceInvoiceTest extends TestCase
         $languages = [
             'en' => [
                 'date' => 'Y.m.d',
-                'duration' => '%h:%m h',
+                'duration' => '%h:%m',
                 'time' => 'H:i',
             ]
         ];
 
-        $formattings = new LanguageFormattings($languages);
+        $formattings = new LocaleService($languages);
 
         $repo = new InvoiceDocumentRepository($paths);
         $invoiceRepo = $this->createMock(InvoiceRepository::class);

@@ -9,11 +9,11 @@
 
 namespace App\DependencyInjection;
 
-use App\Constants;
 use App\Kernel;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Intl\Locales;
 
 /**
  * This class that loads and manages the Kimai configuration and container parameter.
@@ -89,6 +89,14 @@ class AppExtension extends Extension
                 $config[$key] = $value;
             }
         }
+
+        // cleanup for caching
+        unset($config['invoice']['documents']);
+        unset($config['export']);
+        unset($config['dashboard']);
+        unset($config['data_dir']);
+        unset($config['permissions']);
+
         $container->setParameter('kimai.config', $config);
     }
 
@@ -96,23 +104,60 @@ class AppExtension extends Extension
     {
         $locales = explode('|', $container->getParameter('app_locales'));
 
+        // detect all registered locales and allow to choose them as well, so people get to
+        // choose the language for translation with the correct format of their location
+        /*
+        $secondLevel = [];
+        foreach (Locales::getLocales() as $locale) {
+            if (substr_count($locale, '_') === 1) {
+                $baseLocale = substr($locale, 0, strpos($locale, '_'));
+                if (in_array($baseLocale, $locales)) {
+                    $subLocale = substr($locale, strpos($locale, '_') + 1);
+                    if (!is_numeric($subLocale)) {
+                        $secondLevel[] = $locale;
+                    }
+                }
+            }
+        }
+        $locales = array_merge($locales, $secondLevel);
+        */
+
+        $appLocales = [];
+        $defaults = [
+            'date' => 'dd.MM.y',
+            'time' => 'HH:mm',
+            'rtl' => false,
+        ];
+
         // make sure all allowed locales are registered
         foreach ($locales as $locale) {
-            if (!\array_key_exists($locale, $config)) {
-                $config[$locale] = $config[Constants::DEFAULT_LOCALE];
+            if (!Locales::exists($locale)) {
+                continue;
+            }
+
+            $appLocales[$locale] = $defaults;
+            if (\array_key_exists($locale, $config)) {
+                $appLocales[$locale] = array_merge($appLocales[$locale], $config[$locale]);
             }
         }
 
         // make sure all keys are registered for every locale
-        foreach ($config as $locale => $settings) {
-            if ($locale === Constants::DEFAULT_LOCALE) {
-                continue;
-            }
+        foreach ($appLocales as $locale => $settings) {
+            // these are completely new since v2
+            // calculate everything with IntlFormatter
+            $shortDate = new \IntlDateFormatter($locale, \IntlDateFormatter::SHORT, \IntlDateFormatter::NONE);
+            $shortTime = new \IntlDateFormatter($locale, \IntlDateFormatter::NONE, \IntlDateFormatter::SHORT);
+
+            $settings['date'] = $shortDate->getPattern();
+            $settings['time'] = $shortTime->getPattern();
+
             // pre-fill all formats with the default locale settings
-            $config[$locale] = array_merge($config[Constants::DEFAULT_LOCALE], $config[$locale]);
+            $appLocales[$locale] = $settings;
         }
 
-        $container->setParameter('kimai.languages', $config);
+        ksort($appLocales);
+
+        $container->setParameter('kimai.languages', $appLocales);
     }
 
     /**

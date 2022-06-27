@@ -26,4 +26,9 @@ class TestUserEntity implements UserInterface
     public function eraseCredentials()
     {
     }
+
+    public function getTimeFormat()
+    {
+        return 'H:i';
+    }
 }

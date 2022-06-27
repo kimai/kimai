@@ -9,68 +9,36 @@
 
 namespace App\Utils;
 
-use App\Configuration\LanguageFormattings;
+use App\Configuration\LocaleService;
 use App\Entity\Timesheet;
 use DateTime;
 use Exception;
 use IntlDateFormatter;
-use Symfony\Component\Intl\Locales;
+use NumberFormatter;
+use Symfony\Component\Intl\Currencies;
 
 /**
  * Use this class to format values into locale specific representations.
  */
 final class LocaleFormatter
 {
-    /**
-     * @var LocaleFormats
-     */
-    private $localeFormats;
-    /**
-     * @var Duration
-     */
-    private $durationFormatter;
-    /**
-     * @var LocaleHelper
-     */
-    private $helper;
-    /**
-     * @var string
-     */
-    private $locale;
-    // ---------------- private cache below ----------------
-    /**
-     * @var string
-     */
-    private $dateFormat = null;
-    /**
-     * @var string
-     */
-    private $dateTimeFormat = null;
-    /**
-     * @var string
-     */
-    private $dateTypeFormat = null;
-    /**
-     * @var string
-     */
-    private $dateTimeTypeFormat = null;
-    /**
-     * @var string
-     */
-    private $timeFormat = null;
+    private ?Duration $durationFormatter = null;
+    private ?IntlDateFormatter $dateFormatter = null;
+    private ?IntlDateFormatter $dateTimeFormatter = null;
+    private ?IntlDateFormatter $timeFormatter = null;
+    private ?NumberFormatter $numberFormatter = null;
+    private ?NumberFormatter $decimalFormatter = null;
+    private ?NumberFormatter $moneyFormatter = null;
+    private ?NumberFormatter $moneyFormatterNoCurrency = null;
 
-    public function __construct(LanguageFormattings $formats, string $locale)
+    public function __construct(private LocaleService $localeService, private string $locale)
     {
-        $this->locale = $locale;
-        $this->durationFormatter = new Duration();
-        $this->helper = new LocaleHelper($locale);
-        $this->localeFormats = new LocaleFormats($formats, $locale);
     }
 
     /**
      * Transforms seconds into a duration string.
      *
-     * @param int|Timesheet|null $duration
+     * @param int|string|Timesheet|null $duration
      * @param bool $decimal
      * @return string
      */
@@ -80,10 +48,10 @@ final class LocaleFormatter
             return $this->durationDecimal($duration);
         }
 
-        $seconds = $this->getSecondsForDuration($duration);
-        $format = $this->localeFormats->getDurationFormat();
-
-        return $this->formatDuration($seconds, $format);
+        return $this->formatDuration(
+            $this->getSecondsForDuration($duration),
+            $this->localeService->getDurationFormat($this->locale)
+        );
     }
 
     /**
@@ -92,18 +60,28 @@ final class LocaleFormatter
      * @param int|Timesheet|null $duration
      * @return string
      */
-    public function durationDecimal($duration)
+    public function durationDecimal(int|Timesheet|null $duration)
     {
+        if (null === $this->numberFormatter) {
+            $this->decimalFormatter = new NumberFormatter($this->locale, NumberFormatter::DECIMAL);
+            $this->decimalFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 2);
+        }
+
         $seconds = $this->getSecondsForDuration($duration);
 
-        return $this->helper->durationDecimal($seconds);
+        $value = round($seconds / 3600, 2);
+        if ($value <= 0) {
+            $value = 0;
+        }
+
+        return $this->decimalFormatter->format((float) $value);
     }
 
     /**
-     * @param int|Timesheet|null $duration
+     * @param string|int|Timesheet|null $duration
      * @return int
      */
-    private function getSecondsForDuration($duration): int
+    private function getSecondsForDuration(string|int|Timesheet|null $duration): int
     {
         if (null === $duration) {
             return 0;
@@ -126,16 +104,30 @@ final class LocaleFormatter
             return '?';
         }
 
+        if ($this->durationFormatter === null) {
+            $this->durationFormatter = new Duration();
+        }
+
         return $this->durationFormatter->format($seconds, $format);
     }
 
     /**
-     * @param string|float $amount
+     * Used in twig filter |amount and invoice templates.
+     *
+     * @param int|float $amount
      * @return bool|false|string
      */
-    public function amount($amount)
+    public function amount(null|int|float|string $amount): bool|string
     {
-        return $this->helper->amount($amount);
+        if ($amount === null) {
+            return '0';
+        }
+
+        if (null === $this->numberFormatter) {
+            $this->numberFormatter = new NumberFormatter($this->locale, NumberFormatter::DECIMAL);
+        }
+
+        return $this->numberFormatter->format($amount);
     }
 
     /**
@@ -144,61 +136,56 @@ final class LocaleFormatter
      * @param string $currency
      * @return string
      */
-    public function currency($currency)
+    public function currency(string $currency): string
     {
-        return $this->helper->currency($currency);
-    }
-
-    /**
-     * @param string $language
-     * @return string
-     */
-    public function language($language)
-    {
-        return $this->helper->language($language);
-    }
-
-    /**
-     * @param string $country
-     * @return string
-     */
-    public function country($country)
-    {
-        return $this->helper->country($country);
-    }
-
-    /**
-     * @param float $amount
-     * @param string|null $currency
-     * @param bool $withCurrency
-     * @return string
-     */
-    public function money($amount, ?string $currency = null, bool $withCurrency = true)
-    {
-        return $this->helper->money($amount, $currency, $withCurrency);
-    }
-
-    /**
-     * Takes the list of codes of the locales (languages) enabled in the
-     * application and returns an array with the name of each locale written
-     * in its own language (e.g. English, Français, Español, etc.)
-     *
-     * @return array
-     */
-    public function getLocales()
-    {
-        $locales = [];
-        foreach ($this->localeFormats->getAvailableLanguages() as $locale) {
-            $locales[] = ['code' => $locale, 'name' => Locales::getName($locale, $locale)];
+        try {
+            return Currencies::getSymbol(strtoupper($currency), $this->locale);
+        } catch (\Exception $ex) {
         }
 
-        return $locales;
+        return $currency;
+    }
+
+    public function money(null|int|float $amount, ?string $currency = null, bool $withCurrency = true): string
+    {
+        if (null === $currency) {
+            $withCurrency = false;
+        }
+
+        if ($amount === null) {
+            $amount = 0;
+        }
+
+        if (false === $withCurrency) {
+            if (null === $this->moneyFormatterNoCurrency) {
+                $this->moneyFormatterNoCurrency = new NumberFormatter($this->locale, NumberFormatter::CURRENCY);
+                $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::POSITIVE_PREFIX, '');
+                $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::POSITIVE_SUFFIX, '');
+                $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::NEGATIVE_PREFIX, '-');
+                $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::NEGATIVE_SUFFIX, '');
+            }
+
+            return $this->moneyFormatterNoCurrency->format($amount, NumberFormatter::TYPE_DEFAULT);
+        }
+
+        if (null === $this->moneyFormatter) {
+            $this->moneyFormatter = new NumberFormatter($this->locale, NumberFormatter::CURRENCY);
+        }
+
+        return $this->moneyFormatter->formatCurrency($amount, $currency);
     }
 
     public function dateShort(DateTime|string|null $date): string
     {
-        if (null === $this->dateFormat) {
-            $this->dateFormat = $this->localeFormats->getDateFormat();
+        if (null === $this->dateFormatter) {
+            $this->dateFormatter = new IntlDateFormatter(
+                $this->locale,
+                IntlDateFormatter::MEDIUM,
+                IntlDateFormatter::MEDIUM,
+                date_default_timezone_get(),
+                IntlDateFormatter::GREGORIAN,
+                $this->localeService->getDateFormat($this->locale)
+            );
         }
 
         if (!$date instanceof DateTime) {
@@ -209,16 +196,7 @@ final class LocaleFormatter
             }
         }
 
-        return $date->format($this->dateFormat);
-    }
-
-    private function getDateTypeFormat(): string
-    {
-        if (null === $this->dateTypeFormat) {
-            $this->dateTypeFormat = $this->localeFormats->getDateTypeFormat();
-        }
-
-        return $this->dateTypeFormat;
+        return $this->dateFormatter->format($date);
     }
 
     /**
@@ -227,8 +205,15 @@ final class LocaleFormatter
      */
     public function dateTime($date)
     {
-        if (null === $this->dateTimeFormat) {
-            $this->dateTimeFormat = $this->localeFormats->getDateTimeFormat();
+        if (null === $this->dateTimeFormatter) {
+            $this->dateTimeFormatter = new IntlDateFormatter(
+                $this->locale,
+                IntlDateFormatter::MEDIUM,
+                IntlDateFormatter::MEDIUM,
+                date_default_timezone_get(),
+                IntlDateFormatter::GREGORIAN,
+                $this->localeService->getDateTimeFormat($this->locale)
+            );
         }
 
         if (!$date instanceof DateTime) {
@@ -239,46 +224,7 @@ final class LocaleFormatter
             }
         }
 
-        return $date->format($this->dateTimeFormat);
-    }
-
-    /**
-     * @param DateTime|string $date
-     * @param string $timeFormat
-     * @param bool $stripMidnight
-     * @return bool|false|string
-     */
-    public function dateTimeFull($date, string $timeFormat, bool $stripMidnight = false)
-    {
-        if (null === $this->dateTimeTypeFormat) {
-            $converter = new DateFormatConverter();
-            $this->dateTimeTypeFormat = $this->getDateTypeFormat() . ' ' . $converter->convert($timeFormat);
-        }
-
-        if (!$date instanceof DateTime) {
-            try {
-                $date = new DateTime($date);
-            } catch (Exception $ex) {
-                return $date;
-            }
-        }
-
-        $format = $this->dateTimeTypeFormat;
-
-        if ($stripMidnight && $date->format('H') == '00' && $date->format('i') == '00') {
-            $format = $this->localeFormats->getDateTypeFormat();
-        }
-
-        $formatter = new IntlDateFormatter(
-            $this->locale,
-            IntlDateFormatter::MEDIUM,
-            IntlDateFormatter::MEDIUM,
-            date_default_timezone_get(),
-            IntlDateFormatter::GREGORIAN,
-            $format
-        );
-
-        return $formatter->format($date);
+        return $this->dateTimeFormatter->format($date);
     }
 
     /**
@@ -305,17 +251,28 @@ final class LocaleFormatter
      * @return string
      * @throws Exception
      */
-    public function time($date, string $format = null)
+    public function time($date): string
     {
-        if (null === $this->timeFormat) {
-            $this->timeFormat = $this->localeFormats->getTimeFormat();
+        if (null === $this->timeFormatter) {
+            $this->timeFormatter = new IntlDateFormatter(
+                $this->locale,
+                IntlDateFormatter::MEDIUM,
+                IntlDateFormatter::MEDIUM,
+                date_default_timezone_get(),
+                IntlDateFormatter::GREGORIAN,
+                $this->localeService->getTimeFormat($this->locale)
+            );
         }
 
         if (!$date instanceof DateTime) {
-            $date = new DateTime($date);
+            try {
+                $date = new DateTime($date);
+            } catch (Exception $ex) {
+                return $date;
+            }
         }
 
-        return $date->format($format ?? $this->timeFormat);
+        return $this->timeFormatter->format($date);
     }
 
     /**

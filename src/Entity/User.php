@@ -451,20 +451,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return null;
     }
 
-    public function getTimeFormat(): string
-    {
-        if ($this->is24Hour()) {
-            return 'H:i';
-        }
-
-        return 'h:i A';
-    }
-
-    public function is24Hour(): bool
-    {
-        return (bool) $this->getPreferenceValue(UserPreference::HOUR_24, true);
-    }
-
     /**
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("language"),

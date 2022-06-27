@@ -9,23 +9,16 @@
 
 namespace App\Utils;
 
-/**
- * This class is used to convert PHP date format to moment.js format.
- *
- * @author Yonel Ceruto <yonelceruto@gmail.com>
- */
-class MomentFormatConverter
+class JavascriptFormatConverter
 {
     /**
-     * This defines the mapping between PHP ICU date format (key) and moment.js date format (value)
-     * For ICU formats see https://unicode-org.github.io/icu/userguide/format_parse/datetime/#datetime-format-syntax
-     * For Moment formats see http://momentjs.com/docs/#/displaying/format/
+     * Convert PHP date format to litepicker compatible format.
      *
      * @var array
      */
     private static $formatConvertRules = [
         // year
-        'yyyy' => 'YYYY', 'yy' => 'YY', 'y' => 'YYYY',
+        'yyyy' => 'YYYY', 'yy' => 'YYYY', 'y' => 'YYYY',
         // day
         'dd' => 'DD', 'd' => 'D',
         // day of week

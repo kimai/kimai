@@ -1169,10 +1169,6 @@
         <source>stats.workingTimeWeekShort</source>
         <target state="translated">Woche %week%</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="label.hours_24">
-        <source>label.hours_24</source>
-        <target state="translated">24 Stunden</target>
-      </trans-unit>
       <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
         <target state="translated">Darstellung der Einträge in Auswahllisten</target>

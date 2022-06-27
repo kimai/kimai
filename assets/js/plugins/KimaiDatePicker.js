@@ -9,8 +9,9 @@
  * [KIMAI] KimaiDatePicker: single date selects (currently unused)
  */
 
-import jQuery from 'jquery';
 import KimaiPlugin from '../KimaiPlugin';
+import Litepicker from 'litepicker';
+import 'litepicker/dist/plugins/mobilefriendly';
 
 export default class KimaiDatePicker extends KimaiPlugin {
 
@@ -23,50 +24,68 @@ export default class KimaiDatePicker extends KimaiPlugin {
         return 'date-picker';
     }
 
-    activateDatePicker(selector) {
+    init() {
+        window.disableLitepickerStyles = true;
+        this.pickers = {};
+    }
+
+    activate(selector) {
         const TRANSLATE = this.getTranslation();
-        const DATE_UTILS = this.getDateUtils();
-        const firstDow = this.getConfigurations().getFirstDayOfWeek(false);
+        const FIRST_DOW = this.getConfigurations().getFirstDayOfWeek(false);
+        const LANGUAGE = this.getConfigurations().getLanguage();
 
-        jQuery(selector + ' ' + this.selector).each(function(index) {
-            let localeFormat = jQuery(this).data('format');
-            jQuery(this).daterangepicker({
-                singleDatePicker: true,
-                showDropdowns: true,
-                autoUpdateInput: false,
-                drops: 'down',
-                locale: {
-                    format: localeFormat,
-                    firstDay: firstDow,
-                    applyLabel: TRANSLATE.get('confirm'),
-                    cancelLabel: TRANSLATE.get('cancel'),
-                    customRangeLabel: TRANSLATE.get('customRange'),
-                    daysOfWeek: DATE_UTILS.getWeekDaysShort(),
-                    monthNames: DATE_UTILS.getMonthNames(),
-                }
-            });
+        let options = {};
 
-            jQuery(this).on('show.daterangepicker', function (ev, picker) {
-                if (picker.element.offset().top - jQuery(window).scrollTop() + picker.container.outerHeight() + 30 > jQuery(window).height()) {
-                    // "up" is not possible here, because the code is triggered on many mobile phones and the picker then appears out of window
-                    picker.drops = 'auto';
-                    picker.move();
-                }
-            });
+        let previous = `<i class="fas fa-chevron-left"></i>`;
+        let next = `<i class="fas fa-chevron-right"></i>`;
 
-            jQuery(this).on('apply.daterangepicker', function(ev, picker) {
-                jQuery(this).val(picker.startDate.format(localeFormat));
-                jQuery(this).trigger("change");
-            });
+        if (this.getConfigurations().isRTL()) {
+            previous = `<i class="fas fa-chevron-right"></i>`;
+            next = `<i class="fas fa-chevron-left"></i>`;
+        }
+
+        options = {...options, ...{
+            buttonText: {
+                previousMonth: previous,
+                nextMonth: next,
+                apply: TRANSLATE.get('confirm'),
+                cancel: TRANSLATE.get('cancel'),
+            },
+        }};
+
+        this.pickers[selector] = [].slice.call(document.querySelectorAll(selector + ' ' + this.selector)).map((element) => {
+            if (element.dataset.format === undefined) {
+                console.log('Trying to bind litepicker to an element without data-format attribute');
+            }
+            options = {...options, ...{
+                format: element.dataset.format,
+                showTooltip: false,
+                element: element,
+                lang: LANGUAGE,
+                autoRefresh: true,
+                firstDay: FIRST_DOW, // Litepicker: 0 = Sunday, 1 = Monday
+            }};
+
+            return new Litepicker(this._prepareOptions(options));
         });
     }
 
-    destroyDatePicker(selector) {
-        jQuery(selector + ' ' + this.selector).each(function(index) {
-            if (jQuery(this).data('daterangepicker') !== undefined) {
-                jQuery(this).data('daterangepicker').remove();
-            }
-        });
+    _prepareOptions(options) {
+        return {...options, ...{
+            plugins: ['mobilefriendly'],
+        }};
+    }
+
+    destroy(selector) {
+        if (this.pickers[selector] === undefined) {
+            return;
+        }
+
+        for (const picker of this.pickers[selector]) {
+            picker.destroy();
+        }
+
+        delete this.pickers[selector];
     }
 
 }

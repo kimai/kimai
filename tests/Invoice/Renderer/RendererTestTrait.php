@@ -9,7 +9,7 @@
 
 namespace App\Tests\Invoice\Renderer;
 
-use App\Configuration\LanguageFormattings;
+use App\Configuration\LocaleService;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\Customer;
@@ -73,12 +73,12 @@ trait RendererTestTrait
         $languages = [
             'en' => [
                 'date' => 'Y.m.d',
-                'duration' => '%h:%m h',
+                'duration' => '%h:%m',
                 'time' => 'H:i',
             ]
         ];
 
-        $formattings = new LanguageFormattings($languages);
+        $formattings = new LocaleService($languages);
 
         return new DefaultInvoiceFormatter($formattings, 'en');
     }

@@ -1197,10 +1197,6 @@
         <source>status.canceled</source>
         <target>Annullata</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="label.hours_24">
-        <source>label.hours_24</source>
-        <target>24 ore</target>
-      </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>La directory «%dir%» non esiste e non può essere creata.</target>

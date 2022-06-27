@@ -1177,10 +1177,6 @@
         <source>delete_warning.short_stats</source>
         <target>현재 %records%의 시간 기록이 존재하며, %duration%의 전체 총합입니다.</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="label.hours_24">
-        <source>label.hours_24</source>
-        <target>24시간</target>
-      </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
         <target>주 %week%</target>

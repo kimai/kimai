@@ -1209,10 +1209,6 @@
         <source>team.add_user.help</source>
         <target state="translated">Lisää uusi käyttäjä ryhmään valitsemalla se luettelosta. Jälkeenpäin voit päättää, pitäisikö käyttäjästä tulla tiiminjohtaja.</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="label.hours_24">
-        <source>label.hours_24</source>
-        <target state="translated">24 tuntia</target>
-      </trans-unit>
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target state="translated">Päivitetty klo</target>

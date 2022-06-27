@@ -9,7 +9,7 @@
 
 namespace App\Tests\Export\Renderer;
 
-use App\Configuration\LanguageFormattings;
+use App\Configuration\LocaleService;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\Customer;
@@ -48,7 +48,7 @@ abstract class AbstractRendererTest extends KernelTestCase
         $languages = [
             'en' => [
                 'date' => 'Y.m.d',
-                'duration' => '%h:%m h',
+                'duration' => '%h:%m',
                 'time' => 'H:i',
             ]
         ];
@@ -57,7 +57,7 @@ abstract class AbstractRendererTest extends KernelTestCase
         $security->expects($this->any())->method('getUser')->willReturn(new User());
 
         $translator = $this->createMock(TranslatorInterface::class);
-        $dateExtension = new LocaleFormatExtensions(new LanguageFormattings($languages), $security);
+        $dateExtension = new LocaleFormatExtensions(new LocaleService($languages), $security);
 
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());

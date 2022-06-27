@@ -52,7 +52,7 @@
                 {% if customer.country is not empty %}
                     <tr>
                         <th>{{ 'label.country'|trans }}</th>
-                        <td>{{ customer.country|country }}</td>
+                        <td>{{ customer.country|country_name }}</td>
                     </tr>
                 {% endif %}
                 {% if customer.contact is not empty %}
@@ -94,7 +94,7 @@
                 {% if customer.timezone is not empty %}
                     <tr>
                         <th>{{ 'label.timezone'|trans }}</th>
-                        <td>{{ customer_now|date_full }} ({{ customer.timezone }})</td>
+                        <td>{{ customer_now|date_time }} ({{ customer.timezone }})</td>
                     </tr>
                 {% endif %}
                 {% if customer.currency is not empty %}

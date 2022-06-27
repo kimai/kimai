@@ -10,6 +10,7 @@
 namespace App\Tests\Validator\Constraints;
 
 use App\Activity\ActivityStatisticService;
+use App\Configuration\LocaleService;
 use App\Configuration\SystemConfiguration;
 use App\Customer\CustomerStatisticService;
 use App\Entity\Activity;
@@ -91,7 +92,9 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
 
         $auth = $this->createMock(AuthorizationCheckerInterface::class);
 
-        return new TimesheetBudgetUsedValidator($configuration, $customerRepository, $projectRepository, $activityRepository, $timesheetRepository, $rateService, $auth);
+        $localeService = $this->createMock(LocaleService::class);
+
+        return new TimesheetBudgetUsedValidator($configuration, $customerRepository, $projectRepository, $activityRepository, $timesheetRepository, $rateService, $auth, $localeService);
     }
 
     public function testConstraintIsInvalid()

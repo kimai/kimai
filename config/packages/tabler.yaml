@@ -41,7 +41,7 @@ tabler:
         activity: fas fa-tasks
         admin: fas fa-wrench
         administration: fas fa-toolbox
-        applications: far fa-rocket
+        applications: fas fa-rocket
         audit: fas fa-history
         avatar: fas fa-user
         back: fas fa-long-arrow-alt-left

@@ -10,7 +10,6 @@
  */
 
 import KimaiPlugin from '../KimaiPlugin';
-import jQuery from "jquery";
 import { DateTime, Duration, Interval } from 'luxon';
 
 export default class KimaiEditTimesheetForm extends KimaiPlugin {
@@ -25,16 +24,26 @@ export default class KimaiEditTimesheetForm extends KimaiPlugin {
      */
     destroyForm(form)
     {
-        if (this.begin !== undefined) {
-            this.begin.removeEventListener('change', this.beginListener);
+        if (this.beginDate !== undefined) {
+            this.beginDate.removeEventListener('change', this.beginListener);
             delete this.beginListener;
             delete this.begin;
         }
 
-        if (this.end !== undefined) {
-            this.end.removeEventListener('change', this.endListener);
+        if (this.beginTime !== undefined) {
+            this.beginTime.removeEventListener('change', this.beginListener);
+            delete this.beginTime;
+        }
+
+        if (this.endDate !== undefined) {
+            this.endDate.removeEventListener('change', this.endListener);
             delete this.endListener;
             delete this.end;
+        }
+
+        if (this.endTime !== undefined) {
+            this.endTime.removeEventListener('change', this.endListener);
+            delete this.endTime;
         }
 
         if (this.duration !== undefined) {
@@ -50,20 +59,24 @@ export default class KimaiEditTimesheetForm extends KimaiPlugin {
     {
         this.formPrefix = form.name;
 
-        this.begin = document.getElementById(this.formPrefix + '_begin');
-        this.end = document.getElementById(this.formPrefix + '_end');
+        this.beginDate = document.getElementById(this.formPrefix + '_begin_date');
+        this.beginTime = document.getElementById(this.formPrefix + '_begin_time');
+        this.endDate = document.getElementById(this.formPrefix + '_end_date');
+        this.endTime = document.getElementById(this.formPrefix + '_end_time');
         this.duration = document.getElementById(this.formPrefix + '_duration');
 
-        if (this.begin === null || this.end === null || this.duration === null) {
+        if (this.beginDate === null || this.endDate === null || this.beginTime === null || this.endTime === null || this.duration === null) {
             return;
         }
 
-        this.beginListener = () => this.changedBegin(this.begin.value);
-        this.endListener = () => this.changedEnd(this.end.value);
+        this.beginListener = () => this.changedBegin();
+        this.endListener = () => this.changedEnd();
         this.durationListener = () => this.changedDuration();
 
-        this.begin.addEventListener('change', this.beginListener);
-        this.end.addEventListener('change', this.endListener);
+        this.beginDate.addEventListener('change', this.beginListener);
+        this.beginTime.addEventListener('change', this.beginListener);
+        this.endDate.addEventListener('change', this.endListener);
+        this.endTime.addEventListener('change', this.endListener);
         this.duration.addEventListener('change', this.durationListener);
     }
 
@@ -73,43 +86,59 @@ export default class KimaiEditTimesheetForm extends KimaiPlugin {
     }
 
     /**
+     * @returns {DateTime|null}
+     * @private
+     */
+    _getBegin() {
+        if (this.beginDate.value === '' || this.beginTime.value === '') {
+            return null;
+        }
+        const date = this.getDateUtils().fromHtml5Input(this.beginDate.value, this.beginTime.value);
+        if (date.invalid) {
+            return null;
+        }
+        return date;
+    }
+
+    /**
+     * @returns {DateTime|null}
+     * @private
+     */
+    _getEnd() {
+        if (this.endDate.value === '' || this.endTime.value === '') {
+            return null;
+        }
+        const date = this.getDateUtils().fromHtml5Input(this.endDate.value, this.endTime.value);
+        if (date.invalid) {
+            return null;
+        }
+        return date;
+    }
+
+    /**
      * Ruleset:
      * - invalid begin => skip
      * - empty end => set end to begin (only if duration > 0 = running record)
      * - invalid end => skip
      * - calculate duration
-     *
-     * @param {string} value
      */
-    changedBegin(value)
+    changedBegin()
     {
-        const format = this.end.dataset.format;
-        const duration = this.getParsedDuration();
-
-        let begin = this.getDateUtils().fromFormat(value, format);
-        if (!begin.isValid) {
-            this.setDurationAsString(null);
-        }
-
-        if (this.end.value === '' && duration.as('seconds') > 0) {
-            this.applyDateToField(this.end, begin, format);
-        }
-
-        let end = this.getDateUtils().fromFormat(this.end.value, format);
-        if (!end.isValid) {
+        const begin = this._getBegin();
+        if (begin === null) {
             return;
         }
 
-        if (Interval.fromDateTimes(begin, end).isBefore(begin)) {
-            this.applyDateToField(this.end, begin.plus(duration), format);
+        const duration = this.getParsedDuration();
+        const hasDuration = duration.as('seconds') > 0;
+        const end = this._getEnd();
+
+        if (end === null && hasDuration) {
+            this.applyDateToField(begin.plus(duration), this.endDate, this.endTime);
+        } else {
+            this._updateDuration();
         }
-
-        begin = this.getDateUtils().fromFormat(value, format);
-        end = this.getDateUtils().fromFormat(this.end.value, format);
-
-        this.setDurationAsString(end.diff(begin));
     }
-
 
     /**
      * Ruleset:
@@ -117,36 +146,39 @@ export default class KimaiEditTimesheetForm extends KimaiPlugin {
      * - empty begin => set begin to end
      * - invalid begin => skip
      * - calculate duration
-     *
-     * @param {string} value
      */
-    changedEnd(value)
+    changedEnd()
     {
-        const format = this.begin.dataset.format;
-        const duration = this.getParsedDuration();
-
-        let end = this.getDateUtils().fromFormat(value, format);
-        if (!end.isValid) {
-            this.setDurationAsString(null);
-        }
-
-        if (this.begin.value === '') {
-            this.applyDateToField(this.begin, end, format);
-        }
-
-        let begin = this.getDateUtils().fromFormat(this.begin.value, format);
-        if (!begin.isValid) {
+        const end = this._getEnd();
+        // empty or invalid date => reset duration and stop progress
+        if (end === null) {
             return;
         }
 
-        if (Interval.fromDateTimes(begin, end).isBefore(begin)) {
-            this.applyDateToField(this.begin, end.minus(duration), format);
+        const duration = this.getParsedDuration();
+        const hasDuration = duration.as('seconds') > 0;
+        const begin = this._getBegin();
+
+        if (begin === null && hasDuration) {
+            this.applyDateToField(end.minus(duration), this.beginDate, this.beginTime);
+        } else {
+            this._updateDuration();
+        }
+    }
+
+    /**
+     * @private
+     */
+    _updateDuration() {
+        const begin = this._getBegin();
+        const end = this._getEnd();
+        let newDuration = null;
+
+        if (begin !== null && end !== null) {
+            newDuration = end.diff(begin);
         }
 
-        begin = this.getDateUtils().fromFormat(this.begin.value, format);
-        end = this.getDateUtils().fromFormat(value, format);
-
-        this.setDurationAsString(end.diff(begin));
+        this.setDurationAsString(newDuration);
     }
 
     /**
@@ -160,28 +192,33 @@ export default class KimaiEditTimesheetForm extends KimaiPlugin {
     {
         const duration = this.getParsedDuration();
         if (!duration.isValid) {
+            this.setDurationAsString(null);
             return;
         }
 
-        const format = this.end.dataset.format;
-        const begin = this.begin.value;
-        const end = this.end.value;
+        const begin = this._getBegin();
+        let end = this._getEnd();
         const seconds = duration.as('seconds');
 
-        if (begin === '' && end === '') {
-            this.applyDateToField(this.begin, DateTime.now(), format);
-            this.applyDateToField(this.end, this.getDateUtils().fromFormat(begin, format).plus({seconds: seconds}), format);
-        } else if (begin === '' && end !== '') {
-            this.applyDateToField(this.begin, this.getDateUtils().fromFormat(end, format).minus({seconds: seconds}), format);
-        } else if (begin !== '' && duration.as('seconds') > 0) {
-            this.applyDateToField(this.end, this.getDateUtils().fromFormat(begin, format).plus({seconds: seconds}), format);
+        if (seconds < 0) {
+            end = null;
+        }
+
+        if (begin === null && end === null) {
+            const newBegin = DateTime.now();
+            this.applyDateToField(newBegin, this.beginDate, this.beginTime);
+            this.applyDateToField(newBegin.plus({seconds: seconds}), this.endDate, this.endTime);
+        } else if (begin === null && end !== null) {
+            this.applyDateToField(end.minus({seconds: seconds}), this.beginDate, this.beginTime);
+        } else if (begin !== null && seconds > 0) {
+            this.applyDateToField(begin.plus({seconds: seconds}), this.endDate, this.endTime);
         }
     }
 
     /**
      * Writes the value of a duration object as human-readable string into the duration field
      *
-     * @param {Duration} duration
+     * @param {Duration|null} duration
      */
     setDurationAsString(duration)
     {
@@ -194,12 +231,20 @@ export default class KimaiEditTimesheetForm extends KimaiPlugin {
             return;
         }
 
-        let hours = Math.floor(duration.as('hours'));
-        if (hours < 10) {
-            hours = '0' + hours;
+        const seconds = duration.as('seconds');
+        if (seconds < 0) {
+            this.getDurationField().value = '';
+            return;
         }
 
-        this.getDurationField().value = hours + ':' + ('0' + duration.minutes).slice(-2);
+        const hours = Math.floor(seconds / 3600);
+        let minutes = Math.floor((seconds - (hours * 3600)) / 60);
+
+        if (minutes < 10) {
+            minutes = '0' + minutes;
+        }
+
+        this.getDurationField().value = hours + ':' + minutes;
     }
 
     /**
@@ -213,21 +258,20 @@ export default class KimaiEditTimesheetForm extends KimaiPlugin {
     }
 
     /**
-     * @param {HTMLElement} field
-     * @param {DateTime} dateTime
-     * @param {string} format
+     * @param {DateTime|null} dateTime
+     * @param {HTMLElement} dateField
+     * @param {HTMLElement} timeField
      */
-    applyDateToField(field, dateTime, format)
+    applyDateToField(dateTime, dateField, timeField)
     {
-        format = this.getDateUtils()._getFormat(format); // FIXME
-
-        field.value = dateTime.toFormat(format);
-        if (jQuery(field).data('daterangepicker') !== undefined) {
-            jQuery(field).data('daterangepicker').setStartDate(dateTime);
-            jQuery(field).data('daterangepicker').setEndDate(dateTime);
-            // make sure that the project list is reloaded and the dates can be compared against the project end date
-            document.getElementById(this.formPrefix + '_customer').dispatchEvent(new Event('change'));
+        if (dateTime === null || dateTime.invalid) {
+            dateField.value = '';
+            timeField.value = '';
+            return;
         }
+
+        dateField.value = dateTime.toFormat('yyyy-LL-dd');
+        timeField.value = dateTime.toFormat('HH:mm');
     }
 
 }

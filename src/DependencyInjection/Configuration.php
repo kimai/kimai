@@ -14,7 +14,6 @@ use App\Entity\Customer;
 use App\Entity\User;
 use App\Repository\InvoiceDocumentRepository;
 use App\Timesheet\Rounding\RoundingInterface;
-use App\Widget\Type\Counter;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -51,7 +50,6 @@ class Configuration implements ConfigurationInterface
                 ->append($this->getThemeNode())
                 ->append($this->getCompanyNode())
                 ->append($this->getDashboardNode())
-                ->append($this->getWidgetsNode())
                 ->append($this->getDefaultsNode())
                 ->append($this->getPermissionsNode())
                 ->append($this->getLdapNode())
@@ -328,12 +326,9 @@ class Configuration implements ConfigurationInterface
             ->useAttributeAsKey('name', false) // see https://github.com/symfony/symfony/issues/18988
             ->arrayPrototype()
                 ->children()
-                    ->scalarNode('date_type')->defaultValue('dd.MM.yyyy')->end()        // for DateType
-                    ->scalarNode('date')->defaultValue('d.m.Y')->end()                  // for display via twig
-                    ->scalarNode('date_time')->defaultValue('d.m. H:i')->end()          // for display via twig
-                    ->scalarNode('duration')->defaultValue('%%h:%%m h')->end()          // for display via twig
-                    ->scalarNode('time')->defaultValue('H:i')->end()                    // for display via twig
-                    ->scalarNode('rtl')->defaultFalse()->end()                          // for template direction
+                    ->scalarNode('date')->defaultValue('dd.MM.y')->end()
+                    ->scalarNode('time')->defaultValue('HH:mm')->end()
+                    ->scalarNode('rtl')->defaultFalse()->end()
                 ->end()
             ->end()
         ;
@@ -520,33 +515,6 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->integerNode('password_reset_token_ttl')
                     ->defaultValue(86400)
-                ->end()
-            ->end()
-        ;
-
-        return $node;
-    }
-
-    private function getWidgetsNode(): ArrayNodeDefinition
-    {
-        $builder = new TreeBuilder('widgets');
-        /** @var ArrayNodeDefinition $node */
-        $node = $builder->getRootNode();
-
-        $node
-            ->requiresAtLeastOneElement()
-            ->useAttributeAsKey('key')
-            ->arrayPrototype()
-                ->addDefaultsIfNotSet()
-                ->children()
-                    ->scalarNode('title')->isRequired()->end()
-                    ->scalarNode('query')->isRequired()->end()
-                    ->booleanNode('user')->defaultFalse()->end()
-                    ->scalarNode('begin')->end()
-                    ->scalarNode('end')->end()
-                    ->scalarNode('icon')->defaultValue('')->end()
-                    ->scalarNode('color')->defaultValue('')->end()
-                    ->scalarNode('type')->defaultValue(Counter::class)->end()
                 ->end()
             ->end()
         ;

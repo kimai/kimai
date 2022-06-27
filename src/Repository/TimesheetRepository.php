@@ -312,7 +312,6 @@ class TimesheetRepository extends EntityRepository
 
         $qb->select('t')
             ->from(Timesheet::class, 't')
-            ->andWhere($qb->expr()->isNotNull('t.begin'))
             ->andWhere($qb->expr()->isNull('t.end'))
             ->orderBy('t.begin', 'DESC');
 

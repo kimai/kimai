@@ -9,17 +9,17 @@
 
 namespace App\Tests\Utils;
 
-use App\Utils\MomentFormatConverter;
+use App\Utils\JavascriptFormatConverter;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Utils\MomentFormatConverter
+ * @covers \App\Utils\JavascriptFormatConverter
  */
-class MomentFormatConverterTest extends TestCase
+class JavascriptFormatConverterTest extends TestCase
 {
     public function test()
     {
-        $sut = new MomentFormatConverter();
+        $sut = new JavascriptFormatConverter();
         $this->assertEquals('DD.MM.YYYY HH:mm', $sut->convert('dd.MM.yyyy HH:mm'));
         $this->assertEquals('DD-MM-YYYY HH:mm', $sut->convert('dd-MM-yyyy HH:mm'));
         $this->assertEquals('DD/MM/YYYY HH:mm', $sut->convert('dd/MM/yyyy HH:mm'));

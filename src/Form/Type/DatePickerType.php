@@ -9,13 +9,12 @@
 
 namespace App\Form\Type;
 
-use App\Utils\LocaleSettings;
+use App\Configuration\LocaleService;
+use App\Utils\FormFormatConverter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -23,7 +22,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DatePickerType extends AbstractType
 {
-    public function __construct(private LocaleSettings $localeSettings)
+    public function __construct(private LocaleService $localeService)
     {
     }
 
@@ -53,27 +52,16 @@ class DatePickerType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $pickerFormat = $this->localeSettings->getDatePickerFormat();
-        $dateFormat = $this->localeSettings->getDateTypeFormat();
+        $format = $this->localeService->getDateFormat(\Locale::getDefault());
+        $formFormat = (new FormFormatConverter())->convert($format);
 
         $resolver->setDefaults([
             'widget' => 'single_text',
             'html5' => false,
-            'format' => $dateFormat,
-            'format_picker' => $pickerFormat,
+            'format' => $formFormat,
             'model_timezone' => date_default_timezone_get(),
             'view_timezone' => date_default_timezone_get(),
             'force_time' => null,
-        ]);
-    }
-
-    public function buildView(FormView $view, FormInterface $form, array $options): void
-    {
-        $view->vars['attr'] = array_merge($view->vars['attr'], [
-            'data-datepickerenable' => 'on',
-            'autocomplete' => 'off',
-            'placeholder' => strtoupper($options['format']),
-            'data-format' => $options['format_picker'],
         ]);
     }
 

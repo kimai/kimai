@@ -9,21 +9,17 @@
 
 namespace App\Utils;
 
-class DateFormatConverter
+class FormFormatConverter
 {
     /**
-     * This defines the mapping between PHP date format (key) and ICU date format (value).
-     * https://unicode-org.github.io/icu/userguide/format_parse/datetime/#datetime-format-syntax
+     * This defines the mapping between ICU date format and Symfony Form/Date format.
      *
      * @var array
      */
     private static $formatConvertRules = [
-        // hours
-        'h' => 'hh', 'H' => 'HH',
-        // minutes
-        'i' => 'mm',
-        // am/pm to AM/PM
-        'A' => 'a'
+        // Litepicker interprets a year like 22 as 1922 instead of 2022
+        // so we have to make sure that it is always a4-digit year
+        'yy' => 'yyyy', 'y' => 'yyyy',
     ];
 
     public function convert(string $format): string

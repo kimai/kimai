@@ -860,10 +860,6 @@
         <source>export.period</source>
         <target>الفترة الزمنية</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="label.hours_24">
-        <source>label.hours_24</source>
-        <target>24 ساعة</target>
-      </trans-unit>
       <trans-unit id="DZ7XGML" resname="profile.teams">
         <source>profile.teams</source>
         <target>الفِرَق</target>

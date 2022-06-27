@@ -34,10 +34,6 @@
         <source>daterangepicker.thisYear</source>
         <target>Năm này</target>
       </trans-unit>
-      <trans-unit id="MSENTM_" resname="daterangepicker.customRange">
-        <source>daterangepicker.customRange</source>
-        <target>Tùy chỉnh phạm vi</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

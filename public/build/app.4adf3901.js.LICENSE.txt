@@ -5,6 +5,30 @@
   */
 
 /*!
+ * 
+ * litepicker.umd.js
+ * Litepicker v2.0.12 (https://github.com/wakirin/Litepicker)
+ * Package: litepicker (https://www.npmjs.com/package/litepicker)
+ * License: MIT (https://github.com/wakirin/Litepicker/blob/master/LICENCE.md)
+ * Copyright 2019-2021 Rinat G.
+ *     
+ * Hash: 504eef9c08cb42543660
+ * 
+ */
+
+/*!
+ * 
+ * plugins/mobilefriendly.js
+ * Litepicker v2.0.12 (https://github.com/wakirin/Litepicker)
+ * Package: litepicker (https://www.npmjs.com/package/litepicker)
+ * License: MIT (https://github.com/wakirin/Litepicker/blob/master/LICENCE.md)
+ * Copyright 2019-2021 Rinat G.
+ *     
+ * Hash: b9a648207aabe31b2912
+ * 
+ */
+
+/*!
  * Sizzle CSS Selector Engine v2.3.5
  * https://sizzlejs.com/
  *
@@ -73,10 +97,6 @@
 
 /*!
  * [KIMAI] KimaiDateRangePicker: activate the (daterange picker) compound field in toolbar
- */
-
-/*!
- * [KIMAI] KimaiDateTimePicker: activate the (datetime picker) field in timesheet edit dialog
  */
 
 /*!
@@ -164,15 +184,3 @@
  *
  * Date: 2020-05-04T22:49Z
  */
-
-/**
-* @version: 3.1
-* @author: Dan Grossman http://www.dangrossman.info/
-* @copyright: Copyright (c) 2012-2019 Dan Grossman. All rights reserved.
-* @license: Licensed under the MIT license. See http://www.opensource.org/licenses/mit-license.php
-* @website: http://www.daterangepicker.com/
-*/
-
-//! moment.js
-
-//! moment.js locale configuration

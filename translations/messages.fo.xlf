@@ -955,10 +955,6 @@
         <source>quick_entry.title</source>
         <target>Vikuarbeiðistímar</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="label.hours_24">
-        <source>label.hours_24</source>
-        <target>24 tímar</target>
-      </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
         <target>Fastur kostnáður</target>

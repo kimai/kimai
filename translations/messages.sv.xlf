@@ -1233,10 +1233,6 @@
         <source>label.includeBudgetType_full</source>
         <target>Visa poster med "livscykel"-budget</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="label.hours_24">
-        <source>label.hours_24</source>
-        <target>24 timmar</target>
-      </trans-unit>
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target>Uppdaterades den</target>

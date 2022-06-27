@@ -48,7 +48,7 @@
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'account_number') }}">{{ entry.accountNumber }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'title') }}">{{ entry.title }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'email') }}">{{ entry.email }}</td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'lastLogin') }}">{% if entry.lastLogin is not null %}{{ entry.lastLogin|date_full }}{% endif %}</td>
+                <td class="{{ tables.data_table_column_class(tableName, columns, 'lastLogin') }}">{% if entry.lastLogin is not null %}{{ entry.lastLogin|date_time }}{% endif %}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'roles') }}">
                     {% set showUserRole = entry.roles|length == 1 %}
                     {% for role in entry.roles %}

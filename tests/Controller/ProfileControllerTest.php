@@ -417,7 +417,6 @@ class ProfileControllerTest extends ControllerBaseTest
             UserPreference::TIMEZONE => ['value' => 'America/Creston'],
             UserPreference::LOCALE => ['value' => 'ar'],
             UserPreference::FIRST_WEEKDAY => ['value' => 'sunday'],
-            UserPreference::HOUR_24 => ['value' => true],
             UserPreference::SKIN => ['value' => 'dark'],
         ];
 

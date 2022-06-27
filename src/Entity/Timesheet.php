@@ -29,6 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @ORM\Index(columns={"start_time"}),
  *          @ORM\Index(columns={"start_time","end_time"}),
  *          @ORM\Index(columns={"start_time","end_time","user"}),
+ *          @ORM\Index(columns={"end_time","user"}),
  *          @ORM\Index(columns={"date_tz","user"}),
  *     }
  * )

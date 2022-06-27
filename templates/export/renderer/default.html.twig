@@ -296,9 +296,8 @@
                     {{ 'label.date'|trans }}:
                     {% set demo_date = create_date('2020-01-01 20:00:00') %}
                     <select id="date-format" name="date-format">
-                        <option value="time">{{ demo_date|date_time }}</option>
                         <option value="short">{{ demo_date|date_short }}</option>
-                        <option value="full">{{ demo_date|date_full }}</option>
+                        <option value="time">{{ demo_date|date_time }}</option>
                     </select>
                 </label>
                 |
@@ -307,9 +306,8 @@
                     {% set demo_date = create_date('2020-01-01 11:00:00') %}
                     <select id="begin-format" name="begin-format">
                         <option value="plain">{{ demo_date|date_format('H:i') }}</option>
-                        <option value="time">{{ demo_date|date_time }}</option>
                         <option value="short">{{ demo_date|date_short }}</option>
-                        <option value="full">{{ demo_date|date_full }}</option>
+                        <option value="time">{{ demo_date|date_time }}</option>
                     </select>
                 </label>
                 |
@@ -318,12 +316,11 @@
                     {% set demo_date = create_date('2020-01-01 18:00:00') %}
                     <select id="end-format" name="end-format">
                         <option value="plain">{{ demo_date|date_format('H:i') }}</option>
-                        <option value="time">{{ demo_date|date_time }}</option>
                         <option value="short">{{ demo_date|date_short }}</option>
-                        <option value="full">{{ demo_date|date_full }}</option>
+                        <option value="time">{{ demo_date|date_time }}</option>
                     </select>
                 </label>
-                <button type="reset" class="btn btn-primary pull-right" onclick="resetExport()">{{ 'action.reset'|trans }}</button>
+                <button type="reset" class="btn btn-primary btn-sm pull-right" onclick="resetExport()">{{ 'action.reset'|trans }}</button>
             </div>
         </div>
 
@@ -637,17 +634,17 @@
                     {% endif %}
                     <tr>
                         <td class="column-date text-nowrap" {% if not columns.date %}style="display: none"{% endif %}>
-                            <span class="dateformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_full }}" data-time="{{ entry.begin|date_time }}">
+                            <span class="dateformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_time }}" data-time="{{ entry.begin|date_time }}">
                             {{ entry.begin|date_time }}
                             </span>
                         </td>
                         <td class="column-begin text-nowrap" {% if not columns.begin %}style="display: none"{% endif %}>
-                            <span class="beginformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_full }}" data-time="{{ entry.begin|date_time }}" data-plain="{{ entry.begin|date_format('H:i') }}">
+                            <span class="beginformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_time }}" data-time="{{ entry.begin|date_time }}" data-plain="{{ entry.begin|date_format('H:i') }}">
                             {{ entry.begin|date_format('H:i') }}
                             </span>
                         </td>
                         <td class="column-end text-nowrap" {% if not columns.end %}style="display: none"{% endif %}>
-                            <span class="endformat" data-short="{{ entry.end|date_short }}" data-full="{{ entry.end|date_full }}" data-time="{{ entry.end|date_time }}" data-plain="{{ entry.end|date_format('H:i') }}">
+                            <span class="endformat" data-short="{{ entry.end|date_short }}" data-full="{{ entry.end|date_time }}" data-time="{{ entry.end|date_time }}" data-plain="{{ entry.end|date_format('H:i') }}">
                             {{ entry.end|date_format('H:i') }}
                             </span>
                         </td>

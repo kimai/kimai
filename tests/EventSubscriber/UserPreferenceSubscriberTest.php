@@ -30,7 +30,6 @@ class UserPreferenceSubscriberTest extends TestCase
         'language',
         'first_weekday',
         'skin',
-        'hours_24',
         'layout',
         'update_browser_title',
         'calendar_initial_view',

@@ -202,96 +202,14 @@ kimai:
 
 # --------------------------------------------------------------------------------
 # LANGUAGES
+# Only settings which are not fetched from ICU and which differ from the default
+# need to be defined here + the default locale
 # --------------------------------------------------------------------------------
     languages:
         ar:
             rtl: true
-        cs:
-            date_type: 'dd.MM.yyyy'
-            date: 'd.m.Y'
-            date_time: 'd.m H:i'
-        da:
-            date_type: 'dd.MM.yyyy'
-            date: 'd.m.Y'
-            date_time: 'd.m. H:i'
-        de:
-            date_type: 'dd.MM.yyyy'
-            date: 'd.m.Y'
-            date_time: 'd.m. H:i'
-        de_AT:
-            date_type: 'dd.MM.yyyy'
-            date: 'd.m.Y'
-            date_time: 'd.m. H:i'
-        de_CH:
-            date_type: 'dd.MM.yyyy'
-            date: 'd.m.Y'
-            date_time: 'd.m. H:i'
-        el:  
-            date_type: 'dd.MM.yyyy'
-            date: 'd.m.Y'
-            date_time: 'd.m. H:i'
-        en:
-            date_type: 'yyyy-MM-dd'
-            date: 'Y-m-d'
-            date_time: 'm-d H:i'
-            duration: '%%h:%%m h'
-        en_GB:
-            date_type: 'dd/MM/yyyy'
-            date: 'd-m-Y'
-            date_time: 'd-m H:i'
-        es:
-            date_type: 'dd.MM.yyyy'
-            date: 'd.m.Y'
-            date_time: 'd.m. H:i'
-        fi:
-            date_type: 'dd.MM.yyyy'
-            date: 'd.m.Y'
-            date_time: 'd.m. H:i'
-        fr:
-            date_type: 'dd/MM/yyyy'
-            date: 'd/m/Y'
-            date_time: 'd/m H:i'
-            duration: '%%h h %%m'
-        he:
-            date_type: 'dd/MM/yyyy'
-            date: 'd/m/Y'
-            date_time: 'd/m H:i'
-            duration: '%%h:%%m'
+        fa:
             rtl: true
-        hu:
-            date_type: 'yyyy.MM.dd.'
-            date: 'Y.m.d.'
-            date_time: 'm.d. H:i'
-        it:
-            date_type: 'dd.MM.yyyy'
-            date: 'd.m.Y'
-            date_time: 'd.m. H:i'
-        nl:
-            date_type: 'dd.MM.yyyy'
-            date: 'd.m.Y'
-            date_time: 'd.m. H:i'
-            duration: '%%hu%%m'
-        pt:
-            date_type: 'dd/MM/yyyy'
-            date: 'd/m/Y'
-            date_time: 'd-m H:i'
-        pt_BR:
-            date_type: 'dd-MM-yyyy'
-            date: 'd-m-Y'
-            date_time: 'd-m H:i'
-        ru:
-            date_type: 'dd.MM.yyyy'
-            date: 'd.m.Y'
-            date_time: 'd.m. H:i'
-        sk:
-            date_type: 'dd. MM. yyyy'
-            date: 'd. m. Y'
-            date_time: 'd. m.  H:i'
-        sv:
-            duration: '%%h:%%m tim'
-            date_time: 'd/m H:i'
-        pl:
-            date_type: 'dd. MM. yyyy'
-            date: 'd. m. Y'
-            date_time: 'd. m.  H:i'
+        he:
+            rtl: true
 # --------------------------------------------------------------------------------

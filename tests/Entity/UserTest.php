@@ -47,7 +47,6 @@ class UserTest extends TestCase
         self::assertFalse($user->canSeeAllData());
         self::assertFalse($user->isSmallLayout());
         self::assertFalse($user->isExportDecimal());
-        self::assertTrue($user->is24Hour());
 
         $user->setUserIdentifier('foo');
         self::assertEquals('foo', $user->getUserIdentifier());
@@ -503,16 +502,5 @@ class UserTest extends TestCase
         $member = new TeamMember();
         $member->setUser(new User());
         $sut->addMembership($member);
-    }
-
-    public function test24Hour()
-    {
-        $user = new User();
-        self::assertTrue($user->is24Hour());
-        self::assertEquals('H:i', $user->getTimeFormat());
-
-        $user->setPreferenceValue(UserPreference::HOUR_24, false);
-        self::assertFalse($user->is24Hour());
-        self::assertEquals('h:i A', $user->getTimeFormat());
     }
 }

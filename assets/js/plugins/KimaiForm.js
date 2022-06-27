@@ -41,6 +41,8 @@ export default class KimaiForm extends KimaiPlugin {
                     formElement.dispatchEvent(new Event('change'));
                 }
 
+                event.preventDefault();
+
                 return false;
             };
         }
@@ -49,10 +51,23 @@ export default class KimaiForm extends KimaiPlugin {
             element.addEventListener('click', this.dateTimeWidgetHandler);
         });
 
+        // used for the duration plugin, but can be used for more
+        [].slice.call(document.querySelectorAll(formSelector + ' a[data-copy-target]')).map((element) => {
+            if (element.dataset.copyTarget !== undefined) {
+                element.addEventListener('click', (event) => {
+                    const target = document.querySelector(element.dataset.copyTarget);
+                    target.value = element.dataset.copyValue;
+                    for (const event of element.dataset.copyEvent.split(' ')) {
+                        target.dispatchEvent(new Event(event));
+                    }
+                    event.preventDefault();
+                });
+            }
+        });
+
         // TODO do not register them as global plugins, but only as plugins for each form inside this class
-        this.getPlugin('date-range-picker').activateDateRangePicker(formSelector);
-        this.getPlugin('date-time-picker').activateDateTimePicker(formSelector);
-        this.getPlugin('date-picker').activateDatePicker(formSelector);
+        this.getPlugin('date-range-picker').activate(formSelector);
+        this.getPlugin('date-picker').activate(formSelector);
         this.getPlugin('autocomplete').activateAutocomplete(formSelector);
         this.getPlugin('form-select').activateSelectPicker(formSelector);
 
@@ -81,9 +96,8 @@ export default class KimaiForm extends KimaiPlugin {
 
         this.getPlugin('form-select').destroySelectPicker(formSelector);
         this.getPlugin('autocomplete').destroyAutocomplete(formSelector);
-        this.getPlugin('date-picker').destroyDatePicker(formSelector);
-        this.getPlugin('date-time-picker').destroyDateTimePicker(formSelector);
-        this.getPlugin('date-range-picker').destroyDateRangePicker(formSelector);
+        this.getPlugin('date-picker').destroy(formSelector);
+        this.getPlugin('date-range-picker').destroy(formSelector);
 
         switch (form.name) {
             case 'timesheet_edit_form':

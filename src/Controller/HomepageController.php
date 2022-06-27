@@ -9,9 +9,9 @@
 
 namespace App\Controller;
 
+use App\Configuration\LocaleService;
 use App\Entity\User;
 use App\Form\Type\InitialViewType;
-use App\Utils\LanguageService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +28,7 @@ class HomepageController extends AbstractController
     /**
      * @Route(path="", defaults={}, name="homepage", methods={"GET"})
      */
-    public function indexAction(Request $request, LanguageService $service): Response
+    public function indexAction(Request $request, LocaleService $service): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -46,8 +46,8 @@ class HomepageController extends AbstractController
 
         // if a user somehow managed to get a wrong locale into hos account (eg. an imported user from Kimai 1)
         // make sure that he will still see a beautiful page and not a 404
-        if (!$service->isKnownLanguage($userLanguage)) {
-            $userLanguage = $service->getDefaultLanguage();
+        if (!$service->isKnownLocale($userLanguage)) {
+            $userLanguage = $service->getDefaultLocale();
         }
 
         $routes = [

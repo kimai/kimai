@@ -9,49 +9,41 @@
 
 namespace App\Configuration;
 
-use App\Utils\MomentFormatConverter;
+use App\Constants;
 
-final class LanguageFormattings
+/**
+ * @final
+ */
+class LocaleService
 {
-    private array $settings;
-    private MomentFormatConverter $momentFormatter;
-
-    public function __construct(array $languageSettings)
+    public function __construct(private array $languageSettings)
     {
-        $this->settings = $languageSettings;
-        $this->momentFormatter = new MomentFormatConverter();
     }
 
     /**
      * Returns an array with all available locale/language codes.
      *
      * @return string[]
+     * @deprecated use getAllLocales() instead
      */
     public function getAvailableLanguages(): array
     {
-        return array_keys($this->settings);
+        return $this->getAllLocales();
     }
 
-    /**
-     * Returns the format which is used by the form component to handle date values.
-     *
-     * @param string $locale
-     * @return string
-     */
-    public function getDateTypeFormat(string $locale): string
+    public function getAllLocales(): array
     {
-        return $this->getConfig('date_type', $locale);
+        return array_keys($this->languageSettings);
     }
 
-    /**
-     * Returns the format which is used by the Javascript component to handle date values.
-     *
-     * @param string $locale
-     * @return string
-     */
-    public function getDatePickerFormat(string $locale): string
+    public function isKnownLocale(string $language): bool
     {
-        return $this->momentFormatter->convert($this->getDateTypeFormat($locale));
+        return \in_array($language, $this->getAvailableLanguages());
+    }
+
+    public function getDefaultLocale(): string
+    {
+        return Constants::DEFAULT_LOCALE;
     }
 
     /**
@@ -84,7 +76,7 @@ final class LanguageFormattings
      */
     public function getDateTimeFormat(string $locale): string
     {
-        return $this->getConfig('date_time', $locale);
+        return $this->getDateFormat($locale) . ' ' . $this->getTimeFormat($locale);
     }
 
     /**
@@ -95,7 +87,7 @@ final class LanguageFormattings
      */
     public function getDurationFormat(string $locale): string
     {
-        return $this->getConfig('duration', $locale);
+        return '%h:%m';
     }
 
     public function isRightToLeft(string $locale): bool
@@ -103,16 +95,23 @@ final class LanguageFormattings
         return $this->getConfig('rtl', $locale);
     }
 
+    public function is24Hour(string $locale): bool
+    {
+        $format = $this->getTimeFormat($locale);
+
+        return stripos($format, 'a') === false;
+    }
+
     private function getConfig(string $key, string $locale): string|bool
     {
-        if (!isset($this->settings[$locale])) {
+        if (!isset($this->languageSettings[$locale])) {
             throw new \InvalidArgumentException(sprintf('Unknown locale given: %s', $locale));
         }
 
-        if (!isset($this->settings[$locale][$key])) {
+        if (!isset($this->languageSettings[$locale][$key])) {
             throw new \InvalidArgumentException(sprintf('Unknown setting for locale %s: %s', $locale, $key));
         }
 
-        return $this->settings[$locale][$key];
+        return $this->languageSettings[$locale][$key];
     }
 }

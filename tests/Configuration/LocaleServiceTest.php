@@ -9,70 +9,59 @@
 
 namespace App\Tests\Configuration;
 
-use App\Configuration\LanguageFormattings;
+use App\Configuration\LocaleService;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Configuration\LanguageFormattings
+ * @covers \App\Configuration\LocaleService
  */
-class LanguageFormattingsTest extends TestCase
+class LocaleServiceTest extends TestCase
 {
     protected function getSut(array $settings)
     {
-        return new LanguageFormattings($settings);
+        return new LocaleService($settings);
     }
 
     protected function getDefaultSettings()
     {
         return [
             'de' => [
-                'date_type' => 'dd.MM.yyyy',
                 'date' => 'd.m.Y',
-                'date_time' => 'd.m. H:i',
-                'duration' => '%h:%m h',
+                'duration' => '%h:%m',
                 'time' => 'H:i',
             ],
             'en' => [
-                'date_type' => 'yyyy-MM-dd',
                 'date' => 'Y-m-d',
-                'date_time' => 'm-d H:i',
-                'duration' => '%h:%m h',
+                'duration' => '%h:%m',
                 'time' => 'H:i:s',
             ],
             'pt_BR' => [
-                'date_type' => 'dd-MM-yyyy',
                 'date' => 'd-m-Y',
-                'duration' => '%h:%m h',
+                'duration' => '%h:%m',
             ],
             'it' => [
-                'date_type' => 'dd.MM.yyyy',
                 'date' => 'd.m.Y',
-                'duration' => '%h:%m h',
+                'duration' => '%h:%m',
             ],
             'fr' => [
-                'date_type' => 'dd/MM/yyyy',
                 'date' => 'd/m/Y',
                 'duration' => '%h h %m',
             ],
             'es' => [
-                'date_type' => 'dd.MM.yyyy',
                 'date' => 'd.m.Y',
-                'duration' => '%h:%m h',
+                'duration' => '%h:%m',
             ],
             'ru' => [
-                'date_type' => 'dd.MM.yyyy',
                 'date' => 'd.m.Y',
-                'duration' => '%h:%m h',
+                'duration' => '%h:%m',
             ],
             'ar' => [
-                'date_type' => 'yyyy-MM-dd',
                 'date' => 'Y-m-d',
-                'duration' => '%h:%m h',
+                'duration' => '%h:%m',
             ],
             'hu' => [
-                'date_type' => 'yyyy.MM.dd',
                 'date' => 'Y.m.d.',
-                'duration' => '%h:%m h',
+                'duration' => '%h:%m',
             ],
         ];
     }
@@ -98,7 +87,7 @@ class LanguageFormattingsTest extends TestCase
     public function testGetDurationFormat()
     {
         $sut = $this->getSut($this->getDefaultSettings());
-        $this->assertEquals('%h:%m h', $sut->getDurationFormat('de'));
+        $this->assertEquals('%h:%m', $sut->getDurationFormat('de'));
     }
 
     public function testGetDateFormat()
@@ -110,19 +99,7 @@ class LanguageFormattingsTest extends TestCase
     public function testGetDateTimeFormat()
     {
         $sut = $this->getSut($this->getDefaultSettings());
-        $this->assertEquals('d.m. H:i', $sut->getDateTimeFormat('de'));
-    }
-
-    public function testGetDateTypeFormat()
-    {
-        $sut = $this->getSut($this->getDefaultSettings());
-        $this->assertEquals('dd.MM.yyyy', $sut->getDateTypeFormat('de'));
-    }
-
-    public function testGetDatePickerFormat()
-    {
-        $sut = $this->getSut($this->getDefaultSettings());
-        $this->assertEquals('DD.MM.YYYY', $sut->getDatePickerFormat('de'));
+        $this->assertEquals('d.m.Y H:i', $sut->getDateTimeFormat('de'));
     }
 
     public function testGetTimeFormat()

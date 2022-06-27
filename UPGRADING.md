@@ -20,6 +20,7 @@ Perform EACH version specific task between your version and the new one, otherwi
   - removed: kimai.plugin_dir
 - API: upgraded to [Open API specification v3](https://blog.readme.com/an-example-filled-guide-to-swagger-3-2/)
 - API: config/timesheet removed activeEntriesSoftLimit
+- API: removed route `config/i18n`
 - API: Team removed `teamlead` and `users` - access `members` instead
 - API: Project start/end/order dates are now plain dates without time (start and order are set to 00:00:00 and end is set to 23:59:59)
 - All deprecated code was removed
@@ -32,6 +33,12 @@ Perform EACH version specific task between your version and the new one, otherwi
   - `symfony/mailgun-mailer`
   - `symfony/postmark-mailer`
   - `symfony/sendgrid-mailer`
+- Removed Twig filters. You have to replace them in your custom export/invoice templates:
+  - `date_full` => `date_time`
+  - `duration_decimal` => `duration(true)`
+  - `currency` => `currency_name`
+  - `country` => `country_name`
+  - `language` => `language_name`
 
 ## [1.16](https://github.com/kevinpapst/kimai2/releases/tag/1.16)
 

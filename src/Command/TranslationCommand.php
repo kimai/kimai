@@ -9,8 +9,8 @@
 
 namespace App\Command;
 
+use App\Configuration\LocaleService;
 use App\Kernel;
-use App\Utils\LanguageService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
@@ -26,7 +26,7 @@ use Symfony\Component\HttpClient\HttpClient;
  */
 class TranslationCommand extends Command
 {
-    public function __construct(private string $projectDirectory, private string $kernelEnvironment, private LanguageService $languageService)
+    public function __construct(private string $projectDirectory, private string $kernelEnvironment, private LocaleService $localeService)
     {
         parent::__construct();
     }
@@ -206,7 +206,7 @@ class TranslationCommand extends Command
             ];
 
             $locale = strtolower($locale);
-            if (!$this->languageService->isKnownLanguage($locale)) {
+            if (!$this->localeService->isKnownLocale($locale)) {
                 $io->error('Unknown locale given: ' . $locale);
 
                 return 1;

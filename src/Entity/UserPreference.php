@@ -33,7 +33,6 @@ class UserPreference
     public const INTERNAL_RATE = 'internal_rate';
     public const SKIN = 'skin';
     public const LOCALE = 'language';
-    public const HOUR_24 = 'hours_24';
     public const TIMEZONE = 'timezone';
     public const FIRST_WEEKDAY = 'first_weekday';
 

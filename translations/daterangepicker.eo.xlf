@@ -34,10 +34,6 @@
         <source>daterangepicker.thisYear</source>
         <target>Ĉi-jare</target>
       </trans-unit>
-      <trans-unit id="MSENTM_" resname="daterangepicker.customRange">
-        <source>daterangepicker.customRange</source>
-        <target>Propra periodo</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

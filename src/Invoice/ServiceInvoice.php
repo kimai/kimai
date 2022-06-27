@@ -9,7 +9,7 @@
 
 namespace App\Invoice;
 
-use App\Configuration\LanguageFormattings;
+use App\Configuration\LocaleService;
 use App\Entity\ExportableItem;
 use App\Entity\Invoice;
 use App\Entity\InvoiceDocument;
@@ -53,7 +53,7 @@ final class ServiceInvoice
     private $invoiceRepository;
     private $invoiceModelFactory;
 
-    public function __construct(InvoiceDocumentRepository $repository, FileHelper $fileHelper, InvoiceRepository $invoiceRepository, LanguageFormattings $formatter, InvoiceModelFactory $invoiceModelFactory)
+    public function __construct(InvoiceDocumentRepository $repository, FileHelper $fileHelper, InvoiceRepository $invoiceRepository, LocaleService $formatter, InvoiceModelFactory $invoiceModelFactory)
     {
         $this->documents = $repository;
         $this->fileHelper = $fileHelper;

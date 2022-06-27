@@ -44,6 +44,8 @@ final class MenuSubscriber implements EventSubscriberInterface
         // ------------------- main menu -------------------
         $menu = $event->getMenu();
 
+        $menu->addChild(new MenuItemModel('dashboard_nav', 'dashboard.title', 'dashboard', [], 'dashboard'));
+
         $times = new MenuItemModel('timesheet', 'menu.admin_timesheet', 'timesheet', [], 'timesheet');
 
         if ($auth->isGranted('view_own_timesheet')) {

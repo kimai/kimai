@@ -1294,10 +1294,6 @@
         <source>quick_entry.title</source>
         <target>Wochen-Arbeitsstunden</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="label.hours_24">
-        <source>label.hours_24</source>
-        <target>24 Stunden</target>
-      </trans-unit>
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target>Aktualisiert am</target>
@@ -1349,6 +1345,10 @@
       <trans-unit id="dru_Thv" resname="please_choose">
         <source>please_choose</source>
         <target>Bitte auswählen</target>
+      </trans-unit>
+      <trans-unit id="sdfsdf" resname="extended_settings">
+        <source>extended_settings</source>
+        <target>Erweiterte Einstellungen</target>
       </trans-unit>
     </body>
   </file>

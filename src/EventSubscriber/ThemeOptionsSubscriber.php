@@ -9,9 +9,9 @@
 
 namespace App\EventSubscriber;
 
+use App\Configuration\LocaleService;
 use App\Entity\User;
 use App\Entity\UserPreference;
-use App\Utils\LocaleSettings;
 use KevinPapst\TablerBundle\Helper\ContextHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
@@ -19,11 +19,11 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- * Allows dynamic injection of theme related options.
+ * Prepare all theme settings for user and context.
  */
 final class ThemeOptionsSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private TokenStorageInterface $storage, private ContextHelper $helper, private LocaleSettings $localeSettings)
+    public function __construct(private TokenStorageInterface $storage, private ContextHelper $helper, private LocaleService $localeService)
     {
     }
 
@@ -41,7 +41,7 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if ($this->localeSettings->isRightToLeft()) {
+        if ($this->localeService->isRightToLeft(\Locale::getDefault())) {
             $this->helper->setIsRightToLeft(true);
         }
 

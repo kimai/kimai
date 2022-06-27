@@ -1168,10 +1168,6 @@
         <source>action.add</source>
         <target>Legg til</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="label.hours_24">
-        <source>label.hours_24</source>
-        <target>24 timer</target>
-      </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>Mappen «%dir%» finnes ikke og kunne ikke opprettes.</target>

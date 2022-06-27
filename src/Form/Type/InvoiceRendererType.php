@@ -49,7 +49,6 @@ final class InvoiceRendererType extends AbstractType
                 return $choiceValue;
             },
             'translation_domain' => 'invoice-renderer',
-            'docu_chapter' => 'invoices.html',
             'search' => false,
         ]);
     }

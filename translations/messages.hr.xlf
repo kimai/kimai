@@ -1218,10 +1218,6 @@
         <source>label.budgetType_full</source>
         <target>Životni ciklus</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="label.hours_24">
-        <source>label.hours_24</source>
-        <target>24 sata</target>
-      </trans-unit>
       <trans-unit id="gT9W2pZ" resname="status.canceled">
         <source>status.canceled</source>
         <target>Prekinuti</target>

@@ -331,7 +331,7 @@ abstract class ControllerBaseTest extends WebTestCase
 
             $validation = $list->filter('li.text-danger');
             if (\count($validation) < 1) {
-                // decorated form fields with icon have a different html structure, see kimai-theme.html.twig
+                // decorated form fields with icon have a different html structure
                 /** @var \DOMElement $listMsg */
                 $listMsg = $field->getNode(0); //->parents()->getNode(1);
                 $classes = $listMsg->getAttribute('class');

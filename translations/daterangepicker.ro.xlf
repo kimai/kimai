@@ -34,10 +34,6 @@
         <source>daterangepicker.thisYear</source>
         <target>Anul acesta</target>
       </trans-unit>
-      <trans-unit id="MSENTM_" resname="daterangepicker.customRange">
-        <source>daterangepicker.customRange</source>
-        <target>Perioadă personalizată</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

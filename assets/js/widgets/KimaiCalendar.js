@@ -143,7 +143,7 @@ export default class KimaiCalendar {
                 end: endButtons
             },
             direction: this.kimai.getConfiguration().get('direction'),
-            locale: this.kimai.getConfiguration().get('locale').replace('_', '-').toLowerCase(),
+            locale: this.kimai.getConfiguration().getLanguage().toLowerCase(),
 
             // https://fullcalendar.io/docs/height
             // auto makes the calendar too small

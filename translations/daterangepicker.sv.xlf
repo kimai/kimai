@@ -34,10 +34,6 @@
         <source>daterangepicker.thisYear</source>
         <target state="translated">Detta året</target>
       </trans-unit>
-      <trans-unit id="MSENTM_" resname="daterangepicker.customRange">
-        <source>daterangepicker.customRange</source>
-        <target state="translated">Anpassad tidsperiod</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

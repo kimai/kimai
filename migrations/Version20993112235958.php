@@ -36,6 +36,7 @@ final class Version20993112235958 extends AbstractMigration
         //$this->addSql('DELETE FROM kimai2_configuration WHERE `name` = "theme.tags_create"');
 
         //$this->addSql("DELETE FROM kimai2_user_preferences where `name` = 'reporting.initial_view'");
+        //$this->addSql("DELETE FROM kimai2_user_preferences where `name` = 'hours_24'");
 
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'timesheet_daily_stats' WHERE `name` = 'timesheet.daily_stats'");
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'collapsed_sidebar' WHERE `name` = 'theme.collapsed_sidebar'");
@@ -45,11 +46,15 @@ final class Version20993112235958 extends AbstractMigration
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'export_decimal' WHERE `name` = 'timesheet.export_decimal'");
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'update_browser_title' WHERE `name` = 'theme.update_browser_title'");
 
+        $this->addSql('CREATE INDEX IDX_4F60C6B1415614018D93D649 ON kimai2_timesheet (end_time, user)');
+
         // TODO user configuration calendar first day agendaDay = day / agendaMonth = month
     }
 
     public function down(Schema $schema): void
     {
+        $this->addSql('DROP INDEX IDX_4F60C6B1415614018D93D649 ON kimai2_timesheet');
+
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'theme.collapsed_sidebar' WHERE `name` = 'collapsed_sidebar'");
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'theme.layout' WHERE `name` = 'theme_layout'");
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'calendar.initial_view' WHERE `name` = 'calendar_initial_view'");

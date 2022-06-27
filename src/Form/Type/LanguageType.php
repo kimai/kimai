@@ -9,7 +9,7 @@
 
 namespace App\Form\Type;
 
-use App\Utils\LanguageService;
+use App\Configuration\LocaleService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Intl\Locales;
@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class LanguageType extends AbstractType
 {
-    public function __construct(private LanguageService $languageService)
+    public function __construct(private LocaleService $localeService)
     {
     }
 
@@ -30,7 +30,7 @@ class LanguageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $choices = [];
-        foreach ($this->languageService->getAllLanguages() as $key) {
+        foreach ($this->localeService->getAllLocales() as $key) {
             $name = ucfirst(Locales::getName($key, $key));
             $choices[$name] = $key;
         }

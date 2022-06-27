@@ -1,15 +1,15 @@
-{% extends '@theme/layout/form-theme.html.twig' %}
+{% extends '@theme/layout/form-theme-horizontal.html.twig' %}
 {% use 'form/blocks.html.twig' %}
 
 {% block date_widget -%}
+    {% set format = javascript_format('date') %}
+    {% set attr = attr|merge({'autocomplete': 'off'}) -%}
+    {%- if datetime is not defined or not datetime -%}
+        {% set attr = attr|merge({'data-datepicker': 'on', 'data-format': format, 'placeholder': format|upper}) -%}
+    {%- endif -%}
     {%- if widget != 'single_text' -%}
         {{- parent() -}}
     {%- else -%}
-        {% set format = javascript_format('date') %}
-        {% set attr = attr|merge({'autocomplete': 'off'}) -%}
-        {%- if datetime is not defined or not datetime -%}
-            {% set attr = attr|merge({'data-datepicker': 'on', 'data-format': format, 'placeholder': format|upper}) -%}
-        {%- endif -%}
         {%- if datetime is not defined or not datetime -%}
             <div class="input-group">
                 <div class="input-group-text">
