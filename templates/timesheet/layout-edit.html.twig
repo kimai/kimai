@@ -1,131 +1,15 @@
 {% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
-{% import "macros/widgets.html.twig" as widgets %}
+{% from "macros/widgets.html.twig" import alert %}
 
 {% block main %}
     {% if timesheet.exported %}
-        {{ widgets.alert('warning', ('timesheet.locked.warning'|trans({}, 'flashmessages')), null, 'warning') }}
+        {{ alert('warning', ('timesheet.locked.warning'|trans({}, 'flashmessages')), null, 'warning') }}
     {% endif %}
-    {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
+        'template': kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig',
         'title': (timesheet.id ? 'timesheet.edit'|trans : 'create'|trans),
         'form': form,
         'back': path(route_back)
     } %}
-    {% embed formEditTemplate with formOptions %}
-        {% set length = 6 %}
-        {% if form.begin is defined and form.end is defined and form.duration is defined %}
-            {% set length = 5 %}
-        {% elseif form.begin is defined and form.end is defined and form.duration is not defined %}
-            {% set length = 6 %}
-        {% elseif form.begin is defined and form.end is not defined and form.duration is defined %}
-            {% set length = 10 %}
-        {% elseif form.begin is not defined and form.end is defined and form.duration is defined %}
-            {% set length = 10 %}
-        {% endif %}
-        {% block form_body %}
-            {% if form.begin is defined or form.end is defined or form.duration is defined %}
-            <div class="row">
-                {% if form.begin is defined %}
-                    <div class="col-md-{{ length }}">
-                        {{ form_row(form.begin) }}
-                    </div>
-                {% endif %}
-                {% if form.end is defined %}
-                    <div class="col-md-{{ length }}">
-                        {{ form_row(form.end) }}
-                    </div>
-                {% endif %}
-                {% if form.duration is defined %}
-                    <div class="col-md-2">
-                        {{ form_row(form.duration) }}
-                    </div>
-                {% endif %}
-            </div>
-            {% endif %}
-            {% if form.customer is defined %}
-                {{ form_row(form.customer, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_customer'}}) }}
-            {% endif %}
-            {% if form.project is defined %}
-                {{ form_row(form.project, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_project'}}) }}
-            {% endif %}
-            {% if form.activity is defined %}
-                {{ form_row(form.activity, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_activity'}}) }}
-            {% endif %}
-            {% if form.description is defined %}
-                {{ form_row(form.description, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_description'}}) }}
-            {% endif %}
-            {% if form.tags is defined %}
-                {{ form_row(form.tags, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_tags'}}) }}
-            {% endif %}
-            {% if form.user is defined %}
-                {{ form_row(form.user, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_user'}}) }}
-            {% endif %}
-            {% if form.users is defined or form.teams is defined %}
-                {% set uLength = 12 %}
-                {% if form.users is defined and form.teams is defined %}
-                    {% set uLength = 6 %}
-                {% endif %}
-                <div class="row mb-3">
-                {% if form.users is defined %}
-                    <div class="col-md-{{ uLength }}">
-                        {{ form_row(form.users) }}
-                    </div>
-                {% endif %}
-                {% if form.teams is defined %}
-                    <div class="col-md-{{ uLength }}">
-                        {{ form_row(form.teams) }}
-                    </div>
-                {% endif %}
-                </div>
-            {% endif %}
-            {% set colWidth = 0 %}
-            {% if form.fixedRate is defined %}
-                {% set colWidth = colWidth + 1 %}
-            {% endif %}
-            {% if form.hourlyRate is defined %}
-                {% set colWidth = colWidth + 1 %}
-            {% endif %}
-            {% if form.billable is defined %}
-                {% set colWidth = colWidth + 1 %}
-            {% elseif form.billableMode is defined %}
-                {% set colWidth = colWidth + 1 %}
-            {% endif %}
-            {% if colWidth > 0 %}
-            <div class="row mb-3">
-                {% if form.fixedRate is defined %}
-                    <div class="col-md-{{ 12 / colWidth }}">
-                        {{ form_row(form.fixedRate, {'row_attr': {'class': 'timesheet_edit_form_row_fixedRate'}}) }}
-                    </div>
-                {% endif %}
-                {% if form.hourlyRate is defined %}
-                    <div class="col-md-{{ 12 / colWidth }}">
-                        {{ form_row(form.hourlyRate, {'row_attr': {'class': 'timesheet_edit_form_row_hourlyRate'}}) }}
-                    </div>
-                {% endif %}
-                {% if form.billable is defined %}
-                    <div class="col-md-{{ 12 / colWidth }}">
-                        {{ form_row(form.billable, {'row_attr': {'class': 'timesheet_edit_form_row_billable'}}) }}
-                    </div>
-                {% elseif form.billableMode is defined %}
-                    <div class="col-md-{{ 12 / colWidth }}">
-                        {{ form_row(form.billableMode, {'row_attr': {'class': 'timesheet_edit_form_row_billable'}}) }}
-                    </div>
-                {% endif %}
-            </div>
-            {% endif %}
-            {% if form.metaFields is defined and form.metaFields is not empty %}
-                {% for meta in form.metaFields|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
-                    {{ form_row(meta) }}
-                {% endfor %}
-            {% endif %}
-            {% if form.exported is defined %}
-                <div class="row mb-3">
-                    <div class="col-md-12">
-                        {{ form_row(form.exported, {'row_attr': {'class': 'timesheet_edit_form_row_exported'}}) }}
-                    </div>
-                </div>
-            {% endif %}
-            {{ form_widget(form) }}
-        {% endblock %}
-    {% endembed %}
+    {% include template %}
 {% endblock %}

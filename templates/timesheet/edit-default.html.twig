@@ -1,0 +1,72 @@
+{% block timesheet_form %}
+    {% form_theme form 'form/horizontal.html.twig' %}
+    {% embed formOptions.template with formOptions %}
+        {% block form_body %}
+            {% if form.begin is defined %}
+                {{ form_row(form.begin, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_begin'}}) }}
+            {% endif %}
+            {% if form.end is defined %}
+                {{ form_row(form.end, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_end'}}) }}
+            {% endif %}
+            {% if form.duration is defined %}
+                {{ form_row(form.duration, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_duration'}}) }}
+            {% endif %}
+            {% if form.customer is defined %}
+                {{ form_row(form.customer, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_customer'}}) }}
+            {% endif %}
+            {% if form.project is defined %}
+                {{ form_row(form.project, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_project'}}) }}
+            {% endif %}
+            {% if form.activity is defined %}
+                {{ form_row(form.activity, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_activity'}}) }}
+            {% endif %}
+            {% if form.description is defined %}
+                {{ form_row(form.description, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_description'}}) }}
+            {% endif %}
+            {% if form.tags is defined %}
+                {{ form_row(form.tags, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_tags'}}) }}
+            {% endif %}
+            {% if form.user is defined %}
+                {{ form_row(form.user, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_user'}}) }}
+            {% endif %}
+            {% if form.users is defined %}
+                {{ form_row(form.users, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_users'}}) }}
+            {% endif %}
+            {% if form.teams is defined %}
+                {{ form_row(form.teams, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_teams'}}) }}
+            {% endif %}
+
+            {% if form.metaFields is defined and form.metaFields is not empty %}
+                {% for meta in form.metaFields|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
+                    {{ form_row(meta.value, {'row_attr': {'label': false, 'class': 'mb-3 timesheet_edit_form_row_' ~ meta.vars.id}}) }}
+                {% endfor %}
+            {% endif %}
+
+            {% if form.fixedRate is defined or form.hourlyRate is defined or form.billable is defined or form.billableMode is defined or form.exported is defined %}
+                {% embed '@theme/embeds/card.html.twig' with {collapsed: true} %}
+                    {% import "macros/widgets.html.twig" as widgets %}
+                    {% block box_title %}{{ 'extended_settings'|trans }}{% endblock %}
+                    {% block box_body_class %}{% endblock %}
+                    {% block box_body %}
+                        {% if form.fixedRate is defined %}
+                            {{ form_row(form.fixedRate, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_fixedRate'}}) }}
+                        {% endif %}
+                        {% if form.hourlyRate is defined %}
+                            {{ form_row(form.hourlyRate, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_hourlyRate'}}) }}
+                        {% endif %}
+                        {% if form.billable is defined %}
+                            {{ form_row(form.billable, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_billable'}}) }}
+                        {% elseif form.billableMode is defined %}
+                            {{ form_row(form.billableMode, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_billable'}}) }}
+                        {% endif %}
+                        {% if form.exported is defined %}
+                            {{ form_row(form.exported, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_exported'}}) }}
+                        {% endif %}
+                    {% endblock %}
+                {% endembed %}
+            {% endif %}
+
+            {{ form_widget(form) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

@@ -68,4 +68,9 @@ final class DurationOnlyMode extends AbstractTrackingMode
 
         parent::create($timesheet, $request);
     }
+
+    public function getEditTemplate(): string
+    {
+        return 'timesheet/edit-default.html.twig';
+    }
 }

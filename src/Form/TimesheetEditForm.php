@@ -36,14 +36,8 @@ class TimesheetEditForm extends AbstractType
 {
     use FormTrait;
 
-    /**
-     * @var CustomerRepository
-     */
-    private $customers;
-
-    public function __construct(CustomerRepository $customer)
+    public function __construct(private CustomerRepository $customers)
     {
-        $this->customers = $customer;
     }
 
     /**
@@ -171,7 +165,6 @@ class TimesheetEditForm extends AbstractType
     {
         $durationOptions = [
             'required' => false,
-            'docu_chapter' => 'duration-format.html',
             'attr' => [
                 'placeholder' => '0:00',
             ],

@@ -5,3 +5,6 @@
 {% block page_actions %}{{ actions.timesheet(timesheet, 'edit') }}{% endblock %}
 
 {% set route_back = 'timesheet' %}
+{% if template is not defined %}
+    {% set template = 'timesheet/edit-default.html.twig' %}
+{% endif %}

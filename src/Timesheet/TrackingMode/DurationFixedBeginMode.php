@@ -68,4 +68,9 @@ final class DurationFixedBeginMode implements TrackingModeInterface
     {
         return false;
     }
+
+    public function getEditTemplate(): string
+    {
+        return 'timesheet/edit-default.html.twig';
+    }
 }

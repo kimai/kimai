@@ -122,6 +122,7 @@ abstract class TimesheetAbstractController extends AbstractController
         return $this->render($renderTemplate, [
             'timesheet' => $entry,
             'form' => $editForm->createView(),
+            'template' => $this->getTrackingMode()->getEditTemplate(),
         ]);
     }
 
@@ -152,6 +153,7 @@ abstract class TimesheetAbstractController extends AbstractController
         return $this->render($renderTemplate, [
             'timesheet' => $entry,
             'form' => $createForm->createView(),
+            'template' => $this->getTrackingMode()->getEditTemplate(),
         ]);
     }
 
@@ -181,6 +183,7 @@ abstract class TimesheetAbstractController extends AbstractController
         return $this->render($renderTemplate, [
             'timesheet' => $copyTimesheet,
             'form' => $form->createView(),
+            'template' => $this->getTrackingMode()->getEditTemplate(),
         ]);
     }
 
