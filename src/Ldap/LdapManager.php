@@ -161,7 +161,10 @@ class LdapManager
     public function hydrateUser(User $user, array $ldapEntry)
     {
         $userParams = $this->config->getUserParameters();
-        $attributeMap = $userParams['attributes'];
+        $attributeMap = [];
+        if (\array_key_exists('attributes', $userParams)) {
+            $attributeMap = $userParams['attributes'];
+        }
         $attributeMap = array_merge(
             [
                 ['ldap_attr' => $userParams['usernameAttribute'], 'user_method' => 'setUserIdentifier'],
@@ -194,7 +197,10 @@ class LdapManager
     {
         $roleParams = $this->config->getRoleParameters();
         $allowedRoles = $this->roles->getAvailableNames();
-        $groupNameMapping = $roleParams['groups'];
+        $groupNameMapping = [];
+        if (\array_key_exists('groups', $roleParams)) {
+            $groupNameMapping = $roleParams['groups'];
+        }
         $roleNameAttr = $roleParams['nameAttribute'];
 
         $roles = [];

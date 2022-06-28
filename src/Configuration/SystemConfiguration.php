@@ -17,14 +17,13 @@ use App\Entity\Configuration;
 class SystemConfiguration
 {
     private ?array $settings;
-    private array $original;
     private ConfigLoaderInterface $repository;
     private bool $initialized = false;
 
     public function __construct(ConfigLoaderInterface $repository, array $settings)
     {
         $this->repository = $repository;
-        $this->original = $this->settings = $settings;
+        $this->settings = $settings;
     }
 
     /**
@@ -57,122 +56,99 @@ class SystemConfiguration
      * @see https://github.com/divineomega/array_undot
      * @param string $key
      * @param mixed $value
-     *
-     * @return array
+     * @return void
      */
-    private function set(string $key, $value): array
+    private function set(string $key, $value): void
     {
-        $array = &$this->settings;
-        $keys = explode('.', $key);
-        while (\count($keys) > 1) {
-            $key = array_shift($keys);
-            if (!isset($array[$key]) || !\is_array($array[$key])) {
-                $array[$key] = [];
-            }
-
-            $array = &$array[$key];
-        }
-
-        $k = array_shift($keys);
-
-        if (\array_key_exists($k, $array)) {
-            if (\is_bool($array[$k])) {
+        if (\array_key_exists($key, $this->settings)) {
+            if (\is_bool($this->settings[$key])) {
                 $value = (bool) $value;
-            } elseif (\is_int($array[$k])) {
+            } elseif (\is_int($this->settings[$key])) {
                 $value = (int) $value;
             }
         }
-
-        $array[$k] = $value;
-
-        return $array;
-    }
-
-    public function default(string $key): mixed
-    {
-        $key = $this->prepareSearchKey($key);
-
-        return $this->get($key, $this->original);
+        $this->settings[$key] = $value;
     }
 
     /**
      * @param string $key
-     * @return string|int|bool|float|null|array
+     * @return string|int|bool|float|null
      */
-    public function find(string $key)
+    public function find(string $key): string|int|bool|float|null
     {
         $this->prepare();
-        $key = $this->prepareSearchKey($key);
 
-        return $this->get($key, $this->settings);
-    }
-
-    private function prepareSearchKey(string $key): string
-    {
-        $prefix = $this->getPrefix() . '.';
-        $length = \strlen($prefix);
-
-        if (substr($key, 0, $length) === $prefix) {
-            $key = substr($key, $length);
+        if (\array_key_exists($key, $this->settings)) {
+            return $this->settings[$key];
         }
 
-        return $key;
+        return null;
     }
 
     /**
+     * This method should be avoided if possible, use plain keys instead.
+     *
      * @param string $key
-     * @param array $config
-     * @return mixed
+     * @return array
      */
-    private function get(string $key, array $config)
+    public function findArray(string $key): array
     {
-        $keys = explode('.', $key);
-        $search = array_shift($keys);
+        $this->prepare();
 
-        if (!\array_key_exists($search, $config)) {
-            return null;
+        $result = array_filter($this->settings, function ($settingName) use ($key) {
+            return str_starts_with($settingName, $key);
+        }, ARRAY_FILTER_USE_KEY);
+
+        $replaced = [];
+        foreach ($result as $settingName => $value) {
+            if (\is_bool($this->settings[$settingName])) {
+                $value = (bool) $value;
+            } elseif (\is_int($this->settings[$settingName])) {
+                $value = (int) $value;
+            }
+
+            $baseName = str_replace($key . '.', '', $settingName);
+
+            $keys = explode('.', $baseName);
+            $array = &$replaced;
+            while (\count($keys) > 1) {
+                $search = array_shift($keys);
+                /* @phpstan-ignore-next-line  */
+                if (!\array_key_exists($search, $array) || !\is_array($array[$search])) {
+                    $array[$search] = [];
+                }
+
+                $array = &$array[$search];
+            }
+            $array[array_shift($keys)] = $value;
         }
 
-        if (\is_array($config[$search]) && !empty($keys)) {
-            return $this->get(implode('.', $keys), $config[$search]);
-        }
-
-        return $config[$search];
+        return $replaced;
     }
 
     public function has(string $key): bool
     {
         $this->prepare();
-        $key = $this->prepareSearchKey($key);
 
-        $keys = explode('.', $key);
-
-        $settings = $this->settings;
-        while (\count($keys) > 0 && \is_array($settings)) {
-            $search = array_shift($keys);
-
-            if (!\array_key_exists($search, $settings)) {
-                return false;
-            }
-
-            $settings = $settings[$search];
+        if (\array_key_exists($key, $this->settings)) {
+            return true;
         }
 
-        return true;
+        $result = array_filter($this->settings, function ($settingName) use ($key) {
+            return str_starts_with($settingName, $key);
+        }, ARRAY_FILTER_USE_KEY);
+
+        return \count($result) > 0;
     }
 
-    /**
-     * @return bool
-     */
-    public function offsetExists($offset)
+    // ========== Array access methods ==========
+
+    public function offsetExists($offset): bool
     {
         return $this->has($offset);
     }
 
-    /**
-     * @return mixed
-     */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->find($offset);
     }
@@ -196,12 +172,7 @@ class SystemConfiguration
         throw new \BadMethodCallException('SystemBundleConfiguration does not support offsetUnset()');
     }
 
-    public function getPrefix(): string
-    {
-        return 'kimai';
-    }
-
-    // ========== Login form ==========
+    // ========== Authentication configurations ==========
 
     public function isLoginFormActive(): bool
     {
@@ -237,8 +208,6 @@ class SystemConfiguration
         return (bool) $this->find('user.password_reset');
     }
 
-    // ========== SAML configurations ==========
-
     public function isSamlActive(): bool
     {
         return (bool) $this->find('saml.activate');
@@ -254,46 +223,9 @@ class SystemConfiguration
         return $this->find('saml.provider');
     }
 
-    public function getSamlAttributeMapping(): array
-    {
-        return (array) $this->find('saml.mapping');
-    }
-
-    public function getSamlRolesAttribute(): ?string
-    {
-        return (string) $this->find('saml.roles.attribute');
-    }
-
-    public function getSamlRolesMapping(): array
-    {
-        return (array) $this->find('saml.roles.mapping');
-    }
-
-    public function getSamlConnection(): array
-    {
-        return (array) $this->find('saml.connection');
-    }
-
-    // ========== LDAP configurations ==========
-
     public function isLdapActive(): bool
     {
         return (bool) $this->find('ldap.activate');
-    }
-
-    public function getLdapRoleParameters(): array
-    {
-        return (array) $this->find('ldap.role');
-    }
-
-    public function getLdapUserParameters(): array
-    {
-        return (array) $this->find('ldap.user');
-    }
-
-    public function getLdapConnectionParameters(): array
-    {
-        return (array) $this->find('ldap.connection');
     }
 
     // ========== Calendar configurations ==========
@@ -338,9 +270,9 @@ class SystemConfiguration
         return $this->find('calendar.google.api_key');
     }
 
-    public function getCalendarGoogleSources(): ?array
+    public function getCalendarGoogleSources(): array
     {
-        return $this->find('calendar.google.sources');
+        return $this->findArray('calendar.google.sources');
     }
 
     public function getCalendarSlotDuration(): string
@@ -548,11 +480,6 @@ class SystemConfiguration
         return (bool) $this->find('theme.show_about');
     }
 
-    public function getThemeBundle(): string
-    {
-        return 'Tabler';
-    }
-
     public function isThemeColorsLimited(): bool
     {
         return (bool) $this->find('theme.colors_limited');
@@ -575,7 +502,7 @@ class SystemConfiguration
             return $config;
         }
 
-        return $this->default('theme.color_choices');
+        return 'Silver|#c0c0c0';
     }
 
     // ========== Branding configurations ==========

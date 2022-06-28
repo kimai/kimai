@@ -10,8 +10,8 @@
 namespace App\Tests\Validator\Constraints;
 
 use App\Configuration\ConfigLoaderInterface;
-use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\Constraints\TimesheetFutureTimes;
 use App\Validator\Constraints\TimesheetFutureTimesValidator;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -32,7 +32,7 @@ class TimesheetFutureTimesValidatorTest extends ConstraintValidatorTestCase
     protected function createMyValidator(bool $allowFutureTimes = false)
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
-        $config = new SystemConfiguration($loader, [
+        $config = SystemConfigurationFactory::create($loader, [
             'timesheet' => [
                 'rules' => [
                     'allow_future_times' => $allowFutureTimes,

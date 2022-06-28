@@ -9,8 +9,8 @@
 
 namespace App\Tests\Twig;
 
-use App\Configuration\SystemConfiguration;
 use App\Tests\Configuration\TestConfigLoader;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Twig\Context;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ class ContextTest extends TestCase
     protected function getSut(array $settings, array $headers = []): Context
     {
         $loader = new TestConfigLoader([]);
-        $config = new SystemConfiguration($loader, ['theme' => $settings]);
+        $config = SystemConfigurationFactory::create($loader, ['theme' => $settings]);
 
         $stack = new RequestStack();
         $request = new Request();

@@ -22,16 +22,16 @@ final class LdapConfiguration
 
     public function getRoleParameters(): array
     {
-        return $this->configuration->getLdapRoleParameters();
+        return $this->configuration->findArray('ldap.role');
     }
 
     public function getUserParameters(): array
     {
-        return $this->configuration->getLdapUserParameters();
+        return $this->configuration->findArray('ldap.user');
     }
 
     public function getConnectionParameters(): array
     {
-        return $this->configuration->getLdapConnectionParameters();
+        return $this->configuration->findArray('ldap.connection');
     }
 }

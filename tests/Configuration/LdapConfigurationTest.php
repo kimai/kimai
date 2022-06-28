@@ -10,7 +10,7 @@
 namespace App\Tests\Configuration;
 
 use App\Configuration\LdapConfiguration;
-use App\Configuration\SystemConfiguration;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,7 +21,7 @@ class LdapConfigurationTest extends TestCase
 {
     protected function getSut(array $settings)
     {
-        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['ldap' => $settings]);
+        $systemConfig = SystemConfigurationFactory::create(new TestConfigLoader([]), ['ldap' => $settings]);
 
         return new LdapConfiguration($systemConfig);
     }

@@ -9,7 +9,6 @@
 
 namespace App\Tests\Mocks;
 
-use App\Configuration\SystemConfiguration;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Timesheet\TrackingMode\DefaultMode;
 use App\Timesheet\TrackingMode\DurationFixedBeginMode;
@@ -27,7 +26,7 @@ class TrackingModeServiceFactory extends AbstractMockFactory
 
         $loader = new TestConfigLoader([]);
 
-        $configuration = new SystemConfiguration($loader, ['timesheet' => ['mode' => $mode]]);
+        $configuration = SystemConfigurationFactory::create($loader, ['timesheet' => ['mode' => $mode]]);
 
         if (null === $modes) {
             $modes = [

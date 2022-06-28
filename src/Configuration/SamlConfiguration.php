@@ -30,21 +30,26 @@ final class SamlConfiguration implements SamlConfigurationInterface
 
     public function getAttributeMapping(): array
     {
-        return $this->configuration->getSamlAttributeMapping();
+        return $this->configuration->findArray('saml.mapping');
     }
 
     public function getRolesAttribute(): ?string
     {
-        return $this->configuration->getSamlRolesAttribute();
+        $attr = $this->configuration->find('saml.roles.attribute');
+        if (empty($attr)) {
+            return null;
+        }
+
+        return (string) $attr;
     }
 
     public function getRolesMapping(): array
     {
-        return $this->configuration->getSamlRolesMapping();
+        return $this->configuration->findArray('saml.roles.mapping');
     }
 
     public function getConnection(): array
     {
-        return $this->configuration->getSamlConnection();
+        return $this->configuration->findArray('saml.connection');
     }
 }

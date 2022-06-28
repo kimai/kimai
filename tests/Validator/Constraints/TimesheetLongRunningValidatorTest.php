@@ -10,8 +10,8 @@
 namespace App\Tests\Validator\Constraints;
 
 use App\Configuration\ConfigLoaderInterface;
-use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\Constraints\TimesheetLongRunning;
 use App\Validator\Constraints\TimesheetLongRunningValidator;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -32,7 +32,7 @@ class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
     protected function createMyValidator(int $minutes)
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
-        $config = new SystemConfiguration($loader, [
+        $config = SystemConfigurationFactory::create($loader, [
             'timesheet' => [
                 'rules' => [
                     'long_running_duration' => $minutes,

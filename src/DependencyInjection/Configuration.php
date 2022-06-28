@@ -9,7 +9,6 @@
 
 namespace App\DependencyInjection;
 
-use App\Constants;
 use App\Entity\Customer;
 use App\Entity\User;
 use App\Repository\InvoiceDocumentRepository;
@@ -427,21 +426,6 @@ class Configuration implements ConfigurationInterface
                         'Purple|#800080', 'Fuchsia|#ff00ff', 'Violet|#ee82ee', 'Rose|#ffe4e1', 'Lavender|#E6E6FA'
                     ]))
                 ->end()
-                ->arrayNode('chart')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('background_color')->defaultValue('#3c8dbc')->end() // rgba(0,115,183,0.7) = #0073b7 = Constants::DEFAULT_COLOR
-                        ->scalarNode('border_color')->defaultValue('#3b8bba')->end()
-                        ->scalarNode('grid_color')->defaultValue('rgba(0,0,0,.05)')->end()
-                        ->scalarNode('height')->defaultValue('300')->end()
-                    ->end()
-                ->end()
-                ->arrayNode('calendar')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('background_color')->defaultValue(Constants::DEFAULT_COLOR)->end()
-                    ->end()
-                ->end()
                 ->arrayNode('branding')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -551,12 +535,6 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('timezone')->defaultNull()->end()
                         ->scalarNode('country')->defaultValue('DE')->end()
                         ->scalarNode('currency')->defaultValue(Customer::DEFAULT_CURRENCY)->end()
-                    ->end()
-                ->end()
-                ->arrayNode('timesheet')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->booleanNode('billable')->defaultTrue()->end()
                     ->end()
                 ->end()
                 ->arrayNode('user')

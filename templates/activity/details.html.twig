@@ -90,7 +90,7 @@
     {% endif %}
 
     {% if stats is not null %}
-        {% set currency = kimai_config.getCustomerDefaultCurrency() %}
+        {% set currency = kimai_config.customerDefaultCurrency %}
         {% if activity.project is not null %}
             {% set currency = activity.project.customer.currency %}
         {% endif %}

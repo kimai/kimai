@@ -30,7 +30,6 @@ class LocaleFormatExtensionsTest extends TestCase
 {
     private $localeEn = ['en' => ['date' => 'Y-m-d', 'duration' => '%h:%m', 'time' => 'h:mm a']];
     private $localeDe = ['de' => ['date' => 'd.m.Y', 'duration' => '%h:%m', 'time' => 'HH:mm']];
-    private $localeRu = ['ru' => ['date' => 'd.m.Y', 'duration' => '%h:%m', 'time' => 'HH:mm']];
     private $localeFake = ['XX' => ['date' => 'd.m.Y', 'duration' => '%h - %m - %s Zeit', 'time' => 'HH:mm']];
 
     /**
@@ -407,7 +406,7 @@ class LocaleFormatExtensionsTest extends TestCase
 
         // test extended format
         $sut = $this->getSut($this->localeFake, 'XX');
-        $this->assertEquals('02 - 37 - 17 Zeit', $sut->duration($record->getDuration()));
+        $this->assertEquals('02:37', $sut->duration($record->getDuration()));
 
         // test negative duration
         $sut = $this->getSut($this->localeEn, 'en');
@@ -436,7 +435,7 @@ class LocaleFormatExtensionsTest extends TestCase
     {
         $expected = [
             'formatDuration' => '%h:%m',
-            'formatDate' => 'Y-m-D',
+            'formatDate' => 'Y-m-d',
             'defaultColor' => '#d2d6de',
             'twentyFourHours' => false,
             'updateBrowserTitle' => false,

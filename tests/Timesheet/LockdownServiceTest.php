@@ -10,8 +10,8 @@
 namespace App\Tests\Timesheet;
 
 use App\Configuration\ConfigLoaderInterface;
-use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\LockdownService;
 use PHPUnit\Framework\TestCase;
 
@@ -23,7 +23,7 @@ class LockdownServiceTest extends TestCase
     protected function createService(?string $start, ?string $end, ?string $grace, ?string $timezone = null)
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
-        $config = new SystemConfiguration($loader, [
+        $config = SystemConfigurationFactory::create($loader, [
             'timesheet' => [
                 'rules' => [
                     'lockdown_period_start' => $start,

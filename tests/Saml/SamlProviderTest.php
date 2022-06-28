@@ -10,12 +10,12 @@
 namespace App\Tests\Saml;
 
 use App\Configuration\SamlConfiguration;
-use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Saml\SamlLoginAttributes;
 use App\Saml\SamlProvider;
 use App\Tests\Configuration\TestConfigLoader;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -40,7 +40,7 @@ class SamlProviderTest extends TestCase
             ];
         }
 
-        $configuration = new SystemConfiguration(new TestConfigLoader([]), [
+        $configuration = SystemConfigurationFactory::create(new TestConfigLoader([]), [
             'saml' => $mapping
         ]);
         $samlConfig = new SamlConfiguration($configuration);

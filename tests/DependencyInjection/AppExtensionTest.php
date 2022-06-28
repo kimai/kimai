@@ -10,6 +10,7 @@
 namespace App\Tests\DependencyInjection;
 
 use App\DependencyInjection\AppExtension;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -140,37 +141,42 @@ class AppExtensionTest extends TestCase
         ];
 
         $kimaiLdap = [
-            'activate' => false,
-            'user' => [
-                'baseDn' => null,
-                'filter' => '',
-                'usernameAttribute' => 'uid',
-                'attributesFilter' => '(objectClass=*)',
-                'attributes' => [],
-            ],
-            'role' => [
-                'baseDn' => null,
-                'nameAttribute' => 'cn',
-                'userDnAttribute' => 'member',
-                'groups' => [],
-                'usernameAttribute' => 'dn',
-            ],
-            'connection' => [
-                'baseDn' => null,
-                'host' => null,
-                'port' => 389,
-                'useStartTls' => false,
-                'useSsl' => false,
-                'bindRequiresDn' => true,
-                'accountFilterFormat' => '(&(uid=%s))',
+            'ldap' => [
+                'activate' => false,
+                'user' => [
+                    'baseDn' => null,
+                    'filter' => '',
+                    'usernameAttribute' => 'uid',
+                    'attributesFilter' => '(objectClass=*)',
+                    'attributes' => [],
+                ],
+                'role' => [
+                    'baseDn' => null,
+                    'nameAttribute' => 'cn',
+                    'userDnAttribute' => 'member',
+                    'groups' => [],
+                    'usernameAttribute' => 'dn',
+                ],
+                'connection' => [
+                    'baseDn' => null,
+                    'host' => null,
+                    'port' => 389,
+                    'useStartTls' => false,
+                    'useSsl' => false,
+                    'bindRequiresDn' => true,
+                    'accountFilterFormat' => '(&(uid=%s))',
+                ],
             ],
         ];
 
         $this->assertTrue($container->hasParameter('kimai.config'));
 
         $config = $container->getParameter('kimai.config');
-        $this->assertArrayHasKey('ldap', $config);
-        $this->assertEquals($kimaiLdap, $config['ldap']);
+
+        foreach (SystemConfigurationFactory::flatten($kimaiLdap) as $key => $value) {
+            $this->assertArrayHasKey($key, $config);
+            $this->assertEquals($value, $config[$key]);
+        }
 
         foreach ($expected as $key => $value) {
             $this->assertTrue($container->hasParameter($key), 'Could not find config: ' . $key);
@@ -197,13 +203,12 @@ class AppExtensionTest extends TestCase
         $this->extension->load($minConfig, $container = $this->getContainer());
 
         $config = $container->getParameter('kimai.config');
-        $ldapConfig = $config['ldap'];
 
-        $this->assertEquals('123123123', $ldapConfig['user']['baseDn']);
-        $this->assertEquals('(..........)', $ldapConfig['user']['filter']);
-        $this->assertEquals('xxx', $ldapConfig['user']['usernameAttribute']);
-        $this->assertEquals('lkhiuzhkj', $ldapConfig['connection']['baseDn']);
-        $this->assertEquals('(uid=%s)', $ldapConfig['connection']['accountFilterFormat']);
+        $this->assertEquals('123123123', $config['ldap.user.baseDn']);
+        $this->assertEquals('(..........)', $config['ldap.user.filter']);
+        $this->assertEquals('xxx', $config['ldap.user.usernameAttribute']);
+        $this->assertEquals('lkhiuzhkj', $config['ldap.connection.baseDn']);
+        $this->assertEquals('(uid=%s)', $config['ldap.connection.accountFilterFormat']);
     }
 
     public function testLdapFallbackValue()
@@ -222,13 +227,12 @@ class AppExtensionTest extends TestCase
         $this->extension->load($minConfig, $container = $this->getContainer());
 
         $config = $container->getParameter('kimai.config');
-        $ldapConfig = $config['ldap'];
 
-        $this->assertEquals('123123123', $ldapConfig['user']['baseDn']);
-        $this->assertEquals('xxx', $ldapConfig['user']['usernameAttribute']);
-        $this->assertEquals('123123123', $ldapConfig['connection']['baseDn']);
-        $this->assertEquals('(&(xxx=%s))', $ldapConfig['connection']['accountFilterFormat']);
-        $this->assertEquals('', $ldapConfig['user']['filter']);
+        $this->assertEquals('123123123', $config['ldap.user.baseDn']);
+        $this->assertEquals('xxx', $config['ldap.user.usernameAttribute']);
+        $this->assertEquals('123123123', $config['ldap.connection.baseDn']);
+        $this->assertEquals('(&(xxx=%s))', $config['ldap.connection.accountFilterFormat']);
+        $this->assertEquals('', $config['ldap.user.filter']);
     }
 
     public function testLdapMoreFallbackValue()
@@ -249,26 +253,27 @@ class AppExtensionTest extends TestCase
         $this->extension->load($minConfig, $container = $this->getContainer());
 
         $config = $container->getParameter('kimai.config');
-        $ldapConfig = $config['ldap'];
 
-        $this->assertEquals('123123123', $ldapConfig['user']['baseDn']);
-        $this->assertEquals('zzzz', $ldapConfig['user']['usernameAttribute']);
-        $this->assertEquals('7658765', $ldapConfig['connection']['baseDn']);
-        $this->assertEquals('(&(&(objectClass=inetOrgPerson))(zzzz=%s))', $ldapConfig['connection']['accountFilterFormat']);
-        $this->assertEquals('(&(objectClass=inetOrgPerson))', $ldapConfig['user']['filter']);
+        $this->assertEquals('123123123', $config['ldap.user.baseDn']);
+        $this->assertEquals('zzzz', $config['ldap.user.usernameAttribute']);
+        $this->assertEquals('7658765', $config['ldap.connection.baseDn']);
+        $this->assertEquals('(&(&(objectClass=inetOrgPerson))(zzzz=%s))', $config['ldap.connection.accountFilterFormat']);
+        $this->assertEquals('(&(objectClass=inetOrgPerson))', $config['ldap.user.filter']);
     }
 
     public function testWithBundleConfiguration()
     {
         $bundleConfig = [
-            'foo-bundle' => ['test'],
+            'foo-bundle' => [
+                'bar' => 'test'
+            ],
         ];
         $container = $this->getContainer();
         $container->setParameter('kimai.bundles.config', $bundleConfig);
 
         $this->extension->load($this->getMinConfig(), $container);
         $config = $container->getParameter('kimai.config');
-        self::assertEquals(['test'], $config['foo-bundle']);
+        self::assertEquals('test', $config['foo-bundle.bar']);
     }
 
     public function testWithBundleConfigurationFailsOnDuplicatedKey()

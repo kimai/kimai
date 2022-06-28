@@ -10,13 +10,13 @@
 namespace App\Tests\Ldap;
 
 use App\Configuration\LdapConfiguration;
-use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Ldap\LdapDriver;
 use App\Ldap\LdapDriverException;
 use App\Ldap\LdapManager;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\Security\RoleServiceFactory;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -50,7 +50,7 @@ class LdapManagerTest extends TestCase
             ],
             'role' => $roleConfig,
         ];
-        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['ldap' => $conf]);
+        $systemConfig = SystemConfigurationFactory::create(new TestConfigLoader([]), ['ldap' => $conf]);
         $config = new LdapConfiguration($systemConfig);
 
         $roles = [
@@ -473,7 +473,7 @@ class LdapManagerTest extends TestCase
             ],
             'role' => [],
         ];
-        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
+        $systemConfig = SystemConfigurationFactory::create(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
 
         $config = new LdapConfiguration($systemConfig);
 
@@ -501,7 +501,7 @@ class LdapManagerTest extends TestCase
             ],
             'role' => [],
         ];
-        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
+        $systemConfig = SystemConfigurationFactory::create(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
 
         $config = new LdapConfiguration($systemConfig);
 
@@ -529,7 +529,7 @@ class LdapManagerTest extends TestCase
             ],
             'role' => [],
         ];
-        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
+        $systemConfig = SystemConfigurationFactory::create(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
         $config = new LdapConfiguration($systemConfig);
 
         $ldapEntry = [
@@ -577,7 +577,7 @@ class LdapManagerTest extends TestCase
             ],
             'role' => [],
         ];
-        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
+        $systemConfig = SystemConfigurationFactory::create(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
         $config = new LdapConfiguration($systemConfig);
 
         $ldapEntry = [
@@ -621,7 +621,7 @@ class LdapManagerTest extends TestCase
             ],
             'role' => [],
         ];
-        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
+        $systemConfig = SystemConfigurationFactory::create(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
         $config = new LdapConfiguration($systemConfig);
 
         $ldapEntry = [
@@ -669,7 +669,7 @@ class LdapManagerTest extends TestCase
                 ],
             ],
         ];
-        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
+        $systemConfig = SystemConfigurationFactory::create(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
         $config = new LdapConfiguration($systemConfig);
 
         $ldapGroups = [

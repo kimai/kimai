@@ -13,6 +13,7 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Tests\Mocks\SystemConfigurationFactory;
 
 /**
  * @group integration
@@ -61,7 +62,7 @@ class CalendarControllerTest extends ControllerBaseTest
     public function testCalendarActionWithGoogleSource()
     {
         $loader = new TestConfigLoader([]);
-        $config = new SystemConfiguration($loader, $this->getDefaultSettings());
+        $config = SystemConfigurationFactory::create($loader, $this->getDefaultSettings());
 
         $client = $this->getClientForAuthenticatedUser();
         self::getContainer()->set(SystemConfiguration::class, $config);

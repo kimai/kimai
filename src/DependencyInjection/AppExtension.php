@@ -97,7 +97,19 @@ class AppExtension extends Extension
         unset($config['data_dir']);
         unset($config['permissions']);
 
-        $container->setParameter('kimai.config', $config);
+        // make configs a flat dotted notation during compile time, this will save us from the need to
+        // parse each and every call to the config, but allows direct access
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($config, \RecursiveArrayIterator::CHILD_ARRAYS_ONLY));
+        $newConfig = [];
+        foreach ($iterator as $value) {
+            $keys = [];
+            foreach (range(0, $iterator->getDepth()) as $depth) {
+                $keys[] = $iterator->getSubIterator($depth)->key();
+            }
+            $newConfig[implode('.', $keys)] = $value;
+        }
+
+        $container->setParameter('kimai.config', $newConfig);
     }
 
     protected function setLanguageFormats(array $config, ContainerBuilder $container)

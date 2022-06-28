@@ -10,7 +10,7 @@
 namespace App\Tests\Configuration;
 
 use App\Configuration\SamlConfiguration;
-use App\Configuration\SystemConfiguration;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,7 +21,7 @@ class SamlConfigurationTest extends TestCase
 {
     protected function getSut(array $settings)
     {
-        $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['saml' => $settings]);
+        $systemConfig = SystemConfigurationFactory::create(new TestConfigLoader([]), ['saml' => $settings]);
 
         return new SamlConfiguration($systemConfig);
     }

@@ -10,9 +10,9 @@
 namespace App\Tests\Validator\Constraints;
 
 use App\Configuration\ConfigLoaderInterface;
-use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\LockdownService;
 use App\Validator\Constraints\TimesheetLockdown;
 use App\Validator\Constraints\TimesheetLockdownValidator;
@@ -50,7 +50,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         );
 
         $loader = $this->createMock(ConfigLoaderInterface::class);
-        $config = new SystemConfiguration($loader, [
+        $config = SystemConfigurationFactory::create($loader, [
             'timesheet' => [
                 'rules' => [
                     'lockdown_period_start' => $start,

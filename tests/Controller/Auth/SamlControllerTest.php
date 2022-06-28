@@ -15,6 +15,7 @@ use App\Controller\Auth\SamlController;
 use App\Saml\SamlAuthFactory;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\Saml\SamlAuthFactoryFactory;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use OneLogin\Saml2\Auth;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +38,7 @@ class SamlControllerTest extends TestCase
     {
         $loader = new TestConfigLoader($loaderSettings);
 
-        return new SystemConfiguration($loader, $settings);
+        return SystemConfigurationFactory::create($loader, $settings);
     }
 
     protected function getDefaultSettings(bool $activated = true)

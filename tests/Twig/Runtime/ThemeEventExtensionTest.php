@@ -9,11 +9,11 @@
 
 namespace App\Tests\Twig\Runtime;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\Configuration;
 use App\Entity\User;
 use App\Event\ThemeEvent;
 use App\Tests\Configuration\TestConfigLoader;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Twig\Runtime\ThemeExtension;
 use App\Utils\Theme;
 use PHPUnit\Framework\TestCase;
@@ -64,7 +64,7 @@ class ThemeEventExtensionTest extends TestCase
             (new Configuration())->setName('theme.branding.title')->setValue($title)
         ];
         $loader = new TestConfigLoader($configs);
-        $configuration = new SystemConfiguration($loader, $this->getDefaultSettings());
+        $configuration = SystemConfigurationFactory::create($loader, $this->getDefaultSettings());
         $theme = new Theme($configuration);
 
         return new ThemeExtension($dispatcher, $translator, $configuration, $theme);
