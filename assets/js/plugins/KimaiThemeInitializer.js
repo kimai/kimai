@@ -124,4 +124,18 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
             }
         });
     }
+
+    /**
+     * Check if the current device is a mobile device (targeting the bootstrip xs breakpoint size).
+     *
+     * @returns {boolean}
+     */
+    isMobile() {
+        const width = Math.max(
+            document.documentElement.clientWidth,
+            window.innerWidth || 0
+        )
+
+        return width < 576;
+    }
 }

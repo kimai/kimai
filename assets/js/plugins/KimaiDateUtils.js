@@ -30,9 +30,13 @@ export default class KimaiDateUtils extends KimaiPlugin {
         this.dateFormat = this.getConfiguration('formatDate');
     }
 
-    _getFormat(format)
+    /**
+     * @param {string} format
+     * @returns {string}
+     * @private
+     */
+    _parseFormat(format)
     {
-        // FIXME replace me once the move from moment to luxon is done
         format = format.replace('DD', 'dd');
         format = format.replace('D', 'd');
         format = format.replace('MM', 'LL');
@@ -59,7 +63,7 @@ export default class KimaiDateUtils extends KimaiPlugin {
             newDate = DateTime.fromISO(dateTime);
         }
 
-        return newDate.toFormat(this._getFormat(format));
+        return newDate.toFormat(this._parseFormat(format));
     }
 
     /**
@@ -68,7 +72,7 @@ export default class KimaiDateUtils extends KimaiPlugin {
      */
     getFormattedDate(dateTime)
     {
-        return this.format(this.dateFormat, dateTime);
+        return this.format(this._parseFormat(this.dateFormat), dateTime);
     }
 
     /**
@@ -120,7 +124,7 @@ export default class KimaiDateUtils extends KimaiPlugin {
      */
     fromFormat(date, format)
     {
-        return DateTime.fromFormat(date, this._getFormat(format));
+        return DateTime.fromFormat(date, this._parseFormat(format));
     }
 
     /**
@@ -130,6 +134,9 @@ export default class KimaiDateUtils extends KimaiPlugin {
      */
     fromHtml5Input(date, time)
     {
+        date = date ?? '';
+        time = time ?? '';
+
         if (date === '' && time === '') {
             return DateTime.invalid('Empty date and time given');
         }
