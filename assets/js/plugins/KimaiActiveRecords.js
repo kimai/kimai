@@ -33,20 +33,23 @@ export default class KimaiActiveRecords extends KimaiPlugin {
 
         this.attributes = this.menu.dataset;
 
-        const self = this;
-        const handle = function() { self.reloadActiveRecords(); };
+        const handleUpdate = () => {
+            this.reloadActiveRecords();
+        };
 
-        document.addEventListener('kimai.timesheetUpdate', handle);
-        document.addEventListener('kimai.timesheetDelete', handle);
-        document.addEventListener('kimai.activityUpdate', handle);
-        document.addEventListener('kimai.activityDelete', handle);
-        document.addEventListener('kimai.projectUpdate', handle);
-        document.addEventListener('kimai.projectDelete', handle);
-        document.addEventListener('kimai.customerUpdate', handle);
-        document.addEventListener('kimai.customerDelete', handle);
+        document.addEventListener('kimai.timesheetUpdate', handleUpdate);
+        document.addEventListener('kimai.timesheetDelete', handleUpdate);
+        document.addEventListener('kimai.activityUpdate', handleUpdate);
+        document.addEventListener('kimai.activityDelete', handleUpdate);
+        document.addEventListener('kimai.projectUpdate', handleUpdate);
+        document.addEventListener('kimai.projectDelete', handleUpdate);
+        document.addEventListener('kimai.customerUpdate', handleUpdate);
+        document.addEventListener('kimai.customerDelete', handleUpdate);
     }
 
-    _toggleMenu(hasEntries) {
+    setEntries(entries) {
+        const hasEntries = entries.length > 0;
+
         this.menu.style.display = hasEntries ? 'inline-block' : 'none';
         if (!hasEntries) {
             // make sure that template entries in the menu are removed, otherwise they
@@ -60,33 +63,12 @@ export default class KimaiActiveRecords extends KimaiPlugin {
         if (menuEmpty !== null) {
             menuEmpty.style.display = !hasEntries ? 'inline-block' : 'none';
         }
-    }
 
-    setEntries(entries) {
-        this._toggleMenu(entries.length > 0);
-
-        const template = this.menu.querySelector('[data-template="active-record"]');
-
-        const label = this.menu.querySelector('a > span.label');
-        if (label !== null) {
-            label.innerText = entries.length === 0 ? '' : entries.length;
-        }
-
-        if (entries.length === 0) {
+        if (!hasEntries) {
             return;
         }
 
-        if (template === null) {
-            this._replaceInNode(this.menu, entries[0]);
-        } else {
-            const container = template.parentElement;
-            container.innerHTML = '';
-
-            for (let timesheet of entries) {
-                const newNode = template.cloneNode(true);
-                container.appendChild(this._replaceInNode(newNode, timesheet));
-            }
-        }
+        this._replaceInNode(this.menu, entries[0]);
 
         this.getContainer().getPlugin('timesheet-duration').updateRecords();
     }
