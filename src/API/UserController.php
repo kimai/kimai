@@ -216,7 +216,7 @@ final class UserController extends BaseApiController
             $user->setPassword($password);
 
             if ($user->getPlainApiToken() !== null) {
-                $user->setApiToken($this->encoder->encodePassword($user, $user->getPlainApiToken()));
+                $user->setApiToken($this->passwordHasher->hashPassword($user, $user->getPlainApiToken()));
             }
 
             $this->repository->saveUser($user);
