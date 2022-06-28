@@ -119,7 +119,7 @@
             {% import "macros/widgets.html.twig" as widgets %}
             {% block box_title %}{{ 'label.my_teams'|trans }}{% endblock %}
             {% block box_body %}
-                {{ widgets.team_list(user.teams) }}
+                {{ widgets.team_list(user.teams, {collapse: 22}) }}
             {% endblock %}
         {% endembed %}
     {% endif %}
