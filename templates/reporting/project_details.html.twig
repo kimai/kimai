@@ -28,10 +28,6 @@
     {{ charts.doughnut_javascript(options) }}
     {{ charts.bar_javascript({'legend': {'display': false}}) }}
     <script type="text/javascript">
-        document.getElementById('report-form').addEventListener('change', function(event) {
-            event.currentTarget.submit();
-        });
-
         [].slice.call(document.querySelectorAll('a[data-bs-toggle="tab"]')).forEach(function (triggerEl) {
             triggerEl.addEventListener('shown.bs.tab', function (event) {
                 renderChart(event.target.dataset.chart);
@@ -57,7 +53,7 @@
 {% endblock %}
 
 {% block report_form %}
-    {% form_theme form '@theme/layout/form-theme-horizontal.html.twig' %}
+    {% form_theme form 'form/horizontal.html.twig' %}
     {{ form_start(form, {'attr': {'id': 'report-form'}}) }}
     {{ form_row(form.project, {'placeholder': 'please_choose', 'row_attr': {'class': 'w-100'}}) }}
     {{ form_end(form) }}

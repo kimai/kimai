@@ -32,3 +32,15 @@
         </div>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        const reportForm = document.getElementById('report-form');
+        if (reportForm !== null) {
+            reportForm.addEventListener('change', (event) => {
+                reportForm.submit();
+            });
+        }
+    </script>
+{% endblock %}

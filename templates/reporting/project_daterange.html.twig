@@ -116,12 +116,3 @@
     {% endembed %}
 
 {% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript">
-        document.getElementById('report-form').addEventListener('change', function(event) {
-            event.currentTarget.submit();
-        });
-    </script>
-{% endblock %}

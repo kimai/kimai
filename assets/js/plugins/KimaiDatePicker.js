@@ -64,6 +64,23 @@ export default class KimaiDatePicker extends KimaiPlugin {
                 lang: LANGUAGE,
                 autoRefresh: true,
                 firstDay: FIRST_DOW, // Litepicker: 0 = Sunday, 1 = Monday
+                setup: (picker) => {
+                    // nasty hack, because litepicker does not trigger change event on the input and the available
+                    // event "selected" is triggered why to often, even when moving the cursor inside the input
+                    // element (not even typing is necessary) and so we have to make sure that the manual "click" event
+                    // (works for touch as well) happened before we actually dispatch the change event manually ...
+                    // what? report forms would be submitted upon cursor move without the "preselect” check
+                    picker.on('preselect', (date1, date2) => {
+                        picker.wasPreselected = true;
+                    });
+                    picker.on('selected', (date1, date2) => {
+                        if (picker.wasPreselected !== undefined) {
+                            element.dispatchEvent(new Event('change', {bubbles: true}));
+                            delete picker.wasPreselected;
+                        }
+                    });
+                },
+
             }};
 
             return new Litepicker(this._prepareOptions(options));
