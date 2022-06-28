@@ -77,16 +77,19 @@ class CustomerEditForm extends AbstractType
             ->add('phone', TelType::class, [
                 'label' => 'label.phone',
                 'required' => false,
+                'block_prefix' => 'phone',
             ])
             ->add('fax', TelType::class, [
                 'label' => 'label.fax',
                 'required' => false,
                 'attr' => ['icon' => 'fax'],
+                'block_prefix' => 'phone',
             ])
             ->add('mobile', TelType::class, [
                 'label' => 'label.mobile',
                 'required' => false,
                 'attr' => ['icon' => 'mobile'],
+                'block_prefix' => 'phone',
             ])
             ->add('email', MailType::class, [
                 'required' => false,
@@ -94,6 +97,7 @@ class CustomerEditForm extends AbstractType
             ->add('homepage', UrlType::class, [
                 'label' => 'label.homepage',
                 'required' => false,
+                'block_prefix' => 'homepage',
             ])
             ->add('timezone', TimezoneType::class, [
                 'label' => 'label.timezone',

@@ -13,10 +13,10 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Form\Type\AvatarType;
 use App\Form\Type\LanguageType;
+use App\Form\Type\MailType;
 use App\Form\Type\TimezoneType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -63,11 +63,7 @@ class UserEditType extends AbstractType
 
         $this->addColor($builder);
 
-        $builder
-            ->add('email', EmailType::class, [
-                'label' => 'label.email',
-            ])
-        ;
+        $builder->add('email', MailType::class);
 
         if ($options['include_preferences']) {
             $builder->add('language', LanguageType::class, [

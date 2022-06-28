@@ -39,7 +39,7 @@
 
     {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/search.html.twig" as search %}
-        {% form_theme form '@theme/layout/form-theme-horizontal.html.twig' %}
+        {% form_theme form 'form/horizontal.html.twig' %}
         {% block box_title %}{{ 'export.filter'|trans }}{% endblock %}
         {% block box_before %}{{ form_start(form) }}{% endblock %}
         {% block box_body %}

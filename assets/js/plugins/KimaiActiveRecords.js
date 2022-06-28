@@ -115,6 +115,7 @@ export default class KimaiActiveRecords extends KimaiPlugin {
 
     reloadActiveRecords() {
         const self = this;
+        /** @type {KimaiAPI} API */
         const API = this.getContainer().getPlugin('api');
 
         API.get(this.attributes['api'], {}, function(result) {

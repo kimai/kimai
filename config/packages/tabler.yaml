@@ -94,10 +94,11 @@ tabler:
         ods: fas fa-table
         off: fas fa-toggle-off
         on: fas fa-toggle-on
-        pin: fas fa-thumbtack
-        pdf: fas fa-file-pdf
+        password: fas fa-key
         pause: fas fa-pause
         pause-small: far fa-pause-circle
+        pin: fas fa-thumbtack
+        pdf: fas fa-file-pdf
         permissions: fas fa-user-lock
         phone: fas fa-phone
         plugin: fas fa-plug

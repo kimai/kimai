@@ -37,8 +37,16 @@ class UserCreateType extends UserEditType
             ->add('plainPassword', RepeatedType::class, [
                 'required' => true,
                 'type' => PasswordType::class,
-                'first_options' => ['label' => 'label.password', 'attr' => ['autocomplete' => 'new-password']],
-                'second_options' => ['label' => 'label.password_repeat', 'attr' => ['autocomplete' => 'new-password']],
+                'first_options' => [
+                    'label' => 'label.password',
+                    'attr' => ['autocomplete' => 'new-password'],
+                    'block_prefix' => 'secret'
+                ],
+                'second_options' => [
+                    'label' => 'label.password_repeat',
+                    'attr' => ['autocomplete' => 'new-password'],
+                    'block_prefix' => 'secret'
+                ],
             ]);
 
         parent::buildForm($builder, $options);

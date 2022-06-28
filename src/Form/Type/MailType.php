@@ -10,7 +10,7 @@
 namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 
@@ -23,7 +23,6 @@ class MailType extends AbstractType
     {
         $resolver->setDefaults([
             'label' => 'label.email',
-            'icon' => 'mail',
             'constraints' => [
                 new Email(['mode' => 'loose'])
             ],
@@ -32,6 +31,6 @@ class MailType extends AbstractType
 
     public function getParent(): string
     {
-        return TextType::class;
+        return EmailType::class;
     }
 }

@@ -34,8 +34,11 @@ export default class KimaiDateUtils extends KimaiPlugin {
     {
         // FIXME replace me once the move from moment to luxon is done
         format = format.replace('DD', 'dd');
+        format = format.replace('D', 'd');
         format = format.replace('MM', 'LL');
+        format = format.replace('M', 'L');
         format = format.replace('YYYY', 'yyyy');
+        format = format.replace('YY', 'yy');
         return format.replace('A', 'a');
     }
 
@@ -47,7 +50,6 @@ export default class KimaiDateUtils extends KimaiPlugin {
     format(format, dateTime)
     {
         let newDate = null;
-
 
         if (dateTime === null || dateTime === undefined) {
             newDate = DateTime.now();

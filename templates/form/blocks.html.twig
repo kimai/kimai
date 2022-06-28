@@ -80,7 +80,30 @@
     </div>
 {% endblock team_member_widget %}
 
+{% block date_picker_widget -%}
+    {% set format = javascript_format('date') %}
+    {% set attr = attr|merge({'autocomplete': 'off'}) -%}
+    {%- if datetime is not defined or not datetime -%}
+        {% set attr = attr|merge({'data-datepicker': 'on', 'data-format': format, 'placeholder': format|upper}) -%}
+    {%- endif -%}
+    {%- if datetime is not defined or not datetime -%}
+        <div class="input-group">
+            <div class="input-group-text">
+                <a href="#" class="kimai-date-widget" data-format="{{ format }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
+            </div>
+            {{ block('date_widget') }}
+        </div>
+    {%- else -%}
+        <div class="input-group-text">
+            {{ icon('calendar') }}
+        </div>
+        {{ block('date_widget') }}
+    {%- endif -%}
+{%- endblock date_picker_widget %}
+
 {% block daterange_widget %}
+    {% set format = javascript_format('date') %}
+    {% set attr = attr|merge({'data-daterangepicker': 'on', 'autocomplete': 'off', 'data-format': format, 'placeholder': format|upper}) -%}
     <div class="input-group">
         {{ block('form_widget_simple') }}
         {% if ranges is defined %}
@@ -102,7 +125,7 @@
                 <button type="button" class="btn dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                 <div class="dropdown-menu dropdown-menu-right pre-scrollable">
                     {% for value in form.vars.duration_presets %}
-                        <a class="dropdown-item" href="#" onclick="document.getElementById('{{ form.vars.id }}').value = '{{ value }}';document.getElementById('{{ form.vars.id }}').dispatchEvent(new Event('change'));return false;">{{ value }}</a>
+                        <a class="dropdown-item" href="#" onclick="document.getElementById('{{ form.vars.id }}').value = '{{ value }}';document.getElementById('{{ form.vars.id }}').dispatchEvent(new Event('change', {bubbles: true}));return false;">{{ value }}</a>
                     {% endfor %}
                 </div>
             </div>
@@ -112,14 +135,14 @@
     </div>
 {% endblock duration_widget %}
 
-{% block datetime_widget -%}
+{% block date_time_picker_widget -%}
     {%- if widget == 'single_text' -%}
         <div class="input-group">
             <div class="input-group-text">
                 {{ icon('calendar') }}
             </div>
             {# the same is used in symfony form themes #}
-            {{- block('form_widget_simple') -}}
+            {{- block('date_widget') -}}
         </div>
     {%- else -%}
         {% set dateAttr = form.date.vars.attr -%}
@@ -131,14 +154,20 @@
         {% endif %}
         <div {{ block('widget_container_attributes') }}>
             <div class="input-group">
+                <div class="input-group-text add-on">
+                    {{ icon('calendar') }}
+                </div>
                 {{- form_widget(form.date, { datetime: true, compound: false, attr: dateAttr } ) -}}
                 {{- form_errors(form.date) -}}
+                <div class="input-group-text add-on">
+                    {{ icon('clock') }}
+                </div>
                 {{- form_widget(form.time, { datetime: true, compound: false, attr: timeAttr } ) -}}
                 {{- form_errors(form.time) -}}
             </div>
         </div>
     {%- endif -%}
-{%- endblock %}
+{%- endblock date_time_picker_widget %}
 
 {% block text_widget -%}
     {% if icon is not empty %}
@@ -152,6 +181,25 @@
         {{ block('form_widget_simple') }}
     {% endif %}
 {%- endblock text_widget %}
+
+{% block mail_widget -%}
+    <div class="input-group">
+        <div class="input-group-text">
+            {{ icon('mail') }}
+        </div>
+        {{ block('email_widget') }}
+    </div>
+{%- endblock mail_widget %}
+
+{# user password fields, search for "secret" block_prefix #}
+{% block secret_widget -%}
+    <div class="input-group">
+        <div class="input-group-text">
+            {{ icon('password') }}
+        </div>
+        {{ block('password_widget') }}
+    </div>
+{%- endblock secret_widget %}
 
 {% block yearpicker_widget -%}
     {%- set functionName = 'year_' ~ form.vars.id %}
@@ -203,8 +251,7 @@
         function {{ functionName }}(date) {
             const element = document.getElementById('{{ form.vars.id }}');
             element.value = date;
-            element.dispatchEvent(new Event('change'));
-            element.form.dispatchEvent(new Event('change'));
+            element.dispatchEvent(new Event('change', {bubbles: true}));
         }
     </script>
 {%- endblock monthpicker_widget %}
@@ -232,8 +279,7 @@
         function {{ functionName }}(date) {
             const element = document.getElementById('{{ form.vars.id }}');
             element.value = date;
-            element.dispatchEvent(new Event('change'));
-            element.form.dispatchEvent(new Event('change'));
+            element.dispatchEvent(new Event('change', {bubbles: true}));
         }
     </script>
 {%- endblock weekpicker_widget %}
@@ -264,3 +310,23 @@
         </ul>
     </div>
 {% endblock report_sum_widget %}
+
+{# customer phone/fax, search for "phone" block_prefix #}
+{% block phone_widget -%}
+    <div class="input-group">
+        <div class="input-group-text">
+            {{ icon(attr.icon ?? 'phone') }}
+        </div>
+        {{ block('tel_widget') }}
+    </div>
+{%- endblock phone_widget %}
+
+{# customer homepage, search for "homepage" block_prefix #}
+{% block homepage_widget -%}
+    <div class="input-group">
+        <div class="input-group-text">
+            https://
+        </div>
+        {{ block('url_widget') }}
+    </div>
+{%- endblock homepage_widget %}

@@ -14,6 +14,8 @@ class JavascriptFormatConverter
     /**
      * Convert PHP date format to litepicker compatible format.
      *
+     * Litepicker interprets 2-digit year as 1900, so we have to convert 20 to 2022.
+     *
      * @var array
      */
     private static $formatConvertRules = [
@@ -32,7 +34,8 @@ class JavascriptFormatConverter
     ];
 
     /**
-     * Returns associated moment.js format.
+     * The output of this format is used only to convert the Litepicker date object
+     * to the input field (expected by Symfony form).
      *
      * @param string $format
      * @return string

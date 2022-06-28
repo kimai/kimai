@@ -14,7 +14,6 @@ use App\Entity\User;
 use App\Form\Model\DateRange;
 use App\Timesheet\DateTimeFactory;
 use App\Utils\FormFormatConverter;
-use App\Utils\JavascriptFormatConverter;
 use IntlDateFormatter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -44,14 +43,12 @@ class DateRangeType extends AbstractType
     {
         $format = $this->localeService->getDateFormat(\Locale::getDefault());
         $formFormat = (new FormFormatConverter())->convert($format);
-        $pickerFormat = (new JavascriptFormatConverter())->convert($format);
 
         $resolver->setDefaults([
             'timezone' => date_default_timezone_get(),
             'label' => 'label.daterange',
             'format' => $formFormat,
             'separator' => self::DATE_SPACER,
-            'format_picker' => $pickerFormat,
             'allow_empty' => true,
         ]);
     }
@@ -74,10 +71,6 @@ class DateRangeType extends AbstractType
         $view->vars['rangeFormat'] = $options['format'];
 
         $view->vars['attr'] = array_merge($view->vars['attr'], [
-            'data-daterangepicker' => 'on',
-            'autocomplete' => 'off',
-            'placeholder' => strtoupper($options['format_picker']) . $options['separator'] . strtoupper($options['format_picker']),
-            'data-format' => $options['format_picker'],
             'data-separator' => $options['separator'],
         ]);
     }

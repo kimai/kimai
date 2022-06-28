@@ -9,7 +9,7 @@
 
 namespace App\Reporting\ProjectInactive;
 
-use App\Form\Type\DateTimePickerType;
+use App\Form\Type\DatePickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,7 +21,7 @@ class ProjectInactiveForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('lastChange', DateTimePickerType::class, [
+        $builder->add('lastChange', DatePickerType::class, [
             'label' => 'label.last_record_before',
             'model_timezone' => $options['timezone'],
             'view_timezone' => $options['timezone'],

@@ -38,7 +38,7 @@ export default class KimaiForm extends KimaiPlugin {
                 const formElement = document.getElementById(linkTarget.dataset.target);
                 if (!formElement.disabled) {
                     formElement.value = this.getDateUtils().format(linkTarget.dataset.format, null);
-                    formElement.dispatchEvent(new Event('change'));
+                    formElement.dispatchEvent(new Event('change', {bubbles: true}));
                 }
 
                 event.preventDefault();

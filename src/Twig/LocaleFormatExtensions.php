@@ -232,11 +232,9 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
 
     public function getJavascriptConfiguration(User $user): array
     {
-        $converter = new JavascriptFormatConverter();
-
         return [
             'formatDuration' => $this->localeService->getDurationFormat($this->locale),
-            'formatDate' => $converter->convert($this->localeService->getDateFormat($this->locale)),
+            'formatDate' => $this->localeService->getDateFormat($this->locale),
             'defaultColor' => Constants::DEFAULT_COLOR,
             'twentyFourHours' => $this->localeService->is24Hour($this->locale),
             'updateBrowserTitle' => (bool) $user->getPreferenceValue('update_browser_title'),

@@ -2,7 +2,7 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     form_themes:
-        - 'form/kimai-theme.html.twig'
+        - 'form/vertical.html.twig'
     exception_controller: null
     paths:
         # used in templates/emails/layout.html.twig

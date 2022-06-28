@@ -37,7 +37,7 @@
     "file-loader": "^6.0",
     "gridstack": "^5.1",
     "jquery": "<3.6",
-    "litepicker": "^2.0.12",
+    "litepicker": "^2.0",
     "luxon": "^2.4.0",
     "node-sass": "^7.0",
     "sass-loader": "^11.0",
