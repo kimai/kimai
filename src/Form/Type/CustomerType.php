@@ -55,8 +55,8 @@ class CustomerType extends AbstractType
             'query_builder_for_user' => true,
             'project_enabled' => false,
             'project_select' => 'project',
-            'start_date_param' => '%begin%',
-            'end_date_param' => '%end%',
+            'start_date_param' => '%begin_date%',
+            'end_date_param' => '%end_date%',
             'ignore_date' => false,
             'project_visibility' => ProjectQuery::SHOW_VISIBLE,
             // @var Customer|null
