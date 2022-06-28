@@ -107,7 +107,6 @@ final class CalendarService
             'dayLimit' => $this->configuration->getCalendarDayLimit(),
             'showWeekNumbers' => $this->configuration->isCalendarShowWeekNumbers(),
             'showWeekends' => $this->configuration->isCalendarShowWeekends(),
-            'businessDays' => $this->configuration->getCalendarBusinessDays(),
             'businessTimeBegin' => $this->configuration->getCalendarBusinessTimeBegin(),
             'businessTimeEnd' => $this->configuration->getCalendarBusinessTimeEnd(),
             'slotDuration' => $this->configuration->getCalendarSlotDuration(),

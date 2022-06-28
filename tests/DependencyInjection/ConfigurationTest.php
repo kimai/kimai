@@ -323,13 +323,6 @@ class ConfigurationTest extends TestCase
                 'day_limit' => 4,
                 'slot_duration' => '00:30:00',
                 'businessHours' => [
-                    'days' => [
-                        0 => 1,
-                        1 => 2,
-                        2 => 3,
-                        3 => 4,
-                        4 => 5,
-                    ],
                     'begin' => '08:00',
                     'end' => '20:00',
                 ],
@@ -395,7 +388,6 @@ class ConfigurationTest extends TestCase
                     'TotalsActivity',
                 ]
             ],
-            'widgets' => [],
             'defaults' => [
                 'timesheet' => [
                     'billable' => true,

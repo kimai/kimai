@@ -68,31 +68,26 @@ class AppExtensionTest extends TestCase
             'kimai.languages' => [
                 'en' => [
                     'date' => 'M/d/yy',
-                    'duration' => '%%h:%%m',
                     'time' => 'h:mm a',
                     'rtl' => false,
                 ],
                 'de' => [
                     'date' => 'dd.MM.yy',
-                    'duration' => '%%h:%%m',
                     'time' => 'HH:mm',
                     'rtl' => false,
                 ],
                 'he' => [
                     'date' => 'd.M.y',
-                    'duration' => '%%h:%%m',
                     'time' => 'H:mm',
                     'rtl' => false,
                 ],
                 'tr' => [
                     'date' => 'd.MM.y',
-                    'duration' => '%%h:%%m',
                     'time' => 'HH:mm',
                     'rtl' => false,
                 ],
                 'zh_CN' => [
                     'date' => 'y/M/d',
-                    'duration' => '%%h:%%m',
                     'time' => 'HH:mm',
                     'rtl' => false,
                 ],

@@ -298,11 +298,6 @@ class SystemConfiguration
 
     // ========== Calendar configurations ==========
 
-    public function getCalendarBusinessDays(): array
-    {
-        return (array) $this->find('calendar.businessHours.days');
-    }
-
     public function getCalendarBusinessTimeBegin(): string
     {
         return (string) $this->find('calendar.businessHours.begin');

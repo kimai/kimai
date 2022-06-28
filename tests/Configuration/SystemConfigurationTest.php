@@ -65,7 +65,6 @@ class SystemConfigurationTest extends TestCase
             ],
             'calendar' => [
                 'businessHours' => [
-                    'days' => [2, 4, 6],
                     'begin' => '07:49',
                     'end' => '19:27'
                 ],
@@ -207,7 +206,6 @@ class SystemConfigurationTest extends TestCase
     public function testCalendarWithoutLoader()
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);
-        $this->assertEquals([2, 4, 6], $sut->getCalendarBusinessDays());
         $this->assertEquals('07:49', $sut->getCalendarBusinessTimeBegin());
         $this->assertEquals('19:27', $sut->getCalendarBusinessTimeEnd());
         $this->assertEquals('06:00:00', $sut->getCalendarTimeframeBegin());
