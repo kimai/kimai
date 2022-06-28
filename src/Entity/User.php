@@ -142,6 +142,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * @var string|null
      * @internal to be set via form, must not be persisted
+     *
      * @Assert\NotBlank(groups={"ApiTokenUpdate"})
      * @Assert\Length(min="8", max="60", groups={"ApiTokenUpdate"})
      */

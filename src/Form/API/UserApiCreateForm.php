@@ -24,7 +24,9 @@ class UserApiCreateForm extends UserCreateType
     {
         parent::buildForm($builder, $options);
 
-        $builder->remove('plainPassword');
+        if ($builder->has('plainPassword')) {
+            $builder->remove('plainPassword');
+        }
 
         $builder->add('plainPassword', PasswordType::class, [
             'required' => true,
@@ -32,6 +34,19 @@ class UserApiCreateForm extends UserCreateType
             'documentation' => [
                 'type' => 'string',
                 'description' => 'Plain text password',
+            ],
+        ]);
+
+        if ($builder->has('plainApiToken')) {
+            $builder->remove('plainApiToken');
+        }
+
+        $builder->add('plainApiToken', PasswordType::class, [
+            'required' => false,
+            'label' => 'label.api_token',
+            'documentation' => [
+                'type' => 'string',
+                'description' => 'Plain API token',
             ],
         ]);
 
