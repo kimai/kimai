@@ -11,7 +11,6 @@
 
 import KimaiPlugin from "../KimaiPlugin";
 import TomSelect from 'tom-select';
-import jQuery from "jquery";
 
 export default class KimaiFormSelect extends KimaiPlugin {
 
@@ -333,8 +332,12 @@ export default class KimaiFormSelect extends KimaiPlugin {
         /** @type {KimaiAPI} API */
         const API = this.getContainer().getPlugin('api');
 
-        jQuery('body').on('change', selector, (event) => {
-            const apiSelect = event.currentTarget;
+        document.addEventListener('change', (event) => {
+            if (event.target === null || !event.target.matches(selector)) {
+                return;
+            }
+
+            const apiSelect = event.target;
             const targetSelectId = '#' + apiSelect.dataset['relatedSelect'];
             /** @type {HTMLSelectElement} targetSelect */
             const targetSelect = document.getElementById(apiSelect.dataset['relatedSelect']);
@@ -400,16 +403,13 @@ export default class KimaiFormSelect extends KimaiPlugin {
                         newValue = targetField.value;
 
                         if (newValue !== '') {
-                            // we need it for now, because the daterangepicker relies on it!
-                            const $targetField = jQuery(targetField);
-                            // having that special case here is far from being perfect... but for now it works ;-)
-                            // used for the project start & end date in the timesheet edit form
-                            if ($targetField.data('daterangepicker') !== undefined) {
-                                if (key === 'begin' || key === 'start' || $targetField.data('daterangepicker').singleDatePicker) {
-                                    newValue = this.getDateUtils().formatForAPI($targetField.data('daterangepicker').startDate.toDate(), true);
-                                } else if (key === 'end') {
-                                    newValue = this.getDateUtils().formatForAPI($targetField.data('daterangepicker').endDate.toDate(), true);
-                                }
+                            if (targetField.type === 'date') {
+                                const timeId = targetField.id.replace('_date', '_time')
+                                const timeElement = document.getElementById(timeId);
+                                const time = timeElement === null ? '12:00:00' : timeElement.value;
+                                // using 12 because the API might change the date if we use 00:00
+                                const newDate = this.getDateUtils().fromHtml5Input(newValue, time);
+                                newValue = this.getDateUtils().formatForAPI(newDate, false);
                             } else if (targetField.dataset['format'] !== undefined) {
                                 // find out when this else branch is triggered and document!
 
