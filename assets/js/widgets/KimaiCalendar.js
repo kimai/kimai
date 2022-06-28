@@ -159,9 +159,9 @@ export default class KimaiCalendar {
 
             now: this.options['now'],
             businessHours: {
-                dow: this.options['config.businessDays'],
-                start: this.options['businessTimeBegin'],
-                end: this.options['businessTimeEnd']
+                daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
+                startTime: this.options['businessTimeBegin'],
+                endTime: this.options['businessTimeEnd']
             },
             slotDuration: this.options['slotDuration'],
             slotMinTime: this.options['timeframeBegin'] + ':00',
