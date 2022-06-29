@@ -24,15 +24,16 @@ use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * @extends \Doctrine\ORM\EntityRepository<User>
  */
-class UserRepository extends EntityRepository implements UserLoaderInterface, PasswordUpgraderInterface
+class UserRepository extends EntityRepository implements UserProviderInterface, PasswordUpgraderInterface
 {
     public function deleteUserPreference(UserPreference $preference, bool $flush = false): void
     {
@@ -120,7 +121,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Pa
      * @return User|null
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function loadUserByIdentifier(string $identifier): ?UserInterface
+    public function loadUserByIdentifier(string $identifier): UserInterface
     {
         /** @var User|null $user */
         $user = $this->createQueryBuilder('u')
@@ -131,10 +132,12 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Pa
             ->getQuery()
             ->getOneOrNullResult();
 
-        if ($user !== null) {
-            $loader = new UserLoader($this->getEntityManager(), true);
-            $loader->loadResults([$user]);
+        if ($user === null) {
+            throw new UserNotFoundException();
         }
+
+        $loader = new UserLoader($this->getEntityManager(), true);
+        $loader->loadResults([$user]);
 
         return $user;
     }
@@ -424,5 +427,15 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Pa
             $em->rollback();
             throw $ex;
         }
+    }
+
+    public function refreshUser(UserInterface $user): User
+    {
+        return $this->loadUserByIdentifier($user->getUserIdentifier());
+    }
+
+    public function supportsClass(string $class)
+    {
+        return $class === User::class;
     }
 }
