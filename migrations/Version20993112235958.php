@@ -49,6 +49,8 @@ final class Version20993112235958 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_4F60C6B1415614018D93D649 ON kimai2_timesheet (end_time, user)');
 
         // TODO user configuration calendar first day agendaDay = day / agendaMonth = month
+
+        $this->addSql("UPDATE kimai2_configuration SET `value` = 'default' WHERE `name` = 'timesheet.mode' and `value` = 'duration_only'");
     }
 
     public function down(Schema $schema): void

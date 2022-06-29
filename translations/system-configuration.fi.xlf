@@ -22,10 +22,6 @@
         <source>label.timesheet.mode_default</source>
         <target state="translated">[Oletus] aloitus- ja lopetusaikoja voidaan muuttaa</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target state="translated">[Kesto] korvaa lopetusajan syötetyllä kestolla</target>
-      </trans-unit>
       <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target state="translated">[Kesto] konfiguroitava kiinteä aloitusaika, vain kestoa voidaan muuttaa</target>

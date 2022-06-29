@@ -22,10 +22,6 @@
         <source>label.timesheet.mode_default</source>
         <target>[ברירת מחדל] ניתן לערוך התחלה וסיום</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target>[התחלה ומשך זמן עבודה] מחליף את שעת הסיום במשך זמן העבודה</target>
-      </trans-unit>
       <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target>[רק משך זמן עבודה] זמן התחלה קבוע ניתן להגדרה, רק משך זמן העבודה ניתן לשינוי</target>

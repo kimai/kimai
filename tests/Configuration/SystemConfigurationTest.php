@@ -42,7 +42,7 @@ class SystemConfigurationTest extends TestCase
                     'lockdown_period_end' => null,
                     'lockdown_grace_period' => null,
                 ],
-                'mode' => 'duration_only',
+                'mode' => 'punch',
                 'markdown_content' => false,
                 'active_entries' => [
                     'hard_limit' => 99,
@@ -253,7 +253,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals(99, $sut->getTimesheetActiveEntriesHardLimit());
         $this->assertFalse($sut->isTimesheetAllowFutureTimes());
         $this->assertFalse($sut->isTimesheetMarkdownEnabled());
-        $this->assertEquals('duration_only', $sut->getTimesheetTrackingMode());
+        $this->assertEquals('punch', $sut->getTimesheetTrackingMode());
         $this->assertEquals('now', $sut->getTimesheetDefaultBeginTime());
         $this->assertFalse($sut->isTimesheetLockdownActive());
         $this->assertEquals('', $sut->getTimesheetLockdownPeriodStart());

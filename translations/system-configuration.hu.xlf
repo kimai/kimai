@@ -6,10 +6,6 @@
         <source>Time tracking</source>
         <target>Rögzített órák</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target>"Csak időtartam" mód - a befejezés mezőt kicseréli időtartamra</target>
-      </trans-unit>
       <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
         <source>label.timesheet.rules.allow_future_times</source>
         <target>Jövőbeli rögzítések engedélyezése</target>

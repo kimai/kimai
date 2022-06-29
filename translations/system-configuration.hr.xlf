@@ -30,10 +30,6 @@
         <source>label.timesheet.mode_default</source>
         <target>[Standardno] vrijeme početka i kraja mogu se promijeniti</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target>[Trajanje] zamjenjuje vrijeme kraja s poljem za unos trajanja</target>
-      </trans-unit>
       <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target>[Trajanje] podesivo fiksno vrijeme početka, promijeniti se može samo trajanje</target>

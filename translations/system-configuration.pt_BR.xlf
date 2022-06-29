@@ -22,10 +22,6 @@
         <source>label.timesheet.mode_default</source>
         <target>[Default] horários de início e fim podem ser editados</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target>[Duration] substituir o horário final por um campo de entrada de duração</target>
-      </trans-unit>
       <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target>[Duration] Tempo de início fixo configurável, somente a duração pode ser mudada</target>

@@ -22,10 +22,6 @@
         <source>label.timesheet.mode_default</source>
         <target>[افتراضي] يمكن تعديل أوقات البدء والانتهاء</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target>[مدة] يستبدل وقت الانتهاء بحقل إدخال مدة</target>
-      </trans-unit>
       <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target>[مدة] وقت البدء الثابت القابل للتكوين ، يمكن تغيير المدة فقط</target>

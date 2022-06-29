@@ -105,7 +105,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'system_configuration_form_timesheet' => [
                 'configuration' => [
-                    ['name' => 'timesheet.mode', 'value' => 'duration_only'],
+                    ['name' => 'timesheet.mode', 'value' => 'punch'],
                     ['name' => 'timesheet.default_begin', 'value' => '23:59'],
                     ['name' => 'timesheet.rules.allow_future_times', 'value' => false],
                     ['name' => 'timesheet.rules.allow_zero_duration', 'value' => true],
@@ -122,7 +122,7 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertHasFlashSaveSuccess($client);
 
         $configService = $this->getSystemConfiguration();
-        $this->assertEquals('duration_only', $configService->find('timesheet.mode'));
+        $this->assertEquals('punch', $configService->find('timesheet.mode'));
         $this->assertFalse($configService->find('timesheet.rules.allow_future_times'));
         $this->assertFalse($configService->find('timesheet.rules.allow_overlapping_records'));
         $this->assertEquals(99, $configService->find('timesheet.active_entries.hard_limit'));

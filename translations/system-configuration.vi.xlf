@@ -22,10 +22,6 @@
         <source>label.timesheet.mode_default</source>
         <target>[Mặc định] thời gian bắt đầu và kết thúc có thể được chỉnh sửa</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target>[Thời lượng] thay thế thời gian kết thúc dựa vào thời lượng</target>
-      </trans-unit>
       <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target>[Thời lượng] thời gian bắt đầu cố định có thể định cấu hình, chỉ có thể thay đổi thời lượng</target>

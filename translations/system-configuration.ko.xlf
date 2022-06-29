@@ -22,10 +22,6 @@
         <source>label.timesheet.mode_default</source>
         <target state="translated">[기본값] 시작 및 종료 시간을 편집할 수 있습니다</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target state="translated">[지속시간] 종료 시간을 지속시간 입력 필드로 바꿉니다</target>
-      </trans-unit>
       <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target state="translated">[지속시간] 구성 가능한 고정 시작 시간, 지속시간만 변경할 수 있습니다</target>

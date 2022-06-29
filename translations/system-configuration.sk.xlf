@@ -18,10 +18,6 @@
         <source>label.timesheet.mode_default</source>
         <target>Predvolené: akceptovať dátum začiatku a konca</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target>Iba Trvanie: nahradí pole dátumu ukončenia vstupom s trvaním</target>
-      </trans-unit>
       <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
         <source>label.timesheet.rules.allow_future_times</source>
         <target>Povoliť časové záznamy v budúcnosti</target>

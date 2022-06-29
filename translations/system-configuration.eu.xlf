@@ -22,10 +22,6 @@
         <source>label.timesheet.mode_default</source>
         <target>Defektuz hasiera eta bukaera denbora edita daitezke</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target>[Iraupena] Bukaera ordua beharrean iraupena erakutsi</target>
-      </trans-unit>
       <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target>[Iraupena] hasiera ordu finko konfiguragarria. Iraupena soilik alda daiteke</target>

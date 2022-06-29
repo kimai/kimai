@@ -22,10 +22,6 @@
         <source>label.timesheet.mode_default</source>
         <target>[Par défaut] les horaires de début et de fin peuvent êtres modifiés</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target>[Durée] remplace l'heure de fin par une saisie de la durée</target>
-      </trans-unit>
       <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
         <source>label.timesheet.mode_punch</source>
         <target>[Temps-réel] l'utilisateur peut démarrer et arrêter des enregistrements, mais ne peut pas modifier les heures ou la durée</target>

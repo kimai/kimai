@@ -22,10 +22,6 @@
         <source>label.timesheet.mode_default</source>
         <target>[Domyślnie] Czasy początku  i końca moga być edytowane</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target>[Czas trwania] Zamienia czas końca na długość trwania (pole edycyjne) </target>
-      </trans-unit>
       <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target>[Czas trwania] Konfigurowalny ustalony czas początku, możliwa zmiana jedynie długości trwania</target>

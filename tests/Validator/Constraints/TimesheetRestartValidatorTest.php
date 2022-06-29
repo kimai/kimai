@@ -97,7 +97,6 @@ class TimesheetRestartValidatorTest extends ConstraintValidatorTestCase
     {
         yield [false, 'end', 'default'];
         yield [true, null, 'default'];
-        yield [false, 'duration', 'duration_only'];
         yield [false, 'start', 'punch'];
     }
 }

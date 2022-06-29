@@ -22,10 +22,6 @@
         <source>label.timesheet.mode_default</source>
         <target>[默认] 开始时间和结束时间可编辑</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target>[持续时间]用持续时间输入栏代替结束时间</target>
-      </trans-unit>
       <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target>[持续时间] 可配置的固定开始时间，只有持续时间可以更改</target>

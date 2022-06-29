@@ -34,10 +34,6 @@
         <source>label.timesheet.mode_default</source>
         <target state="needs-translation">[Standard] Start- und Endzeiten können bearbeitet werden</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target state="needs-translation">[Dauer] ersetzt den Endzeitpunkt durch ein Eingabefeld für Dauer</target>
-      </trans-unit>
       <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target state="needs-translation">[Dauer] Konfigurierbare feste Startzeit, nur Dauer kann geändert werden</target>

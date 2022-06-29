@@ -22,10 +22,6 @@
         <source>label.timesheet.mode_default</source>
         <target>[Προεπιλογή] Μπορείτε να επεξεργαστείτε τις ώρες έναρξης και λήξης</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target>[Διάρκεια] Αντικαθιστά την ώρα λήξης με πεδίο εισαγωγής διάρκειας</target>
-      </trans-unit>
       <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target>[Διάρκεια] Διαμορφώσιμη προεπιλεγμένη ώρα έναρξης, μόνο η διάρκεια μπορεί να αλλάξει</target>

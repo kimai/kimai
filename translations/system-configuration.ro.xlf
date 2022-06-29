@@ -22,10 +22,6 @@
         <source>label.timesheet.mode_default</source>
         <target>[Default] permite editarea timpilor de pornire si de oprire</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target>[Duration] înlocuiește ora de sfârșit cu un câmp de intrare de durată</target>
-      </trans-unit>
       <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target>[Duration] ora de pornire fixă este configurabilă. Doar durata poate fi modificată</target>

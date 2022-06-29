@@ -22,10 +22,6 @@
         <source>label.timesheet.mode_default</source>
         <target>[Defaŭlte] komenca kaj fina tempoj povas esti redaktitaj</target>
       </trans-unit>
-      <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
-        <source>label.timesheet.mode_duration_only</source>
-        <target>[Daŭro] anstataŭigas la finan tempon per enig-kampo por daŭro</target>
-      </trans-unit>
       <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
         <target>[Daŭro] agordebla fiksita komenca tempo, nur daŭro povas esti ŝanĝita</target>
