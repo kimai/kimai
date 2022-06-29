@@ -118,8 +118,8 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
 
     /**
      * @param string $identifier
-     * @return User|null
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return User
+     * @throws UserNotFoundException
      */
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
@@ -434,7 +434,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
         return $this->loadUserByIdentifier($user->getUserIdentifier());
     }
 
-    public function supportsClass(string $class)
+    public function supportsClass(string $class): bool
     {
         return $class === User::class;
     }
