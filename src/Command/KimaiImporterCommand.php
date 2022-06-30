@@ -870,10 +870,12 @@ final class KimaiImporterCommand extends Command
             $newPref = new UserPreference(self::METAFIELD_NAME, $oldUser['userID']);
             $user->addPreference($newPref);
 
-            if ($this->options['alias-as-account-number']) {
-                $user->setAccountNumber(mb_substr($oldUser['alias'], 0, 30));
-            } else {
-                $user->setAlias($oldUser['alias']);
+            if ($oldUser['alias'] !== null) {
+                if ($this->options['alias-as-account-number']) {
+                    $user->setAccountNumber(mb_substr($oldUser['alias'], 0, 30));
+                } else {
+                    $user->setAlias($oldUser['alias']);
+                }
             }
 
             $pwd = $this->passwordHasher->hashPassword($user, $user->getPlainPassword());
