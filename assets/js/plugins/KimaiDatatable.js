@@ -58,8 +58,8 @@ export default class KimaiDatatable extends KimaiPlugin {
 
         this.fetchForm(form)
         .then(response => {
-            const temp = document.createElement('div');
             response.text().then((text) => {
+                const temp = document.createElement('div');
                 temp.innerHTML = text;
                 const newContent = temp.querySelector(this.contentArea);
                 document.querySelector(this.contentArea).replaceWith(newContent);
