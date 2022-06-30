@@ -9,7 +9,6 @@
  * [KIMAI] KimaiDatatable: handles functionality for the datatable
  */
 
-import jQuery from 'jquery';
 import KimaiPlugin from "../KimaiPlugin";
 
 export default class KimaiDatatable extends KimaiPlugin {
@@ -32,15 +31,13 @@ export default class KimaiDatatable extends KimaiPlugin {
             return;
         }
 
-        const attributes = dataTable.dataset;
-        const events = attributes['reloadEvent'];
+        const events = dataTable.dataset['reloadEvent'];
 
         if (events === undefined) {
             return;
         }
 
-        const self = this;
-        const handle = function() { self.reloadDatatable(); };
+        const handle = () => { this.reloadDatatable(); };
 
         for (let eventName of events.split(' ')) {
             document.addEventListener(eventName, handle);
@@ -51,34 +48,27 @@ export default class KimaiDatatable extends KimaiPlugin {
     }
 
     reloadDatatable() {
-        const contentArea = this.contentArea;
+        /** @type {KimaiActiveRecordsDuration} durations */
         const durations = this.getContainer().getPlugin('timesheet-duration');
         const toolbarSelector = this.getContainer().getPlugin('toolbar').getSelector();
-        
-        const form = jQuery(toolbarSelector);
+
+        /** @type {HTMLFormElement} form */
+        const form = document.querySelector(toolbarSelector);
         document.dispatchEvent(new CustomEvent('kimai.reloadContent', {detail: this.contentArea}));
 
-        // remove the empty fields to prevent errors
-        let formData = jQuery(toolbarSelector + ' :input')
-            .filter(function(index, element) {
-                return jQuery(element).val() !== '';
-            })
-            .serialize();
-
-        jQuery.ajax({
-            url: form.attr('action'),
-            type: form.attr('method'),
-            data: formData,
-            success: function(html) {
-                jQuery(contentArea).replaceWith(
-                    jQuery(html).find(contentArea)
-                );
+        this.fetchForm(form)
+        .then(response => {
+            const temp = document.createElement('div');
+            response.text().then((text) => {
+                temp.innerHTML = text;
+                const newContent = temp.querySelector(this.contentArea);
+                document.querySelector(this.contentArea).replaceWith(newContent);
                 durations.updateRecords();
                 document.dispatchEvent(new Event('kimai.reloadedContent'));
-            },
-            error: function(xhr, err) {
-                form.submit();
-            }
+            });
+        })
+        .catch(error => {
+            form.submit();
         });
     }
 }
