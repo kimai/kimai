@@ -328,9 +328,11 @@ class TimesheetRepository extends EntityRepository
         }
 
         if (\is_array($select)) {
+            /* @phpstan-ignore-next-line  */
             return $qb->getQuery()->getOneOrNullResult();
         }
 
+        /** @phpstan-ignore-next-line  */
         $result = $qb->getQuery()->getSingleScalarResult();
 
         return empty($result) ? 0 : $result;

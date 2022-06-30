@@ -13,6 +13,7 @@ use App\Export\Base\RendererTrait as BaseRendererTrait;
 
 /**
  * @deprecated since 1.6, will be removed with 2.0
+ * @phpstan-ignore-next-line
  */
 trait RendererTrait
 {
