@@ -110,9 +110,10 @@ export default class KimaiForm extends KimaiPlugin {
     /**
      * @param {HTMLFormElement} form
      * @param {Object} overwrites
+     * @param {boolean} removeEmpty
      * @returns {string}
      */
-    convertFormDataToQueryString(form, overwrites = {})
+    convertFormDataToQueryString(form, overwrites = {}, removeEmpty = false)
     {
         let serialized = [];
         let data = new FormData(form);
@@ -122,7 +123,9 @@ export default class KimaiForm extends KimaiPlugin {
         }
 
         for (let row of data) {
-            serialized.push(encodeURIComponent(row[0]) + "=" + encodeURIComponent(row[1]));
+            if (!removeEmpty || row[1] !== '') {
+                serialized.push(encodeURIComponent(row[0]) + "=" + encodeURIComponent(row[1]));
+            }
         }
 
         return serialized.join('&');
