@@ -137,17 +137,16 @@ trait StringAccessibleConfigTrait
         return true;
     }
 
-    /**
-     * @return bool
-     */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->has($offset);
     }
 
     /**
-     * @return mixed
+     * @param $offset
+     * @return array|bool|float|int|string|null
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->find($offset);
