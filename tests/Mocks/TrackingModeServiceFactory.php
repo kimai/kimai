@@ -12,7 +12,6 @@ namespace App\Tests\Mocks;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Timesheet\TrackingMode\DefaultMode;
 use App\Timesheet\TrackingMode\DurationFixedBeginMode;
-use App\Timesheet\TrackingMode\DurationOnlyMode;
 use App\Timesheet\TrackingMode\PunchInOutMode;
 use App\Timesheet\TrackingModeService;
 
@@ -32,7 +31,6 @@ class TrackingModeServiceFactory extends AbstractMockFactory
             $modes = [
                 new DefaultMode((new RoundingServiceFactory($this->getTestCase()))->create()),
                 new PunchInOutMode(),
-                new DurationOnlyMode($configuration),
                 new DurationFixedBeginMode($configuration),
             ];
         }
