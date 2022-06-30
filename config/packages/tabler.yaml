@@ -82,6 +82,7 @@ tabler:
         invoice-template: fas fa-file-signature
         left: fas fa-chevron-left
         left2: fas fa-angle-double-left
+        link: fas fa-link
         list: fas fa-list
         locked: fas fa-lock
         login: fas fa-sign-in-alt
