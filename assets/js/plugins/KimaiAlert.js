@@ -253,15 +253,15 @@ export default class KimaiAlert extends KimaiPlugin {
         template.innerHTML = html.trim();
         const element = template.content.firstChild;
         container.appendChild(element);
-        element.getElementsByClassName('question-confirm')[0].addEventListener('click', function() {
+        element.querySelector('.question-confirm').addEventListener('click', () => {
             callback(true);
         });
-        element.getElementsByClassName('question-cancel')[0].addEventListener('click', function() {
+        element.querySelector('.question-cancel').addEventListener('click', () => {
             callback(false);
         });
 
         const modal = new Modal(element);
-        element.addEventListener('hidden.bs.modal', function () {
+        element.addEventListener('hidden.bs.modal', () => {
             container.removeChild(element);
         });
         modal.show();
