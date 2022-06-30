@@ -102,7 +102,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(false)
                 ->end()
                 ->scalarNode('duration_increment')
-                    ->defaultNull()
+                    ->defaultValue(15)
                     ->validate()
                         ->ifTrue(function ($value) {
                             if ($value !== null) {
@@ -115,7 +115,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->scalarNode('time_increment')
-                    ->defaultNull()
+                    ->defaultValue(15)
                     ->validate()
                         ->ifTrue(function ($value) {
                             if ($value !== null) {
@@ -248,7 +248,7 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue(0)
                         ->end()
                         ->integerNode('long_running_duration')
-                            ->defaultValue(0)
+                            ->defaultValue(480)
                         ->end()
                     ->end()
                 ->end()
