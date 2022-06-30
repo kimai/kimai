@@ -82,6 +82,10 @@
         <source>Duration cannot be zero.</source>
         <target state="translated">Não é permitida uma duração vazia.</target>
       </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">Desculpe, o orçamento esgotou.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

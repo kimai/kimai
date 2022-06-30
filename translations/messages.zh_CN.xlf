@@ -35,10 +35,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>
-                    该项数据也将被删除!
-                    或者，您可以选择一项条目将所有数据传输过去：
-                </target>
+        <target>该项数据也将被删除! 或者，您可以选择一项条目将所有数据传输过去：</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -62,7 +59,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target>%action% %count%  条目?</target>
+        <target>%action% %count% 条目?</target>
       </trans-unit>
       <!--
               Login / Security
@@ -1276,6 +1273,10 @@
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target>自动化</target>
+      </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="translated">发票文本</target>
       </trans-unit>
     </body>
   </file>
