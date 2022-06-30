@@ -102,4 +102,36 @@ export default class KimaiPlugin {
     trigger(name, details) {
         this.getPlugin('event').trigger(name, details);
     };
+
+    /**
+     * @param {string} url
+     * @param {object} options
+     * @returns {Promise<Response>}
+     */
+    fetch(url, options = {}) {
+        return this.getPlugin('fetch').fetch(url, options);
+    };
+
+    /**
+     * @param {HTMLFormElement} form
+     * @param {object} options
+     * @returns {Promise<Response>}
+     */
+    fetchForm(form, options = {}) {
+        let url = form.action;
+        const method = form.method.toUpperCase();
+
+        if (method === 'GET') {
+            const data = this.getPlugin('form').convertFormDataToQueryString(form, {}, true);
+            url = url + (url.includes('?') ? '&' : '?') + data;
+            options = {...{method: 'GET'}, ...options};
+        } else if (method === 'POST') {
+            options = {...{
+                method: 'POST',
+                body: this.getPlugin('form').convertFormDataToQueryString(form)
+            }, ...options};
+        }
+
+        return this.fetch(url, options);
+    };
 }
