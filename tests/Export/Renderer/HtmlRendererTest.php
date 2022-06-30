@@ -82,7 +82,7 @@ class HtmlRendererTest extends AbstractRendererTest
 
         $this->assertStringContainsString('<td>Customer Name</td>', $content);
         $this->assertStringContainsString('<td>project name</td>', $content);
-        $this->assertStringContainsString('<span class="duration-format" data-duration-decimal="1.94" data-duration="01:56 h">01:56 h</span>', $content);
+        $this->assertStringContainsString('<span class="duration-format" data-duration-decimal="1.94" data-duration="01:56">01:56</span>', $content);
         $this->assertStringContainsString('<td class="cost summary-rate">€2,437.12</td>', $content);
         $this->assertStringContainsString('-€100.92', $content);
 

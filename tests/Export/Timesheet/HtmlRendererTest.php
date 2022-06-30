@@ -55,6 +55,6 @@ class HtmlRendererTest extends AbstractRendererTest
 
         $content = $response->getContent();
 
-        $this->assertStringContainsString('>01:50 h<', $content);
+        $this->assertStringContainsString('>01:50<', $content);
     }
 }
