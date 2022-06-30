@@ -9,6 +9,8 @@ parameters:
     tmpDir: %rootDir%/../../../var/cache/phpstan
     ignoreErrors:
         - '#Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required.#'
+        - '#Trait App\\Export\\Renderer\\RendererTrait is used zero times and is not analysed.#'
+        - '#Trait App\\Invoice\\Renderer\\RendererTrait is used zero times and is not analysed.#'
     excludePaths:
         - %rootDir%/../../../src/Ldap/LdapDriver.php
     treatPhpDocTypesAsCertain: false
