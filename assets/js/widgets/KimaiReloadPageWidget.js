@@ -9,8 +9,6 @@
  * [KIMAI] KimaiReloadPageWidget: a simple helper to reload the page on events
  */
 
-import jQuery from "jquery";
-
 export default class KimaiReloadPageWidget {
 
     constructor(events, fullReload) {
@@ -49,22 +47,21 @@ export default class KimaiReloadPageWidget {
         
         self._showOverlay();
 
-        jQuery.ajax({
-            url: url,
-            data: {},
-            success: function (response) {
-                jQuery('section.content').replaceWith(
-                    jQuery(response).find('section.content')
-                );
-                document.dispatchEvent(new Event('kimai.reloadPage'));
-                self._hideOverlay();
-            },
-            dataType: 'html',
-            error: function(jqXHR, textStatus, errorThrown) {
+        window.kimai.getPlugin('fetch').fetch(url)
+            .then(response => {
+                response.text().then((text) => {
+                    const temp = document.createElement('div');
+                    temp.innerHTML = text;
+                    const newContent = temp.querySelector('section.content');
+                    document.querySelector('section.content').replaceWith(newContent);
+                    document.dispatchEvent(new Event('kimai.reloadPage'));
+                    self._hideOverlay();
+                });
+            })
+            .catch(error => {
                 self._hideOverlay();
                 document.location = url;
-            }
-        });        
+            });
     }
 
 }
