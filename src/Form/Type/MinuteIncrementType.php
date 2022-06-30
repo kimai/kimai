@@ -25,33 +25,28 @@ class MinuteIncrementType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'deactivate' => true,
             'max_one_hour' => false,
         ]);
 
         $resolver->setDefault('choices', function (Options $options) {
             $choices = ['increment_rounding' => null];
 
-            if ($options['deactivate']) {
-                $choices['off'] = '0';
-            }
-
-            $choices['1'] = '1';
-            $choices['2'] = '2';
-            $choices['3'] = '3';
-            $choices['4'] = '4';
-            $choices['5'] = '5';
-            $choices['10'] = '10';
-            $choices['15'] = '15';
-            $choices['20'] = '20';
-            $choices['25'] = '25';
-            $choices['30'] = '30';
-            $choices['45'] = '45';
-            $choices['60'] = '60';
+            $choices['1'] = 1;
+            $choices['2'] = 2;
+            $choices['3'] = 3;
+            $choices['4'] = 4;
+            $choices['5'] = 5;
+            $choices['10'] = 10;
+            $choices['15'] = 15;
+            $choices['20'] = 20;
+            $choices['25'] = 25;
+            $choices['30'] = 30;
+            $choices['45'] = 45;
+            $choices['60'] = 60;
 
             if (!$options['max_one_hour']) {
-                $choices['90'] = '90';
-                $choices['120'] = '120';
+                $choices['90'] = 90;
+                $choices['120'] = 120;
             }
 
             return $choices;
