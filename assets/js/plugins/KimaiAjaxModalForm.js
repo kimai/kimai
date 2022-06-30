@@ -79,16 +79,14 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
         const headers = new Headers();
         headers.append('X-Requested-With', 'Kimai-Modal');
 
-        fetch(url, {
+        this.fetch(url, {
             method: 'GET',
             redirect: 'follow',
             headers: headers
         })
         .then(response => {
             if (!response.ok) {
-                if (response.status === undefined || response.status !== 403) {
-                    window.location = url;
-                }
+                window.location = url;
                 return;
             }
 

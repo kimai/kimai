@@ -32,14 +32,23 @@ class AjaxAuthenticationSubscriberTest extends TestCase
         $this->assertTrue(method_exists(AjaxAuthenticationSubscriber::class, $methodName));
     }
 
-    public function testAuthenticationExpiredException()
+    public function getTestHeader()
+    {
+        yield ['XMLHttpRequest'];
+        yield ['Kimai'];
+    }
+
+    /**
+     * @dataProvider getTestHeader
+     */
+    public function testAuthenticationExpiredException(string $requestedWith)
     {
         $sut = new AjaxAuthenticationSubscriber();
 
         $exception = new AuthenticationExpiredException();
         $kernel = $this->createMock(HttpKernelInterface::class);
         $request = new Request();
-        $request->initialize([], [], [], [], [], ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
+        $request->initialize([], [], [], [], [], ['HTTP_X-Requested-With' => $requestedWith]);
 
         $event = new ExceptionEvent($kernel, $request, 1, $exception);
 
@@ -53,14 +62,17 @@ class AjaxAuthenticationSubscriberTest extends TestCase
         self::assertEquals('1', $response->headers->get('Login-Required'));
     }
 
-    public function testAuthenticationException()
+    /**
+     * @dataProvider getTestHeader
+     */
+    public function testAuthenticationException(string $requestedWith)
     {
         $sut = new AjaxAuthenticationSubscriber();
 
         $exception = new AuthenticationException();
         $kernel = $this->createMock(HttpKernelInterface::class);
         $request = new Request();
-        $request->initialize([], [], [], [], [], ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
+        $request->initialize([], [], [], [], [], ['HTTP_X-Requested-With' => $requestedWith]);
 
         $event = new ExceptionEvent($kernel, $request, 1, $exception);
 
@@ -74,14 +86,17 @@ class AjaxAuthenticationSubscriberTest extends TestCase
         self::assertEquals('1', $response->headers->get('Login-Required'));
     }
 
-    public function testAccessDeniedException()
+    /**
+     * @dataProvider getTestHeader
+     */
+    public function testAccessDeniedException(string $requestedWith)
     {
         $sut = new AjaxAuthenticationSubscriber();
 
         $exception = new AccessDeniedException();
         $kernel = $this->createMock(HttpKernelInterface::class);
         $request = new Request();
-        $request->initialize([], [], [], [], [], ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
+        $request->initialize([], [], [], [], [], ['HTTP_X-Requested-With' => $requestedWith]);
 
         $event = new ExceptionEvent($kernel, $request, 1, $exception);
 

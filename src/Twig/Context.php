@@ -21,21 +21,35 @@ final class Context
     public function isModalRequest(): bool
     {
         $request = $this->requestStack->getCurrentRequest();
+
         if ($request === null) {
             return false;
         }
 
-        return $request->isXmlHttpRequest() || 'Kimai-Modal' == $request->headers->get('X-Requested-With');
+        if ($request->isXmlHttpRequest()) {
+            return true;
+        }
+
+        if (!$request->headers->has('X-Requested-With')) {
+            return false;
+        }
+
+        return str_contains(strtolower($request->headers->get('X-Requested-With')), 'kimai-modal');
     }
 
     public function isJavascriptRequest(): bool
     {
         $request = $this->requestStack->getCurrentRequest();
+
         if ($request === null) {
             return false;
         }
 
-        return $request->isXmlHttpRequest() || 'Kimai' == $request->headers->get('X-Requested-With');
+        if ($request->isXmlHttpRequest()) {
+            return true;
+        }
+
+        return str_contains(strtolower($request->headers->get('X-Requested-With')), 'kimai');
     }
 
     public function getBranding(string $config): mixed

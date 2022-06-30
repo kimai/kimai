@@ -41,11 +41,7 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
         this.modal.querySelectorAll('input[name=datatable_profile]').forEach(element => {
             element.addEventListener('change', event => {
                 const form = this.modal.getElementsByTagName('form')[0];
-                fetch(element.getAttribute('data-href'), {
-                    method: form.getAttribute('method'),
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                    body: this.getPlugin('form').convertFormDataToQueryString(form),
-                })
+                this.fetchForm(form, {}, element.getAttribute('data-href'))
                 .then(data => {
                     // the local storage is read in the login screen to set a cookie,
                     // which triggers the session switch in ProfileSubscriber
@@ -84,11 +80,7 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
     saveVisibility() {
         const form = this.modal.getElementsByTagName('form')[0];
 
-        fetch(form.getAttribute('action'), {
-            method: form.getAttribute('method'),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: this.getPlugin('form').convertFormDataToQueryString(form),
-        })
+        this.fetchForm(form)
         .then(data => {
             document.location.reload();
         })
@@ -100,11 +92,7 @@ export default class KimaiDatatableColumnView extends KimaiPlugin {
     resetVisibility(button) {
         const form = this.modal.getElementsByTagName('form')[0];
 
-        fetch(button.getAttribute('formaction'), {
-            method: form.getAttribute('method'),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: this.getPlugin('form').convertFormDataToQueryString(form),
-        })
+        this.fetchForm(form, {}, button.getAttribute('formaction'))
         .then(data => {
             document.location.reload();
         })

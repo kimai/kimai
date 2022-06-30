@@ -23,12 +23,13 @@ export default class KimaiFetch extends KimaiPlugin {
      * @returns {Promise<Response>}
      */
     fetch(url, options = {}) {
-        const headers = new Headers();
-        headers.append('X-Requested-With', 'Kimai');
+        if (options.headers === undefined) {
+            options.headers = new Headers();
+        }
+        options.headers.append('X-Requested-With', 'Kimai');
 
         options = {...{
             redirect: 'follow',
-            headers: headers
         }, ...options};
 
         return new Promise((resolve, reject) => {

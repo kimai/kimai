@@ -115,10 +115,11 @@ export default class KimaiPlugin {
     /**
      * @param {HTMLFormElement} form
      * @param {object} options
+     * @param {string|null} url
      * @returns {Promise<Response>}
      */
-    fetchForm(form, options = {}) {
-        let url = form.action;
+    fetchForm(form, options = {}, url = null) {
+        url = url || form.action;
         const method = form.method.toUpperCase();
 
         if (method === 'GET') {
@@ -126,8 +127,11 @@ export default class KimaiPlugin {
             url = url + (url.includes('?') ? '&' : '?') + data;
             options = {...{method: 'GET'}, ...options};
         } else if (method === 'POST') {
+            const headers = new Headers()
+            headers.append('Content-Type', 'application/x-www-form-urlencoded');
             options = {...{
                 method: 'POST',
+                headers: headers,
                 body: this.getPlugin('form').convertFormDataToQueryString(form)
             }, ...options};
         }
