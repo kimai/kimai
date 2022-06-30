@@ -10,46 +10,60 @@
  */
 
 import KimaiPlugin from '../KimaiPlugin';
-import jQuery from "jquery";
 
 export default class KimaiMultiUpdateTable extends KimaiPlugin {
 
     init() {
-        const self = this;
-        
-        jQuery('body').
-            on('change', '#multi_update_all', function(event) {
-                jQuery('.multi_update_single').prop('checked', jQuery(event.target).prop('checked'));
-                self.toggleForm();
-            })
-            .on('change', '.multi_update_single', function(event) {
-                self.toggleForm();
-            })
-            .on('click', '.multi_update_table_action', function(event) {
-                const selectedItem = jQuery(this);
-                const selectedVal = selectedItem.data('href');
+        const updateAll = document.getElementById('multi_update_all');
+        if (updateAll === null) {
+            return;
+        }
 
-                const form = jQuery('#multi_update_form form');
-                const selectedText = selectedItem.text();
-                const ids = self.getSelectedIds();
-                const question = form.attr('data-question').replace(/%action%/, selectedText).replace(/%count%/, ids.length);
-                
-                self.getContainer().getPlugin('alert').question(question, function(value) {
-                    if (value) {
-                        form.attr('action', selectedVal).submit();
-                    } else {
-                        jQuery('#multi_update_table_action').val('').trigger('change');
-                    }
-                });
+        updateAll.addEventListener('change', (event) => {
+            const checked = event.target.checked;
+            for (const element of document.querySelectorAll('.multi_update_single')) {
+                element.checked = checked;
+            }
+            this.toggleForm();
+            event.stopPropagation();
+        });
+
+        // single checkboxes in front of each row
+        for (const element of document.querySelectorAll('div.data_table')) {
+            element.addEventListener('change', (event) => {
+                if (event.target.matches('.multi_update_single')) {
+                    this.toggleForm();
+                    event.stopPropagation();
+                }
             });
+            element.addEventListener('click', (event) => {
+                if (event.target.matches('.multi_update_table_action')) {
+                    const selectedItem = event.target;
+                    const selectedVal = selectedItem.dataset['href'];
+                    const form = document.getElementById('multi_update_form');
+                    const selectedText = selectedItem.textContent;
+                    const ids = this.getSelectedIds();
+                    const question = form.dataset['question'].replace(/%action%/, selectedText).replace(/%count%/, ids.length.toString());
+
+                    /** @type {KimaiAlert} ALERT */
+                    const ALERT = this.getPlugin('alert');
+                    ALERT.question(question, function(value) {
+                        if (value) {
+                            form.action = selectedVal;
+                            form.submit();
+                        }
+                    });
+                }
+            });
+        }
     }
     
     getSelectedIds()
     {
         let ids = [];
-        jQuery('.multi_update_single:checked').each(function(i){
-            ids[i] = jQuery(this).val();
-        });
+        for (const box of document.querySelectorAll('input.multi_update_single:checked')) {
+            ids.push(box.value);
+        }
 
         return ids;
     }
