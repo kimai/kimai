@@ -35,6 +35,7 @@ import KimaiConfirmationLink from "./plugins/KimaiConfirmationLink";
 import KimaiMultiUpdateTable from "./plugins/KimaiMultiUpdateTable";
 import KimaiDateUtils from "./plugins/KimaiDateUtils";
 import KimaiEscape from "./plugins/KimaiEscape";
+import KimaiFetch from "./plugins/KimaiFetch";
 import KimaiEditTimesheetForm from "./plugins/KimaiEditTimesheetForm";
 
 export default class KimaiLoader {
@@ -52,6 +53,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiEvent());
         kimai.registerPlugin(new KimaiAPI());
         kimai.registerPlugin(new KimaiAlert());
+        kimai.registerPlugin(new KimaiFetch());
         kimai.registerPlugin(new KimaiDateUtils());
         kimai.registerPlugin(new KimaiFormSelect('.selectpicker', 'select[data-related-select]'));
         kimai.registerPlugin(new KimaiConfirmationLink('confirmation-link'));
