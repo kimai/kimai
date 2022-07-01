@@ -81,49 +81,56 @@
             document.getElementById('permission-token').dataset['value'] = token;
         }
 
-        document.addEventListener('kimai.initialized', function() {
-            jQuery('a.togglePerm').on('click', function(event) {
-                event.stopPropagation();
-                event.preventDefault();
+        document.addEventListener('kimai.initialized', (event) => {
+            const FETCHER = event.detail.kimai.getPlugin('fetch');
+            for (const element of document.querySelectorAll('a.togglePerm')) {
+                element.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
 
-                let target = event.target;
-                if (!target.matches('a')) {
-                    target = target.parentNode;
-                }
-
-                let linkElement = jQuery(target);
-                linkElement.html('{{ icon('spinner') }}');
-
-                let isActive = linkElement.hasClass('permOn');
-                let url = linkElement.data('href').replace(/__VALUE__/, isActive ? '0' : '1').replace(/__TOKEN__/, getPermissionToken());
-
-                jQuery.ajax({
-                    url: url,
-                    headers: {'Content-Type':'application/json'},
-                    method: 'POST',
-                    data: [], {# data doesn't matter, everything is in the URL #}
-                    dataType: 'json',
-                    success: function(result) {
-                        kimai.getPlugin('alert').success('action.update.success');
-                        linkElement.toggleClass('permOn').toggleClass('permOff');
-                        toggleLabel(linkElement, !isActive);
-                        setPermissionToken(result.token);
-                    },
-                    error: function(xhr, err) {
-                        kimai.getPlugin('alert').error('action.update.error');
-                        toggleLabel(linkElement, isActive);
+                    let target = event.target;
+                    if (!target.matches('a')) {
+                        target = target.parentNode;
                     }
+
+                    let linkElement = target;
+                    linkElement.innerHTML = '{{ icon('spinner') }}';
+
+                    const isActive = linkElement.classList.contains('permOn');
+                    let url = linkElement.dataset['href'].replace(/__VALUE__/, isActive ? '0' : '1').replace(/__TOKEN__/, getPermissionToken());
+
+                    /** @type {KimaiFetch} FETCHER */
+                    const headers = new Headers();
+                    headers.append('Content-Type', 'application/json');
+
+                    const options = {method: 'POST', headers: headers};
+
+                    FETCHER.fetch(url, options)
+                        .then(response => {
+                            response.json().then(json => {
+                                kimai.getPlugin('alert').success('action.update.success');
+                                linkElement.classList.toggle('permOn');
+                                linkElement.classList.toggle('permOff');
+                                toggleLabel(linkElement, !isActive);
+                                setPermissionToken(json.token);
+                            });
+                        })
+                        .catch(error => {
+                            kimai.getPlugin('alert').error('action.update.error');
+                            toggleLabel(linkElement, isActive);
+                        })
+                    ;
                 });
-            });
+            }
 
             KimaiReloadPageWidget.create('kimai.userRoleUpdate');
         });
 
         function toggleLabel(element, showTrue) {
             if (showTrue) {
-                element.html('{{ widgets.label_boolean(true)|trim|e('js') }}');
+                element.innerHTML = '{{ widgets.label_boolean(true)|trim|e('js') }}';
             } else {
-                element.html('{{ widgets.label_boolean(false)|trim|e('js') }}');
+                element.innerHTML = '{{ widgets.label_boolean(false)|trim|e('js') }}';
             }
         }
     </script>

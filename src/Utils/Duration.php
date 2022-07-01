@@ -17,9 +17,7 @@ class Duration
     public const FORMAT_COLON = 'colon';
     public const FORMAT_NATURAL = 'natural';
     public const FORMAT_DECIMAL = 'decimal';
-
-    public const FORMAT_WITH_SECONDS = '%h:%m:%s';
-    public const FORMAT_NO_SECONDS = '%h:%m';
+    public const FORMAT_DEFAULT = '%h:%m';
 
     /**
      * Transforms seconds into a duration string.
@@ -28,7 +26,7 @@ class Duration
      * @param string $format
      * @return string|null
      */
-    public function format(?int $seconds, string $format = self::FORMAT_NO_SECONDS): ?string
+    public function format(?int $seconds, string $format = self::FORMAT_DEFAULT): ?string
     {
         if (null === $seconds) {
             return null;
@@ -37,7 +35,6 @@ class Duration
         $hour = (int) floor($seconds / 3600);
         $minute = (int) floor((int) ($seconds / 60) % 60);
 
-        $hour = $hour > 9 ? $hour : '0' . $hour;
         $minute = $minute > 9 ? $minute : '0' . $minute;
 
         $second = $seconds % 60;
