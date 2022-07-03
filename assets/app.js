@@ -1,7 +1,4 @@
 
-const $ = require('jquery');
-global.$ = global.jQuery = $;
-
 require('./sass/app.scss');
 
 // ------ Kimai itself ------
