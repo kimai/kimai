@@ -9,26 +9,23 @@
  * [KIMAI] KimaiPaginatedBoxWidget: handles box widgets that have a pagination
  */
 
-import jQuery from "jquery";
-
 export default class KimaiPaginatedBoxWidget {
 
     constructor(boxId) {
         this.selector = boxId;
         const widget = document.querySelector(this.selector);
         this.href = widget.dataset['href'];
-        const self = this;
 
         if (widget.dataset['reload'] !== undefined) {
             this.events = widget.dataset['reload'].split(' ');
-            const reloadPage = function (event) {
+            const reloadPage = (event) => {
                 let url = null;
-                if (document.querySelector(self.selector).dataset['reloadHref'] !== undefined) {
-                    url = document.querySelector(self.selector).dataset['reloadHref'];
+                if (document.querySelector(this.selector).dataset['reloadHref'] !== undefined) {
+                    url = document.querySelector(this.selector).dataset['reloadHref'];
                 } else {
-                    url = jQuery(self.selector + ' ul.pagination li.active a').attr('href');
+                    url = document.querySelector(this.selector + ' ul.pagination li.active a').href;
                 }
-                self.loadPage(url);
+                this.loadPage(url);
             };
 
             for (const eventName of this.events) {
@@ -36,9 +33,16 @@ export default class KimaiPaginatedBoxWidget {
             }
         }
 
-        jQuery('body').on('click', this.selector + ' a.pagination-link', function (event) {
-            event.preventDefault();
-            self.loadPage(jQuery(event.currentTarget).attr('href'));
+        document.body.addEventListener('click', (event) => {
+            let link = event.target;
+            // could be an icon
+            if (!link.matches(this.selector + ' a.pagination-link')) {
+                link = link.parentNode;
+            }
+            if (link.matches(this.selector + ' a.pagination-link')) {
+                event.preventDefault();
+                this.loadPage(link.href);
+            }
         });
     }
     
@@ -51,29 +55,48 @@ export default class KimaiPaginatedBoxWidget {
 
         // this event will render a spinning loader
         document.dispatchEvent(new CustomEvent('kimai.reloadContent', {detail: this.selector}));
+
         // and this event will hide it afterwards
-        const hideOverlay = function() {
+        const hideOverlay = () => {
             document.dispatchEvent(new Event('kimai.reloadedContent'));
         }
 
-        jQuery.ajax({
-            url: url,
-            data: {},
-            success: function (response) {
-                const html = jQuery(response);
-                // previously the parts .card-header .card-body .card-title .card-footer were replaced
-                // but the layout allows eg. ".list-group .list-group-flush" instead of .card-body
-                // so we directly replace the entire HTML
-                jQuery(selector).replaceWith(html);
-                jQuery(selector + ' [data-toggle="tooltip"]').tooltip();
-                hideOverlay();
-            },
-            dataType: 'html',
-            error: function(jqXHR, textStatus, errorThrown) {
+        window.kimai.getPlugin('fetch').fetch(url)
+            .then(response => {
+                response.text().then((text) => {
+                    const temp = document.createElement('div');
+                    temp.innerHTML = text;
+                    // previously the parts .card-header .card-body .card-title .card-footer were replaced
+                    // but the layout allows eg. ".list-group .list-group-flush" instead of .card-body
+                    // so we directly replace the entire HTML
+                    // the HTML needs to be parsed for script tags, which can be included (e.g. paginated chart widget)
+                    document.querySelector(selector).replaceWith(this._makeScriptExecutable(temp.firstElementChild));
+                    hideOverlay();
+                });
+            })
+            .catch(error => {
                 // this is not yet a plugin, so the alert is not available here
-                // self.getPlugin('alert').error('Failed loading selected page');
+                window.kimai.getPlugin('alert').error('Failed loading selected page');
                 hideOverlay();
+            });
+    }
+
+    /**
+     * @param {Element|ChildNode} node
+     * @returns {Element}
+     * @private
+     */
+    _makeScriptExecutable(node) {
+        if (node.tagName !== undefined && node.tagName === 'SCRIPT') {
+            const script  = document.createElement('script');
+            script.text = node.innerHTML;
+            node.parentNode.replaceChild(script, node );
+        } else {
+            for (const child of node.childNodes) {
+                this._makeScriptExecutable(child);
             }
-        });        
+        }
+
+        return node;
     }
 }

@@ -9,7 +9,6 @@
  * [KIMAI] KimaiToolbar: some event listener to handle the toolbar/data-table filter, toolbar and navigation
  */
 
-import jQuery from 'jquery';
 import KimaiPlugin from "../KimaiPlugin";
 
 export default class KimaiToolbar extends KimaiPlugin {
@@ -26,8 +25,7 @@ export default class KimaiToolbar extends KimaiPlugin {
 
     init() {
         const formSelector = this.getSelector();
-        const self = this;
-        const EVENT = self.getContainer().getPlugin('event');
+        const EVENT = this.getContainer().getPlugin('event');
 
         this._registerPagination(formSelector, EVENT);
         this._registerSortableTables(formSelector, EVENT);
@@ -35,41 +33,45 @@ export default class KimaiToolbar extends KimaiPlugin {
 
         // Reset the page if filter values are changed, otherwise we might end up with a limited set of data,
         // which does not support the given page - and it would be just wrong to stay in the same page
-        jQuery(formSelector +' input').change(function (event) {
-            switch (event.target.id) {
-                case 'order':
-                case 'orderBy':
-                case 'page':
-                    break;
-                default:
-                    jQuery(formSelector + ' input#page').val(1);
-                    break;
-            }
-            self.triggerChange();
+        [].slice.call(document.querySelectorAll(formSelector + ' input')).map((element) => {
+            element.addEventListener('change', (event) => {
+                switch (event.target.id) {
+                    case 'order':
+                    case 'orderBy':
+                    case 'page':
+                        break;
+                    default:
+                        document.querySelector(formSelector + ' input#page').value = 1;
+                        break;
+                }
+            });
+            this.triggerChange();
         });
-        
+
         // when user selected a new customer or project, reset the pagination back to 1
         // and then find out if the results should be reloaded
-        jQuery(formSelector + ' select').change(function (event) {
-            let reload = true;
-            switch (event.target.id) {
-                case 'customer':
-                    if (jQuery(formSelector + ' select#project').length > 0) {
-                        reload = false;
-                    }
-                    break;
+        [].slice.call(document.querySelectorAll(formSelector + ' select')).map((element) => {
+            element.addEventListener('change', (event) => {
+                let reload = true;
+                switch (event.target.id) {
+                    case 'customer':
+                        if (document.querySelector(formSelector + ' select#project') !== null) {
+                            reload = false;
+                        }
+                        break;
 
-                case 'project':
-                    if (jQuery(formSelector + ' select#activity').length > 0) {
-                        reload = false;
-                    }
-                    break;
-            }
-            jQuery(formSelector + ' input#page').val(1);
+                    case 'project':
+                        if (document.querySelector(formSelector + ' select#activity') !== null) {
+                            reload = false;
+                        }
+                        break;
+                }
+                document.querySelector(formSelector + ' input#page').value = 1;
 
-            if (reload) {
-                self.triggerChange();
-            }
+                if (reload) {
+                    this.triggerChange();
+                }
+            });
         });
     }
 
@@ -112,20 +114,22 @@ export default class KimaiToolbar extends KimaiPlugin {
      * @private
      */
     _registerSortableTables(formSelector, EVENT) {
-        jQuery('body').on('click', 'th.sortable', function(event){
-            let $header = jQuery(event.target);
+        document.body.addEventListener('click', (event) => {
+            if (!event.target.matches('th.sortable')) {
+                return;
+            }
             let order = 'DESC';
-            let orderBy = $header.data('order');
-            if ($header.hasClass('sorting_desc')) {
+            let orderBy = event.target.dataset['order'];
+            if (event.target.classList.contains('sorting_desc')) {
                 order = 'ASC';
             }
 
-            jQuery(formSelector + ' #orderBy').val(orderBy);
-            jQuery(formSelector + ' #order').val(order);
+            document.querySelector(formSelector + ' #orderBy').value = orderBy;
+            document.querySelector(formSelector + ' #order').value = order;
 
-            // re-render the selectboxes
-            jQuery(formSelector + ' #orderBy').trigger('change');
-            jQuery(formSelector + ' #order').trigger('change');
+            // re-render the selectbox
+            document.querySelector(formSelector + ' #orderBy').dispatchEvent(new Event('change'));
+            document.querySelector(formSelector + ' #order').dispatchEvent(new Event('change'));
 
             // triggers the datatable reload - search for the event name
             EVENT.trigger('filter-change');
@@ -133,21 +137,33 @@ export default class KimaiToolbar extends KimaiPlugin {
     }
     
     /**
-     * This catches all clicks on the pagination and prevents the default action, as we want to reload the page via JS
+     * This catches all clicks on the pagination and prevents the default action,
+     * as we want to reload the page via JS.
+     *
      * @private
      */
     _registerPagination(formSelector, EVENT) {
-        jQuery('body').on('click', 'ul.pagination li a', function(event) {
-            let pager = jQuery(formSelector + " input#page");
-            if (pager.length === 0) {
+        document.body.addEventListener('click', (event) => {
+            if (!event.target.matches('ul.pagination li a') && !event.target.parentNode.matches('ul.pagination li a')) {
                 return;
             }
+
+            let pager = document.querySelector(formSelector + " input#page");
+            if (pager === null) {
+                return;
+            }
+            let target = event.target;
+
+            // this happens for the arrows, which can be an icon <i> element
+            if (!target.matches('a')) {
+                target = target.parentNode;
+            }
+
             event.preventDefault();
             event.stopPropagation();
-            let urlParts = jQuery(this).attr('href').split('/');
-            let page = urlParts[urlParts.length-1];
-            pager.val(page);
-            pager.trigger('change');
+            let urlParts = target.href.split('/');
+            pager.value = urlParts[urlParts.length-1];
+            pager.dispatchEvent(new Event('change'));
             EVENT.trigger('pagination-change');
             return false;
         });
