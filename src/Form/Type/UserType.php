@@ -41,6 +41,7 @@ class UserType extends AbstractType
             },
             'choice_attr' => function (User $user) {
                 return [
+                    'data-id' => $user->getId(),
                     'data-color' => $this->theme->getUserColor($user),
                     'data-title' => $user->getTitle(),
                     'data-username' => $user->getUserIdentifier(),
