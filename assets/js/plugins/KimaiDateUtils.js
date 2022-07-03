@@ -31,6 +31,7 @@ export default class KimaiDateUtils extends KimaiPlugin {
     }
 
     /**
+     * @see https://moment.github.io/luxon/#/formatting?id=table-of-tokens
      * @param {string} format
      * @returns {string}
      * @private
@@ -43,7 +44,9 @@ export default class KimaiDateUtils extends KimaiPlugin {
         format = format.replace('M', 'L');
         format = format.replace('YYYY', 'yyyy');
         format = format.replace('YY', 'yy');
-        return format.replace('A', 'a');
+        format = format.replace('A', 'a');
+
+        return format;
     }
 
     /**
@@ -63,7 +66,9 @@ export default class KimaiDateUtils extends KimaiPlugin {
             newDate = DateTime.fromISO(dateTime);
         }
 
-        return newDate.toFormat(this._parseFormat(format));
+        // using locale english here prevents that that AM/PM is translated to the
+        // locale variant: e.g. "ko" translates it to 오후 / 오전
+        return newDate.toFormat(this._parseFormat(format), { locale: 'en-us' });
     }
 
     /**
@@ -76,27 +81,6 @@ export default class KimaiDateUtils extends KimaiPlugin {
     }
 
     /**
-     * @return {Array}
-     */
-    getWeekDaysShort()
-    {
-        let weekdays = Info.weekdays('short');
-        // the old date-time-range-picker element requires this old order
-        // the next line can be removed, once the date-time-range-picker is replaced
-        weekdays.unshift(weekdays.pop());
-
-        return weekdays;
-    }
-
-    /**
-     * @return {Array}
-     */
-    getMonthNames()
-    {
-        return Info.months();
-    }
-
-    /**
      * Returns a "YYYY-MM-DDTHH:mm:ss" formatted string in local time.
      * This can take Date objects (e.g. from FullCalendar) and turn them into the correct format.
      *
@@ -104,7 +88,7 @@ export default class KimaiDateUtils extends KimaiPlugin {
      * @param {boolean|undefined} isUtc
      * @return {string}
      */
-    formatForAPI(date, isUtc= false)
+    formatForAPI(date, isUtc = false)
     {
         if (date instanceof Date) {
             date = DateTime.fromJSDate(date);
@@ -124,7 +108,9 @@ export default class KimaiDateUtils extends KimaiPlugin {
      */
     fromFormat(date, format)
     {
-        return DateTime.fromFormat(date, this._parseFormat(format));
+        // using locale en-us here prevents that Luxon expects the localized
+        // version of AM/PM (e.g. 오후 / 오전 for locale "ko")
+        return DateTime.fromFormat(date, this._parseFormat(format), { locale: 'en-us' });
     }
 
     /**
