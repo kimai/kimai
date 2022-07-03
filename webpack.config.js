@@ -51,8 +51,6 @@ Encore
         }
     )
 
-    .autoProvidejQuery()
-
     .configureBabel(null, {
         useBuiltIns: 'usage',
         corejs: 3,

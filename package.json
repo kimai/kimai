@@ -36,7 +36,6 @@
     "core-js": "^3.6",
     "file-loader": "^6.0",
     "gridstack": "^5.1",
-    "jquery": "<3.6",
     "litepicker": "^2.0",
     "luxon": "^2.4.0",
     "node-sass": "^7.0",
