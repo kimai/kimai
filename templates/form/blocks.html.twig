@@ -38,7 +38,13 @@
 
 {% block team_member_widget %}
     {% import 'macros/widgets.html.twig' as widgets%}
-    <div class="row mb-1">
+    {% set data = {} %}
+    {% set user = null %}
+    {% if form.vars.data is not null and form.vars.data.user is not null %}
+        {% set user = form.vars.data.user %}
+        {% set data = {id: user.id, color: user.color|colorize(user.displayName), title: user.title, username: user.userIdentifier, alias: user.alias, initials: user.initials, accountnumber: user.accountNumber, display: user.displayName} %}
+    {% endif %}
+    <div class="row mb-1"{% for key, value in data %} data-{{ key }}="{{ value }}"{% endfor %}>
         <div class="col-xs-12">
             <label class="form-selectgroup-item flex-fill">
                 {{ form_widget(form.teamlead) }}
@@ -47,7 +53,7 @@
                         <span class="form-selectgroup-check"></span>
                     </div>
                     <div class="form-selectgroup-label-content d-flex align-items-center me-2">
-                        {% if form.vars.data is not null and form.vars.data.user is not null %}
+                        {% if user is not null %}
                             {{ widgets.user_avatar(form.vars.data.user) }}
                         {% else %}
                             {{ widgets.avatar('__INITIALS__', '__COLOR__', '__DISPLAY__') }}
@@ -56,7 +62,7 @@
                     <div class="form-selectgroup-label-content d-flex align-items-center">
                         <div class="text-start">
                             <div class="font-weight-medium">
-                                {% if form.vars.data is not null and form.vars.data.user is not null %}
+                                {% if user is not null %}
                                     {{ form.vars.data.user.displayName }}
                                 {% else %}
                                     __DISPLAY__
@@ -64,7 +70,7 @@
                                 {{ form_widget(form.user) }}
                                 {{ form_errors(form.user) }}
                             </div>
-                            {% if form.vars.data is not null and form.vars.data.user is not null %}
+                            {% if user is not null %}
                                 <div class="text-muted">{{- form.vars.data.user.title -}}</div>
                             {% else %}
                                 <div class="text-muted">__TITLE__</div>
@@ -72,7 +78,7 @@
                         </div>
                     </div>
                     <div class="ms-auto">
-                        <button class="btn btn-icon" onclick="jQuery(this).parent().parent().parent().remove();return false;">{{ icon('trash', true) }}</button>
+                        <a href="#" class="btn btn-icon remove-member">{{ icon('trash', true) }}</a>
                     </div>
                 </div>
             </label>
