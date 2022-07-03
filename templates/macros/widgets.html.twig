@@ -332,28 +332,19 @@
         {% for team in teams|sort((a, b) => a.name <=> b.name) %}
             {% set members = team.members|filter(m => m.user.enabled) %}
             {% set userTeamCount = members|length %}
+            {% set class = 'avatar-rounded' %}
+            {% set container = 'avatar-list avatar-list-stacked' %}
             <tr{% if viewTeam and is_granted('edit', team) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_team_member', {'id': team.id}) }}"{% endif %}>
                 <td class="{{ nameClass }}">
                     {{ _self.label_color_dot('color', true, team.name, null, team.color|colorize(team.name)) }}
                 </td>
-                <td class="d-none d-sm-table-cell avatars">
-                    {% set teamHiddenId = 'team_' ~ team.id ~ '_hiddenUser' ~ random() %}
-                    {% set counter = 0  %}
+                <td class="d-none d-sm-table-cell avatars {{ container }}">
                     {% for member in members|sort((a, b) => b.teamlead <=> a.teamlead) %}
                         {% set user = member.user %}
                         {% if member.teamlead %}
-                            {{ _self.user_avatar(user, ('label.teamlead'|trans ~ ': ' ~ user.displayName), 'teamlead') }}
+                            {{ _self.user_avatar(user, ('label.teamlead'|trans ~ ': ' ~ user.displayName), (class ~ ' teamlead')) }}
                         {% else %}
-                            {{ _self.user_avatar(user) }}
-                        {% endif %}
-                        {% set counter = counter + 1 %}
-                        {% if userTeamCount > (collapseAt + 1) and counter == (collapseAt - 1) and loop.index != userTeamCount %}
-                            <a href="#" onclick="jQuery(this).parent().append(jQuery('#{{ teamHiddenId }}').contents());jQuery('#{{ teamHiddenId }}').remove();jQuery(this).remove();return false;" class="badge bg-gray">{{ 'label.plus_more'|trans({'%count%': (userTeamCount - collapseAt)}) }}</a>
-                            <span class="d-none" id="{{ teamHiddenId }}">
-                            {% set counter = counter + 1 %}
-                        {% endif %}
-                        {% if userTeamCount > collapseAt and counter != (collapseAt - 1) and loop.index == userTeamCount %}
-                            </span>
+                            {{ _self.user_avatar(user, null, class) }}
                         {% endif %}
                     {% endfor %}
                 </td>
