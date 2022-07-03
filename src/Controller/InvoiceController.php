@@ -544,11 +544,24 @@ final class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/template/create", name="admin_invoice_template_create", methods={"GET", "POST"})
      * @Route(path="/template/create/{id}", name="admin_invoice_template_copy", methods={"GET", "POST"})
      * @Security("is_granted('manage_invoice_template')")
      */
-    public function createTemplateAction(Request $request, ?InvoiceTemplate $copyFrom): Response
+    public function copyTemplateAction(Request $request, InvoiceTemplate $copyFrom): Response
+    {
+        return $this->createTemplate($request, $copyFrom);
+    }
+
+    /**
+     * @Route(path="/template/create", name="admin_invoice_template_create", methods={"GET", "POST"})
+     * @Security("is_granted('manage_invoice_template')")
+     */
+    public function createTemplateAction(Request $request): Response
+    {
+        return $this->createTemplate($request, null);
+    }
+
+    private function createTemplate(Request $request, ?InvoiceTemplate $copyFrom = null): Response
     {
         $template = new InvoiceTemplate();
         $template->setLanguage($request->getLocale());

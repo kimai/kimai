@@ -185,11 +185,24 @@ final class ActivityController extends AbstractController
     }
 
     /**
-     * @Route(path="/create", name="admin_activity_create", methods={"GET", "POST"})
      * @Route(path="/create/{project}", name="admin_activity_create_with_project", methods={"GET", "POST"})
      * @Security("is_granted('create_activity')")
      */
-    public function createAction(Request $request, ?Project $project = null): Response
+    public function createWithProjectAction(Request $request, Project $project): Response
+    {
+        return $this->createActivity($request, $project);
+    }
+
+    /**
+     * @Route(path="/create", name="admin_activity_create", methods={"GET", "POST"})
+     * @Security("is_granted('create_activity')")
+     */
+    public function createAction(Request $request): Response
+    {
+        return $this->createActivity($request, null);
+    }
+
+    private function createActivity(Request $request, ?Project $project = null): Response
     {
         $activity = $this->activityService->createNewActivity($project);
 

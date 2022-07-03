@@ -132,11 +132,24 @@ final class ProjectController extends AbstractController
     }
 
     /**
-     * @Route(path="/create", name="admin_project_create", methods={"GET", "POST"})
      * @Route(path="/create/{customer}", name="admin_project_create_with_customer", methods={"GET", "POST"})
      * @Security("is_granted('create_project')")
      */
-    public function createAction(Request $request, ?Customer $customer = null)
+    public function createWithCustomerAction(Request $request, Customer $customer)
+    {
+        return $this->createProject($request, $customer);
+    }
+
+    /**
+     * @Route(path="/create", name="admin_project_create", methods={"GET", "POST"})
+     * @Security("is_granted('create_project')")
+     */
+    public function createAction(Request $request)
+    {
+        return $this->createProject($request, null);
+    }
+
+    private function createProject(Request $request, ?Customer $customer = null)
     {
         $project = $this->projectService->createNewProject($customer);
 
