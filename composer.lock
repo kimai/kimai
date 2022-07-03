@@ -2322,12 +2322,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "5934d3022c155bbda4a26faaf30826549e013bb3"
+                "reference": "f6ea2f470ac2f12bada5a2e943f8e6f6e20df771"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/5934d3022c155bbda4a26faaf30826549e013bb3",
-                "reference": "5934d3022c155bbda4a26faaf30826549e013bb3",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/f6ea2f470ac2f12bada5a2e943f8e6f6e20df771",
+                "reference": "f6ea2f470ac2f12bada5a2e943f8e6f6e20df771",
                 "shasum": ""
             },
             "require": {
@@ -2377,7 +2377,7 @@
             "description": "Admin/Backend theme bundle for Symfony based on Tabler.io",
             "support": {
                 "issues": "https://github.com/kevinpapst/TablerBundle/issues",
-                "source": "https://github.com/kevinpapst/TablerBundle/tree/main"
+                "source": "https://github.com/kevinpapst/TablerBundle/tree/0.5"
             },
             "funding": [
                 {
@@ -2389,7 +2389,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-06-24T16:12:08+00:00"
+            "time": "2022-07-02T06:47:20+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -10083,16 +10083,16 @@
         },
         {
             "name": "zircote/swagger-php",
-            "version": "4.4.5",
+            "version": "4.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zircote/swagger-php.git",
-                "reference": "fd8f1eb8d0165c7a668f307fbccbf3adf33f4017"
+                "reference": "41c03aa742657473335fa53e2d44adcf3b97a97d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/fd8f1eb8d0165c7a668f307fbccbf3adf33f4017",
-                "reference": "fd8f1eb8d0165c7a668f307fbccbf3adf33f4017",
+                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/41c03aa742657473335fa53e2d44adcf3b97a97d",
+                "reference": "41c03aa742657473335fa53e2d44adcf3b97a97d",
                 "shasum": ""
             },
             "require": {
@@ -10154,9 +10154,9 @@
             ],
             "support": {
                 "issues": "https://github.com/zircote/swagger-php/issues",
-                "source": "https://github.com/zircote/swagger-php/tree/4.4.5"
+                "source": "https://github.com/zircote/swagger-php/tree/4.4.6"
             },
-            "time": "2022-06-02T21:05:02+00:00"
+            "time": "2022-06-29T01:40:06+00:00"
         }
     ],
     "packages-dev": [
@@ -10380,16 +10380,16 @@
         },
         {
             "name": "dama/doctrine-test-bundle",
-            "version": "v7.1.0",
+            "version": "v7.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dmaicher/doctrine-test-bundle.git",
-                "reference": "1cf583f0557e0c73465cece646656bc3a0d7dd9e"
+                "reference": "279a554556bed387a6aaae0c13cc982d4874773b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dmaicher/doctrine-test-bundle/zipball/1cf583f0557e0c73465cece646656bc3a0d7dd9e",
-                "reference": "1cf583f0557e0c73465cece646656bc3a0d7dd9e",
+                "url": "https://api.github.com/repos/dmaicher/doctrine-test-bundle/zipball/279a554556bed387a6aaae0c13cc982d4874773b",
+                "reference": "279a554556bed387a6aaae0c13cc982d4874773b",
                 "shasum": ""
             },
             "require": {
@@ -10441,9 +10441,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dmaicher/doctrine-test-bundle/issues",
-                "source": "https://github.com/dmaicher/doctrine-test-bundle/tree/v7.1.0"
+                "source": "https://github.com/dmaicher/doctrine-test-bundle/tree/v7.1.1"
             },
-            "time": "2022-06-01T09:16:12+00:00"
+            "time": "2022-07-01T12:06:31+00:00"
         },
         {
             "name": "doctrine/data-fixtures",
@@ -11054,16 +11054,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.7.15",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "cd0202ea1b1fc6d1bbe156c6e2e18a03e0ff160a"
+                "reference": "b7648d4ee9321665acaf112e49da9fd93df8fbd5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/cd0202ea1b1fc6d1bbe156c6e2e18a03e0ff160a",
-                "reference": "cd0202ea1b1fc6d1bbe156c6e2e18a03e0ff160a",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b7648d4ee9321665acaf112e49da9fd93df8fbd5",
+                "reference": "b7648d4ee9321665acaf112e49da9fd93df8fbd5",
                 "shasum": ""
             },
             "require": {
@@ -11089,7 +11089,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.7.15"
+                "source": "https://github.com/phpstan/phpstan/tree/1.8.0"
             },
             "funding": [
                 {
@@ -11109,7 +11109,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-20T08:29:01+00:00"
+            "time": "2022-06-29T08:53:31+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
