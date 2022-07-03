@@ -70,7 +70,9 @@ export default class KimaiActiveRecords extends KimaiPlugin {
 
         this._replaceInNode(this.menu, entries[0]);
 
-        this.getContainer().getPlugin('timesheet-duration').updateRecords();
+        /** @type {KimaiActiveRecordsDuration} DURATION */
+        const DURATION = this.getContainer().getPlugin('timesheet-duration');
+        DURATION.updateRecords();
     }
 
     _replaceInNode(node, timesheet) {
@@ -96,12 +98,11 @@ export default class KimaiActiveRecords extends KimaiPlugin {
     }
 
     reloadActiveRecords() {
-        const self = this;
         /** @type {KimaiAPI} API */
         const API = this.getContainer().getPlugin('api');
 
-        API.get(this.attributes['api'], {}, function(result) {
-            self.setEntries(result);
+        API.get(this.attributes['api'], {}, (result) => {
+            this.setEntries(result);
         });
     }
 

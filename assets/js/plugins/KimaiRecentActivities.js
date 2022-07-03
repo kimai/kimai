@@ -66,13 +66,14 @@ export default class KimaiRecentActivities extends KimaiPlugin {
 
         let htmlToInsert = '';
 
-        const escaper = this.getPlugin('escape');
+        /** @type {KimaiEscape} ESCAPER */
+        const ESCAPER = this.getPlugin('escape');
 
         for (let timesheet of entries) {
             const label = this.attributes['template']
-                .replace('%customer%', escaper.escapeForHtml(timesheet.project.customer.name))
-                .replace('%project%', escaper.escapeForHtml(timesheet.project.name))
-                .replace('%activity%', escaper.escapeForHtml(timesheet.activity.name))
+                .replace('%customer%', ESCAPER.escapeForHtml(timesheet.project.customer.name))
+                .replace('%project%', ESCAPER.escapeForHtml(timesheet.project.name))
+                .replace('%activity%', ESCAPER.escapeForHtml(timesheet.activity.name))
             ;
 
             const icon = this.attributes['icon'] !== undefined ? `<i class="${ this.attributes['icon'] }"></i>` : '';
@@ -93,11 +94,11 @@ export default class KimaiRecentActivities extends KimaiPlugin {
     }
 
     reloadRecentActivities() {
-        const self = this;
+        /** @type {KimaiAPI} API */
         const API = this.getContainer().getPlugin('api');
 
-        API.get(this.attributes['api'], {}, function(result) {
-            self.setEntries(result);
+        API.get(this.attributes['api'], {}, (result) => {
+            this.setEntries(result);
         });
     }
 

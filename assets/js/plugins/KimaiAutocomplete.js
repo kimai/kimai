@@ -10,7 +10,7 @@ import TomSelect from 'tom-select';
 
 /**
  * Supporting auto-complete fields via API.
- * Currently used for timesheet tagging in toolbar and edit dialogs.
+ * Used for timesheet tagging in toolbar and edit dialogs.
  */
 export default class KimaiAutocomplete extends KimaiPlugin {
 
@@ -24,10 +24,10 @@ export default class KimaiAutocomplete extends KimaiPlugin {
     }
 
     activateAutocomplete(selector) {
+        /** @type {KimaiAPI} API */
         const API = this.getContainer().getPlugin('api');
 
-        const elementList = [].slice.call(document.querySelectorAll(selector + ' ' + this.selector));
-        elementList.map((node) => {
+        [].slice.call(document.querySelectorAll(selector + ' ' + this.selector)).map((node) => {
             const apiUrl = node.dataset['autocompleteUrl'];
             let minChars = 3;
             if (node.dataset['minimumCharacter'] !== undefined) {
@@ -44,8 +44,8 @@ export default class KimaiAutocomplete extends KimaiPlugin {
                     return query.length >= minChars;
                 },
                 load: function(query, callback) {
-                    API.get(apiUrl, {'name': query}, function(data) {
-                        const results = [].slice.call(data).map(function(result) {
+                    API.get(apiUrl, {'name': query}, (data) => {
+                        const results = [].slice.call(data).map((result) => {
                             return {text: result, value: result};
                         });
                         callback(results);
@@ -73,8 +73,7 @@ export default class KimaiAutocomplete extends KimaiPlugin {
     }
 
     destroyAutocomplete(selector) {
-        const elementList = [].slice.call(document.querySelectorAll(selector + ' ' + this.selector));
-        elementList.map((node) => {
+        [].slice.call(document.querySelectorAll(selector + ' ' + this.selector)).map((node) => {
             if (node.tomselect) {
                 node.tomselect.destroy();
             }

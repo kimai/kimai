@@ -21,14 +21,14 @@ export default class KimaiEvent extends KimaiPlugin {
      * @param {string} name
      * @param {string|array|null} details
      */
-    trigger(name, details) {
-        if (name === undefined || name === null) {
+    trigger(name, details = null) {
+        if (name === '') {
             return;
         }
 
         for (const event of name.split(' ')) {
             let triggerEvent = new Event(event);
-            if (details !== undefined) {
+            if (details !== null) {
                 triggerEvent = new CustomEvent(event, {detail: details});
             }
             document.dispatchEvent(triggerEvent);

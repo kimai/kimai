@@ -57,37 +57,45 @@ export default class KimaiAPILink extends KimaiPlugin {
         });
     }
 
+    /**
+     * @param {string} url
+     * @param {DOMStringMap} attributes
+     * @private
+     */
     _callApi(url, attributes)
     {
         const method = attributes['method'];
         const eventName = attributes['event'];
+        /** @type {KimaiAPI} API */
         const API = this.getContainer().getPlugin('api');
-        const eventing = this.getContainer().getPlugin('event');
-        const alert = this.getContainer().getPlugin('alert');
-        const successHandle = function(result) {
-            eventing.trigger(eventName);
-            if (attributes.msgSuccess) {
-                alert.success(attributes.msgSuccess);
+        /** @type {KimaiEvent} EVENTS */
+        const EVENTS = this.getContainer().getPlugin('event');
+        /** @type {KimaiAlert} ALERT */
+        const ALERT = this.getContainer().getPlugin('alert');
+        const successHandle = (result) => {
+            EVENTS.trigger(eventName);
+            if (attributes['msgSuccess'] !== undefined) {
+                ALERT.success(attributes['msgSuccess']);
             }
         };
-        const errorHandle = function(xhr, err) {
+        const errorHandle = (error) => {
             let message = 'action.update.error';
-            if (attributes.msgError) {
-                message = attributes.msgError;
+            if (attributes['msgError'] !== undefined) {
+                message = attributes['msgError'];
             }
-            API.handleError(message, xhr, err);
+            API.handleError(message, error);
         };
 
         if (method === 'PATCH') {
             let data = {};
-            if (attributes.payload) {
-                data  = attributes.payload;
+            if (attributes['payload'] !== undefined) {
+                data  = attributes['payload'];
             }
             API.patch(url, data, successHandle, errorHandle);
         } else if (method === 'POST') {
             let data = {};
-            if (attributes.payload) {
-                data  = attributes.payload;
+            if (attributes['payload'] !== undefined) {
+                data  = attributes['payload'];
             }
             API.post(url, data, successHandle, errorHandle);
         } else if (method === 'DELETE') {
