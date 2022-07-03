@@ -75,24 +75,6 @@ class DateRangeType extends AbstractType
         ]);
     }
 
-    private function formatToPattern(string $format)
-    {
-        $format = preg_quote($format, '/');
-
-        // days
-        $pattern = str_replace('dd', '[0-9]{2}', $format);
-        $pattern = str_replace('d', '[0-9]{1,2}', $pattern);
-        // months
-        $pattern = str_replace('MM', '[0-9]{2}', $pattern);
-        $pattern = str_replace('M', '[0-9]{1,2}', $pattern);
-        // years
-        $pattern = str_replace('yyyy', '[0-9]{4}', $pattern);
-        $pattern = str_replace('yy', '[0-9]{2}', $pattern);
-        $pattern = str_replace('y', '[0-9]{2}', $pattern);
-
-        return '/^' . $pattern . '$/';
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -102,7 +84,7 @@ class DateRangeType extends AbstractType
         $separator = $options['separator'];
         $allowEmpty = $options['allow_empty'];
         $timezone = $options['timezone'];
-        $pattern = $this->formatToPattern($formatDate . $separator . $formatDate);
+        $pattern = (new FormFormatConverter())->convertToPattern($formatDate . $separator . $formatDate);
 
         $builder->addModelTransformer(new CallbackTransformer(
             function ($range) use ($formatDate, $separator, $timezone) {
