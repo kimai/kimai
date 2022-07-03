@@ -59,6 +59,11 @@ class TimesheetApiEditForm extends TimesheetEditForm
             $builder->get('user')->setRequired(false);
         }
 
+        // TODO this is only a quick fix, see bugs reports
+        if ($builder->has('duration')) {
+            $builder->remove('duration');
+        }
+
         if ($builder->has('tags')) {
             $builder->remove('tags');
             // @deprecated for BC reasons here, arrays will be supported in 2.0
@@ -66,6 +71,21 @@ class TimesheetApiEditForm extends TimesheetEditForm
                 'required' => false,
             ]);
         }
+    }
+
+    protected function addBegin(FormBuilderInterface $builder, array $dateTimeOptions, array $options = [])
+    {
+        $builder->add('begin', DateTimeApiType::class, array_merge($dateTimeOptions, [
+            'label' => 'label.begin',
+        ]));
+    }
+
+    protected function addEnd(FormBuilderInterface $builder, array $dateTimeOptions, array $options = [])
+    {
+        $builder->add('end', DateTimeApiType::class, array_merge($dateTimeOptions, [
+            'label' => 'label.end',
+            'required' => false,
+        ]));
     }
 
     public function configureOptions(OptionsResolver $resolver): void
