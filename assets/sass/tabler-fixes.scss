@@ -18,3 +18,17 @@ $datagrid-item-width: 15rem !default;
     margin-bottom: .25rem;
 }
 /* =========== DATAGRID =========== */
+
+/* @see https://github.com/tabler/tabler/pull/1161 */
+.col-form-label {
+    display: block;
+    font-weight: $font-weight-medium;
+
+    &.required {
+        &:after {
+            content: "*";
+            margin-left: .25rem;
+            color: $red;
+        }
+    }
+}
