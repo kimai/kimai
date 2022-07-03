@@ -19,33 +19,4 @@
         {{ form_row(form.members) }}
         {{ form_widget(form) }}
     {% endblock %}
-    {% block form_after %}
-        {% set blockPrefix = form.vars.id %}
-        <script type="text/javascript">
-            jQuery(document).ready(function () {
-                jQuery('#{{ blockPrefix }}_users').change(function (e) {
-                    var select = e.target;
-                    var selected = select.options[select.selectedIndex];
-                    var userid = selected.value;
-                    select.remove(select.selectedIndex);
-
-                    var prototype = jQuery('#{{ blockPrefix }}_members');
-                    var counter = prototype.data('widget-counter') || prototype.children().length;
-                    var newWidget = prototype.attr('data-prototype');
-
-                    newWidget = newWidget.replace(/__name__/g, counter);
-
-                    newWidget = newWidget.replace(/#000000/g, KimaiColor.calculateContrastColor(selected.dataset.color));
-                    newWidget = newWidget.replace(/__DISPLAY__/g, selected.dataset.display);
-                    newWidget = newWidget.replace(/__COLOR__/g, selected.dataset.color);
-                    newWidget = newWidget.replace(/__INITIALS__/g, selected.dataset.initials);
-                    newWidget = newWidget.replace(/__TITLE__/g, selected.dataset.title);
-                    newWidget = newWidget.replace(/__USERNAME__/g, selected.text);
-
-                    prototype.data('widget-counter', ++counter);
-                    jQuery(newWidget).prependTo(prototype).find('input[type=hidden]').val(userid);
-                });
-            });
-        </script>
-    {% endblock %}
 {% endembed %}
