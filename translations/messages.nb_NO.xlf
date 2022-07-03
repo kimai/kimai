@@ -580,7 +580,7 @@
         <source>help.rate</source>
         <target>Timevis sats å fakturere</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.internalRate">
+      <trans-unit id="4dSa8nM" resname="label.internalRate">
         <source>label.internalRate</source>
         <target>Intern sats</target>
       </trans-unit>
@@ -616,7 +616,7 @@
         <source>menu.admin_timesheet</source>
         <target state="needs-translation">Timesedler</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.internalRate">
+      <trans-unit id="Cxv_0wG" resname="help.internalRate">
         <source>help.internalRate</source>
         <target>Interne kostnader (hvis dette ikke er angitt bruker normal sats)</target>
       </trans-unit>
@@ -656,15 +656,15 @@
         <source>label.appendTags</source>
         <target>Legg til etiketter</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+      <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
         <source>label.calendar_initial_view</source>
         <target>Startvisning for kalender</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+      <trans-unit id="3dU6nOJ" resname="label.login_initial_view">
         <source>label.login_initial_view</source>
         <target>Startvisning etter innlogging</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+      <trans-unit id="DJu1n0C" resname="label.daily_stats">
         <source>label.daily_stats</source>
         <target>Vis daglig statistikk i tidstabell</target>
       </trans-unit>
@@ -692,7 +692,7 @@
         <source>profile.registration_date</source>
         <target>Registrert</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.collapsed_sidebar">
+      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
         <source>label.collapsed_sidebar</source>
         <target>Minimer venstre sidefelt</target>
       </trans-unit>
@@ -744,7 +744,7 @@
         <source>stats.durationYear</source>
         <target>Arbeidstimer dette året</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+      <trans-unit id="42YD.Bf" resname="label.export_decimal">
         <source>label.export_decimal</source>
         <target>Bruk desimalvarighet i eksport</target>
       </trans-unit>
@@ -760,7 +760,7 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Budsjettår</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+      <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target>Oppdater nettlesertittel</target>
       </trans-unit>
@@ -1208,7 +1208,7 @@
         <source>label.budgetType_full</source>
         <target state="needs-translation">Livssyklus</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.layout">
+      <trans-unit id="DAkHUq0" resname="label.layout">
         <source>label.layout</source>
         <target state="needs-translation">Vist: oppsettet</target>
       </trans-unit>

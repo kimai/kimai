@@ -190,7 +190,7 @@
         <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
         <target state="translated">Pilkuilla eroteltu luettelo HTML-värikoodeista. Värien nimet voidaan asettaa lisäämällä värikoodin eteen nimi ja "|"-erotin, esim.: Valkoinen|#ffffff,Musta|#000000.</target>
       </trans-unit>
-      <trans-unit id="z4tQEPb" resname="label.timesheet.rules.allow_zero_duration">
+      <trans-unit id="g1q7hKi" resname="label.timesheet.rules.allow_zero_duration">
         <source>label.timesheet.rules.allow_zero_duration</source>
         <target state="translated">Salli aikamerkinnät, joiden kesto on tyhjä</target>
       </trans-unit>

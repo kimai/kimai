@@ -343,7 +343,7 @@
         <source>label.skin</source>
         <target>Darstellung: Farben</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.layout">
+      <trans-unit id="DAkHUq0" resname="label.layout">
         <source>label.layout</source>
         <target>Darstellung: Layout</target>
       </trans-unit>
@@ -359,11 +359,11 @@
         <source>help.rate</source>
         <target>Zu berechnender Preis pro Stunde bzw. pro Eintrag bei Festpreisen</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.internalRate">
+      <trans-unit id="4dSa8nM" resname="label.internalRate">
         <source>label.internalRate</source>
         <target>Interner Preis</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.internalRate">
+      <trans-unit id="Cxv_0wG" resname="help.internalRate">
         <source>help.internalRate</source>
         <target>Wenn dieser nicht angegeben ist, wird der normale Preis verwendet</target>
       </trans-unit>
@@ -573,15 +573,15 @@
         <source>profile.preferences</source>
         <target>Einstellungen</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.collapsed_sidebar">
+      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
         <source>label.collapsed_sidebar</source>
         <target>Minimiert die Navigationsleiste</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+      <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
         <source>label.calendar_initial_view</source>
         <target>Initiale Darstellung des Kalenders</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+      <trans-unit id="3dU6nOJ" resname="label.login_initial_view">
         <source>label.login_initial_view</source>
         <target>Initiale Ansicht nach Anmeldung</target>
       </trans-unit>
@@ -602,15 +602,15 @@
         <source>agendaDay</source>
         <target>Tag</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+      <trans-unit id="DJu1n0C" resname="label.daily_stats">
         <source>label.daily_stats</source>
         <target>Tägliche Statistiken im Timesheet anzeigen</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+      <trans-unit id="42YD.Bf" resname="label.export_decimal">
         <source>label.export_decimal</source>
         <target>Dezimal Format für Export nutzen</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+      <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target>Browser Titel aktualisieren</target>
       </trans-unit>
@@ -1346,7 +1346,7 @@
         <source>please_choose</source>
         <target>Bitte auswählen</target>
       </trans-unit>
-      <trans-unit id="sdfsdf" resname="extended_settings">
+      <trans-unit id="WbT2QLP" resname="extended_settings">
         <source>extended_settings</source>
         <target>Erweiterte Einstellungen</target>
       </trans-unit>

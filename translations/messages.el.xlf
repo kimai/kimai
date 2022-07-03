@@ -305,7 +305,7 @@
         <source>label.skin</source>
         <target>Εμφάνιση: Χρωμάτων</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.layout">
+      <trans-unit id="DAkHUq0" resname="label.layout">
         <source>label.layout</source>
         <target>Εμφάνιση: διάταξη</target>
       </trans-unit>
@@ -321,11 +321,11 @@
         <source>help.rate</source>
         <target>Ωρομίσθια χρέωση που θα πιστωθεί</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.internalRate">
+      <trans-unit id="4dSa8nM" resname="label.internalRate">
         <source>label.internalRate</source>
         <target>Εσωτερική Χρέωση</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.internalRate">
+      <trans-unit id="Cxv_0wG" resname="help.internalRate">
         <source>help.internalRate</source>
         <target>Εσωτερικές χρεώσεις (εάν δεν έχει προσδιοριστεί το πεδίο, η κανονική χρέωση εφαρμόζεται)</target>
       </trans-unit>
@@ -520,15 +520,15 @@
         <source>profile.preferences</source>
         <target>Προτιμήσεις</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.collapsed_sidebar">
+      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
         <source>label.collapsed_sidebar</source>
         <target>Ελαχιστοποιήση της αριστερής πλευρικής γραμμής</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+      <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
         <source>label.calendar_initial_view</source>
         <target>Αρχική προβολή ημερολογίου</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+      <trans-unit id="3dU6nOJ" resname="label.login_initial_view">
         <source>label.login_initial_view</source>
         <target>Αρχική προβολή ύστερα από την σύνδεση</target>
       </trans-unit>
@@ -549,15 +549,15 @@
         <source>agendaDay</source>
         <target>Ημέρα</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+      <trans-unit id="DJu1n0C" resname="label.daily_stats">
         <source>label.daily_stats</source>
         <target>Εμφάνιση ημερήσιων στατιστικών στο δελτίο απασχόλησης</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+      <trans-unit id="42YD.Bf" resname="label.export_decimal">
         <source>label.export_decimal</source>
         <target>Παρουσίασε την διάρκεια σε δεκαδική μορφή κατά την εξαγωγή</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+      <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target>Ενημέρωση τίτλου προγράμματος περιήγησης</target>
       </trans-unit>

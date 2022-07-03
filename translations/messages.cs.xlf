@@ -379,15 +379,15 @@
         <source>profile.preferences</source>
         <target>Předvolby</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.collapsed_sidebar">
+      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
         <source>label.collapsed_sidebar</source>
         <target>Zmenšit postranní panel</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+      <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
         <source>label.calendar_initial_view</source>
         <target>Počáteční zobrazení kalendáře</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+      <trans-unit id="3dU6nOJ" resname="label.login_initial_view">
         <source>label.login_initial_view</source>
         <target>Počáteční zobrazení po přihlášení</target>
       </trans-unit>
@@ -404,7 +404,7 @@
         <source>agendaDay</source>
         <target>Den</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+      <trans-unit id="DJu1n0C" resname="label.daily_stats">
         <source>label.daily_stats</source>
         <target>Zobrazit denní statistiky v pracovním výkaze</target>
       </trans-unit>
@@ -921,7 +921,7 @@
         <source>label.vat_id</source>
         <target>IČO</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+      <trans-unit id="42YD.Bf" resname="label.export_decimal">
         <source>label.export_decimal</source>
         <target>Použij desítkové trvání v exportu</target>
       </trans-unit>
@@ -973,11 +973,11 @@
         <source>label.recalculate_rates</source>
         <target>Přepočítat sazby</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.internalRate">
+      <trans-unit id="Cxv_0wG" resname="help.internalRate">
         <source>help.internalRate</source>
         <target>Interní náklady (jestli není zadáno, je použita normální sazba)</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.internalRate">
+      <trans-unit id="4dSa8nM" resname="label.internalRate">
         <source>label.internalRate</source>
         <target>Interní sazba</target>
       </trans-unit>
@@ -985,7 +985,7 @@
         <source>help.rate</source>
         <target>Hodinová sazba</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.layout">
+      <trans-unit id="DAkHUq0" resname="label.layout">
         <source>label.layout</source>
         <target>Obrazovka: layout</target>
       </trans-unit>
@@ -1225,7 +1225,7 @@
         <source>delete_warning.short_stats</source>
         <target state="needs-translation">Currently %records% time-records exists, which sum up to a total duration of %duration%.</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+      <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target state="needs-translation">Update browser title</target>
       </trans-unit>

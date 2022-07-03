@@ -10,11 +10,11 @@
         <source>plugin.marketplace</source>
         <target>New plugins from the marketplace</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo12" resname="buy">
+      <trans-unit id="6Bl7IPj" resname="buy">
         <source>Buy now</source>
         <target>Buy now</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo123" resname="shop">
+      <trans-unit id="jZAB0yx" resname="shop">
         <source>Plugin Shop</source>
         <target>More extensions</target>
       </trans-unit>

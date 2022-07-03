@@ -644,11 +644,11 @@
         <source>label.recalculate_rates</source>
         <target>إعادة حساب المعدلات</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.internalRate">
+      <trans-unit id="Cxv_0wG" resname="help.internalRate">
         <source>help.internalRate</source>
         <target>التكاليف الداخلية (إذا لم يتم تحديد هذا، يتم استخدام المعدل العادي)</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.internalRate">
+      <trans-unit id="4dSa8nM" resname="label.internalRate">
         <source>label.internalRate</source>
         <target>المعدل الداخلي</target>
       </trans-unit>
@@ -656,7 +656,7 @@
         <source>help.rate</source>
         <target>السعر بالساعة الذي سيتم دفعه</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.layout">
+      <trans-unit id="DAkHUq0" resname="label.layout">
         <source>label.layout</source>
         <target>العرض: تخطيط</target>
       </trans-unit>
@@ -976,7 +976,7 @@
         <source>month</source>
         <target>شهر</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+      <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target>تحديث عنوان المتصفح</target>
       </trans-unit>
@@ -1060,11 +1060,11 @@
         <source>label.last_record_before</source>
         <target>لا يوجد حجز للوقت منذ</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+      <trans-unit id="3dU6nOJ" resname="label.login_initial_view">
         <source>label.login_initial_view</source>
         <target>طريقة العرض الأولية بعد تسجيل الدخول</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+      <trans-unit id="42YD.Bf" resname="label.export_decimal">
         <source>label.export_decimal</source>
         <target>استخدم المدة العشرية في التصدير</target>
       </trans-unit>
@@ -1076,7 +1076,7 @@
         <source>label.includeNoBudget</source>
         <target>إظهار الإدخالات التي ليس لها ميزانية</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+      <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
         <source>label.calendar_initial_view</source>
         <target state="translated">المظهر الإفتراضي للتقويم</target>
       </trans-unit>
@@ -1124,7 +1124,7 @@
         <source>stats.percentUsed</source>
         <target state="translated">تم استخدام %percent%%</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+      <trans-unit id="DJu1n0C" resname="label.daily_stats">
         <source>label.daily_stats</source>
         <target state="translated">إظهار الإحصائيات اليومية في ورقة التوقيت</target>
       </trans-unit>

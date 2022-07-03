@@ -408,15 +408,15 @@
         <source>profile.preferences</source>
         <target state="translated">Ayarlar</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.collapsed_sidebar">
+      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
         <source>label.collapsed_sidebar</source>
         <target state="translated">Kenar çubuğunu küçült</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar_initial_view">
+      <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
         <source>label.calendar_initial_view</source>
         <target state="translated">İlk takvim görünümü</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login_initial_view">
+      <trans-unit id="3dU6nOJ" resname="label.login_initial_view">
         <source>label.login_initial_view</source>
         <target state="translated">Oturum açtıktan sonraki ilk görünüm</target>
       </trans-unit>
@@ -433,7 +433,7 @@
         <source>agendaDay</source>
         <target state="translated">Gün</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="label.daily_stats">
+      <trans-unit id="DJu1n0C" resname="label.daily_stats">
         <source>label.daily_stats</source>
         <target state="translated">Çizelgede günlük istatistikleri göster</target>
       </trans-unit>
@@ -942,7 +942,7 @@
         <source>label.project_start</source>
         <target>Proje başlangıcı</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="label.export_decimal">
+      <trans-unit id="42YD.Bf" resname="label.export_decimal">
         <source>label.export_decimal</source>
         <target>Dışa aktarmada ondalık süre kullan</target>
       </trans-unit>
@@ -978,11 +978,11 @@
         <source>label.recalculate_rates</source>
         <target>Ücretleri yeniden hesapla</target>
       </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.internalRate">
+      <trans-unit id="Cxv_0wG" resname="help.internalRate">
         <source>help.internalRate</source>
         <target>Dahili maliyetler (bu belirtilmemişse, normal ücret kullanılır)</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="label.internalRate">
+      <trans-unit id="4dSa8nM" resname="label.internalRate">
         <source>label.internalRate</source>
         <target>Dahili ücret</target>
       </trans-unit>
@@ -990,7 +990,7 @@
         <source>help.rate</source>
         <target>Alınacak saatlik ücret</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="label.layout">
+      <trans-unit id="DAkHUq0" resname="label.layout">
         <source>label.layout</source>
         <target>Ekran: düzen</target>
       </trans-unit>
@@ -1038,7 +1038,7 @@
         <source>modal.dirty</source>
         <target>Form değişti. Değişiklikleri kaydetmek için "Kaydet" düğmesine, veya iptal etmek için "Kapat" düğmesine tıklayın.</target>
       </trans-unit>
-      <trans-unit id="5R.QsZ3" resname="update_browser_title">
+      <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target>Tarayıcı başlığını güncelle</target>
       </trans-unit>
