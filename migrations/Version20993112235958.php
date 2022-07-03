@@ -50,6 +50,10 @@ final class Version20993112235958 extends AbstractMigration
 
         // TODO user configuration calendar first day agendaDay = day / agendaMonth = month
 
+        // TODO delete timesheet.active_entries.soft_limit
+
+        // TODO update SET `value` = '15' kimai2_configuration WHERE `name` = 'timesheet.time_increment' and value = '0'
+
         $this->addSql("UPDATE kimai2_configuration SET `value` = 'default' WHERE `name` = 'timesheet.mode' and `value` = 'duration_only'");
     }
 
