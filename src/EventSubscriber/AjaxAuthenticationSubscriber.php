@@ -29,8 +29,9 @@ class AjaxAuthenticationSubscriber implements EventSubscriberInterface
     public function onCoreException(ExceptionEvent $event)
     {
         $request = $event->getRequest();
+        $header = $request->headers->get('X-Requested-With');
 
-        if ($request->isXmlHttpRequest() || str_contains(strtolower($request->headers->get('X-Requested-With')), 'Kimai')) {
+        if ($request->isXmlHttpRequest() || ($header !== null && str_contains(strtolower($header), 'kimai'))) {
             $exception = $event->getThrowable();
             if ($exception instanceof AuthenticationExpiredException) {
                 $event->setResponse(new Response('Session expired', 403, ['Login-Required' => true]));

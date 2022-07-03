@@ -49,6 +49,10 @@ final class Context
             return true;
         }
 
+        if (!$request->headers->has('X-Requested-With')) {
+            return false;
+        }
+
         return str_contains(strtolower($request->headers->get('X-Requested-With')), 'kimai');
     }
 
