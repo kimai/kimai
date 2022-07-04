@@ -11,7 +11,7 @@
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_attributes %}id="quick_entry_box"{% endblock %}
         {% block box_before %}
-            {{ form_start(form, {attr: {class: 'form-dataTable quick-entries'}}) }}
+            {{ form_start(form, {attr: {id: 'quick-entries-form', class: 'form-dataTable quick-entries'}}) }}
             {{ form_widget(form._token) }}
         {% endblock %}
         {% block box_after %}{{ form_end(form) }}{% endblock %}
@@ -68,7 +68,7 @@
             /** @type {KimaiFormSelect} FORM_SELECT */
             const FORM_SELECT = kimai.getPlugin('form-select');
 
-            const recalculateTotals = function(e) {
+            const recalculateTotals = () => {
                 const allFields = document.getElementsByClassName('duration-input');
                 let totalsPerDay = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0};
                 let fullTotals = 0;
@@ -100,9 +100,8 @@
                 location.href = '{{ path('quick_entry', {'begin': '__BEGIN__'}) }}'.replace('__BEGIN__', ev.target.value);
             });
 
-            [].slice.call(document.querySelectorAll('form.quick-entries .duration-input')).map((element) => {
-                element.addEventListener('change', recalculateTotals);
-            });
+            document.getElementById('quick-entries-form').addEventListener('click', recalculateTotals);
+            document.getElementById('quick-entries-form').addEventListener('change', recalculateTotals);
 
             const addFormToCollection = function(e) {
                 const collectionHolder = document.getElementById(e.currentTarget.dataset.collectionHolder);
