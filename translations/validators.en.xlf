@@ -90,6 +90,10 @@
         <source>Validation Failed</source>
         <target>There was a problem saving</target>
       </trans-unit>
+      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+        <source>Cannot stop running timesheet</source>
+        <target>You have an active time record which cannot be stopped automatically.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

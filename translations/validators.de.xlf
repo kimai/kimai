@@ -90,6 +90,10 @@
         <source>Validation Failed</source>
         <target>Es gab ein Problem beim Speichern</target>
       </trans-unit>
+      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+        <source>Cannot stop running timesheet</source>
+        <target>Sie haben eine aktive Zeitmessung, die nicht automatisch beendet werden kann.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
