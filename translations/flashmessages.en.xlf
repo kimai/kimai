@@ -58,6 +58,10 @@
         <source>action.csrf.error</source>
         <target>The action could not be performed: invalid security token.</target>
       </trans-unit>
+      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+        <source>Cannot stop running timesheet</source>
+        <target>You have an active time record which cannot be stopped automatically.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -9,6 +9,7 @@
 
 namespace App\API\Serializer;
 
+use App\Entity\User;
 use App\Validator\ValidationFailedException;
 use FOS\RestBundle\Serializer\Normalizer\FlattenExceptionHandler;
 use JMS\Serializer\Context;
@@ -16,24 +17,14 @@ use JMS\Serializer\GraphNavigatorInterface;
 use JMS\Serializer\Handler\SubscribingHandlerInterface;
 use JMS\Serializer\JsonSerializationVisitor;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ValidationFailedExceptionErrorHandler implements SubscribingHandlerInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-    /**
-     * @var FlattenExceptionHandler
-     */
-    private $exceptionHandler;
-
-    public function __construct(TranslatorInterface $translator, FlattenExceptionHandler $exceptionHandler)
+    public function __construct(private TranslatorInterface $translator, private FlattenExceptionHandler $exceptionHandler, private Security $security)
     {
-        $this->translator = $translator;
-        $this->exceptionHandler = $exceptionHandler;
     }
 
     public static function getSubscribingMethods(): array
@@ -87,10 +78,16 @@ class ValidationFailedExceptionErrorHandler implements SubscribingHandlerInterfa
 
     private function getErrorMessage(ConstraintViolationInterface $error): string
     {
-        if (null !== $error->getPlural()) {
-            return $this->translator->trans($error->getMessageTemplate(), ['%count%' => $error->getPlural()] + $error->getParameters(), 'validators');
+        $locale = \Locale::getDefault();
+        /** @var User $user */
+        if (($user = $this->security->getUser()) !== null) {
+            $locale = $user->getLocale();
         }
 
-        return $this->translator->trans($error->getMessageTemplate(), $error->getParameters(), 'validators');
+        if (null !== $error->getPlural()) {
+            return $this->translator->trans($error->getMessageTemplate(), ['%count%' => $error->getPlural()] + $error->getParameters(), 'validators', $locale);
+        }
+
+        return $this->translator->trans($error->getMessageTemplate(), $error->getParameters(), 'validators', $locale);
     }
 }

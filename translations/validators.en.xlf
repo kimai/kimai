@@ -86,6 +86,10 @@
         <source>This timesheet is already exported.</source>
         <target>This timesheet is already exported.</target>
       </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed">
+        <source>Validation Failed</source>
+        <target>There was a problem saving</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -58,6 +58,10 @@
         <source>action.csrf.error</source>
         <target>Die Aktion konnte nicht durchgeführt werden: ungültiges Sicherheitstoken.</target>
       </trans-unit>
+      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+        <source>Cannot stop running timesheet</source>
+        <target>Sie haben eine aktive Zeitmessung, die nicht automatisch beendet werden kann.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
