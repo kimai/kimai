@@ -12,14 +12,14 @@ namespace App\Utils;
 class JavascriptFormatConverter
 {
     /**
-     * Convert PHP date format to litepicker compatible format.
+     * Convert PHP date format to Luxon compatible format.
      *
-     * Litepicker interprets 2-digit year as 1900, so we have to convert 20 to 2022.
-     *
+     * @see https://moment.github.io/luxon/#/formatting?id=table-of-tokens
+     * @see https://www.php.net/manual/en/datetime.format.php
      * @var array
      */
     private static $formatConvertRules = [
-        // year
+        // year: Litepicker interprets 2-digit year as 1900, so we have to convert 20 to 2022.
         'yyyy' => 'YYYY', 'yy' => 'YYYY', 'y' => 'YYYY',
         // day
         'dd' => 'DD', 'd' => 'D',
@@ -29,7 +29,7 @@ class JavascriptFormatConverter
         'ZZZZZ' => 'Z', 'ZZZ' => 'ZZ',
         // letter 'T'
         '\'T\'' => 'T',
-        // am/pm to AM/PM
+        // am/pm (a) to AM/PM (A) - Luxon always produces uppercase AM/PM
         'a' => 'A',
     ];
 
