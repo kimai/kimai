@@ -20,7 +20,13 @@
     "build": "./node_modules/.bin/encore production",
     "prod": "node_modules/.bin/encore production"
   },
+  "browserslist": [
+    "defaults"
+  ],
+  "packageManager": "yarn@3.2.1",
   "devDependencies": {
+    "@babel/core": "^7.18.6",
+    "@babel/eslint-parser": "^7.18.2",
     "@fortawesome/fontawesome-free": "^5.15",
     "@fullcalendar/bootstrap5": "^5.11.0",
     "@fullcalendar/core": "^5.11.0",
@@ -29,24 +35,20 @@
     "@fullcalendar/icalendar": "^5.11.0",
     "@fullcalendar/interaction": "^5.11.0",
     "@fullcalendar/timegrid": "^5.11.0",
-    "@symfony/webpack-encore": "^1.1",
+    "@popperjs/core": "^2.11.5",
+    "@symfony/webpack-encore": "^2.1",
     "@tabler/core": "^1.0.0-beta8",
     "bootstrap": "^5.1.3",
     "chart.js": "^3.8",
     "core-js": "^3.6",
-    "file-loader": "^6.0",
+    "eslint": "^8.19.0",
+    "eslint-webpack-plugin": "^3.2.0",
     "gridstack": "^5.1",
     "litepicker": "^2.0",
     "luxon": "^2.4.0",
     "node-sass": "^7.0",
-    "sass-loader": "^11.0",
+    "sass-loader": "^12.0.0",
     "tom-select": "^2.0.0",
     "webpack-notifier": "^1.13"
-  },
-  "resolutions": {
-    "jquery": "3.5.1"
-  },
-  "browserslist": [
-    "defaults"
-  ]
+  }
 }

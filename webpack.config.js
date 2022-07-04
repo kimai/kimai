@@ -1,11 +1,10 @@
 // Hint: if something doesn't work as expected: yarn upgrade --latest
 
-var Encore = require('@symfony/webpack-encore');
-var webpack = require('webpack');
+const Encore = require('@symfony/webpack-encore');
 
 Encore
     .setOutputPath('public/build/')
-    .setPublicPath('build/')
+    .setPublicPath('/build/')
     .setManifestKeyPrefix('build/')
     .cleanupOutputBeforeBuild()
 
@@ -21,9 +20,8 @@ Encore
         splitChunks.chunks = 'async';
     })
 
-    // bug: empty hashes in entrypoints.json
-    //.enableIntegrityHashes(Encore.isProduction())
-
+    // in the past there was a bug with empty hashes in entrypoints.json, disable if it happens again
+    .enableIntegrityHashes(Encore.isProduction())
     .enableSingleRuntimeChunk()
     .enableVersioning(Encore.isProduction())
     .enableSourceMaps(!Encore.isProduction())
@@ -33,34 +31,28 @@ Encore
         resolveUrlLoader: false
     })
 
-    // to rewrite the font url() in CSS to be relative.
-    // https://github.com/symfony/webpack-encore/issues/915#issuecomment-827556896
-    .configureFontRule(
-        { type: 'javascript/auto' },
-        (rule) => {
-            rule.loader = 'file-loader';
-            rule.options = { outputPath: 'fonts', name: '[name].[hash:8].[ext]', publicPath: './fonts/' };
-        }
-    )
-
-    .configureImageRule(
-        { type: 'javascript/auto' },
-        (rule) => {
-            rule.loader = 'file-loader';
-            rule.options = { outputPath: 'images', name: '[name].[hash:8].[ext]', publicPath: './images/' };
-        }
-    )
-
-    .configureBabel(null, {
-        useBuiltIns: 'usage',
-        corejs: 3,
-    })
-
     .configureCssMinimizerPlugin((options) => {
         options.minimizerOptions = {
             preset: ['default', { discardComments: { removeAll: true } }],
         }
     })
+
+    // compress javascript in production build
+    .configureTerserPlugin((options) => {
+        options.terserOptions = {
+            compress: true,
+            output: {
+                comments: false,
+            },
+            mangle: {
+                properties: {
+                    regex: /^_/,
+                },
+            },
+        }
+    })
+
+    .enableEslintPlugin()
 ;
 
 module.exports = Encore.getWebpackConfig();

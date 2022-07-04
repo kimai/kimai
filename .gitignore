@@ -16,8 +16,6 @@ php.ini
 /config/packages/*/*-local.yaml
 /config/bundles-local.php
 
-public/avatars/*.png
-
 templates/invoice/renderer/.~lock*
 translations/branding.*.xlf
 
@@ -40,6 +38,10 @@ translations/branding.*.xlf
 
 /var/sessions/*
 !var/sessions/.gitkeep
+
+# YARN 2
+.yarnrc.yml
+.yarn
 
 # symfony-cli
 .php-version
