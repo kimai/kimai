@@ -14,7 +14,8 @@ import KimaiPlugin from '../KimaiPlugin';
 
 export default class KimaiThemeInitializer extends KimaiPlugin {
 
-    init() {
+    init()
+    {
         // the tooltip do not use data-bs-toggle="tooltip" so they can be mixed with data-toggle="modal"
         [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]')).map(function (tooltipTriggerEl) {
             return new Tooltip(tooltipTriggerEl);
@@ -26,21 +27,13 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
         FORMS.activateForm('div.page-wrapper form');
         FORMS.activateForm('form.searchform');
 
-        this.registerModalAutofocus('#modal_search');
-        this.registerModalAutofocus('#remote_form_modal');
-        this.registerOverlayListener('kimai.reloadContent', 'kimai.reloadedContent');
-    }
+        this._registerModalAutofocus('#modal_search');
+        this._registerModalAutofocus('#remote_form_modal');
 
-    /**
-     * Registers an event listener, that will is capabale of displaying and hiding overlays upon notification
-     *
-     * @param {string} eventNameShow
-     * @param {string} eventNameHide
-     */
-    registerOverlayListener(eventNameShow, eventNameHide) {
         this.overlay = null;
 
-        document.addEventListener(eventNameShow, (event) => {
+        // register a global event listener, which displays an overlays upon notification
+        document.addEventListener('kimai.reloadContent', (event) => {
             // do not allow more than one loading screen at a time
             if (this.overlay !== null) {
                 return;
@@ -58,7 +51,8 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
             document.querySelector(container).append(this.overlay);
         });
 
-        document.addEventListener(eventNameHide, (event) => {
+        // register a global event listener, which hides an overlay upon notification
+        document.addEventListener('kimai.reloadedContent', () => {
             if (this.overlay !== null) {
                 this.overlay.remove();
                 this.overlay = null;
@@ -67,11 +61,16 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
     }
 
     /**
-     * workaround for autofocus attribute, as the modal "steals" it
+     * Helps setting the autofocus on modals.
      *
      * @param {string} selector
      */
-    registerModalAutofocus(selector) {
+    _registerModalAutofocus(selector) {
+        // on mobile you do not want to trigger the virtual keyboard upon modal open
+        if (this.isMobile()) {
+            return;
+        }
+
         const modal = document.querySelector(selector);
         if (modal === null) {
             return;
@@ -87,19 +86,5 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
                 formAutofocus[0].focus();
             }
         });
-    }
-
-    /**
-     * Check if the current device is a mobile device (targeting the bootstrip xs breakpoint size).
-     *
-     * @returns {boolean}
-     */
-    isMobile() {
-        const width = Math.max(
-            document.documentElement.clientWidth,
-            window.innerWidth || 0
-        )
-
-        return width < 576;
     }
 }

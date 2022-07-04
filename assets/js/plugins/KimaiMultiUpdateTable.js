@@ -13,7 +13,8 @@ import KimaiPlugin from '../KimaiPlugin';
 
 export default class KimaiMultiUpdateTable extends KimaiPlugin {
 
-    init() {
+    init()
+    {
         if (document.getElementById('multi_update_all') === null) {
             return;
         }
@@ -28,11 +29,11 @@ export default class KimaiMultiUpdateTable extends KimaiPlugin {
                 for (const element of document.querySelectorAll('.multi_update_single')) {
                     element.checked = checked;
                 }
-                this.toggleForm();
+                this._toggleForm();
                 event.stopPropagation();
             } else if (event.target.matches('.multi_update_single')) {
                 // single checkboxes in front of each row
-                this.toggleForm();
+                this._toggleForm();
                 event.stopPropagation();
             }
         });
@@ -40,7 +41,8 @@ export default class KimaiMultiUpdateTable extends KimaiPlugin {
         element.addEventListener('click', (event) => {
             if (event.target.matches('.multi_update_table_action')) {
                 const selectedItem = event.target;
-                const ids = this.getSelectedIds();
+                const ids = this._getSelectedIds();
+                const form = document.getElementById('multi_update_form');
                 const question = form.dataset['question'].replace(/%action%/, selectedItem.textContent).replace(/%count%/, ids.length.toString());
 
                 /** @type {KimaiAlert} ALERT */
@@ -56,7 +58,7 @@ export default class KimaiMultiUpdateTable extends KimaiPlugin {
         });
     }
     
-    getSelectedIds()
+    _getSelectedIds()
     {
         let ids = [];
         for (const box of document.querySelectorAll('input.multi_update_single:checked')) {
@@ -66,9 +68,9 @@ export default class KimaiMultiUpdateTable extends KimaiPlugin {
         return ids;
     }
     
-    toggleForm() 
+    _toggleForm()
     {
-        const ids = this.getSelectedIds();
+        const ids = this._getSelectedIds();
         document.getElementById('multi_update_table_entities').value = ids.join(',');
 
         if (ids.length > 0) {

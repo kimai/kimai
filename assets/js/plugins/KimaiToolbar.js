@@ -15,8 +15,8 @@ export default class KimaiToolbar extends KimaiPlugin {
 
     constructor(formSelector, formSubmitActionClass) {
         super();
-        this.formSelector = formSelector;
-        this.actionClass = formSubmitActionClass;
+        this._formSelector = formSelector;
+        this._actionClass = formSubmitActionClass;
     }
 
     getId() {
@@ -25,11 +25,10 @@ export default class KimaiToolbar extends KimaiPlugin {
 
     init() {
         const formSelector = this.getSelector();
-        const EVENT = this.getContainer().getPlugin('event');
 
-        this._registerPagination(formSelector, EVENT);
-        this._registerSortableTables(formSelector, EVENT);
-        this._registerAlternativeSubmitActions(formSelector, this.actionClass);
+        this._registerPagination(formSelector);
+        this._registerSortableTables(formSelector);
+        this._registerAlternativeSubmitActions(formSelector, this._actionClass);
 
         // Reset the page if filter values are changed, otherwise we might end up with a limited set of data,
         // which does not support the given page - and it would be just wrong to stay in the same page
@@ -113,7 +112,7 @@ export default class KimaiToolbar extends KimaiPlugin {
      * Sortable datatables use hidden fields in the toolbar filter/search form
      * @private
      */
-    _registerSortableTables(formSelector, EVENT) {
+    _registerSortableTables(formSelector) {
         document.body.addEventListener('click', (event) => {
             if (!event.target.matches('th.sortable')) {
                 return;
@@ -132,7 +131,7 @@ export default class KimaiToolbar extends KimaiPlugin {
             document.querySelector(formSelector + ' #order').dispatchEvent(new Event('change'));
 
             // triggers the datatable reload - search for the event name
-            EVENT.trigger('filter-change');
+            document.dispatchEvent(new Event('filter-change'));
         });
     }
     
@@ -142,7 +141,7 @@ export default class KimaiToolbar extends KimaiPlugin {
      *
      * @private
      */
-    _registerPagination(formSelector, EVENT) {
+    _registerPagination(formSelector) {
         document.body.addEventListener('click', (event) => {
             if (!event.target.matches('ul.pagination li a') && !event.target.parentNode.matches('ul.pagination li a')) {
                 return;
@@ -164,7 +163,7 @@ export default class KimaiToolbar extends KimaiPlugin {
             let urlParts = target.href.split('/');
             pager.value = urlParts[urlParts.length-1];
             pager.dispatchEvent(new Event('change'));
-            EVENT.trigger('pagination-change');
+            document.dispatchEvent(new Event('pagination-change'));
             return false;
         });
 
@@ -174,7 +173,7 @@ export default class KimaiToolbar extends KimaiPlugin {
      * Triggers an event, that everyone can listen for.
      */
     triggerChange() {
-        this.getContainer().getPlugin('event').trigger('toolbar-change');
+        document.dispatchEvent(new Event('toolbar-change'));
     }
 
     /**
@@ -183,7 +182,7 @@ export default class KimaiToolbar extends KimaiPlugin {
      * @returns {string}
      */
     getSelector() {
-        return this.formSelector;
+        return this._formSelector;
     }
 
 }

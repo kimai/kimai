@@ -10,7 +10,7 @@
  */
 
 import KimaiPlugin from '../KimaiPlugin';
-import { DateTime, Duration, Info } from 'luxon';
+import { DateTime, Duration } from 'luxon';
 
 export default class KimaiDateUtils extends KimaiPlugin {
 

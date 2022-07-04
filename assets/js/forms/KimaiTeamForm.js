@@ -10,6 +10,7 @@
  */
 
 import KimaiFormPlugin from "./KimaiFormPlugin";
+import KimaiColor from "../widgets/KimaiColor";
 
 export default class KimaiTeamForm extends KimaiFormPlugin {
 
@@ -17,6 +18,7 @@ export default class KimaiTeamForm extends KimaiFormPlugin {
     {
         this.usersId = 'team_edit_form_users';
     }
+
     /**
      * @param {HTMLFormElement} form
      * @return boolean

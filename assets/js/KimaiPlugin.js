@@ -88,6 +88,14 @@ export default class KimaiPlugin {
     }
 
     /**
+     * @param {string} name
+     * @returns {string}
+     */
+    translate(name) {
+        return this.getTranslation().get(name);
+    }
+
+    /**
      * @param {string} title
      * @returns {string}
      */
@@ -97,11 +105,11 @@ export default class KimaiPlugin {
 
     /**
      * @param {string} name
-     * @param {string} details
+     * @param {string|null} details
      */
-    trigger(name, details) {
+    trigger(name, details = null) {
         this.getPlugin('event').trigger(name, details);
-    };
+    }
 
     /**
      * @param {string} url
@@ -110,7 +118,7 @@ export default class KimaiPlugin {
      */
     fetch(url, options = {}) {
         return this.getPlugin('fetch').fetch(url, options);
-    };
+    }
 
     /**
      * @param {HTMLFormElement} form
@@ -124,18 +132,30 @@ export default class KimaiPlugin {
 
         if (method === 'GET') {
             const data = this.getPlugin('form').convertFormDataToQueryString(form, {}, true);
+            // TODO const data = new URLSearchParams(new FormData(form)).toString();
             url = url + (url.includes('?') ? '&' : '?') + data;
             options = {...{method: 'GET'}, ...options};
         } else if (method === 'POST') {
-            const headers = new Headers()
-            headers.append('Content-Type', 'application/x-www-form-urlencoded');
             options = {...{
                 method: 'POST',
-                headers: headers,
-                body: this.getPlugin('form').convertFormDataToQueryString(form)
+                body: new FormData(form)
             }, ...options};
         }
 
         return this.fetch(url, options);
-    };
+    }
+
+    /**
+     * Check if the current device is a mobile device (targeting the bootstrip xs breakpoint size).
+     *
+     * @returns {boolean}
+     */
+    isMobile() {
+        const width = Math.max(
+            document.documentElement.clientWidth,
+            window.innerWidth || 0
+        )
+
+        return width < 576;
+    }
 }

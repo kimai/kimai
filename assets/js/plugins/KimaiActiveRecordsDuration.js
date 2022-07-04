@@ -18,7 +18,7 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
     }
 
     init() {
-        this.updateBrowserTitle = !!this.getConfiguration('updateBrowserTitle');
+        this._updateBrowserTitle = !!this.getConfiguration('updateBrowserTitle');
         this.updateRecords();
         const handle = () => { this.updateRecords(); };
         this._updatesHandler = setInterval(handle, 10000);
@@ -35,9 +35,9 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
         const activeRecords = document.querySelectorAll('[data-since]:not([data-since=""])');
 
         if (activeRecords.length === 0) {
-            if (this.updateBrowserTitle) {
+            if (this._updateBrowserTitle) {
                 if (document.body.dataset['title'] === undefined) {
-                    this.updateBrowserTitle = false;
+                    this._updateBrowserTitle = false;
                 } else {
                     document.title = document.body.dataset['title'];
                 }
@@ -61,7 +61,7 @@ export default class KimaiActiveRecordsDuration extends KimaiPlugin {
             return;
         }
 
-        if (!this.updateBrowserTitle) {
+        if (!this._updateBrowserTitle) {
             return;
         }
 

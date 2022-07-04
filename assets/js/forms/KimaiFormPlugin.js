@@ -17,20 +17,23 @@ export default class KimaiFormPlugin extends KimaiPlugin {
      * @param {HTMLFormElement} form
      * @return boolean
      */
-    supportsForm(form){
+    supportsForm(form) // eslint-disable-line no-unused-vars
+    {
         return false;
     }
 
     /**
      * @param {HTMLFormElement} form
      */
-    activateForm(form) {
+    activateForm(form) // eslint-disable-line no-unused-vars
+    {
     }
 
     /**
      * @param {HTMLFormElement} form
      */
-    destroyForm(form) {
+    destroyForm(form) // eslint-disable-line no-unused-vars
+    {
     }
 
 }

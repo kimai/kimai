@@ -35,5 +35,5 @@ export default class KimaiEscape extends KimaiPlugin {
         return title.replace(/[&<>]/g, function(tag) {
             return tagsToReplace[tag] || tag;
         });
-    };
+    }
 }

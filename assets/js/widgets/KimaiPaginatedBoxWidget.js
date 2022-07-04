@@ -18,7 +18,7 @@ export default class KimaiPaginatedBoxWidget {
 
         if (widget.dataset['reload'] !== undefined) {
             this.events = widget.dataset['reload'].split(' ');
-            const reloadPage = (event) => {
+            const reloadPage = () => {
                 let url = null;
                 if (document.querySelector(this.selector).dataset['reloadHref'] !== undefined) {
                     url = document.querySelector(this.selector).dataset['reloadHref'];
@@ -74,7 +74,7 @@ export default class KimaiPaginatedBoxWidget {
                     hideOverlay();
                 });
             })
-            .catch(error => {
+            .catch(() => {
                 // this is not yet a plugin, so the alert is not available here
                 window.kimai.getPlugin('alert').error('Failed loading selected page');
                 hideOverlay();

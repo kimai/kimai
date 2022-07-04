@@ -22,15 +22,14 @@ export default class KimaiAPILink extends KimaiPlugin {
 
     constructor(selector) {
         super();
-        this.selector = selector;
+        this._selector = selector;
     }
 
     init() {
-        const self = this;
-        document.addEventListener('click', function(event) {
+        document.addEventListener('click', (event) => {
             let target = event.target;
             while (target !== null && !target.matches('body')) {
-                if (target.classList.contains(self.selector)) {
+                if (target.classList.contains(this._selector)) {
                     const attributes = target.dataset;
 
                     let url = attributes['href'];
@@ -39,13 +38,13 @@ export default class KimaiAPILink extends KimaiPlugin {
                     }
 
                     if (attributes.question !== undefined) {
-                        self.getContainer().getPlugin('alert').question(attributes.question, function(value) {
+                        this.getContainer().getPlugin('alert').question(attributes.question, (value) => {
                             if (value) {
-                                self._callApi(url, attributes);
+                                this._callApi(url, attributes);
                             }
                         });
                     } else {
-                        self._callApi(url, attributes);
+                        this._callApi(url, attributes);
                     }
 
                     event.preventDefault();
@@ -72,7 +71,7 @@ export default class KimaiAPILink extends KimaiPlugin {
         const EVENTS = this.getContainer().getPlugin('event');
         /** @type {KimaiAlert} ALERT */
         const ALERT = this.getContainer().getPlugin('alert');
-        const successHandle = (result) => {
+        const successHandle = () => {
             EVENTS.trigger(eventName);
             if (attributes['msgSuccess'] !== undefined) {
                 ALERT.success(attributes['msgSuccess']);

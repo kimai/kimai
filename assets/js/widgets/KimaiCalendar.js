@@ -8,8 +8,8 @@
 /*!
  * [KIMAI] KimaiCalendar: wrapping Fullcalendar.io
  */
-import {Popover, Tooltip} from 'bootstrap';
-import { Calendar, EventApi, EventDropArg } from '@fullcalendar/core';
+import { Popover } from 'bootstrap';
+import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import bootstrap5Plugin, { BootstrapTheme } from '@fullcalendar/bootstrap5';
@@ -132,7 +132,7 @@ export default class KimaiCalendar {
                     icon: this.options['icons']['trash'],
                     text: this.options['translations']['delete'],
                     click: () => {
-                        this.kimai.getPlugin('alert').info(this.options['translations']['dragDropDelete']);
+                        ALERT.info(this.options['translations']['dragDropDelete']);
                     }
                 }
             },
@@ -393,7 +393,7 @@ export default class KimaiCalendar {
                                     () => {
                                         ALERT.success('action.delete.success');
                                         info.event.remove();
-                                    }, function () {
+                                    }, () => {
                                         ALERT.success('action.delete.error');
                                     }
                                 );
@@ -431,8 +431,8 @@ export default class KimaiCalendar {
                 calendarSource = {...calendarSource, ...{
                     id: 'kimai-' + source.id,
                     events: (fetchInfo, successCallback, failureCallback) => {
-                        let url = source.url.replace('{from}', fetchInfo.startStr);
-                        url = url.replace('{to}', fetchInfo.endStr);
+                        let url = source.url.replace('{from}', DATES.formatForAPI(fetchInfo.start));
+                        url = url.replace('{to}', DATES.formatForAPI(fetchInfo.end));
 
                         API.get(url, {}, result => {
                             let apiEvents = [];
@@ -566,7 +566,7 @@ export default class KimaiCalendar {
      */
     renderEventPopoverContent(event) {
         const eventObj = event.extendedProps;
-        /** @var KimaiEscaper escaper */
+        /** @type {KimaiEscape} escaper */
         const escaper = this.kimai.getPlugin('escape');
 
         return `
@@ -605,23 +605,24 @@ export default class KimaiCalendar {
         const API = this.kimai.getPlugin('api');
         /** @type {KimaiAlert} ALERT */
         const ALERT = this.kimai.getPlugin('alert');
+        /** @type {KimaiDateUtils} DATE */
+        const DATES = this.kimai.getPlugin('date');
 
-        let payload = {'begin': event.startStr};
+        let payload = {'begin': DATES.formatForAPI(event.start)};
 
         if (event.end !== null && event.end !== undefined) {
-            payload.end = event.endStr;
+            payload.end = DATES.formatForAPI(event.end);
         } else {
             payload.end = null;
         }
 
         const updateUrl = this.options.url.update(event.id);
-        API.patch(updateUrl, JSON.stringify(payload), function(result) {
+        API.patch(updateUrl, JSON.stringify(payload), () => {
             ALERT.success('action.update.success');
-        }, function(xhr, err) {
-            const callback = API.getPatchErrorHandler();
-            eventDragDropInfo.revert();
-            callback(xhr, err);
+        }, (error) => {
+            eventArg.revert();
+            API.handleError('action.update.error', error);
         });
-    };
+    }
 
 }

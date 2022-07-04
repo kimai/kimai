@@ -13,15 +13,17 @@ import KimaiPlugin from "../KimaiPlugin";
 
 export default class KimaiEvent extends KimaiPlugin {
 
-    getId() {
+    getId()
+    {
         return 'event';
     }
 
     /**
      * @param {string} name
-     * @param {string|array|null} details
+     * @param {string|array|object|null} details
      */
-    trigger(name, details = null) {
+    trigger(name, details = null)
+    {
         if (name === '') {
             return;
         }

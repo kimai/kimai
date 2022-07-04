@@ -15,7 +15,7 @@ export default class KimaiRecentActivities extends KimaiPlugin {
 
     constructor(selector) {
         super();
-        this.selector = selector;
+        this._selector = selector;
     }
 
     getId() {
@@ -23,7 +23,7 @@ export default class KimaiRecentActivities extends KimaiPlugin {
     }
 
     init() {
-        const menu = document.querySelector(this.selector);
+        const menu = document.querySelector(this._selector);
         // the menu can be hidden if user has no permissions to see it
         if (menu === null) {
             return;
@@ -34,8 +34,7 @@ export default class KimaiRecentActivities extends KimaiPlugin {
         this.attributes = dropdown.dataset;
         this.itemList = dropdown.querySelector('.menu');
 
-        const self = this;
-        const handle = function() { self.reloadRecentActivities(); };
+        const handle = () => { this._reloadRecentActivities(); };
 
         // don't block initial browser rendering
         setTimeout(handle, 500);
@@ -51,13 +50,13 @@ export default class KimaiRecentActivities extends KimaiPlugin {
         document.addEventListener('kimai.customerDelete', handle);
     }
 
-    emptyList() {
+    _emptyList() {
         this.itemList.innerHTML = '';
     }
 
-    setEntries(entries) {
+    _setEntries(entries) {
         if (entries.length === 0) {
-            this.emptyList();
+            this._emptyList();
             return;
         }
 
@@ -93,12 +92,12 @@ export default class KimaiRecentActivities extends KimaiPlugin {
         this.itemList.innerHTML = htmlToInsert;
     }
 
-    reloadRecentActivities() {
+    _reloadRecentActivities() {
         /** @type {KimaiAPI} API */
         const API = this.getContainer().getPlugin('api');
 
         API.get(this.attributes['api'], {}, (result) => {
-            this.setEntries(result);
+            this._setEntries(result);
         });
     }
 

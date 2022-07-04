@@ -12,13 +12,11 @@
 export default class KimaiReloadPageWidget {
 
     constructor(events, fullReload) {
-        const self = this;
-
-        const reloadPage = function (event) {
+        const reloadPage = () => {
             if (fullReload) {
                 document.location.reload();
             } else {
-                self.loadPage(document.location);
+                this._loadPage(document.location);
             }
         };
 
@@ -41,11 +39,9 @@ export default class KimaiReloadPageWidget {
     _hideOverlay() {
         document.dispatchEvent(new Event('kimai.reloadedContent'));
     }
-    
-    loadPage(url) {
-        const self = this;
-        
-        self._showOverlay();
+
+    _loadPage(url) {
+        this._showOverlay();
 
         window.kimai.getPlugin('fetch').fetch(url)
             .then(response => {
@@ -55,11 +51,11 @@ export default class KimaiReloadPageWidget {
                     const newContent = temp.querySelector('section.content');
                     document.querySelector('section.content').replaceWith(newContent);
                     document.dispatchEvent(new Event('kimai.reloadPage'));
-                    self._hideOverlay();
+                    this._hideOverlay();
                 });
             })
-            .catch(error => {
-                self._hideOverlay();
+            .catch(() => {
+                this._hideOverlay();
                 document.location = url;
             });
     }
