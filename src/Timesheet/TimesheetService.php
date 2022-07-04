@@ -163,6 +163,7 @@ final class TimesheetService
                 $this->stopActiveEntries($timesheet);
             } catch (ValidationFailedException $vex) {
                 // could happen for timesheets that were started in the future (end before begin)
+                // or if you try to create a new timesheet while an old one is running for too long
                 throw new ValidationFailedException($vex->getViolations(), 'Cannot stop running timesheet');
             }
             $this->repository->commit();
