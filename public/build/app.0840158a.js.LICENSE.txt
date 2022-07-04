@@ -29,17 +29,6 @@
  */
 
 /*!
- * Sizzle CSS Selector Engine v2.3.5
- * https://sizzlejs.com/
- *
- * Copyright JS Foundation and other contributors
- * Released under the MIT license
- * https://js.foundation/
- *
- * Date: 2020-03-14
- */
-
-/*!
  * [KIMAI] KimaiAPI: easy access to API methods
  */
 
@@ -120,7 +109,11 @@
  */
 
 /*!
- * [KIMAI] KimaiFormSelect: enhanced functionality for HTML select's
+ * [KIMAI] KimaiFormPlugin: base class for all none ID plugin that handle forms
+ */
+
+/*!
+ * [KIMAI] KimaiFormSelect: enhanced functionality for HTMLSelectElement
  */
 
 /*!
@@ -169,18 +162,4 @@
 
 /*!
  * [KIMAI] Wrapper class for loading Kimai app in browser script scope
- */
-
-/*!
- * jQuery JavaScript Library v3.5.1
- * https://jquery.com/
- *
- * Includes Sizzle.js
- * https://sizzlejs.com/
- *
- * Copyright JS Foundation and other contributors
- * Released under the MIT license
- * https://jquery.org/license
- *
- * Date: 2020-05-04T22:49Z
  */
