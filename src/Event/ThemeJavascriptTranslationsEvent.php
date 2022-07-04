@@ -24,13 +24,12 @@ final class ThemeJavascriptTranslationsEvent extends Event
      *
      * @var array<string, array<int, string>>
      */
-    private $translations = [
+    private array $translations = [
         'confirm' => ['confirm', 'messages'],
         'cancel' => ['cancel', 'messages'],
         'close' => ['action.close', 'messages'],
         'timesheet.start.success' => ['timesheet.start.success', 'flashmessages'],
         'timesheet.start.error' => ['timesheet.start.error', 'flashmessages'],
-        'timesheet.start.exceeded_limit' => ['timesheet.start.exceeded_limit', 'flashmessages'],
         'timesheet.stop.success' => ['timesheet.stop.success', 'flashmessages'],
         'timesheet.stop.error' => ['timesheet.stop.error', 'flashmessages'],
         'action.update.success' => ['action.update.success', 'flashmessages'],

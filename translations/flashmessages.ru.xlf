@@ -46,10 +46,6 @@
         <source>timesheet.locked.warning</source>
         <target>Вы изменяете выгруженную запись</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target>Достигнут лимит активных записей, пожалуйста, сначала остановите как минимум одно измерение.</target>
-      </trans-unit>
       <trans-unit id="S9k1S7Z" resname="warning">
         <source>warning</source>
         <target>Предупреждение</target>

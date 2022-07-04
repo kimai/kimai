@@ -22,10 +22,6 @@
         <source>timesheet.start.error</source>
         <target>时间记录无法开始</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target>活动时间记录已达到限制，请先停止至少一个运行中的时间测量。</target>
-      </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target>您正在编辑导出的记录</target>

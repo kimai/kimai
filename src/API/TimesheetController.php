@@ -24,6 +24,7 @@ use App\Repository\TimesheetRepository;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Utils\SearchTerm;
+use App\Validator\ValidationFailedException;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -32,10 +33,10 @@ use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -339,23 +340,19 @@ class TimesheetController extends BaseApiController
         if ($form->isValid()) {
             try {
                 $this->service->saveNewTimesheet($timesheet);
-            } catch (\Exception $ex) {
-                if ($ex->getMessage() === 'timesheet.start.exceeded_limit') {
-                    throw new BadRequestHttpException('Too many active timesheets');
+
+                $view = new View($timesheet, 200);
+
+                if ('true' === $paramFetcher->get('full')) {
+                    $view->getContext()->setGroups(self::GROUPS_ENTITY_FULL);
                 } else {
-                    throw $ex;
+                    $view->getContext()->setGroups(self::GROUPS_ENTITY);
                 }
+
+                return $this->viewHandler->handle($view);
+            } catch (ValidationFailedException $ex) {
+                $form->addError(new FormError($ex->getMessage()));
             }
-
-            $view = new View($timesheet, 200);
-
-            if ('true' === $paramFetcher->get('full')) {
-                $view->getContext()->setGroups(self::GROUPS_ENTITY_FULL);
-            } else {
-                $view->getContext()->setGroups(self::GROUPS_ENTITY);
-            }
-
-            return $this->viewHandler->handle($view);
         }
 
         $view = new View($form);

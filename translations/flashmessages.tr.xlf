@@ -22,10 +22,6 @@
         <source>timesheet.start.error</source>
         <target state="translated">Zaman kaydı başlatılamadı</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target state="translated">Etkin zaman kayıtlarının sınırına ulaşıldı, lütfen önce en az bir çalışan zaman ölçümünü durdurun.</target>
-      </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target state="translated">Dışa aktarılan bir kaydı düzenliyorsunuz</target>

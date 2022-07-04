@@ -22,10 +22,6 @@
         <source>timesheet.start.error</source>
         <target>Không thể bắt đầu ghi thời gian</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target>Đã đạt đến giới hạn của các bản ghi thời gian hoạt động, vui lòng dừng ít nhất một lần đo thời gian chạy trước.</target>
-      </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target>Bạn đang chỉnh sửa một bản ghi đã xuất</target>

@@ -22,10 +22,6 @@
         <source>timesheet.start.error</source>
         <target>Temporegistrado ne povas komenĉiĝi</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target>La limo de aktivaj temporegistradoj estas atingita, unue bv. ĉesigi almenaŭ unu nuntempan tempo-mezuradon.</target>
-      </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target>Vi redaktas eksportitan registraĵon</target>

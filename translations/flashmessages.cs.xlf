@@ -22,10 +22,6 @@
         <source>timesheet.start.error</source>
         <target>Záznam času nele začít</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target>Bylo dosaženo limitu aktivních časových záznamů, nejprve prosím zastavte alespoň jednu aktivitu.</target>
-      </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target>Upravujete exportovaný záznam</target>

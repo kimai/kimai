@@ -50,10 +50,6 @@
         <source>timesheet.locked.warning</source>
         <target>أنت تقوم بتحرير تسجيل تم تصديره</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target>تم الوصول إلى الحد الأقصى لسجلات الوقت النشط ، يرجى إيقاف قياس وقت تشغيل واحد على الأقل أولاً.</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

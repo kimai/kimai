@@ -22,10 +22,6 @@
         <source>timesheet.start.error</source>
         <target state="translated">Tidsinspelning kunde inte startas</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target state="translated">Gränsen för aktiva tidsinspelningar har uppnåtts, var god stoppa minst en tidsinspelning först.</target>
-      </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target state="translated">Du håller på att ändra en exporterad post</target>

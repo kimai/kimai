@@ -22,10 +22,6 @@
         <source>timesheet.start.error</source>
         <target>Zeitmessung konnte nicht gestartet werden</target>
       </trans-unit>
-      <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target>Das Limit aktiver Zeitmessungen wurde erreicht, bitte stoppen Sie mindestens eine laufende Zeitmessung.</target>
-      </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
         <target>Sie bearbeiten einen exportierten Eintrag</target>
@@ -57,10 +53,6 @@
       <trans-unit resname="action.csrf.error" id="bOE_q5R">
         <source>action.csrf.error</source>
         <target>Die Aktion konnte nicht durchgeführt werden: ungültiges Sicherheitstoken.</target>
-      </trans-unit>
-      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
-        <source>Cannot stop running timesheet</source>
-        <target>Sie haben eine aktive Zeitmessung, die nicht automatisch beendet werden kann.</target>
       </trans-unit>
     </body>
   </file>
