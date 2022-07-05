@@ -10,19 +10,16 @@
 namespace App\Event;
 
 use App\Entity\User;
-use Symfony\Contracts\EventDispatcher\Event;
 
-/**
- * Base event class to used with user manipulations.
- */
-abstract class AbstractUserEvent extends Event
+class UserDeleteEvent extends AbstractUserEvent
 {
-    public function __construct(private User $user)
+    public function __construct(User $user, private ?User $replacement = null)
     {
+        parent::__construct($user);
     }
 
-    public function getUser(): User
+    public function getReplacementUser(): ?User
     {
-        return $this->user;
+        return $this->replacement;
     }
 }

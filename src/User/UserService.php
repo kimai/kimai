@@ -15,6 +15,8 @@ use App\Entity\UserPreference;
 use App\Event\UserCreateEvent;
 use App\Event\UserCreatePostEvent;
 use App\Event\UserCreatePreEvent;
+use App\Event\UserDeletePostEvent;
+use App\Event\UserDeletePreEvent;
 use App\Event\UserUpdatePostEvent;
 use App\Event\UserUpdatePreEvent;
 use App\Repository\UserRepository;
@@ -164,5 +166,12 @@ class UserService
         $password = $this->passwordHasher->hashPassword($user, $plain);
         $user->setApiToken($password);
         $user->eraseCredentials();
+    }
+
+    public function deleteUser(User $delete, ?User $replace = null): void
+    {
+        $this->dispatcher->dispatch(new UserDeletePreEvent($delete, $replace));
+        $this->repository->deleteUser($delete, $replace);
+        $this->dispatcher->dispatch(new UserDeletePostEvent($delete, $replace));
     }
 }

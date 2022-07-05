@@ -22,6 +22,7 @@ use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
+use App\User\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -112,7 +113,7 @@ final class UserController extends AbstractController
      * @Route(path="/{id}/delete", name="admin_user_delete", methods={"GET", "POST"})
      * @Security("is_granted('delete', userToDelete)")
      */
-    public function deleteAction(User $userToDelete, Request $request, TimesheetRepository $repository): Response
+    public function deleteAction(User $userToDelete, Request $request, TimesheetRepository $repository, UserService $userService): Response
     {
         // $userToDelete MUST not be called $user, as $user is always the current user!
         $stats = $repository->getUserStatistics($userToDelete);
@@ -142,7 +143,7 @@ final class UserController extends AbstractController
 
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
             try {
-                $this->repository->deleteUser($userToDelete, $deleteForm->get('user')->getData());
+                $userService->deleteUser($userToDelete, $deleteForm->get('user')->getData());
                 $this->flashSuccess('action.delete.success');
             } catch (\Exception $ex) {
                 $this->flashDeleteException($ex);
