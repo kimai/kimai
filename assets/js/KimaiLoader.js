@@ -16,7 +16,7 @@ import KimaiContainer from "./KimaiContainer";
 import KimaiActiveRecordsDuration from './plugins/KimaiActiveRecordsDuration.js';
 import KimaiDatatableColumnView from './plugins/KimaiDatatableColumnView.js';
 import KimaiThemeInitializer from "./plugins/KimaiThemeInitializer";
-import KimaiDateRangePicker from "./plugins/KimaiDateRangePicker";
+import KimaiDateRangePicker from "./forms/KimaiDateRangePicker";
 import KimaiDatatable from "./plugins/KimaiDatatable";
 import KimaiToolbar from "./plugins/KimaiToolbar";
 import KimaiAPI from "./plugins/KimaiAPI";
@@ -27,16 +27,19 @@ import KimaiRecentActivities from "./plugins/KimaiRecentActivities";
 import KimaiEvent from "./plugins/KimaiEvent";
 import KimaiAPILink from "./plugins/KimaiAPILink";
 import KimaiAlert from "./plugins/KimaiAlert";
-import KimaiAutocomplete from "./plugins/KimaiAutocomplete";
-import KimaiFormSelect from "./plugins/KimaiFormSelect";
+import KimaiAutocomplete from "./forms/KimaiAutocomplete";
+import KimaiFormSelect from "./forms/KimaiFormSelect";
 import KimaiForm from "./plugins/KimaiForm";
-import KimaiDatePicker from "./plugins/KimaiDatePicker";
+import KimaiDatePicker from "./forms/KimaiDatePicker";
 import KimaiConfirmationLink from "./plugins/KimaiConfirmationLink";
 import KimaiMultiUpdateTable from "./plugins/KimaiMultiUpdateTable";
 import KimaiDateUtils from "./plugins/KimaiDateUtils";
 import KimaiEscape from "./plugins/KimaiEscape";
 import KimaiFetch from "./plugins/KimaiFetch";
-import KimaiEditTimesheetForm from "./plugins/KimaiEditTimesheetForm";
+import KimaiTimesheetForm from "./forms/KimaiTimesheetForm";
+import KimaiTeamForm from "./forms/KimaiTeamForm";
+import KimaiCopyDataForm from "./forms/KimaiCopyDataForm";
+import KimaiDateNowForm from "./forms/KimaiDateNowForm";
 
 export default class KimaiLoader {
 
@@ -49,18 +52,29 @@ export default class KimaiLoader {
             new KimaiTranslation(translations)
         );
 
+        // GLOBAL HELPER PLUGINS
         kimai.registerPlugin(new KimaiEscape());
         kimai.registerPlugin(new KimaiEvent());
         kimai.registerPlugin(new KimaiAPI());
         kimai.registerPlugin(new KimaiAlert());
         kimai.registerPlugin(new KimaiFetch());
         kimai.registerPlugin(new KimaiDateUtils());
+
+        // FORM PLUGINS
         kimai.registerPlugin(new KimaiFormSelect('.selectpicker', 'select[data-related-select]'));
+        kimai.registerPlugin(new KimaiDateRangePicker('input[data-daterangepicker="on"]'));
+        kimai.registerPlugin(new KimaiDatePicker('input[data-datepicker="on"]'));
+        kimai.registerPlugin(new KimaiAutocomplete());
+        kimai.registerPlugin(new KimaiTimesheetForm());
+        kimai.registerPlugin(new KimaiTeamForm());
+        kimai.registerPlugin(new KimaiCopyDataForm());
+        kimai.registerPlugin(new KimaiDateNowForm());
+        kimai.registerPlugin(new KimaiForm());
+
+        // SPECIAL FEATURES
         kimai.registerPlugin(new KimaiConfirmationLink('confirmation-link'));
         kimai.registerPlugin(new KimaiActiveRecordsDuration());
         kimai.registerPlugin(new KimaiDatatableColumnView('data-column-visibility'));
-        kimai.registerPlugin(new KimaiDateRangePicker('input[data-daterangepicker="on"]'));
-        kimai.registerPlugin(new KimaiDatePicker('input[data-datepicker="on"]'));
         kimai.registerPlugin(new KimaiDatatable('section.content', 'table.dataTable'));
         kimai.registerPlugin(new KimaiToolbar('form.searchform', 'toolbar-action'));
         kimai.registerPlugin(new KimaiAlternativeLinks('.alternative-link'));
@@ -68,22 +82,17 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiRecentActivities('.notifications-menu'));
         kimai.registerPlugin(new KimaiActiveRecords('.messages-menu', '.messages-menu-empty'));
         kimai.registerPlugin(new KimaiAPILink('api-link'));
-        kimai.registerPlugin(new KimaiAutocomplete('.js-autocomplete'));
-        kimai.registerPlugin(new KimaiForm());
-        kimai.registerPlugin(new KimaiThemeInitializer());
         kimai.registerPlugin(new KimaiMultiUpdateTable());
-        kimai.registerPlugin(new KimaiEditTimesheetForm());
+        kimai.registerPlugin(new KimaiThemeInitializer());
 
         // notify all listeners that Kimai plugins can now be registered
-        /** @type {KimaiEvent} EVENT */
-        const EVENT = kimai.getPlugin('event');
-        EVENT.trigger('kimai.pluginRegister', {'kimai': kimai});
+        document.dispatchEvent(new CustomEvent('kimai.pluginRegister', {detail: {'kimai': kimai}}));
 
         // initialize all plugins
         kimai.getPlugins().map(plugin => { plugin.init(); });
 
         // notify all listeners that Kimai is now ready to be used
-        EVENT.trigger('kimai.initialized', {'kimai': kimai});
+        document.dispatchEvent(new CustomEvent('kimai.initialized', {detail: {'kimai': kimai}}));
 
         this.kimai = kimai;
     }
