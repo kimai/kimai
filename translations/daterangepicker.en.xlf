@@ -34,6 +34,10 @@
         <source>daterangepicker.thisYear</source>
         <target>This year</target>
       </trans-unit>
+      <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow">
+        <source>daterangepicker.thisYearUntilNow</source>
+        <target>This year - until today</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

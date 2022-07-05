@@ -42,7 +42,9 @@ class DateRangeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $format = $this->localeService->getDateFormat(\Locale::getDefault());
-        $formFormat = (new FormFormatConverter())->convert($format);
+        $converter = new FormFormatConverter();
+        $formFormat = $converter->convert($format);
+        $pattern = $converter->convertToPattern($formFormat);
 
         $resolver->setDefaults([
             'timezone' => date_default_timezone_get(),
@@ -50,6 +52,9 @@ class DateRangeType extends AbstractType
             'format' => $formFormat,
             'separator' => self::DATE_SPACER,
             'allow_empty' => true,
+            'attr' => [
+                'pattern' => $pattern . self::DATE_SPACER . $pattern
+            ],
         ]);
     }
 
@@ -66,6 +71,7 @@ class DateRangeType extends AbstractType
             'thisMonth' => [$factory->getStartOfMonth(), $factory->getEndOfMonth()],
             'lastMonth' => [$factory->getStartOfMonth('-1 month'), $factory->getEndOfMonth('-1 month')],
             'thisYear' => [$factory->createStartOfYear(), $factory->createEndOfYear()],
+            'thisYearUntilNow' => [$factory->createStartOfYear(), $factory->createDateTime('23:59:59')],
             'lastYear' => [$factory->createStartOfYear('-1 year'), $factory->createEndOfYear('-1 year')],
         ];
         $view->vars['rangeFormat'] = $options['format'];
@@ -84,7 +90,7 @@ class DateRangeType extends AbstractType
         $separator = $options['separator'];
         $allowEmpty = $options['allow_empty'];
         $timezone = $options['timezone'];
-        $pattern = (new FormFormatConverter())->convertToPattern($formatDate . $separator . $formatDate);
+        $pattern = (new FormFormatConverter())->convertToPattern($formatDate . $separator . $formatDate, false);
 
         $builder->addModelTransformer(new CallbackTransformer(
             function ($range) use ($formatDate, $separator, $timezone) {
