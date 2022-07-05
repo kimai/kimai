@@ -57,10 +57,10 @@ final class TimesheetRestartValidator extends ConstraintValidator
         }
 
         $mode = $this->trackingModeService->getActiveMode();
-        $path = 'start';
+        $path = 'start_date';
 
         if ($mode->canEditEnd()) {
-            $path = 'end';
+            $path = 'end_date';
         } elseif ($mode->canEditDuration()) {
             $path = 'duration';
         }

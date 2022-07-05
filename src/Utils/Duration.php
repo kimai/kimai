@@ -34,16 +34,10 @@ class Duration
 
         $hour = (int) floor($seconds / 3600);
         $minute = (int) floor((int) ($seconds / 60) % 60);
-
         $minute = $minute > 9 ? $minute : '0' . $minute;
 
-        $second = $seconds % 60;
-        $second = $second > 9 ? $second : '0' . $second;
-
-        $formatted = str_replace('%h', $hour, $format);
-        $formatted = str_replace('%m', $minute, $formatted);
-
-        return str_replace('%s', $second, $formatted);
+        $formatted = str_replace('%h', (string) $hour, $format);
+        return str_replace('%m', (string) $minute, $formatted);
     }
 
     /**

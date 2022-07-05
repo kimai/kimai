@@ -46,7 +46,7 @@ final class TimesheetBasicValidator extends ConstraintValidator
 
         if (null === $begin) {
             $context->buildViolation('You must submit a begin date.')
-                ->atPath('begin')
+                ->atPath('begin_date')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetBasic::MISSING_BEGIN_ERROR)
                 ->addViolation();
@@ -56,7 +56,7 @@ final class TimesheetBasicValidator extends ConstraintValidator
 
         if (null !== $end && $begin > $end) {
             $context->buildViolation('End date must not be earlier then start date.')
-                ->atPath('end')
+                ->atPath('end_date')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetBasic::END_BEFORE_BEGIN_ERROR)
                 ->addViolation();
@@ -124,8 +124,8 @@ final class TimesheetBasicValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        $pathStart = 'begin';
-        $pathEnd = 'end';
+        $pathStart = 'begin_date';
+        $pathEnd = 'end_date';
 
         $projectBegin = $project->getStart();
         $projectEnd = $project->getEnd();

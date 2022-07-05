@@ -9,14 +9,16 @@
 
 namespace App\Form;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
-use App\Form\Type\DateTimePickerType;
+use App\Form\Type\DatePickerType;
 use App\Form\Type\DescriptionType;
 use App\Form\Type\DurationType;
 use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
 use App\Form\Type\MetaFieldsCollectionType;
 use App\Form\Type\TagsType;
+use App\Form\Type\TimePickerType;
 use App\Form\Type\TimesheetBillableType;
 use App\Form\Type\UserType;
 use App\Form\Type\YesNoType;
@@ -28,6 +30,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Defines the form used to manipulate Timesheet entries.
@@ -36,7 +39,7 @@ class TimesheetEditForm extends AbstractType
 {
     use FormTrait;
 
-    public function __construct(private CustomerRepository $customers)
+    public function __construct(private CustomerRepository $customers, private SystemConfiguration $systemConfiguration)
     {
     }
 
@@ -140,13 +143,62 @@ class TimesheetEditForm extends AbstractType
 
     protected function addBegin(FormBuilderInterface $builder, array $dateTimeOptions, array $options = [])
     {
+        $dateOptions = $dateTimeOptions;
+        $builder->add('begin_date', DatePickerType::class, array_merge($dateOptions, [
+            'label' => 'label.date',
+            'mapped' => false,
+            'constraints' => [
+                new NotBlank()
+            ]
+        ]));
+
+        $timeOptions = $dateTimeOptions;
         if ($options['begin_minutes'] >= 1 && $options['begin_minutes'] <= 60) {
-            $dateTimeOptions['time_increment'] = $options['begin_minutes'];
+            $timeOptions['time_increment'] = $options['begin_minutes'];
         }
 
-        $builder->add('begin', DateTimePickerType::class, array_merge($dateTimeOptions, [
-            'label' => 'label.begin',
+        $builder->add('begin_time', TimePickerType::class, array_merge($timeOptions, [
+            'label' => 'label.starttime',
+            'mapped' => false,
+            'constraints' => [
+                new NotBlank()
+            ]
         ]));
+
+        $builder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            function (FormEvent $event) {
+                /** @var Timesheet $timesheet */
+                $timesheet = $event->getData();
+                $begin = $timesheet->getBegin();
+
+                if (null !== $begin) {
+                    $event->getForm()->get('begin_date')->setData($begin);
+                    $event->getForm()->get('begin_time')->setData($begin);
+                }
+            }
+        );
+
+        // map single fields to original datetime object
+        $builder->addEventListener(
+            FormEvents::SUBMIT,
+            function (FormEvent $event) {
+                /** @var Timesheet $data */
+                $data = $event->getData();
+
+                $date = $event->getForm()->get('begin_date')->getData();
+                $time = $event->getForm()->get('begin_time')->getData();
+
+                if ($date === null || $time === null) {
+                    return;
+                }
+
+                // mutable datetime are a problem for doctrine
+                $newDate = clone $date;
+                $newDate->setTime($time->format('H'), $time->format('i'));
+                $data->setBegin($newDate);
+            }
+        );
     }
 
     protected function addEnd(FormBuilderInterface $builder, array $dateTimeOptions, array $options = [])
@@ -155,16 +207,60 @@ class TimesheetEditForm extends AbstractType
             $dateTimeOptions['time_increment'] = (int) $options['end_minutes'];
         }
 
-        $builder->add('end', DateTimePickerType::class, array_merge($dateTimeOptions, [
-            'label' => 'label.end',
+        $builder->add('end_time', TimePickerType::class, array_merge($dateTimeOptions, [
             'required' => false,
+            'label' => 'label.endtime',
+            'mapped' => false
         ]));
+
+        $builder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            function (FormEvent $event) {
+                /** @var Timesheet|null $data */
+                $data = $event->getData();
+                if (null !== $data->getEnd()) {
+                    $event->getForm()->get('end_time')->setData($data->getEnd());
+                }
+            }
+        );
+
+        // make sure that date & time fields are mapped back to begin & end fields
+        $builder->addEventListener(
+            FormEvents::SUBMIT,
+            function (FormEvent $event) {
+                /** @var Timesheet $timesheet */
+                $timesheet = $event->getData();
+                // reset the end, until we know the value for sure
+                $timesheet->setEnd(null);
+
+                $end = $event->getForm()->get('end_time')->getData();
+                if ($end === null || $end === false) {
+                    return;
+                }
+
+                // mutable datetime are a problem for doctrine
+                $end = clone $end;
+
+                // end is assumed to be the same day then start, if not we raise the day by one
+                //$time = $event->getForm()->get('begin_time')->getData();
+                $time = $timesheet->getBegin();
+                $newEnd = clone $time;
+                $newEnd->setTime($end->format('H'), $end->format('i'));
+
+                if ($newEnd < $time) {
+                    $newEnd->modify('+ 1 day');
+                }
+
+                $timesheet->setEnd($newEnd);
+            }
+        );
     }
 
     protected function addDuration(FormBuilderInterface $builder, array $options, bool $forceApply = false, bool $autofocus = false)
     {
         $durationOptions = [
             'required' => false,
+            'toggle' => true,
             'attr' => [
                 'placeholder' => '0:00',
             ],
@@ -193,9 +289,9 @@ class TimesheetEditForm extends AbstractType
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
             function (FormEvent $event) {
-                /** @var Timesheet|null $data */
-                $data = $event->getData();
-                if (null === $data || null === $data->getEnd()) {
+                /** @var Timesheet|null $timesheet */
+                $timesheet = $event->getData();
+                if (null === $timesheet || null === $timesheet->getEnd()) {
                     $event->getForm()->get('duration')->setData(null);
                 }
             }
@@ -205,15 +301,25 @@ class TimesheetEditForm extends AbstractType
         $builder->addEventListener(
             FormEvents::SUBMIT,
             function (FormEvent $event) use ($forceApply) {
-                /** @var Timesheet $data */
-                $data = $event->getData();
-                $duration = $data->getDuration();
+                /** @var Timesheet $timesheet */
+                $timesheet = $event->getData();
+
+                $newDuration = $event->getForm()->get('duration')->getData();
+                if ($newDuration !== null && $newDuration > 0 && $newDuration !== $timesheet->getDuration()) {
+                    // TODO allow to use a duration that differs from end-start by adding a system configuration check here
+                    if ($timesheet->getEnd() === null) {
+                        $timesheet->setDuration($newDuration);
+                    }
+                }
+
+                $duration = $timesheet->getDuration() ?? 0;
+
                 // only apply the duration, if the end is not yet set
                 // without that check, the end would be overwritten and the real end time would be lost
-                if (($forceApply && null !== $duration) || (null !== $duration && null === $data->getEnd())) {
-                    $end = clone $data->getBegin();
+                if (($forceApply && $duration > 0) || ($duration > 0 && null === $timesheet->getEnd())) {
+                    $end = clone $timesheet->getBegin();
                     $end->modify('+ ' . $duration . 'seconds');
-                    $data->setEnd($end);
+                    $timesheet->setEnd($end);
                 }
             }
         );
@@ -286,6 +392,12 @@ class TimesheetEditForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
+        $maxMinutes = $this->systemConfiguration->getTimesheetLongRunningDuration();
+        $maxHours = 8;
+        if ($maxMinutes > 0) {
+            $maxHours = (int) ($maxMinutes / 60);
+        }
+
         $resolver->setDefaults([
             'data_class' => Timesheet::class,
             'csrf_protection' => true,
@@ -304,7 +416,7 @@ class TimesheetEditForm extends AbstractType
             'allow_end_datetime' => true,
             'allow_duration' => false,
             'duration_minutes' => null,
-            'duration_hours' => 10,
+            'duration_hours' => $maxHours,
             'begin_minutes' => 1,
             'end_minutes' => 1,
             'attr' => [

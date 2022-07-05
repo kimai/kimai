@@ -33,6 +33,7 @@ class DurationType extends AbstractType
             'constraints' => [new DurationConstraint()],
             'preset_hours' => null,
             'preset_minutes' => null,
+            'toggle' => false,
         ]);
     }
 
@@ -43,29 +44,28 @@ class DurationType extends AbstractType
             $class .= ' ' . $view->vars['attr']['class'];
         }
         $view->vars['attr']['class'] = $class;
+        $view->vars['toggle'] = $options['toggle'];
 
-        if ($options['preset_hours'] === null || $options['preset_minutes'] === null) {
-            return;
+        if ($options['preset_hours'] !== null && $options['preset_minutes'] !== null) {
+            $intervalMinutes = (int) $options['preset_minutes'];
+            $maxHours = (int) $options['preset_hours'];
+
+            if ($intervalMinutes < 1 || $maxHours < 1) {
+                return;
+            }
+
+            $maxMinutes = $maxHours * 60;
+            $presets = [];
+
+            for ($minutes = $intervalMinutes; $minutes <= $maxMinutes; $minutes += $intervalMinutes) {
+                $h = (int) ($minutes / 60);
+                $m = $minutes % 60;
+                $interval = new \DateInterval('PT' . $h . 'H' . $m . 'M');
+                $presets[] = $interval->format('%h:%I');
+            }
+
+            $view->vars['duration_presets'] = $presets;
         }
-
-        $intervalMinutes = (int) $options['preset_minutes'];
-        $maxHours = (int) $options['preset_hours'];
-
-        if ($intervalMinutes < 1 || $maxHours < 1) {
-            return;
-        }
-
-        $maxMinutes = $maxHours * 60;
-        $presets = [];
-
-        for ($minutes = $intervalMinutes; $minutes <= $maxMinutes; $minutes += $intervalMinutes) {
-            $h = (int) ($minutes / 60);
-            $m = $minutes % 60;
-            $interval = new \DateInterval('PT' . $h . 'H' . $m . 'M');
-            $presets[] = $interval->format('%h:%I');
-        }
-
-        $view->vars['duration_presets'] = $presets;
     }
 
     /**

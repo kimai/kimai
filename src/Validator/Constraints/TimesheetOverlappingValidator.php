@@ -64,7 +64,7 @@ final class TimesheetOverlappingValidator extends ConstraintValidator
         }
 
         $this->context->buildViolation('You already have an entry for this time.')
-            ->atPath('begin')
+            ->atPath('begin_date')
             ->setTranslationDomain('validators')
             ->setCode(TimesheetOverlapping::RECORD_OVERLAPPING)
             ->addViolation();

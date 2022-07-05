@@ -64,14 +64,14 @@ final class TimesheetLongRunningValidator extends ConstraintValidator
         // float on purpose, because one second more than the configured minutes is already too long
         $minutes = $duration / 60;
 
-        if ($minutes < $maxMinutes) {
+        // allow maximum of the exact configured minutes
+        if ($minutes <= $maxMinutes) {
             return;
         }
 
         $format = new \App\Utils\Duration();
         $hours = $format->format($maxMinutes * 60);
 
-        // raise a violation for all entries before the start of lockdown period
         $this->context->buildViolation($constraint->message)
             ->setParameter('{{ value }}', $hours)
             ->setTranslationDomain('validators')

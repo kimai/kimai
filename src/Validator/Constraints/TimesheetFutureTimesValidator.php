@@ -51,7 +51,7 @@ final class TimesheetFutureTimesValidator extends ConstraintValidator
         $allowedDiff = ($this->configuration->getTimesheetDefaultRoundingBegin() * 60) + 60;
         if (($now->getTimestamp() + $allowedDiff) < $timesheet->getBegin()->getTimestamp()) {
             $this->context->buildViolation('The begin date cannot be in the future.')
-                ->atPath('begin')
+                ->atPath('begin_date')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetFutureTimes::BEGIN_IN_FUTURE_ERROR)
                 ->addViolation();
