@@ -187,16 +187,16 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "1.13.2",
+            "version": "1.13.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "5b668aef16090008790395c02c893b1ba13f7e08"
+                "reference": "648b0343343565c4a056bfc8392201385e8d89f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/5b668aef16090008790395c02c893b1ba13f7e08",
-                "reference": "5b668aef16090008790395c02c893b1ba13f7e08",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/648b0343343565c4a056bfc8392201385e8d89f0",
+                "reference": "648b0343343565c4a056bfc8392201385e8d89f0",
                 "shasum": ""
             },
             "require": {
@@ -208,9 +208,10 @@
             "require-dev": {
                 "doctrine/cache": "^1.11 || ^2.0",
                 "doctrine/coding-standard": "^6.0 || ^8.1",
-                "phpstan/phpstan": "^0.12.20",
+                "phpstan/phpstan": "^1.4.10 || ^1.8.0",
                 "phpunit/phpunit": "^7.5 || ^8.0 || ^9.1.5",
-                "symfony/cache": "^4.4 || ^5.2"
+                "symfony/cache": "^4.4 || ^5.2",
+                "vimeo/psalm": "^4.10"
             },
             "type": "library",
             "autoload": {
@@ -253,9 +254,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/annotations/issues",
-                "source": "https://github.com/doctrine/annotations/tree/1.13.2"
+                "source": "https://github.com/doctrine/annotations/tree/1.13.3"
             },
-            "time": "2021-08-05T19:00:23+00:00"
+            "time": "2022-07-02T10:48:51+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -2322,12 +2323,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "f6ea2f470ac2f12bada5a2e943f8e6f6e20df771"
+                "reference": "bd83a18c5c74a19905306d22d47ad82935335d5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/f6ea2f470ac2f12bada5a2e943f8e6f6e20df771",
-                "reference": "f6ea2f470ac2f12bada5a2e943f8e6f6e20df771",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/bd83a18c5c74a19905306d22d47ad82935335d5e",
+                "reference": "bd83a18c5c74a19905306d22d47ad82935335d5e",
                 "shasum": ""
             },
             "require": {
@@ -2377,7 +2378,7 @@
             "description": "Admin/Backend theme bundle for Symfony based on Tabler.io",
             "support": {
                 "issues": "https://github.com/kevinpapst/TablerBundle/issues",
-                "source": "https://github.com/kevinpapst/TablerBundle/tree/0.5"
+                "source": "https://github.com/kevinpapst/TablerBundle/tree/main"
             },
             "funding": [
                 {
@@ -2389,7 +2390,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-07-02T06:47:20+00:00"
+            "time": "2022-07-05T12:16:50+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -10083,16 +10084,16 @@
         },
         {
             "name": "zircote/swagger-php",
-            "version": "4.4.6",
+            "version": "4.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zircote/swagger-php.git",
-                "reference": "41c03aa742657473335fa53e2d44adcf3b97a97d"
+                "reference": "97abe42376b41e072ede13b6f0582457a54d797a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/41c03aa742657473335fa53e2d44adcf3b97a97d",
-                "reference": "41c03aa742657473335fa53e2d44adcf3b97a97d",
+                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/97abe42376b41e072ede13b6f0582457a54d797a",
+                "reference": "97abe42376b41e072ede13b6f0582457a54d797a",
                 "shasum": ""
             },
             "require": {
@@ -10154,9 +10155,9 @@
             ],
             "support": {
                 "issues": "https://github.com/zircote/swagger-php/issues",
-                "source": "https://github.com/zircote/swagger-php/tree/4.4.6"
+                "source": "https://github.com/zircote/swagger-php/tree/4.4.7"
             },
-            "time": "2022-06-29T01:40:06+00:00"
+            "time": "2022-07-02T04:55:25+00:00"
         }
     ],
     "packages-dev": [

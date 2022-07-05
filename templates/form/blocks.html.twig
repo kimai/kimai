@@ -90,12 +90,12 @@
     {% set format = javascript_format('date') %}
     {% set attr = attr|merge({'autocomplete': 'off'}) -%}
     {%- if datetime is not defined or not datetime -%}
-        {% set attr = attr|merge({'data-datepicker': 'on', 'data-format': format, 'placeholder': format|upper}) -%}
+        {% set attr = attr|merge({'data-datepicker': 'on', 'data-format': format, 'placeholder': format}) -%}
     {%- endif -%}
     {%- if datetime is not defined or not datetime -%}
         <div class="input-group">
             <div class="input-group-text">
-                <a href="#" class="kimai-date-widget" data-format="{{ format }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
+                <a href="#" data-form-widget="date-now" data-format="{{ format }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
             </div>
             {{ block('date_widget') }}
         </div>
@@ -107,19 +107,46 @@
     {%- endif -%}
 {%- endblock date_picker_widget %}
 
+{% block time_picker_widget -%}
+    {%- set format = javascript_format('time') -%}
+    {%- set attr = attr|merge({'autocomplete': 'off', 'data-timepicker': 'on', 'data-format': format, 'placeholder': format}) -%}
+    <div class="input-group">
+        <div class="input-group-text">
+            <a href="#" data-form-widget="date-now" data-format="{{ format }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
+        </div>
+        {{ block('form_widget_simple') }}
+        {% if (form.vars.duration_presets is defined and form.vars.duration_presets is not empty) and (form.vars.disabled is same as (false)) %}
+        <button type="button" class="btn dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+        <div class="dropdown-menu dropdown-menu-end pre-scrollable">
+            <div class="dropdown-menu-columns">
+                {% for index in [0, 1, 2, 3] %}
+                    <div class="dropdown-menu-column" style="min-width: 4rem">
+                        {% for value in form.vars.duration_presets %}
+                            {% if loop.index0 % 4 == index %}
+                                <a class="dropdown-item justify-content-center" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ value }}" data-event="change">{{ value }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{%- endblock time_picker_widget %}
+
 {% block daterange_widget %}
     {% set format = javascript_format('date') %}
-    {% set attr = attr|merge({'data-daterangepicker': 'on', 'autocomplete': 'off', 'data-format': format, 'placeholder': format|upper}) -%}
+    {% set attr = attr|merge({'data-daterangepicker': 'on', 'autocomplete': 'off', 'data-format': format, 'placeholder': format ~ attr['data-separator'] ~  format}) -%}
     <div class="input-group">
-        {{ block('form_widget_simple') }}
         {% if ranges is defined %}
         <button type="button" class="btn dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-        <div class="dropdown-menu dropdown-menu-right pre-scrollable">
+        <div class="dropdown-menu dropdown-menu-start pre-scrollable">
             {% for title, range in ranges %}
-                <a class="dropdown-item" href="#" data-copy-target="#{{ form.vars.id }}" data-copy-value="{{ range[0]|format_date('short', rangeFormat) }}{{ attr['data-separator'] }}{{ range[1]|format_date('short', rangeFormat) }}" data-copy-event="change keyup">{{ ('daterangepicker.' ~ title)|trans({}, 'daterangepicker') }}</a>
+                <a class="dropdown-item" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ range[0]|format_date('short', rangeFormat) }}{{ attr['data-separator'] }}{{ range[1]|format_date('short', rangeFormat) }}" data-event="change keyup">{{ ('daterangepicker.' ~ title)|trans({}, 'daterangepicker') }}</a>
             {% endfor %}
         </div>
         {% endif %}
+        {{ block('form_widget_simple') }}
     </div>
 {% endblock daterange_widget %}
 
@@ -127,13 +154,26 @@
     <div class="duration-widget">
         {% if (form.vars.duration_presets is defined and form.vars.duration_presets is not empty) and (form.vars.disabled is same as (false)) %}
             <div class="input-group">
-                {{ block('form_widget_simple') }}
                 <button type="button" class="btn dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                <div class="dropdown-menu dropdown-menu-right pre-scrollable">
-                    {% for value in form.vars.duration_presets %}
-                        <a class="dropdown-item" href="#" onclick="document.getElementById('{{ form.vars.id }}').value = '{{ value }}';document.getElementById('{{ form.vars.id }}').dispatchEvent(new Event('change', {bubbles: true}));return false;">{{ value }}</a>
-                    {% endfor %}
+                <div class="dropdown-menu dropdown-menu-start pre-scrollable">
+                    <div class="dropdown-menu-columns">
+                        {% for index in [0, 1, 2, 3] %}
+                            <div class="dropdown-menu-column" style="min-width: 4rem">
+                                {% for value in form.vars.duration_presets %}
+                                    {% if loop.index0 % 4 == index %}
+                                        <a class="dropdown-item justify-content-center" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ value }}" data-event="change">{{ value }}</a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
+                {{ block('form_widget_simple') }}
+                {% if form.vars.toggle is defined and form.vars.toggle %}
+                    <div class="input-group-text add-on">
+                        <a href="#" id="{{ form.vars.id }}_toggle" class="text-success">{{ icon('link') }}</a>
+                    </div>
+                {% endif %}
             </div>
         {% else %}
             {{ block('form_widget_simple') }}
@@ -210,7 +250,8 @@
 {% block yearpicker_widget -%}
     {%- set functionName = 'year_' ~ form.vars.id %}
     <div class="btn-group">
-        <a class="btn btn-left btn-icon" href="#" onclick="{{ functionName }}('{{ previousYear|report_date }}')" data-toggle="tooltip" data-placement="top" title="{{ previousYear|date_short }}">
+        <a class="btn btn-left btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ previousYear|date_short }}"
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousYear|report_date }}" data-event-bubbles="change">
             {{ icon('left') }}
         </a>
         <a class="btn" href="#" onclick="return false;">
@@ -222,50 +263,39 @@
                 {% endif %}
             </span>
         </a>
-        <a class="btn btn-right btn-icon" href="#" onclick="{{ functionName }}('{{ nextYear|report_date }}')" data-toggle="tooltip" data-placement="top" title="{{ nextYear|date_short }}">
+        <a class="btn btn-right btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ nextYear|date_short }}"
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextYear|report_date }}" data-event-bubbles="change">
             {{ icon('right') }}
         </a>
     </div>
     {%- set required = false -%}
     <input type="hidden" {{ block('widget_attributes') }} value="{{ value }}" />
-    <script>
-        function {{ functionName }}(date) {
-            const element = document.getElementById('{{ form.vars.id }}');
-            element.value = date;
-            element.dispatchEvent(new Event('change'));
-            element.form.dispatchEvent(new Event('change'));
-        }
-    </script>
 {%- endblock yearpicker_widget %}
 
 {% block monthpicker_widget -%}
     {%- set functionName = 'month_' ~ form.vars.id %}
     <div class="btn-group">
-        <a class="btn btn-left btn-icon" href="#" onclick="{{ functionName }}('{{ previousMonth|report_date }}')" data-toggle="tooltip" data-placement="top" title="{{ previousMonth|month_name(true) }}">
+        <a class="btn btn-left btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ previousMonth|month_name(true) }}"
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousMonth|report_date }}" data-event-bubbles="change">
             {{ icon('left') }}
         </a>
         <a class="btn" href="#" onclick="return false;">
             <span id="{{ form.vars.id }}_month_name">{{ month|month_name(true) }}</span>
         </a>
-        <a class="btn btn-right btn-icon" href="#" onclick="{{ functionName }}('{{ nextMonth|report_date }}')" data-toggle="tooltip" data-placement="top" title="{{ nextMonth|month_name(true) }}">
+        <a class="btn btn-right btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ nextMonth|month_name(true) }}"
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextMonth|report_date }}" data-event-bubbles="change">
             {{ icon('right') }}
         </a>
     </div>
     {%- set required = false -%}
     <input type="hidden" {{ block('widget_attributes') }} value="{{ value }}" />
-    <script>
-        function {{ functionName }}(date) {
-            const element = document.getElementById('{{ form.vars.id }}');
-            element.value = date;
-            element.dispatchEvent(new Event('change', {bubbles: true}));
-        }
-    </script>
 {%- endblock monthpicker_widget %}
 
 {% block weekpicker_widget -%}
     {%- set functionName = 'week_' ~ form.vars.id %}
     <div class="btn-group week-picker-btn-group {{ attr.class ?? '' }}">
-        <a class="btn btn-left btn-icon" href="#" onclick="{{ functionName }}('{{ previousWeek|report_date }}')" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': previousWeek|date_format('W')}) }}">
+        <a class="btn btn-left btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': previousWeek|date_format('W')}) }}"
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousWeek|report_date }}" data-event-bubbles="change">
             {{ icon('left') }}
         </a>
         <a class="btn btn-default" href="#" onclick="return false;">
@@ -275,19 +305,13 @@
                 {{ 'stats.workingTimeWeekShort'|trans({'%week%': week|date_format('W')}) }}
             </span>
         </a>
-        <a class="btn btn-right btn-icon" href="#" onclick="{{ functionName }}('{{ nextWeek|report_date }}')" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': nextWeek|date_format('W')}) }}">
+        <a class="btn btn-right btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': nextWeek|date_format('W')}) }}"
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextWeek|report_date }}" data-event-bubbles="change">
             {{ icon('right') }}
         </a>
     </div>
     {%- set required = false -%}
     <input type="hidden" {{ block('widget_attributes') }} value="{{ value }}" />
-    <script>
-        function {{ functionName }}(date) {
-            const element = document.getElementById('{{ form.vars.id }}');
-            element.value = date;
-            element.dispatchEvent(new Event('change', {bubbles: true}));
-        }
-    </script>
 {%- endblock weekpicker_widget %}
 
 {% block tags_widget %}
