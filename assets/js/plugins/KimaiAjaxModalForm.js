@@ -12,7 +12,6 @@
  * opening a modal with the content from the URL given in the elements 'data-href' or 'href' attribute
  */
 
-import jQuery from 'jquery';
 import KimaiReducedClickHandler from "./KimaiReducedClickHandler";
 import { Modal } from 'bootstrap';
 
@@ -20,62 +19,60 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
 
     constructor(selector) {
         super();
-        this.selector = selector;
+        this._selector = selector;
     }
 
-    getId() {
+    getId()
+    {
         return 'modal';
     }
 
-    init() {
-        const self = this;
-        this.isDirty = false;
+    init()
+    {
+        this._isDirty = false;
 
-        this.modalSelector = '#remote_form_modal';
         const modalElement = this._getModalElement();
-
         if (modalElement === null) {
             return;
         }
 
-        const enforceModalFocusFn = Modal.prototype._enforceFocus;
-        Modal.prototype._enforceFocus = function () {};
-
-        modalElement.addEventListener('hide.bs.modal', function (e) {
-            if (self.isDirty) {
-                if (jQuery('#remote_form_modal .modal-body .remote_modal_is_dirty_warning').length === 0) {
-                    const msg = self.getContainer().getTranslation().get('modal.dirty');
-                    jQuery('#remote_form_modal .modal-body').prepend('<p class="text-danger small remote_modal_is_dirty_warning">' + msg + '</p>');
+        modalElement.addEventListener('hide.bs.modal', (event) => {
+            if (this._isDirty) {
+                if (modalElement.querySelector('.modal-body .remote_modal_is_dirty_warning') === null) {
+                    const msg = this.translate('modal.dirty');
+                    const temp = document.createElement('div');
+                    temp.innerHTML = '<p class="text-danger small remote_modal_is_dirty_warning">' + msg + '</p>';
+                    modalElement.querySelector('.modal-body').prepend(temp.firstElementChild);
                 }
-                e.preventDefault();
+                event.preventDefault();
                 return;
             }
-            jQuery(self._getFormIdentifier()).off('change', self._isDirtyHandler);
-            self.isDirty = false;
-            self.getContainer().getPlugin('event').trigger('modal-hide');
+            this._isDirty = false;
+            document.dispatchEvent(new Event('modal-hide'));
         });
 
-        modalElement.addEventListener('hidden.bs.modal', function () {
-            Modal.prototype._enforceFocus = enforceModalFocusFn;
+        modalElement.addEventListener('hidden.bs.modal', () => {
             // kill all references, so GC can kick in
-            self.getContainer().getPlugin('form').destroyForm(self._getFormIdentifier());
-            jQuery('#remote_form_modal .modal-body').replaceWith('');
+            this.getContainer().getPlugin('form').destroyForm(this._getFormIdentifier());
+            modalElement.querySelector('.modal-body').replaceWith('');
         });
 
-        modalElement.addEventListener('show.bs.modal', function () {
-            self.getContainer().getPlugin('event').trigger('modal-show');
+        modalElement.addEventListener('show.bs.modal', () => {
+            document.dispatchEvent(new Event('modal-show'));
         });
 
-        this._addClickHandler(this.selector, function(href) {
-            self.openUrlInModal(href);
+        this.addClickHandler(this._selector, (href) => {
+            this.openUrlInModal(href);
         });
     }
 
-    _getModal() {
+    _getModal()
+    {
         return Modal.getOrCreateInstance(this._getModalElement())
     }
 
-    openUrlInModal(url, errorHandler) {
+    openUrlInModal(url)
+    {
         const headers = new Headers();
         headers.append('X-Requested-With', 'Kimai-Modal');
 
@@ -94,7 +91,7 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
                 this._openFormInModal(html);
             });
         })
-        .catch(error =>  {
+        .catch(() =>  {
             window.location = url;
         });
     }
@@ -105,7 +102,8 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
      * @returns {string}
      * @private
      */
-    _getFormIdentifier() {
+    _getFormIdentifier()
+    {
         return '#remote_form_modal .modal-content form';
     }
 
@@ -113,153 +111,157 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
      * @returns {HTMLElement|null}
      * @private
      */
-    _getModalElement() {
-        return document.getElementById(this.modalSelector.replace('#', ''));
+    _getModalElement()
+    {
+        return document.getElementById('remote_form_modal');
     }
 
-    _openFormInModal(html) {
-        const self = this;
-
-        let formIdentifier = this._getFormIdentifier();
-        // if any of these is found in a response, the form will be re-displayed
-        let flashErrorIdentifier = 'div.alert-error';
-        // messages to show above the form
-        let flashMessageIdentifier = 'div.alert';
-        let form = jQuery(formIdentifier);
-        let remoteModal = jQuery(this.modalSelector);
-
-        // will be (re-)activated later
-        form.off('submit');
+    _openFormInModal(html)
+    {
+        const formIdentifier = this._getFormIdentifier();
+        let remoteModal = this._getModalElement();
+        const newFormHtml = document.createElement('div');
+        newFormHtml.innerHTML = html;
+        const newModalContent = newFormHtml.querySelector('#form_modal .modal-content');
 
         // load new form from given content
-        if (jQuery(html).find('#form_modal .modal-content').length > 0) {
+        if (newModalContent !== null) {
             // Support changing modal sizes
-            let modalDialog = remoteModal.find('.modal-dialog');
-            let largeModal = jQuery(html).find('.modal-dialog').hasClass('modal-lg');
-            if (largeModal && !modalDialog.hasClass('modal-lg')) {
-                modalDialog.addClass('modal-lg');
-            }
-            if (!largeModal && modalDialog.hasClass('modal-lg')) {
-                modalDialog.removeClass('modal-lg');
+            let modalDialog = remoteModal.querySelector('.modal-dialog');
+            let largeModal = newFormHtml.querySelector('.modal-dialog').classList.contains('modal-lg');
+
+            if (largeModal && !modalDialog.classList.contains('modal-lg')) {
+                modalDialog.classList.toggle('modal-lg');
             }
 
-            jQuery('#remote_form_modal .modal-content').replaceWith(
-                jQuery(html).find('#form_modal .modal-content')
-            );
+            if (!largeModal && modalDialog.classList.contains('modal-lg')) {
+                modalDialog.classList.toggle('modal-lg');
+            }
 
-            jQuery('#remote_form_modal [data-bs-dismiss=modal]').on('click', function() {
-                self.isDirty = false;
-                self._getModal().hide();
+            remoteModal.querySelector('.modal-content').replaceWith(newModalContent);
+            [].slice.call(remoteModal.querySelectorAll('[data-bs-dismiss="modal"]')).map((element) => {
+                element.addEventListener('click', () => {
+                    this._isDirty = false;
+                    this._getModal().hide();
+                });
             });
 
             // activate new loaded widgets
-            self.getContainer().getPlugin('form').activateForm(formIdentifier);
+            this.getContainer().getPlugin('form').activateForm(formIdentifier);
         }
 
         // show error flash messages
-        let flashMessages = jQuery(html).find(flashMessageIdentifier);
-        if (flashMessages.length > 0) {
-            jQuery('#remote_form_modal .modal-body').prepend(flashMessages);
+        let flashMessages = newFormHtml.querySelector('div.alert');
+        if (flashMessages !== null) {
+            remoteModal.querySelector('.modal-body').prepend(flashMessages);
         }
 
-        // -----------------------------------------------------------------------
-        // a fix for firefox focus problems with datepicker in modal
-        // see https://github.com/kevinpapst/kimai2/issues/618
-        /*
-        let enforceModalFocusFn = jQuery.fn.modal.Constructor.prototype._enforceFocus;
-        remoteModal.on('hidden.bs.modal', function () {
-            jQuery.fn.modal.Constructor.prototype._enforceFocus = enforceModalFocusFn;
-        });
-        jQuery.fn.modal.Constructor.prototype._enforceFocus = function() {};
-        */
-        // -----------------------------------------------------------------------
-
-        this._getModal().show();
-
         // the new form that was loaded via ajax
-        form = jQuery(formIdentifier);
+        const form = document.querySelector(formIdentifier);
 
-        form.on('change', function(e) {
-            self.isDirty = true;
+        form.addEventListener('change', () => {
+            this._isDirty = true;
         });
 
         // click handler for modal save button, to send forms via ajax
-        form.on('submit', function(event) {
-            // if the form has a target, we let the normal HTML flow happen
-            if (form.attr('target') !== undefined) {
-                return true;
-            }
+        form.addEventListener('submit', this._getEventHandler());
 
-            // otherwise we do some AJAX magic to process the form in the background
-            const btn = jQuery(formIdentifier + ' button[type=submit]').button('loading');
-            const eventName = form.attr('data-form-event');
-            const events = self.getContainer().getPlugin('event');
-            const alert = self.getContainer().getPlugin('alert');
+        this._getModal().show();
+    }
 
-            event.preventDefault();
-            event.stopPropagation();
+    _getEventHandler()
+    {
+        if (this.eventHandler === undefined) {
+            this.eventHandler = (event) => {
+                const form = event.target;
 
-            jQuery.ajax({
-                url: form.attr('action'),
-                type: form.attr('method'),
-                data: form.serialize(),
-                success: function(html) {
-                    const newDocument = jQuery(html);
-                    btn.button('reset');
-                    let hasFieldError = newDocument.find('#form_modal .modal-content .is-invalid').length > 0;
-                    if (!hasFieldError) {
-                        // happens when an error occurs for a "hidden or non-classical" form element e.g. creating team without users
-                        newDocument.find('#form_modal .modal-content .invalid-feedback').length > 0;
-                    }
-                    let hasFormError = newDocument.find('#form_modal .modal-content ul.list-unstyled li.text-danger').length > 0;
-                    let hasFlashError = newDocument.find(flashErrorIdentifier).length > 0;
-
-                    if (hasFieldError || hasFormError || hasFlashError) {
-                        self._openFormInModal(html);
-                    } else {
-                        events.trigger(eventName);
-
-                        // try to find form defined messages first ...
-                        let msg = form.attr('data-msg-success');
-                        if (msg === null || msg === undefined) {
-                            // ... but if none was available, check the response to find server rendered flash-message
-                            let flashMessage = newDocument.find('section.content div.row div.alert.alert-success');
-                            if (flashMessage.length > 0) {
-                                let flashContent = flashMessage.contents();
-                                if (flashContent.length === 3) {
-                                    msg = flashContent[2].textContent;
-                                }
-                            }
-                        }
-
-                        // ... and if even that is not available, we use a generic fallback message
-                        if (msg === null || msg === undefined) {
-                            msg = 'action.update.success';
-                        }
-                        self.isDirty = false;
-                        remoteModal.modal('hide');
-                        alert.success(msg);
-                    }
-                    return false;
-                },
-                error: function(xhr, err) {
-                    let message = form.attr('data-msg-error');
-                    if (message === null || message === undefined) {
-                        message = 'action.update.error';
-                    }
-                    if (xhr.responseJSON && xhr.responseJSON.message) {
-                        err = xhr.responseJSON.message;
-                    } else if (xhr.status && xhr.statusText) {
-                        err = '[' + xhr.status +'] ' + xhr.statusText;
-                    }
-                    alert.error(message, err);
-                    // this is useful for changing form fields and retrying to save (and in development to test form changes)
-                    setTimeout(function() {
-                        btn.button('reset');
-                    }, 1500);
+                // if the form has a target, we let the normal HTML flow happen
+                if (form.target !== undefined && form.target !== '') {
+                    return true;
                 }
-            });
-        });
+
+                // otherwise we do some AJAX magic to process the form in the background
+                /** @type {HTMLButtonElement} btn */
+                const btn = document.querySelector(this._getFormIdentifier() + ' button[type=submit]');
+                btn.textContent = btn.textContent + ' …';
+                btn.disabled = true;
+
+                const eventName = form.dataset['formEvent'];
+                /** @type {KimaiEvent} alert */
+                const events = this.getContainer().getPlugin('event');
+                /** @type {KimaiAlert} alert */
+                const alert = this.getContainer().getPlugin('alert');
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                const headers = new Headers();
+                headers.append('X-Requested-With', 'Kimai-Modal');
+                const options = {headers: headers};
+
+                this.fetchForm(form, options)
+                    .then(response => {
+                        response.text().then((html) => {
+                            /** @type {HTMLDivElement} responseHtml */
+                            const responseHtml = document.createElement('div');
+                            responseHtml.innerHTML = html;
+                            let hasFieldError = false;
+                            let hasFormError = false;
+                            let hasFlashError = false;
+
+                            // button must be re-enabled anyway
+                            btn.textContent = btn.textContent.replace(' …', '');
+                            btn.disabled = false;
+
+                            // if the request was successful, there will be no form
+                            /** @type {Element} modalContent */
+                            const modalContent = responseHtml.querySelector('#form_modal .modal-content');
+                            if (modalContent !== null) {
+                                hasFieldError = modalContent.querySelector('.is-invalid') !== null;
+                                if (!hasFieldError) {
+                                    // happens when an error occurs for a "hidden or non-classical" form element e.g. creating team without users
+                                    hasFieldError = modalContent.querySelector('.invalid-feedback') !== null;
+                                }
+                                hasFormError = modalContent.querySelector('ul.list-unstyled li.text-danger') !== null;
+                                hasFlashError = responseHtml.querySelector('div.alert-danger') !== null;
+                            }
+
+                            if (hasFieldError || hasFormError || hasFlashError) {
+                                this._openFormInModal(html);
+                            } else {
+                                events.trigger(eventName);
+
+                                // try to find form defined message first, but
+                                let msg = form.dataset['msgSuccess'];
+                                // if that is not available: use a generic fallback message
+                                if (msg === null || msg === undefined || msg === '') {
+                                    msg = 'action.update.success';
+                                }
+                                this._isDirty = false;
+                                this._getModal().hide();
+                                alert.success(msg);
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        let message = form.dataset['msgError'];
+                        if (message === null || message === undefined || message === '') {
+                            message = 'action.update.error';
+                        }
+
+                        alert.error(message, error.message);
+
+                        // this is useful for changing form fields and retrying to save (and in development to test form changes)
+                        setTimeout(() =>{
+                            // critical error, allow to re-submit?
+                            btn.textContent = btn.textContent.replace(' …', '');
+                            btn.disabled = false;
+                        }, 1500);
+                    });
+            };
+        }
+
+        return this.eventHandler;
     }
 
 }
