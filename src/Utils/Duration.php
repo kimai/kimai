@@ -37,6 +37,7 @@ class Duration
         $minute = $minute > 9 ? $minute : '0' . $minute;
 
         $formatted = str_replace('%h', (string) $hour, $format);
+
         return str_replace('%m', (string) $minute, $formatted);
     }
 
