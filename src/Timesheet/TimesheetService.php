@@ -184,16 +184,6 @@ final class TimesheetService
      */
     public function updateTimesheet(Timesheet $timesheet): Timesheet
     {
-        // FIXME stop active entries upon update
-        // there is at least one edge case which leads to a problem:
-        // if you do not allow overlapping entries, you cannot restart a timesheet by removing the
-        // end date if another timesheet is running, because the check for existing timesheets will always trigger
-        /*
-        if ($timesheet->getEnd() === null) {
-            $this->stopActiveEntries($timesheet);
-        }
-        */
-
         $this->fixTimezone($timesheet);
 
         $this->dispatcher->dispatch(new TimesheetUpdatePreEvent($timesheet));

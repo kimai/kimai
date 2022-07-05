@@ -22,6 +22,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 
 /**
  * This command can change anytime, don't rely on its API for the future!
@@ -71,20 +72,30 @@ class ImportProjectCommand extends Command
         // validate teamlead
         $teamlead = $input->getOption('teamlead');
         if (null !== $teamlead) {
-            $tmpUser = $this->users->findOneBy(['username' => $teamlead]);
-            if ($tmpUser === null) {
-                $tmpUser = $this->users->findOneBy(['email' => $teamlead]);
-                if ($tmpUser === null) {
-                    $io->error(
-                        sprintf(
-                            'You requested to create empty teams for each project, but the given teamlead cannot be found.' . PHP_EOL .
-                            'Please create a user with the name (or email) %s first, before continuing.' . PHP_EOL,
-                            $teamlead
-                        )
-                    );
+            $tmpUser = null;
 
-                    return 3;
+            try {
+                $tmpUser = $this->users->findOneBy(['username' => $teamlead]);
+            } catch (UserNotFoundException $exception) {
+            }
+
+            if ($tmpUser === null) {
+                try {
+                    $tmpUser = $this->users->findOneBy(['email' => $teamlead]);
+                } catch (UserNotFoundException $exception) {
                 }
+            }
+
+            if ($tmpUser === null) {
+                $io->error(
+                    sprintf(
+                        'You requested to create empty teams for each project, but the given teamlead cannot be found.' . PHP_EOL .
+                        'Please create a user with the name (or email) %s first, before continuing.' . PHP_EOL,
+                        $teamlead
+                    )
+                );
+
+                return 3;
             }
 
             $teamlead = $tmpUser;
