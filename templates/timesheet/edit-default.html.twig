@@ -2,15 +2,41 @@
     {% form_theme form 'form/horizontal.html.twig' %}
     {% embed formOptions.template with formOptions %}
         {% block form_body %}
-            {% if form.begin is defined %}
-                {{ form_row(form.begin, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_begin'}}) }}
+            {{ form_errors(form) }}
+            {% if form.begin_date is defined %}
+                <div class="mb-3 timesheet_edit_form_row_begin row">
+                    <label class="col-form-label col-sm-2 required" for="timesheet_edit_form_begin_date">{{ 'label.begin'|trans }}</label>
+                    <div class="col-sm-5">
+                        {{ form_widget(form.begin_date, {'label': false}) }}
+                        {{ form_errors(form.begin_date, {'label': false}) }}
+                    </div>
+                    <div class="col-sm-5">
+                        {{ form_widget(form.begin_time, {'label': false}) }}
+                        {{ form_errors(form.begin_time, {'label': false}) }}
+                    </div>
+                </div>
             {% endif %}
-            {% if form.end is defined %}
-                {{ form_row(form.end, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_end'}}) }}
+            {% if form.end_time is defined %}
+                <div class="mb-3 timesheet_edit_form_row_end row">
+                    <label class="col-form-label col-sm-2" for="timesheet_edit_form_duration">{{ 'label.duration'|trans }} / {{ 'label.endtime'|trans }}</label>
+                    {% set size = form.duration is defined ? 5 : 10 %}
+                    {% if form.duration is defined %}
+                    <div class="col-sm-{{ size }}">
+                        {{ form_widget(form.duration, {'label': false}) }}
+                        {{ form_errors(form.duration, {'label': false}) }}
+                    </div>
+                    {% endif %}
+                    <div class="col-sm-{{ size }}">
+                        {{ form_widget(form.end_time, {'label': false}) }}
+                        {{ form_errors(form.end_time, {'label': false}) }}
+                    </div>
+                </div>
+            {% else %}
+                {% if form.duration is defined %}
+                    {{ form_row(form.duration, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_duration'}}) }}
+                {% endif %}
             {% endif %}
-            {% if form.duration is defined %}
-                {{ form_row(form.duration, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_duration'}}) }}
-            {% endif %}
+
             {% if form.customer is defined %}
                 {{ form_row(form.customer, {'row_attr': {'class': 'mb-3 timesheet_edit_form_row_customer'}}) }}
             {% endif %}
@@ -66,7 +92,7 @@
                 {% endembed %}
             {% endif %}
 
-            {{ form_widget(form) }}
+            {{ form_rest(form) }}
         {% endblock %}
     {% endembed %}
 {% endblock %}
