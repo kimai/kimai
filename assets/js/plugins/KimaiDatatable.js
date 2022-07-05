@@ -15,8 +15,8 @@ export default class KimaiDatatable extends KimaiPlugin {
 
     constructor(contentAreaSelector, tableSelector) {
         super();
-        this.contentArea = contentAreaSelector;
-        this.selector = tableSelector;
+        this._contentArea = contentAreaSelector;
+        this._selector = tableSelector;
     }
 
     getId() {
@@ -24,7 +24,7 @@ export default class KimaiDatatable extends KimaiPlugin {
     }
 
     init() {
-        const dataTable = document.querySelector(this.selector);
+        const dataTable = document.querySelector(this._selector);
 
         // not every page contains a dataTable
         if (dataTable === null) {
@@ -54,20 +54,20 @@ export default class KimaiDatatable extends KimaiPlugin {
 
         /** @type {HTMLFormElement} form */
         const form = document.querySelector(toolbarSelector);
-        document.dispatchEvent(new CustomEvent('kimai.reloadContent', {detail: this.contentArea}));
+        document.dispatchEvent(new CustomEvent('kimai.reloadContent', {detail: this._contentArea}));
 
         this.fetchForm(form)
         .then(response => {
             response.text().then((text) => {
                 const temp = document.createElement('div');
                 temp.innerHTML = text;
-                const newContent = temp.querySelector(this.contentArea);
-                document.querySelector(this.contentArea).replaceWith(newContent);
+                const newContent = temp.querySelector(this._contentArea);
+                document.querySelector(this._contentArea).replaceWith(newContent);
                 durations.updateRecords();
                 document.dispatchEvent(new Event('kimai.reloadedContent'));
             });
         })
-        .catch(error => {
+        .catch(() => {
             form.submit();
         });
     }

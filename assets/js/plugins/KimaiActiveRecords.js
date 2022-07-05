@@ -15,8 +15,8 @@ export default class KimaiActiveRecords extends KimaiPlugin {
 
     constructor(selector, selectorEmpty) {
         super();
-        this.selector = selector;
-        this.selectorEmpty = selectorEmpty;
+        this._selector = selector;
+        this._selectorEmpty = selectorEmpty;
     }
 
     getId() {
@@ -24,14 +24,14 @@ export default class KimaiActiveRecords extends KimaiPlugin {
     }
 
     init() {
-        this.menu = document.querySelector(this.selector);
+        this._menu = document.querySelector(this._selector);
 
         // the menu can be hidden if user has no permissions to see it
-        if (this.menu === null) {
+        if (this._menu === null) {
             return;
         }
 
-        this.attributes = this.menu.dataset;
+        this.attributes = this._menu.dataset;
 
         const handleUpdate = () => {
             this.reloadActiveRecords();
@@ -47,19 +47,19 @@ export default class KimaiActiveRecords extends KimaiPlugin {
         document.addEventListener('kimai.customerDelete', handleUpdate);
     }
 
-    setEntries(entries) {
+    _setEntries(entries) {
         const hasEntries = entries.length > 0;
 
-        this.menu.style.display = hasEntries ? 'inline-block' : 'none';
+        this._menu.style.display = hasEntries ? 'inline-block' : 'none';
         if (!hasEntries) {
             // make sure that template entries in the menu are removed, otherwise they
             // might still be shown in the browsers title
-            for (let record of this.menu.querySelectorAll('[data-since]')) {
+            for (let record of this._menu.querySelectorAll('[data-since]')) {
                 record.dataset['since'] = '';
             }
         }
 
-        const menuEmpty = document.querySelector(this.selectorEmpty);
+        const menuEmpty = document.querySelector(this._selectorEmpty);
         if (menuEmpty !== null) {
             menuEmpty.style.display = !hasEntries ? 'inline-block' : 'none';
         }
@@ -68,7 +68,7 @@ export default class KimaiActiveRecords extends KimaiPlugin {
             return;
         }
 
-        this._replaceInNode(this.menu, entries[0]);
+        this._replaceInNode(this._menu, entries[0]);
 
         /** @type {KimaiActiveRecordsDuration} DURATION */
         const DURATION = this.getContainer().getPlugin('timesheet-duration');
@@ -102,7 +102,7 @@ export default class KimaiActiveRecords extends KimaiPlugin {
         const API = this.getContainer().getPlugin('api');
 
         API.get(this.attributes['api'], {}, (result) => {
-            this.setEntries(result);
+            this._setEntries(result);
         });
     }
 
