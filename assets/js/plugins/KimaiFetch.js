@@ -35,6 +35,11 @@ export default class KimaiFetch extends KimaiPlugin {
         return new Promise((resolve, reject) => {
             fetch(url, options).then(response => {
                 if (response.ok) {
+                    if (response.status === 201 && response.headers.has('x-modal-redirect')) {
+                        window.location = response.headers.get('x-modal-redirect');
+                        return;
+                    }
+
                     // "ok" is only in status code range of 2xx
                     resolve(response);
                     return;
@@ -42,23 +47,24 @@ export default class KimaiFetch extends KimaiPlugin {
 
                 let stopPropagation = false;
                 switch (response.status) {
-                    case 403:
-                        const loginUrl = this.getConfiguration('login');
-                        /** @type {KimaiAlert} alert */
-                        const alert = this.getContainer().getPlugin('alert');
-                        const translation = this.getTranslation().get('login.required');
+                    case 403: {
                         if (response.headers.has('login-required')) {
-                            alert.question(translation, (result) => {
+                            const loginUrl = this.getConfiguration('login').toString();
+                            /** @type {KimaiAlert} alert */
+                            const alert = this.getContainer().getPlugin('alert');
+                            alert.question(this.translate('login.required'), (result) => {
                                 if (result === true) {
                                     window.location.replace(loginUrl);
                                 }
                             });
+                            stopPropagation = true;
                         }
-                        stopPropagation = true;
                         break;
-                    default:
+                    }
+                    default: {
                         console.log('Some error occurred');
                         break;
+                    }
                 }
 
                 if (!stopPropagation) {
@@ -66,7 +72,7 @@ export default class KimaiFetch extends KimaiPlugin {
                 }
             })
             .catch(error => {
-                console.log('Error occurred while talking to Kimai backend');
+                console.log('Error occurred while talking to Kimai backend', error);
                 reject(error);
             });
         });
