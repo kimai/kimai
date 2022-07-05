@@ -80,7 +80,9 @@ class ValidationFailedExceptionErrorHandler implements SubscribingHandlerInterfa
     {
         $locale = \Locale::getDefault();
         /** @var User $user */
-        if (($user = $this->security->getUser()) !== null) {
+        $user = $this->security->getUser();
+
+        if ($user !== null) {
             $locale = $user->getLocale();
         }
 
