@@ -415,8 +415,8 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
                     ->update(Timesheet::class, 't')
                     ->set('t.user', ':replace')
                     ->where('t.user = :delete')
-                    ->setParameter('delete', $delete)
-                    ->setParameter('replace', $replace)
+                    ->setParameter('delete', $delete->getId())
+                    ->setParameter('replace', $replace->getId())
                     ->getQuery()
                     ->execute();
 
@@ -425,8 +425,8 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
                     ->update(Invoice::class, 'i')
                     ->set('i.user', ':replace')
                     ->where('i.user = :delete')
-                    ->setParameter('delete', $delete)
-                    ->setParameter('replace', $replace)
+                    ->setParameter('delete', $delete->getId())
+                    ->setParameter('replace', $replace->getId())
                     ->getQuery()
                     ->execute();
             }
