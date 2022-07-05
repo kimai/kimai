@@ -9,28 +9,38 @@
  * [KIMAI] KimaiDatePicker: single date selects (currently unused)
  */
 
-import KimaiPlugin from '../KimaiPlugin';
-import Litepicker from 'litepicker';
+import { Litepicker } from 'litepicker';
 import 'litepicker/dist/plugins/mobilefriendly';
+import KimaiFormPlugin from "./KimaiFormPlugin";
 
-export default class KimaiDatePicker extends KimaiPlugin {
+export default class KimaiDatePicker extends KimaiFormPlugin {
 
-    constructor(selector) {
+    constructor(selector)
+    {
         super();
-        this.selector = selector;
+        this._selector = selector;
     }
 
-    getId() {
-        return 'date-picker';
-    }
-
-    init() {
+    init()
+    {
         window.disableLitepickerStyles = true;
-        this.pickers = {};
+        this._pickers = [];
     }
 
-    activate(selector) {
-        const TRANSLATE = this.getTranslation();
+    /**
+     * @param {HTMLFormElement} form
+     * @return boolean
+     */
+    supportsForm(form) // eslint-disable-line no-unused-vars
+    {
+        return true;
+    }
+
+    /**
+     * @param {HTMLFormElement} form
+     */
+    activateForm(form)
+    {
         const FIRST_DOW = this.getConfigurations().getFirstDayOfWeek(false);
         const LANGUAGE = this.getConfigurations().getLanguage();
 
@@ -48,12 +58,12 @@ export default class KimaiDatePicker extends KimaiPlugin {
             buttonText: {
                 previousMonth: previous,
                 nextMonth: next,
-                apply: TRANSLATE.get('confirm'),
-                cancel: TRANSLATE.get('cancel'),
+                apply: this.translate('confirm'),
+                cancel: this.translate('cancel'),
             },
         }};
 
-        this.pickers[selector] = [].slice.call(document.querySelectorAll(selector + ' ' + this.selector)).map((element) => {
+        const newPickers = [].slice.call(form.querySelectorAll(this._selector)).map((element) => {
             if (element.dataset.format === undefined) {
                 console.log('Trying to bind litepicker to an element without data-format attribute');
             }
@@ -70,39 +80,44 @@ export default class KimaiDatePicker extends KimaiPlugin {
                     // element (not even typing is necessary) and so we have to make sure that the manual "click" event
                     // (works for touch as well) happened before we actually dispatch the change event manually ...
                     // what? report forms would be submitted upon cursor move without the "preselect” check
-                    picker.on('preselect', (date1, date2) => {
-                        picker.wasPreselected = true;
+                    picker.on('preselect', (date1, date2) => {  // eslint-disable-line no-unused-vars
+                        picker._wasPreselected = true;
                     });
-                    picker.on('selected', (date1, date2) => {
-                        if (picker.wasPreselected !== undefined) {
+                    picker.on('selected', (date1, date2) => {  // eslint-disable-line no-unused-vars
+                        if (picker._wasPreselected !== undefined) {
                             element.dispatchEvent(new Event('change', {bubbles: true}));
-                            delete picker.wasPreselected;
+                            delete picker._wasPreselected;
                         }
                     });
                 },
-
             }};
 
-            return new Litepicker(this._prepareOptions(options));
+            return [element, new Litepicker(this.prepareOptions(options))];
         });
+
+        this._pickers = this._pickers.concat(newPickers);
     }
 
-    _prepareOptions(options) {
+    prepareOptions(options)
+    {
         return {...options, ...{
             plugins: ['mobilefriendly'],
         }};
     }
 
-    destroy(selector) {
-        if (this.pickers[selector] === undefined) {
-            return;
-        }
-
-        for (const picker of this.pickers[selector]) {
-            picker.destroy();
-        }
-
-        delete this.pickers[selector];
+    /**
+     * @param {HTMLFormElement} form
+     */
+    destroyForm(form)
+    {
+        [].slice.call(form.querySelectorAll(this._selector)).map((element) => {
+            for (let i = 0; i < this._pickers.length; i++) {
+                if (this._pickers[i][0] === element) {
+                    this._pickers[i][1].destroy();
+                    this._pickers.splice(i, 1);
+                }
+            }
+        });
     }
 
 }

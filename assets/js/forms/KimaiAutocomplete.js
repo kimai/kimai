@@ -5,29 +5,35 @@
  * file that was distributed with this source code.
  */
 
-import KimaiPlugin from "../KimaiPlugin";
 import TomSelect from 'tom-select';
+import KimaiFormPlugin from "./KimaiFormPlugin";
 
 /**
  * Supporting auto-complete fields via API.
  * Used for timesheet tagging in toolbar and edit dialogs.
  */
-export default class KimaiAutocomplete extends KimaiPlugin {
+export default class KimaiAutocomplete extends KimaiFormPlugin {
 
-    constructor(selector) {
-        super();
-        this.selector = selector;
+    init()
+    {
+        this.selector = '[data-form-widget="autocomplete"]';
     }
 
-    getId() {
-        return 'autocomplete';
+    /**
+     * @param {HTMLFormElement} form
+     * @return boolean
+     */
+    supportsForm(form) // eslint-disable-line no-unused-vars
+    {
+        return true;
     }
 
-    activateAutocomplete(selector) {
+    activateForm(form)
+    {
         /** @type {KimaiAPI} API */
         const API = this.getContainer().getPlugin('api');
 
-        [].slice.call(document.querySelectorAll(selector + ' ' + this.selector)).map((node) => {
+        [].slice.call(form.querySelectorAll(this.selector)).map((node) => {
             const apiUrl = node.dataset['autocompleteUrl'];
             let minChars = 3;
             if (node.dataset['minimumCharacter'] !== undefined) {
@@ -54,6 +60,7 @@ export default class KimaiAutocomplete extends KimaiPlugin {
                     });
                 },
                 render: {
+                    // eslint-disable-next-line
                     not_loading: function (data, escape) {
                         // no default content
                     },
@@ -72,8 +79,8 @@ export default class KimaiAutocomplete extends KimaiPlugin {
         });
     }
 
-    destroyAutocomplete(selector) {
-        [].slice.call(document.querySelectorAll(selector + ' ' + this.selector)).map((node) => {
+    destroyForm(form) {
+        [].slice.call(form.querySelectorAll(this.selector)).map((node) => {
             if (node.tomselect) {
                 node.tomselect.destroy();
             }

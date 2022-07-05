@@ -6,19 +6,19 @@
  */
 
 /*!
- * [KIMAI] KimaiFormSelect: enhanced functionality for HTML select's
+ * [KIMAI] KimaiFormSelect: enhanced functionality for HTMLSelectElement
  */
 
-import KimaiPlugin from "../KimaiPlugin";
 import TomSelect from 'tom-select';
+import KimaiFormPlugin from "./KimaiFormPlugin";
 
-export default class KimaiFormSelect extends KimaiPlugin {
+export default class KimaiFormSelect extends KimaiFormPlugin {
 
     constructor(selector, apiSelects)
     {
         super();
-        this.selector = selector;
-        this.apiSelects = apiSelects;
+        this._selector = selector;
+        this._apiSelects = apiSelects;
     }
 
     getId()
@@ -29,11 +29,11 @@ export default class KimaiFormSelect extends KimaiPlugin {
     init()
     {
         // selects the original value inside dropdowns, as the "reset" event (the updated option)
-        // is not automatically catched by the JS element
+        // is not automatically propagated to the JS element
         document.addEventListener('reset', (event) => {
             if (event.target.tagName.toUpperCase() === 'FORM') {
                 setTimeout(() => {
-                    const fields = event.target.querySelectorAll(this.selector);
+                    const fields = event.target.querySelectorAll(this._selector);
                     for (let field of fields) {
                         if (field.tagName.toUpperCase() === 'SELECT') {
                             field.dispatchEvent(new Event('data-reloaded'));
@@ -149,23 +149,32 @@ export default class KimaiFormSelect extends KimaiPlugin {
     }
 
     /**
-     * @param {string} selector
+     * @param {HTMLFormElement} form
+     * @return boolean
      */
-    activateSelectPicker(selector)
+    supportsForm(form) // eslint-disable-line no-unused-vars
     {
-        const fields = document.querySelectorAll(selector + ' ' + this.selector);
-        for (const field of fields) {
-            this.activateSelectPickerByElement(field);
-        }
-        this._activateApiSelects(selector + ' ' + this.apiSelects);
+        return true;
     }
 
     /**
-     * @param {string} selector
+     * @param {HTMLFormElement} form
      */
-    destroySelectPicker(selector)
+    activateForm(form)
     {
-        const node = document.querySelector(selector);
+        const fields = form.querySelectorAll(this._selector);
+        for (const field of fields) {
+            this.activateSelectPickerByElement(field);
+        }
+        this._activateApiSelects(this._apiSelects);
+    }
+
+    /**
+     * @param {HTMLFormElement} form
+     */
+    destroyForm(form)
+    {
+        const node = form.querySelector(this._selector);
         if (node.tomselect) {
             node.tomselect.destroy();
         }
@@ -298,6 +307,39 @@ export default class KimaiFormSelect extends KimaiPlugin {
     }
 
     /**
+     * @param {HTMLSelectElement} select
+     * @param {string} label
+     * @param {string} value
+     * @param {object} dataset
+     */
+    addOption(select, label, value, dataset)
+    {
+        const option = this._createOption(label, value);
+        for (const key in dataset) {
+            option.dataset[key] = dataset[key];
+        }
+
+        select.options.add(option);
+        if (select.tomselect !== undefined) {
+            select.tomselect.sync();
+        }
+    }
+
+    /**
+     *
+     * @param {HTMLSelectElement} select
+     * @param {HTMLOptionElement} option
+     */
+    removeOption(select, option)
+    {
+        option.remove();
+        if (select.tomselect !== undefined) {
+            select.tomselect.removeOption(option.value, true);
+            select.tomselect.clear(true);
+        }
+    }
+
+    /**
      * @param {string} label
      * @param {string} value
      * @returns {HTMLElement}
@@ -329,52 +371,56 @@ export default class KimaiFormSelect extends KimaiPlugin {
      */
     _activateApiSelects(selector)
     {
-        /** @type {KimaiAPI} API */
-        const API = this.getContainer().getPlugin('api');
-
-        document.addEventListener('change', (event) => {
-            if (event.target === null || !event.target.matches(selector)) {
-                return;
-            }
-
-            const apiSelect = event.target;
-            const targetSelectId = '#' + apiSelect.dataset['relatedSelect'];
-            /** @type {HTMLSelectElement} targetSelect */
-            const targetSelect = document.getElementById(apiSelect.dataset['relatedSelect']);
-
-            // if the related target select does not exist, we do not need to load the related data
-            if (targetSelect === null) {
-                return;
-            }
-
-            let formPrefix = apiSelect.dataset['formPrefix'];
-            if (formPrefix === undefined || formPrefix === null) {
-                formPrefix = '';
-            } else if (formPrefix.length > 0) {
-                formPrefix += '_';
-            }
-
-            let newApiUrl = this._buildUrlWithFormFields(apiSelect.dataset['apiUrl'], formPrefix);
-
-            const selectValue = apiSelect.value;
-
-            // Problem: select a project with activities and then select a customer that has no project
-            // results in a wrong URL, it triggers "activities?project=" instead of using the "emptyUrl"
-            if (selectValue === undefined || selectValue === null || selectValue === '' || (Array.isArray(selectValue) && selectValue.length === 0)) {
-                if (apiSelect.dataset['emptyUrl'] === undefined) {
-                    this._updateSelect(targetSelectId, {});
-                    targetSelect.disabled = true;
+        if (this._eventHandlerApiSelects === undefined) {
+            this._eventHandlerApiSelects = (event) => {
+                if (event.target === null || !event.target.matches(selector)) {
                     return;
                 }
-                newApiUrl = this._buildUrlWithFormFields(apiSelect.dataset['emptyUrl'], formPrefix);
+
+                const apiSelect = event.target;
+                const targetSelectId = '#' + apiSelect.dataset['relatedSelect'];
+                /** @type {HTMLSelectElement} targetSelect */
+                const targetSelect = document.getElementById(apiSelect.dataset['relatedSelect']);
+
+                // if the related target select does not exist, we do not need to load the related data
+                if (targetSelect === null) {
+                    return;
+                }
+
+                let formPrefix = apiSelect.dataset['formPrefix'];
+                if (formPrefix === undefined || formPrefix === null) {
+                    formPrefix = '';
+                } else if (formPrefix.length > 0) {
+                    formPrefix += '_';
+                }
+
+                let newApiUrl = this._buildUrlWithFormFields(apiSelect.dataset['apiUrl'], formPrefix);
+
+                const selectValue = apiSelect.value;
+
+                // Problem: select a project with activities and then select a customer that has no project
+                // results in a wrong URL, it triggers "activities?project=" instead of using the "emptyUrl"
+                if (selectValue === undefined || selectValue === null || selectValue === '' || (Array.isArray(selectValue) && selectValue.length === 0)) {
+                    if (apiSelect.dataset['emptyUrl'] === undefined) {
+                        this._updateSelect(targetSelectId, {});
+                        targetSelect.disabled = true;
+                        return;
+                    }
+                    newApiUrl = this._buildUrlWithFormFields(apiSelect.dataset['emptyUrl'], formPrefix);
+                }
+
+                targetSelect.disabled = false;
+
+                /** @type {KimaiAPI} API */
+                const API = this.getContainer().getPlugin('api');
+
+                API.get(newApiUrl, {}, (data) => {
+                    this._updateSelect(targetSelectId, data);
+                });
             }
 
-            targetSelect.disabled = false;
-
-            API.get(newApiUrl, {}, (data) => {
-                this._updateSelect(targetSelectId, data);
-            });
-        });
+            document.addEventListener('change', this._eventHandlerApiSelects);
+        }
     }
 
     /**
@@ -388,7 +434,7 @@ export default class KimaiFormSelect extends KimaiPlugin {
         let newApiUrl = apiUrl;
 
         apiUrl.split('?')[1].split('&').forEach(item => {
-            const [key, value] = item.split('=');
+            const [key, value] = item.split('='); // eslint-disable-line no-unused-vars
             const decoded = decodeURIComponent(value);
             const test = decoded.match(/%(.*)%/);
             if (test !== null) {
@@ -401,14 +447,29 @@ export default class KimaiFormSelect extends KimaiPlugin {
                 } else {
                     if (targetField.value !== null) {
                         newValue = targetField.value;
+                        if (targetField.tagName === 'SELECT' && targetField.multiple) {
+                            newValue = [...targetField.selectedOptions].map(o => o.value);
+                        }
 
                         if (newValue !== '') {
                             if (targetField.type === 'date') {
                                 const timeId = targetField.id.replace('_date', '_time')
                                 const timeElement = document.getElementById(timeId);
                                 const time = timeElement === null ? '12:00:00' : timeElement.value;
-                                // using 12 because the API might change the date if we use 00:00
+                                // using 12:00 as fallback, because timezone handling might change the date if we use 00:00
                                 const newDate = this.getDateUtils().fromHtml5Input(newValue, time);
+                                newValue = this.getDateUtils().formatForAPI(newDate, false);
+                            } else if (targetField.type === 'text' && targetField.name.includes('date')) {
+                                const timeId = targetField.id.replace('_date', '_time')
+                                const timeElement = document.getElementById(timeId);
+                                // using 12:00 as fallback, because timezone handling might change the date if we use 00:00
+                                let time = '12:00:00';
+                                let timeFormat = 'HH:mm';
+                                if (timeElement !== null) {
+                                    time = timeElement.value;
+                                    timeFormat = timeElement.dataset['format'];
+                                }
+                                const newDate = this.getDateUtils().fromFormat(newValue.trim() + ' ' + time.trim(), targetField.dataset['format'] + ' ' + timeFormat);
                                 newValue = this.getDateUtils().formatForAPI(newDate, false);
                             } else if (targetField.dataset['format'] !== undefined) {
                                 // find out when this else branch is triggered and document!
@@ -450,10 +511,10 @@ export default class KimaiFormSelect extends KimaiPlugin {
         const options = {};
         for (const apiData of data) {
             let title = '__empty__';
-            if (apiData.hasOwnProperty('parentTitle') && apiData.parentTitle !== null) {
-                title = apiData.parentTitle;
+            if (apiData['parentTitle'] !== undefined && apiData['parentTitle'] !== null) {
+                title = apiData['parentTitle'];
             }
-            if (!options.hasOwnProperty(title)) {
+            if (options[title] === undefined) {
                 options[title] = [];
             }
             options[title].push(apiData);

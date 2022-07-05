@@ -13,11 +13,8 @@ import KimaiDatePicker from "./KimaiDatePicker";
 
 export default class KimaiDateRangePicker extends KimaiDatePicker {
 
-    getId() {
-        return 'date-range-picker';
-    }
-
-    _prepareOptions(options) {
+    prepareOptions(options)
+    {
         return {...options, ...{
             plugins: ['mobilefriendly'],
             singleMode: false,
