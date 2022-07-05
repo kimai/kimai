@@ -14,7 +14,6 @@ use App\Entity\Configuration;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
-use App\Form\Type\DateRangeType;
 use App\Repository\ConfigurationRepository;
 use App\Repository\TagRepository;
 use App\Tests\DataFixtures\ActivityFixtures;
@@ -64,7 +63,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->request($client, '/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
+        $dateRange = $this->formatDateRange($start, new \DateTime('last day of this month'));
 
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
@@ -110,8 +109,6 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->request($client, '/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
-
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'location:homeoffice foobar',
@@ -148,7 +145,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->request($client, '/timesheet/export/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
+        $dateRange = $this->formatDateRange(new \DateTime('-10 days'), new \DateTime());
 
         $client->submitForm('export-btn-print', [
             'export' => [
@@ -182,8 +179,8 @@ class TimesheetControllerTest extends ControllerBaseTest
                 // begin is always pre-filled with the current datetime
                 // 'begin' => null,
                 // end must be allowed to be null, to start a record
-                // there was a bug with end begin required, so we manually set this field to be empty
-                'end' => null,
+                // there was a bug with end a mandatory field, so we manually set this field to be empty
+                'end_time' => null,
                 'project' => 1,
                 'activity' => 1,
             ]
@@ -208,7 +205,7 @@ class TimesheetControllerTest extends ControllerBaseTest
     /**
      * @dataProvider getTestDataForDurationValues
      */
-    public function testCreateActionWithDurationValues($begin, $end, $duration, $expectedDuration, $expectedEnd)
+    public function testCreateActionWithDurationValues($beginDate, $beginTime, $end, $duration, $expectedDuration, $expectedEnd)
     {
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/timesheet/create');
@@ -218,8 +215,9 @@ class TimesheetControllerTest extends ControllerBaseTest
         $client->submit($form, [
             'timesheet_edit_form' => [
                 'description' => 'Testing is fun!',
-                'begin' => $begin,
-                'end' => $end,
+                'begin_date' => $beginDate,
+                'begin_time' => $beginTime,
+                'end_time' => $end,
                 'duration' => $duration,
                 'project' => 1,
                 'activity' => 1,
@@ -244,23 +242,23 @@ class TimesheetControllerTest extends ControllerBaseTest
     public function getTestDataForDurationValues()
     {
         // duration is ignored, because end is set and the duration might come from a rounding rule (by default seconds are rounded down with 1)
-        yield ['2018-12-31 00:00:00', '2018-12-31 02:10:10', '01:00', 7800, '2018-12-31 02:10:00'];
-        yield ['2018-12-31 00:00:00', '2018-12-31 02:09:59', '01:00', 7740, '2018-12-31 02:09:00'];
-        // if seconds are given, they are first rounded up (default for duration rounding is 1)
-        yield ['2018-12-31 00:00:00', null, '01:00', 3600, '2018-12-31 01:00:00'];
-        yield ['2018-12-31 00:00:00', null, '01:00:10', 3660, '2018-12-31 01:01:00'];
-        yield ['2018-12-31 00:00:00', null, '1h', 3600, '2018-12-31 01:00:00'];
-        yield ['2018-12-31 00:00:00', null, '1h10m', 4200, '2018-12-31 01:10:00'];
-        yield ['2018-12-31 00:00:00', null, '1h10s', 3660, '2018-12-31 01:01:00'];
-        yield ['2018-12-31 00:00:00', null, '60m', 3600, '2018-12-31 01:00:00'];
-        yield ['2018-12-31 00:00:00', null, '60M1s', 3660, '2018-12-31 01:01:00'];
-        yield ['2018-12-31 00:00:00', null, '3600s', 3600, '2018-12-31 01:00:00'];
-        yield ['2018-12-31 00:00:00', null, '59m60s', 3600, '2018-12-31 01:00:00'];
-        yield ['2018-12-31 00:00:00', null, '1', 3600, '2018-12-31 01:00:00'];
-        yield ['2018-12-31 00:00:00', null, '1,0', 3600, '2018-12-31 01:00:00'];
-        yield ['2018-12-31 00:00:00', null, '1.0', 3600, '2018-12-31 01:00:00'];
-        yield ['2018-12-31 00:00:00', null, '1.5', 5400, '2018-12-31 01:30:00'];
-        yield ['2018-12-31 00:00:00', null, '1,25', 4500, '2018-12-31 01:15:00'];
+        yield ['12/31/2018', '12:00 AM', '02:10 AM', '01:00', 7800, '2018-12-31 02:10:00'];
+        yield ['12/31/2018', '12:00 AM', '02:09 AM', '01:00', 7740, '2018-12-31 02:09:00'];
+        // if seconds are given: they are first rounded up (default for duration rounding is 1)
+        yield ['12/31/2018', '12:00 AM', null, '01:00', 3600, '2018-12-31 01:00:00'];
+        yield ['12/31/2018', '12:00 AM', null, '01:00:10', 3660, '2018-12-31 01:01:00'];
+        yield ['12/31/2018', '12:00 AM', null, '1h', 3600, '2018-12-31 01:00:00'];
+        yield ['12/31/2018', '12:00 AM', null, '1h10m', 4200, '2018-12-31 01:10:00'];
+        yield ['12/31/2018', '12:00 AM', null, '1h10s', 3660, '2018-12-31 01:01:00'];
+        yield ['12/31/2018', '12:00 AM', null, '60m', 3600, '2018-12-31 01:00:00'];
+        yield ['12/31/2018', '12:00 AM', null, '60M1s', 3660, '2018-12-31 01:01:00'];
+        yield ['12/31/2018', '12:00 AM', null, '3600s', 3600, '2018-12-31 01:00:00'];
+        yield ['12/31/2018', '12:00 AM', null, '59m60s', 3600, '2018-12-31 01:00:00'];
+        yield ['12/31/2018', '12:00 AM', null, '1', 3600, '2018-12-31 01:00:00'];
+        yield ['12/31/2018', '12:00 AM', null, '1,0', 3600, '2018-12-31 01:00:00'];
+        yield ['12/31/2018', '12:00 AM', null, '1.0', 3600, '2018-12-31 01:00:00'];
+        yield ['12/31/2018', '12:00 AM', null, '1.5', 5400, '2018-12-31 01:30:00'];
+        yield ['12/31/2018', '12:00 AM', null, '1,25', 4500, '2018-12-31 01:15:00'];
     }
 
     public function testCreateActionShowsMetaFields()
@@ -416,7 +414,7 @@ class TimesheetControllerTest extends ControllerBaseTest
                     'activity' => 1,
                 ]
             ],
-            ['#timesheet_edit_form_begin']
+            ['#timesheet_edit_form_begin_date']
         );
     }
 
@@ -462,8 +460,9 @@ class TimesheetControllerTest extends ControllerBaseTest
             [
                 'timesheet_edit_form' => [
                     'hourlyRate' => 100,
-                    'begin' => '2020-02-18 01:00',
-                    'end' => '2020-02-18 02:10',
+                    'begin_date' => '02/18/2020',
+                    'begin_time' => '01:00 AM',
+                    'end_time' => '02:10 AM',
                     'duration' => '01:10',
                     'project' => 1,
                     'activity' => $activity->getId(),
@@ -515,8 +514,9 @@ class TimesheetControllerTest extends ControllerBaseTest
             [
                 'timesheet_edit_form' => [
                     'hourlyRate' => 100,
-                    'begin' => '2020-02-18 01:00',
-                    'end' => '2020-02-18 01:00',
+                    'begin_date' => '02/18/2020',
+                    'begin_time' => '01:00 AM',
+                    'end_time' => '01:00 AM',
                     'duration' => '00:00',
                     'project' => 1,
                     'activity' => $activity->getId(),
@@ -624,6 +624,8 @@ class TimesheetControllerTest extends ControllerBaseTest
     public function testEditAction()
     {
         $client = $this->getClientForAuthenticatedUser();
+
+        $this->setSystemConfiguration('timesheet.rules.long_running_duration', '1440');
 
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(1);

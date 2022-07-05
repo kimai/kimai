@@ -71,7 +71,7 @@ class TimesheetFutureTimesValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate($timesheet, new TimesheetFutureTimes(['message' => 'myMessage']));
 
         $this->buildViolation('The begin date cannot be in the future.')
-            ->atPath('property.path.begin')
+            ->atPath('property.path.begin_date')
             ->setCode(TimesheetFutureTimes::BEGIN_IN_FUTURE_ERROR)
             ->assertRaised();
     }

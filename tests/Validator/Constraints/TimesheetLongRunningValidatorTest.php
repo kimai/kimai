@@ -69,7 +69,7 @@ class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
 
         $this->buildViolation('Maximum duration of {{ value }} hours exceeded.')
             ->atPath('property.path.duration')
-            ->setParameter('{{ value }}', '02:00')
+            ->setParameter('{{ value }}', '2:00')
             ->setCode(TimesheetLongRunning::LONG_RUNNING)
             ->assertRaised();
     }

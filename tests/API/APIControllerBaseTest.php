@@ -223,16 +223,22 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
      * @param array<int, string>|array<string, mixed> $failedFields
      * @param bool $extraFields test for the error "This form should not contain extra fields"
      */
-    protected function assertApiCallValidationError(Response $response, array $failedFields, bool $extraFields = false)
+    protected function assertApiCallValidationError(Response $response, array $failedFields, bool $extraFields = false, array $globalError = [])
     {
         self::assertFalse($response->isSuccessful());
         $result = json_decode($response->getContent(), true);
-
         self::assertArrayHasKey('errors', $result);
 
         if ($extraFields) {
             self::assertArrayHasKey('errors', $result['errors']);
             self::assertEquals($result['errors']['errors'][0], 'This form should not contain extra fields.');
+        }
+
+        if (\count($globalError) > 0) {
+            self::assertArrayHasKey('errors', $result['errors']);
+            foreach ($globalError as $err) {
+                self::assertTrue(\in_array($err, $result['errors']['errors']), 'Missing global validation error: ' . $err);
+            }
         }
 
         self::assertArrayHasKey('children', $result['errors']);

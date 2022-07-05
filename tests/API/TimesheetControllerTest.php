@@ -85,7 +85,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->importFixtureForUser(User::ROLE_USER);
-        $em = $this->getEntityManager();
 
         $fixture = new TimesheetFixtures();
         $fixture
@@ -179,7 +178,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testGetCollectionWithQueryFailsWith404OnOutOfRangedPage()
     {
-        $modifiedAfter = new \DateTime('-1 hour');
         $begin = new \DateTime('first day of this month');
         $begin->setTime(0, 0, 0);
         $end = new \DateTime('last day of this month');
@@ -645,14 +643,14 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'activity' => 10,
             'project' => 1,
             'begin' => (new \DateTime())->format('Y-m-d H:m'),
-            'end' => (new \DateTime('- 7 hours'))->format('Y-m-d H:m'),
+            'end' => (new \DateTime('- 1 hours'))->format('Y-m-d H:m'),
             'description' => 'foo',
         ];
         $this->request($client, '/api/timesheets/' . $timesheets[0]->getId(), 'PATCH', [], json_encode($data));
 
         $response = $client->getResponse();
         $this->assertEquals(400, $response->getStatusCode());
-        $this->assertApiCallValidationError($response, ['end', 'activity']);
+        $this->assertApiCallValidationError($response, ['activity'], false, ['End date must not be earlier then start date.']);
     }
 
     // TODO: TEST PATCH FOR EXPORTED TIMESHEET FOR USER WITHOUT PERMISSION IS REJECTED
@@ -803,7 +801,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importFixtureForUser(User::ROLE_USER);
 
-        $start = new \DateTime('-8 hours');
+        $start = new \DateTime('-4 hours');
 
         $fixture = new TimesheetFixtures();
         $fixture

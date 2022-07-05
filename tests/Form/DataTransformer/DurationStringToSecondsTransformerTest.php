@@ -31,9 +31,9 @@ class DurationStringToSecondsTransformerTest extends TestCase
     public function getValidTestDataTransform()
     {
         return [
-            ['00:00', '0'],
-            ['00:00', 0],
-            ['02:00', 7213], // by default no seconds are returned
+            ['0:00', '0'],
+            ['0:00', 0],
+            ['2:00', 7213], // by default no seconds are returned
             [null, null],
         ];
     }
@@ -68,7 +68,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
     {
         return [
             ['2h3s', 7203],
-            ['00:00', 0],
+            ['0:00', 0],
             ['0', null],
             [null, null],
             ['87600000000:00:00', 315360000000000],

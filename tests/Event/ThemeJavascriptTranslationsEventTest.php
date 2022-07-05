@@ -17,11 +17,13 @@ use PHPUnit\Framework\TestCase;
  */
 class ThemeJavascriptTranslationsEventTest extends TestCase
 {
+    public const COUNTER = 15;
+
     public function testDefaultValues()
     {
         $sut = new ThemeJavascriptTranslationsEvent();
 
-        $this->assertCount(16, $sut->getTranslations());
+        $this->assertCount(15, $sut->getTranslations());
     }
 
     public function testGetterAndSetter()
@@ -31,7 +33,7 @@ class ThemeJavascriptTranslationsEventTest extends TestCase
         $sut->setTranslation('hello', 'world', 'testing');
 
         $result = $sut->getTranslations();
-        self::assertCount(18, $result);
+        self::assertCount(self::COUNTER + 2, $result);
         self::assertArrayHasKey('foo', $result);
         self::assertEquals(['bar', 'messages'], $result['foo']);
         self::assertArrayHasKey('hello', $result);

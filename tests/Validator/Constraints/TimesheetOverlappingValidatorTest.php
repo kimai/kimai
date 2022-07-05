@@ -71,7 +71,7 @@ class TimesheetOverlappingValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate($timesheet, new TimesheetOverlapping(['message' => 'myMessage']));
 
         $this->buildViolation('You already have an entry for this time.')
-            ->atPath('property.path.begin')
+            ->atPath('property.path.begin_date')
             ->setCode(TimesheetOverlapping::RECORD_OVERLAPPING)
             ->assertRaised();
     }

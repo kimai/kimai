@@ -92,7 +92,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate($timesheet, $constraint);
 
         $this->buildViolation('This period is locked, please choose a later date.')
-            ->atPath('property.path.begin')
+            ->atPath('property.path.begin_date')
             ->setCode(TimesheetLockdown::PERIOD_LOCKED)
             ->assertRaised();
     }
@@ -162,7 +162,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
 
         if ($isViolation) {
             $this->buildViolation('This period is locked, please choose a later date.')
-                ->atPath('property.path.begin')
+                ->atPath('property.path.begin_date')
                 ->setCode(TimesheetLockdown::PERIOD_LOCKED)
                 ->assertRaised();
         } else {

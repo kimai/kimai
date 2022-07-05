@@ -12,6 +12,7 @@ namespace App\Tests\Controller;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Configuration;
 use App\Entity\User;
+use App\Form\Type\DateRangeType;
 use App\Repository\ConfigurationRepository;
 use App\Repository\UserRepository;
 use App\Tests\KernelTestTrait;
@@ -35,11 +36,33 @@ abstract class ControllerBaseTest extends WebTestCase
     use KernelTestTrait;
 
     public const DEFAULT_LANGUAGE = 'en';
+    public const DEFAULT_DATE_FORMAT = 'n/j/Y';
+    public const DEFAULT_TIME_FORMAT = 'h:mm a';
 
     protected function tearDown(): void
     {
         $this->clearConfigCache();
         parent::tearDown();
+    }
+
+    protected function formatDateRange(\DateTime $begin, \DateTime $end): string
+    {
+        return $begin->format(self::DEFAULT_DATE_FORMAT) . DateRangeType::DATE_SPACER . $end->format(self::DEFAULT_DATE_FORMAT);
+    }
+
+    protected function formatDate(\DateTime $date): string
+    {
+        return $date->format(self::DEFAULT_DATE_FORMAT);
+    }
+
+    protected function formatDateTime(\DateTime $date): string
+    {
+        return $this->formatDate($date) . ' ' . $this->formatTime($date);
+    }
+
+    protected function formatTime(\DateTime $date): string
+    {
+        return $date->format(self::DEFAULT_TIME_FORMAT);
     }
 
     /**

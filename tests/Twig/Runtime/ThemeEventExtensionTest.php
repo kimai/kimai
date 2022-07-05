@@ -13,6 +13,7 @@ use App\Entity\Configuration;
 use App\Entity\User;
 use App\Event\ThemeEvent;
 use App\Tests\Configuration\TestConfigLoader;
+use App\Tests\Event\ThemeJavascriptTranslationsEventTest;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Twig\Runtime\ThemeExtension;
 use App\Utils\Theme;
@@ -107,7 +108,7 @@ class ThemeEventExtensionTest extends TestCase
     {
         $sut = $this->getSut();
         $values = $sut->getJavascriptTranslations();
-        self::assertCount(16, $values);
+        self::assertCount(ThemeJavascriptTranslationsEventTest::COUNTER, $values);
     }
 
     public function getProgressbarColors()

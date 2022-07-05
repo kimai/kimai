@@ -397,16 +397,16 @@ class LocaleFormatExtensionsTest extends TestCase
         $record = $this->getTimesheet(9437);
 
         $sut = $this->getSut('en', $this->localeEn);
-        $this->assertEquals('02:37', $sut->duration($record->getDuration()));
+        $this->assertEquals('2:37', $sut->duration($record->getDuration()));
         $this->assertEquals('2.62', $sut->duration($record->getDuration(), true));
 
         // test Timesheet object
-        $this->assertEquals('02:37', $sut->duration($record));
+        $this->assertEquals('2:37', $sut->duration($record));
         $this->assertEquals('2.62', $sut->duration($record, true));
 
         // test extended format
         $sut = $this->getSut($this->localeFake, 'XX');
-        $this->assertEquals('02:37', $sut->duration($record->getDuration()));
+        $this->assertEquals('2:37', $sut->duration($record->getDuration()));
 
         // test negative duration
         $sut = $this->getSut($this->localeEn, 'en');
@@ -414,11 +414,11 @@ class LocaleFormatExtensionsTest extends TestCase
 
         // test zero duration
         $sut = $this->getSut($this->localeEn, 'en');
-        $this->assertEquals('00:00', $sut->duration(0));
+        $this->assertEquals('0:00', $sut->duration(0));
 
         $sut = $this->getSut($this->localeEn, 'en');
 
-        $this->assertEquals('00:00', $sut->duration(null));
+        $this->assertEquals('0:00', $sut->duration(null));
         $this->assertEquals('0.00', $sut->duration(null, true));
     }
 

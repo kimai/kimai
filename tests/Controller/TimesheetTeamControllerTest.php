@@ -12,7 +12,6 @@ namespace App\Tests\Controller;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
-use App\Form\Type\DateRangeType;
 use App\Repository\TagRepository;
 use App\Tests\DataFixtures\TagFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
@@ -69,7 +68,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->request($client, '/team/timesheet/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $dateRange = ($start)->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime('last day of this month'))->format('Y-m-d');
+        $dateRange = $this->formatDateRange($start, new \DateTime('last day of this month'));
 
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
@@ -142,7 +141,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->request($client, '/team/timesheet/export/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $dateRange = (new \DateTime('-10 days'))->format('Y-m-d') . DateRangeType::DATE_SPACER . (new \DateTime())->format('Y-m-d');
+        $dateRange = $this->formatDateRange(new \DateTime('-10 days'), new \DateTime());
 
         $client->submitForm('export-btn-print', [
             'export' => [
@@ -238,14 +237,17 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
     public function testCreateForMultipleUsersActionWithoutUserOrTeam()
     {
+        $begin = new \DateTime();
+        $end = new \DateTime('+1 hour');
         $data = [
             'timesheet_multi_user_edit_form' => [
                 'description' => 'Testing is more fun!',
                 'project' => 1,
                 'activity' => 1,
                 // make sure the default validation for timesheets is applied as well
-                'begin' => (new \DateTime())->format('Y-m-d H:i'),
-                'end' => (new \DateTime('-1 hour'))->format('Y-m-d H:i'),
+                'begin_date' => $this->formatDate($begin),
+                'begin_time' => $this->formatTime($begin),
+                'end_time' => $this->formatTime($end),
             ]
         ];
 
@@ -254,13 +256,15 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
             '/team/timesheet/create_mu',
             'form[name=timesheet_multi_user_edit_form]',
             $data,
-            ['#timesheet_multi_user_edit_form_users', '#timesheet_multi_user_edit_form_teams', '#timesheet_multi_user_edit_form_end']
+            ['#timesheet_multi_user_edit_form_users', '#timesheet_multi_user_edit_form_teams']
         );
     }
 
     public function testEditAction()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $this->setSystemConfiguration('timesheet.rules.long_running_duration', '1440');
 
         $user = $this->getUserByRole(User::ROLE_USER);
         $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);

@@ -55,7 +55,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate($timesheet, new TimesheetBasic(['message' => 'myMessage']));
 
         $this->buildViolation('You must submit a begin date.')
-            ->atPath('property.path.begin')
+            ->atPath('property.path.begin_date')
             ->setCode(TimesheetBasic::MISSING_BEGIN_ERROR)
             ->buildNextViolation('An activity needs to be selected.')
             ->atPath('property.path.activity')
@@ -85,7 +85,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
             // therefor sub-constraints will not be executed :-(
             /*
             ->buildNextViolation('The begin date cannot be in the future.')
-            ->atPath('property.path.begin')
+            ->atPath('property.path.begin_date')
             ->setCode(TimesheetFutureTimes::BEGIN_IN_FUTURE_ERROR)
             */
             ->assertRaised();
@@ -102,7 +102,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate($timesheet, new TimesheetBasic(['message' => 'myMessage']));
 
         $this->buildViolation('End date must not be earlier then start date.')
-            ->atPath('property.path.end')
+            ->atPath('property.path.end_date')
             ->setCode(TimesheetBasic::END_BEFORE_BEGIN_ERROR)
             ->buildNextViolation('An activity needs to be selected.')
             ->atPath('property.path.activity')
@@ -175,26 +175,26 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
     public function getProjectStartEndTestData()
     {
         yield [new \DateTime(), new \DateTime(), [
-            ['begin', TimesheetBasic::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
-            ['end', TimesheetBasic::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
+            ['begin_date', TimesheetBasic::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
+            ['end_date', TimesheetBasic::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
         ]];
 
         yield [new \DateTime('-9 hour'), new \DateTime('-2 hour'), [
-            ['begin', TimesheetBasic::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
-            ['end', TimesheetBasic::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
+            ['begin_date', TimesheetBasic::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
+            ['end_date', TimesheetBasic::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
         ]];
 
         yield [new \DateTime('-19 hour'), new \DateTime('-12 hour'), [
-            ['begin', TimesheetBasic::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
-            ['end', TimesheetBasic::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
+            ['begin_date', TimesheetBasic::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
+            ['end_date', TimesheetBasic::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
         ]];
 
         yield [new \DateTime('-19 hour'), new \DateTime('-2 hour'), [
-            ['end', TimesheetBasic::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
+            ['end_date', TimesheetBasic::PROJECT_ALREADY_ENDED, 'The project is finished at that time.'],
         ]];
 
         yield [new \DateTime('-9 hour'), new \DateTime(), [
-            ['begin', TimesheetBasic::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
+            ['begin_date', TimesheetBasic::PROJECT_NOT_STARTED, 'The project has not started at that time.'],
         ]];
     }
 

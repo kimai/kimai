@@ -13,7 +13,6 @@ use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Form\Type\DateRangeType;
 use App\Tests\DataFixtures\InvoiceTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -164,7 +163,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->request($client, '/invoice/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $dateRange = $begin->format('Y-m-d') . DateRangeType::DATE_SPACER . $end->format('Y-m-d');
+        $dateRange = $this->formatDateRange($begin, $end);
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
@@ -230,7 +229,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->request($client, '/invoice/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $dateRange = $begin->format('Y-m-d') . DateRangeType::DATE_SPACER . $end->format('Y-m-d');
+        $dateRange = $this->formatDateRange($begin, $end);
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
@@ -285,7 +284,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->request($client, '/invoice/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $dateRange = $begin->format('Y-m-d') . DateRangeType::DATE_SPACER . $end->format('Y-m-d');
+        $dateRange = $this->formatDateRange($begin, $end);
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
@@ -370,7 +369,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=invoice_edit_form]')->form();
         $client->submit($form, [
             'invoice_edit_form' => [
-                'paymentDate' => (new \DateTime())->format('Y-m-d')
+                'paymentDate' => (new \DateTime())->format(self::DEFAULT_DATE_FORMAT)
             ]
         ]);
 
