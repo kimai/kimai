@@ -72,6 +72,8 @@ class LocaleFormatExtensionsTest extends TestCase
             'chart_duration',
             'money',
             'amount',
+            'js_format',
+            'pattern',
         ];
         $i = 0;
 
@@ -87,7 +89,7 @@ class LocaleFormatExtensionsTest extends TestCase
 
     public function testGetFunctions()
     {
-        $functions = ['javascript_configurations', 'create_date', 'month_names', 'javascript_format'];
+        $functions = ['javascript_configurations', 'create_date', 'month_names', 'locale_format'];
         $i = 0;
 
         $sut = $this->getSut('de', []);

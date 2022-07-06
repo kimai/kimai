@@ -94,7 +94,7 @@
         <source>Cannot stop running timesheet</source>
         <target>Sie haben eine aktive Zeitmessung, die nicht automatisch beendet werden kann.</target>
       </trans-unit>
-      <trans-unit id="7HYTefssdfsdf" resname="The given value is not a valid datetime format.">
+      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
         <source>The given value is not a valid datetime format.</source>
         <target>Das angegebene Format für die Tageszeit ist nicht korrekt.</target>
       </trans-unit>

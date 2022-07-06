@@ -55,7 +55,6 @@ class DatePickerType extends AbstractType
         $format = $this->localeService->getDateFormat(\Locale::getDefault());
         $converter = new FormFormatConverter();
         $formFormat = $converter->convert($format);
-        $pattern = $converter->convertToPattern($formFormat);
 
         $resolver->setDefaults([
             'widget' => 'single_text',
@@ -64,9 +63,6 @@ class DatePickerType extends AbstractType
             'model_timezone' => date_default_timezone_get(),
             'view_timezone' => date_default_timezone_get(),
             'force_time' => null,
-            'attr' => [
-                'pattern' => $pattern
-            ],
         ]);
     }
 

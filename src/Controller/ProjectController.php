@@ -569,7 +569,6 @@ final class ProjectController extends AbstractController
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'include_budget' => $this->isGranted('budget', $project),
             'include_time' => $this->isGranted('time', $project),
-            'time_increment' => 15,
         ]);
     }
 }

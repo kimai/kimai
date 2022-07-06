@@ -114,7 +114,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         if ($exception instanceof ValidationFailedException) {
             $msg = $this->getTranslator()->trans($exception->getMessage(), [], 'validators');
             if ($exception->getViolations()->count() > 0) {
-                for ($i = 0 ; $i < $exception->getViolations()->count(); $i++) {
+                for ($i = 0; $i < $exception->getViolations()->count(); $i++) {
                     $violation = $exception->getViolations()->get($i);
                     $form->addError(new FormError($violation->getMessage()));
                 }

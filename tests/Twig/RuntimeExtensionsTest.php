@@ -43,6 +43,7 @@ class RuntimeExtensionsTest extends TestCase
             'get_title',
             'progressbar_color',
             'javascript_translations',
+            'form_time_presets',
             'active_timesheets',
             'encore_entry_css_source',
             'render_widget',

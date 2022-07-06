@@ -16,8 +16,6 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TimePickerType extends AbstractType
@@ -31,18 +29,14 @@ class TimePickerType extends AbstractType
         $format = $this->localeService->getTimeFormat(\Locale::getDefault());
         $converter = new FormFormatConverter();
         $formFormat = $converter->convert($format);
-        $pattern = $converter->convertToPattern($formFormat);
 
         $resolver->setDefaults([
             'input' => 'string',
             'format' => $formFormat,
             'placeholder' => $formFormat, // $format
-            'time_increment' => null,
             'model_timezone' => date_default_timezone_get(),
             'view_timezone' => date_default_timezone_get(),
-            'attr' => [
-                'pattern' => $pattern
-            ],
+            'block_prefix' => 'time'
         ]);
     }
 
@@ -53,6 +47,15 @@ class TimePickerType extends AbstractType
                 function ($data) use ($options) {
                     if ($data === null) {
                         return null;
+                    }
+
+                    // DateTimePickerType
+                    if ($options['input'] === 'array' && \is_array($data)) {
+                        $now = new \DateTime('now', new \DateTimeZone($options['model_timezone']));
+                        $hour = $data['hour'] === '' ? 0 : (int) $data['hour'];
+                        $minute = $data['minute'] === '' ? 0 : (int) $data['minute'];
+                        $now->setTime($hour, $minute, 0);
+                        $data = $now;
                     }
 
                     // missing catch on purpose, will be auto-converted to a TransformationException
@@ -70,32 +73,18 @@ class TimePickerType extends AbstractType
                         throw new TransformationFailedException('Invalid time format');
                     }
 
+                    // DateTimePickerType
+                    if ($options['input'] === 'array') {
+                        return [
+                            'hour' => $dt->format('H'),
+                            'minute' => $dt->format('i'),
+                        ];
+                    }
+
                     return $dt;
                 }
             )
         );
-    }
-
-    public function buildView(FormView $view, FormInterface $form, array $options): void
-    {
-        if ($options['time_increment'] !== null && $options['time_increment'] >= 1) {
-            $intervalMinutes = (int) $options['time_increment'];
-
-            $maxMinutes = 24 * 60 - $intervalMinutes;
-
-            $date = new \DateTime('now', new \DateTimeZone($options['model_timezone']));
-            $date->setTime(0, 0, 0);
-
-            $presets[] = $date->format($options['format']);
-
-            for ($minutes = $intervalMinutes; $minutes <= $maxMinutes; $minutes += $intervalMinutes) {
-                $date->modify('+' . $intervalMinutes . ' minutes');
-
-                $presets[] = $date->format($options['format']);
-            }
-
-            $view->vars['duration_presets'] = $presets;
-        }
     }
 
     public function getParent(): string

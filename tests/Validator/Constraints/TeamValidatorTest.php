@@ -48,7 +48,7 @@ class TeamValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate($team, new TeamConstraint());
 
         $this->buildViolation('At least one team leader must be assigned to the team.')
-            ->atPath('property.path.teamleads')
+            ->atPath('property.path.members')
             ->setCode(TeamConstraint::MISSING_TEAMLEAD)
             ->assertRaised();
     }

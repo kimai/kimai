@@ -7,9 +7,8 @@
 {% set columns = {
     'name': {'class': 'alwaysVisible'},
     'teamlead': {'class': 'd-none badges', 'orderBy': false},
-    'teamlead_avatar': {'title': 'label.teamlead'|trans, 'class': 'd-none d-lg-table-cell avatars', 'orderBy': false},
+    'teamlead_avatar': {'title': 'team.member'|trans({}, 'teams'), 'class': 'd-none d-lg-table-cell avatars avatar-list avatar-list-stacked', 'orderBy': false},
     'user': {'class': 'd-none badges', 'orderBy': false},
-    'user_avatar': {'title': 'label.user'|trans, 'class': 'd-none d-xl-table-cell avatars', 'orderBy': false},
     'actions': {'class': 'actions alwaysVisible'},
 } %}
 
@@ -43,23 +42,16 @@
                     {% endfor %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'teamlead_avatar') }}">
-                    {% for member in team.members %}
-                        {% if member.teamlead %}
-                            {{ widgets.user_avatar(member.user) }}
-                        {% endif %}
+                    {% for member in team.members|sort((a, b) => b.teamlead <=> a.teamlead) %}
+                        {% set user = member.user %}
+                        {% set tooltip = member.teamlead ? ('label.teamlead'|trans ~ ': ' ~ user.displayName) : null %}
+                        {{ widgets.user_avatar(user, tooltip, 'avatar-rounded', (member.teamlead ? 'info' : null)) }}
                     {% endfor %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">
                     {% for member in team.members %}
                         {% if not member.teamlead %}
                             {{ widgets.label_user(member.user) }}
-                        {% endif %}
-                    {% endfor %}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'user_avatar') }}">
-                    {% for member in team.members %}
-                        {% if not member.teamlead %}
-                            {{ widgets.user_avatar(member.user) }}
                         {% endif %}
                     {% endfor %}
                 </td>

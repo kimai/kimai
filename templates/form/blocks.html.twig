@@ -86,42 +86,35 @@
     </div>
 {% endblock team_member_widget %}
 
-{% block date_picker_widget -%}
-    {% set format = javascript_format('date') %}
-    {% set attr = attr|merge({'autocomplete': 'off'}) -%}
-    {%- if datetime is not defined or not datetime -%}
-        {% set attr = attr|merge({'data-datepicker': 'on', 'data-format': format, 'placeholder': format}) -%}
-    {%- endif -%}
-    {%- if datetime is not defined or not datetime -%}
-        <div class="input-group">
-            <div class="input-group-text">
-                <a href="#" data-form-widget="date-now" data-format="{{ format }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
-            </div>
-            {{ block('date_widget') }}
-        </div>
-    {%- else -%}
-        <div class="input-group-text">
-            {{ icon('calendar') }}
-        </div>
-        {{ block('date_widget') }}
-    {%- endif -%}
-{%- endblock date_picker_widget %}
-
-{% block time_picker_widget -%}
-    {%- set format = javascript_format('time') -%}
-    {%- set attr = attr|merge({'autocomplete': 'off', 'data-timepicker': 'on', 'data-format': format, 'placeholder': format}) -%}
+{% block date_widget -%}
+    {% set format = locale_format('date') %}
+    {% set jsFormat = format|js_format %}
+    {% set attr = attr|merge({'pattern': format|pattern, 'autocomplete': 'off', 'data-datepicker': 'on', 'data-format': jsFormat, 'placeholder': jsFormat}) -%}
     <div class="input-group">
         <div class="input-group-text">
-            <a href="#" data-form-widget="date-now" data-format="{{ format }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
+            <a href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
+        </div>
+        {{- block('form_widget_simple') -}}
+    </div>
+{%- endblock date_widget %}
+
+{% block time_widget -%}
+    {%- set format = locale_format('time') -%}
+    {%- set jsFormat = format|js_format -%}
+    {%- set attr = attr|merge({'pattern': format|pattern, 'autocomplete': 'off', 'data-timepicker': 'on', 'data-format': jsFormat, 'placeholder': jsFormat}) -%}
+    <div class="input-group">
+        <div class="input-group-text">
+            <a href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
         </div>
         {{ block('form_widget_simple') }}
-        {% if (form.vars.duration_presets is defined and form.vars.duration_presets is not empty) and (form.vars.disabled is same as (false)) %}
+        {% set time_presets = form_time_presets(app.user.timezone, format) %}
+        {% if time_presets|length > 0 and form.vars.disabled is same as (false) %}
         <button type="button" class="btn dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
         <div class="dropdown-menu dropdown-menu-end pre-scrollable">
             <div class="dropdown-menu-columns">
                 {% for index in [0, 1, 2, 3] %}
                     <div class="dropdown-menu-column" style="min-width: 4rem">
-                        {% for value in form.vars.duration_presets %}
+                        {% for value in time_presets %}
                             {% if loop.index0 % 4 == index %}
                                 <a class="dropdown-item justify-content-center" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ value }}" data-event="change">{{ value }}</a>
                             {% endif %}
@@ -132,10 +125,10 @@
         </div>
         {% endif %}
     </div>
-{%- endblock time_picker_widget %}
+{%- endblock time_widget %}
 
 {% block daterange_widget %}
-    {% set format = javascript_format('date') %}
+    {% set format = locale_format('date')|js_format %}
     {% set attr = attr|merge({'data-daterangepicker': 'on', 'autocomplete': 'off', 'data-format': format, 'placeholder': format ~ attr['data-separator'] ~  format}) -%}
     <div class="input-group">
         {% if ranges is defined %}
@@ -181,39 +174,20 @@
     </div>
 {% endblock duration_widget %}
 
-{% block date_time_picker_widget -%}
-    {%- if widget == 'single_text' -%}
-        <div class="input-group">
-            <div class="input-group-text">
-                {{ icon('calendar') }}
-            </div>
-            {# the same is used in symfony form themes #}
-            {{- block('date_widget') -}}
-        </div>
-    {%- else -%}
-        {% set dateAttr = form.date.vars.attr -%}
-        {% set timeAttr = form.time.vars.attr|merge({step: timePickerIncrement}) -%}
-        {% if not valid %}
-            {% set dateAttr = dateAttr|merge({class: (dateAttr.class|default('') ~ ' is-invalid')|trim}) -%}
-            {% set timeAttr = timeAttr|merge({class: (timeAttr.class|default('') ~ ' is-invalid')|trim}) -%}
-            {% set valid = true %}
-        {% endif %}
-        <div {{ block('widget_container_attributes') }}>
-            <div class="input-group">
-                <div class="input-group-text add-on">
-                    {{ icon('calendar') }}
-                </div>
-                {{- form_widget(form.date, { datetime: true, compound: false, attr: dateAttr } ) -}}
+{% block date_time_widget -%}
+    <div {{ block('widget_container_attributes') }}>
+        <div class="row">
+            <div class="col-sm-6">
+                {{- form_widget(form.date, { datetime: true } ) -}}
                 {{- form_errors(form.date) -}}
-                <div class="input-group-text add-on">
-                    {{ icon('clock') }}
-                </div>
-                {{- form_widget(form.time, { datetime: true, compound: false, attr: timeAttr } ) -}}
-                {{- form_errors(form.time) -}}
+            </div>
+            <div class="col-sm-6">
+            {{- form_widget(form.time, { datetime: true } ) -}}
+            {{- form_errors(form.time) -}}
             </div>
         </div>
-    {%- endif -%}
-{%- endblock date_time_picker_widget %}
+    </div>
+{%- endblock date_time_widget %}
 
 {% block text_widget -%}
     {% if icon is not empty %}

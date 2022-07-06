@@ -266,8 +266,7 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals(0, $sut->getTimesheetDefaultRoundingEnd());
         $this->assertEquals(0, $sut->getTimesheetDefaultRoundingBegin());
         $this->assertEquals(10, $sut->getTimesheetIncrementDuration());
-        $this->assertEquals(5, $sut->getTimesheetIncrementBegin());
-        $this->assertEquals(5, $sut->getTimesheetIncrementEnd());
+        $this->assertEquals(5, $sut->getTimesheetIncrementMinutes());
     }
 
     public function testTimesheetWithLoader()
@@ -289,7 +288,6 @@ class SystemConfigurationTest extends TestCase
         $this->assertEquals(0, $sut->getTimesheetDefaultRoundingEnd());
         $this->assertEquals(0, $sut->getTimesheetDefaultRoundingBegin());
         $this->assertEquals(10, $sut->getTimesheetIncrementDuration());
-        $this->assertEquals(5, $sut->getTimesheetIncrementBegin());
-        $this->assertEquals(5, $sut->getTimesheetIncrementEnd());
+        $this->assertEquals(5, $sut->getTimesheetIncrementMinutes());
     }
 }

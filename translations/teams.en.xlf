@@ -34,6 +34,10 @@
         <source>team.create_default</source>
         <target>Create a new team to limit access</target>
       </trans-unit>
+      <trans-unit id="6g81kYY" approved="yes" resname="team.member">
+        <source>team.member</source>
+        <target>Member</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

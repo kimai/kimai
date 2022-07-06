@@ -115,12 +115,12 @@ class FormFormatConverterTest extends TestCase
         ];
 
         $timeExample = [
-          'ar' => '8:13 am',
+          'ar' => '8:13 AM',
           'cs' => '8:44',
           'da' => '08.44',
           'de' => '19:56',
           'fi' => '17.41',
-          'ko' => 'am 7:39',
+          'ko' => 'AM 7:39',
           'fr_CA' => '17 h 45',
         ];
 

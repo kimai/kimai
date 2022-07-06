@@ -52,11 +52,6 @@ class ProjectEditForm extends AbstractType
             $dateTimeOptions['format'] = $options['date_format'];
         }
 
-        $timeIncrement = 1;
-        if ($options['time_increment'] >= 1 && $options['time_increment'] <= 60) {
-            $timeIncrement = $options['time_increment'];
-        }
-
         $builder
             ->add('name', TextType::class, [
                 'label' => 'label.name',
@@ -115,7 +110,6 @@ class ProjectEditForm extends AbstractType
             'include_budget' => false,
             'include_time' => false,
             'timezone' => date_default_timezone_get(),
-            'time_increment' => 1,
             'attr' => [
                 'data-form-event' => 'kimai.projectUpdate'
             ],

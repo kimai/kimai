@@ -15,6 +15,7 @@ use App\Entity\User;
 use App\Event\PageActionsEvent;
 use App\Event\ThemeEvent;
 use App\Event\ThemeJavascriptTranslationsEvent;
+use App\Utils\FormFormatConverter;
 use App\Utils\Theme;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -112,5 +113,32 @@ final class ThemeExtension implements RuntimeExtensionInterface
     public function colorize(?string $color, ?string $identifier = null): string
     {
         return $this->theme->getColor($color, $identifier);
+    }
+
+    public function getTimePresets(string $timezone, string $format): array
+    {
+        $converter = new FormFormatConverter();
+        $format = $converter->convert($format);
+
+        $intervalMinutes = $this->configuration->getTimesheetIncrementMinutes();
+
+        if ($intervalMinutes === null || $intervalMinutes < 5) {
+            return [];
+        }
+
+        $maxMinutes = 24 * 60 - $intervalMinutes;
+
+        $date = new \DateTime('now', new \DateTimeZone($timezone));
+        $date->setTime(0, 0, 0);
+
+        $presets[] = $date->format($format);
+
+        for ($minutes = $intervalMinutes; $minutes <= $maxMinutes; $minutes += $intervalMinutes) {
+            $date->modify('+' . $intervalMinutes . ' minutes');
+
+            $presets[] = $date->format($format);
+        }
+
+        return $presets;
     }
 }

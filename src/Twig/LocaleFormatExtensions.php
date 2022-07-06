@@ -13,6 +13,7 @@ use App\Configuration\LocaleService;
 use App\Constants;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Utils\FormFormatConverter;
 use App\Utils\JavascriptFormatConverter;
 use App\Utils\LocaleFormatter;
 use DateTime;
@@ -51,6 +52,8 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
             new TwigFilter('chart_duration', [$this, 'durationChart']),
             new TwigFilter('money', [$this, 'money']),
             new TwigFilter('amount', [$this, 'amount']),
+            new TwigFilter('js_format', [$this, 'convertJavascriptFormat']),
+            new TwigFilter('pattern', [$this, 'convertHtmlPattern']),
         ];
     }
 
@@ -78,7 +81,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
             new TwigFunction('javascript_configurations', [$this, 'getJavascriptConfiguration']),
             new TwigFunction('create_date', [$this, 'createDate']),
             new TwigFunction('month_names', [$this, 'getMonthNames']),
-            new TwigFunction('javascript_format', [$this, 'getJavascriptFormat']),
+            new TwigFunction('locale_format', [$this, 'getLocaleFormat']),
         ];
     }
 
@@ -241,25 +244,31 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         ];
     }
 
-    public function getJavascriptFormat(string $name): string
+    public function getLocaleFormat(string $name): string
+    {
+        $timeFormat = $this->localeService->getTimeFormat($this->locale);
+        $dateFormat = $this->localeService->getDateFormat($this->locale);
+
+        return match ($name) {
+            'date' => $dateFormat,
+            'time' => $timeFormat,
+            'datetime', 'date-time' => $dateFormat . ' ' . $timeFormat,
+            default => throw new \InvalidArgumentException('Unknown format name: ' . $name),
+        };
+    }
+
+    public function convertJavascriptFormat(string $format): string
     {
         $converter = new JavascriptFormatConverter();
-        $time = $converter->convert($this->localeService->getTimeFormat($this->locale));
-        $date = $converter->convert($this->localeService->getDateFormat($this->locale));
 
-        switch ($name) {
-            case 'date':
-                return $date;
+        return $converter->convert($format);
+    }
 
-            case 'time':
-                return $time;
+    public function convertHtmlPattern(string $format): string
+    {
+        $converter = new FormFormatConverter();
 
-            case 'datetime':
-            case 'date-time':
-                return $date . ' ' . $time;
-        }
-
-        throw new \InvalidArgumentException('Unknown format name: ' . $name);
+        return $converter->convertToPattern($format);
     }
 
     /**

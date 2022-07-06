@@ -58,7 +58,8 @@ class TeamEditForm extends AbstractType
             'allow_add' => true,
             'by_reference' => false,
             'allow_delete' => true,
-            'label' => 'label.user',
+            'label' => 'team.member',
+            'translation_domain' => 'teams',
             'documentation' => [
                 'type' => 'array',
                 'items' => [

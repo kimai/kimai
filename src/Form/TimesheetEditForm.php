@@ -153,9 +153,6 @@ class TimesheetEditForm extends AbstractType
         ]));
 
         $timeOptions = $dateTimeOptions;
-        if ($options['begin_minutes'] >= 1 && $options['begin_minutes'] <= 60) {
-            $timeOptions['time_increment'] = $options['begin_minutes'];
-        }
 
         $builder->add('begin_time', TimePickerType::class, array_merge($timeOptions, [
             'label' => 'label.starttime',
@@ -203,10 +200,6 @@ class TimesheetEditForm extends AbstractType
 
     protected function addEnd(FormBuilderInterface $builder, array $dateTimeOptions, array $options = [])
     {
-        if ($options['end_minutes'] >= 1 && $options['end_minutes'] <= 60) {
-            $dateTimeOptions['time_increment'] = (int) $options['end_minutes'];
-        }
-
         $builder->add('end_time', TimePickerType::class, array_merge($dateTimeOptions, [
             'required' => false,
             'label' => 'label.endtime',
@@ -417,8 +410,6 @@ class TimesheetEditForm extends AbstractType
             'allow_duration' => false,
             'duration_minutes' => null,
             'duration_hours' => $maxHours,
-            'begin_minutes' => 1,
-            'end_minutes' => 1,
             'attr' => [
                 'data-form-event' => 'kimai.timesheetUpdate',
                 'data-msg-success' => 'action.update.success',

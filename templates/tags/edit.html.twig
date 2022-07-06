@@ -8,20 +8,15 @@
 {% block main %}
     {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
-        'title': tag.name|default('create'|trans),
+        'title': (tag.id is null ? 'create'|trans : 'edit'|trans({}, 'actions')),
         'form': form,
         'back': path('tags')
     } %}
     {% embed formEditTemplate with formOptions %}
+        {% form_theme form 'form/horizontal.html.twig' %}
         {% block form_body %}
-            <div class="row">
-                <div class="col-md-9">
-                    {{ form_row(form.name) }}
-                </div>
-                <div class="col-md-3">
-                    {{ form_row(form.color) }}
-                </div>
-            </div>
+            {{ form_row(form.name) }}
+            {{ form_row(form.color) }}
             {{ form_rest(form) }}
         {% endblock %}
     {% endembed %}

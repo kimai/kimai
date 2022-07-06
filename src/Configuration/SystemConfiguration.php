@@ -445,14 +445,9 @@ class SystemConfiguration
         return $this->getIncrement('timesheet.duration_increment', $this->getTimesheetDefaultRoundingDuration(), 1);
     }
 
-    public function getTimesheetIncrementBegin(): ?int
+    public function getTimesheetIncrementMinutes(): ?int
     {
-        return $this->getIncrement('timesheet.time_increment', $this->getTimesheetDefaultRoundingBegin(), 0);
-    }
-
-    public function getTimesheetIncrementEnd(): ?int
-    {
-        return $this->getIncrement('timesheet.time_increment', $this->getTimesheetDefaultRoundingEnd(), 0);
+        return $this->getIncrement('timesheet.time_increment', $this->getTimesheetDefaultRoundingDuration(), 0);
     }
 
     public function getQuickEntriesRecentAmount(): int

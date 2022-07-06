@@ -84,7 +84,7 @@ class FormFormatConverter
         $pattern = str_replace('i', self::PATTERN_MINUTES, $pattern);
         $pattern = str_replace('mm', self::PATTERN_MINUTES, $pattern);
         $pattern = str_replace('A', '(AM|PM){1}', $pattern);
-        $pattern = str_replace('a', '(am|pm){1}', $pattern);
+        $pattern = str_replace('a', '(AM|PM){1}', $pattern);
         $pattern = str_replace('*****', 'h', $pattern);
 
         if (!$html) {

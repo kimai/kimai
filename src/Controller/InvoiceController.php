@@ -267,7 +267,6 @@ final class InvoiceController extends AbstractController
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('admin_invoice_list');
-
             } catch (Exception $ex) {
                 $this->handleFormUpdateException($ex, $form);
             }

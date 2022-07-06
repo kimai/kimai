@@ -95,19 +95,24 @@
     {{ _self.label_color(team.name, team.color|colorize(team.name)) }}
 {% endmacro %}
 
-{% macro user_avatar(user, tooltip, class) %}
+{% macro user_avatar(user, tooltip, class, badge) %}
+    {% set avatar = null %}
     {% if user.avatar is not empty and kimai_config.themeAllowAvatarUrls %}
         {% set avatar = asset(user.avatar, 'avatars') %}
-        {% if tooltip is same as (false) %}
-        <img src="{{ avatar }}" class="avatar{% if class is not empty %} {{ class }}{% endif %}" alt="{{ user.displayName }}" />
-        {% else %}
-        <img src="{{ avatar }}" class="avatar{% if class is not empty %} {{ class }}{% endif %}" data-toggle="tooltip" data-placement="top" alt="{{ user.displayName }}" title="{{ tooltip|default(user.displayName) }}" />
-        {% endif %}
-    {% else %}
-        {% set color = user.color|colorize(user.displayName) %}
-        <span class="avatar {{ class }}" style="background-color: {{ color }}; color: {{ color|font_contrast }}"
-        {%- if tooltip is not same as (false) %} data-toggle="tooltip" data-placement="top" title="{{ tooltip|default(user.displayName) }}"{% endif -%}>{{ user.initials }}</span>
     {% endif %}
+    {% if not user.enabled %}
+        {% set badge = 'danger' %}
+    {% endif %}
+    {% set color = user.color|colorize(user.displayName) %}
+    <span class="avatar {{ class }}"
+        {%- if tooltip is not same as (false) %} data-toggle="tooltip" data-placement="top" title="{{ tooltip|default(user.displayName) }}"{% endif -%}
+        {% if avatar is not null %}
+            style="background-image: url({{ avatar }})">&nbsp;
+        {% else %}
+            style="background-color: {{ color }}; color: {{ color|font_contrast }}">{{ user.initials }}
+        {% endif %}
+        {%- if badge is not null -%}<span class="badge bg-{{ badge }}"></span>{%-endif -%}
+    </span>
 {% endmacro %}
 
 {% macro avatar(initials, color, tooltip, class) %}
@@ -324,25 +329,23 @@
         <thead>
             <tr>
                 <th class="hw-min">{{ 'label.team'|trans }}</th>
-                <th class="d-none d-sm-table-cell">{{ 'label.user'|trans }}</th>
+                <th class="d-none d-sm-table-cell">{{ 'team.member'|trans({}, 'teams') }}</th>
             </tr>
         </thead>
         {% endif %}
         <tbody>
         {% for team in teams|sort((a, b) => a.name <=> b.name) %}
             {% set members = team.members|filter(m => m.user.enabled) %}
-            {% set userTeamCount = members|length %}
             {% set class = 'avatar-rounded' %}
-            {% set container = 'avatar-list avatar-list-stacked' %}
             <tr{% if viewTeam and is_granted('edit', team) %} class="modal-ajax-form open-edit" data-href="{{ path('admin_team_member', {'id': team.id}) }}"{% endif %}>
                 <td class="{{ nameClass }}">
                     {{ _self.label_color_dot('color', true, team.name, null, team.color|colorize(team.name)) }}
                 </td>
-                <td class="d-none d-sm-table-cell avatars {{ container }}">
+                <td class="d-none d-sm-table-cell avatars avatar-list avatar-list-stacked">
                     {% for member in members|sort((a, b) => b.teamlead <=> a.teamlead) %}
                         {% set user = member.user %}
                         {% if member.teamlead %}
-                            {{ _self.user_avatar(user, ('label.teamlead'|trans ~ ': ' ~ user.displayName), (class ~ ' teamlead')) }}
+                            {{ _self.user_avatar(user, ('label.teamlead'|trans ~ ': ' ~ user.displayName), (class ~ ' teamlead'), 'info') }}
                         {% else %}
                             {{ _self.user_avatar(user, null, class) }}
                         {% endif %}

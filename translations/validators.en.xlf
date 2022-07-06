@@ -94,7 +94,7 @@
         <source>Cannot stop running timesheet</source>
         <target>You have an active time record which cannot be stopped automatically.</target>
       </trans-unit>
-      <trans-unit id="7HYTefssdfsdf" resname="The given value is not a valid datetime format.">
+      <trans-unit id="8L_7O31" resname="The given value is not a valid datetime format.">
         <source>The given value is not a valid datetime format.</source>
         <target>The given value is not a valid day-time format.</target>
       </trans-unit>
