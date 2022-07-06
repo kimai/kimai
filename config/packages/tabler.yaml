@@ -49,7 +49,7 @@ tabler:
         bookmark: far fa-star
         bookmarked: fas fa-star
         calendar: far fa-calendar-alt
-        cancel: far fa-times
+        cancel: fas fa-times
         clock: far fa-clock
         collapse: fas fa-chevron-down
         columns: fas fa-wrench
