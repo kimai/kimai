@@ -8,11 +8,11 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target>Data (implicit)</target>
+        <target state="translated">Formatul configurat</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target>Data</target>
+        <target state="translated">Dată</target>
       </trans-unit>
     </body>
   </file>

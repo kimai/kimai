@@ -82,6 +82,10 @@
         <source>Duration cannot be zero.</source>
         <target state="translated">Prazno trajanje nije dozvoljeno.</target>
       </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">Žao nam je, ali budžet je potrošen.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

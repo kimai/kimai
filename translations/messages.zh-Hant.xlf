@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="messages.en.xlf">
+    <body>
+      <!--
+              Global template keys
+            -->
+      <trans-unit id="N7mikjJ" resname="time_tracking">
+        <source>time_tracking</source>
+        <target state="translated">時間追蹤</target>
+      </trans-unit>
+      <trans-unit id="inmIkP6" resname="yes">
+        <source>yes</source>
+        <target state="translated">是</target>
+      </trans-unit>
+      <trans-unit id="k5Apjz_" resname="no">
+        <source>no</source>
+        <target state="translated">否</target>
+      </trans-unit>
+      <trans-unit id=".3dyBTq" resname="both">
+        <source>both</source>
+        <target state="translated">都是</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target state="translated">自動化</target>
+      </trans-unit>
+      <trans-unit id="KLIuHvt" resname="This is a mandatory field">
+        <source>This is a mandatory field</source>
+        <target state="translated">必選</target>
+      </trans-unit>
+      <trans-unit id="_ohHsMM" resname="create">
+        <source>create</source>
+        <target state="translated">建立</target>
+      </trans-unit>
+      <trans-unit id="DYHuW58" resname="confirm.delete">
+        <source>confirm.delete</source>
+        <target state="translated">您是否真的要刪除此項目？</target>
+      </trans-unit>
+      <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
+        <source>admin_entity.delete_confirm</source>
+        <target state="translated">這些數據也將被刪除！或者，您可以選擇將所有數據傳輸到的條目：</target>
+      </trans-unit>
+      <trans-unit id="COyxNde" resname="delete.not_in_use">
+        <source>delete.not_in_use</source>
+        <target state="translated">可以安全地刪除此項目。</target>
+      </trans-unit>
+      <trans-unit id="I3TZF5S" resname="cancel">
+        <source>cancel</source>
+        <target state="translated">取消</target>
+      </trans-unit>
+      <trans-unit id="PyZ8KrQ" resname="confirm">
+        <source>confirm</source>
+        <target state="translated">確認</target>
+      </trans-unit>
+      <trans-unit id=".0CFrRV" resname="upload">
+        <source>upload</source>
+        <target state="translated">上傳</target>
+      </trans-unit>
+      <trans-unit id="JBkykGe" resname="search">
+        <source>search</source>
+        <target state="translated">搜尋</target>
+      </trans-unit>
+      <trans-unit id="IolBPQD" resname="label.searchTerm">
+        <source>label.searchTerm</source>
+        <target state="translated">搜尋詞</target>
+      </trans-unit>
+      <trans-unit id="BytPihM" resname="label.set_as_default">
+        <source>label.set_as_default</source>
+        <target state="translated">將設置儲存為常用搜索</target>
+      </trans-unit>
+      <trans-unit id="NNKq04n" resname="label.remove_default">
+        <source>label.remove_default</source>
+        <target state="translated">刪除常用搜尋條件</target>
+      </trans-unit>
+      <trans-unit id="31x84Dt" resname="label.asc">
+        <source>label.asc</source>
+        <target state="translated">升幂</target>
+      </trans-unit>
+      <trans-unit id="0D_zaYd" resname="label.desc">
+        <source>label.desc</source>
+        <target state="translated">降冪</target>
+      </trans-unit>
+      <trans-unit id="Z8Fxbvf" resname="label.orderBy">
+        <source>label.orderBy</source>
+        <target state="translated">以此排序</target>
+      </trans-unit>
+      <trans-unit id="hBNESu6" resname="my.profile">
+        <source>my.profile</source>
+        <target state="translated">我的資訊</target>
+      </trans-unit>
+      <trans-unit id="J258iS6" resname="update_multiple">
+        <source>update_multiple</source>
+        <target state="translated">%action% %count% 條目？</target>
+      </trans-unit>
+      <trans-unit id="OTDmccn" resname="attachments">
+        <source>attachments</source>
+        <target state="translated">檔案</target>
+      </trans-unit>
+      <trans-unit id="O5w1jzb" resname="file">
+        <source>file</source>
+        <target state="translated">檔案</target>
+      </trans-unit>
+      <trans-unit id="0M_Gylq" resname="rates.empty">
+        <source>rates.empty</source>
+        <target state="translated">尚未配置每小時費率。</target>
+      </trans-unit>
+      <trans-unit id="mflwMcX" resname="rates.title">
+        <source>rates.title</source>
+        <target state="translated">費用</target>
+      </trans-unit>
+      <trans-unit id="zFfl7jw" resname="sum.total">
+        <source>sum.total</source>
+        <target state="translated">總共</target>
+      </trans-unit>
+      <trans-unit id="XP5zkiN" resname="modal.dirty">
+        <source>modal.dirty</source>
+        <target state="translated">表格已修改。請點擊＂儲存＂以儲存變更或點擊＂關閉＂以取消。</target>
+      </trans-unit>
+      <trans-unit id="DpdNns0" resname="label.choice_pattern">
+        <source>Display of entries in selection lists</source>
+        <target state="translated">顯示選擇列表中的條目</target>
+      </trans-unit>
+      <!--
+              Login / Security
+            -->
+      <trans-unit id="9pvowqn" resname="label.password">
+        <source>label.password</source>
+        <target state="translated">密碼</target>
+      </trans-unit>
+      <trans-unit id="WxAnbP0" resname="label.password_repeat">
+        <source>label.password_repeat</source>
+        <target state="translated">再次輸入密碼</target>
+      </trans-unit>
+      <trans-unit id="II4DGnv" resname="label.logout">
+        <source>label.logout</source>
+        <target state="translated">登入</target>
+      </trans-unit>
+      <trans-unit id="hFFZGp_" resname="label.user_profile">
+        <source>label.user_profile</source>
+        <target state="translated">我的資訊</target>
+      </trans-unit>
+      <trans-unit id="gXZR.hV" resname="label.api_token">
+        <source>label.api_token</source>
+        <target state="translated">API 密碼</target>
+      </trans-unit>
+      <trans-unit id="s_X2xpI" resname="label.api_token_repeat">
+        <source>label.api_token_repeat</source>
+        <target state="translated">再次輸入 API 密碼</target>
+      </trans-unit>
+      <trans-unit id=".372.o7" resname="login_required">
+        <source>login_required</source>
+        <target state="translated">沒有權限。 重新登入？</target>
+      </trans-unit>
+      <trans-unit id=".ndupSK" resname="registration.check_email">
+        <source>registration.check_email</source>
+        <target state="translated">已發送電子郵件到 %email%。內容包含一個啟用連結，您必須點擊才能啟用您的帳戶。</target>
+      </trans-unit>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email">
+        <source>resetting.check_email</source>
+        <target state="translated">電子郵件已發送。內容包含一個您必須點擊才能重置密碼的連結。注意：您只能在 %tokenLifetime% 小時內申請一次新密碼。如果您沒有收到電子郵件，請檢查您的垃圾郵件夾或重試。</target>
+      </trans-unit>
+      <!--
+              Menu / Navbar items
+            -->
+      <trans-unit id="UoOv6mx" resname="menu.homepage">
+        <source>menu.homepage</source>
+        <target state="translated">儀錶板</target>
+      </trans-unit>
+      <trans-unit id="wvvYSw_" resname="menu.admin">
+        <source>menu.admin</source>
+        <target state="translated">管理</target>
+      </trans-unit>
+      <trans-unit id="6OKwCUB" resname="menu.system">
+        <source>menu.system</source>
+        <target state="translated">系統</target>
+      </trans-unit>
+      <trans-unit id="wBTFKFR" resname="menu.logout">
+        <source>menu.logout</source>
+        <target state="translated">登出</target>
+      </trans-unit>
+      <trans-unit id="C0W7_BT" resname="menu.timesheet">
+        <source>menu.timesheet</source>
+        <target state="translated">我的時間</target>
+      </trans-unit>
+      <trans-unit id="I.eil4u" resname="menu.export">
+        <source>menu.export</source>
+        <target state="translated">匯出</target>
+      </trans-unit>
+      <trans-unit id="ypVQO7o" resname="menu.reporting">
+        <source>menu.reporting</source>
+        <target state="translated">報表</target>
+      </trans-unit>
+      <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
+        <source>menu.admin_timesheet</source>
+        <target state="translated">時間表</target>
+      </trans-unit>
+      <trans-unit id="IeshU90" resname="customers">
+        <source>customers</source>
+        <target state="translated">客戶</target>
+      </trans-unit>
+      <trans-unit id="JXfA9Ve" resname="projects">
+        <source>projects</source>
+        <target state="translated">專案</target>
+      </trans-unit>
+      <trans-unit id="YkyVVAY" resname="activities">
+        <source>activities</source>
+        <target state="translated">活動</target>
+      </trans-unit>
+      <trans-unit id="fftM9nd" resname="users">
+        <source>users</source>
+        <target state="translated">使用者</target>
+      </trans-unit>
+      <trans-unit id="pA.bYIk" resname="menu.admin_team">
+        <source>menu.admin_team</source>
+        <target state="translated">團隊</target>
+      </trans-unit>
+      <trans-unit id="hOZxcaK" resname="menu.plugin">
+        <source>menu.plugin</source>
+        <target state="translated">外掛程式</target>
+      </trans-unit>
+      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
+        <source>menu.system_configuration</source>
+        <target state="translated">設置</target>
+      </trans-unit>
+      <trans-unit id="l4wviUE" resname="tags">
+        <source>tags</source>
+        <target state="translated">標籤</target>
+      </trans-unit>
+      <trans-unit id="1kHI0gb" resname="menu.doctor">
+        <source>menu.doctor</source>
+        <target state="translated">診斷</target>
+      </trans-unit>
+      <!--
+              Error templates
+            -->
+      <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
+        <source>error.no_entries_found</source>
+        <target state="translated">根據您選擇的過濾器未找到任何條目。</target>
+      </trans-unit>
+      <trans-unit id="hlu4iX5" resname="error.no_comments_found">
+        <source>error.no_comments_found</source>
+        <target state="translated">尚未發表評論。</target>
+      </trans-unit>
+      <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
+        <source>error.too_many_entries</source>
+        <target state="translated">無法處理該請求。 找到太多結果。</target>
+      </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+        <source>The directory “%dir%” does not exist and could not be created.</source>
+        <target state="translated">目錄 “%dir%” 不存在並且無法建立。</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected">
+        <source>error.directory_protected</source>
+        <target state="translated">目錄 “%dir%” 被保護寫入。</target>
+      </trans-unit>
+      <!--
+              General labels
+            -->
+      <trans-unit id="H1qEi4d" resname="label.date">
+        <source>label.date</source>
+        <target state="translated">日期</target>
+      </trans-unit>
+      <trans-unit id="eJPDE76" resname="label.starttime">
+        <source>label.starttime</source>
+        <target state="translated">開始</target>
+      </trans-unit>
+      <trans-unit id="uZlpDFh" resname="label.endtime">
+        <source>label.endtime</source>
+        <target state="translated">結束</target>
+      </trans-unit>
+      <trans-unit id="cgpmY0I" resname="label.duration">
+        <source>label.duration</source>
+        <target state="translated">持續時間</target>
+      </trans-unit>
+      <trans-unit id="O2X4xZH" resname="label.user">
+        <source>label.user</source>
+        <target state="translated">使用者</target>
+      </trans-unit>
+      <trans-unit id="LDhDPrF" resname="label.username">
+        <source>label.username</source>
+        <target state="translated">使用者名稱</target>
+      </trans-unit>
+      <trans-unit id="4cEApe1" resname="label.description">
+        <source>label.description</source>
+        <target state="translated">描述</target>
+      </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="translated">發票文字</target>
+      </trans-unit>
+      <trans-unit id="ysOvPSq" resname="label.name">
+        <source>label.name</source>
+        <target state="translated">名稱</target>
+      </trans-unit>
+      <trans-unit id="WqTho4C" resname="label.comment">
+        <source>label.comment</source>
+        <target state="translated">評論</target>
+      </trans-unit>
+      <trans-unit id="txRonia" resname="label.id">
+        <source>label.id</source>
+        <target state="translated">ID</target>
+      </trans-unit>
+      <trans-unit id="CYpZwBz" resname="label.visible">
+        <source>label.visible</source>
+        <target state="translated">可見</target>
+      </trans-unit>
+      <trans-unit id="2ktNwkr" resname="label.budget">
+        <source>label.budget</source>
+        <target state="translated">預算</target>
+      </trans-unit>
+      <trans-unit id="x8TrOec" resname="label.timeBudget">
+        <source>label.timeBudget</source>
+        <target state="translated">時間預算</target>
+      </trans-unit>
+      <trans-unit id="l1wiL0h" resname="label.activity">
+        <source>label.activity</source>
+        <target state="translated">活動</target>
+      </trans-unit>
+      <trans-unit id="KtnqJcg" resname="label.project">
+        <source>label.project</source>
+        <target state="translated">專案</target>
+      </trans-unit>
+      <trans-unit id="VNCQ7YU" resname="label.tag">
+        <source>label.tag</source>
+        <target state="translated">標籤</target>
+      </trans-unit>
+      <trans-unit id="ijQyGRo" resname="label.tags">
+        <source>label.tags</source>
+        <target state="translated">標籤</target>
+      </trans-unit>
+      <trans-unit id="VAbtieW" resname="label.hourlyRate">
+        <source>label.hourlyRate</source>
+        <target state="translated">每小時費率</target>
+      </trans-unit>
+      <trans-unit id="IQ.tlua" resname="label.hourly_rate">
+        <source>label.hourly_rate</source>
+        <target state="translated">每小時費率</target>
+      </trans-unit>
+      <trans-unit id="dezCZWf" resname="label.skin">
+        <source>label.skin</source>
+        <target state="translated">顯示：顏色</target>
+      </trans-unit>
+      <trans-unit id="42BRM3Q" resname="label.theme.layout">
+        <source>label.theme.layout</source>
+        <target state="translated">顯示：版面</target>
+      </trans-unit>
+      <trans-unit id="w8T34A6" resname="label.hours">
+        <source>label.hours</source>
+        <target state="translated">小時</target>
+      </trans-unit>
+      <trans-unit id="Ih3IFXj" resname="label.rate">
+        <source>label.rate</source>
+        <target state="translated">費率</target>
+      </trans-unit>
+      <trans-unit id="djL6LMC" resname="help.rate">
+        <source>help.rate</source>
+        <target state="translated">每小時費用</target>
+      </trans-unit>
+      <trans-unit id="QzvjNwg" resname="label.rate_internal">
+        <source>label.rate_internal</source>
+        <target state="translated">內部費率</target>
+      </trans-unit>
+      <trans-unit id="uz4SmfP" resname="help.rate_internal">
+        <source>help.rate_internal</source>
+        <target state="translated">內部成本（如果未指定，則使用正常費率）</target>
+      </trans-unit>
+      <trans-unit id="v72sA1c" resname="label.recalculate_rates">
+        <source>label.recalculate_rates</source>
+        <target state="translated">重新計算費率</target>
+      </trans-unit>
+      <trans-unit id="foM2o5T" resname="label.language">
+        <source>label.language</source>
+        <target state="translated">語言</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

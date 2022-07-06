@@ -44,6 +44,7 @@ class TranslationCommand extends Command
             ->addOption('delete-resname', null, InputOption::VALUE_REQUIRED, 'Deletes the translation by resname')
             ->addOption('extension', null, InputOption::VALUE_NONE, 'Find translation files with wrong extensions')
             ->addOption('fill-empty', null, InputOption::VALUE_NONE, 'Pre-fills empty translations with the english version')
+            ->addOption('delete-empty', null, InputOption::VALUE_NONE, 'Delete all empty kyes and files which have no translated key at all')
             // DEEPL TRANSLATION FEATURE - UNTESTED
             ->addOption('translate-locale', null, InputOption::VALUE_REQUIRED, 'Translate into the given locale with Deepl')
             // @see https://www.deepl.com/de/pro#developer
@@ -122,7 +123,7 @@ class TranslationCommand extends Command
                         continue;
                     }
 
-                    $this->fixEmptyTranslations($file, $translations[$fromLocale][$name]);
+                    $this->fillEmptyTranslations($file, $translations[$fromLocale][$name]);
                 }
             }
         }
@@ -166,6 +167,17 @@ class TranslationCommand extends Command
             foreach ($duplicates as $id => $files) {
                 if (\count($files) > 1) {
                     $io->text($id . ' => ' . implode(', ', $files));
+                }
+            }
+        }
+
+        // ==========================================================================
+        // Delete empty translation keys and files without any translation
+        // ==========================================================================
+        if ($input->getOption('delete-empty')) {
+            foreach ($bases as $directory) {
+                foreach (glob($directory) as $file) {
+                    $this->removeEmptyTranslations($io, $file);
                 }
             }
         }
@@ -390,7 +402,7 @@ class TranslationCommand extends Command
         file_put_contents($file, $xmlDocument->saveXML());
     }
 
-    private function fixEmptyTranslations(string $file, array $translations): void
+    private function fillEmptyTranslations(string $file, array $translations): void
     {
         $xml = simplexml_load_file($file);
         $foundEmpty = false;
@@ -452,6 +464,51 @@ class TranslationCommand extends Command
         $xmlDocument->loadXML($xml->asXML());
 
         file_put_contents($file, $xmlDocument->saveXML());
+    }
+
+    private function removeEmptyTranslations(SymfonyStyle $io, string $file): void
+    {
+        $xml = simplexml_load_file($file);
+        $hasTranslation = false;
+
+        /** @var \SimpleXMLElement $unit */
+        foreach ($xml->file->body->{'trans-unit'} as $unit) {
+            $translation = (string) $unit->target;
+            if (\strlen($translation) > 0) {
+                $hasTranslation = true;
+                break;
+            }
+        }
+
+        if (!$hasTranslation) {
+            unlink($file);
+            $io->warning('Removed empty translation file: ' . basename($file));
+
+            return;
+        }
+
+        $xmlDocument = new \DOMDocument('1.0');
+        $xmlDocument->preserveWhiteSpace = false;
+        $xmlDocument->loadXML($xml->asXML());
+
+        $removedTranslation = false;
+        $elements = $xmlDocument->getElementsByTagName('target');
+        foreach ($elements as $element) {
+            if ($element->nodeValue === '' || $element->nodeValue === null) {
+                /** @var \DOMElement $parent */
+                $parent = $element->parentNode;
+                $io->text('Remove empty translation: ' . $parent->getAttribute('resname'));
+                $parent->parentNode->removeChild($parent);
+                $removedTranslation = true;
+            }
+        }
+
+        if ($removedTranslation) {
+            $xmlDocument->formatOutput = true;
+
+            file_put_contents($file, $xmlDocument->saveXML());
+            $io->warning('Removed empty translations from file: ' . basename($file));
+        }
     }
 
     private function generateId(string $source): string

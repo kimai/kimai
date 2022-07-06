@@ -20,11 +20,11 @@
       </trans-unit>
       <trans-unit id="hlIIRjb" resname="team.visibility_restricted">
         <source>team.visibility_restricted</source>
-        <target>只对以下团队和所有管理员可见</target>
+        <target state="translated">只对以下团队和所有管理员可见。</target>
       </trans-unit>
       <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited">
         <source>team.project_visibility_inherited</source>
-        <target state="needs-translation">该项目访问量有限，因为团队权限是为客户设置的</target>
+        <target state="translated">该项目访问受限，因为团队权限是为客户设置的。</target>
       </trans-unit>
     </body>
   </file>

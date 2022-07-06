@@ -68,6 +68,7 @@
         "twig/string-extra": "^3.0"
     },
     "require-dev": {
+        "ext-simplexml": "*",
         "dama/doctrine-test-bundle": "^7.0",
         "doctrine/doctrine-fixtures-bundle": "^3.2",
         "fakerphp/faker": "^1.15",

@@ -110,15 +110,16 @@ final class SystemConfigurationController extends AbstractController
     }
 
     /**
-     * @Route(path="/update/{section}/{single}", name="system_configuration_update", methods={"POST"})
+     * @Route(path="/update/{section}/{single}", defaults={"single": "0"}, name="system_configuration_update", methods={"POST"})
      *
      * @internal do not link directly to this route
      * @param Request $request
      * @param string $section
      * @return RedirectResponse|Response
      */
-    public function configUpdate(Request $request, string $section, bool $single): Response
+    public function configUpdate(Request $request, string $section, string $single): Response
     {
+        $single = (bool) $single;
         $configModel = null;
         $configSettings = $this->getInitializedConfigurations();
 

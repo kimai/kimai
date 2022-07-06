@@ -458,6 +458,10 @@
         <source>Duration cannot be zero.</source>
         <target>אסור משך זמן ריק.</target>
       </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">התקציב מנוצל, סליחה.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
