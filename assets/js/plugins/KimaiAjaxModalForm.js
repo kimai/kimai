@@ -116,13 +116,32 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
         return document.getElementById('remote_form_modal');
     }
 
+    /**
+     * @param {Element|ChildNode} node
+     * @returns {Element}
+     * @private
+     */
+    _makeScriptExecutable(node) {
+        if (node.tagName !== undefined && node.tagName === 'SCRIPT') {
+            const script  = document.createElement('script');
+            script.text = node.innerHTML;
+            node.parentNode.replaceChild(script, node );
+        } else {
+            for (const child of node.childNodes) {
+                this._makeScriptExecutable(child);
+            }
+        }
+
+        return node;
+    }
+
     _openFormInModal(html)
     {
         const formIdentifier = this._getFormIdentifier();
         let remoteModal = this._getModalElement();
         const newFormHtml = document.createElement('div');
         newFormHtml.innerHTML = html;
-        const newModalContent = newFormHtml.querySelector('#form_modal .modal-content');
+        const newModalContent = this._makeScriptExecutable(newFormHtml.querySelector('#form_modal .modal-content'));
 
         // load new form from given content
         if (newModalContent !== null) {
