@@ -360,3 +360,23 @@
         {{ block('url_widget') }}
     </div>
 {%- endblock homepage_widget %}
+
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        {%- for error in errors -%}
+            <div class="invalid-feedback d-block{% if form is rootform and loop.last %} mb-3{% endif %}">{{ error.message }}</div>
+        {%- endfor -%}
+    {%- endif %}
+{%- endblock form_errors %}
+
+{%- block meta_fields_collection_row -%}
+    <div{% with {attr: row_attr|merge({class: (row_attr.class|default(form.parent.vars.name ~ '_row_' ~ form.vars.name))|trim})} %}{{ block('attributes') }}{% endwith %}>
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock meta_fields_collection_row %}
+
+{%- block meta_fields_collection_widget -%}
+    {% for meta in form|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
+        {{ form_row(meta.value, {'row_attr': {'class': 'mb-3 ' ~  form.parent.vars.name ~ '_row_' ~ form.vars.name ~ '_' ~ meta.vars.name}}) }}
+    {% endfor %}
+{%- endblock meta_fields_collection_widget %}

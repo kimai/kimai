@@ -265,11 +265,12 @@ final class InvoiceController extends AbstractController
             try {
                 $this->invoiceRepository->saveInvoice($invoice);
                 $this->flashSuccess('action.update.success');
-            } catch (Exception $ex) {
-                $this->flashUpdateException($ex);
-            }
 
-            return $this->redirectToRoute('admin_invoice_list');
+                return $this->redirectToRoute('admin_invoice_list');
+
+            } catch (Exception $ex) {
+                $this->handleFormUpdateException($ex, $form);
+            }
         }
 
         return $this->render('invoice/invoice_edit.html.twig', [
@@ -662,7 +663,7 @@ final class InvoiceController extends AbstractController
 
                 return $this->redirectToRoute('admin_invoice_template');
             } catch (Exception $ex) {
-                $this->flashUpdateException($ex);
+                $this->handleFormUpdateException($ex, $editForm);
             }
         }
 

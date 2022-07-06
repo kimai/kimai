@@ -14,9 +14,11 @@ use App\Entity\User;
 use App\Repository\BookmarkRepository;
 use App\Repository\Query\BaseQuery;
 use App\Timesheet\DateTimeFactory;
+use App\Validator\ValidationFailedException;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseAbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -98,6 +100,30 @@ abstract class AbstractController extends BaseAbstractController implements Serv
     protected function flashUpdateException(\Exception $exception): void
     {
         $this->flashException($exception, 'action.update.error');
+    }
+
+    /**
+     * Handles exception flash messages for failed update/create actions.
+     *
+     * @param \Exception $exception
+     * @param FormInterface $form
+     * @return void
+     */
+    protected function handleFormUpdateException(\Exception $exception, FormInterface $form): void
+    {
+        if ($exception instanceof ValidationFailedException) {
+            $msg = $this->getTranslator()->trans($exception->getMessage(), [], 'validators');
+            if ($exception->getViolations()->count() > 0) {
+                for ($i = 0 ; $i < $exception->getViolations()->count(); $i++) {
+                    $violation = $exception->getViolations()->get($i);
+                    $form->addError(new FormError($violation->getMessage()));
+                }
+            } else {
+                $form->addError(new FormError($msg));
+            }
+        } else {
+            $this->flashUpdateException($exception);
+        }
     }
 
     /**

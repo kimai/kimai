@@ -88,11 +88,15 @@
       </trans-unit>
       <trans-unit id="gSAwscA" resname="Validation Failed">
         <source>Validation Failed</source>
-        <target>There was a problem saving</target>
+        <target>There was a problem saving.</target>
       </trans-unit>
       <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
         <source>Cannot stop running timesheet</source>
         <target>You have an active time record which cannot be stopped automatically.</target>
+      </trans-unit>
+      <trans-unit id="7HYTefssdfsdf" resname="The given value is not a valid datetime format.">
+        <source>The given value is not a valid datetime format.</source>
+        <target>The given value is not a valid day-time format.</target>
       </trans-unit>
     </body>
   </file>

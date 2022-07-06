@@ -135,23 +135,19 @@ final class SystemConfigurationController extends AbstractController
         $form = $this->createConfigurationsForm($configModel, $single);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                try {
-                    $this->repository->saveSystemConfiguration($form->getData());
-                    $this->flashSuccess('action.update.success');
-                } catch (\Exception $ex) {
-                    $this->flashUpdateException($ex);
-                }
-
-                if ($single) {
-                    return $this->redirectToRoute('system_configuration_section', ['section' => $section]);
-                }
-
-                return $this->redirectToRoute('system_configuration');
-            } else {
-                $this->flashError('action.update.error', ['%reason%' => 'Validation problem']);
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->repository->saveSystemConfiguration($form->getData());
+                $this->flashSuccess('action.update.success');
+            } catch (\Exception $ex) {
+                $this->handleFormUpdateException($ex, $form);
             }
+
+            if ($single) {
+                return $this->redirectToRoute('system_configuration_section', ['section' => $section]);
+            }
+
+            return $this->redirectToRoute('system_configuration');
         }
 
         $configSettings = $this->getInitializedConfigurations();

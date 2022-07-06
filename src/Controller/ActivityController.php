@@ -219,7 +219,7 @@ final class ActivityController extends AbstractController
 
                 return $this->redirectToRouteAfterCreate('activity_details', ['id' => $activity->getId()]);
             } catch (Exception $ex) {
-                $this->flashUpdateException($ex);
+                $this->handleFormUpdateException($ex, $editForm);
             }
         }
 

@@ -15,8 +15,9 @@
         </h3>
     </div>
     <div class="card-body">
+        {{ form_errors(form) }}
         {% block form_body %}
-            {{ form_widget(form) }}
+            {{ form_rest(form) }}
         {% endblock %}
     </div>
     <div class="card-footer">

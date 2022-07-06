@@ -146,7 +146,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
                 return $this->redirectToRoute($this->getTimesheetRoute());
             } catch (\Exception $ex) {
-                $this->flashUpdateException($ex);
+                $this->handleFormUpdateException($ex, $createForm);
             }
         }
 
@@ -176,7 +176,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
                 return $this->redirectToRoute($this->getTimesheetRoute());
             } catch (\Exception $ex) {
-                $this->flashUpdateException($ex);
+                $this->handleFormUpdateException($ex, $form);
             }
         }
 

@@ -163,7 +163,7 @@ final class ProjectController extends AbstractController
 
                 return $this->redirectToRouteAfterCreate('project_details', ['id' => $project->getId()]);
             } catch (\Exception $ex) {
-                $this->flashUpdateException($ex);
+                $this->handleFormUpdateException($ex, $editForm);
             }
         }
 

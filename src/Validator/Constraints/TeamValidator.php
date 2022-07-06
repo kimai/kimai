@@ -32,7 +32,7 @@ class TeamValidator extends ConstraintValidator
 
         if (!$value->hasTeamleads()) {
             $this->context->buildViolation(Team::getErrorName(Team::MISSING_TEAMLEAD))
-                ->atPath('teamleads')
+                ->atPath('members')
                 ->setTranslationDomain('validators')
                 ->setCode(Team::MISSING_TEAMLEAD)
                 ->addViolation();

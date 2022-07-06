@@ -57,11 +57,9 @@
                 </div>
             </div>
             {% if form.metaFields is defined and form.metaFields is not empty %}
-                {% for meta in form.metaFields|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
-                    {{ form_row(meta) }}
-                {% endfor %}
+                {{ form_row(form.metaFields) }}
             {% endif %}
-            {{ form_widget(form) }}
+            {{ form_rest(form) }}
         {% endblock %}
     {% endembed %}
 {% endblock %}

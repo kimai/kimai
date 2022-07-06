@@ -158,7 +158,7 @@ final class TeamController extends AbstractController
 
                 return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
             } catch (\Exception $ex) {
-                $this->flashUpdateException($ex);
+                $this->handleFormUpdateException($ex, $editForm);
             }
         }
 

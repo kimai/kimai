@@ -21,7 +21,7 @@
             {% set orderHasError = form.orderBy.vars.errors|length > 0 or form.order.vars.errors|length > 0 %}
             {% set orderBy = form_widget(form.orderBy) %}
             {% set order = form_widget(form.order) %}
-            {{ form_widget(form) }}
+            {{ form_rest(form) }}
             <div class="row mb-3{% if orderHasError %} is-invalid{% endif %}">
                 {{ form_label(form.orderBy) }}
                 <div class="col-sm-5 col-xs-5">

@@ -541,7 +541,7 @@ final class CustomerController extends AbstractController
 
                 return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
             } catch (\Exception $ex) {
-                $this->flashUpdateException($ex);
+                $this->handleFormUpdateException($ex, $editForm);
             }
         }
 

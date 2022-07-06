@@ -81,7 +81,7 @@ class TagController extends AbstractController
 
                 return $this->redirectToRoute('tags');
             } catch (\Exception $ex) {
-                $this->flashUpdateException($ex);
+                $this->handleFormUpdateException($ex, $editForm);
             }
         }
 
@@ -113,7 +113,7 @@ class TagController extends AbstractController
 
                 return $this->redirectToRoute('tags');
             } catch (\Exception $ex) {
-                $this->flashUpdateException($ex);
+                $this->handleFormUpdateException($ex, $editForm);
             }
         }
 

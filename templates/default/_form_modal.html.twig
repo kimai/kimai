@@ -16,8 +16,9 @@
             </div>
             <div class="modal-body">
                 {% block modal_body %}
+                    {{ form_errors(form) }}
                     {% block form_body %}
-                        {{ form_widget(form) }}
+                        {{ form_rest(form) }}
                     {% endblock %}
                 {% endblock %}
             </div>

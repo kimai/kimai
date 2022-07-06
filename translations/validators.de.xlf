@@ -88,11 +88,15 @@
       </trans-unit>
       <trans-unit id="gSAwscA" resname="Validation Failed">
         <source>Validation Failed</source>
-        <target>Es gab ein Problem beim Speichern</target>
+        <target>Es gab ein Problem beim Speichern.</target>
       </trans-unit>
-      <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
+      <trans-unit id="7HYTefs" resname="Cannot stop running timesheet">
         <source>Cannot stop running timesheet</source>
         <target>Sie haben eine aktive Zeitmessung, die nicht automatisch beendet werden kann.</target>
+      </trans-unit>
+      <trans-unit id="7HYTefssdfsdf" resname="The given value is not a valid datetime format.">
+        <source>The given value is not a valid datetime format.</source>
+        <target>Das angegebene Format für die Tageszeit ist nicht korrekt.</target>
       </trans-unit>
     </body>
   </file>
