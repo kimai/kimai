@@ -1,14 +1,14 @@
 {
-  "build/app.css": "/build/app.f8607403.css",
-  "build/app.js": "/build/app.0840158a.js",
+  "build/app.css": "/build/app.3d2cf35a.css",
+  "build/app.js": "/build/app.17215fd2.js",
   "build/invoice.css": "/build/invoice.7abcff08.css",
-  "build/invoice.js": "/build/invoice.80d44a33.js",
+  "build/invoice.js": "/build/invoice.c8ae95ad.js",
   "build/invoice-pdf.css": "/build/invoice-pdf.48504f5f.css",
-  "build/invoice-pdf.js": "/build/invoice-pdf.d8a15640.js",
-  "build/chart.js": "/build/chart.29c2fa3b.js",
+  "build/invoice-pdf.js": "/build/invoice-pdf.d86b82ee.js",
+  "build/chart.js": "/build/chart.8ce4ee3e.js",
   "build/calendar.css": "/build/calendar.bb473428.css",
-  "build/calendar.js": "/build/calendar.7454230b.js",
+  "build/calendar.js": "/build/calendar.dccd2130.js",
   "build/dashboard.css": "/build/dashboard.484de6cd.css",
-  "build/dashboard.js": "/build/dashboard.1eef2d28.js",
-  "build/runtime.js": "/build/runtime.6aa4cb78.js"
+  "build/dashboard.js": "/build/dashboard.cf749c05.js",
+  "build/runtime.js": "/build/runtime.f0079159.js"
 }

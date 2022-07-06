@@ -44,11 +44,14 @@ Encore
             output: {
                 comments: false,
             },
+            // chart.js will fail if sources are mangled
+            /*
             mangle: {
                 properties: {
                     regex: /^_/,
                 },
             },
+            */
         }
     })
 
