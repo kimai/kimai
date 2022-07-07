@@ -11,6 +11,7 @@ namespace App\Command;
 
 use App\Importer\ImporterService;
 use App\Importer\ImportNotFoundException;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
@@ -22,23 +23,17 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * This command can change anytime, don't rely on its API for the future!
  */
-class ImportCustomerCommand extends Command
+#[AsCommand(name: 'kimai:import:customer')]
+final class ImportCustomerCommand extends Command
 {
-    private $importer;
-
-    public function __construct(ImporterService $importer)
+    public function __construct(private ImporterService $importer)
     {
         parent::__construct();
-        $this->importer = $importer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('kimai:import:customer')
             ->setDescription('Import customer from CSV file')
             ->setHelp(
                 'Import customers from a CSV file.' . PHP_EOL .

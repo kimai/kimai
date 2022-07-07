@@ -38,6 +38,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
@@ -56,6 +57,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  * This command is way to (messy and) complex to be tested, so excuse me but I use something which I normally don't like:
  * @codeCoverageIgnore
  */
+#[AsCommand(name: 'kimai:import:v1', aliases: ['kimai:import-v1'])]
 final class KimaiImporterCommand extends Command
 {
     // minimum required Kimai and database version, lower versions are not supported by this command
@@ -142,14 +144,9 @@ final class KimaiImporterCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('kimai:import:v1')
-            ->setAliases(['kimai:import-v1'])
             ->setDescription('Import data from a Kimai v1 installation')
             ->setHelp('This command allows you to import the most important data from a Kimi v1 installation.')
             ->addArgument(

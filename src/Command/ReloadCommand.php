@@ -9,26 +9,31 @@
 
 namespace App\Command;
 
-use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Command used to update a Kimai installation.
  *
  * @codeCoverageIgnore
  */
+#[AsCommand(name: 'kimai:reload')]
 final class ReloadCommand extends Command
 {
     public const ERROR_CACHE_CLEAN = 2;
     public const ERROR_CACHE_WARMUP = 4;
     public const ERROR_LINT_CONFIG = 8;
     public const ERROR_LINT_TRANSLATIONS = 16;
+
+    public function __construct(private string $projectDirectory, private string $kernelEnvironment)
+    {
+        parent::__construct();
+    }
 
     /**
      * Returns the base directory to the Kimai installation.
@@ -37,19 +42,12 @@ final class ReloadCommand extends Command
      */
     protected function getRootDirectory(): string
     {
-        /** @var Application $application */
-        $application = $this->getApplication();
-
-        return $application->getKernel()->getProjectDir();
+        return $this->projectDirectory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('kimai:reload')
             ->setDescription('Reload Kimai caches')
             ->setHelp('This command will validate the configurations and translations and then clear and rebuild the application cache.')
         ;
@@ -95,11 +93,7 @@ final class ReloadCommand extends Command
             return self::ERROR_LINT_TRANSLATIONS;
         }
 
-        /** @var Application $application */
-        $application = $this->getApplication();
-        /** @var KernelInterface $kernel */
-        $kernel = $application->getKernel();
-        $environment = $kernel->getEnvironment();
+        $environment = $this->kernelEnvironment;
 
         // flush the cache, in case values from the database are cached
         $cacheResult = $this->rebuildCaches($environment, $io, $input, $output);
@@ -127,7 +121,7 @@ final class ReloadCommand extends Command
         return 0;
     }
 
-    protected function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output)
+    private function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output)
     {
         $io->text('Rebuilding your cache, please be patient ...');
 

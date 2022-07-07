@@ -15,6 +15,7 @@ use App\Importer\ImportNotFoundException;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
 use App\Validator\ValidationFailedException;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
@@ -27,27 +28,17 @@ use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 /**
  * This command can change anytime, don't rely on its API for the future!
  */
-class ImportProjectCommand extends Command
+#[AsCommand(name: 'kimai:import:project')]
+final class ImportProjectCommand extends Command
 {
-    private $importerService;
-    private $teams;
-    private $users;
-
-    public function __construct(ImporterService $importerService, TeamRepository $teams, UserRepository $users)
+    public function __construct(private ImporterService $importerService, private TeamRepository $teams, private UserRepository $users)
     {
         parent::__construct();
-        $this->importerService = $importerService;
-        $this->teams = $teams;
-        $this->users = $users;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('kimai:import:project')
             ->setDescription('Import projects from CSV file')
             ->setHelp(
                 'Import projects from a CSV file, creating customers (if not existing) and optional empty teams for each project.' . PHP_EOL .

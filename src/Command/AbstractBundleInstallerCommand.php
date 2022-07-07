@@ -94,10 +94,7 @@ abstract class AbstractBundleInstallerCommand extends Command
         return $parts[1];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName($this->getInstallerCommandName())

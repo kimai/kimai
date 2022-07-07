@@ -20,18 +20,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 abstract class AbstractRoleCommand extends Command
 {
-    private $userService;
-
-    public function __construct(UserService $userService)
+    public function __construct(private UserService $userService)
     {
         parent::__construct();
-        $this->userService = $userService;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDefinition([

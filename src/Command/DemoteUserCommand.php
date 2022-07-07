@@ -11,20 +11,17 @@ namespace App\Command;
 
 use App\Entity\User;
 use App\User\UserService;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class DemoteUserCommand extends AbstractRoleCommand
+#[AsCommand(name: 'kimai:user:demote')]
+final class DemoteUserCommand extends AbstractRoleCommand
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
         $this
-            ->setName('kimai:user:demote')
-            ->setAliases(['fos:user:demote'])
             ->setDescription('Demote a user by removing a role')
             ->setHelp(
                 <<<'EOT'

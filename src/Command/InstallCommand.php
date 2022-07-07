@@ -11,7 +11,7 @@ namespace App\Command;
 
 use App\Constants;
 use Doctrine\DBAL\Connection;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -20,13 +20,13 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Command used to do the basic installation steps for Kimai.
  *
  * @codeCoverageIgnore
  */
+#[AsCommand(name: 'kimai:install')]
 final class InstallCommand extends Command
 {
     public const ERROR_PERMISSIONS = 1;
@@ -35,24 +35,14 @@ final class InstallCommand extends Command
     public const ERROR_DATABASE = 8;
     public const ERROR_MIGRATIONS = 32;
 
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    public function __construct(Connection $connection)
+    public function __construct(private Connection $connection, private string $kernelEnvironment)
     {
         parent::__construct();
-        $this->connection = $connection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('kimai:install')
             ->setDescription('Basic installation for Kimai')
             ->setHelp('This command will perform the basic installation steps to get Kimai up and running.')
             ->addOption('no-cache', null, InputOption::VALUE_NONE, 'Skip cache re-generation')
@@ -64,12 +54,6 @@ final class InstallCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $io->title('Kimai installation running ...');
-
-        /** @var Application $application */
-        $application = $this->getApplication();
-        /** @var KernelInterface $kernel */
-        $kernel = $application->getKernel();
-        $environment = $kernel->getEnvironment();
 
         // create the database, in case it is not yet existing
         try {
@@ -91,7 +75,7 @@ final class InstallCommand extends Command
 
         if (!$input->getOption('no-cache')) {
             // flush the cache, just to make sure ... and ignore result
-            $this->rebuildCaches($environment, $io, $input, $output);
+            $this->rebuildCaches($this->kernelEnvironment, $io, $input, $output);
         }
 
         $io->success(
@@ -101,7 +85,7 @@ final class InstallCommand extends Command
         return 0;
     }
 
-    protected function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output)
+    private function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output)
     {
         $io->text('Rebuilding your cache, please be patient ...');
 
@@ -126,7 +110,7 @@ final class InstallCommand extends Command
         return 0;
     }
 
-    protected function importMigrations(SymfonyStyle $io, OutputInterface $output)
+    private function importMigrations(SymfonyStyle $io, OutputInterface $output)
     {
         $command = $this->getApplication()->find('doctrine:migrations:migrate');
         $cmdInput = new ArrayInput(['--allow-no-migration' => true]);
@@ -136,7 +120,7 @@ final class InstallCommand extends Command
         $io->writeln('');
     }
 
-    protected function createDatabase(SymfonyStyle $io, InputInterface $input, OutputInterface $output)
+    private function createDatabase(SymfonyStyle $io, InputInterface $input, OutputInterface $output)
     {
         try {
             if ($this->connection->isConnected()) {

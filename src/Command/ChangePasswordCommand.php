@@ -12,25 +12,22 @@ namespace App\Command;
 use App\User\UserService;
 use App\Utils\CommandStyle;
 use App\Validator\ValidationFailedException;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'kimai:user:password')]
 final class ChangePasswordCommand extends AbstractUserCommand
 {
-    private $userService;
-
-    public function __construct(UserService $userService)
+    public function __construct(private UserService $userService)
     {
         parent::__construct();
-        $this->userService = $userService;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('kimai:user:password')
-            ->setAliases(['fos:user:change-password'])
             ->setDescription('Change the password of a user.')
             ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),

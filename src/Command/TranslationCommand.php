@@ -11,6 +11,7 @@ namespace App\Command;
 
 use App\Configuration\LocaleService;
 use App\Kernel;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,20 +25,17 @@ use Symfony\Component\HttpClient\HttpClient;
  *
  * @codeCoverageIgnore
  */
-class TranslationCommand extends Command
+#[AsCommand(name: 'kimai:translations')]
+final class TranslationCommand extends Command
 {
     public function __construct(private string $projectDirectory, private string $kernelEnvironment, private LocaleService $localeService)
     {
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('kimai:translations')
             ->setDescription('Translation adjustments')
             ->addOption('resname', null, InputOption::VALUE_NONE, 'Fix the resname vs. id attribute')
             ->addOption('duplicates', null, InputOption::VALUE_NONE, 'Find duplicate translation keys')

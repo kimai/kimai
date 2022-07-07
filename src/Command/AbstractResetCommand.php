@@ -30,7 +30,6 @@ abstract class AbstractResetCommand extends Command
     {
         $this
             ->setName('kimai:reset:' . $this->getEnvName())
-            ->setAliases(['kimai:reset-' . $this->getEnvName()])
             ->setDescription('Resets the "' . $this->getEnvName() . '" environment')
             ->setHelp(
                 <<<EOT

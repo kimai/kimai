@@ -19,12 +19,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Command used to fetch Kimai version information.
  */
-class VersionCommand extends Command
+final class VersionCommand extends Command
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('kimai:version')

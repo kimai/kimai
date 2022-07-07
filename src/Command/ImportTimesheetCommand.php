@@ -25,6 +25,7 @@ use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use App\Utils\Duration;
 use League\Csv\Reader;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
@@ -40,10 +41,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
  * @internal
  * @codeCoverageIgnore
  */
-class ImportTimesheetCommand extends Command
+#[AsCommand(name: 'kimai:import:timesheet')]
+final class ImportTimesheetCommand extends Command
 {
-    protected static $defaultName = 'kimai:import:timesheet';
-
     // if we use 00:00 we might run into summer/winter time problems which happen between 02:00 and 03:00
     public const DEFAULT_BEGIN = '04:00';
     public const DEFAULT_CUSTOMER = 'Imported customer - %s';
@@ -137,13 +137,9 @@ class ImportTimesheetCommand extends Command
         $this->passwordHasher = $passwordHasher;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName(self::$defaultName)
             ->setDescription('Import timesheets from CSV file')
             ->setHelp(
                 'This command allows to import timesheets from a CSV file, which are formatted like CSV exports.' . PHP_EOL .

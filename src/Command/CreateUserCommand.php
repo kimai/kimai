@@ -13,30 +13,24 @@ use App\Entity\User;
 use App\User\UserService;
 use App\Utils\CommandStyle;
 use App\Validator\ValidationFailedException;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'kimai:user:create')]
 final class CreateUserCommand extends AbstractUserCommand
 {
-    private $userService;
-
-    public function __construct(UserService $userService)
+    public function __construct(private UserService $userService)
     {
         parent::__construct();
-        $this->userService = $userService;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $roles = implode(',', [User::DEFAULT_ROLE, User::ROLE_ADMIN]);
 
         $this
-            ->setName('kimai:user:create')
-            ->setAliases(['kimai:create-user'])
             ->setDescription('Create a new user')
             ->setHelp('This command allows you to create a new user.')
             ->addArgument('username', InputArgument::REQUIRED, 'A name for the new user (must be unique)')

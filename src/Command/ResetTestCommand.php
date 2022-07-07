@@ -26,14 +26,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  * This is one of the cases where I don't feel like it is necessary to add tests, so lets "cheat" with:
  * @codeCoverageIgnore
  */
-class ResetTestCommand extends AbstractResetCommand
+final class ResetTestCommand extends AbstractResetCommand
 {
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
         parent::__construct();
-        $this->entityManager = $entityManager;
     }
 
     protected function getEnvName(): string

@@ -10,6 +10,7 @@
 namespace App\Command;
 
 use App\Timesheet\TimesheetService;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -18,7 +19,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * @codeCoverageIgnore
  */
-class TimesheetStopAllCommand extends Command
+#[AsCommand(name: 'kimai:timesheet:stop-all')]
+final class TimesheetStopAllCommand extends Command
 {
     public function __construct(private TimesheetService $timesheetService)
     {
@@ -27,7 +29,6 @@ class TimesheetStopAllCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('kimai:timesheet:stop-all');
         $this->setDescription('Stop all running timesheets immediately');
     }
 

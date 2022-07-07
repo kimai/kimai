@@ -22,6 +22,7 @@ use App\Repository\Query\TimesheetQuery;
 use App\Repository\UserRepository;
 use App\Timesheet\DateTimeFactory;
 use App\Utils\SearchTerm;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,7 +34,8 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-class InvoiceCreateCommand extends Command
+#[AsCommand(name: 'kimai:invoice:create')]
+final class InvoiceCreateCommand extends Command
 {
     /**
      * @var ServiceInvoice
@@ -82,13 +84,9 @@ class InvoiceCreateCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('kimai:invoice:create')
             ->setDescription('Create invoices')
             ->setHelp('This command allows to create invoices by several different filters.')
             ->addOption('user', null, InputOption::VALUE_REQUIRED, 'The user to be used for generating the invoices')
