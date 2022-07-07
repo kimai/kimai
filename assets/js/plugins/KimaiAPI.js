@@ -130,7 +130,6 @@ export default class KimaiAPI extends KimaiPlugin {
      * @param {Response} response
      */
     handleError(message, response) {
-        console.log(response);
         if (response.headers === undefined) {
             // this can happen if someone clicks to fast and auto running
             // requests (e.g. active records) are aborted
