@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "279b3b50ba8a4dfd4c60e88ac26cbb21",
+    "content-hash": "75400d0416a0a9e6c3d01fbe5d54a1b2",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2323,12 +2323,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "bd83a18c5c74a19905306d22d47ad82935335d5e"
+                "reference": "4a9044292b4de9c05e708d7a5d0f0ddb4722756b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/bd83a18c5c74a19905306d22d47ad82935335d5e",
-                "reference": "bd83a18c5c74a19905306d22d47ad82935335d5e",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/4a9044292b4de9c05e708d7a5d0f0ddb4722756b",
+                "reference": "4a9044292b4de9c05e708d7a5d0f0ddb4722756b",
                 "shasum": ""
             },
             "require": {
@@ -2390,7 +2390,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-07-05T12:16:50+00:00"
+            "time": "2022-07-05T17:48:45+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -9292,16 +9292,16 @@
         },
         {
             "name": "symfony/webpack-encore-bundle",
-            "version": "v1.14.1",
+            "version": "v1.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/webpack-encore-bundle.git",
-                "reference": "6b18be99bf2a5a402b80a2c00043fe0b365fe836"
+                "reference": "1fc386364200ca43108ff1871d86435b840ea67c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/webpack-encore-bundle/zipball/6b18be99bf2a5a402b80a2c00043fe0b365fe836",
-                "reference": "6b18be99bf2a5a402b80a2c00043fe0b365fe836",
+                "url": "https://api.github.com/repos/symfony/webpack-encore-bundle/zipball/1fc386364200ca43108ff1871d86435b840ea67c",
+                "reference": "1fc386364200ca43108ff1871d86435b840ea67c",
                 "shasum": ""
             },
             "require": {
@@ -9309,7 +9309,9 @@
                 "symfony/asset": "^4.4 || ^5.0 || ^6.0",
                 "symfony/config": "^4.4 || ^5.0 || ^6.0",
                 "symfony/dependency-injection": "^4.4 || ^5.0 || ^6.0",
+                "symfony/deprecation-contracts": "^2.1 || ^3.0",
                 "symfony/http-kernel": "^4.4 || ^5.0 || ^6.0",
+                "symfony/polyfill-php80": "^1.25.0",
                 "symfony/service-contracts": "^1.0 || ^2.0 || ^3.0"
             },
             "require-dev": {
@@ -9343,7 +9345,7 @@
             "description": "Integration with your Symfony app & Webpack Encore!",
             "support": {
                 "issues": "https://github.com/symfony/webpack-encore-bundle/issues",
-                "source": "https://github.com/symfony/webpack-encore-bundle/tree/v1.14.1"
+                "source": "https://github.com/symfony/webpack-encore-bundle/tree/v1.15.0"
             },
             "funding": [
                 {
@@ -9359,7 +9361,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-03T17:55:32+00:00"
+            "time": "2022-07-06T13:36:43+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -13200,7 +13202,9 @@
         "ext-xsl": "*",
         "ext-zip": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {
+        "ext-simplexml": "*"
+    },
     "platform-overrides": {
         "php": "8.1.3"
     },
