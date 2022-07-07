@@ -24,13 +24,7 @@ class LocaleService
      * Returns an array with all available locale/language codes.
      *
      * @return string[]
-     * @deprecated use getAllLocales() instead
      */
-    public function getAvailableLanguages(): array
-    {
-        return $this->getAllLocales();
-    }
-
     public function getAllLocales(): array
     {
         return array_keys($this->languageSettings);
@@ -38,7 +32,7 @@ class LocaleService
 
     public function isKnownLocale(string $language): bool
     {
-        return \in_array($language, $this->getAvailableLanguages());
+        return \in_array($language, $this->getAllLocales());
     }
 
     public function getDefaultLocale(): string

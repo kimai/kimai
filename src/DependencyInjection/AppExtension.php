@@ -51,8 +51,7 @@ class AppExtension extends Extension
         $container->setParameter('kimai.data_dir', $config['data_dir']);
         $container->setParameter('kimai.plugin_dir', $container->getParameter('kernel.project_dir') . Kernel::PLUGIN_DIRECTORY);
 
-        $this->setLanguageFormats($config['languages'], $container);
-        unset($config['languages']);
+        $this->setLanguageFormats($container);
 
         $container->setParameter('kimai.dashboard', $config['dashboard']['widgets']);
         $container->setParameter('kimai.invoice.documents', $config['invoice']['documents']);
@@ -112,27 +111,13 @@ class AppExtension extends Extension
         $container->setParameter('kimai.config', $newConfig);
     }
 
-    protected function setLanguageFormats(array $config, ContainerBuilder $container)
+    protected function setLanguageFormats(ContainerBuilder $container)
     {
         $locales = explode('|', $container->getParameter('app_locales'));
 
-        // detect all registered locales and allow to choose them as well, so people get to
-        // choose the language for translation with the correct format of their location
-        /*
-        $secondLevel = [];
-        foreach (Locales::getLocales() as $locale) {
-            if (substr_count($locale, '_') === 1) {
-                $baseLocale = substr($locale, 0, strpos($locale, '_'));
-                if (in_array($baseLocale, $locales)) {
-                    $subLocale = substr($locale, strpos($locale, '_') + 1);
-                    if (!is_numeric($subLocale)) {
-                        $secondLevel[] = $locale;
-                    }
-                }
-            }
-        }
-        $locales = array_merge($locales, $secondLevel);
-        */
+        $directory = $container->getParameter('kernel.project_dir');
+        $config = $directory . DIRECTORY_SEPARATOR . 'config/locales.php';
+        $settings = include $config;
 
         $appLocales = [];
         $defaults = [
@@ -143,28 +128,16 @@ class AppExtension extends Extension
 
         // make sure all allowed locales are registered
         foreach ($locales as $locale) {
+            // unlikely that a locale disappears, but in case that a new symfony update comes with changed locales
             if (!Locales::exists($locale)) {
                 continue;
             }
 
             $appLocales[$locale] = $defaults;
-            if (\array_key_exists($locale, $config)) {
-                $appLocales[$locale] = array_merge($appLocales[$locale], $config[$locale]);
+
+            if (\array_key_exists($locale, $settings)) {
+                $appLocales[$locale] = array_merge($appLocales[$locale], $settings[$locale]);
             }
-        }
-
-        // make sure all keys are registered for every locale
-        foreach ($appLocales as $locale => $settings) {
-            // these are completely new since v2
-            // calculate everything with IntlFormatter
-            $shortDate = new \IntlDateFormatter($locale, \IntlDateFormatter::SHORT, \IntlDateFormatter::NONE);
-            $shortTime = new \IntlDateFormatter($locale, \IntlDateFormatter::NONE, \IntlDateFormatter::SHORT);
-
-            $settings['date'] = $shortDate->getPattern();
-            $settings['time'] = $shortTime->getPattern();
-
-            // pre-fill all formats with the default locale settings
-            $appLocales[$locale] = $settings;
         }
 
         ksort($appLocales);

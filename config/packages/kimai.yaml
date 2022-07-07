@@ -197,18 +197,3 @@ kimai:
             - TotalsProject
             - TotalsActivity
 # --------------------------------------------------------------------------------
-
-
-# --------------------------------------------------------------------------------
-# LANGUAGES
-# Only settings which are not fetched from ICU and which differ from the default
-# need to be defined here + the default locale
-# --------------------------------------------------------------------------------
-    languages:
-        ar:
-            rtl: true
-        fa:
-            rtl: true
-        he:
-            rtl: true
-# --------------------------------------------------------------------------------

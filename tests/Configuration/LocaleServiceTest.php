@@ -66,13 +66,13 @@ class LocaleServiceTest extends TestCase
         ];
     }
 
-    public function testGetAvailableLanguages()
+    public function testGetAllLocales()
     {
         $sut = $this->getSut([]);
-        $this->assertEquals([], $sut->getAvailableLanguages());
+        $this->assertEquals([], $sut->getAllLocales());
 
         $sut = $this->getSut($this->getDefaultSettings());
-        $this->assertEquals(['de', 'en', 'pt_BR', 'it', 'fr', 'es', 'ru', 'ar', 'hu'], $sut->getAvailableLanguages());
+        $this->assertEquals(['de', 'en', 'pt_BR', 'it', 'fr', 'es', 'ru', 'ar', 'hu'], $sut->getAllLocales());
     }
 
     public function testInvalidLocaleWithGivenLocale()
