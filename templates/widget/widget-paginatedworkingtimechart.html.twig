@@ -4,7 +4,7 @@
         {% if not title is empty %}{{ title|trans }}{% endif %}
     {% endblock %}
     {% block box_attributes %}
-        id="PaginatedWorkingTimeChart" data-href="#" data-reload=""
+        id="PaginatedWorkingTimeChartBox" data-href="#" data-reload=""
     {% endblock %}
     {% block box_tools %}
         {% set prevYear = options.year %}
@@ -70,7 +70,7 @@
 {% if not kimai_context.javascriptRequest %}
 <script type="text/javascript">
     document.addEventListener('kimai.initialized', function() {
-        KimaiPaginatedBoxWidget.create('#PaginatedWorkingTimeChart');
+        KimaiPaginatedBoxWidget.create('#PaginatedWorkingTimeChartBox');
     });
 </script>
 {% endif %}
