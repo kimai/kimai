@@ -138,7 +138,7 @@ class ActivityRepository extends EntityRepository
             $stats->setCounter($timesheetResult['amount']);
             $stats->setRecordDuration($timesheetResult['duration']);
             $stats->setRecordRate($timesheetResult['rate']);
-            $stats->setRecordInternalRate($timesheetResult['internal_rate']);
+            $stats->setInternalRate($timesheetResult['internal_rate']);
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();

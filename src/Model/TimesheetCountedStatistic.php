@@ -209,6 +209,7 @@ class TimesheetCountedStatistic implements \JsonSerializable
     /**
      * @param float $recordInternalRate
      * @return $this
+     * @deprecated since 1.15 use setInternalRate() instead
      */
     public function setRecordInternalRate($recordInternalRate)
     {
