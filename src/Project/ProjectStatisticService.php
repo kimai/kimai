@@ -399,8 +399,10 @@ class ProjectStatisticService
             ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
             ->addSelect('COALESCE(SUM(t.internalRate), 0) as internalRate')
             ->addSelect('COUNT(t.id) as count')
+            ->addSelect('t.billable as billable')
             ->andWhere('t.project = :project')
             ->setParameter('project', $query->getProject())
+            ->addGroupBy('billable')
         ;
 
         // fetch stats grouped by ACTIVITY for all time
@@ -410,13 +412,31 @@ class ProjectStatisticService
             ->addSelect('a as activity')
             ->addGroupBy('a')
         ;
+
+        /** @var array<ActivityStatistic> $activities */
+        $activities = [];
         foreach ($qb1->getQuery()->getResult() as $tmp) {
-            $activity = new ActivityStatistic();
-            $activity->setActivity($tmp['activity']);
-            $activity->setRecordRate($tmp['rate']);
-            $activity->setRecordDuration($tmp['duration']);
-            $activity->setRecordInternalRate($tmp['internalRate']);
-            $activity->setCounter($tmp['count']);
+            $activityId = $tmp['activity']->getId();
+            if (!\array_key_exists($activityId, $activities)) {
+                $activity = new ActivityStatistic();
+                $activity->setActivity($tmp['activity']);
+                $activities[$activityId] = $activity;
+            } else {
+                $activity = $activities[$activityId];
+            }
+
+            $activity->setRecordRate($activity->getRecordRate() + $tmp['rate']);
+            $activity->setRecordDuration($activity->getRecordDuration() + $tmp['duration']);
+            $activity->setInternalRate($activity->getInternalRate() + $tmp['internalRate']);
+            $activity->setCounter($activity->getCounter() + $tmp['count']);
+
+            if ($tmp['billable']) {
+                $activity->setDurationBillable($activity->getDurationBillable() + $tmp['duration']);
+                $activity->setRateBillable($activity->getRateBillable() + $tmp['rate']);
+            }
+        }
+
+        foreach ($activities as $activity) {
             $model->addActivity($activity);
         }
         // ---------------------------------------------------
@@ -438,6 +458,7 @@ class ProjectStatisticService
         if (!empty($userIds)) {
             $qb2 = $this->userRepository->createQueryBuilder('u');
             $qb2->select('u')->where($qb2->expr()->in('u.id', $userIds));
+            /** @var array<int, UserStatistic> $users */
             $users = [];
             foreach ($qb2->getQuery()->getResult() as $user) {
                 $users[$user->getId()] = new UserStatistic($user);
@@ -448,14 +469,36 @@ class ProjectStatisticService
                 $year = $model->getUserYear($tmp['year'], $user);
                 if ($year === null) {
                     $year = new Year($tmp['year']);
+                    for($i = 1; $i < 13; $i++) {
+                        $year->setMonth(new Month($i));
+                    }
                     $model->setUserYear($year, $user);
                 }
-                $month = new Month($tmp['month']);
-                $month->setTotalRate($tmp['rate']);
-                $month->setTotalDuration($tmp['duration']);
-                $month->setTotalInternalRate($tmp['internalRate']);
-                $year->setMonth($month);
-                $users[$tmp['user']]->addValuesFromMonth($month);
+                $month = $year->getMonth($tmp['month']);
+                if ($month === null) {
+                    $month = new Month($tmp['month']);
+                    $year->setMonth($month);
+                }
+                $month->setTotalRate($month->getTotalRate() + $tmp['rate']);
+                $month->setTotalDuration($month->getTotalDuration() + $tmp['duration']);
+                $month->setTotalInternalRate($month->getTotalInternalRate() + $tmp['internalRate']);
+
+                if ($tmp['billable']) {
+                    $month->setBillableDuration($month->getBillableDuration() + $tmp['duration']);
+                    $month->setBillableRate($month->getBillableRate() + $tmp['rate']);
+                }
+            }
+
+            foreach ($users as $userId => $statistic) {
+                foreach ($model->getYears() as $year) {
+                    $statYear = $model->getUserYear($year->getYear(), $statistic->getUser());
+                    if ($statYear === null) {
+                        continue;
+                    }
+                    foreach ($statYear->getMonths() as $month) {
+                        $statistic->addValuesFromMonth($month);
+                    }
+                }
             }
         }
         // ---------------------------------------------------
@@ -466,13 +509,29 @@ class ProjectStatisticService
             ->addSelect('YEAR(t.date) as year')
             ->addGroupBy('year')
         ;
-        foreach ($qb1->getQuery()->getResult() as $year) {
-            $tmp = new Year($year['year']);
-            $tmp->setTotalRate($year['rate']);
-            $tmp->setTotalInternalRate($year['internalRate']);
-            $tmp->setTotalDuration($year['duration']);
-            $years[$year['year']] = $tmp;
 
+        foreach ($qb1->getQuery()->getResult() as $year) {
+            if (!\array_key_exists($year['year'], $years)) {
+                $tmp = new Year($year['year']);
+                for($i = 1; $i < 13; $i++) {
+                    $tmp->setMonth(new Month($i));
+                }
+                $years[$year['year']] = $tmp;
+            } else {
+                $tmp = $years[$year['year']];
+            }
+            $tmp->setTotalRate($tmp->getTotalRate() + $year['rate']);
+            $tmp->setTotalInternalRate($tmp->getTotalInternalRate() + $year['internalRate']);
+            $tmp->setTotalDuration($tmp->getTotalDuration() + $year['duration']);
+
+            if ($year['billable']) {
+                $tmp->setBillableDuration($tmp->getBillableDuration() + $year['duration']);
+                $tmp->setBillableRate($tmp->getBillableRate() + $year['rate']);
+            }
+        }
+
+        $yearActivities = [];
+        foreach ($years as $yearName => $yearStat) {
             // fetch yearly stats grouped by ACTIVITY and YEAR
             $qb2 = clone $qb;
             $qb2
@@ -480,20 +539,41 @@ class ProjectStatisticService
                 ->addSelect('a as activity')
                 ->addSelect('YEAR(t.date) as year')
                 ->andWhere('YEAR(t.date) = :year')
-                ->setParameter('year', $year['year'])
+                ->setParameter('year', $yearName)
                 ->addGroupBy('year')
                 ->addGroupBy('a')
             ;
+
             foreach ($qb2->getQuery()->getResult() as $tmp) {
-                $activity = new ActivityStatistic();
-                $activity->setActivity($tmp['activity']);
-                $activity->setRecordRate($tmp['rate']);
-                $activity->setRecordDuration($tmp['duration']);
-                $activity->setRecordInternalRate($tmp['internalRate']);
-                $activity->setCounter($tmp['count']);
-                $model->addYearActivity($tmp['year'], $activity);
+                $activityId = $tmp['activity']->getId();
+                if (!\array_key_exists($yearName, $yearActivities)) {
+                    $yearActivities[$yearName] = [];
+                }
+                if (!\array_key_exists($activityId, $yearActivities[$yearName])) {
+                    $activity = new ActivityStatistic();
+                    $activity->setActivity($tmp['activity']);
+                    $yearActivities[$yearName][$activityId] = $activity;
+                } else {
+                    $activity = $yearActivities[$yearName][$activityId];
+                }
+                $activity->setRecordRate($activity->getRecordRate() + $tmp['rate']);
+                $activity->setRecordDuration($activity->getRecordDuration() + $tmp['duration']);
+                $activity->setInternalRate($activity->getInternalRate() + $tmp['internalRate']);
+                $activity->setCounter($activity->getCounter() + $tmp['count']);
+
+                if ($tmp['billable']) {
+                    $activity->setDurationBillable($activity->getDurationBillable() + $tmp['duration']);
+                    $activity->setRateBillable($activity->getRateBillable() + $tmp['rate']);
+                }
             }
         }
+
+        foreach ($yearActivities as $year => $activities) {
+            foreach ($activities as $activity) {
+                $model->addYearActivity($year, $activity);
+            }
+        }
+
         $model->setYears(array_values($years));
         // ---------------------------------------------------
 
@@ -506,11 +586,19 @@ class ProjectStatisticService
             ->addGroupBy('month')
         ;
         foreach ($qb1->getQuery()->getResult() as $month) {
-            $tmp = new Month($month['month']);
-            $tmp->setTotalRate($month['rate']);
-            $tmp->setTotalInternalRate($month['internalRate']);
-            $tmp->setTotalDuration($month['duration']);
-            $model->getYear($month['year'])->setMonth($tmp);
+            $tmp = $model->getYear($month['year'])->getMonth($month['month']);
+            if ($tmp === null) {
+                $tmp = new Month($month['month']);
+                $model->getYear($month['year'])->setMonth($tmp);
+            }
+            $tmp->setTotalRate($tmp->getTotalRate() + $month['rate']);
+            $tmp->setTotalInternalRate($tmp->getTotalInternalRate() + $month['internalRate']);
+            $tmp->setTotalDuration($tmp->getTotalDuration() + $month['duration']);
+
+            if ($month['billable']) {
+                $tmp->setBillableDuration($tmp->getBillableDuration() + $month['duration']);
+                $tmp->setBillableRate($tmp->getBillableRate() + $month['rate']);
+            }
         }
         // ---------------------------------------------------
 
