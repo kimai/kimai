@@ -34,6 +34,9 @@
             jQuery('#{{ tableId }}').on('change', function(ev) {
                 jQuery(this).submit();
             });
+            {% if project is not null %}
+            renderChart('project{{ project.id }}Budget');
+            {% endif %}
         });
 
         jQuery('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -296,6 +299,14 @@
                                     {{ widgets.label_customer(project.customer) }}
                                 </td>
                             </tr>
+                            <tr {{ widgets.project_row_attr(project) }}>
+                                <th class="w-min">
+                                    {{ 'label.project'|trans }}
+                                </th>
+                                <td>
+                                    {{ widgets.label_project(project) }}
+                                </td>
+                            </tr>
                             <tr>
                                 <th class="w-min">
                                     {{ 'stats.durationTotal'|trans }}
@@ -309,11 +320,13 @@
                                 </th>
                                 <td>{{ project_view.rateTotal|money(currency) }}</td>
                             </tr>
+                            <tr>
+                                <th class="w-min">
+                                    {{ 'label.billable'|trans }}
+                                </th>
+                                <td>{{ project_view.billableRate|money(currency) }}</td>
+                            </tr>
                             {% endif %}
-                        </table>
-                    </div>
-                    <div class="col-xs-12 col-md-6">
-                        <table class="table table-hover dataTable">
                             <tr>
                                 <th class="w-min">
                                     {{ 'label.last_record'|trans }}
@@ -351,6 +364,12 @@
                             </tr>
                             {% endif %}
                         </table>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        {% if (showMoneyBudget and project.budget > 0) or (showTimeBudget and project.timeBudget > 0) %}
+                            {% from "project/charts.html.twig" import project_budget %}
+                            {{ project_budget(project, project_details, chartPrefix) }}
+                        {% endif %}
                     </div>
                 </div>
                 {% if (showMoneyBudget and project.budget > 0) or (showTimeBudget and project.timeBudget > 0) %}

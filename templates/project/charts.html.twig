@@ -1,0 +1,94 @@
+{# project \App\Entity\Project #}
+{# details \App\Reporting\ProjectDetails\ProjectDetailsModel #}
+{% macro project_budget(project, details, prefix) %}
+    {% set chartPrefix = (prefix is null ? random() : prefix) ~ 'Budget' %}
+    {% set chart = is_granted('budget', project) %}
+    {% set showMoneyBudget = is_granted('budget', project) %}
+    {% set showTimeBudget = is_granted('time', project) %}
+    {% if showMoneyBudget or showTimeBudget %}
+        {% from "macros/charts.html.twig" import bar_chart %}
+        {% set currency = project.customer.currency %}
+        {% if project.monthlyBudget %}
+            <h4>
+                {%- if showMoneyBudget %}{{ 'label.budget'|trans }}{% else %}{{ 'label.timeBudget'|trans }}{% endif -%}
+                : {{ 'label.budgetType_month'|trans }}
+            </h4>
+            {% set chartData = [] %}
+            {% set chartLabels = [] %}
+            {% set seenFirstMonth = false %}
+            {# year \App\Model\Statistic\Year #}
+            {% for year in details.years %}
+                {# month \App\Model\Statistic\Month #}
+                {% for month in year.months %}
+                    {% if seenFirstMonth or month.totalRate > 0 or month.totalDuration > 0 %}
+                        {% set monthDate = date(year.year ~ '-' ~ month.month ~ '-01 00:00:00') %}
+                        {% if project.end is null or monthDate < project.end %}
+                            {% set seenFirstMonth = true %}
+                            {% set totalBudget = project.timeBudget - month.billableDuration %}
+                            {% set projectBudget = project.timeBudget %}
+                            {% if showMoneyBudget %}
+                                {% set totalBudget = project.budget - month.billableRate %}
+                                {% set projectBudget = project.budget %}
+                            {% endif %}
+                            {% set chartLabels = chartLabels|merge([monthDate|month_name ~ ' ' ~ year.year]) %}
+                            {% set chartValue = {
+                                'label': (showMoneyBudget ? totalBudget|money(currency) : totalBudget|duration),
+                                'value': '' ~ (showMoneyBudget ? totalBudget|money : totalBudget|chart_duration),
+                            } %}
+                            {% if totalBudget < 0 %}
+                                {% set chartValue = chartValue|merge({'color': 'red'}) %}
+                            {% endif %}
+                            {% if totalBudget == projectBudget %}
+                                {% set chartValue = chartValue|merge({'color': 'green'}) %}
+                            {% endif %}
+                            {% set chartData = chartData|merge([chartValue]) %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+            {{ bar_chart(chartPrefix, chartLabels, [chartData], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix}) }}
+        {% else %}
+            <h4>
+                {%- if showMoneyBudget %}{{ 'label.budget'|trans }}{% else %}{{ 'label.timeBudget'|trans }}{% endif -%}
+            </h4>
+            {% set chartData = [] %}
+            {% set chartLabels = [] %}
+            {% set seenFirstMonth = false %}
+            {% if showMoneyBudget %}
+                {% set totalBudget = project.budget %}
+            {% else %}
+                {% set totalBudget = project.timeBudget %}
+            {% endif %}
+            {# year \App\Model\Statistic\Year #}
+            {% for year in details.years %}
+                {# month \App\Model\Statistic\Month #}
+                {% for month in year.months %}
+                    {% if seenFirstMonth or month.totalRate > 0 or month.totalDuration > 0 %}
+                        {% set monthDate = date(year.year ~ '-' ~ month.month ~ '-01') %}
+                        {% if project.end is null or monthDate < project.end %}
+                            {% set seenFirstMonth = true %}
+                            {% if showMoneyBudget %}
+                                {% set totalBudget = totalBudget - month.billableRate %}
+                            {% else %}
+                                {% set totalBudget = totalBudget - month.billableDuration %}
+                            {% endif %}
+                            {% set chartLabels = chartLabels|merge([monthDate|month_name ~ ' ' ~ year.year]) %}
+                            {% set chartValue = {
+                                'label': (showMoneyBudget ? totalBudget|money(currency) : totalBudget|duration),
+                                'value': (showMoneyBudget ? totalBudget|money : totalBudget|chart_duration),
+                            } %}
+                            {# line chart do not support coloring negative areas #}
+                            {#
+                            {% if totalBudget < 0 %}
+                                {% set chartValue = chartValue|merge({'color': 'red'}) %}
+                            {% endif %}
+                            #}
+                            {% set chartData = chartData|merge([chartValue]) %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+            {{ bar_chart(chartPrefix, chartLabels, [chartData], {'height': '300px', 'renderEvent': 'render.' ~ chartPrefix, 'type': 'line'}) }}
+        {% endif %}
+    {% endif %}
+{% endmacro %}
