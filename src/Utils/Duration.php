@@ -22,8 +22,10 @@ class Duration
      * @deprecated since 1.13
      */
     public const FORMAT_SECONDS = 'seconds';
-
-    public const FORMAT_WITH_SECONDS = '%h:%m:%s';
+    /**
+     * @deprecated since 1.21
+     */
+    public const FORMAT_WITH_SECONDS = '%h:%m';
     public const FORMAT_NO_SECONDS = '%h:%m';
 
     /**
@@ -39,19 +41,21 @@ class Duration
             return null;
         }
 
+        if ($seconds < 0) {
+            if ($seconds <= -60) {
+                $format = '-' . $format;
+            }
+            $seconds = abs($seconds);
+        }
+
         $hour = (int) floor($seconds / 3600);
         $minute = (int) floor((int) ($seconds / 60) % 60);
 
         $hour = $hour > 9 ? $hour : '0' . $hour;
         $minute = $minute > 9 ? $minute : '0' . $minute;
-
-        $second = $seconds % 60;
-        $second = $second > 9 ? $second : '0' . $second;
-
         $formatted = str_replace('%h', $hour, $format);
-        $formatted = str_replace('%m', $minute, $formatted);
 
-        return str_replace('%s', $second, $formatted);
+        return str_replace('%m', $minute, $formatted);
     }
 
     /**

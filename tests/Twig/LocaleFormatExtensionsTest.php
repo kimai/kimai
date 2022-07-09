@@ -31,7 +31,7 @@ class LocaleFormatExtensionsTest extends TestCase
     private $localeEn = ['en' => ['date' => 'Y-m-d', 'duration' => '%h:%m h', 'date_type' => 'yyyy-MM-dd']];
     private $localeDe = ['de' => ['date' => 'd.m.Y', 'duration' => '%h:%m h', 'date_type' => 'yyyy-MM-dd']];
     private $localeRu = ['ru' => ['date' => 'd.m.Y', 'duration' => '%h:%m h', 'date_type' => 'yyyy-MM-dd']];
-    private $localeFake = ['XX' => ['date' => 'd.m.Y', 'duration' => '%h - %m - %s Zeit', 'date_type' => 'yyyy-MM-dd']];
+    private $localeFake = ['XX' => ['date' => 'd.m.Y', 'duration' => '%h - %m Zeit', 'date_type' => 'yyyy-MM-dd']];
 
     /**
      * @param string|array $locale
@@ -458,11 +458,15 @@ class LocaleFormatExtensionsTest extends TestCase
 
         // test extended format
         $sut = $this->getSut($this->localeFake, 'XX');
-        $this->assertEquals('02 - 37 - 17 Zeit', $sut->duration($record->getDuration()));
+        $this->assertEquals('02 - 37 Zeit', $sut->duration($record->getDuration()));
 
         // test negative duration
         $sut = $this->getSut($this->localeEn, 'en');
-        $this->assertEquals('?', $sut->duration(-1));
+        $this->assertEquals('00:00 h', $sut->duration(0));
+        $this->assertEquals('00:00 h', $sut->duration(-1));
+        $this->assertEquals('00:00 h', $sut->duration(-59));
+        $this->assertEquals('-00:01 h', $sut->duration(-60));
+        $this->assertEquals('-01:36 h', $sut->duration(-5786));
 
         // test zero duration
         $sut = $this->getSut($this->localeEn, 'en');

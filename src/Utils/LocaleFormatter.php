@@ -122,10 +122,6 @@ final class LocaleFormatter
 
     private function formatDuration(int $seconds, string $format): string
     {
-        if ($seconds < 0) {
-            return '?';
-        }
-
         return $this->durationFormatter->format($seconds, $format);
     }
 

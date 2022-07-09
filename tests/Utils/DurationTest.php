@@ -23,7 +23,6 @@ class DurationTest extends TestCase
 
         $this->assertNull($sut->format(null));
         $this->assertEquals('02:38', $sut->format(9494));
-        $this->assertEquals('02:38:14', $sut->format(9494, Duration::FORMAT_WITH_SECONDS));
     }
 
     /**

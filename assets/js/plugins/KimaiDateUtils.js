@@ -51,26 +51,30 @@ export default class KimaiDateUtils extends KimaiPlugin {
      * @returns {string|*}
      */
     formatMomentDuration(duration) {
-        const hours = parseInt(duration.asHours()).toString();
+        const hours = parseInt(duration.asHours());
         const minutes = duration.minutes();
-        const seconds = duration.seconds();
 
-        return this.formatTime(hours, minutes, seconds);
+        return this.formatTime(hours, minutes);
     }
 
-    formatTime(hours, minutes, seconds) {
-        if (hours < 0 || minutes < 0 || seconds < 0) {
-            return '?';
+    formatTime(hours, minutes) {
+        let format = this.getConfiguration('formatDuration');
+
+        if (hours < 0 || minutes < 0) {
+            hours = Math.abs(hours);
+            minutes = Math.abs(minutes);
+            if (minutes > 0 || hours > 0) {
+                format = '-' + format;
+            }
         }
 
         // special case for hours, as they can overflow the 24h barrier - Kimai does not support days as duration unit
-        if (hours.length === 1) {
+        if (hours < 10) {
             hours = '0' + hours;
         }
 
-        const format = this.getConfiguration('formatDuration');
 
-        return format.replace('%h', hours).replace('%m', ('0' + minutes).substr(-2)).replace('%s', ('0' + seconds).substr(-2));
+        return format.replace('%h', hours).replace('%m', ('0' + minutes).substr(-2));
     }
 
     /**
