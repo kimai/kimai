@@ -61,7 +61,7 @@ abstract class AbstractTimesheetCountedStatisticTest extends TestCase
         self::assertInstanceOf(TimesheetCountedStatistic::class, $sut->setRecordDuration(21));
         self::assertInstanceOf(TimesheetCountedStatistic::class, $sut->setRecordAmount(5));
         $sut->setRecordAmountBillable(15);
-        self::assertInstanceOf(TimesheetCountedStatistic::class, $sut->setInternalRate(99.09));
+        $sut->setInternalRate(99.09);
 
         $sut->setDurationBillableExported(199);
         $sut->setDurationExported(299);

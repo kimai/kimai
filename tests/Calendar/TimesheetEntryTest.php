@@ -35,7 +35,6 @@ class TimesheetEntryTest extends TestCase
         $timesheet->addTag((new Tag())->setName('action test'));
 
         $expectedData = [
-            'description' => 'hello foo bar',
             'activity' => null,
             'project' => null,
             'tags' => 'bulb,action test',
@@ -56,10 +55,9 @@ class TimesheetEntryTest extends TestCase
         $timesheet = new Timesheet();
 
         $expectedData = [
-            'description' => null,
             'activity' => null,
             'project' => null,
-            'tags' => '',
+            'tags' => null,
         ];
 
         $sut = new TimesheetEntry($timesheet, '#ddd');
