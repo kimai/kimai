@@ -69,6 +69,7 @@ final class LocaleFormatExtensions extends AbstractExtension
             new TwigFilter('hour24', [$this, 'hour24']),
             new TwigFilter('duration', [$this, 'duration']),
             new TwigFilter('chart_duration', [$this, 'durationChart']),
+            new TwigFilter('chart_money', [$this, 'moneyChart']),
             new TwigFilter('duration_decimal', [$this, 'durationDecimal']),
             new TwigFilter('money', [$this, 'money']),
             new TwigFilter('currency', [$this, 'currency']),
@@ -341,6 +342,11 @@ final class LocaleFormatExtensions extends AbstractExtension
     public function durationChart($duration): string
     {
         return number_format(($duration / 3600), 2, '.', '');
+    }
+
+    public function moneyChart($money): string
+    {
+        return number_format($money, 2, '.', '');
     }
 
     /**

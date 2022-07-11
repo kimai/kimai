@@ -33,7 +33,7 @@
                             {% set chartLabels = chartLabels|merge([monthDate|month_name ~ ' ' ~ year.year]) %}
                             {% set chartValue = {
                                 'label': (showMoneyBudget ? totalBudget|money(currency) : totalBudget|duration),
-                                'value': '' ~ (showMoneyBudget ? totalBudget|money : totalBudget|chart_duration),
+                                'value': '' ~ (showMoneyBudget ? totalBudget|chart_money : totalBudget|chart_duration),
                             } %}
                             {% if totalBudget < 0 %}
                                 {% set chartValue = chartValue|merge({'color': 'red'}) %}
@@ -75,7 +75,7 @@
                             {% set chartLabels = chartLabels|merge([monthDate|month_name ~ ' ' ~ year.year]) %}
                             {% set chartValue = {
                                 'label': (showMoneyBudget ? totalBudget|money(currency) : totalBudget|duration),
-                                'value': (showMoneyBudget ? totalBudget|money : totalBudget|chart_duration),
+                                'value': (showMoneyBudget ? totalBudget|chart_money : totalBudget|chart_duration),
                             } %}
                             {# line chart do not support coloring negative areas #}
                             {#

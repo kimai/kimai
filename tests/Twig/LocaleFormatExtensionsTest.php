@@ -62,7 +62,7 @@ class LocaleFormatExtensionsTest extends TestCase
     {
         $filters = [
             'month_name', 'day_name', 'date_short', 'date_time', 'date_full', 'date_format', 'date_weekday', 'time', 'hour24',
-            'duration', 'chart_duration', 'duration_decimal', 'money', 'currency', 'country', 'language', 'amount'
+            'duration', 'chart_duration', 'chart_money', 'duration_decimal', 'money', 'currency', 'country', 'language', 'amount'
         ];
         $i = 0;
 
@@ -587,5 +587,21 @@ class LocaleFormatExtensionsTest extends TestCase
         $record->setDuration($seconds);
 
         return $record;
+    }
+
+    public function testChartMoney()
+    {
+        $sut = $this->getSut('en', $this->localeEn, false);
+        $this->assertEquals('-123456.78', $sut->moneyChart(-123456.78));
+        $this->assertEquals('123456.78', $sut->moneyChart(123456.78));
+        $this->assertEquals('123456.00', $sut->moneyChart(123456));
+        $this->assertEquals('456.00', $sut->moneyChart(456));
+    }
+
+    public function testCharDuration()
+    {
+        $sut = $this->getSut('en', $this->localeEn, false);
+        $this->assertEquals('34.29', $sut->durationChart(123456.78));
+        $this->assertEquals('-34.29', $sut->durationChart(-123456.78));
     }
 }

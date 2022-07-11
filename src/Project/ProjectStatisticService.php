@@ -469,7 +469,7 @@ class ProjectStatisticService
                 $year = $model->getUserYear($tmp['year'], $user);
                 if ($year === null) {
                     $year = new Year($tmp['year']);
-                    for($i = 1; $i < 13; $i++) {
+                    for ($i = 1; $i < 13; $i++) {
                         $year->setMonth(new Month($i));
                     }
                     $model->setUserYear($year, $user);
@@ -513,7 +513,7 @@ class ProjectStatisticService
         foreach ($qb1->getQuery()->getResult() as $year) {
             if (!\array_key_exists($year['year'], $years)) {
                 $tmp = new Year($year['year']);
-                for($i = 1; $i < 13; $i++) {
+                for ($i = 1; $i < 13; $i++) {
                     $tmp->setMonth(new Month($i));
                 }
                 $years[$year['year']] = $tmp;
