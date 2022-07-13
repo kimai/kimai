@@ -1274,6 +1274,10 @@
         <source>automatic</source>
         <target>Automático</target>
       </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="needs-translation">Texto de la factura</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

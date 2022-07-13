@@ -20,19 +20,19 @@
       </trans-unit>
       <trans-unit id="1gBKwGH" resname="report_inactive_project">
         <source>report_inactive_project</source>
-        <target>nieaktywne projekty</target>
+        <target state="translated">Nieaktywne projekty</target>
       </trans-unit>
       <trans-unit id="518eY_l" resname="report_project_details">
         <source>report_project_details</source>
-        <target>szczegóły projektu</target>
+        <target state="translated">Szczegóły projektu</target>
       </trans-unit>
       <trans-unit id="R.9yUkf" resname="report_project_view">
         <source>report_project_view</source>
-        <target>przegląd projektu</target>
+        <target state="translated">Przegląd projektu</target>
       </trans-unit>
       <trans-unit id="VD98UBN" resname="report_yearly_users">
         <source>report_yearly_users</source>
-        <target>roczny widok dla wszystkich użytkowników</target>
+        <target state="translated">Roczny widok dla wszystkich użytkowników</target>
       </trans-unit>
       <trans-unit id="q_A4AHD" resname="report_weekly_users">
         <source>report_weekly_users</source>
@@ -41,6 +41,14 @@
       <trans-unit id="BQAsynV" resname="report_project_daterange">
         <source>report_project_daterange</source>
         <target>Raport miesięczny</target>
+      </trans-unit>
+      <trans-unit id="3JLmvfB" resname="report_user_year">
+        <source>report_user_year</source>
+        <target state="translated">Roczny widok dla jednego użytkownika</target>
+      </trans-unit>
+      <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects">
+        <source>report_customer_monthly_projects</source>
+        <target state="translated">Projekty według miesiąca, aktywności i użytkownika</target>
       </trans-unit>
     </body>
   </file>

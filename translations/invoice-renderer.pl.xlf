@@ -1,30 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="pl" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
       <trans-unit id=".Bji8X5" resname="label.invoice_renderer">
         <source>label.invoice_renderer</source>
-        <target>Dokument Faktury</target>
+        <target state="translated">Dokument faktury</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target>Faktura (domyślnie)</target>
+        <target state="translated">Faktura</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
-        <target>Ewidencja</target>
+        <target state="translated">Ewidencja pomiarów</target>
       </trans-unit>
       <trans-unit id="M82JFjR" resname="freelancer">
         <source>freelancer</source>
-        <target>Freelancer(zlecenie)</target>
+        <target state="translated">Freelancer (zlecenie)</target>
       </trans-unit>
       <trans-unit id="XUbhXLF" resname="open-spreadsheet">
         <source>open-spreadsheet</source>
-        <target>Calc Spreadsheet</target>
+        <target state="translated">Faktura</target>
       </trans-unit>
       <trans-unit id="U_VP0mi" resname="spreadsheet">
         <source>spreadsheet</source>
-        <target>Excel</target>
+        <target state="translated">Faktura</target>
       </trans-unit>
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
@@ -32,7 +32,55 @@
       </trans-unit>
       <trans-unit id="8WjM3ZF" resname="company">
         <source>company</source>
-        <target>Faktura firmowa</target>
+        <target state="translated">Faktura</target>
+      </trans-unit>
+      <trans-unit id="sjwwrr8" resname="Xlsx">
+        <source>Microsoft Excel (XLSX)</source>
+        <target state="translated">Microsoft Excel (XLSX)</target>
+      </trans-unit>
+      <trans-unit id="4NNx9U." resname="Docx">
+        <source>Microsoft Word (DOCX)</source>
+        <target state="translated">Microsoft Word (DOCX)</target>
+      </trans-unit>
+      <trans-unit id="7mEUv6C" resname="help.upload">
+        <source>help.upload</source>
+        <target state="translated">Uwaga: istniejące pliki zostaną nadpisane. Dozwolone typu plików to: DOCX, ODS, XLSX.</target>
+      </trans-unit>
+      <trans-unit id="E5BwZHT" resname="programmatic">
+        <source>programmatic</source>
+        <target state="translated">Do dalszego przetwarzania</target>
+      </trans-unit>
+      <trans-unit id="nA.KOyM" resname="Html">
+        <source>Html</source>
+        <target state="translated">HTML (do wydruku przez przeglądarkę)</target>
+      </trans-unit>
+      <trans-unit id="sXlZPOC" resname="Xls">
+        <source>Microsoft Excel (XLS)</source>
+        <target state="translated">Microsoft Excel (XLS)</target>
+      </trans-unit>
+      <trans-unit id="QqvUWFt" resname="Ods">
+        <source>Ods</source>
+        <target state="translated">Open Office (arkusz kalkulacyjny)</target>
+      </trans-unit>
+      <trans-unit id="kLKl8xE" resname="Pdf">
+        <source>Pdf</source>
+        <target state="translated">PDF</target>
+      </trans-unit>
+      <trans-unit id="jV1SPRL" resname="default-pdf">
+        <source>default-pdf</source>
+        <target state="translated">Faktura</target>
+      </trans-unit>
+      <trans-unit id="v5KgTmC" resname="xml">
+        <source>xml</source>
+        <target state="translated">XML</target>
+      </trans-unit>
+      <trans-unit id="7acXRsA" resname="javascript">
+        <source>javascript</source>
+        <target state="translated">JSON</target>
+      </trans-unit>
+      <trans-unit id="mC2ePrm" resname="text">
+        <source>text</source>
+        <target state="translated">Tekst</target>
       </trans-unit>
     </body>
   </file>

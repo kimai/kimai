@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
         <source>Maximum duration of {{ value }} hours exceeded.</source>
-        <target>Maksymalna ilość godzin dozwolona.</target>
+        <target state="translated">Maksymalna ilość godzin dozwolona to {{ value }}.</target>
       </trans-unit>
       <trans-unit id="S14XECA" resname="The username is already used.">
         <source>The username is already used.</source>
@@ -48,11 +48,43 @@
       </trans-unit>
       <trans-unit id="6u6oCwB" resname="The email is already used.">
         <source>The email is already used.</source>
-        <target>Adres E-mail jest już używany.</target>
+        <target state="translated">Adres e-mail jest już używany.</target>
       </trans-unit>
       <trans-unit id="6WAG.Xj" resname="The entered passwords don't match.">
         <source>The entered passwords don't match.</source>
-        <target>wprowadzone hasła nie pasują.</target>
+        <target state="translated">Wprowadzone hasła nie są takie same.</target>
+      </trans-unit>
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target state="translated">Przynajmniej jeden przywódca musi zostać przypisany do zespołu.</target>
+      </trans-unit>
+      <trans-unit id="ekO5eXI" resname="An equal username is already used.">
+        <source>An equal username is already used.</source>
+        <target state="translated">Taka sama nazwa użytkownika jest już używana.</target>
+      </trans-unit>
+      <trans-unit id="INlaCgW" resname="An equal email is already used.">
+        <source>An equal email is already used.</source>
+        <target state="translated">Taki adres e-mail jest już używany.</target>
+      </trans-unit>
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target state="translated">Ta ewidencja czynności została już wyeksportowana.</target>
+      </trans-unit>
+      <trans-unit id="ePrqiLN" resname="Duration cannot be zero.">
+        <source>Duration cannot be zero.</source>
+        <target state="translated">Pusty czas trwania nie jest dozwolony.</target>
+      </trans-unit>
+      <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
+        <source>An activity needs to be selected.</source>
+        <target state="translated">Należy wybrać czynność.</target>
+      </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">Przepraszamy, budżet się wyczerpał.</target>
+      </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target state="translated">Należy wybrać projekt.</target>
       </trans-unit>
     </body>
   </file>

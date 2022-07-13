@@ -4,15 +4,15 @@
     <body>
       <trans-unit id="S9k1S7Z" resname="warning">
         <source>warning</source>
-        <target>Uwaga</target>
+        <target state="translated">Ostrzeżenie</target>
       </trans-unit>
       <trans-unit id="WmrEP_5" resname="timesheet.stop.success">
         <source>timesheet.stop.success</source>
-        <target>Rejestrowanie czasu zatrzymane</target>
+        <target state="translated">Rejestrowanie czasu zostało zatrzymane</target>
       </trans-unit>
       <trans-unit id="NPBnpK_" resname="timesheet.stop.error">
         <source>timesheet.stop.error</source>
-        <target>Nie mozna zatrzymać rejestrowania czasu</target>
+        <target state="translated">Rejestrowanie czasu nie może zostać zatrzymane</target>
       </trans-unit>
       <trans-unit id="CCUoZga" resname="timesheet.start.success">
         <source>timesheet.start.success</source>
@@ -20,15 +20,15 @@
       </trans-unit>
       <trans-unit id="3w9tuox" resname="timesheet.start.error">
         <source>timesheet.start.error</source>
-        <target>Nie można uruchomić rejestrowania czasu</target>
+        <target state="translated">Rejestrowanie czasu nie mogło zostać uruchomione</target>
       </trans-unit>
       <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
-        <source>timesheet.start.exceeded_limit</source>
-        <target>Limit aktywnych jednoczesnych pomiarów czasu został osiągnięty , proszę zatrzymać przynajmniej jedną aktywność.</target>
+        <source>The limit of active time records has been reached. Please stop at least one running time measurement first.</source>
+        <target state="translated">Limit aktywnych jednoczesnych pomiarów czasu został osiągnięty. Proszę najpierw zatrzymać przynajmniej jeden z trwających już pomiarów.</target>
       </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
-        <target>Edytujesz wyeksportowany rekord</target>
+        <target state="translated">Edytujesz wpis, który został już wyeksportowany</target>
       </trans-unit>
       <trans-unit id="72Ih8zO" resname="action.update.success">
         <source>action.update.success</source>
@@ -56,7 +56,7 @@
       </trans-unit>
       <trans-unit resname="action.csrf.error" id="bOE_q5R">
         <source>action.csrf.error</source>
-        <target>Ta akcja nie może być zrealizowana: błędny klucz bezpieczeństwa.</target>
+        <target state="translated">Ta akcja nie może zostać wykonana: błędny token bezpieczeństwa.</target>
       </trans-unit>
     </body>
   </file>
