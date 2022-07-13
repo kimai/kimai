@@ -392,7 +392,6 @@ class ProjectStatisticService
         $model = new ProjectDetailsModel($project);
         $model->setBudgetStatisticModel($this->getBudgetStatisticModel($project, $query->getToday()));
 
-        $years = [];
         $qb = $this->timesheetRepository->createQueryBuilder('t');
         $qb
             ->select('COALESCE(SUM(t.duration), 0) as duration')
@@ -502,6 +501,32 @@ class ProjectStatisticService
             }
         }
         // ---------------------------------------------------
+
+        $years = [];
+
+        // make sure that we have all month between project start and end
+        if ($project->getStart() !== null) {
+            if ($project->getEnd() !== null) {
+                $end = clone $project->getEnd();
+            } else {
+                $end = clone $query->getToday();
+                $end->setDate((int) $end->format('Y'), 12, 31);
+            }
+
+            $start = clone $project->getStart();
+            $start->setDate((int) $start->format('Y'), (int) $start->format('m'), 1);
+            $start->setTime(0, 0, 0);
+
+            while ($start !== false && $start < $end) {
+                $year = $start->format('Y');
+                if (!\array_key_exists($year, $years)) {
+                    $years[$year] = new Year($year);
+                }
+                $tmp = $years[$year];
+                $tmp->setMonth(new Month($start->format('m')));
+                $start = $start->modify('+1 month');
+            }
+        }
 
         // fetch stats grouped by YEARS
         $qb1 = clone $qb;

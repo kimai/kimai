@@ -366,18 +366,18 @@
                         </table>
                     </div>
                     <div class="col-xs-12 col-md-6">
-                        {% if (showMoneyBudget and project.budget > 0) or (showTimeBudget and project.timeBudget > 0) %}
+                        {% if (showMoneyBudget and project.hasBudget()) or (showTimeBudget and project.hasTimeBudget()) %}
                             {% from "project/charts.html.twig" import project_budget %}
                             {{ project_budget(project, project_details, chartPrefix) }}
                         {% endif %}
                     </div>
                 </div>
-                {% if (showMoneyBudget and project.budget > 0) or (showTimeBudget and project.timeBudget > 0) %}
+                {% if (showMoneyBudget and project.hasBudget()) or (showTimeBudget and project.hasTimeBudget()) %}
                     {% set budgetStats = project_details.budgetStatisticModel %}
                     <div class="row">
                         <div class="col-xs-12">
                             <table class="table table-hover dataTable">
-                                {% if showTimeBudget and project.timeBudget > 0 %}
+                                {% if showTimeBudget and project.hasTimeBudget() %}
                                     <tr>
                                         <th class="w-min">
                                             {{ 'label.timeBudget'|trans }}
@@ -390,7 +390,7 @@
                                         </td>
                                     </tr>
                                 {% endif %}
-                                {% if showMoneyBudget and project.budget > 0 %}
+                                {% if showMoneyBudget and project.hasBudget() %}
                                     <tr>
                                         <th class="w-min">
                                             {{ 'label.budget'|trans }}
