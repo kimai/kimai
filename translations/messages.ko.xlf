@@ -31,14 +31,11 @@
       </trans-unit>
       <trans-unit id="DYHuW58" resname="confirm.delete">
         <source>confirm.delete</source>
-        <target state="translated">삭제 하시겠습니까?</target>
+        <target state="translated">삭제하시겠습니까?</target>
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target state="translated">
-                    이 데이터도 삭제됩니다!
-                    또는 모든 데이터가 전송될 항목을 선택할 수 있습니다:
-                 </target>
+        <target state="translated">이 데이터도 삭제됩니다! 또는 모든 데이터가 전송될 항목을 선택할 수 있습니다:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -182,7 +179,7 @@
       </trans-unit>
       <trans-unit id="ysOvPSq" resname="label.name">
         <source>label.name</source>
-        <target state="translated">이름 </target>
+        <target state="translated">이름</target>
       </trans-unit>
       <trans-unit id="WqTho4C" resname="label.comment">
         <source>label.comment</source>
@@ -222,7 +219,7 @@
       </trans-unit>
       <trans-unit id="VAbtieW" resname="label.hourlyRate">
         <source>label.hourlyRate</source>
-        <target state="translated">시간당 비용 </target>
+        <target state="translated">시간당 비용</target>
       </trans-unit>
       <trans-unit id="IQ.tlua" resname="label.hourly_rate">
         <source>label.hourly_rate</source>
@@ -254,7 +251,7 @@
       </trans-unit>
       <trans-unit id="Ss2xe99" resname="label.team">
         <source>label.team</source>
-        <target state="translated">팀 </target>
+        <target state="translated">팀</target>
       </trans-unit>
       <trans-unit id="hX.EQKy" resname="label.create_more">
         <source>label.create_more</source>
@@ -385,7 +382,7 @@
       </trans-unit>
       <trans-unit id="ygtTz8." resname="profile.roles">
         <source>profile.roles</source>
-        <target state="translated">역할 </target>
+        <target state="translated">역할</target>
       </trans-unit>
       <trans-unit id="DZ7XGML" resname="profile.teams">
         <source>profile.teams</source>
@@ -401,7 +398,7 @@
       </trans-unit>
       <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
         <source>label.calendar.initial_view</source>
-        <target state="translated">달력 초기화면</target>
+        <target state="translated">달력 초기 화면</target>
       </trans-unit>
       <trans-unit id="iqQsgIW" resname="label.login.initial_view">
         <source>label.login.initial_view</source>
@@ -506,7 +503,7 @@
       </trans-unit>
       <trans-unit id="iD6CNOO" resname="label.roles">
         <source>label.roles</source>
-        <target state="translated">역할 </target>
+        <target state="translated">역할</target>
       </trans-unit>
       <!--
               Admin: Plugins
@@ -563,7 +560,7 @@
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
-        <target state="translated">근무시간 </target>
+        <target state="translated">근무시간</target>
       </trans-unit>
       <trans-unit id="023M9Ta" resname="stats.amountToday">
         <source>stats.amountToday</source>
@@ -674,7 +671,7 @@
       </trans-unit>
       <trans-unit id="4XKFnWh" resname="invoice.from">
         <source>invoice.from</source>
-        <target state="translated">드림 </target>
+        <target state="translated">드림</target>
       </trans-unit>
       <trans-unit id="hx7vsMA" resname="invoice.to">
         <source>invoice.to</source>
@@ -776,7 +773,7 @@
             -->
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
-        <target state="translated">활동 시간 측정 </target>
+        <target state="translated">활동 시간 측정</target>
       </trans-unit>
       <trans-unit id="e7XS97t" resname="timesheet.all">
         <source>timesheet.all</source>
@@ -792,7 +789,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target state="translated">새로운 타임시트 생성하기 </target>
+        <target state="translated">새로운 타임시트 생성하기</target>
       </trans-unit>
       <!--
               TOOLBARS
@@ -823,7 +820,7 @@
       </trans-unit>
       <trans-unit id="xm7mqoK" resname="entryState.running">
         <source>entryState.running</source>
-        <target state="translated">활성됨 </target>
+        <target state="translated">활성됨</target>
       </trans-unit>
       <trans-unit id="spHpd_I" resname="entryState.stopped">
         <source>entryState.stopped</source>
@@ -1276,6 +1273,10 @@
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target>자동</target>
+      </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="translated">송장 텍스트</target>
       </trans-unit>
     </body>
   </file>

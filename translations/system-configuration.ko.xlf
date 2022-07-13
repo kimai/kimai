@@ -298,6 +298,22 @@
         <source>label.user_auth_registration</source>
         <target>사용자 등록</target>
       </trans-unit>
+      <trans-unit id="z4tQEPb" resname="label.timesheet.rules.allow_zero_duration">
+        <source>label.timesheet.rules.allow_zero_duration</source>
+        <target state="translated">시간 항목을 비워두는 것을 허용</target>
+      </trans-unit>
+      <trans-unit id="QxQOG3e" resname="label.quick_entry.recent_activity_weeks">
+        <source>label.quick_entry.recent_activity_weeks</source>
+        <target state="translated">최근 X주의 항목 가져오기 (비워두거나 0으로 설정 시 모든 기간)</target>
+      </trans-unit>
+      <trans-unit id="7Efrrn5" resname="label.quick_entry.minimum_rows">
+        <source>label.quick_entry.minimum_rows</source>
+        <target state="translated">최소 줄 수</target>
+      </trans-unit>
+      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
+        <source>label.calendar.title_pattern</source>
+        <target state="translated">달력 항목의 제목 표시</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

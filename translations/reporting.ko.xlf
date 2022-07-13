@@ -46,6 +46,10 @@
         <source>report_project_details</source>
         <target>프로젝트 세부정보</target>
       </trans-unit>
+      <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects">
+        <source>report_customer_monthly_projects</source>
+        <target state="translated">월별 프로젝트, 활동, 사용자</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

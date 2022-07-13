@@ -4,11 +4,11 @@
     <body>
       <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
-        <target>Jeśli przycisk nie działa, skopiuj &amp; i wklej następujący link do przeglądarki: %url%</target>
+        <target state="translated">Jeśli przycisk nie działa, skopiuj i wklej następujący link do przeglądarki: %url%</target>
       </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
-        <target>Ten e-mail został wygenerowany automatycznie. Prosimy na niego nie odpowiadać, adres nie zostanie odczytany.</target>
+        <target state="translated">Ten e-mail został wygenerowany automatycznie. Prosimy na niego nie odpowiadać, ponieważ skrzynka odbiorcza nie jest obsługiwana.</target>
       </trans-unit>
       <trans-unit id="pjr3FDv" resname="registration.subject">
         <source>registration.subject</source>
@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
         <source>registration.intro</source>
-        <target>Zarejestrowałeś się w w rejestratorze czasu Kimai za pomocą e-maila %email%. Aktywuj konto w ciągu kilku godzin, zanim link wygaśnie.</target>
+        <target state="translated">Zarejestrowałeś się w w rejestratorze czasu Kimai za pomocą e-maila %email%. Aktywuj konto w ciągu kilku następnych godzin, zanim link wygaśnie.</target>
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>

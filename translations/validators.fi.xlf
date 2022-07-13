@@ -82,6 +82,10 @@
         <source>Maximum duration of {{ value }} hours exceeded.</source>
         <target state="translated">Enintään {{ value }} tuntia sallittu.</target>
       </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">Valitettavasti budjetti on käytetty.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

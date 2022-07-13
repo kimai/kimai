@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="pl" datatype="plaintext" original="exceptions.en.xlf">
     <body>
       <trans-unit id="DhMUS5c" resname="access.denied">
         <source>access.denied</source>
-        <target>Dostęp zabroniony</target>
+        <target state="translated">Odmowa dostępu</target>
       </trans-unit>
       <trans-unit id="wSGnVM4" resname="stacktrace">
         <source>stacktrace</source>
@@ -20,21 +20,15 @@
       </trans-unit>
       <trans-unit id="ru5FEGk" resname="http_error.suggestion">
         <source>http_error.suggestion</source>
-        <target>
-                    Wystapił bład krytyczny , porsze spróbuj ponownie.
-                    Jeżeli znalazłeś błąd w oprogramowaniu, proszę skontaktuj sie z administratorem gdy bład się powtórzy.
-                </target>
+        <target state="translated">Wystąpił błąd krytyczny, proszę spróbuj ponownie. Możliwe, że znalazłeś błąd w oprogramowaniu. Skontaktuj się z administratorem, jeśli to się powtórzy.</target>
       </trans-unit>
       <trans-unit id="_W1eNz2" resname="http_error_404.description">
         <source>http_error_404.description</source>
-        <target>Strona nnie znaleziona</target>
+        <target state="translated">Strona nie została znaleziona</target>
       </trans-unit>
       <trans-unit id="MWNS5dg" resname="http_error_404.suggestion">
         <source>http_error_404.suggestion</source>
-        <target>
-                    Nie mogliśmy odnależć strony której szukałeś.
-                    Proszę powrócić do swojego pulpitu i spróbować jeszcze raz.
-                </target>
+        <target state="translated">Nie mogliśmy odnaleźć strony, której szukasz. Powróć do swojego pulpitu i spróbuj jeszcze raz.</target>
       </trans-unit>
       <trans-unit id="Qn5rwdU" resname="http_error_403.description">
         <source>http_error_403.description</source>
@@ -42,10 +36,7 @@
       </trans-unit>
       <trans-unit id="zDeeh7L" resname="http_error_403.suggestion">
         <source>http_error_403.suggestion</source>
-        <target>
-                    Przepraszmy ale nie masz wystarczających uprawnień aby oglądać tą stronę.
-                    Proszę zwrócić się do administratora jezeli sądzisz że powinieneś miec takie uprawnienia.
-                </target>
+        <target state="translated">Przepraszamy, ale nie masz wystarczających uprawnień, aby wyświetlić tę stronę. Zwróć się do administratora, jeżeli sądzisz, że to błąd.</target>
       </trans-unit>
     </body>
   </file>
