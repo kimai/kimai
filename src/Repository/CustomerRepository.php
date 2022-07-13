@@ -124,7 +124,7 @@ class CustomerRepository extends EntityRepository
             $stats->setCounter($amount);
             $stats->setRecordDuration($duration);
             $stats->setRecordRate($rate);
-            $stats->setRecordInternalRate($rateInternal);
+            $stats->setInternalRate($rateInternal);
         }
 
         $qb = $this->getEntityManager()->createQueryBuilder();

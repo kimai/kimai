@@ -31,7 +31,7 @@ class LocaleFormatExtensionsTest extends TestCase
     private $localeEn = ['en' => ['date' => 'Y-m-d', 'duration' => '%h:%m h', 'date_type' => 'yyyy-MM-dd']];
     private $localeDe = ['de' => ['date' => 'd.m.Y', 'duration' => '%h:%m h', 'date_type' => 'yyyy-MM-dd']];
     private $localeRu = ['ru' => ['date' => 'd.m.Y', 'duration' => '%h:%m h', 'date_type' => 'yyyy-MM-dd']];
-    private $localeFake = ['XX' => ['date' => 'd.m.Y', 'duration' => '%h - %m - %s Zeit', 'date_type' => 'yyyy-MM-dd']];
+    private $localeFake = ['XX' => ['date' => 'd.m.Y', 'duration' => '%h - %m Zeit', 'date_type' => 'yyyy-MM-dd']];
 
     /**
      * @param string|array $locale
@@ -62,7 +62,7 @@ class LocaleFormatExtensionsTest extends TestCase
     {
         $filters = [
             'month_name', 'day_name', 'date_short', 'date_time', 'date_full', 'date_format', 'date_weekday', 'time', 'hour24',
-            'duration', 'chart_duration', 'duration_decimal', 'money', 'currency', 'country', 'language', 'amount'
+            'duration', 'chart_duration', 'chart_money', 'duration_decimal', 'money', 'currency', 'country', 'language', 'amount'
         ];
         $i = 0;
 
@@ -458,11 +458,15 @@ class LocaleFormatExtensionsTest extends TestCase
 
         // test extended format
         $sut = $this->getSut($this->localeFake, 'XX');
-        $this->assertEquals('02 - 37 - 17 Zeit', $sut->duration($record->getDuration()));
+        $this->assertEquals('02 - 37 Zeit', $sut->duration($record->getDuration()));
 
         // test negative duration
         $sut = $this->getSut($this->localeEn, 'en');
-        $this->assertEquals('?', $sut->duration(-1));
+        $this->assertEquals('00:00 h', $sut->duration(0));
+        $this->assertEquals('00:00 h', $sut->duration(-1));
+        $this->assertEquals('00:00 h', $sut->duration(-59));
+        $this->assertEquals('-00:01 h', $sut->duration(-60));
+        $this->assertEquals('-01:36 h', $sut->duration(-5786));
 
         // test zero duration
         $sut = $this->getSut($this->localeEn, 'en');
@@ -583,5 +587,21 @@ class LocaleFormatExtensionsTest extends TestCase
         $record->setDuration($seconds);
 
         return $record;
+    }
+
+    public function testChartMoney()
+    {
+        $sut = $this->getSut('en', $this->localeEn, false);
+        $this->assertEquals('-123456.78', $sut->moneyChart(-123456.78));
+        $this->assertEquals('123456.78', $sut->moneyChart(123456.78));
+        $this->assertEquals('123456.00', $sut->moneyChart(123456));
+        $this->assertEquals('456.00', $sut->moneyChart(456));
+    }
+
+    public function testCharDuration()
+    {
+        $sut = $this->getSut('en', $this->localeEn, false);
+        $this->assertEquals('34.29', $sut->durationChart(123456.78));
+        $this->assertEquals('-34.29', $sut->durationChart(-123456.78));
     }
 }

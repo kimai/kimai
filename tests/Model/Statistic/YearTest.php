@@ -26,6 +26,8 @@ class YearTest extends AbstractTimesheetTest
         self::assertEmpty($sut->getMonths());
         self::assertIsArray($sut->getMonths());
         self::assertEquals('1999', $sut->getYear());
+        self::assertSame(0, $sut->getBillableDuration());
+        self::assertSame(0.0, $sut->getBillableRate());
     }
 
     public function testSetter()
@@ -46,5 +48,10 @@ class YearTest extends AbstractTimesheetTest
         self::assertInstanceOf(Month::class, $sut->getMonth(2));
         self::assertInstanceOf(Month::class, $sut->getMonth(3));
         self::assertNull($sut->getMonth(4));
+
+        $sut->setBillableDuration(123456);
+        $sut->setBillableRate(123.456789);
+        self::assertSame(123456, $sut->getBillableDuration());
+        self::assertSame(123.456789, $sut->getBillableRate());
     }
 }

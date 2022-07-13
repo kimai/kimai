@@ -17,7 +17,10 @@ final class Month extends Timesheet
     private $billableDuration = 0;
     private $billableRate = 0.00;
 
-    public function __construct(string $month)
+    /**
+     * @param string|int $month
+     */
+    public function __construct($month)
     {
         $monthNumber = (int) $month;
         if ($monthNumber < 1 || $monthNumber > 12) {
