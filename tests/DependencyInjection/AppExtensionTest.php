@@ -40,14 +40,6 @@ class AppExtensionTest extends TestCase
     {
         return [
             'kimai' => [
-                'languages' => [
-                    'en' => [
-                        'date' => 'A-m-d'
-                    ],
-                    'tr' => [
-                        'date' => 'X-m-d'
-                    ],
-                ],
                 'data_dir' => '/tmp/',
                 'timesheet' => [],
                 'saml' => [
@@ -80,7 +72,7 @@ class AppExtensionTest extends TestCase
                 'he' => [
                     'date' => 'd.M.y',
                     'time' => 'H:mm',
-                    'rtl' => false,
+                    'rtl' => true,
                 ],
                 'tr' => [
                     'date' => 'd.MM.y',

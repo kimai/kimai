@@ -317,7 +317,6 @@ class ConfigurationTest extends TestCase
                     1 => 'templates/export/renderer/',
                 ],
             ],
-            'languages' => [],
             'calendar' => [
                 'week_numbers' => true,
                 'day_limit' => 4,

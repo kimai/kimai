@@ -424,8 +424,8 @@ class ProjectStatisticService
                 $activity = $activities[$activityId];
             }
 
-            $activity->setRecordRate($activity->getRecordRate() + $tmp['rate']);
-            $activity->setRecordDuration($activity->getRecordDuration() + $tmp['duration']);
+            $activity->setRate($activity->getRate() + $tmp['rate']);
+            $activity->setDuration($activity->getDuration() + $tmp['duration']);
             $activity->setInternalRate($activity->getInternalRate() + $tmp['internalRate']);
             $activity->setCounter($activity->getCounter() + $tmp['count']);
 
@@ -581,8 +581,8 @@ class ProjectStatisticService
                 } else {
                     $activity = $yearActivities[$yearName][$activityId];
                 }
-                $activity->setRecordRate($activity->getRecordRate() + $tmp['rate']);
-                $activity->setRecordDuration($activity->getRecordDuration() + $tmp['duration']);
+                $activity->setRate($activity->getRate() + $tmp['rate']);
+                $activity->setDuration($activity->getDuration() + $tmp['duration']);
                 $activity->setInternalRate($activity->getInternalRate() + $tmp['internalRate']);
                 $activity->setCounter($activity->getCounter() + $tmp['count']);
 

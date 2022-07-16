@@ -206,7 +206,7 @@ export default class KimaiDateUtils extends KimaiPlugin {
     {
         duration = duration.shiftTo('hours', 'minutes', 'seconds');
 
-        return this.formatAsDuration(duration.hours, duration.minutes, duration.seconds);
+        return this.formatAsDuration(duration.hours, duration.minutes);
     }
 
     /**
@@ -231,10 +231,9 @@ export default class KimaiDateUtils extends KimaiPlugin {
      *
      * @param {int} hours
      * @param {int} minutes
-     * @param {int} seconds
      * @return {string}
      */
-    formatAsDuration(hours, minutes, seconds)
+    formatAsDuration(hours, minutes)
     {
         let format = this.durationFormat;
 
