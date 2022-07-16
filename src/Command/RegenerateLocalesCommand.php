@@ -42,7 +42,7 @@ final class RegenerateLocalesCommand extends Command
         parent::__construct();
     }
 
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->kernelEnvironment === 'dev';
     }
