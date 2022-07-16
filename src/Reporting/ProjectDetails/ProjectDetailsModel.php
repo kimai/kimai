@@ -158,7 +158,12 @@ final class ProjectDetailsModel
      */
     public function setYears(array $years): void
     {
-        $this->years = $years;
+        $all = [];
+        foreach ($years as $year) {
+            $all[$year->getYear()] = $year;
+        }
+        ksort($all);
+        $this->years = array_values($all);
     }
 
     public function getBudgetStatisticModel(): ?BudgetStatisticModel

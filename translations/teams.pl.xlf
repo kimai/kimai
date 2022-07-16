@@ -28,11 +28,11 @@
       </trans-unit>
       <trans-unit id="cZEIdcu" resname="team.create_default">
         <source>team.create_default</source>
-        <target>Utwórz nowy zespól w celu ograniczenia dostępu</target>
+        <target state="translated">Utwórz nowy zespół w celu ograniczenia dostępu</target>
       </trans-unit>
       <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited">
         <source>team.activity_visibility_inherited</source>
-        <target>Działanie ma ograniczony dostęp, ponieważ uprawnienia zespołu są ustawione dla projektu i/lub klienta.</target>
+        <target state="translated">Działanie ma ograniczony dostęp, ponieważ uprawnienia zespołu są ustawione dla projektu lub klienta.</target>
       </trans-unit>
     </body>
   </file>

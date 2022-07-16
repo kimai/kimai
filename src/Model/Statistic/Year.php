@@ -15,6 +15,8 @@ final class Year extends Timesheet
      * @var Month[]
      */
     private $months = [];
+    private $billableDuration = 0;
+    private $billableRate = 0.00;
 
     public function __construct(private string $year)
     {
@@ -47,5 +49,25 @@ final class Year extends Timesheet
     public function getMonths(): array
     {
         return array_values($this->months);
+    }
+
+    public function getBillableDuration(): int
+    {
+        return $this->billableDuration;
+    }
+
+    public function setBillableDuration(int $billableDuration): void
+    {
+        $this->billableDuration = $billableDuration;
+    }
+
+    public function getBillableRate(): float
+    {
+        return $this->billableRate;
+    }
+
+    public function setBillableRate(float $billableRate): void
+    {
+        $this->billableRate = $billableRate;
     }
 }

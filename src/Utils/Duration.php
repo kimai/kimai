@@ -32,6 +32,13 @@ class Duration
             return null;
         }
 
+        if ($seconds < 0) {
+            if ($seconds <= -60) {
+                $format = '-' . $format;
+            }
+            $seconds = abs($seconds);
+        }
+
         $hour = (int) floor($seconds / 3600);
         $minute = (int) floor((int) ($seconds / 60) % 60);
         $minute = $minute > 9 ? $minute : '0' . $minute;

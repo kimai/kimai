@@ -214,7 +214,7 @@ export default class KimaiDateUtils extends KimaiPlugin {
      * @param {boolean|undefined} isUtc
      * @return {string}
      */
-    formatTime(date, isUtc= false)
+    formatTime(date, isUtc = false)
     {
         let newDate = DateTime.fromJSDate(date);
 
@@ -227,6 +227,8 @@ export default class KimaiDateUtils extends KimaiPlugin {
     }
 
     /**
+     * TODO remove seconds
+     *
      * @param {int} hours
      * @param {int} minutes
      * @param {int} seconds
@@ -234,11 +236,16 @@ export default class KimaiDateUtils extends KimaiPlugin {
      */
     formatAsDuration(hours, minutes, seconds)
     {
-        if (hours < 0 || minutes < 0 || seconds < 0) {
-            return '?';
+        let format = this.durationFormat;
+
+        if (hours < 0 || minutes < 0) {
+            hours = Math.abs(hours);
+            minutes = Math.abs(minutes);
+            format = '-' + format;
         }
 
-        return this.durationFormat.replace('%h', (hours < 10 ? '0' + hours : hours)).replace('%m', ('0' + minutes).slice(-2)).replace('%s', ('0' + seconds).slice(-2));
+        return format.replace('%h', (hours < 10 ? '0' + hours : hours)).replace('%m', ('0' + minutes).slice(-2));
+        //return format.replace('%h', (hours < 10 ? '0' + hours : hours)).replace('%m', ('0' + minutes).slice(-2)).replace('%s', ('0' + seconds).slice(-2));
     }
 
     /**

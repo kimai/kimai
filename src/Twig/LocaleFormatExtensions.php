@@ -50,6 +50,8 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
             new TwigFilter('time', [$this, 'time']),
             new TwigFilter('duration', [$this, 'duration']),
             new TwigFilter('chart_duration', [$this, 'durationChart']),
+            new TwigFilter('chart_money', [$this, 'moneyChart']),
+            new TwigFilter('duration_decimal', [$this, 'durationDecimal']),
             new TwigFilter('money', [$this, 'money']),
             new TwigFilter('amount', [$this, 'amount']),
             new TwigFilter('js_format', [$this, 'convertJavascriptFormat']),
@@ -297,6 +299,11 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
     public function durationChart($duration): string
     {
         return number_format(($duration / 3600), 2, '.', '');
+    }
+
+    public function moneyChart($money): string
+    {
+        return number_format($money, 2, '.', '');
     }
 
     /**

@@ -31,14 +31,11 @@
       </trans-unit>
       <trans-unit id="DYHuW58" resname="confirm.delete">
         <source>confirm.delete</source>
-        <target>Czy naprawdę chcesz usunąć ?</target>
+        <target state="translated">Czy na pewno chcesz usunąć?</target>
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>
-                    Te dane zostaną równiez usuniętę!
-                    Alternatywnie, możesz wybrać zapis do którego dane zostaną przesunięte:
-                </target>
+        <target state="translated">Te dane zostaną również usunięte! Alternatywnie, możesz wybrać zapis, do którego dane zostaną przesunięte:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -66,7 +63,7 @@
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments">
         <source>attachments</source>
-        <target>Załaczniki</target>
+        <target state="translated">Załączniki</target>
       </trans-unit>
       <!--
               Login / Security
@@ -89,15 +86,15 @@
       </trans-unit>
       <trans-unit id="gXZR.hV" resname="label.api_token">
         <source>label.api_token</source>
-        <target>hasło API</target>
+        <target state="translated">Hasło API</target>
       </trans-unit>
       <trans-unit id="s_X2xpI" resname="label.api_token_repeat">
         <source>label.api_token_repeat</source>
-        <target>powtórz hasło API</target>
+        <target state="translated">Powtórz hasło API</target>
       </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
-        <target>Brak uprawnień. Przekierować na stronę logowania ?</target>
+        <target state="translated">Brak uprawnień. Przekierować na stronę logowania?</target>
       </trans-unit>
       <!--
               Menu / Navbar items
@@ -120,15 +117,15 @@
       </trans-unit>
       <trans-unit id="C0W7_BT" resname="menu.timesheet">
         <source>menu.timesheet</source>
-        <target>Moje czasy</target>
+        <target state="translated">Moje wpisy</target>
       </trans-unit>
       <trans-unit id="I.eil4u" resname="menu.export">
         <source>menu.export</source>
-        <target>Export</target>
+        <target state="translated">Eksportowanie</target>
       </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
-        <target>Ewidencje</target>
+        <target state="translated">Ewidencja</target>
       </trans-unit>
       <trans-unit id="IeshU90" resname="customers">
         <source>customers</source>
@@ -194,7 +191,7 @@
       </trans-unit>
       <trans-unit id="cgpmY0I" resname="label.duration">
         <source>label.duration</source>
-        <target>Czas trwania</target>
+        <target state="translated">Czas trwania</target>
       </trans-unit>
       <trans-unit id="O2X4xZH" resname="label.user">
         <source>label.user</source>
@@ -242,7 +239,7 @@
       </trans-unit>
       <trans-unit id="VNCQ7YU" resname="label.tag">
         <source>label.tag</source>
-        <target>Tagi</target>
+        <target state="translated">Tag</target>
       </trans-unit>
       <trans-unit id="ijQyGRo" resname="label.tags">
         <source>label.tags</source>
@@ -254,7 +251,7 @@
       </trans-unit>
       <trans-unit id="dezCZWf" resname="label.skin">
         <source>label.skin</source>
-        <target>Wyświetlanie: Kolory</target>
+        <target state="translated">Wyświetlanie: kolory</target>
       </trans-unit>
       <trans-unit id="DAkHUq0" resname="label.layout">
         <source>label.layout</source>
@@ -343,7 +340,7 @@
       </trans-unit>
       <trans-unit id="jTiYRIu" resname="label.my_team_projects">
         <source>label.my_team_projects</source>
-        <target>Budżety zespołu projektowego &amp; </target>
+        <target state="translated">Moje projekty</target>
       </trans-unit>
       <trans-unit id="1PQHtXu" resname="label.progress">
         <source>label.progress</source>
@@ -358,7 +355,7 @@
             -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
-        <target>Moje czasy</target>
+        <target state="translated">Moje wpisy</target>
       </trans-unit>
       <trans-unit id="dwEVXUR" resname="timesheet.edit">
         <source>timesheet.edit</source>
@@ -378,7 +375,7 @@
       </trans-unit>
       <trans-unit id="UbnqJLn" resname="modal.columns.title">
         <source>modal.columns.title</source>
-        <target>Ukryj - pokaż kolumny</target>
+        <target state="translated">Zmień widoczność kolumn</target>
       </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
@@ -437,7 +434,7 @@
       </trans-unit>
       <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
         <source>label.collapsed_sidebar</source>
-        <target>Zminimalizuj lewy sidebar</target>
+        <target state="translated">Zminimalizuj lewy panel boczny</target>
       </trans-unit>
       <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
         <source>label.calendar_initial_view</source>
@@ -462,7 +459,7 @@
       </trans-unit>
       <trans-unit id="DJu1n0C" resname="label.daily_stats">
         <source>label.daily_stats</source>
-        <target>Pokaż dzienne statystyki w ewidencji</target>
+        <target state="translated">Pokaż dzienne statystyki w ewidencji czynności</target>
       </trans-unit>
       <!--
               User timesheet calendar
@@ -495,7 +492,7 @@
       </trans-unit>
       <trans-unit id="GOStgLi" resname="label.vat">
         <source>label.vat</source>
-        <target>Vat</target>
+        <target state="translated">NIP</target>
       </trans-unit>
       <trans-unit id="0tkOMo1" resname="label.contact">
         <source>label.contact</source>
@@ -519,7 +516,7 @@
       </trans-unit>
       <trans-unit id="AawT9pW" resname="label.mobile">
         <source>label.mobile</source>
-        <target>Tel.Komórkowy</target>
+        <target state="translated">Telefon komórkowy</target>
       </trans-unit>
       <trans-unit id="PS9IH_t" resname="label.homepage">
         <source>label.homepage</source>
@@ -588,7 +585,7 @@
       </trans-unit>
       <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD">
         <source>ROLE_TEAMLEAD</source>
-        <target>Teamleader</target>
+        <target state="translated">Przywódca grupy</target>
       </trans-unit>
       <trans-unit id="rvO5ZXf" resname="ROLE_USER">
         <source>ROLE_USER</source>
@@ -702,7 +699,7 @@
       </trans-unit>
       <trans-unit id="ov4OQOh" resname="invoice.filter">
         <source>invoice.filter</source>
-        <target>Filtruj po dacie faktury</target>
+        <target state="translated">Filtruj dane faktur</target>
       </trans-unit>
       <trans-unit id="7H7P1mE" resname="button.preview">
         <source>button.preview</source>
@@ -758,7 +755,7 @@
       </trans-unit>
       <trans-unit id="x_W5sV4" resname="invoice.number">
         <source>invoice.number</source>
-        <target>Faktura numer</target>
+        <target state="translated">Numer faktury</target>
       </trans-unit>
       <trans-unit id="86KyrKO" resname="invoice.subtotal">
         <source>invoice.subtotal</source>
@@ -766,7 +763,7 @@
       </trans-unit>
       <trans-unit id="EO57yXg" resname="invoice.tax">
         <source>invoice.tax</source>
-        <target>Vat</target>
+        <target state="translated">Podatek</target>
       </trans-unit>
       <trans-unit id="N68vyvo" resname="invoice.total">
         <source>invoice.total</source>
@@ -794,15 +791,15 @@
       </trans-unit>
       <trans-unit id="9p2KQag" resname="invoice.signature_user">
         <source>invoice.signature_user</source>
-        <target>Wystawiono: Data /Osoba upoważniona do wystawienia / Podpis</target>
+        <target state="translated">Wystawiono: data / osoba wystawiająca / podpis</target>
       </trans-unit>
       <trans-unit id="Q9ykNhO" resname="invoice.signature_customer">
         <source>invoice.signature_customer</source>
-        <target>Odebrano: Data / Osoba upoważniona do odbioru / Podpis</target>
+        <target state="translated">Odebrano: data / osoba potwierdzająca / podpis</target>
       </trans-unit>
       <trans-unit id="c3d6p33" resname="invoice.total_working_time">
         <source>invoice.total_working_time</source>
-        <target>Łącznie  czas</target>
+        <target state="translated">Łączna długość (czas trwania)</target>
       </trans-unit>
       <trans-unit id="BS00SS7" resname="label.orderNumber">
         <source>label.orderNumber</source>
@@ -818,18 +815,14 @@
       </trans-unit>
       <trans-unit id="LvU2nJh" resname="label.invoice_salutation">
         <source>label.invoice_salutation</source>
-        <target>
-                    Dziękujemy za skorzystanie z naszych usług
-
-                    Zapraszamy ponownie !
-                </target>
+        <target>Dziękujemy za skorzystanie z naszych usług Zapraszamy ponownie !</target>
       </trans-unit>
       <!--
               Export
             -->
       <trans-unit id="F6Jmro7" resname="export.title">
         <source>export.title</source>
-        <target>Export</target>
+        <target state="translated">Eksport</target>
       </trans-unit>
       <trans-unit id="iwWaUoa" resname="export.filter">
         <source>export.filter</source>
@@ -841,7 +834,7 @@
       </trans-unit>
       <trans-unit id="3CQ7A2m" resname="export.document_title">
         <source>export.document_title</source>
-        <target>Lista wydatków</target>
+        <target state="translated">Eksportuj ewidencję czynności</target>
       </trans-unit>
       <trans-unit id="d5wyWRD" resname="export.full_list">
         <source>export.full_list</source>
@@ -849,7 +842,7 @@
       </trans-unit>
       <trans-unit id="N778uJ6" resname="export.summary">
         <source>export.summary</source>
-        <target>Łącznie</target>
+        <target state="translated">Podsumowanie</target>
       </trans-unit>
       <trans-unit id="ElDyzrx" resname="export.page_of">
         <source>export.page_of</source>
@@ -880,7 +873,7 @@
       </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
-        <target>Utwórz nową wpis czasu pracy</target>
+        <target state="translated">Utwórz nowy wpis</target>
       </trans-unit>
       <!--
               TOOLBARS
@@ -899,11 +892,11 @@
       </trans-unit>
       <trans-unit id="_DDecAV" resname="entryState.exported">
         <source>entryState.exported</source>
-        <target>Odznaczone</target>
+        <target state="translated">Wyeksportowane</target>
       </trans-unit>
       <trans-unit id="ccCiXyR" resname="entryState.not_exported">
         <source>entryState.not_exported</source>
-        <target>Otwarte</target>
+        <target state="translated">Nie wyeksportowane</target>
       </trans-unit>
       <trans-unit id="do7fP0q" resname="entryState.all">
         <source>entryState.all</source>
@@ -919,11 +912,11 @@
       </trans-unit>
       <trans-unit id="BhsaLxX" resname="export.clear_all">
         <source>export.clear_all</source>
-        <target>Oznaczyć wszystkie widoczne wpisy jako otwarte ?</target>
+        <target state="translated">Oznaczyć wszystkie widoczne wpisy jako niewyeksportowane?</target>
       </trans-unit>
       <trans-unit id="qtjPKUT" resname="export.mark_all">
         <source>export.mark_all</source>
-        <target>Oznaczyć wszystkie widoczne wpisy jako oznaczone?</target>
+        <target state="translated">Oznaczyć wszystkie widoczne wpisy jako wyeksportowane?</target>
       </trans-unit>
       <trans-unit id="S0vT92U" resname="label.globalsOnly">
         <source>label.globalsOnly</source>
@@ -943,11 +936,11 @@
       </trans-unit>
       <trans-unit id=".0CFrRV" resname="upload">
         <source>upload</source>
-        <target>Pobierz</target>
+        <target state="translated">Prześlij</target>
       </trans-unit>
       <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields">
         <source>help.batch_meta_fields</source>
-        <target>Pola, które mają być aktualizowane, należy najpierw aktywować, klikając odpowiednie pole wyboru.</target>
+        <target state="translated">Pola mające zostać zaktualizowane należy najpierw aktywować poprzez kliknięcie odpowiedniego okienka wyboru.</target>
       </trans-unit>
       <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">
         <source>label.batch_meta_fields</source>
@@ -979,7 +972,7 @@
       </trans-unit>
       <trans-unit id="JnUFsNi" resname="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
-        <target>Rok %year%</target>
+        <target state="translated">%year% rok</target>
       </trans-unit>
       <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
@@ -995,7 +988,7 @@
       </trans-unit>
       <trans-unit id="42YD.Bf" resname="label.export_decimal">
         <source>label.export_decimal</source>
-        <target>Użyj dziesiętnego czasu trwania podczas eksportu</target>
+        <target state="translated">Użyj formatu dziesiętnego dla długości (czasu trwania) podczas eksportu</target>
       </trans-unit>
       <trans-unit id="hO7mkmf" resname="label.lastLogin">
         <source>label.lastLogin</source>
@@ -1007,7 +1000,7 @@
       </trans-unit>
       <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>
-        <target>Za każdym razem rekord uzyskuje tę samą wartość, niezależnie od czasu jego trwania</target>
+        <target state="translated">Za każdym razem wpis uzyskuje tę samą wartość, niezależnie od jego długości (czasu trwania)</target>
       </trans-unit>
       <trans-unit id="vkHr9AP" resname="label.billable">
         <source>label.billable</source>
@@ -1039,27 +1032,27 @@
       </trans-unit>
       <trans-unit id="XP5zkiN" resname="modal.dirty">
         <source>modal.dirty</source>
-        <target>Formularz uległ zmianie. Prosimy, kliknij "Zapisz", by zapisać zmiany, lub "Zamknij", by je anulować.</target>
+        <target state="translated">Formularz został zmieniony. Kliknij „zapisz”, aby zapisać zmiany lub „Zamknij”, aby je anulować.</target>
       </trans-unit>
       <trans-unit id="qDnURk7" resname="label.last_record">
         <source>label.last_record</source>
-        <target>ostatni wpis</target>
+        <target state="translated">Ostatni wpis</target>
       </trans-unit>
       <trans-unit id="AJ6dwR." resname="label.last_record_before">
         <source>label.last_record_before</source>
-        <target>brak rezerwacji od czasu</target>
+        <target state="translated">Brak rezerwacji czasu od</target>
       </trans-unit>
       <trans-unit id="csF1D35" resname="label.not_invoiced">
         <source>label.not_invoiced</source>
-        <target>nierozliczone</target>
+        <target state="translated">Nierozliczone</target>
       </trans-unit>
       <trans-unit id="3zn5T5e" resname="label.not_exported">
         <source>label.not_exported</source>
-        <target>nie eksportowane</target>
+        <target state="translated">Nie wyeksportowane</target>
       </trans-unit>
       <trans-unit id="B.Dbbob" resname="label.includeNoBudget">
         <source>label.includeNoBudget</source>
-        <target>pokaż wpisy bez budżetu</target>
+        <target state="translated">Pokaż wpisy bez budżetu</target>
       </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
@@ -1067,7 +1060,7 @@
       </trans-unit>
       <trans-unit id="Xij3oQl" resname="invoice.payment_date">
         <source>invoice.payment_date</source>
-        <target>termin zapłaty</target>
+        <target state="translated">Termin zapłaty</target>
       </trans-unit>
       <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
         <source>stats.activeUsersFinancialYear</source>
@@ -1075,7 +1068,7 @@
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
-        <target>Dochód w tym budżetowym roku</target>
+        <target state="translated">Przychód w tym roku budżetowym</target>
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
         <source>stats.durationFinancialYear</source>
@@ -1087,27 +1080,27 @@
       </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime">
         <source>stats.workingTime</source>
-        <target>czas pracy</target>
+        <target state="translated">Czas pracy</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
-        <target>rok budżetowy</target>
+        <target state="translated">Rok budżetowy</target>
       </trans-unit>
       <trans-unit id="YNGNfGn" resname="label.tax_rate">
         <source>label.tax_rate</source>
-        <target>wysokość podatku</target>
+        <target state="translated">Wysokość podatku</target>
       </trans-unit>
       <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
         <source>calendar.drag_and_drop.delete</source>
-        <target>jeśli chcesz usunąć wpis, musisz przeciągnąć go na przycisk.</target>
+        <target state="translated">Jeśli chcesz usunąć wpis, musisz przeciągnąć go na przycisk.</target>
       </trans-unit>
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
-        <target>zaktualizuj tytuł przeglądarki</target>
+        <target state="translated">Zaktualizuj tytuł przeglądarki</target>
       </trans-unit>
       <trans-unit id="9hpJPiG" resname="action.save_all">
         <source>action.save_all</source>
-        <target>zapisz wszystko</target>
+        <target state="translated">Zapisz wszystko</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>
@@ -1115,7 +1108,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>resetting.check_email</source>
-        <target state="translated">E-mail został wysłany. Zawiera link który musisz kliknąć aby zresetować twoje hasło. Uwaga Możesz jedynie poprosić o nowe hasło w %tokenLifetime% godziny. jeśli nie dostałeś e-maila zobacz swój folder ze spamem lub spróbuj ponownie.</target>
+        <target state="translated">E-mail został wysłany. Zawiera link, który musisz kliknąć, aby zresetować twoje hasło. Ważne: możesz poprosić o nowe hasło tylko raz na %tokenLifetime% godziny. Jeśli nie dostałeś e-maila, zobacz swój folder ze spamem lub spróbuj ponownie.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
@@ -1123,7 +1116,7 @@
       </trans-unit>
       <trans-unit id="O5w1jzb" resname="file">
         <source>file</source>
-        <target state="translated">pliki</target>
+        <target state="translated">Pliki</target>
       </trans-unit>
       <trans-unit id="Z8Fxbvf" resname="label.orderBy">
         <source>label.orderBy</source>
@@ -1135,23 +1128,23 @@
       </trans-unit>
       <trans-unit id="31x84Dt" resname="label.asc">
         <source>label.asc</source>
-        <target state="translated">rosnąco</target>
+        <target state="translated">Rosnąco</target>
       </trans-unit>
       <trans-unit id="NNKq04n" resname="label.remove_default">
         <source>label.remove_default</source>
-        <target state="translated">usuń ulubione wyszukiwanie</target>
+        <target state="translated">Usuń ulubione wyszukiwanie</target>
       </trans-unit>
       <trans-unit id="BytPihM" resname="label.set_as_default">
         <source>label.set_as_default</source>
-        <target state="translated">Zapisz ustawienie jako ulubione wyszukiwania</target>
+        <target state="translated">Zapisz ustawienie jako ulubione wyszukiwanie</target>
       </trans-unit>
       <trans-unit id="IolBPQD" resname="label.searchTerm">
         <source>label.searchTerm</source>
-        <target state="translated">wyszukaj termin</target>
+        <target state="translated">Wyszukaj termin</target>
       </trans-unit>
       <trans-unit id="z_YHoZn" resname="label.includeNoWork">
         <source>label.includeNoWork</source>
-        <target>pokaż wpisy bez rezerwacji</target>
+        <target state="translated">Pokaż wpisy bez rezerwacji</target>
       </trans-unit>
       <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
         <source>stats.percentUsedLeft_month</source>
@@ -1167,15 +1160,15 @@
       </trans-unit>
       <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
         <source>delete_warning.short_stats</source>
-        <target>Obecnie istnieją rekordy czasu %records%, które sumują się do całkowitego czasu trwania %duration%.</target>
+        <target state="translated">Obecnie istnieją %records% wpisy, które sumują się do całkowitej długości (czasu trwania) %duration%.</target>
       </trans-unit>
       <trans-unit id="RRj6PYN" resname="label.invoice_tax_number">
         <source>label.invoice_tax_number</source>
-        <target>VAT no.:</target>
+        <target state="translated">NIP (VAT-ID):</target>
       </trans-unit>
       <trans-unit id="tp.gIrE" resname="team.add_user.help">
         <source>team.add_user.help</source>
-        <target>Dodaj nowego użytkownika do drużyny poprzez wybór z listy. Potem możesz zdecydować czy użytkownik powinien zostać przywódcą.</target>
+        <target state="translated">Dodaj nowego użytkownika do grupy poprzez wybór z listy. Potem możesz zdecydować czy użytkownik powinien zostać przywódcą.</target>
       </trans-unit>
       <trans-unit id="Zif614Q" resname="add_user.label">
         <source>add_user.label</source>
@@ -1195,7 +1188,7 @@
       </trans-unit>
       <trans-unit id="W92QGbY" resname="export.warn_result_amount">
         <source>export.warn_result_amount</source>
-        <target>Twoje wyszukiwanie prowadzi do %count% wyników. Jeżeli eksport zawiedzie, musisz zawęzić wyszukiwanie.</target>
+        <target state="translated">Twoje wyszukiwanie prowadzi do %count% wyników. Jeżeli eksport się nie powiódł, musisz zawęzić wyszukiwanie.</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
@@ -1203,7 +1196,7 @@
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
-        <target>Katalog „%dir%” is zabezpieczony przed zapisem.</target>
+        <target state="translated">Katalog „%dir%” jest zabezpieczony przed zapisem.</target>
       </trans-unit>
       <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
@@ -1215,7 +1208,7 @@
       </trans-unit>
       <trans-unit id="gT9W2pZ" resname="status.canceled">
         <source>status.canceled</source>
-        <target state="needs-translation">Canceled</target>
+        <target state="translated">Anuluj</target>
       </trans-unit>
       <trans-unit id="pnGDFmf" resname="label.type">
         <source>label.type</source>
@@ -1223,15 +1216,15 @@
       </trans-unit>
       <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
         <source>label.includeBudgetType_month</source>
-        <target state="translated">Pokaż pozycję z budżetem "miesięcznym"</target>
+        <target state="translated">Pokaż pozycję z budżetem „miesięcznym”</target>
       </trans-unit>
       <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
         <source>label.includeBudgetType_full</source>
-        <target state="needs-translation">Show entries with "life cycle" budget</target>
+        <target state="translated">Pokaż wpisy z uwzględnieniem „cyklu życia” budżetu</target>
       </trans-unit>
       <trans-unit id="9Rhadz6" resname="label.budgetType_full">
         <source>label.budgetType_full</source>
-        <target state="needs-translation">Life cycle</target>
+        <target state="translated">Cykl życia</target>
       </trans-unit>
       <trans-unit id="yNWIi5U" resname="default_value_new">
         <source>default_value_new</source>
@@ -1239,15 +1232,15 @@
       </trans-unit>
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
-        <target state="needs-translation">Updated at</target>
+        <target state="translated">Zaktualizowano</target>
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
-        <target state="needs-translation">Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
+        <target state="translated">Osiągnięto maksymalną ilość z %max% faktur. Możesz dodać więcej po usunięciu jednej.</target>
       </trans-unit>
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
-        <target state="needs-translation">Weekly working hours</target>
+        <target state="translated">Tygodniowe godziny pracy</target>
       </trans-unit>
       <trans-unit id="jdbtx6z" resname="action.add">
         <source>action.add</source>
@@ -1256,6 +1249,10 @@
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target>Automatycznie</target>
+      </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="translated">Tekst na fakturze</target>
       </trans-unit>
     </body>
   </file>

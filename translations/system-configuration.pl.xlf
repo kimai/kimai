@@ -4,11 +4,11 @@
     <body>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Time tracking</source>
-        <target>Ewidencje</target>
+        <target state="translated">Śledzenie czasu</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
-        <target>Kompozycja</target>
+        <target state="translated">Motyw graficzny</target>
       </trans-unit>
       <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
         <source>label.theme.markdown_content</source>
@@ -16,23 +16,23 @@
       </trans-unit>
       <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
         <source>label.timesheet.mode</source>
-        <target>Tryb rejestrowania czasu</target>
+        <target state="translated">Tryb rejestrowania czasu</target>
       </trans-unit>
       <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
         <source>label.timesheet.mode_default</source>
-        <target>[Domyślnie] Czasy początku  i końca moga być edytowane</target>
+        <target state="translated">[Domyślnie] czasy rozpoczęcia i zakończenia może być zmieniony</target>
       </trans-unit>
       <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
-        <target>[Czas trwania] Konfigurowalny ustalony czas początku, możliwa zmiana jedynie długości trwania</target>
+        <target state="translated">[Długość] konfigurowalny stały czas rozpoczęcia, możliwa jest zmiana długości (czasu trwania)</target>
       </trans-unit>
       <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
         <source>label.timesheet.mode_punch</source>
-        <target>[Stoper] Uzytkownik może utuchomić i zatrzymać pomiar, bez mozliwości edycji czasów poczatku , końca czy też długości trwania</target>
+        <target state="translated">[Stoper] użytkownik może uruchomić i zatrzymać pomiar, bez możliwości edycji czasu rozpoczęcia czy długości (czasu trwania)</target>
       </trans-unit>
       <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
         <source>label.timesheet.rules.allow_future_times</source>
-        <target>Zezwalaj na przyszłe wpisy czasu</target>
+        <target state="translated">Zezwalaj na wpisy w przyszłości</target>
       </trans-unit>
       <trans-unit id="oIueXaX" resname="label.timesheet.active_entries.hard_limit">
         <source>label.timesheet.active_entries.hard_limit</source>
@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>
-        <target>Wyświetlaj nimery tygodnia</target>
+        <target state="translated">Wyświetlaj numery tygodni</target>
       </trans-unit>
       <trans-unit id="NULxaYp" resname="label.calendar.weekends">
         <source>label.calendar.weekends</source>
@@ -48,11 +48,11 @@
       </trans-unit>
       <trans-unit id="AMCb58W" resname="label.calendar.businessHours.begin">
         <source>label.calendar.businessHours.begin</source>
-        <target>Poczatek normalnych godzin pracy (będzie wyrózniony)</target>
+        <target state="translated">Początek normalnych godzin pracy (będzie wyróżniony)</target>
       </trans-unit>
       <trans-unit id="3nfAkqy" resname="label.calendar.businessHours.end">
         <source>label.calendar.businessHours.end</source>
-        <target>Koniec normalnych godzin pracy (będzie wyrózniony)</target>
+        <target state="translated">Koniec normalnych godzin pracy (będzie wyróżniony)</target>
       </trans-unit>
       <trans-unit id="Yl4Ztfv" resname="label.calendar.visibleHours.begin">
         <source>label.calendar.visibleHours.begin</source>
@@ -68,15 +68,15 @@
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>
-        <target>Marka</target>
+        <target state="translated">Moja firma</target>
       </trans-unit>
       <trans-unit id="m5dLCoB" resname="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
-        <target>Logo URL (zastępuje nazwę firmy na ekranie logowania)</target>
+        <target state="translated">URL logo (zastępuje nazwę firmy na ekranie logowania)</target>
       </trans-unit>
       <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
         <source>label.theme.branding.company</source>
-        <target>Nazwa Firmy</target>
+        <target state="translated">Nazwa firmy</target>
       </trans-unit>
       <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
         <source>label.theme.branding.mini</source>
@@ -84,75 +84,75 @@
       </trans-unit>
       <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
         <source>label.theme.branding.title</source>
-        <target>Tytuł przeglądarki</target>
+        <target state="translated">Tytuł w przeglądarce</target>
       </trans-unit>
       <trans-unit id="Gdb5M4w" resname="rounding">
         <source>rounding</source>
-        <target>Zaokraglanie czasu</target>
+        <target state="translated">Zaokrąglanie czasu</target>
       </trans-unit>
       <trans-unit id="0wyl4Bb" resname="label.timesheet.rounding.default.begin">
         <source>label.timesheet.rounding.default.begin</source>
-        <target>Zaokrąglanie czasu startu w minutach (0 = nieaktywne)</target>
+        <target state="translated">Zaokrąglanie czasu rozpoczęcia w minutach (0 = nieaktywne)</target>
       </trans-unit>
       <trans-unit id="Jx6bTVr" resname="label.timesheet.rounding.default.end">
         <source>label.timesheet.rounding.default.end</source>
-        <target>Zaokrąglenie czasu końca w minutach (0 = nieaktywne)</target>
+        <target state="translated">Zaokrąglenie czasu zakończenia w minutach (0 = nieaktywne)</target>
       </trans-unit>
       <trans-unit id="Hnl7Jxt" resname="label.timesheet.rounding.default.duration">
         <source>label.timesheet.rounding.default.duration</source>
-        <target>Zaokrąglenie długości czasu trwania w minutach (0 = nieaktywne)</target>
+        <target state="translated">Zaokrąglenie długości (czasu trwania) w minutach (0 = nieaktywne)</target>
       </trans-unit>
       <trans-unit id="aenIpDV" resname="label.timesheet.rounding.default.mode">
         <source>label.timesheet.rounding.default.mode</source>
-        <target>Tryb zaokraglania czasu</target>
+        <target state="translated">Tryb zaokrąglania</target>
       </trans-unit>
       <trans-unit id="D1NSPl5" resname="label.timesheet.rounding.default.days">
         <source>label.timesheet.rounding.default.days</source>
-        <target>Dni tygodnia w których zaokrąglanie czasu będzie stosowane</target>
+        <target state="translated">Dni tygodnia, dla których zaokrąglanie czasu będzie stosowane</target>
       </trans-unit>
       <trans-unit id="agDfwdy" resname="Monday">
         <source>Monday</source>
-        <target>Poniedziałek</target>
+        <target state="translated">poniedziałek</target>
       </trans-unit>
       <trans-unit id="fYrx3hJ" resname="Tuesday">
         <source>Tuesday</source>
-        <target>Wtorek</target>
+        <target state="translated">wtorek</target>
       </trans-unit>
       <trans-unit id="wKbMgpz" resname="Wednesday">
         <source>Wednesday</source>
-        <target>Środa</target>
+        <target state="translated">środa</target>
       </trans-unit>
       <trans-unit id=".CZiBi." resname="Thursday">
         <source>Thursday</source>
-        <target>Czwartek</target>
+        <target state="translated">czwartek</target>
       </trans-unit>
       <trans-unit id="4h8.Nyp" resname="Friday">
         <source>Friday</source>
-        <target>Piatek</target>
+        <target state="translated">piątek</target>
       </trans-unit>
       <trans-unit id="2_Ncc2P" resname="Saturday">
         <source>Saturday</source>
-        <target>Sobota</target>
+        <target state="translated">sobota</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>
-        <target>Niedziela</target>
+        <target state="translated">niedziela</target>
       </trans-unit>
       <trans-unit id="jmsE4EY" resname="Ceil">
         <source>Ceil</source>
-        <target>W górę: poczatek , koniec i długośc bedą zaokrąglane w górę</target>
+        <target state="translated">Sufit: początek, koniec i długość (czas trwania) będą zaokrąglane w górę</target>
       </trans-unit>
       <trans-unit id="Y_qmsDz" resname="Closest">
         <source>Closest</source>
-        <target>Najbliższy: matematyczne zaokraglanie do najbliższej wartości</target>
+        <target state="translated">Najbliższe: matematyczne zaokrąglanie do najbliższej wartości</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default">
         <source>Default</source>
-        <target>Standart: poczatek będzie zaokraglany w doł , koniec i długość w górę</target>
+        <target state="translated">Standard: początek będzie zaokrąglany w dół, koniec i długość (czas trwania) w górę</target>
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor">
         <source>Floor</source>
-        <target>W dół: poczatek , koniec i długośc będą zaokraglane w dół</target>
+        <target state="translated">W dół: początek, koniec i długość (czas trwania) będą zaokrąglane w dół</target>
       </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>
@@ -164,7 +164,7 @@
       </trans-unit>
       <trans-unit id="DY_cM92" resname="label.timesheet.default_begin">
         <source>label.timesheet.default_begin</source>
-        <target>Domyślny czas rozpoczęcia (nie używany we wszystkich trybach śledzenia czasu)</target>
+        <target state="translated">Domyślny czas rozpoczęcia (nieużywany we wszystkich trybach śledzenia czasu)</target>
       </trans-unit>
       <trans-unit id="y2i0PU3" resname="label.timesheet.rules.lockdown_grace_period">
         <source>label.timesheet.rules.lockdown_grace_period</source>
@@ -172,7 +172,7 @@
       </trans-unit>
       <trans-unit id=".es2tyO" resname="label.timesheet.rules.lockdown_period_end">
         <source>label.timesheet.rules.lockdown_period_end</source>
-        <target>Początek okresu blokady (względna data PHP do teraz)</target>
+        <target state="translated">Koniec okresu blokady (względna data PHP do teraz)</target>
       </trans-unit>
       <trans-unit id="yVBJECt" resname="label.timesheet.rules.lockdown_period_start">
         <source>label.timesheet.rules.lockdown_period_start</source>
@@ -188,23 +188,23 @@
       </trans-unit>
       <trans-unit id="x3AfnWn" resname="label.timesheet.time_increment">
         <source>label.timesheet.time_increment</source>
-        <target>Wybór minut dla Od &amp; Do</target>
+        <target state="translated">Wybór minut dla „od” i „do”</target>
       </trans-unit>
       <trans-unit id="40i4Xlr" resname="label.timesheet.duration_increment">
         <source>label.timesheet.duration_increment</source>
-        <target>Wybór minut dla czasu trwania</target>
+        <target state="translated">Wybór minut dla długości (czasu trwania)</target>
       </trans-unit>
       <trans-unit id="ZUTc3eH" resname="label.calendar.dragdrop_amount">
         <source>label.calendar.dragdrop_amount</source>
-        <target>Liczba wpisów do przeciągania &amp; i upuszczania (0 = deactivated)</target>
+        <target state="translated">Liczba wpisów możliwych do przeciągania i upuszczania (0 = wyłączone)</target>
       </trans-unit>
       <trans-unit id="h4bhOny" resname="label.timesheet.rules.long_running_duration">
         <source>label.timesheet.rules.long_running_duration</source>
-        <target>Maksymalny czas trwania rekordu grafiku w minutach przed odrzuceniem zapisu (0 = deactivated)</target>
+        <target state="translated">Maksymalna długość (czas trwania w minutach) rekordu w ewidencji pomiarów przed odrzuceniem jej zapisu (0 = wyłączone)</target>
       </trans-unit>
       <trans-unit id="jLG6z.w" resname="label.timesheet.rules.break_warning_duration">
         <source>label.timesheet.rules.break_warning_duration</source>
-        <target>Maksymalny czas trwania rekordu grafiku w minutach przed wyświetleniem „ostrzeżenia o przerwie” zostanie wyświetlone (0 = deactivated)</target>
+        <target state="translated">Maksymalna długość (czas trwania w minutach) rekordu w ewidencji pomiarów, zanim wyświetli się „ostrzeżenie o przerwaniu” (0 = wyłączone)</target>
       </trans-unit>
       <trans-unit id="A3HPT4p" resname="label.saml_activate">
         <source>label.saml_activate</source>
@@ -212,19 +212,19 @@
       </trans-unit>
       <trans-unit id="71FjFMp" resname="label.ldap_activate">
         <source>label.ldap_activate</source>
-        <target>logowanie LDAP</target>
+        <target state="translated">Logowanie LDAP</target>
       </trans-unit>
       <trans-unit id="0Tj.NhS" resname="label.user_auth_password_reset_token_ttl">
         <source>label.user_auth_password_reset_token_ttl</source>
-        <target>Zapomniane hasło - sekundy przed wygaśnięciem linku resetującego</target>
+        <target state="translated">Zapomniane hasło — sekundy do wygaśnięcia linku resetującego</target>
       </trans-unit>
       <trans-unit id="ufoC1qF" resname="label.user_auth_password_reset_retry_ttl">
         <source>label.user_auth_password_reset_retry_ttl</source>
-        <target>Zapomniałeś hasło - zachwile możesz poprosić na następne w E-mailu</target>
+        <target state="translated">Zapomniane hasło — za chwilę możesz poprosić o następny e-mail</target>
       </trans-unit>
       <trans-unit id="t2zKRp5" resname="label.user_auth_password_reset">
         <source>label.user_auth_password_reset</source>
-        <target>Zapomniałeś hasła</target>
+        <target state="translated">Zapomniane hasło</target>
       </trans-unit>
       <trans-unit id=".zZ_MeA" resname="label.user_auth_registration">
         <source>label.user_auth_registration</source>
@@ -232,19 +232,19 @@
       </trans-unit>
       <trans-unit id="CCXeSFj" resname="label.user_auth_login">
         <source>label.user_auth_login</source>
-        <target>Forma logowania</target>
+        <target state="translated">Formularz logowania</target>
       </trans-unit>
       <trans-unit id="udkGKEU" resname="authentication">
         <source>authentication</source>
         <target>Poświadczenie</target>
       </trans-unit>
       <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
-        <source>help.theme.color_choices</source>
-        <target>Lista oddzielonych przecinkami kodów kolorów HTML. Nazwy kolorów można ustawić, poprzedzając kod koloru nazwą | delimiter, eg.: White|#ffffff,Black|#000000.</target>
+        <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
+        <target state="translated">Lista rozdzielonych przecinkami kodów kolorów HTML. Nazwy kolorów można ustawić, poprzedzając kod koloru jego nazwą i ogranicznikiem "|", np.: biały|#ffffff,czarny|#000000.</target>
       </trans-unit>
       <trans-unit id="scCc2Xm" resname="label.theme.color_choices">
         <source>label.theme.color_choices</source>
-        <target>Zezwól na kolory</target>
+        <target state="translated">Dozwolone kolory</target>
       </trans-unit>
       <trans-unit id="QHVk7AA" resname="label.theme.colors_limited">
         <source>label.theme.colors_limited</source>
@@ -256,11 +256,11 @@
       </trans-unit>
       <trans-unit id=".CeyZwj" resname="label.company.financial_year">
         <source>label.company.financial_year</source>
-        <target>Budżet roczny</target>
+        <target state="translated">Rok budżetowy</target>
       </trans-unit>
       <trans-unit id="HeDzoVE" resname="label.timesheet.rules.lockdown_period_timezone">
         <source>label.timesheet.rules.lockdown_period_timezone</source>
-        <target>Strefa czasowa (Jeśli jest pusta, używana jest strefa czasowa odpowiedniego użytkownika</target>
+        <target state="translated">Strefa czasowa (jeśli jest pusta, używana jest strefa czasowa danego użytkownika)</target>
       </trans-unit>
       <trans-unit id="tuPXa0S" resname="lockdown_period">
         <source>lockdown_period</source>
@@ -272,11 +272,31 @@
       </trans-unit>
       <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
         <source>label.theme.random_colors</source>
-        <target>Użyj losowy kolor dla przedmiotu bez przypisanego koloru</target>
+        <target state="translated">Użyj losowy kolor dla obiektu nieposiadającego przypisanego koloru</target>
       </trans-unit>
       <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
         <source>label.theme.avatar_url</source>
-        <target>Zezwalaj na używanie adresów URL dla obrazów awatarów</target>
+        <target state="translated">Zezwalaj na używanie adresów URL w celu ustawiania awatarów</target>
+      </trans-unit>
+      <trans-unit id="z4tQEPb" resname="label.timesheet.rules.allow_zero_duration">
+        <source>label.timesheet.rules.allow_zero_duration</source>
+        <target state="translated">Zezwalaj na wpisy bez długości (pusty czas trwania)</target>
+      </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target state="translated">Liczba wpisów przejętych z poprzednich tygodni</target>
+      </trans-unit>
+      <trans-unit id="QxQOG3e" resname="label.quick_entry.recent_activity_weeks">
+        <source>label.quick_entry.recent_activity_weeks</source>
+        <target state="translated">Przejmij wpisy z ostatnich X tygodni (pozostaw puste lub wpisz 0 aby wybrać cały czas)</target>
+      </trans-unit>
+      <trans-unit id="7Efrrn5" resname="label.quick_entry.minimum_rows">
+        <source>label.quick_entry.minimum_rows</source>
+        <target state="translated">Minimalna liczba wierszy</target>
+      </trans-unit>
+      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
+        <source>label.calendar.title_pattern</source>
+        <target state="translated">Wyświetlanie tytułów na wpisach kalendarza</target>
       </trans-unit>
     </body>
   </file>

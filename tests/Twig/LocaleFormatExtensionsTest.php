@@ -70,6 +70,7 @@ class LocaleFormatExtensionsTest extends TestCase
             'time',
             'duration',
             'chart_duration',
+            'chart_money',
             'money',
             'amount',
             'js_format',
@@ -412,7 +413,11 @@ class LocaleFormatExtensionsTest extends TestCase
 
         // test negative duration
         $sut = $this->getSut($this->localeEn, 'en');
-        $this->assertEquals('?', $sut->duration(-1));
+        $this->assertEquals('00:00 h', $sut->duration(0));
+        $this->assertEquals('00:00 h', $sut->duration(-1));
+        $this->assertEquals('00:00 h', $sut->duration(-59));
+        $this->assertEquals('-00:01 h', $sut->duration(-60));
+        $this->assertEquals('-01:36 h', $sut->duration(-5786));
 
         // test zero duration
         $sut = $this->getSut($this->localeEn, 'en');
@@ -533,5 +538,21 @@ class LocaleFormatExtensionsTest extends TestCase
         $record->setDuration($seconds);
 
         return $record;
+    }
+
+    public function testChartMoney()
+    {
+        $sut = $this->getSut('en', $this->localeEn, false);
+        $this->assertEquals('-123456.78', $sut->moneyChart(-123456.78));
+        $this->assertEquals('123456.78', $sut->moneyChart(123456.78));
+        $this->assertEquals('123456.00', $sut->moneyChart(123456));
+        $this->assertEquals('456.00', $sut->moneyChart(456));
+    }
+
+    public function testCharDuration()
+    {
+        $sut = $this->getSut('en', $this->localeEn, false);
+        $this->assertEquals('34.29', $sut->durationChart(123456.78));
+        $this->assertEquals('-34.29', $sut->durationChart(-123456.78));
     }
 }

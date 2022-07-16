@@ -35,10 +35,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>
-                    Tato data budou smazána!
-                    Nebo můžete data prenést do jiného záznamu:
-                </target>
+        <target>Tato data budou smazána! Nebo můžete data prenést do jiného záznamu:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -1219,15 +1216,15 @@
       </trans-unit>
       <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
+        <target state="translated">Zobrazení položek ve výběru</target>
       </trans-unit>
       <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
         <source>delete_warning.short_stats</source>
-        <target state="needs-translation">Currently %records% time-records exists, which sum up to a total duration of %duration%.</target>
+        <target state="translated">V současnosti existuje %records% časových záznamů, kterých součet představuje celkovou dobu %duration%.</target>
       </trans-unit>
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
-        <target state="needs-translation">Update browser title</target>
+        <target state="translated">Aktualizovat nadpis prohlížeče</target>
       </trans-unit>
       <trans-unit id="tp.gIrE" resname="team.add_user.help">
         <source>team.add_user.help</source>
@@ -1239,11 +1236,19 @@
       </trans-unit>
       <trans-unit id="z_YHoZn" resname="label.includeNoWork">
         <source>label.includeNoWork</source>
-        <target state="needs-translation">Show entries without bookings</target>
+        <target state="translated">Zobrazit vstupy bez rezervace</target>
       </trans-unit>
       <trans-unit id="AJ6dwR." resname="label.last_record_before">
         <source>label.last_record_before</source>
-        <target state="needs-translation">No time booking since</target>
+        <target state="translated">Bez rezervace času</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target state="translated">Automaticky</target>
+      </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="translated">Text faktury</target>
       </trans-unit>
     </body>
   </file>
