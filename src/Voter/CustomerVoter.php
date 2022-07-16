@@ -33,7 +33,6 @@ final class CustomerVoter extends Voter
         'delete',
         'permissions',
         'comments',
-        'comments_create',
         'details',
         'access',
     ];

@@ -32,7 +32,6 @@ final class ProjectVoter extends Voter
         'delete',
         'permissions',
         'comments',
-        'comments_create',
         'details',
     ];
 

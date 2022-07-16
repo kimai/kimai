@@ -177,7 +177,7 @@ final class CustomerController extends AbstractController
 
     /**
      * @Route(path="/{id}/comment_add", name="customer_comment_add", methods={"POST"})
-     * @Security("is_granted('comments_create', customer)")
+     * @Security("is_granted('comments', customer)")
      */
     public function addCommentAction(Customer $customer, Request $request)
     {
@@ -311,9 +311,6 @@ final class CustomerController extends AbstractController
 
         if ($this->isGranted('comments', $customer)) {
             $comments = $this->repository->getComments($customer);
-        }
-
-        if ($this->isGranted('comments_create', $customer)) {
             $commentForm = $this->getCommentForm($customer, new CustomerComment())->createView();
         }
 

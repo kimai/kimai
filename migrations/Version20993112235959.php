@@ -15,17 +15,19 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
- * @version 2.00
+ * @version 2.1.0
  */
 final class Version20993112235959 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Necessary changes for 2.0';
+        return 'Cleanup after 2.0, these changes will prevent rollbacks to 1.x';
     }
 
     public function up(Schema $schema): void
     {
+        $this->addSql("DELETE FROM kimai2_roles_permissions WHERE `permission` LIKE 'comments_create%'");
+
         $schema->getTable('kimai2_invoice_templates')->getColumn('language')->setNotnull(true);
     }
 

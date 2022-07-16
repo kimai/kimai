@@ -200,7 +200,7 @@ final class ProjectController extends AbstractController
 
     /**
      * @Route(path="/{id}/comment_add", name="project_comment_add", methods={"POST"})
-     * @Security("is_granted('comments_create', project)")
+     * @Security("is_granted('comments', project)")
      */
     public function addCommentAction(Project $project, Request $request)
     {
@@ -330,9 +330,6 @@ final class ProjectController extends AbstractController
 
         if ($this->isGranted('comments', $project)) {
             $comments = $this->repository->getComments($project);
-        }
-
-        if ($this->isGranted('comments_create', $project)) {
             $commentForm = $this->getCommentForm($project, new ProjectComment())->createView();
         }
 
