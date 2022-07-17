@@ -56,7 +56,6 @@ class LocaleFormatExtensionsTest extends TestCase
      */
     protected function getSut($locale, $dateSettings, $fdowSunday = false)
     {
-
         $language = $locale;
         if (\is_array($locale)) {
             $language = $dateSettings;
