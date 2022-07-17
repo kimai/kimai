@@ -44,7 +44,7 @@ final class RegenerateLocalesCommand extends Command
 
     public function isEnabled(): bool
     {
-        return $this->kernelEnvironment === 'dev';
+        return $this->kernelEnvironment !== 'prod';
     }
 
     protected function configure(): void
