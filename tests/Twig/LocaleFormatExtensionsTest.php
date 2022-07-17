@@ -24,7 +24,6 @@ use Twig\TwigTest;
 /**
  * @covers \App\Twig\LocaleFormatExtensions
  * @covers \App\Utils\LocaleFormatter
- * @covers \App\Utils\LocaleFormat
  */
 class LocaleFormatExtensionsTest extends TestCase
 {
