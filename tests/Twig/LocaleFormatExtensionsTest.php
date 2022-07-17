@@ -138,11 +138,13 @@ class LocaleFormatExtensionsTest extends TestCase
 
     public function getDateShortData()
     {
+        $timezone = new \DateTimeZone('Europe/Vienna');
+
         return [
-            ['en', new \DateTime('7 January 2010'), '2010-01-07'],
-            ['en', new \DateTime('2016-06-23'), '2016-06-23'],
-            ['de', new \DateTime('1980-12-14'), '14.12.1980'],
-            ['ru', new \DateTime('1980-12-14'), '14.12.1980'],
+            ['en', new \DateTime('7 January 2010', $timezone), '2010-01-07'],
+            ['en', new \DateTime('2016-06-23', $timezone), '2016-06-23'],
+            ['de', new \DateTime('1980-12-14', $timezone), '14.12.1980'],
+            ['ru', new \DateTime('1980-12-14', $timezone), '14.12.1980'],
             ['ru', '1980-12-14', '14.12.1980'],
             ['ru', 1.2345, 1.2345],
         ];
@@ -165,9 +167,11 @@ class LocaleFormatExtensionsTest extends TestCase
 
     public function getDateTimeData()
     {
+        $timezone = new \DateTimeZone('Europe/Vienna');
+
         return [
-            ['en', new \DateTime('7 January 2010 00:01:00'), '2010-01-07 12:01 AM'],
-            ['de', (new \DateTime('1980-12-14'))->setTime(13, 27, 55), '14.12.1980 13:27:55'],
+            ['en', new \DateTime('7 January 2010 00:01:00', $timezone), '2010-01-07 12:01 AM'],
+            ['de', (new \DateTime('1980-12-14', $timezone))->setTime(13, 27, 55), '14.12.1980 13:27:55'],
             ['de', '1980-12-14 13:27:55', '14.12.1980 13:27:55'],
             ['de', 1.2345, 1.2345],
         ];
