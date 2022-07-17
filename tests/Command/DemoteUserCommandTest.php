@@ -48,10 +48,6 @@ class DemoteUserCommandTest extends KernelTestCase
 
         $command = $application->find('kimai:user:demote');
         self::assertInstanceOf(DemoteUserCommand::class, $command);
-
-        // test alias
-        $command = $application->find('fos:user:demote');
-        self::assertInstanceOf(DemoteUserCommand::class, $command);
     }
 
     protected function callCommand(?string $username, ?string $role, bool $super = false)

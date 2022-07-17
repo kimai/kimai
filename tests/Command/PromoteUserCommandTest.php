@@ -48,10 +48,6 @@ class PromoteUserCommandTest extends KernelTestCase
 
         $command = $application->find('kimai:user:promote');
         self::assertInstanceOf(PromoteUserCommand::class, $command);
-
-        // test alias
-        $command = $application->find('fos:user:promote');
-        self::assertInstanceOf(PromoteUserCommand::class, $command);
     }
 
     protected function callCommand(?string $username, ?string $role, bool $super = false)

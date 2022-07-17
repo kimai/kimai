@@ -47,10 +47,6 @@ class DeactivateUserCommandTest extends KernelTestCase
 
         $command = $application->find('kimai:user:deactivate');
         self::assertInstanceOf(DeactivateUserCommand::class, $command);
-
-        // test alias
-        $command = $application->find('fos:user:deactivate');
-        self::assertInstanceOf(DeactivateUserCommand::class, $command);
     }
 
     protected function callCommand(?string $username)

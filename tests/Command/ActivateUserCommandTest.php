@@ -47,10 +47,6 @@ class ActivateUserCommandTest extends KernelTestCase
 
         $command = $application->find('kimai:user:activate');
         self::assertInstanceOf(ActivateUserCommand::class, $command);
-
-        // test alias
-        $command = $application->find('fos:user:activate');
-        self::assertInstanceOf(ActivateUserCommand::class, $command);
     }
 
     protected function callCommand(?string $username)

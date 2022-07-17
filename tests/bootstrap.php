@@ -13,7 +13,7 @@ if (isset($_ENV['BOOTSTRAP_RESET_DATABASE']) && $_ENV['BOOTSTRAP_RESET_DATABASE'
     echo 'Re-Installing test database ...' . PHP_EOL;
 
     exec(sprintf(
-        'APP_ENV=test php "%s/../bin/console" kimai:reset-test --env=test --no-interaction -vvv',
+        'APP_ENV=test php "%s/../bin/console" kimai:reset:test --env=test --no-interaction -vvv',
         __DIR__
     ), $output, $exitCode);
 

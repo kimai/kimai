@@ -26,8 +26,8 @@ class ResetTestCommandTest extends KernelTestCase
         $application = new Application($kernel);
         $application->add(new ResetTestCommand($this->createMock(EntityManagerInterface::class)));
 
-        self::assertTrue($application->has('kimai:reset-test'));
-        $command = $application->find('kimai:reset-test');
+        self::assertTrue($application->has('kimai:reset:test'));
+        $command = $application->find('kimai:reset:test');
         self::assertInstanceOf(ResetTestCommand::class, $command);
     }
 
@@ -37,6 +37,6 @@ class ResetTestCommandTest extends KernelTestCase
         $application = new Application($kernel);
         $application->add(new ResetTestCommand($this->createMock(EntityManagerInterface::class)));
 
-        self::assertFalse($application->has('kimai:reset-test'));
+        self::assertFalse($application->has('kimai:reset:test'));
     }
 }

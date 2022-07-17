@@ -49,10 +49,6 @@ class ChangePasswordCommandTest extends KernelTestCase
 
         $command = $application->find('kimai:user:password');
         self::assertInstanceOf(ChangePasswordCommand::class, $command);
-
-        // test alias
-        $command = $application->find('fos:user:change-password');
-        self::assertInstanceOf(ChangePasswordCommand::class, $command);
     }
 
     protected function callCommand(?string $username, ?string $password)
