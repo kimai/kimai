@@ -47,6 +47,7 @@ class LocaleFormatExtensionsTest extends TestCase
 
         $user = new User();
         $user->setPreferenceValue(UserPreference::FIRST_WEEKDAY, ($fdowSunday ? 'sunday' : 'monday'));
+        $user->setTimezone('Europe/Vienna');
         $security = $this->createMock(Security::class);
         $security->expects($this->any())->method('getUser')->willReturn($user);
 
