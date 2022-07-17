@@ -120,7 +120,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Project_Entity"})
-     * @Serializer\Type(name="DateTime")
+     * @Serializer\Type(name="DateTime<'Y-m-d'>")
      * @Serializer\Accessor(getter="getOrderDate")
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
@@ -135,7 +135,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Project"})
-     * @Serializer\Type(name="DateTime")
+     * @Serializer\Type(name="DateTime<'Y-m-d'>")
      * @Serializer\Accessor(getter="getStart")
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
@@ -150,7 +150,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Project"})
-     * @Serializer\Type(name="DateTime")
+     * @Serializer\Type(name="DateTime<'Y-m-d'>")
      * @Serializer\Accessor(getter="getEnd")
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.

@@ -220,7 +220,7 @@ class ProjectController extends BaseApiController
 
         $form = $this->createForm(ProjectApiEditForm::class, $project, [
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
-            'date_format' => self::DATE_FORMAT,
+            'date_format' => self::DATE_ONLY_FORMAT,
             'include_budget' => $this->isGranted('budget', $project),
             'include_time' => $this->isGranted('time', $project),
         ]);

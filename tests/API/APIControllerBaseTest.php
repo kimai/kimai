@@ -486,14 +486,14 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'color' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'parentTitle' => 'string',
-                    'start' => '@datetime',
-                    'end' => '@datetime',
+                    'start' => '@date',
+                    'end' => '@date',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'comment' => '@string',
                     'budget' => 'float',
                     'timeBudget' => 'int',
                     'orderNumber' => '@string',
-                    'orderDate' => '@datetime',
+                    'orderDate' => '@date',
                     'budgetType' => '@string', // since 1.15
                 ];
 
@@ -710,7 +710,12 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
             }
 
             if (strtolower($value) === 'datetime') {
-                // TODO
+                $date = \DateTime::createFromFormat('Y-m-d\TH:i:sO', $result[$key]);
+                self::assertInstanceOf(\DateTime::class, $date, sprintf('Field "%s" was expected to be a Date with the format "Y-m-dTH:i:sO", but found: %s', $key, $result[$key]));
+                $value = 'string';
+            } elseif (strtolower($value) === 'date') {
+                $date = \DateTime::createFromFormat('Y-m-d', $result[$key]);
+                self::assertInstanceOf(\DateTime::class, $date, sprintf('Field "%s" was expected to be a Date with the format "Y-m-d", but found: %s', $key, $result[$key]));
                 $value = 'string';
             }
 

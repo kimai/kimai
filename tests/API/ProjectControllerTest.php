@@ -254,9 +254,9 @@ class ProjectControllerTest extends APIControllerBaseTest
             'name' => 'first',
             'orderNumber' => null,
             // make sure the timezone is properly applied in serializer (see #1858)
-            'orderDate' => '2019-11-29T14:35:17+1300',
-            'start' => '2020-01-07T18:19:20+1300',
-            'end' => '2021-03-23T00:00:01+1300',
+            'orderDate' => '2019-11-29',
+            'start' => '2020-01-07',
+            'end' => '2021-03-23',
             'comment' => null,
             'visible' => true,
             'budget' => 0.0,
@@ -283,9 +283,9 @@ class ProjectControllerTest extends APIControllerBaseTest
             'name' => 'foo',
             'customer' => 1,
             'visible' => true,
-            'orderDate' => '2018-02-08T13:02:54',
-            'start' => '2019-02-01T19:32:17',
-            'end' => '2020-02-08T21:11:42',
+            'orderDate' => '2018-04-17',
+            'start' => '2019-02-01',
+            'end' => '2020-02-08',
             'budget' => '999',
             'timeBudget' => '7200',
             'orderNumber' => '1234567890/WXYZ/SUBPROJECT/1234/CONTRACT/EMPLOYEE1',
@@ -297,9 +297,9 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
         $this->assertNotEmpty($result['id']);
-        self::assertEquals('2018-02-08T00:00:00+0000', $result['orderDate']);
-        self::assertEquals('2019-02-01T00:00:00+0000', $result['start']);
-        self::assertEquals('2020-02-08T23:59:59+0000', $result['end']);
+        self::assertEquals('2018-04-17', $result['orderDate']);
+        self::assertEquals('2019-02-01', $result['start']);
+        self::assertEquals('2020-02-08', $result['end']);
         self::assertEquals('1234567890/WXYZ/SUBPROJECT/1234/CONTRACT/EMPLOYEE1', $result['orderNumber']);
     }
 
