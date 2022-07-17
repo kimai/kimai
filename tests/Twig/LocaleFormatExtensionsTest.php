@@ -31,6 +31,23 @@ class LocaleFormatExtensionsTest extends TestCase
     private $localeDe = ['de' => ['date' => 'd.m.Y', 'duration' => '%h:%m', 'time' => 'HH:mm']];
     private $localeFake = ['XX' => ['date' => 'd.m.Y', 'duration' => '%h - %m - %s Zeit', 'time' => 'HH:mm']];
 
+    private ?string $oldTimezone = null;
+
+    /**
+     * This method is called before each test.
+     */
+    protected function setUp(): void
+    {
+        $this->oldTimezone = date_default_timezone_get();
+        date_default_timezone_set('Europe/Vienna');
+    }
+
+    protected function tearDown(): void
+    {
+        date_default_timezone_set($this->oldTimezone);
+        $this->oldTimezone = null;
+    }
+
     /**
      * @param string|array $locale
      * @param array|string $dateSettings
@@ -39,6 +56,7 @@ class LocaleFormatExtensionsTest extends TestCase
      */
     protected function getSut($locale, $dateSettings, $fdowSunday = false)
     {
+
         $language = $locale;
         if (\is_array($locale)) {
             $language = $dateSettings;
@@ -142,11 +160,11 @@ class LocaleFormatExtensionsTest extends TestCase
         $timezone = new \DateTimeZone('Europe/Vienna');
 
         return [
-            ['en', new \DateTime('7 January 2010', $timezone), '2010-01-07'],
-            ['en', new \DateTime('2016-06-23', $timezone), '2016-06-23'],
-            ['de', new \DateTime('1980-12-14', $timezone), '14.12.1980'],
-            ['ru', new \DateTime('1980-12-14', $timezone), '14.12.1980'],
-            ['ru', '1980-12-14', '14.12.1980'],
+            ['en', new \DateTime('7 January 2010 12:00:00', $timezone), '2010-01-07'],
+            ['en', new \DateTime('2016-06-23 12:00:00', $timezone), '2016-06-23'],
+            ['de', new \DateTime('1980-12-14 12:00:00', $timezone), '14.12.1980'],
+            ['ru', new \DateTime('1980-12-14 12:00:00', $timezone), '14.12.1980'],
+            ['ru', '1980-12-14 12:00:00', '14.12.1980'],
             ['ru', 1.2345, 1.2345],
         ];
     }
