@@ -107,7 +107,11 @@
                             {% set currency = model.currency %}
                             <tr>
                                 <td>
-                                    {{ widgets.label_customer(model.customer) }}
+                                    {% if is_granted('view', model.customer) %}
+                                        <a class="link-black" href="{{ path('customer_details', {id: model.customer.id}) }}">{{ widgets.label_customer(model.customer) }}</a>
+                                    {% else %}
+                                        {{ widgets.label_customer(model.customer) }}
+                                    {% endif %}
                                 </td>
                                 <td class="w-min text-center">
                                     {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'class': 'btn btn-sm', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_preview', {'customer': model.customer.id, 'token': csrf_token('invoice.preview')})}}) }}
@@ -161,11 +165,19 @@
                             <tr>
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.begin|date_short }}</td>
                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
-                                    {{ widgets.label_project(entry.project) }}
+                                    {% if is_granted('view', entry.project) %}
+                                        <a class="link-black" href="{{ path('project_details', {id: entry.project.id}) }}">{{ widgets.label_project(entry.project) }}</a>
+                                    {% else %}
+                                        {{ widgets.label_project(entry.project) }}
+                                    {% endif %}
                                     {% if entry.activity is not null %}
                                     <br>
                                     <small>
-                                        {{ widgets.label_activity(entry.activity) }}
+                                        {% if is_granted('view', entry.activity) %}
+                                            <a class="link-black" href="{{ path('activity_details', {id: entry.activity.id}) }}">{{ widgets.label_activity(entry.activity) }}</a>
+                                        {% else %}
+                                            {{ widgets.label_activity(entry.activity) }}
+                                        {% endif %}
                                     </small>
                                     {% endif %}
                                 </td>
