@@ -106,5 +106,4 @@ class ActivityService
     {
         return $this->repository->findOneBy(['project' => $project, 'name' => $name]);
     }
-
 }
