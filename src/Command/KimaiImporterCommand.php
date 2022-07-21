@@ -34,7 +34,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
-use KimaiPlugin\AuditTrailBundle\Doctrine\MetadataSubscriber;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
@@ -692,7 +691,8 @@ final class KimaiImporterCommand extends Command
             foreach ($listeners as $hash => $object) {
                 if ($object instanceof TimesheetSubscriber) {
                     $connection->getEventManager()->removeEventListener([$event], $object);
-                } elseif ($object instanceof MetadataSubscriber) {
+                /* @phpstan-ignore-next-line  */
+                } elseif ($object instanceof \KimaiPlugin\AuditTrailBundle\Doctrine\MetadataSubscriber) {
                     // deactivate audit plugin listener
                     $connection->getEventManager()->removeEventListener([$event], $object);
                 }
