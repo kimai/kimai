@@ -51,6 +51,7 @@ class ProjectDateRangeControllerTest extends ControllerBaseTest
         $activities = $this->importFixture($activities);
 
         $timesheets = new TimesheetFixtures();
+        $timesheets->setStartDate(new \DateTime());
         $timesheets->setAmount(50);
         $timesheets->setActivities($activities);
         $timesheets->setUser($this->getUserByRole(User::ROLE_TEAMLEAD));
