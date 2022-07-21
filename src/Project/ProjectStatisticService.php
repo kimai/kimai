@@ -168,7 +168,7 @@ class ProjectStatisticService
                 $qb->expr()->eq('p.budget', 0.0),
                 $qb->expr()->eq('p.timeBudget', 0)
             );
-        } else {
+        } else if (!$query->isBudgetIndependent()) {
             $qb->andWhere(
                 $qb->expr()->orX(
                     $qb->expr()->gt('p.budget', 0.0),

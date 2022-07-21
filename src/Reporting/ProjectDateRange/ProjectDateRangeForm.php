@@ -56,6 +56,7 @@ class ProjectDateRangeForm extends AbstractType
             'multiple' => false,
             'expanded' => true,
             'choices' => [
+                'label.budgetIndependent' => null,
                 'label.includeNoBudget' => 'none',
                 'label.includeBudgetType_full' => 'full',
                 'label.includeBudgetType_month' => 'month',
