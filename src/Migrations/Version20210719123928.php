@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
+use App\Doctrine\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
 
 /**
  * @version 1.15
