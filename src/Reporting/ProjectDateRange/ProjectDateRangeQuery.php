@@ -26,14 +26,24 @@ final class ProjectDateRangeQuery
      * @var Customer|null
      */
     private $customer;
-
-    private $includeNoWork = true;
-    private $budgetType = 'month';
+    /**
+     * @var bool
+     */
+    private $includeNoWork = false;
+    /**
+     * @var string|null
+     */
+    private $budgetType = null;
 
     public function __construct(\DateTime $month, User $user)
     {
         $this->month = clone $month;
         $this->user = $user;
+    }
+
+    public function isBudgetIndependent(): bool
+    {
+        return $this->budgetType === null;
     }
 
     public function isIncludeNoBudget(): bool
