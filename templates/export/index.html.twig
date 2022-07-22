@@ -66,10 +66,26 @@
         {% if entries is empty %}
             {{ widgets.nothing_found() }}
         {% else %}
+            {% set totalDuration = 0 %}
+            {% set totalRates = {} %}
+
+            {% for row in by_customer %}
+                {% set totalDuration = totalDuration + row.duration %}
+                {% set customerCurrency = row.customer.currency %}
+                {% if totalRates[customerCurrency] is not defined %}
+                    {% set totalRates = totalRates|merge({(customerCurrency): 0.00}) %}
+                {% endif %}
+                {% set totalRates = totalRates|merge({(customerCurrency): totalRates[customerCurrency] + row.rate}) %}
+            {% endfor %}
+
             {% embed '@AdminLTE/Widgets/box-widget.html.twig' %}
                 {% import "macros/widgets.html.twig" as widgets %}
                 {% block box_title %}
                     {{ 'button.preview'|trans }}: {{ 'export.title'|trans }}
+                    {{ widgets.label(totalDuration|duration, 'gray') }}
+                    {% for totalCurrency, totalRate in totalRates %}
+                        {{ widgets.label(totalRate|money(totalCurrency), 'gray') }}
+                    {% endfor %}
                 {% endblock %}
                 {% block box_body_class %}no-padding{% endblock %}
                 {% block box_footer %}

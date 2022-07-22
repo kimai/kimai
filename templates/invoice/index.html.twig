@@ -66,12 +66,21 @@
         {{ widgets.callout('danger', 'http_error_403.suggestion'|trans({}, 'exceptions')) }}
     {% endif %}
 
+    {% set totalDuration = 0 %}
+    {% set totalRates = {} %}
+
     {% if searched %}
         {% set showEmpty = true %}
         {% for model in models %}
             {% if showEmpty %}
                 {% set showEmpty = model.calculator is empty or model.calculator.entries is empty %}
             {% endif %}
+            {% set totalDuration = totalDuration + model.calculator.timeWorked %}
+            {% set customerCurrency = model.customer.currency %}
+            {% if totalRates[customerCurrency] is not defined %}
+                {% set totalRates = totalRates|merge({(customerCurrency): 0.00}) %}
+            {% endif %}
+            {% set totalRates = totalRates|merge({(customerCurrency): totalRates[customerCurrency] + model.calculator.total}) %}
         {% endfor %}
         {% if showEmpty %}
             {{ widgets.nothing_found() }}
@@ -84,6 +93,10 @@
             {% import '@AdminLTE/Macros/buttons.html.twig' as button %}
             {% block box_title %}
                 {{ 'button.preview'|trans }}: {{ 'invoices'|trans }}
+                {{ widgets.label(totalDuration|duration, 'gray') }}
+                {% for totalCurrency, totalRate in totalRates %}
+                    {{ widgets.label(totalRate|money(totalCurrency), 'gray') }}
+                {% endfor %}
             {% endblock %}
             {% block box_body_class %}no-padding{% endblock %}
             {% block box_footer %}
