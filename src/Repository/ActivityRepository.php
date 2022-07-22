@@ -286,12 +286,28 @@ class ActivityRepository extends EntityRepository
         if ($query->isGlobalsOnly()) {
             $mainQuery->add($qb->expr()->isNull('a.project'));
         } elseif ($query->hasProjects()) {
-            $mainQuery->add(
-                $qb->expr()->orX(
-                    $qb->expr()->isNull('a.project'),
-                    $qb->expr()->in('a.project', ':project')
-                )
+            $orX = $qb->expr()->orX(
+                $qb->expr()->in('a.project', ':project')
             );
+
+            $includeGlobals = true;
+            // projects have a setting to disallow global activities, and we check for it only
+            // if we query for exactly one project (usually used in dropdown queries)
+            if (\count($query->getProjects()) === 1) {
+                $project = $query->getProjects()[0];
+                if (!$project instanceof Project) {
+                    $project = $this->getEntityManager()->getRepository(Project::class)->find($project);
+                }
+                if ($project instanceof Project) {
+                    $includeGlobals = $project->isGlobalActivities();
+                }
+            }
+
+            if ($includeGlobals) {
+                $orX->add($qb->expr()->isNull('a.project'));
+            }
+
+            $mainQuery->add($orX);
             $qb->setParameter('project', $query->getProjects());
         }
 
@@ -381,7 +397,21 @@ class ActivityRepository extends EntityRepository
             );
 
             if (!$query->isExcludeGlobals()) {
-                $orX->add($qb->expr()->isNull('a.project'));
+                $includeGlobals = true;
+                // projects have a setting to disallow global activities, and we check for it only
+                // if we query for exactly one project (usually used in dropdown queries)
+                if (\count($query->getProjects()) === 1) {
+                    $project = $query->getProjects()[0];
+                    if (!$project instanceof Project) {
+                        $project = $this->getEntityManager()->getRepository(Project::class)->find($project);
+                    }
+                    if ($project instanceof Project) {
+                        $includeGlobals = $project->isGlobalActivities();
+                    }
+                }
+                if ($includeGlobals) {
+                    $orX->add($qb->expr()->isNull('a.project'));
+                }
             }
 
             $where->add($orX);

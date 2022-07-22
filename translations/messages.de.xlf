@@ -1201,6 +1201,10 @@
         <source>label.globalsOnly</source>
         <target>Nur globale</target>
       </trans-unit>
+      <trans-unit id="G9hBaDJ" resname="label.globalActivities">
+        <source>label.globalActivities</source>
+        <target>Globale Tätigkeiten erlauben</target>
+      </trans-unit>
       <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">
         <source>label.batch_meta_fields</source>
         <target>Zusätzliche Felder</target>
@@ -1221,7 +1225,7 @@
         <source>label.includeBudgetType_month</source>
         <target>Einträge mit „Monats-Budget“ anzeigen</target>
       </trans-unit>
-      <trans-unit id="Wq.h4adsfsdfnD" resname="label.budgetIndependent">
+      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
         <source>label.budgetIndependent</source>
         <target>Unabhängig vom „Budget-Typ“ anzeigen</target>
       </trans-unit>

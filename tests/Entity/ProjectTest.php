@@ -38,6 +38,7 @@ class ProjectTest extends AbstractEntityTest
         self::assertNull($sut->getInvoiceText());
         self::assertTrue($sut->isVisible());
         self::assertTrue($sut->isBillable());
+        self::assertTrue($sut->isGlobalActivities());
         self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
@@ -106,6 +107,9 @@ class ProjectTest extends AbstractEntityTest
         self::assertFalse($sut->isVisible());
         $sut->setVisible(true);
         self::assertTrue($sut->isVisible());
+
+        $sut->setGlobalActivities(false);
+        self::assertFalse($sut->isGlobalActivities());
     }
 
     public function testMetaFields()

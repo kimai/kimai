@@ -13,6 +13,7 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\Type\CustomerType;
 use App\Form\Type\DateTimePickerType;
+use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -95,7 +96,11 @@ class ProjectEditForm extends AbstractType
                 'placeholder' => (null === $id && null === $customer) ? '' : false,
                 'customers' => $customer,
                 'query_builder_for_user' => true,
-            ]);
+            ])
+            ->add('globalActivities', YesNoType::class, [
+                'label' => 'label.globalActivities',
+            ])
+        ;
 
         $this->addCommonFields($builder, $options);
     }

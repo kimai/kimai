@@ -60,11 +60,14 @@
                 {{ form_row(form.invoiceText) }}
             {% endif %}
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     {{ form_row(form.visible) }}
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4 text-center">
                     {{ form_row(form.billable) }}
+                </div>
+                <div class="col-md-4 text-right">
+                    {{ form_row(form.globalActivities) }}
                 </div>
             </div>
             {% if form.metaFields is defined and form.metaFields is not empty %}
