@@ -257,8 +257,6 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * @var bool
      *
-     * @Exporter\Expose(label="label.globalActivities", type="boolean")
-     *
      * @ORM\Column(name="global_activities", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
      */
