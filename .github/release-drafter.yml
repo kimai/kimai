@@ -18,8 +18,7 @@ exclude-labels:
     - 'wontfix'
 exclude-contributors:
     - 'dependabot'
-    - 'weblate'
-change-template: '- $TITLE (#$NUMBER) @$AUTHOR'
+change-template: '- $TITLE (#$NUMBER)'
 change-title-escapes: '\<*_&`#@'
 version-resolver:
     major:
@@ -35,12 +34,14 @@ version-resolver:
             - 'translation'
     default: patch
 template: |
-  [Upgrade Kimai](https://www.kimai.org/documentation/updates.html) - [Install Kimai](https://www.kimai.org/documentation/installation.html) - [Docker](https://tobybatch.github.io/kimai2/) & [Hub](https://hub.docker.com/r/kimai/kimai2)
+  [Upgrade Kimai](https://www.kimai.org/documentation/updates.html) - [Install Kimai](https://www.kimai.org/documentation/installation.html) - [Docker](https://tobybatch.github.io/kimai2/)
 
   **PHP Version compatibility:**
     - PHP 7.3 is [end-of-life](https://www.php.net/supported-versions.php): you need to update now
     - PHP 7.4, PHP 8 and PHP 8.1 are supported
-  
+
   $CHANGES
 
-  Thanks to $CONTRIBUTORS
+  Thanks to all contributors ❤️ 
+
+    Involved in this release: $CONTRIBUTORS
