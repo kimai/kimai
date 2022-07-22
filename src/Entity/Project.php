@@ -252,6 +252,17 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * @ORM\Column(name="invoice_text", type="text", nullable=true)
      */
     private $invoiceText;
+    /**
+     * Whether this project allows booking of global activities
+     *
+     * @var bool
+     *
+     * @Exporter\Expose(label="label.globalActivities", type="boolean")
+     *
+     * @ORM\Column(name="global_activities", type="boolean", nullable=false, options={"default": true})
+     * @Assert\NotNull()
+     */
+    private $globalActivities = true;
 
     public function __construct()
     {
@@ -417,6 +428,16 @@ class Project implements EntityWithMetaFields, EntityWithBudget
         }
 
         return $this;
+    }
+
+    public function isGlobalActivities(): bool
+    {
+        return $this->globalActivities;
+    }
+
+    public function setGlobalActivities(bool $globalActivities): void
+    {
+        $this->globalActivities = $globalActivities;
     }
 
     /**

@@ -116,6 +116,14 @@
                         </td>
                     </tr>
                 {% endif %}
+                {% if not project.globalActivities %}
+                    <tr>
+                        <th>{{ 'label.globalActivities'|trans }}</th>
+                        <td colspan="3">
+                            {{ widgets.label_boolean(project.globalActivities) }}
+                        </td>
+                    </tr>
+                {% endif %}
                 {% for metaField in project.visibleMetaFields|sort((a, b) => a.order <=> b.order) %}
                     <tr>
                         <th>{{ metaField.label|trans }}</th>
