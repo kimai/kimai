@@ -124,6 +124,14 @@ final class TimesheetBasicValidator extends ConstraintValidator
                 ->addViolation();
         }
 
+        if (!$project->isGlobalActivities() && $activity->isGlobal()) {
+            $context->buildViolation('Global activities are forbidden for the selected project.')
+                ->atPath('activity')
+                ->setTranslationDomain('validators')
+                ->setCode(TimesheetBasic::PROJECT_DISALLOWS_GLOBAL_ACTIVITY)
+                ->addViolation();
+        }
+
         $pathStart = 'begin';
         $pathEnd = 'end';
 

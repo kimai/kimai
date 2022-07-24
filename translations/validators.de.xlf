@@ -86,6 +86,10 @@
         <source>This timesheet is already exported.</source>
         <target>Dieser Eintrag wurde bereits exportiert.</target>
       </trans-unit>
+      <trans-unit id="mjlHwer0la" resname="Global activities are forbidden for the selected project.">
+        <source>Global activities are forbidden for the selected project.</source>
+        <target>Globale Aktivitäten sind in dem gewählten Projekt nicht erlaubt.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
