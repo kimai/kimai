@@ -451,6 +451,7 @@ class ConfigurationTest extends TestCase
                 'activate' => false,
                 'title' => 'Login with SAML',
                 'roles' => [
+                    'resetOnLogin' => true,
                     'attribute' => null,
                     'mapping' => []
                 ],
