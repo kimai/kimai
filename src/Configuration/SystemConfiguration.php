@@ -86,6 +86,11 @@ class SystemConfiguration implements SystemBundleConfiguration
         return (array) $this->find('saml.roles.mapping');
     }
 
+    public function isSamlRolesResetOnLogin(): bool
+    {
+        return (bool) $this->find('saml.roles.resetOnLogin');
+    }
+
     public function getSamlConnection(): array
     {
         return (array) $this->find('saml.connection');
