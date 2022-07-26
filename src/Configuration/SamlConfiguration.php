@@ -46,6 +46,11 @@ final class SamlConfiguration implements SamlConfigurationInterface
         return $this->configuration->getSamlRolesMapping();
     }
 
+    public function isRolesResetOnLogin(): bool
+    {
+        return $this->configuration->isSamlRolesResetOnLogin();
+    }
+
     public function getConnection(): array
     {
         return $this->configuration->getSamlConnection();
