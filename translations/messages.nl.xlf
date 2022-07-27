@@ -972,10 +972,6 @@
         <source>label.status</source>
         <target>Status</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target>Toon decimale tijdsduur</target>
-      </trans-unit>
       <trans-unit id="IQ9DUOW" resname="button.preview_print">
         <source>button.preview_print</source>
         <target>Afdrukvoorbeeld</target>
@@ -1067,10 +1063,6 @@
       <trans-unit id="YNGNfGn" resname="label.tax_rate">
         <source>label.tax_rate</source>
         <target>Belastingtarief</target>
-      </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target>Alles opslaan</target>
       </trans-unit>
       <trans-unit id="O5w1jzb" resname="file">
         <source>file</source>

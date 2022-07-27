@@ -904,10 +904,6 @@
         <source>export.filter</source>
         <target>Фильтровать данные для экспорта</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target>Показывать длительность в виде десятичного числа</target>
-      </trans-unit>
       <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
         <target>Банковский счет</target>
@@ -1071,10 +1067,6 @@
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
         <target>Финансовый год</target>
-      </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target>Сохранить все</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>

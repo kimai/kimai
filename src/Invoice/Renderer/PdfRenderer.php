@@ -20,15 +20,9 @@ use Twig\Environment;
 
 final class PdfRenderer extends AbstractTwigRenderer
 {
-    /**
-     * @var HtmlToPdfConverter
-     */
-    private $converter;
-
-    public function __construct(Environment $twig, HtmlToPdfConverter $converter)
+    public function __construct(Environment $twig, private HtmlToPdfConverter $converter)
     {
         parent::__construct($twig);
-        $this->converter = $converter;
     }
 
     public function supports(InvoiceDocument $document): bool

@@ -20,7 +20,6 @@ use App\Event\InvoicePreRenderEvent;
 use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
-use App\Timesheet\DateTimeFactory;
 use App\Utils\FileHelper;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -269,19 +268,6 @@ final class ServiceInvoice
         return $items;
     }
 
-    private function getDateTimeFactory(InvoiceQuery $query): DateTimeFactory
-    {
-        $timezone = date_default_timezone_get();
-        $sunday = false;
-
-        if (null !== ($user = $query->getCurrentUser())) {
-            $timezone = $user->getTimezone();
-            $sunday = $user->isFirstDayOfWeekSunday();
-        }
-
-        return new DateTimeFactory(new \DateTimeZone($timezone), $sunday);
-    }
-
     /**
      * @param ExportableItem[] $entries
      */
@@ -292,7 +278,7 @@ final class ServiceInvoice
         }
     }
 
-    public function renderInvoiceWithModel(InvoiceModel $model, EventDispatcherInterface $dispatcher): Response
+    public function renderInvoice(InvoiceModel $model, EventDispatcherInterface $dispatcher): Response
     {
         $document = $this->getDocumentByName($model->getTemplate()->getRenderer());
         if (null === $document) {
@@ -316,20 +302,13 @@ final class ServiceInvoice
         );
     }
 
-    public function renderInvoice(InvoiceQuery $query, EventDispatcherInterface $dispatcher): Response
-    {
-        $model = $this->createModel($query);
-
-        return $this->renderInvoiceWithModel($model, $dispatcher);
-    }
-
     /**
      * @param InvoiceModel $model
      * @param EventDispatcherInterface $dispatcher
      * @return Invoice
      * @throws \Exception
      */
-    public function createInvoiceFromModel(InvoiceModel $model, EventDispatcherInterface $dispatcher): Invoice
+    public function createInvoice(InvoiceModel $model, EventDispatcherInterface $dispatcher): Invoice
     {
         $document = $this->getDocumentByName($model->getTemplate()->getRenderer());
         if (null === $document) {
@@ -359,12 +338,13 @@ final class ServiceInvoice
                 $invoice = new Invoice();
                 $invoice->setModel($model);
                 $invoice->setFilename($invoiceFilename);
+
+                if (!$invoice->getCustomer()->hasInvoiceTemplate()) {
+                    $invoice->getCustomer()->setInvoiceTemplate($model->getTemplate());
+                }
                 $this->invoiceRepository->saveInvoice($invoice);
 
-                if ($model->getQuery()->isMarkAsExported()) {
-                    $this->markEntriesAsExported($model->getEntries());
-                }
-
+                $this->markEntriesAsExported($model->getEntries());
                 $dispatcher->dispatch(new InvoiceCreatedEvent($invoice, $model));
 
                 return $invoice;
@@ -374,37 +354,6 @@ final class ServiceInvoice
         throw new \Exception(
             sprintf('Cannot render invoice: %s (%s)', $model->getTemplate()->getRenderer(), $document->getName())
         );
-    }
-
-    /**
-     * @param InvoiceQuery $query
-     * @param EventDispatcherInterface $dispatcher
-     * @return Invoice[]
-     * @throws \Exception
-     */
-    public function createInvoices(InvoiceQuery $query, EventDispatcherInterface $dispatcher): array
-    {
-        $invoices = [];
-
-        $models = $this->createModels($query);
-        foreach ($models as $model) {
-            $invoices[] = $this->createInvoiceFromModel($model, $dispatcher);
-        }
-
-        return $invoices;
-    }
-
-    /**
-     * @param InvoiceQuery $query
-     * @param EventDispatcherInterface $dispatcher
-     * @return Invoice
-     * @throws \Exception
-     */
-    public function createInvoice(InvoiceQuery $query, EventDispatcherInterface $dispatcher): Invoice
-    {
-        $model = $this->createModel($query);
-
-        return $this->createInvoiceFromModel($model, $dispatcher);
     }
 
     public function deleteInvoice(Invoice $invoice, EventDispatcherInterface $dispatcher)
@@ -438,10 +387,15 @@ final class ServiceInvoice
 
     private function createModelWithoutEntries(InvoiceQuery $query): InvoiceModel
     {
+        $customer = $query->getCustomer();
+        if ($customer === null) {
+            throw new \Exception('Cannot create invoice model without customer');
+        }
+
         $template = $query->getTemplate();
 
-        if (!$query->hasCustomers()) {
-            throw new \Exception('Cannot create invoice model without customer');
+        if ($query->isAllowTemplateOverwrite() && $customer->hasInvoiceTemplate()) {
+            $template = $customer->getInvoiceTemplate();
         }
 
         if (null === $template) {
@@ -452,8 +406,9 @@ final class ServiceInvoice
 
         $model = $this->invoiceModelFactory->createModel($formatter);
         $model
+            ->setCustomer($customer)
             ->setTemplate($template)
-            ->setInvoiceDate($this->getDateTimeFactory($query)->createDateTime())
+            ->setInvoiceDate($query->getInvoiceDate())
             ->setQuery($query)
         ;
 
@@ -461,16 +416,14 @@ final class ServiceInvoice
             $model->setUser($query->getCurrentUser());
         }
 
-        $model->setCustomer($query->getCustomers()[0]);
-
-        $generator = $this->getNumberGeneratorByName($query->getTemplate()->getNumberGenerator());
+        $generator = $this->getNumberGeneratorByName($template->getNumberGenerator());
         if (null === $generator) {
-            throw new \Exception('Unknown number generator: ' . $query->getTemplate()->getNumberGenerator());
+            throw new \Exception('Unknown number generator: ' . $template->getNumberGenerator());
         }
 
-        $calculator = $this->getCalculatorByName($query->getTemplate()->getCalculator());
+        $calculator = $this->getCalculatorByName($template->getCalculator());
         if (null === $calculator) {
-            throw new \Exception('Unknown invoice calculator: ' . $query->getTemplate()->getCalculator());
+            throw new \Exception('Unknown invoice calculator: ' . $template->getCalculator());
         }
 
         $model->setCalculator($calculator);

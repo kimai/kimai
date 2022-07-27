@@ -941,10 +941,6 @@
         <source>label.status</source>
         <target>Egoera</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target>Erakutsi iraupena zenbaki hamartar gisa</target>
-      </trans-unit>
       <trans-unit id="IQ9DUOW" resname="button.preview_print">
         <source>button.preview_print</source>
         <target>Inprimatzeko aurrebista</target>
@@ -1068,10 +1064,6 @@
       <trans-unit id="jdbtx6z" resname="action.add">
         <source>action.add</source>
         <target state="needs-translation">Add</target>
-      </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target state="needs-translation">Save all</target>
       </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime">
         <source>stats.workingTime</source>

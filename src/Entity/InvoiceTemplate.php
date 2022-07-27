@@ -124,15 +124,6 @@ class InvoiceTemplate
      */
     private $paymentDetails;
     /**
-     * Used when rendering HTML templates.
-     *
-     * @var bool
-     *
-     * @ORM\Column(name="decimal_duration", type="boolean", nullable=false, options={"default": false})
-     * @Assert\NotNull()
-     */
-    private $decimalDuration = false;
-    /**
      * Used for translations and locale dependent number and date formats.
      *
      * @var string
@@ -304,16 +295,12 @@ class InvoiceTemplate
         return $this;
     }
 
+    /**
+     * @deprecated since 2.0
+     */
     public function isDecimalDuration(): bool
     {
-        return $this->decimalDuration;
-    }
-
-    public function setDecimalDuration(bool $decimalDuration): InvoiceTemplate
-    {
-        $this->decimalDuration = $decimalDuration;
-
-        return $this;
+        return true;
     }
 
     public function getLanguage(): string

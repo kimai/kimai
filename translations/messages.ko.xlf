@@ -962,10 +962,6 @@
         <source>label.status</source>
         <target>상태</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target>십진수로 기간 표시</target>
-      </trans-unit>
       <trans-unit id="as948k9" resname="label.orderDate">
         <source>label.orderDate</source>
         <target>주문 일자</target>
@@ -1077,10 +1073,6 @@
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target>브라우저 제목 업데이트</target>
-      </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target>모두 저장</target>
       </trans-unit>
       <trans-unit id="XP5zkiN" resname="modal.dirty">
         <source>modal.dirty</source>

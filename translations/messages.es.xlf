@@ -970,10 +970,6 @@
         <source>label.lastLogin</source>
         <target state="translated">Último acceso</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target state="translated">Mostrar duración como número decimal</target>
-      </trans-unit>
       <trans-unit id="Cxv_0wG" resname="help.internalRate">
         <source>help.internalRate</source>
         <target>Costes internos (si no se especifica, se utiliza la tarifa normal)</target>
@@ -1097,10 +1093,6 @@
       <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
         <source>calendar.drag_and_drop.delete</source>
         <target>Si quiere eliminar una entrada, debe arrastrarla sobre el botón.</target>
-      </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target>Guardar todo</target>
       </trans-unit>
       <trans-unit id="Z8Fxbvf" resname="label.orderBy">
         <source>label.orderBy</source>

@@ -21,12 +21,7 @@ trait BudgetHydratorTrait
 
         $budgetOpen = $statistic->getBudgetOpenRelative();
         $budgetTimeOpen = $statistic->getTimeBudgetOpenRelative();
-
-        if ($model->getTemplate()->isDecimalDuration()) {
-            $budgetOpenDuration = $formatter->getFormattedDecimalDuration($budgetTimeOpen);
-        } else {
-            $budgetOpenDuration = $formatter->getFormattedDuration($budgetTimeOpen);
-        }
+        $budgetOpenDuration = $formatter->getFormattedDecimalDuration($budgetTimeOpen);
 
         return [
             $prefix . 'budget_open' => $formatter->getFormattedMoney($budgetOpen, $currency),

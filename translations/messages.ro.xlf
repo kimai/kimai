@@ -786,10 +786,6 @@
         <source>label.invoice_bank_account</source>
         <target>Cont bancar</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target>Afișează durata ca număr zecimal</target>
-      </trans-unit>
       <trans-unit id="F6Jmro7" resname="export.title">
         <source>export.title</source>
         <target>Export</target>
@@ -997,10 +993,6 @@
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target>Actualizarea titlului browserului</target>
-      </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target>Salvează tot</target>
       </trans-unit>
       <trans-unit id="XP5zkiN" resname="modal.dirty">
         <source>modal.dirty</source>

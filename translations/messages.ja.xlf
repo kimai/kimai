@@ -1097,10 +1097,6 @@
         <source>placeholder.type_message</source>
         <target state="needs-translation">Type your message…</target>
       </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target state="needs-translation">Save all</target>
-      </trans-unit>
       <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
         <target state="needs-translation">Reset</target>
@@ -1192,10 +1188,6 @@
       <trans-unit id="X_NRsed" resname="status.new">
         <source>status.new</source>
         <target state="needs-translation">New</target>
-      </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target state="needs-translation">Display duration as decimal number</target>
       </trans-unit>
       <trans-unit id="Uvo1CbP" resname="status.pending">
         <source>status.pending</source>

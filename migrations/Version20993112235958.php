@@ -26,6 +26,35 @@ final class Version20993112235958 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
+        $customers = $schema->getTable('kimai2_customers');
+
+        // clean up column length for strict mode
+        $customers->getColumn('company')->setLength(100);
+        $customers->getColumn('contact')->setLength(100);
+        $customers->getColumn('phone')->setLength(30);
+        $customers->getColumn('fax')->setLength(30);
+        $customers->getColumn('mobile')->setLength(30);
+        $customers->getColumn('homepage')->setLength(100);
+        $customers->getColumn('email')->setLength(75);
+
+        // new invoice features
+        if (!$customers->hasColumn('invoice_template_id')) {
+            $customers->addColumn('invoice_template_id', 'integer', ['notnull' => false, 'default' => null]);
+            $customers->addForeignKeyConstraint('kimai2_invoice_templates', ['invoice_template_id'], ['id'], ['onDelete' => 'SET NULL'], 'FK_5A97604412946D8B');
+            $customers->addIndex(['invoice_template_id'], 'IDX_5A97604412946D8B');
+        }
+
+        if (!$customers->hasColumn('invoice_text')) {
+            $customers->addColumn('invoice_text', 'text', ['notnull' => false, 'default' => null]);
+        }
+
+        $timesheet = $schema->getTable('kimai2_timesheet');
+        if (!$timesheet->hasIndex('IDX_4F60C6B1415614018D93D649')) {
+            $timesheet->addIndex(['end_time', 'user'], 'IDX_4F60C6B1415614018D93D649');
+        }
+
+//        return;
+
         $this->addSql("UPDATE kimai2_invoice_templates SET `language` = 'en' WHERE `language` IS NULL");
 
         //$this->addSql('UPDATE kimai2_user_preferences SET `value` = "boxed" WHERE `name` = "theme.layout"');
@@ -46,12 +75,8 @@ final class Version20993112235958 extends AbstractMigration
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'export_decimal' WHERE `name` = 'timesheet.export_decimal'");
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'update_browser_title' WHERE `name` = 'theme.update_browser_title'");
 
-        $this->addSql('CREATE INDEX IDX_4F60C6B1415614018D93D649 ON kimai2_timesheet (end_time, user)');
-
         // TODO user configuration calendar first day agendaDay = day / agendaMonth = month
-
         // TODO delete timesheet.active_entries.soft_limit
-
         // TODO update SET `value` = '15' kimai2_configuration WHERE `name` = 'timesheet.time_increment' and value = '0'
 
         $this->addSql("UPDATE kimai2_configuration SET `value` = 'default' WHERE `name` = 'timesheet.mode' and `value` = 'duration_only'");
@@ -59,7 +84,25 @@ final class Version20993112235958 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        $this->addSql('DROP INDEX IDX_4F60C6B1415614018D93D649 ON kimai2_timesheet');
+        $customers = $schema->getTable('kimai2_customers');
+        $customers->getColumn('company')->setLength(255);
+        $customers->getColumn('contact')->setLength(255);
+        $customers->getColumn('phone')->setLength(255);
+        $customers->getColumn('fax')->setLength(255);
+        $customers->getColumn('mobile')->setLength(255);
+        $customers->getColumn('homepage')->setLength(255);
+
+        $customers->removeForeignKey('FK_5A97604412946D8B');
+        $customers->dropIndex('IDX_5A97604412946D8B');
+        $customers->dropColumn('invoice_template_id');
+        $customers->dropColumn('invoice_text');
+
+        $timesheet = $schema->getTable('kimai2_timesheet');
+        if ($timesheet->hasIndex('IDX_4F60C6B1415614018D93D649')) {
+            $timesheet->dropIndex('IDX_4F60C6B1415614018D93D649');
+        }
+
+//        return;
 
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'theme.collapsed_sidebar' WHERE `name` = 'collapsed_sidebar'");
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'theme.layout' WHERE `name` = 'theme_layout'");

@@ -10,6 +10,7 @@
 namespace App\Form;
 
 use App\Entity\Customer;
+use App\Form\Type\InvoiceTemplateType;
 use App\Form\Type\MailType;
 use App\Form\Type\TimezoneType;
 use Symfony\Component\Form\AbstractType;
@@ -101,7 +102,15 @@ class CustomerEditForm extends AbstractType
             ])
             ->add('timezone', TimezoneType::class, [
                 'label' => 'label.timezone',
-            ]);
+            ])
+            ->add('invoiceText', TextareaType::class, [
+                'label' => 'label.invoiceText',
+                'required' => false,
+            ])
+            ->add('invoiceTemplate', InvoiceTemplateType::class, [
+                'required' => false,
+            ])
+        ;
 
         $this->addCommonFields($builder, $options);
     }

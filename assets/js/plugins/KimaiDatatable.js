@@ -54,18 +54,31 @@ export default class KimaiDatatable extends KimaiPlugin {
 
         /** @type {HTMLFormElement} form */
         const form = document.querySelector(toolbarSelector);
+        const callback = (text) => {
+            const temp = document.createElement('div');
+            temp.innerHTML = text;
+            const newContent = temp.querySelector(this._contentArea);
+            document.querySelector(this._contentArea).replaceWith(newContent);
+            durations.updateRecords();
+            document.dispatchEvent(new Event('kimai.reloadedContent'));
+        };
+
         document.dispatchEvent(new CustomEvent('kimai.reloadContent', {detail: this._contentArea}));
+
+        if (form === null) {
+            this.fetch(document.location)
+                .then(response => {
+                    response.text().then(callback);
+                })
+                .catch(() => {
+                    document.location.reload();
+                });
+            return;
+        }
 
         this.fetchForm(form)
         .then(response => {
-            response.text().then((text) => {
-                const temp = document.createElement('div');
-                temp.innerHTML = text;
-                const newContent = temp.querySelector(this._contentArea);
-                document.querySelector(this._contentArea).replaceWith(newContent);
-                durations.updateRecords();
-                document.dispatchEvent(new Event('kimai.reloadedContent'));
-            });
+            response.text().then(callback);
         })
         .catch(() => {
             form.submit();

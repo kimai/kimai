@@ -380,10 +380,6 @@
         <source>action.save</source>
         <target>Αποθήκευση</target>
       </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target>Αποθήκευση όλων</target>
-      </trans-unit>
       <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
         <target>Αρχικοποίηση</target>
@@ -955,10 +951,6 @@
       <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
         <target>Τραπεζικός λογαριασμός</target>
-      </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target>Εμφάνιση διάρκειας ως δεκαδικό αριθμό</target>
       </trans-unit>
       <trans-unit id="hzhzbqw" resname="label.status">
         <source>label.status</source>

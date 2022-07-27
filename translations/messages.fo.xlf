@@ -311,10 +311,6 @@
         <source>action.reset</source>
         <target>Tómstilla</target>
       </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target>Goym alt</target>
-      </trans-unit>
       <trans-unit id="HLtdhYw" resname="action.save">
         <source>action.save</source>
         <target>Goym</target>
@@ -506,10 +502,6 @@
       <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
         <target>Bankakonta</target>
-      </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target>Vís tíðarskeiði sum desimal tølum</target>
       </trans-unit>
       <trans-unit id="X_NRsed" resname="status.new">
         <source>status.new</source>

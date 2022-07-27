@@ -976,10 +976,6 @@
         <source>label.status</source>
         <target>Stav</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target>Zobraziť trvanie ako desatinné číslo</target>
-      </trans-unit>
       <trans-unit id="7J7G3Vr" resname="label.mark_as_exported">
         <source>label.mark_as_exported</source>
         <target>Označiť ako exportované</target>
@@ -1119,10 +1115,6 @@
       <trans-unit id="jdbtx6z" resname="action.add">
         <source>action.add</source>
         <target state="translated">Pridať</target>
-      </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target state="translated">Uložiť všetko</target>
       </trans-unit>
       <trans-unit id="YNGNfGn" resname="label.tax_rate">
         <source>label.tax_rate</source>

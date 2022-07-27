@@ -95,6 +95,19 @@
             {% if form.metaFields is defined and form.metaFields is not empty %}
                 {{ form_row(form.metaFields) }}
             {% endif %}
+            {% embed '@theme/embeds/card.html.twig' with {collapsed: true} %}
+                {% import "macros/widgets.html.twig" as widgets %}
+                {% block box_title %}{{ 'invoices'|trans }}{% endblock %}
+                {% block box_body_class %}{% endblock %}
+                {% block box_body %}
+                    {% if form.invoiceTemplate is defined %}
+                        {{ form_row(form.invoiceTemplate) }}
+                    {% endif %}
+                    {% if form.invoiceText is defined %}
+                        {{ form_row(form.invoiceText) }}
+                    {% endif %}
+                {% endblock %}
+            {% endembed %}
             {{ form_rest(form) }}
         {% endblock %}
     {% endembed %}

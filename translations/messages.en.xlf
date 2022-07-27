@@ -420,10 +420,6 @@
         <source>action.save</source>
         <target>Save</target>
       </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target>Save all</target>
-      </trans-unit>
       <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
         <target>Reset</target>
@@ -1077,10 +1073,6 @@
       <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
         <target>Bank account</target>
-      </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target>Display duration as decimal number</target>
       </trans-unit>
       <trans-unit id="hzhzbqw" resname="label.status">
         <source>label.status</source>

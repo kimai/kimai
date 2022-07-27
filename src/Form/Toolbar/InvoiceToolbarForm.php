@@ -9,8 +9,8 @@
 
 namespace App\Form\Toolbar;
 
+use App\Form\Type\DatePickerType;
 use App\Form\Type\InvoiceTemplateType;
-use App\Form\Type\MarkAsExportedType;
 use App\Repository\Query\InvoiceQuery;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,9 +26,6 @@ class InvoiceToolbarForm extends AbstractToolbarForm
         $this->addDateRange($builder, ['timezone' => $options['timezone']]);
         $this->addCustomerMultiChoice($builder, ['required' => false, 'start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true, 'placeholder' => ''], true);
         $this->addProjectMultiChoice($builder, ['ignore_date' => true], false, true);
-        if ($options['include_export']) {
-            $builder->add('markAsExported', MarkAsExportedType::class);
-        }
         $this->addSearchTermInputField($builder);
         if ($options['include_user']) {
             $this->addUsersChoice($builder);
@@ -36,6 +33,9 @@ class InvoiceToolbarForm extends AbstractToolbarForm
         $this->addActivityMultiChoice($builder, $options, true);
         $this->addTagInputField($builder);
         $this->addExportStateChoice($builder);
+        $builder->add('invoiceDate', DatePickerType::class, [
+            'required' => true,
+        ]);
     }
 
     protected function addTemplateChoice(FormBuilderInterface $builder): void
@@ -52,7 +52,6 @@ class InvoiceToolbarForm extends AbstractToolbarForm
             'data_class' => InvoiceQuery::class,
             'csrf_protection' => false,
             'include_user' => true,
-            'include_export' => true,
             'timezone' => date_default_timezone_get(),
         ]);
     }

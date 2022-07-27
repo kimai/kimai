@@ -26,7 +26,7 @@ class MenuItemModel implements MenuItemInterface
     private ?MenuItemModel $parent = null;
     private ?string $badge = null;
     private ?string $badgeColor = null;
-    private static $dividerId = 0;
+    private static int $dividerId = 0;
     private bool $divider = false;
     private bool $lastWasDivider = false;
 

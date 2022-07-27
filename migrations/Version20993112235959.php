@@ -26,13 +26,21 @@ final class Version20993112235959 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
+//        return;
         $this->addSql("DELETE FROM kimai2_roles_permissions WHERE `permission` LIKE 'comments_create%'");
 
-        $schema->getTable('kimai2_invoice_templates')->getColumn('language')->setNotnull(true);
+        $templates = $schema->getTable('kimai2_invoice_templates');
+
+        $templates->getColumn('language')->setNotnull(true);
+        $templates->dropColumn('decimal_duration');
     }
 
     public function down(Schema $schema): void
     {
-        $schema->getTable('kimai2_invoice_templates')->getColumn('language')->setNotnull(false);
+//        return;
+        $templates = $schema->getTable('kimai2_invoice_templates');
+
+        $templates->addColumn('decimal_duration', 'boolean', ['notnull' => true, 'default' => false]);
+        $templates->getColumn('language')->setNotnull(false);
     }
 }

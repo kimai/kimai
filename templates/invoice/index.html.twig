@@ -47,10 +47,10 @@
                 {% if form.exported is defined %}
                     {{ form_row(form.exported, {'row_attr': {'class': 'mb-3 invoice_search_form_row_exported'}}) }}
                 {% endif %}
+                <div class="d-none">
                 {{ form_row(form.template, {'row_attr': {'class': 'mb-3 invoice_search_form_row_template'}}) }}
-                {% if form.markAsExported is defined %}
-                    {{ form_row(form.markAsExported, {'row_attr': {'class': 'mb-3 invoice_search_form_row_markAsExported'}}) }}
-                {% endif %}
+                {{ form_row(form.invoiceDate, {'row_attr': {'class': 'mb-3 invoice_search_form_row_invoiceDate'}}) }}
+                </div>
             {% endblock %}
             {% block box_footer%}
                 {{ search.searchButton(form) }}
@@ -96,14 +96,10 @@
                     {{ widgets.label(totalRate|money(totalCurrency), totalRates|length == 1 ? 'primary' : 'gray') }}
                 {% endfor %}
             {% endblock %}
+            {% block box_attributes %}id="invoice_customer_forms"{% endblock %}
             {% block box_body_class %}p-0{% endblock %}
-            {% block box_footer %}
-                <a href="#" onclick="return saveAllInvoices(this);" class="btn btn-success" id="create_all_invoices">
-                    {{ 'action.save_all'|trans }}
-                </a>
-            {% endblock %}
             {% block box_body %}
-                <table class="table table-hover dataTable">
+                <table class="table dataTable">
                     <thead>
                         <tr>
                             <th class="d-sm-table-cell d-none"></th>
@@ -115,9 +111,10 @@
                     </thead>
                     <tbody>
                         {% for model in models %}
-                            {% set isDecimal = model.template.decimalDuration|default(false) %}
+                            {% set isDecimal = true %}
                             {% set currency = model.currency %}
                             {% set isEmptyModel = model.calculator is empty or model.calculator.entries is empty %}
+                            {% set customerForm = forms[loop.index0] %}
                             <tr>
                                 <td class="w-min d-sm-table-cell d-none">
                                     {% if not isEmptyModel %}
@@ -139,16 +136,20 @@
                                 </td>
                                 <td class="w-min text-center actions alwaysVisible">
                                     {% for attrs in [{'class': 'd-inline-flex d-md-none'}, {'icon': false, 'class': 'd-none d-md-inline-flex'}] %}
-                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_preview', {'customer': model.customer.id, 'token': csrf_token('invoice.preview')})}}|merge(attrs)) }}
-                                    {{ widgets.action_button('invoice', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id, 'token': csrf_token('invoice.create')})}}|merge(attrs), 'success') }}
+                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'attr': {'data-customer': model.customer.id, 'data-href': path('invoice_preview', {'customer': model.customer.id, 'token': csrf_token('invoice.preview')})}}|merge(attrs)) }}
+                                    {{ widgets.action_button('invoice', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'attr': {'data-customer': model.customer.id, 'data-href': path('invoice_create', {'customer': model.customer.id, 'token': csrf_token('invoice.create')})}}|merge(attrs), 'success') }}
                                     {% endfor %}
                                 </td>
                             </tr>
                             <tr class="d-none">
-                                <td colspan="5" class="p-0">
+                                <td colspan="5" class="p-2">
                                     {% if not isEmptyModel %}
+                                        {% form_theme customerForm 'form/horizontal.html.twig' %}
+                                        {{ form_start(customerForm) }}
+                                        {{ form_rest(customerForm) }}
+                                        {{ form_end(customerForm) }}
                                         {% set customer = model.query.customers[0] %}
-                                        {% set isDecimal = model.template.decimalDuration|default(false) %}
+                                        {% set isDecimal = true %}
                                         {% set entries = model.calculator.entries %}
                                         {% set currency = model.currency %}
                                         {% set itemsAmount = entries|length %}
@@ -201,16 +202,6 @@
                                                 <td colspan="8">&raquo; {{ 'preview.skipped_rows'|trans({'%rows%': (itemsAmount - 100)}) }}</td>
                                             </tr>
                                         {% endif %}
-                                        <tr class="summary">
-                                            <td class="{{ tables.data_table_column_class(tableName, columns, 'date') }}"></td>
-                                            <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}"></td>
-                                            <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}"></td>
-                                            <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}"></td>
-                                            <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }}"></td>
-                                            <td class="{{ tables.data_table_column_class(tableName, columns, 'amount') }}"></td>
-                                            <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}">{{ model.calculator.timeWorked|duration(isDecimal) }}</td>
-                                            <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }}">{{ model.calculator.total|money(currency) }}</td>
-                                        </tr>
                                         {{ tables.data_table_footer(entries) }}
                                     {% endif %}
                                 </td>
@@ -233,29 +224,23 @@
     {% set formSelector = 'form#' ~ formId %}
 
     <script type="text/javascript">
-
         function singleInvoice(link)
         {
+            const formName = 'customer_' + link.dataset['customer'];
+            const template = document.getElementById(formName + '_template').value;
+            const date = document.getElementById(formName + '_invoiceDate').value;
             const formPlugin = kimai.getPlugin('form');
-            const overwrites = {'customers[]': link.dataset['customer'], 'template': link.dataset['template']};
+            const overwrites = {'customers[]': link.dataset['customer'], 'template': template, 'invoiceDate': date};
             const uri = formPlugin.convertFormDataToQueryString(document.getElementById('{{ formId }}'), overwrites);
 
             link.href = link.dataset['href'] + '?' + uri;
+            console.log(link.href);
 
             return true;
         }
 
-        function saveAllInvoices(link)
-        {
-            const formPlugin = kimai.getPlugin('form');
-            const uri = formPlugin.convertFormDataToQueryString(document.getElementById('{{ formId }}'));
-
-            link.href = '{{ path('invoice') }}?token={{ csrf_token('invoice.create') }}&createInvoice=true&' + uri;
-
-            return true;
-        }
-
-        document.addEventListener('kimai.initialized', function() {
+        /** @type CustomEvent event */
+        document.addEventListener('kimai.initialized', function(event) {
             KimaiReloadPageWidget.create('kimai.systemConfigUpdate', true);
 
             {% if models|length > 0 %}
@@ -264,6 +249,5 @@
             });
             {% endif %}
         });
-
     </script>
 {% endblock %}

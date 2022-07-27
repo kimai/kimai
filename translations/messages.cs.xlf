@@ -906,10 +906,6 @@
         <source>label.project_end</source>
         <target>Konec projektu</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target>Zobrazit trvání jako desetinné číslo</target>
-      </trans-unit>
       <trans-unit id="Dgmh_mv" resname="label.vat_id">
         <source>label.vat_id</source>
         <target>IČO</target>
@@ -1149,10 +1145,6 @@
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
         <target>Složka „%dir%“ je chráněna proti zápisu.</target>
-      </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target>Uložit vše</target>
       </trans-unit>
       <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>

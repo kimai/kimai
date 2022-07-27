@@ -876,10 +876,6 @@
         <source>label.invoice_bank_account</source>
         <target>Conto bancario</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target>Mostra durata come numero decimale</target>
-      </trans-unit>
       <trans-unit id="hzhzbqw" resname="label.status">
         <source>label.status</source>
         <target>Stato</target>
@@ -1068,10 +1064,6 @@
       <trans-unit id="Xij3oQl" resname="invoice.payment_date">
         <source>invoice.payment_date</source>
         <target>Data di pagamento</target>
-      </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target>Salva tutto</target>
       </trans-unit>
       <trans-unit id="NNKq04n" resname="label.remove_default">
         <source>label.remove_default</source>

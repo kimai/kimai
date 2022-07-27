@@ -822,10 +822,6 @@
         <source>label.status</source>
         <target>Estado</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target>Duração da visualização como número decimal</target>
-      </trans-unit>
       <trans-unit id="as948k9" resname="label.orderDate">
         <source>label.orderDate</source>
         <target>Data do pedido</target>
@@ -1073,10 +1069,6 @@
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target>Atualizar título do navegador</target>
-      </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target>Guardar tudo</target>
       </trans-unit>
       <trans-unit id="XP5zkiN" resname="modal.dirty">
         <source>modal.dirty</source>

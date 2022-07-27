@@ -241,7 +241,6 @@ final class InvoiceCreateCommand extends Command
         $defaultQuery->setEnd($end);
         $defaultQuery->setCurrentUser($user);
         $defaultQuery->setSearchTerm($searchTerm);
-        $defaultQuery->setMarkAsExported($markAsExported);
         $defaultQuery->setExported($exportedFilter);
 
         /** @var Invoice[] $invoices */
@@ -321,9 +320,9 @@ final class InvoiceCreateCommand extends Command
 
             try {
                 if (null !== $this->previewDirectory) {
-                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($query, $this->eventDispatcher));
+                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher));
                 } else {
-                    $invoices[] = $this->serviceInvoice->createInvoice($query, $this->eventDispatcher);
+                    $invoices[] = $this->serviceInvoice->createInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher);
                 }
             } catch (\Exception $ex) {
                 $io->error(sprintf('Failed to create invoice for project "%s" with: %s', $project->getName(), $ex->getMessage()));
@@ -392,9 +391,9 @@ final class InvoiceCreateCommand extends Command
 
             try {
                 if (null !== $this->previewDirectory) {
-                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($query, $this->eventDispatcher));
+                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher));
                 } else {
-                    $invoices[] = $this->serviceInvoice->createInvoice($query, $this->eventDispatcher);
+                    $invoices[] = $this->serviceInvoice->createInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher);
                 }
             } catch (\Exception $ex) {
                 $io->error(sprintf('Failed to create invoice for customer "%s" with: %s', $customer->getName(), $ex->getMessage()));

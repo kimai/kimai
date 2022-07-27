@@ -804,10 +804,6 @@
         <source>label.my_team_projects</source>
         <target>مشاريعي</target>
       </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target>احفظ الكل</target>
-      </trans-unit>
       <trans-unit id="PHJwR4w" resname="status.paid">
         <source>status.paid</source>
         <target>مدفوع</target>
@@ -1087,10 +1083,6 @@
       <trans-unit id="7J7G3Vr" resname="label.mark_as_exported">
         <source>label.mark_as_exported</source>
         <target state="needs-translation">Mark as exported</target>
-      </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target state="translated">عرض المدة كرقم عشري</target>
       </trans-unit>
       <trans-unit id="BhsaLxX" resname="export.clear_all">
         <source>export.clear_all</source>

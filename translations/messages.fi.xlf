@@ -900,10 +900,6 @@
         <source>label.invoice_bank_account</source>
         <target state="translated">Pankkitili</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target state="translated">Näytä kesto desimaalilukuna</target>
-      </trans-unit>
       <trans-unit id="hzhzbqw" resname="label.status">
         <source>label.status</source>
         <target state="translated">Tila</target>
@@ -1100,10 +1096,6 @@
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target>Päivitä selaimen otsikko</target>
-      </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target>Tallenna kaikki</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>

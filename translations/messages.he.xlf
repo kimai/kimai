@@ -806,10 +806,6 @@
         <source>label.invoice_bank_account</source>
         <target>חשבון בנק</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target>הצגת משך זמן עם נקודה עשרונית</target>
-      </trans-unit>
       <trans-unit id="hzhzbqw" resname="label.status">
         <source>label.status</source>
         <target>מצב</target>
@@ -1005,10 +1001,6 @@
       <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
         <source>calendar.drag_and_drop.delete</source>
         <target>למחיקת רשומה יש לגרור אותה לתחתית.</target>
-      </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target>שמירה של הכול</target>
       </trans-unit>
       <trans-unit id="O5w1jzb" resname="file">
         <source>file</source>

@@ -118,8 +118,8 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      *
      * @Exporter\Expose(label="label.company")
      *
-     * @ORM\Column(name="company", type="string", length=255, nullable=true)
-     * @Assert\Length(max=255)
+     * @ORM\Column(name="company", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
     private $company;
     /**
@@ -142,8 +142,8 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      *
      * @Exporter\Expose(label="label.contact")
      *
-     * @ORM\Column(name="contact", type="string", length=255, nullable=true)
-     * @Assert\Length(max=255)
+     * @ORM\Column(name="contact", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
     private $contact;
     /**
@@ -193,8 +193,8 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      *
      * @Exporter\Expose(label="label.phone")
      *
-     * @ORM\Column(name="phone", type="string", length=255, nullable=true)
-     * @Assert\Length(max=255)
+     * @ORM\Column(name="phone", type="string", length=30, nullable=true)
+     * @Assert\Length(max=30)
      */
     private $phone;
     /**
@@ -205,8 +205,8 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      *
      * @Exporter\Expose(label="label.fax")
      *
-     * @ORM\Column(name="fax", type="string", length=255, nullable=true)
-     * @Assert\Length(max=255)
+     * @ORM\Column(name="fax", type="string", length=30, nullable=true)
+     * @Assert\Length(max=30)
      */
     private $fax;
     /**
@@ -217,8 +217,8 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      *
      * @Exporter\Expose(label="label.mobile")
      *
-     * @ORM\Column(name="mobile", type="string", length=255, nullable=true)
-     * @Assert\Length(max=255)
+     * @ORM\Column(name="mobile", type="string", length=30, nullable=true)
+     * @Assert\Length(max=30)
      */
     private $mobile;
     /**
@@ -233,8 +233,8 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      *
      * @Exporter\Expose(label="label.email")
      *
-     * @ORM\Column(name="email", type="string", length=255, nullable=true)
-     * @Assert\Length(max=254)
+     * @ORM\Column(name="email", type="string", length=75, nullable=true)
+     * @Assert\Length(max=75)
      */
     private $email;
     /**
@@ -245,8 +245,8 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      *
      * @Exporter\Expose(label="label.homepage")
      *
-     * @ORM\Column(name="homepage", type="string", length=255, nullable=true)
-     * @Assert\Length(max=255)
+     * @ORM\Column(name="homepage", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
     private $homepage;
     /**
@@ -305,6 +305,25 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      * )
      */
     private $teams;
+    /**
+     * Default invoice template for this customer
+     *
+     * @var InvoiceTemplate|null
+     *
+     * @Serializer\Exclude()
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\InvoiceTemplate")
+     * @ORM\JoinColumn(onDelete="SET NULL", nullable=true)
+     */
+    private $invoiceTemplate;
+    /**
+     * @var string|null
+     *
+     * @Serializer\Exclude()
+     *
+     * @ORM\Column(name="invoice_text", type="text", nullable=true)
+     */
+    private $invoiceText;
 
     public function __construct()
     {
@@ -517,6 +536,31 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
     public function getTimezone(): ?string
     {
         return $this->timezone;
+    }
+
+    public function hasInvoiceTemplate(): bool
+    {
+        return $this->invoiceTemplate !== null;
+    }
+
+    public function getInvoiceTemplate(): ?InvoiceTemplate
+    {
+        return $this->invoiceTemplate;
+    }
+
+    public function setInvoiceTemplate(?InvoiceTemplate $invoiceTemplate): void
+    {
+        $this->invoiceTemplate = $invoiceTemplate;
+    }
+
+    public function getInvoiceText(): ?string
+    {
+        return $this->invoiceText;
+    }
+
+    public function setInvoiceText(?string $invoiceText): void
+    {
+        $this->invoiceText = $invoiceText;
     }
 
     /**

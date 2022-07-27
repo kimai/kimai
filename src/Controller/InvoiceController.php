@@ -13,7 +13,6 @@ use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
 use App\Entity\MetaTableTypeInterface;
-use App\Event\InvoiceCreatedMultipleEvent;
 use App\Event\InvoiceDocumentsEvent;
 use App\Event\InvoiceMetaDefinitionEvent;
 use App\Event\InvoiceMetaDisplayEvent;
@@ -25,7 +24,10 @@ use App\Form\InvoiceEditForm;
 use App\Form\InvoiceTemplateForm;
 use App\Form\Toolbar\InvoiceArchiveForm;
 use App\Form\Toolbar\InvoiceToolbarForm;
+use App\Form\Type\DatePickerType;
+use App\Form\Type\InvoiceTemplateType;
 use App\Invoice\ServiceInvoice;
+use App\Repository\CustomerRepository;
 use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\InvoiceTemplateRepository;
@@ -34,6 +36,7 @@ use App\Repository\Query\InvoiceArchiveQuery;
 use App\Repository\Query\InvoiceQuery;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -79,12 +82,6 @@ final class InvoiceController extends AbstractController
 
         $query = $this->getDefaultQuery();
 
-        $token = null;
-        if ($request->query->has('token')) {
-            $token = $request->query->get('token');
-            $request->query->remove('token');
-        }
-
         $form = $this->getToolbarForm($query);
         if ($this->handleSearch($form, $request)) {
             return $this->redirectToRoute('invoice');
@@ -94,41 +91,41 @@ final class InvoiceController extends AbstractController
         $total = 0;
         $searched = false;
 
-        if ($form->isValid() && $this->isGranted('create_invoice')) {
-            if ($request->query->has('createInvoice')) {
-                if (!$this->isCsrfTokenValid('invoice.create', $token)) {
-                    $this->flashError('action.csrf.error');
-
-                    return $this->redirectToRoute('invoice');
-                }
-
-                $csrfTokenManager->refreshToken('invoice.create');
-
-                try {
-                    return $this->renderInvoice($query, $request);
-                } catch (Exception $ex) {
-                    $this->logException($ex);
-                    $this->flashError('action.update.error', ['%reason%' => 'check doctor/logs']);
-                }
-            }
-
-            if ($form->get('template')->getData() !== null) {
-                try {
-                    $models = $this->service->createModels($query);
-                    $searched = true;
-                } catch (Exception $ex) {
-                    $this->logException($ex);
-                    $this->flashError($ex->getMessage());
-                }
+        if ($form->isValid() && $this->isGranted('create_invoice') && $query->getTemplate() !== null) {
+            try {
+                $models = $this->service->createModels($query);
+                $searched = true;
+            } catch (Exception $ex) {
+                $this->logException($ex);
+                $this->flashError($ex->getMessage());
             }
         }
 
+        $forms = [];
+
         foreach ($models as $model) {
+            $customer = $model->getCustomer();
+            $customerTpl = $model->getTemplate();
             $total += \count($model->getCalculator()->getEntries());
+
+            $values = [
+                'invoiceDate' => $query->getInvoiceDate(),
+                'template' => $customerTpl
+            ];
+
+            $forms[] = $this->createFormWithName('customer_' . $customer->getId(), FormType::class, $values, [
+                    'csrf_protection' => false,
+                ])
+                ->add('template', InvoiceTemplateType::class)
+                ->add('invoiceDate', DatePickerType::class, [
+                    'required' => true,
+                ])
+                ->createView();
         }
 
         return $this->render('invoice/index.html.twig', [
             'models' => $models,
+            'forms' => $forms,
             'form' => $form->createView(),
             'limit_preview' => ($total > 500),
             'searched' => $searched,
@@ -156,6 +153,7 @@ final class InvoiceController extends AbstractController
         // so the new token would not be loaded
 
         $query = $this->getDefaultQuery();
+        $query->setAllowTemplateOverwrite(false);
         $form = $this->getToolbarForm($query);
         if ($this->handleSearch($form, $request)) {
             return $this->redirectToRoute('invoice');
@@ -166,7 +164,7 @@ final class InvoiceController extends AbstractController
                 $query->setCustomers([$customer]);
                 $model = $this->service->createModel($query);
 
-                return $this->service->renderInvoiceWithModel($model, $this->dispatcher);
+                return $this->service->renderInvoice($model, $this->dispatcher);
             } catch (Exception $ex) {
                 $this->logException($ex);
                 $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
@@ -179,11 +177,11 @@ final class InvoiceController extends AbstractController
     }
 
     /**
-     * @Route(path="/save-invoice/{customer}/{template}/{token}", name="invoice_create", methods={"GET"})
+     * @Route(path="/save-invoice/{customer}/{token}", name="invoice_create", methods={"GET"})
      * @Security("is_granted('access', customer)")
      * @Security("is_granted('create_invoice')")
      */
-    public function createInvoiceAction(Customer $customer, InvoiceTemplate $template, string $token, Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response
+    public function createInvoiceAction(Customer $customer, string $token, Request $request, CustomerRepository $customerRepository): Response
     {
         if (!$this->templateRepository->hasTemplate()) {
             return $this->redirectToRoute('invoice');
@@ -196,19 +194,34 @@ final class InvoiceController extends AbstractController
         }
 
         $query = $this->getDefaultQuery();
+        $query->setAllowTemplateOverwrite(false);
         $form = $this->getToolbarForm($query);
         if ($this->handleSearch($form, $request)) {
             return $this->redirectToRoute('invoice');
         }
 
         if ($form->isValid()) {
-            $query->setTemplate($template);
-            $query->setCustomers([$customer]);
+            try {
+                $query->setCustomers([$customer]);
+                $model = $this->service->createModel($query);
 
-            return $this->renderInvoice($query, $request);
+                // save default template for customer if not yet set
+                if ($customer->getInvoiceTemplate() === null) {
+                    $customer->setInvoiceTemplate($query->getTemplate());
+                    $customerRepository->saveCustomer($customer);
+                }
+
+                $invoice = $this->service->createInvoice($model, $this->dispatcher);
+
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('admin_invoice_list', ['id' => $invoice->getId()]);
+            } catch (Exception $ex) {
+                $this->flashUpdateException($ex);
+            }
+        } else {
+            $this->flashFormError($form);
         }
-
-        $this->flashFormError($form);
 
         return $this->redirectToRoute('invoice');
     }
@@ -607,6 +620,7 @@ final class InvoiceController extends AbstractController
         $query = new InvoiceQuery();
         $query->setBegin($begin);
         $query->setEnd($end);
+        $query->setInvoiceDate($factory->createDateTime());
         // limit access to data from teams
         $query->setCurrentUser($this->getUser());
 
@@ -616,27 +630,6 @@ final class InvoiceController extends AbstractController
         }
 
         return $query;
-    }
-
-    private function renderInvoice(InvoiceQuery $query, Request $request)
-    {
-        try {
-            $invoices = $this->service->createInvoices($query, $this->dispatcher);
-
-            $this->flashSuccess('action.update.success');
-
-            if (\count($invoices) === 1) {
-                return $this->redirectToRoute('admin_invoice_list', ['id' => $invoices[0]->getId()]);
-            } elseif (\count($invoices) > 1) {
-                $this->dispatcher->dispatch(new InvoiceCreatedMultipleEvent($invoices));
-            }
-
-            return $this->redirectToRoute('admin_invoice_list');
-        } catch (Exception $ex) {
-            $this->flashUpdateException($ex);
-        }
-
-        return $this->redirectToRoute('invoice');
     }
 
     private function flashFormError(FormInterface $form): void
@@ -674,11 +667,10 @@ final class InvoiceController extends AbstractController
 
     private function getToolbarForm(InvoiceQuery $query): FormInterface
     {
-        return $this->createForm(InvoiceToolbarForm::class, $query, [
+        return $this->createFormForGetRequest(InvoiceToolbarForm::class, $query, [
             'action' => $this->generateUrl('invoice', []),
             'method' => 'GET',
             'include_user' => $this->isGranted('view_other_timesheet'),
-            'include_export' => $this->isGranted('edit_export_other_timesheet'),
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'attr' => [
                 'id' => 'invoice-print-form'

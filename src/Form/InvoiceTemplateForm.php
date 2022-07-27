@@ -14,7 +14,6 @@ use App\Form\Type\InvoiceCalculatorType;
 use App\Form\Type\InvoiceNumberGeneratorType;
 use App\Form\Type\InvoiceRendererType;
 use App\Form\Type\LanguageType;
-use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -74,9 +73,6 @@ class InvoiceTemplateForm extends AbstractType
             ->add('calculator', InvoiceCalculatorType::class)
             ->add('numberGenerator', InvoiceNumberGeneratorType::class)
             ->add('language', LanguageType::class)
-            ->add('decimalDuration', YesNoType::class, [
-                'label' => 'label.decimalDuration'
-            ])
         ;
     }
 

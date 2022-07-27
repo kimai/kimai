@@ -161,10 +161,6 @@
         <source>label.status</source>
         <target>Status</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target>Dauer als Dezimalzahl anzeigen</target>
-      </trans-unit>
       <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
         <target>Bankverbindung</target>
@@ -1016,10 +1012,6 @@
       <trans-unit id="Xij3oQl" resname="invoice.payment_date">
         <source>invoice.payment_date</source>
         <target>Zahlungsdatum</target>
-      </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target>Alle speichern</target>
       </trans-unit>
       <trans-unit id="Z8Fxbvf" resname="label.orderBy">
         <source>label.orderBy</source>

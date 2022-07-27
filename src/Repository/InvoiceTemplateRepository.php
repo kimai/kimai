@@ -78,34 +78,15 @@ class InvoiceTemplateRepository extends EntityRepository
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
-    /**
-     * @param InvoiceTemplate $template
-     * @return InvoiceTemplate
-     * @throws RepositoryException
-     */
-    public function saveTemplate(InvoiceTemplate $template)
+    public function saveTemplate(InvoiceTemplate $template): void
     {
-        try {
-            $this->getEntityManager()->persist($template);
-            $this->getEntityManager()->flush();
-        } catch (\Exception $ex) {
-            throw new RepositoryException('Could not save InvoiceTemplate');
-        }
-
-        return $template;
+        $this->getEntityManager()->persist($template);
+        $this->getEntityManager()->flush();
     }
 
-    /**
-     * @param InvoiceTemplate $template
-     * @throws RepositoryException
-     */
-    public function removeTemplate(InvoiceTemplate $template)
+    public function removeTemplate(InvoiceTemplate $template): void
     {
-        try {
-            $this->getEntityManager()->remove($template);
-            $this->getEntityManager()->flush();
-        } catch (\Exception $ex) {
-            throw new RepositoryException('Could not remove InvoiceTemplate');
-        }
+        $this->getEntityManager()->remove($template);
+        $this->getEntityManager()->flush();
     }
 }

@@ -19,24 +19,19 @@ use App\Entity\Project;
  */
 class InvoiceQuery extends TimesheetQuery
 {
-    /**
-     * @var InvoiceTemplate
-     */
-    private $template;
-    /**
-     * @var bool
-     */
-    private $markAsExported = true;
+    private ?InvoiceTemplate $template = null;
+    private ?\DateTime $invoiceDate = null;
+    private bool $allowTemplateOverwrite = true;
 
     public function __construct()
     {
         parent::__construct();
         $this->setDefaults([
-            'order' => InvoiceQuery::ORDER_ASC,
-            'exported' => InvoiceQuery::STATE_NOT_EXPORTED,
+            'order' => self::ORDER_ASC,
+            'exported' => self::STATE_NOT_EXPORTED,
             'state' => self::STATE_STOPPED,
             'billable' => true,
-            'markAsExported' => true,
+            'invoiceDate' => null,
         ]);
     }
 
@@ -48,18 +43,6 @@ class InvoiceQuery extends TimesheetQuery
     public function setTemplate(InvoiceTemplate $template): InvoiceQuery
     {
         $this->template = $template;
-
-        return $this;
-    }
-
-    public function isMarkAsExported(): bool
-    {
-        return $this->markAsExported;
-    }
-
-    public function setMarkAsExported(bool $markAsExported): InvoiceQuery
-    {
-        $this->markAsExported = $markAsExported;
 
         return $this;
     }
@@ -116,5 +99,25 @@ class InvoiceQuery extends TimesheetQuery
         }
 
         return null;
+    }
+
+    public function getInvoiceDate(): ?\DateTime
+    {
+        return $this->invoiceDate;
+    }
+
+    public function setInvoiceDate(?\DateTime $invoiceDate): void
+    {
+        $this->invoiceDate = $invoiceDate;
+    }
+
+    public function isAllowTemplateOverwrite(): bool
+    {
+        return $this->allowTemplateOverwrite;
+    }
+
+    public function setAllowTemplateOverwrite(bool $allowTemplateOverwrite): void
+    {
+        $this->allowTemplateOverwrite = $allowTemplateOverwrite;
     }
 }

@@ -17,11 +17,8 @@ class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
 {
     use BudgetHydratorTrait;
 
-    private $customerStatistic;
-
-    public function __construct(CustomerStatisticService $customerStatistic)
+    public function __construct(private CustomerStatisticService $customerStatisticService)
     {
-        $this->customerStatistic = $customerStatistic;
     }
 
     public function hydrate(InvoiceModel $model): array
@@ -47,9 +44,10 @@ class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             'customer.fax' => $customer->getFax(),
             'customer.phone' => $customer->getPhone(),
             'customer.mobile' => $customer->getMobile(),
+            'customer.invoice_text' => $customer->getInvoiceText(),
         ];
 
-        $statistic = $this->customerStatistic->getBudgetStatisticModel($customer, $model->getQuery()->getEnd());
+        $statistic = $this->customerStatisticService->getBudgetStatisticModel($customer, $model->getQuery()->getEnd());
 
         $values = array_merge($values, $this->getBudgetValues('customer.', $statistic, $model));
 

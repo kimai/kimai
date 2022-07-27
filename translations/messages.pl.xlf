@@ -958,10 +958,6 @@
         <source>label.status</source>
         <target>Status</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target>Wyświetlaj czas trwania jako liczbę dziesiętną</target>
-      </trans-unit>
       <trans-unit id="IQ9DUOW" resname="button.preview_print">
         <source>button.preview_print</source>
         <target>Podgląd wydruku</target>
@@ -1093,10 +1089,6 @@
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target state="translated">Zaktualizuj tytuł przeglądarki</target>
-      </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target state="translated">Zapisz wszystko</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>

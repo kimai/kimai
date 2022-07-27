@@ -37,11 +37,16 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         return $this->container->get('translator');
     }
 
-    public function createFormForGetRequest(string $type = FormType::class, $data = null, array $options = []): FormInterface
+    protected function createFormForGetRequest(string $type = FormType::class, $data = null, array $options = []): FormInterface
     {
         return $this->container
             ->get('form.factory')
             ->createNamed('', $type, $data, $options);
+    }
+
+    protected function createFormWithName(string $name, string $type, mixed $data = null, array $options = []): FormInterface
+    {
+        return $this->container->get('form.factory')->createNamed($name, $type, $data, $options);
     }
 
     /**

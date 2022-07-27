@@ -1,7 +1,7 @@
 {% extends 'invoice/layout.html.twig' %}
 
 {% block invoice %}
-{% set isDecimal = model.template.decimalDuration|default(false) %}
+{% set isDecimal = true %}
 {% set currency = model.currency %}
 {% set project = model.query.project %}
 <div class="row">

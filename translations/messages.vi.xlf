@@ -864,10 +864,6 @@
         <source>label.invoice_bank_account</source>
         <target>Ngày đặt hàng…</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target>Thời lượng hiển thị dưới dạng số thập phân</target>
-      </trans-unit>
       <trans-unit id="hzhzbqw" resname="label.status">
         <source>label.status</source>
         <target>Trạng thái</target>
@@ -1060,10 +1056,6 @@
       <trans-unit id="jdbtx6z" resname="action.add">
         <source>action.add</source>
         <target>Thêm</target>
-      </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target>Lưu tất cả</target>
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>

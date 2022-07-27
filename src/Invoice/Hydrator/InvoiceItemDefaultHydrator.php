@@ -32,11 +32,7 @@ class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
         $rate = $item->getRate();
         $internalRate = $item->getInternalRate();
         $appliedRate = $item->getHourlyRate();
-        if ($this->model->getTemplate()->isDecimalDuration()) {
-            $amount = $formatter->getFormattedDecimalDuration($item->getDuration());
-        } else {
-            $amount = $formatter->getFormattedDuration($item->getDuration());
-        }
+        $amount = $formatter->getFormattedDecimalDuration($item->getDuration());
         $description = $item->getDescription();
 
         if ($item->isFixedRate()) {

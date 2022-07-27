@@ -179,10 +179,6 @@
         <source>action.reset</source>
         <target>تنظیم مجدد</target>
       </trans-unit>
-      <trans-unit id="9hpJPiG" resname="action.save_all">
-        <source>action.save_all</source>
-        <target>ذخیره همه</target>
-      </trans-unit>
       <trans-unit id="HLtdhYw" resname="action.save">
         <source>action.save</source>
         <target>ذخیره</target>
@@ -804,10 +800,6 @@
       <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
         <target state="needs-translation">Bank account</target>
-      </trans-unit>
-      <trans-unit id="9VxfLLy" resname="label.decimalDuration">
-        <source>label.decimalDuration</source>
-        <target state="needs-translation">Display duration as decimal number</target>
       </trans-unit>
       <trans-unit id="hzhzbqw" resname="label.status">
         <source>label.status</source>
