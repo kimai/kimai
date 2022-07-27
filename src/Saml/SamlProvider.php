@@ -86,7 +86,13 @@ final class SamlProvider
                     $roles[] = $groupMap[$groupName];
                 }
             }
-            $user->setRoles($roles);
+            if ($this->configuration->isRolesResetOnLogin()) {
+                $user->setRoles($roles);
+            } else {
+                foreach ($roles as $role) {
+                    $user->addRole($role);
+                }
+            }
         }
 
         $mappingConfig = $this->configuration->getAttributeMapping();

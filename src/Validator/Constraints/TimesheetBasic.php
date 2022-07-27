@@ -27,6 +27,7 @@ class TimesheetBasic extends TimesheetConstraint
     public const DISABLED_CUSTOMER_ERROR = 'kimai-timesheet-89';
     public const PROJECT_NOT_STARTED = 'kimai-timesheet-91';
     public const PROJECT_ALREADY_ENDED = 'kimai-timesheet-92';
+    public const PROJECT_DISALLOWS_GLOBAL_ACTIVITY = 'kimai-timesheet-93';
 
     protected static $errorNames = [
         self::MISSING_BEGIN_ERROR => 'You must submit a begin date.',
@@ -39,6 +40,7 @@ class TimesheetBasic extends TimesheetConstraint
         self::DISABLED_CUSTOMER_ERROR => 'Cannot start a disabled customer.',
         self::PROJECT_NOT_STARTED => 'The project has not started at that time.',
         self::PROJECT_ALREADY_ENDED => 'The project is finished at that time.',
+        self::PROJECT_DISALLOWS_GLOBAL_ACTIVITY => 'Global activities are forbidden for the selected project.',
     ];
 
     public $message = 'This timesheet has invalid settings.';

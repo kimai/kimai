@@ -223,6 +223,11 @@ class SystemConfiguration
         return $this->find('saml.provider');
     }
 
+    public function isSamlRolesResetOnLogin(): bool
+    {
+        return (bool) $this->find('saml.roles.resetOnLogin');
+    }
+
     public function isLdapActive(): bool
     {
         return (bool) $this->find('ldap.activate');

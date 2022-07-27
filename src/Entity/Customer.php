@@ -106,7 +106,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      *
      * @Exporter\Expose(label="label.billable", type="boolean")
      *
-     * @ORM\Column(name="billable", type="boolean", nullable=false)
+     * @ORM\Column(name="billable", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
      */
     private $billable = true;

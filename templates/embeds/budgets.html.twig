@@ -1,4 +1,6 @@
-{% if is_granted('time', entity) %}
+{% set timeBudgetVisible = is_granted('time', entity) %}
+{% set durationTrans = entity.isMonthlyBudget() ? 'stats.durationMonth' : 'stats.durationTotal' %}
+{% if timeBudgetVisible %}
     {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/progressbar.html.twig" as progress %}
         {% import "macros/widgets.html.twig" as widgets %}
@@ -8,7 +10,6 @@
         {% block box_body_class %}p-0{% endblock %}
         {% block box_attributes %}id="time_budget_box"{% endblock %}
         {% block box_body %}
-            {% set durationTrans = entity.isMonthlyBudget() ? 'stats.durationMonth' : 'stats.durationTotal' %}
             <div class="row">
                 <div class="col-12 col-md-6 order-1 order-md-0">
                     <table class="table table-hover dataTable">
@@ -128,6 +129,14 @@
                             <td class="text-nowrap text-end">{{ stats.internalRate|money(currency) }}</td>
                             <td class="text-nowrap text-end">{{ percentReached|number_format(2) }}%</td>
                         </tr>
+                        {% if not entity.isMonthlyBudget() and timeBudgetVisible and stats.duration > 0 %}
+                            {% set realHourlyRate = stats.rateBillable / stats.duration|chart_duration %}
+                            <tr>
+                                <td>{{ 'label.hourlyRate'|trans }} ({{ 'label.billable'|trans }} / {{ durationTrans|trans }})</td>
+                                <td class="text-nowrap text-right">{{ realHourlyRate|money(currency) }}</td>
+                                <td class="text-nowrap text-right">-</td>
+                            </tr>
+                        {% endif %}
                         {% if entity.budget > 0 %}
                             <tr>
                                 <th colspan="3" class="text-nowrap text-end">

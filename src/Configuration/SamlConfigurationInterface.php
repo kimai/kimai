@@ -21,5 +21,7 @@ interface SamlConfigurationInterface
 
     public function getRolesMapping(): array;
 
+    public function isRolesResetOnLogin(): bool;
+
     public function getConnection(): array;
 }

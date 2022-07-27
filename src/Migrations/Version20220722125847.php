@@ -15,30 +15,24 @@ use App\Doctrine\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * @version 1.20.2
+ * @version 1.22.0
  */
-final class Version20220531145920 extends AbstractMigration
+final class Version20220722125847 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Add invoice text columns to project and activity';
+        return '(De-)Activate global activities for Projects';
     }
 
     public function up(Schema $schema): void
     {
-        $activities = $schema->getTable('kimai2_activities');
-        $activities->addColumn('invoice_text', 'text', ['notnull' => false, 'default' => null]);
-
         $projects = $schema->getTable('kimai2_projects');
-        $projects->addColumn('invoice_text', 'text', ['notnull' => false, 'default' => null]);
+        $projects->addColumn('global_activities', 'boolean', ['notnull' => true, 'default' => true]);
     }
 
     public function down(Schema $schema): void
     {
-        $activities = $schema->getTable('kimai2_activities');
-        $activities->dropColumn('invoice_text');
-
         $projects = $schema->getTable('kimai2_projects');
-        $projects->dropColumn('invoice_text');
+        $projects->dropColumn('global_activities');
     }
 }

@@ -372,7 +372,7 @@ final class KimaiImporterCommand extends Command
             }
 
             $io->success('Fetched Kimai v1 data, validating now');
-            $validationMessages = $this->validateKimai1Data($options, $users, $customer, $projects, $rates);
+            $validationMessages = $this->validateKimai1Data($options, $users, $customer, $projects, $activities, $rates);
             if (!empty($validationMessages)) {
                 foreach ($validationMessages as $errorMessage) {
                     $io->error($errorMessage);
@@ -470,7 +470,7 @@ final class KimaiImporterCommand extends Command
         return 0;
     }
 
-    private function validateKimai1Data(array $options, array $users, array $customer, array $projects, array $rates): array
+    private function validateKimai1Data(array $options, array $users, array $customer, array $projects, array $activities, array $rates): array
     {
         $validationMessages = [];
 
@@ -509,6 +509,14 @@ final class KimaiImporterCommand extends Command
             $customerIds = [];
             foreach ($customer as $oldCustomer) {
                 $customerIds[] = $oldCustomer['customerID'];
+                if (($customerNameLength = mb_strlen($oldCustomer['name'])) > 150) {
+                    $validationMessages[] = sprintf(
+                        'Customer name "%s" (ID %s) is too long. Max. 150 character are allowed, found %s.',
+                        $oldCustomer['name'],
+                        $oldCustomer['customerID'],
+                        $customerNameLength
+                    );
+                }
             }
 
             foreach ($projects as $oldProject) {
@@ -518,6 +526,25 @@ final class KimaiImporterCommand extends Command
                         $oldProject['name'],
                         $oldProject['projectID'],
                         $oldProject['customerID']
+                    );
+                }
+                if (($projectNameLength = mb_strlen($oldProject['name'])) > 150) {
+                    $validationMessages[] = sprintf(
+                        'Project name "%s" (ID %s) is too long. Max. 150 character are allowed, found %s.',
+                        $oldProject['name'],
+                        $oldProject['projectID'],
+                        $projectNameLength
+                    );
+                }
+            }
+
+            foreach ($activities as $oldActivity) {
+                if (($activityNameLength = mb_strlen($oldActivity['name'])) > 150) {
+                    $validationMessages[] = sprintf(
+                        'Activity name "%s" (ID %s) is too long. Max. 150 character are allowed, found %s.',
+                        $oldActivity['name'],
+                        $oldActivity['activityID'],
+                        $activityNameLength
                     );
                 }
             }
@@ -652,6 +679,10 @@ final class KimaiImporterCommand extends Command
         foreach ($allListener as $event => $listeners) {
             foreach ($listeners as $hash => $object) {
                 if ($object instanceof TimesheetSubscriber) {
+                    $connection->getEventManager()->removeEventListener([$event], $object);
+                /* @phpstan-ignore-next-line  */
+                } elseif ($object instanceof \KimaiPlugin\AuditTrailBundle\Doctrine\MetadataSubscriber) {
+                    // deactivate audit plugin listener
                     $connection->getEventManager()->removeEventListener([$event], $object);
                 }
             }
@@ -2052,6 +2083,7 @@ final class KimaiImporterCommand extends Command
 
     private function fixEncoding(): void
     {
+        // https://onlineasciitools.com/convert-ascii-to-utf8
         $searchReplace = [
             'Ã¤' => 'ä',
             'Ã„' => 'Ä',
@@ -2060,6 +2092,7 @@ final class KimaiImporterCommand extends Command
             'Ã¶' => 'ö',
             'Ã–' => 'Ö',
             'ÃŸ' => 'ß',
+            'â¦' => '-',
         ];
 
         $tablesColumns = [
