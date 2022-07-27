@@ -734,10 +734,6 @@
         <source>active.entries</source>
         <target state="translated">Dina aktiva tidsmätningar</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
-        <source>timesheet.all</source>
-        <target state="translated">Visa alla Poster</target>
-      </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
         <target state="translated">Starta om en av dina senaste aktiviteter</target>

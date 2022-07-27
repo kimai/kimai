@@ -926,10 +926,6 @@
         <source>active.entries</source>
         <target>Đo thời gian hoạt động của bạn</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
-        <source>timesheet.all</source>
-        <target>Hiển thị tất cả các hồ sơ</target>
-      </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
         <target>Khởi động lại một trong những hoạt động cuối cùng của bạn</target>

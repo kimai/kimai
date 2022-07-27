@@ -755,10 +755,6 @@
         <source>active.entries</source>
         <target>Vaše aktivní měření času</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
-        <source>timesheet.all</source>
-        <target>Zobrazit všechny záznamy</target>
-      </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
         <target>Restartujte jednu z vašich posledních aktivit</target>

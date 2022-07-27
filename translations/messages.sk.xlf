@@ -887,10 +887,6 @@
         <source>active.entries</source>
         <target>Máte %count% aktívny záznam | Máte %count% aktívnych záznamov</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
-        <source>timesheet.all</source>
-        <target>Zobraziť všetky záznamy</target>
-      </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
         <target>

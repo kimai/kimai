@@ -938,10 +938,6 @@
         <source>active.entries</source>
         <target>Le tue attività recenti</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
-        <source>timesheet.all</source>
-        <target>Mostra tutte le registrazioni</target>
-      </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
         <target>Riavvia una delle tue ultime attività</target>

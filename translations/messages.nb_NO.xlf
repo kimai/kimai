@@ -1080,10 +1080,6 @@
         <source>error.no_comments_found</source>
         <target>Ingen kommentarer enda.</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
-        <source>timesheet.all</source>
-        <target>Vis alle oppføringer</target>
-      </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>
         <target state="needs-translation">Forespørselen kunne ikke behandles. For mange resultater.</target>

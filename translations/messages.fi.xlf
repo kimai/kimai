@@ -962,10 +962,6 @@
         <source>active.entries</source>
         <target state="translated">Sinun aktiiviset ajan mittaukset</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
-        <source>timesheet.all</source>
-        <target state="translated">Näytä kaikki merkinnät</target>
-      </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
         <target state="translated">Aloita uudelleen yksi viimeisimmistä työtehtävistäsi</target>

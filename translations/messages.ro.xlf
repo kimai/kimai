@@ -826,10 +826,6 @@
         <source>active.entries</source>
         <target>Înregistrările tale active</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
-        <source>timesheet.all</source>
-        <target>Arată toate înregistrările</target>
-      </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
         <target>Repornește una din activitățile recente</target>

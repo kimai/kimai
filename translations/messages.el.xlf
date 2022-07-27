@@ -1022,10 +1022,6 @@
         <source>active.entries</source>
         <target>Οι ενεργές μετρήσεις του χρόνου σας</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
-        <source>timesheet.all</source>
-        <target>Εμφάνιση όλων των εγγραφών</target>
-      </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
         <target>Επανεκκινήστε μία από τις τελευταίες σας δραστηριότητες</target>

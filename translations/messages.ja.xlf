@@ -730,10 +730,6 @@
         <source>active.entries</source>
         <target>進行中の時間記録のプロセス</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
-        <source>timesheet.all</source>
-        <target>すべての記録を見る</target>
-      </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
         <target>最後のアクティビティを再度行う</target>

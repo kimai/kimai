@@ -1152,10 +1152,6 @@
         <source>active.entries</source>
         <target>Ihre aktiven Zeitmessungen</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
-        <source>timesheet.all</source>
-        <target>Alle Einträge anzeigen</target>
-      </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
         <target>Eine ihrer letzten Tätigkeiten neustarten</target>

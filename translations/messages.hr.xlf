@@ -1075,10 +1075,6 @@
         <source>active.entries</source>
         <target>Mjerenja tvog aktivnog vremena</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
-        <source>timesheet.all</source>
-        <target>Pokaži sve zapise</target>
-      </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
         <target>Ponovo pokreni jednu od zadnjih aktivnosti</target>

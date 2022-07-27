@@ -109,10 +109,6 @@
         <source>recent.activities</source>
         <target>Eine ihrer letzten Tätigkeiten neustarten</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
-        <source>timesheet.all</source>
-        <target>Alle Einträge anzeigen</target>
-      </trans-unit>
       <trans-unit id="OxdYMR3" resname="active.entries">
         <source>active.entries</source>
         <target>Ihre aktiven Zeitmessungen</target>

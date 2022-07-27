@@ -751,10 +751,6 @@
         <source>active.entries</source>
         <target state="translated">활동 시간 측정</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
-        <source>timesheet.all</source>
-        <target state="translated">모든 타임시트 보기</target>
-      </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
         <target state="translated">지난 활동 재개</target>

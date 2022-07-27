@@ -847,10 +847,6 @@
         <source>label.batch_meta_fields</source>
         <target>Eyka rein</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
-        <source>timesheet.all</source>
-        <target>Vís allar skrásetingar</target>
-      </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
         <target>Virknar skrásetingar</target>

@@ -846,10 +846,6 @@
         <source>active.entries</source>
         <target>Dine aktive tidsregistreringer</target>
       </trans-unit>
-      <trans-unit id="e7XS97t" resname="timesheet.all">
-        <source>timesheet.all</source>
-        <target>Vis alle tidsregistreringer</target>
-      </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
         <target>Genstart en af dine sidste aktiviteter</target>
