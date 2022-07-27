@@ -408,9 +408,12 @@ final class ServiceInvoice
         $model
             ->setCustomer($customer)
             ->setTemplate($template)
-            ->setInvoiceDate($query->getInvoiceDate())
             ->setQuery($query)
         ;
+
+        if ($query->getInvoiceDate() !== null) {
+            $model->setInvoiceDate($query->getInvoiceDate());
+        }
 
         if (null !== $query->getCurrentUser()) {
             $model->setUser($query->getCurrentUser());

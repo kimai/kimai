@@ -133,6 +133,7 @@ class DebugRendererTest extends TestCase
             'customer.time_budget_open_plain',
             'customer.mobile',
             'customer.meta.foo-customer',
+            'customer.invoice_text',
             'activity.id',
             'activity.name',
             'activity.comment',

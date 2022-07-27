@@ -36,7 +36,6 @@ class InvoiceQueryTest extends TimesheetQueryTest
         self::assertTrue($sut->isStopped());
 
         $this->assertExportedWith($sut, InvoiceQuery::STATE_NOT_EXPORTED);
-        $this->assertMarkAsExported($sut);
         $this->assertModifiedAfter($sut);
 
         self::assertTrue($sut->getBillable());
