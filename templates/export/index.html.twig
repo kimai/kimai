@@ -88,9 +88,11 @@
                 {% import "macros/widgets.html.twig" as widgets %}
                 {% block box_title %}
                     {{ 'button.preview'|trans }}: {{ 'export.title'|trans }}
-                    {{ widgets.label(totalDuration|duration, 'gray') }}
+                {% endblock %}
+                {% block box_tools %}
+                    {{ widgets.label(totalDuration|duration, 'primary') }}
                     {% for totalCurrency, totalRate in totalRates %}
-                        {{ widgets.label(totalRate|money(totalCurrency), 'gray') }}
+                        {{ widgets.label(totalRate|money(totalCurrency), totalRates|length == 1 ? 'primary' : 'gray') }}
                     {% endfor %}
                 {% endblock %}
                 {% block box_attributes %}id="preview_export"{% endblock %}

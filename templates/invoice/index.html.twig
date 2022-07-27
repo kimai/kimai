@@ -88,9 +88,12 @@
             {% import "macros/datatables.html.twig" as tables %}
             {% block box_title %}
                 {{ 'button.preview'|trans }}: {{ 'invoices'|trans }}
-                {{ widgets.label(totalDuration|duration, 'gray') }}
+            {% endblock %}
+            {% block box_tools %}
+                {{ widgets.label(totalDuration|duration, 'primary') }}
+
                 {% for totalCurrency, totalRate in totalRates %}
-                    {{ widgets.label(totalRate|money(totalCurrency), 'gray') }}
+                    {{ widgets.label(totalRate|money(totalCurrency), totalRates|length == 1 ? 'primary' : 'gray') }}
                 {% endfor %}
             {% endblock %}
             {% block box_body_class %}p-0{% endblock %}
@@ -123,7 +126,7 @@
                                 </td>
                                 <td>
                                     {% if is_granted('view', model.customer) %}
-                                        <a class="link-black" href="{{ path('customer_details', {id: model.customer.id}) }}">{{ widgets.label_customer(model.customer) }}</a>
+                                        <a class="text-reset" href="{{ path('customer_details', {id: model.customer.id}) }}">{{ widgets.label_customer(model.customer) }}</a>
                                     {% else %}
                                         {{ widgets.label_customer(model.customer) }}
                                     {% endif %}
@@ -166,7 +169,7 @@
                                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'date') }}">{{ entry.begin|date_short }}</td>
                                                 <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
                                                     {% if is_granted('view', entry.project) %}
-                                                        <a class="link-black" href="{{ path('project_details', {id: entry.project.id}) }}">{{ widgets.label_project(entry.project) }}</a>
+                                                        <a class="text-reset" href="{{ path('project_details', {id: entry.project.id}) }}">{{ widgets.label_project(entry.project) }}</a>
                                                     {% else %}
                                                         {{ widgets.label_project(entry.project) }}
                                                     {% endif %}
@@ -174,7 +177,7 @@
                                                         <br>
                                                         <small>
                                                             {% if is_granted('view', entry.activity) %}
-                                                                <a class="link-black" href="{{ path('activity_details', {id: entry.activity.id}) }}">{{ widgets.label_activity(entry.activity) }}</a>
+                                                                <a class="text-reset" href="{{ path('activity_details', {id: entry.activity.id}) }}">{{ widgets.label_activity(entry.activity) }}</a>
                                                             {% else %}
                                                                 {{ widgets.label_activity(entry.activity) }}
                                                             {% endif %}

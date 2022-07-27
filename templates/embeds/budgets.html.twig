@@ -133,8 +133,8 @@
                             {% set realHourlyRate = stats.rateBillable / stats.duration|chart_duration %}
                             <tr>
                                 <td>{{ 'label.hourlyRate'|trans }} ({{ 'label.billable'|trans }} / {{ durationTrans|trans }})</td>
-                                <td class="text-nowrap text-right">{{ realHourlyRate|money(currency) }}</td>
-                                <td class="text-nowrap text-right">-</td>
+                                <td class="text-nowrap text-end">{{ realHourlyRate|money(currency) }}</td>
+                                <td class="text-nowrap text-end">-</td>
                             </tr>
                         {% endif %}
                         {% if entity.budget > 0 %}
