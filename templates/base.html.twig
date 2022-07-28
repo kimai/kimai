@@ -139,7 +139,4 @@
     {{ webloader.init_frontend_loader() }}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::JAVASCRIPT')) %}
     {{ event.content|raw }}
-    <script>
-
-    </script>
 {% endblock %}

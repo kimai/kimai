@@ -1529,7 +1529,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@popperjs/core@npm:^2.11.2, @popperjs/core@npm:^2.11.5":
+"@popperjs/core@npm:^2.11.5":
   version: 2.11.5
   resolution: "@popperjs/core@npm:2.11.5"
   checksum: fd7f9dca3fb716d7426332b6ee283f88d2724c0ab342fb678865a640bad403dfb9eeebd8204a406986162f7e2b33394f104320008b74d0e9066d7322f70ea35d
@@ -1570,24 +1570,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tabler/core@npm:^1.0.0-beta8":
-  version: 1.0.0-beta9
-  resolution: "@tabler/core@npm:1.0.0-beta9"
+"@tabler/core@npm:1.0.0-beta10":
+  version: 1.0.0-beta10
+  resolution: "@tabler/core@npm:1.0.0-beta10"
   dependencies:
-    "@popperjs/core": ^2.11.2
-    "@tabler/icons": ^1.53.0
+    "@popperjs/core": ^2.11.5
+    "@tabler/icons": ^1.67.0
     bootstrap: 5.1.3
   peerDependencies:
-    apexcharts: ^3.33.1
+    apexcharts: ^3.35.0
     autosize: ^5.0.1
     choices.js: ^10.1.0
-    countup.js: ^2.0.8
-    flatpickr: ^4.6.9
+    countup.js: ^2.1.0
+    flatpickr: ^4.6.11
     imask: ^6.4.2
-    jsvectormap: ^1.4.4
+    jsvectormap: ^1.4.5
+    list.js: ^2.3.1
     litepicker: ^2.0.12
     nouislider: ^15.5.1
-    tom-select: ^2.0.0
+    tom-select: ^2.0.1
   peerDependenciesMeta:
     apexcharts:
       optional: true
@@ -1603,19 +1604,21 @@ __metadata:
       optional: true
     jsvectormap:
       optional: true
+    list.js:
+      optional: true
     litepicker:
       optional: true
     nouislider:
       optional: true
     tom-select:
       optional: true
-  checksum: 1cb0c3ec379e3e239d9079613e1f98aa2d34a23a175e6396e2c1b21e28398488dc28a827502c741171d75b91554192f07931529bb7bb1ebb616826c113fd63c6
+  checksum: 411e453c087966e7e4cf05806e7f8557ce4d6910b9a0fb59c2fa76473b2b65228eb1686bc5bc77e5fc06e1193b35a164d1c96f71c8c7b54891822ea3c7e1fbaa
   languageName: node
   linkType: hard
 
-"@tabler/icons@npm:^1.53.0":
-  version: 1.72.0
-  resolution: "@tabler/icons@npm:1.72.0"
+"@tabler/icons@npm:^1.67.0":
+  version: 1.78.1
+  resolution: "@tabler/icons@npm:1.78.1"
   peerDependencies:
     react: ^16.x || 17.x || 18.x
     react-dom: ^16.x || 17.x || 18.x
@@ -1624,7 +1627,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: d7840adb4b973207d569e0ee770096e90849e41e472c50e004c68c070511c3a2c81b63145276cd19f787ad08fc6cfdcdeb53e610213e8ec7cd6d2d30602ab05f
+  checksum: 3b8fe745adf66a211ea03e3a6e9a54393812733bafd7e46e51eaa8503df7836dcfeb56789ea18c661a8c866b6ee1a90d2031c05a9192c623414289fdfec7d181
   languageName: node
   linkType: hard
 
@@ -4956,7 +4959,7 @@ __metadata:
     "@fullcalendar/timegrid": ^5.11.0
     "@popperjs/core": ^2.11.5
     "@symfony/webpack-encore": ^2.1
-    "@tabler/core": ^1.0.0-beta8
+    "@tabler/core": 1.0.0-beta10
     bootstrap: ^5.1.3
     chart.js: ^3.8
     core-js: ^3.6
