@@ -11,19 +11,14 @@ namespace App\EventSubscriber;
 
 use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel;
+use KevinPapst\TablerBundle\Helper\ContextHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * Menu event subscriber is creating the Kimai default menu structure.
- */
 final class MenuSubscriber implements EventSubscriberInterface
 {
-    private $security;
-
-    public function __construct(AuthorizationCheckerInterface $security)
+    public function __construct(private AuthorizationCheckerInterface $security, private ContextHelper $helper)
     {
-        $this->security = $security;
     }
 
     public static function getSubscribedEvents(): array
@@ -31,6 +26,13 @@ final class MenuSubscriber implements EventSubscriberInterface
         return [
             ConfigureMainMenuEvent::class => ['onMainMenuConfigure', 100],
         ];
+    }
+
+    private function addDivider(MenuItemModel $menu): void
+    {
+        if ($this->helper->isBoxedLayout()) {
+            $menu->addChild(MenuItemModel::createDivider());
+        }
     }
 
     public function onMainMenuConfigure(ConfigureMainMenuEvent $event)
@@ -64,7 +66,7 @@ final class MenuSubscriber implements EventSubscriberInterface
             );
         }
 
-        $times->addChild(MenuItemModel::createDivider());
+        $this->addDivider($times);
 
         if ($auth->isGranted('create_export')) {
             $times->addChild(
@@ -94,7 +96,7 @@ final class MenuSubscriber implements EventSubscriberInterface
             }
 
             if ($invoice->hasChildren()) {
-                $invoice->addChild(MenuItemModel::createDivider());
+                $this->addDivider($invoice);
             }
         }
 
@@ -133,7 +135,7 @@ final class MenuSubscriber implements EventSubscriberInterface
             );
         }
 
-        $menu->addChild(MenuItemModel::createDivider());
+        $this->addDivider($menu);
 
         // ------------------- system menu -------------------
         $menu = $event->getSystemMenu();
@@ -156,7 +158,7 @@ final class MenuSubscriber implements EventSubscriberInterface
         }
 
         if ($menu->hasChildren()) {
-            $menu->addChild(MenuItemModel::createDivider());
+            $this->addDivider($menu);
         }
 
         if ($auth->isGranted('plugins')) {
@@ -177,6 +179,6 @@ final class MenuSubscriber implements EventSubscriberInterface
             );
         }
 
-        $menu->addChild(MenuItemModel::createDivider());
+        $this->addDivider($menu);
     }
 }

@@ -379,7 +379,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             UserPreference::SKIN,
             'calendar_initial_view',
             'login_initial_view',
-            'collapsed_sidebar',
+            'collapsed_sidebar', // TODO @2.1 removed with 2.0, can be deleted with 2.1
             'layout',
             'update_browser_title',
             'daily_stats',
