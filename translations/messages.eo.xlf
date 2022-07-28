@@ -444,10 +444,6 @@
         <source>profile.preferences</source>
         <target>Agordoj</target>
       </trans-unit>
-      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
-        <source>label.collapsed_sidebar</source>
-        <target>Minimumigi la maldekstran flankpanelon</target>
-      </trans-unit>
       <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
         <source>label.calendar_initial_view</source>
         <target>Komenca kalendara vido</target>

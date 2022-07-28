@@ -420,10 +420,6 @@
         <source>profile.preferences</source>
         <target>Hobespenak</target>
       </trans-unit>
-      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
-        <source>label.collapsed_sidebar</source>
-        <target>Ezkerraldeko gunea txikitu</target>
-      </trans-unit>
       <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
         <source>label.calendar_initial_view</source>
         <target>Egutegiaren hasierako bista</target>

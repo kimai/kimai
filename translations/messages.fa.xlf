@@ -491,10 +491,6 @@
         <source>label.lastLogin</source>
         <target>آخرین ورود</target>
       </trans-unit>
-      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
-        <source>label.collapsed_sidebar</source>
-        <target>کوچک کردن نوار کناری سمت چپ</target>
-      </trans-unit>
       <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
         <source>label.calendar_initial_view</source>
         <target>مشاهده ابتدایی و ساده تقویم</target>

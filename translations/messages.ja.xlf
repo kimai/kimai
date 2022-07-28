@@ -359,10 +359,6 @@
         <source>profile.preferences</source>
         <target>個人設定</target>
       </trans-unit>
-      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
-        <source>label.collapsed_sidebar</source>
-        <target>左のサイドバーを最小化する</target>
-      </trans-unit>
       <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
         <source>label.calendar_initial_view</source>
         <target>カレンダー表示の初期状態</target>

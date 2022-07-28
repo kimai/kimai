@@ -372,10 +372,6 @@
         <source>profile.preferences</source>
         <target state="translated">설정</target>
       </trans-unit>
-      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
-        <source>label.collapsed_sidebar</source>
-        <target state="translated">왼쪽 사이드바 최소화</target>
-      </trans-unit>
       <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
         <source>label.calendar_initial_view</source>
         <target state="translated">달력 초기 화면</target>

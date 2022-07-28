@@ -432,10 +432,6 @@
         <source>profile.preferences</source>
         <target>Preferencje</target>
       </trans-unit>
-      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
-        <source>label.collapsed_sidebar</source>
-        <target state="translated">Zminimalizuj lewy panel boczny</target>
-      </trans-unit>
       <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
         <source>label.calendar_initial_view</source>
         <target>Początkowy wygląd kalendarza</target>

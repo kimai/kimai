@@ -14,10 +14,6 @@
         <source>label.theme.markdown_content</source>
         <target state="needs-translation">Erlaube Markdown-Formatierungen in Beschreibungen und Kommentaren</target>
       </trans-unit>
-      <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
-        <source>label.theme.tags_create</source>
-        <target state="needs-translation">Schlagworte: Suche per Auto-Complete und Erstellung von Schlagworten erlauben</target>
-      </trans-unit>
       <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
         <source>label.theme.avatar_url</source>
         <target state="needs-translation">Erlaube die Nutzung von URLs für Avatar Bilder</target>
@@ -81,10 +77,6 @@
       <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
         <source>label.quick_entry.recent_activities</source>
         <target state="needs-translation">Anzahl übernommener Einträge aus Vorwochen</target>
-      </trans-unit>
-      <trans-unit id="iZLna_g" resname="label.theme.autocomplete_chars">
-        <source>label.theme.autocomplete_chars</source>
-        <target state="needs-translation">Minimale Anzahl Buchstaben für den Start der Autovervollständigung</target>
       </trans-unit>
       <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>

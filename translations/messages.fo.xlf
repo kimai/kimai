@@ -767,10 +767,6 @@
         <source>label.project_start</source>
         <target>Verkætlanar byrjan</target>
       </trans-unit>
-      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
-        <source>label.collapsed_sidebar</source>
-        <target>Minsta bjálkan vinstrumegin</target>
-      </trans-unit>
       <trans-unit id="MQKiG33" resname="profile.preferences">
         <source>profile.preferences</source>
         <target>Stillingar</target>

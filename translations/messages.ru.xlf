@@ -296,10 +296,6 @@
         <source>profile.preferences</source>
         <target>Настройки</target>
       </trans-unit>
-      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
-        <source>label.collapsed_sidebar</source>
-        <target>Управление статусом левой панели навигации (скрыта или открыта)</target>
-      </trans-unit>
       <!--
               Admin: Timesheet
             -->

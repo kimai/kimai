@@ -545,10 +545,6 @@
         <source>label.calendar_initial_view</source>
         <target>Initiale Darstellung des Kalenders</target>
       </trans-unit>
-      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
-        <source>label.collapsed_sidebar</source>
-        <target>Minimiert die Navigationsleiste</target>
-      </trans-unit>
       <trans-unit id="MQKiG33" resname="profile.preferences">
         <source>profile.preferences</source>
         <target>Einstellungen</target>

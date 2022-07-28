@@ -356,10 +356,6 @@
         <source>profile.preferences</source>
         <target>Preferências</target>
       </trans-unit>
-      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
-        <source>label.collapsed_sidebar</source>
-        <target>Alterna o estado da barra lateral esquerda no carregamento da página (abrir ou recolher)</target>
-      </trans-unit>
       <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
         <source>label.calendar_initial_view</source>
         <target>Vista inicial do calendário</target>

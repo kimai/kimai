@@ -14,10 +14,6 @@
         <source>label.theme.markdown_content</source>
         <target>Tillat markdown-formatering i beskrivelser og kommentarer</target>
       </trans-unit>
-      <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
-        <source>label.theme.tags_create</source>
-        <target>Etiketter: Bruk automatisk fullføring for søk og tillat opprettelse av etiketter</target>
-      </trans-unit>
       <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
         <source>label.theme.avatar_url</source>
         <target>Tillat bruk av nettadresser for avatar-bilder</target>
@@ -81,10 +77,6 @@
       <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
         <source>label.quick_entry.recent_activities</source>
         <target>Antall oppføringer overført fra tidligere uker</target>
-      </trans-unit>
-      <trans-unit id="iZLna_g" resname="label.theme.autocomplete_chars">
-        <source>label.theme.autocomplete_chars</source>
-        <target>Minste antall bokstaver å starte automatisk fullføring fra</target>
       </trans-unit>
       <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
         <source>label.calendar.week_numbers</source>

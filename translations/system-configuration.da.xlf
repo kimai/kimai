@@ -162,10 +162,6 @@
         <source>label.theme.random_colors</source>
         <target>Brug tilfældige farver for objekter uden tildelt farve</target>
       </trans-unit>
-      <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
-        <source>label.theme.tags_create</source>
-        <target>Tags: brug auto-complete søg og tillad tag oprettelse</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

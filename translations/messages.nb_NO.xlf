@@ -688,10 +688,6 @@
         <source>profile.registration_date</source>
         <target>Registrert</target>
       </trans-unit>
-      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
-        <source>label.collapsed_sidebar</source>
-        <target>Minimer venstre sidefelt</target>
-      </trans-unit>
       <trans-unit id="eRyhERS" resname="label.fax">
         <source>label.fax</source>
         <target>Faks.</target>

@@ -480,10 +480,6 @@
         <source>profile.preferences</source>
         <target>Preferenze</target>
       </trans-unit>
-      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
-        <source>label.collapsed_sidebar</source>
-        <target>Auto collassa la sidebar di sinistra</target>
-      </trans-unit>
       <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
         <source>label.calendar_initial_view</source>
         <target>Vista iniziale calendario</target>

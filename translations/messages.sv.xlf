@@ -355,10 +355,6 @@
         <source>profile.preferences</source>
         <target state="translated">Inställningar</target>
       </trans-unit>
-      <trans-unit id="2KHf8fv" resname="label.collapsed_sidebar">
-        <source>label.collapsed_sidebar</source>
-        <target state="translated">Minimera vänster sidofält</target>
-      </trans-unit>
       <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
         <source>label.calendar_initial_view</source>
         <target state="translated">Initial kalendervy</target>
