@@ -61,11 +61,7 @@ final class Version20993112235958 extends AbstractMigration
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'calendar_initial_view' WHERE `name` = 'calendar.initial_view'");
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'export_decimal' WHERE `name` = 'timesheet.export_decimal'");
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'update_browser_title' WHERE `name` = 'theme.update_browser_title'");
-
-        // TODO update SET `value` = '15' kimai2_configuration WHERE `name` = 'timesheet.time_increment' and value = '0'
-        //$this->addSql('UPDATE kimai2_user_preferences SET `value` = "boxed" WHERE `name` = "theme.layout"');
-        //$this->addSql('UPDATE kimai2_user_preferences SET `value` = "default" WHERE `name` = "skin"');
-        //$this->addSql('UPDATE kimai2_configuration SET `value` = "default" WHERE `name` = "defaults.user.theme"');
+        $this->addSql("UPDATE kimai2_configuration SET `value` = '15' WHERE `name` = 'timesheet.time_increment' and `value` = '0'");
     }
 
     public function down(Schema $schema): void
@@ -95,9 +91,5 @@ final class Version20993112235958 extends AbstractMigration
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'timesheet.daily_stats' WHERE `name` = 'timesheet_daily_stats'");
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'timesheet.export_decimal' WHERE `name` = 'export_decimal'");
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'theme.update_browser_title' WHERE `name` = 'update_browser_title'");
-
-        //$this->addSql('UPDATE kimai2_configuration SET `value` = null WHERE `name` = "defaults.user.theme"');
-        //$this->addSql('UPDATE kimai2_user_preferences SET `value` = "fixed" WHERE `name` = "theme.layout"');
-        //$this->addSql('UPDATE kimai2_user_preferences SET `value` = null WHERE `name` = "skin"');
     }
 }
