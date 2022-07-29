@@ -31,3 +31,12 @@
         animation: ticktac-blink 2s step-end infinite;
     }
 }
+
+/* Full size with bright colors => navbar turns dark in small screens: button and color would still be white */
+@include media-breakpoint-down(lg) {
+    .ticktac-start.btn-outline-white,
+    .ticktac-stop.btn-outline-white {
+        background-color: var(--tblr-body-color);
+        border-color: $border-color-dark-transparent;
+    }
+}
