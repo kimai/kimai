@@ -224,7 +224,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
                 $assertion = $this->buildViolation($violation[2])
                     ->atPath('property.path.' . $violation[0])
                     ->setCode($violation[1])
-                    ;
+                ;
             } else {
                 $assertion = $assertion->buildNextViolation($violation[2])
                     ->atPath('property.path.' . $violation[0])

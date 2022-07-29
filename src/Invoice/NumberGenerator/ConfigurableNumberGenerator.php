@@ -157,7 +157,7 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
                 $partialResult = $invoiceDate->format('ymd');
                 break;
 
-            // for customer
+                // for customer
             case 'cc':
                 $partialResult = $this->repository->getCounterForCustomerAllTime($this->model->getCustomer()) + $increaseBy;
                 break;
@@ -174,7 +174,7 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
                 $partialResult = $this->repository->getCounterForDay($invoiceDate, $this->model->getCustomer()) + $increaseBy;
                 break;
 
-            // for user
+                // for user
             case 'cu':
                 $partialResult = $this->repository->getCounterForUserAllTime($this->model->getUser()) + $increaseBy;
                 break;
@@ -199,7 +199,7 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
                 $partialResult = $this->model->getUser() !== null ? (string) $this->model->getUser()->getId() : '';
                 break;
 
-            // across all invoices
+                // across all invoices
             case 'c':
                 $partialResult = $this->repository->getCounterForCustomerAllTime() + $increaseBy;
                 break;

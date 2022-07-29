@@ -291,7 +291,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'color' => '@string',
                 ];
 
-            // embedded meta data
+                // embedded meta data
             case 'UserPreference':
                 return [
                     'name' => 'string',
@@ -307,9 +307,9 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'value' => 'string',
                 ];
 
-            // if a user is embedded in other objects
+                // if a user is embedded in other objects
             case 'User':
-            // if a list of users is loaded
+                // if a list of users is loaded
             case 'UserCollection':
                 return [
                     'id' => 'int',
@@ -322,7 +322,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'title' => '@string',
                 ];
 
-            // if a user is loaded explicitly
+                // if a user is loaded explicitly
             case 'UserEntity':
                 return [
                     'id' => 'int',
@@ -342,9 +342,9 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'preferences' => ['result' => 'array', 'type' => 'UserPreference'],
                 ];
 
-            // if a team is embedded
+                // if a team is embedded
             case 'Team':
-            // if a collection of teams is requested
+                // if a collection of teams is requested
             case 'TeamCollection':
                 return [
                     'id' => 'int',
@@ -352,7 +352,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'color' => '@string',
                 ];
 
-            // explicitly requested team
+                // explicitly requested team
             case 'TeamEntity':
                 return [
                     'id' => 'int',
@@ -364,21 +364,21 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'activities' => ['result' => 'array', 'type' => '@Activity'],
                 ];
 
-            // if the team is used inside the team context
+                // if the team is used inside the team context
             case 'TeamMember':
                 return [
                     'user' => ['result' => 'object', 'type' => 'User'],
                     'teamlead' => 'bool',
                 ];
 
-            // if the team is used inside the user context
+                // if the team is used inside the user context
             case 'TeamMembership':
                 return [
                     'team' => ['result' => 'object', 'type' => 'Team'],
                     'teamlead' => 'bool',
                 ];
 
-            // if a customer is embedded in other objects
+                // if a customer is embedded in other objects
             case 'Customer':
                 return [
                     'id' => 'int',
@@ -390,7 +390,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'comment' => '@string',
                 ];
 
-            // if a list of customers is loaded
+                // if a list of customers is loaded
             case 'CustomerCollection':
                 return [
                     'id' => 'int',
@@ -405,7 +405,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'currency' => 'string', // since 1.10
                 ];
 
-            // if a customer is loaded explicitly
+                // if a customer is loaded explicitly
             case 'CustomerEntity':
                 return [
                     'id' => 'int',
@@ -434,7 +434,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'budgetType' => '@string', // since 1.15
                 ];
 
-            // if a project is embedded
+                // if a project is embedded
             case 'Project':
                 return [
                     'id' => 'int',
@@ -446,7 +446,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'comment' => '@string',
                 ];
 
-            // if a project is embedded in an expanded collection (here timesheet)
+                // if a project is embedded in an expanded collection (here timesheet)
             case 'ProjectExpanded':
                 return [
                     'id' => 'int',
@@ -458,7 +458,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'comment' => '@string',
                 ];
 
-            // if a collection of projects is loaded
+                // if a collection of projects is loaded
             case 'ProjectCollection':
                 return [
                     'id' => 'int',
@@ -475,7 +475,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'comment' => '@string',
                 ];
 
-            // if a project is explicitly loaded
+                // if a project is explicitly loaded
             case 'ProjectEntity':
                 return [
                     'id' => 'int',
@@ -497,7 +497,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'budgetType' => '@string', // since 1.15
                 ];
 
-            // embedded activities
+                // embedded activities
             case 'Activity':
                 return [
                     'id' => 'int',
@@ -520,7 +520,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'comment' => '@string',
                 ];
 
-            // collection of activities
+                // collection of activities
             case 'ActivityCollection':
                 return [
                     'id' => 'int',
@@ -535,7 +535,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                 ];
 
-            // if a activity is explicitly loaded
+                // if a activity is explicitly loaded
             case 'ActivityEntity':
                 return [
                     'id' => 'int',

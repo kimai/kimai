@@ -107,7 +107,7 @@ class LdapDriver
                 }
                 break;
 
-            // Other level codes
+                // Other level codes
             default:
                 $this->logDebug('{exception}', ['exception' => $sanitizedException]);
                 break;

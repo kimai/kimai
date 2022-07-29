@@ -96,7 +96,7 @@ class UserPreferenceSubscriberTest extends TestCase
                 case UserPreference::HOURLY_RATE:
                 case UserPreference::INTERNAL_RATE:
                     self::assertFalse($pref->isEnabled());
-                break;
+                    break;
 
                 default:
                     self::assertTrue($pref->isEnabled());
