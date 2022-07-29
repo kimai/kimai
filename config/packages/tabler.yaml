@@ -66,7 +66,6 @@ tabler:
         display: fas fa-layer-group
         doctor: fas fa-medkit
         documentation: fas fa-book
-        docu_chapter: fas fa-question
         dot: fas fa-circle
         download: fas fa-download
         duration: far fa-hourglass
