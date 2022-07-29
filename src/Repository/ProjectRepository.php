@@ -315,11 +315,11 @@ class ProjectRepository extends EntityRepository
             $and->add(
                 $qb->expr()->andX(
                     $qb->expr()->orX(
-                        $qb->expr()->lte('p.start', ':start'),
+                        $qb->expr()->lte('DATE(p.start)', 'DATE(:start)'),
                         $qb->expr()->isNull('p.start')
                     ),
                     $qb->expr()->orX(
-                        $qb->expr()->gte('p.end', ':start'),
+                        $qb->expr()->gte('DATE(p.end)', 'DATE(:start)'),
                         $qb->expr()->isNull('p.end')
                     )
                 )
@@ -331,11 +331,11 @@ class ProjectRepository extends EntityRepository
             $and->add(
                 $qb->expr()->andX(
                     $qb->expr()->orX(
-                        $qb->expr()->gte('p.end', ':end'),
+                        $qb->expr()->gte('DATE(p.end)', 'DATE(:end)'),
                         $qb->expr()->isNull('p.end')
                     ),
                     $qb->expr()->orX(
-                        $qb->expr()->lte('p.start', ':end'),
+                        $qb->expr()->lte('DATE(p.start)', 'DATE(:end)'),
                         $qb->expr()->isNull('p.start')
                     )
                 )
