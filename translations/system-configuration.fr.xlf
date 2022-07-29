@@ -270,10 +270,6 @@
         <source>label.calendar.dragdrop_amount</source>
         <target>Nombre d'entrées pour le glisser-déposer (0 = désactivé)</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target>Utiliser des couleurs aléatoires pour les objets sans couleur assignée</target>
-      </trans-unit>
       <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
         <source>label.theme.avatar_url</source>
         <target>Permettre l'utilisation d'URL pour les images d'avatars</target>

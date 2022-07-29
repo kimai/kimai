@@ -18,10 +18,6 @@
         <source>label.theme.avatar_url</source>
         <target>Erlaube die Nutzung von URLs für Avatar Bilder</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target>Zufallsfarben verwenden für Objekte ohne zugewiesene Farbe</target>
-      </trans-unit>
       <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
         <source>label.timesheet.mode</source>
         <target>Zeiterfassungs Modus</target>

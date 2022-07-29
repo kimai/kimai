@@ -254,10 +254,6 @@
         <source>label.timesheet.rules.allow_overbooking_budget</source>
         <target>Sta overboekingen van opgeslagen budgetten toe</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target>Gebruik willekeurige kleuren voor objecten zonder toegewezen kleur</target>
-      </trans-unit>
       <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
         <source>label.theme.avatar_url</source>
         <target>Sta het gebruik van URLs voor profielfoto's toe</target>

@@ -9,23 +9,10 @@
 
 namespace App\Utils;
 
-use App\Configuration\SystemConfiguration;
-use App\Constants;
 use App\Entity\User;
 
 final class Theme
 {
-    private $configuration;
-    /**
-     * @var bool|null
-     */
-    private $randomColors;
-
-    public function __construct(SystemConfiguration $configuration)
-    {
-        $this->configuration = $configuration;
-    }
-
     public function getUserColor(User $user): string
     {
         $color = $user->getColor();
@@ -34,16 +21,7 @@ final class Theme
             return $color;
         }
 
-        $identifier = $user->getDisplayName();
-        if ($this->randomColors === null) {
-            $this->randomColors = $this->configuration->isThemeRandomColors();
-        }
-
-        if ($this->randomColors) {
-            return (new Color())->getRandom($identifier);
-        }
-
-        return Constants::DEFAULT_COLOR;
+        return (new Color())->getRandom($user->getDisplayName());
     }
 
     public function getColor(?string $color, ?string $identifier = null): string
@@ -52,14 +30,6 @@ final class Theme
             return $color;
         }
 
-        if ($this->randomColors === null) {
-            $this->randomColors = $this->configuration->isThemeRandomColors();
-        }
-
-        if ($this->randomColors) {
-            return (new Color())->getRandom($identifier);
-        }
-
-        return Constants::DEFAULT_COLOR;
+        return (new Color())->getRandom($identifier);
     }
 }

@@ -202,10 +202,6 @@
         <source>label.timesheet.rules.lockdown_period_timezone</source>
         <target>Časové pásmo (pokud je prázdné, použije se časové pásmo příslušného uživatele)</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target>Použijte náhodné barvy pro objekty bez přiřazené barvy</target>
-      </trans-unit>
       <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
         <source>label.theme.avatar_url</source>
         <target>Povolit použití adres URL pro obrázky avatarů</target>

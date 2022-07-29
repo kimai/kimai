@@ -270,10 +270,6 @@
         <source>label.timesheet.rules.allow_overbooking_budget</source>
         <target>Permitir reserva em excesso dos orçamentos acumulados</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target>Usar cores aleatórias para os objetos sem atribuição de cor</target>
-      </trans-unit>
       <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
         <source>label.theme.avatar_url</source>
         <target>Permitir a utilização de URLs para as imagens do avatar</target>

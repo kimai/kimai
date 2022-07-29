@@ -222,10 +222,6 @@
         <source>label.timesheet.rules.allow_overbooking_budget</source>
         <target>Tillåt överbokning av lagrade budgetar</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target>Använd slumpmässiga färger för objekt som saknar tilldelad färg</target>
-      </trans-unit>
       <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
         <source>label.theme.avatar_url</source>
         <target>Tillåt URL:er för profilbilder</target>

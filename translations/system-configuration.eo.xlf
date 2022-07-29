@@ -262,10 +262,6 @@
         <source>label.theme.avatar_url</source>
         <target>Permesi URL-ojn por profilbildoj</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target>Uzi hazardajn kolorojn por objektoj sen asignita koloro</target>
-      </trans-unit>
       <trans-unit id="h4bhOny" resname="label.timesheet.rules.long_running_duration">
         <source>label.timesheet.rules.long_running_duration</source>
         <target>Maksimuma daŭro de temposlipa registraĵo en minutoj antaŭ ol konservo estas rifuzita (0 = malaktivigita)</target>

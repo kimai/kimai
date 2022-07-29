@@ -485,11 +485,6 @@ class SystemConfiguration
         return (bool) $this->find('theme.colors_limited');
     }
 
-    public function isThemeRandomColors(): bool
-    {
-        return (bool) $this->find('theme.random_colors');
-    }
-
     public function isThemeAllowAvatarUrls(): bool
     {
         return (bool) $this->find('theme.avatar_url');

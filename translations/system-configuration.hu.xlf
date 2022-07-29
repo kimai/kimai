@@ -206,10 +206,6 @@
         <source>label.theme.avatar_url</source>
         <target>Engedélyezze az URL-ek használatát az avatarképekhez</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target>Véletlenszerű színeket használjon a hozzárendelt szín nélküli objektumokhoz</target>
-      </trans-unit>
       <trans-unit id=".CeyZwj" resname="label.company.financial_year">
         <source>label.company.financial_year</source>
         <target>Pénzügyi év</target>

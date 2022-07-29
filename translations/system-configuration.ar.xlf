@@ -226,10 +226,6 @@
         <source>lockdown_period</source>
         <target>فترة الإغلاق</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target>استخدام ألوان عشوائية للمكونات التي ليس لها لون معين</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

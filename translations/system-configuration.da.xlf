@@ -158,10 +158,6 @@
         <source>label.theme.avatar_url</source>
         <target>Tillad brugen af URL'er for avatar billeder</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target>Brug tilfældige farver for objekter uden tildelt farve</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -238,10 +238,6 @@
         <source>label.timesheet.rules.allow_overbooking_budget</source>
         <target>允许超额预订存储的预算</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target>对没有指定颜色的对象使用随机颜色</target>
-      </trans-unit>
       <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
         <source>label.quick_entry.recent_activities</source>
         <target>从前几周接收的参赛作品数量</target>

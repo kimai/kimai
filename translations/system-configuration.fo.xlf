@@ -18,10 +18,6 @@
         <source>label.theme.avatar_url</source>
         <target state="needs-translation">Allow the use of URLs for avatar images</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target state="needs-translation">Use random colors for objects without assigned color</target>
-      </trans-unit>
       <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
         <source>label.timesheet.mode</source>
         <target state="needs-translation">Timetracking mode</target>

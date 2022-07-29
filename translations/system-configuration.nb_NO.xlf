@@ -18,10 +18,6 @@
         <source>label.theme.avatar_url</source>
         <target>Tillat bruk av nettadresser for avatar-bilder</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target>Bruk tilfeldige farger for objekter som ikke har tilknyttet farge</target>
-      </trans-unit>
       <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
         <source>label.timesheet.mode</source>
         <target>Tidsregistreringsmodus</target>

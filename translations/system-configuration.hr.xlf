@@ -18,10 +18,6 @@
         <source>label.theme.avatar_url</source>
         <target>Dozvoli korištenje URL-ova za slike avatara</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target>Koristi slučajno odabrane boje za objekte bez dodijeljene boje</target>
-      </trans-unit>
       <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
         <source>label.timesheet.mode</source>
         <target>Modus evidentiranja vremena</target>

@@ -520,12 +520,6 @@ final class SystemConfigurationController extends AbstractController
                         ->setOptions(['help' => 'help.theme.color_choices'])
                         ->setConstraints([new ColorChoices()])
                         ->setTranslationDomain('system-configuration'),
-                    // random colors as fallback
-                    (new Configuration('theme.random_colors'))
-                        ->setRequired(false)
-                        ->setLabel('theme.random_colors')
-                        ->setType(CheckboxType::class)
-                        ->setTranslationDomain('system-configuration'),
                 ]),
             (new SystemConfigurationModel('calendar'))
                 ->setTranslation('calendar')

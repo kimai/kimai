@@ -250,10 +250,6 @@
         <source>label.calendar.dragdrop_amount</source>
         <target state="translated">Vedä&amp;pudota merkintöjen määrä (0 = ei käytössä)</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target state="translated">Käytä satunnaisia värejä objekteille, joille ei ole määritetty väriä</target>
-      </trans-unit>
       <trans-unit id="9C1qkmD" resname="increment_rounding">
         <source>increment_rounding</source>
         <target state="translated">Käytä pyöristyssäännön määritettyä arvoa</target>

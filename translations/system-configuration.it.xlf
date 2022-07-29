@@ -222,10 +222,6 @@
         <source>label.company.financial_year</source>
         <target>Anno finanziario</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target>Usa colori casuali per gli oggetti senza un colore assegnato</target>
-      </trans-unit>
       <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
         <source>label.theme.avatar_url</source>
         <target>Permetti l'utilizzo di URL come immagini degli avatar</target>

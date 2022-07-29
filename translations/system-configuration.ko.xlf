@@ -206,10 +206,6 @@
         <source>label.theme.avatar_url</source>
         <target>아바타 이미지에 대한 URL 사용 허용</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
-        <target>색상이 지정되지 않은 객체에 임의 색상 사용</target>
-      </trans-unit>
       <trans-unit id="VAAaL2t" resname="label.timesheet.rules.allow_overbooking_budget">
         <source>label.timesheet.rules.allow_overbooking_budget</source>
         <target>저장된 예산 초과 예약 허용</target>
