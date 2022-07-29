@@ -66,7 +66,7 @@ class ThemeEventExtensionTest extends TestCase
         ];
         $loader = new TestConfigLoader($configs);
         $configuration = SystemConfigurationFactory::create($loader, $this->getDefaultSettings());
-        $theme = new Theme($configuration);
+        $theme = new Theme();
 
         return new ThemeExtension($dispatcher, $translator, $configuration, $theme);
     }
