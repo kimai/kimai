@@ -78,6 +78,9 @@ class SamlAuthenticator extends AbstractAuthenticator
         $oneLoginAuth = $this->samlAuthFactory->create();
 
         $oneLoginAuth->processResponse();
+
+        // $this->logger->debug('Received SAML response: ' . $oneLoginAuth->getLastResponseXML());
+
         if ($oneLoginAuth->getErrors()) {
             throw new AuthenticationException($oneLoginAuth->getLastErrorReason());
         }
