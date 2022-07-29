@@ -84,6 +84,12 @@ final class MenuSubscriber implements EventSubscriberInterface
             $menu->addChild($times);
         }
 
+        if ($auth->isGranted('view_reporting')) {
+            $reporting = new MenuItemModel('reporting', 'menu.reporting', 'reporting', [], 'reporting');
+            $reporting->setChildRoutes(['report_user_week', 'report_user_month', 'report_weekly_users', 'report_monthly_users', 'report_project_view']);
+            $menu->addChild($reporting);
+        }
+
         $invoice = new MenuItemModel('invoice', 'invoices', null, [], 'invoice');
         $invoice->setChildRoutes(['admin_invoice_template', 'admin_invoice_template_edit', 'admin_invoice_template_create', 'admin_invoice_template_copy', 'admin_invoice_list', 'admin_invoice_document_upload', 'admin_invoice_edit']);
 
@@ -101,12 +107,6 @@ final class MenuSubscriber implements EventSubscriberInterface
         }
 
         $menu->addChild($invoice);
-
-        if ($auth->isGranted('view_reporting')) {
-            $reporting = new MenuItemModel('reporting', 'menu.reporting', 'reporting', [], 'reporting');
-            $reporting->setChildRoutes(['report_user_week', 'report_user_month', 'report_weekly_users', 'report_monthly_users', 'report_project_view']);
-            $menu->addChild($reporting);
-        }
 
         // ------------------- admin menu -------------------
         $menu = $event->getAdminMenu();
