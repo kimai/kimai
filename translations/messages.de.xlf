@@ -1284,7 +1284,7 @@
       <!-- QUICK ENTRIES -->
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
-        <target>Wochen-Arbeitsstunden</target>
+        <target>Wochenstunden</target>
       </trans-unit>
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>

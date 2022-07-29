@@ -1123,7 +1123,7 @@
       </trans-unit>
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
-        <target>Wöchentliche Arbeitsstunden</target>
+        <target>Wochenstunden</target>
       </trans-unit>
       <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
         <source>label.includeBudgetType_month</source>

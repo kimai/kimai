@@ -1151,7 +1151,7 @@
       </trans-unit>
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
-        <target state="needs-translation">Weekly working hours</target>
+        <target state="needs-translation">Weekly hours</target>
       </trans-unit>
       <trans-unit id="NNKq04n" resname="label.remove_default">
         <source>label.remove_default</source>

@@ -1203,7 +1203,7 @@
       </trans-unit>
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
-        <target state="needs-translation">Weekly working hours</target>
+        <target state="needs-translation">Weekly hours</target>
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
