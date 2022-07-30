@@ -145,6 +145,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $fixture = new InvoiceTemplateFixtures();
         $templates = $this->importFixture($fixture);
+        /** @var InvoiceTemplate $template */
         $template = $templates[0];
 
         $begin = new \DateTime('first day of this month');
@@ -186,12 +187,12 @@ class InvoiceControllerTest extends ControllerBaseTest
         $urlParams = [
             'daterange' => $dateRange,
             'projects[]' => 1,
-            'markAsExported' => 1,
+            'template' => $template->getId(),
         ];
 
         $token = $client->getCrawler()->filter('div#create-token')->attr('data-value');
 
-        $action = '/invoice/save-invoice/1/' . $template->getId() . '/' . $token . '?' . http_build_query($urlParams);
+        $action = '/invoice/save-invoice/1/' . $token . '?' . http_build_query($urlParams);
         $this->request($client, $action);
         $this->assertIsRedirect($client, '/invoice/show?id=', false);
         $client->followRedirect();
@@ -288,7 +289,7 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/?preview='));
+        $node->setAttribute('action', $this->createUrl('/invoice/'));
         $node->setAttribute('method', 'GET');
         $client->submit($form, [
             'template' => $template->getId(),
@@ -308,14 +309,12 @@ class InvoiceControllerTest extends ControllerBaseTest
 
         $form = $client->getCrawler()->filter('#invoice-print-form')->form();
         $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/invoice/?createInvoice=true&token=' . $token));
+        $node->setAttribute('action', $this->createUrl('/invoice/save-invoice/1/' . $token));
         $node->setAttribute('method', 'GET');
         $client->submit($form, [
             'template' => $template->getId(),
             'daterange' => $dateRange,
-            'customers' => [1],
             'projects' => [1],
-            'markAsExported' => 1,
         ]);
 
         $this->assertIsRedirect($client, '/invoice/show?id=', false);

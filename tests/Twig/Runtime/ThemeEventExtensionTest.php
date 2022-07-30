@@ -16,7 +16,6 @@ use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Event\ThemeJavascriptTranslationsEventTest;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Twig\Runtime\ThemeExtension;
-use App\Utils\Theme;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -66,9 +65,8 @@ class ThemeEventExtensionTest extends TestCase
         ];
         $loader = new TestConfigLoader($configs);
         $configuration = SystemConfigurationFactory::create($loader, $this->getDefaultSettings());
-        $theme = new Theme();
 
-        return new ThemeExtension($dispatcher, $translator, $configuration, $theme);
+        return new ThemeExtension($dispatcher, $translator, $configuration);
     }
 
     protected function getEnvironment(): Environment
