@@ -337,7 +337,6 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
                 'system_configuration_form_theme' => [
                     'configuration' => [
                         ['name' => 'timesheet.markdown_content', 'value' => 1],
-                        ['name' => 'theme.colors_limited', 'value' => 1],
                         ['name' => 'theme.color_choices', 'value' => '11234567865=)(/&%$§Silver|#c0c0c0'],
                     ]
                 ]

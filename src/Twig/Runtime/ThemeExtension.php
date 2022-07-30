@@ -15,8 +15,8 @@ use App\Entity\User;
 use App\Event\PageActionsEvent;
 use App\Event\ThemeEvent;
 use App\Event\ThemeJavascriptTranslationsEvent;
+use App\Utils\Color;
 use App\Utils\FormFormatConverter;
-use App\Utils\Theme;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -25,7 +25,7 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 final class ThemeExtension implements RuntimeExtensionInterface
 {
-    public function __construct(private EventDispatcherInterface $eventDispatcher, private TranslatorInterface $translator, private SystemConfiguration $configuration, private Theme $theme)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private TranslatorInterface $translator, private SystemConfiguration $configuration)
     {
     }
 
@@ -112,7 +112,11 @@ final class ThemeExtension implements RuntimeExtensionInterface
 
     public function colorize(?string $color, ?string $identifier = null): string
     {
-        return $this->theme->getColor($color, $identifier);
+        if ($color !== null) {
+            return $color;
+        }
+
+        return (new Color())->getRandom($identifier);
     }
 
     public function getTimePresets(string $timezone, string $format): array

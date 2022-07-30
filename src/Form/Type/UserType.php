@@ -13,7 +13,7 @@ use App\Entity\User;
 use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\VisibilityInterface;
 use App\Repository\UserRepository;
-use App\Utils\Theme;
+use App\Utils\Color;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\Options;
@@ -24,13 +24,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserType extends AbstractType
 {
-    public function __construct(private Theme $theme)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -40,9 +33,15 @@ class UserType extends AbstractType
                 return $user->getDisplayName();
             },
             'choice_attr' => function (User $user) {
+                $color = $user->getColor();
+
+                if ($color === null) {
+                    $color = (new Color())->getRandom($user->getDisplayName());
+                }
+
                 return [
                     'data-id' => $user->getId(),
-                    'data-color' => $this->theme->getUserColor($user),
+                    'data-color' => $color,
                     'data-title' => $user->getTitle(),
                     'data-username' => $user->getUserIdentifier(),
                     'data-alias' => $user->getAlias(),

@@ -509,10 +509,6 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('theme.markdown_content')
                         ->setType(CheckboxType::class)
                         ->setTranslationDomain('system-configuration'),
-                    (new Configuration('theme.colors_limited'))
-                        ->setLabel('theme.colors_limited')
-                        ->setType(CheckboxType::class)
-                        ->setTranslationDomain('system-configuration'),
                     (new Configuration('theme.color_choices'))
                         ->setRequired(false)
                         ->setLabel('theme.color_choices')

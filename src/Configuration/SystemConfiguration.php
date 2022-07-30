@@ -480,11 +480,6 @@ class SystemConfiguration
         return (bool) $this->find('theme.show_about');
     }
 
-    public function isThemeColorsLimited(): bool
-    {
-        return (bool) $this->find('theme.colors_limited');
-    }
-
     public function isThemeAllowAvatarUrls(): bool
     {
         return (bool) $this->find('theme.avatar_url');

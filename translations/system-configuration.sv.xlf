@@ -102,10 +102,6 @@
         <source>label.theme.color_choices</source>
         <target>Tillåt färger</target>
       </trans-unit>
-      <trans-unit id="QHVk7AA" resname="label.theme.colors_limited">
-        <source>label.theme.colors_limited</source>
-        <target>Begränsa färgval</target>
-      </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
         <target>Av</target>

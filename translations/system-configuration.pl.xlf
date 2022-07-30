@@ -246,10 +246,6 @@
         <source>label.theme.color_choices</source>
         <target state="translated">Dozwolone kolory</target>
       </trans-unit>
-      <trans-unit id="QHVk7AA" resname="label.theme.colors_limited">
-        <source>label.theme.colors_limited</source>
-        <target>Limit wybranych kolorów</target>
-      </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
         <target>Wyłącz</target>

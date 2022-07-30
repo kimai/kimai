@@ -234,10 +234,6 @@
         <source>off</source>
         <target>끄기</target>
       </trans-unit>
-      <trans-unit id="QHVk7AA" resname="label.theme.colors_limited">
-        <source>label.theme.colors_limited</source>
-        <target>색상 선택 제한</target>
-      </trans-unit>
       <trans-unit id="scCc2Xm" resname="label.theme.color_choices">
         <source>label.theme.color_choices</source>
         <target>허용되는 색상</target>

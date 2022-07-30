@@ -210,10 +210,6 @@
         <source>label.theme.color_choices</source>
         <target>Permesataj koloroj</target>
       </trans-unit>
-      <trans-unit id="QHVk7AA" resname="label.theme.colors_limited">
-        <source>label.theme.colors_limited</source>
-        <target>Limigi elektojn pri koloroj</target>
-      </trans-unit>
       <trans-unit id=".CeyZwj" resname="label.company.financial_year">
         <source>label.company.financial_year</source>
         <target>Financjaro</target>

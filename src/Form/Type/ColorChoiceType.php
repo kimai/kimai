@@ -14,23 +14,13 @@ use App\Constants;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ColorChoiceType extends AbstractType implements DataTransformerInterface
 {
-    public const DEFAULT_COLOR = Constants::DEFAULT_COLOR;
-
-    private $systemConfiguration;
-    /**
-     * @var bool|null
-     */
-    private $limitedColors;
-
-    public function __construct(SystemConfiguration $systemConfiguration)
+    public function __construct(private SystemConfiguration $systemConfiguration)
     {
-        $this->systemConfiguration = $systemConfiguration;
     }
 
     /**
@@ -41,15 +31,6 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
         $builder->addViewTransformer($this);
     }
 
-    private function isLimitedColors(): bool
-    {
-        if (null === $this->limitedColors) {
-            $this->limitedColors = $this->systemConfiguration->isThemeColorsLimited();
-        }
-
-        return $this->limitedColors;
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -58,24 +39,22 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
         $options = [
             'documentation' => [
                 'type' => 'string',
-                'description' => sprintf('The hexadecimal color code (default: %s)', self::DEFAULT_COLOR),
+                'description' => sprintf('The hexadecimal color code (default: %s)', Constants::DEFAULT_COLOR),
             ],
             'label' => 'label.color',
             'empty_data' => null,
         ];
 
-        if ($this->isLimitedColors()) {
-            $choices = [];
-            $colors = $this->convertStringToColorArray($this->systemConfiguration->getThemeColorChoices());
+        $choices = [];
+        $colors = $this->convertStringToColorArray($this->systemConfiguration->getThemeColorChoices());
 
-            foreach ($colors as $name => $color) {
-                $choices[$name] = $color;
-            }
-
-            $options['choices'] = $choices;
-            $options['search'] = false;
-            $options['attr']['data-renderer'] = 'color';
+        foreach ($colors as $name => $color) {
+            $choices[$name] = $color;
         }
+
+        $options['choices'] = $choices;
+        $options['search'] = false;
+        $options['attr']['data-renderer'] = 'color';
 
         $resolver->setDefaults($options);
     }
@@ -116,10 +95,6 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
      */
     public function transform(mixed $data): mixed
     {
-        if (empty($data) && !$this->isLimitedColors()) {
-            return self::DEFAULT_COLOR;
-        }
-
         return $data;
     }
 
@@ -128,19 +103,11 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
      */
     public function reverseTransform(mixed $value): mixed
     {
-        if (null === $value && !$this->isLimitedColors()) {
-            return self::DEFAULT_COLOR;
-        }
-
         return $value;
     }
 
     public function getParent(): string
     {
-        if ($this->isLimitedColors()) {
-            return ChoiceType::class;
-        }
-
-        return ColorType::class;
+        return ChoiceType::class;
     }
 }
