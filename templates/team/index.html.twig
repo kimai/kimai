@@ -32,7 +32,7 @@
         {% for team in teams %}
             <tr{% if is_granted('edit', team) %} class="open-edit alternative-link" data-href="{{ path('admin_team_edit', {'id': team.id}) }}"{% endif %}>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
-                    {{ widgets.label_name(team.name, team.color) }}
+                    {{ widgets.label_name(team.name, team.color|colorize(team.name)) }}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'teamlead') }}">
                     {% for member in team.members %}

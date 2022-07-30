@@ -54,7 +54,7 @@
         {% for entry in entries %}
             <tr {{ widgets.project_row_attr(entry, now) }}>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
-                    {{ widgets.label_name(entry.name, entry.color) }}
+                    {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'customer') }}">{{ widgets.label_customer(entry.customer) }}</td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'comment') }}">{{ entry.comment|comment1line }}</td>

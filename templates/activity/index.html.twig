@@ -50,7 +50,7 @@
         {% for entry in entries %}
             <tr {{ widgets.activity_row_attr(entry, now) }}>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
-                    {{ widgets.label_name(entry.name, entry.color) }}
+                    {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'project') }}">
                     {# only none-global activities have a project and customer assigned #}
