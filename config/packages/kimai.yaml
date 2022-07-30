@@ -266,6 +266,11 @@ kimai:
             date: 'd/m/Y'
             date_time: 'd/m H:i'
             duration: '%%h:%%m'
+        hr:
+            date_type: 'dd. MM. yyyy.'
+            date: 'd. m. Y.'
+            date_time: 'd. m. H:i'
+            duration: '%%h:%%m'
         hu:
             date_type: 'yyyy.MM.dd.'
             date: 'Y.m.d.'
