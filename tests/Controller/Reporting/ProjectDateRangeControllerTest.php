@@ -16,6 +16,7 @@ use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Timesheet\DateTimeFactory;
 
 /**
  * @group integration
@@ -50,11 +51,16 @@ class ProjectDateRangeControllerTest extends ControllerBaseTest
         $activities->setIsGlobal(true);
         $activities = $this->importFixture($activities);
 
+        $user = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        $dateTimeFactory = DateTimeFactory::createByUser($user);
+        $startMonth = $dateTimeFactory->getStartOfMonth();
+        $startDate = $startMonth->add(new \DateInterval('P10D'));
+
         $timesheets = new TimesheetFixtures();
-        $timesheets->setStartDate(new \DateTime());
+        $timesheets->setStartDate($startDate);
         $timesheets->setAmount(50);
         $timesheets->setActivities($activities);
-        $timesheets->setUser($this->getUserByRole(User::ROLE_TEAMLEAD));
+        $timesheets->setUser($user);
         $this->importFixture($timesheets);
 
         $this->assertAccessIsGranted($client, '/reporting/project_daterange');
