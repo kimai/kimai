@@ -1048,7 +1048,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target>%action% %count% entries?</target>
+        <target state="translated">%action% %count% záznamů?</target>
       </trans-unit>
       <trans-unit id="hBNESu6" resname="my.profile">
         <source>my.profile</source>
@@ -1256,11 +1256,11 @@
       </trans-unit>
       <trans-unit id="tp.gIrE" resname="team.add_user.help">
         <source>team.add_user.help</source>
-        <target state="needs-translation">Add a new user to the team by selecting it from the list. Afterwards you can decide if the user should become a teamlead.</target>
+        <target state="translated">Výběrem ze seznamu přidejte do týmu nového uživatele. Poté můžete rozhodnout, zda se má uživatel stát vedoucím týmu.</target>
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
-        <target state="needs-translation">Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
+        <target state="translated">Dosaženo maximálního množství %max% dokladů faktur. Po odebrání jednoho dokladu můžete přidat další.</target>
       </trans-unit>
       <trans-unit id="z_YHoZn" resname="label.includeNoWork">
         <source>label.includeNoWork</source>

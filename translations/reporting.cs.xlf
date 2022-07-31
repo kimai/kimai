@@ -42,6 +42,14 @@
         <source>reporting.initial_view</source>
         <target>Počáteční výkaz</target>
       </trans-unit>
+      <trans-unit id="3JLmvfB" resname="report_user_year">
+        <source>report_user_year</source>
+        <target state="translated">Roční přehled jednoho uživatele</target>
+      </trans-unit>
+      <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects">
+        <source>report_customer_monthly_projects</source>
+        <target state="translated">Projekty podle měsíce, aktivity a uživatele</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -440,7 +440,7 @@
       </trans-unit>
       <trans-unit id="4iliLZT" resname="label.toggle_dropdown">
         <source>label.toggle_dropdown</source>
-        <target>Pokaži izbornik</target>
+        <target state="translated">Prikaži izbornik</target>
       </trans-unit>
       <trans-unit id="f3KMQJh" resname="label.my_teams">
         <source>label.my_teams</source>
@@ -583,7 +583,7 @@
       </trans-unit>
       <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
         <source>label.timesheet.daily_stats</source>
-        <target>Pokaži dnevne statistike u vremenskoj tablici</target>
+        <target state="translated">Prikaži dnevne statistike u vremenskoj tablici</target>
       </trans-unit>
       <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
         <source>label.timesheet.export_decimal</source>
@@ -1101,7 +1101,7 @@
       </trans-unit>
       <trans-unit id="e7XS97t" resname="timesheet.all">
         <source>timesheet.all</source>
-        <target>Pokaži sve zapise</target>
+        <target state="translated">Prikaži sve zapise</target>
       </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
@@ -1160,7 +1160,7 @@
       </trans-unit>
       <trans-unit id="S0vT92U" resname="label.globalsOnly">
         <source>label.globalsOnly</source>
-        <target>Samo globalni</target>
+        <target state="translated">Samo globalne</target>
       </trans-unit>
       <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">
         <source>label.batch_meta_fields</source>
@@ -1172,11 +1172,11 @@
       </trans-unit>
       <trans-unit id="z_YHoZn" resname="label.includeNoWork">
         <source>label.includeNoWork</source>
-        <target>Pokaži unose bez rezervacija</target>
+        <target state="translated">Prikaži unose bez rezervacija</target>
       </trans-unit>
       <trans-unit id="B.Dbbob" resname="label.includeNoBudget">
         <source>label.includeNoBudget</source>
-        <target>Pokaži unose bez budžeta</target>
+        <target state="translated">Prikaži unose bez budžeta</target>
       </trans-unit>
       <trans-unit id="3zn5T5e" resname="label.not_exported">
         <source>label.not_exported</source>
@@ -1232,11 +1232,11 @@
       </trans-unit>
       <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
         <source>label.includeBudgetType_month</source>
-        <target>Prikaži unose s proračunom „mjesečno”</target>
+        <target state="translated">Prikaži unose s „mjesečnim” budžetom</target>
       </trans-unit>
       <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
         <source>label.includeBudgetType_full</source>
-        <target>Prikaži unose s proračunom „životni ciklus”</target>
+        <target state="translated">Prikaži unose s budžetom „životni ciklus”</target>
       </trans-unit>
       <trans-unit id="9Rhadz6" resname="label.budgetType_full">
         <source>label.budgetType_full</source>
@@ -1281,6 +1281,14 @@
       <trans-unit id="74pEVx1" resname="label.invoiceText">
         <source>label.invoiceText</source>
         <target state="translated">Tekst računa</target>
+      </trans-unit>
+      <trans-unit id="G9hBaDJ" resname="label.globalActivities">
+        <source>label.globalActivities</source>
+        <target state="translated">Dozvoli globalne aktivnosti</target>
+      </trans-unit>
+      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
+        <source>label.budgetIndependent</source>
+        <target state="translated">Prikaži neovisno o „vrsti budžeta”</target>
       </trans-unit>
     </body>
   </file>

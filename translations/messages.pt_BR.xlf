@@ -1278,6 +1278,14 @@
         <source>label.invoiceText</source>
         <target state="translated">Texto da fatura</target>
       </trans-unit>
+      <trans-unit id="G9hBaDJ" resname="label.globalActivities">
+        <source>label.globalActivities</source>
+        <target state="translated">Permitir atividades globais</target>
+      </trans-unit>
+      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
+        <source>label.budgetIndependent</source>
+        <target state="translated">Mostrar independentemente do "tipo de orçamento"</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

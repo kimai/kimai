@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter">
         <source>Filter timesheets</source>
-        <target>Vremenske tablice</target>
+        <target state="translated">Filtriraj vremenske tablice</target>
       </trans-unit>
       <trans-unit id="xY9_cU2" resname="customer.filter">
         <source>Filter customers</source>
