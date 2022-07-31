@@ -45,7 +45,7 @@ class Kernel extends BaseKernel
     use MicroKernelTrait;
 
     public const PLUGIN_DIRECTORY = '/var/plugins';
-    public const CONFIG_EXTS = '.{php,xml,yaml,yml}';
+    public const CONFIG_EXTS = '.{php,yaml}';
 
     public const TAG_PLUGIN = 'kimai.plugin';
     public const TAG_WIDGET = 'widget';
@@ -172,17 +172,12 @@ class Kernel extends BaseKernel
         $container->setParameter('container.dumper.inline_class_loader', true);
         $confDir = $this->getProjectDir() . '/config';
 
-        // if you want to prepend any config, you can do it here
-        $loader->load($confDir . '/packages/local_before' . self::CONFIG_EXTS, 'glob');
-
         // using this one instead of $loader->load($confDir . '/packages/*' . self::CONFIG_EXTS, 'glob');
         // to get rid of the local.yaml from the list, we load it afterwards explicit
         $finder = (new Finder())
             ->files()
             ->in([$confDir . '/packages/'])
             ->name('*' . self::CONFIG_EXTS)
-            ->notName('local*' . self::CONFIG_EXTS)
-            ->depth('== 0')
             ->sortByName()
             ->followLinks()
         ;
@@ -192,10 +187,9 @@ class Kernel extends BaseKernel
             $loader->load($file->getPathname());
         }
 
-        if (is_dir($confDir . '/packages/' . $this->environment)) {
-            $loader->load($confDir . '/packages/' . $this->environment . '/**/*' . self::CONFIG_EXTS, 'glob');
+        if (is_file($confDir . '/packages/local.yaml')) {
+            $loader->load($confDir . '/packages/local.yaml', 'glob');
         }
-        $loader->load($confDir . '/packages/local' . self::CONFIG_EXTS, 'glob');
         $loader->load($confDir . '/services' . self::CONFIG_EXTS, 'glob');
         $loader->load($confDir . '/services_' . $this->environment . self::CONFIG_EXTS, 'glob');
 

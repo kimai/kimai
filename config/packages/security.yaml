@@ -67,3 +67,20 @@ security:
         - { path: '^/(%app_locales%)/resetting', role: PUBLIC_ACCESS }
         - { path: '^/(%app_locales%)/', roles: ROLE_USER }
         - { path: '^/api', roles: IS_AUTHENTICATED_REMEMBERED }
+
+
+when@test:
+    # this configuration simplifies testing URLs protected by the security mechanism
+    # See https://symfony.com/doc/current/cookbook/testing/http_authentication.html
+    security:
+        password_hashers:
+            App\Entity\User:
+                algorithm: auto
+                # see https://github.com/symfony/recipes/pull/1026
+                cost: 4 # Lowest possible value for bcrypt
+                time_cost: 3 # Lowest possible value for argon
+                memory_cost: 10 # Lowest possible value for argon
+
+        firewalls:
+            secured_area:
+                http_basic: ~

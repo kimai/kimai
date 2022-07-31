@@ -197,3 +197,8 @@ kimai:
             - TotalsProject
             - TotalsActivity
 # --------------------------------------------------------------------------------
+
+
+when@test:
+    kimai:
+        data_dir: '%kernel.project_dir%/tests/_data'

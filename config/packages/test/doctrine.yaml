@@ -1,3 +1,0 @@
-doctrine:
-    dbal:
-        logging: false
