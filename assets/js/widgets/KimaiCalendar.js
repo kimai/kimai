@@ -28,6 +28,7 @@ import faLocale from '@fullcalendar/core/locales/fa';
 import fiLocale from '@fullcalendar/core/locales/fi';
 import frLocale from '@fullcalendar/core/locales/fr';
 import heLocale from '@fullcalendar/core/locales/he';
+import hrLocale from '@fullcalendar/core/locales/hr';
 import huLocale from '@fullcalendar/core/locales/hu';
 import itLocale from '@fullcalendar/core/locales/it';
 import jaLocale from '@fullcalendar/core/locales/ja';
@@ -120,7 +121,7 @@ export default class KimaiCalendar {
 
         let calendarOptions = {
             locales: [ enGbLocale, enUsLocale, arLocale, csLocale, daLocale, deLocale, deAtLocale, elLocale,
-                esLocale, euLocale, faLocale, fiLocale, frLocale, heLocale, huLocale, itLocale, jaLocale, koLocale,
+                esLocale, euLocale, faLocale, fiLocale, frLocale, heLocale, hrLocale, huLocale, itLocale, jaLocale, koLocale,
                 nbLocale, nlLocale, plLocale, ptLocale, ptBrLocale, roLocale, ruLocale, skLocale, svLocale, trLocale, zhLocale, viLocale ],
             plugins: [ bootstrap5Plugin, dayGridPlugin, timeGridPlugin, googlePlugin, iCalendarPlugin, interactionPlugin ],
             initialView: initialView,
