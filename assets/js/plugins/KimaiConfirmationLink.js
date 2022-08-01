@@ -25,7 +25,7 @@ export default class KimaiConfirmationLink extends KimaiPlugin {
     init() {
         document.addEventListener('click', (event) => {
             let target = event.target;
-            while (target !== null && !target.matches('body')) {
+            while (target !== null && typeof target.matches === "function" && !target.matches('body')) {
                 if (target.classList.contains(this._selector)) {
                     const attributes = target.dataset;
 

@@ -81,7 +81,7 @@ export default class KimaiToolbar extends KimaiPlugin {
     _registerAlternativeSubmitActions(toolbarSelector, actionBtnClass) {
         document.addEventListener('click', function(event) {
             let target = event.target;
-            while (target !== null && !target.matches('body')) {
+            while (target !== null && typeof target.matches === "function" && !target.matches('body')) {
                 if (target.classList.contains(actionBtnClass)) {
                     const form = document.querySelector(toolbarSelector);
                     if (form === null) {
