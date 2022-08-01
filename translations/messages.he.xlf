@@ -1166,7 +1166,7 @@
         <source>label.invoiceText</source>
         <target state="translated">טקסט חשבונית</target>
       </trans-unit>
-      <trans-unit id="Wq.h4adsfsdfnD" resname="label.budgetIndependent">
+      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
         <source>label.budgetIndependent</source>
         <target state="translated">להציג ללא תלות ב־„budget-type” (סוג תקציב)</target>
       </trans-unit>

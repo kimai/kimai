@@ -1216,7 +1216,7 @@
         <source>automatic</source>
         <target>Автоматический</target>
       </trans-unit>
-      <trans-unit id="Wq.h4adsfsdfnD" resname="label.budgetIndependent">
+      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
         <source>label.budgetIndependent</source>
         <target state="translated">Показывать независимо от "бюджетного типа"</target>
       </trans-unit>
