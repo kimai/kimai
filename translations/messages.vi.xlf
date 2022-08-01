@@ -35,7 +35,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>Dữ liệu này cũng sẽ bị xóa!                     Ngoài ra, bạn có thể chọn một mục nhập mà tất cả dữ liệu sẽ được chuyển đến:</target>
+        <target>Dữ liệu này cũng sẽ bị xóa! Ngoài ra, bạn có thể chọn một mục nhập mà tất cả dữ liệu sẽ được chuyển đến:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
