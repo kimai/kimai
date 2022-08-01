@@ -34,6 +34,7 @@ class RuntimeExtensions extends AbstractExtension
             new TwigFunction('javascript_translations', [ThemeExtension::class, 'getJavascriptTranslations']),
             new TwigFunction('form_time_presets', [ThemeExtension::class, 'getTimePresets']),
             new TwigFunction('active_timesheets', [TimesheetExtension::class, 'activeEntries']),
+            new TwigFunction('favorite_timesheets', [TimesheetExtension::class, 'favoriteEntries']),
             new TwigFunction('encore_entry_css_source', [EncoreExtension::class, 'getEncoreEntryCssSource']),
             new TwigFunction('render_widget', [WidgetExtension::class, 'renderWidget'], ['is_safe' => ['html'], 'needs_environment' => true]),
             new TwigFunction('icon', [RuntimeExtension::class, 'createIcon'], ['is_safe' => ['html']]),

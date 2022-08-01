@@ -16,7 +16,6 @@ use App\Event\CalendarDragAndDropSourceEvent;
 use App\Event\CalendarGoogleSourceEvent;
 use App\Event\RecentActivityEvent;
 use App\Repository\TimesheetRepository;
-use App\Timesheet\DateTimeFactory;
 use App\Utils\Color;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -56,11 +55,7 @@ final class CalendarService
             return [];
         }
 
-        $data = $this->repository->getRecentActivities(
-            $user,
-            DateTimeFactory::createByUser($user)->createDateTime('-1 year'),
-            $maxAmount
-        );
+        $data = $this->repository->getRecentActivities($user, null, $maxAmount);
 
         $recentActivity = new RecentActivityEvent($user, $data);
         $this->dispatcher->dispatch($recentActivity);

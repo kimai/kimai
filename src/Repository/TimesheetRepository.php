@@ -614,36 +614,35 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * @param User|null $user
+     * @param User $user
      * @param DateTime|null $startFrom
      * @param int $limit
      * @return Timesheet[]
      * @throws \Doctrine\ORM\Query\QueryException
      */
-    public function getRecentActivities(User $user = null, DateTime $startFrom = null, int $limit = 10): array
+    public function getRecentActivities(User $user, DateTime $startFrom = null, int $limit = 10): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
+
+        // do NOT join the customer and do NOT check the customer visibility, as this
+        // will dramatically increase the speed of this (otherwise slow) query
+        // ->join('p.customer', 'c')
+        // ->andWhere($qb->expr()->eq('c.visible', ':visible'))
 
         $qb->select($qb->expr()->max('t.id') . ' AS maxid')
             ->from(Timesheet::class, 't')
             ->indexBy('t', 't.id')
-            ->join('t.activity', 'a')
+            ->andWhere($qb->expr()->eq('t.user', ':user'))
             ->join('t.project', 'p')
-            ->join('p.customer', 'c')
-            ->andWhere($qb->expr()->isNotNull('t.end'))
-            ->andWhere($qb->expr()->eq('a.visible', ':visible'))
             ->andWhere($qb->expr()->eq('p.visible', ':visible'))
-            ->andWhere($qb->expr()->eq('c.visible', ':visible'))
-            ->groupBy('a.id', 'p.id')
+            ->join('t.activity', 'a')
+            ->andWhere($qb->expr()->eq('a.visible', ':visible'))
+            ->groupBy('p.id', 'a.id')
             ->orderBy('maxid', 'DESC')
             ->setMaxResults($limit)
+            ->setParameter('user', $user)
             ->setParameter('visible', true, Types::BOOLEAN)
         ;
-
-        if (null !== $user) {
-            $qb->andWhere('t.user = :user')
-                ->setParameter('user', $user);
-        }
 
         if (null !== $startFrom) {
             $qb->andWhere($qb->expr()->gte('t.begin', ':begin'))
@@ -665,7 +664,7 @@ class TimesheetRepository extends EntityRepository
             ->orderBy('t.end', 'DESC')
         ;
 
-        return $this->getHydratedResultsByQuery($qb, true);
+        return $this->getHydratedResultsByQuery($qb);
     }
 
     /**

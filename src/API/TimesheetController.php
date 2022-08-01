@@ -466,13 +466,12 @@ class TimesheetController extends BaseApiController
      *      )
      * )
      *
-     * @Rest\QueryParam(name="user", requirements="\d+|all", strict=true, nullable=true, description="User ID to filter timesheets. Needs permission 'view_other_timesheet', pass 'all' to fetch data for all user (default: current user)")
      * @Rest\QueryParam(name="begin", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only records after this date will be included. Default: today - 1 year (format: HTML5)")
      * @Rest\QueryParam(name="size", requirements="\d+", strict=true, nullable=true, description="The amount of entries (default: 10)")
      *
      * @Rest\Get(path="/recent", name="recent_timesheet")
      *
-     * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
+     * @Security("is_granted('view_own_timesheet')")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -480,28 +479,20 @@ class TimesheetController extends BaseApiController
     public function recentAction(ParamFetcherInterface $paramFetcher): Response
     {
         $user = $this->getUser();
-        $factory = $this->getDateTimeFactory();
-        $begin = $factory->createDateTime('-1 year');
+        $begin = null;
         $limit = 10;
-
-        if ($this->isGranted('view_other_timesheet') && null !== ($reqUser = $paramFetcher->get('user'))) {
-            if ('all' === $reqUser) {
-                $reqUser = null;
-            }
-            $user = $reqUser;
-        }
 
         if (null !== ($reqLimit = $paramFetcher->get('size'))) {
             $limit = (int) $reqLimit;
         }
 
         if (null !== ($reqBegin = $paramFetcher->get('begin'))) {
-            $begin = $factory->createDateTime($reqBegin);
+            $begin = $this->getDateTimeFactory($user)->createDateTime($reqBegin);
         }
 
         $data = $this->repository->getRecentActivities($user, $begin, $limit);
 
-        $recentActivity = new RecentActivityEvent($this->getUser(), $data);
+        $recentActivity = new RecentActivityEvent($user, $data);
         $this->dispatcher->dispatch($recentActivity);
 
         $view = new View($recentActivity->getRecentActivities(), 200);

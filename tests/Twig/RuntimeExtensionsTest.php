@@ -45,6 +45,7 @@ class RuntimeExtensionsTest extends TestCase
             'javascript_translations',
             'form_time_presets',
             'active_timesheets',
+            'favorite_timesheets',
             'encore_entry_css_source',
             'render_widget',
             'icon',

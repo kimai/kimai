@@ -107,9 +107,9 @@
     {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {% block navbar_extensions %}{% endblock %}
         {% if is_granted('create_own_timesheet') %}
-            {% include '@theme/ticktack.html.twig' %}
+            {% include 'partials/ticktack.html.twig' %}
         {% endif %}
-        {% include '@Tabler/recent-activities.html.twig' %}
+        {% include 'partials/recent-activities.html.twig' %}
     {% endif %}
 {% endblock %}
 

@@ -79,7 +79,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiToolbar('form.searchform', 'toolbar-action'));
         kimai.registerPlugin(new KimaiAlternativeLinks('.alternative-link'));
         kimai.registerPlugin(new KimaiAjaxModalForm('.modal-ajax-form'));
-        kimai.registerPlugin(new KimaiRecentActivities('.notifications-menu'));
+        kimai.registerPlugin(new KimaiRecentActivities());
         kimai.registerPlugin(new KimaiActiveRecords('.messages-menu', '.messages-menu-empty'));
         kimai.registerPlugin(new KimaiAPILink('api-link'));
         kimai.registerPlugin(new KimaiMultiUpdateTable());

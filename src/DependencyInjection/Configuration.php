@@ -358,7 +358,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->booleanNode('weekends')->defaultTrue()->end()
                 ->integerNode('dragdrop_amount')
-                    ->defaultValue(10)
+                    ->defaultValue(5)
                     ->validate()
                         ->ifTrue(static function ($v) {
                             if ($v === null || $v < 0 || $v > 20) {
