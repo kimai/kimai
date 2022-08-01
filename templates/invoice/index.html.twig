@@ -127,8 +127,8 @@
                                     {% endif %}
                                 </td>
                                 <td class="w-min text-center">
-                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'button.preview'|trans, 'target': '_blank', 'class': 'btn btn-sm', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_preview', {'customer': model.customer.id, 'token': csrf_token('invoice.preview')})}}) }}
-                                    {{ widgets.action_button('save', {'url': '#', 'onclick': 'return singleInvoice(this)', 'title': 'action.save'|trans, 'class': 'btn btn-sm', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id, 'token': csrf_token('invoice.create')})}}, 'success') }}
+                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this, true)', 'title': 'button.preview'|trans, 'target': '_blank', 'class': 'btn btn-sm', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_preview', {'customer': model.customer.id, 'token': csrf_token('invoice.preview')})}}) }}
+                                    {{ widgets.action_button('save', {'url': '#', 'onclick': 'return singleInvoice(this, false)', 'title': 'action.save'|trans, 'class': 'btn btn-sm', 'attr': {'data-customer': model.customer.id, 'data-template': model.template.id, 'data-href': path('invoice_create', {'customer': model.customer.id, 'template': model.template.id, 'token': csrf_token('invoice.create')})}}, 'success') }}
                                 </td>
                                 <td class="w-min text-right hidden-xs">
                                     {{ model.calculator.timeWorked|duration(isDecimal) }}
@@ -238,18 +238,24 @@
 
     <script type="text/javascript">
 
-        function singleInvoice(link)
+        function singleInvoice(link, preview)
         {
             const formPlugin = kimai.getPlugin('form');
             const overwrites = {'customers[]': link.dataset['customer'], 'template': link.dataset['template']};
             const uri = formPlugin.convertFormDataToQueryString(document.getElementById('{{ formId }}'), overwrites);
+            const invoiceUrl = link.dataset['href'] + '?' + uri;
 
-            link.classList.toggle('disabled');
-            link.href = 'javascript: void(0)';
+            if (!preview) {
+                link.classList.toggle('disabled');
+                link.href = 'javascript: void(0)';
 
-            document.location = link.dataset['href'] + '?' + uri;
+                document.location = invoiceUrl;
+                return false;
+            }
 
-            return false;
+            link.href = invoiceUrl;
+
+            return true;
         }
 
         function saveAllInvoices(link)
