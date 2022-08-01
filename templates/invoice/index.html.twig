@@ -244,9 +244,12 @@
             const overwrites = {'customers[]': link.dataset['customer'], 'template': link.dataset['template']};
             const uri = formPlugin.convertFormDataToQueryString(document.getElementById('{{ formId }}'), overwrites);
 
-            link.href = link.dataset['href'] + '?' + uri;
+            link.classList.toggle('disabled');
+            link.href = 'javascript: void(0)';
 
-            return true;
+            document.location = link.dataset['href'] + '?' + uri;
+
+            return false;
         }
 
         function saveAllInvoices(link)
@@ -254,9 +257,12 @@
             const formPlugin = kimai.getPlugin('form');
             const uri = formPlugin.convertFormDataToQueryString(document.getElementById('{{ formId }}'));
 
-            link.href = '{{ path('invoice') }}?token={{ csrf_token('invoice.create') }}&createInvoice=true&' + uri;
+            link.classList.toggle('disabled');
+            link.href = 'javascript: void(0)';
 
-            return true;
+            document.location = '{{ path('invoice') }}?token={{ csrf_token('invoice.create') }}&createInvoice=true&' + uri;
+
+            return false;
         }
 
         document.addEventListener('kimai.initialized', function() {
