@@ -19,7 +19,7 @@
                                            href="{{ path('restart_timesheet', {'id': entry.id}) }}" data-event="kimai.timesheetStart kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.start.error"
                                            data-msg-success="timesheet.start.success">
                                             {{ label_activity(entry.activity) }}
-                                            <div class="d-block text-muted text-truncate mt-n1">
+                                            <div class="d-block text-truncate mt-n1">
                                                 {{ label_project(entry.project) }}
                                                 {{ label_customer(entry.project.customer) }}
                                             </div>
@@ -32,7 +32,7 @@
                                         </a>
                                         {% else %}
                                         <a href="{{ path('favorites_timesheets_add', {'id': favorite.timesheet.id}) }}" class="list-group-item-actions">
-                                            <i class="text-muted {{ 'bookmark'|icon }}"></i>
+                                            <i class="{{ 'bookmark'|icon }}"></i>
                                         </a>
                                         {% endif %}
                                     </div>
