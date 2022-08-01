@@ -854,10 +854,6 @@
         <source>recent.activities</source>
         <target>Aurrejo jarduera bati berrekin</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% jarduera %project% proiektuan %customer% bezeroarentzako</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>Sarrera berria sortu</target>

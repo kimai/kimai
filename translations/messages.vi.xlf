@@ -922,10 +922,6 @@
         <source>recent.activities</source>
         <target>Khởi động lại một trong những hoạt động cuối cùng của bạn</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% trong %project% của %customer%</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>Tạo bản ghi thời gian mới</target>

@@ -1144,10 +1144,6 @@
         <source>recent.activities</source>
         <target>Eine ihrer letzten Tätigkeiten neustarten</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% in %project% für %customer%</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>Neue Zeitmessung starten</target>

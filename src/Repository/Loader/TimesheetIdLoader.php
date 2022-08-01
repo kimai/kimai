@@ -20,7 +20,7 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 final class TimesheetIdLoader implements LoaderInterface
 {
-    public function __construct(private EntityManagerInterface $entityManager, private bool $fullyHydrated = false)
+    public function __construct(private EntityManagerInterface $entityManager, private bool $fullyHydrated = false, private bool $basicHydrated = true)
     {
     }
 
@@ -101,28 +101,30 @@ final class TimesheetIdLoader implements LoaderInterface
                 ->execute();
         }
 
-        $qb = $em->createQueryBuilder();
-        $qb->select('PARTIAL t.{id}', 'user')
-            ->from(Timesheet::class, 't')
-            ->leftJoin('t.user', 'user')
-            ->andWhere($qb->expr()->in('t.id', $results))
-            ->getQuery()
-            ->execute();
+        if ($this->basicHydrated) {
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL t.{id}', 'user')
+                ->from(Timesheet::class, 't')
+                ->leftJoin('t.user', 'user')
+                ->andWhere($qb->expr()->in('t.id', $results))
+                ->getQuery()
+                ->execute();
 
-        $qb = $em->createQueryBuilder();
-        $qb->select('PARTIAL t.{id}', 'tags')
-            ->from(Timesheet::class, 't')
-            ->leftJoin('t.tags', 'tags')
-            ->andWhere($qb->expr()->in('t.id', $results))
-            ->getQuery()
-            ->execute();
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL t.{id}', 'tags')
+                ->from(Timesheet::class, 't')
+                ->leftJoin('t.tags', 'tags')
+                ->andWhere($qb->expr()->in('t.id', $results))
+                ->getQuery()
+                ->execute();
 
-        $qb = $em->createQueryBuilder();
-        $qb->select('PARTIAL t.{id}', 'meta')
-            ->from(Timesheet::class, 't')
-            ->leftJoin('t.meta', 'meta')
-            ->andWhere($qb->expr()->in('t.id', $results))
-            ->getQuery()
-            ->execute();
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL t.{id}', 'meta')
+                ->from(Timesheet::class, 't')
+                ->leftJoin('t.meta', 'meta')
+                ->andWhere($qb->expr()->in('t.id', $results))
+                ->getQuery()
+                ->execute();
+        }
     }
 }

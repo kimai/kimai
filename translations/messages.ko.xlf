@@ -751,10 +751,6 @@
         <source>recent.activities</source>
         <target state="translated">지난 활동 재개</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target state="translated">%customer%를 위한 %project%의 %activity%</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target state="translated">새로운 타임시트 생성하기</target>

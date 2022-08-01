@@ -822,10 +822,6 @@
         <source>recent.activities</source>
         <target>Repornește una din activitățile recente</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% în %project% pentru %customer%</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>Crează o nouă înregistrare</target>

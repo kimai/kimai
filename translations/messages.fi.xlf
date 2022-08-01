@@ -958,10 +958,6 @@
         <source>recent.activities</source>
         <target state="translated">Aloita uudelleen yksi viimeisimmistä työtehtävistäsi</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target state="translated">%activity% projektissa %project% asiakkaalle %customer%</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target state="translated">Luo uusi aikamerkintä</target>

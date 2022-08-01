@@ -859,10 +859,6 @@
         <source>recent.activities</source>
         <target>Uruchom ponownie jedną z ostatnich aktywności</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% w %project% dla %customer%</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target state="translated">Utwórz nowy wpis</target>

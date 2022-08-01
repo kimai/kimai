@@ -934,10 +934,6 @@
         <source>recent.activities</source>
         <target>Riavvia una delle tue ultime attività</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% nel %project% di %customer%</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>Crea una nuova registrazione</target>

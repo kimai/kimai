@@ -1014,10 +1014,6 @@
         <source>recent.activities</source>
         <target>Επανεκκινήστε μία από τις τελευταίες σας δραστηριότητες</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% του %project% για τον %customer%</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>Δημιουργήστε νέα εγγραφή ωρών</target>

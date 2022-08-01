@@ -11,7 +11,7 @@ namespace App\Tests\Twig\Runtime;
 
 use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Model\FavoriteTimesheet;
+use App\Repository\BookmarkRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\FavoriteRecordService;
 use App\Twig\Runtime\TimesheetExtension;
@@ -31,7 +31,8 @@ class TimesheetExtensionTest extends TestCase
         $repository->method('getActiveEntries')->willReturn($entries);
 
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
-        $service = new FavoriteRecordService($repository, $dispatcher);
+        $bookmarks = $this->createMock(BookmarkRepository::class);
+        $service = new FavoriteRecordService($repository, $bookmarks, $dispatcher);
 
         $sut = new TimesheetExtension($repository, $service);
         self::assertEquals($entries, $sut->activeEntries(new User()));
@@ -39,17 +40,21 @@ class TimesheetExtensionTest extends TestCase
 
     public function testRecentEntries()
     {
-        $entries = [new Timesheet(), new Timesheet()];
-        $expected = [
-            new FavoriteTimesheet($entries[0], false),
-            new FavoriteTimesheet($entries[1], false),
-        ];
+        $timesheet1 = $this->createMock(Timesheet::class);
+        $timesheet1->method('getId')->willReturn(1);
+
+        $timesheet2 = $this->createMock(Timesheet::class);
+        $timesheet2->method('getId')->willReturn(2);
+
+        $entries = [$timesheet1, $timesheet2];
 
         $repository = $this->createMock(TimesheetRepository::class);
-        $repository->method('getRecentActivities')->willReturn($entries);
+        $repository->method('findTimesheetsById')->willReturn($entries);
+        $repository->method('getRecentActivityIds')->willReturn([1, 2]);
 
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
-        $service = new FavoriteRecordService($repository, $dispatcher);
+        $bookmarks = $this->createMock(BookmarkRepository::class);
+        $service = new FavoriteRecordService($repository, $bookmarks, $dispatcher);
 
         $sut = new TimesheetExtension($repository, $service);
         $favorites = $sut->favoriteEntries(new User());

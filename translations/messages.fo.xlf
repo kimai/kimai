@@ -867,10 +867,6 @@
         <source>preview.skipped_rows</source>
         <target>Leyp undansýning av %rows% fleiri rekkjum um …</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% í %project% fyri %customer%</target>
-      </trans-unit>
       <trans-unit id="_DDecAV" resname="entryState.exported">
         <source>entryState.exported</source>
         <target>Ruddað</target>

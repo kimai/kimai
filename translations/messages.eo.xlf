@@ -906,10 +906,6 @@
         <source>recent.activities</source>
         <target>Restartigi unu de viaj lastaj aktivaĵoj</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% en %project% por %customer%</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>Krei novan temporegistraĵon</target>

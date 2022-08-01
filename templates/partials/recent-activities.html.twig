@@ -25,19 +25,17 @@
                                             </div>
                                         </a>
                                     </div>
-                                    {#
                                     <div class="col-auto">
                                         {% if favorite.isFavorite() %}
-                                        <a href="#" onclick="console.log('remove bookmark')" class="list-group-item-actions show">
+                                        <a href="{{ path('favorites_timesheets_remove', {'id': favorite.timesheet.id}) }}" class="list-group-item-actions show">
                                             <i class="text-yellow {{ 'bookmarked'|icon }}"></i>
                                         </a>
                                         {% else %}
-                                        <a href="#" onclick="console.log('bookmark')" class="list-group-item-actions">
+                                        <a href="{{ path('favorites_timesheets_add', {'id': favorite.timesheet.id}) }}" class="list-group-item-actions">
                                             <i class="text-muted {{ 'bookmark'|icon }}"></i>
                                         </a>
                                         {% endif %}
                                     </div>
-                                    #}
                                 </div>
                             </div>
                         {% endfor %}

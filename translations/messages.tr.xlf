@@ -811,10 +811,6 @@
         <source>recent.activities</source>
         <target state="translated">Son etkinliklerinizden birini yeniden başlat</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target state="translated">%customer% için %project% projede %activity% etkinlik</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target state="translated">Yeni kayıt oluştur</target>

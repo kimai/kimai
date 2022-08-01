@@ -9,15 +9,20 @@
 
 namespace App\Timesheet;
 
+use App\Entity\Bookmark;
+use App\Entity\Timesheet;
 use App\Entity\User;
-use App\Event\RecentActivityEvent;
 use App\Model\FavoriteTimesheet;
+use App\Repository\BookmarkRepository;
 use App\Repository\TimesheetRepository;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * @internal
+ */
 final class FavoriteRecordService
 {
-    public function __construct(private TimesheetRepository $repository, private EventDispatcherInterface $eventDispatcher)
+    public function __construct(private TimesheetRepository $repository, private BookmarkRepository $bookmarkRepository, private EventDispatcherInterface $eventDispatcher)
     {
     }
 
@@ -28,17 +33,83 @@ final class FavoriteRecordService
      */
     public function favoriteEntries(User $user, int $limit = 5): array
     {
-        // TODO add favorite records to list
+        $favIds = $this->getBookmark($user)->getContent();
+        $recentIds = [];
+        if (\count($favIds) < 5) {
+            $recentIds = $this->repository->getRecentActivityIds($user, null, $limit);
+        }
+        $ids = \array_slice(array_unique(array_merge($favIds, $recentIds)), 0, $limit);
+
         $favorites = [];
-
-        $data = $this->repository->getRecentActivities($user, null, $limit);
-        $recentActivity = new RecentActivityEvent($user, $data);
-        $this->eventDispatcher->dispatch($recentActivity);
-
-        foreach ($recentActivity->getRecentActivities() as $recentActivity) {
-            $favorites[] = new FavoriteTimesheet($recentActivity, false);
+        foreach ($ids as $id) {
+            $favorites[$id] = \in_array($id, $favIds);
         }
 
-        return $favorites;
+        if (\count($ids) > 0) {
+            $timesheets = $this->repository->findTimesheetsById($ids, false, false);
+            foreach ($timesheets as $timesheet) {
+                $favorites[$timesheet->getId()] = new FavoriteTimesheet($timesheet, $favorites[$timesheet->getId()]);
+            }
+        }
+
+        return array_values($favorites);
+    }
+
+    private function getBookmark(User $user): Bookmark
+    {
+        $bookmark = $this->bookmarkRepository->findBookmark($user, 'favorite', 'timesheet');
+
+        if ($bookmark === null) {
+            $bookmark = new Bookmark();
+            $bookmark->setUser($user);
+            $bookmark->setType('favorite');
+            $bookmark->setName('timesheet');
+        }
+
+        return $bookmark;
+    }
+
+    public function addFavorite(Timesheet $timesheet): void
+    {
+        if ($timesheet->getUser() === null) {
+            throw new \InvalidArgumentException('Cannot favorite timesheet without user');
+        }
+
+        $bookmark = $this->getBookmark($timesheet->getUser());
+        $ids = $bookmark->getContent();
+        if (\in_array($timesheet->getId(), $ids)) {
+            return;
+        }
+
+        if (\count($ids) >= 5) {
+            array_pop($ids); // remove the last element and make space for a new id
+        }
+        array_unshift($ids, $timesheet->getId());
+        $bookmark->setContent($ids);
+
+        $this->bookmarkRepository->saveBookmark($bookmark);
+    }
+
+    public function removeFavorite(Timesheet $timesheet): void
+    {
+        if ($timesheet->getUser() === null) {
+            throw new \InvalidArgumentException('Cannot favorite timesheet without user');
+        }
+
+        $bookmark = $this->getBookmark($timesheet->getUser());
+        $ids = $bookmark->getContent();
+
+        if (!\in_array($timesheet->getId(), $ids)) {
+            return;
+        }
+
+        $newIds = [];
+        foreach ($ids as $id) {
+            if ($id !== $timesheet->getId()) {
+                $newIds[] = $id;
+            }
+        }
+        $bookmark->setContent($newIds);
+        $this->bookmarkRepository->saveBookmark($bookmark);
     }
 }

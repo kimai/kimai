@@ -730,10 +730,6 @@
         <source>recent.activities</source>
         <target>最後のアクティビティを再度行う</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>得意先 %customer% - %project% プロジェクト - %activity% アクティビティ</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>新たに時間の記録を始める</target>

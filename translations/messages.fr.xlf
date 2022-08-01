@@ -735,10 +735,6 @@
         <source>recent.activities</source>
         <target>Reprendre une de vos activités récentes</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% dans %project% pour %customer%</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>Créer une nouvelle fiche de temps</target>

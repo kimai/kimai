@@ -964,10 +964,6 @@
         <source>recent.activities</source>
         <target>Start én av dine siste aktiviteter igjen</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% i %project% for %customer%</target>
-      </trans-unit>
       <trans-unit id="X3JM9wj" resname="label.exported">
         <source>label.exported</source>
         <target>Eksportert</target>

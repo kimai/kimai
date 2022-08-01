@@ -734,10 +734,6 @@
         <source>recent.activities</source>
         <target state="translated">Starta om en av dina senaste aktiviteter</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target state="translated">%activity% i %project% för %customer%</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target state="translated">Skapa ny tidrapport</target>

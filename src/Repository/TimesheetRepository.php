@@ -410,17 +410,18 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * When switching $fullyHydrated to true, the call gets even more expensive.
-     * You normally don't need this, unless you want to access deeply nested attributes for many entries!
+     * You normally don't need this, unless you want to access deeply nested attributes for many entries.
      *
      * @param TimesheetQuery $query
      * @param bool $fullyHydrated
+     * @param bool $basicHydrated
      * @return Timesheet[]
      */
-    public function getTimesheetsForQuery(TimesheetQuery $query, bool $fullyHydrated = false): iterable
+    public function getTimesheetsForQuery(TimesheetQuery $query, bool $fullyHydrated = false, bool $basicHydrated = true): iterable
     {
         $qb = $this->getQueryBuilderForQuery($query);
 
-        return $this->getHydratedResultsByQuery($qb, $fullyHydrated);
+        return $this->getHydratedResultsByQuery($qb, $fullyHydrated, $basicHydrated);
     }
 
     public function getTimesheetResult(TimesheetQuery $query): TimesheetResult
@@ -433,13 +434,14 @@ class TimesheetRepository extends EntityRepository
     /**
      * @param QueryBuilder $qb
      * @param bool $fullyHydrated
+     * @param bool $basicHydrated
      * @return Timesheet[]
      */
-    protected function getHydratedResultsByQuery(QueryBuilder $qb, bool $fullyHydrated = false): iterable
+    private function getHydratedResultsByQuery(QueryBuilder $qb, bool $fullyHydrated = false, bool $basicHydrated = true): iterable
     {
         $results = $qb->getQuery()->getResult();
 
-        $loader = new TimesheetLoader($qb->getEntityManager(), $fullyHydrated);
+        $loader = new TimesheetLoader($qb->getEntityManager(), $fullyHydrated, $basicHydrated);
         $loader->loadResults($results);
 
         return $results;
@@ -618,9 +620,21 @@ class TimesheetRepository extends EntityRepository
      * @param DateTime|null $startFrom
      * @param int $limit
      * @return Timesheet[]
-     * @throws \Doctrine\ORM\Query\QueryException
      */
     public function getRecentActivities(User $user, DateTime $startFrom = null, int $limit = 10): array
+    {
+        return $this->findTimesheetsById(
+            $this->getRecentActivityIds($user, $startFrom, $limit)
+        );
+    }
+
+    /**
+     * @param User $user
+     * @param DateTime|null $startFrom
+     * @param int $limit
+     * @return array<int>
+     */
+    public function getRecentActivityIds(User $user, DateTime $startFrom = null, int $limit = 10): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -655,8 +669,15 @@ class TimesheetRepository extends EntityRepository
             return [];
         }
 
-        $ids = array_column($results, 'maxid');
+        return array_column($results, 'maxid');
+    }
 
+    /**
+     * @param array<int> $ids
+     * @return array<Timesheet>
+     */
+    public function findTimesheetsById(array $ids, bool $fullyHydrated = false, bool $basicHydrated = true): array
+    {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('t')
             ->from(Timesheet::class, 't')
@@ -664,7 +685,7 @@ class TimesheetRepository extends EntityRepository
             ->orderBy('t.end', 'DESC')
         ;
 
-        return $this->getHydratedResultsByQuery($qb);
+        return $this->getHydratedResultsByQuery($qb, $fullyHydrated, $basicHydrated);
     }
 
     /**

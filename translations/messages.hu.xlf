@@ -738,10 +738,6 @@
         <source>recent.activities</source>
         <target>Egyik korábbi rögzítésed újraindítása</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% tevékenység %project% projekt %customer% ügyfél</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>Új rögzítés indítása</target>

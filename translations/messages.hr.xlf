@@ -1067,10 +1067,6 @@
         <source>recent.activities</source>
         <target>Ponovo pokreni jednu od zadnjih aktivnosti</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% u %project% za %customer%</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>Stvori nov vremenski zapis</target>

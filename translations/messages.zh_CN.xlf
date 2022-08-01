@@ -843,10 +843,6 @@
         <source>recent.activities</source>
         <target>重启一项您的最后活动</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% 在 %project% 对于 %customer%</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>创建新的时间记录</target>

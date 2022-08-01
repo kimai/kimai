@@ -581,10 +581,6 @@
       <!--
              Navbar - recent entries and activities
             -->
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% في %project% لـ %customer%</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>إنشاء سجل زمني جديد</target>
