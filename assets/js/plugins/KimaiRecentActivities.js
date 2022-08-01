@@ -28,22 +28,7 @@ export default class KimaiRecentActivities extends KimaiPlugin {
         }
 
         const handle = () => {
-            this.fetch(this.menu.dataset['reload'], {method: 'GET'})
-                .then(response => {
-                    if (!response.ok) {
-                        this.menu.remove();
-                        return;
-                    }
-
-                    return response.text().then(html => {
-                        const newFormHtml = document.createElement('div');
-                        newFormHtml.innerHTML = html;
-                        this.menu.replaceWith(newFormHtml.firstElementChild);
-                    });
-                })
-                .catch(() =>  {
-                    this.menu.remove();
-                });
+            this._reloadMenu(this.menu.dataset['reload']);
         };
 
         document.addEventListener('kimai.recentActivities', handle);
@@ -55,6 +40,44 @@ export default class KimaiRecentActivities extends KimaiPlugin {
         document.addEventListener('kimai.projectDelete', handle);
         document.addEventListener('kimai.customerUpdate', handle);
         document.addEventListener('kimai.customerDelete', handle);
+
+        this._attachAddRemoveFavorite();
     }
 
+    _attachAddRemoveFavorite()
+    {
+        [].slice.call(this.menu.querySelectorAll('a.list-group-item-actions')).map((element) => {
+            element.addEventListener('click', (event) => {
+                this._reloadMenu(event.currentTarget.href);
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                return false;
+            });
+        });
+    }
+
+    _reloadMenu(url)
+    {
+        this.fetch(url, {method: 'GET'})
+            .then(response => {
+                if (!response.ok) {
+                    //this.menu.remove();
+                    return;
+                }
+
+                return response.text().then(html => {
+                    const newFormHtml = document.createElement('div');
+                    newFormHtml.innerHTML = html;
+                    this.menu.replaceWith(newFormHtml.firstElementChild);
+
+                    this.menu = document.querySelector('header .notifications-menu');
+                    this._attachAddRemoveFavorite();
+                });
+            })
+            .catch(() =>  {
+                //this.menu.remove();
+            });
+    }
 }
