@@ -35,10 +35,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>
-                    Dữ liệu này cũng sẽ bị xóa!
-                    Ngoài ra, bạn có thể chọn một mục nhập mà tất cả dữ liệu sẽ được chuyển đến:
-                </target>
+        <target>Dữ liệu này cũng sẽ bị xóa! Ngoài ra, bạn có thể chọn một mục nhập mà tất cả dữ liệu sẽ được chuyển đến:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -333,7 +330,7 @@
       </trans-unit>
       <trans-unit id="hTKWQ6g" resname="action.delete">
         <source>action.delete</source>
-        <target>Xóa bỏ</target>
+        <target state="translated">Xóa</target>
       </trans-unit>
       <trans-unit id="HLtdhYw" resname="action.save">
         <source>action.save</source>
@@ -707,23 +704,23 @@
       </trans-unit>
       <trans-unit id="xyiadv3" resname="stats.userActiveToday">
         <source>stats.userActiveToday</source>
-        <target>Người dùng tích cực ngày hôm nays</target>
+        <target state="translated">Hoạt động của người dùng ngày hôm nay</target>
       </trans-unit>
       <trans-unit id="knMHaeO" resname="stats.userActiveWeek">
         <source>stats.userActiveWeek</source>
-        <target>Người dùng tích cực trong tuần này</target>
+        <target state="translated">Hoạt động của người dùng trong tuần này</target>
       </trans-unit>
       <trans-unit id="adzVDgb" resname="stats.userActiveMonth">
         <source>stats.userActiveMonth</source>
-        <target>Người dùng tích cực trong tháng này</target>
+        <target state="translated">Hoạt động của người dùng trong tháng này</target>
       </trans-unit>
       <trans-unit id="AswjFvh" resname="stats.userActiveYear">
         <source>stats.userActiveYear</source>
-        <target>Người dùng tích cực trong năm nay</target>
+        <target state="translated">Hoạt động của người dùng trong năm nay</target>
       </trans-unit>
       <trans-unit id="dLTb1Po" resname="stats.userActiveTotal">
         <source>stats.userActiveTotal</source>
-        <target>Người dùng tích cực</target>
+        <target state="needs-translation">Tổng hoạt động của người dùng</target>
       </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
@@ -758,7 +755,7 @@
             -->
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
-        <target>Mẫu hóa đơn</target>
+        <target state="needs-translation">Mẫu hóa đơn</target>
       </trans-unit>
       <trans-unit id="SR2r1Cs" resname="invoices">
         <source>invoices</source>
@@ -1063,7 +1060,7 @@
       </trans-unit>
       <trans-unit id="zMY6gkY" resname="stats.userActiveFinancialYear">
         <source>stats.userActiveFinancialYear</source>
-        <target>Người dùng tích cực trong năm tài chính này</target>
+        <target state="translated">Hoạt động của người dùng trong năm tài chính này</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
@@ -1143,7 +1140,7 @@
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
         <source>stats.durationFinancialYear</source>
-        <target>Giờ làm việc trong năm tài chính này</target>
+        <target state="translated">Tổng số giờ làm việc trong năm tài chính này</target>
       </trans-unit>
       <trans-unit id="BytPihM" resname="label.set_as_default">
         <source>label.set_as_default</source>
@@ -1231,7 +1228,7 @@
       </trans-unit>
       <trans-unit id="Zif614Q" resname="add_user.label">
         <source>add_user.label</source>
-        <target state="needs-translation">Add user</target>
+        <target state="translated">Thêm người dùng</target>
       </trans-unit>
       <trans-unit id="tp.gIrE" resname="team.add_user.help">
         <source>team.add_user.help</source>
@@ -1272,6 +1269,10 @@
       <trans-unit id="PoF7hD8" resname="label.budgetType">
         <source>label.budgetType</source>
         <target state="needs-translation">Budget-Type</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target state="translated">Tự động</target>
       </trans-unit>
     </body>
   </file>

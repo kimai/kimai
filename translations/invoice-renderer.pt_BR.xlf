@@ -56,7 +56,7 @@
       </trans-unit>
       <trans-unit id="QqvUWFt" resname="Ods">
         <source>Ods</source>
-        <target>Open Office (Planilha)</target>
+        <target state="translated">Open Office (planilha)</target>
       </trans-unit>
       <trans-unit id="kLKl8xE" resname="Pdf">
         <source>Pdf</source>
