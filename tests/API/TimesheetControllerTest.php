@@ -740,7 +740,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
     public function testGetRecentAction()
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
         $start = new \DateTime('-10 days');
 
@@ -755,7 +755,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->importFixture($fixture);
 
         $query = [
-            'user' => 'all',
             'size' => 2,
             'begin' => $start->format(self::DATE_FORMAT_HTML5),
         ];
