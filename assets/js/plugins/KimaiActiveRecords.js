@@ -45,6 +45,64 @@ export default class KimaiActiveRecords extends KimaiPlugin {
         document.addEventListener('kimai.projectDelete', handleUpdate);
         document.addEventListener('kimai.customerUpdate', handleUpdate);
         document.addEventListener('kimai.customerDelete', handleUpdate);
+
+        // -----------------------------------------------------------------------
+        // handle duration in the visible UI
+        this._updateBrowserTitle = !!this.getConfiguration('updateBrowserTitle');
+        this._updateDuration();
+        const handle = () => {
+            this._updateDuration();
+        };
+        this._updatesHandler = setInterval(handle, 10000);
+        document.addEventListener('kimai.timesheetUpdate', handle);
+        document.addEventListener('kimai.reloadedContent', handle);
+    }
+
+    // TODO we could unregister all handler and listener
+    // _unregisterHandler() {
+    //     clearInterval(this._updatesHandler);
+    // }
+
+    _updateDuration() {
+        const activeRecords = this._menu.querySelectorAll('[data-since]:not([data-since=""])');
+
+        if (activeRecords.length === 0) {
+            if (this._updateBrowserTitle) {
+                if (document.body.dataset['title'] === undefined) {
+                    this._updateBrowserTitle = false;
+                } else {
+                    document.title = document.body.dataset['title'];
+                }
+            }
+            return;
+        }
+
+        const DATE = this.getDateUtils();
+        let durations = [];
+
+        for (const record of activeRecords) {
+            const duration = DATE.formatDuration(record.dataset['since']);
+            // only use the ones from the menu for the title
+            if (record.dataset['replacer'] !== undefined && record.dataset['title'] !== null && duration !== '?') {
+                durations.push(duration);
+            }
+            // but update all on the page (running entries in list pages)
+            record.textContent = duration;
+        }
+
+        if (durations.length === 0) {
+            return;
+        }
+
+        if (!this._updateBrowserTitle) {
+            return;
+        }
+
+        let title = durations.shift();
+        for (const duration of durations.slice(0, 2)) {
+            title += ' | ' + duration;
+        }
+        document.title = title;
     }
 
     _setEntries(entries) {
@@ -69,10 +127,7 @@ export default class KimaiActiveRecords extends KimaiPlugin {
         }
 
         this._replaceInNode(this._menu, entries[0]);
-
-        /** @type {KimaiActiveRecordsDuration} DURATION */
-        const DURATION = this.getContainer().getPlugin('timesheet-duration');
-        DURATION.updateRecords();
+        this._updateDuration();
     }
 
     _replaceInNode(node, timesheet) {

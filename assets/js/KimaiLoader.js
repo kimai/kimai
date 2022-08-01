@@ -13,7 +13,6 @@ import { Settings } from 'luxon';
 import KimaiTranslation from "./KimaiTranslation";
 import KimaiConfiguration from "./KimaiConfiguration";
 import KimaiContainer from "./KimaiContainer";
-import KimaiActiveRecordsDuration from './plugins/KimaiActiveRecordsDuration.js';
 import KimaiDatatableColumnView from './plugins/KimaiDatatableColumnView.js';
 import KimaiThemeInitializer from "./plugins/KimaiThemeInitializer";
 import KimaiDateRangePicker from "./forms/KimaiDateRangePicker";
@@ -73,14 +72,13 @@ export default class KimaiLoader {
 
         // SPECIAL FEATURES
         kimai.registerPlugin(new KimaiConfirmationLink('confirmation-link'));
-        kimai.registerPlugin(new KimaiActiveRecordsDuration());
         kimai.registerPlugin(new KimaiDatatableColumnView('data-column-visibility'));
         kimai.registerPlugin(new KimaiDatatable('section.content', 'table.dataTable'));
         kimai.registerPlugin(new KimaiToolbar('form.searchform', 'toolbar-action'));
         kimai.registerPlugin(new KimaiAlternativeLinks('.alternative-link'));
         kimai.registerPlugin(new KimaiAjaxModalForm('.modal-ajax-form'));
         kimai.registerPlugin(new KimaiRecentActivities());
-        kimai.registerPlugin(new KimaiActiveRecords('.messages-menu', '.messages-menu-empty'));
+        kimai.registerPlugin(new KimaiActiveRecords('header .messages-menu', 'header .messages-menu-empty'));
         kimai.registerPlugin(new KimaiAPILink('api-link'));
         kimai.registerPlugin(new KimaiMultiUpdateTable());
         kimai.registerPlugin(new KimaiThemeInitializer());

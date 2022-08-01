@@ -37,10 +37,6 @@
  */
 
 /*!
- * [KIMAI] KimaiActiveRecordsDuration: activate the updates for all active timesheet records on this page
- */
-
-/*!
  * [KIMAI] KimaiAjaxModalForm
  *
  * allows to assign the given selector to any element, which then is used as click-handler:

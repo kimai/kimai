@@ -48,8 +48,6 @@ export default class KimaiDatatable extends KimaiPlugin {
     }
 
     reloadDatatable() {
-        /** @type {KimaiActiveRecordsDuration} durations */
-        const durations = this.getContainer().getPlugin('timesheet-duration');
         const toolbarSelector = this.getContainer().getPlugin('toolbar').getSelector();
 
         /** @type {HTMLFormElement} form */
@@ -59,7 +57,6 @@ export default class KimaiDatatable extends KimaiPlugin {
             temp.innerHTML = text;
             const newContent = temp.querySelector(this._contentArea);
             document.querySelector(this._contentArea).replaceWith(newContent);
-            durations.updateRecords();
             document.dispatchEvent(new Event('kimai.reloadedContent'));
         };
 
