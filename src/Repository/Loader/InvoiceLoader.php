@@ -19,15 +19,44 @@ final class InvoiceLoader implements LoaderInterface
     }
 
     /**
-     * @param Invoice[] $results
+     * @param array<int|Invoice> $results
      */
     public function loadResults(array $results): void
     {
-        $ids = array_map(function (Invoice $invoice) {
-            return $invoice->getId();
+        if (empty($results)) {
+            return;
+        }
+
+        $ids = array_map(function ($invoice) {
+            if ($invoice instanceof Invoice) {
+                return $invoice->getId();
+            }
+
+            return (int) $invoice;
         }, $results);
 
-        $loader = new InvoiceIdLoader($this->entityManager);
-        $loader->loadResults($ids);
+        $em = $this->entityManager;
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('PARTIAL i.{id}', 'customer')
+            ->from(Invoice::class, 'i')
+            ->leftJoin('i.customer', 'customer')
+            ->getQuery()
+            ->execute();
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('PARTIAL i.{id}', 'user')
+            ->from(Invoice::class, 'i')
+            ->leftJoin('i.user', 'user')
+            ->getQuery()
+            ->execute();
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('PARTIAL i.{id}', 'meta')
+            ->from(Invoice::class, 'i')
+            ->leftJoin('i.meta', 'meta')
+            ->andWhere($qb->expr()->in('i.id', $ids))
+            ->getQuery()
+            ->execute();
     }
 }

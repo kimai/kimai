@@ -14,7 +14,6 @@ use App\Repository\Loader\InvoiceLoader;
 
 /**
  * @covers \App\Repository\Loader\InvoiceLoader
- * @covers \App\Repository\Loader\InvoiceIdLoader
  */
 class InvoiceLoaderTest extends AbstractLoaderTest
 {

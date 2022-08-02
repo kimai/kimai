@@ -9,7 +9,7 @@
 
 namespace App\Widget\Type;
 
-use App\Repository\Loader\UserIdLoader;
+use App\Repository\Loader\UserLoader;
 use App\Widget\WidgetInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -57,7 +57,7 @@ class UserTeams extends AbstractWidget
         $user = $this->getUser();
 
         // without this, every user would be lazy loaded
-        $loader = new UserIdLoader($this->entityManager, true);
+        $loader = new UserLoader($this->entityManager, true);
         $loader->loadResults([$user->getId()]);
 
         return $user->getTeams();

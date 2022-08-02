@@ -14,7 +14,6 @@ use App\Repository\Loader\TeamLoader;
 
 /**
  * @covers \App\Repository\Loader\TeamLoader
- * @covers \App\Repository\Loader\TeamIdLoader
  */
 class TeamLoaderTest extends AbstractLoaderTest
 {

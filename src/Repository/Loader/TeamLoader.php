@@ -19,15 +19,39 @@ final class TeamLoader implements LoaderInterface
     }
 
     /**
-     * @param Team[] $results
+     * @param array<int|Team> $results
      */
     public function loadResults(array $results): void
     {
-        $ids = array_map(function (Team $team) {
-            return $team->getId();
+        if (empty($results)) {
+            return;
+        }
+
+        $ids = array_map(function ($team) {
+            if ($team instanceof Team) {
+                return $team->getId();
+            }
+
+            return (int) $team;
         }, $results);
 
-        $loader = new TeamIdLoader($this->entityManager);
-        $loader->loadResults($ids);
+        $em = $this->entityManager;
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('PARTIAL team.{id}', 'members', 'user')
+            ->from(Team::class, 'team')
+            ->leftJoin('team.members', 'members')
+            ->leftJoin('members.user', 'user')
+            ->andWhere($qb->expr()->in('team.id', $ids))
+            ->getQuery()
+            ->execute();
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('PARTIAL team.{id}', 'projects')
+            ->from(Team::class, 'team')
+            ->leftJoin('team.projects', 'projects')
+            ->andWhere($qb->expr()->in('team.id', $ids))
+            ->getQuery()
+            ->execute();
     }
 }
