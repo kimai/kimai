@@ -668,11 +668,18 @@ class ProjectStatisticService
             ;
         }
 
-        if (!$query->isIncludeNoBudget()) {
+        if ($query->isIncludeWithBudget()) {
             $qb->andWhere(
                 $qb->expr()->orX(
                     $qb->expr()->gt('p.timeBudget', 0),
                     $qb->expr()->gt('p.budget', 0)
+                )
+            );
+        } elseif ($query->isIncludeWithoutBudget()) {
+            $qb->andWhere(
+                $qb->expr()->andX(
+                    $qb->expr()->eq('p.timeBudget', 0),
+                    $qb->expr()->eq('p.budget', 0)
                 )
             );
         }

@@ -12,6 +12,7 @@ namespace App\Reporting\ProjectView;
 use App\Form\Type\CustomerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,9 +27,16 @@ class ProjectViewForm extends AbstractType
             'required' => false,
             'width' => false,
         ]);
-        $builder->add('includeNoBudget', CheckboxType::class, [
+        $builder->add('budgetState', ChoiceType::class, [
+            'label' => false,
             'required' => false,
-            'label' => 'label.includeNoBudget',
+            'placeholder' => null,
+            'expanded' => true,
+            'choices' => [
+                'all' => null,
+                'label.includeWithBudget' => true,
+                'label.includeNoBudget' => false
+            ]
         ]);
         $builder->add('includeNoWork', CheckboxType::class, [
             'required' => false,
