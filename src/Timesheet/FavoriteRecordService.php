@@ -15,14 +15,13 @@ use App\Entity\User;
 use App\Model\FavoriteTimesheet;
 use App\Repository\BookmarkRepository;
 use App\Repository\TimesheetRepository;
-use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @internal
  */
 final class FavoriteRecordService
 {
-    public function __construct(private TimesheetRepository $repository, private BookmarkRepository $bookmarkRepository, private EventDispatcherInterface $eventDispatcher)
+    public function __construct(private TimesheetRepository $repository, private BookmarkRepository $bookmarkRepository)
     {
     }
 

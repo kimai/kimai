@@ -16,7 +16,6 @@ use App\Repository\TimesheetRepository;
 use App\Timesheet\FavoriteRecordService;
 use App\Twig\Runtime\TimesheetExtension;
 use PHPUnit\Framework\TestCase;
-use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @covers \App\Twig\Runtime\TimesheetExtension
@@ -30,9 +29,8 @@ class TimesheetExtensionTest extends TestCase
         $repository = $this->createMock(TimesheetRepository::class);
         $repository->method('getActiveEntries')->willReturn($entries);
 
-        $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $bookmarks = $this->createMock(BookmarkRepository::class);
-        $service = new FavoriteRecordService($repository, $bookmarks, $dispatcher);
+        $service = new FavoriteRecordService($repository, $bookmarks);
 
         $sut = new TimesheetExtension($repository, $service);
         self::assertEquals($entries, $sut->activeEntries(new User()));
@@ -52,9 +50,8 @@ class TimesheetExtensionTest extends TestCase
         $repository->method('findTimesheetsById')->willReturn($entries);
         $repository->method('getRecentActivityIds')->willReturn([1, 2]);
 
-        $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $bookmarks = $this->createMock(BookmarkRepository::class);
-        $service = new FavoriteRecordService($repository, $bookmarks, $dispatcher);
+        $service = new FavoriteRecordService($repository, $bookmarks);
 
         $sut = new TimesheetExtension($repository, $service);
         $favorites = $sut->favoriteEntries(new User());
