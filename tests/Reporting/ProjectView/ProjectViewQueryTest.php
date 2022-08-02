@@ -28,7 +28,8 @@ class ProjectViewQueryTest extends TestCase
         self::assertSame($date, $sut->getToday());
         self::assertSame($user, $sut->getUser());
         self::assertNull($sut->getCustomer());
-        self::assertFalse($sut->isIncludeNoBudget());
+        self::assertFalse($sut->isIncludeWithoutBudget());
+        self::assertTrue($sut->isIncludeWithBudget());
         self::assertFalse($sut->isIncludeNoWork());
     }
 
@@ -41,11 +42,21 @@ class ProjectViewQueryTest extends TestCase
         $customer = new Customer();
 
         $sut->setCustomer($customer);
-        $sut->setIncludeNoBudget(true);
         $sut->setIncludeNoWork(true);
 
         self::assertSame($customer, $sut->getCustomer());
-        self::assertTrue($sut->isIncludeNoBudget());
         self::assertTrue($sut->isIncludeNoWork());
+
+        $sut->setBudgetState(true);
+        self::assertTrue($sut->isIncludeWithBudget());
+        self::assertFalse($sut->isIncludeWithoutBudget());
+
+        $sut->setBudgetState(false);
+        self::assertFalse($sut->isIncludeWithBudget());
+        self::assertTrue($sut->isIncludeWithoutBudget());
+
+        $sut->setBudgetState(null);
+        self::assertFalse($sut->isIncludeWithBudget());
+        self::assertFalse($sut->isIncludeWithoutBudget());
     }
 }
