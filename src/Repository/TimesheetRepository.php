@@ -678,6 +678,10 @@ class TimesheetRepository extends EntityRepository
      */
     public function findTimesheetsById(array $ids, bool $fullyHydrated = false, bool $basicHydrated = true): array
     {
+        if (\count($ids) === 0) {
+            return [];
+        }
+
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('t')
             ->from(Timesheet::class, 't')
