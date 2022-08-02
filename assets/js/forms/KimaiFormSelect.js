@@ -387,6 +387,11 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
                     return;
                 }
 
+                if (targetSelect.tomselect !== undefined) {
+                    targetSelect.tomselect.disable();
+                }
+                targetSelect.disabled = true;
+
                 let formPrefix = apiSelect.dataset['formPrefix'];
                 if (formPrefix === undefined || formPrefix === null) {
                     formPrefix = '';
@@ -403,19 +408,21 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
                 if (selectValue === undefined || selectValue === null || selectValue === '' || (Array.isArray(selectValue) && selectValue.length === 0)) {
                     if (apiSelect.dataset['emptyUrl'] === undefined) {
                         this._updateSelect(targetSelectId, {});
-                        targetSelect.disabled = true;
                         return;
                     }
                     newApiUrl = this._buildUrlWithFormFields(apiSelect.dataset['emptyUrl'], formPrefix);
                 }
 
-                targetSelect.disabled = false;
 
                 /** @type {KimaiAPI} API */
                 const API = this.getContainer().getPlugin('api');
 
                 API.get(newApiUrl, {}, (data) => {
                     this._updateSelect(targetSelectId, data);
+                    if (targetSelect.tomselect !== undefined) {
+                        targetSelect.tomselect.enable();
+                    }
+                    targetSelect.disabled = false;
                 });
             }
 
