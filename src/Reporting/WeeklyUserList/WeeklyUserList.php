@@ -7,8 +7,10 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Reporting;
+namespace App\Reporting\WeeklyUserList;
 
-final class WeekByUser extends DateByUser
+use App\Reporting\AbstractUserList;
+
+final class WeeklyUserList extends AbstractUserList
 {
 }

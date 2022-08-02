@@ -7,23 +7,23 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Reporting;
+namespace App\Reporting\WeekByUser;
 
-use App\Form\Type\MonthPickerType;
 use App\Form\Type\ReportSumType;
 use App\Form\Type\UserType;
+use App\Form\Type\WeekPickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MonthByUserForm extends AbstractType
+class WeekByUserForm extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('date', MonthPickerType::class, [
+        $builder->add('date', WeekPickerType::class, [
             'model_timezone' => $options['timezone'],
             'view_timezone' => $options['timezone'],
             'start_date' => $options['start_date'],
@@ -41,7 +41,7 @@ class MonthByUserForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => MonthByUser::class,
+            'data_class' => WeekByUser::class,
             'timezone' => date_default_timezone_get(),
             'start_date' => new \DateTime(),
             'include_user' => false,

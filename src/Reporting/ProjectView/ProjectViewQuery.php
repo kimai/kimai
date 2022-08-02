@@ -33,14 +33,12 @@ final class ProjectViewQuery
         return $this->budgetState;
     }
 
+    /**
+     * @internal
+     */
     public function setBudgetState(?bool $budgetState): void
     {
         $this->budgetState = $budgetState;
-    }
-
-    public function isIncludeAll(): bool
-    {
-        return $this->budgetState === null;
     }
 
     public function isIncludeWithoutBudget(): bool

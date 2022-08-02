@@ -7,8 +7,10 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Reporting;
+namespace App\Reporting\MonthlyUserList;
 
-final class MonthByUser extends DateByUser
+use App\Reporting\AbstractUserList;
+
+final class MonthlyUserList extends AbstractUserList
 {
 }

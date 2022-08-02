@@ -7,7 +7,9 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Reporting;
+namespace App\Reporting\YearlyUserList;
+
+use App\Reporting\AbstractUserList;
 
 final class YearlyUserList extends AbstractUserList
 {

@@ -9,10 +9,9 @@
 
 namespace App\Controller\Reporting;
 
-use App\Entity\User;
 use App\Model\DailyStatistic;
-use App\Reporting\WeekByUser;
-use App\Reporting\WeekByUserForm;
+use App\Reporting\WeekByUser\WeekByUser;
+use App\Reporting\WeekByUser\WeekByUserForm;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;

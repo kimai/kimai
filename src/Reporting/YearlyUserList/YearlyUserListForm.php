@@ -7,25 +7,26 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Reporting;
+namespace App\Reporting\YearlyUserList;
 
-use App\Form\Type\MonthPickerType;
 use App\Form\Type\ReportSumType;
+use App\Form\Type\YearPickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MonthlyUserListForm extends AbstractType
+class YearlyUserListForm extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('date', MonthPickerType::class, [
+        $builder->add('date', YearPickerType::class, [
             'model_timezone' => $options['timezone'],
             'view_timezone' => $options['timezone'],
             'start_date' => $options['start_date'],
+            'show_range' => true,
         ]);
         $builder->add('sumType', ReportSumType::class);
     }
@@ -36,7 +37,7 @@ class MonthlyUserListForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => MonthlyUserList::class,
+            'data_class' => YearlyUserList::class,
             'timezone' => date_default_timezone_get(),
             'start_date' => new \DateTime(),
             'csrf_protection' => false,

@@ -7,19 +7,20 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Reporting;
+namespace App\Tests\Reporting\WeekByUser;
 
 use App\Reporting\DateByUser;
-use App\Reporting\MonthByUser;
+use App\Reporting\WeekByUser\WeekByUser;
+use App\Tests\Reporting\AbstractDateByUserTest;
 
 /**
- * @covers \App\Reporting\MonthByUser
+ * @covers \App\Reporting\WeekByUser\WeekByUser
  * @covers \App\Reporting\DateByUser
  */
-class MonthByUserTest extends AbstractDateByUserTest
+class WeekByUserTest extends AbstractDateByUserTest
 {
     protected function createSut(): DateByUser
     {
-        return new MonthByUser();
+        return new WeekByUser();
     }
 }

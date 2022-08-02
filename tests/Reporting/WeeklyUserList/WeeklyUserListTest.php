@@ -7,13 +7,14 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Reporting;
+namespace App\Tests\Reporting\WeeklyUserList;
 
 use App\Reporting\AbstractUserList;
-use App\Reporting\WeeklyUserList;
+use App\Reporting\WeeklyUserList\WeeklyUserList;
+use App\Tests\Reporting\AbstractUserListTest;
 
 /**
- * @covers \App\Reporting\WeeklyUserList
+ * @covers \App\Reporting\WeeklyUserList\WeeklyUserList
  * @covers \App\Reporting\AbstractUserList
  */
 class WeeklyUserListTest extends AbstractUserListTest

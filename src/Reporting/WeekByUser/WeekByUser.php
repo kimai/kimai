@@ -7,8 +7,10 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Reporting;
+namespace App\Reporting\WeekByUser;
 
-final class YearByUser extends DateByUser
+use App\Reporting\DateByUser;
+
+final class WeekByUser extends DateByUser
 {
 }

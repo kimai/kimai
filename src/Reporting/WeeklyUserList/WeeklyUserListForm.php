@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Reporting;
+namespace App\Reporting\WeeklyUserList;
 
 use App\Form\Type\ReportSumType;
 use App\Form\Type\WeekPickerType;
