@@ -861,8 +861,8 @@
         <source>label.entryState</source>
         <target state="needs-translation">Records</target>
       </trans-unit>
-      <trans-unit id="do7fP0q" resname="entryState.all">
-        <source>entryState.all</source>
+      <trans-unit id="XvXvA2S" resname="all">
+        <source>all</source>
         <target state="needs-translation">All</target>
       </trans-unit>
       <trans-unit id="spHpd_I" resname="entryState.stopped">

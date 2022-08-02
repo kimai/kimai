@@ -73,8 +73,8 @@
         <source>entryState.running</source>
         <target>Laufende</target>
       </trans-unit>
-      <trans-unit id="do7fP0q" resname="entryState.all">
-        <source>entryState.all</source>
+      <trans-unit id="XvXvA2S" resname="all">
+        <source>all</source>
         <target>Alle</target>
       </trans-unit>
       <trans-unit id="ccCiXyR" resname="entryState.not_exported">

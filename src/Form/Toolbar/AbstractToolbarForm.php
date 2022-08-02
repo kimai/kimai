@@ -399,7 +399,7 @@ abstract class AbstractToolbarForm extends AbstractType
             'placeholder' => null,
             'search' => false,
             'choices' => [
-                'entryState.all' => TimesheetQuery::STATE_ALL,
+                'all' => TimesheetQuery::STATE_ALL,
                 'entryState.running' => TimesheetQuery::STATE_RUNNING,
                 'entryState.stopped' => TimesheetQuery::STATE_STOPPED
             ],
@@ -414,7 +414,7 @@ abstract class AbstractToolbarForm extends AbstractType
             'placeholder' => null,
             'search' => false,
             'choices' => [
-                'entryState.all' => TimesheetQuery::STATE_ALL,
+                'all' => TimesheetQuery::STATE_ALL,
                 'entryState.exported' => TimesheetQuery::STATE_EXPORTED,
                 'entryState.not_exported' => TimesheetQuery::STATE_NOT_EXPORTED
             ],

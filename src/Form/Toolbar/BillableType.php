@@ -23,7 +23,7 @@ class BillableType extends AbstractType
         $resolver->setDefaults([
             'label' => 'label.billable',
             'choices' => [
-                'entryState.all' => null,
+                'all' => null,
                 'yes' => true,
                 'no' => false,
             ],

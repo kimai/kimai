@@ -946,8 +946,8 @@
         <source>entryState.not_exported</source>
         <target>Mở</target>
       </trans-unit>
-      <trans-unit id="do7fP0q" resname="entryState.all">
-        <source>entryState.all</source>
+      <trans-unit id="XvXvA2S" resname="all">
+        <source>all</source>
         <target>Tất cả</target>
       </trans-unit>
       <trans-unit id="xm7mqoK" resname="entryState.running">

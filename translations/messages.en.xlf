@@ -1169,8 +1169,8 @@
         <source>entryState.not_exported</source>
         <target>Open</target>
       </trans-unit>
-      <trans-unit id="do7fP0q" resname="entryState.all">
-        <source>entryState.all</source>
+      <trans-unit id="XvXvA2S" resname="all">
+        <source>all</source>
         <target>All</target>
       </trans-unit>
       <trans-unit id="xm7mqoK" resname="entryState.running">
@@ -1212,6 +1212,10 @@
       <trans-unit id="B.Dbbob" resname="label.includeNoBudget">
         <source>label.includeNoBudget</source>
         <target>Show entries without budget</target>
+      </trans-unit>
+      <trans-unit id="qBmPenL" resname="label.includeWithBudget">
+        <source>label.includeWithBudget</source>
+        <target>Show entries with budget</target>
       </trans-unit>
       <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
         <source>label.includeBudgetType_month</source>
