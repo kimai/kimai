@@ -319,7 +319,7 @@ final class InvoiceController extends AbstractController
     /**
      * @Route(path="/download/{id}", name="admin_invoice_download", methods={"GET"})
      * @Security("is_granted('access', invoice.getCustomer())")
-     * @Security("is_granted('create_invoice')")
+     * @Security("is_granted('view_invoice')")
      */
     public function downloadAction(Invoice $invoice): Response
     {
