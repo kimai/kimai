@@ -109,9 +109,11 @@ class CustomerEditForm extends AbstractType
             ])
             ->add('invoiceText', TextareaType::class, [
                 'label' => 'label.invoiceText',
+                'help' => 'help.invoiceText',
                 'required' => false,
             ])
             ->add('invoiceTemplate', InvoiceTemplateType::class, [
+                'help' => 'help.invoiceTemplate_customer',
                 'required' => false,
             ])
         ;
@@ -123,6 +125,7 @@ class CustomerEditForm extends AbstractType
                     'multiple' => true,
                     'expanded' => false,
                     'by_reference' => false,
+                    'help' => 'help.teams',
                 ]);
         }
 

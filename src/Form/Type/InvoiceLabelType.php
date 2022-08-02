@@ -10,26 +10,25 @@
 namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Form field type to select if something is billable.
+ * Form field type to edit an optional invoice label.
  */
-class BillableType extends AbstractType
+class InvoiceLabelType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.billable',
-            'help' => 'help.billable',
+            'label' => 'label.invoiceLabel',
+            'help' => 'help.invoiceLabel',
+            'required' => false,
         ]);
     }
 
     public function getParent(): string
     {
-        return YesNoType::class;
+        return TextareaType::class;
     }
 }

@@ -56,6 +56,7 @@ trait EntityFormTrait
         $builder
             ->add('visible', YesNoType::class, [
                 'label' => 'label.visible',
+                'help' => 'help.visible',
             ])
             ->add('billable', BillableType::class)
         ;

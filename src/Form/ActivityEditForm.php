@@ -11,6 +11,7 @@ namespace App\Form;
 
 use App\Entity\Activity;
 use App\Entity\Customer;
+use App\Form\Type\InvoiceLabelType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\TeamType;
 use App\Repository\ProjectRepository;
@@ -61,16 +62,14 @@ class ActivityEditForm extends AbstractType
                 'label' => 'label.description',
                 'required' => false,
             ])
-            ->add('invoiceText', TextareaType::class, [
-                'label' => 'label.invoiceText',
-                'required' => false,
-            ])
+            ->add('invoiceText', InvoiceLabelType::class)
         ;
 
         if ($isNew || !$isGlobal) {
             $builder
                 ->add('project', ProjectType::class, [
                     'required' => false,
+                    'help' => 'help.globalActivity',
                     'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer) {
                         $query = new ProjectFormTypeQuery($project, $customer);
                         $query->setUser($builder->getOption('user'));
@@ -89,6 +88,7 @@ class ActivityEditForm extends AbstractType
                     'multiple' => true,
                     'expanded' => false,
                     'by_reference' => false,
+                    'help' => 'help.teams',
                 ]);
         }
 

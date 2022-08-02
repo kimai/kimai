@@ -13,6 +13,7 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\Type\CustomerType;
 use App\Form\Type\DatePickerType;
+use App\Form\Type\InvoiceLabelType;
 use App\Form\Type\TeamType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
@@ -65,10 +66,7 @@ class ProjectEditForm extends AbstractType
                 'label' => 'label.description',
                 'required' => false,
             ])
-            ->add('invoiceText', TextareaType::class, [
-                'label' => 'label.invoiceText',
-                'required' => false,
-            ])
+            ->add('invoiceText', InvoiceLabelType::class)
             ->add('orderNumber', TextType::class, [
                 'label' => 'label.orderNumber',
                 'required' => false,
@@ -95,6 +93,7 @@ class ProjectEditForm extends AbstractType
             ])
             ->add('globalActivities', YesNoType::class, [
                 'label' => 'label.globalActivities',
+                'help' => 'help.globalActivities'
             ])
         ;
 
@@ -105,6 +104,7 @@ class ProjectEditForm extends AbstractType
                     'multiple' => true,
                     'expanded' => false,
                     'by_reference' => false,
+                    'help' => 'help.teams',
                 ]);
         }
 

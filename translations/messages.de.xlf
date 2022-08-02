@@ -225,6 +225,10 @@
         <source>label.teams</source>
         <target>Teams</target>
       </trans-unit>
+      <trans-unit id="3rJ5QDP" resname="help.teams">
+        <source>help.teams</source>
+        <target>Schränkt die Sichtbarkeit auf die ausgewählten Teams ein.</target>
+      </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>Erweiterungen</target>
@@ -293,7 +297,19 @@
       </trans-unit>
       <trans-unit id="74pEVx1" resname="label.invoiceText">
         <source>label.invoiceText</source>
+        <target>Rechnungsinformationen</target>
+      </trans-unit>
+      <trans-unit id="aOJITgv" resname="help.invoiceText">
+        <source>help.invoiceText</source>
+        <target>Dieser Text wird in Rechnungsdokumenten verwendet und kann z.B. zur Hinterlegung von Lieferbedingungen genutzt werden.</target>
+      </trans-unit>
+      <trans-unit id="RAWgK1Y" resname="label.invoiceLabel">
+        <source>label.invoiceLabel</source>
         <target>Rechnungstext</target>
+      </trans-unit>
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel">
+        <source>help.invoiceLabel</source>
+        <target>Dieser Text ersetzt den Namen des Objekts, was die detailliertere Bezeichnung von Rechnungsposten ermöglicht.</target>
       </trans-unit>
       <trans-unit id="ysOvPSq" resname="label.name">
         <source>label.name</source>
@@ -310,6 +326,10 @@
       <trans-unit id="CYpZwBz" resname="label.visible">
         <source>label.visible</source>
         <target>Sichtbar</target>
+      </trans-unit>
+      <trans-unit id="AeMGtJO" resname="help.visible">
+        <source>help.visible</source>
+        <target>Falls die Einstellung aus ist, wird das Objekt nicht in Auswahlboxen und Listen angezeigt.</target>
       </trans-unit>
       <trans-unit id="2ktNwkr" approved="yes" resname="label.budget">
         <source>label.budget</source>
@@ -398,6 +418,10 @@
       <trans-unit id="vkHr9AP" resname="label.billable">
         <source>label.billable</source>
         <target>Abrechenbar</target>
+      </trans-unit>
+      <trans-unit id="oq1jcSQ" resname="help.billable">
+        <source>help.billable</source>
+        <target>Falls die Einstellung aus ist, werden alle zukünftig erfassten Zeiteinträge als "nicht abrechenbar" markiert.</target>
       </trans-unit>
       <!-- Buttons & Actions -->
       <trans-unit id="zldXQq6" resname="label.actions">
@@ -976,7 +1000,15 @@
       </trans-unit>
       <trans-unit id="p0IprAw" resname="label.template">
         <source>label.template</source>
-        <target>Vorlage</target>
+        <target>Rechnungsvorlage</target>
+      </trans-unit>
+      <trans-unit id="2lL9ACs" resname="help.invoiceTemplate">
+        <source>help.invoiceTemplate</source>
+        <target>Die Rechnung wird mit dieser Vorlage generiert.</target>
+      </trans-unit>
+      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer">
+        <source>help.invoiceTemplate_customer</source>
+        <target>Rechnungen für diesen Kunden werden standardmäßig mit dieser Vorlage generiert. Sie kann bei Bedarf während der Rechnungserstellung geändert werden.</target>
       </trans-unit>
       <trans-unit id="zfIRxJh" resname="label.due_days">
         <source>label.due_days</source>
@@ -1188,6 +1220,14 @@
       <trans-unit id="G9hBaDJ" resname="label.globalActivities">
         <source>label.globalActivities</source>
         <target>Globale Tätigkeiten erlauben</target>
+      </trans-unit>
+      <trans-unit id="Fkrev.q" resname="help.globalActivities">
+        <source>help.globalActivities</source>
+        <target>Falls die Einstellung aus ist, können Zeiten nur mit projektspezifischen Tätigkeiten erfasst werden.</target>
+      </trans-unit>
+      <trans-unit id="FxwWVFI" resname="help.globalActivity">
+        <source>help.globalActivity</source>
+        <target>Wenn Sie kein Projekt auswählen wird diese Tätigkeit global und kann mit jedem Projekt kombinierbar ist. Wenn Sie ein Projekt auswählen, kann die Tätigkeit nur mit diesem verwendet werden. Die Einstellung kann nachträglich nicht mehr geändert werden.</target>
       </trans-unit>
       <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">
         <source>label.batch_meta_fields</source>
