@@ -69,8 +69,8 @@
         <source>users</source>
         <target>Brúkarar</target>
       </trans-unit>
-      <trans-unit id="pA.bYIk" resname="menu.admin_team">
-        <source>menu.admin_team</source>
+      <trans-unit id="xxoo5lW" resname="label.teams">
+        <source>label.teams</source>
         <target>Bólkar</target>
       </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
@@ -270,10 +270,6 @@
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Máni</target>
-      </trans-unit>
-      <trans-unit id="DZ7XGML" resname="profile.teams">
-        <source>profile.teams</source>
-        <target>Lið</target>
       </trans-unit>
       <trans-unit id="A6TLLQa" resname="profile.password">
         <source>profile.password</source>

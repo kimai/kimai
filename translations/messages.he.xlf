@@ -146,8 +146,8 @@
         <source>users</source>
         <target>משתמשים</target>
       </trans-unit>
-      <trans-unit id="pA.bYIk" resname="menu.admin_team">
-        <source>menu.admin_team</source>
+      <trans-unit id="xxoo5lW" resname="label.teams">
+        <source>label.teams</source>
         <target>צוותים</target>
       </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
@@ -421,10 +421,6 @@
       <trans-unit id="ygtTz8." resname="profile.roles">
         <source>profile.roles</source>
         <target>תפקידים</target>
-      </trans-unit>
-      <trans-unit id="DZ7XGML" resname="profile.teams">
-        <source>profile.teams</source>
-        <target>צוותים</target>
       </trans-unit>
       <trans-unit id="MQKiG33" resname="profile.preferences">
         <source>profile.preferences</source>

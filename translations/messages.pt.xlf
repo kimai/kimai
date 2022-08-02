@@ -886,10 +886,6 @@
         <source>label.lastLogin</source>
         <target>Última sessão</target>
       </trans-unit>
-      <trans-unit id="DZ7XGML" resname="profile.teams">
-        <source>profile.teams</source>
-        <target>Equipas</target>
-      </trans-unit>
       <trans-unit id="BxkmaKz" resname="label.appendTags">
         <source>label.appendTags</source>
         <target>Anexar etiquetas</target>
@@ -962,8 +958,8 @@
         <source>menu.doctor</source>
         <target>Doutor</target>
       </trans-unit>
-      <trans-unit id="pA.bYIk" resname="menu.admin_team">
-        <source>menu.admin_team</source>
+      <trans-unit id="xxoo5lW" resname="label.teams">
+        <source>label.teams</source>
         <target>Equipas</target>
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">

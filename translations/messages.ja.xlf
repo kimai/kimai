@@ -833,8 +833,8 @@
         <source>login_required</source>
         <target state="needs-translation">Missing permission. Redirect to login?</target>
       </trans-unit>
-      <trans-unit id="pA.bYIk" resname="menu.admin_team">
-        <source>menu.admin_team</source>
+      <trans-unit id="xxoo5lW" resname="label.teams">
+        <source>label.teams</source>
         <target state="needs-translation">Teams</target>
       </trans-unit>
       <trans-unit id="DpdNns0" resname="label.choice_pattern">
@@ -864,10 +864,6 @@
       <trans-unit id="BxkmaKz" resname="label.appendTags">
         <source>label.appendTags</source>
         <target state="needs-translation">Append tags</target>
-      </trans-unit>
-      <trans-unit id="DZ7XGML" resname="profile.teams">
-        <source>profile.teams</source>
-        <target state="needs-translation">Teams</target>
       </trans-unit>
       <trans-unit id="hO7mkmf" resname="label.lastLogin">
         <source>label.lastLogin</source>

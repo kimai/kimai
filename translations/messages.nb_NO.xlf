@@ -273,10 +273,6 @@
         <source>profile.roles</source>
         <target>Roller</target>
       </trans-unit>
-      <trans-unit id="DZ7XGML" resname="profile.teams">
-        <source>profile.teams</source>
-        <target>Lag</target>
-      </trans-unit>
       <trans-unit id="MQKiG33" resname="profile.preferences">
         <source>profile.preferences</source>
         <target>Innstillinger</target>
@@ -540,8 +536,8 @@
         <source>users</source>
         <target>Brukere</target>
       </trans-unit>
-      <trans-unit id="pA.bYIk" resname="menu.admin_team">
-        <source>menu.admin_team</source>
+      <trans-unit id="xxoo5lW" resname="label.teams">
+        <source>label.teams</source>
         <target>Lag</target>
       </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">

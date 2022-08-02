@@ -54,7 +54,7 @@ class UserSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('view_team')) {
-            $event->addActionToSubmenu('filter', 'teams', ['url' => $this->path('admin_team', ['users[]' => $user->getId()]), 'title' => 'menu.admin_team']);
+            $event->addActionToSubmenu('filter', 'teams', ['url' => $this->path('admin_team', ['users[]' => $user->getId()]), 'title' => 'label.teams']);
         }
 
         if ($event->isIndexView() && $this->isGranted('delete', $user)) {

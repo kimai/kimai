@@ -211,8 +211,8 @@
         <source>users</source>
         <target state="translated">使用者</target>
       </trans-unit>
-      <trans-unit id="pA.bYIk" resname="menu.admin_team">
-        <source>menu.admin_team</source>
+      <trans-unit id="xxoo5lW" resname="label.teams">
+        <source>label.teams</source>
         <target state="translated">團隊</target>
       </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
