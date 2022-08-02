@@ -15,7 +15,6 @@ use App\Repository\Loader\ProjectLoader;
 
 /**
  * @covers \App\Repository\Loader\ProjectLoader
- * @covers \App\Repository\Loader\ProjectIdLoader
  */
 class ProjectLoaderTest extends AbstractLoaderTest
 {
@@ -33,7 +32,6 @@ class ProjectLoaderTest extends AbstractLoaderTest
         $em = $this->getEntityManagerMock(4, $results);
 
         $sut = new ProjectLoader($em);
-
-        $sut->loadResults([$entity]);
+        $sut->loadResults([$entity, 4711]);
     }
 }

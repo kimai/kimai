@@ -114,7 +114,7 @@ class ProjectStatisticService
         $projects = $qb->getQuery()->getResult();
 
         // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager());
+        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager(), false, false, false);
         $loader->loadResults($projects);
 
         return $projects;
@@ -198,7 +198,7 @@ class ProjectStatisticService
         $projects = $qb->getQuery()->getResult();
 
         // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager());
+        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager(), false, false, false);
         $loader->loadResults($projects);
 
         return $projects;
@@ -690,7 +690,7 @@ class ProjectStatisticService
         $projects = $qb->getQuery()->getResult();
 
         // pre-cache customer objects instead of joining them
-        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager());
+        $loader = new ProjectLoader($this->repository->createQueryBuilder('p')->getEntityManager(), false, false, false);
         $loader->loadResults($projects);
 
         return $projects;

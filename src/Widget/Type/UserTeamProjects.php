@@ -85,7 +85,7 @@ class UserTeamProjects extends AbstractWidget
             }
         }
 
-        $loader = new ProjectLoader($this->entityManager);
+        $loader = new ProjectLoader($this->entityManager, false, false, false);
         $loader->loadResults($teamProjects);
 
         foreach ($teamProjects as $id => $project) {
