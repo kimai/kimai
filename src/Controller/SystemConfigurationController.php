@@ -31,7 +31,6 @@ use App\Form\Type\TrackingModeType;
 use App\Form\Type\WeekDaysType;
 use App\Form\Type\YesNoType;
 use App\Repository\ConfigurationRepository;
-use App\Validator\Constraints\AllowedHtmlTags;
 use App\Validator\Constraints\ColorChoices;
 use App\Validator\Constraints\DateTimeFormat;
 use App\Validator\Constraints\TimeFormat;
@@ -57,7 +56,7 @@ use Symfony\Component\Validator\Constraints\Regex;
  * Controller used for executing system relevant tasks.
  *
  * @Route(path="/admin/system-config")
- * @Security("is_granted('system_configuration')")
+ * @Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('system_configuration')")
  */
 final class SystemConfigurationController extends AbstractController
 {

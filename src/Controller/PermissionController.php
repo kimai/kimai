@@ -33,7 +33,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  * Controller used to manage user roles and role permissions.
  *
  * @Route(path="/admin/permissions")
- * @Security("is_granted('role_permissions')")
+ * @Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('role_permissions')")
  */
 final class PermissionController extends AbstractController
 {

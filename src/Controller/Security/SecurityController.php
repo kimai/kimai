@@ -32,8 +32,14 @@ final class SecurityController extends AbstractController
 
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
-
         $csrfToken = $this->tokenManager->getToken('authenticate')->getValue();
+
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->render('security/unlock.html.twig', [
+                'error' => $error,
+                'csrf_token' => $csrfToken,
+            ]);
+        }
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,

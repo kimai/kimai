@@ -162,11 +162,23 @@
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>resetting.check_email</source>
         <target>
-                    An email has been sent. It contains a link you must click to reset your password.
-                    Note: You can only request a new password once within %tokenLifetime% hours.
+            An email has been sent. It contains a link you must click to reset your password.
+            Note: You can only request a new password once within %tokenLifetime% hours.
 
-                    If you don't get an email check your spam folder or try again.
-                </target>
+            If you don't get an email check your spam folder or try again.
+        </target>
+      </trans-unit>
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title">
+        <source>security.unlock.title</source>
+        <target>Unlock account</target>
+      </trans-unit>
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro">
+        <source>security.unlock.intro</source>
+        <target>Please enter your password for full access</target>
+      </trans-unit>
+      <trans-unit id="853W5Iu" resname="security.unlock.button">
+        <source>security.unlock.button</source>
+        <target>Unlock</target>
       </trans-unit>
       <!-- Menu / Navbar items -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">

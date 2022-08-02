@@ -168,6 +168,18 @@
           Eventuell wurde diese E-Mail als Spam markiert, wenn sie nicht angekommen ist.
         </target>
       </trans-unit>
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title">
+        <source>security.unlock.title</source>
+        <target>Konto entsperren</target>
+      </trans-unit>
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro">
+        <source>security.unlock.intro</source>
+        <target>Bitte Passwort eingeben für vollen Zugriff</target>
+      </trans-unit>
+      <trans-unit id="853W5Iu" resname="security.unlock.button">
+        <source>security.unlock.button</source>
+        <target>Freischalten</target>
+      </trans-unit>
       <!-- Menu / Navbar items -->
       <trans-unit id="UoOv6mx" approved="yes" resname="menu.homepage">
         <source>menu.homepage</source>

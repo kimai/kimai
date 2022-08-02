@@ -35,7 +35,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Controller used to manage users in the admin part of the site.
  *
  * @Route(path="/admin/user")
- * @Security("is_granted('view_user')")
+ * @Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('view_user')")
  */
 final class UserController extends AbstractController
 {

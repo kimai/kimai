@@ -50,7 +50,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  * Controller used to create invoices and manage invoice templates.
  *
  * @Route(path="/invoice")
- * @Security("is_granted('view_invoice')")
+ * @Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('view_invoice')")
  */
 final class InvoiceController extends AbstractController
 {
