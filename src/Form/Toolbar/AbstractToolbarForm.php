@@ -415,8 +415,8 @@ abstract class AbstractToolbarForm extends AbstractType
             'search' => false,
             'choices' => [
                 'all' => TimesheetQuery::STATE_ALL,
-                'entryState.exported' => TimesheetQuery::STATE_EXPORTED,
-                'entryState.not_exported' => TimesheetQuery::STATE_NOT_EXPORTED
+                'yes' => TimesheetQuery::STATE_EXPORTED,
+                'no' => TimesheetQuery::STATE_NOT_EXPORTED
             ],
         ]);
     }
