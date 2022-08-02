@@ -78,14 +78,6 @@
         <source>label.theme.branding.company</source>
         <target>Công ty</target>
       </trans-unit>
-      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
-        <source>label.theme.branding.mini</source>
-        <target>Logo nhỏ (thanh bên bị sập)</target>
-      </trans-unit>
-      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
-        <source>label.theme.branding.title</source>
-        <target>Tiêu đề trình duyệt</target>
-      </trans-unit>
       <trans-unit id="Gdb5M4w" resname="rounding">
         <source>rounding</source>
         <target>Thời gian làm tròn</target>

@@ -114,14 +114,6 @@
         <source>label.theme.branding.company</source>
         <target state="needs-translation">Unternehmensname</target>
       </trans-unit>
-      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
-        <source>label.theme.branding.mini</source>
-        <target state="needs-translation">Mini Logo (zugeklappte Seitenleiste)</target>
-      </trans-unit>
-      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
-        <source>label.theme.branding.title</source>
-        <target state="needs-translation">Browser Titel</target>
-      </trans-unit>
       <trans-unit id=".CeyZwj" resname="label.company.financial_year">
         <source>label.company.financial_year</source>
         <target state="needs-translation">Geschäftsjahr</target>

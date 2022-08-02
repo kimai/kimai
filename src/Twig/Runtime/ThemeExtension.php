@@ -102,12 +102,7 @@ final class ThemeExtension implements RuntimeExtensionInterface
 
     public function generateTitle(?string $prefix = null, string $delimiter = ' – '): string
     {
-        $title = $this->configuration->getBrandingTitle();
-        if (null === $title || \strlen($title) === 0) {
-            $title = Constants::SOFTWARE;
-        }
-
-        return ($prefix ?? '') . $title . $delimiter . $this->translator->trans('time_tracking', [], 'messages');
+        return ($prefix ?? '') . Constants::SOFTWARE . $delimiter . $this->translator->trans('time_tracking', [], 'messages');
     }
 
     public function colorize(?string $color, ?string $identifier = null): string

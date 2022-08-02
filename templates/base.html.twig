@@ -77,25 +77,7 @@
     {%- endif -%}
 {% endblock %}
 
-{% block logo_mini %}
-    {% set mini = config('theme.branding.mini') %}
-    {% if mini is not empty %}
-        {{ mini|raw }}
-    {% else %}
-        <b>K</b>TT
-    {% endif %}
-{% endblock %}
-
 {% block page_actions_class %}col-auto ms-auto d-print-none{% endblock %}
-
-{% block logo_large %}
-    {% set company = config('theme.branding.company') %}
-    {% if company is not empty %}
-        {{ company|raw }}
-    {% else %}
-        <b>Kimai</b> - Time Tracking
-    {% endif %}
-{% endblock %}
 
 {% block footer %}
     {% if 'dashboard' in app.request.attributes.get('_route') %}

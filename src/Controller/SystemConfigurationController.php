@@ -564,22 +564,12 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration('theme.branding.company'))
                         ->setTranslationDomain('system-configuration')
                         ->setRequired(false)
-                        ->setType(TextType::class)
-                        ->setConstraints([new AllowedHtmlTags(['tags' => '<b><i><u><strong><em><img><svg>'])]),
-                    (new Configuration('theme.branding.mini'))
-                        ->setTranslationDomain('system-configuration')
-                        ->setRequired(false)
-                        ->setType(TextType::class)
-                        ->setConstraints([new AllowedHtmlTags(['tags' => '<b><i><u><strong><em><img><svg>'])]),
-                    (new Configuration('theme.branding.title'))
-                        ->setTranslationDomain('system-configuration')
-                        ->setRequired(false)
                         ->setType(TextType::class),
                     (new Configuration('company.financial_year'))
                         ->setTranslationDomain('system-configuration')
                         ->setRequired(false)
                         ->setType(DatePickerType::class)
-                    ->setOptions(['input' => 'string']),
+                        ->setOptions(['input' => 'string']),
                 ]),
         ];
     }

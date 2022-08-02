@@ -78,10 +78,6 @@
         <source>label.theme.branding.company</source>
         <target>Название компании</target>
       </trans-unit>
-      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
-        <source>label.theme.branding.mini</source>
-        <target>Мини лого (свернутая боковая панель)</target>
-      </trans-unit>
       <trans-unit id="agDfwdy" resname="Monday">
         <source>Monday</source>
         <target>Понедельник</target>
@@ -161,10 +157,6 @@
       <trans-unit id="Gdb5M4w" resname="rounding">
         <source>rounding</source>
         <target>Округление времени</target>
-      </trans-unit>
-      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
-        <source>label.theme.branding.title</source>
-        <target>Заголовок окна браузера</target>
       </trans-unit>
       <trans-unit id="AlBuZhv" resname="label.calendar.slot_duration">
         <source>label.calendar.slot_duration</source>

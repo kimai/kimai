@@ -110,14 +110,6 @@
         <source>label.theme.branding.company</source>
         <target>Ime poduzeća</target>
       </trans-unit>
-      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
-        <source>label.theme.branding.mini</source>
-        <target>Mali logotip (sklopljena bočna traka)</target>
-      </trans-unit>
-      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
-        <source>label.theme.branding.title</source>
-        <target>Naslov preglednika</target>
-      </trans-unit>
       <trans-unit id=".CeyZwj" resname="label.company.financial_year">
         <source>label.company.financial_year</source>
         <target>Fiskalna godina</target>

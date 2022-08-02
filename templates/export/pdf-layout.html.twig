@@ -92,7 +92,7 @@
     <td align="right">
     {% set company = config('theme.branding.company') %}
     {% if company is not empty %}
-        {{ company|raw }} &ndash; {{ now|date_time }}
+        {{ company }} &ndash; {{ now|date_time }}
     {% else %}
         {{ 'export.date_copyright'|trans({'%date%': now|date_time, '%kimai%': '<a href="' ~ constant('App\\Constants::HOMEPAGE') ~ '">' ~ constant('App\\Constants::SOFTWARE') ~ '</a>'})|raw }}
     {% endif %}

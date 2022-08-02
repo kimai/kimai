@@ -158,14 +158,6 @@
         <source>rounding</source>
         <target>Denboraren biribiltzea</target>
       </trans-unit>
-      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
-        <source>label.theme.branding.title</source>
-        <target>Arakatzailearen izenburua</target>
-      </trans-unit>
-      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
-        <source>label.theme.branding.mini</source>
-        <target>Mini logotipoa (itxitako alboko barra)</target>
-      </trans-unit>
       <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
         <source>label.theme.branding.company</source>
         <target>Enpresa</target>

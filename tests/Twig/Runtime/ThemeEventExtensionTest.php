@@ -9,7 +9,6 @@
 
 namespace App\Tests\Twig\Runtime;
 
-use App\Entity\Configuration;
 use App\Entity\User;
 use App\Event\ThemeEvent;
 use App\Tests\Configuration\TestConfigLoader;
@@ -43,9 +42,7 @@ class ThemeEventExtensionTest extends TestCase
                 ],
                 'branding' => [
                     'logo' => null,
-                    'mini' => null,
                     'company' => null,
-                    'title' => null,
                 ],
             ],
         ];
@@ -60,9 +57,7 @@ class ThemeEventExtensionTest extends TestCase
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $translator->method('trans')->willReturn('foo');
 
-        $configs = [
-            (new Configuration())->setName('theme.branding.title')->setValue($title)
-        ];
+        $configs = [];
         $loader = new TestConfigLoader($configs);
         $configuration = SystemConfigurationFactory::create($loader, $this->getDefaultSettings());
 
@@ -164,9 +159,9 @@ class ThemeEventExtensionTest extends TestCase
     public function testGetBrandedTitle()
     {
         $sut = $this->getSut(false, 'MyCompany');
-        $this->assertEquals('MyCompany – foo', $sut->generateTitle());
-        $this->assertEquals('sdfsdf | MyCompany – foo', $sut->generateTitle('sdfsdf | '));
-        $this->assertEquals('<b>MyCompany</b> ... foo', $sut->generateTitle('<b>', '</b> ... '));
-        $this->assertEquals('MyCompany | foo', $sut->generateTitle(null, ' | '));
+        $this->assertEquals('Kimai – foo', $sut->generateTitle());
+        $this->assertEquals('sdfsdf | Kimai – foo', $sut->generateTitle('sdfsdf | '));
+        $this->assertEquals('<b>Kimai</b> ... foo', $sut->generateTitle('<b>', '</b> ... '));
+        $this->assertEquals('Kimai | foo', $sut->generateTitle(null, ' | '));
     }
 }

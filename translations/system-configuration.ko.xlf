@@ -142,14 +142,6 @@
         <source>rounding</source>
         <target>시간 반올림</target>
       </trans-unit>
-      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
-        <source>label.theme.branding.title</source>
-        <target>브라우저 제목</target>
-      </trans-unit>
-      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
-        <source>label.theme.branding.mini</source>
-        <target>미니 로고 (접힌 사이드바)</target>
-      </trans-unit>
       <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
         <source>label.theme.branding.company</source>
         <target>회사 이름</target>

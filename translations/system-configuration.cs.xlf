@@ -162,14 +162,6 @@
         <source>rounding</source>
         <target>Zaokrouhlování času</target>
       </trans-unit>
-      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
-        <source>label.theme.branding.title</source>
-        <target>Název prohlížeče</target>
-      </trans-unit>
-      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
-        <source>label.theme.branding.mini</source>
-        <target>Mini logo (sbalený sidebar)</target>
-      </trans-unit>
       <trans-unit id="m5dLCoB" resname="label.theme.branding.logo">
         <source>label.theme.branding.logo</source>
         <target>Logo (adresa URL, nahradí firmu na přihlašovací stránce)</target>

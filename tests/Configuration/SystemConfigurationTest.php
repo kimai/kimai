@@ -100,10 +100,7 @@ class SystemConfigurationTest extends TestCase
                 'colors_limited' => true,
                 'branding' => [
                     'logo' => null,
-                    'mini' => null,
                     'company' => 'Acme Corp.',
-                    'title' => 'Fantastic Time-Tracking',
-                    'translation' => null,
                 ],
             ],
         ];
@@ -134,7 +131,6 @@ class SystemConfigurationTest extends TestCase
         $this->assertFalse($sut->find('timesheet.rules.allow_future_times'));
         $this->assertEquals(99, $sut->find('timesheet.active_entries.hard_limit'));
         $this->assertEquals('Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,#ffffff,,|#000000', $sut->getThemeColorChoices());
-        $this->assertEquals('Fantastic Time-Tracking', $sut->getBrandingTitle());
     }
 
     public function testDefaultWithLoader()

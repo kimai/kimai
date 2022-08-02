@@ -494,11 +494,4 @@ class SystemConfiguration
 
         return 'Silver|#c0c0c0';
     }
-
-    // ========== Branding configurations ==========
-
-    public function getBrandingTitle(): ?string
-    {
-        return $this->find('theme.branding.title');
-    }
 }

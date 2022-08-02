@@ -78,14 +78,6 @@
         <source>label.theme.branding.company</source>
         <target>公司名称</target>
       </trans-unit>
-      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
-        <source>label.theme.branding.mini</source>
-        <target>小标识（折叠侧面菜单）</target>
-      </trans-unit>
-      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
-        <source>label.theme.branding.title</source>
-        <target>浏览器名称</target>
-      </trans-unit>
       <trans-unit id="Gdb5M4w" resname="rounding">
         <source>rounding</source>
         <target>时间取整</target>

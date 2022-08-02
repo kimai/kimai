@@ -94,14 +94,6 @@
         <source>label.theme.branding.company</source>
         <target state="translated">Yritys</target>
       </trans-unit>
-      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
-        <source>label.theme.branding.mini</source>
-        <target state="translated">Mini Logo (piilotettu sivupalkki)</target>
-      </trans-unit>
-      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
-        <source>label.theme.branding.title</source>
-        <target state="translated">Selaimen otsikko</target>
-      </trans-unit>
       <trans-unit id="Gdb5M4w" resname="rounding">
         <source>rounding</source>
         <target state="translated">Ajan pyöristys</target>

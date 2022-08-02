@@ -3,7 +3,7 @@
 {% if logo is not empty %}
     <img src="{{ logo }}" style="max-width: 300px;">
 {% elseif company is not empty %}
-    <b>{{ company|raw }}</b>
+    <p>{{ company }}</p>
 {% else %}
-    {{- get_title('<b>', '</b><br>')|raw -}}
+    <p>{{ get_title('', '<br>')|raw }}</p>
 {% endif %}

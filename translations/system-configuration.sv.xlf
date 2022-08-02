@@ -178,14 +178,6 @@
         <source>label.company.financial_year</source>
         <target>Budgetår</target>
       </trans-unit>
-      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
-        <source>label.theme.branding.title</source>
-        <target>Webbläsarens titel</target>
-      </trans-unit>
-      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
-        <source>label.theme.branding.mini</source>
-        <target>Minilogo (infällt sidofält)</target>
-      </trans-unit>
       <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
         <source>label.theme.branding.company</source>
         <target>Företagsnamn</target>

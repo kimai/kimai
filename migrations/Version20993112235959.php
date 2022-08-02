@@ -40,6 +40,8 @@ final class Version20993112235959 extends AbstractMigration
         $this->addSql("DELETE FROM kimai2_configuration WHERE `name` = 'timesheet.active_entries.soft_limit'");
         $this->addSql("DELETE FROM kimai2_configuration WHERE `name` = 'theme.autocomplete_chars'");
         $this->addSql("DELETE FROM kimai2_configuration WHERE `name` = 'theme.tags_create'");
+        $this->addSql("DELETE FROM kimai2_configuration WHERE `name` = 'theme.branding.mini'");
+        $this->addSql("DELETE FROM kimai2_configuration WHERE `name` = 'theme.branding.title'");
         $this->addSql("UPDATE kimai2_configuration SET `value` = 'default' WHERE `name` = 'timesheet.mode' and `value` = 'duration_only'");
         $this->addSql("UPDATE kimai2_configuration SET `value` = 'default' WHERE `name` = 'defaults.user.theme'");
 
