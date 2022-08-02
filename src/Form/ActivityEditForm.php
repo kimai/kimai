@@ -12,6 +12,7 @@ namespace App\Form;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Form\Type\ProjectType;
+use App\Form\Type\TeamType;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectFormTypeQuery;
 use Symfony\Component\Form\AbstractType;
@@ -31,7 +32,7 @@ class ActivityEditForm extends AbstractType
     {
         $project = null;
         $customer = null;
-        $new = true;
+        $isNew = true;
         $isGlobal = false;
         $options['currency'] = null;
 
@@ -46,7 +47,7 @@ class ActivityEditForm extends AbstractType
                 $options['currency'] = $customer->getCurrency();
             }
 
-            $new = $entry->getId() === null;
+            $isNew = $entry->getId() === null;
         }
 
         $builder
@@ -66,7 +67,7 @@ class ActivityEditForm extends AbstractType
             ])
         ;
 
-        if ($new || !$isGlobal) {
+        if ($isNew || !$isGlobal) {
             $builder
                 ->add('project', ProjectType::class, [
                     'required' => false,
@@ -74,9 +75,20 @@ class ActivityEditForm extends AbstractType
                         $query = new ProjectFormTypeQuery($project, $customer);
                         $query->setUser($builder->getOption('user'));
                         $query->setIgnoreDate(true);
+                        $query->setWithCustomer(true);
 
                         return $repo->getQueryBuilderForFormType($query);
                     },
+                ]);
+        }
+
+        if ($isNew) {
+            $builder
+                ->add('teams', TeamType::class, [
+                    'required' => false,
+                    'multiple' => true,
+                    'expanded' => false,
+                    'by_reference' => false,
                 ]);
         }
 

@@ -13,6 +13,7 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\Type\CustomerType;
 use App\Form\Type\DatePickerType;
+use App\Form\Type\TeamType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -30,13 +31,13 @@ class ProjectEditForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $customer = null;
-        $id = null;
+        $isNew = false;
         $options['currency'] = null;
 
         if (isset($options['data'])) {
             /** @var Project $entry */
             $entry = $options['data'];
-            $id = $entry->getId();
+            $isNew = $entry->getId() === null;
 
             if (null !== $entry->getCustomer()) {
                 $customer = $entry->getCustomer();
@@ -88,7 +89,7 @@ class ProjectEditForm extends AbstractType
                 'force_time' => 'end',
             ]))
             ->add('customer', CustomerType::class, [
-                'placeholder' => (null === $id && null === $customer) ? '' : false,
+                'placeholder' => ($isNew && null === $customer) ? '' : false,
                 'customers' => $customer,
                 'query_builder_for_user' => true,
             ])
@@ -96,6 +97,16 @@ class ProjectEditForm extends AbstractType
                 'label' => 'label.globalActivities',
             ])
         ;
+
+        if ($isNew) {
+            $builder
+                ->add('teams', TeamType::class, [
+                    'required' => false,
+                    'multiple' => true,
+                    'expanded' => false,
+                    'by_reference' => false,
+                ]);
+        }
 
         $this->addCommonFields($builder, $options);
     }

@@ -56,23 +56,37 @@
                 </div>
             </div>
             {% endif %}
-            {% if form.invoiceText is defined %}
-                {{ form_row(form.invoiceText) }}
+            {% if form.teams is defined %}
+                <div class="row">
+                    <div class="col-12">
+                        {{ form_row(form.teams) }}
+                    </div>
+                </div>
             {% endif %}
             <div class="row">
                 <div class="col-md-4">
                     {{ form_row(form.visible) }}
                 </div>
-                <div class="col-md-4 text-center">
+                <div class="col-md-4">
                     {{ form_row(form.billable) }}
                 </div>
-                <div class="col-md-4 text-right">
+                <div class="col-md-4">
                     {{ form_row(form.globalActivities) }}
                 </div>
             </div>
             {% if form.metaFields is defined and form.metaFields is not empty %}
                 {{ form_row(form.metaFields) }}
             {% endif %}
+            {% embed '@theme/embeds/card.html.twig' with {collapsed: true} %}
+                {% import "macros/widgets.html.twig" as widgets %}
+                {% block box_title %}{{ 'invoices'|trans }}{% endblock %}
+                {% block box_body_class %}{% endblock %}
+                {% block box_body %}
+                    {% if form.invoiceText is defined %}
+                        {{ form_row(form.invoiceText) }}
+                    {% endif %}
+                {% endblock %}
+            {% endembed %}
             {{ form_rest(form) }}
         {% endblock %}
     {% endembed %}

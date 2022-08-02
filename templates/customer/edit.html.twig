@@ -84,6 +84,13 @@
                     </div>
                 </div>
             {% endif %}
+            {% if form.teams is defined %}
+            <div class="row">
+                <div class="col-12">
+                    {{ form_row(form.teams) }}
+                </div>
+            </div>
+            {% endif %}
             <div class="row">
                 <div class="col-md-6">
                     {{ form_row(form.visible) }}

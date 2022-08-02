@@ -12,6 +12,7 @@ namespace App\Form;
 use App\Entity\Customer;
 use App\Form\Type\InvoiceTemplateType;
 use App\Form\Type\MailType;
+use App\Form\Type\TeamType;
 use App\Form\Type\TimezoneType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
@@ -32,9 +33,12 @@ class CustomerEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $isNew = false;
+
         if (isset($options['data'])) {
             /** @var Customer $customer */
             $customer = $options['data'];
+            $isNew = $customer->getId() === null;
             $options['currency'] = $customer->getCurrency();
         }
 
@@ -111,6 +115,16 @@ class CustomerEditForm extends AbstractType
                 'required' => false,
             ])
         ;
+
+        if ($isNew) {
+            $builder
+                ->add('teams', TeamType::class, [
+                    'required' => false,
+                    'multiple' => true,
+                    'expanded' => false,
+                    'by_reference' => false,
+                ]);
+        }
 
         $this->addCommonFields($builder, $options);
     }
