@@ -902,10 +902,6 @@
         <source>help.fixedRate</source>
         <target>Cada registo de tempo obtém o mesmo valor, independentemente da sua duração</target>
       </trans-unit>
-      <trans-unit id="vTY9SUk" resname="label.plus_more">
-        <source>label.plus_more</source>
-        <target>mais +%count%</target>
-      </trans-unit>
       <trans-unit id="1PQHtXu" resname="label.progress">
         <source>label.progress</source>
         <target>Progresso</target>

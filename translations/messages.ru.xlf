@@ -740,10 +740,6 @@
         <source>label.color</source>
         <target>Цвет</target>
       </trans-unit>
-      <trans-unit id="vTY9SUk" resname="label.plus_more">
-        <source>label.plus_more</source>
-        <target>+%count% еще</target>
-      </trans-unit>
       <trans-unit id="1PQHtXu" resname="label.progress">
         <source>label.progress</source>
         <target>Прогресс</target>

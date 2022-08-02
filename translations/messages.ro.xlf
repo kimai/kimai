@@ -334,10 +334,6 @@
         <source>label.progress</source>
         <target>Progres</target>
       </trans-unit>
-      <trans-unit id="vTY9SUk" resname="label.plus_more">
-        <source>label.plus_more</source>
-        <target>+%count% mai mult</target>
-      </trans-unit>
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Pontajele mele</target>

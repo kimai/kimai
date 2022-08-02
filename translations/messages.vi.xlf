@@ -370,10 +370,6 @@
         <source>label.progress</source>
         <target>Phát triển</target>
       </trans-unit>
-      <trans-unit id="vTY9SUk" resname="label.plus_more">
-        <source>label.plus_more</source>
-        <target>+%count% hơn</target>
-      </trans-unit>
       <!--
               Timesheet
             -->

@@ -342,10 +342,6 @@
         <source>label.progress</source>
         <target>Egoera</target>
       </trans-unit>
-      <trans-unit id="vTY9SUk" resname="label.plus_more">
-        <source>label.plus_more</source>
-        <target>+%count% gehiago</target>
-      </trans-unit>
       <!--
               Timesheet
             -->

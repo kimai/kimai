@@ -926,10 +926,6 @@
         <source>help.fixedRate</source>
         <target>Každý záznam obdrží stejnou hodnotu, nezáleží na jeho délce</target>
       </trans-unit>
-      <trans-unit id="vTY9SUk" resname="label.plus_more">
-        <source>label.plus_more</source>
-        <target>+%count% víc</target>
-      </trans-unit>
       <trans-unit id="1PQHtXu" resname="label.progress">
         <source>label.progress</source>
         <target>Postup</target>

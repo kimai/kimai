@@ -668,10 +668,6 @@
         <source>dashboard.title</source>
         <target>Oversikt</target>
       </trans-unit>
-      <trans-unit id="vTY9SUk" resname="label.plus_more">
-        <source>label.plus_more</source>
-        <target>+%count% til</target>
-      </trans-unit>
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Min timeseddel</target>

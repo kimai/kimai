@@ -386,10 +386,6 @@
         <source>label.progress</source>
         <target state="translated">Edistyminen</target>
       </trans-unit>
-      <trans-unit id="vTY9SUk" resname="label.plus_more">
-        <source>label.plus_more</source>
-        <target state="translated">+%count% lisää</target>
-      </trans-unit>
       <!--
               Timesheet
             -->

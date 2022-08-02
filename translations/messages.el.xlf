@@ -422,10 +422,6 @@
         <source>label.progress</source>
         <target>Πρόοδος</target>
       </trans-unit>
-      <trans-unit id="vTY9SUk" resname="label.plus_more">
-        <source>label.plus_more</source>
-        <target>+%count% παραπάνω</target>
-      </trans-unit>
       <!--
               Timesheet
             -->

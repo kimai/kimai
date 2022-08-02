@@ -798,10 +798,6 @@
         <source>help.fixedRate</source>
         <target>Chaque enregistrement a la même valeur, quelle que soit sa durée</target>
       </trans-unit>
-      <trans-unit id="vTY9SUk" resname="label.plus_more">
-        <source>label.plus_more</source>
-        <target>+%count% de plus</target>
-      </trans-unit>
       <trans-unit id="1PQHtXu" resname="label.progress">
         <source>label.progress</source>
         <target>Progression</target>

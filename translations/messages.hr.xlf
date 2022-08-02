@@ -434,10 +434,6 @@
         <source>label.progress</source>
         <target>Napredak</target>
       </trans-unit>
-      <trans-unit id="vTY9SUk" resname="label.plus_more">
-        <source>label.plus_more</source>
-        <target>i još %count%</target>
-      </trans-unit>
       <!--
               Timesheet
             -->

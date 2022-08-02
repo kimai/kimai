@@ -1096,10 +1096,6 @@
         <source>error.directory_protected</source>
         <target state="needs-translation">Directory "%dir%" is write protected.</target>
       </trans-unit>
-      <trans-unit id="vTY9SUk" resname="label.plus_more">
-        <source>label.plus_more</source>
-        <target state="needs-translation">+%count% more</target>
-      </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
         <target state="translated">إيرادات هذه السنة المالية</target>

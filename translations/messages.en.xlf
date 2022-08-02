@@ -462,10 +462,6 @@
         <source>label.progress</source>
         <target>Progress</target>
       </trans-unit>
-      <trans-unit id="vTY9SUk" resname="label.plus_more">
-        <source>label.plus_more</source>
-        <target>+%count% more</target>
-      </trans-unit>
       <!-- Timesheet -->
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
