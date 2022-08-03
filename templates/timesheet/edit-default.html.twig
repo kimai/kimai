@@ -25,10 +25,12 @@
                         {{ form_errors(form.duration, {'label': false}) }}
                     </div>
                     {% endif %}
+                    {% if form.end_time is defined %}
                     <div class="col-sm-{{ size }}">
                         {{ form_widget(form.end_time, {'label': false}) }}
                         {{ form_errors(form.end_time, {'label': false}) }}
                     </div>
+                    {% endif %}
                 </div>
             {% else %}
                 {% if form.duration is defined %}
