@@ -17,7 +17,7 @@ final class ProjectViewQuery
 {
     private ?Customer $customer = null;
     private bool $includeNoWork = false;
-    private ?bool $budgetState = true;
+    private ?bool $budgetType = true;
 
     public function __construct(private DateTime $today, private User $user)
     {
@@ -28,27 +28,27 @@ final class ProjectViewQuery
         return $this->user;
     }
 
-    public function getBudgetState(): ?bool
+    public function getBudgetType(): ?bool
     {
-        return $this->budgetState;
+        return $this->budgetType;
     }
 
     /**
      * @internal
      */
-    public function setBudgetState(?bool $budgetState): void
+    public function setBudgetType(?bool $budgetType): void
     {
-        $this->budgetState = $budgetState;
+        $this->budgetType = $budgetType;
     }
 
     public function isIncludeWithoutBudget(): bool
     {
-        return $this->budgetState === false;
+        return $this->budgetType === false;
     }
 
     public function isIncludeWithBudget(): bool
     {
-        return $this->budgetState === true;
+        return $this->budgetType === true;
     }
 
     public function isIncludeNoWork(): bool

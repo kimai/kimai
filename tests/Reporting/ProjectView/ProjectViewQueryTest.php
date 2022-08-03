@@ -47,15 +47,15 @@ class ProjectViewQueryTest extends TestCase
         self::assertSame($customer, $sut->getCustomer());
         self::assertTrue($sut->isIncludeNoWork());
 
-        $sut->setBudgetState(true);
+        $sut->setBudgetType(true);
         self::assertTrue($sut->isIncludeWithBudget());
         self::assertFalse($sut->isIncludeWithoutBudget());
 
-        $sut->setBudgetState(false);
+        $sut->setBudgetType(false);
         self::assertFalse($sut->isIncludeWithBudget());
         self::assertTrue($sut->isIncludeWithoutBudget());
 
-        $sut->setBudgetState(null);
+        $sut->setBudgetType(null);
         self::assertFalse($sut->isIncludeWithBudget());
         self::assertFalse($sut->isIncludeWithoutBudget());
     }

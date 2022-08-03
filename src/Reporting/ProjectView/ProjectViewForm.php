@@ -27,7 +27,7 @@ class ProjectViewForm extends AbstractType
             'required' => false,
             'width' => false,
         ]);
-        $builder->add('budgetState', ChoiceType::class, [
+        $builder->add('budgetType', ChoiceType::class, [
             'label' => false,
             'required' => false,
             'placeholder' => null,

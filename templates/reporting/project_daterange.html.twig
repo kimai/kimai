@@ -45,15 +45,15 @@
                 {{ icon('filter', true) }}
             </button>
             <ul class="dropdown-menu checkbox-menu">
-                <li class="dropdown-item">
-                    {{ form_widget(form.includeNoWork) }}
-                </li>
-                <li class="dropdown-divider"></li>
                 {% for option in form.budgetType.children %}
                     <li class="dropdown-item">
                         {{ form_widget(option) }}
                     </li>
                 {% endfor %}
+                <li class="dropdown-divider"></li>
+                <li class="dropdown-item">
+                    {{ form_widget(form.includeNoWork) }}
+                </li>
             </ul>
         </div>
     </div>

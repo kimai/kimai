@@ -787,46 +787,32 @@ class ProjectStatisticService
             $projectViews[$row['id']]->setDurationMonth($row['duration']);
         }
 
-        // values for all time (not exported)
         $qb = clone $tplQb;
         $qb
-            ->andWhere('t.exported = :exported')
-            ->setParameter('exported', false, Types::BOOLEAN)
+            ->addSelect('t.exported')
+            ->addSelect('t.billable')
+            ->addGroupBy('t.exported')
+            ->addGroupBy('t.billable')
         ;
-
         $result = $qb->getQuery()->getScalarResult();
         foreach ($result as $row) {
-            $projectViews[$row['id']]->setNotExportedDuration($row['duration']);
-            $projectViews[$row['id']]->setNotExportedRate($row['rate']);
-        }
-
-        // values for all time (not exported and billable)
-        $qb = clone $tplQb;
-        $qb
-            ->andWhere('t.exported = :exported')
-            ->andWhere('t.billable = :billable')
-            ->setParameter('exported', false, Types::BOOLEAN)
-            ->setParameter('billable', true, Types::BOOLEAN)
-        ;
-
-        $result = $qb->getQuery()->getScalarResult();
-        foreach ($result as $row) {
-            $projectViews[$row['id']]->setNotBilledDuration($row['duration']);
-            $projectViews[$row['id']]->setNotBilledRate($row['rate']);
-        }
-
-        // values for all time (none billable)
-        $qb = clone $tplQb;
-        $qb
-            ->andWhere('t.billable = :billable')
-            ->groupBy('t.project')
-            ->setParameter('billable', true, Types::BOOLEAN)
-        ;
-
-        $result = $qb->getQuery()->getScalarResult();
-        foreach ($result as $row) {
-            $projectViews[$row['id']]->setBillableDuration($row['duration']);
-            $projectViews[$row['id']]->setBillableRate($row['rate']);
+            /** @var ProjectViewModel $view */
+            $view = $projectViews[$row['id']];
+            if ($row['billable'] === 1 && $row['exported'] === 1) {
+                $view->setBillableDuration($view->getBillableDuration() + $row['duration']);
+                $view->setBillableRate($view->getBillableRate() + $row['rate']);
+            } elseif ($row['billable'] === 1 && $row['exported'] === 0) {
+                $view->setBillableDuration($view->getBillableDuration() + $row['duration']);
+                $view->setBillableRate($view->getBillableRate() + $row['rate']);
+                $view->setNotExportedDuration($view->getNotExportedDuration() + $row['duration']);
+                $view->setNotExportedRate($view->getNotExportedRate() + $row['rate']);
+                $view->setNotBilledDuration($view->getNotBilledDuration() + $row['duration']);
+                $view->setNotBilledRate($view->getNotBilledRate() + $row['rate']);
+            } elseif ($row['billable'] === 0 && $row['exported'] === 0) {
+                $view->setNotExportedDuration($view->getNotExportedDuration() + $row['duration']);
+                $view->setNotExportedRate($view->getNotExportedRate() + $row['rate']);
+            }
+            // the last possible case $row['billable'] === 0 && $row['exported'] === 1 is extremely unlikely and not used
         }
 
         return array_values($projectViews);

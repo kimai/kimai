@@ -9,9 +9,11 @@
                 {{ icon('filter', true) }}
             </button>
             <ul class="dropdown-menu checkbox-menu">
-                <li class="dropdown-item">
-                    {{ form_widget(form.budgetState) }}
-                </li>
+                {% for option in form.budgetType.children %}
+                    <li class="dropdown-item">
+                        {{ form_widget(option) }}
+                    </li>
+                {% endfor %}
                 <li class="dropdown-divider"></li>
                 <li class="dropdown-item">
                     {{ form_widget(form.includeNoWork) }}
