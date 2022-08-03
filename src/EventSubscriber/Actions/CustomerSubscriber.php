@@ -51,6 +51,16 @@ class CustomerSubscriber extends AbstractActionsSubscriber
             $event->addAction('vcard', ['title' => 'vcard', 'translation_domain' => 'actions', 'icon' => 'far fa-address-card', 'url' => $this->path('customer_vcard', ['id' => $customer->getId()])]);
         }
 
+        if ($isListingView) {
+            if ($customer->isVisible() && $this->isGranted('create_project')) {
+                $event->addAction('create-project', [
+                    'icon' => 'create',
+                    'url' => $this->path('admin_project_create_with_customer', ['customer' => $customer->getId()]),
+                    'class' => 'modal-ajax-form'
+                ]);
+            }
+        }
+
         if ($event->countActions() > 0) {
             $event->addDivider();
         }
@@ -71,22 +81,17 @@ class CustomerSubscriber extends AbstractActionsSubscriber
             $event->addDivider();
         }
 
-        if ($isListingView) {
-            if ($customer->isVisible() && $this->isGranted('create_project')) {
-                $event->addAction('create-project', [
-                    'icon' => 'create',
-                    'url' => $this->path('admin_project_create_with_customer', ['customer' => $customer->getId()]),
-                    'class' => 'modal-ajax-form'
-                ]);
-            }
-        }
-
         if ($event->isIndexView() && $this->isGranted('delete', $customer)) {
             $event->addDelete($this->path('admin_customer_delete', ['id' => $customer->getId()]));
         }
 
-        if ($isListingView && $this->isGranted('report:project') && $this->isGranted('budget_any', 'project')) {
-            $event->addAction('report_project_view', ['title' => 'report_project_view', 'url' => $this->path('report_project_view', ['customer' => $customer->getId()]), 'icon' => 'reporting', 'translation_domain' => 'reporting']);
+        if ($this->isGranted('report:customer') && $this->isGranted('report:other')) {
+            $event->addActionToSubmenu('report', 'report_customer_monthly_projects', ['title' => 'report_customer_monthly_projects', 'url' => $this->path('report_customer_monthly_projects', ['customer' => $customer->getId()]), 'translation_domain' => 'reporting']);
+        }
+
+        if ($this->isGranted('report:project') && $this->isGranted('budget_any', 'project')) {
+            $event->addActionToSubmenu('report', 'daterange_projects', ['title' => 'report_project_daterange', 'url' => $this->path('report_project_daterange', ['customer' => $customer->getId()]), 'translation_domain' => 'reporting']);
+            $event->addActionToSubmenu('report', 'report_project_view', ['title' => 'report_project_view', 'url' => $this->path('report_project_view', ['customer' => $customer->getId()]), 'translation_domain' => 'reporting']);
         }
 
         if (!$isListingView) {
