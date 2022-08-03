@@ -41,7 +41,8 @@ class ProjectDateRangeForm extends AbstractType
         ]);
 
         $builder->add('budgetType', ChoiceType::class, [
-            'required' => true,
+            'placeholder' => null,
+            'required' => false,
             'multiple' => false,
             'expanded' => true,
             'choices' => [
