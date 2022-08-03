@@ -9,6 +9,7 @@
 
 namespace App\Reporting\CustomerMonthlyProjects;
 
+use App\Form\Type\CustomerType;
 use App\Form\Type\MonthPickerType;
 use App\Form\Type\ReportSumType;
 use Symfony\Component\Form\AbstractType;
@@ -22,11 +23,17 @@ class CustomerMonthlyProjectsForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('customer', CustomerType::class, [
+            'required' => false,
+            'width' => false,
+        ]);
+
         $builder->add('date', MonthPickerType::class, [
             'model_timezone' => $options['timezone'],
             'view_timezone' => $options['timezone'],
             'start_date' => $options['start_date'],
         ]);
+
         $builder->add('sumType', ReportSumType::class);
     }
 

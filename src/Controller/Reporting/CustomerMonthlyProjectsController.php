@@ -14,9 +14,9 @@ use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Reporting\CustomerMonthlyProjects\CustomerMonthlyProjects;
 use App\Reporting\CustomerMonthlyProjects\CustomerMonthlyProjectsForm;
+use App\Reporting\CustomerMonthlyProjects\CustomerMonthlyProjectsRepository;
 use App\Repository\Query\UserQuery;
 use App\Repository\UserRepository;
-use App\Timesheet\TimesheetStatisticService;
 use PhpOffice\PhpSpreadsheet\Reader\Html;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,20 +32,20 @@ final class CustomerMonthlyProjectsController extends AbstractController
     /**
      * @Route(path="/view", name="report_customer_monthly_projects", methods={"GET","POST"})
      */
-    public function report(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
+    public function report(Request $request, CustomerMonthlyProjectsRepository $repository, UserRepository $userRepository): Response
     {
         return $this->render(
             'reporting/customer/monthly_projects.html.twig',
-            $this->getData($request, $statisticService, $userRepository)
+            $this->getData($request, $repository, $userRepository)
         );
     }
 
     /**
      * @Route(path="/export", name="report_customer_monthly_projects_export", methods={"GET","POST"})
      */
-    public function export(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
+    public function export(Request $request, CustomerMonthlyProjectsRepository $repository, UserRepository $userRepository): Response
     {
-        $data = $this->getData($request, $statisticService, $userRepository);
+        $data = $this->getData($request, $repository, $userRepository);
 
         $content = $this->render('reporting/customer/monthly_projects_export.html.twig', $data)->getContent();
 
@@ -57,7 +57,7 @@ final class CustomerMonthlyProjectsController extends AbstractController
         return $writer->getFileResponse($spreadsheet);
     }
 
-    private function getData(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): array
+    private function getData(Request $request, CustomerMonthlyProjectsRepository $repository, UserRepository $userRepository): array
     {
         $currentUser = $this->getUser();
         $dateTimeFactory = $this->getDateTimeFactory();
@@ -94,7 +94,7 @@ final class CustomerMonthlyProjectsController extends AbstractController
         $next = clone $start;
         $next->modify('+1 month');
 
-        $stats = $statisticService->getGroupedByCustomerProjectActivityUser($start, $end, $allUsers);
+        $stats = $repository->getGroupedByCustomerProjectActivityUser($start, $end, $allUsers, $values->getCustomer());
 
         return [
             'dataType' => $values->getSumType(),
