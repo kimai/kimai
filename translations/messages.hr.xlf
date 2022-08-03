@@ -1230,10 +1230,6 @@
         <source>label.globalActivities</source>
         <target state="translated">Dozvoli globalne aktivnosti</target>
       </trans-unit>
-      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
-        <source>label.budgetIndependent</source>
-        <target state="translated">Prikaži neovisno o „vrsti budžeta”</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

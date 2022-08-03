@@ -1222,10 +1222,6 @@
         <source>label.invoiceText</source>
         <target state="translated">Texte de la facture</target>
       </trans-unit>
-      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
-        <source>label.budgetIndependent</source>
-        <target state="translated">Afficher sans tenir compte du « type de budget »</target>
-      </trans-unit>
       <trans-unit id="G9hBaDJ" resname="label.globalActivities">
         <source>label.globalActivities</source>
         <target state="translated">Autoriser les activités globales</target>
