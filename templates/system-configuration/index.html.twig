@@ -5,22 +5,48 @@
 {% block page_actions %}{{ actions.system_configuration('index') }}{% endblock %}
 
 {% block main %}
+<div class="row">
 
-    {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
-
-    {% for section in sections %}
-        {% set title = section.model.translation|trans({}, section.model.translationDomain) %}
-        {% if title == section.model.translation %}
-            {% set title = ('label.' ~ section.model.section)|trans %}
-        {% endif %}
-        {% embed formEditTemplate with {'title': title, 'form': section.form} %}
-            {% block form_body %}
-                {% for pref in form.children.configuration %}
-                    {{ form_widget(pref) }}
+    <div class="col-12 col-md-3 mb-3 d-none d-md-block">
+        <div class="card">
+            <div class="list-group list-group-flush">
+                {% for section in sections %}
+                    {% set title = section.model.translation|trans({}, section.model.translationDomain) %}
+                    {% if title == section.model.translation %}
+                        {% set title = ('label.' ~ section.model.section)|trans %}
+                    {% endif %}
+                    <a class="list-group-item d-flex" href="#{{ section.model.section }}">
+                        {{ title }}
+                        <small class="text-muted ms-auto">{{ section.form.children.configuration|length }}</small>
+                    </a>
                 {% endfor %}
-                {{ form_rest(form) }}
-            {% endblock %}
-        {% endembed %}
-    {% endfor %}
+            </div>
+        </div>
+    </div>
 
+    <div class="col-12 col-md-9">
+        <div class="row">
+            <div class="col-12">
+                {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+        
+                {% for section in sections %}
+                    {% set title = section.model.translation|trans({}, section.model.translationDomain) %}
+                    {% if title == section.model.translation %}
+                        {% set title = ('label.' ~ section.model.section)|trans %}
+                    {% endif %}
+                    {% embed formEditTemplate with {'title': title, 'form': section.form} %}
+                        {% block form_before %}<span id="{{ section.model.section }}"></span>{% endblock %}
+                        {% block form_body %}
+                            {% for pref in form.children.configuration %}
+                                {{ form_widget(pref) }}
+                            {% endfor %}
+                            {{ form_rest(form) }}
+                        {% endblock %}
+                    {% endembed %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
 {% endblock %}

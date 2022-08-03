@@ -103,7 +103,7 @@ final class SystemConfigurationController extends AbstractController
             ];
         }
 
-        return $this->render('system-configuration/index.html.twig', [
+        return $this->render('system-configuration/section.html.twig', [
             'sections' => $configurations,
         ]);
     }
@@ -281,16 +281,6 @@ final class SystemConfigurationController extends AbstractController
                     ->setLabel('user_auth_password_reset_token_ttl')
                     ->setConstraints([new NotNull(), new GreaterThanOrEqual(['value' => 60])])
                     ->setType(IntegerType::class),
-                /*
-                (new Configuration('ldap.activate'))
-                    ->setLabel('ldap_activate')
-                    ->setTranslationDomain('system-configuration')
-                    ->setType(YesNoType::class),
-                (new Configuration('saml.activate'))
-                    ->setLabel('saml_activate')
-                    ->setTranslationDomain('system-configuration')
-                    ->setType(YesNoType::class),
-                */
             ]);
 
         if (!$this->systemConfiguration->isSamlActive()) {
