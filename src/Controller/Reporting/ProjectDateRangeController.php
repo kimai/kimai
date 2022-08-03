@@ -33,7 +33,7 @@ final class ProjectDateRangeController extends AbstractController
         $form = $this->createFormForGetRequest(ProjectDateRangeForm::class, $query, [
             'timezone' => $user->getTimezone()
         ]);
-        $form->handleRequest($request);
+        $form->submit($request->query->all(), false);
 
         $dateRange = new DateRange(true);
         $dateRange->setBegin($query->getMonth());
