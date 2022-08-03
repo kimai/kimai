@@ -33,7 +33,10 @@ export default class KimaiCopyDataForm extends KimaiFormPlugin {
     {
         if (this._eventHandler === undefined) {
             this._eventHandler = (event) => {
-                const element = event.target;
+                let element = event.target;
+                if (!element.matches('a[data-form-widget="copy-data"]')) {
+                    element = element.parentNode; // mostly for icons
+                }
                 if (!element.matches('a[data-form-widget="copy-data"]') || element.dataset.target === undefined) {
                     return;
                 }
