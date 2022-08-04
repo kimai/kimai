@@ -48,7 +48,13 @@
         {% endif %}
         </div>
         <div class="pa-mobile d-inline-flex d-sm-none btn-list">
-            {{ _self.table_actions(actions, 'btn btn-dark') }}
+            {% set btnClass = 'btn' %}
+            {% if tabler_bundle.isNavbarOverlapping() %}
+                {% set btnClass = 'btn btn-dark' %}
+            {% elseif not tabler_bundle.isDarkMode() %}
+                {% set btnClass = 'btn btn-white' %}
+            {% endif %}
+            {{ _self.table_actions(actions, btnClass) }}
         </div>
     </div>
 {%- endmacro -%}
