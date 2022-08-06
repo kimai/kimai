@@ -1,38 +1,3 @@
-/* =========== DATAGRID =========== */
-/* Can be removed, once the latest tabler release is used */
-
-$datagrid-padding: 1.5rem !default;
-$datagrid-item-width: 15rem !default;
-
-.datagrid {
-    --#{$variable-prefix}datagrid-padding: #{$datagrid-padding};
-    --#{$variable-prefix}datagrid-item-width: #{$datagrid-item-width};
-
-    display: grid;
-    grid-gap: var(--#{$variable-prefix}datagrid-padding);
-    grid-template-columns: repeat(auto-fit, minmax(var(--#{$variable-prefix}datagrid-item-width), 1fr));
-}
-
-.datagrid-title {
-    @include subheader;
-    margin-bottom: .25rem;
-}
-/* =========== DATAGRID =========== */
-
-/* @see https://github.com/tabler/tabler/pull/1161 */
-.col-form-label {
-    display: block;
-    font-weight: $font-weight-medium;
-
-    &.required {
-        &:after {
-            content: "*";
-            margin-left: .25rem;
-            color: $red;
-        }
-    }
-}
-
 /* fix for vertical labels in date-time pickers, if they are used in half-column forms, e.g. "create tasks" or "create expenses" */
 fieldset legend.col-form-label {
     padding-top: 0;

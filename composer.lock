@@ -2320,12 +2320,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "9e13b2cdf234d233e8eddbe8f1c182a2195bdf28"
+                "reference": "e6985f6d7aa2036b04bca5e5fb73382e4dd648f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/9e13b2cdf234d233e8eddbe8f1c182a2195bdf28",
-                "reference": "9e13b2cdf234d233e8eddbe8f1c182a2195bdf28",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/e6985f6d7aa2036b04bca5e5fb73382e4dd648f7",
+                "reference": "e6985f6d7aa2036b04bca5e5fb73382e4dd648f7",
                 "shasum": ""
             },
             "require": {
@@ -2375,7 +2375,7 @@
             "description": "Admin/Backend theme bundle for Symfony based on Tabler.io",
             "support": {
                 "issues": "https://github.com/kevinpapst/TablerBundle/issues",
-                "source": "https://github.com/kevinpapst/TablerBundle/tree/main"
+                "source": "https://github.com/kevinpapst/TablerBundle/tree/0.6"
             },
             "funding": [
                 {
@@ -2387,7 +2387,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-07-31T18:14:06+00:00"
+            "time": "2022-08-05T10:23:07+00:00"
         },
         {
             "name": "laminas/laminas-code",

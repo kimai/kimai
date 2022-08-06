@@ -157,5 +157,9 @@
  */
 
 /*!
+ * [KIMAI] Notification: notifications for Kimai
+ */
+
+/*!
  * [KIMAI] Wrapper class for loading Kimai app in browser script scope
  */
