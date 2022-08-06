@@ -57,8 +57,8 @@ abstract class AbstractAmountPeriod extends AbstractWidget
         $data = $this->repository->getRevenue($begin, $end, null);
 
         $event = new RevenueStatisticEvent($begin, $end);
-        if ($data !== null) {
-            $event->addRevenue($data);
+        foreach ($data as $row) {
+            $event->addRevenue($row['currency'], $row['revenue']);
         }
         $this->dispatcher->dispatch($event);
 

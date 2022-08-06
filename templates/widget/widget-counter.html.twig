@@ -17,13 +17,9 @@
                     {{ title|trans }}
                 </div>
                 <div class="text-muted">
-                    {% if data is iterable %}
-                        {{ 'Invalid data' }}
-                    {% else %}
-                        {% block widget_data %}
-                            {{ data }}
-                        {% endblock %}
-                    {% endif %}
+                    {% block widget_data %}
+                        {{ data }}
+                    {% endblock %}
                 </div>
                 {% if not url is empty %}</a>{% endif %}
             </div>

@@ -15,13 +15,8 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractUserRevenuePeriod extends AbstractWidget
 {
-    private $repository;
-    private $dispatcher;
-
-    public function __construct(TimesheetRepository $repository, EventDispatcherInterface $dispatcher)
+    public function __construct(private TimesheetRepository $repository, private EventDispatcherInterface $dispatcher)
     {
-        $this->repository = $repository;
-        $this->dispatcher = $dispatcher;
     }
 
     public function getTitle(): string
@@ -62,8 +57,8 @@ abstract class AbstractUserRevenuePeriod extends AbstractWidget
         $data = $this->repository->getRevenue($begin, $end, $user);
 
         $event = new UserRevenueStatisticEvent($user, $begin, $end);
-        if ($data !== null) {
-            $event->addRevenue($data);
+        foreach ($data as $row) {
+            $event->addRevenue($row['currency'], $row['revenue']);
         }
         $this->dispatcher->dispatch($event);
 

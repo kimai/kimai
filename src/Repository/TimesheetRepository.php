@@ -200,9 +200,31 @@ class TimesheetRepository extends EntityRepository
         return $this->queryTimeRange($what, $begin, $end, $user, $billable);
     }
 
-    public function getRevenue(?DateTime $begin, ?DateTime $end, ?User $user)
+    public function getRevenue(?DateTime $begin, ?DateTime $end, ?User $user): array
     {
-        return $this->queryTimeRange('COALESCE(SUM(t.rate), 0)', $begin, $end, $user, true);
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb
+            ->from(Timesheet::class, 't')
+            ->addSelect('COALESCE(SUM(t.rate), 0) as revenue')
+            ->addSelect('c.currency as currency')
+            ->leftJoin('t.project', 'p')
+            ->leftJoin('p.customer', 'c')
+            ->groupBy('c.currency')
+        ;
+
+        if ($begin !== null) {
+            $qb->andWhere($qb->expr()->between('t.begin', ':from', ':to'))
+                ->setParameter('from', $begin)
+                ->setParameter('to', $end);
+        }
+
+        if ($user !== null) {
+            $qb->andWhere('t.user = :user')
+                ->setParameter('user', $user);
+        }
+
+        return $qb->getQuery()->getArrayResult();
     }
 
     /**

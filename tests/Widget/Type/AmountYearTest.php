@@ -26,7 +26,7 @@ class AmountYearTest extends AbstractWidgetTypeTest
 {
     protected function assertDefaultData(AbstractWidgetType $sut)
     {
-        self::assertEquals(0.0, $sut->getData());
+        self::assertEquals([], $sut->getData());
     }
 
     /**
@@ -35,6 +35,7 @@ class AmountYearTest extends AbstractWidgetTypeTest
     public function createSut(): AbstractWidgetType
     {
         $repository = $this->createMock(TimesheetRepository::class);
+        $repository->method('getStatistic')->willReturn([]);
         $configuration = $this->createMock(SystemConfiguration::class);
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
 

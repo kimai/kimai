@@ -61,8 +61,8 @@ final class UserAmountYear extends AbstractCounterYear
         $data = parent::getData($options);
 
         $event = new UserRevenueStatisticEvent($this->getUser(), $this->getBegin(), $this->getEnd());
-        if ($data !== null) {
-            $event->addRevenue($data);
+        foreach ($data as $row) {
+            $event->addRevenue($row['currency'], $row['revenue']);
         }
         $this->dispatcher->dispatch($event);
 

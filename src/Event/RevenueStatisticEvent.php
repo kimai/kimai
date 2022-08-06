@@ -16,14 +16,13 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class RevenueStatisticEvent extends Event
 {
-    private $begin;
-    private $end;
-    private $revenue = 0.0;
+    /**
+     * @var array<string, float>
+     */
+    private array $revenue = [];
 
-    public function __construct(?\DateTime $begin, ?\DateTime $end)
+    public function __construct(private ?\DateTime $begin, private ?\DateTime $end)
     {
-        $this->begin = $begin;
-        $this->end = $end;
     }
 
     public function getBegin(): ?\DateTime
@@ -36,13 +35,17 @@ final class RevenueStatisticEvent extends Event
         return $this->end;
     }
 
-    public function getRevenue(): float
+    public function getRevenue(): array
     {
         return $this->revenue;
     }
 
-    public function addRevenue(float $revenue): void
+    public function addRevenue(string $currency, float $revenue): void
     {
-        $this->revenue += $revenue;
+        if (!\array_key_exists($currency, $this->revenue)) {
+            $this->revenue[$currency] = 0.0;
+        }
+
+        $this->revenue[$currency] += $revenue;
     }
 }

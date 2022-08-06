@@ -17,12 +17,9 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class AmountYear extends AbstractCounterYear
 {
-    private $dispatcher;
-
-    public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration, EventDispatcherInterface $dispatcher)
+    public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration, private EventDispatcherInterface $dispatcher)
     {
         parent::__construct($repository, $systemConfiguration);
-        $this->dispatcher = $dispatcher;
     }
 
     public function getOptions(array $options = []): array
@@ -41,8 +38,8 @@ final class AmountYear extends AbstractCounterYear
         $data = parent::getData($options);
 
         $event = new RevenueStatisticEvent($this->getBegin(), $this->getEnd());
-        if ($data !== null) {
-            $event->addRevenue($data);
+        foreach ($data as $row) {
+            $event->addRevenue($row['currency'], $row['revenue']);
         }
         $this->dispatcher->dispatch($event);
 
