@@ -609,6 +609,19 @@
         <source>label.lastLogin</source>
         <target>Letzte Anmeldung</target>
       </trans-unit>
+      <trans-unit id="r0R38BU" resname="label.notifications">
+        <source>label.notifications</source>
+        <target>Benachrichtigungen</target>
+      </trans-unit>
+      <!-- Notifications -->
+      <trans-unit id="0ZWvn12" resname="notifications.welcome">
+        <source>notifications.welcome</source>
+        <target>Vielen Dank, dass Sie Benachrichtigungen zugestimmt haben!</target>
+      </trans-unit>
+      <trans-unit id="BrOQ92O" resname="notifications.denied">
+        <source>notifications.denied</source>
+        <target>Sie haben Benachrichtigungen abgelehnt. Lesen Sie bitte in der Dokumentation ihres Browsers nach, wie Sie diese aktivieren können.</target>
+      </trans-unit>
       <!-- Options for user-preference label.calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>

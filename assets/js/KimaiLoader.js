@@ -39,6 +39,7 @@ import KimaiTimesheetForm from "./forms/KimaiTimesheetForm";
 import KimaiTeamForm from "./forms/KimaiTeamForm";
 import KimaiCopyDataForm from "./forms/KimaiCopyDataForm";
 import KimaiDateNowForm from "./forms/KimaiDateNowForm";
+import KimaiNotification from "./plugins/KimaiNotification";
 
 export default class KimaiLoader {
 
@@ -58,6 +59,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiAlert());
         kimai.registerPlugin(new KimaiFetch());
         kimai.registerPlugin(new KimaiDateUtils());
+        kimai.registerPlugin(new KimaiNotification());
 
         // FORM PLUGINS
         kimai.registerPlugin(new KimaiFormSelect('.selectpicker', 'select[data-related-select]'));

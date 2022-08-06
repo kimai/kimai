@@ -11,27 +11,15 @@
 
 import KimaiPlugin from '../KimaiPlugin';
 
-/**
- * In the future the "lang" and "dir" options could be set via constructor.
- * @see https://developer.mozilla.org/de/docs/Web/API/notification
- */
 export default class KimaiNotification extends KimaiPlugin {
 
-    getId() {
+    getId()
+    {
         return 'notification';
     }
 
-    _checkNotificationPromiseSupport() {
-        try {
-            Notification.requestPermission().then();
-        } catch(e) {
-            return false;
-        }
-
-        return true;
-    }
-
-    hasNotificationSupport() {
+    isSupported()
+    {
         if (!window.Notification) {
             return false;
         }
@@ -40,44 +28,74 @@ export default class KimaiNotification extends KimaiPlugin {
             return false;
         }
 
-        if (Notification.permission === "granted") {
-            return true;
-        }
+        return Notification.permission === "granted";
+    }
 
-        let result = false;
-
+    request(callback)
+    {
         try {
             Notification.requestPermission().then((permission) => {
                 if (permission === "granted") {
-                    result = true;
+                    callback(true);
+                } else if (permission === "default") {
+                    callback(null);
+                } else {
+                    callback(false);
                 }
             });
         } catch (e) {
-            Notification.requestPermission(function (permission) {
+            Notification.requestPermission((permission) => {
                 if (permission === "granted") {
-                    result = true;
+                    callback(true);
+                } else if (permission === "default") {
+                    callback(null);
+                } else {
+                    callback(false);
                 }
             });
         }
-
-        return result;
     }
 
-    notify(title, message, icon, options) {
-        if (false === this.hasNotificationSupport()) {
-            return;
-        }
+    notify(title, message, icon, options)
+    {
+        this.request((permission) => {
 
-        let opts = { body: message };
+            if (permission !== true) {
+                /** @type KimaiAlert */
+                const ALERT = this.getPlugin('alert');
+                ALERT.info(message);
+            }
 
-        if (icon !== null) {
-            opts.icon = icon;
-        }
+            let opts = {
+                body: message,
+                dir: this.getConfigurations().isRTL() ? 'rtl' : 'ltr',
+            };
+            //opts.requireInteraction = true;
+            //opts.renotify = true;
+            /*
+            if (options.tag === undefined) {
+                opts.tag = 'kimai';
+            }
+            */
+            if (icon !== undefined && icon !== null) {
+                opts.icon = icon;
+            }
 
-        if (options !== null) {
-            opts = { ...opts, ...options};
-        }
+            let nTitle = 'Kimai';
+            if (title !== null) {
+                nTitle = nTitle + ': ' + title;
+            }
 
-        return new Notification(title, opts);
+            if (options !== undefined && options !== null) {
+                opts = { ...opts, ...options};
+            }
+
+            const notification = new window.Notification(nTitle, opts);
+
+            notification.onclick = function () {
+                window.focus();
+                notification.close();
+            };
+        });
     }
 }

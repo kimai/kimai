@@ -609,6 +609,19 @@
         <source>label.lastLogin</source>
         <target>Last login</target>
       </trans-unit>
+      <trans-unit id="r0R38BU" resname="label.notifications">
+        <source>label.notifications</source>
+        <target>Notifications</target>
+      </trans-unit>
+      <!-- Notifications -->
+      <trans-unit id="0ZWvn12" resname="notifications.welcome">
+        <source>notifications.welcome</source>
+        <target>Thank you for agreeing to notifications!</target>
+      </trans-unit>
+      <trans-unit id="BrOQ92O" resname="notifications.denied">
+        <source>notifications.denied</source>
+        <target>You have rejected notifications. Please refer to your browser documentation to find out how to enable them..</target>
+      </trans-unit>
       <!-- Options for user-preference label.calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>

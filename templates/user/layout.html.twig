@@ -23,8 +23,11 @@
                                 </div>
                                 {% endif %}
                             </div>
-                            <div class="col-auto">
+                            <div class="col-auto" id="profile-buttons">
                                 {% from '@theme/components/buttons.html.twig' import link_button %}
+                                {% if app.user == user %}
+                                {{ link_button('label.notifications'|trans, 'javascript:notificationStatus()', 'fas fa-bell', 'default') }}
+                                {% endif %}
                                 {{ link_button('label.email'|trans, ('mailto:' ~ user.email), 'mail', 'default') }}
                             </div>
                         </div>
@@ -34,4 +37,51 @@
             {% block profile_content %}{% endblock %}
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if app.user == user %}
+    <script>
+        function notificationStatus()
+        {
+            const notification = window.kimai.getPlugin('notification');
+            if (!notification.isSupported()) {
+                notification.request((result) => {
+                    if (result === false) {
+                        window.kimai.getPlugin('alert').info('{{ 'notifications.denied'|trans|e('js') }}');
+                    } else if (result === true) {
+                        notification.notify(null, '{{ 'notifications.welcome'|trans|e('js') }}');
+                    }
+                    buttonStatusCheck(window.kimai);
+                });
+            } else {
+                notification.notify(null, '{{ 'notifications.welcome'|trans|e('js') }}');
+            }
+        }
+
+        function buttonStatusCheck(kimai)
+        {
+            const button = document.querySelector('div#profile-buttons a');
+            const icon = button.querySelector('i');
+            const notification = kimai.getPlugin('notification');
+
+            if (notification.isSupported()) {
+                icon.classList.remove('fa-bell-slash');
+                icon.classList.add('fa-bell');
+                icon.classList.remove('text-danger');
+                icon.classList.add('text-success');
+            } else {
+                icon.classList.remove('fa-bell');
+                icon.classList.add('fa-bell-slash');
+                icon.classList.remove('text-success');
+                icon.classList.add('text-danger');
+            }
+        }
+
+        document.addEventListener('kimai.initialized', function(event) {
+            buttonStatusCheck(event.detail.kimai);
+        });
+    </script>
+    {% endif %}
 {% endblock %}
