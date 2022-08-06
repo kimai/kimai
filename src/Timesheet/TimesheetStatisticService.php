@@ -14,20 +14,11 @@ use App\Model\DailyStatistic;
 use App\Model\MonthlyStatistic;
 use App\Repository\TimesheetRepository;
 use DateTime;
-use Doctrine\ORM\EntityManagerInterface;
 
 final class TimesheetStatisticService
 {
-    /**
-     * @var TimesheetRepository
-     */
-    private $repository;
-    private $entityManager;
-
-    public function __construct(TimesheetRepository $repository, EntityManagerInterface $entityManager)
+    public function __construct(private TimesheetRepository $repository)
     {
-        $this->repository = $repository;
-        $this->entityManager = $entityManager;
     }
 
     /**
