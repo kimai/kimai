@@ -38,9 +38,10 @@ class SystemConfigurationControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/system-config/');
 
         $expectedForms = $this->getTestDataForms();
+        $expectedCount = \count($expectedForms) + 1; // the menu is another card
 
         $result = $client->getCrawler()->filter('section.content div.card');
-        $this->assertEquals(\count($expectedForms), \count($result));
+        $this->assertEquals($expectedCount, \count($result));
 
         $result = $client->getCrawler()->filter('section.content div.card form');
         $this->assertEquals(\count($expectedForms), \count($result));
