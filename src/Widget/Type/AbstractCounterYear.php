@@ -15,16 +15,11 @@ use App\Timesheet\DateTimeFactory;
 
 abstract class AbstractCounterYear extends AbstractSimpleStatisticChart
 {
-    private $systemConfiguration;
-    /**
-     * @var string|null
-     */
-    protected $titleYear;
+    private $isFinancialYear = false;
 
-    public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration)
+    public function __construct(TimesheetRepository $repository, private SystemConfiguration $systemConfiguration)
     {
         parent::__construct($repository);
-        $this->systemConfiguration = $systemConfiguration;
     }
 
     public function getData(array $options = [])
@@ -37,16 +32,20 @@ abstract class AbstractCounterYear extends AbstractSimpleStatisticChart
             $begin = $factory->createStartOfFinancialYear($financialYear);
             $this->setBegin($begin);
             $this->setEnd($factory->createEndOfFinancialYear($begin));
-            if (!empty($this->titleYear)) {
-                $this->setTitle($this->titleYear);
-            }
+            $this->isFinancialYear = true;
         }
 
         return parent::getData($options);
     }
 
+    abstract protected function getFinancialYearTitle(): string;
+
     public function getTitle(): string
     {
+        if ($this->isFinancialYear) {
+            return $this->getFinancialYearTitle();
+        }
+
         return 'stats.' . lcfirst($this->getId());
     }
 

@@ -35,6 +35,11 @@ final class UserAmountYear extends AbstractCounterYear
         return ['view_rate_own_timesheet'];
     }
 
+    protected function getFinancialYearTitle(): string
+    {
+        return 'stats.amountFinancialYear';
+    }
+
     public function getId(): string
     {
         return 'UserAmountYear';
@@ -50,7 +55,6 @@ final class UserAmountYear extends AbstractCounterYear
 
     public function getData(array $options = [])
     {
-        $this->titleYear = 'stats.amountFinancialYear';
         $this->setQuery(TimesheetRepository::STATS_QUERY_RATE);
         $this->setQueryWithUser(true);
 

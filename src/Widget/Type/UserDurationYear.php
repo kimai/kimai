@@ -34,10 +34,14 @@ final class UserDurationYear extends AbstractCounterYear
 
     public function getData(array $options = [])
     {
-        $this->titleYear = 'stats.durationFinancialYear';
         $this->setQuery(TimesheetRepository::STATS_QUERY_DURATION);
         $this->setQueryWithUser(true);
 
         return parent::getData($options);
+    }
+
+    protected function getFinancialYearTitle(): string
+    {
+        return 'stats.durationFinancialYear';
     }
 }

@@ -35,7 +35,6 @@ final class AmountYear extends AbstractCounterYear
 
     public function getData(array $options = [])
     {
-        $this->titleYear = 'stats.amountFinancialYear';
         $this->setQuery(TimesheetRepository::STATS_QUERY_RATE);
         $this->setQueryWithUser(false);
 
@@ -53,6 +52,11 @@ final class AmountYear extends AbstractCounterYear
     public function getId(): string
     {
         return 'AmountYear';
+    }
+
+    protected function getFinancialYearTitle(): string
+    {
+        return 'stats.amountFinancialYear';
     }
 
     public function getTemplateName(): string

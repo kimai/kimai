@@ -13,26 +13,14 @@ use App\Widget\WidgetInterface;
 
 abstract class AbstractWidgetType extends AbstractWidget
 {
-    /**
-     * @var string
-     */
-    private $id;
-    /**
-     * @var string
-     */
-    private $title = '';
-    /**
-     * @var int|null
-     */
-    private $height = WidgetInterface::HEIGHT_SMALL;
-    /**
-     * @var int
-     */
-    private $width = WidgetInterface::WIDTH_SMALL;
+    private ?string $id = null;
+    private string $title = '';
+    private int $height = WidgetInterface::HEIGHT_SMALL;
+    private int $width = WidgetInterface::WIDTH_SMALL;
     /**
      * @var array<string>
      */
-    private $permissions = [];
+    private array $permissions = [];
 
     public function getHeight(): int
     {
