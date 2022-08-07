@@ -9,6 +9,7 @@
 
 namespace App\Validator\Constraints;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet as TimesheetEntity;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -17,6 +18,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetBasicValidator extends ConstraintValidator
 {
+    public function __construct(private SystemConfiguration $systemConfiguration)
+    {
+    }
+
     /**
      * @param TimesheetEntity $timesheet
      * @param Constraint $constraint
@@ -69,7 +74,9 @@ final class TimesheetBasicValidator extends ConstraintValidator
      */
     protected function validateActivityAndProject(TimesheetEntity $timesheet, ExecutionContextInterface $context)
     {
-        if (null === ($activity = $timesheet->getActivity())) {
+        $activity = $timesheet->getActivity();
+
+        if ($this->systemConfiguration->isTimesheetRequiresActivity() && null === $activity) {
             $context->buildViolation('An activity needs to be selected.')
                 ->atPath('activity')
                 ->setTranslationDomain('validators')
@@ -85,11 +92,13 @@ final class TimesheetBasicValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        if (null === $activity || null === $project) {
+        $hasActivity = null !== $activity;
+
+        if (null === $project) {
             return;
         }
 
-        if (null !== $activity->getProject() && $activity->getProject() !== $project) {
+        if ($hasActivity && null !== $activity->getProject() && $activity->getProject() !== $project) {
             $context->buildViolation('Project mismatch, project specific activity and timesheet project are different.')
                 ->atPath('project')
                 ->setTranslationDomain('validators')
@@ -100,7 +109,7 @@ final class TimesheetBasicValidator extends ConstraintValidator
         $timesheetEnd = $timesheet->getEnd();
         $newOrStarted = null === $timesheetEnd || $timesheet->getId() === null;
 
-        if ($newOrStarted && !$activity->isVisible()) {
+        if ($newOrStarted && $hasActivity && !$activity->isVisible()) {
             $context->buildViolation('Cannot start a disabled activity.')
                 ->atPath('activity')
                 ->setTranslationDomain('validators')
@@ -124,7 +133,7 @@ final class TimesheetBasicValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        if (!$project->isGlobalActivities() && $activity->isGlobal()) {
+        if ($hasActivity && !$project->isGlobalActivities() && $activity->isGlobal()) {
             $context->buildViolation('Global activities are forbidden for the selected project.')
                 ->atPath('activity')
                 ->setTranslationDomain('validators')

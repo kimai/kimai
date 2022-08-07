@@ -93,9 +93,11 @@ final class TimesheetLoader implements LoaderInterface
             ->execute();
 
         if ($this->fullyHydrated) {
-            $activityIds = array_map(function (Timesheet $timesheet) {
-                return $timesheet->getActivity()->getId();
-            }, $timesheets);
+            $activityIds = array_filter(array_map(function (Timesheet $timesheet) {
+                return $timesheet->getActivity()?->getId();
+            }, $timesheets), function ($id) {
+                return $id !== null;
+            });
 
             $qb = $em->createQueryBuilder();
             $qb->select('PARTIAL a.{id}', 'meta')

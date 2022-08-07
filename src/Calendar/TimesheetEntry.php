@@ -40,8 +40,8 @@ final class TimesheetEntry implements DragAndDropEntry
         return [
             // restarting a timesheet should not copy the description - @version 1.21
             //'description' => $this->timesheet->getDescription(),
-            'activity' => $this->timesheet->getActivity() !== null ? $this->timesheet->getActivity()->getId() : null,
-            'project' => $this->timesheet->getProject() !== null ? $this->timesheet->getProject()->getId() : null,
+            'activity' => $this->timesheet->getActivity()?->getId(),
+            'project' => $this->timesheet->getProject()?->getId(),
             'tags' => $tags,
         ];
     }

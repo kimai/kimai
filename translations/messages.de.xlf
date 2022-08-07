@@ -1395,6 +1395,10 @@
         <source>extended_settings</source>
         <target>Erweiterte Einstellungen</target>
       </trans-unit>
+      <trans-unit id="ZZaqTEr" resname="no_activity">
+        <source>no_activity</source>
+        <target>Ohne Tätigkeit</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

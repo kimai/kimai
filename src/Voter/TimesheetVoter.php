@@ -159,19 +159,19 @@ final class TimesheetVoter extends Voter
         // we could check the amount of active entries (maybe slow)
         // if a teamlead starts an entry for another user, check that this user is part of his team (needs to be done for teams)
 
-        if (null === $timesheet->getActivity()) {
-            return false;
-        }
-
         if (null === $timesheet->getProject()) {
             return false;
         }
 
-        if (!$timesheet->getActivity()->isVisible() || !$timesheet->getProject()->isVisible()) {
+        if (!$timesheet->getProject()->isVisible()) {
             return false;
         }
 
         if (!$timesheet->getProject()->getCustomer()->isVisible()) {
+            return false;
+        }
+
+        if ($timesheet->getActivity() !== null && !$timesheet->getActivity()->isVisible()) {
             return false;
         }
 
