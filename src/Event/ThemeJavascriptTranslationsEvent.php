@@ -39,7 +39,9 @@ final class ThemeJavascriptTranslationsEvent extends Event
         'confirm.delete' => ['confirm.delete', 'messages'],
         'delete' => ['action.delete', 'messages'],
         'login.required' => ['login_required', 'messages'],
-        'modal.dirty' => ['modal.dirty', 'messages']
+        'modal.dirty' => ['modal.dirty', 'messages'],
+        'select.search.notfound' => ['search.no_results', 'messages'],
+        'select.search.create' => ['select.add_new', 'messages'],
     ];
 
     public function getTranslations(): array

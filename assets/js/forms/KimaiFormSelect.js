@@ -75,18 +75,17 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
         };
 
         let render = {
-            option_create: function (data, escape) {
-                const tpl = node.dataset['transAddResult'] ?? 'Add %input% &hellip;';
-                const tplReplaced = tpl.replace('%input%', '<strong>' + escape(data.input) + '</strong>')
+            option_create: (data, escape) => {
+                const tpl = this.translate('select.search.create');
+                const tplReplaced = tpl.replace('%input%', '<strong>' + escape(data.input) + '</strong>');
                 return '<div class="create">' + tplReplaced + '</div>';
             },
-            no_results: function (data, escape) {
-                const tpl = node.dataset['transNoResult'] ?? 'No results found for "%input%"';
-                const tplReplaced = tpl.replace('%input%', '<strong>' + escape(data.input) + '</strong>')
+            no_results: (data, escape) => {
+                const tpl = this.translate('select.search.notfound');
+                const tplReplaced = tpl.replace('%input%', '<strong>' + escape(data.input) + '</strong>');
                 return '<div class="no-results">' + tplReplaced + '</div>';
             },
         };
-
 
         if (node.dataset['create'] !== undefined && node.dataset['create'] === 'true') {
             options = {...options, ...{
@@ -107,34 +106,28 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
         }
 
         if (node.dataset['renderer'] !== undefined && node.dataset['renderer'] === 'color') {
-            render = {...render, ...{
-                render: {
-                    option: function(data, escape) {
-                        return '<div class="list-group-item border-0 p-1 ps-2"><span style="background-color:' + data.value + '; width: 20px; height: 20px; display: inline-block; margin-right: 10px;">&nbsp;</span>' + escape(data.text) + '</div>';
-                    },
-                    item: function(data, escape) {
-                        return '<div><span style="background-color:' + data.value + '; width: 20px; height: 20px; display: inline-block; margin-right: 10px;">&nbsp;</span>' + escape(data.text) + '</div>';
-                    }
+            options.render = {...render, ...{
+                option: function(data, escape) {
+                    return '<div class="list-group-item border-0 p-1 ps-2"><span style="background-color:' + data.value + '; width: 20px; height: 20px; display: inline-block; margin-right: 10px;">&nbsp;</span>' + escape(data.text) + '</div>';
+                },
+                item: function(data, escape) {
+                    return '<div><span style="background-color:' + data.value + '; width: 20px; height: 20px; display: inline-block; margin-right: 10px;">&nbsp;</span>' + escape(data.text) + '</div>';
                 }
             }};
         } else {
-            render = {...render, ...{
-                render: {
-                    // the empty entry would collapse and only show as a tiny 5px line if there is no content inside
-                    option: function(data, escape) {
-                        let text = data.text;
-                        if (text === null || text.trim() === '') {
-                            text = '&nbsp;';
-                        } else {
-                            text = escape(text);
-                        }
-                        return '<div>' + text + '</div>';
+            options.render = {...render, ...{
+                // the empty entry would collapse and only show as a tiny 5px line if there is no content inside
+                option: function(data, escape) {
+                    let text = data.text;
+                    if (text === null || text.trim() === '') {
+                        text = '&nbsp;';
+                    } else {
+                        text = escape(text);
                     }
+                    return '<div>' + text + '</div>';
                 }
             }};
         }
-
-        options = {...options, ...render};
 
         const select = new TomSelect(node, options);
         node.addEventListener('data-reloaded', (event) => {

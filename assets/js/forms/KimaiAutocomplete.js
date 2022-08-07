@@ -41,7 +41,7 @@ export default class KimaiAutocomplete extends KimaiFormPlugin {
             }
 
             new TomSelect(node, {
-                // if there are more than 500, they need to be found by "tipping"
+                // if there are more than 500, they need to be found by "typing"
                 maxOptions: 500,
                 // the autocomplete is ONLY used, when the user can create tags
                 create: node.dataset['create'] !== undefined && node.dataset['create'] === 'true',
@@ -49,28 +49,28 @@ export default class KimaiAutocomplete extends KimaiFormPlugin {
                 shouldLoad: function(query) {
                     return query.length >= minChars;
                 },
-                load: function(query, callback) {
+                load: (query, callback) => {
                     API.get(apiUrl, {'name': query}, (data) => {
                         const results = [].slice.call(data).map((result) => {
                             return {text: result, value: result};
                         });
                         callback(results);
-                    }, function() {
+                    }, () => {
                         callback();
                     });
                 },
                 render: {
                     // eslint-disable-next-line
-                    not_loading: function (data, escape) {
+                    not_loading: (data, escape) => {
                         // no default content
                     },
-                    option_create: function (data, escape) {
-                        const tpl = node.dataset['transAddResult'] ?? 'Add %input% &hellip;';
+                    option_create: (data, escape) => {
+                        const tpl = this.translate('select.search.create');
                         const tplReplaced = tpl.replace('%input%', '<strong>' + escape(data.input) + '</strong>')
                         return '<div class="create">' + tplReplaced + '</div>';
                     },
-                    no_results: function (data, escape) {
-                        const tpl = node.dataset['transNoResult'] ?? 'No results found for "%input%"';
+                    no_results: (data, escape) => {
+                        const tpl = this.translate('select.search.notfound');
                         const tplReplaced = tpl.replace('%input%', '<strong>' + escape(data.input) + '</strong>')
                         return '<div class="no-results">' + tplReplaced + '</div>';
                     },

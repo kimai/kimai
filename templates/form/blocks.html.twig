@@ -289,10 +289,6 @@
 {%- endblock weekpicker_widget %}
 
 {% block tags_widget %}
-    {%- set attr = attr|merge({
-        'data-trans-no-result': 'tags.no_results'|trans,
-        'data-trans-add-result': 'tags.add_new'|trans
-    }) -%}
     {% if form.vars.choices is defined %}
         {{ block('choice_widget_collapsed') }}
     {% else %}
