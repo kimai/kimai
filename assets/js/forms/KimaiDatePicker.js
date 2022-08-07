@@ -44,24 +44,14 @@ export default class KimaiDatePicker extends KimaiFormPlugin {
         const FIRST_DOW = this.getConfigurations().getFirstDayOfWeek(false);
         const LANGUAGE = this.getConfigurations().getLanguage();
 
-        let options = {};
-
-        let previous = `<i class="fas fa-chevron-left"></i>`;
-        let next = `<i class="fas fa-chevron-right"></i>`;
-
-        if (this.getConfigurations().isRTL()) {
-            previous = `<i class="fas fa-chevron-right"></i>`;
-            next = `<i class="fas fa-chevron-left"></i>`;
-        }
-
-        options = {...options, ...{
+        let options = {
             buttonText: {
-                previousMonth: previous,
-                nextMonth: next,
+                previousMonth: `<i class="fas fa-chevron-left"></i>`,
+                nextMonth: `<i class="fas fa-chevron-right"></i>`,
                 apply: this.translate('confirm'),
                 cancel: this.translate('cancel'),
             },
-        }};
+        };
 
         const newPickers = [].slice.call(form.querySelectorAll(this._selector)).map((element) => {
             if (element.dataset.format === undefined) {
