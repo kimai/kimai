@@ -37,7 +37,7 @@
             <span class="progress-text">
                 {{ currentFormatted }}
             </span>
-            <span class="progress-number">
+            <span class="progress-number text-end">
                 <strong>
                     {{ maxFormatted }}
                 </strong>
@@ -71,7 +71,7 @@
                 {{ title }}
                 {% if percentReached >= 0 and subTitle is not empty %} &ndash; {{ percentReached|number_format(2) }}%{% endif %}
             </span>
-            <span class="progress-number">
+            <span class="progress-number text-end">
                 {% if percentReached >= 0 and subTitle is empty %}
                     {{ percentReached|number_format(2) }}%
                 {% elseif subTitle is not empty %}
