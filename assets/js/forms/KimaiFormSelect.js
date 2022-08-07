@@ -76,8 +76,12 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
 
         let render = {
             option_create: (data, escape) => {
+                const name = escape(data.input);
+                if (name.length < 3) {
+                    return null;
+                }
                 const tpl = this.translate('select.search.create');
-                const tplReplaced = tpl.replace('%input%', '<strong>' + escape(data.input) + '</strong>');
+                const tplReplaced = tpl.replace('%input%', '<strong>' + name + '</strong>');
                 return '<div class="create">' + tplReplaced + '</div>';
             },
             no_results: (data, escape) => {
@@ -94,8 +98,6 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
             options = {...options, ...{
                 persist: true,
                 create: true,
-                // called when a new item is added: unfortunately triggers reloading related selects
-                // onOptionAdd: (value, data) => {},
             }};
         } else {
             options = {...options, ...{
