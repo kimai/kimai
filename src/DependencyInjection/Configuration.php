@@ -53,13 +53,14 @@ class Configuration implements ConfigurationInterface
                 ->append($this->getLdapNode())
                 ->append($this->getSamlNode())
                 ->append($this->getQuickEntryNode())
+                ->append($this->getActivityNode())
             ->end()
         ->end();
 
         return $treeBuilder;
     }
 
-    private function getQuickEntryNode()
+    private function getQuickEntryNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('quick_entry');
         /** @var ArrayNodeDefinition $node */
@@ -76,6 +77,24 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->integerNode('minimum_rows')
                     ->defaultValue(3)
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    private function getActivityNode(): ArrayNodeDefinition
+    {
+        $builder = new TreeBuilder('activity');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->booleanNode('allow_inline_create')
+                    ->defaultValue(true)
                 ->end()
             ->end()
         ;
@@ -287,7 +306,7 @@ class Configuration implements ConfigurationInterface
         return $node;
     }
 
-    private function getExportNode()
+    private function getExportNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('export');
         /** @var ArrayNodeDefinition $node */

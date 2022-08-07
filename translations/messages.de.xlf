@@ -1379,11 +1379,11 @@
         <source>api_password.missing_description</source>
         <target>Sie haben noch kein API Passwort hinterlegt. Aus Sicherheitsgründen ist die Nutzung der API bis zur Hinterlegung eines Passworts für Sie nicht nutzbar.</target>
       </trans-unit>
-      <trans-unit id="za1AHbg" resname="search.no_results">
+      <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
         <target>Kein Ergebnis gefunden für "%input%"</target>
       </trans-unit>
-      <trans-unit id="Gphgnvt" resname="select.add_new">
+      <trans-unit id="biHjm0h" resname="select.add_new">
         <source>select.add_new</source>
         <target>Neu erstellen mit dem Namen "%input%"</target>
       </trans-unit>

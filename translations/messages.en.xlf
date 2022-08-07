@@ -1379,11 +1379,11 @@
         <source>api_password.missing_description</source>
         <target>You have not yet entered an API password. For security reasons, you cannot use the API until you have saved a password.</target>
       </trans-unit>
-      <trans-unit id="za1AHbg" resname="search.no_results">
+      <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
         <target>No results found for "%input%"</target>
       </trans-unit>
-      <trans-unit id="Gphgnvt" resname="select.add_new">
+      <trans-unit id="biHjm0h" resname="select.add_new">
         <source>select.add_new</source>
         <target>Create new with the name "%input%"</target>
       </trans-unit>

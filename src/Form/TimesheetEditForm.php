@@ -107,9 +107,11 @@ class TimesheetEditForm extends AbstractType
             $this->addCustomer($builder, $customer);
         }
 
+        $allowCreate = (bool) $this->systemConfiguration->find('activity.allow_inline_create');
+
         $this->addProject($builder, $isNew, $project, $customer);
         $this->addActivity($builder, $activity, $project, [
-            'allow_create' => $options['create_activity'],
+            'allow_create' => $allowCreate && $options['create_activity'],
         ]);
 
         $descriptionOptions = ['required' => false];
@@ -402,6 +404,7 @@ class TimesheetEditForm extends AbstractType
             'include_exported' => false,
             'include_billable' => true,
             'include_rate' => true,
+            'create_activity' => false,
             'docu_chapter' => 'timesheet.html',
             'method' => 'POST',
             'date_format' => null,

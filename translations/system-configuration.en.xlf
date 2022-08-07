@@ -282,6 +282,10 @@
         <source>label.calendar.title_pattern</source>
         <target>Display of the titles of calendar entries</target>
       </trans-unit>
+      <trans-unit id="Uw6ZiIJ" resname="label.activity.allow_inline_create">
+        <source>label.activity.allow_inline_create</source>
+        <target>Allow creation of activities in time-tracking form</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
