@@ -91,6 +91,8 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
             options = {...options, ...{
                 persist: true,
                 create: true,
+                // called when a new item is added: unfortunately triggers reloading related selects
+                // onOptionAdd: (value, data) => {},
             }};
         } else {
             options = {...options, ...{
