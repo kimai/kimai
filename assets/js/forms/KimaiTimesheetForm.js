@@ -59,6 +59,16 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
             delete this._durationToggleListener;
             delete this._durationToggle;
         }
+
+        if (this._activity !== undefined) {
+            this._activity.removeEventListener('create', this._activityListener);
+            delete this._activityListener;
+            delete this._activity;
+        }
+
+        if (this._project !== undefined) {
+            delete this._project;
+        }
     }
 
     activateForm(form)
@@ -68,6 +78,24 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
         }
 
         const formPrefix = form.name;
+
+        this._activity = document.getElementById(formPrefix + '_activity');
+        this._project = document.getElementById(formPrefix + '_project');
+
+        /** @param {CustomEvent} event */
+        this._activityListener = (event) => {
+            const project = this._project.value;
+            /** @type {KimaiAPI} API */
+            const API = this.getContainer().getPlugin('api');
+            API.post(this._activity.dataset['create'], {
+                name: event.detail.value,
+                project: (project === '' ? null : project),
+                visible: true,
+            }, () => {
+                this._project.dispatchEvent(new Event('change'));
+            });
+        };
+        this._activity.addEventListener('create', this._activityListener);
 
         this._beginDate = document.getElementById(formPrefix + '_begin_date');
         this._beginTime = document.getElementById(formPrefix + '_begin_time');

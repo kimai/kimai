@@ -108,7 +108,9 @@ class TimesheetEditForm extends AbstractType
         }
 
         $this->addProject($builder, $isNew, $project, $customer);
-        $this->addActivity($builder, $activity, $project);
+        $this->addActivity($builder, $activity, $project, [
+            'allow_create' => $options['create_activity'],
+        ]);
 
         $descriptionOptions = ['required' => false];
         if (!$isNew) {

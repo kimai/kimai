@@ -44,7 +44,10 @@ export default class KimaiAutocomplete extends KimaiFormPlugin {
                 // if there are more than 500, they need to be found by "typing"
                 maxOptions: 500,
                 // the autocomplete is ONLY used, when the user can create tags
-                create: node.dataset['create'] !== undefined && node.dataset['create'] === 'true',
+                create: node.dataset['create'] !== undefined,
+                onOptionAdd: (value) => {
+                    node.dispatchEvent(new CustomEvent('create', {detail: {'value': value}}));
+                },
                 plugins: ['remove_button'],
                 shouldLoad: function(query) {
                     return query.length >= minChars;

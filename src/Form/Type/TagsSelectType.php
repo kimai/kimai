@@ -53,7 +53,7 @@ class TagsSelectType extends AbstractType
     {
         if ($options['allow_create']) {
             $view->vars['attr'] = array_merge($view->vars['attr'], [
-                'data-create' => 'true',
+                'data-create' => 'post_tag',
             ]);
         }
     }

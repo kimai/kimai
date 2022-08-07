@@ -85,7 +85,16 @@ class ActivityType extends AbstractType
             'activities' => null,
             // @var Activity|null
             'ignore_activity' => null,
+            'allow_create' => false,
         ]);
+
+        $resolver->setDefault('api_data', function (Options $options) {
+            if (false !== $options['allow_create']) {
+                return ['create' => 'post_activity'];
+            }
+
+            return [];
+        });
 
         $resolver->setDefault('query_builder', function (Options $options) {
             return function (ActivityRepository $repo) use ($options) {

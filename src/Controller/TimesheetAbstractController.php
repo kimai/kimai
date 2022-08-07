@@ -439,6 +439,7 @@ abstract class TimesheetAbstractController extends AbstractController
             'duration_minutes' => $this->configuration->getTimesheetIncrementDuration(),
             'timezone' => $this->getDateTimeFactory()->getTimezone(),
             'customer' => true,
+            'create_activity' => $this->isGranted('create_activity'),
         ]);
     }
 
@@ -460,6 +461,7 @@ abstract class TimesheetAbstractController extends AbstractController
             'include_exported' => $this->isGranted('edit_export', $entry),
             'include_billable' => $this->isGranted('edit_billable', $entry),
             'include_user' => $this->includeUserInForms('edit'),
+            'create_activity' => $this->isGranted('create_activity'),
             'allow_begin_datetime' => $mode->canEditBegin(),
             'allow_end_datetime' => $mode->canEditEnd(),
             'allow_duration' => $mode->canEditDuration(),

@@ -85,9 +85,12 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
                 const tplReplaced = tpl.replace('%input%', '<strong>' + escape(data.input) + '</strong>');
                 return '<div class="no-results">' + tplReplaced + '</div>';
             },
+            onOptionAdd: (value) => {
+                node.dispatchEvent(new CustomEvent('create', {detail: {'value': value}}));
+            },
         };
 
-        if (node.dataset['create'] !== undefined && node.dataset['create'] === 'true') {
+        if (node.dataset['create'] !== undefined) {
             options = {...options, ...{
                 persist: true,
                 create: true,

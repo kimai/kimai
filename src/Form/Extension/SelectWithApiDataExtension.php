@@ -47,6 +47,12 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
             throw new \InvalidArgumentException('Option "api_data" must be an array for form "' . $form->getName() . '"');
         }
 
+        if (isset($apiData['create'])) {
+            $view->vars['attr'] = array_merge($view->vars['attr'], [
+                'data-create' => $this->router->generate($apiData['create']),
+            ]);
+        }
+
         if (!isset($apiData['select'])) {
             return;
         }
