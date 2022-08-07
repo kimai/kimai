@@ -102,6 +102,7 @@ class CustomerType extends AbstractType
                 }
 
                 return [
+                    'reload' => 'get_customers',
                     'select' => $options['project_select'],
                     'route' => 'get_projects',
                     'route_params' => $routeParams,

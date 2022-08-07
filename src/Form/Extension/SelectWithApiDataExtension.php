@@ -84,6 +84,12 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
                 'data-empty-url' => $this->router->generate($apiData['route'], $apiData['empty_route_params']),
             ]);
         }
+
+        if (isset($apiData['reload'])) {
+            $view->vars['attr'] = array_merge($view->vars['attr'], [
+                'data-reload' => $this->router->generate($apiData['reload']),
+            ]);
+        }
     }
 
     /**

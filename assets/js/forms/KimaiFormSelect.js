@@ -146,6 +146,24 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
             select.refreshItems();
             select.refreshOptions(false);
         });
+
+        if (node.dataset['reload'] !== undefined) {
+            node.addEventListener('reload', () => {
+                select.disable();
+                node.disabled = true;
+
+                /** @type {KimaiAPI} API */
+                const API = this.getContainer().getPlugin('api');
+
+                API.get(node.dataset['reload'], {}, (data) => {
+                    this._updateSelect(node, data);
+                    select.enable();
+                    node.disabled = false;
+                });
+
+                node.dispatchEvent(new Event('change'));
+            });
+        }
     }
 
     /**
@@ -181,14 +199,19 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
     }
 
     /**
-     * @param {string} selectIdentifier
+     * @param {string|Element} selectIdentifier
      * @param {object} data
      * @private
      */
     _updateOptions(selectIdentifier, data)
     {
         let emptyOption = null;
-        const node = document.querySelector(selectIdentifier);
+        let node = null;
+        if (selectIdentifier instanceof Element) {
+            node = selectIdentifier;
+        } else {
+            node = document.querySelector(selectIdentifier);
+        }
         if (node === null) {
             console.log('Missing select: ' + selectIdentifier);
             return;
@@ -413,7 +436,6 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
                     newApiUrl = this._buildUrlWithFormFields(apiSelect.dataset['emptyUrl'], formPrefix);
                 }
 
-
                 /** @type {KimaiAPI} API */
                 const API = this.getContainer().getPlugin('api');
 
@@ -509,11 +531,11 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
     }
 
     /**
-     * @param selectName
-     * @param data
+     * @param {string|Element} select
+     * @param {object} data
      * @private
      */
-    _updateSelect(selectName, data)
+    _updateSelect(select, data)
     {
         const options = {};
         for (const apiData of data) {
@@ -532,6 +554,6 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
             ordered[key] = options[key];
         });
 
-        this._updateOptions(selectName, ordered);
+        this._updateOptions(select, ordered);
     }
 }
