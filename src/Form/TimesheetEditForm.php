@@ -62,7 +62,7 @@ class TimesheetEditForm extends AbstractType
 
             $activity = $entry->getActivity();
             $project = $entry->getProject();
-            $customer = null === $project ? null : $project->getCustomer();
+            $customer = $project?->getCustomer();
 
             if (null !== $entry->getId()) {
                 $isNew = false;
