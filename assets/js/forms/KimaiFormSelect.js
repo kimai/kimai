@@ -140,6 +140,7 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
             select.refreshOptions(false);
         });
 
+        // support reloading the list upon external event
         if (node.dataset['reload'] !== undefined) {
             node.addEventListener('reload', () => {
                 select.disable();
