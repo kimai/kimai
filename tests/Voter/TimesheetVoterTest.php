@@ -162,7 +162,9 @@ class TimesheetVoterTest extends AbstractVoterTest
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
         // cannot start timesheet without activity
         $timesheet = new Timesheet();
-        $timesheet->setUser($user2)->setProject(new Project());
+        $project = new Project();
+        $project->setCustomer(new Customer());
+        $timesheet->setUser($user2)->setProject($project);
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
         // cannot start timesheet without project
         $timesheet = new Timesheet();

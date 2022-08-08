@@ -153,7 +153,9 @@
                     {{ widgets.label_project(entry.project) }}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'activity') }}">
-                    {{ widgets.label_activity(entry.activity) }}
+                    {% if entry.activity is not null %}
+                        {{ widgets.label_activity(entry.activity) }}
+                    {% endif %}
                 </td>
                 <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }} timesheet-description">
                     {% if allowMarkdown %}

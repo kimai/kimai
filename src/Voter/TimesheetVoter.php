@@ -153,11 +153,15 @@ final class TimesheetVoter extends Voter
         return $this->permissionManager->hasRolePermission($user, $permission);
     }
 
-    protected function canStart(Timesheet $timesheet): bool
+    private function canStart(Timesheet $timesheet): bool
     {
         // possible improvements for the future:
         // we could check the amount of active entries (maybe slow)
         // if a teamlead starts an entry for another user, check that this user is part of his team (needs to be done for teams)
+
+        if (null === $timesheet->getActivity()) {
+            return false;
+        }
 
         if (null === $timesheet->getProject()) {
             return false;
@@ -178,7 +182,7 @@ final class TimesheetVoter extends Voter
         return true;
     }
 
-    protected function canEdit(User $user, Timesheet $timesheet): bool
+    private function canEdit(User $user, Timesheet $timesheet): bool
     {
         if (!$this->isAllowedExported($user, $timesheet)) {
             return false;
@@ -191,7 +195,7 @@ final class TimesheetVoter extends Voter
         return true;
     }
 
-    protected function canDelete(User $user, Timesheet $timesheet): bool
+    private function canDelete(User $user, Timesheet $timesheet): bool
     {
         if (!$this->isAllowedExported($user, $timesheet)) {
             return false;
@@ -204,7 +208,7 @@ final class TimesheetVoter extends Voter
         return true;
     }
 
-    protected function canDuplicate(User $user, Timesheet $timesheet): bool
+    private function canDuplicate(User $user, Timesheet $timesheet): bool
     {
         if (!$this->isAllowedInLockdown($user, $timesheet)) {
             return false;

@@ -377,6 +377,11 @@ class SystemConfiguration
         return (bool) $this->find('timesheet.markdown_content');
     }
 
+    public function isTimesheetRequiresActivity(): bool
+    {
+        return (bool) $this->find('timesheet.require_activity');
+    }
+
     public function getTimesheetActiveEntriesHardLimit(): int
     {
         return (int) $this->find('timesheet.active_entries.hard_limit');

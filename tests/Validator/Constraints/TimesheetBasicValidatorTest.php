@@ -9,6 +9,7 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -32,7 +33,10 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
 
     protected function createMyValidator()
     {
-        return new TimesheetBasicValidator();
+        $mock = $this->createMock(SystemConfiguration::class);
+        $mock->method('isTimesheetRequiresActivity')->willReturn(true);
+
+        return new TimesheetBasicValidator($mock);
     }
 
     public function testConstraintIsInvalid()

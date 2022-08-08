@@ -289,6 +289,7 @@ class ConfigurationTest extends TestCase
                     'lockdown_period_timezone' => null,
                     'break_warning_duration' => 0,
                     'long_running_duration' => 480,
+                    'require_activity' => true,
                 ],
                 'duration_increment' => 15,
                 'time_increment' => 15,
@@ -446,6 +447,9 @@ class ConfigurationTest extends TestCase
                 'recent_activities' => 5,
                 'recent_activity_weeks' => null,
                 'minimum_rows' => 3,
+            ],
+            'activity' => [
+                'allow_inline_create' => true,
             ],
         ];
 

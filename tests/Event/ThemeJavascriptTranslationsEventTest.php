@@ -17,13 +17,13 @@ use PHPUnit\Framework\TestCase;
  */
 class ThemeJavascriptTranslationsEventTest extends TestCase
 {
-    public const COUNTER = 15;
+    public const COUNTER = 17;
 
     public function testDefaultValues()
     {
         $sut = new ThemeJavascriptTranslationsEvent();
 
-        $this->assertCount(15, $sut->getTranslations());
+        $this->assertCount(self::COUNTER, $sut->getTranslations());
     }
 
     public function testGetterAndSetter()
