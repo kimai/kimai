@@ -15,7 +15,7 @@ use App\Timesheet\DateTimeFactory;
 
 abstract class AbstractCounterYear extends AbstractSimpleStatisticChart
 {
-    private $isFinancialYear = false;
+    private bool $isFinancialYear = false;
 
     public function __construct(TimesheetRepository $repository, private SystemConfiguration $systemConfiguration)
     {

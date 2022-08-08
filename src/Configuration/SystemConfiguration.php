@@ -379,7 +379,7 @@ class SystemConfiguration
 
     public function isTimesheetRequiresActivity(): bool
     {
-        return (bool) $this->find('timesheet.require_activity');
+        return (bool) $this->find('timesheet.rules.require_activity');
     }
 
     public function getTimesheetActiveEntriesHardLimit(): int

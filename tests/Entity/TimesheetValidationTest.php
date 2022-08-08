@@ -47,10 +47,13 @@ class TimesheetValidationTest extends KernelTestCase
 
     public function testValidationNeedsActivity()
     {
+        $project = new Project();
+        $project->setCustomer(new Customer());
+
         $entity = new Timesheet();
         $entity
             ->setUser(new User())
-            ->setProject(new Project())
+            ->setProject($project)
             ->setBegin(new \DateTime())
         ;
 

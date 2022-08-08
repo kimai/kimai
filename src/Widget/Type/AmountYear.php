@@ -11,6 +11,7 @@ namespace App\Widget\Type;
 
 use App\Configuration\SystemConfiguration;
 use App\Event\RevenueStatisticEvent;
+use App\Model\Revenue;
 use App\Repository\TimesheetRepository;
 use App\Widget\WidgetInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -35,11 +36,12 @@ final class AmountYear extends AbstractCounterYear
         $this->setQuery(TimesheetRepository::STATS_QUERY_RATE);
         $this->setQueryWithUser(false);
 
+        /** @var array<Revenue> $data */
         $data = parent::getData($options);
 
         $event = new RevenueStatisticEvent($this->getBegin(), $this->getEnd());
         foreach ($data as $row) {
-            $event->addRevenue($row['currency'], $row['revenue']);
+            $event->addRevenue($row->getCurrency(), $row->getAmount());
         }
         $this->dispatcher->dispatch($event);
 

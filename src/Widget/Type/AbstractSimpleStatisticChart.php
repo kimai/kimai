@@ -18,7 +18,7 @@ abstract class AbstractSimpleStatisticChart extends AbstractWidgetType
     /**
      * @var TimesheetRepository::STATS_QUERY_*
      */
-    private $query;
+    private string $query;
     /**
      * @var string|\DateTime|null
      */
@@ -27,10 +27,7 @@ abstract class AbstractSimpleStatisticChart extends AbstractWidgetType
      * @var string|\DateTime|null
      */
     private $end;
-    /**
-     * @var bool
-     */
-    private $queryWithUser = false;
+    private bool $queryWithUser = false;
 
     public function __construct(private TimesheetRepository $repository)
     {

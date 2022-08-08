@@ -18,6 +18,7 @@ use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
+use App\Model\Revenue;
 use App\Model\TimesheetStatistic;
 use App\Repository\Loader\TimesheetLoader;
 use App\Repository\Paginator\LoaderPaginator;
@@ -200,6 +201,12 @@ class TimesheetRepository extends EntityRepository
         return $this->queryTimeRange($what, $begin, $end, $user, $billable);
     }
 
+    /**
+     * @param DateTime|null $begin
+     * @param DateTime|null $end
+     * @param User|null $user
+     * @return array<Revenue>
+     */
     public function getRevenue(?DateTime $begin, ?DateTime $end, ?User $user): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -213,6 +220,8 @@ class TimesheetRepository extends EntityRepository
             ->groupBy('c.currency')
         ;
 
+        // TODO only billable?
+
         if ($begin !== null) {
             $qb->andWhere($qb->expr()->between('t.begin', ':from', ':to'))
                 ->setParameter('from', $begin)
@@ -224,7 +233,12 @@ class TimesheetRepository extends EntityRepository
                 ->setParameter('user', $user);
         }
 
-        return $qb->getQuery()->getArrayResult();
+        $all = [];
+        foreach ($qb->getQuery()->getArrayResult() as $item) {
+            $all[] = new Revenue($item['currency'], $item['revenue']);
+        }
+
+        return $all;
     }
 
     /**
@@ -297,8 +311,10 @@ class TimesheetRepository extends EntityRepository
         $stats->setDurationTotal($allTimeData['duration']);
         $stats->setRecordsTotal($allTimeData['amount']);
 
-        $billableAllTime = $this->getStatistic(self::STATS_QUERY_RATE, null, null, $user, true);
-        $stats->setRateTotalBillable($billableAllTime);
+        $data = $this->getRevenue(null, null, $user);
+        foreach ($data as $row) {
+            $stats->setRateTotalBillable($stats->getRateTotalBillable() + $row->getAmount());
+        }
 
         $timezone = new \DateTimeZone($user->getTimezone());
         $begin = new DateTime('first day of this month 00:00:00', $timezone);
@@ -317,8 +333,10 @@ class TimesheetRepository extends EntityRepository
         $stats->setAmountThisMonth($monthData['rate']);
         $stats->setDurationThisMonth($monthData['duration']);
 
-        $billableMonth = $this->getStatistic(self::STATS_QUERY_RATE, $begin, $end, $user, true);
-        $stats->setRateThisMonthBillable($billableMonth);
+        $data = $this->getRevenue($begin, $end, $user);
+        foreach ($data as $row) {
+            $stats->setRateThisMonthBillable($stats->getRateThisMonthBillable() + $row->getAmount());
+        }
 
         return $stats;
     }

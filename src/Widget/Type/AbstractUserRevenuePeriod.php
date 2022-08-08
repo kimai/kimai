@@ -58,7 +58,7 @@ abstract class AbstractUserRevenuePeriod extends AbstractWidget
 
         $event = new UserRevenueStatisticEvent($user, $begin, $end);
         foreach ($data as $row) {
-            $event->addRevenue($row['currency'], $row['revenue']);
+            $event->addRevenue($row->getCurrency(), $row->getAmount());
         }
         $this->dispatcher->dispatch($event);
 

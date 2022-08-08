@@ -11,18 +11,16 @@ namespace App\Widget\Type;
 
 use App\Configuration\SystemConfiguration;
 use App\Event\UserRevenueStatisticEvent;
+use App\Model\Revenue;
 use App\Repository\TimesheetRepository;
 use App\Widget\WidgetInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class UserAmountYear extends AbstractCounterYear
 {
-    private $dispatcher;
-
-    public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration, EventDispatcherInterface $dispatcher)
+    public function __construct(TimesheetRepository $repository, SystemConfiguration $systemConfiguration, private EventDispatcherInterface $dispatcher)
     {
         parent::__construct($repository, $systemConfiguration);
-        $this->dispatcher = $dispatcher;
     }
 
     public function getTemplateName(): string
@@ -58,11 +56,12 @@ final class UserAmountYear extends AbstractCounterYear
         $this->setQuery(TimesheetRepository::STATS_QUERY_RATE);
         $this->setQueryWithUser(true);
 
+        /** @var array<Revenue> $data */
         $data = parent::getData($options);
 
         $event = new UserRevenueStatisticEvent($this->getUser(), $this->getBegin(), $this->getEnd());
         foreach ($data as $row) {
-            $event->addRevenue($row['currency'], $row['revenue']);
+            $event->addRevenue($row->getCurrency(), $row->getAmount());
         }
         $this->dispatcher->dispatch($event);
 
