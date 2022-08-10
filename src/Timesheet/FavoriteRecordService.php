@@ -56,7 +56,7 @@ final class FavoriteRecordService
 
     private function getBookmark(User $user): Bookmark
     {
-        $bookmark = $this->bookmarkRepository->findBookmark($user, 'favorite', 'timesheet');
+        $bookmark = $this->bookmarkRepository->findBookmark($user, 'favorite', 'recent');
 
         if ($bookmark === null) {
             $bookmark = new Bookmark();
