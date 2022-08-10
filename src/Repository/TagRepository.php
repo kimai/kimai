@@ -52,6 +52,15 @@ class TagRepository extends EntityRepository
         $entityManager->flush();
     }
 
+    /**
+     * @param array $tagNames
+     * @return array<Tag>
+     */
+    public function findTagsByName(array $tagNames): array
+    {
+        return $this->findBy(['name' => $tagNames]);
+    }
+
     public function findTagByName(string $tagName): ?Tag
     {
         return $this->findOneBy(['name' => $tagName]);

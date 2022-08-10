@@ -299,7 +299,13 @@
         {{ value|currency_name }}
     {% elseif '\\LanguageType' in type %}
         {{ value|locale_name }}
-    {% elseif '\\MoneyType' in type  %}
+    {% elseif '\\TagsType' in type %}
+        {% for tag in value|split(',') %}
+            {% if tag is not empty %}
+                {{ _self.badge(tag, null|colorize(tag)) }}
+            {% endif %}
+        {% endfor %}
+    {% elseif '\\MoneyType' in type %}
         {% set classname = class_name(entity) %}
         {% if entity is null %}
             {{ value }}
