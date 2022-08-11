@@ -116,8 +116,8 @@ class CustomerTest extends AbstractEntityTest
         self::assertInstanceOf(Customer::class, $sut->setCountry(null));
         self::assertNull($sut->getCountry());
 
-        self::assertInstanceOf(Customer::class, $sut->setCurrency(null));
-        self::assertNull($sut->getCurrency());
+        self::assertInstanceOf(Customer::class, $sut->setCurrency('USD'));
+        self::assertEquals('USD', $sut->getCurrency());
     }
 
     public function testMetaFields()

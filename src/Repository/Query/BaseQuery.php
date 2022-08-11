@@ -71,10 +71,7 @@ class BaseQuery
      * @var string|null
      */
     private $name;
-    /**
-     * @var bool
-     */
-    private $bookmarkSearch = false;
+    private bool $bookmarkSearch = false;
 
     /**
      * @param Team[] $teams

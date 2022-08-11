@@ -25,22 +25,19 @@ class CustomerComment implements CommentInterface
     use CommentTableTypeTrait;
 
     /**
-     * @var Customer
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
-    private $customer;
+    private Customer $customer;
 
-    public function setCustomer(Customer $customer): CustomerComment
+    public function __construct(Customer $customer)
     {
+        $this->createdAt = new \DateTime();
         $this->customer = $customer;
-
-        return $this;
     }
 
-    public function getCustomer(): ?Customer
+    public function getCustomer(): Customer
     {
         return $this->customer;
     }

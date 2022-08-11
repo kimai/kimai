@@ -79,17 +79,15 @@ final class CustomerFixtures implements TestFixture
                 $visible = $this->isVisible;
             }
             $customer = new Customer();
-            $customer
-                ->setCurrency($faker->currencyCode())
-                ->setName($faker->company() . ($visible ? '' : ' (x)'))
-                ->setAddress($faker->address())
-                ->setEmail($faker->safeEmail())
-                ->setComment($faker->text())
-                ->setNumber('C-' . $faker->ean8())
-                ->setCountry($faker->countryCode())
-                ->setTimezone($faker->timezone())
-                ->setVisible($visible)
-            ;
+            $customer->setCurrency($faker->currencyCode());
+            $customer->setName($faker->company() . ($visible ? '' : ' (x)'));
+            $customer->setAddress($faker->address());
+            $customer->setEmail($faker->safeEmail());
+            $customer->setComment($faker->text());
+            $customer->setNumber('C-' . $faker->ean8());
+            $customer->setCountry($faker->countryCode());
+            $customer->setTimezone($faker->timezone());
+            $customer->setVisible($visible);
 
             if (null !== $this->callback) {
                 \call_user_func($this->callback, $customer);

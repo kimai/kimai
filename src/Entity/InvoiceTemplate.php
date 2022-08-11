@@ -55,82 +55,60 @@ class InvoiceTemplate
      */
     private $company;
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="vat_id", type="string", length=50, nullable=true)
      * @Assert\Length(max=50)
      */
-    private $vatId;
+    private ?string $vatId = null;
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="address", type="text", nullable=true)
      */
-    private $address;
+    private ?string $address = null;
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="contact", type="text", nullable=true)
      */
-    private $contact;
+    private ?string $contact = null;
     /**
-     * @var int
-     *
      * @ORM\Column(name="due_days", type="integer", length=3, nullable=false)
      * @Assert\Range(min = 0, max = 999)
      */
-    private $dueDays = 30;
+    private int $dueDays = 30;
     /**
-     * @var float
-     *
      * @ORM\Column(name="vat", type="float", nullable=false)
      * @Assert\Range(min = 0.0, max = 99.99)
      */
-    private $vat = 0.00;
+    private float $vat = 0.00;
     /**
-     * @var string
-     *
      * @ORM\Column(name="calculator", type="string", length=20, nullable=false)
      * @Assert\NotBlank()
      * @Assert\Length(max=20)
      */
-    private $calculator = 'default';
+    private string $calculator = 'default';
     /**
-     * @var string
-     *
      * @ORM\Column(name="number_generator", type="string", length=20, nullable=false)
      * @Assert\NotBlank()
      * @Assert\Length(max=20)
      */
-    private $numberGenerator = 'default';
+    private string $numberGenerator = 'default';
     /**
-     * @var string
-     *
      * @ORM\Column(name="renderer", type="string", length=20, nullable=false)
      * @Assert\NotBlank()
      * @Assert\Length(max=20)
      */
-    private $renderer = 'default';
+    private string $renderer = 'default';
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="payment_terms", type="text", nullable=true)
      */
-    private $paymentTerms;
+    private ?string $paymentTerms = null;
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="payment_details", type="text", nullable=true)
      */
-    private $paymentDetails;
+    private ?string $paymentDetails = null;
     /**
-     * Used for translations and locale dependent number and date formats.
-     *
-     * @var string
+     * Used for translations and formatting money, numbers, dates and time.
      *
      * @ORM\Column(name="language", type="string", length=6, nullable=false)
      */
-    private $language = 'en';
+    private string $language = 'en';
 
     public function getId(): ?int
     {

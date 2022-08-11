@@ -84,8 +84,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * The user alias will be displayed in the frontend instead of the username
      *
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
@@ -94,35 +92,28 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @ORM\Column(name="alias", type="string", length=60, nullable=true)
      * @Assert\Length(max=60)
      */
-    private $alias;
+    private ?string $alias = null;
     /**
      * Registration date for the user
-     *
-     * @var DateTime|null
      *
      * @Exporter\Expose(label="profile.registration_date", type="datetime")
      *
      * @ORM\Column(name="registration_date", type="datetime", nullable=true)
      */
-    private $registeredAt;
+    private ?\DateTime $registeredAt = null;
     /**
      * An additional title for the user, like the Job position or Department
      *
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
      * @Exporter\Expose(label="label.title")
      *
      * @ORM\Column(name="title", type="string", length=50, nullable=true)
      * @Assert\Length(max=50)
      */
-    private $title;
+    private ?string $title = null;
     /**
      * URL to the user avatar, will be auto-generated if empty
-     *
-     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"User_Entity"})
@@ -130,23 +121,20 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
      * @Assert\Length(max=255)
      */
-    private $avatar;
+    private ?string $avatar = null;
     /**
      * API token (password) for this user
      *
-     * @var string|null
-     *
      * @ORM\Column(name="api_token", type="string", length=255, nullable=true)
      */
-    private $apiToken;
+    private ?string $apiToken = null;
     /**
-     * @var string|null
      * @internal to be set via form, must not be persisted
      *
      * @Assert\NotBlank(groups={"ApiTokenUpdate"})
      * @Assert\Length(min="8", max="60", groups={"ApiTokenUpdate"})
      */
-    private $plainApiToken;
+    private ?string $plainApiToken = null;
     /**
      * User preferences
      *
@@ -174,25 +162,24 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * The type of authentication used by the user (e.g. "kimai", "ldap", "saml")
      *
-     * @var string|null
      * @internal for internal usage only
      *
      * @ORM\Column(name="auth", type="string", length=20, nullable=true)
      * @Assert\Length(max=20)
      */
-    private $auth = self::AUTH_INTERNAL;
+    private ?string $auth = self::AUTH_INTERNAL;
     /**
      * This flag will be initialized in UserEnvironmentSubscriber.
      *
-     * @var bool|null
      * @internal has no database mapping as the value is calculated from a permission
      */
-    private $isAllowedToSeeAllData = null;
+    private ?bool $isAllowedToSeeAllData = null;
     /**
+     * @var string
+     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @var string
      * @ORM\Column(name="username", type="string", length=180)
      * @Assert\NotBlank(groups={"Registration", "UserCreate", "Profile"})
      * @Assert\Length(min="2", max="60", groups={"Registration", "UserCreate", "Profile"})
@@ -200,6 +187,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     private $username;
     /**
      * @var string
+     *
      * @ORM\Column(name="email", type="string", length=180)
      * @Assert\NotBlank(groups={"Registration", "UserCreate", "Profile"})
      * @Assert\Length(min="2", max="180")
@@ -209,22 +197,19 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
      * @Exporter\Expose(label="label.account_number")
      *
-     * @var string|null
      * @ORM\Column(name="account", type="string", length=30, nullable=true)
      * @Assert\Length(max="30", groups={"Registration", "UserCreate", "Profile"})
      */
-    private $accountNumber;
+    private ?string $accountNumber = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @var bool
      * @ORM\Column(name="enabled", type="boolean")
      */
-    private $enabled = false;
+    private bool $enabled = false;
     /**
      * Encrypted password. Must be persisted.
      *
@@ -250,15 +235,13 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * Random string sent to the user email address in order to verify it.
      *
-     * @var string|null
      * @ORM\Column(name="confirmation_token", type="string", length=180, unique=true, nullable=true)
      */
-    private $confirmationToken;
+    private ?string $confirmationToken = null;
     /**
-     * @var \DateTime|null
      * @ORM\Column(name="password_requested_at", type="datetime", nullable=true)
      */
-    private $passwordRequestedAt;
+    private ?\DateTime $passwordRequestedAt = null;
     /**
      * List of all role names
      *
@@ -266,11 +249,10 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @Serializer\Groups({"User_Entity"})
      * @Serializer\Type("array<string>")
      *
-     * @var array
      * @ORM\Column(name="roles", type="array")
      * @Constraints\Role(groups={"RolesUpdate"})
      */
-    private $roles = [];
+    private array $roles = [];
 
     use ColorTrait;
 

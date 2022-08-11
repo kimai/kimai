@@ -181,8 +181,8 @@ final class CustomerController extends AbstractController
      */
     public function addCommentAction(Customer $customer, Request $request)
     {
-        $comment = new CustomerComment();
-        $form = $this->getCommentForm($customer, $comment);
+        $comment = new CustomerComment($customer);
+        $form = $this->getCommentForm($comment);
 
         $form->handleRequest($request);
 
@@ -311,7 +311,7 @@ final class CustomerController extends AbstractController
 
         if ($this->isGranted('comments', $customer)) {
             $comments = $this->repository->getComments($customer);
-            $commentForm = $this->getCommentForm($customer, new CustomerComment())->createView();
+            $commentForm = $this->getCommentForm(new CustomerComment($customer))->createView();
         }
 
         if ($this->isGranted('permissions', $customer) || $this->isGranted('details', $customer) || $this->isGranted('view_team')) {
@@ -558,15 +558,14 @@ final class CustomerController extends AbstractController
         ]);
     }
 
-    private function getCommentForm(Customer $customer, CustomerComment $comment): FormInterface
+    private function getCommentForm(CustomerComment $comment): FormInterface
     {
         if (null === $comment->getId()) {
-            $comment->setCustomer($customer);
             $comment->setCreatedBy($this->getUser());
         }
 
         return $this->createForm(CustomerCommentForm::class, $comment, [
-            'action' => $this->generateUrl('customer_comment_add', ['id' => $customer->getId()]),
+            'action' => $this->generateUrl('customer_comment_add', ['id' => $comment->getCustomer()->getId()]),
             'method' => 'POST',
         ]);
     }

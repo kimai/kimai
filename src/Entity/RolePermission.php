@@ -48,12 +48,10 @@ class RolePermission
      */
     private $permission;
     /**
-     * @var bool
-     *
      * @ORM\Column(name="allowed", type="boolean", nullable=false, options={"default": false})
      * @Assert\NotNull()
      */
-    private $allowed = false;
+    private bool $allowed = false;
 
     public function getId(): ?int
     {

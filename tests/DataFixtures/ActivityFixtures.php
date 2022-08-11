@@ -117,12 +117,10 @@ final class ActivityFixtures implements TestFixture
                 $visible = $this->isVisible;
             }
             $activity = new Activity();
-            $activity
-                ->setProject($project)
-                ->setName($faker->company() . ($visible ? '' : ' (x)'))
-                ->setComment($faker->text())
-                ->setVisible($visible)
-            ;
+            $activity->setProject($project);
+            $activity->setName($faker->company() . ($visible ? '' : ' (x)'));
+            $activity->setComment($faker->text());
+            $activity->setVisible($visible);
 
             if (null !== $this->callback) {
                 \call_user_func($this->callback, $activity);

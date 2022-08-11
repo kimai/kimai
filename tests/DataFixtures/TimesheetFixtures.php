@@ -412,13 +412,12 @@ final class TimesheetFixtures implements TestFixture
         $rate = Util::calculateRate($hourlyRate, $duration);
 
         $entry = new Timesheet();
-        $entry
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setDescription($description)
-            ->setUser($user)
-            ->setRate($rate)
-            ->setBegin($start);
+        $entry->setActivity($activity);
+        $entry->setProject($project);
+        $entry->setDescription($description);
+        $entry->setUser($user);
+        $entry->setRate($rate);
+        $entry->setBegin($start);
 
         if (\count($tagArray) > 0) {
             foreach ($tagArray as $item) {
@@ -439,10 +438,8 @@ final class TimesheetFixtures implements TestFixture
         }
 
         if ($setEndDate) {
-            $entry
-                ->setEnd($end)
-                ->setDuration($duration)
-            ;
+            $entry->setEnd($end);
+            $entry->setDuration($duration);
         }
 
         return $entry;

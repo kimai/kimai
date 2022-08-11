@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -45,6 +46,8 @@ trait MetaTableTypeTrait
     /**
      * Value of the meta (custom) field
      *
+     * This field can be used to temporary hold data in another format (e.g. array) during form transformation.
+     *
      * @var string|null
      *
      * @Serializer\Expose()
@@ -53,44 +56,25 @@ trait MetaTableTypeTrait
      * @ORM\Column(name="value", type="text", length=65535, nullable=true)
      * @Assert\Length(max=65535)
      */
-    private $value;
+    private $value = null;
     /**
-     * @var bool
-     *
      * @ORM\Column(name="visible", type="boolean", nullable=false, options={"default": false})
      * @Assert\NotNull()
      */
-    private $visible = false;
-
-    /**
-     * @var string
-     */
-    private $label;
-
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var bool
-     */
-    private $required = false;
-
+    private bool $visible = false;
+    private ?string $label = null;
+    private ?string $type = null;
+    private bool $required = false;
     /**
      * @var Constraint[]
      */
     private $constraints = [];
-
     /**
      * An array of options for the form element
      * @var array
      */
     private $options = [];
-    /**
-     * @var int
-     */
-    private $order = 0;
+    private int $order = 0;
 
     public function getName(): ?string
     {
@@ -109,19 +93,16 @@ trait MetaTableTypeTrait
     }
 
     /**
-     * @return int|bool|string|null
+     * @return int|bool|string|float|null
      */
     public function getValue()
     {
-        switch ($this->type) {
-            case YesNoType::class:
-            case CheckboxType::class:
-                return (bool) $this->value;
-            case IntegerType::class:
-                return (int) $this->value;
-        }
-
-        return $this->value;
+        return match ($this->type) {
+            YesNoType::class, CheckboxType::class => (bool) $this->value,
+            IntegerType::class => (int) $this->value,
+            NumberType::class => (float) $this->value,
+            default => $this->value,
+        };
     }
 
     /**

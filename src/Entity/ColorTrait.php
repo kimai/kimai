@@ -20,17 +20,14 @@ trait ColorTrait
     /**
      * The assigned color in HTML hex format, eg. #dd1d00
      *
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
      * @Exporter\Expose(label="label.color")
      *
      * @ORM\Column(name="color", type="string", length=7, nullable=true)
      * @Constraints\HexColor()
      */
-    private $color = null;
+    private ?string $color = null;
 
     public function getColor(): ?string
     {

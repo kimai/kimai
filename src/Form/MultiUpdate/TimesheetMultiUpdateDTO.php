@@ -30,14 +30,8 @@ class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements EntityWithM
      * @var Tag[]|ArrayCollection|iterable
      */
     private $tags = [];
-    /**
-     * @var bool
-     */
-    private $replaceTags = false;
-    /**
-     * @var bool
-     */
-    private $recalculateRates = false;
+    private bool $replaceTags = false;
+    private bool $recalculateRates = false;
     /**
      * @var Customer|null
      */
@@ -54,14 +48,8 @@ class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements EntityWithM
      * @var User|null
      */
     private $user;
-    /**
-     * @var bool|null
-     */
-    private $exported = null;
-    /**
-     * @var bool|null
-     */
-    private $billable = null;
+    private ?bool $exported = null;
+    private ?bool $billable = null;
     /**
      * @var float|null
      */

@@ -59,15 +59,13 @@ class TeamMember
      */
     private $team;
     /**
-     * @var bool
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default", "Entity", "Team_Entity", "User_Entity"})
      *
      * @ORM\Column(name="teamlead", type="boolean", nullable=false, options={"default": false})
      * @Assert\NotNull()
      */
-    private $teamlead = false;
+    private bool $teamlead = false;
 
     public function getId(): ?int
     {

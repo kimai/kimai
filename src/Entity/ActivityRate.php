@@ -32,8 +32,6 @@ class ActivityRate implements RateInterface
     /**
      * @var Activity
      *
-     * @Serializer\Exclude()
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Activity")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()

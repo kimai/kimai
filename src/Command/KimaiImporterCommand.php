@@ -120,9 +120,6 @@ final class KimaiImporterCommand extends Command
      * @var array<Activity[]>
      */
     private array $activities = [];
-    /**
-     * @var bool
-     */
     private bool $debug = false;
     /**
      * Global activities (either because they were global OR because --global was used).
@@ -1042,22 +1039,20 @@ final class KimaiImporterCommand extends Command
             }
 
             $customer = new Customer();
-            $customer
-                ->setName($name)
-                ->setComment($oldCustomer['comment'])
-                ->setCompany($oldCustomer['company'])
-                ->setFax($oldCustomer['fax'])
-                ->setHomepage($oldCustomer['homepage'])
-                ->setMobile($oldCustomer['mobile'])
-                ->setEmail($oldCustomer['mail'])
-                ->setPhone($oldCustomer['phone'])
-                ->setContact($oldCustomer['contact'])
-                ->setAddress($oldCustomer['street'] . PHP_EOL . $oldCustomer['zipcode'] . ' ' . $oldCustomer['city'])
-                ->setTimezone($newTimezone)
-                ->setVisible($isActive)
-                ->setCountry(strtoupper($country))
-                ->setCurrency(strtoupper($currency))
-            ;
+            $customer->setName($name);
+            $customer->setComment($oldCustomer['comment']);
+            $customer->setCompany($oldCustomer['company']);
+            $customer->setFax($oldCustomer['fax']);
+            $customer->setHomepage($oldCustomer['homepage']);
+            $customer->setMobile($oldCustomer['mobile']);
+            $customer->setEmail($oldCustomer['mail']);
+            $customer->setPhone($oldCustomer['phone']);
+            $customer->setContact($oldCustomer['contact']);
+            $customer->setAddress($oldCustomer['street'] . PHP_EOL . $oldCustomer['zipcode'] . ' ' . $oldCustomer['city']);
+            $customer->setTimezone($newTimezone);
+            $customer->setVisible($isActive);
+            $customer->setCountry(strtoupper($country));
+            $customer->setCurrency(strtoupper($currency));
 
             $metaField = new CustomerMeta();
             $metaField->setName(self::METAFIELD_NAME);
@@ -1160,13 +1155,11 @@ final class KimaiImporterCommand extends Command
             }
 
             $project = new Project();
-            $project
-                ->setCustomer($customer)
-                ->setName($name)
-                ->setComment($oldProject['comment'] ?: null)
-                ->setVisible($isActive)
-                ->setBudget($oldProject['budget'] ?: 0)
-            ;
+            $project->setCustomer($customer);
+            $project->setName($name);
+            $project->setComment($oldProject['comment'] ?: null);
+            $project->setVisible($isActive);
+            $project->setBudget($oldProject['budget'] ?: 0);
 
             $metaField = new ProjectMeta();
             $metaField->setName(self::METAFIELD_NAME);
@@ -1701,17 +1694,15 @@ final class KimaiImporterCommand extends Command
             }
             // ---------------------------------------------------------------------
 
-            $timesheet
-                ->setDescription($oldRecord['description'] ?? ($oldRecord['comment'] ?? null))
-                ->setUser($user)
-                ->setBegin($begin)
-                ->setEnd($end)
-                ->setDuration($duration)
-                ->setActivity($activity)
-                ->setProject($project)
-                ->setExported(\intval($oldRecord['cleared']) !== 0)
-                ->setTimezone($user->getTimezone())
-            ;
+            $timesheet->setDescription($oldRecord['description'] ?? ($oldRecord['comment'] ?? null));
+            $timesheet->setUser($user);
+            $timesheet->setBegin($begin);
+            $timesheet->setEnd($end);
+            $timesheet->setDuration($duration);
+            $timesheet->setActivity($activity);
+            $timesheet->setProject($project);
+            $timesheet->setExported(\intval($oldRecord['cleared']) !== 0);
+            $timesheet->setTimezone($user->getTimezone());
 
             if ($this->options['meta-comment'] !== null) {
                 $timesheet->setDescription($oldRecord['description']);

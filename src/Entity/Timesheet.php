@@ -139,8 +139,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
      */
     private $begin;
     /**
-     * @var DateTime|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="DateTime")
@@ -150,7 +148,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
      *
      * @ORM\Column(name="end_time", type="datetime", nullable=true)
      */
-    private $end;
+    private ?\DateTime $end = null;
     /**
      * @var string
      * @internal for storing the timezone of "begin" and "end" date
@@ -160,20 +158,17 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
      */
     private $timezone;
     /**
-     * @var bool
      * @internal for storing the localized state of dates (see $timezone)
      */
-    private $localized = false;
+    private bool $localized = false;
     /**
-     * @var int|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="duration", type="integer", nullable=true)
      * @Assert\GreaterThanOrEqual(0)
      */
-    private $duration = 0;
+    private ?int $duration = 0;
     /**
      * @var User
      *
@@ -211,78 +206,63 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
      */
     private $project;
     /**
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="description", type="text", nullable=true)
      */
-    private $description;
+    private ?string $description = null;
     /**
-     * @var float
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="rate", type="float", nullable=false)
      * @Assert\GreaterThanOrEqual(0)
      */
-    private $rate = 0.00;
+    private float $rate = 0.00;
     /**
-     * @var float|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="internal_rate", type="float", nullable=true)
      */
-    private $internalRate;
+    private ?float $internalRate = null;
     /**
-     * @var float|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Entity"})
      *
      * @ORM\Column(name="fixed_rate", type="float", nullable=true)
      * @Assert\GreaterThanOrEqual(0)
      */
-    private $fixedRate = null;
+    private ?float $fixedRate = null;
     /**
-     * @var float|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Entity"})
      *
      * @ORM\Column(name="hourly_rate", type="float", nullable=true)
      * @Assert\GreaterThanOrEqual(0)
      */
-    private $hourlyRate = null;
+    private ?float $hourlyRate = null;
     /**
-     * @var bool
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="exported", type="boolean", nullable=false, options={"default": false})
      * @Assert\NotNull()
      */
-    private $exported = false;
+    private bool $exported = false;
     /**
-     * @var bool
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="billable", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
      */
-    private $billable = true;
+    private bool $billable = true;
     /**
      * Internal property used to determine whether the billable field should be calculated automatically.
-     * @var string
      */
-    private $billableMode = self::BILLABLE_DEFAULT;
+    private string $billableMode = self::BILLABLE_DEFAULT;
     /**
      * @var string
      *
@@ -291,13 +271,12 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
      */
     private $category = self::WORK;
     /**
-     * @var DateTime|null
      * @internal used for limiting queries, eg. via API sync
      *
      * @Gedmo\Timestampable
      * @ORM\Column(name="modified_at", type="datetime", nullable=true)
      */
-    private $modifiedAt;
+    private ?\DateTime $modifiedAt = null;
     /**
      * Tags
      *

@@ -104,8 +104,6 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     /**
      * Project order number
      *
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Project_Entity"})
      *
@@ -114,9 +112,9 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * @ORM\Column(name="order_number", type="text", length=50, nullable=true)
      * @Assert\Length(max=50)
      */
-    private $orderNumber;
+    private ?string $orderNumber = null;
     /**
-     * @var \DateTime|null
+     * Order date for the project
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Project_Entity"})
@@ -129,9 +127,9 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * @ORM\Column(name="order_date", type="datetime", nullable=true)
      */
-    private $orderDate;
+    private ?\DateTime $orderDate = null;
     /**
-     * @var \DateTime|null
+     * Project start date (times before this date cannot be recorded)
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Project"})
@@ -144,9 +142,9 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * @ORM\Column(name="start", type="datetime", nullable=true)
      */
-    private $start;
+    private ?\DateTime $start = null;
     /**
-     * @var \DateTime|null
+     * Project end time (times after this date cannot be recorded)
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Project"})
@@ -159,22 +157,18 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * @ORM\Column(name="end", type="datetime", nullable=true)
      */
-    private $end;
+    private ?\DateTime $end = null;
     /**
-     * @var string|null
      * @internal used for storing the timezone for "order", "start" and "end" date
      *
      * @ORM\Column(name="timezone", type="string", length=64, nullable=true)
      */
-    private $timezone;
+    private ?string $timezone = null;
     /**
-     * @var bool
      * @internal used for having the localization state of the dates (see $timezone)
      */
-    private $localized = false;
+    private bool $localized = false;
     /**
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
@@ -182,9 +176,9 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
-    private $comment;
+    private ?string $comment = null;
     /**
-     * @var bool
+     * If the project is not visible, times cannot be recorded
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
@@ -194,10 +188,8 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      * @Assert\NotNull()
      */
-    private $visible = true;
+    private bool $visible = true;
     /**
-     * @var bool
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
@@ -206,7 +198,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * @ORM\Column(name="billable", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
      */
-    private $billable = true;
+    private bool $billable = true;
     /**
      * Meta fields
      *
@@ -247,20 +239,16 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      */
     private $teams;
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="invoice_text", type="text", nullable=true)
      */
-    private $invoiceText;
+    private ?string $invoiceText = null;
     /**
      * Whether this project allows booking of global activities
-     *
-     * @var bool
      *
      * @ORM\Column(name="global_activities", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
      */
-    private $globalActivities = true;
+    private bool $globalActivities = true;
 
     public function __construct()
     {

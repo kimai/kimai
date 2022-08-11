@@ -25,22 +25,19 @@ class ProjectComment implements CommentInterface
     use CommentTableTypeTrait;
 
     /**
-     * @var Project
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Project")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
-    private $project;
+    private Project $project;
 
-    public function setProject(Project $project): ProjectComment
+    public function __construct(Project $project)
     {
+        $this->createdAt = new \DateTime();
         $this->project = $project;
-
-        return $this;
     }
 
-    public function getProject(): ?Project
+    public function getProject(): Project
     {
         return $this->project;
     }

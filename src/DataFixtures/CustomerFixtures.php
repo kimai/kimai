@@ -86,17 +86,15 @@ class CustomerFixtures extends Fixture
     private function createCustomer(Generator $faker, bool $visible): Customer
     {
         $entry = new Customer();
-        $entry
-            ->setCurrency($faker->currencyCode())
-            ->setName($faker->company())
-            ->setAddress($faker->address())
-            ->setEmail($faker->safeEmail())
-            ->setComment($faker->text())
-            ->setNumber('C-' . $faker->ean8())
-            ->setCountry($faker->countryCode())
-            ->setTimezone($faker->timezone())
-            ->setVisible($visible)
-        ;
+        $entry->setCurrency($faker->currencyCode());
+        $entry->setName($faker->company());
+        $entry->setAddress($faker->address());
+        $entry->setEmail($faker->safeEmail());
+        $entry->setComment($faker->text());
+        $entry->setNumber('C-' . $faker->ean8());
+        $entry->setCountry($faker->countryCode());
+        $entry->setTimezone($faker->timezone());
+        $entry->setVisible($visible);
         $entry->setVatId($faker->creditCardNumber());
 
         if (rand(0, 3) % 3) {
@@ -117,13 +115,11 @@ class CustomerFixtures extends Fixture
         /** @var string $name */
         $name = $faker->words(2, true);
 
-        $entry
-            ->setName(ucfirst($name))
-            ->setComment($faker->text())
-            ->setCustomer($customer)
-            ->setOrderNumber('P-' . $faker->ean8())
-            ->setVisible($visible)
-        ;
+        $entry->setName(ucfirst($name));
+        $entry->setComment($faker->text());
+        $entry->setCustomer($customer);
+        $entry->setOrderNumber('P-' . $faker->ean8());
+        $entry->setVisible($visible);
 
         if (rand(0, 3) % 3) {
             $entry->setBudget(rand(self::MIN_BUDGET, self::MAX_BUDGET));
@@ -142,12 +138,10 @@ class CustomerFixtures extends Fixture
         $name = $faker->words(2, true);
 
         $entry = new Activity();
-        $entry
-            ->setName(ucfirst($name))
-            ->setProject($project)
-            ->setComment($faker->text())
-            ->setVisible($visible)
-        ;
+        $entry->setName(ucfirst($name));
+        $entry->setProject($project);
+        $entry->setComment($faker->text());
+        $entry->setVisible($visible);
 
         if (rand(0, 3) % 3) {
             $entry->setBudget(rand(self::MIN_BUDGET, self::MAX_BUDGET));

@@ -56,7 +56,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     use ColorTrait;
 
     /**
-     * Internal ID
+     * Unique activity ID
      *
      * @var int|null
      *
@@ -88,7 +88,6 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
      * @Exporter\Expose(label="label.name")
      *
      * @ORM\Column(name="name", type="string", length=150, nullable=false)
@@ -99,42 +98,33 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     /**
      * Description of this activity
      *
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
      * @Exporter\Expose(label="label.comment")
      *
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
-    private $comment;
+    private ?string $comment = null;
     /**
      * Whether this activity is visible and can be used for timesheets
      *
-     * @var bool
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
      * @Exporter\Expose(label="label.visible", type="boolean")
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
      */
-    private $visible = true;
+    private bool $visible = true;
     /**
-     * @var bool
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
      * @Exporter\Expose(label="label.billable", type="boolean")
      *
      * @ORM\Column(name="billable", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
      */
-    private $billable = true;
+    private bool $billable = true;
     /**
      * Meta fields
      *
@@ -175,11 +165,9 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      */
     private $teams;
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="invoice_text", type="text", nullable=true)
      */
-    private $invoiceText;
+    private ?string $invoiceText = null;
 
     public function __construct()
     {

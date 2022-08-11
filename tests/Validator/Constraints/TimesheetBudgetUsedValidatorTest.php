@@ -209,12 +209,12 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             'a_f1' => [1320, null, null, null, null, null,      null, 3600, null, null, null, null, null, null, null,       '0:22', '0:38', '1:00', 'activity',          '+3600 seconds',    ['rate' => 1.0, 'duration' => 1000]],
             'a_h1' => [7200, null, null, null, null, null,      null, 7200, null, null, null, null, null, null, null,       '2:00', '0:00', '2:00', 'activity',          '+3601 seconds',    ['rate' => 1.0, 'duration' => 3600]],
             'a_h2' => [3601, null, null, null, null, null,      null, 3600, null, null, null, null, null, null, null,       null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 3601]],
-            'a_g0' => [null, 1002.0, null, null, null, null,    null, null, 1000.0, null, null, null, null, null, null,     '1,002.00', '0.00', '1,000.00', 'activity',     '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
+            'a_g0' => [null, 1002.0, null, null, null, null,    null, null, 1000.0, null, null, null, null, null, null,     '€1,002.00', '€0.00', '€1,000.00', 'activity',     '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
             'a_g1' => [null, 1002.0, null, null, null, null,    null, null, 1000.0, null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds',    ['rate' => 2.0, 'duration' => 0]],
             // nothing changed => no violation
             'a_x1' => [3600, 1000.0, null, null, null, null,    null, 3600, 1000.0, null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds',    ['rate' => 1000.0, 'duration' => 3600], new Rate(1000.0, 0.00)],
             // date changed => violation
-            'a_x2' => [3600, 1000.0, null, null, null, null,    'month', 3600, 1000.0, null, null, null, null, null, null,  '1,000.00', '0.00', '1,000.00', 'activity',     '+3600 seconds',    ['rate' => 999.0, 'duration' => 3599, 'begin' => new DateTime('2021-03-17 16:15:00'), 'end' => new DateTime('2021-03-17 17:15:01'), 'billable' => true], new Rate(1000.0, 0.00)],
+            'a_x2' => [3600, 1000.0, null, null, null, null,    'month', 3600, 1000.0, null, null, null, null, null, null,  '€1,000.00', '€0.00', '€1,000.00', 'activity',     '+3600 seconds',    ['rate' => 999.0, 'duration' => 3599, 'begin' => new DateTime('2021-03-17 16:15:00'), 'end' => new DateTime('2021-03-17 17:15:01'), 'billable' => true], new Rate(1000.0, 0.00)],
             // date changed but not violation was raised
             'a_x3' => [3600, 1000.0, null, null, null, null,    'month', 3600, 1000.0, null, null, null, null, null, null,  null, null, null, null,                         '+3600 seconds',    ['rate' => 999.0, 'duration' => 3599, 'begin' => new DateTime('2021-03-17 16:15:00'), 'end' => new DateTime('2021-03-17 17:15:01'), 'billable' => false], new Rate(1000.0, 0.00)],
             'a_x4' => [3600, 1000.0, null, null, null, null,    'month', 3600, 1000.0, null, null, null, null, null, null,  null, null, null, null,                         '+3600 seconds',    ['rate' => 1000.0, 'duration' => 3600, 'begin' => new DateTime('2021-03-17 16:15:00'), 'end' => new DateTime('2021-03-17 17:15:01'), 'billable' => true], new Rate(1000.0, 0.00)],
@@ -228,7 +228,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             'p_f1' => [null, null, 1320, null, null, null,      null, null, null, null, 3600, null, null, null, null,       '0:22', '0:38', '1:00', 'project',           '+3600 seconds',    ['rate' => 1.0, 'duration' => 1000]],
             'p_h1' => [null, null, 7200, null, null, null,      null, null, null, null, 7200, null, null, null, null,       '2:00', '0:00', '2:00', 'project',           '+3601 seconds',    ['rate' => 1.0, 'duration' => 3600]],
             'p_h2' => [null, null, 3601, null, null, null,      null, null, null, null, 3600, null, null, null, null,       null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 3601]],
-            'p_g0' => [null, null, null, 1002.0, null, null,    null, null, null, null, null, 1000.0, null, null, null,     '1,002.00', '0.00', '1,000.00', 'project',      '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
+            'p_g0' => [null, null, null, 1002.0, null, null,    null, null, null, null, null, 1000.0, null, null, null,     '€1,002.00', '€0.00', '€1,000.00', 'project',      '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
             'p_g1' => [null, null, null, 1002.0, null, null,    null, null, null, null, null, 1000.0, null, null, null,     null, null, null, null,                         '+3600 seconds',    ['rate' => 2.0, 'duration' => 0]],
 
             // project: no violations
@@ -250,7 +250,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             'c_f1' => [null, null, null, null, 1320, null,      null, null, null, null, null, null, null, 3600, null,       '0:22', '0:38', '1:00', 'customer',          '+3600 seconds',    ['rate' => 1.0, 'duration' => 1000]],
             'c_h1' => [null, null, null, null, 7200, null,      null, null, null, null, null, null, null, 7200, null,       '2:00', '0:00', '2:00', 'customer',          '+3601 seconds',    ['rate' => 1.0, 'duration' => 3600]],
             'c_h2' => [null, null, null, null, 3601, null,      null, null, null, null, null, null, null, 3600, null,       null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 3601]],
-            'c_g0' => [null, null, null, null, null, 1002.0,    null, null, null, null, null, null, null, null, 1000.0,     '1,002.00', '0.00', '1,000.00', 'customer',     '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
+            'c_g0' => [null, null, null, null, null, 1002.0,    null, null, null, null, null, null, null, null, 1000.0,     '€1,002.00', '€0.00', '€1,000.00', 'customer',     '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
             'c_g1' => [null, null, null, null, null, 1002.0,    null, null, null, null, null, null, null, null, 1000.0,     null, null, null, null,                         '+3600 seconds',    ['rate' => 2.0, 'duration' => 0]],
 
             // customer: no violations
@@ -374,6 +374,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             }
 
             $customer = $this->createMock(Customer::class);
+            $customer->method('getCurrency')->willReturn('EUR');
             $customer->method('getId')->willReturn($rawData['customer']);
             $customer->method('isMonthlyBudget')->willReturn(false);
             if ($customerBudgetType !== null) {

@@ -26,14 +26,8 @@ final class ProjectDateRangeQuery
      * @var Customer|null
      */
     private $customer;
-    /**
-     * @var bool
-     */
-    private $includeNoWork = false;
-    /**
-     * @var string|null
-     */
-    private $budgetType = null;
+    private bool $includeNoWork = false;
+    private ?string $budgetType = null;
 
     public function __construct(\DateTime $month, User $user)
     {

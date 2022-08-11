@@ -34,24 +34,21 @@ class InvoiceFixtures extends Fixture
         $faker = Factory::create('at_AT');
 
         foreach ($this->getInvoiceConfigs($faker) as $invoiceConfig) {
-            $template = new InvoiceTemplate();
-
             // name, title, renderer, calculator, numberGenerator, company, vat, dueDays, address, paymentTerms
-            $template
-                ->setName($invoiceConfig[0])
-                ->setTitle($invoiceConfig[1])
-                ->setRenderer($invoiceConfig[2])
-                ->setCalculator($invoiceConfig[3])
-                ->setNumberGenerator($invoiceConfig[4])
-                ->setCompany($invoiceConfig[5])
-                ->setVat($invoiceConfig[6])
-                ->setDueDays($invoiceConfig[7])
-                ->setPaymentTerms($invoiceConfig[8])
-                ->setLanguage('de')
-                ->setAddress($this->generateAddress($faker))
-                ->setContact($this->generateContact($faker))
-                ->setPaymentDetails($this->generatePaymentDetails($faker))
-            ;
+            $template = new InvoiceTemplate();
+            $template->setName($invoiceConfig[0]);
+            $template->setTitle($invoiceConfig[1]);
+            $template->setRenderer($invoiceConfig[2]);
+            $template->setCalculator($invoiceConfig[3]);
+            $template->setNumberGenerator($invoiceConfig[4]);
+            $template->setCompany($invoiceConfig[5]);
+            $template->setVat($invoiceConfig[6]);
+            $template->setDueDays($invoiceConfig[7]);
+            $template->setPaymentTerms($invoiceConfig[8]);
+            $template->setLanguage('de');
+            $template->setAddress($this->generateAddress($faker));
+            $template->setContact($this->generateContact($faker));
+            $template->setPaymentDetails($this->generatePaymentDetails($faker));
             $template->setVatId($faker->creditCardNumber());
 
             $manager->persist($template);

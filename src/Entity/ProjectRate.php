@@ -32,8 +32,6 @@ class ProjectRate implements RateInterface
     /**
      * @var Project
      *
-     * @Serializer\Exclude()
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Project")
      * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull

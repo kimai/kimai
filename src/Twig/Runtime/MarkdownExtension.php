@@ -15,23 +15,10 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 final class MarkdownExtension implements RuntimeExtensionInterface
 {
-    /**
-     * @var Markdown
-     */
-    private $markdown;
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
-    /**
-     * @var bool|null
-     */
-    private $markdownEnabled;
+    private ?bool $markdownEnabled = null;
 
-    public function __construct(Markdown $parser, SystemConfiguration $configuration)
+    public function __construct(private Markdown $markdown, private SystemConfiguration $configuration)
     {
-        $this->markdown = $parser;
-        $this->configuration = $configuration;
     }
 
     private function isMarkdownEnabled(): bool

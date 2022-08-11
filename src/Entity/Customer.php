@@ -42,7 +42,6 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
      * @Exporter\Expose(label="label.id", type="integer")
      *
      * @ORM\Column(name="id", type="integer")
@@ -55,7 +54,6 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
      * @Exporter\Expose(label="label.name")
      *
      * @ORM\Column(name="name", type="string", length=150, nullable=false)
@@ -64,105 +62,80 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      */
     private $name;
     /**
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
      * @Exporter\Expose(label="label.number")
      *
      * @ORM\Column(name="number", type="string", length=50, nullable=true)
      * @Assert\Length(max=50)
      */
-    private $number;
+    private ?string $number = null;
     /**
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
      * @Exporter\Expose(label="label.comment")
      *
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
-    private $comment;
+    private ?string $comment = null;
     /**
-     * @var bool
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
      * @Exporter\Expose(label="label.visible", type="boolean")
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      * @Assert\NotNull()
      */
-    private $visible = true;
+    private bool $visible = true;
     /**
-     * @var bool
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
      * @Exporter\Expose(label="label.billable", type="boolean")
      *
      * @ORM\Column(name="billable", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
      */
-    private $billable = true;
+    private bool $billable = true;
     /**
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
-     *
      * @Exporter\Expose(label="label.company")
      *
      * @ORM\Column(name="company", type="string", length=100, nullable=true)
      * @Assert\Length(max=100)
      */
-    private $company;
+    private ?string $company = null;
     /**
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
-     *
      * @Exporter\Expose(label="label.vat_id")
      *
      * @ORM\Column(name="vat_id", type="string", length=50, nullable=true)
      * @Assert\Length(max=50)
      */
-    private $vatId;
+    private ?string $vatId = null;
     /**
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
-     *
      * @Exporter\Expose(label="label.contact")
      *
      * @ORM\Column(name="contact", type="string", length=100, nullable=true)
      * @Assert\Length(max=100)
      */
-    private $contact;
+    private ?string $contact = null;
     /**
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
-     *
      * @Exporter\Expose(label="label.address")
      *
      * @ORM\Column(name="address", type="text", nullable=true)
      */
-    private $address;
+    private ?string $address = null;
     /**
      * @var string
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
-     *
      * @Exporter\Expose(label="label.country")
      *
      * @ORM\Column(name="country", type="string", length=2, nullable=false)
@@ -172,11 +145,8 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      */
     private $country;
     /**
-     * @var string
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer"})
-     *
      * @Exporter\Expose(label="label.currency")
      *
      * @ORM\Column(name="currency", type="string", length=3, nullable=false)
@@ -184,71 +154,54 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      * @Assert\Currency()
      * @Assert\Length(max=3)
      */
-    private $currency = self::DEFAULT_CURRENCY;
+    private string $currency = self::DEFAULT_CURRENCY;
     /**
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
-     *
      * @Exporter\Expose(label="label.phone")
      *
      * @ORM\Column(name="phone", type="string", length=30, nullable=true)
      * @Assert\Length(max=30)
      */
-    private $phone;
+    private ?string $phone = null;
     /**
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
-     *
      * @Exporter\Expose(label="label.fax")
      *
      * @ORM\Column(name="fax", type="string", length=30, nullable=true)
      * @Assert\Length(max=30)
      */
-    private $fax;
+    private ?string $fax = null;
     /**
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
-     *
      * @Exporter\Expose(label="label.mobile")
      *
      * @ORM\Column(name="mobile", type="string", length=30, nullable=true)
      * @Assert\Length(max=30)
      */
-    private $mobile;
+    private ?string $mobile = null;
     /**
      * Customers contact email
      *
-     * Limited via RFC to 254 chars
-     *
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
-     *
      * @Exporter\Expose(label="label.email")
      *
      * @ORM\Column(name="email", type="string", length=75, nullable=true)
      * @Assert\Length(max=75)
      */
-    private $email;
+    private ?string $email = null;
     /**
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
-     *
      * @Exporter\Expose(label="label.homepage")
      *
      * @ORM\Column(name="homepage", type="string", length=100, nullable=true)
      * @Assert\Length(max=100)
      */
-    private $homepage;
+    private ?string $homepage = null;
     /**
      * Timezone of begin and end
      *
@@ -308,22 +261,14 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
     /**
      * Default invoice template for this customer
      *
-     * @var InvoiceTemplate|null
-     *
-     * @Serializer\Exclude()
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\InvoiceTemplate")
      * @ORM\JoinColumn(onDelete="SET NULL", nullable=true)
      */
-    private $invoiceTemplate;
+    private ?InvoiceTemplate $invoiceTemplate = null;
     /**
-     * @var string|null
-     *
-     * @Serializer\Exclude()
-     *
      * @ORM\Column(name="invoice_text", type="text", nullable=true)
      */
-    private $invoiceText;
+    private ?string $invoiceText = null;
 
     public function __construct()
     {
@@ -454,14 +399,14 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
         return $this->country;
     }
 
-    public function setCurrency(?string $currency): Customer
+    public function setCurrency(string $currency): Customer
     {
         $this->currency = $currency;
 
         return $this;
     }
 
-    public function getCurrency(): ?string
+    public function getCurrency(): string
     {
         return $this->currency;
     }

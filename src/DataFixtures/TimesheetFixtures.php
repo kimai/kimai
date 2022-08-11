@@ -210,12 +210,11 @@ class TimesheetFixtures extends Fixture implements FixtureGroupInterface
         $start->setTimezone(new \DateTimeZone($user->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get())));
 
         $entry = new Timesheet();
-        $entry
-            ->setActivity($activity)
-            ->setProject($activity->getProject() ?? $project)
-            ->setDescription($description)
-            ->setUser($user)
-            ->setBegin($start);
+        $entry->setActivity($activity);
+        $entry->setProject($activity->getProject() ?? $project);
+        $entry->setDescription($description);
+        $entry->setUser($user);
+        $entry->setBegin($start);
 
         if ($setEndDate) {
             $end = clone $start;
@@ -225,10 +224,9 @@ class TimesheetFixtures extends Fixture implements FixtureGroupInterface
             $hourlyRate = (float) $user->getPreferenceValue(UserPreference::HOURLY_RATE);
             $rate = Util::calculateRate($hourlyRate, $duration);
 
-            $entry
-                ->setEnd($end)
-                ->setRate($rate)
-                ->setDuration($duration);
+            $entry->setEnd($end);
+            $entry->setRate($rate);
+            $entry->setDuration($duration);
         } else {
             // running entries should be short
             $newBegin = clone $entry->getBegin();

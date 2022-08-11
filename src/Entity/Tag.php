@@ -61,8 +61,6 @@ class Tag
     /**
      * @var Timesheet[]|ArrayCollection
      *
-     * @Serializer\Exclude()
-     *
      * @ORM\ManyToMany(targetEntity="Timesheet", mappedBy="tags", fetch="EXTRA_LAZY")
      */
     private $timesheets;

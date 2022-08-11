@@ -41,11 +41,9 @@ class Configuration
      */
     private $name;
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="value", type="text", nullable=true)
      */
-    private $value;
+    private ?string $value = null;
 
     public function getId(): ?int
     {

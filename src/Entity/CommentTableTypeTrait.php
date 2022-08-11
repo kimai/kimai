@@ -45,17 +45,10 @@ trait CommentTableTypeTrait
      */
     private $createdAt;
     /**
-     * @var bool
-     *
      * @ORM\Column(name="pinned", type="boolean", nullable=false, options={"default": false})
      * @Assert\NotNull()
      */
-    private $pinned = false;
-
-    public function __construct()
-    {
-        $this->createdAt = new \DateTime();
-    }
+    private bool $pinned = false;
 
     public function getId(): ?int
     {

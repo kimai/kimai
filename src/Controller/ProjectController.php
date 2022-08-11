@@ -204,8 +204,8 @@ final class ProjectController extends AbstractController
      */
     public function addCommentAction(Project $project, Request $request)
     {
-        $comment = new ProjectComment();
-        $form = $this->getCommentForm($project, $comment);
+        $comment = new ProjectComment($project);
+        $form = $this->getCommentForm($comment);
 
         $form->handleRequest($request);
 
@@ -330,7 +330,7 @@ final class ProjectController extends AbstractController
 
         if ($this->isGranted('comments', $project)) {
             $comments = $this->repository->getComments($project);
-            $commentForm = $this->getCommentForm($project, new ProjectComment())->createView();
+            $commentForm = $this->getCommentForm(new ProjectComment($project))->createView();
         }
 
         if ($this->isGranted('permissions', $project) || $this->isGranted('details', $project) || $this->isGranted('view_team')) {
@@ -533,15 +533,14 @@ final class ProjectController extends AbstractController
         ]);
     }
 
-    private function getCommentForm(Project $project, ProjectComment $comment): FormInterface
+    private function getCommentForm(ProjectComment $comment): FormInterface
     {
         if (null === $comment->getId()) {
-            $comment->setProject($project);
             $comment->setCreatedBy($this->getUser());
         }
 
         return $this->createForm(ProjectCommentForm::class, $comment, [
-            'action' => $this->generateUrl('project_comment_add', ['id' => $project->getId()]),
+            'action' => $this->generateUrl('project_comment_add', ['id' => $comment->getProject()->getId()]),
             'method' => 'POST',
         ]);
     }

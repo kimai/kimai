@@ -64,39 +64,25 @@ class UserPreference
      */
     private $name;
     /**
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="value", type="string", length=255, nullable=true)
      */
-    private $value;
-    /**
-     * @var string
-     */
-    private $type;
-    /**
-     * @var bool
-     */
-    private $enabled = true;
+    private ?string $value;
+    private ?string $type = null;
+    private bool $enabled = true;
     /**
      * @var Constraint[]
      */
-    private $constraints = [];
+    private array $constraints = [];
     /**
      * An array of options for the form element
      * @var array
      */
-    private $options = [];
-    /**
-     * @var int
-     */
-    private $order = 1000;
-    /**
-     * @var string
-     */
-    private $section = 'default';
+    private array $options = [];
+    private int $order = 1000;
+    private string $section = 'default';
 
     public function __construct(string $name, string|int|float|bool|null $value = null)
     {

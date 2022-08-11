@@ -44,6 +44,8 @@ class Invoice implements EntityWithMetaFields
     public const STATUS_NEW = 'new';
 
     /**
+     * Unique invoice ID
+     *
      * @var int|null
      *
      * @Exporter\Expose(label="label.id", type="integer")
@@ -63,16 +65,13 @@ class Invoice implements EntityWithMetaFields
      */
     private $invoiceNumber;
     /**
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
-     *
      * @Exporter\Expose(label="label.comment")
      *
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
-    private $comment;
+    private ?string $comment = null;
     /**
      * @var Customer
      *
@@ -133,34 +132,28 @@ class Invoice implements EntityWithMetaFields
      */
     private $currency;
     /**
-     * @var int
-     *
      * @Exporter\Expose(label="label.due_days", type="integer")
      *
      * @ORM\Column(name="due_days", type="integer", length=3, nullable=false)
      * @Assert\NotNull()
      * @Assert\Range(min = 0, max = 999)
      */
-    private $dueDays = 30;
+    private int $dueDays = 30;
     /**
-     * @var float
-     *
      * @Exporter\Expose(label="label.tax_rate", type="float")
      *
      * @ORM\Column(name="vat", type="float", nullable=false)
      * @Assert\NotNull()
      * @Assert\Range(min = 0.0, max = 99.99)
      */
-    private $vat = 0.00;
+    private float $vat = 0.00;
     /**
-     * @var string
-     *
      * @Exporter\Expose(label="label.status", type="string")
      *
      * @ORM\Column(name="status", type="string", length=20, nullable=false)
      * @Assert\NotNull()
      */
-    private $status = self::STATUS_NEW;
+    private string $status = self::STATUS_NEW;
     /**
      * @var string
      *
@@ -171,16 +164,11 @@ class Invoice implements EntityWithMetaFields
      * @Assert\Length(min=1, max=150)
      */
     private $invoiceFilename;
+    private bool $localized = false;
     /**
-     * @var bool
-     */
-    private $localized = false;
-    /**
-     * @var \DateTime|null
-     *
      * @ORM\Column(name="payment_date", type="date", nullable=true)
      */
-    private $paymentDate;
+    private ?\DateTime $paymentDate = null;
     /**
      * Meta fields
      *
