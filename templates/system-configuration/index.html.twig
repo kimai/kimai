@@ -15,7 +15,7 @@
                     {% if title == section.model.translation %}
                         {% set title = ('label.' ~ section.model.section)|trans %}
                     {% endif %}
-                    <a class="list-group-item d-flex" href="#{{ section.model.section }}">
+                    <a class="list-group-item d-flex" href="#conf_{{ section.model.section }}">
                         {{ title }}
                         <small class="text-muted ms-auto">{{ section.form.children.configuration|length }}</small>
                     </a>
@@ -35,7 +35,7 @@
                         {% set title = ('label.' ~ section.model.section)|trans %}
                     {% endif %}
                     {% embed formEditTemplate with {'title': title, 'form': section.form} %}
-                        {% block form_before %}<span id="{{ section.model.section }}"></span>{% endblock %}
+                        {% block form_before %}<span id="conf_{{ section.model.section }}"></span>{% endblock %}
                         {% block form_body %}
                             {% for pref in form.children.configuration %}
                                 {{ form_widget(pref) }}
