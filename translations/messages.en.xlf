@@ -479,7 +479,7 @@
       </trans-unit>
       <trans-unit id="wv3n.FT" resname="dashboard.edit_mode">
         <source>dashboard.edit_mode</source>
-        <target>You can rearrange your widgets using drag &amp; drop. Adding and removing widgets saves pending changes.</target>
+        <target>You can rearrange your widgets using drag &amp; drop. Adding widgets saves pending changes.</target>
       </trans-unit>
       <!-- Widgets -->
       <trans-unit id="4iliLZT" resname="label.toggle_dropdown">

@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% from "macros/widgets.html.twig" import nothing_found, alert, page_actions %}
+{% from "macros/widgets.html.twig" import nothing_found, alert, page_actions, card_tool_button %}
 
 {% block page_title %}{{ 'dashboard.title'|trans }}{% endblock %}
 {% block subtitle %}{{ 'dashboard.subtitle'|trans }}{% endblock %}
@@ -36,9 +36,38 @@
 
         <div class="grid-stack" id="dashboard-grid-container" style="visibility: hidden">
             {% for widget in widgets %}
-                <div class="grid-stack-item" data-widget="{{ widget.id }}" gs-w="{{ widget.width }}" gs-min-w="{{ widget.width }}" gs-h="{{ widget.height }}" gs-id="{{ widget.id }}" id="{{ widget.id }}">
+                {% set gridWidth = widget.width %}
+                {% set gridHeight = widget.height %}
+                {% set widgetWidth = gridWidth * 100 %}
+                {% set widgetHeight = (gridHeight * 72) %}
+                {% if gridHeight == 1 %}
+                    {% set widgetHeight = widgetHeight - 67 %}
+                {% elseif gridHeight == 3 %}
+                    {% set widgetHeight = widgetHeight %}
+                {% elseif gridHeight == 5 %}
+                    {% set widgetHeight = widgetHeight - 10 %}
+                {% elseif gridHeight == 7 %}
+                    {% set widgetHeight = widgetHeight - 10 %}
+                {% endif %}
+                <div class="grid-stack-item" data-widget="{{ widget.id }}" gs-w="{{ gridWidth }}" gs-min-w="{{ gridWidth }}" gs-h="{{ gridHeight }}" gs-id="{{ widget.id }}" id="{{ widget.id }}">
                     <div class="grid-stack-item-content">
-                        {{ render_widget(widget) }}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">{{ widget.title|trans }}</h3>
+                                <div class="card-actions">
+                                    {% if widget.hasForm() %}
+                                        {{ card_tool_button('configuration', {'title': 'settings', 'translation_domain': 'actions', 'class': 'modal-ajax-form', 'url': path('tasks_create')}) }}
+                                    {% endif %}
+                                    {{ card_tool_button('delete', {'title': 'widget_remove', 'translation_domain': 'actions', 'url': '#', 'onclick': "removeWidget('" ~ widget.id ~ "'); return false;"}) }}
+                                </div>
+                            </div>
+                            <div class="card-body p-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-100" preserveAspectRatio="none" width="{{ widgetWidth }}" height="{{ widgetHeight }}" viewBox="0 0 {{ widgetWidth }} {{ widgetHeight }}" stroke="var(--tblr-border-color, #b8cef1)">
+                                    <line x1="0" y1="0" x2="{{ widgetWidth }}" y2="{{ widgetHeight }}"></line>
+                                    <line x1="0" y1="{{ widgetHeight }}" x2="{{ widgetWidth }}" y2="0"></line>
+                                </svg>
+                            </div>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
@@ -61,9 +90,11 @@
             } else if (width) {
                 grid.column(4);
             }
-        };
+        }
 
-        window.addEventListener('resize', function() {resizeGrid()});
+        window.addEventListener('resize', function() {
+            resizeGrid();
+        });
 
         document.addEventListener('kimai.initialized', function() {
             grid = GridStack.init({
@@ -88,6 +119,14 @@
         });
 
         {% if form is defined %}
+        function removeWidget(widgetId)
+        {
+            const widget = document.querySelector('div[data-widget=' + widgetId + ']');
+            if (widget !== null) {
+                grid.removeWidget(widget);
+            }
+        }
+
         function saveDashboard()
         {
             let serializedData = grid.save();

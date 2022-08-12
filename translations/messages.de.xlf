@@ -479,7 +479,7 @@
       </trans-unit>
       <trans-unit id="wv3n.FT" resname="dashboard.edit_mode">
         <source>dashboard.edit_mode</source>
-        <target>Sie können Ihre Widgets per Drag &amp; Drop neu anordnen. Das Hinzufügen und Entfernen von Widgets speichert ausstehende Änderungen.</target>
+        <target>Sie können Ihre Widgets per Drag &amp; Drop neu anordnen. Das Hinzufügen von Widgets speichert ausstehende Änderungen.</target>
       </trans-unit>
       <!-- Widgets -->
       <trans-unit id="4iliLZT" resname="label.toggle_dropdown">

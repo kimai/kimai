@@ -32,13 +32,11 @@ class DashboardSubscriber extends AbstractActionsSubscriber
             $event->addAction('settings', ['title' => 'settings', 'translation_domain' => 'actions', 'url' => $this->path('dashboard_edit')]);
         } else {
             $ids = [];
-            $removes = [];
 
             $event->addAction('save', ['title' => 'action.save', 'onclick' => 'saveDashboard(); return false;', 'icon' => 'save']);
 
             foreach ($widgets as $widget) {
                 $ids[] = $widget->getId();
-                $removes[] = $widget;
             }
 
             foreach ($available as $widget) {
@@ -46,6 +44,7 @@ class DashboardSubscriber extends AbstractActionsSubscriber
                     continue;
                 }
 
+                // prevent to use the same widget multiple times
                 if (\in_array($widget->getId(), $ids)) {
                     continue;
                 }
@@ -69,10 +68,6 @@ class DashboardSubscriber extends AbstractActionsSubscriber
                 }
 
                 $event->addActionToSubmenu('widget_add', $widget->getId(), ['url' => $this->path('dashboard_add', ['widget' => $widget->getId()]), 'title' => $widget->getTitle()]);
-            }
-
-            foreach ($removes as $widget) {
-                $event->addActionToSubmenu('widget_remove', $widget->getId(), ['url' => $this->path('dashboard_remove', ['widget' => $widget->getId()]),  'title' => $widget->getTitle()]);
             }
 
             $event->addAction('reset', ['title' => 'action.reset', 'url' => $this->path('dashboard_reset'), 'icon' => 'delete', 'class' => 'confirmation-link', 'attr' => ['data-question' => 'confirm.delete']]);

@@ -1,4 +1,4 @@
-{% embed '@theme/embeds/card.html.twig' %}
+{% embed '@theme/embeds/card.html.twig' with {'margin_bottom': 0} %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% block box_title %}
         {% if not title is empty %}{{ title|trans }}{% endif %}

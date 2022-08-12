@@ -18,6 +18,7 @@ use App\Widget\WidgetService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,29 +29,23 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route(path="/dashboard")
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
-class DashboardController extends AbstractController
+final class DashboardController extends AbstractController
 {
     public const BOOKMARK_TYPE = 'dashboard';
     public const BOOKMARK_NAME = 'default';
-
-    private $eventDispatcher;
-    private $service;
-    private $repository;
-    /**
-     * @var array<string> array with names of default widgets
-     */
-    private $dashboard;
     /**
      * @var WidgetInterface[]|null
      */
-    private $widgets;
+    private ?array $widgets = null;
 
-    public function __construct(EventDispatcherInterface $dispatcher, WidgetService $service, BookmarkRepository $repository, array $dashboard)
+    /**
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param WidgetService $service
+     * @param BookmarkRepository $repository
+     * @param array<string> $dashboard names of default widgets
+     */
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private WidgetService $service, private BookmarkRepository $repository, private array $dashboard)
     {
-        $this->eventDispatcher = $dispatcher;
-        $this->service = $service;
-        $this->repository = $repository;
-        $this->dashboard = $dashboard;
     }
 
     /**
@@ -157,7 +152,7 @@ class DashboardController extends AbstractController
     /**
      * @Route(path="/", defaults={}, name="dashboard", methods={"GET"})
      */
-    public function index()
+    public function index(): Response
     {
         $user = $this->getUser();
         $available = $this->getAllAvailableWidgets($user);
@@ -171,7 +166,7 @@ class DashboardController extends AbstractController
     /**
      * @Route(path="/reset/", defaults={}, name="dashboard_reset", methods={"GET", "POST"})
      */
-    public function reset()
+    public function reset(): RedirectResponse
     {
         $bookmark = $this->getBookmark($this->getUser());
         if ($bookmark !== null) {
@@ -189,6 +184,8 @@ class DashboardController extends AbstractController
         $user = $this->getUser();
 
         $widgets = $this->getUserConfig($user);
+
+        // prevent to add the same widget multiple times
         foreach ($widgets as $id => $setting) {
             if ($setting['id'] === $widget) {
                 return $this->redirectToRoute('dashboard_edit');
@@ -202,26 +199,7 @@ class DashboardController extends AbstractController
         return $this->redirectToRoute('dashboard_edit');
     }
 
-    /**
-     * @Route(path="/remove-widget/{widget}", defaults={}, name="dashboard_remove", methods={"GET"})
-     */
-    public function remove(string $widget): Response
-    {
-        $user = $this->getUser();
-
-        $widgets = $this->getUserConfig($user);
-        foreach ($widgets as $id => $setting) {
-            if ($setting['id'] === $widget) {
-                unset($widgets[$id]);
-            }
-        }
-
-        $this->saveBookmark($user, $widgets);
-
-        return $this->redirectToRoute('dashboard_edit');
-    }
-
-    private function saveBookmark(User $user, array $widgets)
+    private function saveBookmark(User $user, array $widgets): void
     {
         $bookmark = $this->getBookmark($user);
         if ($bookmark === null) {
@@ -238,7 +216,7 @@ class DashboardController extends AbstractController
     /**
      * @Route(path="/edit/", defaults={}, name="dashboard_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request)
+    public function edit(Request $request): Response
     {
         $user = $this->getUser();
 
