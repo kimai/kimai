@@ -3,7 +3,7 @@
     "app": {
       "js": [
         "/build/runtime.f0079159.js",
-        "/build/app.3fbf6382.js"
+        "/build/app.546fbb08.js"
       ],
       "css": [
         "/build/app.33cde1e7.css"
@@ -54,7 +54,7 @@
   },
   "integrity": {
     "/build/runtime.f0079159.js": "sha384-H22sAW1aTvyIPqvHOvGXWSWTxf0y6mptp+MsVmyXCfjx/WJjBbhX9gbUZ+qIuihV",
-    "/build/app.3fbf6382.js": "sha384-0+FoNlZntjTls/mgp0xrsEn13iNzgBSMFt7HJx0QJAOOJcHexpC5Lal8sWO6dMr4",
+    "/build/app.546fbb08.js": "sha384-SdWacQ9NumPjZEkR8QxQfsthecO8GEiG2J49V+cu4Q0jcUbsUPaXvAiSxtc3N9LR",
     "/build/app.33cde1e7.css": "sha384-gNn1dVz7yDw/Uu8xr4JygO2ZoUrKfDKO8G+HSedlXHoJoVcC/t2EZspJtC/zOjZG",
     "/build/invoice.c8ae95ad.js": "sha384-2eVY7MBiMQxo1vhfizU+fYfEZbz9bYUdzqxnpTQhxpYiLaxeSV4WnaObq2G7/Pks",
     "/build/invoice.7abcff08.css": "sha384-7Amhb/hy+pWEfFEPme/DhVIQovv16kdL/H0pWRGTYwwTCp9iUQcglC2UjSyQ8swG",

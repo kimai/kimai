@@ -257,7 +257,7 @@ class TimesheetEditForm extends AbstractType
     {
         $durationOptions = [
             'required' => false,
-            'toggle' => true,
+            //'toggle' => true,
             'attr' => [
                 'placeholder' => '0:00',
             ],

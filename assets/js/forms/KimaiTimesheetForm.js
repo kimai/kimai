@@ -130,6 +130,10 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
             return false;
         }
 
+        if (this._durationToggle === null) {
+            return true;
+        }
+
         return this._durationToggle.classList.contains('text-success');
     }
 
