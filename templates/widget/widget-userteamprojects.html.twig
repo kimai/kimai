@@ -1,7 +1,7 @@
 {% set projectStats = data %}
 {% set title = options.title|default('label.my_team_projects') %}
 
-{% embed '@theme/embeds/card.html.twig' %}
+{% embed '@theme/embeds/card.html.twig' with {'margin_bottom': 0} %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% import "macros/progressbar.html.twig" as progress %}
     {% block box_body_class %}p-0 box-body-scrollable{% endblock %}
