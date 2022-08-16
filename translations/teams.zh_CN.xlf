@@ -26,6 +26,14 @@
         <source>team.project_visibility_inherited</source>
         <target state="translated">该项目访问受限，因为团队权限是为客户设置的。</target>
       </trans-unit>
+      <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited">
+        <source>team.activity_visibility_inherited</source>
+        <target state="translated">该活动具有有限的访问权，因为团队权限是为项目和/或客户设置的。</target>
+      </trans-unit>
+      <trans-unit id="cZEIdcu" resname="team.create_default">
+        <source>team.create_default</source>
+        <target state="translated">创建新团队以限制访问</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

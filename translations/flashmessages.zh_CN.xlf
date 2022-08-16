@@ -50,6 +50,14 @@
         <source>invoice.first_template</source>
         <target>您必须先创立一个自己的发票模板</target>
       </trans-unit>
+      <trans-unit id="wejAEcR" resname="action.upload.error">
+        <source>action.upload.error</source>
+        <target state="translated">无法上载或保存文件：%reason%</target>
+      </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R">
+        <source>action.csrf.error</source>
+        <target state="translated">无法执行该操作：安全令牌无效。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
