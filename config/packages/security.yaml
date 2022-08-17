@@ -32,9 +32,10 @@ security:
                 - App\Saml\SamlAuthenticator
 
             remember_me:
-                secret:   '%kernel.secret%'
+                secret: '%kernel.secret%'
                 lifetime: 604800
-                path:     /
+                path: /
+                always_remember_me: true
 
             # activate all configured user provider
             provider: chain_provider
