@@ -5,7 +5,6 @@
     {% import "user/actions.html.twig" as actions %}
     {% set event = actions(app.user, 'user_forms', tab, {'user': user}) %}
 
-    {{ form_start(form) }}
     <div class="card">
         <ul class="nav nav-tabs" data-bs-toggle="tabs">
             {% for name, settings in event.actions %}
@@ -14,6 +13,8 @@
                 </li>
             {% endfor %}
         </ul>
+        {% block form_body %}
+        {{ form_start(form) }}
         <div class="card-body">
             {% block form_pre_content %}{% endblock %}
             {% block form_content %}
@@ -24,7 +25,8 @@
         <div class="card-footer">
             <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
         </div>
+        {{ form_end(form) }}
+        {% endblock %}
     </div>
-    {{ form_end(form) }}
 
 {% endblock %}

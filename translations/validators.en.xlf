@@ -98,6 +98,10 @@
         <source>The given value is not a valid datetime format.</source>
         <target>The given value is not a valid day-time format.</target>
       </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+        <source>The given code is not the correct TOTP token.</source>
+        <target>The given code is not the correct TOTP token.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

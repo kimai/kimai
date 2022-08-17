@@ -56,3 +56,11 @@ homeLocale:
         _locale: '%locale%'
         route: homepage
         permanent: true
+
+2fa_login:
+    path: /{_locale}/auth/2fa
+    defaults:
+        _controller: "scheb_two_factor.form_controller::form"
+
+2fa_login_check:
+    path: /{_locale}/auth/2fa_check

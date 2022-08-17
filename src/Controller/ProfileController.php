@@ -12,18 +12,26 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
+use App\Form\Model\TotpActivation;
 use App\Form\UserApiTokenType;
 use App\Form\UserEditType;
 use App\Form\UserPasswordType;
 use App\Form\UserPreferencesForm;
 use App\Form\UserRolesType;
 use App\Form\UserTeamsType;
+use App\Form\UserTwoFactorType;
 use App\Repository\TeamRepository;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use App\Timesheet\TimesheetStatisticService;
 use App\User\UserService;
 use Doctrine\Common\Collections\ArrayCollection;
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\Writer\PngWriter;
+use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Totp\TotpAuthenticatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -35,7 +43,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * User profile controller
  *
  * @Route(path="/profile")
- * @Security("is_granted('view_own_profile') or is_granted('view_other_profile')")
+ * @Security("is_granted('IS_AUTHENTICATED_FULLY') and (is_granted('view_own_profile') or is_granted('view_other_profile'))")
  */
 final class ProfileController extends AbstractController
 {
@@ -343,4 +351,102 @@ final class ProfileController extends AbstractController
             ]
         );
     }
+
+    // --------------- 2 Factor Authentication ---------------
+
+    /**
+     * @Route(path="/{username}/2fa", name="user_profile_2fa", methods={"GET", "POST"})
+     * @Security("is_granted('2fa', profile)")
+     */
+    public function twoFactorAction(User $profile, Request $request, UserService $userService, TotpAuthenticatorInterface $totpAuthenticator): Response
+    {
+        if (!$profile->hasTotpSecret()) {
+            $profile->setTotpSecret($totpAuthenticator->generateSecret());
+            $userService->updateUser($profile);
+        }
+
+        $data = new TotpActivation($profile);
+
+        $form = $this->createForm(UserTwoFactorType::class, $data, [
+            'action' => $this->generateUrl('user_profile_2fa', ['username' => $profile->getUserIdentifier()]),
+            'method' => 'POST'
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $profile->enableTotpAuthentication();
+            $userService->updateUser($profile);
+
+            $this->flashSuccess('action.update.success');
+
+            return $this->redirectToRoute('user_profile_2fa', ['username' => $profile->getUserIdentifier()]);
+        }
+
+        return $this->render('user/2fa.html.twig', [
+            'tab' => '2fa',
+            'user' => $profile,
+            'form' => $form->createView(),
+            'deactivate' => $this->getTwoFactorDeactivationForm($profile)->createView(),
+        ]);
+    }
+
+    private function getTwoFactorDeactivationForm(User $user): FormInterface
+    {
+        return $this->createFormBuilder(
+            [],
+            [
+                'action' => $this->generateUrl('user_profile_2fa_deactivate', ['username' => $user->getUserIdentifier()]),
+                'method' => 'POST'
+            ]
+        )->getForm();
+    }
+
+    /**
+     * @Route(path="/{username}/2fa_deactivate", name="user_profile_2fa_deactivate", methods={"POST"})
+     * @Security("is_granted('2fa', profile)")
+     */
+    public function deactivateTwoFactorAction(User $profile, Request $request, UserService $userService, TotpAuthenticatorInterface $totpAuthenticator): Response
+    {
+        if ($profile->hasTotpSecret()) {
+            $form = $this->getTwoFactorDeactivationForm($profile);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $profile->disableTotpAuthentication();
+                $userService->updateUser($profile);
+
+                $this->flashSuccess('action.update.success');
+            }
+        }
+
+        return $this->redirectToRoute('user_profile_2fa', ['username' => $profile->getUserIdentifier()]);
+    }
+
+    /**
+     * @Route(path="/{username}/totp.png", name="user_profile_2fa_image", methods={"GET"})
+     * @Security("is_granted('2fa', profile)")
+     */
+    public function displayTotpQrCode(User $profile, TotpAuthenticatorInterface $totpAuthenticator): Response
+    {
+        if (!$profile->hasTotpSecret()) {
+            throw $this->createNotFoundException('User has no TOTP secret.');
+        }
+
+        $qrCodeContent = $totpAuthenticator->getQRContent($profile);
+
+        $result = Builder::create()
+            ->writer(new PngWriter())
+            ->writerOptions([])
+            ->data($qrCodeContent)
+            ->encoding(new Encoding('UTF-8'))
+            ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
+            ->size(200)
+            ->margin(0)
+            ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
+            ->build();
+
+        return new Response($result->getString(), 200, ['Content-Type' => 'image/png']);
+    }
+
 }

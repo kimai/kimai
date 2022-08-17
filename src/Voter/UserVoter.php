@@ -25,6 +25,7 @@ final class UserVoter extends Voter
         'roles',
         'teams',
         'password',
+        '2fa',
         'delete',
         'preferences',
         'api-token',
@@ -91,6 +92,12 @@ final class UserVoter extends Voter
             if (!$subject->isInternalUser()) {
                 return false;
             }
+        }
+
+        if ($attribute === '2fa') {
+            // two factor only works for internal users and
+            // can only be activated by the logged-in user for himself
+            return $subject->isInternalUser() && $subject->getId() === $user->getId();
         }
 
         $permission = $attribute;

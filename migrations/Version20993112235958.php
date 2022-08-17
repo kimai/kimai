@@ -37,6 +37,12 @@ final class Version20993112235958 extends AbstractMigration
         $customers->getColumn('homepage')->setLength(100);
         $customers->getColumn('email')->setLength(75);
 
+        $users = $schema->getTable('kimai2_users');
+        if (!$users->hasColumn('totp_secret')) {
+            $users->addColumn('totp_secret', 'string', ['notnull' => false, 'default' => null]);
+            $users->addColumn('totp_enabled', 'boolean', ['notnull' => true, 'default' => false]);
+        }
+
         // new invoice features
         if (!$customers->hasColumn('invoice_template_id')) {
             $customers->addColumn('invoice_template_id', 'integer', ['notnull' => false, 'default' => null]);

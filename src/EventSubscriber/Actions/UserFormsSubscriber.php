@@ -36,6 +36,9 @@ class UserFormsSubscriber extends AbstractActionsSubscriber
         if ($this->isGranted('password', $user)) {
             $event->addAction('password', ['url' => $this->path('user_profile_password', ['username' => $user->getUserIdentifier()]), 'title' => 'profile.password']);
         }
+        if ($this->isGranted('2fa', $user)) {
+            $event->addAction('2fa', ['url' => $this->path('user_profile_2fa', ['username' => $user->getUserIdentifier()]), 'title' => 'profile.2fa']);
+        }
         if ($this->isGranted('api-token', $user)) {
             $event->addAction('api-token', ['url' => $this->path('user_profile_api_token', ['username' => $user->getUserIdentifier()]), 'title' => 'profile.api-token']);
         }

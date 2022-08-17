@@ -585,6 +585,28 @@
         <source>profile.password</source>
         <target>Password</target>
       </trans-unit>
+      <!-- 2FA  -->
+      <trans-unit id="FeFBn_3" resname="profile.2fa">
+        <source>profile.2fa</source>
+        <target>Two-Factor (TOTP)</target>
+      </trans-unit>
+      <trans-unit id="hPY2VcD" resname="profile.2fa_intro">
+        <source>profile.2fa_intro</source>
+        <target>You can activate a new device by scanning the image in your application.</target>
+      </trans-unit>
+      <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation">
+        <source>profile.2fa_confirmation</source>
+        <target>Please confirm the code, which will activate the two-factor authentication for this account.</target>
+      </trans-unit>
+      <trans-unit id="IRzPWmL" resname="login.2fa_intro">
+        <source>login.2fa_intro</source>
+        <target>Please enter the confirmation code to complete the login process.</target>
+      </trans-unit>
+      <trans-unit id="FgKTw5v" resname="login.2fa_label">
+        <source>login.2fa_label</source>
+        <target>Confirmation code</target>
+      </trans-unit>
+      <!-- END 2FA  -->
       <trans-unit id="Z34ZpjK" resname="profile.api-token">
         <source>profile.api-token</source>
         <target>API</target>
@@ -1398,6 +1420,14 @@
       <trans-unit id="ZZaqTEr" resname="no_activity">
         <source>no_activity</source>
         <target>Without activity</target>
+      </trans-unit>
+      <trans-unit id="Uu8YvYV" resname="deactivated">
+        <source>Deactivated</source>
+        <target>Deactivated</target>
+      </trans-unit>
+      <trans-unit id="3WHV.yf" resname="activated">
+        <source>Activated</source>
+        <target>Activated</target>
       </trans-unit>
     </body>
   </file>

@@ -21,6 +21,9 @@ use Exception;
 use JMS\Serializer\Annotation as Serializer;
 use KevinPapst\TablerBundle\Model\UserInterface as ThemeUserInterface;
 use OpenApi\Annotations as OA;
+use Scheb\TwoFactorBundle\Model\Totp\TotpConfiguration;
+use Scheb\TwoFactorBundle\Model\Totp\TotpConfigurationInterface;
+use Scheb\TwoFactorBundle\Model\Totp\TwoFactorInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -51,7 +54,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams()", type="array")
  * @Exporter\Expose("active", label="label.active", exp="object.isEnabled()", type="boolean")
  */
-class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
@@ -253,6 +256,16 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @Constraints\Role(groups={"RolesUpdate"})
      */
     private array $roles = [];
+    /**
+     * If not empty two-factor authentication is enabled.
+     *
+     * @ORM\Column(name="totp_secret", type="string", nullable=true)
+     */
+    private ?string $totpSecret;
+    /**
+     * @ORM\Column(name="totp_enabled", type="boolean", nullable=false, options={"default": false})
+     */
+    private bool $totpEnabled = false;
 
     use ColorTrait;
 
@@ -1116,5 +1129,42 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function getName(): string
     {
         return $this->getDisplayName();
+    }
+
+    // --------------- 2 Factor Authentication ---------------
+
+    public function setTotpSecret(?string $secret): void
+    {
+        $this->totpSecret = $secret;
+    }
+
+    public function hasTotpSecret(): bool
+    {
+        return $this->totpSecret !== null;
+    }
+
+    public function isTotpAuthenticationEnabled(): bool
+    {
+        return $this->totpEnabled;
+    }
+
+    public function enableTotpAuthentication(): void
+    {
+        $this->totpEnabled = true;
+    }
+
+    public function disableTotpAuthentication(): void
+    {
+        $this->totpEnabled = false;
+    }
+
+    public function getTotpAuthenticationUsername(): string
+    {
+        return $this->getUserIdentifier();
+    }
+
+    public function getTotpAuthenticationConfiguration(): TotpConfigurationInterface
+    {
+        return new TotpConfiguration($this->totpSecret, TotpConfiguration::ALGORITHM_SHA1, 30, 6);
     }
 }

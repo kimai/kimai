@@ -240,9 +240,6 @@
     "phar-io/version": {
         "version": "1.0.1"
     },
-    "php-cs-fixer/diff": {
-        "version": "v1.2.0"
-    },
     "php-http/message-factory": {
         "version": "v1.0.2"
     },
@@ -329,6 +326,19 @@
     },
     "robrichards/xmlseclibs": {
         "version": "3.0.4"
+    },
+    "scheb/2fa-bundle": {
+        "version": "6.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "6.0",
+            "ref": "1e6f68089146853a790b5da9946fc5974f6fcd49"
+        },
+        "files": [
+            "config/packages/scheb_2fa.yaml",
+            "config/routes/scheb_2fa.yaml"
+        ]
     },
     "sebastian/cli-parser": {
         "version": "1.0.1"

@@ -45,6 +45,11 @@ security:
                 login_path: login
                 enable_csrf: true
 
+            two_factor:
+                auth_form_path: 2fa_login
+                check_path: 2fa_login_check
+                remember_me_sets_trusted: true
+
             logout:
                 path: logout
                 target: homepage
@@ -60,6 +65,7 @@ security:
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     access_control:
+        - { path: '^/auth/2fa', role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
         - { path: '^/auth', roles: PUBLIC_ACCESS }
         - { path: '^/(%app_locales%)$', role: PUBLIC_ACCESS }
         - { path: '^/(%app_locales%)/auth', role: PUBLIC_ACCESS }
@@ -68,7 +74,6 @@ security:
         - { path: '^/(%app_locales%)/resetting', role: PUBLIC_ACCESS }
         - { path: '^/(%app_locales%)/', roles: ROLE_USER }
         - { path: '^/api', roles: IS_AUTHENTICATED_REMEMBERED }
-
 
 when@test:
     # this configuration simplifies testing URLs protected by the security mechanism
