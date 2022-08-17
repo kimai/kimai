@@ -9,15 +9,17 @@
 
 namespace App\Controller\Security;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 final class SecurityController extends AbstractController
 {
-    public function __construct(private CsrfTokenManagerInterface $tokenManager)
+    public function __construct(private CsrfTokenManagerInterface $tokenManager, private Security $security)
     {
     }
 
@@ -34,7 +36,8 @@ final class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
         $csrfToken = $this->tokenManager->getToken('authenticate')->getValue();
 
-        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        $user = $this->security->getUser();
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED') && $user instanceof User && $user->isInternalUser()) {
             return $this->render('security/unlock.html.twig', [
                 'error' => $error,
                 'csrf_token' => $csrfToken,
