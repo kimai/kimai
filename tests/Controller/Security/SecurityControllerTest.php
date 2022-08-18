@@ -12,6 +12,7 @@ namespace App\Tests\Controller\Security;
 use App\Controller\Security\SecurityController;
 use App\Entity\User;
 use App\Tests\Controller\ControllerBaseTest;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
@@ -45,7 +46,6 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->assertStringContainsString('<form action="/en/login_check" method="post"', $content);
         $this->assertStringContainsString('<input type="text" name="_username"', $content);
         $this->assertStringContainsString('<input name="_password" type="password"', $content);
-        $this->assertStringContainsString('<input id="remember_me" tabindex="30" name="_remember_me" type="checkbox"', $content);
         $this->assertStringContainsString('">Login</button>', $content);
         $this->assertStringContainsString('<input type="hidden" name="_csrf_token" value="', $content);
         $this->assertStringNotContainsString('<a href="/en/register/"', $content);
@@ -117,9 +117,9 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
 
-        $client = self::createClient(); // just to bootstrap the container
+        self::createClient(); // just to bootstrap the container
         $csrf = $this->createMock(CsrfTokenManagerInterface::class);
-        $sut = new SecurityController($csrf);
+        $sut = new SecurityController($csrf, $this->getSecurityMock());
         $sut->checkAction();
     }
 
@@ -128,9 +128,14 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('You must activate the logout in your security firewall configuration.');
 
-        $client = self::createClient(); // just to bootstrap the container
+        self::createClient(); // just to bootstrap the container
         $csrf = $this->createMock(CsrfTokenManagerInterface::class);
-        $sut = new SecurityController($csrf);
+        $sut = new SecurityController($csrf, $this->getSecurityMock());
         $sut->logoutAction();
+    }
+
+    private function getSecurityMock(): Security
+    {
+        return new Security($this->getContainer());
     }
 }
