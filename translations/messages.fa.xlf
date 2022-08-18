@@ -509,13 +509,11 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>resetting.check_email</source>
-        <target>‌لینکی به ایمیل شما ارسال شد. جهت بازیابی رمز خود روی آن کلیک کنید. نکته: شما در طی %tokenLifetime% ساعت فقط یکبار می‌توانید رمز جدید درخواست کنید.
-اگر ایمیل برای شما ارسال نشد پوشه spam را بررسی کنید یا دوباره تلاش کنید.</target>
+        <target>‌لینکی به ایمیل شما ارسال شد. جهت بازیابی رمز خود روی آن کلیک کنید. نکته: شما در طی %tokenLifetime% ساعت فقط یکبار می‌توانید رمز جدید درخواست کنید. اگر ایمیل برای شما ارسال نشد پوشه spam را بررسی کنید یا دوباره تلاش کنید.</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>
-        <target>درخواست قابل انجام نیست.
-نتایج زیادی پیدا شدند.</target>
+        <target>درخواست قابل انجام نیست. نتایج زیادی پیدا شدند.</target>
       </trans-unit>
       <trans-unit id="5gjqxgK" resname="label.fixedRate">
         <source>label.fixedRate</source>
@@ -531,7 +529,7 @@
       </trans-unit>
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
-        <target state="needs-translation">Month</target>
+        <target state="translated">ماه</target>
       </trans-unit>
       <trans-unit id="k7MJQ82" resname="label.country">
         <source>label.country</source>
@@ -595,15 +593,15 @@
       </trans-unit>
       <trans-unit id="Irm6dfx" resname="agendaWeek">
         <source>agendaWeek</source>
-        <target state="needs-translation">Week</target>
+        <target state="translated">هفته</target>
       </trans-unit>
       <trans-unit id="DJu1n0C" resname="label.daily_stats">
         <source>label.daily_stats</source>
-        <target state="needs-translation">Show daily stats in timesheet</target>
+        <target state="translated">نشان دادن در جدول زمانی</target>
       </trans-unit>
       <trans-unit id="42YD.Bf" resname="label.export_decimal">
         <source>label.export_decimal</source>
-        <target state="needs-translation">Use decimal duration in export</target>
+        <target state="translated">استفاده از زمان اعشاری در خروجی</target>
       </trans-unit>
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
@@ -907,7 +905,7 @@
       </trans-unit>
       <trans-unit id="Q0Zip02" resname="agendaDay">
         <source>agendaDay</source>
-        <target state="needs-translation">Day</target>
+        <target state="translated">روز</target>
       </trans-unit>
       <trans-unit id="UrRn8xj" resname="label.title">
         <source>label.title</source>
@@ -1160,6 +1158,14 @@
       <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
         <source>label.includeBudgetType_month</source>
         <target state="needs-translation">Show entries with "monthly" budget</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target state="translated">اتوماتیک</target>
+      </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="translated">متن فاکتور</target>
       </trans-unit>
     </body>
   </file>

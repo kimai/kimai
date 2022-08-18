@@ -1162,6 +1162,14 @@
         <source>label.invoiceText</source>
         <target state="translated">Textul facturii</target>
       </trans-unit>
+      <trans-unit id="G9hBaDJ" resname="label.globalActivities">
+        <source>label.globalActivities</source>
+        <target state="translated">Permiteți activități globale</target>
+      </trans-unit>
+      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
+        <source>label.budgetIndependent</source>
+        <target state="translated">Se afișează indiferent de "tip de buget"</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

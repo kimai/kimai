@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Time tracking</source>
-        <target>Monitorizarea timpului</target>
+        <target state="translated">Timpul de urmărire</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>

@@ -452,7 +452,7 @@
             -->
       <trans-unit id="39AtPxQ" resname="label.number">
         <source>label.number</source>
-        <target>账户</target>
+        <target state="translated">账户</target>
       </trans-unit>
       <trans-unit id="7jfRn_1" resname="label.company">
         <source>label.company</source>
@@ -787,7 +787,7 @@
       </trans-unit>
       <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
         <source>label.invoice_bank_account</source>
-        <target>银行账户</target>
+        <target state="translated">银行账户</target>
       </trans-unit>
       <!--
               Export
@@ -1096,7 +1096,7 @@
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
-        <target>一封电子邮件已发送至 %email%。它包含一个激活链接，您必须单击该链接才能激活您的帐户。</target>
+        <target state="translated">一封电子邮件已发送至 %email%。它包含一个激活链接，您必须单击该链接才能激活您的账户。</target>
       </trans-unit>
       <trans-unit id="O5w1jzb" resname="file">
         <source>file</source>
@@ -1221,6 +1221,14 @@
       <trans-unit id="74pEVx1" resname="label.invoiceText">
         <source>label.invoiceText</source>
         <target state="translated">发票文本</target>
+      </trans-unit>
+      <trans-unit id="G9hBaDJ" resname="label.globalActivities">
+        <source>label.globalActivities</source>
+        <target state="translated">允许全局活动</target>
+      </trans-unit>
+      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
+        <source>label.budgetIndependent</source>
+        <target state="translated">无论 "预算类型 "如何都显示</target>
       </trans-unit>
     </body>
   </file>

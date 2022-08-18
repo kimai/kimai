@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="pjr3FDv" resname="registration.subject">
         <source>registration.subject</source>
-        <target>激活您的账户</target>
+        <target state="translated">激活您的账户</target>
       </trans-unit>
       <trans-unit id="QtcznHC" resname="registration.title">
         <source>registration.title</source>
@@ -21,6 +21,26 @@
       <trans-unit id="rhkMAep" resname="reset.intro">
         <source>reset.intro</source>
         <target>…您忘记了密码吗？别担心：Kimai将帮助您创建一个新的：</target>
+      </trans-unit>
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
+        <source>automated_email_dont_answer</source>
+        <target state="translated">这是一封自动生成的电子邮件。请不要回复，地址将不会被阅读。</target>
+      </trans-unit>
+      <trans-unit id="YMLel3P" resname="registration.button">
+        <source>registration.button</source>
+        <target state="translated">激活您的账户</target>
+      </trans-unit>
+      <trans-unit id="G2mhn_2" resname="reset.title">
+        <source>reset.title</source>
+        <target state="translated">这可能发生…</target>
+      </trans-unit>
+      <trans-unit id="qbt.84Y" resname="reset.button">
+        <source>reset.button</source>
+        <target state="translated">重置您的密码</target>
+      </trans-unit>
+      <trans-unit id="IkjnHoP" resname="registration.intro">
+        <source>registration.intro</source>
+        <target state="translated">您在 Kimai 时间跟踪器上注册了电子邮件 %email%。请在接下来的几个小时内激活您的账户，直到链接过期。</target>
       </trans-unit>
     </body>
   </file>

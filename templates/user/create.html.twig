@@ -44,6 +44,7 @@
                 </div>
             </div>
 
+            {% if form.language is defined and form.timezone is defined %}
             <div class="row">
                 <div class="col-md-6">
                     {{ form_row(form.language) }}
@@ -52,6 +53,7 @@
                     {{ form_row(form.timezone) }}
                 </div>
             </div>
+            {% endif %}
 
             {% if form.teams is defined or form.roles is defined %}
                 {% set length = 12 %}
