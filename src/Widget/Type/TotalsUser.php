@@ -15,11 +15,8 @@ use App\Widget\WidgetInterface;
 
 final class TotalsUser extends AbstractWidget
 {
-    private $repository;
-
-    public function __construct(UserRepository $repository)
+    public function __construct(private UserRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     public function getOptions(array $options = []): array
