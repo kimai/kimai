@@ -39,7 +39,7 @@
             }
             localStorage.setItem('kimai_profile', profile);
         }
-        document.cookie = "{{ constant('\\App\\Utils\\ProfileManager::COOKIE_PROFILE') }}="+profile+"; expires=; SameSite=Strict; Secure";
+        document.cookie = "{{ constant('\\App\\Utils\\ProfileManager::COOKIE_PROFILE') }}="+profile+"; path=/; expires=; SameSite=Strict; Secure";
     </script>
     {{ event.content|raw }}
 {% endblock %}
