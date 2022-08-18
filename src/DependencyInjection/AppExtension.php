@@ -53,7 +53,6 @@ class AppExtension extends Extension
 
         $this->setLanguageFormats($container);
 
-        $container->setParameter('kimai.dashboard', $config['dashboard']['widgets']);
         $container->setParameter('kimai.invoice.documents', $config['invoice']['documents']);
         $container->setParameter('kimai.export.documents', $config['export']['documents']);
 

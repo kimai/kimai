@@ -46,10 +46,6 @@ services:
     security.user.provider.chain:
         class: App\Security\KimaiUserProvider
 
-    App\Controller\DashboardController:
-        arguments:
-            $dashboard: '%kimai.dashboard%'
-
     App\Configuration\MailConfiguration:
         arguments: ['%env(MAILER_FROM)%']
 

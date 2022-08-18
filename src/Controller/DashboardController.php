@@ -38,13 +38,7 @@ final class DashboardController extends AbstractController
      */
     private ?array $widgets = null;
 
-    /**
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param WidgetService $service
-     * @param BookmarkRepository $repository
-     * @param array<string> $dashboard names of default widgets
-     */
-    public function __construct(private EventDispatcherInterface $eventDispatcher, private WidgetService $service, private BookmarkRepository $repository, private array $dashboard)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private WidgetService $service, private BookmarkRepository $repository)
     {
     }
 
@@ -91,7 +85,34 @@ final class DashboardController extends AbstractController
     {
         $event = new DashboardEvent($this->getUser());
 
-        foreach ($this->dashboard as $widgetName) {
+        // default widgets
+        $dashboard = [
+            'PaginatedWorkingTimeChart',
+            //'UserAmountToday',
+            //'UserAmountWeek',
+            //'UserAmountMonth',
+            //'UserAmountYear',
+            //'UserTeams',
+            //'UserTeamProjects',
+            'DurationToday',
+            'DurationWeek',
+            'DurationMonth',
+            'DurationYear',
+            //'ActiveUsersToday',
+            //'ActiveUsersWeek',
+            //'ActiveUsersMonth',
+            //'ActiveUsersYear',
+            //'AmountToday',
+            //'AmountWeek',
+            //'AmountMonth',
+            //'AmountYear',
+            //'TotalsUser',
+            //'TotalsCustomer',
+            //'TotalsProject',
+            //'TotalsActivity',
+        ];
+
+        foreach ($dashboard as $widgetName) {
             $event->addWidget($widgetName);
         }
 
