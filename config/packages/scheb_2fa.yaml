@@ -11,3 +11,4 @@ scheb_two_factor:
 #        issuer: Issuer Name                # Issuer name used in QR code
 #        parameters:                        # Additional parameters added in the QR code
 #            image: 'https://my-service/img/logo.png'
+    two_factor_condition: App\Security\TwoFactorCondition

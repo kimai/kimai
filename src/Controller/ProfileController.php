@@ -43,7 +43,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * User profile controller
  *
  * @Route(path="/profile")
- * @Security("is_granted('IS_AUTHENTICATED_FULLY') and (is_granted('view_own_profile') or is_granted('view_other_profile'))")
+ * @Security("(is_granted('view_own_profile') or is_granted('view_other_profile'))")
  */
 final class ProfileController extends AbstractController
 {
@@ -109,7 +109,7 @@ final class ProfileController extends AbstractController
 
     /**
      * @Route(path="/{username}/password", name="user_profile_password", methods={"GET", "POST"})
-     * @Security("is_granted('password', profile)")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('password', profile)")
      */
     public function passwordAction(User $profile, Request $request, UserService $userService): Response
     {
@@ -133,7 +133,7 @@ final class ProfileController extends AbstractController
 
     /**
      * @Route(path="/{username}/api-token", name="user_profile_api_token", methods={"GET", "POST"})
-     * @Security("is_granted('api-token', profile)")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('api-token', profile)")
      */
     public function apiTokenAction(User $profile, Request $request, UserService $userService): Response
     {
@@ -157,7 +157,7 @@ final class ProfileController extends AbstractController
 
     /**
      * @Route(path="/{username}/roles", name="user_profile_roles", methods={"GET", "POST"})
-     * @Security("is_granted('roles', profile)")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('roles', profile)")
      */
     public function rolesAction(User $profile, Request $request, UserRepository $userRepository): Response
     {
@@ -356,7 +356,7 @@ final class ProfileController extends AbstractController
 
     /**
      * @Route(path="/{username}/2fa", name="user_profile_2fa", methods={"GET", "POST"})
-     * @Security("is_granted('2fa', profile)")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('2fa', profile)")
      */
     public function twoFactorAction(User $profile, Request $request, UserService $userService, TotpAuthenticatorInterface $totpAuthenticator): Response
     {
@@ -404,7 +404,7 @@ final class ProfileController extends AbstractController
 
     /**
      * @Route(path="/{username}/2fa_deactivate", name="user_profile_2fa_deactivate", methods={"POST"})
-     * @Security("is_granted('2fa', profile)")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('2fa', profile)")
      */
     public function deactivateTwoFactorAction(User $profile, Request $request, UserService $userService, TotpAuthenticatorInterface $totpAuthenticator): Response
     {
@@ -448,5 +448,4 @@ final class ProfileController extends AbstractController
 
         return new Response($result->getString(), 200, ['Content-Type' => 'image/png']);
     }
-
 }
