@@ -683,19 +683,23 @@ class TimesheetRepository extends EntityRepository
         // ->join('p.customer', 'c')
         // ->andWhere($qb->expr()->eq('c.visible', ':visible'))
 
+        // you might want to join activity and project to check their visibility
+        // but for now this is way slower than simply fetching more items
+        //
+        // ->join('t.project', 'p')
+        // ->andWhere($qb->expr()->eq('p.visible', ':visible'))
+        // ->join('t.activity', 'a')
+        // ->andWhere($qb->expr()->eq('a.visible', ':visible'))
+        // ->setParameter('visible', true, Types::BOOLEAN)
+
         $qb->select($qb->expr()->max('t.id') . ' AS maxid')
             ->from(Timesheet::class, 't')
             ->indexBy('t', 't.id')
             ->andWhere($qb->expr()->eq('t.user', ':user'))
-            ->join('t.project', 'p')
-            ->andWhere($qb->expr()->eq('p.visible', ':visible'))
-            ->join('t.activity', 'a')
-            ->andWhere($qb->expr()->eq('a.visible', ':visible'))
-            ->groupBy('p.id', 'a.id')
+            ->groupBy('t.project', 't.activity')
             ->orderBy('maxid', 'DESC')
             ->setMaxResults($limit)
             ->setParameter('user', $user)
-            ->setParameter('visible', true, Types::BOOLEAN)
         ;
 
         if (null !== $startFrom) {
