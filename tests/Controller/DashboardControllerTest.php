@@ -9,9 +9,6 @@
 
 namespace App\Tests\Controller;
 
-use App\DataFixtures\UserFixtures;
-use App\Entity\User;
-
 /**
  * @group integration
  */
