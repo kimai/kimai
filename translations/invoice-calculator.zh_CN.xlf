@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target>默认：每次记录一个条目</target>
+        <target state="translated">默认：每则时间记录一个条目</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
@@ -29,6 +29,14 @@
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target state="translated">日期：每天一个条目（使用开始日期）</target>
+      </trans-unit>
+      <trans-unit id="aDtTH0H" resname="price">
+        <source>price</source>
+        <target state="translated">价格：每个价格一次</target>
+      </trans-unit>
+      <trans-unit id="iFDs7Zh" resname="weekly">
+        <source>weekly</source>
+        <target state="translated">每周：每周一次（使用开始日期）</target>
       </trans-unit>
     </body>
   </file>

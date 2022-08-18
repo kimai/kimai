@@ -78,6 +78,14 @@
         <source>A project needs to be selected.</source>
         <target>需要选中一个项目。</target>
       </trans-unit>
+      <trans-unit id="ePrqiLN" resname="Duration cannot be zero.">
+        <source>Duration cannot be zero.</source>
+        <target state="translated">不允许使用空持续时间。</target>
+      </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">抱歉，预算用完了。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
