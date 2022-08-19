@@ -13,63 +13,48 @@
 {% endblock %}
 
 {% block profile_content %}
+    {% set datagrid = {
+        'label.username' : user.userIdentifier,
+    } %}
+    {% if user.accountNumber is not empty %}
+        {% set datagrid = datagrid|merge({
+        'label.account_number' : (user.accountNumber ?? '&ndash;'),
+        }) %}
+    {% endif %}
+    {% set datagrid = datagrid|merge({
+        'profile.first_entry' : (firstTimesheet is not null ? firstTimesheet|date_short : '&ndash;'),
+        'profile.registration_date' : user.registeredAt|date_short,
+    }) %}
+    {% set seeOwnRate = false %}
+    {% if stats is not null %}
+        {% set seeOwnRate = is_granted('view_rate_own_timesheet') %}
+        {% set datagrid = datagrid|merge({
+            'stats.durationTotal' : stats.durationTotal|duration,
+            'stats.durationMonth' : stats.durationThisMonth|duration
+        }) %}
+        {#% if seeOwnRate %}
+            {% set datagrid = datagrid|merge({
+                'stats.amountMonth' : stats.rateThisMonthBillable|money,
+                'stats.amountTotal' : stats.rateTotalBillable|money
+            }) %}
+        {% endif %#}
+    {% endif %}
+    {% if not seeOwnRate and is_granted('hourly-rate', user) and user.preferenceValue('hourly_rate') is not null %}
+        {% set datagrid = datagrid|merge({
+            'label.hourlyRate' : user.preferenceValue('hourly_rate'),
+            'label.internalRate' : user.preferenceValue('internal_rate')
+        }) %}
+    {% endif %}
+
     <div class="card mb-3">
         <div class="card-body">
             <div class="datagrid">
-                <div class="datagrid-item">
-                    <div class="datagrid-title">{{ 'label.username'|trans }}</div>
-                    <div class="datagrid-content">{{ user.userIdentifier }}</div>
-                </div>
-                <div class="datagrid-item">
-                    <div class="datagrid-title">{{ 'label.account_number'|trans }}</div>
-                    <div class="datagrid-content">{{ user.accountNumber ?? '&ndash;' }}</div>
-                </div>
-                <div class="datagrid-item">
-                    <div class="datagrid-title">{{ 'profile.first_entry'|trans }}</div>
-                    <div class="datagrid-content">
-                        {% if firstTimesheet is not null %}
-                            {{ firstTimesheet|date_short }}
-                        {% else %}
-                            &ndash;
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="datagrid-item">
-                    <div class="datagrid-title">{{ 'profile.registration_date'|trans }}</div>
-                    <div class="datagrid-content">{{ user.registeredAt|date_short }}</div>
-                </div>
-                {% set seeOwnRate = false %}
-                {% if stats is not null %}
-                    {% set seeOwnRate = is_granted('view_rate_own_timesheet') %}
+                {% for name, value in datagrid %}
                     <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'stats.durationTotal'|trans }}</div>
-                        <div class="datagrid-content">{{ stats.durationTotal|duration }}</div>
+                        <div class="datagrid-title">{{ name|trans }}</div>
+                        <div class="datagrid-content">{{ value }}</div>
                     </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'stats.durationMonth'|trans }}</div>
-                        <div class="datagrid-content">{{ stats.durationThisMonth|duration }}</div>
-                    </div>
-                    {% if seeOwnRate %}
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">{{ 'stats.amountMonth'|trans }}</div>
-                            <div class="datagrid-content">{{ stats.rateThisMonthBillable|money }}</div>
-                        </div>
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">{{ 'stats.amountTotal'|trans }}</div>
-                            <div class="datagrid-content">{{ stats.rateTotalBillable|money }}</div>
-                        </div>
-                    {% endif %}
-                {% endif %}
-                {% if not seeOwnRate and is_granted('hourly-rate', user) and user.preferenceValue('hourly_rate') is not null %}
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'label.hourlyRate'|trans }}</div>
-                        <div class="datagrid-content">{{ user.preferenceValue('hourly_rate') }}</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">{{ 'label.internalRate'|trans }}</div>
-                        <div class="datagrid-content">{{ user.preferenceValue('internal_rate') }}</div>
-                    </div>
-                {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div>
