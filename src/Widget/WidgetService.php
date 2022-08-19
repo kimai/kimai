@@ -14,10 +14,7 @@ namespace App\Widget;
  */
 class WidgetService
 {
-    /**
-     * @var array
-     */
-    private $widgets = [];
+    private array $widgets = [];
 
     public function hasWidget(string $id): bool
     {

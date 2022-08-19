@@ -19,13 +19,8 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 final class WidgetExtension implements RuntimeExtensionInterface
 {
-    private $service;
-    private $security;
-
-    public function __construct(WidgetService $service, Security $security)
+    public function __construct(private WidgetService $service, private Security $security)
     {
-        $this->service = $service;
-        $this->security = $security;
     }
 
     /**

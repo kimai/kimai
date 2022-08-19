@@ -15,14 +15,8 @@ use Symfony\Component\Form\Form;
 
 abstract class AbstractWidget implements WidgetInterface
 {
-    /**
-     * @var array
-     */
-    private $options = [];
-    /**
-     * @var User
-     */
-    private $user;
+    private array $options = [];
+    private ?User $user = null;
 
     public function hasForm(): bool
     {
