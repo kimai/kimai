@@ -52,7 +52,7 @@ tabler:
         cancel: fas fa-times
         clock: far fa-clock
         collapse: fas fa-chevron-down
-        columns: fas fa-wrench
+        columns: fas fa-table
         comment: far fa-comment
         configuration: fas fa-cog
         copy: far fa-copy
