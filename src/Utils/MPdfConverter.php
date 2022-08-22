@@ -17,14 +17,8 @@ use Mpdf\Output\Destination;
 
 class MPdfConverter implements HtmlToPdfConverter
 {
-    /**
-     * @var string
-     */
-    private $cacheDirectory;
-
-    public function __construct(string $cacheDirectory)
+    public function __construct(private string $cacheDirectory)
     {
-        $this->cacheDirectory = $cacheDirectory;
     }
 
     protected function sanitizeOptions(array $options): array

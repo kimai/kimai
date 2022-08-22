@@ -18,14 +18,8 @@ final class DurationFixedBeginMode implements TrackingModeInterface
 {
     use TrackingModeTrait;
 
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
-
-    public function __construct(SystemConfiguration $configuration)
+    public function __construct(private SystemConfiguration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     public function canEditBegin(): bool

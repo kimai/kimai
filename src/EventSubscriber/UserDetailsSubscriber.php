@@ -21,13 +21,8 @@ use Symfony\Component\Security\Core\Security;
  */
 class UserDetailsSubscriber implements EventSubscriberInterface
 {
-    private $security;
-    private $auth;
-
-    public function __construct(AuthorizationCheckerInterface $auth, Security $security)
+    public function __construct(private AuthorizationCheckerInterface $auth, private Security $security)
     {
-        $this->auth = $auth;
-        $this->security = $security;
     }
 
     public static function getSubscribedEvents(): array

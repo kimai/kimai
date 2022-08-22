@@ -15,19 +15,8 @@ use App\Entity\Timesheet;
 
 final class TimesheetEntry implements DragAndDropEntry
 {
-    /**
-     * @var Timesheet
-     */
-    private $timesheet;
-    /**
-     * @var string
-     */
-    private $color;
-
-    public function __construct(Timesheet $timesheet, string $color)
+    public function __construct(private Timesheet $timesheet, private string $color)
     {
-        $this->timesheet = $timesheet;
-        $this->color = $color;
     }
 
     public function getData(): array

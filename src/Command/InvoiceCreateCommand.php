@@ -37,50 +37,17 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 #[AsCommand(name: 'kimai:invoice:create')]
 final class InvoiceCreateCommand extends Command
 {
-    /**
-     * @var ServiceInvoice
-     */
-    private $serviceInvoice;
-    /**
-     * @var CustomerRepository
-     */
-    private $customerRepository;
-    /**
-     * @var ProjectRepository
-     */
-    private $projectRepository;
-    /**
-     * @var InvoiceTemplateRepository
-     */
-    private $invoiceTemplateRepository;
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-    /**
-     * @var string|null
-     */
-    private $previewDirectory;
-    private $previewUniqueFile = false;
+    private ?string $previewDirectory = null;
+    private bool $previewUniqueFile = false;
 
     public function __construct(
-        ServiceInvoice $serviceInvoice,
-        CustomerRepository $customerRepository,
-        ProjectRepository $projectRepository,
-        InvoiceTemplateRepository $invoiceTemplateRepository,
-        UserRepository $userRepository,
-        EventDispatcherInterface $eventDispatcher
+        private ServiceInvoice $serviceInvoice,
+        private CustomerRepository $customerRepository,
+        private ProjectRepository $projectRepository,
+        private InvoiceTemplateRepository $invoiceTemplateRepository,
+        private UserRepository $userRepository,
+        private EventDispatcherInterface $eventDispatcher
     ) {
-        $this->serviceInvoice = $serviceInvoice;
-        $this->customerRepository = $customerRepository;
-        $this->projectRepository = $projectRepository;
-        $this->invoiceTemplateRepository = $invoiceTemplateRepository;
-        $this->userRepository = $userRepository;
-        $this->eventDispatcher = $eventDispatcher;
         parent::__construct();
     }
 
@@ -223,7 +190,7 @@ final class InvoiceCreateCommand extends Command
 
         $markAsExported = false;
         if ($input->getOption('preview') !== null) {
-            $this->previewUniqueFile = $input->getOption('preview-unique');
+            $this->previewUniqueFile = (bool) $input->getOption('preview-unique');
             $this->previewDirectory = rtrim($input->getOption('preview'), '/') . '/';
             if (!is_dir($this->previewDirectory) || !is_writable($this->previewDirectory)) {
                 $io->error('Invalid preview directory given');

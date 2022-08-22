@@ -38,36 +38,19 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
-class ActivityController extends BaseApiController
+final class ActivityController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Activity', 'Activity_Entity'];
     public const GROUPS_FORM = ['Default', 'Entity', 'Activity'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Activity'];
     public const GROUPS_RATE = ['Default', 'Entity', 'Activity_Rate'];
 
-    /**
-     * @var ActivityRepository
-     */
-    private $repository;
-    /**
-     * @var ViewHandlerInterface
-     */
-    private $viewHandler;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-    /**
-     * @var ActivityRateRepository
-     */
-    private $activityRateRepository;
-
-    public function __construct(ViewHandlerInterface $viewHandler, ActivityRepository $repository, EventDispatcherInterface $dispatcher, ActivityRateRepository $activityRateRepository)
-    {
-        $this->viewHandler = $viewHandler;
-        $this->repository = $repository;
-        $this->dispatcher = $dispatcher;
-        $this->activityRateRepository = $activityRateRepository;
+    public function __construct(
+        private ViewHandlerInterface $viewHandler,
+        private ActivityRepository $repository,
+        private EventDispatcherInterface $dispatcher,
+        private ActivityRateRepository $activityRateRepository
+    ) {
     }
 
     /**

@@ -43,19 +43,8 @@ final class TeamController extends BaseApiController
     public const GROUPS_FORM = ['Default', 'Entity', 'Team', 'Team_Entity', 'Not_Expanded'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Team'];
 
-    /**
-     * @var TeamRepository
-     */
-    private $repository;
-    /**
-     * @var ViewHandlerInterface
-     */
-    private $viewHandler;
-
-    public function __construct(ViewHandlerInterface $viewHandler, TeamRepository $repository)
+    public function __construct(private ViewHandlerInterface $viewHandler, private TeamRepository $repository)
     {
-        $this->viewHandler = $viewHandler;
-        $this->repository = $repository;
     }
 
     /**

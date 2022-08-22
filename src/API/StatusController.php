@@ -26,16 +26,10 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
-class StatusController extends BaseApiController
+final class StatusController extends BaseApiController
 {
-    /**
-     * @var ViewHandlerInterface
-     */
-    private $viewHandler;
-
-    public function __construct(ViewHandlerInterface $viewHandler)
+    public function __construct(private ViewHandlerInterface $viewHandler)
     {
-        $this->viewHandler = $viewHandler;
     }
 
     /**

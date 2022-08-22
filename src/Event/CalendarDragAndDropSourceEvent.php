@@ -16,22 +16,12 @@ use Symfony\Contracts\EventDispatcher\Event;
 final class CalendarDragAndDropSourceEvent extends Event
 {
     /**
-     * @var User
-     */
-    private $user;
-    /**
      * @var DragAndDropSource[]
      */
     private $sources = [];
-    /**
-     * @var int
-     */
-    private $maxEntries = 0;
 
-    public function __construct(User $user, int $maxEntries)
+    public function __construct(private User $user, private int $maxEntries)
     {
-        $this->user = $user;
-        $this->maxEntries = $maxEntries;
     }
 
     public function getUser(): User

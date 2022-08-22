@@ -23,24 +23,10 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 class MenuBuilderSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
-
-    public function __construct(EventDispatcherInterface $dispatcher, TokenStorageInterface $storage)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private TokenStorageInterface $tokenStorage)
     {
-        $this->eventDispatcher = $dispatcher;
-        $this->tokenStorage = $storage;
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -92,7 +78,7 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
      * @param string $route
      * @param MenuItemInterface[] $items
      */
-    protected function activateByRoute($route, $items)
+    protected function activateByRoute(string $route, array $items): void
     {
         foreach ($items as $item) {
             if ($item instanceof MenuItemModel) {

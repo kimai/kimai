@@ -33,11 +33,8 @@ final class ActivityVoter extends Voter
         'permissions',
     ];
 
-    private $permissionManager;
-
-    public function __construct(RolePermissionManager $permissionManager)
+    public function __construct(private RolePermissionManager $permissionManager)
     {
-        $this->permissionManager = $permissionManager;
     }
 
     /**

@@ -19,22 +19,11 @@ use App\Model\Statistic\BudgetStatistic;
  */
 class BudgetStatisticModel implements BudgetStatisticModelInterface
 {
-    /**
-     * @var EntityWithBudget
-     */
-    private $entity;
-    /**
-     * @var BudgetStatistic
-     */
-    private $statistic;
-    /**
-     * @var BudgetStatistic
-     */
-    private $statisticTotal;
+    private ?BudgetStatistic $statistic = null;
+    private ?BudgetStatistic $statisticTotal = null;
 
-    public function __construct(EntityWithBudget $entity)
+    public function __construct(private EntityWithBudget $entity)
     {
-        $this->entity = $entity;
     }
 
     public function getEntity(): EntityWithBudget

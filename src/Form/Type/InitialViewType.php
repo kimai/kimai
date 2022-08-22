@@ -53,20 +53,10 @@ class InitialViewType extends AbstractType
         'quick_entry' => 'view_own_timesheet',
     ];
 
-    private $voter;
-    private $reportingService;
-    private $translator;
-
-    public function __construct(AuthorizationCheckerInterface $voter, ReportingService $reportingService, TranslatorInterface $translator)
+    public function __construct(private AuthorizationCheckerInterface $voter, private ReportingService $reportingService, private TranslatorInterface $translator)
     {
-        $this->voter = $voter;
-        $this->reportingService = $reportingService;
-        $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('required', true);

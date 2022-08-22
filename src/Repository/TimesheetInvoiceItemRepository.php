@@ -16,14 +16,8 @@ use App\Repository\Query\InvoiceQuery;
 
 final class TimesheetInvoiceItemRepository implements InvoiceItemRepositoryInterface
 {
-    /**
-     * @var TimesheetRepository
-     */
-    private $repository;
-
-    public function __construct(TimesheetRepository $repository)
+    public function __construct(private TimesheetRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**

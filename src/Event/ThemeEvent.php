@@ -22,22 +22,11 @@ class ThemeEvent extends Event
     public const CONTENT_END = 'app.theme.content_end';
     public const CONTENT_AFTER = 'app.theme.content_after';
 
-    /**
-     * @var User|null
-     */
-    private $user;
-    /**
-     * @var string
-     */
-    private $content = '';
-    /**
-     * @var mixed
-     */
-    protected $payload;
+    private string $content = '';
+    protected mixed $payload;
 
-    public function __construct(?User $user = null, mixed $payload = null)
+    public function __construct(private ?User $user = null, mixed $payload = null)
     {
-        $this->user = $user;
         $this->payload = $payload;
     }
 

@@ -18,19 +18,8 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetOverlappingValidator extends ConstraintValidator
 {
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
-    /**
-     * @var TimesheetRepository
-     */
-    private $repository;
-
-    public function __construct(SystemConfiguration $configuration, TimesheetRepository $repository)
+    public function __construct(private SystemConfiguration $configuration, private TimesheetRepository $repository)
     {
-        $this->configuration = $configuration;
-        $this->repository = $repository;
     }
 
     /**

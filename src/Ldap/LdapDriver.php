@@ -16,14 +16,10 @@ use Psr\Log\LoggerInterface;
 
 class LdapDriver
 {
-    private LdapConfiguration $config;
     private ?Ldap $driver = null;
-    private ?LoggerInterface $logger;
 
-    public function __construct(LdapConfiguration $config, LoggerInterface $logger = null)
+    public function __construct(private LdapConfiguration $config, private ?LoggerInterface $logger = null)
     {
-        $this->config = $config;
-        $this->logger = $logger;
     }
 
     protected function getDriver(): Ldap

@@ -18,7 +18,7 @@ use Doctrine\Persistence\ObjectManager;
  *
  * @codeCoverageIgnore
  */
-class AllFixtures extends Fixture implements DependentFixtureInterface
+final class AllFixtures extends Fixture implements DependentFixtureInterface
 {
     /**
      * @return class-string[]
@@ -35,10 +35,7 @@ class AllFixtures extends Fixture implements DependentFixtureInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         // this is a fake fixture class, it only exists to make developers life easier
         // if we use the DependentFixtureInterface on the TimesheetFixture directly,

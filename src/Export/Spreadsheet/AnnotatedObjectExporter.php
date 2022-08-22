@@ -14,13 +14,8 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 final class AnnotatedObjectExporter
 {
-    private $spreadsheetExporter;
-    private $annotationExtractor;
-
-    public function __construct(SpreadsheetExporter $spreadsheetExporter, AnnotationExtractor $annotationExtractor)
+    public function __construct(private SpreadsheetExporter $spreadsheetExporter, private AnnotationExtractor $annotationExtractor)
     {
-        $this->spreadsheetExporter = $spreadsheetExporter;
-        $this->annotationExtractor = $annotationExtractor;
     }
 
     public function export(string $class, array $entries): Spreadsheet

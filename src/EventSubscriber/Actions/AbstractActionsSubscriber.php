@@ -20,13 +20,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 abstract class AbstractActionsSubscriber implements EventSubscriberInterface
 {
-    private $auth;
-    private $urlGenerator;
-
-    public function __construct(AuthorizationCheckerInterface $security, UrlGeneratorInterface $urlGenerator)
+    public function __construct(private AuthorizationCheckerInterface $auth, private UrlGeneratorInterface $urlGenerator)
     {
-        $this->auth = $security;
-        $this->urlGenerator = $urlGenerator;
     }
 
     protected function isGranted($attributes, $subject = null): bool

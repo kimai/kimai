@@ -9,9 +9,9 @@
 
 namespace App\Invoice\Renderer;
 
-use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceFilename;
 use App\Invoice\InvoiceModel;
+use App\Model\InvoiceDocument;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 

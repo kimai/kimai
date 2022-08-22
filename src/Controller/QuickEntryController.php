@@ -29,15 +29,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class QuickEntryController extends AbstractController
 {
-    private $configuration;
-    private $timesheetService;
-    private $repository;
-
-    public function __construct(SystemConfiguration $configuration, TimesheetService $timesheetService, TimesheetRepository $repository)
+    public function __construct(private SystemConfiguration $configuration, private TimesheetService $timesheetService, private TimesheetRepository $repository)
     {
-        $this->configuration = $configuration;
-        $this->timesheetService = $timesheetService;
-        $this->repository = $repository;
     }
 
     /**

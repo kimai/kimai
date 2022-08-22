@@ -9,7 +9,7 @@
 
 namespace App\Repository;
 
-use App\Entity\InvoiceDocument;
+use App\Model\InvoiceDocument;
 use Symfony\Component\Finder\Finder;
 
 final class InvoiceDocumentRepository
@@ -17,9 +17,9 @@ final class InvoiceDocumentRepository
     public const DEFAULT_DIRECTORY = 'templates/invoice/renderer/';
 
     /**
-     * @var array
+     * @var array<string>
      */
-    private $documentDirs = [];
+    private array $documentDirs = [];
 
     public function __construct(array $directories)
     {

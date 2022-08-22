@@ -38,45 +38,14 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class TimesheetService
 {
-    /**
-     * @var TimesheetRepository
-     */
-    private $repository;
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
-    /**
-     * @var TrackingModeService
-     */
-    private $trackingModeService;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $auth;
-    /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-
     public function __construct(
-        SystemConfiguration $configuration,
-        TimesheetRepository $repository,
-        TrackingModeService $service,
-        EventDispatcherInterface $dispatcher,
-        AuthorizationCheckerInterface $security,
-        ValidatorInterface $validator
+        private SystemConfiguration $configuration,
+        private TimesheetRepository $repository,
+        private TrackingModeService $trackingModeService,
+        private EventDispatcherInterface $dispatcher,
+        private AuthorizationCheckerInterface $auth,
+        private ValidatorInterface $validator
     ) {
-        $this->configuration = $configuration;
-        $this->repository = $repository;
-        $this->trackingModeService = $service;
-        $this->dispatcher = $dispatcher;
-        $this->auth = $security;
-        $this->validator = $validator;
     }
 
     /**

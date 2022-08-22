@@ -56,28 +56,12 @@ abstract class AbstractSpreadsheetRenderer
      */
     public const RATE_FORMAT_NO_CURRENCY = '#,##0.00;-#,##0.00';
 
-    protected $durationFormat = self::DURATION_FORMAT;
-    protected $durationBase = 86400;
+    protected string $durationFormat = self::DURATION_FORMAT;
+    protected int $durationBase = 86400;
     /**
-     * @var LocaleFormatExtensions
+     * @var array<string, array>
      */
-    protected $dateExtension;
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $dispatcher;
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    protected $voter;
-    /**
-     * @var array
-     */
-    protected $columns = [
+    protected array $columns = [
         'date' => [],
         'begin' => [],
         'end' => [],
@@ -111,12 +95,12 @@ abstract class AbstractSpreadsheetRenderer
         'order_number' => [],
     ];
 
-    public function __construct(TranslatorInterface $translator, LocaleFormatExtensions $dateExtension, EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter)
-    {
-        $this->translator = $translator;
-        $this->dateExtension = $dateExtension;
-        $this->dispatcher = $dispatcher;
-        $this->voter = $voter;
+    public function __construct(
+        protected TranslatorInterface $translator,
+        protected LocaleFormatExtensions $dateExtension,
+        protected EventDispatcherInterface $dispatcher,
+        protected AuthorizationCheckerInterface $voter
+    ) {
     }
 
     protected function isRenderRate(TimesheetQuery $query): bool
@@ -128,7 +112,7 @@ abstract class AbstractSpreadsheetRenderer
         return $this->voter->isGranted('view_rate_other_timesheet');
     }
 
-    protected function setFormattedDateTime(Worksheet $sheet, $column, $row, ?DateTime $date)
+    protected function setFormattedDateTime(Worksheet $sheet, $column, $row, ?DateTime $date): void
     {
         if (null === $date) {
             $sheet->setCellValueByColumnAndRow($column, $row, '');
@@ -149,7 +133,7 @@ abstract class AbstractSpreadsheetRenderer
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::DATETIME_FORMAT);
     }
 
-    protected function setFormattedTime(Worksheet $sheet, $column, $row, ?DateTime $date)
+    protected function setFormattedTime(Worksheet $sheet, $column, $row, ?DateTime $date): void
     {
         if (null === $date) {
             $sheet->setCellValueByColumnAndRow($column, $row, '');
@@ -169,7 +153,7 @@ abstract class AbstractSpreadsheetRenderer
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(self::TIME_FORMAT);
     }
 
-    protected function setFormattedDate(Worksheet $sheet, $column, $row, ?DateTime $date)
+    protected function setFormattedDate(Worksheet $sheet, $column, $row, ?DateTime $date): void
     {
         if (null === $date) {
             $sheet->setCellValueByColumnAndRow($column, $row, '');
@@ -190,14 +174,14 @@ abstract class AbstractSpreadsheetRenderer
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_DATE_YYYYMMDD2);
     }
 
-    protected function setDurationTotal(Worksheet $sheet, $column, $row, $startCoordinate, $endCoordinate)
+    protected function setDurationTotal(Worksheet $sheet, $column, $row, $startCoordinate, $endCoordinate): void
     {
         $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=SUBTOTAL(9,%s:%s)', $startCoordinate, $endCoordinate));
         $style = $sheet->getStyleByColumnAndRow($column, $row);
         $style->getNumberFormat()->setFormatCode($this->durationFormat);
     }
 
-    protected function setDuration(Worksheet $sheet, $column, $row, $duration)
+    protected function setDuration(Worksheet $sheet, $column, $row, $duration): void
     {
         if (null === $duration) {
             $duration = 0;
@@ -206,19 +190,19 @@ abstract class AbstractSpreadsheetRenderer
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode($this->durationFormat);
     }
 
-    protected function setRateTotal(Worksheet $sheet, $column, $row, $startCoordinate, $endCoordinate)
+    protected function setRateTotal(Worksheet $sheet, $column, $row, $startCoordinate, $endCoordinate): void
     {
         $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=SUBTOTAL(9,%s:%s)', $startCoordinate, $endCoordinate));
     }
 
-    protected function setRateStyle(Worksheet $sheet, $column, $row, $rate, $currency)
+    protected function setRateStyle(Worksheet $sheet, $column, $row, $rate, $currency): void
     {
         $sheet->getStyleByColumnAndRow($column, $row)->getNumberFormat()->setFormatCode(
             sprintf(self::RATE_FORMAT_LEFT, $currency)
         );
     }
 
-    protected function setRate(Worksheet $sheet, $column, $row, $rate, $currency)
+    protected function setRate(Worksheet $sheet, $column, $row, $rate, $currency): void
     {
         $sheet->setCellValueByColumnAndRow($column, $row, $rate);
         $this->setRateStyle($sheet, $column, $row, $rate, $currency);

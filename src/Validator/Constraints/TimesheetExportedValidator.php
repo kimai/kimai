@@ -17,11 +17,8 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetExportedValidator extends ConstraintValidator
 {
-    private $security;
-
-    public function __construct(Security $security)
+    public function __construct(private Security $security)
     {
-        $this->security = $security;
     }
 
     /**

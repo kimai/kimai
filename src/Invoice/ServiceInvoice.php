@@ -12,11 +12,11 @@ namespace App\Invoice;
 use App\Configuration\LocaleService;
 use App\Entity\ExportableItem;
 use App\Entity\Invoice;
-use App\Entity\InvoiceDocument;
 use App\Event\InvoiceCreatedEvent;
 use App\Event\InvoiceDeleteEvent;
 use App\Event\InvoicePostRenderEvent;
 use App\Event\InvoicePreRenderEvent;
+use App\Model\InvoiceDocument;
 use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
@@ -46,19 +46,14 @@ final class ServiceInvoice
      * @var array InvoiceItemRepositoryInterface[]
      */
     private $invoiceItemRepositories = [];
-    private $documents;
-    private $fileHelper;
-    private $formatter;
-    private $invoiceRepository;
-    private $invoiceModelFactory;
 
-    public function __construct(InvoiceDocumentRepository $repository, FileHelper $fileHelper, InvoiceRepository $invoiceRepository, LocaleService $formatter, InvoiceModelFactory $invoiceModelFactory)
-    {
-        $this->documents = $repository;
-        $this->fileHelper = $fileHelper;
-        $this->invoiceRepository = $invoiceRepository;
-        $this->formatter = $formatter;
-        $this->invoiceModelFactory = $invoiceModelFactory;
+    public function __construct(
+        private InvoiceDocumentRepository $documents,
+        private FileHelper $fileHelper,
+        private InvoiceRepository $invoiceRepository,
+        private LocaleService $formatter,
+        private InvoiceModelFactory $invoiceModelFactory
+    ) {
     }
 
     public function addNumberGenerator(NumberGeneratorInterface $generator): ServiceInvoice

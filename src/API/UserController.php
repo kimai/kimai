@@ -43,17 +43,12 @@ final class UserController extends BaseApiController
     public const GROUPS_FORM = ['Default', 'Entity', 'User', 'User_Entity'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'User'];
 
-    private UserRepository $repository;
-    private ViewHandlerInterface $viewHandler;
-    private UserPasswordHasherInterface $passwordHasher;
-    private SystemConfiguration $configuration;
-
-    public function __construct(ViewHandlerInterface $viewHandler, UserRepository $repository, UserPasswordHasherInterface $passwordHasher, SystemConfiguration $config)
-    {
-        $this->viewHandler = $viewHandler;
-        $this->repository = $repository;
-        $this->passwordHasher = $passwordHasher;
-        $this->configuration = $config;
+    public function __construct(
+        private ViewHandlerInterface $viewHandler,
+        private UserRepository $repository,
+        private UserPasswordHasherInterface $passwordHasher,
+        private SystemConfiguration $configuration
+    ) {
     }
 
     /**

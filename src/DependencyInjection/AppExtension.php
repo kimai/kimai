@@ -20,11 +20,7 @@ use Symfony\Component\Intl\Locales;
  */
 class AppExtension extends Extension
 {
-    /**
-     * @param array $configs
-     * @param ContainerBuilder $container
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         try {
@@ -110,7 +106,7 @@ class AppExtension extends Extension
         $container->setParameter('kimai.config', $newConfig);
     }
 
-    protected function setLanguageFormats(ContainerBuilder $container)
+    private function setLanguageFormats(ContainerBuilder $container): void
     {
         $locales = explode('|', $container->getParameter('app_locales'));
 
@@ -151,7 +147,7 @@ class AppExtension extends Extension
      * @param array $config
      * @param ContainerBuilder $container
      */
-    protected function createPermissionParameter(array $config, ContainerBuilder $container)
+    private function createPermissionParameter(array $config, ContainerBuilder $container): void
     {
         $roles = [];
         foreach ($config['maps'] as $role => $sets) {
@@ -179,7 +175,7 @@ class AppExtension extends Extension
         $container->setParameter('kimai.permissions', $config['roles']);
     }
 
-    protected function getFilteredPermissions(array $permissions): array
+    private function getFilteredPermissions(array $permissions): array
     {
         $deleteFromArray = array_filter($permissions, function ($permission) {
             return $permission[0] == '!';
@@ -194,7 +190,7 @@ class AppExtension extends Extension
         });
     }
 
-    protected function extractSinglePermissionsFromSet(array $permissions, string $name): array
+    private function extractSinglePermissionsFromSet(array $permissions, string $name): array
     {
         if (!isset($permissions['sets'][$name])) {
             throw new InvalidConfigurationException('Unknown permission set "' . $name . '"');

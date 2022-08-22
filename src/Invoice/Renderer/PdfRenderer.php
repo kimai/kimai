@@ -9,10 +9,10 @@
 
 namespace App\Invoice\Renderer;
 
-use App\Entity\InvoiceDocument;
 use App\Export\ExportContext;
 use App\Invoice\InvoiceFilename;
 use App\Invoice\InvoiceModel;
+use App\Model\InvoiceDocument;
 use App\Utils\HtmlToPdfConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;

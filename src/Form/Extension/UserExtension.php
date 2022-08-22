@@ -17,14 +17,8 @@ use Symfony\Component\Security\Core\Security;
 
 final class UserExtension extends AbstractTypeExtension
 {
-    /**
-     * @var Security
-     */
-    private $security;
-
-    public function __construct(Security $security)
+    public function __construct(private Security $security)
     {
-        $this->security = $security;
     }
 
     public static function getExtendedTypes(): iterable

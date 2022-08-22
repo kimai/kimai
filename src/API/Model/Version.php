@@ -18,65 +18,59 @@ use JMS\Serializer\Annotation as Serializer;
 class Version
 {
     /**
-     * Kimai Version, eg. "1.14"
-     *
-     * @var string
+     * Kimai Version, eg. "2.0.0"
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
-    protected $version = Constants::VERSION;
+    private string $version = Constants::VERSION;
     /**
-     * Kimai Version as integer, eg. 11400
+     * Kimai Version as integer, eg. 20000
      *
      * Follows the same logic as PHP_VERSION_ID, see https://www.php.net/manual/de/function.phpversion.php
-     *
-     * @var int
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="integer")
+     * @phpstan-ignore-next-line
      */
-    protected $versionId = Constants::VERSION_ID;
+    private int $versionId = Constants::VERSION_ID;
     /**
      * Candidate: either "prod" or "dev"
      *
-     * @var string
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
-    protected $candidate = Constants::STATUS;
+    private string $candidate = Constants::STATUS;
     /**
      * Full version including status, eg: "1.9-prod"
      *
-     * @var string
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
-    protected $semver = Constants::VERSION . '-' . Constants::STATUS;
+    private string $semver = Constants::VERSION . '-' . Constants::STATUS;
     /**
      * The version name
      *
-     * @var string
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
-    protected $name = Constants::NAME;
+    private string $name = Constants::NAME;
     /**
      * A full copyright notice
      *
-     * @var string
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
-    protected $copyright = Constants::SOFTWARE . ' ' . Constants::VERSION . ' by Kevin Papst and contributors.';
+    private string $copyright = Constants::SOFTWARE . ' ' . Constants::VERSION . ' by Kevin Papst.';
 }

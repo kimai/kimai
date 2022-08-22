@@ -25,11 +25,8 @@ use Symfony\Component\Validator\Constraints\Valid;
 
 class QuickEntryForm extends AbstractType
 {
-    private $configuration;
-
-    public function __construct(SystemConfiguration $configuration)
+    public function __construct(private SystemConfiguration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     /**

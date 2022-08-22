@@ -31,19 +31,13 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class UserService
 {
-    private UserRepository $repository;
-    private EventDispatcherInterface $dispatcher;
-    private ValidatorInterface $validator;
-    private SystemConfiguration $configuration;
-    private UserPasswordHasherInterface $passwordHasher;
-
-    public function __construct(UserRepository $repository, EventDispatcherInterface $dispatcher, ValidatorInterface $validator, SystemConfiguration $configuration, UserPasswordHasherInterface $passwordHasher)
-    {
-        $this->repository = $repository;
-        $this->dispatcher = $dispatcher;
-        $this->validator = $validator;
-        $this->configuration = $configuration;
-        $this->passwordHasher = $passwordHasher;
+    public function __construct(
+        private UserRepository $repository,
+        private EventDispatcherInterface $dispatcher,
+        private ValidatorInterface $validator,
+        private SystemConfiguration $configuration,
+        private UserPasswordHasherInterface $passwordHasher
+    ) {
     }
 
     public function createNewUser(): User

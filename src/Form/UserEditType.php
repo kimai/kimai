@@ -28,11 +28,8 @@ class UserEditType extends AbstractType
 {
     use ColorTrait;
 
-    private $configuration;
-
-    public function __construct(SystemConfiguration $configuration)
+    public function __construct(private SystemConfiguration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     /**

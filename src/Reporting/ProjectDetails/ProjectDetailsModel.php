@@ -20,10 +20,6 @@ use App\Model\UserStatistic;
 final class ProjectDetailsModel
 {
     /**
-     * @var Project
-     */
-    private $project;
-    /**
      * @var Year[]
      */
     private $years = [];
@@ -44,9 +40,8 @@ final class ProjectDetailsModel
      */
     private $budgetStatisticModel;
 
-    public function __construct(Project $project)
+    public function __construct(private Project $project)
     {
-        $this->project = $project;
     }
 
     public function getProject(): Project

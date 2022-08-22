@@ -17,14 +17,8 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetFutureTimesValidator extends ConstraintValidator
 {
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
-
-    public function __construct(SystemConfiguration $configuration)
+    public function __construct(private SystemConfiguration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     /**

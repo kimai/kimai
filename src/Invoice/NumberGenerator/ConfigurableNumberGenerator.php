@@ -16,37 +16,18 @@ use App\Repository\InvoiceRepository;
 
 final class ConfigurableNumberGenerator implements NumberGeneratorInterface
 {
-    /**
-     * @var InvoiceModel
-     */
-    private $model;
-    /**
-     * @var InvoiceRepository
-     */
-    private $repository;
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
+    private ?InvoiceModel $model = null;
 
-    public function __construct(InvoiceRepository $repository, SystemConfiguration $configuration)
+    public function __construct(private InvoiceRepository $repository, private SystemConfiguration $configuration)
     {
-        $this->repository = $repository;
-        $this->configuration = $configuration;
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return 'default';
     }
 
-    /**
-     * @param InvoiceModel $model
-     */
-    public function setModel(InvoiceModel $model)
+    public function setModel(InvoiceModel $model): void
     {
         $this->model = $model;
     }

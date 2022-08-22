@@ -32,18 +32,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TimesheetMultiUpdate extends AbstractType
 {
-    private TimesheetRepository $timesheet;
-    private CustomerRepository $customers;
-
-    public function __construct(TimesheetRepository $timesheet, CustomerRepository $customer)
+    public function __construct(private TimesheetRepository $timesheet, private CustomerRepository $customers)
     {
-        $this->timesheet = $timesheet;
-        $this->customers = $customer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $activity = null;
@@ -246,9 +238,6 @@ class TimesheetMultiUpdate extends AbstractType
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

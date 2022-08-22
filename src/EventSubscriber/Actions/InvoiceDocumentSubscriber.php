@@ -9,8 +9,8 @@
 
 namespace App\EventSubscriber\Actions;
 
-use App\Entity\InvoiceDocument;
 use App\Event\PageActionsEvent;
+use App\Model\InvoiceDocument;
 
 class InvoiceDocumentSubscriber extends AbstractActionsSubscriber
 {

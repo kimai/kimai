@@ -14,11 +14,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class ExportItemsQueryEvent extends Event
 {
-    private $query;
-
-    public function __construct(ExportQuery $query)
+    public function __construct(private ExportQuery $query)
     {
-        $this->query = $query;
     }
 
     public function getExportQuery(): ExportQuery

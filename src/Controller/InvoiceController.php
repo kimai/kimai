@@ -54,17 +54,12 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 final class InvoiceController extends AbstractController
 {
-    private $service;
-    private $templateRepository;
-    private $invoiceRepository;
-    private $dispatcher;
-
-    public function __construct(ServiceInvoice $service, InvoiceTemplateRepository $templateRepository, InvoiceRepository $invoiceRepository, EventDispatcherInterface $dispatcher)
-    {
-        $this->service = $service;
-        $this->templateRepository = $templateRepository;
-        $this->invoiceRepository = $invoiceRepository;
-        $this->dispatcher = $dispatcher;
+    public function __construct(
+        private ServiceInvoice $service,
+        private InvoiceTemplateRepository $templateRepository,
+        private InvoiceRepository $invoiceRepository,
+        private EventDispatcherInterface $dispatcher
+    ) {
     }
 
     /**

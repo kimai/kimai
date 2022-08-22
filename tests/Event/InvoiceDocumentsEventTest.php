@@ -9,8 +9,8 @@
 
 namespace App\Tests\Event;
 
-use App\Entity\InvoiceDocument;
 use App\Event\InvoiceDocumentsEvent;
+use App\Model\InvoiceDocument;
 use PHPUnit\Framework\TestCase;
 
 /**

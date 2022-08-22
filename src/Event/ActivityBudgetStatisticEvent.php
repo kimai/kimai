@@ -13,20 +13,13 @@ use App\Model\ActivityBudgetStatisticModel;
 
 final class ActivityBudgetStatisticEvent
 {
-    private $models;
-    private $begin;
-    private $end;
-
     /**
      * @param ActivityBudgetStatisticModel[] $models
      * @param \DateTime|null $begin
      * @param \DateTime|null $end
      */
-    public function __construct(array $models, ?\DateTime $begin = null, ?\DateTime $end = null)
+    public function __construct(private array $models, private ?\DateTime $begin = null, private ?\DateTime $end = null)
     {
-        $this->models = $models;
-        $this->begin = $begin;
-        $this->end = $end;
     }
 
     public function getModel(int $activityId): ?ActivityBudgetStatisticModel

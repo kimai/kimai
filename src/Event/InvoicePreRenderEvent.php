@@ -9,31 +9,15 @@
 
 namespace App\Event;
 
-use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceModel;
 use App\Invoice\RendererInterface;
+use App\Model\InvoiceDocument;
 use Symfony\Contracts\EventDispatcher\Event;
 
 final class InvoicePreRenderEvent extends Event
 {
-    /**
-     * @var InvoiceModel
-     */
-    private $model;
-    /**
-     * @var InvoiceDocument
-     */
-    private $document;
-    /**
-     * @var RendererInterface
-     */
-    private $renderer;
-
-    public function __construct(InvoiceModel $model, InvoiceDocument $document, RendererInterface $renderer)
+    public function __construct(private InvoiceModel $model, private InvoiceDocument $document, private RendererInterface $renderer)
     {
-        $this->model = $model;
-        $this->document = $document;
-        $this->renderer = $renderer;
     }
 
     public function getModel(): InvoiceModel

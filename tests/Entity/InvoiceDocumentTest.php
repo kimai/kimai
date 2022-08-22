@@ -9,11 +9,11 @@
 
 namespace App\Tests\Entity;
 
-use App\Entity\InvoiceDocument;
+use App\Model\InvoiceDocument;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Entity\InvoiceDocument
+ * @covers \App\Model\InvoiceDocument
  */
 class InvoiceDocumentTest extends TestCase
 {

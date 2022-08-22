@@ -63,7 +63,7 @@ class StatusControllerTest extends APIControllerBaseTest
         $this->assertEquals(Constants::VERSION . '-' . Constants::STATUS, $result['semver']);
         $this->assertEquals(Constants::NAME, $result['name']);
         $this->assertEquals(
-            'Kimai ' . Constants::VERSION . ' by Kevin Papst and contributors.',
+            'Kimai ' . Constants::VERSION . ' by Kevin Papst.',
             $result['copyright']
         );
     }

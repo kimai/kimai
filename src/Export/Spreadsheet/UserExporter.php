@@ -17,15 +17,8 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 final class UserExporter
 {
-    private $exporter;
-    private $annotationExtractor;
-    private $userPreferenceExtractor;
-
-    public function __construct(SpreadsheetExporter $exporter, AnnotationExtractor $annotationExtractor, UserPreferenceExtractor $userPreferenceExtractor)
+    public function __construct(private SpreadsheetExporter $exporter, private AnnotationExtractor $annotationExtractor, private UserPreferenceExtractor $userPreferenceExtractor)
     {
-        $this->exporter = $exporter;
-        $this->annotationExtractor = $annotationExtractor;
-        $this->userPreferenceExtractor = $userPreferenceExtractor;
     }
 
     /**

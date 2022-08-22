@@ -15,11 +15,8 @@ use App\Widget\WidgetInterface;
 
 final class TotalsProject extends AbstractWidget
 {
-    private $project;
-
-    public function __construct(ProjectRepository $project)
+    public function __construct(private ProjectRepository $project)
     {
-        $this->project = $project;
     }
 
     public function getTitle(): string

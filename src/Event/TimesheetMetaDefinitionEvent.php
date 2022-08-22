@@ -17,14 +17,8 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class TimesheetMetaDefinitionEvent extends Event
 {
-    /**
-     * @var Timesheet
-     */
-    private $entity;
-
-    public function __construct(Timesheet $entity)
+    public function __construct(private Timesheet $entity)
     {
-        $this->entity = $entity;
     }
 
     public function getEntity(): Timesheet

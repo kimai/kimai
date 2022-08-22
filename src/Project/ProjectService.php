@@ -28,24 +28,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class ProjectService
 {
-    /**
-     * @var ProjectRepository
-     */
-    private $repository;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-    /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-
-    public function __construct(ProjectRepository $projectRepository, EventDispatcherInterface $dispatcher, ValidatorInterface $validator)
+    public function __construct(private ProjectRepository $repository, private EventDispatcherInterface $dispatcher, private ValidatorInterface $validator)
     {
-        $this->repository = $projectRepository;
-        $this->dispatcher = $dispatcher;
-        $this->validator = $validator;
     }
 
     public function createNewProject(?Customer $customer = null): Project

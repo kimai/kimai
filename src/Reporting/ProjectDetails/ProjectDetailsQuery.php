@@ -15,23 +15,10 @@ use DateTime;
 
 final class ProjectDetailsQuery
 {
-    /**
-     * @var Project|null
-     */
-    private $project;
-    /**
-     * @var DateTime
-     */
-    private $today;
-    /**
-     * @var User
-     */
-    private $user;
+    private ?Project $project = null;
 
-    public function __construct(DateTime $today, User $user)
+    public function __construct(private DateTime $today, private User $user)
     {
-        $this->today = $today;
-        $this->user = $user;
     }
 
     public function getToday(): DateTime

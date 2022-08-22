@@ -7,18 +7,12 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Entity;
+namespace App\Model;
 
 final class InvoiceDocument
 {
-    /**
-     * @var \SplFileInfo
-     */
-    private $file;
-
-    public function __construct(\SplFileInfo $file)
+    public function __construct(private \SplFileInfo $file)
     {
-        $this->file = $file;
     }
 
     public function getId(): string

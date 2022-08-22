@@ -26,11 +26,8 @@ final class TeamVoter extends Voter
         'delete',
     ];
 
-    private $permissionManager;
-
-    public function __construct(RolePermissionManager $permissionManager)
+    public function __construct(private RolePermissionManager $permissionManager)
     {
-        $this->permissionManager = $permissionManager;
     }
 
     /**

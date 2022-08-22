@@ -19,19 +19,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 final class UserProfileSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-    /**
-     * @var TokenStorageInterface
-     */
-    private $storage;
-
-    public function __construct(EventDispatcherInterface $dispatcher, TokenStorageInterface $storage)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private TokenStorageInterface $storage)
     {
-        $this->eventDispatcher = $dispatcher;
-        $this->storage = $storage;
     }
 
     public static function getSubscribedEvents(): array

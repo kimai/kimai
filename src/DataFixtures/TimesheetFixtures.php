@@ -34,7 +34,7 @@ use Faker\Factory;
  *
  * @codeCoverageIgnore
  */
-class TimesheetFixtures extends Fixture implements FixtureGroupInterface
+final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
 {
     public const MIN_TIMESHEETS_PER_USER = 100;
     public const MAX_TIMESHEETS_PER_USER = 1000;
@@ -56,9 +56,6 @@ class TimesheetFixtures extends Fixture implements FixtureGroupInterface
         return new \DateTime(rand(-1095, 14) . ' days');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load(ObjectManager $manager): void
     {
         $results = $this->findRandom($manager, Customer::class, 50);

@@ -54,12 +54,12 @@ class CsvRenderer extends AbstractSpreadsheetRenderer
         return 'csv';
     }
 
-    protected function setDuration(Worksheet $sheet, $column, $row, $duration)
+    protected function setDuration(Worksheet $sheet, $column, $row, $duration): void
     {
         $sheet->setCellValueByColumnAndRow($column, $row, sprintf('=%s', $duration));
     }
 
-    protected function setRateStyle(Worksheet $sheet, $column, $row, $rate, $currency)
+    protected function setRateStyle(Worksheet $sheet, $column, $row, $rate, $currency): void
     {
         if ($rate === 0.00) {
             return;

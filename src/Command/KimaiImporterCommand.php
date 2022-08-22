@@ -67,9 +67,6 @@ final class KimaiImporterCommand extends Command
     public const BATCH_SIZE = 1000;
     private const METAFIELD_NAME = '_imported_id';
 
-    private UserPasswordHasherInterface $passwordHasher;
-    private ValidatorInterface $validator;
-    private ManagerRegistry $doctrine;
     private Connection $connection;
     /**
      * Prefix for the v1 database tables.
@@ -132,12 +129,8 @@ final class KimaiImporterCommand extends Command
      */
     private array $options = [];
 
-    public function __construct(UserPasswordHasherInterface $passwordHasher, ManagerRegistry $registry, ValidatorInterface $validator)
+    public function __construct(private UserPasswordHasherInterface $passwordHasher, private ManagerRegistry $doctrine, private ValidatorInterface $validator)
     {
-        $this->passwordHasher = $passwordHasher;
-        $this->doctrine = $registry;
-        $this->validator = $validator;
-
         parent::__construct();
     }
 

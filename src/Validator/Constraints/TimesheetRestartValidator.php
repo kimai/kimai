@@ -18,13 +18,8 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetRestartValidator extends ConstraintValidator
 {
-    private $trackingModeService;
-    private $security;
-
-    public function __construct(Security $security, TrackingModeService $service)
+    public function __construct(private Security $security, private TrackingModeService $trackingModeService)
     {
-        $this->security = $security;
-        $this->trackingModeService = $service;
     }
 
     /**

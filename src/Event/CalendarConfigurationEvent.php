@@ -14,13 +14,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 class CalendarConfigurationEvent extends Event
 {
     /**
-     * @var array<string, string|int|bool|array>
+     * @param array<string, string|int|bool|array> $configuration
      */
-    private $configuration;
-
-    public function __construct(array $configuration)
+    public function __construct(private array $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     public function getConfiguration(): array

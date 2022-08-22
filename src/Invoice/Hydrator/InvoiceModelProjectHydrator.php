@@ -18,11 +18,8 @@ class InvoiceModelProjectHydrator implements InvoiceModelHydrator
 {
     use BudgetHydratorTrait;
 
-    private $projectStatistic;
-
-    public function __construct(ProjectStatisticService $projectStatistic)
+    public function __construct(private ProjectStatisticService $projectStatistic)
     {
-        $this->projectStatistic = $projectStatistic;
     }
 
     public function hydrate(InvoiceModel $model): array

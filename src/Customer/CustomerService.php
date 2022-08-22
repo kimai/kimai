@@ -28,17 +28,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class CustomerService
 {
-    private $repository;
-    private $dispatcher;
-    private $validator;
-    private $configuration;
-
-    public function __construct(CustomerRepository $customerRepository, SystemConfiguration $configuration, ValidatorInterface $validator, EventDispatcherInterface $dispatcher)
-    {
-        $this->repository = $customerRepository;
-        $this->dispatcher = $dispatcher;
-        $this->validator = $validator;
-        $this->configuration = $configuration;
+    public function __construct(
+        private CustomerRepository $repository,
+        private SystemConfiguration $configuration,
+        private ValidatorInterface $validator,
+        private EventDispatcherInterface $dispatcher
+    ) {
     }
 
     private function getDefaultTimezone(): string

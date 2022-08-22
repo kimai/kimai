@@ -30,13 +30,6 @@ class HtmlRenderer
     use RendererTrait;
 
     /**
-     * @var Environment
-     */
-    protected $twig;
-    protected $dispatcher;
-    private $projectStatisticService;
-    private $activityStatisticService;
-    /**
      * @var string
      */
     private $id = 'html';
@@ -45,12 +38,12 @@ class HtmlRenderer
      */
     private $template = 'default.html.twig';
 
-    public function __construct(Environment $twig, EventDispatcherInterface $dispatcher, ProjectStatisticService $projectStatisticService, ActivityStatisticService $activityStatisticService)
-    {
-        $this->twig = $twig;
-        $this->dispatcher = $dispatcher;
-        $this->projectStatisticService = $projectStatisticService;
-        $this->activityStatisticService = $activityStatisticService;
+    public function __construct(
+        protected Environment $twig,
+        protected EventDispatcherInterface $dispatcher,
+        private ProjectStatisticService $projectStatisticService,
+        private ActivityStatisticService $activityStatisticService
+    ) {
     }
 
     /**

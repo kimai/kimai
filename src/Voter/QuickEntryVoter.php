@@ -17,13 +17,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 final class QuickEntryVoter extends Voter
 {
-    private $permissionManager;
-    private $trackingModeService;
-
-    public function __construct(RolePermissionManager $permissionManager, TrackingModeService $trackingModeService)
+    public function __construct(private RolePermissionManager $permissionManager, private TrackingModeService $trackingModeService)
     {
-        $this->permissionManager = $permissionManager;
-        $this->trackingModeService = $trackingModeService;
     }
 
     /**

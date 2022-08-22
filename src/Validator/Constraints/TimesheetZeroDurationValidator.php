@@ -17,11 +17,8 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetZeroDurationValidator extends ConstraintValidator
 {
-    private $configuration;
-
-    public function __construct(SystemConfiguration $configuration)
+    public function __construct(private SystemConfiguration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     /**

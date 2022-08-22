@@ -14,12 +14,10 @@ use App\Entity\Timesheet;
 
 final class LockdownService
 {
-    private $configuration;
-    private $isActive;
+    private ?bool $isActive = null;
 
-    public function __construct(SystemConfiguration $configuration)
+    public function __construct(private SystemConfiguration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     public function isLockdownActive(): bool

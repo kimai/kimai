@@ -40,41 +40,20 @@ use Symfony\Component\Validator\Constraints;
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
-class ProjectController extends BaseApiController
+final class ProjectController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
     public const GROUPS_FORM = ['Default', 'Entity', 'Project'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
     public const GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
 
-    /**
-     * @var ProjectRepository
-     */
-    private $repository;
-    /**
-     * @var ViewHandlerInterface
-     */
-    private $viewHandler;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-    /**
-     * @var ProjectRateRepository
-     */
-    private $projectRateRepository;
-    /**
-     * @var ProjectService
-     */
-    private $projectService;
-
-    public function __construct(ViewHandlerInterface $viewHandler, ProjectRepository $repository, EventDispatcherInterface $dispatcher, ProjectRateRepository $projectRateRepository, ProjectService $projectService)
-    {
-        $this->viewHandler = $viewHandler;
-        $this->repository = $repository;
-        $this->dispatcher = $dispatcher;
-        $this->projectRateRepository = $projectRateRepository;
-        $this->projectService = $projectService;
+    public function __construct(
+        private ViewHandlerInterface $viewHandler,
+        private ProjectRepository $repository,
+        private EventDispatcherInterface $dispatcher,
+        private ProjectRateRepository $projectRateRepository,
+        private ProjectService $projectService
+    ) {
     }
 
     /**

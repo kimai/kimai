@@ -36,13 +36,8 @@ final class TagController extends BaseApiController
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Tag'];
     public const GROUPS_FORM = ['Default', 'Entity', 'Tag'];
 
-    private TagRepository $repository;
-    private ViewHandlerInterface $viewHandler;
-
-    public function __construct(ViewHandlerInterface $viewHandler, TagRepository $repository)
+    public function __construct(private ViewHandlerInterface $viewHandler, private TagRepository $repository)
     {
-        $this->viewHandler = $viewHandler;
-        $this->repository = $repository;
     }
 
     /**

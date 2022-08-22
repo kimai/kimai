@@ -19,13 +19,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserTeamProjects extends AbstractWidget
 {
-    private $statisticService;
-    private $entityManager;
-
-    public function __construct(ProjectStatisticService $statisticService, EntityManagerInterface $entityManager)
+    public function __construct(private ProjectStatisticService $statisticService, private EntityManagerInterface $entityManager)
     {
-        $this->statisticService = $statisticService;
-        $this->entityManager = $entityManager;
     }
 
     public function getWidth(): int

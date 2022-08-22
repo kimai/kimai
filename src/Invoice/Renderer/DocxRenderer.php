@@ -9,9 +9,9 @@
 
 namespace App\Invoice\Renderer;
 
-use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceModel;
 use App\Invoice\RendererInterface;
+use App\Model\InvoiceDocument;
 use PhpOffice\PhpWord\Escaper\Xml;
 use PhpOffice\PhpWord\Exception\Exception as OfficeException;
 use PhpOffice\PhpWord\Settings;
@@ -46,9 +46,7 @@ final class DocxRenderer extends AbstractRenderer implements RendererInterface
             try {
                 $template->cloneRow('entry.row', \count($model->getCalculator()->getEntries()));
             } catch (OfficeException $ex) {
-                @trigger_error(
-                    sprintf('Invoice document (%s) did not contain a clone row, was that on purpose?', $document->getFilename())
-                );
+                @trigger_error('Invoice document did not contain a clone row, was that on purpose?');
             }
         }
 

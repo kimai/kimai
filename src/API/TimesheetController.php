@@ -45,7 +45,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  *
  * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
-class TimesheetController extends BaseApiController
+final class TimesheetController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Timesheet', 'Timesheet_Entity', 'Not_Expanded'];
     public const GROUPS_ENTITY_FULL = ['Default', 'Entity', 'Timesheet', 'Timesheet_Entity', 'Expanded'];
@@ -53,39 +53,13 @@ class TimesheetController extends BaseApiController
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Timesheet', 'Not_Expanded'];
     public const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'Timesheet', 'Expanded'];
 
-    /**
-     * @var TimesheetRepository
-     */
-    private $repository;
-    /**
-     * @var ViewHandlerInterface
-     */
-    private $viewHandler;
-    /**
-     * @var TagRepository
-     */
-    private $tagRepository;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-    /**
-     * @var TimesheetService
-     */
-    private $service;
-
     public function __construct(
-        ViewHandlerInterface $viewHandler,
-        TimesheetRepository $repository,
-        TagRepository $tagRepository,
-        EventDispatcherInterface $dispatcher,
-        TimesheetService $service
+        private ViewHandlerInterface $viewHandler,
+        private TimesheetRepository $repository,
+        private TagRepository $tagRepository,
+        private EventDispatcherInterface $dispatcher,
+        private TimesheetService $service
     ) {
-        $this->viewHandler = $viewHandler;
-        $this->repository = $repository;
-        $this->tagRepository = $tagRepository;
-        $this->dispatcher = $dispatcher;
-        $this->service = $service;
     }
 
     protected function getTrackingMode(): TrackingModeInterface

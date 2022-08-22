@@ -19,11 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class TwigContextCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     * @throws \Exception
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $twig = $container->getDefinition('twig');
 

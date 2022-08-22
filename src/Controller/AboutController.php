@@ -18,17 +18,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AboutController extends AbstractController
 {
-    /**
-     * @var string
-     */
-    protected $projectDirectory;
-
-    /**
-     * @param string $projectDirectory
-     */
-    public function __construct(string $projectDirectory)
+    public function __construct(private string $projectDirectory)
     {
-        $this->projectDirectory = $projectDirectory;
     }
 
     /**

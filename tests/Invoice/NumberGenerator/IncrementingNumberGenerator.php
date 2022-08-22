@@ -16,16 +16,10 @@ class IncrementingNumberGenerator implements NumberGeneratorInterface
 {
     private $counter = 0;
 
-    /**
-     * @param InvoiceModel $model
-     */
-    public function setModel(InvoiceModel $model)
+    public function setModel(InvoiceModel $model): void
     {
     }
 
-    /**
-     * @return string
-     */
     public function getInvoiceNumber(): string
     {
         return $this->counter++;

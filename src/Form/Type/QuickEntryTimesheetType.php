@@ -20,11 +20,8 @@ use Symfony\Component\Security\Core\Security;
 
 class QuickEntryTimesheetType extends AbstractType
 {
-    private $security;
-
-    public function __construct(Security $security)
+    public function __construct(private Security $security)
     {
-        $this->security = $security;
     }
 
     /**

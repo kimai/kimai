@@ -23,17 +23,13 @@ use Faker\Factory;
  *
  * @codeCoverageIgnore
  */
-class TagFixtures extends Fixture
+final class TagFixtures extends Fixture
 {
     public const MIN_TAGS = 50;
     public const MAX_TAGS = 2000;
-
     public const BATCH_SIZE = 100;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $faker = Factory::create();
         $amount = rand(self::MIN_TAGS, self::MAX_TAGS);

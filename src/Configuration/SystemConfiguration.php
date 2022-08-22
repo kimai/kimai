@@ -16,14 +16,10 @@ use App\Entity\Configuration;
  */
 class SystemConfiguration
 {
-    private ?array $settings;
-    private ConfigLoaderInterface $repository;
     private bool $initialized = false;
 
-    public function __construct(ConfigLoaderInterface $repository, array $settings)
+    public function __construct(private ConfigLoaderInterface $repository, private ?array $settings)
     {
-        $this->repository = $repository;
-        $this->settings = $settings;
     }
 
     /**
@@ -35,7 +31,7 @@ class SystemConfiguration
         return $repository->getConfiguration();
     }
 
-    private function prepare()
+    private function prepare(): void
     {
         if ($this->initialized) {
             return;

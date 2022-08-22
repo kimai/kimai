@@ -24,12 +24,9 @@ use Faker\Generator;
  *
  * @codeCoverageIgnore
  */
-class InvoiceFixtures extends Fixture
+final class InvoiceFixtures extends Fixture
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('at_AT');
 
@@ -56,7 +53,11 @@ class InvoiceFixtures extends Fixture
         }
     }
 
-    private function getInvoiceConfigs(Generator $faker)
+    /**
+     * @param Generator $faker
+     * @return array
+     */
+    private function getInvoiceConfigs(Generator $faker): array
     {
         $paymentTerms =
             'I would like to thank you for your confidence and will gladly be there for you in the future.' .

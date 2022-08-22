@@ -9,8 +9,8 @@
 
 namespace App\Tests\Event;
 
-use App\Entity\InvoiceDocument;
 use App\Event\InvoicePreRenderEvent;
+use App\Model\InvoiceDocument;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Invoice\Renderer\DebugRenderer;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;

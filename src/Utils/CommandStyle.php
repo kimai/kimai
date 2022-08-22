@@ -16,14 +16,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 final class CommandStyle
 {
-    private $input;
-    private $output;
-    private $style;
+    private ?SymfonyStyle $style = null;
 
-    public function __construct(InputInterface $input, OutputInterface $output)
+    public function __construct(private InputInterface $input, private OutputInterface $output)
     {
-        $this->input = $input;
-        $this->output = $output;
     }
 
     private function getStyle(): SymfonyStyle

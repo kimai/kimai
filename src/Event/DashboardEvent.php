@@ -15,17 +15,12 @@ use Symfony\Contracts\EventDispatcher\Event;
 final class DashboardEvent extends Event
 {
     /**
-     * @var User
-     */
-    private $user;
-    /**
      * @var array<string>
      */
     private $widgets = [];
 
-    public function __construct(User $user)
+    public function __construct(private User $user)
     {
-        $this->user = $user;
     }
 
     /**

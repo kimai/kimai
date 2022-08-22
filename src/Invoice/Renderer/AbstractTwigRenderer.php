@@ -9,9 +9,9 @@
 
 namespace App\Invoice\Renderer;
 
-use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceModel;
 use App\Invoice\RendererInterface;
+use App\Model\InvoiceDocument;
 use App\Twig\TwigRendererTrait;
 use Twig\Environment;
 

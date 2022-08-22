@@ -21,24 +21,8 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class CalendarService
 {
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
-    /**
-     * @var TimesheetRepository
-     */
-    private $repository;
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-
-    public function __construct(SystemConfiguration $configuration, TimesheetRepository $repository, EventDispatcherInterface $dispatcher)
+    public function __construct(private SystemConfiguration $configuration, private TimesheetRepository $repository, private EventDispatcherInterface $dispatcher)
     {
-        $this->configuration = $configuration;
-        $this->repository = $repository;
-        $this->dispatcher = $dispatcher;
     }
 
     /**

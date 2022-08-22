@@ -21,11 +21,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class InvoiceDocumentUploadForm extends AbstractType
 {
-    private $repository;
-
-    public function __construct(InvoiceDocumentRepository $repository)
+    public function __construct(private InvoiceDocumentRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**

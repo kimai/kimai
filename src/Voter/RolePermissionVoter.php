@@ -20,11 +20,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 final class RolePermissionVoter extends Voter
 {
-    private $permissionManager;
-
-    public function __construct(RolePermissionManager $permissionManager)
+    public function __construct(private RolePermissionManager $permissionManager)
     {
-        $this->permissionManager = $permissionManager;
     }
 
     /**

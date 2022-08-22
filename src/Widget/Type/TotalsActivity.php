@@ -15,11 +15,8 @@ use App\Widget\WidgetInterface;
 
 final class TotalsActivity extends AbstractWidget
 {
-    private $activity;
-
-    public function __construct(ActivityRepository $activity)
+    public function __construct(private ActivityRepository $activity)
     {
-        $this->activity = $activity;
     }
 
     public function getTitle(): string

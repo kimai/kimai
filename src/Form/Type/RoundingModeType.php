@@ -19,14 +19,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class RoundingModeType extends AbstractType
 {
-    /**
-     * @var RoundingService
-     */
-    private $service;
-
-    public function __construct(RoundingService $service)
+    public function __construct(private RoundingService $service)
     {
-        $this->service = $service;
     }
 
     /**

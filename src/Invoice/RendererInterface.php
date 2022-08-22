@@ -9,7 +9,7 @@
 
 namespace App\Invoice;
 
-use App\Entity\InvoiceDocument;
+use App\Model\InvoiceDocument;
 use Symfony\Component\HttpFoundation\Response;
 
 interface RendererInterface

@@ -19,18 +19,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class InvoiceNumberGeneratorType extends AbstractType
 {
-    /**
-     * @var ServiceInvoice
-     */
-    protected $service;
-
-    /**
-     * InvoiceNumberGeneratorType constructor.
-     * @param ServiceInvoice $service
-     */
-    public function __construct(ServiceInvoice $service)
+    public function __construct(private ServiceInvoice $service)
     {
-        $this->service = $service;
     }
 
     /**

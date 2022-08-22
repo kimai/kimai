@@ -9,11 +9,11 @@
 
 namespace App\Tests\Invoice\Renderer;
 
-use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceItemHydrator;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
+use App\Model\InvoiceDocument;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 

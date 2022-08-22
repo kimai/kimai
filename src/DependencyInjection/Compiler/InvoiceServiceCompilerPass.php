@@ -20,11 +20,7 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class InvoiceServiceCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     * @throws \Exception
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $definition = $container->findDefinition(ServiceInvoice::class);
 

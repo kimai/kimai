@@ -12,22 +12,11 @@ namespace App\Calendar;
 final class Google
 {
     /**
-     * @var GoogleSource[]
-     */
-    private $sources;
-    /**
-     * @var string
-     */
-    private $apiKey;
-
-    /**
      * @param string $apiKey
      * @param GoogleSource[] $sources
      */
-    public function __construct(string $apiKey, array $sources = [])
+    public function __construct(private string $apiKey, private array $sources = [])
     {
-        $this->apiKey = $apiKey;
-        $this->sources = $sources;
     }
 
     /**

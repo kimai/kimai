@@ -19,16 +19,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class ProjectValidator extends ConstraintValidator
 {
     /**
-     * @var Constraint[]
-     */
-    private $constraints;
-
-    /**
      * @param Constraint[] $constraints
      */
-    public function __construct(iterable $constraints = [])
+    public function __construct(private iterable $constraints = [])
     {
-        $this->constraints = $constraints;
     }
 
     /**

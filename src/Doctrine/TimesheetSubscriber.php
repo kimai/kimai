@@ -23,18 +23,13 @@ class TimesheetSubscriber implements EventSubscriber
     /**
      * @var CalculatorInterface[]
      */
-    private $calculator;
-    /**
-     * @var CalculatorInterface[]
-     */
     private $sorted;
 
     /**
      * @param CalculatorInterface[] $calculators
      */
-    public function __construct(iterable $calculators)
+    public function __construct(private iterable $calculators)
     {
-        $this->calculator = $calculators;
     }
 
     public function getSubscribedEvents(): array
@@ -74,7 +69,7 @@ class TimesheetSubscriber implements EventSubscriber
         if ($this->sorted === null) {
             $this->sorted = [];
 
-            foreach ($this->calculator as $calculator) {
+            foreach ($this->calculators as $calculator) {
                 $i = 0;
                 $prio = 1000;
                 if (method_exists($calculator, 'getPriority')) {

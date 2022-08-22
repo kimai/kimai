@@ -15,13 +15,8 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractAmountPeriod extends AbstractWidget
 {
-    private $repository;
-    private $dispatcher;
-
-    public function __construct(TimesheetRepository $repository, EventDispatcherInterface $dispatcher)
+    public function __construct(private TimesheetRepository $repository, private EventDispatcherInterface $dispatcher)
     {
-        $this->repository = $repository;
-        $this->dispatcher = $dispatcher;
     }
 
     public function getTitle(): string

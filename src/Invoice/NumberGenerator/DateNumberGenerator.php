@@ -19,32 +19,18 @@ use App\Repository\InvoiceRepository;
  */
 final class DateNumberGenerator implements NumberGeneratorInterface
 {
-    /**
-     * @var InvoiceModel
-     */
-    private $model;
-    /**
-     * @var InvoiceRepository
-     */
-    private $repository;
+    private ?InvoiceModel $model = null;
 
-    public function __construct(InvoiceRepository $repository)
+    public function __construct(private InvoiceRepository $repository)
     {
-        $this->repository = $repository;
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return 'date';
     }
 
-    /**
-     * @param InvoiceModel $model
-     */
-    public function setModel(InvoiceModel $model)
+    public function setModel(InvoiceModel $model): void
     {
         $this->model = $model;
     }

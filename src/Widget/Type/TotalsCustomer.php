@@ -15,11 +15,8 @@ use App\Widget\WidgetInterface;
 
 final class TotalsCustomer extends AbstractWidget
 {
-    private $customer;
-
-    public function __construct(CustomerRepository $customer)
+    public function __construct(private CustomerRepository $customer)
     {
-        $this->customer = $customer;
     }
 
     public function getTitle(): string

@@ -18,13 +18,8 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetLockdownValidator extends ConstraintValidator
 {
-    private $lockdownService;
-    private $security;
-
-    public function __construct(Security $security, LockdownService $lockdownService)
+    public function __construct(private Security $security, private LockdownService $lockdownService)
     {
-        $this->security = $security;
-        $this->lockdownService = $lockdownService;
     }
 
     /**

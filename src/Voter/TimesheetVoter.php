@@ -48,18 +48,13 @@ final class TimesheetVoter extends Voter
         'duplicate'
     ];
 
-    private $permissionManager;
-    private $lockdownService;
-
     private $lockdownGrace;
     private $lockdownOverride;
     private $editExported;
     private $now;
 
-    public function __construct(RolePermissionManager $permissionManager, LockdownService $lockdownService)
+    public function __construct(private RolePermissionManager $permissionManager, private LockdownService $lockdownService)
     {
-        $this->permissionManager = $permissionManager;
-        $this->lockdownService = $lockdownService;
     }
 
     /**

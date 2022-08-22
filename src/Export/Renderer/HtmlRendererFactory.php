@@ -16,17 +16,12 @@ use Twig\Environment;
 
 final class HtmlRendererFactory
 {
-    private $twig;
-    private $dispatcher;
-    private $projectStatisticService;
-    private $activityStatisticService;
-
-    public function __construct(Environment $twig, EventDispatcherInterface $dispatcher, ProjectStatisticService $projectStatisticService, ActivityStatisticService $activityStatisticService)
-    {
-        $this->twig = $twig;
-        $this->dispatcher = $dispatcher;
-        $this->projectStatisticService = $projectStatisticService;
-        $this->activityStatisticService = $activityStatisticService;
+    public function __construct(
+        private Environment $twig,
+        private EventDispatcherInterface $dispatcher,
+        private ProjectStatisticService $projectStatisticService,
+        private ActivityStatisticService $activityStatisticService
+    ) {
     }
 
     public function create(string $id, string $template): HtmlRenderer

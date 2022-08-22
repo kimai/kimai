@@ -9,7 +9,7 @@
 
 namespace App\Event;
 
-use App\Entity\InvoiceDocument;
+use App\Model\InvoiceDocument;
 use Symfony\Contracts\EventDispatcher\Event;
 
 final class InvoiceDocumentsEvent extends Event

@@ -9,7 +9,7 @@
 
 namespace App\Tests\Repository;
 
-use App\Entity\InvoiceDocument;
+use App\Model\InvoiceDocument;
 use App\Repository\InvoiceDocumentRepository;
 use PHPUnit\Framework\TestCase;
 

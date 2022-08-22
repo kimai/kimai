@@ -18,30 +18,15 @@ final class RoundingService
     /**
      * @var array
      */
-    private $rules;
-    /**
-     * @var array
-     */
     private $rulesCache;
-    /**
-     * @var SystemConfiguration
-     */
-    private $configuration;
-    /**
-     * @var RoundingInterface[]
-     */
-    private $roundingModes;
 
     /**
      * @param SystemConfiguration $configuration
      * @param RoundingInterface[] $roundingModes
      * @param array $rules
      */
-    public function __construct(SystemConfiguration $configuration, iterable $roundingModes, array $rules)
+    public function __construct(private SystemConfiguration $configuration, private iterable $roundingModes, private array $rules)
     {
-        $this->configuration = $configuration;
-        $this->roundingModes = $roundingModes;
-        $this->rules = $rules;
     }
 
     private function getRoundingRules(): array

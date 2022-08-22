@@ -17,14 +17,8 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 abstract class AbstractActivityEvent extends Event
 {
-    /**
-     * @var Activity
-     */
-    private $activity;
-
-    public function __construct(Activity $activity)
+    public function __construct(private Activity $activity)
     {
-        $this->activity = $activity;
     }
 
     public function getActivity(): Activity

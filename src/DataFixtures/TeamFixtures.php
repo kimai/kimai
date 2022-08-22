@@ -25,7 +25,7 @@ use Faker\Factory;
  *
  * @codeCoverageIgnore
  */
-class TeamFixtures extends Fixture
+final class TeamFixtures extends Fixture
 {
     public const AMOUNT_TEAMS = 10;
     public const MAX_USERS_PER_TEAM = 15;
@@ -69,10 +69,7 @@ class TeamFixtures extends Fixture
         return $all;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $allUsers = $this->getAllUsers($manager);
         $allProjects = $this->getAllProjects($manager);

@@ -15,7 +15,6 @@ use DateTime;
 
 final class ProjectViewModel
 {
-    private Project $project;
     private int $timesheetCounter = 0;
     private int $durationDay = 0;
     private int $durationWeek = 0;
@@ -31,9 +30,8 @@ final class ProjectViewModel
     private ?DateTime $lastRecord = null;
     private ?BudgetStatisticModelInterface $budgetStatisticModel = null;
 
-    public function __construct(Project $project)
+    public function __construct(private Project $project)
     {
-        $this->project = $project;
     }
 
     public function getProject(): Project

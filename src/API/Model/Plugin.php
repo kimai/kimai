@@ -20,23 +20,21 @@ class Plugin
     /**
      * The plugin name, eg. "ExpensesBundle"
      *
-     * @var string
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
-    protected $name;
+    private ?string $name = null;
     /**
      * The plugin version, eg. "1.14"
      *
-     * @var string
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
+     * @phpstan-ignore-next-line
      */
-    protected $version;
+    private ?string $version = null;
 
     public function __construct(CorePlugin $plugin)
     {

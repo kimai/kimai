@@ -21,14 +21,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserRoleType extends AbstractType
 {
-    /**
-     * @var RoleService
-     */
-    private $roles;
-
-    public function __construct(RoleService $roles)
+    public function __construct(private RoleService $roles)
     {
-        $this->roles = $roles;
     }
 
     /**

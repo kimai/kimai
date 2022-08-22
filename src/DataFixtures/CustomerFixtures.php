@@ -26,7 +26,7 @@ use Faker\Generator;
  *
  * @codeCoverageIgnore
  */
-class CustomerFixtures extends Fixture
+final class CustomerFixtures extends Fixture
 {
     public const MIN_CUSTOMERS = 5;
     public const MAX_CUSTOMERS = 15;
@@ -41,10 +41,7 @@ class CustomerFixtures extends Fixture
     public const MIN_ACTIVITIES_PER_PROJECT = 0;
     public const MAX_ACTIVITIES_PER_PROJECT = 25;
 
-    /**
-     * @param ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('at_AT');
 

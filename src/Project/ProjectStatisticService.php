@@ -43,17 +43,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class ProjectStatisticService
 {
-    private $repository;
-    private $timesheetRepository;
-    private $dispatcher;
-    private $userRepository;
-
-    public function __construct(ProjectRepository $projectRepository, TimesheetRepository $timesheetRepository, EventDispatcherInterface $dispatcher, UserRepository $userRepository)
+    public function __construct(private ProjectRepository $repository, private TimesheetRepository $timesheetRepository, private EventDispatcherInterface $dispatcher, private UserRepository $userRepository)
     {
-        $this->repository = $projectRepository;
-        $this->timesheetRepository = $timesheetRepository;
-        $this->dispatcher = $dispatcher;
-        $this->userRepository = $userRepository;
     }
 
     /**

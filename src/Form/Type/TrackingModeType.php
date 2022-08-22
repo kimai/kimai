@@ -19,16 +19,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TrackingModeType extends AbstractType
 {
-    protected $service;
-
-    public function __construct(TrackingModeService $service)
+    public function __construct(private TrackingModeService $service)
     {
-        $this->service = $service;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $choices = [];

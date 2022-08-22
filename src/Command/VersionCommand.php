@@ -48,7 +48,7 @@ final class VersionCommand extends Command
             return 0;
         }
 
-        $io->writeln(sprintf('%s <info>%s</info> by Kevin Papst and contributors.', Constants::SOFTWARE, Constants::VERSION));
+        $io->writeln(sprintf('%s <info>%s</info> by Kevin Papst.', Constants::SOFTWARE, Constants::VERSION));
 
         return 0;
     }

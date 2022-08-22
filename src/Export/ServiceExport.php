@@ -28,14 +28,9 @@ final class ServiceExport
      * @var ExportRepositoryInterface[]
      */
     private $repositories = [];
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(private EventDispatcherInterface $eventDispatcher)
     {
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function addRenderer(ExportRendererInterface $renderer): void

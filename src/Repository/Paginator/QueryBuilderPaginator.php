@@ -14,13 +14,8 @@ use Doctrine\ORM\QueryBuilder;
 
 final class QueryBuilderPaginator implements PaginatorInterface
 {
-    private QueryBuilder $query;
-    private int $results;
-
-    public function __construct(QueryBuilder $query, int $results)
+    public function __construct(private QueryBuilder $query, private int $results)
     {
-        $this->query = $query;
-        $this->results = $results;
     }
 
     public function getNbResults(): int

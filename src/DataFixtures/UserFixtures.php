@@ -26,7 +26,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
  *
  * @codeCoverageIgnore
  */
-class UserFixtures extends Fixture implements FixtureGroupInterface
+final class UserFixtures extends Fixture implements FixtureGroupInterface
 {
     public const DEFAULT_PASSWORD = 'kitten';
     public const DEFAULT_API_TOKEN = 'api_kitten';
@@ -42,11 +42,8 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
     public const MIN_RATE = 30;
     public const MAX_RATE = 120;
 
-    private UserPasswordHasherInterface $passwordHasher;
-
-    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    public function __construct(private UserPasswordHasherInterface $passwordHasher)
     {
-        $this->passwordHasher = $passwordHasher;
     }
 
     public static function getGroups(): array
@@ -54,10 +51,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
         return ['user'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->loadDefaultAccounts($manager);
         $this->loadTestUsers($manager);
