@@ -204,7 +204,6 @@ final class UserController extends AbstractController
             'method' => 'POST',
             'include_active_flag' => true,
             'include_preferences' => true,
-            'include_add_more' => true,
             'include_teams' => $this->isGranted('teams_other_profile'),
             'include_roles' => $this->isGranted('roles_other_profile'),
         ]);
