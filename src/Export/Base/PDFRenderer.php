@@ -12,14 +12,12 @@ namespace App\Export\Base;
 use App\Export\ExportContext;
 use App\Export\ExportFilename;
 use App\Export\ExportItemInterface;
-use App\Export\Renderer\DispositionInlineInterface;
 use App\Invoice\Renderer\DispositionInlineTrait;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
 use App\Utils\FileHelper;
 use App\Utils\HtmlToPdfConverter;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Twig\Environment;
 
 class PDFRenderer implements DispositionInlineInterface

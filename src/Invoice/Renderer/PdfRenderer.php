@@ -15,7 +15,6 @@ use App\Invoice\InvoiceFilename;
 use App\Invoice\InvoiceModel;
 use App\Utils\HtmlToPdfConverter;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Twig\Environment;
 
 final class PdfRenderer extends AbstractTwigRenderer implements DispositionInlineInterface

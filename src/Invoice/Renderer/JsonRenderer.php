@@ -13,7 +13,6 @@ use App\Entity\InvoiceDocument;
 use App\Invoice\InvoiceFilename;
 use App\Invoice\InvoiceModel;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 final class JsonRenderer extends AbstractTwigRenderer implements DispositionInlineInterface
 {

@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Export\Renderer;
+namespace App\Export\Base;
 
 interface DispositionInlineInterface
 {
