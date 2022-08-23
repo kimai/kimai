@@ -77,8 +77,8 @@
 {% endblock %}
 </head>
 <body>
-{% block pdf_footer %}
 <!--mpdf
+{% block pdf_footer %}
 <htmlpagefooter name="myfooter">
 <table style="border-top: 1px solid #000000; font-size: 9pt; padding-top: 3mm; width: 100%">
 <tr>
@@ -101,8 +101,8 @@
 </table>
 </htmlpagefooter>
 <sethtmlpagefooter name="myfooter" value="on" />
-mpdf-->
 {% endblock %}
+mpdf-->
 {% block body_start %}{% endblock %}
 {% block summary %}
     {% block summary_header %}
