@@ -149,6 +149,7 @@ mpdf-->
             {% block items_head_inner %}
             <th class="first">{{ 'label.description'|trans }}</th>
             <th class="text-right">{{ 'label.unit_price'|trans }}</th>
+            {% block items_head_additional_columns %}{% endblock %}
             <th class="text-right">{{ 'label.amount'|trans }}</th>
             <th class="last text-right">{{ 'label.total_rate'|trans }}</th>
             {% endblock %}
@@ -177,6 +178,7 @@ mpdf-->
                         {% if entry.activity is not null %}{{ entry.activity.name }} / {% endif %}{{ entry.project.name }}
                     {% endif %}
                 </td>
+                {% block items_body_additional_columns %}{% endblock %}
                 <td class="text-right text-nowrap">{{ rate|money(currency) }}</td>
                 <td class="text-right text-nowrap">{{ duration }}</td>
                 <td class="last text-right text-nowrap">{{ entry.rate|money(currency) }}</td>
