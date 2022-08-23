@@ -17,6 +17,7 @@ use App\Event\InvoiceCreatedEvent;
 use App\Event\InvoiceDeleteEvent;
 use App\Event\InvoicePostRenderEvent;
 use App\Event\InvoicePreRenderEvent;
+use App\Invoice\Renderer\DispositionInlineInterface;
 use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
@@ -309,7 +310,7 @@ final class ServiceInvoice
         }
     }
 
-    public function renderInvoiceWithModel(InvoiceModel $model, EventDispatcherInterface $dispatcher): Response
+    public function renderInvoiceWithModel(InvoiceModel $model, EventDispatcherInterface $dispatcher, bool $dispositionInline = false): Response
     {
         $document = $this->getDocumentByName($model->getTemplate()->getRenderer());
         if (null === $document) {
@@ -319,6 +320,10 @@ final class ServiceInvoice
         foreach ($this->getRenderer() as $renderer) {
             if ($renderer->supports($document)) {
                 $dispatcher->dispatch(new InvoicePreRenderEvent($model, $document, $renderer));
+
+                if ($renderer instanceof DispositionInlineInterface) {
+                    $renderer->setDispositionInline($dispositionInline);
+                }
 
                 $response = $renderer->render($document, $model);
 

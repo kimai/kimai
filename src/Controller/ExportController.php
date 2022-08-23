@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Export\ExportItemInterface;
+use App\Export\Renderer\DispositionInlineInterface;
 use App\Export\ServiceExport;
 use App\Export\TooManyItemsExportException;
 use App\Form\Toolbar\ExportToolbarForm;
@@ -112,6 +113,11 @@ class ExportController extends AbstractController
         }
 
         $renderer = $this->export->getRendererById($type);
+
+        // display file inline if supported and `markAsExported` is not set
+        if ($renderer instanceof DispositionInlineInterface && !$query->isMarkAsExported()) {
+            $renderer->setDispositionInline(true);
+        }
 
         if (null === $renderer) {
             throw $this->createNotFoundException('Unknown export renderer');

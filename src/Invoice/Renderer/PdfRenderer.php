@@ -18,8 +18,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Twig\Environment;
 
-final class PdfRenderer extends AbstractTwigRenderer
+final class PdfRenderer extends AbstractTwigRenderer implements DispositionInlineInterface
 {
+    use DispositionInlineTrait;
+
     /**
      * @var HtmlToPdfConverter
      */
@@ -58,7 +60,7 @@ final class PdfRenderer extends AbstractTwigRenderer
 
         $response = new Response($content);
 
-        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename . '.pdf');
+        $disposition = $response->headers->makeDisposition($this->getDisposition(), $filename . '.pdf');
 
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', $disposition);
