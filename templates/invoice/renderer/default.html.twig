@@ -17,7 +17,7 @@
     {% block addresses %}
     <div class="row">
         <div class="col-sm-5">
-            {% block addresses_to %}
+            {% block address_recipient %}
             {{ 'invoice.to'|trans }}
             <address contenteditable="true">
                 <strong>{{ model.customer.company|default(model.customer.name) }}</strong><br>
@@ -39,7 +39,7 @@
         </div>
         <div class="col-sm-2"></div>
         <div class="col-sm-5">
-            {% block addresses_from %}
+            {% block address_sender %}
             {{ 'invoice.from'|trans }}
             <address contenteditable="true">
                 <strong>{{ model.template.company }}</strong><br>

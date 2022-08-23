@@ -69,10 +69,10 @@ mpdf-->
         <table class="addresses">
             <tr>
                 <td>
-                    {% block addresses_table_from %}
+                    {% block addresses_table_sender %}
                     <strong>{{ model.customer.company|default(model.customer.name) }}</strong><br>
                     {% endblock %}
-                    {% block addresses_table_to %}
+                    {% block addresses_table_recipient %}
                     {{ model.customer.address|nl2br }}
                     {% endblock %}
                 </td>
