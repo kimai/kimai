@@ -637,10 +637,6 @@
         <source>label.toggle_dropdown</source>
         <target>Menü anzeigen</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target>Willkommen!</target>
-      </trans-unit>
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
         <target>Dashboard</target>

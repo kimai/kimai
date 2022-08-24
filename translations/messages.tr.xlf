@@ -307,10 +307,6 @@
         <source>dashboard.title</source>
         <target state="translated">Kontrol paneli</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target state="translated">Hoş geldiniz!</target>
-      </trans-unit>
       <!--
               Widgets
             -->

@@ -323,10 +323,6 @@
         <source>dashboard.title</source>
         <target>Pulpit</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target>Witaj !</target>
-      </trans-unit>
       <!--
               Widgets
             -->

@@ -2,7 +2,6 @@
 {% from "macros/widgets.html.twig" import nothing_found, alert, page_actions, card_tool_button %}
 
 {% block page_title %}{{ 'dashboard.title'|trans }}{% endblock %}
-{% block subtitle %}{{ 'dashboard.subtitle'|trans }}{% endblock %}
 {% block page_actions %}
     {% set event = actions(app.user, 'dashboard', (form is defined ? 'edit' : 'dashboard'), {'widgets': widgets, 'available': available}) %}
     {{ page_actions(event.actions) }}

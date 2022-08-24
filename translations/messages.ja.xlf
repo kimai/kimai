@@ -278,10 +278,6 @@
         <source>dashboard.title</source>
         <target>ダッシュボード</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target>ようこそ！</target>
-      </trans-unit>
       <!--
               Widgets
             -->

@@ -311,10 +311,6 @@
         <source>dashboard.title</source>
         <target>控制主页</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target>欢迎!</target>
-      </trans-unit>
       <!--
               Widgets
             -->

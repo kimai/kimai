@@ -473,10 +473,6 @@
         <source>dashboard.title</source>
         <target>Dashboard</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target>Welcome!</target>
-      </trans-unit>
       <trans-unit id="wv3n.FT" resname="dashboard.edit_mode">
         <source>dashboard.edit_mode</source>
         <target>You can rearrange your widgets using drag &amp; drop. Adding widgets saves pending changes.</target>

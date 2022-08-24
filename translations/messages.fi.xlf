@@ -363,10 +363,6 @@
         <source>dashboard.title</source>
         <target state="translated">Ohjauspaneeli</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target state="translated">Tervetuloa!</target>
-      </trans-unit>
       <!--
               Widgets
             -->

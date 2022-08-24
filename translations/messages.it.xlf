@@ -363,10 +363,6 @@
         <source>dashboard.title</source>
         <target>Pannello di controllo</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target>Benvenuto/a!</target>
-      </trans-unit>
       <!--
               Widgets
             -->

@@ -278,10 +278,6 @@
         <source>dashboard.title</source>
         <target>Kezdőlap</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target>Üdv!</target>
-      </trans-unit>
       <!--
               Widgets
             -->

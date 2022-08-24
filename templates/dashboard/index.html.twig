@@ -2,7 +2,6 @@
 {% import "macros/widgets.html.twig" as widgets %}
 
 {% block page_title %}{{ 'dashboard.title'|trans }}{% endblock %}
-{% block subtitle %}{{ 'dashboard.subtitle'|trans }}{% endblock %}
 {% block page_actions %}
     {% set event = actions(app.user, 'dashboard', 'dashboard', {'widgets': widgets, 'available': available}) %}
     {{ widgets.page_actions(event.actions) }}

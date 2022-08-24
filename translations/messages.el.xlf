@@ -399,10 +399,6 @@
         <source>dashboard.title</source>
         <target>Συνοπτικός πίνακας</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target>Καλώς ορίσατε!</target>
-      </trans-unit>
       <!--
               Widgets
             -->

@@ -275,10 +275,6 @@
         <source>dashboard.title</source>
         <target>Tableau de bord</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target>Bienvenue !</target>
-      </trans-unit>
       <!--
               Widgets
             -->

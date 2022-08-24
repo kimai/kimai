@@ -307,10 +307,6 @@
         <source>dashboard.title</source>
         <target>Overzicht</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target>Welkom!</target>
-      </trans-unit>
       <!--
               Widgets
             -->

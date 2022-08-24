@@ -327,10 +327,6 @@
         <source>dashboard.title</source>
         <target>Prehľad</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target>Vitajte!</target>
-      </trans-unit>
       <trans-unit id="vOjbO8l" resname="dashboard.admin">
         <source>dashboard.admin</source>
         <target>Administrátor</target>

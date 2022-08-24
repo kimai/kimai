@@ -211,10 +211,6 @@
         <source>action.close</source>
         <target>Lukk</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target>Velkommen.</target>
-      </trans-unit>
       <!--
               Widgets
             -->

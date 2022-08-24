@@ -347,10 +347,6 @@
         <source>dashboard.title</source>
         <target>Bảng điều khiển</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target>Chào mừng bạn!</target>
-      </trans-unit>
       <!--
               Widgets
             -->

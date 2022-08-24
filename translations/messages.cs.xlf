@@ -291,10 +291,6 @@
         <source>dashboard.title</source>
         <target>Nástěnka</target>
       </trans-unit>
-      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
-        <source>dashboard.subtitle</source>
-        <target>Vítejte!</target>
-      </trans-unit>
       <!--
               Widgets
             -->
