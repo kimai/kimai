@@ -170,12 +170,7 @@ class QuickEntryController extends AbstractController
         }
 
         // sort rows by projects - make it configurable in the future
-        uasort($models, function (QuickEntryModel $a, QuickEntryModel $b) {
-            $aId = $a->getProject() !== null ? $a->getProject()->getId() : PHP_INT_MAX;
-            $bId = $b->getProject() !== null ? $b->getProject()->getId() : PHP_INT_MAX;
-
-            return $aId <=> $bId;
-        });
+        uasort($models, [$this, 'sortByProjectName']);
 
         $formModel = new QuickEntryWeek($startWeek, $models);
 
@@ -236,5 +231,29 @@ class QuickEntryController extends AbstractController
             'days' => $week,
             'form' => $form->createView(),
         ]);
+    }
+
+    private function sortByProjectId(QuickEntryModel $a, QuickEntryModel $b): int
+    {
+        $aId = $a->getProject() !== null ? $a->getProject()->getId() : PHP_INT_MAX;
+        $bId = $b->getProject() !== null ? $b->getProject()->getId() : PHP_INT_MAX;
+
+        return $aId <=> $bId;
+    }
+
+    private function sortByProjectName(QuickEntryModel $a, QuickEntryModel $b): int
+    {
+        $aName = $a->getProject() !== null ? $a->getProject()->getName() : null;
+        $bName = $b->getProject() !== null ? $b->getProject()->getName() : null;
+
+        if ($aName === null && $bName === null) {
+            return -1;
+        } else if ($aName === null && $bName !== null) {
+            return -1;
+        } else if ($aName !== null && $bName === null) {
+            return -1;
+        }
+
+        return strcmp($aName, $bName);
     }
 }
