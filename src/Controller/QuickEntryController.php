@@ -120,6 +120,7 @@ class QuickEntryController extends AbstractController
 
         $beginTime = $this->configuration->getTimesheetDefaultBeginTime();
 
+        // fill all rows and columns to make sure we do not have missing records
         /** @var QuickEntryModel[] $models */
         $models = [];
         foreach ($rows as $id => $row) {
@@ -167,6 +168,14 @@ class QuickEntryController extends AbstractController
                 $models[] = $model;
             }
         }
+
+        // sort rows by projects - make it configurable in the future
+        uasort($models, function (QuickEntryModel $a, QuickEntryModel $b) {
+            $aId = $a->getProject() !== null ? $a->getProject()->getId() : PHP_INT_MAX;
+            $bId = $b->getProject() !== null ? $b->getProject()->getId() : PHP_INT_MAX;
+
+            return $aId <=> $bId;
+        });
 
         $formModel = new QuickEntryWeek($startWeek, $models);
 
@@ -225,7 +234,6 @@ class QuickEntryController extends AbstractController
 
         return $this->render('quick-entry/index.html.twig', [
             'days' => $week,
-            'week' => $rows,
             'form' => $form->createView(),
         ]);
     }
