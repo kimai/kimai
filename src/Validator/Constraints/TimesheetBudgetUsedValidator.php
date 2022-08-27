@@ -74,15 +74,15 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             return;
         }
 
-        $duration = $timesheet->getDuration();
-        if (null === $duration || 0 === $duration) {
-            $duration = $timesheet->getEnd()->getTimestamp() - $timesheet->getBegin()->getTimestamp();
-        }
-
         // this validator needs a project to calculate the rates
         if ($timesheet->getProject() === null) {
             return;
         }
+
+        // when changing the date via the calendar and/or the API, the duration will not be reset by the
+        // duration calculator (which runs after validation!) so we manually reset the duration before
+        $timesheet->setDuration(null);
+        $duration = $timesheet->getDuration();
 
         $timeRate = $this->rateService->calculate($timesheet);
         $rate = $timeRate->getRate();
