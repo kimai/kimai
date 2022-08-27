@@ -233,24 +233,12 @@ class QuickEntryController extends AbstractController
         ]);
     }
 
-    private function sortByProjectId(QuickEntryModel $a, QuickEntryModel $b): int
-    {
-        $aId = $a->getProject() !== null ? $a->getProject()->getId() : PHP_INT_MAX;
-        $bId = $b->getProject() !== null ? $b->getProject()->getId() : PHP_INT_MAX;
-
-        return $aId <=> $bId;
-    }
-
     private function sortByProjectName(QuickEntryModel $a, QuickEntryModel $b): int
     {
         $aName = $a->getProject() !== null ? $a->getProject()->getName() : null;
         $bName = $b->getProject() !== null ? $b->getProject()->getName() : null;
 
-        if ($aName === null && $bName === null) {
-            return -1;
-        } elseif ($aName === null && $bName !== null) {
-            return -1;
-        } elseif ($aName !== null && $bName === null) {
+        if ($aName === null || $bName === null) {
             return -1;
         }
 
