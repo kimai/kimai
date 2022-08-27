@@ -102,14 +102,13 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             $projectId = (int) $rawData['project'];
             $customerId = (int) $rawData['customer'];
 
-            // if an existing entry was updated, but "date", "duration", "rate" and "billable" were not changed:
-            // do not validate! this could for example happen when export flag is changed OR if "prevent overbooking"
-            // config was recently activated and this is an old entry
+            // if an existing entry was updated, but the relevant fields for budget calculation were not touched: do not validate!
+            // this could for example happen when export flag is changed OR if "prevent overbooking"  config was recently activated and this is an old entry
             if ($duration === $rawData['duration'] &&
                 $rate === $rawData['rate'] &&
                 $timesheet->isBillable() === $rawData['billable'] &&
                 $timesheet->getBegin()->format('Y.m.d') === $rawData['begin']->format('Y.m.d') &&
-                ($timesheet->getProject() === null || $timesheet->getProject()->getId() === $projectId) &&
+                $timesheet->getProject()->getId() === $projectId &&
                 ($timesheet->getActivity() === null || $timesheet->getActivity()->getId() === $activityId)
             ) {
                 return;
