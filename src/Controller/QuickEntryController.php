@@ -248,9 +248,9 @@ class QuickEntryController extends AbstractController
 
         if ($aName === null && $bName === null) {
             return -1;
-        } else if ($aName === null && $bName !== null) {
+        } elseif ($aName === null && $bName !== null) {
             return -1;
-        } else if ($aName !== null && $bName === null) {
+        } elseif ($aName !== null && $bName === null) {
             return -1;
         }
 
