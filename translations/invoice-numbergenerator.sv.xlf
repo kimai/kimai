@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sv" datatype="plaintext" original="invoice-numbergenerator.en.xlf">
     <body>
       <trans-unit id="7zreGwV" resname="label.invoice_number_generator">
         <source>label.invoice_number_generator</source>
-        <target state="translated">Fakturanummergenerator</target>
+        <target state="translated">Generera fakturanummer</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="translated">Konfigurerat format</target>
+        <target state="translated">Angiven stil</target>
       </trans-unit>
     </body>
   </file>

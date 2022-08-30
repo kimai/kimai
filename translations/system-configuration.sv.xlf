@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Time tracking</source>
-        <target state="translated">Tidsuppföljning</target>
+        <target state="translated">Uppföljning av tid</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
@@ -293,6 +293,26 @@
       <trans-unit id="y2i0PU3" resname="label.timesheet.rules.lockdown_grace_period">
         <source>label.timesheet.rules.lockdown_grace_period</source>
         <target>Avslutningsperiodens slut (PHP relativt datum till slutet av spärrperiod)</target>
+      </trans-unit>
+      <trans-unit id="z4tQEPb" resname="label.timesheet.rules.allow_zero_duration">
+        <source>label.timesheet.rules.allow_zero_duration</source>
+        <target state="translated">Tillåt tidsredovisningar med saknad varaktighet</target>
+      </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target state="translated">Antal poster överförd från tidigare veckor</target>
+      </trans-unit>
+      <trans-unit id="QxQOG3e" resname="label.quick_entry.recent_activity_weeks">
+        <source>label.quick_entry.recent_activity_weeks</source>
+        <target state="translated">Överför poster från senaste X veckor (tomma eller 0 för alla tider)</target>
+      </trans-unit>
+      <trans-unit id="7Efrrn5" resname="label.quick_entry.minimum_rows">
+        <source>label.quick_entry.minimum_rows</source>
+        <target state="translated">Minst antal rader</target>
+      </trans-unit>
+      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
+        <source>label.calendar.title_pattern</source>
+        <target state="translated">Visning av kalenderradernas rubriker</target>
       </trans-unit>
     </body>
   </file>
