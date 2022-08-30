@@ -35,10 +35,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target state="translated">
-                    Denna data kommer också att raderas!
-                    Alternativt kan du välja en post som alla data ska överföras till:
-                </target>
+        <target state="translated">Denna data kommer också att raderas! Alternativt kan du välja en post som alla data ska överföras till:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -190,7 +187,7 @@
       </trans-unit>
       <trans-unit id="2ktNwkr" resname="label.budget">
         <source>label.budget</source>
-        <target>Budget</target>
+        <target state="translated">Finansplan</target>
       </trans-unit>
       <trans-unit id="x8TrOec" resname="label.timeBudget">
         <source>label.timeBudget</source>
@@ -539,7 +536,7 @@
       </trans-unit>
       <trans-unit id="WqF84KR" resname="stats.durationYear">
         <source>stats.durationYear</source>
-        <target state="translated">Arbetstimmar detta  året</target>
+        <target state="translated">Arbetstimmar detta året</target>
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal">
         <source>stats.durationTotal</source>
@@ -1279,7 +1276,23 @@
       </trans-unit>
       <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
+        <target state="translated">Visning av vallista</target>
+      </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="translated">Faktureringstext</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target state="translated">Automatisk</target>
+      </trans-unit>
+      <trans-unit id="G9hBaDJ" resname="label.globalActivities">
+        <source>label.globalActivities</source>
+        <target state="translated">Tillåt globala händelser</target>
+      </trans-unit>
+      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
+        <source>label.budgetIndependent</source>
+        <target state="translated">Visa oavsett "budgettyp"</target>
       </trans-unit>
     </body>
   </file>

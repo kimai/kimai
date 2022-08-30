@@ -335,7 +335,7 @@
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">
         <source>help.rate</source>
-        <target>Cijena sata koja se naplaćuje</target>
+        <target state="translated">Satnica koja se naplaćuje</target>
       </trans-unit>
       <trans-unit id="QzvjNwg" resname="label.rate_internal">
         <source>label.rate_internal</source>
@@ -347,7 +347,7 @@
       </trans-unit>
       <trans-unit id="v72sA1c" resname="label.recalculate_rates">
         <source>label.recalculate_rates</source>
-        <target>Ponovno izračunaj cijene</target>
+        <target state="translated">Ponovo izračunaj cijene</target>
       </trans-unit>
       <trans-unit id="foM2o5T" resname="label.language">
         <source>label.language</source>
