@@ -102,7 +102,7 @@ class TimesheetMultiUpdateDTOTest extends TestCase
         $sut->setProject($project);
         self::assertSame($project, $sut->getProject());
 
-        $customer = (new Customer())->setName('sdfsdfsd');
+        $customer = new Customer('sdfsdfsd');
         $sut->setCustomer($customer);
         self::assertSame($customer, $sut->getCustomer());
 

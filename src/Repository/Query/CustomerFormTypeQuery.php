@@ -16,11 +16,8 @@ use App\Entity\Customer;
  */
 final class CustomerFormTypeQuery extends BaseFormTypeQuery
 {
-    /**
-     * @var Customer|null
-     */
-    private $customerToIgnore;
-    private $allowCustomerPreselect = false;
+    private ?Customer $customerToIgnore = null;
+    private bool $allowCustomerPreselect = false;
 
     /**
      * @param Customer|int|null $customer

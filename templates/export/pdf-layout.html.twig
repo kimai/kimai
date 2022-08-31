@@ -86,7 +86,7 @@
     {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
     {% if not showUserColumn and query is defined and query.user %}
         &ndash;
-        {{ 'label.user'|trans }}: {{ query.user.displayName }}
+        {{ 'user'|trans }}: {{ query.user.displayName }}
     {% endif %}
     </td>
     <td align="right">
@@ -118,20 +118,20 @@ mpdf-->
     <table class="items">
         <thead>
         <tr>
-            <th>{{ 'label.customer'|trans }}</th>
-            <th>{{ 'label.project'|trans }}</th>
+            <th>{{ 'customer'|trans }}</th>
+            <th>{{ 'project'|trans }}</th>
             {% if showTimeBudget %}
-                <th class="center">{{ 'label.timeBudget'|trans }}</th>
+                <th class="center">{{ 'timeBudget'|trans }}</th>
             {% endif %}
             {% if showRateBudget %}
-                <th class="center">{{ 'label.budget'|trans }}</th>
+                <th class="center">{{ 'budget'|trans }}</th>
             {% endif %}
-            <th class="center">{{ 'label.duration'|trans }}</th>
+            <th class="center">{{ 'duration'|trans }}</th>
             {% if showRateColumn %}
                 {% if showInternalRate %}
-                    <th class="center">{{ 'label.internalRate'|trans }}</th>
+                    <th class="center">{{ 'internalRate'|trans }}</th>
                 {% endif %}
-                <th class="center">{{ 'label.rate'|trans }}</th>
+                <th class="center">{{ 'rate'|trans }}</th>
             {% endif %}
         </tr>
         </thead>
@@ -268,17 +268,17 @@ mpdf-->
     <table class="items">
         <thead>
         <tr>
-            <th>{{ 'label.date'|trans }}</th>
+            <th>{{ 'date'|trans }}</th>
             {% if showUserColumn %}
-                <th>{{ 'label.user'|trans }}</th>
+                <th>{{ 'user'|trans }}</th>
             {% endif %}
-            <th>{{ 'label.description'|trans }}</th>
-            <th class="center">{{ 'label.duration'|trans }}</th>
+            <th>{{ 'description'|trans }}</th>
+            <th class="center">{{ 'duration'|trans }}</th>
             {% if showRateColumn %}
                 {% if showInternalRate %}
-                    <th class="center">{{ 'label.internalRate'|trans }}</th>
+                    <th class="center">{{ 'internalRate'|trans }}</th>
                 {% endif %}
-                <th class="center">{{ 'label.rate'|trans }}</th>
+                <th class="center">{{ 'rate'|trans }}</th>
             {% endif %}
         </tr>
         </thead>

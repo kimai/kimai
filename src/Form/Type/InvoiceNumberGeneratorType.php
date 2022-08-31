@@ -34,7 +34,7 @@ class InvoiceNumberGeneratorType extends AbstractType
         }
 
         $resolver->setDefaults([
-            'label' => 'label.invoice_number_generator',
+            'label' => 'invoice_number_generator',
             'choices' => $renderer,
             'choice_label' => function ($renderer) {
                 return $renderer;

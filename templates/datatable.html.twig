@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "macros/datatables.html.twig" as tables %}
+
+{% block main_before %}
+    {{ tables.configuration(dataTable) }}
+{% endblock %}
+
+{% block table_actions %}
+    {{ tables.actions(dataTable) }}
+{% endblock %}
+
+{% block status %}
+    {% if dataTable.getPagination() is not null %}
+        {% from "macros/status.html.twig" import status_count %}
+        {{ status_count(dataTable.getPagination().getNbResults()) }}
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+
+    {% if not dataTable.hasResults() %}
+        {{ widgets.nothing_found(dataTable.getReloadEvents()) }}
+    {% else %}
+        {{ tables.header(dataTable) }}
+
+        {% block datatable_before %}{% endblock %}
+
+        {% for entry in dataTable %}
+            {% block datatable_row %}{% endblock %}
+        {% endfor %}
+
+        {% block datatable_after %}{% endblock %}
+
+        {{ tables.footer(dataTable) }}
+    {% endif %}
+
+{% endblock %}

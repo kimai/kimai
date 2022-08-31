@@ -11,29 +11,21 @@ namespace App\Repository\Query;
 
 use App\Entity\Customer;
 
-/**
- * Can be used for advanced queries with the: ProjectRepository
- */
 class ProjectQuery extends BaseQuery implements VisibilityInterface
 {
     use VisibilityTrait;
 
     public const PROJECT_ORDER_ALLOWED = [
-        'id', 'name', 'comment', 'customer', 'orderNumber', 'orderDate', 'project_start', 'project_end', 'budget', 'timeBudget', 'visible'
+        'name', 'description' => 'comment', 'customer', 'orderNumber', 'orderDate',
+        'project_start', 'project_end', 'budget', 'timeBudget', 'visible'
     ];
 
     /**
      * @var array<Customer|int>
      */
-    private $customers = [];
-    /**
-     * @var \DateTime|null
-     */
-    private $projectStart;
-    /**
-     * @var \DateTime|null
-     */
-    private $projectEnd;
+    private array $customers = [];
+    private ?\DateTime $projectStart = null;
+    private ?\DateTime $projectEnd = null;
 
     public function __construct()
     {

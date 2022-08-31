@@ -59,7 +59,7 @@ class ProjectType extends AbstractType
                 'type' => 'integer',
                 'description' => 'Project ID',
             ],
-            'label' => 'label.project',
+            'label' => 'project',
             'class' => Project::class,
             'choice_label' => [$this, 'getChoiceLabel'],
             'choice_attr' => [$this, 'getChoiceAttributes'],

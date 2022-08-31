@@ -14,7 +14,7 @@ use App\Export\Annotation as Exporter;
 class MethodRequiresParams
 {
     /**
-     * @Exporter\Expose("accessor", label="label.accessor")
+     * @Exporter\Expose("accessor", label="accessor")
      */
     public function foo(string $foo)
     {

@@ -1,8 +1,102 @@
 
+{% macro configuration(dataTable) %}
+    {{ _self.data_table_column_modal(dataTable.getTableName(), dataTable.getColumns()) }}
+{% endmacro %}
+
+{% macro header(dataTable) %}
+    {{ _self.datatable_header(dataTable.getTableName(), dataTable.getColumns(), dataTable.getQuery(), dataTable.getOptions()) }}
+{% endmacro %}
+
+{% macro footer(dataTable) %}
+    {{ _self.data_table_footer(dataTable.getPagination(), dataTable.getPaginationRoute(), dataTable.getBatchForm()) }}
+{% endmacro %}
+
+{% macro class(dataTable, column) %}
+    {{- datatable_column_class(dataTable.getTableName(), column) -}}
+{% endmacro %}
+
+{% macro actions(dataTable) %}
+    {% set btnClass = '' %}
+    {% set bgClass = '' %}
+    {% if not tabler_bundle.isNavbarOverlapping() and not tabler_bundle.isDarkMode() %}
+        {% set btnClass = 'btn-white' %}
+        {% set bgClass = 'bg-white' %}
+    {% endif %}
+    <div class="btn-list">
+    {% if dataTable.hasConfiguration() %}
+    <a class="btn btn-icon {{ btnClass }}" href="#" data-bs-toggle="modal" data-bs-target="#modal_{{ dataTable.getTableName() }}">
+        {{ icon('columns', true) }}
+    </a>
+    {% endif %}
+    {% set form = dataTable.getSearchForm() %}
+    {% if form is not null %}
+        {% form_theme form 'form/search.html.twig' %}
+        {% form_theme form.order 'form/vertical.html.twig' %}
+        {{ form_start(form, {'attr': {'class': 'searchform'}}) }}
+        {% set searchTerm = form_widget(form.searchTerm) %}
+        {% set orderHasError = form.orderBy.vars.errors|length > 0 or form.order.vars.errors|length > 0 %}
+        {% set orderBy = form_widget(form.orderBy) %}
+        {% set order = form_widget(form.order) %}
+        {% set filterCount = dataTable.getQuery().countFilter() %}
+        <div class="input-group inline-search input-group-flat position-static">
+            <button type="button" class="btn {{ btnClass }} dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-haspopup="true" aria-expanded="false" id="search-dropdown-btn">
+                {{ icon('filter', true) }}
+                {% if filterCount > 0 %}<span class="badge badge-pill bg-blue ms-1 d-none d-md-inline">{{ filterCount }}</span>{% endif %}
+            </button>
+            <div class="dropdown-menu p-3 search-dropdown" data-popper-placement="bottom-start" aria-labelledby="search-dropdown-btn">
+                {{ form_rest(form) }}
+                <div class="mb-2 row {% if orderHasError %} is-invalid{% endif %} ">
+                    {{ form_label(form.orderBy) }}
+                    <div class="col-sm-4 col-xs-6">
+                        {{ orderBy|raw }}
+                        {{ form_errors(form.orderBy) }}
+                    </div>
+                    <div class="col-sm-4 col-xs-6">
+                        {{ order|raw }}
+                        {{ form_errors(form.order) }}
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 text-end">
+                        <button type="submit" class="btn btn-primary">{{ 'search'|trans }}</button>
+                    </div>
+                </div>
+            </div>
+            {{ searchTerm|raw }}
+            <span class="input-group-text {{ bgClass }}">
+                {% set bookmarkToken = csrf_token('search') %}
+                {% set searchBtnClass = 'btn btn-icon btn-sm btn-ghost-secondary' %}
+                <input type="hidden" name="_token" value="{{ bookmarkToken }}">
+                <button type="submit" class="{{ searchBtnClass }}" data-toggle="tooltip" title="{{ 'search'|trans }}">
+                    {{ icon('search') }}
+                </button>
+
+                {% if form.vars.data.bookmark %}
+                <a class="{{ searchBtnClass }} text-yellow" href="?_token={{ bookmarkToken }}&removeDefaultQuery={{ form.vars.data.bookmark.name }}" data-toggle="tooltip" title="{{ 'remove_default'|trans }}" id="removeDefaultQuery">
+                    {{ icon('bookmarked') }}
+                </a>
+                {% elseif filterCount > 0 %}
+                <button class="{{ searchBtnClass }}" type="submit" id="setDefaultQuery" name="setDefaultQuery" data-toggle="tooltip" title="{{ 'set_as_default'|trans }}">
+                    {{ icon('bookmark') }}
+                </button>
+                {% endif %}
+
+                {% if filterCount > 0 and not form.vars.data.isBookmarkSearch() %}
+                    <button class="{{ searchBtnClass }} text-orange" type="submit" id="resetSearchFilter" name="resetSearchFilter" data-toggle="tooltip" title="{{ 'remove_filter'|trans }}">
+                        {{ icon('cancel') }}
+                    </button>
+                {% endif %}
+            </span>
+        </div>
+        {{ form_end(form) }}
+    {% endif %}
+    </div>
+{% endmacro %}
+
 {% macro data_table_column_modal(name, columns) %}
 {% set visibility = initialize_datatable(app.user, app.session, name, columns) %}
 <div class="modal modal-blur fade" data-bs-backdrop="static" id="modal_{{ name }}" data-column-visibility="{{ name }}" tabindex="-1" role="dialog" aria-labelledby="data_table_modal_label">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="data_table_modal_label">{{ 'modal.columns.title'|trans }}</h5>
@@ -10,50 +104,45 @@
             </div>
             <div class="modal-body">
                 <form name="{{ name }}_visibility" method="post" action="{{ path('bookmark_save_datatable') }}" class="mb-3">
-                    <div class="row">
-                        <div class="col-12 col-md-6 order-1 order-md-0">
-                            <div class="form-label">{{ 'modal.columns.label'|trans }}</div>
-                            {%- for title, headerOptions in columns -%}
-                                {% if not headerOptions is iterable %}
-                                    {% set headerOptions = {'class': headerOptions} %}
-                                {% endif %}
-                                {% if headerOptions.title is defined and headerOptions.title is not empty %}
-                                    {% set headerTitle = headerOptions.title %}
-                                {% else %}
-                                    {% set headerTitle = ('label.' ~ title)|trans %}
-                                {% endif %}
-                                {% if 'alwaysVisible' not in headerOptions.class %}
-                                    <label class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="column_{{ title }}" name="{{ title }}">
-                                        <span class="form-check-label">{{ headerTitle }}</span>
-                                    </label>
-                                {% endif %}
-                            {% endfor %}
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label class="form-label">{{ 'modal.columns.label'|trans }}</label>
+                            <div class="form-selectgroup form-selectgroup-pills">
+                                {%- for title, headerOptions in columns -%}
+                                    {% set translationDomain = headerOptions.translation_domain ?? 'messages' %}
+                                    {% if not headerOptions is iterable %}
+                                        {% set headerOptions = {'class': headerOptions} %}
+                                    {% endif %}
+                                    {% if headerOptions.title is defined and headerOptions.title is not empty %}
+                                        {% set headerTitle = headerOptions.title|trans({}, translationDomain) %}
+                                    {% else %}
+                                        {% set headerTitle = title|trans({}, translationDomain) %}
+                                    {% endif %}
+                                    {% if 'alwaysVisible' not in headerOptions.class %}
+                                        <label class="form-selectgroup-item">
+                                            <input class="form-selectgroup-input" type="checkbox" id="column_{{ title }}" name="{{ title }}">
+                                            <span class="form-selectgroup-label">{{ headerTitle }}</span>
+                                        </label>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
                         </div>
-                        <div class="col-12 col-md-6 mb-3 order-0 order-md-1 ">
-                            <div class="form-label">{{ 'modal.columns.profile'|trans }}</div>
-                            <div class="form-selectgroup form-selectgroup-boxes d-flex flex-column">
-                                <label class="form-selectgroup-item flex-fill">
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="form-label">{{ 'modal.columns.profile'|trans }}</label>
+                            <div class="form-selectgroup">
+                                <label class="form-selectgroup-item">
                                     <input type="radio" name="datatable_profile" value="{{ constant('\\App\\Utils\\ProfileManager::PROFILE_DESKTOP') }}" class="form-selectgroup-input" data-href="{{ path('bookmark_profile') }}"{% if app.session.get(constant('\\App\\Utils\\ProfileManager::SESSION_PROFILE'), '') == '' %} checked="checked"{% endif %}>
-                                    <div class="form-selectgroup-label d-flex align-items-center p-3">
-                                        <div class="me-3">
-                                            <span class="form-selectgroup-check"></span>
-                                        </div>
-                                        <div>
-                                            {{ 'desktop'|trans }}
-                                        </div>
-                                    </div>
+                                    <span class="form-selectgroup-label">
+                                        {{ 'desktop'|trans }}
+                                    </span>
                                 </label>
-                                <label class="form-selectgroup-item flex-fill">
+                                <label class="form-selectgroup-item">
                                     <input type="radio" name="datatable_profile" value="{{ constant('\\App\\Utils\\ProfileManager::PROFILE_MOBILE') }}" class="form-selectgroup-input" data-href="{{ path('bookmark_profile') }}"{% if app.session.get(constant('\\App\\Utils\\ProfileManager::SESSION_PROFILE'), '') == 'mobile' %} checked="checked"{% endif %}>
-                                    <div class="form-selectgroup-label d-flex align-items-center p-3">
-                                        <div class="me-3">
-                                            <span class="form-selectgroup-check"></span>
-                                        </div>
-                                        <div>
-                                            {{ 'mobile'|trans }}
-                                        </div>
-                                    </div>
+                                    <span class="form-selectgroup-label">
+                                        {{ 'mobile'|trans }}
+                                    </span>
                                 </label>
                             </div>
                         </div>
@@ -63,7 +152,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" formaction="{{ path('bookmark_delete') }}" class="btn btn-outline-danger me-auto" data-type="reset">{{ 'action.delete'|trans }}</button>
+                <button type="submit" formaction="{{ path('bookmark_delete') }}" class="btn btn-outline-danger me-auto" data-type="reset">{{ 'action.reset'|trans }}</button>
                 <button type="submit" class="btn btn-primary" data-type="save">{{ 'action.save'|trans }}</button>
                 <button type="button" class="btn" data-bs-dismiss="modal">{{ 'action.close'|trans }}</button>
             </div>
@@ -82,17 +171,16 @@
         {% set order = false %}
     {% endif %}
     {% set reloadEvent = options.reload|default('') %}
-    {% set translationDomain = options.translationDomain|default('messages') %}
-    {% set translationPrefix = options.translationPrefix ?? 'label.' %}
     {% set boxClass = options.boxClass ?? 'card data_table' %}
     {% set columnModal = options.columnConfig ?? true %}
     {% set responsive = options.responsive ?? false %}
+    {% set sticky = options.sticky ?? true %}
 
     <div class="{{ boxClass }} datatable_{{ tableName }}">
         <div class="card-body p-0{% if responsive %} table-responsive{% endif %}">
             <div class="dataTables_wrapper form-inline">
                 <table class="table table-hover dataTable" role="grid" data-reload-event="kimai.reset_column_visibility {{ reloadEvent }}">
-                    <thead class="sticky-top">
+                    <thead{% if sticky %} class="sticky-top"{% endif %}>
                         <tr>
                         {%- for title, headerOptions in columns -%}
                             {% set isActions = title is not empty and title == 'actions' %}
@@ -115,22 +203,25 @@
                                 {% endif %}
                             {% endif %}
                             {% set headerTitle = '' %}
+                            {% set translationDomain = headerOptions.translation_domain ?? 'messages' %}
                             {% if headerOptions.title is defined %}
-                                {% set headerTitle = headerOptions.title %}
+                                {% set headerTitle = headerOptions.title|trans({}, translationDomain) %}
                             {% elseif title is not empty and not isActions %}
-                                {% set headerTitle = (translationPrefix ~ title)|trans({}, translationDomain) %}
+                                {% set headerTitle = title|trans({}, translationDomain) %}
                             {% endif %}
                             {% if isActions %}
                                 {% set headerClass = headerClass ~ ' text-center' %}
                             {% endif %}
                             <th data-field="{{ title }}" {% if not headerOptions.orderBy is same as(false) %}data-order="{{ headerOptions.orderBy }}" {% endif %}class="{{ headerClass }}">
                             {% if title is not empty and title == 'actions' and columnModal is not same as (false) %}
+
                                 <a class="link-secondary" href="#" data-bs-toggle="modal" data-bs-target="#modal_{{ tableName }}">
                                     {{ icon('columns', true) }}
                                 </a>
+
                             {% else %}
-                                {% if headerOptions.html_before is defined %}
-                                    {{ headerOptions.html_before|raw }}
+                                {% if headerOptions.batchUpdate is defined %}
+                                    <input type="checkbox" id="multi_update_all" class="multiupdater form-check-input m-0 align-middle">
                                 {% endif %}
                                 {{ headerTitle }}
                                 {% if headerOptions.html_after is defined %}
@@ -186,10 +277,6 @@
         {% set metaField = metaField.merge(field) %}
         {{ widgets.form_type_value(metaField.type, metaField.value, entry) }}
     {% endif %}
-{% endmacro %}
-
-{% macro datatable_multiupdate_all() %}
-    <input type="checkbox" id="multi_update_all" class="multiupdater form-check-input m-0 align-middle">
 {% endmacro %}
 
 {% macro datatable_multiupdate_row(id) %}

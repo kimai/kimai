@@ -25,7 +25,7 @@ class TimesheetBillableType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.billable',
+            'label' => 'billable',
             'choices' => [
                 'automatic' => Timesheet::BILLABLE_AUTOMATIC,
                 'yes' => Timesheet::BILLABLE_YES,

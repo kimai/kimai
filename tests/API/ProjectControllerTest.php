@@ -111,10 +111,10 @@ class ProjectControllerTest extends APIControllerBaseTest
 
         $customer = $em->getRepository(Customer::class)->find(1);
 
-        $customer2 = (new Customer())->setName('first one')->setVisible(false)->setCountry('de')->setTimezone('Europe/Berlin');
+        $customer2 = (new Customer('first one'))->setVisible(false)->setCountry('de')->setTimezone('Europe/Berlin');
         $em->persist($customer2);
 
-        $customer3 = (new Customer())->setName('second one')->setCountry('at')->setTimezone('Europe/Vienna');
+        $customer3 = (new Customer('second one'))->setCountry('at')->setTimezone('Europe/Vienna');
         $em->persist($customer3);
 
         $project = (new Project())->setName('first')->setVisible(false)->setCustomer($customer2);
@@ -141,8 +141,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $em->persist($project);
 
         // and a team
-        $team = new Team();
-        $team->setName('Testing project team');
+        $team = new Team('Testing project team');
         $team->addTeamlead($this->getUserByRole(User::ROLE_USER));
         $team->addCustomer($customer);
         $team->addProject($project);
@@ -218,8 +217,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $em = $this->getEntityManager();
 
-        $customer = (new Customer())
-            ->setName('first one')
+        $customer = (new Customer('first one'))
             ->setVisible(true)
             ->setCountry('de')
             ->setTimezone('Europe/Berlin')

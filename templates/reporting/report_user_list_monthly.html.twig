@@ -26,17 +26,17 @@
             </a>
         {% endblock %}
         {% block rate %}
-            <a href="{{ path('report_user_month', {'sumType': dataType, 'date': create_date(period.date.format('Y') ~'-'~period.date.format('m')~'-01')|report_date, 'user': userPeriod.user.id}) }}" data-toggle="tooltip" title="{{ 'label.billable'|trans }}: {{ period.billableDuration|duration(decimal) }}">
+            <a href="{{ path('report_user_month', {'sumType': dataType, 'date': create_date(period.date.format('Y') ~'-'~period.date.format('m')~'-01')|report_date, 'user': userPeriod.user.id}) }}" data-toggle="tooltip" title="{{ 'billable'|trans }}: {{ period.billableDuration|duration(decimal) }}">
                 {{ period.totalRate|money }}
             </a>
         {% endblock %}
         {% block internal_rate %}
-            <a href="{{ path('report_user_month', {'sumType': dataType, 'date': create_date(period.date.format('Y') ~'-'~period.date.format('m')~'-01')|report_date, 'user': userPeriod.user.id}) }}" data-toggle="tooltip" title="{{ 'label.billable'|trans }}: {{ period.billableDuration|duration(decimal) }}">
+            <a href="{{ path('report_user_month', {'sumType': dataType, 'date': create_date(period.date.format('Y') ~'-'~period.date.format('m')~'-01')|report_date, 'user': userPeriod.user.id}) }}" data-toggle="tooltip" title="{{ 'billable'|trans }}: {{ period.billableDuration|duration(decimal) }}">
                 {{ period.totalInternalRate|money }}
             </a>
         {% endblock %}
         {% block duration %}
-            <a href="{{ path('report_user_month', {'sumType': dataType, 'date': create_date(period.date.format('Y') ~'-'~period.date.format('m')~'-01')|report_date, 'user': userPeriod.user.id}) }}" data-toggle="tooltip" title="{{ 'label.billable'|trans }}: {{ period.billableDuration|duration(decimal) }}">
+            <a href="{{ path('report_user_month', {'sumType': dataType, 'date': create_date(period.date.format('Y') ~'-'~period.date.format('m')~'-01')|report_date, 'user': userPeriod.user.id}) }}" data-toggle="tooltip" title="{{ 'billable'|trans }}: {{ period.billableDuration|duration(decimal) }}">
                 {{ period.totalDuration|duration(decimal) }}
             </a>
         {% endblock %}

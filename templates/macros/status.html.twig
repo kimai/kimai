@@ -1,0 +1,18 @@
+{% macro status(title, color) %}
+    {% from '@theme/components/status.html.twig' import status %}
+    {% set options = {} %}
+    {% if color %}{% set options = options|merge({'color': color}) %}{% endif %}
+    {{ status(title, options) }}
+{% endmacro %}
+
+{% macro status_duration(duration) %}
+    {{ _self.status(duration, 'azure') }}
+{% endmacro %}
+
+{% macro status_money(money) %}
+    {{ _self.status(money, 'blue') }}
+{% endmacro %}
+
+{% macro status_count(counter) %}
+    {{ _self.status(counter, 'teal') }}
+{% endmacro %}

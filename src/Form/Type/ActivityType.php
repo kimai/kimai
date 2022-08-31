@@ -73,7 +73,7 @@ class ActivityType extends AbstractType
                 'type' => 'integer',
                 'description' => 'Activity ID',
             ],
-            'label' => 'label.activity',
+            'label' => 'activity',
             'class' => Activity::class,
             'choice_label' => [$this, 'getChoiceLabel'],
             'choice_attr' => [$this, 'getChoiceAttributes'],

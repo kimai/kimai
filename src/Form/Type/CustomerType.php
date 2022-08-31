@@ -48,7 +48,7 @@ class CustomerType extends AbstractType
                 'type' => 'integer',
                 'description' => 'Customer ID',
             ],
-            'label' => 'label.customer',
+            'label' => 'customer',
             'class' => Customer::class,
             'choice_label' => [$this, 'getChoiceLabel'],
             'choice_attr' => [$this, 'getChoiceAttributes'],

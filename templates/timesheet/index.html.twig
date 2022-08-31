@@ -1,11 +1,7 @@
 {% extends 'timesheet/layout-listing.html.twig' %}
 {% import "timesheet/actions.html.twig" as actions %}
 
-{% set tableName = 'timesheet' %}
-{% set paginationRoute = 'timesheet_paginated' %}
 {% set editRoute = 'timesheet_edit' %}
-{% set canSeeRate = is_granted('view_rate_own_timesheet') %}
-{% set canSeeUsername = false %}
 {% set allowMarkdown = true %}
 
 {% block page_title %}{{ 'timesheet.title'|trans }}{% endblock %}

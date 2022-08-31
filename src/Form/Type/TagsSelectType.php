@@ -32,7 +32,7 @@ class TagsSelectType extends AbstractType
         $resolver->setDefaults([
             'multiple' => true,
             'class' => Tag::class,
-            'label' => 'label.tag',
+            'label' => 'tag',
             'allow_create' => false,
             'choice_label' => function (Tag $tag) {
                 return $tag->getName();

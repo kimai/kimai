@@ -22,7 +22,7 @@ class MailType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.email',
+            'label' => 'email',
             'constraints' => [
                 new Email(['mode' => 'loose'])
             ],

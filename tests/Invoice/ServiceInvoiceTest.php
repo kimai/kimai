@@ -116,7 +116,7 @@ class ServiceInvoiceTest extends TestCase
         $this->expectExceptionMessage('Cannot create invoice model without template');
 
         $query = new InvoiceQuery();
-        $query->setCustomers([new Customer()]);
+        $query->setCustomers([new Customer('foo')]);
 
         $sut = $this->getSut([]);
         $sut->createModel($query);
@@ -129,7 +129,7 @@ class ServiceInvoiceTest extends TestCase
         $template->setLanguage('it');
 
         $query = new InvoiceQuery();
-        $query->setCustomers([new Customer()]);
+        $query->setCustomers([new Customer('foo')]);
         $query->setTemplate($template);
 
         $sut = $this->getSut([]);
@@ -144,7 +144,7 @@ class ServiceInvoiceTest extends TestCase
     public function testBeginAndEndDateFallback()
     {
         $timezone = new \DateTimeZone('Europe/Vienna');
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project = new Project();
         $project->setCustomer($customer);
 
@@ -187,7 +187,7 @@ class ServiceInvoiceTest extends TestCase
         $template->setLanguage('de');
 
         $query = new InvoiceQuery();
-        $query->setCustomers([new Customer(), $customer]);
+        $query->setCustomers([new Customer('foo'), $customer]);
         $query->setTemplate($template);
         self::assertNull($query->getBegin());
         self::assertNull($query->getEnd());

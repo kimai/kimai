@@ -45,14 +45,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Serializer\ExclusionPolicy("all")
  *
  * @Exporter\Order({"id", "username", "alias", "title", "email", "last_login", "language", "timezone", "active", "registeredAt", "roles", "teams", "color", "accountNumber"})
- * @Exporter\Expose("email", label="label.email", exp="object.getEmail()")
- * @Exporter\Expose("username", label="label.username", exp="object.getUserIdentifier()")
- * @Exporter\Expose("timezone", label="label.timezone", exp="object.getTimezone()")
- * @Exporter\Expose("language", label="label.language", exp="object.getLanguage()")
- * @Exporter\Expose("last_login", label="label.lastLogin", exp="object.getLastLogin()", type="datetime")
- * @Exporter\Expose("roles", label="label.roles", exp="object.getRoles()", type="array")
- * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams()", type="array")
- * @Exporter\Expose("active", label="label.active", exp="object.isEnabled()", type="boolean")
+ * @Exporter\Expose("email", label="email", exp="object.getEmail()")
+ * @Exporter\Expose("username", label="username", exp="object.getUserIdentifier()")
+ * @Exporter\Expose("timezone", label="timezone", exp="object.getTimezone()")
+ * @Exporter\Expose("language", label="language", exp="object.getLanguage()")
+ * @Exporter\Expose("last_login", label="lastLogin", exp="object.getLastLogin()", type="datetime")
+ * @Exporter\Expose("roles", label="roles", exp="object.getRoles()", type="array")
+ * @ Exporter\Expose("teams", label="team", exp="object.getTeams()", type="array")
+ * @Exporter\Expose("active", label="active", exp="object.isEnabled()", type="boolean")
  */
 class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
@@ -77,7 +77,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @Exporter\Expose(label="label.id", type="integer")
+     * @Exporter\Expose(label="id", type="integer")
      *
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -90,7 +90,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @Exporter\Expose(label="label.alias")
+     * @Exporter\Expose(label="alias")
      *
      * @ORM\Column(name="alias", type="string", length=60, nullable=true)
      * @Assert\Length(max=60)
@@ -109,7 +109,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     * @Exporter\Expose(label="label.title")
+     * @Exporter\Expose(label="title")
      *
      * @ORM\Column(name="title", type="string", length=50, nullable=true)
      * @Assert\Length(max=50)
@@ -200,7 +200,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     * @Exporter\Expose(label="label.account_number")
+     * @Exporter\Expose(label="account_number")
      *
      * @ORM\Column(name="account", type="string", length=30, nullable=true)
      * @Assert\Length(max="30", groups={"Registration", "UserCreate", "Profile"})

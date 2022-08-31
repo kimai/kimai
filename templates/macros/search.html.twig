@@ -1,59 +1,22 @@
-{% macro searchModal(form) %}
-    {% form_theme form 'form/search-form.html.twig' %}
-    {% embed '@theme/embeds/modal.html.twig' %}
-        {% import 'macros/search.html.twig' as macros %}
-        {% block modal_id %}modal_search{% endblock %}
-        {% block modal_size %}{% endblock %}
-        {% block modal_before %}
-            {{ form_start(form, {'attr': {'class': 'searchform'}}) }}
-        {% endblock %}
-        {% block modal_title %}{{ 'search'|trans }}{% endblock %}
-        {% block modal_body %}
-            {% set orderHasError = form.orderBy.vars.errors|length > 0 or form.order.vars.errors|length > 0 %}
-            {% set orderBy = form_widget(form.orderBy) %}
-            {% set order = form_widget(form.order) %}
-            {{ form_rest(form) }}
-            <div class="row mb-3{% if orderHasError %} is-invalid{% endif %}">
-                {{ form_label(form.orderBy) }}
-                <div class="col-sm-5 col-xs-5">
-                    {{ orderBy|raw }}
-                    {{ form_errors(form.orderBy) }}
-                </div>
-                <div class="col-sm-4 col-xs-3">
-                    {{ order|raw }}
-                    {{ form_errors(form.order) }}
-                </div>
-            </div>
-        {% endblock %}
-        {% block modal_footer %}
-            {{ macros.searchButton(form) }}
-            <button type="button" class="btn" data-bs-dismiss="modal">{{ 'action.close'|trans }}</button>
-        {% endblock %}
-        {% block modal_end %}
-            {{ form_end(form) }}
-        {% endblock %}
-    {% endembed %}
-{% endmacro %}
-
 {% macro searchButton(form) %}
     <input type="hidden" name="_token" value="{{ csrf_token('search') }}">
     <div class="btn-group me-auto">
         {% if form.vars.data.bookmark %}
-            <button type="submit" id="setDefaultQuery" name="setDefaultQuery" class="btn btn-outline-secondary" data-toggle="tooltip" title="{{ 'label.set_as_default'|trans }}">
+            <button type="submit" id="setDefaultQuery" name="setDefaultQuery" class="btn btn-outline-secondary" data-toggle="tooltip" title="{{ 'set_as_default'|trans }}">
                 {{ icon('bookmarked', true) }}
                 {{ 'action.save'|trans }}
             </button>
-            <a class="btn btn-icon btn-outline-warning" href="?_token={{ csrf_token('search') }}&removeDefaultQuery={{ form.vars.data.bookmark.name }}" data-toggle="tooltip" title="{{ 'label.remove_default'|trans }}" id="removeDefaultQuery">
+            <a class="btn btn-icon btn-outline-warning" href="?_token={{ csrf_token('search') }}&removeDefaultQuery={{ form.vars.data.bookmark.name }}" data-toggle="tooltip" title="{{ 'remove_default'|trans }}" id="removeDefaultQuery">
                 {{ icon('delete', true) }}
             </a>
         {% else %}
-            <button type="submit" id="setDefaultQuery" name="setDefaultQuery" class="btn btn-outline-secondary" data-toggle="tooltip" title="{{ 'label.set_as_default'|trans }}">
+            <button type="submit" id="setDefaultQuery" name="setDefaultQuery" class="btn btn-outline-secondary" data-toggle="tooltip" title="{{ 'set_as_default'|trans }}">
                 {{ icon('bookmark', true) }}
                 {{ 'action.save'|trans }}
             </button>
         {% endif %}
         {% if form.vars.data.countFilter() > 0 and not form.vars.data.isBookmarkSearch() %}
-            <button type="submit" id="resetSearchFilter" name="resetSearchFilter" class="btn btn-icon btn-outline-secondary" data-toggle="tooltip" title="{{ 'label.remove_filter'|trans }}">{{ icon('cancel', true) }}</button>
+            <button type="submit" id="resetSearchFilter" name="resetSearchFilter" class="btn btn-icon btn-outline-secondary" data-toggle="tooltip" title="{{ 'remove_filter'|trans }}">{{ icon('cancel', true) }}</button>
         {% endif %}
     </div>
     <button type="submit" name="performSearch" value="performSearch" class="performSearch btn btn-primary ms-auto" data-type="submit">{{ 'search'|trans }}</button>

@@ -52,28 +52,28 @@
       <!--
               Login / Security
             -->
-      <trans-unit id="9pvowqn" resname="label.password">
-        <source>label.password</source>
+      <trans-unit id="XohImNo" resname="password">
+        <source>password</source>
         <target>Heslo</target>
       </trans-unit>
-      <trans-unit id="WxAnbP0" resname="label.password_repeat">
-        <source>label.password_repeat</source>
+      <trans-unit id="hLEZkoC" resname="password_repeat">
+        <source>password_repeat</source>
         <target>Potvrzení hesla</target>
       </trans-unit>
-      <trans-unit id="II4DGnv" resname="label.logout">
-        <source>label.logout</source>
+      <trans-unit id="ACcM9j_" resname="logout">
+        <source>logout</source>
         <target>Odhlásit se</target>
       </trans-unit>
-      <trans-unit id="hFFZGp_" resname="label.user_profile">
-        <source>label.user_profile</source>
+      <trans-unit id="_x2He8M" resname="user_profile">
+        <source>user_profile</source>
         <target>Můj profil</target>
       </trans-unit>
-      <trans-unit id="gXZR.hV" resname="label.api_token">
-        <source>label.api_token</source>
+      <trans-unit id="T4nAM7X" resname="api_token">
+        <source>api_token</source>
         <target>API heslo</target>
       </trans-unit>
-      <trans-unit id="s_X2xpI" resname="label.api_token_repeat">
-        <source>label.api_token_repeat</source>
+      <trans-unit id="aq59Sk8" resname="api_token_repeat">
+        <source>api_token_repeat</source>
         <target>Potvrdit API heslo</target>
       </trans-unit>
       <!--
@@ -123,8 +123,8 @@
         <source>users</source>
         <target>Uživatelé</target>
       </trans-unit>
-      <trans-unit id="xxoo5lW" resname="label.teams">
-        <source>label.teams</source>
+      <trans-unit id="_t.2z4V" resname="teams">
+        <source>teams</source>
         <target>Skupiny</target>
       </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
@@ -149,115 +149,111 @@
       <!--
               General labels
             -->
-      <trans-unit id="H1qEi4d" resname="label.date">
-        <source>label.date</source>
+      <trans-unit id="DodjLNR" resname="date">
+        <source>date</source>
         <target>Datum</target>
       </trans-unit>
-      <trans-unit id="eJPDE76" resname="label.starttime">
-        <source>label.starttime</source>
+      <trans-unit id="BHk4pZ3" resname="starttime">
+        <source>starttime</source>
         <target>Začátek</target>
       </trans-unit>
-      <trans-unit id="uZlpDFh" resname="label.endtime">
-        <source>label.endtime</source>
+      <trans-unit id="eI_tMbq" resname="endtime">
+        <source>endtime</source>
         <target>Konec</target>
       </trans-unit>
-      <trans-unit id="cgpmY0I" resname="label.duration">
-        <source>label.duration</source>
+      <trans-unit id="yqea9Nt" resname="duration">
+        <source>duration</source>
         <target>Doba trvání</target>
       </trans-unit>
-      <trans-unit id="O2X4xZH" resname="label.user">
-        <source>label.user</source>
+      <trans-unit id="BPiZbad" resname="user">
+        <source>user</source>
         <target>Uživatel</target>
       </trans-unit>
-      <trans-unit id="LDhDPrF" resname="label.username">
-        <source>label.username</source>
+      <trans-unit id="FveKfWM" resname="username">
+        <source>username</source>
         <target>Uživatelské jméno</target>
       </trans-unit>
-      <trans-unit id="4cEApe1" resname="label.description">
-        <source>label.description</source>
+      <trans-unit id="yQRveje" resname="description">
+        <source>description</source>
         <target>Popis</target>
       </trans-unit>
-      <trans-unit id="ysOvPSq" resname="label.name">
-        <source>label.name</source>
+      <trans-unit id="gqNTf.D" resname="name">
+        <source>name</source>
         <target>Jméno</target>
       </trans-unit>
-      <trans-unit id="WqTho4C" resname="label.comment">
-        <source>label.comment</source>
+      <trans-unit id="xEuy.VF" resname="comment">
+        <source>comment</source>
         <target>Poznámka</target>
       </trans-unit>
-      <trans-unit id="txRonia" resname="label.id">
-        <source>label.id</source>
+      <trans-unit id="pWFFJwz" resname="id">
+        <source>id</source>
         <target>ID</target>
       </trans-unit>
-      <trans-unit id="CYpZwBz" resname="label.visible">
-        <source>label.visible</source>
+      <trans-unit id="1C7xSXk" resname="visible">
+        <source>visible</source>
         <target>Viditelné</target>
       </trans-unit>
-      <trans-unit id="2ktNwkr" resname="label.budget">
-        <source>label.budget</source>
+      <trans-unit id="CvlqjtY" resname="budget">
+        <source>budget</source>
         <target>Rozpočet</target>
       </trans-unit>
-      <trans-unit id="x8TrOec" resname="label.timeBudget">
-        <source>label.timeBudget</source>
+      <trans-unit id="qbD0dHa" resname="timeBudget">
+        <source>timeBudget</source>
         <target>Hodinový rozpočet</target>
       </trans-unit>
-      <trans-unit id="l1wiL0h" resname="label.activity">
-        <source>label.activity</source>
+      <trans-unit id="BlGGO.X" resname="activity">
+        <source>activity</source>
         <target>Aktivity</target>
       </trans-unit>
-      <trans-unit id="KtnqJcg" resname="label.project">
-        <source>label.project</source>
+      <trans-unit id="JEIQ5IQ" resname="project">
+        <source>project</source>
         <target>Projekt</target>
       </trans-unit>
-      <trans-unit id="VNCQ7YU" resname="label.tag">
-        <source>label.tag</source>
+      <trans-unit id="KhBzpuZ" resname="tag">
+        <source>tag</source>
         <target>Štítek</target>
       </trans-unit>
-      <trans-unit id="ijQyGRo" resname="label.tags">
-        <source>label.tags</source>
-        <target>Štítky</target>
-      </trans-unit>
-      <trans-unit id="VAbtieW" resname="label.hourlyRate">
-        <source>label.hourlyRate</source>
+      <trans-unit id="E_bHhGR" resname="hourlyRate">
+        <source>hourlyRate</source>
         <target>Hodinová mzda</target>
       </trans-unit>
-      <trans-unit id="dezCZWf" resname="label.skin">
-        <source>label.skin</source>
+      <trans-unit id="KgBw0BS" resname="skin">
+        <source>skin</source>
         <target>Obrazovka: barvy</target>
       </trans-unit>
-      <trans-unit id="w8T34A6" resname="label.hours">
-        <source>label.hours</source>
+      <trans-unit id="QEMUsfS" resname="hours">
+        <source>hours</source>
         <target>Hodin</target>
       </trans-unit>
-      <trans-unit id="Ih3IFXj" resname="label.rate">
-        <source>label.rate</source>
+      <trans-unit id="xUl3nXn" resname="rate">
+        <source>rate</source>
         <target>Sazba</target>
       </trans-unit>
-      <trans-unit id="foM2o5T" resname="label.language">
-        <source>label.language</source>
+      <trans-unit id="pO8wS6Q" resname="language">
+        <source>language</source>
         <target>Jazyk</target>
       </trans-unit>
-      <trans-unit id="Z8a2kUf" resname="label.customer">
-        <source>label.customer</source>
+      <trans-unit id="tsRYY4d" resname="customer">
+        <source>customer</source>
         <target>Zákazník</target>
       </trans-unit>
-      <trans-unit id="D2N6_cP" resname="label.email">
-        <source>label.email</source>
+      <trans-unit id="giREF.l" resname="email">
+        <source>email</source>
         <target>E-mail</target>
       </trans-unit>
-      <trans-unit id="Ss2xe99" resname="label.team">
-        <source>label.team</source>
+      <trans-unit id="yosi0Nu" resname="team">
+        <source>team</source>
         <target>Team</target>
       </trans-unit>
-      <trans-unit id="Zpj9UB4" resname="label.teamlead">
-        <source>label.teamlead</source>
+      <trans-unit id="evFI7nW" resname="teamlead">
+        <source>teamlead</source>
         <target>Vedoucí teamu</target>
       </trans-unit>
       <!--
               Buttons & Actions
             -->
-      <trans-unit id="zldXQq6" resname="label.actions">
-        <source>label.actions</source>
+      <trans-unit id="Kw3N1AA" resname="actions">
+        <source>actions</source>
         <target>Akce</target>
       </trans-unit>
       <trans-unit id="ovKkXwU" resname="action.edit">
@@ -294,8 +290,8 @@
       <!--
               Widgets
             -->
-      <trans-unit id="4iliLZT" resname="label.toggle_dropdown">
-        <source>label.toggle_dropdown</source>
+      <trans-unit id="muzkQpM" resname="toggle_dropdown">
+        <source>toggle_dropdown</source>
         <target>Zobrazit menu</target>
       </trans-unit>
       <!--
@@ -309,28 +305,28 @@
         <source>timesheet.edit</source>
         <target>Upravit záznam</target>
       </trans-unit>
-      <trans-unit id="trDJK9W" resname="label.begin">
-        <source>label.begin</source>
+      <trans-unit id="5vB9Q7X" resname="begin">
+        <source>begin</source>
         <target>Začít</target>
       </trans-unit>
-      <trans-unit id="R9typUt" resname="label.end">
-        <source>label.end</source>
+      <trans-unit id="Nh5I0DC" resname="end">
+        <source>end</source>
         <target>Ukončit</target>
       </trans-unit>
-      <trans-unit id="egaNXjp" resname="label.daterange">
-        <source>label.daterange</source>
+      <trans-unit id="iNOVZRh" resname="daterange">
+        <source>daterange</source>
         <target>Časový rozsah</target>
       </trans-unit>
       <trans-unit id="UbnqJLn" resname="modal.columns.title">
         <source>modal.columns.title</source>
         <target>Změnit viditelnost sloubce</target>
       </trans-unit>
-      <trans-unit id="5gjqxgK" resname="label.fixedRate">
-        <source>label.fixedRate</source>
+      <trans-unit id="_0tuMNE" resname="fixedRate">
+        <source>fixedRate</source>
         <target>Fixní sazba</target>
       </trans-unit>
-      <trans-unit id="YTSS_Q1" resname="label.color">
-        <source>label.color</source>
+      <trans-unit id="dChNncv" resname="color">
+        <source>color</source>
         <target>Barva</target>
       </trans-unit>
       <!--
@@ -368,15 +364,15 @@
         <source>profile.preferences</source>
         <target>Předvolby</target>
       </trans-unit>
-      <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
-        <source>label.calendar_initial_view</source>
+      <trans-unit id="j4Kd9N1" resname="calendar_initial_view">
+        <source>calendar_initial_view</source>
         <target>Počáteční zobrazení kalendáře</target>
       </trans-unit>
-      <trans-unit id="3dU6nOJ" resname="label.login_initial_view">
-        <source>label.login_initial_view</source>
+      <trans-unit id="H.IqJTQ" resname="login_initial_view">
+        <source>login_initial_view</source>
         <target>Počáteční zobrazení po přihlášení</target>
       </trans-unit>
-      <!-- Options for user-preference label.calendar_initial_view -->
+      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Měsíc</target>
@@ -389,8 +385,8 @@
         <source>agendaDay</source>
         <target>Den</target>
       </trans-unit>
-      <trans-unit id="DJu1n0C" resname="label.daily_stats">
-        <source>label.daily_stats</source>
+      <trans-unit id="r49TNAg" resname="daily_stats">
+        <source>daily_stats</source>
         <target>Zobrazit denní statistiky v pracovním výkaze</target>
       </trans-unit>
       <!--
@@ -406,82 +402,82 @@
       <!--
               Admin: Customer
             -->
-      <trans-unit id="39AtPxQ" resname="label.number">
-        <source>label.number</source>
+      <trans-unit id="EohvnQA" resname="number">
+        <source>number</source>
         <target>Účet</target>
       </trans-unit>
-      <trans-unit id="7jfRn_1" resname="label.company">
-        <source>label.company</source>
+      <trans-unit id="8WjM3ZF" resname="company">
+        <source>company</source>
         <target>Jméno společnosti</target>
       </trans-unit>
-      <trans-unit id="GOStgLi" resname="label.vat">
-        <source>label.vat</source>
+      <trans-unit id="fFErSLq" resname="vat">
+        <source>vat</source>
         <target>Daň</target>
       </trans-unit>
-      <trans-unit id="0tkOMo1" resname="label.contact">
-        <source>label.contact</source>
+      <trans-unit id="CT59X9u" resname="contact">
+        <source>contact</source>
         <target>Kontakt</target>
       </trans-unit>
-      <trans-unit id="c9W5AO4" resname="label.address">
-        <source>label.address</source>
+      <trans-unit id="2Ayb_RD" resname="address">
+        <source>address</source>
         <target>Adresa</target>
       </trans-unit>
-      <trans-unit id="k7MJQ82" resname="label.country">
-        <source>label.country</source>
+      <trans-unit id="r.ZOT9U" resname="country">
+        <source>country</source>
         <target>Země</target>
       </trans-unit>
-      <trans-unit id="g03c_vw" resname="label.phone">
-        <source>label.phone</source>
+      <trans-unit id="RVadpX9" resname="phone">
+        <source>phone</source>
         <target>Telefon</target>
       </trans-unit>
-      <trans-unit id="eRyhERS" resname="label.fax">
-        <source>label.fax</source>
+      <trans-unit id="SvTiF8B" resname="fax">
+        <source>fax</source>
         <target>Fax</target>
       </trans-unit>
-      <trans-unit id="AawT9pW" resname="label.mobile">
-        <source>label.mobile</source>
+      <trans-unit id="1STBoIE" resname="mobile">
+        <source>mobile</source>
         <target>Mobilní telefon</target>
       </trans-unit>
-      <trans-unit id="PS9IH_t" resname="label.homepage">
-        <source>label.homepage</source>
+      <trans-unit id="pcWhXux" resname="homepage">
+        <source>homepage</source>
         <target>Domácí stránka</target>
       </trans-unit>
-      <trans-unit id="dmtPdwq" resname="label.timezone">
-        <source>label.timezone</source>
+      <trans-unit id="OWLt7pw" resname="timezone">
+        <source>timezone</source>
         <target>Časové pásmo</target>
       </trans-unit>
-      <trans-unit id="otd2FZd" resname="label.currency">
-        <source>label.currency</source>
+      <trans-unit id="Rm5bnNV" resname="currency">
+        <source>currency</source>
         <target>Měna</target>
       </trans-unit>
       <!--
               Admin: Users
             -->
-      <trans-unit id="TRDzmCV" resname="label.alias">
-        <source>label.alias</source>
+      <trans-unit id="GgpqNso" resname="alias">
+        <source>alias</source>
         <target>Jméno</target>
       </trans-unit>
-      <trans-unit id="UrRn8xj" resname="label.title">
-        <source>label.title</source>
+      <trans-unit id="qvIyBkY" resname="title">
+        <source>title</source>
         <target>Název</target>
       </trans-unit>
-      <trans-unit id="nWMH_Nr" resname="label.avatar">
-        <source>label.avatar</source>
+      <trans-unit id="h7voece" resname="avatar">
+        <source>avatar</source>
         <target>Profilový obrázek</target>
       </trans-unit>
-      <trans-unit id="KtTP.Sh" resname="label.active">
-        <source>label.active</source>
+      <trans-unit id="loeWEWU" resname="active">
+        <source>active</source>
         <target>Aktivní</target>
       </trans-unit>
-      <trans-unit id="iD6CNOO" resname="label.roles">
-        <source>label.roles</source>
+      <trans-unit id="Zs9VE7N" resname="roles">
+        <source>roles</source>
         <target>Funkce</target>
       </trans-unit>
       <!--
               Admin: Plugins
             -->
-      <trans-unit id="d75KAlJ" resname="label.version">
-        <source>label.version</source>
+      <trans-unit id="XKTzhQz" resname="version">
+        <source>version</source>
         <target>Verze</target>
       </trans-unit>
       <!--
@@ -625,12 +621,12 @@
         <source>invoice_print</source>
         <target>Faktura</target>
       </trans-unit>
-      <trans-unit id="p0IprAw" resname="label.template">
-        <source>label.template</source>
+      <trans-unit id="XN4PEpj" resname="template">
+        <source>template</source>
         <target>Šablona</target>
       </trans-unit>
-      <trans-unit id="zfIRxJh" resname="label.due_days">
-        <source>label.due_days</source>
+      <trans-unit id="ohNu8DK" resname="due_days">
+        <source>due_days</source>
         <target>Doba splatnosti ve dnech</target>
       </trans-unit>
       <trans-unit id="rAJrxSK" resname="invoice.due_days">
@@ -665,20 +661,20 @@
         <source>invoice.service_date</source>
         <target>Datum vyhotovení</target>
       </trans-unit>
-      <trans-unit id="6x24VVR" resname="label.amount">
-        <source>label.amount</source>
+      <trans-unit id="zzjZXJx" resname="amount">
+        <source>amount</source>
         <target>Množství</target>
       </trans-unit>
-      <trans-unit id="g7EpaPY" resname="label.total_rate">
-        <source>label.total_rate</source>
+      <trans-unit id="BAkWQqr" resname="total_rate">
+        <source>total_rate</source>
         <target>Celková cena</target>
       </trans-unit>
-      <trans-unit id="MF3MdTu" resname="label.unit_price">
-        <source>label.unit_price</source>
+      <trans-unit id="IoKfYkz" resname="unit_price">
+        <source>unit_price</source>
         <target>Jednotková cena</target>
       </trans-unit>
-      <trans-unit id="77aZC3r" resname="label.payment_terms">
-        <source>label.payment_terms</source>
+      <trans-unit id="033t0aO" resname="payment_terms">
+        <source>payment_terms</source>
         <target>Platební podmínky</target>
       </trans-unit>
       <trans-unit id="9p2KQag" resname="invoice.signature_user">
@@ -693,23 +689,23 @@
         <source>invoice.total_working_time</source>
         <target>Celková doba trvání</target>
       </trans-unit>
-      <trans-unit id="BS00SS7" resname="label.orderNumber">
-        <source>label.orderNumber</source>
+      <trans-unit id="3tegKgk" resname="orderNumber">
+        <source>orderNumber</source>
         <target>Číslo objednávky</target>
       </trans-unit>
-      <trans-unit id="RRj6PYN" resname="label.invoice_tax_number">
-        <source>label.invoice_tax_number</source>
+      <trans-unit id="WMJwy8r" resname="invoice_tax_number">
+        <source>invoice_tax_number</source>
         <target>DIČ:</target>
       </trans-unit>
-      <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
-        <source>label.invoice_bank_account</source>
+      <trans-unit id="lswYe8s" resname="invoice_bank_account">
+        <source>invoice_bank_account</source>
         <target>Bankovní účet</target>
       </trans-unit>
       <!--
               Export
             -->
-      <trans-unit id="F6Jmro7" resname="export.title">
-        <source>export.title</source>
+      <trans-unit id="1GruCMx" resname="export">
+        <source>export</source>
         <target>Export</target>
       </trans-unit>
       <trans-unit id="vjmoQGo" resname="export.period">
@@ -754,16 +750,16 @@
       <!--
               TOOLBARS
             -->
-      <trans-unit id="MPimOps" resname="label.pageSize">
-        <source>label.pageSize</source>
+      <trans-unit id="igCkqAP" resname="pageSize">
+        <source>pageSize</source>
         <target>Velikost stránky</target>
       </trans-unit>
-      <trans-unit id="KhyA_PW" resname="label.entryState">
-        <source>label.entryState</source>
+      <trans-unit id="cjgNYUB" resname="entryState">
+        <source>entryState</source>
         <target>Záznami</target>
       </trans-unit>
-      <trans-unit id="X3JM9wj" resname="label.exported">
-        <source>label.exported</source>
+      <trans-unit id="Qn2ouiL" resname="exported">
+        <source>exported</source>
         <target>Exportováno</target>
       </trans-unit>
       <trans-unit id="_DDecAV" resname="entryState.exported">
@@ -794,16 +790,16 @@
         <source>export.mark_all</source>
         <target>Označit všechny zobrazené záznamy jako odstraněné?</target>
       </trans-unit>
-      <trans-unit id="S0vT92U" resname="label.globalsOnly">
-        <source>label.globalsOnly</source>
+      <trans-unit id="NNsA8i2" resname="globalsOnly">
+        <source>globalsOnly</source>
         <target>Pouze globální</target>
       </trans-unit>
       <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields">
         <source>help.batch_meta_fields</source>
         <target>Pole, které jsou určena k aktualizaci, musí být aktivována v zaškrtávacím políčku.</target>
       </trans-unit>
-      <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">
-        <source>label.batch_meta_fields</source>
+      <trans-unit id="8BPmHPa" resname="batch_meta_fields">
+        <source>batch_meta_fields</source>
         <target>Dodatečné pole</target>
       </trans-unit>
       <trans-unit id="iwWaUoa" resname="export.filter">
@@ -822,28 +818,24 @@
         <source>status.new</source>
         <target>Nový</target>
       </trans-unit>
-      <trans-unit id="hzhzbqw" resname="label.status">
-        <source>label.status</source>
+      <trans-unit id="BzwWNMS" resname="status">
+        <source>status</source>
         <target>Stav</target>
       </trans-unit>
-      <trans-unit id="as948k9" resname="label.orderDate">
-        <source>label.orderDate</source>
+      <trans-unit id="tCNBGKG" resname="orderDate">
+        <source>orderDate</source>
         <target>Datum objednávky</target>
       </trans-unit>
-      <trans-unit id="yLOqEX_" resname="label.project_start">
-        <source>label.project_start</source>
+      <trans-unit id="Xyjr.V." resname="project_start">
+        <source>project_start</source>
         <target>Začátek projektu</target>
       </trans-unit>
-      <trans-unit id="7J7G3Vr" resname="label.mark_as_exported">
-        <source>label.mark_as_exported</source>
+      <trans-unit id="dicW36D" resname="mark_as_exported">
+        <source>mark_as_exported</source>
         <target>Označit jako exportováno</target>
       </trans-unit>
-      <trans-unit id="IQ9DUOW" resname="button.preview_print">
-        <source>button.preview_print</source>
-        <target>Náhled tisku</target>
-      </trans-unit>
-      <trans-unit id="7H7P1mE" resname="button.preview">
-        <source>button.preview</source>
+      <trans-unit id="WXXPG7p" resname="preview">
+        <source>preview</source>
         <target>Náhled</target>
       </trans-unit>
       <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
@@ -886,76 +878,76 @@
         <source>Allowed character: A-Z and _</source>
         <target>Povolené znaky: A-Z a _</target>
       </trans-unit>
-      <trans-unit id="4kQGReV" resname="label.project_end">
-        <source>label.project_end</source>
+      <trans-unit id="TBWoUYf" resname="project_end">
+        <source>project_end</source>
         <target>Konec projektu</target>
       </trans-unit>
-      <trans-unit id="Dgmh_mv" resname="label.vat_id">
-        <source>label.vat_id</source>
+      <trans-unit id="EJDS9HY" resname="vat_id">
+        <source>vat_id</source>
         <target>IČO</target>
       </trans-unit>
-      <trans-unit id="42YD.Bf" resname="label.export_decimal">
-        <source>label.export_decimal</source>
+      <trans-unit id="dherSTU" resname="export_decimal">
+        <source>export_decimal</source>
         <target>Použij desítkové trvání v exportu</target>
       </trans-unit>
-      <trans-unit id="hO7mkmf" resname="label.lastLogin">
-        <source>label.lastLogin</source>
+      <trans-unit id="gRIArHS" resname="lastLogin">
+        <source>lastLogin</source>
         <target>Poslední přihlášení</target>
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
         <target>Registrován</target>
       </trans-unit>
-      <trans-unit id="BxkmaKz" resname="label.appendTags">
-        <source>label.appendTags</source>
+      <trans-unit id="ICpl9sx" resname="appendTags">
+        <source>appendTags</source>
         <target>Připojit štítky</target>
       </trans-unit>
-      <trans-unit id="EoouxGX" resname="label.replaceTags">
-        <source>label.replaceTags</source>
+      <trans-unit id="tl01EdS" resname="replaceTags">
+        <source>replaceTags</source>
         <target>Nahradit štítky</target>
       </trans-unit>
       <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>
         <target>Každý záznam obdrží stejnou hodnotu, nezáleží na jeho délce</target>
       </trans-unit>
-      <trans-unit id="1PQHtXu" resname="label.progress">
-        <source>label.progress</source>
+      <trans-unit id="tfkKlua" resname="progress">
+        <source>progress</source>
         <target>Postup</target>
       </trans-unit>
-      <trans-unit id="jTiYRIu" resname="label.my_team_projects">
-        <source>label.my_team_projects</source>
+      <trans-unit id="Ia0kvPi" resname="my_team_projects">
+        <source>my_team_projects</source>
         <target>Rozpočty &amp; týmových projektů</target>
       </trans-unit>
-      <trans-unit id="f3KMQJh" resname="label.my_teams">
-        <source>label.my_teams</source>
+      <trans-unit id="L05Qw2x" resname="my_teams">
+        <source>my_teams</source>
         <target>Moje týmy</target>
       </trans-unit>
-      <trans-unit id="vkHr9AP" resname="label.billable">
-        <source>label.billable</source>
+      <trans-unit id="aVwNQcX" resname="billable">
+        <source>billable</source>
         <target>Zpoplatnitelné</target>
       </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
         <target>Napište vaši zprávu…</target>
       </trans-unit>
-      <trans-unit id="v72sA1c" resname="label.recalculate_rates">
-        <source>label.recalculate_rates</source>
+      <trans-unit id="Qc5nsFn" resname="recalculate_rates">
+        <source>recalculate_rates</source>
         <target>Přepočítat sazby</target>
       </trans-unit>
       <trans-unit id="Cxv_0wG" resname="help.internalRate">
         <source>help.internalRate</source>
         <target>Interní náklady (jestli není zadáno, je použita normální sazba)</target>
       </trans-unit>
-      <trans-unit id="4dSa8nM" resname="label.internalRate">
-        <source>label.internalRate</source>
+      <trans-unit id="5ofAsOs" resname="internalRate">
+        <source>internalRate</source>
         <target>Interní sazba</target>
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">
         <source>help.rate</source>
         <target>Hodinová sazba</target>
       </trans-unit>
-      <trans-unit id="DAkHUq0" resname="label.layout">
-        <source>label.layout</source>
+      <trans-unit id="HcWuW2g" resname="layout">
+        <source>layout</source>
         <target>Obrazovka: layout</target>
       </trans-unit>
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">
@@ -1010,24 +1002,24 @@
         <source>upload</source>
         <target>Nahrát</target>
       </trans-unit>
-      <trans-unit id="0D_zaYd" resname="label.desc">
-        <source>label.desc</source>
+      <trans-unit id="l4ZOh4." resname="desc">
+        <source>desc</source>
         <target>Sestupně</target>
       </trans-unit>
-      <trans-unit id="31x84Dt" resname="label.asc">
-        <source>label.asc</source>
+      <trans-unit id="1o0.9vf" resname="asc">
+        <source>asc</source>
         <target>Vzestupně</target>
       </trans-unit>
-      <trans-unit id="IolBPQD" resname="label.searchTerm">
-        <source>label.searchTerm</source>
+      <trans-unit id="8W_TZI0" resname="searchTerm">
+        <source>searchTerm</source>
         <target>Hledaný výraz</target>
       </trans-unit>
-      <trans-unit id="BytPihM" resname="label.set_as_default">
-        <source>label.set_as_default</source>
+      <trans-unit id="CiA4s9E" resname="set_as_default">
+        <source>set_as_default</source>
         <target>Uložit nastavení jako oblíbené vyhledávání</target>
       </trans-unit>
-      <trans-unit id="Z8Fxbvf" resname="label.orderBy">
-        <source>label.orderBy</source>
+      <trans-unit id="VSo_gmO" resname="orderBy">
+        <source>orderBy</source>
         <target>Seřadit podle</target>
       </trans-unit>
       <trans-unit id="O5w1jzb" resname="file">
@@ -1042,8 +1034,8 @@
         <source>action.add</source>
         <target>Přidat</target>
       </trans-unit>
-      <trans-unit id="YNGNfGn" resname="label.tax_rate">
-        <source>label.tax_rate</source>
+      <trans-unit id="qX_CKtU" resname="tax_rate">
+        <source>tax_rate</source>
         <target>Sazba daně</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
@@ -1074,36 +1066,36 @@
         <source>preview.skipped_rows</source>
         <target>Přeskočen náhled %rows% dalších řádků…</target>
       </trans-unit>
-      <trans-unit id="B.Dbbob" resname="label.includeNoBudget">
-        <source>label.includeNoBudget</source>
+      <trans-unit id="L0hRlcf" resname="includeNoBudget">
+        <source>includeNoBudget</source>
         <target>Zobrazit položky bez rozpočtu</target>
       </trans-unit>
-      <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
-        <source>label.includeBudgetType_full</source>
+      <trans-unit id="KukrzcT" resname="includeBudgetType_full">
+        <source>includeBudgetType_full</source>
         <target>Zobrazit položky s rozpočtem „životního cyklu“</target>
       </trans-unit>
-      <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
-        <source>label.includeBudgetType_month</source>
+      <trans-unit id="ViUuILv" resname="includeBudgetType_month">
+        <source>includeBudgetType_month</source>
         <target>Zobrazit položky s „měsíčním“ rozpočtem</target>
       </trans-unit>
-      <trans-unit id="3zn5T5e" resname="label.not_exported">
-        <source>label.not_exported</source>
+      <trans-unit id="2dm.ZWM" resname="not_exported">
+        <source>not_exported</source>
         <target>Neexportováno</target>
       </trans-unit>
-      <trans-unit id="csF1D35" resname="label.not_invoiced">
-        <source>label.not_invoiced</source>
+      <trans-unit id="o0yOFHL" resname="not_invoiced">
+        <source>not_invoiced</source>
         <target>Neúčtováno</target>
       </trans-unit>
-      <trans-unit id="PoF7hD8" resname="label.budgetType">
-        <source>label.budgetType</source>
+      <trans-unit id="4Ndj7Xo" resname="budgetType">
+        <source>budgetType</source>
         <target>Typ rozpočtu</target>
       </trans-unit>
-      <trans-unit id="cHfLJtL" resname="label.budgetType_month">
-        <source>label.budgetType_month</source>
+      <trans-unit id="wYqyL6A" resname="budgetType_month">
+        <source>budgetType_month</source>
         <target>Měsíční</target>
       </trans-unit>
-      <trans-unit id="LXdqaTH" resname="label.account_number">
-        <source>label.account_number</source>
+      <trans-unit id="KH2hgil" resname="account_number">
+        <source>account_number</source>
         <target>Číslo pracovníka</target>
       </trans-unit>
       <trans-unit id="Zif614Q" resname="add_user.label">
@@ -1114,8 +1106,8 @@
         <source>quick_entry.title</source>
         <target>Týdenní pracovní doba</target>
       </trans-unit>
-      <trans-unit id="9Rhadz6" resname="label.budgetType_full">
-        <source>label.budgetType_full</source>
+      <trans-unit id="dnQEYoJ" resname="budgetType_full">
+        <source>budgetType_full</source>
         <target>Životní cyklus</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
@@ -1138,8 +1130,8 @@
         <source>invoice.payment_date</source>
         <target>Datum splatnosti</target>
       </trans-unit>
-      <trans-unit id="pnGDFmf" resname="label.type">
-        <source>label.type</source>
+      <trans-unit id="EwPAaws" resname="type">
+        <source>type</source>
         <target>Typ</target>
       </trans-unit>
       <trans-unit id="IPHM4iP" resname="updated_at">
@@ -1150,8 +1142,8 @@
         <source>default_value_new</source>
         <target>Výchozí hodnoty pro nové záznamy</target>
       </trans-unit>
-      <trans-unit id="NNKq04n" resname="label.remove_default">
-        <source>label.remove_default</source>
+      <trans-unit id="DUDrvjk" resname="remove_default">
+        <source>remove_default</source>
         <target>Smazat oblíbené vyhledávání</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
@@ -1178,11 +1170,11 @@
         <source>export.warn_result_amount</source>
         <target>Vaše vyhledávání vede k %count% výsledkům. Pokud se export nezdaří, musíte vyhledávání dále zúžit.</target>
       </trans-unit>
-      <trans-unit id="qDnURk7" resname="label.last_record">
-        <source>label.last_record</source>
+      <trans-unit id="_YiKaOT" resname="last_record">
+        <source>last_record</source>
         <target>Poslední záznam</target>
       </trans-unit>
-      <trans-unit id="DpdNns0" resname="label.choice_pattern">
+      <trans-unit id="fVA3M2x" resname="choice_pattern">
         <source>Display of entries in selection lists</source>
         <target state="translated">Zobrazení položek ve výběru</target>
       </trans-unit>
@@ -1202,20 +1194,20 @@
         <source>invoice_document.max_reached</source>
         <target state="translated">Dosaženo maximálního množství %max% dokladů faktur. Po odebrání jednoho dokladu můžete přidat další.</target>
       </trans-unit>
-      <trans-unit id="z_YHoZn" resname="label.includeNoWork">
-        <source>label.includeNoWork</source>
+      <trans-unit id="L27KvC9" resname="includeNoWork">
+        <source>includeNoWork</source>
         <target state="translated">Zobrazit vstupy bez rezervace</target>
       </trans-unit>
-      <trans-unit id="AJ6dwR." resname="label.last_record_before">
-        <source>label.last_record_before</source>
+      <trans-unit id="vpqPF8v" resname="last_record_before">
+        <source>last_record_before</source>
         <target state="translated">Bez rezervace času</target>
       </trans-unit>
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target state="translated">Automaticky</target>
       </trans-unit>
-      <trans-unit id="74pEVx1" resname="label.invoiceText">
-        <source>label.invoiceText</source>
+      <trans-unit id="OJ.wI1U" resname="invoiceText">
+        <source>invoiceText</source>
         <target state="translated">Text faktury</target>
       </trans-unit>
     </body>

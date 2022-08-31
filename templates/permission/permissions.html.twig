@@ -5,7 +5,7 @@
 
 {% set roles = roles|reverse %}
 {% set columns = {
-    'label.name': 'alwaysVisible',
+    'name': 'alwaysVisible',
 } %}
 {% set canEditPermissions = is_granted('role_permissions') %}
 {% for role in roles %}
@@ -33,7 +33,7 @@
 {% block page_actions %}{{ actions.user_permissions('index') }}{% endblock %}
 
 {% block main %}
-    {{ tables.datatable_header(tableName, columns, null, {'reload': 'kimai.userRoleUpdate', 'translationPrefix': ''}) }}
+    {{ tables.datatable_header(tableName, columns, null, {'reload': 'kimai.userRoleUpdate'}) }}
     
     {% set colspan = 1 + (roles|length) %}
 

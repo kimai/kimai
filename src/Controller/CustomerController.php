@@ -9,7 +9,7 @@
 
 namespace App\Controller;
 
-use App\Configuration\SystemConfiguration;
+use App\Customer\CustomerService;
 use App\Customer\CustomerStatisticService;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
@@ -34,6 +34,7 @@ use App\Repository\ProjectRepository;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\TeamRepository;
+use App\Utils\DataTable;
 use App\Utils\FileHelper;
 use JeroenDesloovere\VCard\VCard;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -75,12 +76,48 @@ final class CustomerController extends AbstractController
         }
 
         $entries = $this->repository->getPagerfantaForQuery($query);
+        $metaColumns = $this->findMetaColumns($query);
+
+        $table = new DataTable('customer_admin', $query);
+        $table->setPagination($entries);
+        $table->setSearchForm($form);
+        $table->setPaginationRoute('admin_customer_paginated');
+        $table->setReloadEvents('kimai.customerUpdate kimai.customerDelete kimai.customerTeamUpdate');
+
+        $table->addColumn('name', ['class' => 'alwaysVisible']);
+        $table->addColumn('comment', ['class' => 'd-none', 'title' => 'description']);
+        $table->addColumn('number', ['class' => 'd-none w-min']);
+        $table->addColumn('company', ['class' => 'd-none']);
+        $table->addColumn('vat_id', ['class' => 'd-none w-min']);
+        $table->addColumn('contact', ['class' => 'd-none']);
+        $table->addColumn('address', ['class' => 'd-none']);
+        $table->addColumn('country', ['class' => 'd-none w-min']);
+        $table->addColumn('currency', ['class' => 'd-none w-min']);
+        $table->addColumn('phone', ['class' => 'd-none']);
+        $table->addColumn('fax', ['class' => 'd-none']);
+        $table->addColumn('mobile', ['class' => 'd-none']);
+        $table->addColumn('email', ['class' => 'd-none']);
+        $table->addColumn('homepage', ['class' => 'd-none']);
+
+        foreach ($metaColumns as $metaColumn) {
+            $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false]);
+        }
+
+        if ($this->isGranted('budget_money', 'customer')) {
+            $table->addColumn('budget', ['class' => 'd-none text-end w-min', 'title' => 'budget']);
+        }
+
+        if ($this->isGranted('budget_time', 'customer')) {
+            $table->addColumn('timeBudget', ['class' => 'd-none text-end w-min', 'title' => 'timeBudget']);
+        }
+
+        $table->addColumn('team', ['class' => 'text-center w-min', 'orderBy' => false]);
+        $table->addColumn('visible', ['class' => 'd-none text-center w-min']);
+        $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
 
         return $this->render('customer/index.html.twig', [
-            'entries' => $entries,
-            'query' => $query,
-            'toolbarForm' => $form->createView(),
-            'metaColumns' => $this->findMetaColumns($query),
+            'dataTable' => $table,
+            'metaColumns' => $metaColumns,
             'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
@@ -101,17 +138,9 @@ final class CustomerController extends AbstractController
      * @Route(path="/create", name="admin_customer_create", methods={"GET", "POST"})
      * @Security("is_granted('create_customer')")
      */
-    public function createAction(Request $request, SystemConfiguration $configuration)
+    public function createAction(Request $request, CustomerService $customerService)
     {
-        $timezone = date_default_timezone_get();
-        if (null !== $configuration->getCustomerDefaultTimezone()) {
-            $timezone = $configuration->getCustomerDefaultTimezone();
-        }
-
-        $customer = new Customer();
-        $customer->setCountry($configuration->getCustomerDefaultCountry());
-        $customer->setCurrency($configuration->getCustomerDefaultCurrency());
-        $customer->setTimezone($timezone);
+        $customer = $customerService->createNewCustomer('');
 
         return $this->renderCustomerForm($customer, $request, true);
     }
@@ -236,8 +265,7 @@ final class CustomerController extends AbstractController
             return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
         }
 
-        $defaultTeam = new Team();
-        $defaultTeam->setName($customer->getName());
+        $defaultTeam = new Team($customer->getName());
         $defaultTeam->addTeamlead($this->getUser());
         $defaultTeam->addCustomer($customer);
 

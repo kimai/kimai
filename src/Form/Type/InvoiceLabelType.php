@@ -21,7 +21,7 @@ class InvoiceLabelType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.invoiceLabel',
+            'label' => 'invoiceLabel',
             'help' => 'help.invoiceLabel',
             'required' => false,
         ]);

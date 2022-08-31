@@ -35,7 +35,7 @@ class TimesheetController extends TimesheetAbstractController
         $query = $this->createDefaultQuery();
         $query->setPage($page);
 
-        return $this->index($query, $request, 'timesheet', 'timesheet/index.html.twig', TimesheetMetaDisplayEvent::TIMESHEET);
+        return $this->index($query, $request, 'timesheet', 'timesheet_paginated', 'timesheet/index.html.twig', TimesheetMetaDisplayEvent::TIMESHEET);
     }
 
     /**

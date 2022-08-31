@@ -149,7 +149,7 @@ class TimesheetEditForm extends AbstractType
     {
         $dateOptions = $dateTimeOptions;
         $builder->add('begin_date', DatePickerType::class, array_merge($dateOptions, [
-            'label' => 'label.date',
+            'label' => 'date',
             'mapped' => false,
             'constraints' => [
                 new NotBlank()
@@ -159,7 +159,7 @@ class TimesheetEditForm extends AbstractType
         $timeOptions = $dateTimeOptions;
 
         $builder->add('begin_time', TimePickerType::class, array_merge($timeOptions, [
-            'label' => 'label.starttime',
+            'label' => 'starttime',
             'mapped' => false,
             'constraints' => [
                 new NotBlank()
@@ -206,7 +206,7 @@ class TimesheetEditForm extends AbstractType
     {
         $builder->add('end_time', TimePickerType::class, array_merge($dateTimeOptions, [
             'required' => false,
-            'label' => 'label.endtime',
+            'label' => 'endtime',
             'mapped' => false
         ]));
 
@@ -353,7 +353,7 @@ class TimesheetEditForm extends AbstractType
         }
 
         $builder->add('exported', YesNoType::class, [
-            'label' => 'label.exported'
+            'label' => 'exported'
         ]);
     }
 

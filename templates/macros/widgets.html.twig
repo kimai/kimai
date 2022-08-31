@@ -1,8 +1,3 @@
-{% macro breadcrumb(breadcrumbs) %}
-    {% from '@theme/components/breadcrumb.html.twig' import breadcrumb %}
-    {{ breadcrumb(breadcrumbs) }}
-{% endmacro %}
-
 {%- macro page_actions(actions) -%}
     {% set large = true %}
     {% set btnClasses = 'btn-primary' %}
@@ -26,7 +21,7 @@
                     {% if values.children is defined and values.children|length > 0 %}
                             <div class="dropdown">
                                 <button type="button" class="btn {{ btnClasses}} dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ icon(icon, true) }}{% if large %} {{ icon|trans({}, 'actions') }}{% endif %}
+                                    {{ icon(icon, true) }}{% if large %} {{ values.title is defined ? values.title|trans : icon|trans({}, 'actions') }}{% endif %}
                                 </button>
                                 <div class="dropdown-menu">
                                 {%- for icon, values in values.children %}
@@ -48,11 +43,11 @@
         {% endif %}
         </div>
         <div class="pa-mobile d-inline-flex d-sm-none btn-list">
-            {% set btnClass = 'btn' %}
+            {% set btnClass = 'btn btn-icon ' %}
             {% if tabler_bundle.isNavbarOverlapping() %}
-                {% set btnClass = 'btn btn-dark' %}
+                {% set btnClass = 'btn btn-icon btn-dark' %}
             {% elseif not tabler_bundle.isDarkMode() %}
-                {% set btnClass = 'btn btn-white' %}
+                {% set btnClass = 'btn btn-icon btn-white' %}
             {% endif %}
             {{ _self.table_actions(actions, btnClass) }}
         </div>
@@ -340,7 +335,7 @@
         {% if showTitle %}
         <thead>
             <tr>
-                <th class="hw-min">{{ 'label.team'|trans }}</th>
+                <th class="hw-min">{{ 'team'|trans }}</th>
                 <th class="d-none d-sm-table-cell">{{ 'team.member'|trans({}, 'teams') }}</th>
             </tr>
         </thead>
@@ -357,7 +352,7 @@
                     {% for member in members|sort((a, b) => b.teamlead <=> a.teamlead) %}
                         {% set user = member.user %}
                         {% if member.teamlead %}
-                            {{ _self.user_avatar(user, ('label.teamlead'|trans ~ ': ' ~ user.displayName), (class ~ ' teamlead'), 'info') }}
+                            {{ _self.user_avatar(user, ('teamlead'|trans ~ ': ' ~ user.displayName), (class ~ ' teamlead'), 'info') }}
                         {% else %}
                             {{ _self.user_avatar(user, null, class) }}
                         {% endif %}

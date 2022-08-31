@@ -26,16 +26,16 @@ class ProjectTypePatternType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $name = $this->translator->trans('label.name');
-        $comment = $this->translator->trans('label.description');
-        $orderNumber = $this->translator->trans('label.orderNumber');
-        $projectStart = $this->translator->trans('label.project_start');
-        $projectEnd = $this->translator->trans('label.project_end');
+        $name = $this->translator->trans('name');
+        $comment = $this->translator->trans('description');
+        $orderNumber = $this->translator->trans('orderNumber');
+        $projectStart = $this->translator->trans('project_start');
+        $projectEnd = $this->translator->trans('project_end');
 
         $spacer = ProjectHelper::SPACER;
 
         $resolver->setDefaults([
-            'label' => 'label.choice_pattern',
+            'label' => 'choice_pattern',
             'choices' => [
                 $name => ProjectHelper::PATTERN_NAME,
                 $comment => ProjectHelper::PATTERN_COMMENT,

@@ -31,7 +31,7 @@ class UserFormsSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('edit', $user)) {
-            $event->addAction('settings', ['url' => $this->path('user_profile_edit', ['username' => $user->getUserIdentifier()]), 'title' => 'edit', 'translation_domain' => 'actions']);
+            $event->addAction('edit', ['url' => $this->path('user_profile_edit', ['username' => $user->getUserIdentifier()]), 'title' => 'edit', 'translation_domain' => 'actions']);
         }
         if ($this->isGranted('password', $user)) {
             $event->addAction('password', ['url' => $this->path('user_profile_password', ['username' => $user->getUserIdentifier()]), 'title' => 'profile.password']);
@@ -43,7 +43,7 @@ class UserFormsSubscriber extends AbstractActionsSubscriber
             $event->addAction('api-token', ['url' => $this->path('user_profile_api_token', ['username' => $user->getUserIdentifier()]), 'title' => 'profile.api-token']);
         }
         if ($this->isGranted('teams', $user)) {
-            $event->addAction('teams', ['url' => $this->path('user_profile_teams', ['username' => $user->getUserIdentifier()]), 'title' => 'label.teams']);
+            $event->addAction('teams', ['url' => $this->path('user_profile_teams', ['username' => $user->getUserIdentifier()]), 'title' => 'teams']);
         }
         if ($this->isGranted('roles', $user)) {
             $event->addAction('roles', ['url' => $this->path('user_profile_roles', ['username' => $user->getUserIdentifier()]), 'title' => 'profile.roles']);

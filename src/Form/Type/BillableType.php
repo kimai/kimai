@@ -23,7 +23,7 @@ class BillableType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.billable',
+            'label' => 'billable',
             'help' => 'help.billable',
         ]);
     }

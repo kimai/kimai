@@ -37,7 +37,7 @@ class ProjectDateRangeForm extends AbstractType
 
         $builder->add('includeNoWork', CheckboxType::class, [
             'required' => false,
-            'label' => 'label.includeNoWork',
+            'label' => 'includeNoWork',
         ]);
 
         $builder->add('budgetType', ChoiceType::class, [
@@ -47,9 +47,9 @@ class ProjectDateRangeForm extends AbstractType
             'expanded' => true,
             'choices' => [
                 'all' => null,
-                'label.includeNoBudget' => 'none',
-                'label.includeBudgetType_full' => 'full',
-                'label.includeBudgetType_month' => 'month',
+                'includeNoBudget' => 'none',
+                'includeBudgetType_full' => 'full',
+                'includeBudgetType_month' => 'month',
             ],
         ]);
     }

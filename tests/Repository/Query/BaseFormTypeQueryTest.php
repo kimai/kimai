@@ -43,17 +43,17 @@ abstract class BaseFormTypeQueryTest extends TestCase
     {
         self::assertEmpty($sut->getTeams());
 
-        self::assertInstanceOf(BaseFormTypeQuery::class, $sut->addTeam(new Team()));
+        self::assertInstanceOf(BaseFormTypeQuery::class, $sut->addTeam(new Team('foo')));
         self::assertCount(1, $sut->getTeams());
 
-        $team = new Team();
+        $team = new Team('foo');
         self::assertInstanceOf(BaseFormTypeQuery::class, $sut->addTeam($team));
         self::assertCount(1, $sut->getTeams());
         self::assertSame($team, $sut->getTeams()[0]);
 
         self::assertInstanceOf(BaseFormTypeQuery::class, $sut->setTeams([]));
         self::assertEmpty($sut->getTeams());
-        self::assertInstanceOf(BaseFormTypeQuery::class, $sut->setTeams([new Team(), new Team()]));
+        self::assertInstanceOf(BaseFormTypeQuery::class, $sut->setTeams([new Team('foo'), new Team('foo')]));
         self::assertCount(2, $sut->getTeams());
     }
 
@@ -85,15 +85,13 @@ abstract class BaseFormTypeQueryTest extends TestCase
 
     protected function assertCustomer(BaseFormTypeQuery $sut)
     {
-        $expected = new Customer();
-        $expected->setName('foo-bar');
+        $expected = new Customer('foo-bar');
 
         $sut->addCustomer($expected);
         $this->assertEquals([$expected], $sut->getCustomers());
         $this->assertTrue($sut->hasCustomers());
 
-        $expected2 = new Customer();
-        $expected2->setName('foo-bar2');
+        $expected2 = new Customer('foo-bar2');
 
         $sut->addCustomer($expected2);
         $this->assertEquals([$expected, $expected2], $sut->getCustomers());

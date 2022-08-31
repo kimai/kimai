@@ -29,7 +29,7 @@ class RoleType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'label.name',
+                'label' => 'name',
                 'help' => 'Allowed character: A-Z and _',
                 'constraints' => [
                     new Regex(['pattern' => '/^[a-zA-Z_]{5,}$/'])

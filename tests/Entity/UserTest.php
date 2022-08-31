@@ -215,7 +215,7 @@ class UserTest extends TestCase
     {
         $sut = new User();
         $user = new User();
-        $team = new Team();
+        $team = new Team('foo');
         self::assertEmpty($sut->getTeams());
         self::assertEmpty($team->getUsers());
 
@@ -236,7 +236,7 @@ class UserTest extends TestCase
         self::assertFalse($sut->isTeamleadOf($team));
         self::assertTrue($sut->isInTeam($team));
 
-        $team2 = new Team();
+        $team2 = new Team('foo');
         self::assertFalse($sut->isInTeam($team2));
         self::assertFalse($sut->isTeamleadOf($team2));
         $team2->addTeamLead($sut);
@@ -349,19 +349,19 @@ class UserTest extends TestCase
         self::assertIsArray($columns);
 
         $expected = [
-            ['label.id', 'integer'],
-            ['label.username', 'string'],
-            ['label.alias', 'string'],
-            ['label.title', 'string'],
-            ['label.email', 'string'],
-            ['label.lastLogin', 'datetime'],
-            ['label.language', 'string'],
-            ['label.timezone', 'string'],
-            ['label.active', 'boolean'],
+            ['id', 'integer'],
+            ['username', 'string'],
+            ['alias', 'string'],
+            ['title', 'string'],
+            ['email', 'string'],
+            ['lastLogin', 'datetime'],
+            ['language', 'string'],
+            ['timezone', 'string'],
+            ['active', 'boolean'],
             ['profile.registration_date', 'datetime'],
-            ['label.roles', 'array'],
-            ['label.color', 'string'],
-            ['label.account_number', 'string'],
+            ['roles', 'array'],
+            ['color', 'string'],
+            ['account_number', 'string'],
         ];
 
         self::assertCount(\count($expected), $columns);
@@ -441,8 +441,7 @@ class UserTest extends TestCase
 
     public function testTeamMemberships()
     {
-        $team = new Team();
-        $team->setName('Foo');
+        $team = new Team('Foo');
 
         $member = new TeamMember();
         $member->setTeam($team);
@@ -487,7 +486,7 @@ class UserTest extends TestCase
         self::assertCount(1, $sut->getMemberships());
         self::assertSame($sut, $member21->getUser());
 
-        $sut->addTeam(new Team());
+        $sut->addTeam(new Team('foo'));
         self::assertCount(2, $sut->getTeams());
         self::assertCount(2, $sut->getMemberships());
 

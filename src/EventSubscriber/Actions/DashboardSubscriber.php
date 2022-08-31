@@ -29,7 +29,7 @@ class DashboardSubscriber extends AbstractActionsSubscriber
         $available = $payload['available'];
 
         if (!$event->isView('edit')) {
-            $event->addAction('settings', ['title' => 'settings', 'translation_domain' => 'actions', 'url' => $this->path('dashboard_edit')]);
+            $event->addConfig($this->path('dashboard_edit'));
         } else {
             $ids = [];
 

@@ -36,7 +36,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
 
     public function testWithMultipleEntries()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $template = new InvoiceTemplate();
         $template->setVat(19);
 
@@ -121,7 +121,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
 
     public function testWithMultipleEntriesDifferentRates()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $template = new InvoiceTemplate();
         $template->setVat(19);
 
@@ -202,7 +202,7 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
 
     public function testWithMixedRateTypes()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $template = new InvoiceTemplate();
         $template->setVat(19);
 

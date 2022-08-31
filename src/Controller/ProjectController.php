@@ -38,6 +38,7 @@ use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\TeamRepository;
+use App\Utils\DataTable;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -75,12 +76,41 @@ final class ProjectController extends AbstractController
         }
 
         $entries = $this->repository->getPagerfantaForQuery($query);
+        $metaColumns = $this->findMetaColumns($query);
+
+        $table = new DataTable('project_admin', $query);
+        $table->setPagination($entries);
+        $table->setSearchForm($form);
+        $table->setPaginationRoute('admin_project_paginated');
+        $table->setReloadEvents('kimai.projectUpdate kimai.projectDelete kimai.projectTeamUpdate');
+
+        $table->addColumn('name', ['class' => 'alwaysVisible']);
+        $table->addColumn('customer', ['class' => 'd-none']);
+        $table->addColumn('comment', ['class' => 'd-none', 'title' => 'description']);
+        $table->addColumn('orderNumber', ['class' => 'd-none']);
+        $table->addColumn('orderDate', ['class' => 'd-none']);
+        $table->addColumn('project_start', ['class' => 'd-none']);
+        $table->addColumn('project_end', ['class' => 'd-none']);
+
+        foreach ($metaColumns as $metaColumn) {
+            $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false]);
+        }
+
+        if ($this->isGranted('budget_money', 'project')) {
+            $table->addColumn('budget', ['class' => 'd-none text-end w-min', 'title' => 'budget']);
+        }
+
+        if ($this->isGranted('budget_time', 'project')) {
+            $table->addColumn('timeBudget', ['class' => 'd-none text-end w-min', 'title' => 'timeBudget']);
+        }
+
+        $table->addColumn('team', ['class' => 'text-center w-min', 'orderBy' => false]);
+        $table->addColumn('visible', ['class' => 'd-none text-center w-min']);
+        $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
 
         return $this->render('project/index.html.twig', [
-            'entries' => $entries,
-            'query' => $query,
-            'toolbarForm' => $form->createView(),
-            'metaColumns' => $this->findMetaColumns($query),
+            'dataTable' => $table,
+            'metaColumns' => $metaColumns,
             'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
@@ -259,8 +289,7 @@ final class ProjectController extends AbstractController
             return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
         }
 
-        $defaultTeam = new Team();
-        $defaultTeam->setName($project->getName());
+        $defaultTeam = new Team($project->getName());
         $defaultTeam->addTeamlead($this->getUser());
         $defaultTeam->addProject($project);
 

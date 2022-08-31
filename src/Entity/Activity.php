@@ -48,7 +48,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  *
  * @Exporter\Order({"id", "name", "project", "budget", "timeBudget", "budgetType", "color", "visible", "comment", "billable"})
- * @Exporter\Expose("project", label="label.project", exp="object.getProject() === null ? null : object.getProject().getName()")
+ * @Exporter\Expose("project", label="project", exp="object.getProject() === null ? null : object.getProject().getName()")
  */
 class Activity implements EntityWithMetaFields, EntityWithBudget
 {
@@ -63,7 +63,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @Exporter\Expose(label="label.id", type="integer")
+     * @Exporter\Expose(label="id", type="integer")
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -88,7 +88,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     * @Exporter\Expose(label="label.name")
+     * @Exporter\Expose(label="name")
      *
      * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotBlank()
@@ -100,7 +100,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     * @Exporter\Expose(label="label.comment")
+     * @Exporter\Expose(label="comment")
      *
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
@@ -110,7 +110,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     * @Exporter\Expose(label="label.visible", type="boolean")
+     * @Exporter\Expose(label="visible", type="boolean")
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
@@ -119,7 +119,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     * @Exporter\Expose(label="label.billable", type="boolean")
+     * @Exporter\Expose(label="billable", type="boolean")
      *
      * @ORM\Column(name="billable", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()

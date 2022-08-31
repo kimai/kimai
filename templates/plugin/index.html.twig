@@ -70,7 +70,7 @@
                 {% for extension in extensions|filter(e => e.bundle is not null and e.bundle not in installed) %}
                     <tr>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
-                            <a href="{{ extension.url }}" title="{{ 'label.homepage'|trans }}" target="_blank">{{ extension.name }}</a>
+                            <a href="{{ extension.url }}" title="{{ 'homepage'|trans }}" target="_blank">{{ extension.name }}</a>
                         </td>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ extension.description }}</td>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">

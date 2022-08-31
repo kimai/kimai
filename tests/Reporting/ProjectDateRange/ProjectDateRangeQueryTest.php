@@ -41,7 +41,7 @@ class ProjectDateRangeQueryTest extends TestCase
         $sut = new ProjectDateRangeQuery(new \DateTime(), new User());
 
         $date = new \DateTime('+1 year');
-        $customer = new Customer();
+        $customer = new Customer('foo');
 
         $sut->setMonth($date);
         $sut->setCustomer($customer);

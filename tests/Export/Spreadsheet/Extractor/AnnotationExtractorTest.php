@@ -43,16 +43,16 @@ class AnnotationExtractorTest extends TestCase
         }
 
         $expected = [
-            ['label.type-time', 'time', new \DateTime()],
-            ['label.Public-Property', 'string', 'public-property'],
-            ['label.type-date', 'date', new \DateTime()],
-            ['label.Private-Property', 'integer', 123],
-            ['label.accessor', 'string', 'accessor-method'],
-            ['label.Protected-Property', 'boolean', false],
-            ['label.Public-Method', 'string', 'public-method'],
-            ['label.Protected-Method', 'datetime', new \DateTime()],
-            ['label.duration', 'duration', 12345],
-            ['label.Private-Method', 'boolean', true],
+            ['type-time', 'time', new \DateTime()],
+            ['Public-Property', 'string', 'public-property'],
+            ['type-date', 'date', new \DateTime()],
+            ['Private-Property', 'integer', 123],
+            ['accessor', 'string', 'accessor-method'],
+            ['Protected-Property', 'boolean', false],
+            ['Public-Method', 'string', 'public-method'],
+            ['Protected-Method', 'datetime', new \DateTime()],
+            ['duration', 'duration', 12345],
+            ['Private-Method', 'boolean', true],
         ];
 
         $i = 0;

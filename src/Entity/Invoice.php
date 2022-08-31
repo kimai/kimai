@@ -30,10 +30,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("invoiceFilename")
  *
  * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "subtotal", "total", "tax", "currency", "vat", "dueDays", "dueDate", "paymentDate", "user", "invoiceFilename", "customerNumber", "comment"})
- * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
- * @Exporter\Expose("customerNumber", label="label.number", exp="object.getCustomer() === null ? null : object.getCustomer().getNumber()")
+ * @Exporter\Expose("customer", label="customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
+ * @Exporter\Expose("customerNumber", label="number", exp="object.getCustomer() === null ? null : object.getCustomer().getNumber()")
  * @Exporter\Expose("dueDate", label="invoice.due_days", type="datetime", exp="object.getDueDate() === null ? null : object.getDueDate()")
- * @Exporter\Expose("user", label="label.username", type="string", exp="object.getUser() === null ? null : object.getUser().getDisplayName()")
+ * @Exporter\Expose("user", label="username", type="string", exp="object.getUser() === null ? null : object.getUser().getDisplayName()")
  * @Exporter\Expose("paymentDate", label="invoice.payment_date", type="date", exp="object.getPaymentDate() === null ? null : object.getPaymentDate()")
  */
 class Invoice implements EntityWithMetaFields
@@ -48,7 +48,7 @@ class Invoice implements EntityWithMetaFields
      *
      * @var int|null
      *
-     * @Exporter\Expose(label="label.id", type="integer")
+     * @Exporter\Expose(label="id", type="integer")
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -67,7 +67,7 @@ class Invoice implements EntityWithMetaFields
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
-     * @Exporter\Expose(label="label.comment")
+     * @Exporter\Expose(label="comment")
      *
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
@@ -91,7 +91,7 @@ class Invoice implements EntityWithMetaFields
     /**
      * @var \DateTime
      *
-     * @Exporter\Expose(label="label.date", type="datetime")
+     * @Exporter\Expose(label="date", type="datetime")
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      * @Assert\NotNull()
@@ -106,7 +106,7 @@ class Invoice implements EntityWithMetaFields
     /**
      * @var float
      *
-     * @Exporter\Expose(label="label.total_rate", type="float")
+     * @Exporter\Expose(label="total_rate", type="float")
      *
      * @ORM\Column(name="total", type="float", nullable=false)
      * @Assert\NotNull()
@@ -124,7 +124,7 @@ class Invoice implements EntityWithMetaFields
     /**
      * @var string
      *
-     * @Exporter\Expose(label="label.currency", type="string")
+     * @Exporter\Expose(label="currency", type="string")
      *
      * @ORM\Column(name="currency", type="string", length=3, nullable=false)
      * @Assert\NotNull()
@@ -132,7 +132,7 @@ class Invoice implements EntityWithMetaFields
      */
     private $currency;
     /**
-     * @Exporter\Expose(label="label.due_days", type="integer")
+     * @Exporter\Expose(label="due_days", type="integer")
      *
      * @ORM\Column(name="due_days", type="integer", length=3, nullable=false)
      * @Assert\NotNull()
@@ -140,7 +140,7 @@ class Invoice implements EntityWithMetaFields
      */
     private int $dueDays = 30;
     /**
-     * @Exporter\Expose(label="label.tax_rate", type="float")
+     * @Exporter\Expose(label="tax_rate", type="float")
      *
      * @ORM\Column(name="vat", type="float", nullable=false)
      * @Assert\NotNull()
@@ -148,7 +148,7 @@ class Invoice implements EntityWithMetaFields
      */
     private float $vat = 0.00;
     /**
-     * @Exporter\Expose(label="label.status", type="string")
+     * @Exporter\Expose(label="status", type="string")
      *
      * @ORM\Column(name="status", type="string", length=20, nullable=false)
      * @Assert\NotNull()

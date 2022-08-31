@@ -98,7 +98,7 @@ class BaseQueryTest extends TestCase
     {
         self::assertEmpty($sut->getTeams());
 
-        self::assertInstanceOf(BaseQuery::class, $sut->addTeam(new Team()));
+        self::assertInstanceOf(BaseQuery::class, $sut->addTeam(new Team('foo')));
         self::assertEquals(1, \count($sut->getTeams()));
 
         $sut->setTeams(null);
@@ -106,7 +106,7 @@ class BaseQueryTest extends TestCase
         $sut->setTeams([]);
         self::assertEmpty($sut->getTeams());
 
-        $team = new Team();
+        $team = new Team('foo');
         self::assertInstanceOf(BaseQuery::class, $sut->setTeams([$team]));
         self::assertEquals(1, \count($sut->getTeams()));
         self::assertSame($team, $sut->getTeams()[0]);
@@ -240,15 +240,13 @@ class BaseQueryTest extends TestCase
         $this->assertEquals([], $sut->getCustomers());
         $this->assertFalse($sut->hasCustomers());
 
-        $expected = new Customer();
-        $expected->setName('foo-bar');
+        $expected = new Customer('foo-bar');
 
         $sut->addCustomer($expected);
         $this->assertEquals([$expected], $sut->getCustomers());
         $this->assertTrue($sut->hasCustomers());
 
-        $expected2 = new Customer();
-        $expected2->setName('foo-bar2');
+        $expected2 = new Customer('foo-bar2');
 
         $sut->addCustomer($expected2);
         $this->assertEquals([$expected, $expected2], $sut->getCustomers());

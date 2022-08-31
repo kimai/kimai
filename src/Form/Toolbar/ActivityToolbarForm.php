@@ -40,7 +40,7 @@ class ActivityToolbarForm extends AbstractToolbarForm
             'search' => false,
             'placeholder' => null,
             'required' => false,
-            'label' => 'label.globalsOnly',
+            'label' => 'globalsOnly',
         ]);
         $this->addVisibilityChoice($builder);
         $this->addPageSizeChoice($builder);

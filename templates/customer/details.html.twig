@@ -31,13 +31,13 @@
             <table class="table table-hover dataTable">
                 {% if not customer.visible %}
                     <tr class="{{ widgets.class_customer_row(customer, now) }}">
-                        <th>{{ 'label.visible'|trans }}</th>
+                        <th>{{ 'visible'|trans }}</th>
                         <td>{{ widgets.label_boolean(customer.visible) }}</td>
                     </tr>
                 {% endif %}
                 {% if not customer.billable %}
                     <tr>
-                        <th>{{ 'label.billable'|trans }}</th>
+                        <th>{{ 'billable'|trans }}</th>
                         <td colspan="3">
                             {{ widgets.label_boolean(customer.billable) }}
                         </td>
@@ -45,74 +45,74 @@
                 {% endif %}
                 {% if customer.address is not empty %}
                     <tr>
-                        <th>{{ 'label.address'|trans }}</th>
+                        <th>{{ 'address'|trans }}</th>
                         <td>{{ customer.address|nl2br }}</td>
                     </tr>
                 {% endif %}
                 {% if customer.country is not empty %}
                     <tr>
-                        <th>{{ 'label.country'|trans }}</th>
+                        <th>{{ 'country'|trans }}</th>
                         <td>{{ customer.country|country_name }}</td>
                     </tr>
                 {% endif %}
                 {% if customer.contact is not empty %}
                     <tr>
-                        <th>{{ 'label.contact'|trans }}</th>
+                        <th>{{ 'contact'|trans }}</th>
                         <td>{{ customer.contact }}</td>
                     </tr>
                 {% endif %}
                 {% if customer.phone is not empty %}
                     <tr>
-                        <th>{{ 'label.phone'|trans }}</th>
+                        <th>{{ 'phone'|trans }}</th>
                         <td><a href="tel:{{ customer.phone }}">{{ customer.phone }}</a></td>
                     </tr>
                 {% endif %}
                 {% if customer.mobile is not empty %}
                     <tr>
-                        <th>{{ 'label.mobile'|trans }}</th>
+                        <th>{{ 'mobile'|trans }}</th>
                         <td><a href="tel:{{ customer.mobile }}">{{ customer.mobile }}</a></td>
                     </tr>
                 {% endif %}
                 {% if customer.email is not empty %}
                     <tr>
-                        <th>{{ 'label.email'|trans }}</th>
+                        <th>{{ 'email'|trans }}</th>
                         <td><a href="mailto:{{ customer.email }}">{{ customer.email }}</a></td>
                     </tr>
                 {% endif %}
                 {% if customer.homepage is not empty %}
                     <tr>
-                        <th>{{ 'label.homepage'|trans }}</th>
+                        <th>{{ 'homepage'|trans }}</th>
                         <td><a href="{{ customer.homepage }}" target="_blank">{{ customer.homepage|replace({'https://': '', 'http://': ''}) }}</a></td>
                     </tr>
                 {% endif %}
                 {% if customer.fax is not empty %}
                     <tr>
-                        <th>{{ 'label.fax'|trans }}</th>
+                        <th>{{ 'fax'|trans }}</th>
                         <td>{{ customer.fax }}</td>
                     </tr>
                 {% endif %}
                 {% if customer.timezone is not empty %}
                     <tr>
-                        <th>{{ 'label.timezone'|trans }}</th>
+                        <th>{{ 'timezone'|trans }}</th>
                         <td>{{ customer_now|date_time }} ({{ customer.timezone }})</td>
                     </tr>
                 {% endif %}
                 {% if customer.currency is not empty %}
                     <tr>
-                        <th>{{ 'label.currency'|trans }}</th>
+                        <th>{{ 'currency'|trans }}</th>
                         <td>{{ customer.currency }}</td>
                     </tr>
                 {% endif %}
                 {% if is_granted('details', customer) %}
                     {% if customer.number is not empty %}
                         <tr>
-                            <th>{{ 'label.number'|trans }}</th>
+                            <th>{{ 'number'|trans }}</th>
                             <td>{{ customer.number }}</td>
                         </tr>
                     {% endif %}
                     {% if customer.vatId is not empty %}
                         <tr>
-                            <th>{{ 'label.vat_id'|trans }}</th>
+                            <th>{{ 'vat_id'|trans }}</th>
                             <td>{{ customer.vatId }}</td>
                         </tr>
                     {% endif %}

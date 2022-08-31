@@ -10,7 +10,6 @@
 namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
-use App\Repository\Query\TagQuery;
 
 class TagsSubscriber extends AbstractActionsSubscriber
 {
@@ -21,13 +20,6 @@ class TagsSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        $payload = $event->getPayload();
-
-        /** @var TagQuery $query */
-        $query = $payload['query'];
-
-        $event->addSearchToggle($query);
-
         if ($this->isGranted('manage_tag') || $this->isGranted('create_tag')) {
             $event->addCreate($this->path('tags_create'));
         }

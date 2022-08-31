@@ -34,39 +34,39 @@ class InvoiceTemplateForm extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'label.name',
+                'label' => 'name',
             ])
             ->add('title', TextType::class, [
-                'label' => 'label.title',
+                'label' => 'title',
             ])
             ->add('company', TextType::class, [
-                'label' => 'label.company',
+                'label' => 'company',
             ])
             ->add('vatId', TextType::class, [
-                'label' => 'label.vat_id',
+                'label' => 'vat_id',
                 'required' => false,
             ])
             ->add('address', TextareaType::class, [
-                'label' => 'label.address',
+                'label' => 'address',
                 'required' => false,
             ])
             ->add('contact', TextareaType::class, [
-                'label' => 'label.contact',
+                'label' => 'contact',
                 'required' => false,
             ])
             ->add('paymentTerms', TextareaType::class, [
-                'label' => 'label.payment_terms',
+                'label' => 'payment_terms',
                 'required' => false,
             ])
             ->add('paymentDetails', TextareaType::class, [
-                'label' => 'label.invoice_bank_account',
+                'label' => 'invoice_bank_account',
                 'required' => false,
             ])
             ->add('dueDays', IntegerType::class, [
-                'label' => 'label.due_days',
+                'label' => 'due_days',
             ])
             ->add('vat', NumberType::class, [
-                'label' => 'label.tax_rate',
+                'label' => 'tax_rate',
                 'scale' => 2,
             ])
             ->add('renderer', InvoiceRendererType::class)

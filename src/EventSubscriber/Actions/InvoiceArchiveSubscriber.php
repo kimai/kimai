@@ -10,7 +10,6 @@
 namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
-use App\Repository\Query\InvoiceArchiveQuery;
 
 class InvoiceArchiveSubscriber extends AbstractActionsSubscriber
 {
@@ -21,12 +20,6 @@ class InvoiceArchiveSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        $payload = $event->getPayload();
-
-        /** @var InvoiceArchiveQuery $query */
-        $query = $payload['query'];
-
-        $event->addSearchToggle($query);
         $event->addQuickExport($this->path('invoice_export'));
         $event->addHelp($this->documentationLink('invoices.html'));
     }

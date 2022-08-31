@@ -26,12 +26,12 @@ class ActivityTypePatternType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $name = $this->translator->trans('label.name');
-        $comment = $this->translator->trans('label.description');
+        $name = $this->translator->trans('name');
+        $comment = $this->translator->trans('description');
         $spacer = ActivityHelper::SPACER;
 
         $resolver->setDefaults([
-            'label' => 'label.choice_pattern',
+            'label' => 'choice_pattern',
             'choices' => [
                 $name => ActivityHelper::PATTERN_NAME,
                 $comment => ActivityHelper::PATTERN_COMMENT,

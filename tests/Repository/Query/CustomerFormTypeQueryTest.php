@@ -24,7 +24,7 @@ class CustomerFormTypeQueryTest extends BaseFormTypeQueryTest
 
         $this->assertBaseQuery($sut);
 
-        $customer = new Customer();
+        $customer = new Customer('foo');
         self::assertFalse($sut->isAllowCustomerPreselect());
         $sut->setAllowCustomerPreselect(true);
         self::assertTrue($sut->isAllowCustomerPreselect());

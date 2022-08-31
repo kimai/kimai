@@ -25,9 +25,7 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
         /** @type {KimaiForm} FORMS */
         const FORMS = this.getContainer().getPlugin('form');
         FORMS.activateForm('div.page-wrapper form');
-        FORMS.activateForm('form.searchform');
 
-        this._registerModalAutofocus('#modal_search');
         this._registerModalAutofocus('#remote_form_modal');
 
         this.overlay = null;

@@ -26,7 +26,7 @@ class InvoiceTemplateType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.template',
+            'label' => 'template',
             'help' => 'help.invoiceTemplate',
             'class' => InvoiceTemplate::class,
             'choice_label' => 'name',

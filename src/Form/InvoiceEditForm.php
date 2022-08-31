@@ -32,7 +32,7 @@ class InvoiceEditForm extends AbstractType
 
         $builder
             ->add('comment', TextareaType::class, [
-                'label' => 'label.description',
+                'label' => 'description',
                 'required' => false,
             ])
             ->add('status', ChoiceType::class, [
@@ -42,7 +42,7 @@ class InvoiceEditForm extends AbstractType
                     'status.paid' => Invoice::STATUS_PAID,
                     'status.canceled' => Invoice::STATUS_CANCELED,
                 ],
-                'label' => 'label.status',
+                'label' => 'status',
                 'required' => true,
             ])
             ->add('paymentDate', DatePickerType::class, array_merge($dateTimeOptions, [

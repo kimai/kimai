@@ -49,7 +49,6 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
 
         $this->assertPageActions($client, [
-            'search' => '#',
             'download toolbar-action' => $this->createUrl('/admin/project/export'),
             'help' => 'https://www.kimai.org/documentation/project.html'
         ]);
@@ -62,7 +61,6 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
 
         $this->assertPageActions($client, [
-            'search' => '#',
             'download toolbar-action' => $this->createUrl('/admin/project/export'),
             'create modal-ajax-form' => $this->createUrl('/admin/project/create'),
             'settings modal-ajax-form' => $this->createUrl('/admin/system-config/edit/project'),
@@ -87,7 +85,6 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/admin/project/');
 
         $this->assertPageActions($client, [
-            'search' => '#',
             'download toolbar-action' => $this->createUrl('/admin/project/export'),
             'create modal-ajax-form' => $this->createUrl('/admin/project/create'),
             'help' => 'https://www.kimai.org/documentation/project.html'
@@ -227,10 +224,9 @@ class ProjectControllerTest extends ControllerBaseTest
         $project->setMetaField((new ProjectMeta())->setName('foo')->setValue('bar'));
         $project->setEnd(new \DateTime());
         $em->persist($project);
-        $team = new Team();
+        $team = new Team('project 1');
         $team->addTeamlead($this->getUserByRole(User::ROLE_ADMIN));
         $team->addProject($project);
-        $team->setName('project 1');
         $em->persist($team);
         $rate = new ProjectRate();
         $rate->setProject($project);

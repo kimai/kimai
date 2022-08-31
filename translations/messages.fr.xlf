@@ -52,28 +52,28 @@
       <!--
               Login / Security
             -->
-      <trans-unit id="9pvowqn" resname="label.password">
-        <source>label.password</source>
+      <trans-unit id="XohImNo" resname="password">
+        <source>password</source>
         <target>Mot de passe</target>
       </trans-unit>
-      <trans-unit id="WxAnbP0" resname="label.password_repeat">
-        <source>label.password_repeat</source>
+      <trans-unit id="hLEZkoC" resname="password_repeat">
+        <source>password_repeat</source>
         <target>Répéter le mot de passe</target>
       </trans-unit>
-      <trans-unit id="II4DGnv" resname="label.logout">
-        <source>label.logout</source>
+      <trans-unit id="ACcM9j_" resname="logout">
+        <source>logout</source>
         <target>Se déconnecter</target>
       </trans-unit>
-      <trans-unit id="hFFZGp_" resname="label.user_profile">
-        <source>label.user_profile</source>
+      <trans-unit id="_x2He8M" resname="user_profile">
+        <source>user_profile</source>
         <target>Mon profil</target>
       </trans-unit>
-      <trans-unit id="gXZR.hV" resname="label.api_token">
-        <source>label.api_token</source>
+      <trans-unit id="T4nAM7X" resname="api_token">
+        <source>api_token</source>
         <target>Mot de passe de l'API</target>
       </trans-unit>
-      <trans-unit id="s_X2xpI" resname="label.api_token_repeat">
-        <source>label.api_token_repeat</source>
+      <trans-unit id="aq59Sk8" resname="api_token_repeat">
+        <source>api_token_repeat</source>
         <target>Répéter le mot de passe de l'API</target>
       </trans-unit>
       <!--
@@ -145,107 +145,103 @@
       <!--
               General labels
             -->
-      <trans-unit id="H1qEi4d" resname="label.date">
-        <source>label.date</source>
+      <trans-unit id="DodjLNR" resname="date">
+        <source>date</source>
         <target>Date</target>
       </trans-unit>
-      <trans-unit id="eJPDE76" resname="label.starttime">
-        <source>label.starttime</source>
+      <trans-unit id="BHk4pZ3" resname="starttime">
+        <source>starttime</source>
         <target>Début</target>
       </trans-unit>
-      <trans-unit id="uZlpDFh" resname="label.endtime">
-        <source>label.endtime</source>
+      <trans-unit id="eI_tMbq" resname="endtime">
+        <source>endtime</source>
         <target>Fin</target>
       </trans-unit>
-      <trans-unit id="cgpmY0I" resname="label.duration">
-        <source>label.duration</source>
+      <trans-unit id="yqea9Nt" resname="duration">
+        <source>duration</source>
         <target>Durée</target>
       </trans-unit>
-      <trans-unit id="O2X4xZH" resname="label.user">
-        <source>label.user</source>
+      <trans-unit id="BPiZbad" resname="user">
+        <source>user</source>
         <target>Utilisateur</target>
       </trans-unit>
-      <trans-unit id="LDhDPrF" resname="label.username">
-        <source>label.username</source>
+      <trans-unit id="FveKfWM" resname="username">
+        <source>username</source>
         <target>Identifiant</target>
       </trans-unit>
-      <trans-unit id="4cEApe1" resname="label.description">
-        <source>label.description</source>
+      <trans-unit id="yQRveje" resname="description">
+        <source>description</source>
         <target>Description</target>
       </trans-unit>
-      <trans-unit id="ysOvPSq" resname="label.name">
-        <source>label.name</source>
+      <trans-unit id="gqNTf.D" resname="name">
+        <source>name</source>
         <target>Nom</target>
       </trans-unit>
-      <trans-unit id="WqTho4C" resname="label.comment">
-        <source>label.comment</source>
+      <trans-unit id="xEuy.VF" resname="comment">
+        <source>comment</source>
         <target>Commentaire</target>
       </trans-unit>
-      <trans-unit id="txRonia" resname="label.id">
-        <source>label.id</source>
+      <trans-unit id="pWFFJwz" resname="id">
+        <source>id</source>
         <target>Identifiant</target>
       </trans-unit>
-      <trans-unit id="CYpZwBz" resname="label.visible">
-        <source>label.visible</source>
+      <trans-unit id="1C7xSXk" resname="visible">
+        <source>visible</source>
         <target>Visible</target>
       </trans-unit>
-      <trans-unit id="2ktNwkr" resname="label.budget">
-        <source>label.budget</source>
+      <trans-unit id="CvlqjtY" resname="budget">
+        <source>budget</source>
         <target>Budget</target>
       </trans-unit>
-      <trans-unit id="x8TrOec" resname="label.timeBudget">
-        <source>label.timeBudget</source>
+      <trans-unit id="qbD0dHa" resname="timeBudget">
+        <source>timeBudget</source>
         <target>Budget temps</target>
       </trans-unit>
-      <trans-unit id="l1wiL0h" resname="label.activity">
-        <source>label.activity</source>
+      <trans-unit id="BlGGO.X" resname="activity">
+        <source>activity</source>
         <target>Activité</target>
       </trans-unit>
-      <trans-unit id="KtnqJcg" resname="label.project">
-        <source>label.project</source>
+      <trans-unit id="JEIQ5IQ" resname="project">
+        <source>project</source>
         <target>Projet</target>
       </trans-unit>
-      <trans-unit id="VNCQ7YU" resname="label.tag">
-        <source>label.tag</source>
+      <trans-unit id="KhBzpuZ" resname="tag">
+        <source>tag</source>
         <target>Mot-clé</target>
       </trans-unit>
-      <trans-unit id="ijQyGRo" resname="label.tags">
-        <source>label.tags</source>
-        <target>Mots-clés</target>
-      </trans-unit>
-      <trans-unit id="VAbtieW" resname="label.hourlyRate">
-        <source>label.hourlyRate</source>
+      <trans-unit id="E_bHhGR" resname="hourlyRate">
+        <source>hourlyRate</source>
         <target>Taux horaire</target>
       </trans-unit>
-      <trans-unit id="dezCZWf" resname="label.skin">
-        <source>label.skin</source>
+      <trans-unit id="KgBw0BS" resname="skin">
+        <source>skin</source>
         <target>Affichage : Couleurs</target>
       </trans-unit>
-      <trans-unit id="w8T34A6" resname="label.hours">
-        <source>label.hours</source>
+      <trans-unit id="QEMUsfS" resname="hours">
+        <source>hours</source>
         <target>Heures</target>
       </trans-unit>
-      <trans-unit id="Ih3IFXj" resname="label.rate">
-        <source>label.rate</source>
+      <trans-unit id="xUl3nXn" resname="rate">
+        <source>rate</source>
         <target>Taux</target>
       </trans-unit>
-      <trans-unit id="foM2o5T" resname="label.language">
-        <source>label.language</source>
+      <trans-unit id="pO8wS6Q" resname="language">
+        <source>language</source>
         <target>Langue</target>
       </trans-unit>
-      <trans-unit id="Z8a2kUf" resname="label.customer">
-        <source>label.customer</source>
+      <trans-unit id="tsRYY4d" resname="customer">
+        <source>customer</source>
         <target>Client</target>
       </trans-unit>
-      <trans-unit id="D2N6_cP" resname="label.email">
-        <source>label.email</source>
+      <trans-unit id="giREF.l" resname="email">
+        <source>email</source>
         <target>Courriel</target>
       </trans-unit>
       <!--
               Buttons & Actions
             -->
-      <trans-unit id="zldXQq6" resname="label.actions">
-        <source>label.actions</source>
+      <trans-unit id="Kw3N1AA" resname="actions">
+        <source>actions</source>
         <target>Actions</target>
       </trans-unit>
       <trans-unit id="ovKkXwU" resname="action.edit">
@@ -278,8 +274,8 @@
       <!--
               Widgets
             -->
-      <trans-unit id="4iliLZT" resname="label.toggle_dropdown">
-        <source>label.toggle_dropdown</source>
+      <trans-unit id="muzkQpM" resname="toggle_dropdown">
+        <source>toggle_dropdown</source>
         <target>Afficher le menu</target>
       </trans-unit>
       <!--
@@ -293,28 +289,28 @@
         <source>timesheet.edit</source>
         <target>Modifier l'enregistrement</target>
       </trans-unit>
-      <trans-unit id="trDJK9W" resname="label.begin">
-        <source>label.begin</source>
+      <trans-unit id="5vB9Q7X" resname="begin">
+        <source>begin</source>
         <target>De</target>
       </trans-unit>
-      <trans-unit id="R9typUt" resname="label.end">
-        <source>label.end</source>
+      <trans-unit id="Nh5I0DC" resname="end">
+        <source>end</source>
         <target>À</target>
       </trans-unit>
-      <trans-unit id="egaNXjp" resname="label.daterange">
-        <source>label.daterange</source>
+      <trans-unit id="iNOVZRh" resname="daterange">
+        <source>daterange</source>
         <target>Plage horaire</target>
       </trans-unit>
       <trans-unit id="UbnqJLn" resname="modal.columns.title">
         <source>modal.columns.title</source>
         <target>Modifier la visibilité des colonnes</target>
       </trans-unit>
-      <trans-unit id="5gjqxgK" resname="label.fixedRate">
-        <source>label.fixedRate</source>
+      <trans-unit id="_0tuMNE" resname="fixedRate">
+        <source>fixedRate</source>
         <target>Taux fixe</target>
       </trans-unit>
-      <trans-unit id="YTSS_Q1" resname="label.color">
-        <source>label.color</source>
+      <trans-unit id="dChNncv" resname="color">
+        <source>color</source>
         <target>Couleur</target>
       </trans-unit>
       <!--
@@ -352,15 +348,15 @@
         <source>profile.preferences</source>
         <target>Préférences</target>
       </trans-unit>
-      <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
-        <source>label.calendar_initial_view</source>
+      <trans-unit id="j4Kd9N1" resname="calendar_initial_view">
+        <source>calendar_initial_view</source>
         <target>Vue par défaut du calendrier</target>
       </trans-unit>
-      <trans-unit id="3dU6nOJ" resname="label.login_initial_view">
-        <source>label.login_initial_view</source>
+      <trans-unit id="H.IqJTQ" resname="login_initial_view">
+        <source>login_initial_view</source>
         <target>Vue par défaut après connexion</target>
       </trans-unit>
-      <!-- Options for user-preference label.calendar_initial_view -->
+      <!-- Options for user-preference calendar_initial_view -->
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
         <target>Mois</target>
@@ -373,8 +369,8 @@
         <source>agendaDay</source>
         <target>Jour</target>
       </trans-unit>
-      <trans-unit id="DJu1n0C" resname="label.daily_stats">
-        <source>label.daily_stats</source>
+      <trans-unit id="r49TNAg" resname="daily_stats">
+        <source>daily_stats</source>
         <target>Voir les statistiques journalières dans la fiche des temps</target>
       </trans-unit>
       <!--
@@ -390,82 +386,82 @@
       <!--
               Admin: Customer
             -->
-      <trans-unit id="39AtPxQ" resname="label.number">
-        <source>label.number</source>
+      <trans-unit id="EohvnQA" resname="number">
+        <source>number</source>
         <target>Compte</target>
       </trans-unit>
-      <trans-unit id="7jfRn_1" resname="label.company">
-        <source>label.company</source>
+      <trans-unit id="8WjM3ZF" resname="company">
+        <source>company</source>
         <target>Nom de la société</target>
       </trans-unit>
-      <trans-unit id="GOStgLi" resname="label.vat">
-        <source>label.vat</source>
+      <trans-unit id="fFErSLq" resname="vat">
+        <source>vat</source>
         <target>TVA</target>
       </trans-unit>
-      <trans-unit id="0tkOMo1" resname="label.contact">
-        <source>label.contact</source>
+      <trans-unit id="CT59X9u" resname="contact">
+        <source>contact</source>
         <target>Contact</target>
       </trans-unit>
-      <trans-unit id="c9W5AO4" resname="label.address">
-        <source>label.address</source>
+      <trans-unit id="2Ayb_RD" resname="address">
+        <source>address</source>
         <target>Addresse</target>
       </trans-unit>
-      <trans-unit id="k7MJQ82" resname="label.country">
-        <source>label.country</source>
+      <trans-unit id="r.ZOT9U" resname="country">
+        <source>country</source>
         <target>Pays</target>
       </trans-unit>
-      <trans-unit id="g03c_vw" resname="label.phone">
-        <source>label.phone</source>
+      <trans-unit id="RVadpX9" resname="phone">
+        <source>phone</source>
         <target>Téléphone</target>
       </trans-unit>
-      <trans-unit id="eRyhERS" resname="label.fax">
-        <source>label.fax</source>
+      <trans-unit id="SvTiF8B" resname="fax">
+        <source>fax</source>
         <target>Fax</target>
       </trans-unit>
-      <trans-unit id="AawT9pW" resname="label.mobile">
-        <source>label.mobile</source>
+      <trans-unit id="1STBoIE" resname="mobile">
+        <source>mobile</source>
         <target>Mobile</target>
       </trans-unit>
-      <trans-unit id="PS9IH_t" resname="label.homepage">
-        <source>label.homepage</source>
+      <trans-unit id="pcWhXux" resname="homepage">
+        <source>homepage</source>
         <target>Page d'accueil</target>
       </trans-unit>
-      <trans-unit id="dmtPdwq" resname="label.timezone">
-        <source>label.timezone</source>
+      <trans-unit id="OWLt7pw" resname="timezone">
+        <source>timezone</source>
         <target>Fuseau horaire</target>
       </trans-unit>
-      <trans-unit id="otd2FZd" resname="label.currency">
-        <source>label.currency</source>
+      <trans-unit id="Rm5bnNV" resname="currency">
+        <source>currency</source>
         <target>Devise</target>
       </trans-unit>
       <!--
               Admin: User
             -->
-      <trans-unit id="TRDzmCV" resname="label.alias">
-        <source>label.alias</source>
+      <trans-unit id="GgpqNso" resname="alias">
+        <source>alias</source>
         <target>Nom</target>
       </trans-unit>
-      <trans-unit id="UrRn8xj" resname="label.title">
-        <source>label.title</source>
+      <trans-unit id="qvIyBkY" resname="title">
+        <source>title</source>
         <target>Titre</target>
       </trans-unit>
-      <trans-unit id="nWMH_Nr" resname="label.avatar">
-        <source>label.avatar</source>
+      <trans-unit id="h7voece" resname="avatar">
+        <source>avatar</source>
         <target>Photo de profil (URL)</target>
       </trans-unit>
-      <trans-unit id="KtTP.Sh" resname="label.active">
-        <source>label.active</source>
+      <trans-unit id="loeWEWU" resname="active">
+        <source>active</source>
         <target>Actif</target>
       </trans-unit>
-      <trans-unit id="iD6CNOO" resname="label.roles">
-        <source>label.roles</source>
+      <trans-unit id="Zs9VE7N" resname="roles">
+        <source>roles</source>
         <target>Rôle</target>
       </trans-unit>
       <!--
               Admin: Plugins
             -->
-      <trans-unit id="d75KAlJ" resname="label.version">
-        <source>label.version</source>
+      <trans-unit id="XKTzhQz" resname="version">
+        <source>version</source>
         <target>Version</target>
       </trans-unit>
       <!--
@@ -609,12 +605,12 @@
         <source>invoice_print</source>
         <target>Facture</target>
       </trans-unit>
-      <trans-unit id="p0IprAw" resname="label.template">
-        <source>label.template</source>
+      <trans-unit id="XN4PEpj" resname="template">
+        <source>template</source>
         <target>Modèle</target>
       </trans-unit>
-      <trans-unit id="zfIRxJh" resname="label.due_days">
-        <source>label.due_days</source>
+      <trans-unit id="ohNu8DK" resname="due_days">
+        <source>due_days</source>
         <target>Délai de paiement en jours</target>
       </trans-unit>
       <trans-unit id="rAJrxSK" resname="invoice.due_days">
@@ -649,20 +645,20 @@
         <source>invoice.service_date</source>
         <target>Date du service</target>
       </trans-unit>
-      <trans-unit id="6x24VVR" resname="label.amount">
-        <source>label.amount</source>
+      <trans-unit id="zzjZXJx" resname="amount">
+        <source>amount</source>
         <target>Quantité</target>
       </trans-unit>
-      <trans-unit id="g7EpaPY" resname="label.total_rate">
-        <source>label.total_rate</source>
+      <trans-unit id="BAkWQqr" resname="total_rate">
+        <source>total_rate</source>
         <target>Prix total</target>
       </trans-unit>
-      <trans-unit id="MF3MdTu" resname="label.unit_price">
-        <source>label.unit_price</source>
+      <trans-unit id="IoKfYkz" resname="unit_price">
+        <source>unit_price</source>
         <target>Prix unitaire</target>
       </trans-unit>
-      <trans-unit id="77aZC3r" resname="label.payment_terms">
-        <source>label.payment_terms</source>
+      <trans-unit id="033t0aO" resname="payment_terms">
+        <source>payment_terms</source>
         <target>Modalités de paiement</target>
       </trans-unit>
       <trans-unit id="9p2KQag" resname="invoice.signature_user">
@@ -677,23 +673,23 @@
         <source>invoice.total_working_time</source>
         <target>Durée totale</target>
       </trans-unit>
-      <trans-unit id="BS00SS7" resname="label.orderNumber">
-        <source>label.orderNumber</source>
+      <trans-unit id="3tegKgk" resname="orderNumber">
+        <source>orderNumber</source>
         <target>Numéro de commande</target>
       </trans-unit>
-      <trans-unit id="RRj6PYN" resname="label.invoice_tax_number">
-        <source>label.invoice_tax_number</source>
+      <trans-unit id="WMJwy8r" resname="invoice_tax_number">
+        <source>invoice_tax_number</source>
         <target>No de TVA :</target>
       </trans-unit>
-      <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
-        <source>label.invoice_bank_account</source>
+      <trans-unit id="lswYe8s" resname="invoice_bank_account">
+        <source>invoice_bank_account</source>
         <target>Compte bancaire</target>
       </trans-unit>
       <!--
               Export
             -->
-      <trans-unit id="F6Jmro7" resname="export.title">
-        <source>export.title</source>
+      <trans-unit id="1GruCMx" resname="export">
+        <source>export</source>
         <target>Export</target>
       </trans-unit>
       <trans-unit id="vjmoQGo" resname="export.period">
@@ -738,16 +734,16 @@
       <!--
               TOOLBARS
             -->
-      <trans-unit id="MPimOps" resname="label.pageSize">
-        <source>label.pageSize</source>
+      <trans-unit id="igCkqAP" resname="pageSize">
+        <source>pageSize</source>
         <target>Taille de la page</target>
       </trans-unit>
-      <trans-unit id="KhyA_PW" resname="label.entryState">
-        <source>label.entryState</source>
+      <trans-unit id="cjgNYUB" resname="entryState">
+        <source>entryState</source>
         <target>Enregistrements</target>
       </trans-unit>
-      <trans-unit id="X3JM9wj" resname="label.exported">
-        <source>label.exported</source>
+      <trans-unit id="Qn2ouiL" resname="exported">
+        <source>exported</source>
         <target>Exporté</target>
       </trans-unit>
       <trans-unit id="_DDecAV" resname="entryState.exported">
@@ -778,72 +774,72 @@
         <source>export.mark_all</source>
         <target>Marquer tous les enregistrements affichés comme fermés ?</target>
       </trans-unit>
-      <trans-unit id="S0vT92U" resname="label.globalsOnly">
-        <source>label.globalsOnly</source>
+      <trans-unit id="NNsA8i2" resname="globalsOnly">
+        <source>globalsOnly</source>
         <target>Uniquement global</target>
       </trans-unit>
-      <trans-unit id="BxkmaKz" resname="label.appendTags">
-        <source>label.appendTags</source>
+      <trans-unit id="ICpl9sx" resname="appendTags">
+        <source>appendTags</source>
         <target>Ajouter des mots-clés</target>
       </trans-unit>
-      <trans-unit id="EoouxGX" resname="label.replaceTags">
-        <source>label.replaceTags</source>
+      <trans-unit id="tl01EdS" resname="replaceTags">
+        <source>replaceTags</source>
         <target>Remplacer les mots-clés</target>
       </trans-unit>
       <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>
         <target>Chaque enregistrement a la même valeur, quelle que soit sa durée</target>
       </trans-unit>
-      <trans-unit id="1PQHtXu" resname="label.progress">
-        <source>label.progress</source>
+      <trans-unit id="tfkKlua" resname="progress">
+        <source>progress</source>
         <target>Progression</target>
       </trans-unit>
-      <trans-unit id="jTiYRIu" resname="label.my_team_projects">
-        <source>label.my_team_projects</source>
+      <trans-unit id="Ia0kvPi" resname="my_team_projects">
+        <source>my_team_projects</source>
         <target>Mes projets</target>
       </trans-unit>
-      <trans-unit id="f3KMQJh" resname="label.my_teams">
-        <source>label.my_teams</source>
+      <trans-unit id="L05Qw2x" resname="my_teams">
+        <source>my_teams</source>
         <target>Mes équipes</target>
       </trans-unit>
       <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
         <target>Réinitialiser</target>
       </trans-unit>
-      <trans-unit id="vkHr9AP" resname="label.billable">
-        <source>label.billable</source>
+      <trans-unit id="aVwNQcX" resname="billable">
+        <source>billable</source>
         <target state="translated">Facturable</target>
       </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
         <target>Tapez votre message…</target>
       </trans-unit>
-      <trans-unit id="Zpj9UB4" resname="label.teamlead">
-        <source>label.teamlead</source>
+      <trans-unit id="evFI7nW" resname="teamlead">
+        <source>teamlead</source>
         <target>Chef d'équipe</target>
       </trans-unit>
-      <trans-unit id="Ss2xe99" resname="label.team">
-        <source>label.team</source>
+      <trans-unit id="yosi0Nu" resname="team">
+        <source>team</source>
         <target>Équipe</target>
       </trans-unit>
-      <trans-unit id="v72sA1c" resname="label.recalculate_rates">
-        <source>label.recalculate_rates</source>
+      <trans-unit id="Qc5nsFn" resname="recalculate_rates">
+        <source>recalculate_rates</source>
         <target>Recalculer les taux</target>
       </trans-unit>
       <trans-unit id="Cxv_0wG" resname="help.internalRate">
         <source>help.internalRate</source>
         <target>Coûts internes (si cela n’est pas spécifié, le taux normal est utilisé)</target>
       </trans-unit>
-      <trans-unit id="4dSa8nM" resname="label.internalRate">
-        <source>label.internalRate</source>
+      <trans-unit id="5ofAsOs" resname="internalRate">
+        <source>internalRate</source>
         <target>Taux interne</target>
       </trans-unit>
       <trans-unit id="djL6LMC" resname="help.rate">
         <source>help.rate</source>
         <target>Taux horaire à appliquer</target>
       </trans-unit>
-      <trans-unit id="DAkHUq0" resname="label.layout">
-        <source>label.layout</source>
+      <trans-unit id="HcWuW2g" resname="layout">
+        <source>layout</source>
         <target>Affichage : Disposition</target>
       </trans-unit>
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">
@@ -858,8 +854,8 @@
         <source>menu.reporting</source>
         <target>Rapports</target>
       </trans-unit>
-      <trans-unit id="xxoo5lW" resname="label.teams">
-        <source>label.teams</source>
+      <trans-unit id="_t.2z4V" resname="teams">
+        <source>teams</source>
         <target>Équipes</target>
       </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
@@ -910,24 +906,20 @@
         <source>status.new</source>
         <target>Nouveau</target>
       </trans-unit>
-      <trans-unit id="hzhzbqw" resname="label.status">
-        <source>label.status</source>
+      <trans-unit id="BzwWNMS" resname="status">
+        <source>status</source>
         <target>État</target>
       </trans-unit>
-      <trans-unit id="as948k9" resname="label.orderDate">
-        <source>label.orderDate</source>
+      <trans-unit id="tCNBGKG" resname="orderDate">
+        <source>orderDate</source>
         <target>Date de commande</target>
       </trans-unit>
-      <trans-unit id="7J7G3Vr" resname="label.mark_as_exported">
-        <source>label.mark_as_exported</source>
+      <trans-unit id="dicW36D" resname="mark_as_exported">
+        <source>mark_as_exported</source>
         <target>Marquer comme exporté</target>
       </trans-unit>
-      <trans-unit id="IQ9DUOW" resname="button.preview_print">
-        <source>button.preview_print</source>
-        <target>Aperçu avant impression</target>
-      </trans-unit>
-      <trans-unit id="7H7P1mE" resname="button.preview">
-        <source>button.preview</source>
+      <trans-unit id="WXXPG7p" resname="preview">
+        <source>preview</source>
         <target>Aperçu</target>
       </trans-unit>
       <trans-unit id="ov4OQOh" resname="invoice.filter">
@@ -970,24 +962,24 @@
         <source>user_permissions.title</source>
         <target>Autorisations de l'utilisateur</target>
       </trans-unit>
-      <trans-unit id="Dgmh_mv" resname="label.vat_id">
-        <source>label.vat_id</source>
+      <trans-unit id="EJDS9HY" resname="vat_id">
+        <source>vat_id</source>
         <target>ID de TVA</target>
       </trans-unit>
-      <trans-unit id="4kQGReV" resname="label.project_end">
-        <source>label.project_end</source>
+      <trans-unit id="TBWoUYf" resname="project_end">
+        <source>project_end</source>
         <target>Fin du projet</target>
       </trans-unit>
-      <trans-unit id="yLOqEX_" resname="label.project_start">
-        <source>label.project_start</source>
+      <trans-unit id="Xyjr.V." resname="project_start">
+        <source>project_start</source>
         <target>Début du projet</target>
       </trans-unit>
-      <trans-unit id="42YD.Bf" resname="label.export_decimal">
-        <source>label.export_decimal</source>
+      <trans-unit id="dherSTU" resname="export_decimal">
+        <source>export_decimal</source>
         <target>Utiliser la durée décimale à l’exportation</target>
       </trans-unit>
-      <trans-unit id="hO7mkmf" resname="label.lastLogin">
-        <source>label.lastLogin</source>
+      <trans-unit id="gRIArHS" resname="lastLogin">
+        <source>lastLogin</source>
         <target>Dernière connexion</target>
       </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
@@ -998,8 +990,8 @@
         <source>help.batch_meta_fields</source>
         <target>Champs qui doivent d'abord être mis à jour en cliquant sur la case à cocher associée.</target>
       </trans-unit>
-      <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">
-        <source>label.batch_meta_fields</source>
+      <trans-unit id="8BPmHPa" resname="batch_meta_fields">
+        <source>batch_meta_fields</source>
         <target>Champs additionnels</target>
       </trans-unit>
       <trans-unit id="zFfl7jw" resname="sum.total">
@@ -1014,48 +1006,48 @@
         <source>update_browser_title</source>
         <target>Mettre à jour le titre du navigateur</target>
       </trans-unit>
-      <trans-unit id="B.Dbbob" resname="label.includeNoBudget">
-        <source>label.includeNoBudget</source>
+      <trans-unit id="L0hRlcf" resname="includeNoBudget">
+        <source>includeNoBudget</source>
         <target>Afficher les entrées sans budget</target>
       </trans-unit>
-      <trans-unit id="z_YHoZn" resname="label.includeNoWork">
-        <source>label.includeNoWork</source>
+      <trans-unit id="L27KvC9" resname="includeNoWork">
+        <source>includeNoWork</source>
         <target>Afficher les entrées sans réservation</target>
       </trans-unit>
-      <trans-unit id="YNGNfGn" resname="label.tax_rate">
-        <source>label.tax_rate</source>
+      <trans-unit id="qX_CKtU" resname="tax_rate">
+        <source>tax_rate</source>
         <target>Taux d’imposition</target>
       </trans-unit>
       <trans-unit id="O5w1jzb" resname="file">
         <source>file</source>
         <target>Fichier</target>
       </trans-unit>
-      <trans-unit id="csF1D35" resname="label.not_invoiced">
-        <source>label.not_invoiced</source>
+      <trans-unit id="o0yOFHL" resname="not_invoiced">
+        <source>not_invoiced</source>
         <target>Non facturé</target>
       </trans-unit>
-      <trans-unit id="3zn5T5e" resname="label.not_exported">
-        <source>label.not_exported</source>
+      <trans-unit id="2dm.ZWM" resname="not_exported">
+        <source>not_exported</source>
         <target>Non exporté</target>
       </trans-unit>
-      <trans-unit id="Z8Fxbvf" resname="label.orderBy">
-        <source>label.orderBy</source>
+      <trans-unit id="VSo_gmO" resname="orderBy">
+        <source>orderBy</source>
         <target>Trier par</target>
       </trans-unit>
-      <trans-unit id="0D_zaYd" resname="label.desc">
-        <source>label.desc</source>
+      <trans-unit id="l4ZOh4." resname="desc">
+        <source>desc</source>
         <target>Descendant</target>
       </trans-unit>
-      <trans-unit id="31x84Dt" resname="label.asc">
-        <source>label.asc</source>
+      <trans-unit id="1o0.9vf" resname="asc">
+        <source>asc</source>
         <target>Ascendant</target>
       </trans-unit>
-      <trans-unit id="BytPihM" resname="label.set_as_default">
-        <source>label.set_as_default</source>
+      <trans-unit id="CiA4s9E" resname="set_as_default">
+        <source>set_as_default</source>
         <target>Enregistrer le paramètre comme favori de la recherche</target>
       </trans-unit>
-      <trans-unit id="IolBPQD" resname="label.searchTerm">
-        <source>label.searchTerm</source>
+      <trans-unit id="8W_TZI0" resname="searchTerm">
+        <source>searchTerm</source>
         <target>Terme de recherche</target>
       </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
@@ -1066,16 +1058,16 @@
         <source>invoice.payment_date</source>
         <target>Date de paiement</target>
       </trans-unit>
-      <trans-unit id="NNKq04n" resname="label.remove_default">
-        <source>label.remove_default</source>
+      <trans-unit id="DUDrvjk" resname="remove_default">
+        <source>remove_default</source>
         <target>Supprimer le favori de recherche</target>
       </trans-unit>
-      <trans-unit id="qDnURk7" resname="label.last_record">
-        <source>label.last_record</source>
+      <trans-unit id="_YiKaOT" resname="last_record">
+        <source>last_record</source>
         <target>Dernière entrée</target>
       </trans-unit>
-      <trans-unit id="AJ6dwR." resname="label.last_record_before">
-        <source>label.last_record_before</source>
+      <trans-unit id="vpqPF8v" resname="last_record_before">
+        <source>last_record_before</source>
         <target>Aucune réservation de temps depuis</target>
       </trans-unit>
       <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
@@ -1118,20 +1110,20 @@
         <source>error.too_many_entries</source>
         <target>La demande n'a pas pu être traitée. Trop de résultats ont été trouvés.</target>
       </trans-unit>
-      <trans-unit id="LXdqaTH" resname="label.account_number">
-        <source>label.account_number</source>
+      <trans-unit id="KH2hgil" resname="account_number">
+        <source>account_number</source>
         <target>Numéro d'équipe</target>
       </trans-unit>
       <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
         <source>delete_warning.short_stats</source>
         <target>Il existe actuellement %records% enregistrements de temps, dont la durée totale est de %duration%.</target>
       </trans-unit>
-      <trans-unit id="cHfLJtL" resname="label.budgetType_month">
-        <source>label.budgetType_month</source>
+      <trans-unit id="wYqyL6A" resname="budgetType_month">
+        <source>budgetType_month</source>
         <target>Mensuel</target>
       </trans-unit>
-      <trans-unit id="PoF7hD8" resname="label.budgetType">
-        <source>label.budgetType</source>
+      <trans-unit id="4Ndj7Xo" resname="budgetType">
+        <source>budgetType</source>
         <target>Type de budget</target>
       </trans-unit>
       <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
@@ -1154,8 +1146,8 @@
         <source>export.warn_result_amount</source>
         <target>Votre recherche aboutit à %count% de résultats. Si l'exportation échoue, vous devez affiner votre recherche.</target>
       </trans-unit>
-      <trans-unit id="pnGDFmf" resname="label.type">
-        <source>label.type</source>
+      <trans-unit id="EwPAaws" resname="type">
+        <source>type</source>
         <target>Type</target>
       </trans-unit>
       <trans-unit id="yNWIi5U" resname="default_value_new">
@@ -1170,16 +1162,16 @@
         <source>quick_entry.title</source>
         <target>Heures de travail hebdomadaires</target>
       </trans-unit>
-      <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
-        <source>label.includeBudgetType_month</source>
+      <trans-unit id="ViUuILv" resname="includeBudgetType_month">
+        <source>includeBudgetType_month</source>
         <target>Afficher les entrées avec un budget « mensuel »</target>
       </trans-unit>
-      <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
-        <source>label.includeBudgetType_full</source>
+      <trans-unit id="KukrzcT" resname="includeBudgetType_full">
+        <source>includeBudgetType_full</source>
         <target>Afficher les entrées avec le budget « cycle de vie »</target>
       </trans-unit>
-      <trans-unit id="9Rhadz6" resname="label.budgetType_full">
-        <source>label.budgetType_full</source>
+      <trans-unit id="dnQEYoJ" resname="budgetType_full">
+        <source>budgetType_full</source>
         <target>Cycle de vie</target>
       </trans-unit>
       <trans-unit id="gT9W2pZ" resname="status.canceled">
@@ -1206,7 +1198,7 @@
         <source>Updated at</source>
         <target>Mis à jour le</target>
       </trans-unit>
-      <trans-unit id="DpdNns0" resname="label.choice_pattern">
+      <trans-unit id="fVA3M2x" resname="choice_pattern">
         <source>Display of entries in selection lists</source>
         <target>Affichage des entrées dans les listes de sélection</target>
       </trans-unit>
@@ -1214,12 +1206,12 @@
         <source>automatic</source>
         <target>Automatique</target>
       </trans-unit>
-      <trans-unit id="74pEVx1" resname="label.invoiceText">
-        <source>label.invoiceText</source>
+      <trans-unit id="OJ.wI1U" resname="invoiceText">
+        <source>invoiceText</source>
         <target state="translated">Texte de la facture</target>
       </trans-unit>
-      <trans-unit id="G9hBaDJ" resname="label.globalActivities">
-        <source>label.globalActivities</source>
+      <trans-unit id="HNFpvnH" resname="globalActivities">
+        <source>globalActivities</source>
         <target state="translated">Autoriser les activités globales</target>
       </trans-unit>
     </body>

@@ -9,15 +9,12 @@
 
 namespace App\Repository\Query;
 
-/**
- * Can be used for advanced queries with the: CustomerRepository
- */
 class CustomerQuery extends BaseQuery implements VisibilityInterface
 {
     use VisibilityTrait;
 
     public const CUSTOMER_ORDER_ALLOWED = [
-        'id', 'name', 'comment', 'country', 'number', 'homepage', 'email', 'mobile', 'fax',
+        'name', 'description' => 'comment', 'country', 'number', 'homepage', 'email', 'mobile', 'fax',
         'phone', 'currency', 'address', 'contact', 'company', 'vat_id', 'budget', 'timeBudget', 'visible'
     ];
 

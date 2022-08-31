@@ -126,7 +126,7 @@ class ProjectServiceTest extends TestCase
 
         $sut = $this->getSut($dispatcher);
 
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project = $sut->createNewProject($customer);
 
         self::assertSame($customer, $project->getCustomer());

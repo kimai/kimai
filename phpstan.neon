@@ -13,5 +13,6 @@ parameters:
     inferPrivatePropertyTypeFromConstructor: true
     doctrine:
         objectManagerLoader: %rootDir%/../../../tests/phpstan-doctrine.php
+        allowNullablePropertyForRequiredField: true
     symfony:
         containerXmlPath: %rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml

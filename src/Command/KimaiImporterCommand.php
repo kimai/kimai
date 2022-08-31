@@ -1031,8 +1031,7 @@ final class KimaiImporterCommand extends Command
                 $newTimezone = $timezone;
             }
 
-            $customer = new Customer();
-            $customer->setName($name);
+            $customer = new Customer($name);
             $customer->setComment($oldCustomer['comment']);
             $customer->setCompany($oldCustomer['company']);
             $customer->setFax($oldCustomer['fax']);
@@ -1872,8 +1871,7 @@ final class KimaiImporterCommand extends Command
             }
 
             if (!$this->isKnownGroup($group)) {
-                $team = new Team();
-                $team->setName($group['name']);
+                $team = new Team($group['name']);
             } else {
                 $team = $this->getCachedGroup($group['groupID']);
             }
@@ -2022,8 +2020,7 @@ final class KimaiImporterCommand extends Command
 
     private function createInstanceTeam(SymfonyStyle $io, array $users, array $activities, string $name): void
     {
-        $team = new Team();
-        $team->setName($name);
+        $team = new Team($name);
         $teamlead = $users[array_key_first($users)];
         $teamlead = $this->getCachedUser($teamlead['userID']);
         $team->addTeamlead($teamlead);

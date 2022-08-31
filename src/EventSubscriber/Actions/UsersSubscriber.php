@@ -10,7 +10,6 @@
 namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
-use App\Repository\Query\UserQuery;
 
 class UsersSubscriber extends AbstractActionsSubscriber
 {
@@ -21,18 +20,11 @@ class UsersSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        $payload = $event->getPayload();
-
-        /** @var UserQuery $query */
-        $query = $payload['query'];
-
-        $event->addSearchToggle($query);
-
-        $event->addQuickExport($this->path('user_export'));
-
         if ($this->isGranted('create_user')) {
             $event->addCreate($this->path('admin_user_create'), true);
         }
+
+        $event->addQuickExport($this->path('user_export'));
 
         if ($this->isGranted('report:other')) {
             $event->addActionToSubmenu('report', 'weekly', ['url' => $this->path('report_weekly_users'), 'translation_domain' => 'reporting', 'title' => 'report_weekly_users']);
@@ -41,7 +33,7 @@ class UsersSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('system_configuration')) {
-            $event->addAction('settings', ['title' => 'settings', 'translation_domain' => 'actions', 'url' => $this->path('system_configuration_section', ['section' => 'user']), 'class' => 'modal-ajax-form']);
+            $event->addSettings($this->path('system_configuration_section', ['section' => 'user']));
         }
 
         $event->addHelp($this->documentationLink('users.html'));

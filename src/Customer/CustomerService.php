@@ -45,9 +45,9 @@ class CustomerService
         return $timezone;
     }
 
-    public function createNewCustomer(): Customer
+    public function createNewCustomer(string $name): Customer
     {
-        $customer = new Customer();
+        $customer = new Customer($name);
         $customer->setTimezone($this->getDefaultTimezone());
         $customer->setCountry($this->configuration->getCustomerDefaultCountry());
         $customer->setCurrency($this->configuration->getCustomerDefaultCurrency());

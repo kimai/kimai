@@ -25,7 +25,7 @@ class CalendarSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('system_configuration')) {
-            $event->addAction('settings', ['title' => 'settings', 'translation_domain' => 'actions', 'url' => $this->path('system_configuration_section', ['section' => 'calendar']), 'class' => 'modal-ajax-form']);
+            $event->addSettings($this->path('system_configuration_section', ['section' => 'calendar']));
         }
 
         $event->addHelp($this->documentationLink('calendar.html'));

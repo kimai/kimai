@@ -24,7 +24,7 @@ class TeamMemberType extends AbstractType
         ]);
 
         $builder->add('teamlead', YesNoType::class, [
-            'label' => 'label.teamlead'
+            'label' => 'teamlead'
         ]);
     }
 
@@ -40,7 +40,7 @@ class TeamMemberType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => TeamMember::class,
-            'label' => 'label.user',
+            'label' => 'user',
             'compound' => true,
             'include_users' => [],
         ]);

@@ -24,7 +24,7 @@ trait BudgetTrait
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity_Entity", "Project_Entity", "Customer_Entity"})
      *
-     * @Exporter\Expose(label="label.budget", type="float")
+     * @Exporter\Expose(label="budget", type="float")
      *
      * @ORM\Column(name="budget", type="float", nullable=false)
      * @Assert\Range(min=0.00, max=900000000000.00)
@@ -39,7 +39,7 @@ trait BudgetTrait
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity_Entity", "Project_Entity", "Customer_Entity"})
      *
-     * @Exporter\Expose(label="label.timeBudget", type="duration")
+     * @Exporter\Expose(label="timeBudget", type="duration")
      *
      * @ORM\Column(name="time_budget", type="integer", nullable=false)
      * @Assert\Range(min=0, max=2145600000)
@@ -53,7 +53,7 @@ trait BudgetTrait
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity_Entity", "Project_Entity", "Customer_Entity"})
-     * @Exporter\Expose(label="label.budgetType")
+     * @Exporter\Expose(label="budgetType")
      *
      * @ORM\Column(name="budget_type", type="string", length=10, nullable=true)
      */

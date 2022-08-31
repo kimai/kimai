@@ -32,6 +32,7 @@ use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\TeamRepository;
+use App\Utils\DataTable;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -68,12 +69,37 @@ final class ActivityController extends AbstractController
         }
 
         $entries = $this->repository->getPagerfantaForQuery($query);
+        $metaColumns = $this->findMetaColumns($query);
+
+        $table = new DataTable('activity_admin', $query);
+        $table->setPagination($entries);
+        $table->setSearchForm($form);
+        $table->setPaginationRoute('admin_activity_paginated');
+        $table->setReloadEvents('kimai.activityUpdate kimai.activityDelete kimai.activityTeamUpdate');
+
+        $table->addColumn('name', ['class' => 'alwaysVisible']);
+        $table->addColumn('project', ['class' => 'd-none']);
+        $table->addColumn('comment', ['class' => 'd-none', 'title' => 'description']);
+
+        foreach ($metaColumns as $metaColumn) {
+            $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false]);
+        }
+
+        if ($this->isGranted('budget_money', 'activity')) {
+            $table->addColumn('budget', ['class' => 'd-none text-end w-min', 'title' => 'budget']);
+        }
+
+        if ($this->isGranted('budget_time', 'activity')) {
+            $table->addColumn('timeBudget', ['class' => 'd-none text-end w-min', 'title' => 'timeBudget']);
+        }
+
+        $table->addColumn('team', ['class' => 'text-center w-min', 'orderBy' => false]);
+        $table->addColumn('visible', ['class' => 'd-none text-center w-min']);
+        $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
 
         return $this->render('activity/index.html.twig', [
-            'entries' => $entries,
-            'query' => $query,
-            'toolbarForm' => $form->createView(),
-            'metaColumns' => $this->findMetaColumns($query),
+            'dataTable' => $table,
+            'metaColumns' => $metaColumns,
             'defaultCurrency' => $this->configuration->getCustomerDefaultCurrency(),
             'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
@@ -276,8 +302,7 @@ final class ActivityController extends AbstractController
             return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
         }
 
-        $defaultTeam = new Team();
-        $defaultTeam->setName($activity->getName());
+        $defaultTeam = new Team($activity->getName());
         $defaultTeam->addTeamlead($this->getUser());
         $defaultTeam->addActivity($activity);
 

@@ -28,7 +28,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'class' => User::class,
-            'label' => 'label.user',
+            'label' => 'user',
             'choice_label' => function (User $user) {
                 return $user->getDisplayName();
             },

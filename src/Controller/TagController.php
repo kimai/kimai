@@ -16,6 +16,7 @@ use App\Form\TagEditForm;
 use App\Form\Toolbar\TagToolbarForm;
 use App\Repository\Query\TagQuery;
 use App\Repository\TagRepository;
+use App\Utils\DataTable;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,17 +48,26 @@ class TagController extends AbstractController
             return $this->redirectToRoute('tags');
         }
 
-        $tags = $repository->getTagCount($query);
+        $entries = $repository->getTagCount($query);
         $multiUpdateForm = $this->getMultiUpdateForm($repository);
+
+        $table = new DataTable('admin_tags', $query);
+        $table->setSearchForm($form);
+        $table->setPagination($entries);
+        $table->setPaginationRoute('tags_paginated');
+        $table->setReloadEvents('kimai.tagUpdate');
+        $table->setBatchForm($multiUpdateForm);
+
         if ($multiUpdateForm !== null) {
-            $multiUpdateForm = $multiUpdateForm->createView();
+            $table->addColumn('id', ['class' => 'alwaysVisible multiCheckbox', 'orderBy' => false, 'title' => false, 'batchUpdate' => true]);
         }
 
+        $table->addColumn('name', ['class' => 'alwaysVisible']);
+        $table->addColumn('amount', ['class' => 'text-center w-min']);
+        $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
+
         return $this->render('tags/index.html.twig', [
-            'tags' => $tags,
-            'query' => $query,
-            'toolbarForm' => $form->createView(),
-            'multiUpdateForm' => $multiUpdateForm,
+            'dataTable' => $table,
         ]);
     }
 

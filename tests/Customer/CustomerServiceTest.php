@@ -91,7 +91,7 @@ class CustomerServiceTest extends TestCase
         $this->expectException(ValidationFailedException::class);
         $this->expectExceptionMessage('Validation Failed');
 
-        $sut->saveNewCustomer(new Customer());
+        $sut->saveNewCustomer(new Customer('foo'));
     }
 
     public function testUpdateDispatchesEvents()
@@ -134,7 +134,7 @@ class CustomerServiceTest extends TestCase
 
         $sut = $this->getSut($dispatcher);
 
-        $customer = $sut->createNewCustomer();
+        $customer = $sut->createNewCustomer('');
 
         self::assertInstanceOf(Customer::class, $customer);
         self::assertEquals('Europe/Vienna', $customer->getTimezone());
@@ -159,7 +159,7 @@ class CustomerServiceTest extends TestCase
 
         $sut = $this->getSut($dispatcher);
 
-        $Customer = new Customer();
+        $Customer = new Customer('foo');
         $sut->saveNewCustomer($Customer);
     }
 }

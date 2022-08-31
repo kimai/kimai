@@ -31,7 +31,7 @@ class UserTeams extends AbstractWidget
 
     public function getTitle(): string
     {
-        return 'label.my_teams';
+        return 'my_teams';
     }
 
     public function getTemplateName(): string

@@ -11,19 +11,16 @@ namespace App\Repository\Query;
 
 class ExportQuery extends TimesheetQuery
 {
-    /**
-     * @var string
-     */
-    private $renderer;
+    private ?string $renderer = null;
     private bool $markAsExported = true;
 
     public function __construct()
     {
         parent::__construct();
         $this->setDefaults([
-            'order' => ExportQuery::ORDER_ASC,
-            'state' => ExportQuery::STATE_STOPPED,
-            'exported' => ExportQuery::STATE_NOT_EXPORTED,
+            'order' => BaseQuery::ORDER_ASC,
+            'state' => TimesheetQuery::STATE_STOPPED,
+            'exported' => TimesheetQuery::STATE_NOT_EXPORTED,
         ]);
     }
 

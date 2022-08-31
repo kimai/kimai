@@ -1,5 +1,5 @@
 {% set projectStats = data %}
-{% set title = options.title|default('label.my_team_projects') %}
+{% set title = options.title|default('my_team_projects') %}
 
 {% embed '@theme/embeds/card.html.twig' with {'margin_bottom': 0} %}
     {% import "macros/widgets.html.twig" as widgets %}

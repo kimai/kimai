@@ -29,11 +29,11 @@ class TrackingModeType extends AbstractType
 
         foreach ($this->service->getModes() as $mode) {
             $id = $mode->getId();
-            $choices['label.timesheet.mode_' . $id] = $id;
+            $choices['timesheet.mode_' . $id] = $id;
         }
 
         $resolver->setDefaults([
-            'label' => 'label.timesheet.mode',
+            'label' => 'timesheet.mode',
             'choices' => $choices,
         ]);
     }

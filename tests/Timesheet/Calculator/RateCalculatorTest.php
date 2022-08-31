@@ -123,7 +123,7 @@ class RateCalculatorTest extends TestCase
         $customerInternal,
         $customerIsFixed
     ) {
-        $customer = new Customer();
+        $customer = new Customer('foo');
 
         $project = new Project();
         $project->setCustomer($customer);

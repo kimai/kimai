@@ -41,7 +41,7 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
                 'type' => 'string',
                 'description' => sprintf('The hexadecimal color code (default: %s)', Constants::DEFAULT_COLOR),
             ],
-            'label' => 'label.color',
+            'label' => 'color',
             'empty_data' => null,
         ];
 

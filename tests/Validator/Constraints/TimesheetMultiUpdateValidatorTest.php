@@ -105,7 +105,7 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
 
     public function testDisabledValues()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $customer->setVisible(false);
         $activity = new Activity();
         $activity->setVisible(false);

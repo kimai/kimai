@@ -1,67 +1,39 @@
-{% extends 'base.html.twig' %}
+{% extends 'datatable.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
-{% import "macros/search.html.twig" as search %}
 {% import "team/actions.html.twig" as actions %}
 
-{% set columns = {
-    'name': {'class': 'alwaysVisible'},
-    'teamlead': {'class': 'd-none badges', 'orderBy': false},
-    'teamlead_avatar': {'title': 'team.member'|trans({}, 'teams'), 'class': 'd-none d-lg-table-cell avatars avatar-list avatar-list-stacked', 'orderBy': false},
-    'user': {'class': 'd-none badges', 'orderBy': false},
-    'actions': {'class': 'actions alwaysVisible'},
-} %}
-
-{% set tableName = 'admin_teams' %}
-
 {% block page_title %}{{ 'teams.title'|trans({}, 'teams') }}{% endblock %}
-{% block page_search %}{{ search.searchModal(toolbarForm) }}{% endblock %}
-{% block page_actions %}{{ actions.teams('index', query) }}{% endblock %}
+{% block page_actions %}{{ actions.teams('index', dataTable.getQuery()) }}{% endblock %}
 
-{% block main_before %}
-    {{ tables.data_table_column_modal(tableName, columns) }}
-{% endblock %}
-
-{% block main %}
-
-    {% if teams|length == 0 %}
-        {{ widgets.nothing_found('kimai.teamUpdate') }}
-    {% else %}
-
-        {{ tables.datatable_header(tableName, columns, query, {'reload': 'kimai.teamUpdate'}) }}
-        {% for team in teams %}
-            <tr{% if is_granted('edit', team) %} class="open-edit alternative-link" data-href="{{ path('admin_team_edit', {'id': team.id}) }}"{% endif %}>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
-                    {{ widgets.label_name(team.name, team.color|colorize(team.name)) }}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'teamlead') }}">
-                    {% for member in team.members %}
-                        {% if member.teamlead %}
-                            {{ widgets.label_user(member.user) }}
-                        {% endif %}
-                    {% endfor %}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'teamlead_avatar') }}">
-                    {% for member in team.members|sort((a, b) => b.teamlead <=> a.teamlead) %}
-                        {% set user = member.user %}
-                        {% set tooltip = member.teamlead ? ('label.teamlead'|trans ~ ': ' ~ user.displayName) : null %}
-                        {{ widgets.user_avatar(user, tooltip, 'avatar-rounded', (member.teamlead ? 'info' : null)) }}
-                    {% endfor %}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">
-                    {% for member in team.members %}
-                        {% if not member.teamlead %}
-                            {{ widgets.label_user(member.user) }}
-                        {% endif %}
-                    {% endfor %}
-                </td>
-                <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
-                    {{ actions.team(team, 'index') }}
-                </td>
-            </tr>
-        {% endfor %}
-        {{ tables.data_table_footer(teams, 'admin_team_paginated') }}
-
-    {% endif %}
-
+{% block datatable_row %}
+    <tr{% if is_granted('edit', entry) %} class="open-edit alternative-link" data-href="{{ path('admin_team_edit', {'id': entry.id}) }}"{% endif %}>
+        <td class="{{ tables.class(dataTable, 'name') }}">
+            {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
+        </td>
+        <td class="{{ tables.class(dataTable, 'teamlead') }}">
+            {% for member in entry.members %}
+                {% if member.teamlead %}
+                    {{ widgets.label_user(member.user) }}
+                {% endif %}
+            {% endfor %}
+        </td>
+        <td class="{{ tables.class(dataTable, 'teamlead_avatar') }}">
+            {% for member in entry.members|sort((a, b) => b.teamlead <=> a.teamlead) %}
+                {% set user = member.user %}
+                {% set tooltip = member.teamlead ? ('teamlead'|trans ~ ': ' ~ user.displayName) : null %}
+                {{ widgets.user_avatar(user, tooltip, 'avatar-rounded', (member.teamlead ? 'info' : null)) }}
+            {% endfor %}
+        </td>
+        <td class="{{ tables.class(dataTable, 'user') }}">
+            {% for member in entry.members %}
+                {% if not member.teamlead %}
+                    {{ widgets.label_user(member.user) }}
+                {% endif %}
+            {% endfor %}
+        </td>
+        <td class="{{ tables.class(dataTable, 'actions') }}">
+            {{ actions.team(entry, 'index') }}
+        </td>
+    </tr>
 {% endblock %}

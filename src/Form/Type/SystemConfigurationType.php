@@ -55,7 +55,7 @@ class SystemConfigurationType extends AbstractType
                 }
 
                 $options = [
-                    'label' => 'label.' . ($preference->getLabel() ?? $preference->getName()),
+                    'label' => $preference->getLabel() ?? $preference->getName(),
                     'constraints' => $preference->getConstraints(),
                     'required' => $required,
                     'disabled' => !$preference->isEnabled(),

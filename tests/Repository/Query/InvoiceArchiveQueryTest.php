@@ -30,8 +30,8 @@ class InvoiceArchiveQueryTest extends BaseQueryTest
         $this->assertEmpty($sut->getCustomers());
         self::assertFalse($sut->hasCustomers());
 
-        $sut->addCustomer(new Customer());
-        $sut->setCustomers([new Customer()]);
+        $sut->addCustomer(new Customer('foo'));
+        $sut->setCustomers([new Customer('foo')]);
         self::assertCount(2, $sut->getCustomers());
         self::assertTrue($sut->hasCustomers());
 

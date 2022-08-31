@@ -26,9 +26,8 @@ class TeamTest extends TestCase
 {
     public function testDefaultValues()
     {
-        $sut = new Team();
+        $sut = new Team('foo');
         self::assertNull($sut->getId());
-        self::assertNull($sut->getName());
         self::assertFalse($sut->hasUsers());
         self::assertFalse($sut->hasTeamleads());
         self::assertIsArray($sut->getTeamleads());
@@ -43,7 +42,7 @@ class TeamTest extends TestCase
 
     public function testColor()
     {
-        $sut = new Team();
+        $sut = new Team('foo');
         self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
 
@@ -66,9 +65,9 @@ class TeamTest extends TestCase
 
         $member2 = new TeamMember();
         $member2->setUser($user);
-        $member2->setTeam(new Team());
+        $member2->setTeam(new Team('foo'));
 
-        $sut = new Team();
+        $sut = new Team('foo');
         self::assertFalse($sut->isTeamlead($user));
         self::assertCount(0, $sut->getTeamleads());
         self::assertCount(0, $sut->getMembers());
@@ -119,16 +118,15 @@ class TeamTest extends TestCase
     public function testTeamMembershipsException()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $sut = new Team();
+        $sut = new Team('foo');
         $member = new TeamMember();
-        $member->setTeam(new Team());
+        $member->setTeam(new Team('foo'));
         $sut->addMember($member);
     }
 
     public function testSetterAndGetter()
     {
-        $sut = new Team();
-        self::assertInstanceOf(Team::class, $sut->setName('foo-bar'));
+        $sut = new Team('foo-bar');
         self::assertEquals('foo-bar', $sut->getName());
         self::assertEquals('foo-bar', (string) $sut);
 
@@ -160,11 +158,10 @@ class TeamTest extends TestCase
 
     public function testCustomer()
     {
-        $customer = new Customer();
-        $customer->setName('foo');
+        $customer = new Customer('foo');
         self::assertEmpty($customer->getTeams());
 
-        $sut = new Team();
+        $sut = new Team('foo');
         self::assertFalse($sut->hasCustomer($customer));
         $sut->addCustomer($customer);
         self::assertEquals(1, $sut->getCustomers()->count());
@@ -172,7 +169,7 @@ class TeamTest extends TestCase
         $actual = $sut->getCustomers()[0];
         self::assertSame($actual, $customer);
         self::assertSame($sut, $customer->getTeams()[0]);
-        $sut->removeCustomer(new Customer());
+        $sut->removeCustomer(new Customer('foo'));
         self::assertEquals(1, $sut->getCustomers()->count());
         $sut->removeCustomer($customer);
         self::assertEquals(0, $sut->getCustomers()->count());
@@ -184,7 +181,7 @@ class TeamTest extends TestCase
         $project->setName('foo');
         self::assertEmpty($project->getTeams());
 
-        $sut = new Team();
+        $sut = new Team('foo');
         self::assertFalse($sut->hasProject($project));
         $sut->addProject($project);
         self::assertEquals(1, $sut->getProjects()->count());
@@ -204,7 +201,7 @@ class TeamTest extends TestCase
         $activity->setName('foo');
         self::assertEmpty($activity->getTeams());
 
-        $sut = new Team();
+        $sut = new Team('foo');
         self::assertFalse($sut->hasActivity($activity));
         $sut->addActivity($activity);
         self::assertEquals(1, $sut->getActivities()->count());
@@ -224,7 +221,7 @@ class TeamTest extends TestCase
         $user->setAlias('foo');
         self::assertEmpty($user->getTeams());
 
-        $sut = new Team();
+        $sut = new Team('foo');
         $sut->addUser($user);
         self::assertCount(1, $sut->getUsers());
 
@@ -246,8 +243,7 @@ class TeamTest extends TestCase
 
     public function testClone()
     {
-        $c = new Customer();
-        $c->setName('Foo');
+        $c = new Customer('Foo');
         $p = new Project();
         $p->setName('Bar');
         $a = new Activity();
@@ -257,9 +253,9 @@ class TeamTest extends TestCase
         $member = new TeamMember();
         $member->setUser(new User());
 
-        $team = new Team();
+        $team = new Team('foo');
         $team->addCustomer($c);
-        $team->addCustomer(new Customer());
+        $team->addCustomer(new Customer('foo'));
         $team->addProject($p);
         $team->addProject(new Project());
         $team->addActivity($a);

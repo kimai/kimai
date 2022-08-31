@@ -18,7 +18,7 @@ class MarkAsExportedType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.mark_as_exported',
+            'label' => 'mark_as_exported',
             'required' => false,
         ]);
     }

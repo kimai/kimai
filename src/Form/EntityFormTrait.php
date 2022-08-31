@@ -32,7 +32,7 @@ trait EntityFormTrait
         if ($showMoney) {
             $builder->add('budget', MoneyType::class, [
                 'empty_data' => '0.00',
-                'label' => 'label.budget',
+                'label' => 'budget',
                 'required' => false,
                 'currency' => $options['currency'],
             ]);
@@ -41,7 +41,7 @@ trait EntityFormTrait
         if ($showTime) {
             $builder->add('timeBudget', DurationType::class, [
                 'empty_data' => 0,
-                'label' => 'label.timeBudget',
+                'label' => 'timeBudget',
                 'icon' => 'clock',
                 'required' => false,
             ]);
@@ -55,7 +55,7 @@ trait EntityFormTrait
 
         $builder
             ->add('visible', YesNoType::class, [
-                'label' => 'label.visible',
+                'label' => 'visible',
                 'help' => 'help.visible',
             ])
             ->add('billable', BillableType::class)

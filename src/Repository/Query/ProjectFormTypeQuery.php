@@ -14,18 +14,9 @@ use App\Entity\Project;
 
 final class ProjectFormTypeQuery extends BaseFormTypeQuery
 {
-    /**
-     * @var \DateTime|null
-     */
-    private $projectStart;
-    /**
-     * @var \DateTime|null
-     */
-    private $projectEnd;
-    /**
-     * @var Project|null
-     */
-    private $projectToIgnore;
+    private ?\DateTime $projectStart = null;
+    private ?\DateTime $projectEnd = null;
+    private ?Project $projectToIgnore = null;
     private $ignoreDate = false;
     private $withCustomer = false;
 
@@ -49,7 +40,8 @@ final class ProjectFormTypeQuery extends BaseFormTypeQuery
             $this->setCustomers($customer);
         }
 
-        $this->projectStart = $this->projectEnd = new \DateTime();
+        $this->projectStart = new \DateTime();
+        $this->projectEnd = clone $this->projectStart;
     }
 
     /**

@@ -112,9 +112,9 @@
                 <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Rate" href="#revenue-chart-{{ id }}" data-bs-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
             {% endif %}
             {% if see_users %}
-            <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}User" href="#user-chart-{{ id}}" data-bs-toggle="tab">{{ 'label.user'|trans }}</a></li>
+            <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}User" href="#user-chart-{{ id}}" data-bs-toggle="tab">{{ 'user'|trans }}</a></li>
             {% endif %}
-            <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Activity" href="#activity-chart-{{ id}}" data-bs-toggle="tab">{{ 'label.activity'|trans }}</a></li>
+            <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Activity" href="#activity-chart-{{ id}}" data-bs-toggle="tab">{{ 'activity'|trans }}</a></li>
         </ul>
         <div class="tab-content mt-2 p-2">
             <div class="chart tab-pane active" id="time-chart-{{ id }}">
@@ -150,7 +150,7 @@
         <div class="col-xs-12 table-responsive">
             <table class="table table-hover dataTable">
                 <tr>
-                    <th>{{ 'label.username'|trans }}</th>
+                    <th>{{ 'username'|trans }}</th>
                     <th></th>
                     {% for monthName in month_names() %}
                         <th class="text-center">{{ monthName }}</th>
@@ -285,10 +285,10 @@
                 <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-bs-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
             {% endif %}
             {% if see_users and project_details.userStats|length > 0 %}
-                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}User" href="#user-chart" data-bs-toggle="tab">{{ 'label.user'|trans }}</a></li>
+                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}User" href="#user-chart" data-bs-toggle="tab">{{ 'user'|trans }}</a></li>
             {% endif %}
             {% if activities is not empty %}
-                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Activity" href="#activity-chart" data-bs-toggle="tab">{{ 'label.activity'|trans }}</a></li>
+                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Activity" href="#activity-chart" data-bs-toggle="tab">{{ 'activity'|trans }}</a></li>
             {% endif %}
         </ul>
         <div class="tab-content mt-2 p-2">
@@ -298,7 +298,7 @@
                         <table class="table table-hover dataTable">
                             <tr {{ widgets.customer_row_attr(project.customer) }}>
                                 <th class="w-min">
-                                    {{ 'label.customer'|trans }}
+                                    {{ 'customer'|trans }}
                                 </th>
                                 <td>
                                     {{ widgets.label_customer(project.customer) }}
@@ -306,7 +306,7 @@
                             </tr>
                             <tr {{ widgets.project_row_attr(project) }}>
                                 <th class="w-min">
-                                    {{ 'label.project'|trans }}
+                                    {{ 'project'|trans }}
                                 </th>
                                 <td>
                                     {{ widgets.label_project(project) }}
@@ -327,14 +327,14 @@
                             </tr>
                             <tr>
                                 <th class="w-min">
-                                    {{ 'label.billable'|trans }}
+                                    {{ 'billable'|trans }}
                                 </th>
                                 <td>{{ project_view.billableRate|money(currency) }}</td>
                             </tr>
                             {% endif %}
                             <tr>
                                 <th class="w-min">
-                                    {{ 'label.last_record'|trans }}
+                                    {{ 'last_record'|trans }}
                                 </th>
                                 <td>
                                     {% if project_view.lastRecord is not null %}
@@ -347,7 +347,7 @@
                             {% if is_granted('create_export') %}
                             <tr>
                                 <th class="w-min">
-                                    {{ 'label.not_exported'|trans }}
+                                    {{ 'not_exported'|trans }}
                                 </th>
                                 <td>
                                     <a href="{{ path('export', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': '', 'preview': true}) }}">
@@ -359,7 +359,7 @@
                             {% if is_granted('view_invoice') %}
                             <tr>
                                 <th class="w-min">
-                                    {{ 'label.not_invoiced'|trans }}
+                                    {{ 'not_invoiced'|trans }}
                                 </th>
                                 <td>
                                     <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
@@ -385,9 +385,9 @@
                                 {% if showTimeBudget and project.hasTimeBudget() %}
                                     <tr>
                                         <th class="w-min">
-                                            {{ 'label.timeBudget'|trans }}
+                                            {{ 'timeBudget'|trans }}
                                             {% if budgetStats.isMonthlyBudget() %}
-                                                ({{ 'label.budgetType_month'|trans }})
+                                                ({{ 'budgetType_month'|trans }})
                                             {% endif %}
                                         </th>
                                         <td>
@@ -398,9 +398,9 @@
                                 {% if showMoneyBudget and project.hasBudget() %}
                                     <tr>
                                         <th class="w-min">
-                                            {{ 'label.budget'|trans }}
+                                            {{ 'budget'|trans }}
                                             {% if budgetStats.isMonthlyBudget() %}
-                                                ({{ 'label.budgetType_month'|trans }})
+                                                ({{ 'budgetType_month'|trans }})
                                             {% endif %}
                                         </th>
                                         <td>

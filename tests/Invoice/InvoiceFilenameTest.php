@@ -26,7 +26,7 @@ class InvoiceFilenameTest extends TestCase
 {
     public function testInvoiceFilename()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $template = new InvoiceTemplate();
 
         $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
@@ -36,12 +36,6 @@ class InvoiceFilenameTest extends TestCase
 
         $datePrefix = date('ymd');
 
-        $sut = new InvoiceFilename($model);
-
-        self::assertEquals($datePrefix, $sut->getFilename());
-        self::assertEquals($datePrefix, (string) $sut);
-
-        $customer->setName('foo');
         $sut = new InvoiceFilename($model);
 
         self::assertEquals($datePrefix . '-foo', $sut->getFilename());

@@ -26,13 +26,13 @@ class BudgetType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.budgetType',
+            'label' => 'budgetType',
             // not yet translated in enough languages
-            //'placeholder' => 'label.budgetType_full',
+            //'placeholder' => 'budgetType_full',
             'required' => false,
             'search' => false,
             'choices' => [
-                'label.budgetType_month' => self::TYPE_MONTH,
+                'budgetType_month' => self::TYPE_MONTH,
             ],
         ]);
     }

@@ -30,7 +30,7 @@ class FixedRateType extends AbstractType
                 'description' => 'Fixed rate',
             ],
             'required' => false,
-            'label' => 'label.fixedRate',
+            'label' => 'fixedRate',
         ]);
     }
 

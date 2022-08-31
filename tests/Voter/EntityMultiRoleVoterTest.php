@@ -43,7 +43,7 @@ class EntityMultiRoleVoterTest extends AbstractVoterTest
 
         $result = VoterInterface::ACCESS_GRANTED;
         $allPermissions = ['budget_money', 'budget_time', 'budget_any', 'details'];
-        $allSubjects = ['project', 'customer', new Project(), new Customer()];
+        $allSubjects = ['project', 'customer', new Project(), new Customer('foo')];
 
         foreach ($allPermissions as $permission) {
             foreach ($allSubjects as $subject) {

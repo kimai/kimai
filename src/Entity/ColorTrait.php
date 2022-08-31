@@ -22,7 +22,7 @@ trait ColorTrait
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     * @Exporter\Expose(label="label.color")
+     * @Exporter\Expose(label="color")
      *
      * @ORM\Column(name="color", type="string", length=7, nullable=true)
      * @Constraints\HexColor()

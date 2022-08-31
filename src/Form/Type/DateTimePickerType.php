@@ -101,7 +101,7 @@ class DateTimePickerType extends AbstractType
             // this option.
             'data_class' => null,
             'compound' => true,
-            'label' => 'label.begin',
+            'label' => 'begin',
             'date_label' => null,
             'time_label' => null,
             'empty_data' => function (Options $options) {

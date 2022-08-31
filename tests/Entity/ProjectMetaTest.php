@@ -36,6 +36,6 @@ class ProjectMetaTest extends AbstractMetaEntityTest
         $this->expectExceptionMessage('Expected instanceof Project, received "App\Entity\Customer"');
 
         $sut = new ProjectMeta();
-        $sut->setEntity(new Customer());
+        $sut->setEntity(new Customer('foo'));
     }
 }

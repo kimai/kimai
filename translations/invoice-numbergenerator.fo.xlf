@@ -2,8 +2,8 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fo" datatype="plaintext" original="invoice-numbergenerator.en.xlf">
     <body>
-      <trans-unit id="7zreGwV" resname="label.invoice_number_generator">
-        <source>label.invoice_number_generator</source>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+        <source>invoice_number_generator</source>
         <target state="needs-translation">Invoicenumber-Generator</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">

@@ -39,7 +39,7 @@ class ProjectViewQueryTest extends TestCase
         $date = new \DateTime();
         $sut = new ProjectViewQuery($date, $user);
 
-        $customer = new Customer();
+        $customer = new Customer('foo');
 
         $sut->setCustomer($customer);
         $sut->setIncludeNoWork(true);

@@ -54,7 +54,7 @@ class MultiUpdateTableDTOTest extends TestCase
 
         $activity = new Activity();
         $project = new Project();
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $timesheet = new Timesheet();
         $tag = new Tag();
 

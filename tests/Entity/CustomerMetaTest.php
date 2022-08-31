@@ -22,7 +22,7 @@ class CustomerMetaTest extends AbstractMetaEntityTest
 {
     protected function getEntity(): EntityWithMetaFields
     {
-        return new Customer();
+        return new Customer('foo');
     }
 
     protected function getMetaEntity(): MetaTableTypeInterface

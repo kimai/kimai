@@ -40,7 +40,7 @@ class UserSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('preferences', $user)) {
-            $event->addAction('settings', ['title' => 'settings', 'translation_domain' => 'actions', 'url' => $this->path('user_profile_preferences', ['username' => $user->getUserIdentifier()])]);
+            $event->addConfig($this->path('user_profile_preferences', ['username' => $user->getUserIdentifier()]));
         }
 
         if ($this->isGranted('report:other') || ($this->isGranted('report:user') && $event->getUser()->getId() === $user->getId())) {
@@ -54,7 +54,7 @@ class UserSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('view_team')) {
-            $event->addActionToSubmenu('filter', 'teams', ['url' => $this->path('admin_team', ['users[]' => $user->getId()]), 'title' => 'label.teams']);
+            $event->addActionToSubmenu('filter', 'teams', ['url' => $this->path('admin_team', ['users[]' => $user->getId()]), 'title' => 'teams']);
         }
 
         if ($event->isIndexView() && $this->isGranted('delete', $user)) {

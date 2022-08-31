@@ -59,7 +59,7 @@ class ProjectTest extends AbstractEntityTest
     {
         $sut = new Project();
 
-        $customer = (new Customer())->setName('customer');
+        $customer = new Customer('customer');
         self::assertInstanceOf(Project::class, $sut->setCustomer($customer));
         self::assertSame($customer, $sut->getCustomer());
 
@@ -145,7 +145,7 @@ class ProjectTest extends AbstractEntityTest
     public function testTeams()
     {
         $sut = new Project();
-        $team = new Team();
+        $team = new Team('foo');
         self::assertEmpty($sut->getTeams());
         self::assertEmpty($team->getProjects());
 
@@ -156,7 +156,7 @@ class ProjectTest extends AbstractEntityTest
         self::assertSame($sut, $team->getProjects()[0]);
 
         // test remove unknown team doesn't do anything
-        $sut->removeTeam(new Team());
+        $sut->removeTeam(new Team('foo'));
         self::assertCount(1, $sut->getTeams());
         self::assertCount(1, $team->getProjects());
 
@@ -174,20 +174,20 @@ class ProjectTest extends AbstractEntityTest
         self::assertIsArray($columns);
 
         $expected = [
-            ['label.id', 'integer'],
-            ['label.name', 'string'],
-            ['label.customer', 'string'],
-            ['label.orderNumber', 'string'],
-            ['label.orderDate', 'datetime'],
-            ['label.project_start', 'datetime'],
-            ['label.project_end', 'datetime'],
-            ['label.budget', 'float'],
-            ['label.timeBudget', 'duration'],
-            ['label.budgetType', 'string'],
-            ['label.color', 'string'],
-            ['label.visible', 'boolean'],
-            ['label.comment', 'string'],
-            ['label.billable', 'boolean'],
+            ['id', 'integer'],
+            ['name', 'string'],
+            ['customer', 'string'],
+            ['orderNumber', 'string'],
+            ['orderDate', 'datetime'],
+            ['project_start', 'datetime'],
+            ['project_end', 'datetime'],
+            ['budget', 'float'],
+            ['timeBudget', 'duration'],
+            ['budgetType', 'string'],
+            ['color', 'string'],
+            ['visible', 'boolean'],
+            ['comment', 'string'],
+            ['billable', 'boolean'],
         ];
 
         self::assertCount(\count($expected), $columns);
@@ -207,8 +207,7 @@ class ProjectTest extends AbstractEntityTest
 
     public function testClone()
     {
-        $customer = new Customer();
-        $customer->setName('prj-customer');
+        $customer = new Customer('prj-customer');
         $customer->setVatId('DE-0123456789');
 
         $sut = new Project();
@@ -222,7 +221,7 @@ class ProjectTest extends AbstractEntityTest
 
         $sut->setCustomer($customer);
 
-        $team = new Team();
+        $team = new Team('foo');
         $sut->addTeam($team);
 
         $meta = new ProjectMeta();
@@ -251,7 +250,7 @@ class ProjectTest extends AbstractEntityTest
     {
         $now = new \DateTime();
 
-        $customer = new Customer();
+        $customer = new Customer('foo');
 
         $sut = new Project();
         $sut->setVisible(false);

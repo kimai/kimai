@@ -5,7 +5,7 @@
         {% import "macros/progressbar.html.twig" as progress %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_title %}
-            {{ 'label.timeBudget'|trans }} {% if entity.isMonthlyBudget() %}({{ 'label.budgetType_month'|trans }}){% endif %}
+            {{ 'timeBudget'|trans }} {% if entity.isMonthlyBudget() %}({{ 'budgetType_month'|trans }}){% endif %}
         {% endblock %}
         {% block box_body_class %}p-0{% endblock %}
         {% block box_attributes %}id="time_budget_box"{% endblock %}
@@ -14,7 +14,7 @@
                 <div class="col-12 col-md-6 order-1 order-md-0">
                     <table class="table table-hover dataTable">
                         <tr>
-                            <td>{{ 'label.timeBudget'|trans }}</td>
+                            <td>{{ 'timeBudget'|trans }}</td>
                             <td class="text-nowrap text-end">
                                 {% if entity.timeBudget > 0 %}
                                     {{ entity.timeBudget|duration }}
@@ -44,7 +44,7 @@
                             {% set percentReached = (stats.durationBillable / (stats.duration / 100)) %}
                         {% endif %}
                         <tr>
-                            <td>{{ 'label.billable'|trans }}</td>
+                            <td>{{ 'billable'|trans }}</td>
                             <td class="text-nowrap text-end">{{ stats.durationBillable|duration }}</td>
                             <td class="text-nowrap text-end">{{ percentReached|number_format(2) }}%</td>
                         </tr>
@@ -65,7 +65,7 @@
                     {% if entity.timeBudget > 0 %}
                         <div class="mb-3">{{ progress.progressbar(entity.timeBudget, stats.durationBillable, durationTrans|trans, stats.durationBillable|duration ~ ' / ' ~ entity.timeBudget|duration) }}</div>
                     {% endif %}
-                    <div class="mb-3">{{ progress.progressbar(stats.duration, stats.durationBillable, 'label.billable'|trans, stats.durationBillable|duration ~ ' / ' ~ stats.duration|duration, true) }}</div>
+                    <div class="mb-3">{{ progress.progressbar(stats.duration, stats.durationBillable, 'billable'|trans, stats.durationBillable|duration ~ ' / ' ~ stats.duration|duration, true) }}</div>
                 </div>
             </div>
         {% endblock %}
@@ -76,7 +76,7 @@
         {% import "macros/progressbar.html.twig" as progress %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_title %}
-            {{ 'label.budget'|trans }} {% if entity.isMonthlyBudget() %}({{ 'label.budgetType_month'|trans }}){% endif %}
+            {{ 'budget'|trans }} {% if entity.isMonthlyBudget() %}({{ 'budgetType_month'|trans }}){% endif %}
         {% endblock %}
         {% block box_body_class %}p-0{% endblock %}
         {% block box_attributes %}id="budget_box"{% endblock %}
@@ -86,7 +86,7 @@
                 <div class="col-12 col-md-6 order-1 order-md-0">
                     <table class="table table-hover dataTable">
                         <tr>
-                            <td>{{ 'label.budget'|trans }}</td>
+                            <td>{{ 'budget'|trans }}</td>
                             <td class="text-nowrap text-end">
                                 {% if entity.budget > 0 %}
                                     {{ entity.budget|money(currency) }}
@@ -116,7 +116,7 @@
                             {% set percentReached = (stats.rateBillable / (stats.rate / 100)) %}
                         {% endif %}
                         <tr>
-                            <td>{{ 'label.billable'|trans }}</td>
+                            <td>{{ 'billable'|trans }}</td>
                             <td class="text-nowrap text-end">{{ stats.rateBillable|money(currency) }}</td>
                             <td class="text-nowrap text-end">{{ percentReached|number_format(2) }}%</td>
                         </tr>
@@ -125,14 +125,14 @@
                             {% set percentReached = (stats.internalRate / (stats.rateBillable / 100)) %}
                         {% endif %}
                         <tr>
-                            <td>{{ 'label.internalRate'|trans }}</td>
+                            <td>{{ 'internalRate'|trans }}</td>
                             <td class="text-nowrap text-end">{{ stats.internalRate|money(currency) }}</td>
                             <td class="text-nowrap text-end">{{ percentReached|number_format(2) }}%</td>
                         </tr>
                         {% if not entity.isMonthlyBudget() and timeBudgetVisible and stats.duration > 0 %}
                             {% set realHourlyRate = stats.rateBillable / stats.duration|chart_duration %}
                             <tr>
-                                <td>{{ 'label.hourlyRate'|trans }} ({{ 'label.billable'|trans }} / {{ durationTrans|trans }})</td>
+                                <td>{{ 'hourlyRate'|trans }} ({{ 'billable'|trans }} / {{ durationTrans|trans }})</td>
                                 <td class="text-nowrap text-end">{{ realHourlyRate|money(currency) }}</td>
                                 <td class="text-nowrap text-end">-</td>
                             </tr>
@@ -154,8 +154,8 @@
                     {% if entity.budget > 0 %}
                         <div class="mb-3">{{ progress.progressbar(entity.budget, stats.rateBillable, rateTrans|trans, stats.rateBillable|money(currency) ~ ' / ' ~ entity.budget|money(currency)) }}</div>
                     {% endif %}
-                    <div class="mb-3">{{ progress.progressbar(stats.rate, stats.rateBillable, 'label.billable'|trans, stats.rateBillable|money(currency) ~ ' / ' ~ stats.rate|money(currency), true) }}</div>
-                    <div class="mb-3">{{ progress.progressbar(stats.rateBillable, stats.internalRate, 'label.internalRate'|trans, stats.internalRate|money(currency) ~ ' / ' ~ stats.rateBillable|money(currency)) }}</div>
+                    <div class="mb-3">{{ progress.progressbar(stats.rate, stats.rateBillable, 'billable'|trans, stats.rateBillable|money(currency) ~ ' / ' ~ stats.rate|money(currency), true) }}</div>
+                    <div class="mb-3">{{ progress.progressbar(stats.rateBillable, stats.internalRate, 'internalRate'|trans, stats.internalRate|money(currency) ~ ' / ' ~ stats.rateBillable|money(currency)) }}</div>
                 </div>
             </div>
         {% endblock %}

@@ -142,8 +142,8 @@ class TimesheetMultiUpdate extends AbstractType
             'required' => true,
             'expanded' => true,
             'choices' => [
-                'label.replaceTags' => true,
-                'label.appendTags' => false,
+                'replaceTags' => true,
+                'appendTags' => false,
             ]
         ]);
 
@@ -159,7 +159,7 @@ class TimesheetMultiUpdate extends AbstractType
 
         if ($options['include_exported']) {
             $builder->add('exported', ChoiceType::class, [
-                'label' => 'label.mark_as_exported',
+                'label' => 'mark_as_exported',
                 'required' => false,
                 'choices' => [
                     'entryState.exported' => true,
@@ -170,7 +170,7 @@ class TimesheetMultiUpdate extends AbstractType
 
         if ($options['include_billable']) {
             $builder->add('billable', ChoiceType::class, [
-                'label' => 'label.billable',
+                'label' => 'billable',
                 'choices' => [
                     '' => null,
                     'yes' => true,
@@ -182,7 +182,7 @@ class TimesheetMultiUpdate extends AbstractType
         if ($options['include_rate']) {
             $builder
                 ->add('recalculateRates', YesNoType::class, [
-                    'label' => 'label.recalculate_rates',
+                    'label' => 'recalculate_rates',
                 ])
                 ->add('fixedRate', FixedRateType::class, [
                     'currency' => $currency,
@@ -207,7 +207,7 @@ class TimesheetMultiUpdate extends AbstractType
                 'choices' => $choices,
                 'multiple' => true,
                 'expanded' => true,
-                'label' => 'label.batch_meta_fields',
+                'label' => 'batch_meta_fields',
                 'help' => 'help.batch_meta_fields',
             ]);
         }

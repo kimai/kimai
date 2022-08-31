@@ -117,7 +117,7 @@ class ActivityTest extends AbstractEntityTest
     public function testTeams()
     {
         $sut = new Activity();
-        $team = new Team();
+        $team = new Team('foo');
         self::assertEmpty($sut->getTeams());
         self::assertEmpty($team->getActivities());
 
@@ -128,7 +128,7 @@ class ActivityTest extends AbstractEntityTest
         self::assertSame($sut, $team->getActivities()[0]);
 
         // test remove unknown team doesn't do anything
-        $sut->removeTeam(new Team());
+        $sut->removeTeam(new Team('foo'));
         self::assertCount(1, $sut->getTeams());
         self::assertCount(1, $team->getActivities());
 
@@ -146,16 +146,16 @@ class ActivityTest extends AbstractEntityTest
         self::assertIsArray($columns);
 
         $expected = [
-            ['label.id', 'integer'],
-            ['label.name', 'string'],
-            ['label.project', 'string'],
-            ['label.budget', 'float'],
-            ['label.timeBudget', 'duration'],
-            ['label.budgetType', 'string'],
-            ['label.color', 'string'],
-            ['label.visible', 'boolean'],
-            ['label.comment', 'string'],
-            ['label.billable', 'boolean'],
+            ['id', 'integer'],
+            ['name', 'string'],
+            ['project', 'string'],
+            ['budget', 'float'],
+            ['timeBudget', 'duration'],
+            ['budgetType', 'string'],
+            ['color', 'string'],
+            ['visible', 'boolean'],
+            ['comment', 'string'],
+            ['billable', 'boolean'],
         ];
 
         self::assertCount(\count($expected), $columns);
@@ -190,7 +190,7 @@ class ActivityTest extends AbstractEntityTest
 
         $sut->setProject($project);
 
-        $team = new Team();
+        $team = new Team('foo');
         $sut->addTeam($team);
 
         $meta = new ActivityMeta();

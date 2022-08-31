@@ -24,7 +24,7 @@ class PageSizeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.pageSize',
+            'label' => 'pageSize',
             'choices' => [
                 10 => 10,
                 15 => 15,

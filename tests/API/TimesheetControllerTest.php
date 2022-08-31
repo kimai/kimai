@@ -468,7 +468,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $em = $this->getEntityManager();
-        $customer = (new Customer())->setName('foo-bar-1')->setVisible(false)->setCountry('DE')->setTimezone('Europe/Berlin');
+        $customer = (new Customer('foo-bar-1'))->setVisible(false)->setCountry('DE')->setTimezone('Europe/Berlin');
         $em->persist($customer);
         $project = (new Project())->setName('foo-bar-2')->setVisible(true)->setCustomer($customer);
         $em->persist($project);
@@ -494,7 +494,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $em = $this->getEntityManager();
-        $customer = (new Customer())->setName('foo-bar-1')->setVisible(true)->setCountry('DE')->setTimezone('Europe/Berlin');
+        $customer = (new Customer('foo-bar-1'))->setVisible(true)->setCountry('DE')->setTimezone('Europe/Berlin');
         $em->persist($customer);
         $project = (new Project())->setName('foo-bar-2')->setVisible(true)->setCustomer($customer);
         $em->persist($project);
@@ -518,7 +518,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
         $em = $this->getEntityManager();
-        $customer = (new Customer())->setName('foo-bar-1')->setCountry('DE')->setTimezone('Europe/Berlin');
+        $customer = (new Customer('foo-bar-1'))->setCountry('DE')->setTimezone('Europe/Berlin');
         $customer->setBillable(false);
         $em->persist($customer);
         $project = (new Project())->setName('foo-bar-2')->setCustomer($customer);
@@ -548,7 +548,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
         $em = $this->getEntityManager();
-        $customer = (new Customer())->setName('foo-bar-1')->setCountry('DE')->setTimezone('Europe/Berlin');
+        $customer = (new Customer('foo-bar-1'))->setCountry('DE')->setTimezone('Europe/Berlin');
         $customer->setBillable(false);
         $em->persist($customer);
         $project = (new Project())->setName('foo-bar-2')->setCustomer($customer);

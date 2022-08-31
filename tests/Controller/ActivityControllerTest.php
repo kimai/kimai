@@ -44,7 +44,6 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
 
         $this->assertPageActions($client, [
-            'search' => '#',
             'download toolbar-action' => $this->createUrl('/admin/activity/export'),
             'create modal-ajax-form' => $this->createUrl('/admin/activity/create'),
             'help' => 'https://www.kimai.org/documentation/activity.html'
@@ -58,7 +57,6 @@ class ActivityControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
 
         $this->assertPageActions($client, [
-            'search' => '#',
             'download toolbar-action' => $this->createUrl('/admin/activity/export'),
             'create modal-ajax-form' => $this->createUrl('/admin/activity/create'),
             'settings modal-ajax-form' => $this->createUrl('/admin/system-config/edit/activity'),
@@ -304,13 +302,13 @@ class ActivityControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/activity/1/details');
         $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body');
-        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text(null, true));
+        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text());
 
         $this->request($client, '/admin/activity/1/create_team');
         $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
         $client->followRedirect();
         $node = $client->getCrawler()->filter('div.card#team_listing_box .card-title');
-        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
+        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text());
         $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body table tbody tr');
         self::assertEquals(1, $node->count());
 

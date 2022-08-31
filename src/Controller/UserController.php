@@ -23,6 +23,7 @@ use App\Repository\Query\UserQuery;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use App\User\UserService;
+use App\Utils\DataTable;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -63,10 +64,30 @@ final class UserController extends AbstractController
         $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::USERS);
         $this->dispatcher->dispatch($event);
 
+        $table = new DataTable('user_admin', $query);
+        $table->setPagination($entries);
+        $table->setSearchForm($form);
+        $table->setPaginationRoute('admin_user_paginated');
+        $table->setReloadEvents('kimai.userUpdate');
+
+        $table->addColumn('avatar', ['class' => 'alwaysVisible w-avatar', 'title' => null, 'orderBy' => false]);
+        $table->addColumn('alias', ['class' => 'alwaysVisible']);
+        $table->addColumn('account_number', ['class' => 'd-none']);
+        $table->addColumn('title', ['class' => 'd-none']);
+        $table->addColumn('email', ['class' => 'd-none', 'orderBy' => false]);
+        $table->addColumn('lastLogin', ['class' => 'd-none', 'orderBy' => false]);
+        $table->addColumn('roles', ['class' => 'd-none', 'orderBy' => false]);
+
+        foreach ($event->getPreferences() as $userPreference) {
+            $table->addColumn('mf_' . $userPreference->getName(), ['title' => $userPreference->getLabel(), 'class' => 'd-none', 'orderBy' => false, 'translation_domain' => 'messages']);
+        }
+
+        $table->addColumn('team', ['class' => 'text-center w-min', 'orderBy' => false]);
+        $table->addColumn('active', ['class' => 'd-none w-min', 'orderBy' => false]);
+        $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
+
         return $this->render('user/index.html.twig', [
-            'entries' => $entries,
-            'query' => $query,
-            'toolbarForm' => $form->createView(),
+            'dataTable' => $table,
             'preferences' => $event->getPreferences(),
         ]);
     }

@@ -78,9 +78,8 @@ final class CustomerFixtures implements TestFixture
             if (null !== $this->isVisible) {
                 $visible = $this->isVisible;
             }
-            $customer = new Customer();
+            $customer = new Customer($faker->company() . ($visible ? '' : ' (x)'));
             $customer->setCurrency($faker->currencyCode());
-            $customer->setName($faker->company() . ($visible ? '' : ' (x)'));
             $customer->setAddress($faker->address());
             $customer->setEmail($faker->safeEmail());
             $customer->setComment($faker->text());

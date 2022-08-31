@@ -25,7 +25,7 @@ class VisibilityType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.visible',
+            'label' => 'visible',
             'choices' => [
                 'both' => VisibilityInterface::SHOW_BOTH,
                 'yes' => VisibilityInterface::SHOW_VISIBLE,

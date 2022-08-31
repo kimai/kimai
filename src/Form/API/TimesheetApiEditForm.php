@@ -76,14 +76,14 @@ class TimesheetApiEditForm extends TimesheetEditForm
     protected function addBegin(FormBuilderInterface $builder, array $dateTimeOptions, array $options = [])
     {
         $builder->add('begin', DateTimeApiType::class, array_merge($dateTimeOptions, [
-            'label' => 'label.begin',
+            'label' => 'begin',
         ]));
     }
 
     protected function addEnd(FormBuilderInterface $builder, array $dateTimeOptions, array $options = [])
     {
         $builder->add('end', DateTimeApiType::class, array_merge($dateTimeOptions, [
-            'label' => 'label.end',
+            'label' => 'end',
             'required' => false,
         ]));
     }

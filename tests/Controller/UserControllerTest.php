@@ -35,7 +35,6 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_user_admin', 7);
         $this->assertPageActions($client, [
-            'search' => '#',
             'download toolbar-action' => $this->createUrl('/admin/user/export'),
             'create modal-ajax-form' => $this->createUrl('/admin/user/create'),
             'settings modal-ajax-form' => $this->createUrl('/admin/system-config/edit/user'),

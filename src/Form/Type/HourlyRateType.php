@@ -30,7 +30,7 @@ class HourlyRateType extends AbstractType
                 'description' => 'Hourly rate',
             ],
             'required' => false,
-            'label' => 'label.hourlyRate',
+            'label' => 'hourlyRate',
         ]);
     }
 

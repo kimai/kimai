@@ -90,7 +90,7 @@ class ActivityEditFormTest extends TypeTestCase
     public function testWithNonGlobalExistingActivityAndOptions()
     {
         $project = new Project();
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project->setCustomer($customer);
         $model = $this->createMock(Activity::class);
 

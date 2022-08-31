@@ -147,8 +147,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
      */
     public function testGetInvoiceNumber(string $format, string $expectedInvoiceNumber, \DateTime $invoiceDate, int $counter = 1)
     {
-        $customer = new Customer();
-        $customer->setName('Acme company');
+        $customer = new Customer('Acme company');
         $customer->setNumber('0815');
 
         $user = $this->createMock(User::class);
@@ -199,7 +198,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
         $sut = $this->getSut($format);
         $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter());
         $model->setInvoiceDate($invoiceDate);
-        $model->setCustomer(new Customer());
+        $model->setCustomer(new Customer('foo'));
         $sut->setModel($model);
 
         $sut->getInvoiceNumber();

@@ -36,7 +36,7 @@ class WeeklyInvoiceCalculatorTest extends AbstractCalculatorTest
 
     public function testWithMultipleEntries()
     {
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $template = new InvoiceTemplate();
         $template->setVat(19);
 

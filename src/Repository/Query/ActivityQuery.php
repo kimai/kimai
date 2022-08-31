@@ -16,12 +16,14 @@ use App\Entity\Project;
  */
 class ActivityQuery extends ProjectQuery
 {
-    public const ACTIVITY_ORDER_ALLOWED = ['id', 'name', 'comment', 'customer', 'project', 'budget', 'timeBudget', 'visible'];
+    public const ACTIVITY_ORDER_ALLOWED = [
+        'name', 'description' => 'comment', 'customer', 'project', 'budget', 'timeBudget', 'visible'
+    ];
 
     /**
      * @var array<Project|int>
      */
-    private $projects = [];
+    private array $projects = [];
     private bool $globalsOnly = false;
     private bool $excludeGlobals = false;
 

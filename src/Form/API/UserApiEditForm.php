@@ -25,7 +25,7 @@ class UserApiEditForm extends UserEditType
 
         if ($options['include_roles']) {
             $builder->add('roles', UserRoleType::class, [
-                'label' => 'label.roles',
+                'label' => 'roles',
                 'required' => false,
                 'multiple' => true,
                 'expanded' => false,

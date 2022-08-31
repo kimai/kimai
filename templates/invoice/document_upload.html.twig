@@ -5,11 +5,12 @@
 {% block page_title %}{{ 'admin_invoice_template.title'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.invoice_upload('index') }}{% endblock %}
 
-{% block subtitle %}
+{% block breadcrumb %}
     {% if is_granted('manage_invoice_template') %}
-        {{ widgets.breadcrumb({
+        {% from "macros/breadcrumb.html.twig" import breadcrumb %}
+        {{ breadcrumb({
             ('admin_invoice_template.title'|trans): path('admin_invoice_template'),
-            ('label.invoice_renderer'|trans({}, 'invoice-renderer')): '#'
+            ('invoice_renderer'|trans({}, 'invoice-renderer')): '#'
         }) }}
     {% endif %}
 {% endblock %}
@@ -38,7 +39,7 @@
         {% embed '@theme/embeds/card.html.twig' with {'documents': documents} %}
             {% import "invoice/actions.html.twig" as actions %}
             {% import "macros/widgets.html.twig" as widgets %}
-            {% block box_title %}{{ 'label.invoice_renderer'|trans({}, 'invoice-renderer') }}{% endblock %}
+            {% block box_title %}{{ 'invoice_renderer'|trans({}, 'invoice-renderer') }}{% endblock %}
             {% block box_attributes %}
                 id="invoice_document_list"
             {% endblock %}
@@ -49,7 +50,7 @@
                         <tr>
                             <th>{{ 'file'|trans }}</th>
                             <th>{{ 'updated_at'|trans }}</th>
-                            <th>{{ 'label.template'|trans }}</th>
+                            <th>{{ 'template'|trans }}</th>
                             <th></th>
                         </tr>
                     </thead>

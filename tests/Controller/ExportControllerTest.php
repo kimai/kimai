@@ -48,8 +48,7 @@ class ExportControllerTest extends ControllerBaseTest
         $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
         $user = $this->getUserByRole(User::ROLE_USER);
         /** @var Team $team */
-        $team = new Team();
-        $team->setName('fooo');
+        $team = new Team('fooo');
         $team->addTeamlead($teamlead);
         $team->addUser($user);
         $em->persist($team);

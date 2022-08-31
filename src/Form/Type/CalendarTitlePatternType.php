@@ -34,13 +34,13 @@ class CalendarTitlePatternType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $customer = $this->translator->trans('label.customer');
-        $project = $this->translator->trans('label.project');
-        $activity = $this->translator->trans('label.activity');
-        $description = $this->translator->trans('label.description');
+        $customer = $this->translator->trans('customer');
+        $project = $this->translator->trans('project');
+        $activity = $this->translator->trans('activity');
+        $description = $this->translator->trans('description');
 
         $resolver->setDefaults([
-            'label' => 'label.choice_pattern',
+            'label' => 'choice_pattern',
             'choices' => [
                 $activity => CalendarTitlePatternType::PATTERN_ACTIVITY,
                 $project => CalendarTitlePatternType::PATTERN_PROJECT,

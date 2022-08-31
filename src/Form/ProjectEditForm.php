@@ -57,32 +57,32 @@ class ProjectEditForm extends AbstractType
 
         $builder
             ->add('name', TextType::class, [
-                'label' => 'label.name',
+                'label' => 'name',
                 'attr' => [
                     'autofocus' => 'autofocus'
                 ],
             ])
             ->add('comment', TextareaType::class, [
-                'label' => 'label.description',
+                'label' => 'description',
                 'required' => false,
             ])
             ->add('invoiceText', InvoiceLabelType::class)
             ->add('orderNumber', TextType::class, [
-                'label' => 'label.orderNumber',
+                'label' => 'orderNumber',
                 'required' => false,
             ])
             ->add('orderDate', DatePickerType::class, array_merge($dateTimeOptions, [
-                'label' => 'label.orderDate',
+                'label' => 'orderDate',
                 'required' => false,
                 'force_time' => 'start',
             ]))
             ->add('start', DatePickerType::class, array_merge($dateTimeOptions, [
-                'label' => 'label.project_start',
+                'label' => 'project_start',
                 'required' => false,
                 'force_time' => 'start',
             ]))
             ->add('end', DatePickerType::class, array_merge($dateTimeOptions, [
-                'label' => 'label.project_end',
+                'label' => 'project_end',
                 'required' => false,
                 'force_time' => 'end',
             ]))
@@ -92,7 +92,7 @@ class ProjectEditForm extends AbstractType
                 'query_builder_for_user' => true,
             ])
             ->add('globalActivities', YesNoType::class, [
-                'label' => 'label.globalActivities',
+                'label' => 'globalActivities',
                 'help' => 'help.globalActivities'
             ])
         ;

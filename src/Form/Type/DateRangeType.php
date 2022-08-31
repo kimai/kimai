@@ -48,7 +48,7 @@ class DateRangeType extends AbstractType
 
         $resolver->setDefaults([
             'timezone' => date_default_timezone_get(),
-            'label' => 'label.daterange',
+            'label' => 'daterange',
             'format' => $formFormat,
             'separator' => self::DATE_SPACER,
             'allow_empty' => true,

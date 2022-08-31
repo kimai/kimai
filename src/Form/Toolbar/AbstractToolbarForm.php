@@ -54,7 +54,7 @@ abstract class AbstractToolbarForm extends AbstractType
     protected function addUserChoice(FormBuilderInterface $builder)
     {
         $builder->add('user', UserType::class, [
-            'label' => 'label.user',
+            'label' => 'user',
             'required' => false,
         ]);
     }
@@ -67,7 +67,7 @@ abstract class AbstractToolbarForm extends AbstractType
                 'items' => ['type' => 'integer', 'description' => 'User ID'],
                 'description' => 'Array of user IDs',
             ],
-            'label' => 'label.user',
+            'label' => 'user',
             'multiple' => true,
             'required' => false,
         ]);
@@ -76,7 +76,7 @@ abstract class AbstractToolbarForm extends AbstractType
     protected function addTeamChoice(FormBuilderInterface $builder)
     {
         $builder->add('team', TeamType::class, [
-            'label' => 'label.team',
+            'label' => 'team',
             'required' => false,
         ]);
     }
@@ -89,7 +89,7 @@ abstract class AbstractToolbarForm extends AbstractType
                 'items' => ['type' => 'integer', 'description' => 'Team ID'],
                 'description' => 'Array of team IDs',
             ],
-            'label' => 'label.team',
+            'label' => 'team',
             'multiple' => true,
             'required' => false,
         ], $options));
@@ -153,7 +153,7 @@ abstract class AbstractToolbarForm extends AbstractType
         );
     }
 
-    protected function addVisibilityChoice(FormBuilderInterface $builder, string $label = 'label.visible')
+    protected function addVisibilityChoice(FormBuilderInterface $builder, string $label = 'visible')
     {
         $builder->add('visibility', VisibilityType::class, [
             'required' => false,
@@ -356,10 +356,10 @@ abstract class AbstractToolbarForm extends AbstractType
             'documentation' => [
                 'description' => 'The order for returned items',
             ],
-            'label' => 'label.order',
+            'label' => 'order',
             'choices' => [
-                'label.asc' => BaseQuery::ORDER_ASC,
-                'label.desc' => BaseQuery::ORDER_DESC
+                'asc' => BaseQuery::ORDER_ASC,
+                'desc' => BaseQuery::ORDER_DESC
             ],
             'search' => false,
         ]);
@@ -369,11 +369,11 @@ abstract class AbstractToolbarForm extends AbstractType
     {
         $all = [];
         foreach ($allowedColumns as $id => $name) {
-            $label = \is_int($id) ? 'label.' . $name : $id;
+            $label = \is_int($id) ? $name : $id;
             $all[$label] = $name;
         }
         $builder->add('orderBy', ChoiceType::class, [
-            'label' => 'label.orderBy',
+            'label' => 'orderBy',
             'choices' => $all,
             'search' => false,
         ]);
@@ -394,7 +394,7 @@ abstract class AbstractToolbarForm extends AbstractType
     protected function addTimesheetStateChoice(FormBuilderInterface $builder)
     {
         $builder->add('state', ChoiceType::class, [
-            'label' => 'label.entryState',
+            'label' => 'entryState',
             'required' => false,
             'placeholder' => null,
             'search' => false,
@@ -409,7 +409,7 @@ abstract class AbstractToolbarForm extends AbstractType
     protected function addExportStateChoice(FormBuilderInterface $builder)
     {
         $builder->add('exported', ChoiceType::class, [
-            'label' => 'label.exported',
+            'label' => 'exported',
             'required' => false,
             'placeholder' => null,
             'search' => false,

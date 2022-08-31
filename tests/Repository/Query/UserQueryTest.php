@@ -38,10 +38,10 @@ class UserQueryTest extends BaseQueryTest
 
     protected function assertSearchTeam(UserQuery $sut)
     {
-        $team = new Team();
+        $team = new Team('foo');
         $this->assertIsArray($sut->getSearchTeams());
         $this->assertEmpty($sut->getSearchTeams());
-        $sut->setSearchTeams([$team, new Team()]);
+        $sut->setSearchTeams([$team, new Team('foo')]);
         $this->assertCount(2, $sut->getSearchTeams());
         $this->assertSame($team, $sut->getSearchTeams()[0]);
     }

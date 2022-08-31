@@ -2,6 +2,20 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
 
+{% set totalDuration = 0 %}
+{% set totalRates = {} %}
+
+{% if too_many is not same as (true) and preview_show and entries is not empty %}
+    {% for row in by_customer %}
+        {% set totalDuration = totalDuration + row.duration %}
+        {% set customerCurrency = row.customer.currency %}
+        {% if totalRates[customerCurrency] is not defined %}
+            {% set totalRates = totalRates|merge({(customerCurrency): 0.00}) %}
+        {% endif %}
+        {% set totalRates = totalRates|merge({(customerCurrency): totalRates[customerCurrency] + row.rate}) %}
+    {% endfor %}
+{% endif %}
+
 {% set columns = {
     'avatar': {'class': 'text-nowrap w-avatar d-none d-md-table-cell', 'title': false, 'orderBy': false},
     'date': {'class': 'alwaysVisible text-nowrap', 'orderBy': false},
@@ -25,10 +39,18 @@
     {% set showToggleButton = preview_show and form.exported.vars.value != constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') %}
 {% endif %}
 
-{% block page_title %}{{ 'export.title'|trans }}{% endblock %}
+{% block page_title %}{{ 'export'|trans }}{% endblock %}
 {% block page_actions %}
     {% set event = actions(app.user, 'export', (preview_show ? 'preview' : 'index')) %}
     {{ widgets.page_actions(event.actions) }}
+{% endblock %}
+
+{% block status %}
+    {% from "macros/status.html.twig" import status_duration, status_money %}
+    {{ status_duration(totalDuration|duration) }}
+    {% for totalCurrency, totalRate in totalRates %}
+        {{ status_money(totalRate|money(totalCurrency)) }}
+    {% endfor %}
 {% endblock %}
 
 {% block main_before %}
@@ -72,28 +94,10 @@
         {% if entries is empty %}
             {{ widgets.nothing_found() }}
         {% else %}
-            {% set totalDuration = 0 %}
-            {% set totalRates = {} %}
-
-            {% for row in by_customer %}
-                {% set totalDuration = totalDuration + row.duration %}
-                {% set customerCurrency = row.customer.currency %}
-                {% if totalRates[customerCurrency] is not defined %}
-                    {% set totalRates = totalRates|merge({(customerCurrency): 0.00}) %}
-                {% endif %}
-                {% set totalRates = totalRates|merge({(customerCurrency): totalRates[customerCurrency] + row.rate}) %}
-            {% endfor %}
-
             {% embed '@theme/embeds/card.html.twig' %}
                 {% import "macros/widgets.html.twig" as widgets %}
                 {% block box_title %}
-                    {{ 'button.preview'|trans }}: {{ 'export.title'|trans }}
-                {% endblock %}
-                {% block box_tools %}
-                    {{ widgets.label(totalDuration|duration, 'primary') }}
-                    {% for totalCurrency, totalRate in totalRates %}
-                        {{ widgets.label(totalRate|money(totalCurrency), totalRates|length == 1 ? 'primary' : 'gray') }}
-                    {% endfor %}
+                    {{ 'preview'|trans }}
                 {% endblock %}
                 {% block box_attributes %}id="preview_export"{% endblock %}
                 {% block box_body_class %}p-0{% endblock %}
@@ -112,7 +116,7 @@
                     <div class="d-flex">
                         <div class="form-check">
                             <input type="checkbox" id="markAsExportedCheck" name="markAsExportedCheck" class="form-check-input" value="1" {% if form.markAsExported.vars.value == '1' %} checked="checked"{% endif %}>
-                            <label class="form-check-label" for="markAsExportedCheck">{{ 'label.mark_as_exported'|trans }}</label>
+                            <label class="form-check-label" for="markAsExportedCheck">{{ 'mark_as_exported'|trans }}</label>
                         </div>
                     </div>
                     {% endif %}
@@ -150,10 +154,10 @@
                             <button id="toggle-button" class="btn ms-auto d-none d-sm-inline-flex">
                                 {% if form.exported.vars.value == '5' %}
                                     {{ icon('off', true) }}
-                                    {{ 'label.mark_as_exported'|trans }}
+                                    {{ 'mark_as_exported'|trans }}
                                 {% elseif form.exported.vars.value == '4' %}
                                     {{ icon('on', true) }}
-                                    {{ 'label.mark_as_open'|trans }}
+                                    {{ 'mark_as_open'|trans }}
                                 {% endif %}
                             </button>
                         {% endif %}
@@ -163,9 +167,9 @@
                     <table class="table table-hover dataTable">
                         <thead>
                         <tr>
-                            <th>{{ 'label.customer'|trans }}</th>
-                            <th class="w-min text-end d-none d-sm-table-cell">{{ 'label.duration'|trans }}</th>
-                            <th class="w-min text-end">{{ 'label.total_rate'|trans }}</th>
+                            <th>{{ 'customer'|trans }}</th>
+                            <th class="w-min text-end d-none d-sm-table-cell">{{ 'duration'|trans }}</th>
+                            <th class="w-min text-end">{{ 'total_rate'|trans }}</th>
                         </tr>
                         </thead>
                         <tbody>

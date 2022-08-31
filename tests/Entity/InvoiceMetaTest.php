@@ -36,6 +36,6 @@ class InvoiceMetaTest extends AbstractMetaEntityTest
         $this->expectExceptionMessage('Expected instanceof Invoice, received "App\Entity\Customer"');
 
         $sut = new InvoiceMeta();
-        $sut->setEntity(new Customer());
+        $sut->setEntity(new Customer('foo'));
     }
 }

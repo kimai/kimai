@@ -49,7 +49,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $configuration->method('isTimesheetAllowOverbookingBudget')->willReturn($isAllowed);
 
         if ($customerStatisticModel === null) {
-            $customerStatisticModel = new CustomerBudgetStatisticModel(new Customer());
+            $customerStatisticModel = new CustomerBudgetStatisticModel(new Customer('foo'));
             $customerStatistic = new CustomerStatistic();
             $customerStatisticModel->setStatisticTotal($customerStatistic);
             $customerStatisticModel->setStatistic($customerStatistic);
@@ -154,7 +154,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
     public function testWithoutBudget()
     {
         $project = new Project();
-        $project->setCustomer(new Customer());
+        $project->setCustomer(new Customer('foo'));
 
         $timesheet = new Timesheet();
         $timesheet->setBegin(new DateTime());
@@ -179,7 +179,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $end->modify('+3601 seconds');
 
         $project = new Project();
-        $project->setCustomer(new Customer());
+        $project->setCustomer(new Customer('foo'));
 
         $timesheet = new Timesheet();
         $timesheet->setBegin($begin);
@@ -428,7 +428,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
                 $activity->setBudget($activityBudget);
             }
 
-            $customer = new Customer();
+            $customer = new Customer('foo');
             if ($customerTimeBudget !== null) {
                 $customer->setTimeBudget($customerTimeBudget);
             }

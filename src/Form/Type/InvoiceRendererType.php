@@ -36,7 +36,7 @@ final class InvoiceRendererType extends AbstractType
         }
 
         $resolver->setDefaults([
-            'label' => 'label.invoice_renderer',
+            'label' => 'invoice_renderer',
             'choices' => array_flip($documents),
             'group_by' => [$this, 'getGroupBy'],
             'choice_label' => function ($choiceValue, $key, $value) {

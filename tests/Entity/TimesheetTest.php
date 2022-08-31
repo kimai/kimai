@@ -75,8 +75,7 @@ class TimesheetTest extends TestCase
 
     protected function getEntity()
     {
-        $customer = new Customer();
-        $customer->setName('Test Customer');
+        $customer = new Customer('Test Customer');
 
         $project = new Project();
         $project->setName('Test Project');

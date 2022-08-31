@@ -33,16 +33,16 @@
         <source>confirm.delete</source>
         <target>Er tú vís/ur í, at tú vilt sletta hetta?</target>
       </trans-unit>
-      <trans-unit id="hFFZGp_" resname="label.user_profile">
-        <source>label.user_profile</source>
+      <trans-unit id="_x2He8M" resname="user_profile">
+        <source>user_profile</source>
         <target>Mín vangi</target>
       </trans-unit>
-      <trans-unit id="gXZR.hV" resname="label.api_token">
-        <source>label.api_token</source>
+      <trans-unit id="T4nAM7X" resname="api_token">
+        <source>api_token</source>
         <target>API loyniorð</target>
       </trans-unit>
-      <trans-unit id="s_X2xpI" resname="label.api_token_repeat">
-        <source>label.api_token_repeat</source>
+      <trans-unit id="aq59Sk8" resname="api_token_repeat">
+        <source>api_token_repeat</source>
         <target>Endurtak API loyniorð</target>
       </trans-unit>
       <trans-unit id="wBTFKFR" resname="menu.logout">
@@ -69,8 +69,8 @@
         <source>users</source>
         <target>Brúkarar</target>
       </trans-unit>
-      <trans-unit id="xxoo5lW" resname="label.teams">
-        <source>label.teams</source>
+      <trans-unit id="_t.2z4V" resname="teams">
+        <source>teams</source>
         <target>Bólkar</target>
       </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
@@ -95,100 +95,100 @@
       <!--
               General labels
             -->
-      <trans-unit id="H1qEi4d" resname="label.date">
-        <source>label.date</source>
+      <trans-unit id="DodjLNR" resname="date">
+        <source>date</source>
         <target>Dato</target>
       </trans-unit>
-      <trans-unit id="eJPDE76" resname="label.starttime">
-        <source>label.starttime</source>
+      <trans-unit id="BHk4pZ3" resname="starttime">
+        <source>starttime</source>
         <target>Byrja</target>
       </trans-unit>
-      <trans-unit id="uZlpDFh" resname="label.endtime">
-        <source>label.endtime</source>
+      <trans-unit id="eI_tMbq" resname="endtime">
+        <source>endtime</source>
         <target>Enda</target>
       </trans-unit>
-      <trans-unit id="cgpmY0I" resname="label.duration">
-        <source>label.duration</source>
+      <trans-unit id="yqea9Nt" resname="duration">
+        <source>duration</source>
         <target>Tíðarlongd</target>
       </trans-unit>
-      <trans-unit id="O2X4xZH" resname="label.user">
-        <source>label.user</source>
+      <trans-unit id="BPiZbad" resname="user">
+        <source>user</source>
         <target>Brúkari</target>
       </trans-unit>
-      <trans-unit id="LDhDPrF" resname="label.username">
-        <source>label.username</source>
+      <trans-unit id="FveKfWM" resname="username">
+        <source>username</source>
         <target>Brúkari</target>
       </trans-unit>
-      <trans-unit id="4cEApe1" resname="label.description">
-        <source>label.description</source>
+      <trans-unit id="yQRveje" resname="description">
+        <source>description</source>
         <target>Frágreiðing</target>
       </trans-unit>
-      <trans-unit id="ysOvPSq" resname="label.name">
-        <source>label.name</source>
+      <trans-unit id="gqNTf.D" resname="name">
+        <source>name</source>
         <target>Navn</target>
       </trans-unit>
-      <trans-unit id="WqTho4C" resname="label.comment">
-        <source>label.comment</source>
+      <trans-unit id="xEuy.VF" resname="comment">
+        <source>comment</source>
         <target>Viðmerking</target>
       </trans-unit>
-      <trans-unit id="txRonia" resname="label.id">
-        <source>label.id</source>
+      <trans-unit id="pWFFJwz" resname="id">
+        <source>id</source>
         <target>ID</target>
       </trans-unit>
-      <trans-unit id="CYpZwBz" resname="label.visible">
-        <source>label.visible</source>
+      <trans-unit id="1C7xSXk" resname="visible">
+        <source>visible</source>
         <target>Sjónligur</target>
       </trans-unit>
-      <trans-unit id="2ktNwkr" resname="label.budget">
-        <source>label.budget</source>
+      <trans-unit id="CvlqjtY" resname="budget">
+        <source>budget</source>
         <target>Fíggjarætlan</target>
       </trans-unit>
-      <trans-unit id="x8TrOec" resname="label.timeBudget">
-        <source>label.timeBudget</source>
+      <trans-unit id="qbD0dHa" resname="timeBudget">
+        <source>timeBudget</source>
         <target>Tíðarætlan</target>
       </trans-unit>
-      <trans-unit id="l1wiL0h" resname="label.activity">
-        <source>label.activity</source>
+      <trans-unit id="BlGGO.X" resname="activity">
+        <source>activity</source>
         <target>Virksemi</target>
       </trans-unit>
-      <trans-unit id="KtnqJcg" resname="label.project">
-        <source>label.project</source>
+      <trans-unit id="JEIQ5IQ" resname="project">
+        <source>project</source>
         <target>Verkætlan</target>
       </trans-unit>
-      <trans-unit id="VNCQ7YU" resname="label.tag">
-        <source>label.tag</source>
+      <trans-unit id="KhBzpuZ" resname="tag">
+        <source>tag</source>
         <target>Frámerkir</target>
       </trans-unit>
-      <trans-unit id="ijQyGRo" resname="label.tags">
-        <source>label.tags</source>
+      <trans-unit id="l4wviUE" resname="tags">
+        <source>tags</source>
         <target>Frámerkir</target>
       </trans-unit>
-      <trans-unit id="VAbtieW" resname="label.hourlyRate">
-        <source>label.hourlyRate</source>
+      <trans-unit id="E_bHhGR" resname="hourlyRate">
+        <source>hourlyRate</source>
         <target>Tímaprísur</target>
       </trans-unit>
-      <trans-unit id="dezCZWf" resname="label.skin">
-        <source>label.skin</source>
+      <trans-unit id="KgBw0BS" resname="skin">
+        <source>skin</source>
         <target>Vís: litir</target>
       </trans-unit>
-      <trans-unit id="DAkHUq0" resname="label.layout">
-        <source>label.layout</source>
+      <trans-unit id="HcWuW2g" resname="layout">
+        <source>layout</source>
         <target>Vís: uppseting</target>
       </trans-unit>
-      <trans-unit id="w8T34A6" resname="label.hours">
-        <source>label.hours</source>
+      <trans-unit id="QEMUsfS" resname="hours">
+        <source>hours</source>
         <target>Tímar</target>
       </trans-unit>
-      <trans-unit id="Ih3IFXj" resname="label.rate">
-        <source>label.rate</source>
+      <trans-unit id="xUl3nXn" resname="rate">
+        <source>rate</source>
         <target>Prísur</target>
       </trans-unit>
-      <trans-unit id="4dSa8nM" resname="label.internalRate">
-        <source>label.internalRate</source>
+      <trans-unit id="5ofAsOs" resname="internalRate">
+        <source>internalRate</source>
         <target>Innanhýsis tímaprísur</target>
       </trans-unit>
-      <trans-unit id="nWMH_Nr" resname="label.avatar">
-        <source>label.avatar</source>
+      <trans-unit id="h7voece" resname="avatar">
+        <source>avatar</source>
         <target>Vanga mynd</target>
       </trans-unit>
       <trans-unit id="UVJ5Die" resname="calendar">
@@ -203,16 +203,16 @@
         <source>profile.about_me</source>
         <target>Um meg</target>
       </trans-unit>
-      <trans-unit id="c9W5AO4" resname="label.address">
-        <source>label.address</source>
+      <trans-unit id="2Ayb_RD" resname="address">
+        <source>address</source>
         <target>Búðstaður</target>
       </trans-unit>
-      <trans-unit id="UrRn8xj" resname="label.title">
-        <source>label.title</source>
+      <trans-unit id="qvIyBkY" resname="title">
+        <source>title</source>
         <target>Heiti</target>
       </trans-unit>
-      <trans-unit id="d75KAlJ" resname="label.version">
-        <source>label.version</source>
+      <trans-unit id="XKTzhQz" resname="version">
+        <source>version</source>
         <target>Útgáva</target>
       </trans-unit>
       <trans-unit id="718iPw6" resname="ROLE_ADMIN">
@@ -223,40 +223,40 @@
         <source>ROLE_USER</source>
         <target>Brúkari</target>
       </trans-unit>
-      <trans-unit id="TRDzmCV" resname="label.alias">
-        <source>label.alias</source>
+      <trans-unit id="GgpqNso" resname="alias">
+        <source>alias</source>
         <target>Navn</target>
       </trans-unit>
-      <trans-unit id="otd2FZd" resname="label.currency">
-        <source>label.currency</source>
+      <trans-unit id="Rm5bnNV" resname="currency">
+        <source>currency</source>
         <target>Gjaldoyra</target>
       </trans-unit>
-      <trans-unit id="dmtPdwq" resname="label.timezone">
-        <source>label.timezone</source>
+      <trans-unit id="OWLt7pw" resname="timezone">
+        <source>timezone</source>
         <target>Tíðarsona</target>
       </trans-unit>
-      <trans-unit id="PS9IH_t" resname="label.homepage">
-        <source>label.homepage</source>
+      <trans-unit id="pcWhXux" resname="homepage">
+        <source>homepage</source>
         <target>Heimasíða</target>
       </trans-unit>
-      <trans-unit id="AawT9pW" resname="label.mobile">
-        <source>label.mobile</source>
+      <trans-unit id="1STBoIE" resname="mobile">
+        <source>mobile</source>
         <target>Fartelefon</target>
       </trans-unit>
-      <trans-unit id="eRyhERS" resname="label.fax">
-        <source>label.fax</source>
+      <trans-unit id="SvTiF8B" resname="fax">
+        <source>fax</source>
         <target>Faks</target>
       </trans-unit>
-      <trans-unit id="g03c_vw" resname="label.phone">
-        <source>label.phone</source>
+      <trans-unit id="RVadpX9" resname="phone">
+        <source>phone</source>
         <target>Telefon</target>
       </trans-unit>
-      <trans-unit id="k7MJQ82" resname="label.country">
-        <source>label.country</source>
+      <trans-unit id="r.ZOT9U" resname="country">
+        <source>country</source>
         <target>Land</target>
       </trans-unit>
-      <trans-unit id="39AtPxQ" resname="label.number">
-        <source>label.number</source>
+      <trans-unit id="EohvnQA" resname="number">
+        <source>number</source>
         <target>Konta</target>
       </trans-unit>
       <trans-unit id="Q0Zip02" resname="agendaDay">
@@ -275,16 +275,16 @@
         <source>profile.password</source>
         <target>Loyniorð</target>
       </trans-unit>
-      <trans-unit id="YTSS_Q1" resname="label.color">
-        <source>label.color</source>
+      <trans-unit id="dChNncv" resname="color">
+        <source>color</source>
         <target>Litur</target>
       </trans-unit>
-      <trans-unit id="R9typUt" resname="label.end">
-        <source>label.end</source>
+      <trans-unit id="Nh5I0DC" resname="end">
+        <source>end</source>
         <target>Til</target>
       </trans-unit>
-      <trans-unit id="trDJK9W" resname="label.begin">
-        <source>label.begin</source>
+      <trans-unit id="5vB9Q7X" resname="begin">
+        <source>begin</source>
         <target>Frá</target>
       </trans-unit>
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
@@ -315,8 +315,8 @@
         <source>status.paid</source>
         <target>Goldið</target>
       </trans-unit>
-      <trans-unit id="6x24VVR" resname="label.amount">
-        <source>label.amount</source>
+      <trans-unit id="zzjZXJx" resname="amount">
+        <source>amount</source>
         <target>Mongd</target>
       </trans-unit>
       <trans-unit id="hx7vsMA" resname="invoice.to">
@@ -355,8 +355,8 @@
         <source>invoice.total</source>
         <target>Samanlagt</target>
       </trans-unit>
-      <trans-unit id="hzhzbqw" resname="label.status">
-        <source>label.status</source>
+      <trans-unit id="BzwWNMS" resname="status">
+        <source>status</source>
         <target>Støða</target>
       </trans-unit>
       <trans-unit id="XvXvA2S" resname="all">
@@ -371,12 +371,12 @@
         <source>my.profile</source>
         <target>Mín vangi</target>
       </trans-unit>
-      <trans-unit id="Z8Fxbvf" resname="label.orderBy">
-        <source>label.orderBy</source>
+      <trans-unit id="VSo_gmO" resname="orderBy">
+        <source>orderBy</source>
         <target>Raðfest eftir</target>
       </trans-unit>
-      <trans-unit id="BytPihM" resname="label.set_as_default">
-        <source>label.set_as_default</source>
+      <trans-unit id="CiA4s9E" resname="set_as_default">
+        <source>set_as_default</source>
         <target>Goym sum yndis leiti-stilling</target>
       </trans-unit>
       <trans-unit id="zFfl7jw" resname="sum.total">
@@ -395,8 +395,8 @@
         <source>menu.homepage</source>
         <target>Yvirlitsskíggi</target>
       </trans-unit>
-      <trans-unit id="9pvowqn" resname="label.password">
-        <source>label.password</source>
+      <trans-unit id="XohImNo" resname="password">
+        <source>password</source>
         <target>Loyniorð</target>
       </trans-unit>
       <trans-unit id=".0CFrRV" resname="upload">
@@ -411,28 +411,28 @@
         <source>cancel</source>
         <target>Angra</target>
       </trans-unit>
-      <trans-unit id="WxAnbP0" resname="label.password_repeat">
-        <source>label.password_repeat</source>
+      <trans-unit id="hLEZkoC" resname="password_repeat">
+        <source>password_repeat</source>
         <target>Endurtak loyniorð</target>
       </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>Arbeiðsseðlar</target>
       </trans-unit>
-      <trans-unit id="II4DGnv" resname="label.logout">
-        <source>label.logout</source>
+      <trans-unit id="ACcM9j_" resname="logout">
+        <source>logout</source>
         <target>Rita út</target>
       </trans-unit>
       <trans-unit id="O5w1jzb" resname="file">
         <source>file</source>
         <target>Fíla</target>
       </trans-unit>
-      <trans-unit id="0D_zaYd" resname="label.desc">
-        <source>label.desc</source>
+      <trans-unit id="l4ZOh4." resname="desc">
+        <source>desc</source>
         <target>Lækkandi</target>
       </trans-unit>
-      <trans-unit id="31x84Dt" resname="label.asc">
-        <source>label.asc</source>
+      <trans-unit id="1o0.9vf" resname="asc">
+        <source>asc</source>
         <target>Hækkandi</target>
       </trans-unit>
       <trans-unit id="JBkykGe" resname="search">
@@ -447,13 +447,9 @@
         <source>invoices</source>
         <target>Vørurokningar</target>
       </trans-unit>
-      <trans-unit id="7H7P1mE" resname="button.preview">
-        <source>button.preview</source>
+      <trans-unit id="WXXPG7p" resname="preview">
+        <source>preview</source>
         <target>Undansýning</target>
-      </trans-unit>
-      <trans-unit id="IQ9DUOW" resname="button.preview_print">
-        <source>button.preview_print</source>
-        <target>Undansýning av prenti</target>
       </trans-unit>
       <trans-unit id="X70dwP8" resname="button.print">
         <source>button.print</source>
@@ -463,8 +459,8 @@
         <source>invoice_print</source>
         <target>Vørurokning</target>
       </trans-unit>
-      <trans-unit id="zfIRxJh" resname="label.due_days">
-        <source>label.due_days</source>
+      <trans-unit id="ohNu8DK" resname="due_days">
+        <source>due_days</source>
         <target>Gjaldsstøða í døgum</target>
       </trans-unit>
       <trans-unit id="Xij3oQl" resname="invoice.payment_date">
@@ -475,24 +471,24 @@
         <source>invoice.number</source>
         <target>Vørurokningarnummar</target>
       </trans-unit>
-      <trans-unit id="MF3MdTu" resname="label.unit_price">
-        <source>label.unit_price</source>
+      <trans-unit id="IoKfYkz" resname="unit_price">
+        <source>unit_price</source>
         <target>Eindarprísur</target>
       </trans-unit>
-      <trans-unit id="77aZC3r" resname="label.payment_terms">
-        <source>label.payment_terms</source>
+      <trans-unit id="033t0aO" resname="payment_terms">
+        <source>payment_terms</source>
         <target>Gjaldsháttur</target>
       </trans-unit>
-      <trans-unit id="BS00SS7" resname="label.orderNumber">
-        <source>label.orderNumber</source>
+      <trans-unit id="3tegKgk" resname="orderNumber">
+        <source>orderNumber</source>
         <target>Bíleggingarnummar</target>
       </trans-unit>
-      <trans-unit id="as948k9" resname="label.orderDate">
-        <source>label.orderDate</source>
+      <trans-unit id="tCNBGKG" resname="orderDate">
+        <source>orderDate</source>
         <target>Bíleggingardato</target>
       </trans-unit>
-      <trans-unit id="uFZA7Uf" resname="label.invoice_bank_account">
-        <source>label.invoice_bank_account</source>
+      <trans-unit id="lswYe8s" resname="invoice_bank_account">
+        <source>invoice_bank_account</source>
         <target>Bankakonta</target>
       </trans-unit>
       <trans-unit id="X_NRsed" resname="status.new">
@@ -511,8 +507,8 @@
         <source>timesheet.start</source>
         <target>Upprætta eina nýggja tíðarinntøppan</target>
       </trans-unit>
-      <trans-unit id="MPimOps" resname="label.pageSize">
-        <source>label.pageSize</source>
+      <trans-unit id="igCkqAP" resname="pageSize">
+        <source>pageSize</source>
         <target>Stødd av síðu</target>
       </trans-unit>
       <trans-unit id="xm7mqoK" resname="entryState.running">
@@ -523,10 +519,6 @@
         <source>entryState.stopped</source>
         <target>Steðga</target>
       </trans-unit>
-      <trans-unit id="l4wviUE" resname="tags">
-        <source>tags</source>
-        <target>Frámerki</target>
-      </trans-unit>
       <trans-unit id="mflwMcX" resname="rates.title">
         <source>rates.title</source>
         <target>Avgjøld</target>
@@ -535,24 +527,24 @@
         <source>attachments</source>
         <target>Fílur</target>
       </trans-unit>
-      <trans-unit id="DJu1n0C" resname="label.daily_stats">
-        <source>label.daily_stats</source>
+      <trans-unit id="r49TNAg" resname="daily_stats">
+        <source>daily_stats</source>
         <target>Vís daglig hagtøl á arbeiðsseðli</target>
       </trans-unit>
       <trans-unit id="EO57yXg" resname="invoice.tax">
         <source>invoice.tax</source>
         <target>Skattur</target>
       </trans-unit>
-      <trans-unit id="p0IprAw" resname="label.template">
-        <source>label.template</source>
+      <trans-unit id="XN4PEpj" resname="template">
+        <source>template</source>
         <target>Formur</target>
       </trans-unit>
-      <trans-unit id="jTiYRIu" resname="label.my_team_projects">
-        <source>label.my_team_projects</source>
+      <trans-unit id="Ia0kvPi" resname="my_team_projects">
+        <source>my_team_projects</source>
         <target>Lið verkætlanir &amp; fíggjarætlanir</target>
       </trans-unit>
-      <trans-unit id="4iliLZT" resname="label.toggle_dropdown">
-        <source>label.toggle_dropdown</source>
+      <trans-unit id="muzkQpM" resname="toggle_dropdown">
+        <source>toggle_dropdown</source>
         <target>Vís valmynd</target>
       </trans-unit>
       <trans-unit id="d5wyWRD" resname="export.full_list">
@@ -623,20 +615,20 @@
         <source>stats.amountToday</source>
         <target>Inntøka í dag</target>
       </trans-unit>
-      <trans-unit id="KtTP.Sh" resname="label.active">
-        <source>label.active</source>
+      <trans-unit id="loeWEWU" resname="active">
+        <source>active</source>
         <target>Virkin</target>
       </trans-unit>
-      <trans-unit id="egaNXjp" resname="label.daterange">
-        <source>label.daterange</source>
+      <trans-unit id="iNOVZRh" resname="daterange">
+        <source>daterange</source>
         <target>Tíðarskeið</target>
       </trans-unit>
-      <trans-unit id="1PQHtXu" resname="label.progress">
-        <source>label.progress</source>
+      <trans-unit id="tfkKlua" resname="progress">
+        <source>progress</source>
         <target>Framstig</target>
       </trans-unit>
-      <trans-unit id="hO7mkmf" resname="label.lastLogin">
-        <source>label.lastLogin</source>
+      <trans-unit id="gRIArHS" resname="lastLogin">
+        <source>lastLogin</source>
         <target>Seinasta innritan</target>
       </trans-unit>
       <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth">
@@ -667,8 +659,8 @@
         <source>export.period</source>
         <target>Tíðarskeið</target>
       </trans-unit>
-      <trans-unit id="S0vT92U" resname="label.globalsOnly">
-        <source>label.globalsOnly</source>
+      <trans-unit id="NNsA8i2" resname="globalsOnly">
+        <source>globalsOnly</source>
         <target>Einans heiltøk</target>
       </trans-unit>
       <trans-unit id="Bor.76M" resname="stats.activityTotal">
@@ -683,20 +675,20 @@
         <source>menu.reporting</source>
         <target>Fráboðan</target>
       </trans-unit>
-      <trans-unit id="zldXQq6" resname="label.actions">
-        <source>label.actions</source>
+      <trans-unit id="Kw3N1AA" resname="actions">
+        <source>actions</source>
         <target>Gerðir</target>
       </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
         <target>Skriva tíni boð…</target>
       </trans-unit>
-      <trans-unit id="vkHr9AP" resname="label.billable">
-        <source>label.billable</source>
+      <trans-unit id="aVwNQcX" resname="billable">
+        <source>billable</source>
         <target>Gjaldskylda</target>
       </trans-unit>
-      <trans-unit id="v72sA1c" resname="label.recalculate_rates">
-        <source>label.recalculate_rates</source>
+      <trans-unit id="Qc5nsFn" resname="recalculate_rates">
+        <source>recalculate_rates</source>
         <target>Endurrokna kostnáðir</target>
       </trans-unit>
       <trans-unit id="Cxv_0wG" resname="help.internalRate">
@@ -727,32 +719,32 @@
         <source>user_permissions.title</source>
         <target>Brúkara heimildir</target>
       </trans-unit>
-      <trans-unit id="iD6CNOO" resname="label.roles">
-        <source>label.roles</source>
+      <trans-unit id="Zs9VE7N" resname="roles">
+        <source>roles</source>
         <target>Leiklutur</target>
       </trans-unit>
-      <trans-unit id="0tkOMo1" resname="label.contact">
-        <source>label.contact</source>
+      <trans-unit id="CT59X9u" resname="contact">
+        <source>contact</source>
         <target>Samband</target>
       </trans-unit>
-      <trans-unit id="YNGNfGn" resname="label.tax_rate">
-        <source>label.tax_rate</source>
+      <trans-unit id="qX_CKtU" resname="tax_rate">
+        <source>tax_rate</source>
         <target>Skattaprosent</target>
       </trans-unit>
-      <trans-unit id="7jfRn_1" resname="label.company">
-        <source>label.company</source>
+      <trans-unit id="8WjM3ZF" resname="company">
+        <source>company</source>
         <target>Fyritøku navn</target>
       </trans-unit>
-      <trans-unit id="GOStgLi" resname="label.vat">
-        <source>label.vat</source>
+      <trans-unit id="fFErSLq" resname="vat">
+        <source>vat</source>
         <target>Skattur</target>
       </trans-unit>
-      <trans-unit id="4kQGReV" resname="label.project_end">
-        <source>label.project_end</source>
+      <trans-unit id="TBWoUYf" resname="project_end">
+        <source>project_end</source>
         <target>Verkætlanar endan</target>
       </trans-unit>
-      <trans-unit id="yLOqEX_" resname="label.project_start">
-        <source>label.project_start</source>
+      <trans-unit id="Xyjr.V." resname="project_start">
+        <source>project_start</source>
         <target>Verkætlanar byrjan</target>
       </trans-unit>
       <trans-unit id="MQKiG33" resname="profile.preferences">
@@ -779,48 +771,48 @@
         <source>profile.title</source>
         <target>Brúkara vangi</target>
       </trans-unit>
-      <trans-unit id="BxkmaKz" resname="label.appendTags">
-        <source>label.appendTags</source>
+      <trans-unit id="ICpl9sx" resname="appendTags">
+        <source>appendTags</source>
         <target>Legg aftrat frámerki</target>
       </trans-unit>
-      <trans-unit id="EoouxGX" resname="label.replaceTags">
-        <source>label.replaceTags</source>
+      <trans-unit id="tl01EdS" resname="replaceTags">
+        <source>replaceTags</source>
         <target>Útskift frámerki</target>
       </trans-unit>
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
         <source>timesheet.title</source>
         <target>Mínar tíðarskrásetingar</target>
       </trans-unit>
-      <trans-unit id="f3KMQJh" resname="label.my_teams">
-        <source>label.my_teams</source>
+      <trans-unit id="L05Qw2x" resname="my_teams">
+        <source>my_teams</source>
         <target>Míni lið</target>
       </trans-unit>
       <trans-unit id="ovKkXwU" resname="action.edit">
         <source>action.edit</source>
         <target>Broyt</target>
       </trans-unit>
-      <trans-unit id="Zpj9UB4" resname="label.teamlead">
-        <source>label.teamlead</source>
+      <trans-unit id="evFI7nW" resname="teamlead">
+        <source>teamlead</source>
         <target>Liðskipari</target>
       </trans-unit>
-      <trans-unit id="Ss2xe99" resname="label.team">
-        <source>label.team</source>
+      <trans-unit id="yosi0Nu" resname="team">
+        <source>team</source>
         <target>Lið</target>
       </trans-unit>
-      <trans-unit id="foM2o5T" resname="label.language">
-        <source>label.language</source>
+      <trans-unit id="pO8wS6Q" resname="language">
+        <source>language</source>
         <target>Mál</target>
       </trans-unit>
-      <trans-unit id="Z8a2kUf" resname="label.customer">
-        <source>label.customer</source>
+      <trans-unit id="tsRYY4d" resname="customer">
+        <source>customer</source>
         <target>Kundi</target>
       </trans-unit>
-      <trans-unit id="D2N6_cP" resname="label.email">
-        <source>label.email</source>
+      <trans-unit id="giREF.l" resname="email">
+        <source>email</source>
         <target>Teldupostur</target>
       </trans-unit>
-      <trans-unit id="2Ek7sXu" resname="label.batch_meta_fields">
-        <source>label.batch_meta_fields</source>
+      <trans-unit id="8BPmHPa" resname="batch_meta_fields">
+        <source>batch_meta_fields</source>
         <target>Eyka rein</target>
       </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
@@ -835,8 +827,8 @@
         <source>timesheet.edit</source>
         <target>Broyt skráseting</target>
       </trans-unit>
-      <trans-unit id="KhyA_PW" resname="label.entryState">
-        <source>label.entryState</source>
+      <trans-unit id="cjgNYUB" resname="entryState">
+        <source>entryState</source>
         <target>Skrásetingar</target>
       </trans-unit>
       <trans-unit id="vKY0tof" resname="export.date_copyright">
@@ -859,8 +851,8 @@
         <source>entryState.exported</source>
         <target>Ruddað</target>
       </trans-unit>
-      <trans-unit id="IolBPQD" resname="label.searchTerm">
-        <source>label.searchTerm</source>
+      <trans-unit id="8W_TZI0" resname="searchTerm">
+        <source>searchTerm</source>
         <target>Leitingarorð</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
@@ -887,12 +879,12 @@
         <source>update_multiple</source>
         <target>%action% %count% innlegg?</target>
       </trans-unit>
-      <trans-unit id="NNKq04n" resname="label.remove_default">
-        <source>label.remove_default</source>
+      <trans-unit id="DUDrvjk" resname="remove_default">
+        <source>remove_default</source>
         <target>Strika yndis-leiti fráðmerki</target>
       </trans-unit>
-      <trans-unit id="csF1D35" resname="label.not_invoiced">
-        <source>label.not_invoiced</source>
+      <trans-unit id="o0yOFHL" resname="not_invoiced">
+        <source>not_invoiced</source>
         <target>Eingin rokning send</target>
       </trans-unit>
       <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields">
@@ -923,20 +915,20 @@
         <source>quick_entry.title</source>
         <target>Vikuarbeiðistímar</target>
       </trans-unit>
-      <trans-unit id="5gjqxgK" resname="label.fixedRate">
-        <source>label.fixedRate</source>
+      <trans-unit id="_0tuMNE" resname="fixedRate">
+        <source>fixedRate</source>
         <target>Fastur kostnáður</target>
       </trans-unit>
-      <trans-unit id="Dgmh_mv" resname="label.vat_id">
-        <source>label.vat_id</source>
+      <trans-unit id="EJDS9HY" resname="vat_id">
+        <source>vat_id</source>
         <target>V-tal</target>
       </trans-unit>
-      <trans-unit id="F6Jmro7" resname="export.title">
-        <source>export.title</source>
+      <trans-unit id="1GruCMx" resname="export">
+        <source>export</source>
         <target>Útflyt</target>
       </trans-unit>
-      <trans-unit id="pnGDFmf" resname="label.type">
-        <source>label.type</source>
+      <trans-unit id="EwPAaws" resname="type">
+        <source>type</source>
         <target>Slag</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
@@ -955,24 +947,24 @@
         <source>error.directory_protected</source>
         <target>Mappan "%dir%" skrivivard.</target>
       </trans-unit>
-      <trans-unit id="DhprVgS" resname="label.calendar_initial_view">
-        <source>label.calendar_initial_view</source>
+      <trans-unit id="j4Kd9N1" resname="calendar_initial_view">
+        <source>calendar_initial_view</source>
         <target>Byrjanarvísan fyri kalendara</target>
       </trans-unit>
-      <trans-unit id="3dU6nOJ" resname="label.login_initial_view">
-        <source>label.login_initial_view</source>
+      <trans-unit id="H.IqJTQ" resname="login_initial_view">
+        <source>login_initial_view</source>
         <target>Byrjanarvísan eftir innritan</target>
       </trans-unit>
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target>navnabót kagara dagførd</target>
       </trans-unit>
-      <trans-unit id="42YD.Bf" resname="label.export_decimal">
-        <source>label.export_decimal</source>
+      <trans-unit id="dherSTU" resname="export_decimal">
+        <source>export_decimal</source>
         <target>Nýt kommatals-tíðarlongd í útflutningi</target>
       </trans-unit>
-      <trans-unit id="7J7G3Vr" resname="label.mark_as_exported">
-        <source>label.mark_as_exported</source>
+      <trans-unit id="dicW36D" resname="mark_as_exported">
+        <source>mark_as_exported</source>
         <target>Merk sum útflutt</target>
       </trans-unit>
       <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
@@ -987,7 +979,7 @@
         <source>error.too_many_entries</source>
         <target>Umbønin kundi ikki fullfíggjast. Ov nógv úrslit vóru funnin.</target>
       </trans-unit>
-      <trans-unit id="DpdNns0" resname="label.choice_pattern">
+      <trans-unit id="fVA3M2x" resname="choice_pattern">
         <source>Display of entries in selection lists</source>
         <target state="needs-translation">Display of entries in selection lists</target>
       </trans-unit>
@@ -995,8 +987,8 @@
         <source>stats.durationFinancialYear</source>
         <target state="needs-translation">Working hours this financial year</target>
       </trans-unit>
-      <trans-unit id="z_YHoZn" resname="label.includeNoWork">
-        <source>label.includeNoWork</source>
+      <trans-unit id="L27KvC9" resname="includeNoWork">
+        <source>includeNoWork</source>
         <target state="needs-translation">Show entries without bookings</target>
       </trans-unit>
       <trans-unit id="IPHM4iP" resname="updated_at">
@@ -1035,8 +1027,8 @@
         <source>invoice.signature_customer</source>
         <target state="needs-translation">Confirmation: Date / Customer's name / Signature</target>
       </trans-unit>
-      <trans-unit id="RRj6PYN" resname="label.invoice_tax_number">
-        <source>label.invoice_tax_number</source>
+      <trans-unit id="WMJwy8r" resname="invoice_tax_number">
+        <source>invoice_tax_number</source>
         <target state="needs-translation">VAT no.:</target>
       </trans-unit>
       <trans-unit id="gT9W2pZ" resname="status.canceled">
@@ -1055,36 +1047,36 @@
         <source>export.warn_result_amount</source>
         <target state="needs-translation">Your search leads to %count% results. If the export fails, you have to narrow down your search further.</target>
       </trans-unit>
-      <trans-unit id="X3JM9wj" resname="label.exported">
-        <source>label.exported</source>
+      <trans-unit id="Qn2ouiL" resname="exported">
+        <source>exported</source>
         <target state="needs-translation">Exported</target>
       </trans-unit>
-      <trans-unit id="B.Dbbob" resname="label.includeNoBudget">
-        <source>label.includeNoBudget</source>
+      <trans-unit id="L0hRlcf" resname="includeNoBudget">
+        <source>includeNoBudget</source>
         <target state="needs-translation">Show entries without budget</target>
       </trans-unit>
-      <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
-        <source>label.includeBudgetType_month</source>
+      <trans-unit id="ViUuILv" resname="includeBudgetType_month">
+        <source>includeBudgetType_month</source>
         <target state="needs-translation">Show entries with "monthly" budget</target>
       </trans-unit>
-      <trans-unit id="3zn5T5e" resname="label.not_exported">
-        <source>label.not_exported</source>
+      <trans-unit id="2dm.ZWM" resname="not_exported">
+        <source>not_exported</source>
         <target state="needs-translation">Not exported</target>
       </trans-unit>
-      <trans-unit id="AJ6dwR." resname="label.last_record_before">
-        <source>label.last_record_before</source>
+      <trans-unit id="vpqPF8v" resname="last_record_before">
+        <source>last_record_before</source>
         <target state="needs-translation">No time booking since</target>
       </trans-unit>
-      <trans-unit id="LXdqaTH" resname="label.account_number">
-        <source>label.account_number</source>
+      <trans-unit id="KH2hgil" resname="account_number">
+        <source>account_number</source>
         <target state="needs-translation">Staff number</target>
       </trans-unit>
-      <trans-unit id="PoF7hD8" resname="label.budgetType">
-        <source>label.budgetType</source>
+      <trans-unit id="4Ndj7Xo" resname="budgetType">
+        <source>budgetType</source>
         <target state="needs-translation">Budget-Type</target>
       </trans-unit>
-      <trans-unit id="9Rhadz6" resname="label.budgetType_full">
-        <source>label.budgetType_full</source>
+      <trans-unit id="dnQEYoJ" resname="budgetType_full">
+        <source>budgetType_full</source>
         <target state="needs-translation">Life cycle</target>
       </trans-unit>
       <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
@@ -1111,8 +1103,8 @@
         <source>invoice.subtotal</source>
         <target state="needs-translation">Subtotal</target>
       </trans-unit>
-      <trans-unit id="g7EpaPY" resname="label.total_rate">
-        <source>label.total_rate</source>
+      <trans-unit id="BAkWQqr" resname="total_rate">
+        <source>total_rate</source>
         <target state="needs-translation">Total price</target>
       </trans-unit>
       <trans-unit id="c3d6p33" resname="invoice.total_working_time">
@@ -1127,8 +1119,8 @@
         <source>calendar.drag_and_drop.delete</source>
         <target state="needs-translation">If you want to delete an entry, you must drag it onto the button.</target>
       </trans-unit>
-      <trans-unit id="8Rfa01v" resname="label.required_version">
-        <source>label.required_version</source>
+      <trans-unit id="HkxjXDU" resname="required_version">
+        <source>required_version</source>
         <target state="needs-translation">Compatible with</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
@@ -1143,20 +1135,20 @@
         <source>invoice.service_date</source>
         <target state="needs-translation">Service date</target>
       </trans-unit>
-      <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
-        <source>label.includeBudgetType_full</source>
+      <trans-unit id="KukrzcT" resname="includeBudgetType_full">
+        <source>includeBudgetType_full</source>
         <target state="needs-translation">Show entries with "life cycle" budget</target>
       </trans-unit>
-      <trans-unit id="cHfLJtL" resname="label.budgetType_month">
-        <source>label.budgetType_month</source>
+      <trans-unit id="wYqyL6A" resname="budgetType_month">
+        <source>budgetType_month</source>
         <target state="needs-translation">Monthly</target>
       </trans-unit>
       <trans-unit id="Zif614Q" resname="add_user.label">
         <source>add_user.label</source>
         <target state="needs-translation">Add user</target>
       </trans-unit>
-      <trans-unit id="qDnURk7" resname="label.last_record">
-        <source>label.last_record</source>
+      <trans-unit id="_YiKaOT" resname="last_record">
+        <source>last_record</source>
         <target state="needs-translation">Last entry</target>
       </trans-unit>
       <trans-unit id="U_D.NIy" resname="automatic">

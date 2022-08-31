@@ -31,7 +31,7 @@ class InvoiceCalculatorType extends AbstractType
         }
 
         $resolver->setDefaults([
-            'label' => 'label.invoice_calculator',
+            'label' => 'invoice_calculator',
             'choices' => $renderer,
             'choice_label' => function ($renderer) {
                 return $renderer;

@@ -14,11 +14,11 @@
 
 {% block profile_content %}
     {% set datagrid = {
-        'label.username' : user.userIdentifier,
+        'username' : user.userIdentifier,
     } %}
     {% if user.accountNumber is not empty %}
         {% set datagrid = datagrid|merge({
-        'label.account_number' : (user.accountNumber ?? '&ndash;'),
+        'account_number' : (user.accountNumber ?? '&ndash;'),
         }) %}
     {% endif %}
     {% set datagrid = datagrid|merge({
@@ -41,8 +41,8 @@
     {% endif %}
     {% if not seeOwnRate and is_granted('hourly-rate', user) and user.preferenceValue('hourly_rate') is not null %}
         {% set datagrid = datagrid|merge({
-            'label.hourlyRate' : user.preferenceValue('hourly_rate'),
-            'label.internalRate' : user.preferenceValue('internal_rate')
+            'hourlyRate' : user.preferenceValue('hourly_rate'),
+            'internalRate' : user.preferenceValue('internal_rate')
         }) %}
     {% endif %}
 
@@ -92,7 +92,7 @@
                 {% set dataset = [] %}
                 {% for month in workMonths.year(year) %}
                     {% set monthDate = create_date(year ~ '-' ~ month.date.format('m') ~ '-01') %}
-                    {% set dataset = dataset|merge([{'value': month.duration|chart_duration, 'tooltip': month.duration|duration, 'footer': ('label.billable'|trans ~ ': ' ~ month.billableDuration|duration), 'month': monthDate|report_date}]) %}
+                    {% set dataset = dataset|merge([{'value': month.duration|chart_duration, 'tooltip': month.duration|duration, 'footer': ('billable'|trans ~ ': ' ~ month.billableDuration|duration), 'month': monthDate|report_date}]) %}
                 {% endfor %}
                 {{ charts.bar_chart('userProfileChart'~year, month_names(), [dataset]) }}
             {% endblock %}
@@ -102,7 +102,7 @@
     {% if user.teams is not empty and (is_granted('teams', user) or is_granted('view_team_member', user)) %}
         {% embed '@theme/embeds/card.html.twig' with {fullsize: true} %}
             {% import "macros/widgets.html.twig" as widgets %}
-            {% block box_title %}{{ 'label.my_teams'|trans }}{% endblock %}
+            {% block box_title %}{{ 'my_teams'|trans }}{% endblock %}
             {% block box_body %}
                 {{ widgets.team_list(user.teams, {collapse: 22}) }}
             {% endblock %}

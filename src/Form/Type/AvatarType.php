@@ -21,7 +21,7 @@ class AvatarType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.avatar',
+            'label' => 'avatar',
         ]);
     }
 

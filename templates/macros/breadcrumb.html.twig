@@ -1,0 +1,6 @@
+{% macro breadcrumb(breadcrumbs) %}
+    {% from '@theme/components/breadcrumb.html.twig' import breadcrumb %}
+    <div class="btn-list">
+    {{ breadcrumb(breadcrumbs, 'arrows') }}
+    </div>
+{% endmacro %}

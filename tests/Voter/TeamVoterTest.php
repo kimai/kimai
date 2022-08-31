@@ -39,7 +39,7 @@ class TeamVoterTest extends AbstractVoterTest
         $user3 = $this->getUser(3, User::ROLE_ADMIN);
         $user4 = $this->getUser(4, User::ROLE_SUPER_ADMIN);
 
-        $team = new Team();
+        $team = new Team('foo');
 
         $result = VoterInterface::ACCESS_ABSTAIN;
 

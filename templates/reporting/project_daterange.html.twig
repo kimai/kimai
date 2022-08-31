@@ -9,12 +9,12 @@
 } %}
 {% if showTimeBudget %}
     {% set columns = columns|merge({
-        'timeBudget':    {'class': 'd-none d-md-table-cell', 'title': 'label.timeBudget'|trans},
+        'timeBudget':    {'class': 'd-none d-md-table-cell', 'title': 'timeBudget'|trans},
     }) %}
 {% endif %}
 {% if showMoneyBudget %}
     {% set columns = columns|merge({
-        'budget':        {'class': 'd-none d-md-table-cell', 'title': 'label.budget'|trans},
+        'budget':        {'class': 'd-none d-md-table-cell', 'title': 'budget'|trans},
     }) %}
 {% endif %}
 {% set columns = columns|merge({

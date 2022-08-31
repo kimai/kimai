@@ -3,6 +3,25 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% import "invoice/actions.html.twig" as actions %}
 
+{% set totalDuration = 0 %}
+{% set totalRates = {} %}
+
+{% set showEmpty = false %}
+{% if searched %}
+    {% set showEmpty = true %}
+    {% for model in models %}
+        {% if showEmpty %}
+            {% set showEmpty = model.calculator is empty or model.calculator.entries is empty %}
+        {% endif %}
+        {% set totalDuration = totalDuration + model.calculator.timeWorked %}
+        {% set customerCurrency = model.customer.currency %}
+        {% if totalRates[customerCurrency] is not defined %}
+            {% set totalRates = totalRates|merge({(customerCurrency): 0.00}) %}
+        {% endif %}
+        {% set totalRates = totalRates|merge({(customerCurrency): totalRates[customerCurrency] + model.calculator.total}) %}
+    {% endfor %}
+{% endif %}
+
 {% set columns = {
     'date': {'class': 'alwaysVisible w-min', 'orderBy': false},
     'project': {'class': 'd-none d-md-table-cell', 'orderBy': false},
@@ -18,6 +37,14 @@
 
 {% block page_title %}{{ 'invoice_form.title'|trans }}{% endblock %}
 {% block page_actions %}{{ actions.invoices('index') }}{% endblock %}
+
+{% block status %}
+    {% from "macros/status.html.twig" import status_duration, status_money %}
+    {{ status_duration(totalDuration|duration) }}
+    {% for totalCurrency, totalRate in totalRates %}
+        {{ status_money(totalRate|money(totalCurrency)) }}
+    {% endfor %}
+{% endblock %}
 
 {% block main %}
 
@@ -61,25 +88,8 @@
         {{ widgets.callout('danger', 'http_error_403.suggestion'|trans({}, 'exceptions')) }}
     {% endif %}
 
-    {% set totalDuration = 0 %}
-    {% set totalRates = {} %}
-
-    {% if searched %}
-        {% set showEmpty = true %}
-        {% for model in models %}
-            {% if showEmpty %}
-                {% set showEmpty = model.calculator is empty or model.calculator.entries is empty %}
-            {% endif %}
-            {% set totalDuration = totalDuration + model.calculator.timeWorked %}
-            {% set customerCurrency = model.customer.currency %}
-            {% if totalRates[customerCurrency] is not defined %}
-                {% set totalRates = totalRates|merge({(customerCurrency): 0.00}) %}
-            {% endif %}
-            {% set totalRates = totalRates|merge({(customerCurrency): totalRates[customerCurrency] + model.calculator.total}) %}
-        {% endfor %}
-        {% if showEmpty %}
-            {{ widgets.nothing_found() }}
-        {% endif %}
+    {% if showEmpty %}
+        {{ widgets.nothing_found() }}
     {% endif %}
 
     {% if models|length > 0 %}
@@ -87,14 +97,7 @@
             {% import "macros/widgets.html.twig" as widgets %}
             {% import "macros/datatables.html.twig" as tables %}
             {% block box_title %}
-                {{ 'button.preview'|trans }}: {{ 'invoices'|trans }}
-            {% endblock %}
-            {% block box_tools %}
-                {{ widgets.label(totalDuration|duration, 'primary') }}
-
-                {% for totalCurrency, totalRate in totalRates %}
-                    {{ widgets.label(totalRate|money(totalCurrency), totalRates|length == 1 ? 'primary' : 'gray') }}
-                {% endfor %}
+                {{ 'preview'|trans }}
             {% endblock %}
             {% block box_attributes %}id="invoice_customer_forms"{% endblock %}
             {% block box_body_class %}p-0{% endblock %}
@@ -103,9 +106,9 @@
                     <thead>
                         <tr>
                             <th class="d-sm-table-cell d-none"></th>
-                            <th>{{ 'label.customer'|trans }}</th>
-                            <th class="w-min text-end d-sm-table-cell d-none">{{ 'label.duration'|trans }}</th>
-                            <th class="w-min text-end d-sm-table-cell d-none">{{ 'label.total_rate'|trans }}</th>
+                            <th>{{ 'customer'|trans }}</th>
+                            <th class="w-min text-end d-sm-table-cell d-none">{{ 'duration'|trans }}</th>
+                            <th class="w-min text-end d-sm-table-cell d-none">{{ 'total_rate'|trans }}</th>
                             <th class="w-min text-center actions alwaysVisible"></th>
                         </tr>
                     </thead>
@@ -132,11 +135,11 @@
                                     {{ model.calculator.timeWorked|duration(isDecimal) }}
                                 </td>
                                 <td class="w-min text-end d-sm-table-cell d-none">
-                                    <span title="{{ 'label.vat'|trans }}: {{ model.calculator.tax|money(currency) }}" data-toggle="tooltip">{{ model.calculator.total|money(currency) }}</span>
+                                    <span title="{{ 'vat'|trans }}: {{ model.calculator.tax|money(currency) }}" data-toggle="tooltip">{{ model.calculator.total|money(currency) }}</span>
                                 </td>
                                 <td class="w-min text-center actions alwaysVisible">
                                     {% for attrs in [{'class': 'd-inline-flex d-md-none'}, {'icon': false, 'class': 'd-none d-md-inline-flex'}] %}
-                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this, true)', 'title': 'button.preview'|trans, 'target': '_blank', 'attr': {'data-customer': model.customer.id, 'data-href': path('invoice_preview', {'customer': model.customer.id, 'token': csrf_token('invoice.preview')})}}|merge(attrs)) }}
+                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this, true)', 'title': 'preview'|trans, 'target': '_blank', 'attr': {'data-customer': model.customer.id, 'data-href': path('invoice_preview', {'customer': model.customer.id, 'token': csrf_token('invoice.preview')})}}|merge(attrs)) }}
                                     {{ widgets.action_button('invoice', {'url': '#', 'onclick': 'return singleInvoice(this, false)', 'title': 'action.save'|trans, 'attr': {'data-customer': model.customer.id, 'data-href': path('invoice_create', {'customer': model.customer.id, 'token': csrf_token('invoice.create')})}}|merge(attrs), 'success') }}
                                     {% endfor %}
                                 </td>

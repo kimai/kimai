@@ -27,7 +27,7 @@ class TeamType extends AbstractType
     {
         $resolver->setDefaults([
             'class' => Team::class,
-            'label' => 'label.team',
+            'label' => 'team',
             'teamlead_only' => true,
             'choice_label' => function (Team $team) {
                 return $team->getName();

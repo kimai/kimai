@@ -12,7 +12,7 @@
                 <div class="card mb-3">
                     <div class="card-body box-user-profile">
                         <div class="row g-2 align-items-center">
-                            <div class="col-auto" data-toggle="tooltip" title="{{ 'label.id'|trans }}: {{ user.id }}">
+                            <div class="col-auto" data-toggle="tooltip" title="{{ 'id'|trans }}: {{ user.id }}">
                                 {{ widgets.user_avatar(user, false, 'avatar-lg') }}
                             </div>
                             <div class="col">
@@ -26,9 +26,9 @@
                             <div class="col-auto" id="profile-buttons">
                                 {% from '@theme/components/buttons.html.twig' import link_button %}
                                 {% if app.user == user %}
-                                {{ link_button('label.notifications'|trans, 'javascript:notificationStatus()', 'fas fa-bell', 'default') }}
+                                {{ link_button('notifications'|trans, 'javascript:notificationStatus()', 'fas fa-bell', 'default') }}
                                 {% endif %}
-                                {{ link_button('label.email'|trans, ('mailto:' ~ user.email), 'mail', 'default') }}
+                                {{ link_button('email'|trans, ('mailto:' ~ user.email), 'mail', 'default') }}
                             </div>
                         </div>
                     </div>

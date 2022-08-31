@@ -60,7 +60,7 @@ class UserPreferenceType extends AbstractType
                     $type = HiddenType::class;
                 }
 
-                $transId = 'label.' . $preference->getName();
+                $transId = $preference->getName();
                 if ($this->translator->trans($transId) === $transId) {
                     $transId = $preference->getName();
                 }

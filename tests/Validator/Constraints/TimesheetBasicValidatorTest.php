@@ -124,7 +124,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         $activity = new Activity();
         $project1 = new Project();
         $project2 = new Project();
-        $project2->setCustomer(new Customer());
+        $project2->setCustomer(new Customer('foo'));
         $activity->setProject($project1);
 
         $timesheet = new Timesheet();
@@ -146,7 +146,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
     public function testDisabledValuesDuringStart()
     {
         $begin = new \DateTime('-10 hour');
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $customer->setVisible(false);
         $activity = new Activity();
         $activity->setVisible(false);
@@ -211,7 +211,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setBegin(new \DateTime('-10 hour'));
         $timesheet->setEnd(new \DateTime('-1 hour'));
 
-        $customer = new Customer();
+        $customer = new Customer('foo');
         $project = new Project();
         $project->setStart($start);
         $project->setEnd($end);

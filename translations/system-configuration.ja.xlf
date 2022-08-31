@@ -10,56 +10,56 @@
         <source>theme</source>
         <target>テーマ</target>
       </trans-unit>
-      <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
-        <source>label.theme.markdown_content</source>
+      <trans-unit id="mPRUBFX" resname="theme.markdown_content">
+        <source>theme.markdown_content</source>
         <target>Markdown 形式で説明とコメントを書けるようにする</target>
       </trans-unit>
-      <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
-        <source>label.timesheet.mode</source>
+      <trans-unit id="FaGqoTT" resname="timesheet.mode">
+        <source>timesheet.mode</source>
         <target>タイムトラッキング モード</target>
       </trans-unit>
-      <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
-        <source>label.timesheet.mode_default</source>
+      <trans-unit id="A11vhSN" resname="timesheet.mode_default">
+        <source>timesheet.mode_default</source>
         <target>[デフォルト] 開始日時と終了日時を入力する</target>
       </trans-unit>
-      <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
-        <source>label.timesheet.mode_duration_fixed_begin</source>
+      <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin">
+        <source>timesheet.mode_duration_fixed_begin</source>
         <target>[経過時間] 開始日時（固定）を事前に設定して、ユーザーは経過時間のみを入力可能とする</target>
       </trans-unit>
-      <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
-        <source>label.timesheet.mode_punch</source>
+      <trans-unit id="3tlkqJC" resname="timesheet.mode_punch">
+        <source>timesheet.mode_punch</source>
         <target>[タイムレコーダー] ユーザーは開始日時と終了日時を打刻できるが、それぞれの日時や経過時間を編集することはできない</target>
       </trans-unit>
-      <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
-        <source>label.timesheet.rules.allow_future_times</source>
+      <trans-unit id="k4pl27g" resname="timesheet.rules.allow_future_times">
+        <source>timesheet.rules.allow_future_times</source>
         <target>未来時間の入力を許容する</target>
       </trans-unit>
-      <trans-unit id="oIueXaX" resname="label.timesheet.active_entries.hard_limit">
-        <source>label.timesheet.active_entries.hard_limit</source>
+      <trans-unit id="Fe18zp4" resname="timesheet.active_entries.hard_limit">
+        <source>timesheet.active_entries.hard_limit</source>
         <target>同じ期間内に同時進行のものとして記録可能とする明細の上限数</target>
       </trans-unit>
-      <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
-        <source>label.calendar.week_numbers</source>
+      <trans-unit id="t38HFZd" resname="calendar.week_numbers">
+        <source>calendar.week_numbers</source>
         <target>週番号を表示する</target>
       </trans-unit>
-      <trans-unit id="NULxaYp" resname="label.calendar.weekends">
-        <source>label.calendar.weekends</source>
+      <trans-unit id="qaoBvYU" resname="calendar.weekends">
+        <source>calendar.weekends</source>
         <target>週末を表示する</target>
       </trans-unit>
-      <trans-unit id="AMCb58W" resname="label.calendar.businessHours.begin">
-        <source>label.calendar.businessHours.begin</source>
+      <trans-unit id="yUeuM2_" resname="calendar.businessHours.begin">
+        <source>calendar.businessHours.begin</source>
         <target>業務時間の開始時刻（ハイライト表示）</target>
       </trans-unit>
-      <trans-unit id="3nfAkqy" resname="label.calendar.businessHours.end">
-        <source>label.calendar.businessHours.end</source>
+      <trans-unit id="Aa_Ushz" resname="calendar.businessHours.end">
+        <source>calendar.businessHours.end</source>
         <target>業務時間の終了時刻（ハイライト表示）</target>
       </trans-unit>
-      <trans-unit id="Yl4Ztfv" resname="label.calendar.visibleHours.begin">
-        <source>label.calendar.visibleHours.begin</source>
+      <trans-unit id="1bHgx7p" resname="calendar.visibleHours.begin">
+        <source>calendar.visibleHours.begin</source>
         <target>表示可能な時間帯の開始時刻</target>
       </trans-unit>
-      <trans-unit id="UJGYdCt" resname="label.calendar.visibleHours.end">
-        <source>label.calendar.visibleHours.end</source>
+      <trans-unit id="6nayLDB" resname="calendar.visibleHours.end">
+        <source>calendar.visibleHours.end</source>
         <target>表示可能な時間帯の終了時刻</target>
       </trans-unit>
     </body>

@@ -44,54 +44,54 @@ class CustomerEditForm extends AbstractType
 
         $builder
             ->add('name', TextType::class, [
-                'label' => 'label.name',
+                'label' => 'name',
                 'attr' => [
                     'autofocus' => 'autofocus'
                 ],
             ])
             ->add('number', TextType::class, [
-                'label' => 'label.number',
+                'label' => 'number',
                 'required' => false,
             ])
             ->add('comment', TextareaType::class, [
-                'label' => 'label.description',
+                'label' => 'description',
                 'required' => false,
             ])
             ->add('company', TextType::class, [
-                'label' => 'label.company',
+                'label' => 'company',
                 'required' => false,
             ])
             ->add('vatId', TextType::class, [
-                'label' => 'label.vat_id',
+                'label' => 'vat_id',
                 'required' => false,
             ])
             ->add('contact', TextType::class, [
-                'label' => 'label.contact',
+                'label' => 'contact',
                 'required' => false,
             ])
             ->add('address', TextareaType::class, [
-                'label' => 'label.address',
+                'label' => 'address',
                 'required' => false,
             ])
             ->add('country', CountryType::class, [
-                'label' => 'label.country',
+                'label' => 'country',
             ])
             ->add('currency', CurrencyType::class, [
-                'label' => 'label.currency',
+                'label' => 'currency',
             ])
             ->add('phone', TelType::class, [
-                'label' => 'label.phone',
+                'label' => 'phone',
                 'required' => false,
                 'block_prefix' => 'phone',
             ])
             ->add('fax', TelType::class, [
-                'label' => 'label.fax',
+                'label' => 'fax',
                 'required' => false,
                 'attr' => ['icon' => 'fax'],
                 'block_prefix' => 'phone',
             ])
             ->add('mobile', TelType::class, [
-                'label' => 'label.mobile',
+                'label' => 'mobile',
                 'required' => false,
                 'attr' => ['icon' => 'mobile'],
                 'block_prefix' => 'phone',
@@ -100,15 +100,15 @@ class CustomerEditForm extends AbstractType
                 'required' => false,
             ])
             ->add('homepage', UrlType::class, [
-                'label' => 'label.homepage',
+                'label' => 'homepage',
                 'required' => false,
                 'block_prefix' => 'homepage',
             ])
             ->add('timezone', TimezoneType::class, [
-                'label' => 'label.timezone',
+                'label' => 'timezone',
             ])
             ->add('invoiceText', TextareaType::class, [
-                'label' => 'label.invoiceText',
+                'label' => 'invoiceText',
                 'help' => 'help.invoiceText',
                 'required' => false,
             ])

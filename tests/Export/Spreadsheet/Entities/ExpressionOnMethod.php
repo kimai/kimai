@@ -14,7 +14,7 @@ use App\Export\Annotation as Exporter;
 class ExpressionOnMethod
 {
     /**
-     * @Exporter\Expose("accessor", label="label.accessor", exp="object.foo")
+     * @Exporter\Expose("accessor", label="accessor", exp="object.foo")
      */
     public function foo()
     {

@@ -11,10 +11,7 @@ namespace App\Repository\Query;
 
 trait VisibilityTrait
 {
-    /**
-     * @var int
-     */
-    private $visibility = VisibilityInterface::SHOW_VISIBLE;
+    private int $visibility = VisibilityInterface::SHOW_VISIBLE;
 
     public function getVisibility(): int
     {

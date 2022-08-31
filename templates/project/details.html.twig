@@ -30,14 +30,14 @@
             <table class="table table-hover dataTable">
                 {% if not project.visible %}
                     <tr class="{{ widgets.class_project_row(project, now) }}">
-                        <th>{{ 'label.visible'|trans }}</th>
+                        <th>{{ 'visible'|trans }}</th>
                         <td colspan="3">
                             {{ widgets.label_boolean(project.visible) }}
                         </td>
                     </tr>
                 {% endif %}
                 <tr {{ widgets.customer_row_attr(project.customer, now) }}>
-                    <th>{{ 'label.customer'|trans }}</th>
+                    <th>{{ 'customer'|trans }}</th>
                     <td>
                         {{ widgets.label_customer(project.customer) }}
                     </td>
@@ -51,7 +51,7 @@
                 {% if is_granted('details', project) %}
                     {% if not project.billable %}
                         <tr>
-                            <th>{{ 'label.billable'|trans }}</th>
+                            <th>{{ 'billable'|trans }}</th>
                             <td colspan="3">
                                 {{ widgets.label_boolean(project.billable) }}
                             </td>
@@ -59,7 +59,7 @@
                     {% endif %}
                     {% if project.orderNumber is not empty %}
                     <tr>
-                        <th>{{ 'label.orderNumber'|trans }}</th>
+                        <th>{{ 'orderNumber'|trans }}</th>
                         <td colspan="3">
                             {{ project.orderNumber }}
                         </td>
@@ -67,7 +67,7 @@
                     {% endif %}
                     {% if project.orderDate is not empty %}
                     <tr>
-                        <th>{{ 'label.orderDate'|trans }}</th>
+                        <th>{{ 'orderDate'|trans }}</th>
                         <td colspan="3">
                             {{ project.orderDate|date_short }}
                         </td>
@@ -75,7 +75,7 @@
                     {% endif %}
                     {% if project.start is not empty %}
                     <tr>
-                        <th>{{ 'label.project_start'|trans }}</th>
+                        <th>{{ 'project_start'|trans }}</th>
                         <td colspan="3">
                             {{ project.start|date_short }}
                         </td>
@@ -83,7 +83,7 @@
                     {% endif %}
                     {% if project.end is not empty %}
                     <tr>
-                        <th>{{ 'label.project_end'|trans }}</th>
+                        <th>{{ 'project_end'|trans }}</th>
                         <td colspan="3">
                             {{ project.end|date_short }}
                         </td>
@@ -93,9 +93,9 @@
                 {% if project.hasBudget() and is_granted('budget', project) %}
                     <tr>
                         <th>
-                            {{ 'label.budget'|trans }}
+                            {{ 'budget'|trans }}
                             {% if project.isMonthlyBudget() %}
-                                ({{ 'label.budgetType_month'|trans }})
+                                ({{ 'budgetType_month'|trans }})
                             {% endif %}
                         </th>
                         <td colspan="3">
@@ -106,9 +106,9 @@
                 {% if project.hasTimeBudget() and is_granted('time', project) %}
                     <tr>
                         <th>
-                            {{ 'label.timeBudget'|trans }}
+                            {{ 'timeBudget'|trans }}
                             {% if project.isMonthlyBudget() %}
-                                ({{ 'label.budgetType_month'|trans }})
+                                ({{ 'budgetType_month'|trans }})
                             {% endif %}
                         </th>
                         <td colspan="3">
@@ -118,7 +118,7 @@
                 {% endif %}
                 {% if not project.globalActivities %}
                     <tr>
-                        <th>{{ 'label.globalActivities'|trans }}</th>
+                        <th>{{ 'globalActivities'|trans }}</th>
                         <td colspan="3">
                             {{ widgets.label_boolean(project.globalActivities) }}
                         </td>

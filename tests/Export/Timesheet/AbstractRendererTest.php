@@ -76,8 +76,7 @@ abstract class AbstractRendererTest extends KernelTestCase
      */
     protected function render(TimesheetExportInterface $renderer)
     {
-        $customer = new Customer();
-        $customer->setName('Customer Name');
+        $customer = new Customer('Customer Name');
         $customer->setNumber('A-0123456789');
         $customer->setVatId('DE-9876543210');
         $customer->setMetaField((new CustomerMeta())->setName('customer-foo')->setValue('customer-bar')->setIsVisible(true));

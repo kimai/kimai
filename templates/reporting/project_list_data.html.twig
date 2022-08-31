@@ -9,16 +9,16 @@
 } %}
 {% if showTimeBudget %}
     {% set availableColumns = availableColumns|merge({
-        'timeBudget':    {'class': 'd-none d-md-table-cell', 'title': 'label.timeBudget'|trans},
+        'timeBudget':    {'class': 'd-none d-md-table-cell', 'title': 'timeBudget'|trans},
     }) %}
 {% endif %}
 {% if showMoneyBudget %}
     {% set availableColumns = availableColumns|merge({
-        'budget':        {'class': 'd-none d-md-table-cell', 'title': 'label.budget'|trans},
+        'budget':        {'class': 'd-none d-md-table-cell', 'title': 'budget'|trans},
     }) %}
 {% endif %}
 {% set availableColumns = availableColumns|merge({
-    'lastRecord':       {'class': 'd-none d-sm-table-cell text-start hw-min w-min', 'title': 'label.last_record'|trans, 'columnClass': 'w-min'},
+    'lastRecord':       {'class': 'd-none d-sm-table-cell text-start hw-min w-min', 'title': 'last_record'|trans, 'columnClass': 'w-min'},
     'today':            {'class': 'd-none text-end hw-min w-min', 'title': 'stats.durationToday'|trans},
     'week':             {'class': 'd-none text-end hw-min w-min', 'title': 'stats.durationWeek'|trans},
     'month':            {'class': 'd-none d-lg-table-cell text-end hw-min w-min', 'title': 'stats.durationMonth'|trans},
@@ -26,18 +26,18 @@
 }) %}
 {% if showTimeBudget and is_granted('create_export') %}
     {% set availableColumns = availableColumns|merge({
-        'exported':         {'class': 'd-none d-xl-table-cell text-end hw-min w-min', 'title': 'label.not_exported'|trans, 'columnClass': 'w-min'},
+        'exported':         {'class': 'd-none d-xl-table-cell text-end hw-min w-min', 'title': 'not_exported'|trans, 'columnClass': 'w-min'},
     }) %}
 {% endif %}
 {% if showMoneyBudget and is_granted('view_invoice') %}
     {% set availableColumns = availableColumns|merge({
-        'invoiced':         {'class': 'd-none d-xl-table-cell text-end hw-min w-min', 'title': 'label.not_invoiced'|trans, 'columnClass': 'w-min'},
+        'invoiced':         {'class': 'd-none d-xl-table-cell text-end hw-min w-min', 'title': 'not_invoiced'|trans, 'columnClass': 'w-min'},
     }) %}
 {% endif %}
 {% set availableColumns = availableColumns|merge({
-    'projectStart':     {'class': 'd-none text-start hw-min w-min', 'title': 'label.project_start'|trans},
-    'projectEnd':       {'class': 'd-none text-start hw-min w-min', 'title': 'label.project_end'|trans},
-    'comment':          {'class': 'd-none', 'title': 'label.comment'|trans},
+    'projectStart':     {'class': 'd-none text-start hw-min w-min', 'title': 'project_start'|trans},
+    'projectEnd':       {'class': 'd-none text-start hw-min w-min', 'title': 'project_end'|trans},
+    'comment':          {'class': 'd-none', 'title': 'comment'|trans},
     'actions':          {'class': 'actions alwaysVisible'},
 }) %}
 {% set tableName = tableName|default('project_view_reporting') %}

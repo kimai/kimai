@@ -10,64 +10,64 @@
         <source>theme</source>
         <target>Tema</target>
       </trans-unit>
-      <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
-        <source>label.theme.markdown_content</source>
+      <trans-unit id="mPRUBFX" resname="theme.markdown_content">
+        <source>theme.markdown_content</source>
         <target>Permitir formato markdown en descripciones y comentarios</target>
       </trans-unit>
-      <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
-        <source>label.timesheet.mode</source>
+      <trans-unit id="FaGqoTT" resname="timesheet.mode">
+        <source>timesheet.mode</source>
         <target>Modo de seguimiento de tiempo</target>
       </trans-unit>
-      <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
-        <source>label.timesheet.mode_default</source>
+      <trans-unit id="A11vhSN" resname="timesheet.mode_default">
+        <source>timesheet.mode_default</source>
         <target>Los tiempos [predeterminados] de inicio y fin pueden editarse</target>
       </trans-unit>
-      <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
-        <source>label.timesheet.mode_duration_fixed_begin</source>
+      <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin">
+        <source>timesheet.mode_duration_fixed_begin</source>
         <target>[Duración] tiempo de inicio fijo configurable, solo se puede editar la duración</target>
       </trans-unit>
-      <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
-        <source>label.timesheet.mode_punch</source>
+      <trans-unit id="3tlkqJC" resname="timesheet.mode_punch">
+        <source>timesheet.mode_punch</source>
         <target>[Reloj de control] el usuario puede iniciar y detener registros, pero no editar los tiempos o la duración</target>
       </trans-unit>
-      <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
-        <source>label.timesheet.rules.allow_future_times</source>
+      <trans-unit id="k4pl27g" resname="timesheet.rules.allow_future_times">
+        <source>timesheet.rules.allow_future_times</source>
         <target>Permitir registros de tiempo en el futuro</target>
       </trans-unit>
-      <trans-unit id="oIueXaX" resname="label.timesheet.active_entries.hard_limit">
-        <source>label.timesheet.active_entries.hard_limit</source>
+      <trans-unit id="Fe18zp4" resname="timesheet.active_entries.hard_limit">
+        <source>timesheet.active_entries.hard_limit</source>
         <target>Número máximo de registros activos simultáneos permitidos</target>
       </trans-unit>
-      <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
-        <source>label.calendar.week_numbers</source>
+      <trans-unit id="t38HFZd" resname="calendar.week_numbers">
+        <source>calendar.week_numbers</source>
         <target>Mostrar números de semana</target>
       </trans-unit>
-      <trans-unit id="NULxaYp" resname="label.calendar.weekends">
-        <source>label.calendar.weekends</source>
+      <trans-unit id="qaoBvYU" resname="calendar.weekends">
+        <source>calendar.weekends</source>
         <target>Mostrar fines de semana</target>
       </trans-unit>
-      <trans-unit id="AMCb58W" resname="label.calendar.businessHours.begin">
-        <source>label.calendar.businessHours.begin</source>
+      <trans-unit id="yUeuM2_" resname="calendar.businessHours.begin">
+        <source>calendar.businessHours.begin</source>
         <target>Inicio del horario comercial normal (se destacará)</target>
       </trans-unit>
-      <trans-unit id="3nfAkqy" resname="label.calendar.businessHours.end">
-        <source>label.calendar.businessHours.end</source>
+      <trans-unit id="Aa_Ushz" resname="calendar.businessHours.end">
+        <source>calendar.businessHours.end</source>
         <target>Fin del horario comercial normal (se destacará)</target>
       </trans-unit>
-      <trans-unit id="Yl4Ztfv" resname="label.calendar.visibleHours.begin">
-        <source>label.calendar.visibleHours.begin</source>
+      <trans-unit id="1bHgx7p" resname="calendar.visibleHours.begin">
+        <source>calendar.visibleHours.begin</source>
         <target>Inicio del intervalo de tiempo visible</target>
       </trans-unit>
-      <trans-unit id="UJGYdCt" resname="label.calendar.visibleHours.end">
-        <source>label.calendar.visibleHours.end</source>
+      <trans-unit id="6nayLDB" resname="calendar.visibleHours.end">
+        <source>calendar.visibleHours.end</source>
         <target>Final del intervalo de tiempo visible</target>
       </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>
         <target>Primer día de la semana</target>
       </trans-unit>
-      <trans-unit id="HrEBLUr" resname="label.invoice.number_format">
-        <source>label.invoice.number_format</source>
+      <trans-unit id="UTurPF1" resname="invoice.number_format">
+        <source>invoice.number_format</source>
         <target>Formato de números de factura</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
@@ -98,28 +98,28 @@
         <source>Monday</source>
         <target>Lunes</target>
       </trans-unit>
-      <trans-unit id="D1NSPl5" resname="label.timesheet.rounding.default.days">
-        <source>label.timesheet.rounding.default.days</source>
+      <trans-unit id="oL_eD_9" resname="timesheet.rounding.default.days">
+        <source>timesheet.rounding.default.days</source>
         <target>Días de la semana en los que se aplicará redondeo</target>
       </trans-unit>
-      <trans-unit id="aenIpDV" resname="label.timesheet.rounding.default.mode">
-        <source>label.timesheet.rounding.default.mode</source>
+      <trans-unit id="O8E4Hj5" resname="timesheet.rounding.default.mode">
+        <source>timesheet.rounding.default.mode</source>
         <target>Modo de redondeo</target>
       </trans-unit>
-      <trans-unit id=".NE5mGi" resname="label.timesheet.rules.allow_overlapping_records">
-        <source>label.timesheet.rules.allow_overlapping_records</source>
+      <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records">
+        <source>timesheet.rules.allow_overlapping_records</source>
         <target>Permitir registros de tiempo traslapados</target>
       </trans-unit>
-      <trans-unit id="Hnl7Jxt" resname="label.timesheet.rounding.default.duration">
-        <source>label.timesheet.rounding.default.duration</source>
+      <trans-unit id="t.YW9eU" resname="timesheet.rounding.default.duration">
+        <source>timesheet.rounding.default.duration</source>
         <target>Redondeo de la duración en minutos (0 = desactivado)</target>
       </trans-unit>
-      <trans-unit id="0wyl4Bb" resname="label.timesheet.rounding.default.begin">
-        <source>label.timesheet.rounding.default.begin</source>
+      <trans-unit id="ZMvZTTx" resname="timesheet.rounding.default.begin">
+        <source>timesheet.rounding.default.begin</source>
         <target>Redondeo de la hora de inicio en minutos (0 = desactivado)</target>
       </trans-unit>
-      <trans-unit id="m5dLCoB" resname="label.theme.branding.logo">
-        <source>label.theme.branding.logo</source>
+      <trans-unit id="o9mON14" resname="theme.branding.logo">
+        <source>theme.branding.logo</source>
         <target>Logo (URL de imagen; sustituye a la empresa en la pantalla de acceso)</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
@@ -130,36 +130,36 @@
         <source>rounding</source>
         <target>Redondeo de tiempos</target>
       </trans-unit>
-      <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
-        <source>label.theme.branding.company</source>
+      <trans-unit id="en0.Ahu" resname="theme.branding.company">
+        <source>theme.branding.company</source>
         <target>Empresa</target>
       </trans-unit>
-      <trans-unit id="y2i0PU3" resname="label.timesheet.rules.lockdown_grace_period">
-        <source>label.timesheet.rules.lockdown_grace_period</source>
+      <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period">
+        <source>timesheet.rules.lockdown_grace_period</source>
         <target>Final de período de gracia de cierre (fecha relativa PHP hasta el final del período de cierre)</target>
       </trans-unit>
-      <trans-unit id=".es2tyO" resname="label.timesheet.rules.lockdown_period_end">
-        <source>label.timesheet.rules.lockdown_period_end</source>
+      <trans-unit id="M1iVHeQ" resname="timesheet.rules.lockdown_period_end">
+        <source>timesheet.rules.lockdown_period_end</source>
         <target>Final de período de cierre (fecha relativa PHP hasta hoy)</target>
       </trans-unit>
-      <trans-unit id="yVBJECt" resname="label.timesheet.rules.lockdown_period_start">
-        <source>label.timesheet.rules.lockdown_period_start</source>
+      <trans-unit id="_PvFlQ9" resname="timesheet.rules.lockdown_period_start">
+        <source>timesheet.rules.lockdown_period_start</source>
         <target>Inicio de período de cierre (fecha relativa PHP hasta hoy)</target>
       </trans-unit>
       <trans-unit id="9C1qkmD" resname="increment_rounding">
         <source>increment_rounding</source>
         <target>Usar el valor configurado para la regla de redondeo</target>
       </trans-unit>
-      <trans-unit id="x3AfnWn" resname="label.timesheet.time_increment">
-        <source>label.timesheet.time_increment</source>
+      <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
+        <source>timesheet.time_increment</source>
         <target>Selección de minuto para De &amp; Para</target>
       </trans-unit>
-      <trans-unit id="40i4Xlr" resname="label.timesheet.duration_increment">
-        <source>label.timesheet.duration_increment</source>
+      <trans-unit id="nqWKu27" resname="timesheet.duration_increment">
+        <source>timesheet.duration_increment</source>
         <target>Selección de minuto para la Duración</target>
       </trans-unit>
-      <trans-unit id="DY_cM92" resname="label.timesheet.default_begin">
-        <source>label.timesheet.default_begin</source>
+      <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
+        <source>timesheet.default_begin</source>
         <target>Tiempo de inicio por defecto (no se usa en todos los modos de seguimiento de tiempo)</target>
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor">
@@ -178,12 +178,12 @@
         <source>Ceil</source>
         <target>Techo: El inicio, final y la duración se redondearán hacia arriba</target>
       </trans-unit>
-      <trans-unit id="Jx6bTVr" resname="label.timesheet.rounding.default.end">
-        <source>label.timesheet.rounding.default.end</source>
+      <trans-unit id="AUc43eR" resname="timesheet.rounding.default.end">
+        <source>timesheet.rounding.default.end</source>
         <target>Redondeo de la hora de finalización en minutos (0 = desactivado)</target>
       </trans-unit>
-      <trans-unit id="AlBuZhv" resname="label.calendar.slot_duration">
-        <source>label.calendar.slot_duration</source>
+      <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
+        <source>calendar.slot_duration</source>
         <target>Unidad mínima de tiempo para las vistas semanal y diaria (formato: hh:mm:ss)</target>
       </trans-unit>
     </body>

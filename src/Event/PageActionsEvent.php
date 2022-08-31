@@ -10,7 +10,6 @@
 namespace App\Event;
 
 use App\Entity\User;
-use App\Repository\Query\BaseQuery;
 
 /**
  * This event is triggered once per side load.
@@ -137,23 +136,9 @@ class PageActionsEvent extends ThemeEvent
         $this->payload['actions'][$key] = null;
     }
 
-    public function addSearchToggle(?BaseQuery $query = null): void
-    {
-        $label = null;
-
-        if ($query !== null) {
-            $label = $query->countFilter();
-            if ($label < 1) {
-                $label = null;
-            }
-        }
-
-        $this->addAction('search', ['modal' => '#modal_search', 'label' => $label, 'title' => 'search']);
-    }
-
     public function addQuickExport(string $url): void
     {
-        $this->addAction('download', ['url' => $url, 'class' => 'toolbar-action', 'title' => 'export.title']);
+        $this->addAction('download', ['url' => $url, 'class' => 'toolbar-action', 'title' => 'export']);
     }
 
     public function addCreate(string $url, bool $modal = true): void
@@ -161,9 +146,25 @@ class PageActionsEvent extends ThemeEvent
         $this->addAction('create', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' : ''), 'title' => 'create']);
     }
 
+    /**
+     * Link to a configuration section.
+     *
+     * @param string $url
+     * @return void
+     */
+    public function addSettings(string $url): void
+    {
+        $this->addAction('settings', ['url' => $url, 'class' => 'modal-ajax-form', 'title' => 'settings', 'translation_domain' => 'actions']);
+    }
+
     public function addHelp(string $url): void
     {
         $this->addAction('help', ['url' => $url, 'target' => '_blank', 'title' => 'help', 'translation_domain' => 'about']);
+    }
+
+    public function addConfig(string $url): void
+    {
+        $this->addAction('settings', ['url' => $url, 'title' => 'settings', 'translation_domain' => 'actions']);
     }
 
     public function addDelete(string $url, bool $remoteConfirm = true): void

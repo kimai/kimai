@@ -21,7 +21,7 @@ class InvoicesSubscriber extends AbstractActionsSubscriber
     public function onActions(PageActionsEvent $event): void
     {
         if ($this->isGranted('system_configuration')) {
-            $event->addAction('settings', ['title' => 'settings', 'translation_domain' => 'actions', 'url' => $this->path('system_configuration_section', ['section' => 'invoice']), 'class' => 'modal-ajax-form']);
+            $event->addSettings($this->path('system_configuration_section', ['section' => 'invoice']));
         }
 
         $event->addHelp($this->documentationLink('invoices.html'));

@@ -38,7 +38,7 @@ class ColorPickerType extends AbstractType implements DataTransformerInterface
                 'type' => 'string',
                 'description' => sprintf('The hexadecimal color code (default: %s)', self::DEFAULT_COLOR),
             ],
-            'label' => 'label.color',
+            'label' => 'color',
             'empty_data' => null,
         ]);
     }

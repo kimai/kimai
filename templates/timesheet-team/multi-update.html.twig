@@ -6,10 +6,10 @@
     {{ actions.timesheets_team_multi_update('multi-update') }}
 {% endblock %}
 
-{% block subtitle %}
-    {% from "macros/widgets.html.twig" import breadcrumb %}
+{% block breadcrumb %}
+    {% from "macros/breadcrumb.html.twig" import breadcrumb %}
     {{ breadcrumb({
-        ('menu.admin_timesheet'|trans): path('admin_timesheet_multi_update'),
+        ('menu.admin_timesheet'|trans): path('admin_timesheet'),
         ('edit'|trans({}, 'actions')): '#'
     }) }}
 {% endblock %}

@@ -31,7 +31,7 @@ class UserRoleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.roles',
+            'label' => 'roles',
             'include_default' => false,
         ]);
 

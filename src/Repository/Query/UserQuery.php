@@ -18,16 +18,13 @@ class UserQuery extends BaseQuery implements VisibilityInterface
 {
     use VisibilityTrait;
 
-    public const USER_ORDER_ALLOWED = ['id', 'alias', 'username', 'title', 'email'];
+    public const USER_ORDER_ALLOWED = ['alias', 'username', 'title', 'email'];
 
-    /**
-     * @var string|null
-     */
-    private $role;
+    private ?string $role = null;
     /**
      * @var Team[]
      */
-    private $searchTeams = [];
+    private array $searchTeams = [];
 
     public function __construct()
     {

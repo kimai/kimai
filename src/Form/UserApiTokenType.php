@@ -29,8 +29,8 @@ class UserApiTokenType extends AbstractType
         $builder
             ->add('plainApiToken', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'first_options' => ['label' => 'label.api_token'],
-                'second_options' => ['label' => 'label.api_token_repeat'],
+                'first_options' => ['label' => 'api_token'],
+                'second_options' => ['label' => 'api_token_repeat'],
             ])
         ;
     }

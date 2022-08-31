@@ -21,7 +21,7 @@
                 {{ model.template.title }}
             </td>
             <td class="date text-right">
-                {{ 'label.date'|trans }}: {{ model.invoiceDate|date_short }}
+                {{ 'date'|trans }}: {{ model.invoiceDate|date_short }}
             </td>
         </tr>
     </table>
@@ -31,10 +31,10 @@
     <table class="footer">
         <tr>
             <td>
-                <strong>{{ 'label.contact'|trans }}</strong>:
+                <strong>{{ 'contact'|trans }}</strong>:
                 {{ model.template.contact|nl2str(' &ndash; ') }}
                 <br>
-                <strong>{{ 'label.invoice_bank_account'|trans }}</strong>:
+                <strong>{{ 'invoice_bank_account'|trans }}</strong>:
                 {{ model.template.paymentDetails|nl2str(' &ndash; ') }}
             </td>
             <td align="right">
@@ -55,7 +55,7 @@ mpdf-->
                 {{ model.customer.address|nl2br }}
                 {% if model.customer.vatId is not empty %}
                     <br>
-                    {{ 'label.vat_id'|trans }}: {{ model.customer.vatId }}
+                    {{ 'vat_id'|trans }}: {{ model.customer.vatId }}
                 {% endif %}
             </td>
             <td>
@@ -66,7 +66,7 @@ mpdf-->
                 {{ model.template.address|trim|nl2br }}
                 {% if model.template.vatId is not empty %}
                     <br>
-                    {{ 'label.vat_id'|trans }}:
+                    {{ 'vat_id'|trans }}:
                     {{ model.template.vatId }}
                 {% endif %}
             </td>
@@ -83,13 +83,13 @@ mpdf-->
 
         {% if model.customer.number is not empty %}
             <br>
-            {{ 'label.number'|trans }}:
+            {{ 'number'|trans }}:
             {{ model.customer.number }}
         {% endif %}
 
         {% if project is not null and project.orderNumber is not empty %}
             <br>
-            {{ 'label.orderNumber'|trans }}:
+            {{ 'orderNumber'|trans }}:
             {{ project.orderNumber }}
         {% endif %}
     </p>
@@ -101,11 +101,11 @@ mpdf-->
     <table class="items">
         <thead>
             <tr>
-                <th class="first"><strong>{{ 'label.date'|trans }}</strong></th>
-                <th><strong>{{ 'label.description'|trans }}</strong></th>
-                <th class="text-right"><strong>{{ 'label.unit_price'|trans }}</strong></th>
-                <th class="text-right"><strong>{{ 'label.amount'|trans }}</strong></th>
-                <th class="last text-right"><strong>{{ 'label.total_rate'|trans }}</strong></th>
+                <th class="first"><strong>{{ 'date'|trans }}</strong></th>
+                <th><strong>{{ 'description'|trans }}</strong></th>
+                <th class="text-right"><strong>{{ 'unit_price'|trans }}</strong></th>
+                <th class="text-right"><strong>{{ 'amount'|trans }}</strong></th>
+                <th class="last text-right"><strong>{{ 'total_rate'|trans }}</strong></th>
             </tr>
         </thead>
         <tbody>

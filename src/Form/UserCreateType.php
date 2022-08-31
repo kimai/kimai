@@ -28,7 +28,7 @@ class UserCreateType extends UserEditType
     {
         $builder
             ->add('username', null, [
-                'label' => 'label.username',
+                'label' => 'username',
                 'required' => true,
                 'attr' => [
                     'autofocus' => 'autofocus'
@@ -38,12 +38,12 @@ class UserCreateType extends UserEditType
                 'required' => true,
                 'type' => PasswordType::class,
                 'first_options' => [
-                    'label' => 'label.password',
+                    'label' => 'password',
                     'attr' => ['autocomplete' => 'new-password'],
                     'block_prefix' => 'secret'
                 ],
                 'second_options' => [
-                    'label' => 'label.password_repeat',
+                    'label' => 'password_repeat',
                     'attr' => ['autocomplete' => 'new-password'],
                     'block_prefix' => 'secret'
                 ],

@@ -41,7 +41,6 @@ class TimesheetControllerTest extends ControllerBaseTest
         // there are no records by default in the test database
         $this->assertHasNoEntriesWithFilter($client);
         $this->assertPageActions($client, [
-            'search' => '#',
             'download toolbar-action modal-ajax-form' => $this->createUrl('/timesheet/export/'),
             'create modal-ajax-form' => $this->createUrl('/timesheet/create'),
             'help' => 'https://www.kimai.org/documentation/timesheet.html'

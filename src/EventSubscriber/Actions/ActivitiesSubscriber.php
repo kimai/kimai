@@ -10,7 +10,6 @@
 namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
-use App\Repository\Query\ActivityQuery;
 
 class ActivitiesSubscriber extends AbstractActionsSubscriber
 {
@@ -21,20 +20,14 @@ class ActivitiesSubscriber extends AbstractActionsSubscriber
 
     public function onActions(PageActionsEvent $event): void
     {
-        $payload = $event->getPayload();
-
-        /** @var ActivityQuery $query */
-        $query = $payload['query'];
-
-        $event->addSearchToggle($query);
-        $event->addQuickExport($this->path('activity_export'));
-
         if ($this->isGranted('create_activity')) {
             $event->addCreate($this->path('admin_activity_create'));
         }
 
+        $event->addQuickExport($this->path('activity_export'));
+
         if ($this->isGranted('system_configuration')) {
-            $event->addAction('settings', ['title' => 'settings', 'translation_domain' => 'actions', 'url' => $this->path('system_configuration_section', ['section' => 'activity']), 'class' => 'modal-ajax-form']);
+            $event->addSettings($this->path('system_configuration_section', ['section' => 'activity']));
         }
 
         $event->addHelp($this->documentationLink('activity.html'));

@@ -30,6 +30,7 @@ use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
+use App\Utils\DataTable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormError;
@@ -53,7 +54,7 @@ abstract class TimesheetAbstractController extends AbstractController
         return $this->service->getActiveTrackingMode();
     }
 
-    protected function index(TimesheetQuery $query, Request $request, string $route, string $renderTemplate, string $location): Response
+    protected function index(TimesheetQuery $query, Request $request, string $route, string $paginationRoute, string $renderTemplate, string $location): Response
     {
         $form = $this->getToolbarForm($query);
         if ($this->handleSearch($form, $request)) {
@@ -69,21 +70,61 @@ abstract class TimesheetAbstractController extends AbstractController
             );
         }
 
+        $canSeeRate = $this->canSeeRate();
+        $canSeeUsername = $this->canSeeUsername();
+
         $this->prepareQuery($query);
 
         $result = $this->repository->getTimesheetResult($query);
-        $pager = $result->getPagerfanta();
+        $metaColumns = $this->findMetaColumns($query, $location);
+
+        $table = new DataTable($this->getTableName(), $query);
+        $table->setPagination($result->getPagerfanta());
+        $table->setSearchForm($form);
+        $table->setBatchForm($this->getMultiUpdateActionForm());
+        $table->setPaginationRoute($paginationRoute);
+        $table->setReloadEvents('kimai.timesheetUpdate kimai.timesheetDelete');
+
+        $table->addColumn('date', ['class' => 'alwaysVisible', 'orderBy' => 'begin']);
+
+        if ($this->canSeeStartEndTime()) {
+            $table->addColumn('starttime', ['class' => 'd-none d-sm-table-cell text-center', 'orderBy' => 'begin']);
+            $table->addColumn('endtime', ['class' => 'd-none d-sm-table-cell text-center', 'orderBy' => 'end']);
+        }
+
+        $table->addColumn('duration', ['class' => 'text-end text-nowrap']);
+
+        if ($canSeeRate) {
+            $table->addColumn('hourlyRate', ['class' => 'text-end d-none']);
+            $table->addColumn('rate', ['class' => 'text-end']);
+        }
+
+        $table->addColumn('customer', ['class' => 'd-none d-md-table-cell']);
+        $table->addColumn('project', ['class' => 'd-none d-lg-table-cell']);
+        $table->addColumn('activity', ['class' => 'd-none d-xl-table-cell']);
+        $table->addColumn('description', ['class' => 'd-none']);
+        $table->addColumn('tags', ['class' => 'd-none badges', 'orderBy' => false]);
+
+        foreach ($metaColumns as $metaColumn) {
+            $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false]);
+        }
+
+        if ($canSeeUsername) {
+            $table->addColumn('username', ['class' => 'd-none d-sm-table-cell', 'orderBy' => false]);
+        }
+
+        $table->addColumn('billable', ['class' => 'text-center d-none w-min', 'orderBy' => false]);
+        $table->addColumn('exported', ['class' => 'text-center d-none w-min', 'orderBy' => false]);
+        $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
 
         return $this->render($renderTemplate, [
-            'stats' => $result->getStatistic(), // FIXME remove me
-            'entries' => $pager,
-            'page' => $query->getPage(),
-            'query' => $query,
-            'toolbarForm' => $form->createView(),
-            'multiUpdateForm' => $this->getMultiUpdateActionForm()->createView(),
+            'dataTable' => $table,
+            'canSeeUsername' => $canSeeUsername,
+            'canSeeRate' => $canSeeRate,
+            'stats' => $result->getStatistic(),
             'showSummary' => $this->includeSummary(),
             'showStartEndTime' => $this->canSeeStartEndTime(),
-            'metaColumns' => $this->findMetaColumns($query, $location),
+            'metaColumns' => $metaColumns,
         ]);
     }
 
@@ -564,6 +605,21 @@ abstract class TimesheetAbstractController extends AbstractController
         $query->setName($this->getQueryNamePrefix() . $suffix);
 
         return $query;
+    }
+
+    protected function canSeeRate(): bool
+    {
+        return $this->isGranted('view_rate_own_timesheet');
+    }
+
+    protected function canSeeUsername(): bool
+    {
+        return false;
+    }
+
+    protected function getTableName(): string
+    {
+        return 'timesheet';
     }
 
     abstract protected function getDuplicateForm(Timesheet $entry, Timesheet $original): FormInterface;

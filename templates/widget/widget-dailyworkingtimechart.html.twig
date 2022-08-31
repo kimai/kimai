@@ -120,7 +120,7 @@
                                 footer: function(tooltipItems) {
                                     const tooltipItem = tooltipItems[0];
                                     const tooltipData = tooltipItem.dataset.realData[tooltipItem.dataIndex];
-                                    return '{{ 'stats.durationTotal'|trans }}: ' + tooltipData.total + '\n{{ 'label.billable'|trans }}: ' + tooltipData.billable;
+                                    return '{{ 'stats.durationTotal'|trans }}: ' + tooltipData.total + '\n{{ 'billable'|trans }}: ' + tooltipData.billable;
                                 },
                                 beforeFooter: function(tooltipItems) {
                                     return ' ';

@@ -49,7 +49,7 @@ class TagsInputType extends AbstractType
                 'description' => 'Comma separated list of tags',
             ],
             'allow_create' => false,
-            'label' => 'label.tag',
+            'label' => 'tag',
         ]);
     }
 

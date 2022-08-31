@@ -14,10 +14,7 @@ use App\Entity\Project;
 
 final class ActivityFormTypeQuery extends BaseFormTypeQuery
 {
-    /**
-     * @var Activity|null
-     */
-    private $activityToIgnore;
+    private ?Activity $activityToIgnore = null;
 
     /**
      * @param Activity|int|array|null $activity

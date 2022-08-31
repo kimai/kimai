@@ -65,7 +65,7 @@ class InvoiceModelTest extends TestCase
         self::assertInstanceOf(InvoiceModel::class, $sut->setQuery($query));
         self::assertSame($query, $sut->getQuery());
 
-        $customer = new Customer();
+        $customer = new Customer('foo');
         self::assertInstanceOf(InvoiceModel::class, $sut->setCustomer($customer));
         self::assertSame($customer, $sut->getCustomer());
 

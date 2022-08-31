@@ -35,7 +35,7 @@
             <table class="table table-hover dataTable">
                 {% if not activity.visible %}
                     <tr class="{{ widgets.class_activity_row(activity, now) }}">
-                        <th>{{ 'label.visible'|trans }}</th>
+                        <th>{{ 'visible'|trans }}</th>
                         <td colspan="3">
                             {{ widgets.label_boolean(activity.visible) }}
                         </td>
@@ -43,7 +43,7 @@
                 {% endif %}
                 {% if not activity.billable %}
                     <tr>
-                        <th>{{ 'label.billable'|trans }}</th>
+                        <th>{{ 'billable'|trans }}</th>
                         <td colspan="3">
                             {{ widgets.label_boolean(activity.billable) }}
                         </td>
@@ -51,7 +51,7 @@
                 {% endif %}
                 {% if not activity.global %}
                     <tr {{ widgets.customer_row_attr(activity.project.customer, now) }}>
-                        <th>{{ 'label.customer'|trans }}</th>
+                        <th>{{ 'customer'|trans }}</th>
                         <td>
                             {{ widgets.label_customer(activity.project.customer) }}
                         </td>
@@ -63,7 +63,7 @@
                         </td>
                     </tr>
                     <tr {{ widgets.project_row_attr(activity.project, now) }}>
-                        <th>{{ 'label.project'|trans }}</th>
+                        <th>{{ 'project'|trans }}</th>
                         <td>
                             {{ widgets.label_project(activity.project) }}
                         </td>

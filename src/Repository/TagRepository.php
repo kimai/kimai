@@ -145,19 +145,13 @@ class TagRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('tag');
 
-        $qb
-            ->select('tag.id, tag.name, tag.color, SIZE(tag.timesheets) as amount')
-        ;
+        $qb->select('tag.id, tag.name, tag.color, SIZE(tag.timesheets) as amount');
 
         $orderBy = $query->getOrderBy();
-        switch ($orderBy) {
-            case 'amount':
-                $orderBy = 'amount';
-                break;
-            default:
-                $orderBy = 'tag.' . $orderBy;
-                break;
-        }
+        $orderBy = match ($orderBy) {
+            'amount' => 'amount',
+            default => 'tag.' . $orderBy,
+        };
 
         $qb->addOrderBy($orderBy, $query->getOrder());
 

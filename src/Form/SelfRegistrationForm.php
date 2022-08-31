@@ -25,7 +25,7 @@ class SelfRegistrationForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, ['label' => 'label.email'])
+            ->add('email', EmailType::class, ['label' => 'email'])
             ->add('username', null, ['label' => 'Username', 'translation_domain' => 'TablerBundle'])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -34,8 +34,8 @@ class SelfRegistrationForm extends AbstractType
                         'autocomplete' => 'new-password',
                     ],
                 ],
-                'first_options' => ['label' => 'label.password'],
-                'second_options' => ['label' => 'label.password_repeat'],
+                'first_options' => ['label' => 'password'],
+                'second_options' => ['label' => 'password_repeat'],
                 'invalid_message' => 'The entered passwords don\'t match.',
             ])
         ;

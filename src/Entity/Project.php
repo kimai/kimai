@@ -49,8 +49,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  *
  * @Exporter\Order({"id", "name", "customer", "orderNumber", "orderDate", "start", "end", "budget", "timeBudget", "budgetType", "color", "visible", "teams", "comment", "billable"})
- * @Exporter\Expose("customer", label="label.customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
- * @ Exporter\Expose("teams", label="label.team", exp="object.getTeams().toArray()", type="array")
+ * @Exporter\Expose("customer", label="customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
+ * @ Exporter\Expose("teams", label="team", exp="object.getTeams().toArray()", type="array")
  */
 class Project implements EntityWithMetaFields, EntityWithBudget
 {
@@ -65,7 +65,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @Exporter\Expose(label="label.id", type="integer")
+     * @Exporter\Expose(label="id", type="integer")
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -94,7 +94,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @Exporter\Expose(label="label.name")
+     * @Exporter\Expose(label="name")
      *
      * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotNull()
@@ -107,7 +107,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Expose()
      * @Serializer\Groups({"Project_Entity"})
      *
-     * @Exporter\Expose(label="label.orderNumber")
+     * @Exporter\Expose(label="orderNumber")
      *
      * @ORM\Column(name="order_number", type="text", length=50, nullable=true)
      * @Assert\Length(max=50)
@@ -123,7 +123,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      *
-     * @Exporter\Expose(label="label.orderDate", type="datetime")
+     * @Exporter\Expose(label="orderDate", type="datetime")
      *
      * @ORM\Column(name="order_date", type="datetime", nullable=true)
      */
@@ -138,7 +138,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      *
-     * @Exporter\Expose(label="label.project_start", type="datetime")
+     * @Exporter\Expose(label="project_start", type="datetime")
      *
      * @ORM\Column(name="start", type="datetime", nullable=true)
      */
@@ -153,7 +153,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      *
-     * @Exporter\Expose(label="label.project_end", type="datetime")
+     * @Exporter\Expose(label="project_end", type="datetime")
      *
      * @ORM\Column(name="end", type="datetime", nullable=true)
      */
@@ -172,7 +172,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @Exporter\Expose(label="label.comment")
+     * @Exporter\Expose(label="comment")
      *
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
@@ -183,7 +183,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @Exporter\Expose(label="label.visible", type="boolean")
+     * @Exporter\Expose(label="visible", type="boolean")
      *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      * @Assert\NotNull()
@@ -193,7 +193,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @Exporter\Expose(label="label.billable", type="boolean")
+     * @Exporter\Expose(label="billable", type="boolean")
      *
      * @ORM\Column(name="billable", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()

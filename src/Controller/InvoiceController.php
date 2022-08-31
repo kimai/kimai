@@ -34,6 +34,7 @@ use App\Repository\InvoiceTemplateRepository;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\InvoiceArchiveQuery;
 use App\Repository\Query\InvoiceQuery;
+use App\Utils\DataTable;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -350,14 +351,38 @@ final class InvoiceController extends AbstractController
             return $this->redirectToRoute('admin_invoice_list');
         }
 
-        $invoices = $this->invoiceRepository->getPagerfantaForQuery($query);
+        $entries = $this->invoiceRepository->getPagerfantaForQuery($query);
+        $metaColumns = $this->findMetaColumns($query);
+
+        $table = new DataTable('invoices', $query);
+        $table->setPagination($entries);
+        $table->setSearchForm($form);
+        $table->setPaginationRoute('admin_invoice_list');
+        $table->setReloadEvents('kimai.invoiceUpdate');
+
+        $table->addColumn('avatar', ['class' => 'text-nowrap w-avatar d-none d-md-table-cell', 'title' => false, 'orderBy' => false]);
+        $table->addColumn('date', ['class' => 'd-none d-sm-table-cell text-nowrap w-min']);
+        $table->addColumn('user', ['class' => 'd-none text-nowrap w-min', 'orderBy' => false]);
+        $table->addColumn('customer', ['class' => 'alwaysVisible text-nowrap', 'orderBy' => false]);
+        $table->addColumn('comment', ['class' => 'd-none', 'title' => 'description']);
+
+        foreach ($metaColumns as $metaColumn) {
+            $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false]);
+        }
+
+        $table->addColumn('invoice_number', ['class' => 'd-none d-md-table-cell w-min', 'title' => 'invoice.number', 'orderBy' => false]);
+        $table->addColumn('due_date', ['class' => 'd-none w-min', 'title' => 'invoice.due_days', 'orderBy' => false]);
+        $table->addColumn('payment_date', ['class' => 'd-none w-min', 'title' => 'invoice.payment_date', 'orderBy' => false]);
+        $table->addColumn('status', ['class' => 'd-none d-sm-table-cell w-min', 'orderBy' => false]);
+        $table->addColumn('subtotal', ['class' => 'd-none text-end w-min', 'title' => 'invoice.subtotal', 'orderBy' => false]);
+        $table->addColumn('tax', ['class' => 'd-none text-end w-min', 'title' => 'invoice.tax']);
+        $table->addColumn('total_rate', ['class' => 'd-none d-md-table-cell text-end w-min']);
+        $table->addColumn('actions', ['class' => 'actions alwaysVisible', 'orderBy' => false]);
 
         return $this->render('invoice/listing.html.twig', [
-            'entries' => $invoices,
-            'query' => $query,
-            'toolbarForm' => $form->createView(),
+            'dataTable' => $table,
             'download' => $invoice,
-            'metaColumns' => $this->findMetaColumns($query),
+            'metaColumns' => $metaColumns,
         ]);
     }
 
@@ -395,10 +420,28 @@ final class InvoiceController extends AbstractController
         $query = new BaseQuery();
         $query->setPage($page);
 
-        $templates = $this->templateRepository->getPagerfantaForQuery($query);
+        $entries = $this->templateRepository->getPagerfantaForQuery($query);
+
+        $table = new DataTable('invoice_template', $query);
+        $table->setPagination($entries);
+        $table->setPaginationRoute('admin_invoice_template');
+        $table->setReloadEvents('kimai.invoiceTemplateUpdate');
+
+        $table->addColumn('name', ['class' => 'alwaysVisible', 'orderBy' => false]);
+        $table->addColumn('title', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
+        $table->addColumn('company', ['class' => 'd-none', 'orderBy' => false]);
+        $table->addColumn('vat_id', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
+        $table->addColumn('tax_rate', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
+        $table->addColumn('due_days', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
+        $table->addColumn('address', ['class' => 'd-none', 'orderBy' => false]);
+        $table->addColumn('contact', ['class' => 'd-none', 'orderBy' => false]);
+        $table->addColumn('calculator', ['class' => 'd-none', 'orderBy' => false, 'title' => 'invoice_calculator', 'translation_domain' => 'invoice-calculator']);
+        $table->addColumn('renderer', ['class' => 'd-none', 'orderBy' => false, 'title' => 'invoice_renderer', 'translation_domain' => 'invoice-renderer']);
+        $table->addColumn('language', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
+        $table->addColumn('actions', ['class' => 'actions alwaysVisible', 'orderBy' => false]);
 
         return $this->render('invoice/templates.html.twig', [
-            'entries' => $templates,
+            'dataTable' => $table,
         ]);
     }
 

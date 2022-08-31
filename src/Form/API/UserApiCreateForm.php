@@ -30,7 +30,7 @@ class UserApiCreateForm extends UserCreateType
 
         $builder->add('plainPassword', PasswordType::class, [
             'required' => true,
-            'label' => 'label.password',
+            'label' => 'password',
             'documentation' => [
                 'type' => 'string',
                 'description' => 'Plain text password',
@@ -43,7 +43,7 @@ class UserApiCreateForm extends UserCreateType
 
         $builder->add('plainApiToken', PasswordType::class, [
             'required' => false,
-            'label' => 'label.api_token',
+            'label' => 'api_token',
             'documentation' => [
                 'type' => 'string',
                 'description' => 'Plain API token',
@@ -52,7 +52,7 @@ class UserApiCreateForm extends UserCreateType
 
         if ($options['include_roles']) {
             $builder->add('roles', UserRoleType::class, [
-                'label' => 'label.roles',
+                'label' => 'roles',
                 'required' => false,
                 'multiple' => true,
                 'expanded' => false,

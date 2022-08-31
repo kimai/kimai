@@ -16,6 +16,7 @@ use App\Form\TeamProjectForm;
 use App\Form\Toolbar\TeamToolbarForm;
 use App\Repository\Query\TeamQuery;
 use App\Repository\TeamRepository;
+use App\Utils\DataTable;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,12 +53,22 @@ final class TeamController extends AbstractController
             return $this->redirectToRoute('admin_team');
         }
 
-        $teams = $repository->getPagerfantaForQuery($query);
+        $entries = $repository->getPagerfantaForQuery($query);
+
+        $table = new DataTable('admin_teams', $query);
+        $table->setPagination($entries);
+        $table->setSearchForm($form);
+        $table->setPaginationRoute('admin_team_paginated');
+        $table->setReloadEvents('kimai.teamUpdate');
+
+        $table->addColumn('name', ['class' => 'alwaysVisible']);
+        $table->addColumn('teamlead', ['class' => 'd-none badges', 'orderBy' => false]);
+        $table->addColumn('teamlead_avatar', ['title' => 'team.member', 'translation_domain' => 'teams', 'class' => 'd-none d-lg-table-cell avatars avatar-list avatar-list-stacked', 'orderBy' => false]);
+        $table->addColumn('user', ['class' => 'd-none badges', 'orderBy' => false, 'title' => 'user']);
+        $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
 
         return $this->render('team/index.html.twig', [
-            'teams' => $teams,
-            'query' => $query,
-            'toolbarForm' => $form->createView(),
+            'dataTable' => $table,
         ]);
     }
 
@@ -70,7 +81,7 @@ final class TeamController extends AbstractController
      */
     public function createTeam(Request $request): Response
     {
-        return $this->renderEditScreen(new Team(), $request, true);
+        return $this->renderEditScreen(new Team(''), $request, true);
     }
 
     /**

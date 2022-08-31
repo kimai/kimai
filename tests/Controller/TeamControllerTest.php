@@ -41,7 +41,6 @@ class TeamControllerTest extends ControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/admin/teams/');
         $this->assertPageActions($client, [
-            'search' => '#',
             'create modal-ajax-form' => $this->createUrl('/admin/teams/create'),
             'help' => 'https://www.kimai.org/documentation/teams.html'
         ]);
@@ -52,7 +51,6 @@ class TeamControllerTest extends ControllerBaseTest
     public function testIndexActionWithSearchTermQuery()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $em = $this->getEntityManager();
         $fixture = new TeamFixtures();
         $fixture->setAmount(5);
         $fixture->setCallback(function (Team $team) {

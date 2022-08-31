@@ -13,28 +13,28 @@ use App\Export\Annotation as Exporter;
 
 /**
  * @Exporter\Order({"a-time", "publicProperty", "a-date", "something", "privateProperty"})
- * @Exporter\Expose("accessor", label="label.accessor", exp="object.accessorMethod()")
- * @Exporter\Expose("a-date", label="label.type-date", exp="object.getDateTime()", type="date")
- * @Exporter\Expose("a-time", label="label.type-time", exp="object.getDateTime()", type="time")
+ * @Exporter\Expose("accessor", label="accessor", exp="object.accessorMethod()")
+ * @Exporter\Expose("a-date", label="type-date", exp="object.getDateTime()", type="date")
+ * @Exporter\Expose("a-time", label="type-time", exp="object.getDateTime()", type="time")
  */
 class DemoFull
 {
     /**
-     * @Exporter\Expose(label="label.Public-Property", type="string")
+     * @Exporter\Expose(label="Public-Property", type="string")
      */
     public $publicProperty = 'public-property';
     /**
-     * @Exporter\Expose("fake-name", label="label.Protected-Property", type="boolean")
+     * @Exporter\Expose("fake-name", label="Protected-Property", type="boolean")
      */
     protected $protectedProperty = false;
     /**
-     * @Exporter\Expose(label="label.Private-Property", type="integer")
+     * @Exporter\Expose(label="Private-Property", type="integer")
      * @phpstan-ignore-next-line
      */
     private $privateProperty = 123;
 
     /**
-     * @Exporter\Expose(label="label.Public-Method")
+     * @Exporter\Expose(label="Public-Method")
      */
     public function publicMethod(): string
     {
@@ -42,7 +42,7 @@ class DemoFull
     }
 
     /**
-     * @Exporter\Expose(label="label.Protected-Method", type="datetime")
+     * @Exporter\Expose(label="Protected-Method", type="datetime")
      */
     protected function protectedMethod(): \DateTime
     {
@@ -55,7 +55,7 @@ class DemoFull
     }
 
     /**
-     * @Exporter\Expose("renamedDuration", label="label.duration", type="duration")
+     * @Exporter\Expose("renamedDuration", label="duration", type="duration")
      */
     protected function duration(): int
     {
@@ -63,7 +63,7 @@ class DemoFull
     }
 
     /**
-     * @Exporter\Expose(name="fake-method", label="label.Private-Method", type="boolean")
+     * @Exporter\Expose(name="fake-method", label="Private-Method", type="boolean")
      * @phpstan-ignore-next-line
      */
     private function privateMethod(): bool

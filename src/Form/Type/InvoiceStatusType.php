@@ -22,7 +22,7 @@ class InvoiceStatusType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.status',
+            'label' => 'status',
             'multiple' => true,
             'choices' => [
                 'status.' . Invoice::STATUS_NEW => Invoice::STATUS_NEW,

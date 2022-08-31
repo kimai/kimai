@@ -311,7 +311,7 @@ abstract class ControllerBaseTest extends WebTestCase
 
         /** @var \DOMElement $element */
         foreach ($node->getIterator() as $element) {
-            $expectedClass = trim(str_replace(['btn action-', ' btn-icon', 'btn btn-primary action-', 'btn btn-dark action-'], '', $element->getAttribute('class')));
+            $expectedClass = trim(str_replace(['btn action-', ' btn-icon', 'btn btn-primary action-', 'btn btn-dark action-', 'btn btn-white action-', 'btn  action-'], '', $element->getAttribute('class')));
             self::assertArrayHasKey($expectedClass, $buttons);
             $expectedUrl = $buttons[$expectedClass];
             self::assertEquals($expectedUrl, $element->getAttribute('href'));

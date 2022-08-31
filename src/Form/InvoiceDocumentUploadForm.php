@@ -38,7 +38,7 @@ class InvoiceDocumentUploadForm extends AbstractType
 
         $builder
             ->add('document', FileType::class, [
-                'label' => 'label.invoice_renderer',
+                'label' => 'invoice_renderer',
                 'translation_domain' => 'invoice-renderer',
                 'help' => 'help.upload',
                 'mapped' => false,

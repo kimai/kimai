@@ -69,14 +69,6 @@
     {{- get_title() -}}
 {% endblock %}
 
-{% block page_pretitle %}{% endblock %}
-
-{% block page_subtitle %}
-    {%- if block('subtitle') is defined -%}
-    <div class="text-muted mt-1">{{ block('subtitle') }}</div>
-    {%- endif -%}
-{% endblock %}
-
 {% block page_actions_class %}col-auto ms-auto d-print-none{% endblock %}
 
 {% block footer %}
@@ -96,10 +88,8 @@
 {% endblock %}
 
 {# deactivated blocks from the original theme #}
-{% block navbar_search %}{% endblock %}
-{% block navbar_brand_class %}{% endblock %}
-
 {% block page_actions %}{% endblock %}
+{% block page_pretitle %}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -122,4 +112,32 @@
     {{ webloader.init_frontend_loader() }}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::JAVASCRIPT')) %}
     {{ event.content|raw }}
+{% endblock %}
+
+{% block navbar_brand_class %} d-none d-lg-inline-flex{% endblock %}
+
+{% block app_logo %}
+    {% set mylogo %}{{ parent() }}{% endset %}
+    <div class="d-flex justify-content-start flex-fill d-lg-none">
+        <h2 class="page-title d-lg-none ps-2 text-white">{{ block('page_title') }}</h2>
+        {{ mylogo }}
+    </div>
+    {{ mylogo }}
+{% endblock %}
+
+{% block navbar_search %}
+    <h2 class="page-title me-2">{{ block('page_title') }}</h2>
+    {%- if block('status') is defined -%}<div class="btn-list">{{ block('status') }}</div>{%- endif -%}
+    {%- if block('subtitle') is defined -%}{{ block('subtitle') }}{%- endif -%}
+    {%- if block('breadcrumb') is defined and block('table_actions') is defined -%}{{ block('breadcrumb') }}{%- endif -%}
+{% endblock %}
+
+{% block page_intro %}
+    {% if block('table_actions') is defined %}
+        {{ block('table_actions') }}
+    {% elseif block('breadcrumb') is defined %}
+        <div class="text-muted mt-1">
+            {{ block('breadcrumb') }}
+        </div>
+    {% endif %}
 {% endblock %}

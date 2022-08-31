@@ -13,10 +13,7 @@ use App\Form\Model\DateRange;
 
 trait DateRangeTrait
 {
-    /**
-     * @var DateRange
-     */
-    protected $dateRange;
+    protected ?DateRange $dateRange = null;
 
     public function getBegin(): ?\DateTime
     {

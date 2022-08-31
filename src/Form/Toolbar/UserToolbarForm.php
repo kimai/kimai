@@ -26,7 +26,7 @@ class UserToolbarForm extends AbstractToolbarForm
         $this->addSearchTermInputField($builder);
         $this->addUserRoleChoice($builder);
         $this->addTeamsChoice($builder, 'searchTeams');
-        $this->addVisibilityChoice($builder, 'label.active');
+        $this->addVisibilityChoice($builder, 'active');
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
         $this->addOrder($builder);

@@ -42,11 +42,11 @@ class Team
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private ?int $id = null;
     /**
      * Team name
      *
-     * @var string
+     * @var null|string
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
@@ -55,7 +55,7 @@ class Team
      * @Assert\NotBlank()
      * @Assert\Length(min=2, max=100)
      */
-    private $name;
+    private ?string $name;
     /**
      * All team member (including team leads)
      *
@@ -69,7 +69,7 @@ class Team
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\Count(min="1")
      */
-    private $members;
+    private Collection $members;
     /**
      * Customers assigned to the team
      *
@@ -81,7 +81,7 @@ class Team
      *
      * @ORM\ManyToMany(targetEntity="Customer", mappedBy="teams", fetch="EXTRA_LAZY")
      */
-    private $customers;
+    private Collection $customers;
     /**
      * Projects assigned to the team
      *
@@ -93,7 +93,7 @@ class Team
      *
      * @ORM\ManyToMany(targetEntity="Project", mappedBy="teams", fetch="EXTRA_LAZY")
      */
-    private $projects;
+    private Collection $projects;
     /**
      * Activities assigned to the team
      *
@@ -105,12 +105,13 @@ class Team
      *
      * @ORM\ManyToMany(targetEntity="Activity", mappedBy="teams", fetch="EXTRA_LAZY")
      */
-    private $activities;
+    private Collection $activities;
 
     use ColorTrait;
 
-    public function __construct()
+    public function __construct(string $name)
     {
+        $this->name = $name;
         $this->members = new ArrayCollection();
         $this->customers = new ArrayCollection();
         $this->projects = new ArrayCollection();
@@ -122,7 +123,7 @@ class Team
         return $this->id;
     }
 
-    public function setName(string $name): Team
+    public function setName(?string $name): Team
     {
         $this->name = $name;
 
@@ -246,14 +247,12 @@ class Team
     {
         if (null !== ($member = $this->findMemberByUser($user))) {
             $member->setTeamlead(false);
-
-            return;
         }
     }
 
     public function hasUser(User $user): bool
     {
-        return (null !== ($member = $this->findMemberByUser($user)));
+        return (null !== $this->findMemberByUser($user));
     }
 
     public function hasUsers(): bool
@@ -274,7 +273,7 @@ class Team
 
     public function addUser(User $user): void
     {
-        if (null !== ($member = $this->findMemberByUser($user))) {
+        if (null !== $this->findMemberByUser($user)) {
             return;
         }
 
@@ -312,7 +311,7 @@ class Team
         return $this->customers->contains($customer);
     }
 
-    public function addCustomer(Customer $customer)
+    public function addCustomer(Customer $customer): void
     {
         if ($this->customers->contains($customer)) {
             return;
@@ -322,7 +321,7 @@ class Team
         $customer->addTeam($this);
     }
 
-    public function removeCustomer(Customer $customer)
+    public function removeCustomer(Customer $customer): void
     {
         if (!$this->customers->contains($customer)) {
             return;
@@ -345,7 +344,7 @@ class Team
         return $this->projects->contains($project);
     }
 
-    public function addProject(Project $project)
+    public function addProject(Project $project): void
     {
         if ($this->projects->contains($project)) {
             return;
@@ -355,7 +354,7 @@ class Team
         $project->addTeam($this);
     }
 
-    public function removeProject(Project $project)
+    public function removeProject(Project $project): void
     {
         if (!$this->projects->contains($project)) {
             return;
@@ -378,7 +377,7 @@ class Team
         return $this->activities->contains($activity);
     }
 
-    public function addActivity(Activity $activity)
+    public function addActivity(Activity $activity): void
     {
         if ($this->activities->contains($activity)) {
             return;
@@ -388,7 +387,7 @@ class Team
         $activity->addTeam($this);
     }
 
-    public function removeActivity(Activity $activity)
+    public function removeActivity(Activity $activity): void
     {
         if (!$this->activities->contains($activity)) {
             return;

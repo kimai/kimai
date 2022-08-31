@@ -48,13 +48,12 @@ final class ResetTestCommand extends AbstractResetCommand
         $activity->setBudget(1000);
         $this->entityManager->persist($activity);
 
-        $customer = new Customer();
+        $customer = new Customer('Test');
         $customer->setNumber('1');
         $customer->setComment('Test comment');
         $customer->setContact('Test');
         $customer->setAddress('Test');
         $customer->setCompany('Test');
-        $customer->setName('Test');
         $customer->setCountry('DE');
         $customer->setCurrency('EUR');
         $customer->setPhone('111');
@@ -284,8 +283,7 @@ final class ResetTestCommand extends AbstractResetCommand
             $userEntities[] = $user;
         }
 
-        $team = new Team();
-        $team->setName('Test team');
+        $team = new Team('Test team');
         $team->addTeamlead($userEntities[6]);
         $team->addUser($userEntities[7]);
         $this->entityManager->persist($team);

@@ -82,9 +82,8 @@ final class CustomerFixtures extends Fixture
 
     private function createCustomer(Generator $faker, bool $visible): Customer
     {
-        $entry = new Customer();
+        $entry = new Customer($faker->company());
         $entry->setCurrency($faker->currencyCode());
-        $entry->setName($faker->company());
         $entry->setAddress($faker->address());
         $entry->setEmail($faker->safeEmail());
         $entry->setComment($faker->text());

@@ -4,7 +4,7 @@
         {% block form_body %}
             {% if form.begin_date is defined %}
                 <div class="mb-3 row">
-                    <label class="col-form-label col-sm-2 required" for="{{ form.vars.name }}_begin_date">{{ 'label.begin'|trans }}</label>
+                    <label class="col-form-label col-sm-2 required" for="{{ form.vars.name }}_begin_date">{{ 'begin'|trans }}</label>
                     <div class="col-sm-5">
                         {{ form_widget(form.begin_date, {'label': false}) }}
                         {{ form_errors(form.begin_date, {'label': false}) }}
@@ -17,7 +17,7 @@
             {% endif %}
             {% if form.end_time is defined or form.duration is defined %}
                 <div class="mb-3 row">
-                    <label class="col-form-label col-sm-2" for="{{ form.vars.name }}_duration">{{ 'label.duration'|trans }} / {{ 'label.endtime'|trans }}</label>
+                    <label class="col-form-label col-sm-2" for="{{ form.vars.name }}_duration">{{ 'duration'|trans }} / {{ 'endtime'|trans }}</label>
                     {% set size = form.duration is defined ? 5 : 10 %}
                     {% if form.duration is defined %}
                     <div class="col-sm-{{ size }}">

@@ -39,15 +39,15 @@ class UserEditType extends AbstractType
     {
         $builder
             ->add('alias', TextType::class, [
-                'label' => 'label.alias',
+                'label' => 'alias',
                 'required' => false,
             ])
             ->add('title', TextType::class, [
-                'label' => 'label.title',
+                'label' => 'title',
                 'required' => false,
             ])
             ->add('accountNumber', TextType::class, [
-                'label' => 'label.account_number',
+                'label' => 'account_number',
                 'required' => false,
             ])
         ;
@@ -75,7 +75,7 @@ class UserEditType extends AbstractType
         if ($options['include_active_flag']) {
             $builder
                 ->add('enabled', YesNoType::class, [
-                    'label' => 'label.active',
+                    'label' => 'active',
                 ])
             ;
         }

@@ -12,7 +12,7 @@ namespace App\Tests\Export\Spreadsheet\Entities;
 use App\Export\Annotation as Exporter;
 
 /**
- * @Exporter\Expose("accessor", label="label.accessor")
+ * @Exporter\Expose("accessor", label="accessor")
  */
 class MissingExpressionOnClass
 {

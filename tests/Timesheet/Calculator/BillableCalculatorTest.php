@@ -49,10 +49,10 @@ class BillableCalculatorTest extends TestCase
 
     public function getTestData()
     {
-        $customerYes = new Customer();
+        $customerYes = new Customer('foo');
         $customerYes->setBillable(true);
 
-        $customerNo = new Customer();
+        $customerNo = new Customer('foo');
         $customerNo->setBillable(false);
 
         $projectYes = new Project();

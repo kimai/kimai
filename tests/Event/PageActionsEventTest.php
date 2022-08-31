@@ -82,7 +82,6 @@ class PageActionsEventTest extends TestCase
     {
         $sut = new PageActionsEvent(new User(), ['hello' => 'world'], 'foo', 'xxx');
 
-        $sut->addSearchToggle();
         $sut->addDivider();
         $sut->addColumnToggle('foo2');
         $sut->addDelete('foo3');
@@ -92,12 +91,11 @@ class PageActionsEventTest extends TestCase
         $sut->addQuickExport('foo7');
 
         $expected = [
-            'search' => ['modal' => '#modal_search', 'label' => null, 'title' => 'search'],
             'divider0' => null,
             'visibility' => ['modal' => '#foo2', 'title' => 'modal.columns.title'],
             'help' => ['url' => 'foo4', 'target' => '_blank', 'title' => 'help', 'translation_domain' => 'about'],
             'create' => ['url' => 'foo5', 'class' => 'modal-ajax-form', 'title' => 'create'],
-            'download' => ['url' => 'foo7', 'class' => 'toolbar-action', 'title' => 'export.title'],
+            'download' => ['url' => 'foo7', 'class' => 'toolbar-action', 'title' => 'export'],
             'trash' => ['url' => 'foo3', 'class' => 'modal-ajax-form text-red'],
         ];
         $this->assertEquals(\count($expected), $sut->countActions());

@@ -42,7 +42,7 @@ class TeamValidatorTest extends ConstraintValidatorTestCase
         $member->setTeamlead(false);
         $member->setUser(new User());
 
-        $team = new Team();
+        $team = new Team('foo');
         $team->addMember($member);
 
         $this->validator->validate($team, new TeamConstraint());

@@ -30,7 +30,7 @@ class AnnotatedObjectExporterTest extends TestCase
 
         $project = new Project();
         $project->setName('test project');
-        $project->setCustomer((new Customer())->setName('A customer'));
+        $project->setCustomer(new Customer('A customer'));
         $project->setComment('Lorem Ipsum');
         $project->setOrderNumber('1234567890');
         $project->setBudget(123456.7890);

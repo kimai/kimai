@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\Customer\CustomerService;
 use App\Entity\Customer;
 use App\Entity\CustomerRate;
 use App\Entity\User;
@@ -146,13 +147,13 @@ final class CustomerController extends BaseApiController
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
-    public function postAction(Request $request): Response
+    public function postAction(Request $request, CustomerService $customerService): Response
     {
         if (!$this->isGranted('create_customer')) {
             throw new AccessDeniedHttpException('User cannot create customers');
         }
 
-        $customer = new Customer();
+        $customer = $customerService->createNewCustomer('');
 
         $event = new CustomerMetaDefinitionEvent($customer);
         $this->dispatcher->dispatch($event);

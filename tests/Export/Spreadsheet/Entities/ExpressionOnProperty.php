@@ -14,7 +14,7 @@ use App\Export\Annotation as Exporter;
 class ExpressionOnProperty
 {
     /**
-     * @Exporter\Expose("accessor", label="label.accessor", exp="object.foo")
+     * @Exporter\Expose("accessor", label="accessor", exp="object.foo")
      * @phpstan-ignore-next-line
      */
     private $foo;

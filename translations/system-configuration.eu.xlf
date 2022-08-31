@@ -10,56 +10,56 @@
         <source>theme</source>
         <target>Itxura</target>
       </trans-unit>
-      <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
-        <source>label.theme.markdown_content</source>
+      <trans-unit id="mPRUBFX" resname="theme.markdown_content">
+        <source>theme.markdown_content</source>
         <target>Markdown formatua onartu deskribapen eta iruzkinetan</target>
       </trans-unit>
-      <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
-        <source>label.timesheet.mode</source>
+      <trans-unit id="FaGqoTT" resname="timesheet.mode">
+        <source>timesheet.mode</source>
         <target>Denbora jarraipen modua</target>
       </trans-unit>
-      <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
-        <source>label.timesheet.mode_default</source>
+      <trans-unit id="A11vhSN" resname="timesheet.mode_default">
+        <source>timesheet.mode_default</source>
         <target>Defektuz hasiera eta bukaera denbora edita daitezke</target>
       </trans-unit>
-      <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
-        <source>label.timesheet.mode_duration_fixed_begin</source>
+      <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin">
+        <source>timesheet.mode_duration_fixed_begin</source>
         <target>[Iraupena] hasiera ordu finko konfiguragarria. Iraupena soilik alda daiteke</target>
       </trans-unit>
-      <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
-        <source>label.timesheet.mode_punch</source>
+      <trans-unit id="3tlkqJC" resname="timesheet.mode_punch">
+        <source>timesheet.mode_punch</source>
         <target>[Kontrol erlojua] Erabiltzaileak sarreak abiarazi eta geldi ditzake, baina ezin ditu beranduago aldatu</target>
       </trans-unit>
-      <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
-        <source>label.timesheet.rules.allow_future_times</source>
+      <trans-unit id="k4pl27g" resname="timesheet.rules.allow_future_times">
+        <source>timesheet.rules.allow_future_times</source>
         <target>Etorkizuneko denbora sarrerak onartu</target>
       </trans-unit>
-      <trans-unit id="oIueXaX" resname="label.timesheet.active_entries.hard_limit">
-        <source>label.timesheet.active_entries.hard_limit</source>
+      <trans-unit id="Fe18zp4" resname="timesheet.active_entries.hard_limit">
+        <source>timesheet.active_entries.hard_limit</source>
         <target>Gehinezko sarrera kopurua aldi berean</target>
       </trans-unit>
-      <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
-        <source>label.calendar.week_numbers</source>
+      <trans-unit id="t38HFZd" resname="calendar.week_numbers">
+        <source>calendar.week_numbers</source>
         <target>Aste zenbakia erakutsi</target>
       </trans-unit>
-      <trans-unit id="NULxaYp" resname="label.calendar.weekends">
-        <source>label.calendar.weekends</source>
+      <trans-unit id="qaoBvYU" resname="calendar.weekends">
+        <source>calendar.weekends</source>
         <target>Asteburuak erakutsi</target>
       </trans-unit>
-      <trans-unit id="AMCb58W" resname="label.calendar.businessHours.begin">
-        <source>label.calendar.businessHours.begin</source>
+      <trans-unit id="yUeuM2_" resname="calendar.businessHours.begin">
+        <source>calendar.businessHours.begin</source>
         <target>Lan-egunaren hasiera ordua (nabarmendua izango da)</target>
       </trans-unit>
-      <trans-unit id="3nfAkqy" resname="label.calendar.businessHours.end">
-        <source>label.calendar.businessHours.end</source>
+      <trans-unit id="Aa_Ushz" resname="calendar.businessHours.end">
+        <source>calendar.businessHours.end</source>
         <target>Lan-egunaren bukaera ordua (nabarmendua izango da)</target>
       </trans-unit>
-      <trans-unit id="Yl4Ztfv" resname="label.calendar.visibleHours.begin">
-        <source>label.calendar.visibleHours.begin</source>
+      <trans-unit id="1bHgx7p" resname="calendar.visibleHours.begin">
+        <source>calendar.visibleHours.begin</source>
         <target>Ordu-denbora tartearen hasiera</target>
       </trans-unit>
-      <trans-unit id="UJGYdCt" resname="label.calendar.visibleHours.end">
-        <source>label.calendar.visibleHours.end</source>
+      <trans-unit id="6nayLDB" resname="calendar.visibleHours.end">
+        <source>calendar.visibleHours.end</source>
         <target>Ordu-denbora tartearen bukaera</target>
       </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
@@ -70,24 +70,24 @@
         <source>increment_rounding</source>
         <target>Erabili biribiltze arauaren balio konfiguratua</target>
       </trans-unit>
-      <trans-unit id="x3AfnWn" resname="label.timesheet.time_increment">
-        <source>label.timesheet.time_increment</source>
+      <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
+        <source>timesheet.time_increment</source>
         <target>Minutuen hautapena Nondik Nora</target>
       </trans-unit>
-      <trans-unit id="40i4Xlr" resname="label.timesheet.duration_increment">
-        <source>label.timesheet.duration_increment</source>
+      <trans-unit id="nqWKu27" resname="timesheet.duration_increment">
+        <source>timesheet.duration_increment</source>
         <target>Iraupenerako minutu aukeraketa</target>
       </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>
         <target>Asteko lehen eguna</target>
       </trans-unit>
-      <trans-unit id="HrEBLUr" resname="label.invoice.number_format">
-        <source>label.invoice.number_format</source>
+      <trans-unit id="UTurPF1" resname="invoice.number_format">
+        <source>invoice.number_format</source>
         <target>Faktura zenbakien formatua</target>
       </trans-unit>
-      <trans-unit id="DY_cM92" resname="label.timesheet.default_begin">
-        <source>label.timesheet.default_begin</source>
+      <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
+        <source>timesheet.default_begin</source>
         <target>Hasierako denbora lehenetsia (ez da erabiltzen denbora-jarraipena egiteko modu guztietan)</target>
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor">
@@ -134,60 +134,60 @@
         <source>Monday</source>
         <target>Astelehena</target>
       </trans-unit>
-      <trans-unit id="D1NSPl5" resname="label.timesheet.rounding.default.days">
-        <source>label.timesheet.rounding.default.days</source>
+      <trans-unit id="oL_eD_9" resname="timesheet.rounding.default.days">
+        <source>timesheet.rounding.default.days</source>
         <target>Biribilduko diren asteko egunak</target>
       </trans-unit>
-      <trans-unit id="aenIpDV" resname="label.timesheet.rounding.default.mode">
-        <source>label.timesheet.rounding.default.mode</source>
+      <trans-unit id="O8E4Hj5" resname="timesheet.rounding.default.mode">
+        <source>timesheet.rounding.default.mode</source>
         <target>Biribiltzeko modua</target>
       </trans-unit>
-      <trans-unit id="Hnl7Jxt" resname="label.timesheet.rounding.default.duration">
-        <source>label.timesheet.rounding.default.duration</source>
+      <trans-unit id="t.YW9eU" resname="timesheet.rounding.default.duration">
+        <source>timesheet.rounding.default.duration</source>
         <target>Iraupenaren biribilketa minututan (0 = desaktibatuta)</target>
       </trans-unit>
-      <trans-unit id="Jx6bTVr" resname="label.timesheet.rounding.default.end">
-        <source>label.timesheet.rounding.default.end</source>
+      <trans-unit id="AUc43eR" resname="timesheet.rounding.default.end">
+        <source>timesheet.rounding.default.end</source>
         <target>Amaiera-orduaren biribilketa minututan (0 = desaktibatuta)</target>
       </trans-unit>
-      <trans-unit id="0wyl4Bb" resname="label.timesheet.rounding.default.begin">
-        <source>label.timesheet.rounding.default.begin</source>
+      <trans-unit id="ZMvZTTx" resname="timesheet.rounding.default.begin">
+        <source>timesheet.rounding.default.begin</source>
         <target>Hasierako orduaren biribilketa minututan (0 = desaktibatuta)</target>
       </trans-unit>
       <trans-unit id="Gdb5M4w" resname="rounding">
         <source>rounding</source>
         <target>Denboraren biribiltzea</target>
       </trans-unit>
-      <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
-        <source>label.theme.branding.company</source>
+      <trans-unit id="en0.Ahu" resname="theme.branding.company">
+        <source>theme.branding.company</source>
         <target>Enpresa</target>
       </trans-unit>
-      <trans-unit id="m5dLCoB" resname="label.theme.branding.logo">
-        <source>label.theme.branding.logo</source>
+      <trans-unit id="o9mON14" resname="theme.branding.logo">
+        <source>theme.branding.logo</source>
         <target>Logotipoa (Irudiaren URLa, enpresa ordezkatzen du saio hasierako pantailan)</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>
         <target>Marka</target>
       </trans-unit>
-      <trans-unit id="AlBuZhv" resname="label.calendar.slot_duration">
-        <source>label.calendar.slot_duration</source>
+      <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
+        <source>calendar.slot_duration</source>
         <target>Astearen eta egunaren ikuspegiaren zirrikituaren iraupena (formatua: hh:mm:ss)</target>
       </trans-unit>
-      <trans-unit id="y2i0PU3" resname="label.timesheet.rules.lockdown_grace_period">
-        <source>label.timesheet.rules.lockdown_grace_period</source>
+      <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period">
+        <source>timesheet.rules.lockdown_grace_period</source>
         <target>Blokeoaren grazia aldiaren amaiera (PHP-ren data erlatibotik blokeatze aldiaren amaiera arte)</target>
       </trans-unit>
-      <trans-unit id=".es2tyO" resname="label.timesheet.rules.lockdown_period_end">
-        <source>label.timesheet.rules.lockdown_period_end</source>
+      <trans-unit id="M1iVHeQ" resname="timesheet.rules.lockdown_period_end">
+        <source>timesheet.rules.lockdown_period_end</source>
         <target>Blokeo-aldiaren amaiera (PHP-ren data erlatibotik orain arte)</target>
       </trans-unit>
-      <trans-unit id="yVBJECt" resname="label.timesheet.rules.lockdown_period_start">
-        <source>label.timesheet.rules.lockdown_period_start</source>
+      <trans-unit id="_PvFlQ9" resname="timesheet.rules.lockdown_period_start">
+        <source>timesheet.rules.lockdown_period_start</source>
         <target>Blokeo epea hasi (PHP-ren data erlatibotik orain arte)</target>
       </trans-unit>
-      <trans-unit id=".NE5mGi" resname="label.timesheet.rules.allow_overlapping_records">
-        <source>label.timesheet.rules.allow_overlapping_records</source>
+      <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records">
+        <source>timesheet.rules.allow_overlapping_records</source>
         <target>Baimendu gainjarritako denbora-sarrerak</target>
       </trans-unit>
     </body>

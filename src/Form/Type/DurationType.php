@@ -29,7 +29,7 @@ class DurationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'label' => 'label.duration',
+            'label' => 'duration',
             'constraints' => [new DurationConstraint()],
             'preset_hours' => null,
             'preset_minutes' => null,

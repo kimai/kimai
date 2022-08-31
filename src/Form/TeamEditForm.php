@@ -37,7 +37,7 @@ class TeamEditForm extends AbstractType
 
         $builder
             ->add('name', TextType::class, [
-                'label' => 'label.name',
+                'label' => 'name',
                 'attr' => [
                     'autofocus' => 'autofocus'
                 ],

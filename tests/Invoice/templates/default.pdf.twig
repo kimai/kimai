@@ -8,7 +8,7 @@
     <div class="col-xs-12">
         <h2 class="page-header">
             <span contenteditable="true">{{ model.template.title }}</span>
-            <small class="pull-right">{{ 'label.date'|trans({}, 'messages', language) }}: {{ model.invoiceDate|date_short }}</small>
+            <small class="pull-right">{{ 'date'|trans({}, 'messages', language) }}: {{ model.invoiceDate|date_short }}</small>
         </h2>
     </div>
 </div>
@@ -21,7 +21,7 @@
             {{ model.template.address|trim|nl2br }}
             {% if model.template.vatId is not empty %}
             <br>
-            {{ 'label.vat_id'|trans({}, 'messages', language) }}:
+            {{ 'vat_id'|trans({}, 'messages', language) }}:
             {{ model.template.vatId }}
             {% endif %}
         </address>
@@ -34,15 +34,15 @@
             {{ model.customer.address|nl2br }}
             {% if model.customer.vatId is not empty %}
                 <br>
-                {{ 'label.vat_id'|trans({}, 'messages', language) }}: {{ model.customer.vatId }}
+                {{ 'vat_id'|trans({}, 'messages', language) }}: {{ model.customer.vatId }}
             {% endif %}
             {% if model.customer.number is not empty %}
                 <br>
-                {{ 'label.number'|trans({}, 'messages', language) }}: {{ model.customer.number }}
+                {{ 'number'|trans({}, 'messages', language) }}: {{ model.customer.number }}
             {% endif %}
             {% if model.query.project is not empty and model.query.project.orderNumber is not empty %}
                 <br>
-                {{ 'label.orderNumber'|trans({}, 'messages', language) }}: {{ model.query.project.orderNumber }}
+                {{ 'orderNumber'|trans({}, 'messages', language) }}: {{ model.query.project.orderNumber }}
             {% endif %}
         </address>
     </div>
@@ -67,11 +67,11 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>{{ 'label.date'|trans({}, 'messages', language) }}</th>
-                    <th>{{ 'label.description'|trans({}, 'messages', language) }}</th>
-                    <th class="text-right">{{ 'label.unit_price'|trans({}, 'messages', language) }}</th>
-                    <th class="text-right">{{ 'label.amount'|trans({}, 'messages', language) }}</th>
-                    <th class="text-right">{{ 'label.total_rate'|trans({}, 'messages', language) }}</th>
+                    <th>{{ 'date'|trans({}, 'messages', language) }}</th>
+                    <th>{{ 'description'|trans({}, 'messages', language) }}</th>
+                    <th class="text-right">{{ 'unit_price'|trans({}, 'messages', language) }}</th>
+                    <th class="text-right">{{ 'amount'|trans({}, 'messages', language) }}</th>
+                    <th class="text-right">{{ 'total_rate'|trans({}, 'messages', language) }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -136,11 +136,11 @@
 
 <footer class="footer">
     <p>
-        <strong>{{ 'label.address'|trans({}, 'messages', language) }}</strong>: {{ model.template.company }} &ndash; {{ model.template.address|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
+        <strong>{{ 'address'|trans({}, 'messages', language) }}</strong>: {{ model.template.company }} &ndash; {{ model.template.address|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
         <br>
-        <strong>{{ 'label.invoice_bank_account'|trans({}, 'messages', language) }}</strong>: {{ model.template.paymentDetails|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
+        <strong>{{ 'invoice_bank_account'|trans({}, 'messages', language) }}</strong>: {{ model.template.paymentDetails|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
         <br>
-        <strong>{{ 'label.contact'|trans({}, 'messages', language) }}</strong>: {{ model.template.contact|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
+        <strong>{{ 'contact'|trans({}, 'messages', language) }}</strong>: {{ model.template.contact|replace({"\n": ' &ndash; ', "\r\n": ' &ndash; ', "\r": ' &ndash; '})|raw }}
     </p>
 </footer>
 

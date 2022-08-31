@@ -300,7 +300,7 @@ abstract class AbstractSpreadsheetRenderer
             }
             if (!isset($columns['username']['header'])) {
                 $columns['username']['header'] = function (Worksheet $sheet, $row, $column) {
-                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('label.name'));
+                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('name'));
 
                     return 1;
                 };
@@ -565,7 +565,7 @@ abstract class AbstractSpreadsheetRenderer
         if (isset($columns['customer_number'])) {
             if (!isset($columns['customer_number']['header'])) {
                 $columns['customer_number']['header'] = function (Worksheet $sheet, $row, $column) {
-                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('label.number'));
+                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('number'));
 
                     return 1;
                 };
@@ -585,7 +585,7 @@ abstract class AbstractSpreadsheetRenderer
         if (isset($columns['customer_vat']) && !isset($columns['customer_vat']['render'])) {
             if (!isset($columns['customer_vat']['header'])) {
                 $columns['customer_vat']['header'] = function (Worksheet $sheet, $row, $column) {
-                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('label.vat_id'));
+                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('vat_id'));
 
                     return 1;
                 };
@@ -605,7 +605,7 @@ abstract class AbstractSpreadsheetRenderer
         if (isset($columns['order_number']) && !isset($columns['order_number']['render'])) {
             if (!isset($columns['order_number']['header'])) {
                 $columns['order_number']['header'] = function (Worksheet $sheet, $row, $column) {
-                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('label.orderNumber'));
+                    $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('orderNumber'));
 
                     return 1;
                 };
@@ -661,7 +661,7 @@ abstract class AbstractSpreadsheetRenderer
                 $amount = $settings['header']($sheet, $recordsHeaderRow, $recordsHeaderColumn);
                 $recordsHeaderColumn += $amount;
             } else {
-                $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans('label.' . $label));
+                $sheet->setCellValueByColumnAndRow($recordsHeaderColumn++, $recordsHeaderRow, $this->translator->trans($label));
             }
         }
 

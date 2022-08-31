@@ -20,7 +20,7 @@ class CustomerCommentTest extends AbstractCommentEntityTest
 {
     protected function getEntity(): CustomerComment
     {
-        return new CustomerComment(new Customer());
+        return new CustomerComment(new Customer('foo'));
     }
 
     public function testEntitySpecificMethods()

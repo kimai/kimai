@@ -24,14 +24,14 @@
             <table class="table dataTable">
                 <thead class="sticky-top">
                     <tr>
-                        <th>{{ 'label.project'|trans }}</th>
-                        <th>{{ 'label.activity'|trans }}</th>
+                        <th>{{ 'project'|trans }}</th>
+                        <th>{{ 'activity'|trans }}</th>
                         {% for id, week in days %}
                         <th class="text-center{% if week.day is weekend %} weekend{% endif %}{% if week.day is today %} today{% endif %}">
                             {{ week.day|date_weekday }}
                         </th>
                         {% endfor %}
-                        <th class="summary">{{ 'label.duration'|trans }}</th>
+                        <th class="summary">{{ 'duration'|trans }}</th>
                     </tr>
                 </thead>
                 <tbody id="ts-collection" data-index="{{ form.rows.children|length }}">

@@ -300,8 +300,19 @@ abstract class AbstractController extends BaseAbstractController implements Serv
             if ($sessionSearch !== null) {
                 $submitData = array_merge($sessionSearch, $submitData);
             } elseif ($bookmark !== null && !$request->query->has('setDefaultQuery')) {
-                $submitData = array_merge($bookmark->getContent(), $submitData);
-                $data->flagAsBookmarkSearch();
+                $bookContent = $bookmark->getContent();
+                $isBookmarkSearch = true;
+                foreach ($submitData as $key => $value) {
+                    if (!\array_key_exists($key, $bookContent) || $value !== $bookContent[$key]) {
+                        $isBookmarkSearch = false;
+                        break;
+                    }
+                }
+                if ($isBookmarkSearch) {
+                    $data->flagAsBookmarkSearch();
+                }
+
+                $submitData = array_merge($bookContent, $submitData);
             }
         }
 

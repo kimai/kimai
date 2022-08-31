@@ -46,7 +46,7 @@ class TimesheetTeamController extends TimesheetAbstractController
         $query = $this->createDefaultQuery();
         $query->setPage($page);
 
-        return $this->index($query, $request, 'admin_timesheet', 'timesheet-team/index.html.twig', TimesheetMetaDisplayEvent::TEAM_TIMESHEET);
+        return $this->index($query, $request, 'admin_timesheet', 'admin_timesheet_paginated', 'timesheet-team/index.html.twig', TimesheetMetaDisplayEvent::TEAM_TIMESHEET);
     }
 
     /**
@@ -260,5 +260,20 @@ class TimesheetTeamController extends TimesheetAbstractController
     protected function getQueryNamePrefix(): string
     {
         return 'TeamTimes';
+    }
+
+    protected function canSeeRate(): bool
+    {
+        return $this->isGranted('view_rate_other_timesheet');
+    }
+
+    protected function canSeeUsername(): bool
+    {
+        return true;
+    }
+
+    protected function getTableName(): string
+    {
+        return 'timesheet_admin';
     }
 }

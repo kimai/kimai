@@ -62,10 +62,9 @@ class CustomerControllerTest extends APIControllerBaseTest
         $customer = $repository->find($id);
 
         if (null === $customer) {
-            $customer = new Customer();
+            $customer = new Customer('foooo');
             $customer->setCountry('DE');
             $customer->setTimezone('Europre/Paris');
-            $customer->setName('foooo');
             $repository->saveCustomer($customer);
         }
 
@@ -157,8 +156,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $em->persist($activity);
 
         // and finally a team
-        $team = new Team();
-        $team->setName('Testing customer 1 team');
+        $team = new Team('Testing customer 1 team');
         $team->addTeamlead($this->getUserByRole(User::ROLE_USER));
         $team->addCustomer($customer);
         $team->addProject($project);

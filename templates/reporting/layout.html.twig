@@ -3,13 +3,12 @@
 
 {% block page_title %}{{ 'menu.reporting'|trans }}{% endblock %}
 
-{% block subtitle %}
-    {% block report_title %}
-        {{ widgets.breadcrumb({
-            ('menu.reporting'|trans): path('reporting'),
-            (report_title|trans({}, 'reporting')): '#'
-        }) }}
-    {% endblock %}
+{% block breadcrumb %}
+    {% from "macros/breadcrumb.html.twig" import breadcrumb %}
+    {{ breadcrumb({
+        ('menu.reporting'|trans): path('reporting'),
+        (report_title|trans({}, 'reporting')): '#'
+    }) }}
 {% endblock %}
 
 {% block page_actions %}

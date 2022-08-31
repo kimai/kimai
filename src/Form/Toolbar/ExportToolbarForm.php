@@ -39,7 +39,7 @@ class ExportToolbarForm extends AbstractToolbarForm
         $this->addTagInputField($builder);
         if ($options['include_export']) {
             $builder->add('markAsExported', HiddenType::class, [
-                'label' => 'label.mark_as_exported',
+                'label' => 'mark_as_exported',
                 'required' => false,
             ]);
         }

@@ -22,7 +22,7 @@ class ProjectInactiveForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('lastChange', DatePickerType::class, [
-            'label' => 'label.last_record_before',
+            'label' => 'last_record_before',
             'model_timezone' => $options['timezone'],
             'view_timezone' => $options['timezone'],
         ]);

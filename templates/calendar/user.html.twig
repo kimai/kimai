@@ -108,9 +108,9 @@
                 initialView: '{{ app.user.getPreferenceValue('calendar_initial_view') }}',
                 delete: {% if canDelete %}true{% else %}false{% endif %},
                 translations: {
-                    customer: '{{ 'label.customer'|trans }}',
-                    project: '{{ 'label.project'|trans }}',
-                    activity: '{{ 'label.activity'|trans }}',
+                    customer: '{{ 'customer'|trans }}',
+                    project: '{{ 'project'|trans }}',
+                    activity: '{{ 'activity'|trans }}',
                     delete: '{{ 'action.delete'|trans }}',
                     dragDropDelete: '{{ 'calendar.drag_and_drop.delete'|trans }}',
                 },

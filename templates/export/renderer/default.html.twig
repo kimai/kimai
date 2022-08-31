@@ -3,7 +3,7 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/webloader.html.twig" as webloader %}
 
-{% block document_title %}{{ 'export.title'|trans }}{% endblock %}
+{% block document_title %}{{ 'export'|trans }}{% endblock %}
 
 {% set storageItemName = 'kimai_html_export' %}
 
@@ -46,9 +46,9 @@
 {% set columns = columns|merge({
     'hourlyRate': false,
     'fixedRate': false,
-    'duration': 'label.duration',
-    'internalRate': 'label.internalRate',
-    'rate': 'label.rate',
+    'duration': 'duration',
+    'internalRate': 'internalRate',
+    'rate': 'rate',
 }) %}
 
 {% block javascripts %}
@@ -289,11 +289,11 @@
             <div class="card-body">
                 <label for="duration-decimal">
                     <input type="checkbox" id="duration-decimal" name="duration-decimal"{% if decimal%} checked="checked"{% endif %}>
-                    {{ 'label.export_decimal'|trans }}
+                    {{ 'export_decimal'|trans }}
                 </label>
                 |
                 <label for="date-format">
-                    {{ 'label.date'|trans }}:
+                    {{ 'date'|trans }}:
                     {% set demo_date = create_date('2020-01-01 20:00:00') %}
                     <select id="date-format" name="date-format">
                         <option value="short">{{ demo_date|date_short }}</option>
@@ -302,7 +302,7 @@
                 </label>
                 |
                 <label for="begin-format">
-                    {{ 'label.begin'|trans }}:
+                    {{ 'begin'|trans }}:
                     {% set demo_date = create_date('2020-01-01 11:00:00') %}
                     <select id="begin-format" name="begin-format">
                         <option value="plain">{{ demo_date|date_format('H:i') }}</option>
@@ -312,7 +312,7 @@
                 </label>
                 |
                 <label for="end-format">
-                    {{ 'label.end'|trans }}:
+                    {{ 'end'|trans }}:
                     {% set demo_date = create_date('2020-01-01 18:00:00') %}
                     <select id="end-format" name="end-format">
                         <option value="plain">{{ demo_date|date_format('H:i') }}</option>
@@ -335,38 +335,38 @@
                 <div class="{{ formItemClass }}">
                     <label for="summary-by-activities">
                         <input type="checkbox" id="summary-by-activities" name="summary-by-activities">
-                        {{ 'label.activity'|trans }}
+                        {{ 'activity'|trans }}
                     </label>
                 </div>
                 <div class="{{ formItemClass }}">
                     <label for="summary-timeBudget">
                         <input type="checkbox" id="summary-timeBudget" name="summary-timeBudget" checked>
-                        {{ 'label.timeBudget'|trans }}
+                        {{ 'timeBudget'|trans }}
                     </label>
                 </div>
                 <div class="{{ formItemClass }}">
                     <label for="summary-budget">
                         <input type="checkbox" id="summary-budget" name="summary-budget" checked>
-                        {{ 'label.budget'|trans }}
+                        {{ 'budget'|trans }}
                     </label>
                 </div>
 
                 <div class="{{ formItemClass }}">
                     <label for="summary-duration">
                         <input type="checkbox" id="summary-duration" name="summary-duration" checked>
-                        {{ 'label.duration'|trans }}
+                        {{ 'duration'|trans }}
                     </label>
                 </div>
                 <div class="{{ formItemClass }}">
                     <label for="summary-internalRate">
                         <input type="checkbox" id="summary-internalRate" name="summary-internalRate" checked>
-                        {{ 'label.internalRate'|trans }}
+                        {{ 'internalRate'|trans }}
                     </label>
                 </div>
                 <div class="{{ formItemClass }}">
                     <label for="summary-rate">
                         <input type="checkbox" id="summary-rate" name="summary-rate" checked>
-                        {{ 'label.rate'|trans }}
+                        {{ 'rate'|trans }}
                     </label>
                 </div>
             </div>
@@ -386,7 +386,7 @@
                     <div class="{{ formItemClass }}">
                         <label for="records-column-{{ columnId }}">
                             <input type="checkbox" class="column-visibility-changer" id="records-column-{{ columnId }}" name="{{ columnId }}" {% if visibility %}checked="checked"{% endif %}>
-                            {{ columnTitles[columnId]|default('label.'~columnId)|trans }}
+                            {{ columnTitles[columnId]|default(columnId)|trans }}
                         </label>
                     </div>
                 {% endfor %}
@@ -412,13 +412,13 @@
             <table class="items table table-sm table-bordered dataTable" id="summary-project">
                 <thead>
                 <tr>
-                    <th>{{ 'label.customer'|trans }}</th>
-                    <th>{{ 'label.project'|trans }}</th>
-                    <th class="center export-timeBudget">{{ 'label.timeBudget'|trans }}</th>
-                    <th class="center export-budget">{{ 'label.budget'|trans }}</th>
-                    <th class="duration summary-duration">{{ 'label.duration'|trans }}</th>
-                    <th class="cost summary-internalRate">{{ 'label.internalRate'|trans }}</th>
-                    <th class="cost summary-rate">{{ 'label.rate'|trans }}</th>
+                    <th>{{ 'customer'|trans }}</th>
+                    <th>{{ 'project'|trans }}</th>
+                    <th class="center export-timeBudget">{{ 'timeBudget'|trans }}</th>
+                    <th class="center export-budget">{{ 'budget'|trans }}</th>
+                    <th class="duration summary-duration">{{ 'duration'|trans }}</th>
+                    <th class="cost summary-internalRate">{{ 'internalRate'|trans }}</th>
+                    <th class="cost summary-rate">{{ 'rate'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -504,14 +504,14 @@
             <table class="items table table-sm table-bordered dataTable" id="summary-activity" style="display:none">
                 <thead>
                 <tr>
-                    <th>{{ 'label.customer'|trans }}</th>
-                    <th>{{ 'label.project'|trans }}</th>
-                    <th>{{ 'label.activity'|trans }}</th>
-                    <th class="center export-timeBudget">{{ 'label.timeBudget'|trans }}</th>
-                    <th class="center export-budget">{{ 'label.budget'|trans }}</th>
-                    <th class="duration summary-duration">{{ 'label.duration'|trans }}</th>
-                    <th class="cost summary-internalRate">{{ 'label.internalRate'|trans }}</th>
-                    <th class="cost summary-rate">{{ 'label.rate'|trans }}</th>
+                    <th>{{ 'customer'|trans }}</th>
+                    <th>{{ 'project'|trans }}</th>
+                    <th>{{ 'activity'|trans }}</th>
+                    <th class="center export-timeBudget">{{ 'timeBudget'|trans }}</th>
+                    <th class="center export-budget">{{ 'budget'|trans }}</th>
+                    <th class="duration summary-duration">{{ 'duration'|trans }}</th>
+                    <th class="cost summary-internalRate">{{ 'internalRate'|trans }}</th>
+                    <th class="cost summary-rate">{{ 'rate'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -608,7 +608,7 @@
                     <tr>
                         {% for columnId, visibility in columns %}
                         <th class="column column-{{ columnId }}" {% if not visibility %}style="display: none"{% endif %}>
-                            {{ columnTitles[columnId]|default('label.'~columnId)|trans }}
+                            {{ columnTitles[columnId]|default(columnId)|trans }}
                         </th>
                         {% endfor %}
                     </tr>
