@@ -2,7 +2,13 @@
 {% import "macros/widgets.html.twig" as widgets %}
 
 {% block page_title %}{{ 'menu.doctor'|trans }}{% endblock %}
-{% block subtitle %}{{ 'label.version'|trans }}: {{ constant('App\\Constants::VERSION') }} {{ constant('App\\Constants::STATUS') }} ({{ environment }}){% endblock %}
+
+{% block status %}
+    {% from "macros/status.html.twig" import status %}
+    {{ status(constant('App\\Constants::VERSION') ~ ' ' ~ constant('App\\Constants::STATUS')) }}
+    {{ status(environment, environment == 'dev' ? 'red' : 'green') }}
+{% endblock %}
+
 {% block page_actions %}
     {% set event = actions(app.user, 'doctor', 'index') %}
     {{ widgets.page_actions(event.actions) }}
@@ -52,8 +58,7 @@
         {% block box_title %}Required PHP extensions{% endblock %}
         {% block box_body %}
             <p>
-                If you see a warning icon <i class="{{ 'warning'|icon(false) }} text-red"></i> in the list below, you should talk to your administrator.
-                There is a missing PHP extension and Kimai might not work as expected.
+                If you see a warning icon <i class="{{ 'warning'|icon(false) }} text-red"></i> in the list below, you should talk to your administrator, as there is a missing PHP extension causing Kimai not to work as expected.
             </p>
             <table class="table">
                 {% for name, value in extensions %}
