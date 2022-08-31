@@ -250,6 +250,7 @@ class DoctorController extends AbstractController
             'post_max_size',
             'sys_temp_dir',
             'date.timezone',
+            'session.gc_maxlifetime',
         ];
 
         $settings = [];
