@@ -1206,7 +1206,7 @@
         <source>Display of entries in selection lists</source>
         <target state="translated">Visning av vallista</target>
       </trans-unit>
-      <trans-unit id="74pEVx1" resname="invoiceText">
+      <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
         <target state="translated">Faktureringstext</target>
       </trans-unit>
@@ -1214,11 +1214,11 @@
         <source>automatic</source>
         <target state="translated">Automatisk</target>
       </trans-unit>
-      <trans-unit id="G9hBaDJ" resname="globalActivities">
+      <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
         <target state="translated">Tillåt globala händelser</target>
       </trans-unit>
-      <trans-unit id="8mTf0eZ" resname="budgetIndependent">
+      <trans-unit id="KB9cJM6" resname="budgetIndependent">
         <source>budgetIndependent</source>
         <target state="translated">Visa oavsett "budgettyp"</target>
       </trans-unit>
