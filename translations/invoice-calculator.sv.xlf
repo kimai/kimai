@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sv" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
@@ -29,6 +29,14 @@
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target state="translated">Datum grupperad - en post per dag (använder start datum)</target>
+      </trans-unit>
+      <trans-unit id="aDtTH0H" resname="price">
+        <source>price</source>
+        <target state="translated">Pris: en rad per pris</target>
+      </trans-unit>
+      <trans-unit id="iFDs7Zh" resname="weekly">
+        <source>weekly</source>
+        <target state="translated">Veckovis: en rad per vecka (nyttjar startdatum)</target>
       </trans-unit>
     </body>
   </file>

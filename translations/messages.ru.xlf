@@ -1192,6 +1192,10 @@
         <source>automatic</source>
         <target>Автоматический</target>
       </trans-unit>
+      <trans-unit id="74pEVx1" resname="invoiceText">
+        <source>invoiceText</source>
+        <target state="translated">Текст счета</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

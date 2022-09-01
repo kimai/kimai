@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="3tlkqJC" resname="timesheet.mode_punch">
         <source>timesheet.mode_punch</source>
-        <target>[Štoperica] korisnik može pokrenuti i prekinuti snimanja, ali ne može mijenjati vremena niti trajanje</target>
+        <target state="translated">[Kontrolni sat] korisnik može pokrenuti i prekinuti snimanja, ali ne može mijenjati vremena niti trajanje</target>
       </trans-unit>
       <trans-unit id="k4pl27g" resname="timesheet.rules.allow_future_times">
         <source>timesheet.rules.allow_future_times</source>

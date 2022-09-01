@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="JiEhxTc" resname="edit">
         <source>Edit</source>
-        <target state="needs-translation">Edit</target>
+        <target state="translated">Edit</target>
       </trans-unit>
       <trans-unit id="4G2jBDS" resname="trash">
         <source>trash</source>
