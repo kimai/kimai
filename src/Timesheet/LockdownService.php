@@ -86,9 +86,9 @@ final class LockdownService
         }
 
         // further validate entries inside of the most recent lockdown
-        if ($timesheetStart > $lockdownStart && $timesheetStart < $lockdownEnd) {
+        if ($timesheetStart >= $lockdownStart && $timesheetStart <= $lockdownEnd) {
             // if grace period is still in effect, validation succeeds
-            if ($now < $lockdownGrace) {
+            if ($now <= $lockdownGrace) {
                 return true;
             }
 
