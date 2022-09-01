@@ -239,10 +239,6 @@
         <source>layout</source>
         <target>نمایش: طرح بندی</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target>نمایش: رنگها</target>
-      </trans-unit>
       <trans-unit id="E_bHhGR" resname="hourlyRate">
         <source>hourlyRate</source>
         <target>نرخ ساعتی</target>

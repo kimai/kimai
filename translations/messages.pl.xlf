@@ -245,10 +245,6 @@
         <source>hourlyRate</source>
         <target>Stawka godzinowa</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target state="translated">Wyświetlanie: kolory</target>
-      </trans-unit>
       <trans-unit id="HcWuW2g" resname="layout">
         <source>layout</source>
         <target>Wyświetlanie: układ</target>

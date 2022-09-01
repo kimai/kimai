@@ -245,10 +245,6 @@
         <source>hourlyRate</source>
         <target>Orduko tarifa</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target>Kimai-gaia</target>
-      </trans-unit>
       <trans-unit id="QEMUsfS" resname="hours">
         <source>hours</source>
         <target>Orduak</target>

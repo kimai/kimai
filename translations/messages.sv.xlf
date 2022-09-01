@@ -216,10 +216,6 @@
         <source>hourlyRate</source>
         <target state="translated">Timpris</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target state="translated">Kimai-Tema</target>
-      </trans-unit>
       <trans-unit id="QEMUsfS" resname="hours">
         <source>hours</source>
         <target state="translated">Timmar</target>

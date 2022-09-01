@@ -19,7 +19,6 @@ use App\Form\Type\FirstWeekDayType;
 use App\Form\Type\InitialViewType;
 use App\Form\Type\LanguageType;
 use App\Form\Type\SkinType;
-use App\Form\Type\ThemeLayoutType;
 use App\Form\Type\TimezoneType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -96,11 +95,6 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setOrder(400)
                 ->setSection('theme')
                 ->setType(SkinType::class),
-
-            (new UserPreference('layout', 'boxed'))
-                ->setOrder(450)
-                ->setSection('theme')
-                ->setType(ThemeLayoutType::class),
 
             (new UserPreference('update_browser_title', true))
                 ->setOrder(550)

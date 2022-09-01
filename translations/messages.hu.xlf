@@ -216,10 +216,6 @@
         <source>hourlyRate</source>
         <target>Órabér</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target>Kimai téma</target>
-      </trans-unit>
       <trans-unit id="QEMUsfS" resname="hours">
         <source>hours</source>
         <target>Órák</target>

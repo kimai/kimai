@@ -242,10 +242,6 @@
         <source>hourlyRate</source>
         <target>תעריף שעתי</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target>צבע</target>
-      </trans-unit>
       <trans-unit id="HcWuW2g" resname="layout">
         <source>layout</source>
         <target>תצוגה: פריסה</target>

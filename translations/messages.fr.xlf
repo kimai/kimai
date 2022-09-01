@@ -213,10 +213,6 @@
         <source>hourlyRate</source>
         <target>Taux horaire</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target>Affichage : Couleurs</target>
-      </trans-unit>
       <trans-unit id="QEMUsfS" resname="hours">
         <source>hours</source>
         <target>Heures</target>

@@ -257,10 +257,6 @@
         <source>hourlyRate</source>
         <target>Hora kotizo</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target>Montri: koloroj</target>
-      </trans-unit>
       <trans-unit id="HcWuW2g" resname="layout">
         <source>layout</source>
         <target>Montri: aspektigo</target>

@@ -719,7 +719,7 @@
       </trans-unit>
       <trans-unit id="KgBw0BS" resname="skin">
         <source>skin</source>
-        <target>Darstellung: Farben</target>
+        <target>Design</target>
       </trans-unit>
       <trans-unit id="E_bHhGR" resname="hourlyRate">
         <source>hourlyRate</source>

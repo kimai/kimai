@@ -61,19 +61,13 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
             $this->helper->setIsDarkMode(true);
         }
 
-        if ($user->isSmallLayout()) {
-            $this->helper->setIsBoxedLayout(true);
-            $this->helper->setIsCondensedUserMenu(true);
-            $this->helper->setIsCondensedNavbar(true);
-            $this->helper->setIsNavbarOverlapping(!$this->helper->isDarkMode());
-        } else {
-            $this->helper->setIsBoxedLayout(false);
-            $this->helper->setIsCondensedUserMenu(false);
-            $this->helper->setIsCondensedNavbar(false);
-            $this->helper->setIsNavbarOverlapping(false);
-            if (!$this->helper->isDarkMode()) {
-                $this->helper->setIsNavbarDark(true);
-            }
+        // do not allow boxed layout, header is not compatible and other functions need the full size as well
+        $this->helper->setIsBoxedLayout(false);
+        $this->helper->setIsCondensedUserMenu(false);
+        $this->helper->setIsCondensedNavbar(false);
+        $this->helper->setIsNavbarOverlapping(false);
+        if (!$this->helper->isDarkMode()) {
+            $this->helper->setIsNavbarDark(true);
         }
     }
 }

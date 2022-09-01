@@ -213,10 +213,6 @@
         <source>hourlyRate</source>
         <target>Taxa horária</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target>Tema: cores</target>
-      </trans-unit>
       <trans-unit id="QEMUsfS" resname="hours">
         <source>hours</source>
         <target>Horas</target>

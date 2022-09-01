@@ -333,10 +333,6 @@
         <source>hourly_rate</source>
         <target state="translated">每小時費率</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target state="translated">顯示：顏色</target>
-      </trans-unit>
       <trans-unit id="iZtaQs8" resname="theme.layout">
         <source>theme.layout</source>
         <target state="translated">顯示：版面</target>

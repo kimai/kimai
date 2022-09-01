@@ -375,7 +375,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             'calendar_initial_view',
             'login_initial_view',
             'collapsed_sidebar', // TODO @2.1 removed with 2.0, can be deleted with 2.1
-            'layout',
+            'layout', // TODO @2.1 removed with 2.0, can be deleted with 2.1
             'update_browser_title',
             'daily_stats',
             'export_decimal',
@@ -494,11 +494,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function getFirstDayOfWeek(): string
     {
         return $this->getPreferenceValue(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY);
-    }
-
-    public function isSmallLayout(): bool
-    {
-        return $this->getPreferenceValue('layout', 'fixed') === 'boxed';
     }
 
     public function isExportDecimal(): bool

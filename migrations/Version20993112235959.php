@@ -32,9 +32,11 @@ final class Version20993112235959 extends AbstractMigration
         $this->addSql("DELETE FROM kimai2_user_preferences WHERE `name` = 'collapsed_sidebar'");
         $this->addSql("DELETE FROM kimai2_roles_permissions WHERE `permission` LIKE 'comments_create%'");
 
+        $this->addSql("DELETE FROM kimai2_user_preferences where `name` = 'theme.layout'");
+        $this->addSql("DELETE FROM kimai2_user_preferences where `name` = 'layout'");
+
         $this->addSql("DELETE FROM kimai2_user_preferences where `name` = 'reporting.initial_view'");
         $this->addSql("DELETE FROM kimai2_user_preferences where `name` = 'hours_24'");
-        $this->addSql("UPDATE kimai2_user_preferences SET `value` = 'default' WHERE `name` = 'layout' and `value` = 'fixed'");
         $this->addSql("UPDATE kimai2_user_preferences SET `value` = 'default' WHERE `name` = 'skin'");
 
         $this->addSql("DELETE FROM kimai2_configuration WHERE `name` = 'timesheet.active_entries.soft_limit'");

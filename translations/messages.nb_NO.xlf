@@ -552,10 +552,6 @@
         <source>hourlyRate</source>
         <target>Timesats</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target state="needs-translation">Vis: farger</target>
-      </trans-unit>
       <trans-unit id="xUl3nXn" resname="rate">
         <source>rate</source>
         <target>Sats</target>

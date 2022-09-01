@@ -40,7 +40,7 @@
                 {% for project in projects %}
                     <tr {{ widgets.project_row_attr(project, now) }}>
                         <td>{{ widgets.label_project(project) }}</td>
-                        <td class="d-none d-md-table-cell">{{ project.comment|comment1line(not app.user.smallLayout) }}</td>
+                        <td class="d-none d-md-table-cell">{{ project.comment|comment1line(false) }}</td>
                         <td class="d-none d-sm-table-cell w-min text-end">
                             {% if project.end is not null %}
                                 {{ project.end|date_short }}

@@ -309,10 +309,6 @@
         <source>hourlyRate</source>
         <target>Satnica</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target>Prikaz: boje</target>
-      </trans-unit>
       <trans-unit id="HcWuW2g" resname="layout">
         <source>layout</source>
         <target>Prikaz: raspored</target>

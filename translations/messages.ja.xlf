@@ -216,10 +216,6 @@
         <source>hourlyRate</source>
         <target>時間給</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target>Kimai テーマ</target>
-      </trans-unit>
       <trans-unit id="QEMUsfS" resname="hours">
         <source>hours</source>
         <target>時間</target>

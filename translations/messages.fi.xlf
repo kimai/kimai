@@ -261,10 +261,6 @@
         <source>hourlyRate</source>
         <target state="translated">Tunti hinta</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target state="translated">Näyttö: värit</target>
-      </trans-unit>
       <trans-unit id="HcWuW2g" resname="layout">
         <source>layout</source>
         <target state="translated">Näyttö: asettelu</target>

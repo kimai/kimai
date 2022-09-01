@@ -240,10 +240,6 @@
         <source>hourlyRate</source>
         <target>Timesats</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target>Kimai-Tema</target>
-      </trans-unit>
       <trans-unit id="QEMUsfS" resname="hours">
         <source>hours</source>
         <target>Timer</target>

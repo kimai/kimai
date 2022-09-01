@@ -169,10 +169,6 @@
         <source>hourlyRate</source>
         <target>بالساعة</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target>Kimai-Theme</target>
-      </trans-unit>
       <trans-unit id="QEMUsfS" resname="hours">
         <source>hours</source>
         <target>ساعات</target>

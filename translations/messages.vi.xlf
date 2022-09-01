@@ -257,10 +257,6 @@
         <source>hourlyRate</source>
         <target>Tỷ lệ hàng giờ</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target>Hiển thị: màu sắc</target>
-      </trans-unit>
       <trans-unit id="HcWuW2g" resname="layout">
         <source>layout</source>
         <target>Hiển thị: bố cục</target>

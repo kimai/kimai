@@ -297,10 +297,6 @@
         <source>hourlyRate</source>
         <target>Ωρομίσθιο</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target>Εμφάνιση: Χρωμάτων</target>
-      </trans-unit>
       <trans-unit id="HcWuW2g" resname="layout">
         <source>layout</source>
         <target>Εμφάνιση: διάταξη</target>

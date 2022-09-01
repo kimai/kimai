@@ -242,10 +242,6 @@
         <source>hourlyRate</source>
         <target>Tarif orar</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target>Afișare: culori</target>
-      </trans-unit>
       <trans-unit id="HcWuW2g" resname="layout">
         <source>layout</source>
         <target>Afișare: aranjare</target>

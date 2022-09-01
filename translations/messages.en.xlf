@@ -369,7 +369,7 @@
       </trans-unit>
       <trans-unit id="KgBw0BS" resname="skin">
         <source>skin</source>
-        <target>Display: colors</target>
+        <target>Design</target>
       </trans-unit>
       <trans-unit id="HcWuW2g" resname="layout">
         <source>layout</source>
@@ -1359,19 +1359,11 @@
       </trans-unit>
       <trans-unit id="mjKOAgQ" resname="skin.light">
         <source>skin.light</source>
-        <target>Bright colors</target>
+        <target>Bright</target>
       </trans-unit>
       <trans-unit id="WOFPb2i" resname="skin.dark">
         <source>skin.dark</source>
-        <target>Dark colors</target>
-      </trans-unit>
-      <trans-unit id="__SlRre" resname="layout.boxed">
-        <source>layout.boxed</source>
-        <target>Centered layout</target>
-      </trans-unit>
-      <trans-unit id="97TTEU5" resname="layout.fluid">
-        <source>layout.fluid</source>
-        <target>Full screen width</target>
+        <target>Dark</target>
       </trans-unit>
       <trans-unit id="JSBReoa" resname="api_password.intro">
         <source>api_password.intro</source>

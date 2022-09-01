@@ -217,10 +217,6 @@
         <source>hourlyRate</source>
         <target>Hodinová mzda</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target>Obrazovka: barvy</target>
-      </trans-unit>
       <trans-unit id="QEMUsfS" resname="hours">
         <source>hours</source>
         <target>Hodin</target>

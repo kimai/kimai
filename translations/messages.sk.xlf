@@ -253,10 +253,6 @@
         <source>hourlyRate</source>
         <target>Hodinová sadzba</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target>Farebná téma</target>
-      </trans-unit>
       <trans-unit id="QEMUsfS" resname="hours">
         <source>hours</source>
         <target>Hodiny</target>

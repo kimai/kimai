@@ -237,10 +237,6 @@
         <source>hourlyRate</source>
         <target>每小时收费</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
-        <source>skin</source>
-        <target>Kimai-主题</target>
-      </trans-unit>
       <trans-unit id="QEMUsfS" resname="hours">
         <source>hours</source>
         <target>小时数</target>

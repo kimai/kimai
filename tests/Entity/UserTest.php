@@ -45,7 +45,6 @@ class UserTest extends TestCase
         self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLocale());
         self::assertFalse($user->hasTeamAssignment());
         self::assertFalse($user->canSeeAllData());
-        self::assertFalse($user->isSmallLayout());
         self::assertFalse($user->isExportDecimal());
 
         $user->setUserIdentifier('foo');
@@ -158,11 +157,6 @@ class UserTest extends TestCase
         $user->setPreferenceValue('test2', 'I like rain');
         self::assertEquals('I like rain', $user->getPreferenceValue('test2'));
         self::assertEquals('I like rain', $user->getMetaFieldValue('test2'));
-
-        $user->setPreferenceValue('layout', 'boxed');
-        self::assertTrue($user->isSmallLayout());
-        $user->setPreferenceValue('layout', '12345');
-        self::assertFalse($user->isSmallLayout());
 
         $user->setPreferenceValue('export_decimal', true);
         self::assertTrue($user->isExportDecimal());

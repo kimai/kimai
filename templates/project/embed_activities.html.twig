@@ -36,7 +36,7 @@
                     {% for activity in activities %}
                         <tr {{ widgets.activity_row_attr(activity, now) }}>
                             <td>{{ widgets.label_activity(activity) }}</td>
-                            <td class="d-none d-md-table-cell">{{ activity.comment|comment1line(not app.user.smallLayout) }}</td>
+                            <td class="d-none d-md-table-cell">{{ activity.comment|comment1line(false) }}</td>
                             <td class="d-none d-sm-table-cell w-min text-center">{{ widgets.label_visible(activity.visible) }}</td>
                             <td class="d-none d-sm-table-cell w-min text-center">{{ widgets.badge_team_access(activity.teams) }}</td>
                             <td class="actions">{{ actions.activity(activity, 'project_details', true) }}</td>
