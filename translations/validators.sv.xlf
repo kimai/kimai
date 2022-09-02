@@ -78,6 +78,14 @@
         <source>An activity needs to be selected.</source>
         <target>En aktivitet måste väljas.</target>
       </trans-unit>
+      <trans-unit id="ePrqiLN" resname="Duration cannot be zero.">
+        <source>Duration cannot be zero.</source>
+        <target state="translated">Det är inte tillåtet att ange tom varaktighet.</target>
+      </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">Tyvärr, budgeten är förbrukad.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
