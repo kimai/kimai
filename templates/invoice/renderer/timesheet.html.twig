@@ -5,19 +5,15 @@
     {% set isDecimal = model.template.decimalDuration|default(false) %}
     <div class="row">
         <div class="col-xs-12">
-            {% block page_header %}
             <h2 class="page-header">
                <span contenteditable="true">{{ model.template.title }}</span>
             </h2>
-            {% endblock %}
         </div>
     </div>
 
-    {% block invoice_details %}
     <div class="row">
         <div class="col-xs-12">
             <table class="table no-border table-condensed">
-                {% block invoice_details_user %}
                 <tr>
                     <th>{{ 'invoice.from'|trans }}</th>
                     <td contenteditable="true">
@@ -28,8 +24,6 @@
                         {% endif %}
                     </td>
                 </tr>
-                {% endblock %}
-                {% block invoice_details_date %}
                 <tr>
                     <th>{{ 'label.date'|trans }}</th>
                     <td contenteditable="true">
@@ -40,8 +34,6 @@
                         {% endif %}
                     </td>
                 </tr>
-                {% endblock %}
-                {% block invoice_details_customer %}
                 <tr>
                     <th>{{ 'label.customer'|trans }}</th>
                     <td contenteditable="true">
@@ -49,8 +41,6 @@
                         {{ model.customer.name }}{% if model.customer.contact is not empty %} / {{ model.customer.contact }}{% endif %}
                     </td>
                 </tr>
-                {% endblock %}
-                {% block invoice_details_project %}
                 {% if model.query.project is not empty %}
                     <tr>
                         <th>{{ 'label.project'|trans }}</th>
@@ -62,8 +52,6 @@
                         </td>
                     </tr>
                 {% endif %}
-                {% endblock %}
-                {% block invoice_details_activity %}
                 {% if model.query.activity is not empty %}
                     <tr>
                         <th>{{ 'label.activity'|trans }}</th>
@@ -72,79 +60,57 @@
                         </td>
                     </tr>
                 {% endif %}
-                {% endblock %}
             </table>
         </div>
     </div>
-    {% endblock %}
 
-    {% block items %}
     <div class="row invoice-items">
         <div class="col-xs-12 table-responsive">
             <table class="table table-striped">
                 <thead>
-                {% block items_head %}
                 <tr>
-                    {% block items_head_inner %}
                     <th>{{ 'label.date'|trans }}</th>
                     {% if model.query.user is empty %}
                     <th>{{ 'label.user'|trans }}</th>
                     {% endif %}
                     <th>{{ 'label.activity'|trans }}</th>
                     <th class="text-right">{{ 'label.hours'|trans }}</th>
-                    {% endblock %}
                 </tr>
-                {% endblock %}
                 </thead>
                 <tbody>
-                {% block items_body %}
                 {% for entry in model.calculator.entries %}
-                    {% block items_body_entry_row %}
-                    <tr>
-                        {% block items_body_entry_row_inner %}
-                        <td>{{ entry.begin|date_short }}</td>
-                        {% if model.query.user is empty %}
-                            <td>{{ widgets.username(entry.user) }}</td>
+                <tr>
+                    <td>{{ entry.begin|date_short }}</td>
+                    {% if model.query.user is empty %}
+                        <td>{{ widgets.username(entry.user) }}</td>
+                    {% endif %}
+                    <td contenteditable="true">
+                        {% if entry.description is not empty %}
+                            {{ entry.description|nl2br }}
+                        {% else %}
+                            {% if entry.activity is not null %}{{ entry.activity.name }} / {% endif %}{{ entry.project.name }}
                         {% endif %}
-                        <td contenteditable="true">
-                            {% if entry.description is not empty %}
-                                {{ entry.description|nl2br }}
-                            {% else %}
-                                {% if entry.activity is not null %}{{ entry.activity.name }} / {% endif %}{{ entry.project.name }}
-                            {% endif %}
-                        </td>
-                        <td class="text-right text-nowrap">{{ entry.duration|duration(isDecimal) }}</td>
-                        {% endblock %}
-                    </tr>
-                    {% endblock %}
+                    </td>
+                    <td class="text-right text-nowrap">{{ entry.duration|duration(isDecimal) }}</td>
+                </tr>
                 {% endfor %}
-                {% endblock %}
                 </tbody>
                 <tfoot>
-                {% block items_foot %}
                 <tr>
                     <th></th>
                     {% if model.query.user is empty %}
                     <th></th>
                     {% endif %}
-                    {% block items_foot_total_label %}
                     <th>{{ 'invoice.total_working_time'|trans }}</th>
-                    {% endblock %}
-                    {% block items_foot_total_value %}
                     <th class="text-right text-nowrap">{{ model.calculator.timeWorked|duration(isDecimal) }}</th>
-                    {% endblock %}
                 </tr>
-                {% endblock %}
                 </tfoot>
             </table>
         </div>
     </div>
-    {% endblock %}
 
-    {% block bottom_notes %}
     <div class="row">
         <div class="col-xs-12">
-            {% block payment_terms %}
             {% if model.template.paymentTerms is not empty %}
                 <p class="lead">{{ 'label.payment_terms'|trans }}</p>
 
@@ -152,9 +118,7 @@
                     {{ model.template.paymentTerms|trim|nl2br }}
                 </p>
             {% endif %}
-            {% endblock %}
 
-            {% block signatures %}
             <div class="table-responsive">
                 <table class="table">
                     <tbody>
@@ -167,8 +131,6 @@
                     </tbody>
                 </table>
             </div>
-            {% endblock %}
         </div>
     </div>
-    {% endblock %}
 {% endblock %}
