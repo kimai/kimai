@@ -9,8 +9,8 @@
 
 namespace App\Controller;
 
+use App\Export\Base\DispositionInlineInterface;
 use App\Export\ExportItemInterface;
-use App\Export\Renderer\DispositionInlineInterface;
 use App\Export\ServiceExport;
 use App\Export\TooManyItemsExportException;
 use App\Form\Toolbar\ExportToolbarForm;

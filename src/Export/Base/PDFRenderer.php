@@ -12,7 +12,6 @@ namespace App\Export\Base;
 use App\Export\ExportContext;
 use App\Export\ExportFilename;
 use App\Export\ExportItemInterface;
-use App\Invoice\Renderer\DispositionInlineTrait;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
 use App\Utils\FileHelper;

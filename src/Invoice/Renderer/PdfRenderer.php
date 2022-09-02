@@ -10,6 +10,8 @@
 namespace App\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
+use App\Export\Base\DispositionInlineInterface;
+use App\Export\Base\DispositionInlineTrait;
 use App\Export\ExportContext;
 use App\Invoice\InvoiceFilename;
 use App\Invoice\InvoiceModel;

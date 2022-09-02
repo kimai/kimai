@@ -9,6 +9,9 @@
 
 namespace App\Export\Base;
 
+/**
+ * @deprecated remove me in 2.0
+ */
 interface DispositionInlineInterface
 {
     /**

@@ -17,7 +17,7 @@ use App\Event\InvoiceCreatedEvent;
 use App\Event\InvoiceDeleteEvent;
 use App\Event\InvoicePostRenderEvent;
 use App\Event\InvoicePreRenderEvent;
-use App\Invoice\Renderer\DispositionInlineInterface;
+use App\Export\Base\DispositionInlineInterface;
 use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
