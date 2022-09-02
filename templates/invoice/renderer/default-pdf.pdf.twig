@@ -16,8 +16,8 @@
     {% endblock %}
 </head>
 <body>
-<!--mpdf
 {% block pdf_header %}
+<!--mpdf
 <htmlpageheader name="header">
     <table class="header">
         <tr>
@@ -30,10 +30,10 @@
         </tr>
     </table>
 </htmlpageheader>
-<sethtmlpageheader name="header" page="ALL" value="on" show-this-page="1" />
 {% endblock %}
 
 {% block pdf_footer %}
+<sethtmlpageheader name="header" page="ALL" value="on" show-this-page="1" />
 <htmlpagefooter name="footer">
     <table class="footer">
         <tr>
@@ -51,8 +51,8 @@
     </table>
 </htmlpagefooter>
 <sethtmlpagefooter page="ALL" value="on" name="footer" show-this-page="1" />
-{% endblock %}
 mpdf-->
+{% endblock %}
 
 {% block wrapper %}
 <div class="wrapper">
