@@ -4,31 +4,31 @@
     <body>
       <trans-unit id="bEXLcqN" resname="stop">
         <source>stop</source>
-        <target state="needs-translation">Stop</target>
+        <target state="translated">Steðga</target>
       </trans-unit>
       <trans-unit id="PEgjRvN" resname="back">
         <source>back</source>
-        <target state="needs-translation">Back</target>
+        <target state="translated">Aftur</target>
       </trans-unit>
       <trans-unit id="JiEhxTc" resname="edit">
-        <source>edit</source>
-        <target state="needs-translation">Edit</target>
+        <source>Edit</source>
+        <target state="translated">Broyt</target>
       </trans-unit>
       <trans-unit id="4G2jBDS" resname="trash">
         <source>trash</source>
-        <target state="needs-translation">Delete</target>
+        <target state="translated">Strika</target>
       </trans-unit>
       <trans-unit id="hF6RgxM" resname="report">
         <source>report</source>
-        <target state="needs-translation">Report</target>
+        <target state="translated">Melda</target>
       </trans-unit>
       <trans-unit id="JeK2sQZ" resname="repeat">
         <source>repeat</source>
-        <target state="needs-translation">Start again</target>
+        <target state="translated">Byrja umaftur</target>
       </trans-unit>
       <trans-unit id="J0sRBY_" resname="profile-stats">
         <source>profile-stats</source>
-        <target state="needs-translation">Profile</target>
+        <target state="translated">Vangi</target>
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings">
         <source>settings</source>
@@ -52,7 +52,7 @@
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
-        <target state="needs-translation">Create copy</target>
+        <target state="translated">Stovna avrit</target>
       </trans-unit>
       <trans-unit id="TqFAWIF" resname="home">
         <source>home</source>
@@ -60,7 +60,7 @@
       </trans-unit>
       <trans-unit id="PBlIO2x" resname="create-project">
         <source>create-project</source>
-        <target state="needs-translation">Create project</target>
+        <target state="translated">Stovna verkætlan</target>
       </trans-unit>
       <trans-unit id="UbouFOs" resname="create-activity">
         <source>create-activity</source>
@@ -80,19 +80,19 @@
       </trans-unit>
       <trans-unit id="Qf.Yt2r" resname="details">
         <source>details</source>
-        <target state="needs-translation">Show</target>
+        <target state="translated">Vís</target>
       </trans-unit>
       <trans-unit id="aP9j_4L" resname="download">
         <source>download</source>
-        <target state="needs-translation">Download</target>
+        <target state="translated">Heinta</target>
       </trans-unit>
       <trans-unit id="hHIeqOW" resname="invoice.pending">
         <source>invoice.pending</source>
-        <target state="needs-translation">Waiting for payment</target>
+        <target state="translated">Bíðar eftir gjalding</target>
       </trans-unit>
       <trans-unit id="9M4b2ZN" resname="invoice.paid">
         <source>invoice.paid</source>
-        <target state="needs-translation">Invoice paid</target>
+        <target state="translated">Goldið</target>
       </trans-unit>
       <trans-unit id="SEyZupT" resname="invoice.cancel">
         <source>invoice.cancel</source>

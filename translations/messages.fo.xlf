@@ -1053,7 +1053,7 @@
       </trans-unit>
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
-        <target state="needs-translation">Updated at</target>
+        <target state="translated">Dagført tann</target>
       </trans-unit>
       <trans-unit id="EbfIoLp" resname="modal.columns.description">
         <source>modal.columns.description</source>
@@ -1061,11 +1061,11 @@
       </trans-unit>
       <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
-        <target state="needs-translation">Calendar week %week%</target>
+        <target state="translated">Vika %week%</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
-        <target state="needs-translation">Week %week%</target>
+        <target state="translated">Vika %week%</target>
       </trans-unit>
       <trans-unit id="JnUFsNi" resname="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
@@ -1169,7 +1169,7 @@
       </trans-unit>
       <trans-unit id="g7EpaPY" resname="label.total_rate">
         <source>label.total_rate</source>
-        <target state="needs-translation">Total price</target>
+        <target state="translated">Samlaður kostnaður</target>
       </trans-unit>
       <trans-unit id="c3d6p33" resname="invoice.total_working_time">
         <source>invoice.total_working_time</source>
@@ -1209,7 +1209,7 @@
       </trans-unit>
       <trans-unit id="Zif614Q" resname="add_user.label">
         <source>add_user.label</source>
-        <target state="needs-translation">Add user</target>
+        <target state="translated">Legg brúkara aftrat</target>
       </trans-unit>
       <trans-unit id="qDnURk7" resname="label.last_record">
         <source>label.last_record</source>
@@ -1218,6 +1218,10 @@
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target state="translated">Sjálvvirkandi</target>
+      </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="translated">Tekstur á rokning</target>
       </trans-unit>
     </body>
   </file>
