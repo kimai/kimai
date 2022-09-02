@@ -63,7 +63,12 @@ final class DurationOnlyMode extends AbstractTrackingMode
         }
 
         $newBegin = clone $timesheet->getBegin();
-        $newBegin->modify($this->configuration->getTimesheetDefaultBeginTime());
+
+        // this prevents the problem that "now" is being ignored in modify()
+        $beginTime = $this->configuration->getTimesheetDefaultBeginTime();
+        $beginTime = (new DateTime($this->configuration->getTimesheetDefaultBeginTime(), $newBegin->getTimezone()))->format('H:i:s');
+        $newBegin->modify($beginTime);
+
         $timesheet->setBegin($newBegin);
 
         parent::create($timesheet, $request);
