@@ -8,5 +8,3 @@ twig:
         # used in templates/emails/layout.html.twig
         '%kernel.project_dir%/assets/css': css
         '%kernel.project_dir%/vendor/kevinpapst/adminlte-bundle/Resources/views': theme
-    globals:
-        projectDirectory: '%kernel.project_dir%'

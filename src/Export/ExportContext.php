@@ -9,20 +9,15 @@
 
 namespace App\Export;
 
-use Mpdf\Config\ConfigVariables;
-use Mpdf\Config\FontVariables;
-
 /**
  * A simple class that is available in twig renderer context, which can be used to define global renderer options.
  */
 final class ExportContext
 {
+    /**
+     * @var array
+     */
     private $options = [];
-
-    public function __construct()
-    {
-        $this->initDefaults();
-    }
 
     /**
      * @param string $key
@@ -34,6 +29,9 @@ final class ExportContext
         $this->options[$key] = $value;
     }
 
+    /**
+     * @return array
+     */
     public function getOptions(): array
     {
         return $this->options;
@@ -50,17 +48,5 @@ final class ExportContext
         }
 
         return null;
-    }
-
-    /**
-     * @return void
-     */
-    private function initDefaults(): void
-    {
-        $defaultConfig = (new ConfigVariables())->getDefaults();
-        $defaultFontConfig = (new FontVariables())->getDefaults();
-
-        $this->setOption('fontDir', $defaultConfig['fontDir']);
-        $this->setOption('fontdata', $defaultFontConfig['fontdata']);
     }
 }
