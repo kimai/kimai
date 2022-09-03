@@ -142,9 +142,8 @@ class MPdfConverter implements HtmlToPdfConverter
         $defaultFontConfig = (new FontVariables())->getDefaults();
         $fontData = $defaultFontConfig['fontdata'];
 
-        if (array_key_exists('fonts', $options)) {
+        if (\array_key_exists('fonts', $options)) {
             $fontData = array_merge($fontData, $options['fonts']);
-            unset($options['fonts']);
         }
 
         return $fontData;
