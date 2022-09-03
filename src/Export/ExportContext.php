@@ -14,19 +14,34 @@ namespace App\Export;
  */
 final class ExportContext
 {
+    /**
+     * @var array
+     */
     private $options = [];
 
-    public function setOption(string $key, string $value): void
+    /**
+     * @param string $key
+     * @param string|array $value
+     * @return void
+     */
+    public function setOption(string $key, $value): void
     {
         $this->options[$key] = $value;
     }
 
+    /**
+     * @return array
+     */
     public function getOptions(): array
     {
         return $this->options;
     }
 
-    public function getOption(string $key): ?string
+    /**
+     * @param string $key
+     * @return array|string|null
+     */
+    public function getOption(string $key)
     {
         if (\array_key_exists($key, $this->options)) {
             return $this->options[$key];
