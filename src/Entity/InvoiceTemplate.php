@@ -106,9 +106,10 @@ class InvoiceTemplate
     /**
      * Used for translations and formatting money, numbers, dates and time.
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="language", type="string", length=6, nullable=false)
      */
-    private string $language = 'en';
+    private ?string $language = 'en';
 
     public function getId(): ?int
     {
@@ -281,12 +282,12 @@ class InvoiceTemplate
         return true;
     }
 
-    public function getLanguage(): string
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
 
-    public function setLanguage(string $language): InvoiceTemplate
+    public function setLanguage(?string $language): InvoiceTemplate
     {
         $this->language = $language;
 
