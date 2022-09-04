@@ -39,6 +39,10 @@ class Constants
      */
     public const GITHUB = 'https://github.com/kevinpapst/kimai2/';
     /**
+     * The Github repository name
+     */
+    public const GITHUB_REPO = 'kevinpapst/kimai2';
+    /**
      * Homepage, used in multiple views
      */
     public const HOMEPAGE = 'https://www.kimai.org';
