@@ -10,6 +10,7 @@
 namespace App\Tests\Invoice\Renderer;
 
 use App\Invoice\Renderer\PdfRenderer;
+use App\Tests\Mocks\FileHelperFactory;
 use App\Utils\MPdfConverter;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,7 +57,7 @@ class PdfRendererTest extends KernelTestCase
         $loader = $twig->getLoader();
         $loader->addPath(__DIR__ . '/../templates/', 'invoice');
 
-        $sut = new PdfRenderer($twig, new MPdfConverter($cacheDir));
+        $sut = new PdfRenderer($twig, new MPdfConverter((new FileHelperFactory($this))->create(), $cacheDir));
         $model = $this->getInvoiceModel();
         $document = $this->getInvoiceDocument('default.pdf.twig', true);
 

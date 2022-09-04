@@ -9,6 +9,7 @@
 
 namespace App\Tests\Utils;
 
+use App\Tests\Mocks\FileHelperFactory;
 use App\Utils\MPdfConverter;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -28,7 +29,7 @@ class MPdfConverterTest extends KernelTestCase
         $kernel = self::bootKernel();
         $cacheDir = $kernel->getContainer()->getParameter('kernel.cache_dir');
 
-        $sut = new MPdfConverter($cacheDir);
+        $sut = new MPdfConverter((new FileHelperFactory($this))->create(), $cacheDir);
         $result = $sut->convertToPdf('<h1>Test</h1>');
         // Yeah, thats not a real test, I know ;-)
         $this->assertNotEmpty($result);
