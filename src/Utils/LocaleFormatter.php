@@ -171,7 +171,7 @@ final class LocaleFormatter
         return $this->moneyFormatter->formatCurrency($amount, $currency);
     }
 
-    public function dateShort(DateTime|string|null $date): string
+    public function dateShort(\DateTimeInterface|string|null $date): string
     {
         if (null === $this->dateFormatter) {
             $this->dateFormatter = new IntlDateFormatter(
@@ -184,9 +184,9 @@ final class LocaleFormatter
             );
         }
 
-        if (!$date instanceof DateTime) {
+        if (!$date instanceof \DateTimeInterface) {
             try {
-                $date = new DateTime($date ?? 'now');
+                $date = new \DateTimeImmutable($date ?? 'now');
             } catch (Exception $ex) {
                 return $date;
             }
@@ -212,9 +212,9 @@ final class LocaleFormatter
             );
         }
 
-        if (!$date instanceof DateTime) {
+        if (!$date instanceof \DateTimeInterface) {
             try {
-                $date = new DateTime($date);
+                $date = new \DateTimeImmutable($date);
             } catch (Exception $ex) {
                 return $date;
             }
@@ -223,17 +223,11 @@ final class LocaleFormatter
         return $this->dateTimeFormatter->format($date);
     }
 
-    /**
-     * @param DateTime|string $date
-     * @param string $format
-     * @return false|string
-     * @throws Exception
-     */
-    public function dateFormat($date, string $format)
+    public function dateFormat(\DateTimeInterface|string $date, string $format): bool|string
     {
-        if (!$date instanceof DateTime) {
+        if (!$date instanceof \DateTimeInterface) {
             try {
-                $date = new DateTime($date);
+                $date = new \DateTimeImmutable($date);
             } catch (Exception $ex) {
                 return $date;
             }
@@ -247,7 +241,7 @@ final class LocaleFormatter
      * @return string
      * @throws Exception
      */
-    public function time($date): string
+    public function time(\DateTimeInterface|string $date): string
     {
         if (null === $this->timeFormatter) {
             $this->timeFormatter = new IntlDateFormatter(
@@ -260,9 +254,9 @@ final class LocaleFormatter
             );
         }
 
-        if (!$date instanceof DateTime) {
+        if (!$date instanceof \DateTimeInterface) {
             try {
-                $date = new DateTime($date);
+                $date = new \DateTimeImmutable($date);
             } catch (Exception $ex) {
                 return $date;
             }

@@ -1004,7 +1004,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     {
         $date = $this->getPasswordRequestedAt();
 
-        if ($date === null || !($date instanceof DateTime)) {
+        if (!($date instanceof \DateTimeInterface)) {
             return false;
         }
 

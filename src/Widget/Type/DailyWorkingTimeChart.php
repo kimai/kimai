@@ -66,7 +66,7 @@ final class DailyWorkingTimeChart extends AbstractWidget
             $options['begin'] = $dateTimeFactory->getStartOfWeek();
         }
 
-        if ($options['begin'] instanceof DateTime) {
+        if ($options['begin'] instanceof \DateTimeInterface) {
             $begin = $options['begin'];
         } else {
             $begin = new DateTime($options['begin'], new \DateTimeZone($user->getTimezone()));
@@ -76,7 +76,7 @@ final class DailyWorkingTimeChart extends AbstractWidget
             $options['end'] = $dateTimeFactory->getEndOfWeek($begin);
         }
 
-        if ($options['end'] instanceof DateTime) {
+        if ($options['end'] instanceof \DateTimeInterface) {
             $end = $options['end'];
         } else {
             $end = new DateTime($options['end'], new \DateTimeZone($user->getTimezone()));
