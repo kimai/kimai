@@ -14,6 +14,7 @@ use App\Entity\User;
 use App\Model\Statistic\Day;
 use App\Repository\TimesheetRepository;
 use DateTime;
+use DateTimeInterface;
 
 /**
  * This class should really be deleted and replaced by TimesheetStatisticService::getDailyStatistics()
@@ -32,12 +33,12 @@ class DailyWorkingTimeChartProvider
      * In case this method is called with one timezone and the results are from another timezone,
      * it might return rows outside the time-range.
      *
-     * @param DateTime $begin
-     * @param DateTime $end
+     * @param DateTimeInterface $begin
+     * @param DateTimeInterface $end
      * @param User|null $user
      * @return mixed
      */
-    protected function getDailyData(DateTime $begin, DateTime $end, ?User $user = null)
+    protected function getDailyData(DateTimeInterface $begin, DateTimeInterface $end, ?User $user = null)
     {
         $qb = $this->repository->createQueryBuilder('t');
 
@@ -166,18 +167,18 @@ class DailyWorkingTimeChartProvider
      * @deprecated since 2.0 - use TimesheetStatisticService::getDailyStatistics() instead
      *
      * @param User|null $user
-     * @param DateTime $begin
-     * @param DateTime $end
+     * @param DateTimeInterface $begin
+     * @param DateTimeInterface $end
      * @return Day[]
      * @throws \Exception
      */
-    public function getData(?User $user, DateTime $begin, DateTime $end): array
+    public function getData(?User $user, DateTimeInterface $begin, DateTimeInterface $end): array
     {
         /** @var Day[] $days */
         $days = [];
 
         // prefill the array
-        $tmp = clone $end;
+        $tmp = DateTime::createFromInterface($end);
         $until = (int) $begin->format('Ymd');
         while ((int) $tmp->format('Ymd') >= $until) {
             $last = clone $tmp;
@@ -188,7 +189,7 @@ class DailyWorkingTimeChartProvider
         $results = $this->getDailyData($begin, $end, $user);
 
         foreach ($results as $statRow) {
-            $dateTime = clone $begin;
+            $dateTime = DateTime::createFromInterface($begin);
             $dateTime->setDate($statRow['year'], $statRow['month'], $statRow['day']);
             $dateTime->setTime(0, 0, 0);
             $day = new Day($dateTime, (int) $statRow['duration'], (float) $statRow['rate']);

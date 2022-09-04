@@ -11,6 +11,7 @@ namespace App\Timesheet;
 
 use App\Entity\User;
 use DateTime;
+use DateTimeInterface;
 use DateTimeZone;
 
 class DateTimeFactory
@@ -37,7 +38,7 @@ class DateTimeFactory
         return $this->timezone;
     }
 
-    public function getStartOfMonth(DateTime|string|null $date = null): DateTime
+    public function getStartOfMonth(DateTimeInterface|string|null $date = null): DateTime
     {
         $date = $this->getDate($date);
 
@@ -47,7 +48,7 @@ class DateTimeFactory
         return $date;
     }
 
-    private function getDate(DateTime|string|null $date = null): DateTime
+    private function getDate(DateTimeInterface|string|null $date = null): DateTime
     {
         if ($date === null) {
             $date = 'now';
@@ -57,10 +58,10 @@ class DateTimeFactory
             return $this->createDateTime($date);
         }
 
-        return clone $date;
+        return DateTime::createFromInterface($date);
     }
 
-    public function getStartOfWeek(DateTime|string|null $date = null): DateTime
+    public function getStartOfWeek(DateTimeInterface|string|null $date = null): DateTime
     {
         $date = $this->getDate($date);
         $firstDay = 1;
@@ -77,7 +78,7 @@ class DateTimeFactory
         return $this->createWeekDateTime($date->format('o'), $date->format('W'), $firstDay, 0, 0, 0);
     }
 
-    public function getEndOfWeek(DateTime|string|null $date = null): DateTime
+    public function getEndOfWeek(DateTimeInterface|string|null $date = null): DateTime
     {
         $date = $this->getDate($date);
         $lastDay = 7;
@@ -94,7 +95,7 @@ class DateTimeFactory
         return $this->createWeekDateTime($date->format('o'), $date->format('W'), $lastDay, 23, 59, 59);
     }
 
-    public function getEndOfMonth(DateTime|string|null $date = null): DateTime
+    public function getEndOfMonth(DateTimeInterface|string|null $date = null): DateTime
     {
         $date = $this->getDate($date);
 
@@ -128,7 +129,7 @@ class DateTimeFactory
         return DateTime::createFromFormat($format, $datetime ?? 'now', $this->getTimezone());
     }
 
-    public function createStartOfYear(DateTime|string|null $date = null): DateTime
+    public function createStartOfYear(DateTimeInterface|string|null $date = null): DateTime
     {
         $date = $this->getDate($date);
 
@@ -137,7 +138,7 @@ class DateTimeFactory
         return $date;
     }
 
-    public function createEndOfYear(DateTime|string|null $date = null): DateTime
+    public function createEndOfYear(DateTimeInterface|string|null $date = null): DateTime
     {
         $date = $this->getDate($date);
 
@@ -166,9 +167,9 @@ class DateTimeFactory
         return $financialYear;
     }
 
-    public function createEndOfFinancialYear(DateTime $financialYear): DateTime
+    public function createEndOfFinancialYear(DateTimeInterface $financialYear): DateTime
     {
-        $yearEnd = clone $financialYear;
+        $yearEnd = DateTime::createFromInterface($financialYear);
         $yearEnd->modify('+1 year')->modify('-1 day')->setTime(23, 59, 59);
 
         return $yearEnd;
