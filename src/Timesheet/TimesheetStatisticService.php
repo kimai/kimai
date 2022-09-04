@@ -106,7 +106,7 @@ final class TimesheetStatisticService
      */
     public function getDailyStatisticsGrouped(DateTime $begin, DateTime $end, array $users): array
     {
-        /** @var DailyStatistic[] $stats */
+        /** @var array<int, DailyStatistic[]> $stats */
         $stats = [];
         $usersById = [];
 
@@ -183,7 +183,7 @@ final class TimesheetStatisticService
      */
     public function getMonthlyStatisticsGrouped(DateTime $begin, DateTime $end, array $users): array
     {
-        /** @var MonthlyStatistic[] $stats */
+        /** @var array<int, MonthlyStatistic[]> $stats */
         $stats = [];
         $usersById = [];
 
