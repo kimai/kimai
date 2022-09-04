@@ -17,12 +17,12 @@ use App\Repository\Query\TimesheetQuery;
 use App\Utils\FileHelper;
 use App\Utils\HtmlToPdfConverter;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Twig\Environment;
 
-class PDFRenderer
+class PDFRenderer implements DispositionInlineInterface
 {
     use RendererTrait;
+    use DispositionInlineTrait;
 
     /**
      * @var Environment
@@ -125,7 +125,7 @@ class PDFRenderer
 
         $filename = FileHelper::convertToAsciiFilename($filename);
 
-        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename . '.pdf');
+        $disposition = $response->headers->makeDisposition($this->getDisposition(), $filename . '.pdf');
 
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', $disposition);

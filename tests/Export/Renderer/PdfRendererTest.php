@@ -15,6 +15,7 @@ use App\Tests\Mocks\FileHelperFactory;
 use App\Utils\HtmlToPdfConverter;
 use App\Utils\MPdfConverter;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Twig\Environment;
 
 /**
@@ -25,6 +26,22 @@ use Twig\Environment;
  */
 class PdfRendererTest extends AbstractRendererTest
 {
+    public function testDisposition()
+    {
+        $sut = new PDFRenderer(
+            $this->createMock(Environment::class),
+            $this->createMock(HtmlToPdfConverter::class),
+            $this->createMock(ProjectStatisticService::class)
+        );
+        $this->assertEquals(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $sut->getDisposition());
+        $sut->setDispositionInline(false);
+        $this->assertEquals(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $sut->getDisposition());
+        $sut->setDispositionInline(true);
+        $this->assertEquals(ResponseHeaderBag::DISPOSITION_INLINE, $sut->getDisposition());
+        $sut->setDispositionInline(false);
+        $this->assertEquals(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $sut->getDisposition());
+    }
+
     public function testConfiguration()
     {
         $sut = new PDFRenderer(
