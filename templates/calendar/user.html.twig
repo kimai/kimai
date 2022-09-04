@@ -206,6 +206,11 @@
             document.querySelector('.fc-timeGridDay-button').classList.toggle('btn-icon');
             document.querySelector('.fc-today-button').classList.toggle('btn-icon');
             document.querySelector('.fc-deleteButton-button').classList.toggle('btn-outline-danger');
+            document.querySelector('.fc-header-toolbar').classList.toggle('row');
+            const toolbar = document.querySelectorAll('.fc-header-toolbar .fc-toolbar-chunk');
+            toolbar[0].classList.add('col-md-4', 'col-xs-12', 'mb-1', 'text-start');
+            toolbar[1].classList.add('col-md-4', 'col-xs-12', 'mb-1', 'text-center');
+            toolbar[2].classList.add('col-md-4', 'col-xs-12', 'mb-1', 'text-end');
 
             KimaiReloadPageWidget.create('kimai.systemConfigUpdate', true);
         });
