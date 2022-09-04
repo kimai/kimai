@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Utils;
+namespace App\Pdf;
 
 interface HtmlToPdfConverter
 {

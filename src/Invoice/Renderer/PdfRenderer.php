@@ -10,18 +10,18 @@
 namespace App\Invoice\Renderer;
 
 use App\Export\Base\DispositionInlineInterface;
-use App\Export\Base\DispositionInlineTrait;
-use App\Export\ExportContext;
 use App\Invoice\InvoiceFilename;
 use App\Invoice\InvoiceModel;
 use App\Model\InvoiceDocument;
-use App\Utils\HtmlToPdfConverter;
+use App\Pdf\HtmlToPdfConverter;
+use App\Pdf\PdfContext;
+use App\Pdf\PdfRendererTrait;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
 final class PdfRenderer extends AbstractTwigRenderer implements DispositionInlineInterface
 {
-    use DispositionInlineTrait;
+    use PDFRendererTrait;
 
     public function __construct(Environment $twig, private HtmlToPdfConverter $converter)
     {
@@ -37,7 +37,7 @@ final class PdfRenderer extends AbstractTwigRenderer implements DispositionInlin
     {
         $filename = new InvoiceFilename($model);
 
-        $context = new ExportContext();
+        $context = new PdfContext();
         $context->setOption('filename', $filename->getFilename());
         $context->setOption('setAutoTopMargin', 'pad');
         $context->setOption('setAutoBottomMargin', 'pad');
@@ -47,19 +47,6 @@ final class PdfRenderer extends AbstractTwigRenderer implements DispositionInlin
         $content = $this->renderTwigTemplate($document, $model, ['pdfContext' => $context]);
         $content = $this->converter->convertToPdf($content, $context->getOptions());
 
-        $filename = $context->getOption('filename');
-        if (empty($filename)) {
-            $filename = new InvoiceFilename($model);
-            $filename = $filename->getFilename();
-        }
-
-        $response = new Response($content);
-
-        $disposition = $response->headers->makeDisposition($this->getDisposition(), $filename . '.pdf');
-
-        $response->headers->set('Content-Type', 'application/pdf');
-        $response->headers->set('Content-Disposition', $disposition);
-
-        return $response;
+        return $this->createPdfResponse($content, $context);
     }
 }

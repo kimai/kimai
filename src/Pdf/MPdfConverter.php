@@ -7,9 +7,10 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Utils;
+namespace App\Pdf;
 
 use App\Constants;
+use App\Utils\FileHelper;
 use Mpdf\Config\ConfigVariables;
 use Mpdf\Config\FontVariables;
 use Mpdf\Mpdf;

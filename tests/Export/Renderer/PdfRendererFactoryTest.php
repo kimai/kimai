@@ -11,8 +11,8 @@ namespace App\Tests\Export\Renderer;
 
 use App\Export\Renderer\PDFRenderer;
 use App\Export\Renderer\PdfRendererFactory;
+use App\Pdf\HtmlToPdfConverter;
 use App\Project\ProjectStatisticService;
-use App\Utils\HtmlToPdfConverter;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 

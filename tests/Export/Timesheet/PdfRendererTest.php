@@ -10,10 +10,10 @@
 namespace App\Tests\Export\Timesheet;
 
 use App\Export\Timesheet\PDFRenderer;
+use App\Pdf\HtmlToPdfConverter;
+use App\Pdf\MPdfConverter;
 use App\Project\ProjectStatisticService;
 use App\Tests\Mocks\FileHelperFactory;
-use App\Utils\HtmlToPdfConverter;
-use App\Utils\MPdfConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 

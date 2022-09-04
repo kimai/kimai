@@ -9,12 +9,12 @@
 
 namespace App\Tests\Utils;
 
+use App\Pdf\MPdfConverter;
 use App\Tests\Mocks\FileHelperFactory;
-use App\Utils\MPdfConverter;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
- * @covers \App\Utils\MPdfConverter
+ * @covers \App\Pdf\MPdfConverter
  * @group integration
  */
 class MPdfConverterTest extends KernelTestCase

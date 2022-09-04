@@ -10,10 +10,10 @@
 namespace App\Tests\Export\Renderer;
 
 use App\Export\Renderer\PDFRenderer;
+use App\Pdf\HtmlToPdfConverter;
+use App\Pdf\MPdfConverter;
 use App\Project\ProjectStatisticService;
 use App\Tests\Mocks\FileHelperFactory;
-use App\Utils\HtmlToPdfConverter;
-use App\Utils\MPdfConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Twig\Environment;

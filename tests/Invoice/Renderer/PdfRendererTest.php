@@ -10,8 +10,8 @@
 namespace App\Tests\Invoice\Renderer;
 
 use App\Invoice\Renderer\PdfRenderer;
+use App\Pdf\MPdfConverter;
 use App\Tests\Mocks\FileHelperFactory;
-use App\Utils\MPdfConverter;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;

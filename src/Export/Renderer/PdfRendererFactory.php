@@ -9,8 +9,8 @@
 
 namespace App\Export\Renderer;
 
+use App\Pdf\HtmlToPdfConverter;
 use App\Project\ProjectStatisticService;
-use App\Utils\HtmlToPdfConverter;
 use Twig\Environment;
 
 final class PdfRendererFactory
