@@ -4,35 +4,35 @@
     <body>
       <trans-unit id="s9Hdo7E" resname="daterangepicker.today">
         <source>daterangepicker.today</source>
-        <target state="needs-translation">Today</target>
+        <target state="translated">Í dag</target>
       </trans-unit>
       <trans-unit id="gkQA1YG" resname="daterangepicker.yesterday">
         <source>daterangepicker.yesterday</source>
-        <target state="needs-translation">Yesterday</target>
+        <target state="translated">Í gjár</target>
       </trans-unit>
       <trans-unit id="CAvVEbc" resname="daterangepicker.lastWeek">
         <source>daterangepicker.lastWeek</source>
-        <target state="needs-translation">Last week</target>
+        <target state="translated">Síðstu viku</target>
       </trans-unit>
       <trans-unit id="HfcD1_y" resname="daterangepicker.thisWeek">
         <source>daterangepicker.thisWeek</source>
-        <target state="needs-translation">This week</target>
+        <target state="translated">Hesa vikuna</target>
       </trans-unit>
       <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth">
         <source>daterangepicker.lastMonth</source>
-        <target state="needs-translation">Last month</target>
+        <target state="translated">Síðsta mánaða</target>
       </trans-unit>
       <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth">
         <source>daterangepicker.thisMonth</source>
-        <target state="needs-translation">This month</target>
+        <target state="translated">Hendan mánaðin</target>
       </trans-unit>
       <trans-unit id="_9rEFED" resname="daterangepicker.lastYear">
         <source>daterangepicker.lastYear</source>
-        <target state="needs-translation">Last year</target>
+        <target state="translated">Síðsta ár</target>
       </trans-unit>
       <trans-unit id="XgIrZS3" resname="daterangepicker.thisYear">
         <source>daterangepicker.thisYear</source>
-        <target state="needs-translation">This year</target>
+        <target state="translated">Hetta árið</target>
       </trans-unit>
       <trans-unit id="MSENTM_" resname="daterangepicker.customRange">
         <source>daterangepicker.customRange</source>
