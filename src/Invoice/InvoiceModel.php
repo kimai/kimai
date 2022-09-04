@@ -77,6 +77,10 @@ final class InvoiceModel
      * @var string
      */
     private $invoiceNumber;
+    /**
+     * @var bool
+     */
+    private $hideZeroTax = false;
 
     /**
      * @internal use InvoiceModelFactory
@@ -315,5 +319,15 @@ final class InvoiceModel
         }
 
         return $values;
+    }
+
+    public function isHideZeroTax(): bool
+    {
+        return $this->hideZeroTax;
+    }
+
+    public function setHideZeroTax(bool $hideZeroTax): void
+    {
+        $this->hideZeroTax = $hideZeroTax;
     }
 }
