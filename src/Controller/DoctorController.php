@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 /**
  * @Route(path="/doctor")
@@ -44,7 +46,7 @@ class DoctorController extends AbstractController
         'var/log/',
     ];
 
-    public function __construct(private string $projectDirectory, private string $kernelEnvironment, private FileHelper $fileHelper)
+    public function __construct(private string $projectDirectory, private string $kernelEnvironment, private FileHelper $fileHelper, private CacheInterface $cache)
     {
     }
 
@@ -105,6 +107,9 @@ class DoctorController extends AbstractController
         ));
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function getComposerPackages(): array
     {
         $versions = [];
@@ -134,7 +139,10 @@ class DoctorController extends AbstractController
         return $versions;
     }
 
-    private function getLoadedExtensions()
+    /**
+     * @return array<string, bool>
+     */
+    private function getLoadedExtensions(): array
     {
         $results = [];
 
@@ -200,7 +208,7 @@ class DoctorController extends AbstractController
         return $result;
     }
 
-    private function getFilePermissions()
+    private function getFilePermissions(): array
     {
         $testPaths = [];
         $baseDir = $this->projectDirectory . DIRECTORY_SEPARATOR;
@@ -223,7 +231,7 @@ class DoctorController extends AbstractController
         foreach ($testPaths as $fullUri) {
             $fullUri = rtrim($fullUri, DIRECTORY_SEPARATOR);
             $tmp = str_replace($baseDir, '', $fullUri) . DIRECTORY_SEPARATOR;
-            if ($fullUri !== false && is_readable($fullUri) && is_writable($fullUri)) {
+            if (is_readable($fullUri) && is_writable($fullUri)) {
                 $results[$tmp] = true;
             } else {
                 $results[$tmp] = false;
@@ -233,9 +241,13 @@ class DoctorController extends AbstractController
         return $results;
     }
 
-    private function getIniSettings()
+    private function getIniSettings(): array
     {
         $ini = [
+            'memory_limit',
+            'session.gc_maxlifetime',
+            'max_execution_time',
+            'date.timezone',
             'allow_url_fopen',
             'allow_url_include',
             'default_charset',
@@ -244,13 +256,9 @@ class DoctorController extends AbstractController
             'error_log',
             'error_reporting',
             'log_errors',
-            'max_execution_time',
-            'memory_limit',
             'open_basedir',
             'post_max_size',
             'sys_temp_dir',
-            'date.timezone',
-            'session.gc_maxlifetime',
         ];
 
         $settings = [];
