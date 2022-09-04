@@ -14,9 +14,5 @@ namespace App\Export\Base;
  */
 interface DispositionInlineInterface
 {
-    /**
-     * @param bool $useInlineDisposition
-     * @return void
-     */
     public function setDispositionInline(bool $useInlineDisposition): void;
 }

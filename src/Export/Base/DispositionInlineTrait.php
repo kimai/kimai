@@ -18,18 +18,11 @@ trait DispositionInlineTrait
      */
     private $disposition = ResponseHeaderBag::DISPOSITION_ATTACHMENT;
 
-    /**
-     * @return string
-     */
     public function getDisposition(): string
     {
         return $this->disposition;
     }
 
-    /**
-     * @param bool $useInlineDisposition
-     * @return void
-     */
     public function setDispositionInline(bool $useInlineDisposition): void
     {
         if ($useInlineDisposition) {
