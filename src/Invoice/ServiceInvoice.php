@@ -470,6 +470,9 @@ final class ServiceInvoice
             throw new \Exception('Cannot create invoice model without template');
         }
 
+        // prevent that changes on the template will be persisted
+        $this->invoiceRepository->preventTemplateUpdate($template);
+
         if (null === $template->getLanguage()) {
             $template->setLanguage(Constants::DEFAULT_LOCALE);
             @trigger_error('Using invoice templates without a language is is deprecated and trigger and will throw an exception with 2.0', E_USER_DEPRECATED);

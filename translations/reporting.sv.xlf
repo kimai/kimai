@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sv" datatype="plaintext" original="reporting.en.xlf">
     <body>
@@ -41,6 +41,14 @@
       <trans-unit id="BQAsynV" resname="report_project_daterange">
         <source>report_project_daterange</source>
         <target>Månadsrapport</target>
+      </trans-unit>
+      <trans-unit id="3JLmvfB" resname="report_user_year">
+        <source>report_user_year</source>
+        <target state="translated">Årlig vy för en användare</target>
+      </trans-unit>
+      <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects">
+        <source>report_customer_monthly_projects</source>
+        <target state="translated">Projekt per månad, händelser och användare</target>
       </trans-unit>
     </body>
   </file>
