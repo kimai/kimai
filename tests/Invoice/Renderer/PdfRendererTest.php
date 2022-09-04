@@ -14,7 +14,9 @@ use App\Tests\Mocks\FileHelperFactory;
 use App\Utils\MPdfConverter;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 use Twig\Loader\FilesystemLoader;
 
 /**
@@ -26,10 +28,22 @@ class PdfRendererTest extends KernelTestCase
 {
     use RendererTestTrait;
 
+    public function testDisposition()
+    {
+        $env = new Environment(new ArrayLoader([]));
+        $sut = new PdfRenderer($env, $this->createMock(MPdfConverter::class));
+        $this->assertEquals(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $sut->getDisposition());
+        $sut->setDispositionInline(false);
+        $this->assertEquals(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $sut->getDisposition());
+        $sut->setDispositionInline(true);
+        $this->assertEquals(ResponseHeaderBag::DISPOSITION_INLINE, $sut->getDisposition());
+        $sut->setDispositionInline(false);
+        $this->assertEquals(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $sut->getDisposition());
+    }
+
     public function testSupports()
     {
-        $loader = new FilesystemLoader();
-        $env = new Environment($loader);
+        $env = new Environment(new ArrayLoader([]));
         $sut = new PdfRenderer($env, $this->createMock(MPdfConverter::class));
         $this->assertTrue($sut->supports($this->getInvoiceDocument('default.pdf.twig', true)));
         $this->assertTrue($sut->supports($this->getInvoiceDocument('freelancer.pdf.twig')));
