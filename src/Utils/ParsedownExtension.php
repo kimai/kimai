@@ -18,7 +18,7 @@ class ParsedownExtension extends \Parsedown
 
     /**
      * Overwritten to prevent # to show up as headings for two reasons:
-     * - Hashes are often used to cross link issues in other systems
+     * - Hashes are often used to cross-link issues in other systems
      * - Headings should not occur in time record listings
      */
     protected $BlockTypes = [
@@ -71,16 +71,16 @@ class ParsedownExtension extends \Parsedown
      * - added support for file:///
      * - open links in new windows
      */
-    protected function inlineUrl($Excerpt)
+    protected function inlineUrl($Excerpt): ?array
     {
         if ($this->urlsLinked !== true or !isset($Excerpt['text'][2]) or $Excerpt['text'][2] !== '/') {
-            return;
+            return null;
         }
 
         if (preg_match('/\b(https?:[\/]{2}|file:[\/]{3})[^\s<]+\b\/*/ui', $Excerpt['context'], $matches, PREG_OFFSET_CAPTURE)) {
             $url = $matches[0][0];
 
-            $Inline = [
+            return [
                 'extent' => \strlen($matches[0][0]),
                 'position' => $matches[0][1],
                 'element' => [
@@ -92,14 +92,14 @@ class ParsedownExtension extends \Parsedown
                     ],
                 ],
             ];
-
-            return $Inline;
         }
+
+        return null;
     }
 
-    protected function blockHeader($line)
+    protected function blockHeader($Line)
     {
-        $block = parent::blockHeader($line);
+        $block = parent::blockHeader($Line);
 
         $text = $block['element']['text'];
         $id = $this->getIDfromText($text);

@@ -14,14 +14,8 @@ namespace App\Utils;
  */
 final class Markdown
 {
-    /**
-     * @var ParsedownExtension
-     */
-    private $parser;
-    /**
-     * @var \Parsedown
-     */
-    private $parserFull;
+    private ?ParsedownExtension $parser = null;
+    private ?\Parsedown $parserFull = null;
 
     public function toHtml(string $text): string
     {
