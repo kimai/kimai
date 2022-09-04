@@ -10,16 +10,13 @@
 namespace App\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
-use App\Export\Base\DispositionInlineInterface;
-use App\Export\Base\DispositionInlineTrait;
 use App\Invoice\InvoiceFilename;
 use App\Invoice\InvoiceModel;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-final class JsonRenderer extends AbstractTwigRenderer implements DispositionInlineInterface
+final class JsonRenderer extends AbstractTwigRenderer
 {
-    use DispositionInlineTrait;
-
     public function supports(InvoiceDocument $document): bool
     {
         return stripos($document->getFilename(), '.json.twig') !== false;
@@ -32,7 +29,7 @@ final class JsonRenderer extends AbstractTwigRenderer implements DispositionInli
 
         $response = new Response($content);
 
-        $disposition = $response->headers->makeDisposition($this->getDisposition(), $filename . '.json');
+        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename . '.json');
 
         $response->headers->set('Content-Type', 'application/json');
         $response->headers->set('Content-Disposition', $disposition);

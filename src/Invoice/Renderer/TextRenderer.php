@@ -10,16 +10,13 @@
 namespace App\Invoice\Renderer;
 
 use App\Entity\InvoiceDocument;
-use App\Export\Base\DispositionInlineInterface;
-use App\Export\Base\DispositionInlineTrait;
 use App\Invoice\InvoiceFilename;
 use App\Invoice\InvoiceModel;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-final class TextRenderer extends AbstractTwigRenderer implements DispositionInlineInterface
+final class TextRenderer extends AbstractTwigRenderer
 {
-    use DispositionInlineTrait;
-
     public function supports(InvoiceDocument $document): bool
     {
         return stripos($document->getFilename(), '.txt.twig') !== false;
@@ -32,7 +29,7 @@ final class TextRenderer extends AbstractTwigRenderer implements DispositionInli
 
         $response = new Response($content);
 
-        $disposition = $response->headers->makeDisposition($this->getDisposition(), $filename . '.txt');
+        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename . '.txt');
 
         $response->headers->set('Content-Type', 'text/plain');
         $response->headers->set('Content-Disposition', $disposition);

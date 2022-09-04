@@ -114,13 +114,13 @@ class ExportController extends AbstractController
 
         $renderer = $this->export->getRendererById($type);
 
+        if (null === $renderer) {
+            throw $this->createNotFoundException('Unknown export renderer');
+        }
+
         // display file inline if supported and `markAsExported` is not set
         if ($renderer instanceof DispositionInlineInterface && !$query->isMarkAsExported()) {
             $renderer->setDispositionInline(true);
-        }
-
-        if (null === $renderer) {
-            throw $this->createNotFoundException('Unknown export renderer');
         }
 
         $entries = $this->getEntries($query);
