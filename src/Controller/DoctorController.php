@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Utils\FileHelper;
+use App\Utils\ReleaseVersion;
 use Composer\InstalledVersions;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -103,6 +104,7 @@ class DoctorController extends AbstractController
                 'logLines' => $logLines,
                 'logSize' => $this->getLogSize(),
                 'composer' => $this->getComposerPackages(),
+                'release' => $this->getNextUpdateVersion()
             ]
         ));
     }
@@ -312,5 +314,25 @@ class DoctorController extends AbstractController
         unset($phpInfo[1]);
 
         return $phpInfo;
+    }
+
+    private function getNextUpdateVersion(): ?array
+    {
+        return $this->cache->get('kimai.update_release', function (ItemInterface $item) {
+            // we cache the result, no matter if the call failed: at the end, this is "just"
+            // an update note but an expensive call
+
+            $item->expiresAfter(86400); // one day
+
+            try {
+                $version = new ReleaseVersion();
+
+                return $version->getLatestReleaseFromGithub(true);
+            } catch (\Exception $ex) {
+                // something failed, retry tomorrow
+            }
+
+            return null;
+        });
     }
 }

@@ -24,9 +24,9 @@
     {% endif %}
     <div class="btn-list">
     {% if dataTable.hasConfiguration() %}
-    <a class="btn btn-icon {{ btnClass }}" href="#" data-bs-toggle="modal" data-bs-target="#modal_{{ dataTable.getTableName() }}">
-        {{ icon('columns', true) }}
-    </a>
+        <a class="btn btn-icon {{ btnClass }}" href="#" data-bs-toggle="modal" data-bs-target="#modal_{{ dataTable.getTableName() }}">
+            {{ icon('columns', true) }}
+        </a>
     {% endif %}
     {% set form = dataTable.getSearchForm() %}
     {% if form is not null %}
