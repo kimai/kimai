@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Export\Base\DispositionInlineInterface;
 use App\Entity\ExportableItem;
 use App\Export\ServiceExport;
 use App\Export\TooManyItemsExportException;
@@ -109,6 +110,11 @@ class ExportController extends AbstractController
 
         if (null === $renderer) {
             throw $this->createNotFoundException('Unknown export renderer');
+        }
+
+        // display file inline if supported and `markAsExported` is not set
+        if ($renderer instanceof DispositionInlineInterface && !$query->isMarkAsExported()) {
+            $renderer->setDispositionInline(true);
         }
 
         $entries = $this->getEntries($query);

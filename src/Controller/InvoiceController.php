@@ -160,7 +160,7 @@ final class InvoiceController extends AbstractController
                 $query->setCustomers([$customer]);
                 $model = $this->service->createModel($query);
 
-                return $this->service->renderInvoice($model, $this->dispatcher);
+                return $this->service->renderInvoice($model, $this->dispatcher, true);
             } catch (Exception $ex) {
                 $this->logException($ex);
                 $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);

@@ -9,17 +9,20 @@
 
 namespace App\Invoice\Renderer;
 
+use App\Export\Base\DispositionInlineInterface;
+use App\Export\Base\DispositionInlineTrait;
 use App\Export\ExportContext;
 use App\Invoice\InvoiceFilename;
 use App\Invoice\InvoiceModel;
 use App\Model\InvoiceDocument;
 use App\Utils\HtmlToPdfConverter;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Twig\Environment;
 
-final class PdfRenderer extends AbstractTwigRenderer
+final class PdfRenderer extends AbstractTwigRenderer implements DispositionInlineInterface
 {
+    use DispositionInlineTrait;
+
     public function __construct(Environment $twig, private HtmlToPdfConverter $converter)
     {
         parent::__construct($twig);
@@ -52,7 +55,7 @@ final class PdfRenderer extends AbstractTwigRenderer
 
         $response = new Response($content);
 
-        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename . '.pdf');
+        $disposition = $response->headers->makeDisposition($this->getDisposition(), $filename . '.pdf');
 
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', $disposition);

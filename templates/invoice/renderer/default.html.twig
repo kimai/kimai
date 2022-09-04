@@ -99,6 +99,7 @@
             {% endfor %}
             </tbody>
             <tfoot>
+                {% if model.calculator.tax > 0 or not model.isHideZeroTax() %}
                 <tr>
                     <td colspan="4" class="text-end">
                         {{ 'invoice.subtotal'|trans }}
@@ -111,6 +112,7 @@
                     </td>
                     <td class="text-end">{{ model.calculator.tax|money(currency) }}</td>
                 </tr>
+                {% endif %}
                 <tr>
                     <td colspan="4" class="text-end text-nowrap">
                         <strong>{{ 'invoice.total'|trans }}</strong>

@@ -57,7 +57,8 @@ services:
             $settings: '%kimai.config%'
 
     App\Utils\MPdfConverter:
-        arguments: ['%kernel.cache_dir%']
+        arguments:
+            $cacheDirectory: '%kernel.cache_dir%'
 
     App\Plugin\PluginManager:
         arguments: [!tagged kimai.plugin]
