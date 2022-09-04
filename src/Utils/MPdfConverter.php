@@ -27,7 +27,7 @@ class MPdfConverter implements HtmlToPdfConverter
         $fonts = new FontVariables();
         $allowed = [
             'mode', 'format', 'default_font_size', 'default_font', 'margin_left', 'margin_right', 'margin_top',
-            'margin_bottom', 'margin_header', 'margin_footer', 'orientation'
+            'margin_bottom', 'margin_header', 'margin_footer', 'orientation',
         ];
 
         $filtered = array_filter($options, function ($key) use ($allowed, $configs, $fonts) {
@@ -55,15 +55,22 @@ class MPdfConverter implements HtmlToPdfConverter
      */
     public function convertToPdf(string $html, array $options = []): string
     {
-        $options = array_merge(
+        $sanitized = array_merge(
             $this->sanitizeOptions($options),
             ['tempDir' => $this->cacheDirectory, 'exposeVersion' => false]
         );
 
-        $mpdf = new Mpdf($options);
+        $mpdf = new Mpdf($sanitized);
         $mpdf->creator = Constants::SOFTWARE;
 
-        // some OS do not follow the PHP default settings
+        if (\array_key_exists('fonts', $options)) {
+            $mpdf->AddFontDirectory($this->fileHelper->getDataDirectory('fonts'));
+            foreach ($options['fonts'] as $fontName => $fontConfig) {
+                $mpdf->AddFont($fontName, $fontConfig);
+            }
+        }
+
+        // some OS'es do not follow the PHP default settings
         if ((int) \ini_get('pcre.backtrack_limit') < 1000000) {
             @ini_set('pcre.backtrack_limit', '1000000');
         }
