@@ -302,7 +302,7 @@
         <source>label.calendar.title_pattern</source>
         <target>Prikaz naslova kalendarskih zapisa</target>
       </trans-unit>
-      <trans-unit id="z4tQEPb" resname="label.timesheet.rules.allow_zero_duration">
+      <trans-unit id="g1q7hKi" resname="label.timesheet.rules.allow_zero_duration">
         <source>label.timesheet.rules.allow_zero_duration</source>
         <target state="translated">Dozvoli unose vremena s praznim poljem trajanja</target>
       </trans-unit>

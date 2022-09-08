@@ -1278,7 +1278,7 @@
         <source>label.invoiceText</source>
         <target state="translated">Texte de la facture</target>
       </trans-unit>
-      <trans-unit id="Wq.h4adsfsdfnD" resname="label.budgetIndependent">
+      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
         <source>label.budgetIndependent</source>
         <target state="translated">Afficher sans tenir compte du « type de budget »</target>
       </trans-unit>

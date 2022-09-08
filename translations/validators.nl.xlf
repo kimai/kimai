@@ -66,7 +66,7 @@
         <source>The entered passwords don't match.</source>
         <target>De ingevulde wachtwoorden komen niet overeen.</target>
       </trans-unit>
-      <trans-unit id="ePrqiLN" resname="Duration cannot be zero.">
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
         <source>Duration cannot be zero.</source>
         <target state="translated">Een lege tijdsduur is niet toegestaan.</target>
       </trans-unit>

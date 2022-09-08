@@ -78,7 +78,7 @@
         <source>A project needs to be selected.</source>
         <target>프로젝트를 선택해야 합니다.</target>
       </trans-unit>
-      <trans-unit id="ePrqiLN" resname="Duration cannot be zero.">
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
         <source>Duration cannot be zero.</source>
         <target state="translated">기간은 비워둘 수 없습니다.</target>
       </trans-unit>

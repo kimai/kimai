@@ -310,7 +310,7 @@
         <source>label.quick_entry.minimum_rows</source>
         <target>En az satır sayısı</target>
       </trans-unit>
-      <trans-unit id="z4tQEPb" resname="label.timesheet.rules.allow_zero_duration">
+      <trans-unit id="g1q7hKi" resname="label.timesheet.rules.allow_zero_duration">
         <source>label.timesheet.rules.allow_zero_duration</source>
         <target>Boş süreye sahip zaman kayıtlarına izin ver</target>
       </trans-unit>

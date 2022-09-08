@@ -298,7 +298,7 @@
         <source>label.calendar.dragdrop_amount</source>
         <target state="needs-translation">Mengde oppføringer for dra-og-slipp (0 = avskrudd)</target>
       </trans-unit>
-      <trans-unit id="z4tQEPb" resname="label.timesheet.rules.allow_zero_duration">
+      <trans-unit id="g1q7hKi" resname="label.timesheet.rules.allow_zero_duration">
         <source>label.timesheet.rules.allow_zero_duration</source>
         <target>Tillat tidsoppføringer uten varighet</target>
       </trans-unit>

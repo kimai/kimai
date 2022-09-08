@@ -310,7 +310,7 @@
         <source>label.quick_entry.minimum_rows</source>
         <target>מספר השורות המזערי</target>
       </trans-unit>
-      <trans-unit id="z4tQEPb" resname="label.timesheet.rules.allow_zero_duration">
+      <trans-unit id="g1q7hKi" resname="label.timesheet.rules.allow_zero_duration">
         <source>label.timesheet.rules.allow_zero_duration</source>
         <target>לאפשר רשומות זמן עם משך זמן ריק</target>
       </trans-unit>
