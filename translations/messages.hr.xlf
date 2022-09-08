@@ -111,7 +111,7 @@
       </trans-unit>
       <trans-unit id="XP5zkiN" resname="modal.dirty">
         <source>modal.dirty</source>
-        <target>Obrazac se promijenio. Za spremanje promjena pritisni „Spremi”, inače pritisni „Zatvori”.</target>
+        <target state="translated">Obrazac se promijenio. Za spremanje promjena pritisni „Spremi”, za prekidnje pritisni „Zatvori”.</target>
       </trans-unit>
       <!--
               Login / Security
@@ -1248,7 +1248,7 @@
       </trans-unit>
       <trans-unit id="gT9W2pZ" resname="status.canceled">
         <source>status.canceled</source>
-        <target>Prekinuti</target>
+        <target state="translated">Anulirani</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>error.directory_missing</source>
