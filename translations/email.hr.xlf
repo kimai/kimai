@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
         <source>registration.intro</source>
-        <target>Prijavio/prijavila si se na Kimaijevo evidentiranje vremena pomoću e-mail adrese %email%. Aktiviraj svoj račun u idućih par sati, prije nego što poveznica istekne.</target>
+        <target state="translated">Prijavio/prijavila si se na Kimaijevo evidentiranje vremena s e-mail adresom %email%. Aktiviraj svoj račun u idućih par sati prije nego što poveznica istekne.</target>
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>

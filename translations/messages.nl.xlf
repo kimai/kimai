@@ -849,9 +849,7 @@
       </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
-        <target>
-                    Herstart een van uw laatste activiteiten
-                </target>
+        <target>Herstart een van uw laatste activiteiten</target>
       </trans-unit>
       <trans-unit id="SLV47Uu" resname="recent.activities.format">
         <source>recent.activities.format</source>
@@ -1271,6 +1269,10 @@
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
         <target state="needs-translation">Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target state="translated">Automatisch</target>
       </trans-unit>
     </body>
   </file>

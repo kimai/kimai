@@ -84,7 +84,7 @@
       </trans-unit>
       <trans-unit id="aP9j_4L" resname="download">
         <source>download</source>
-        <target>Preuzmi</target>
+        <target state="translated">Preuzmi</target>
       </trans-unit>
       <trans-unit id="hHIeqOW" resname="invoice.pending">
         <source>invoice.pending</source>
@@ -100,7 +100,7 @@
       </trans-unit>
       <trans-unit id="SEyZupT" resname="invoice.cancel">
         <source>invoice.cancel</source>
-        <target>Prekini račun</target>
+        <target state="translated">Anuliraj račun</target>
       </trans-unit>
     </body>
   </file>
