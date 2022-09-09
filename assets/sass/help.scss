@@ -1,0 +1,36 @@
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+.float-help {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--tblr-body-color);
+    text-align: center;
+    z-index: 1021;
+    /* box-shadow: 2px 2px 3px var(--tblr-body-color); */
+    i {
+        margin-top: 11px;
+        color: var(--tblr-body-bg);
+        font-size: 30px;
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .float-help {
+        width: 36px;
+        height: 36px;
+        border-radius: 36px;
+        i {
+            margin-top: 8px;
+            font-size: 20px;
+        }
+    }
+}
