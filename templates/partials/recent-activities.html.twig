@@ -2,8 +2,12 @@
     {% set favorites = favorite_timesheets(app.user) %}
     {% if favorites|length > 0 %}
         {% from 'macros/widgets.html.twig' import label_customer, label_project, label_activity %}
+        {% set class = "btn-outline-white" %}
+        {% if tabler_bundle.isDarkMode() or tabler_bundle.isNavbarOverlapping() %}
+            {% set class = "btn-dark" %}
+        {% endif %}
         <div class="nav-item dropdown d-none d-md-flex me-3 notifications-menu" data-reload="{{ path('favorites_timesheets') }}">
-            <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="{{ 'recent.activities'|trans }}">
+            <a href="#" class="btn btn-icon {{ class}} px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="{{ 'recent.activities'|trans }}">
                 {{ icon('repeat') }}
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-card">
