@@ -54,7 +54,7 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
             delete this._duration;
         }
 
-        if (this._durationToggle !== undefined) {
+        if (this._durationToggle !== undefined && this._durationToggle !== null) {
             this._durationToggle.removeEventListener('change', this._durationToggleListener);
             delete this._durationToggleListener;
             delete this._durationToggle;
