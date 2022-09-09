@@ -34,8 +34,8 @@
 
 /* Full size with bright colors => navbar turns dark in small screens: button and color would still be white */
 @include media-breakpoint-down(lg) {
-    aside.navbar .navbar-nav .btn-outline-white,
-    aside.navbar .navbar-nav .btn-outline-white {
+    aside.navbar .btn-outline-white,
+    header.navbar .btn-outline-white {
         background-color: var(--tblr-body-color);
         border-color: $border-color-dark-transparent;
     }
