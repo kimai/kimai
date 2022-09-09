@@ -162,8 +162,8 @@
         <source>tags</source>
         <target>תגיות</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="menu.doctor">
-        <source>menu.doctor</source>
+      <trans-unit id="1kHI0gb" resname="Doctor">
+        <source>Doctor</source>
         <target>דוקטור</target>
       </trans-unit>
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">

@@ -806,8 +806,8 @@
         <source>error.no_comments_found</source>
         <target>Det finns inga kommentarer uppladdade ännu.</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="menu.doctor">
-        <source>menu.doctor</source>
+      <trans-unit id="1kHI0gb" resname="Doctor">
+        <source>Doctor</source>
         <target>Doktor</target>
       </trans-unit>
       <trans-unit id="_t.2z4V" resname="teams">

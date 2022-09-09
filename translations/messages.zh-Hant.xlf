@@ -227,8 +227,8 @@
         <source>tags</source>
         <target state="translated">標籤</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="menu.doctor">
-        <source>menu.doctor</source>
+      <trans-unit id="1kHI0gb" resname="Doctor">
+        <source>Doctor</source>
         <target state="translated">診斷</target>
       </trans-unit>
       <!--

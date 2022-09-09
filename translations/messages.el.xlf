@@ -211,8 +211,8 @@
         <source>tags</source>
         <target>Ετικέτες</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="menu.doctor">
-        <source>menu.doctor</source>
+      <trans-unit id="1kHI0gb" resname="Doctor">
+        <source>Doctor</source>
         <target>Διαγνώσεις</target>
       </trans-unit>
       <!--

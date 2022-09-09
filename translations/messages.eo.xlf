@@ -171,8 +171,8 @@
         <source>tags</source>
         <target>Etikedoj</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="menu.doctor">
-        <source>menu.doctor</source>
+      <trans-unit id="1kHI0gb" resname="Doctor">
+        <source>Doctor</source>
         <target>Sistem-sano</target>
       </trans-unit>
       <!--

@@ -802,8 +802,8 @@
         <source>error.no_comments_found</source>
         <target>아직 코멘트가 생성되지 않았습니다.</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="menu.doctor">
-        <source>menu.doctor</source>
+      <trans-unit id="1kHI0gb" resname="Doctor">
+        <source>Doctor</source>
         <target>박사</target>
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
