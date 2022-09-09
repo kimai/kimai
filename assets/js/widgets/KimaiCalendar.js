@@ -200,6 +200,11 @@ export default class KimaiCalendar {
             },
 
             // ============= POPOVER =============
+            viewClassNames: () => {
+                document.querySelector('.fc-dayGridMonth-button').classList.remove('btn-icon');
+                document.querySelector('.fc-timeGridWeek-button').classList.remove('btn-icon');
+                document.querySelector('.fc-timeGridDay-button').classList.remove('btn-icon');
+            },
 
             // DESTROY TO PREVENT MEMORY LEAKS
             eventWillUnmount: (unmountInfo) => {
