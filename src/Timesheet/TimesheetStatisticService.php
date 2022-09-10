@@ -93,14 +93,14 @@ final class TimesheetStatisticService
      */
     public function getDailyStatisticsGrouped(DateTime $begin, DateTime $end, array $users): array
     {
-        /** @var DailyStatistic[] $stats */
         $stats = [];
         $usersById = [];
 
         foreach ($users as $user) {
-            $usersById[$user->getId()] = $user;
-            if (!isset($stats[$user->getId()])) {
-                $stats[$user->getId()] = [];
+            $uid = (string) $user->getId();
+            $usersById[$uid] = $user;
+            if (!isset($stats[$uid])) {
+                $stats[$uid] = [];
             }
         }
 
@@ -130,9 +130,9 @@ final class TimesheetStatisticService
         $results = $qb->getQuery()->getResult();
 
         foreach ($results as $row) {
-            $uid = $row['user'];
-            $pid = $row['project'];
-            $aid = $row['activity'];
+            $uid = (string) $row['user'];
+            $pid = (string) $row['project'];
+            $aid = (string) $row['activity'];
             if (!isset($stats[$uid][$pid])) {
                 $stats[$uid][$pid] = ['project' => $pid, 'activities' => []];
             }
@@ -158,6 +158,7 @@ final class TimesheetStatisticService
             }
         }
 
+        /* @phpstan-ignore-next-line */
         return $stats;
     }
 
@@ -166,18 +167,18 @@ final class TimesheetStatisticService
      * @param DateTime $begin
      * @param DateTime $end
      * @param User[] $users
-     * @return array<int, MonthlyStatistic[]>
+     * @return array<string, array<string, MonthlyStatistic[]>>
      */
     public function getMonthlyStatisticsGrouped(DateTime $begin, DateTime $end, array $users): array
     {
-        /** @var MonthlyStatistic[] $stats */
         $stats = [];
         $usersById = [];
 
         foreach ($users as $user) {
-            $usersById[$user->getId()] = $user;
-            if (!isset($stats[$user->getId()])) {
-                $stats[$user->getId()] = [];
+            $uid = (string) $user->getId();
+            $usersById[$uid] = $user;
+            if (!isset($stats[$uid])) {
+                $stats[$uid] = [];
             }
         }
 
@@ -209,9 +210,9 @@ final class TimesheetStatisticService
         $results = $qb->getQuery()->getResult();
 
         foreach ($results as $row) {
-            $uid = $row['user'];
-            $pid = $row['project'];
-            $aid = $row['activity'];
+            $uid = (string) $row['user'];
+            $pid = (string) $row['project'];
+            $aid = (string) $row['activity'];
             if (!isset($stats[$uid][$pid])) {
                 $stats[$uid][$pid] = ['project' => $pid, 'activities' => []];
             }
@@ -237,6 +238,7 @@ final class TimesheetStatisticService
             }
         }
 
+        /* @phpstan-ignore-next-line */
         return $stats;
     }
 
