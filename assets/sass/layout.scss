@@ -1,5 +1,8 @@
 .inline-search {
     max-width: 200px;
+    #searchTerm {
+        border-right: 0;
+    }
 }
 @media (min-width: 360px) {
     .inline-search {

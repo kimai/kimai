@@ -38,7 +38,7 @@
         {% set orderBy = form_widget(form.orderBy) %}
         {% set order = form_widget(form.order) %}
         {% set filterCount = dataTable.getQuery().countFilter() %}
-        <div class="input-group inline-search input-group-flat position-static">
+        <div class="input-group inline-search position-static">
             <button type="button" class="btn {{ btnClass }} dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-haspopup="true" aria-expanded="false" id="search-dropdown-btn">
                 {{ icon('filter', true) }}
                 {% if filterCount > 0 %}<span class="badge badge-pill bg-blue ms-1 d-none d-md-inline">{{ filterCount }}</span>{% endif %}
