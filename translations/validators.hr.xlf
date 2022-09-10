@@ -80,7 +80,7 @@
       </trans-unit>
       <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
         <source>Duration cannot be zero.</source>
-        <target state="translated">Prazno trajanje nije dozvoljeno.</target>
+        <target state="translated">Polje trajanja ne smije biti prazno.</target>
       </trans-unit>
       <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
         <source>Sorry, the budget is used up.</source>

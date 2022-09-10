@@ -65,8 +65,8 @@
         <target>Timesheet</target>
       </trans-unit>
       <trans-unit id="M82JFjR" resname="freelancer">
-        <source>freelancer</source>
-        <target>Single service date</target>
+        <source>Single service date</source>
+        <target state="needs-translation">Single service date</target>
       </trans-unit>
       <trans-unit id="XUbhXLF" resname="open-spreadsheet">
         <source>open-spreadsheet</source>

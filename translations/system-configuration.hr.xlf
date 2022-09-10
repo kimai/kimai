@@ -196,11 +196,11 @@
       </trans-unit>
       <trans-unit id="nqWKu27" resname="timesheet.duration_increment">
         <source>timesheet.duration_increment</source>
-        <target>Biranje trajanja pomoću minuta</target>
+        <target state="translated">Biranje minuta za trajanje</target>
       </trans-unit>
       <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
         <source>timesheet.time_increment</source>
-        <target>Biranje vremena „od” i „do” pomoću minuta</target>
+        <target state="translated">Biranje minuta za vremena „od” i „do”</target>
       </trans-unit>
       <trans-unit id="9C1qkmD" resname="increment_rounding">
         <source>increment_rounding</source>
@@ -272,11 +272,11 @@
       </trans-unit>
       <trans-unit id="yBBvkfb" resname="timesheet.rules.allow_zero_duration">
         <source>timesheet.rules.allow_zero_duration</source>
-        <target>Dozvoli unose vremena s praznim trajanjem</target>
+        <target state="translated">Dozvoli unose vremena s praznim poljem trajanja</target>
       </trans-unit>
       <trans-unit id="Vp1e9qb" resname="quick_entry.recent_activity_weeks">
         <source>quick_entry.recent_activity_weeks</source>
-        <target>Preuzmi unose iz zadnjih X tjedana (prazno ili 0 za svo vrijeme)</target>
+        <target state="translated">Preuzmi unose zadnjih X tjedana (prazno ili 0 za svo vrijeme)</target>
       </trans-unit>
       <trans-unit id="KbAqHBa" resname="quick_entry.minimum_rows">
         <source>quick_entry.minimum_rows</source>

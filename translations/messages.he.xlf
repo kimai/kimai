@@ -1138,6 +1138,10 @@
         <source>invoiceText</source>
         <target state="translated">טקסט חשבונית</target>
       </trans-unit>
+      <trans-unit id="8mTf0eZ" resname="budgetIndependent">
+        <source>budgetIndependent</source>
+        <target state="translated">להציג ללא תלות ב־„budget-type” (סוג תקציב)</target>
+      </trans-unit>
       <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
         <target state="translated">לאפשר פעילויות גלובליות</target>
