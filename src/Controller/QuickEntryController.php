@@ -17,6 +17,7 @@ use App\Model\QuickEntryWeek;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\TimesheetService;
+use App\Utils\PageSetup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -220,7 +221,11 @@ class QuickEntryController extends AbstractController
             }
         }
 
+        $page = new PageSetup('quick_entry.title');
+        $page->setHelp('weekly-times.html');
+
         return $this->render('quick-entry/index.html.twig', [
+            'page_setup' => $page,
             'days' => $week,
             'form' => $form->createView(),
         ]);

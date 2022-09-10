@@ -17,6 +17,7 @@ use App\Form\Toolbar\TeamToolbarForm;
 use App\Repository\Query\TeamQuery;
 use App\Repository\TeamRepository;
 use App\Utils\DataTable;
+use App\Utils\PageSetup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,7 +68,13 @@ final class TeamController extends AbstractController
         $table->addColumn('user', ['class' => 'd-none badges', 'orderBy' => false, 'title' => 'user']);
         $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
 
+        $page = new PageSetup('teams');
+        $page->setActionName('teams');
+        $page->setHelp('teams.html');
+        $page->setDataTable($table);
+
         return $this->render('team/index.html.twig', [
+            'page_setup' => $page,
             'dataTable' => $table,
         ]);
     }
@@ -134,7 +141,11 @@ final class TeamController extends AbstractController
             }
         }
 
+        $page = new PageSetup('teams');
+        $page->setHelp('teams.html');
+
         return $this->render('team/edit_member.html.twig', [
+            'page_setup' => $page,
             'team' => $team,
             'form' => $editForm->createView(),
         ]);
@@ -207,7 +218,11 @@ final class TeamController extends AbstractController
             }
         }
 
+        $page = new PageSetup('teams');
+        $page->setHelp('teams.html');
+
         return $this->render('team/edit.html.twig', [
+            'page_setup' => $page,
             'team' => $team,
             'form' => $editForm->createView(),
             'customerForm' => $customerForm?->createView(),

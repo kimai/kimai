@@ -30,8 +30,6 @@ class ActivitySubscriber extends AbstractActionsSubscriber
             return;
         }
 
-        $isListingView = $event->isIndexView() || $event->isCustomView();
-
         if (!$event->isView('activity_details') && $this->isGranted('view', $activity)) {
             $event->addAction('details', ['title' => 'details', 'translation_domain' => 'actions', 'url' => $this->path('activity_details', ['id' => $activity->getId()])]);
         }
@@ -73,10 +71,6 @@ class ActivitySubscriber extends AbstractActionsSubscriber
 
         if (($event->isIndexView() || $event->isView('project_details')) && $this->isGranted('delete', $activity)) {
             $event->addDelete($this->path('admin_activity_delete', ['id' => $activity->getId()]));
-        }
-
-        if (!$isListingView) {
-            $event->addHelp($this->documentationLink('activity.html'));
         }
     }
 }

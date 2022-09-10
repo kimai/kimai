@@ -60,9 +60,5 @@ abstract class AbstractTimesheetSubscriber extends AbstractActionsSubscriber
                 ]);
             }
         }
-
-        if (!$event->isIndexView()) {
-            $event->addHelp($this->documentationLink('timesheet.html'));
-        }
     }
 }

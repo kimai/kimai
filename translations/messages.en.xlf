@@ -205,10 +205,6 @@
         <source>menu.timesheet</source>
         <target>My times</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Export</target>
-      </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
         <target>Reporting</target>
@@ -1404,6 +1400,10 @@
       <trans-unit id="3WHV.yf" resname="activated">
         <source>Activated</source>
         <target>Activated</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>About Kimai</target>
       </trans-unit>
     </body>
   </file>

@@ -1,8 +1,4 @@
 {% extends 'base.html.twig' %}
-{% import "about/actions.html.twig" as actions %}
-
-{% block page_title %}{{ 'about.title'|trans({}, 'about') }}{% endblock %}
-{% block page_actions %}{{ actions.about('index') }}{% endblock %}
 
 {% block main %}
     <div class="row row-cards mb-3">
@@ -27,7 +23,7 @@
                         <i class="me-2 text-muted {{ 'help'|icon(false) }}"></i>
                         {{ 'help'|trans({}, 'about') }}
                     </a>
-                    <a href="{{ constant('App\\Constants::GITHUB') }}" target="_blank" class="card-btn">
+                    <a href="{{ constant('App\\Constants::GITHUB') }}discussions" target="_blank" class="card-btn">
                         <i class="me-2 text-muted {{ 'fab fa-github'|icon(false) }}"></i>
                         {{ 'support'|trans({}, 'about') }}
                     </a>

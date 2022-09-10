@@ -14,6 +14,7 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Form\CalendarForm;
 use App\Timesheet\TrackingModeService;
+use App\Utils\PageSetup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -86,7 +87,11 @@ class CalendarController extends AbstractController
             }
         }
 
+        $page = new PageSetup('calendar');
+        $page->setHelp('calendar.html');
+
         return $this->render('calendar/user.html.twig', [
+            'page_setup' => $page,
             'form' => $form,
             'user' => $profile,
             'config' => $config,

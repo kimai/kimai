@@ -78,9 +78,10 @@
         {% embed '@theme/embeds/card.html.twig' %}
             {% import "macros/charts.html.twig" as charts %}
             {% import "macros/widgets.html.twig" as macros %}
+            {% from "macros/status.html.twig" import status_duration %}
             {% block box_title -%}
-                {{ year }} &ndash;
-                {{ macros.badge_counter(totalDuration|duration) }}
+                {{ year }}
+                {{ status_duration(totalDuration|duration) }}
             {%- endblock %}
             {% block box_tools %}
                 {%- if canSeeReport -%}

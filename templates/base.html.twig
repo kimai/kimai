@@ -4,8 +4,6 @@
     data-title="{{- get_title()|e('html_attr') -}}"
 {%- endblock -%}
 
-{% block page_title -%}{{- get_title() -}}{%- endblock %}
-
 {% block after_body_start %}
     {% embed '@theme/embeds/modal.html.twig' %}
         {% block modal_id %}remote_form_modal{% endblock %}
@@ -55,6 +53,14 @@
     {% block main_after %}{% endblock %}
     {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_AFTER')) %}
     {{ event.content|raw }}
+    {% if page_setup is defined and page_setup.help is not null %}
+        <div class="float-help">
+            <a href="{% if '://' in page_setup.help %}{{ page_setup.help }}{% else %}{{ page_setup.help|docu_link }}{% endif %}" target="_blank">
+                <i class="fas fa-question"></i>
+            </a>
+        </div>
+        <div class="mb-4"></div>
+    {% endif %}
 {% endblock %}
 
 {% block page_content %}
@@ -88,7 +94,6 @@
 {% endblock %}
 
 {# deactivated blocks from the original theme #}
-{% block page_actions %}{% endblock %}
 {% block page_pretitle %}{% endblock %}
 
 {% block stylesheets %}
@@ -119,14 +124,18 @@
 {% block app_logo %}
     {% set mylogo %}{{ parent() }}{% endset %}
     <div class="d-flex justify-content-start flex-fill d-lg-none">
-        <h2 class="page-title d-lg-none ps-2 text-white">{{ block('page_title') }}</h2>
+        <h2 class="page-title d-lg-none ps-2 text-white">
+            {{- block('page_title') -}}
+        </h2>
         {{ mylogo }}
     </div>
     {{ mylogo }}
 {% endblock %}
 
 {% block navbar_search %}
-    <h2 class="page-title me-2">{{ block('page_title') }}</h2>
+    <h2 class="page-title me-2">
+        {{- block('page_title') -}}
+    </h2>
     {%- if block('status') is defined -%}<div class="btn-list">{{ block('status') }}</div>{%- endif -%}
     {%- if block('subtitle') is defined -%}{{ block('subtitle') }}{%- endif -%}
     {%- if block('breadcrumb') is defined and block('table_actions') is defined -%}{{ block('breadcrumb') }}{%- endif -%}
@@ -140,4 +149,34 @@
             {{ block('breadcrumb') }}
         </div>
     {% endif %}
+{% endblock %}
+
+{% block page_title %}
+    {%- if page_setup is defined -%}
+        {{ page_setup.title|trans }}
+    {%- else -%}
+        {{ get_title() }}
+    {%- endif -%}
+{% endblock %}
+
+{% block page_actions %}
+    {% from "macros/widgets.html.twig" import page_actions, table_actions %}
+    {%- if page_setup is defined and page_setup.actionName is not null -%}
+        {% set event = actions(app.user, page_setup.actionName, page_setup.actionView, page_setup.actionPayload) %}
+        {% if page_setup.tableAction() %}
+            {{ table_actions(event.actions) }}
+        {% else %}
+            {{ page_actions(event.actions) }}
+        {% endif %}
+    {%- endif -%}
+{% endblock %}
+
+{% block page_header %}
+    {%- if page_setup is defined -%}
+        {%- if page_setup.actionName is not null or page_setup.hasSearchForm() -%}
+            {{ parent() }}
+        {%- endif -%}
+    {%- else -%}
+        {{ parent() }}
+    {%- endif -%}
 {% endblock %}

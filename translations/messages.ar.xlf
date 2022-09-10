@@ -680,10 +680,6 @@
         <source>menu.reporting</source>
         <target>الإبلاغ</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>تصدير</target>
-      </trans-unit>
       <trans-unit id="6OKwCUB" resname="menu.system">
         <source>menu.system</source>
         <target>النظام</target>
@@ -1199,6 +1195,10 @@
       <trans-unit id="NNsA8i2" resname="globalsOnly">
         <source>globalsOnly</source>
         <target state="needs-translation">عالمي فقط</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>حول Kimai</target>
       </trans-unit>
     </body>
   </file>

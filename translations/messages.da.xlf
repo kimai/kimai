@@ -118,10 +118,6 @@
         <source>menu.timesheet</source>
         <target>Min timeseddel</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Eksporter</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>Timesedler</target>
@@ -1200,6 +1196,10 @@
       <trans-unit id="KH2hgil" resname="account_number">
         <source>account_number</source>
         <target state="needs-translation">Staff number</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>Om Kimai</target>
       </trans-unit>
     </body>
   </file>

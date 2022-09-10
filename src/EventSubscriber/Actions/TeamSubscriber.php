@@ -53,6 +53,5 @@ class TeamSubscriber extends AbstractActionsSubscriber
                 ]
             ]);
         }
-        $event->addHelp($this->documentationLink('teams.html'));
     }
 }

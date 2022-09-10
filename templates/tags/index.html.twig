@@ -1,12 +1,8 @@
 {% extends 'datatable.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
-{% import "tags/actions.html.twig" as actions %}
 
 {% set manageAllowed = is_granted('manage_tag') %}
-
-{% block page_title %}{{ 'tags'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.tags('index', dataTable.getQuery()) }}{% endblock %}
 
 {% block datatable_row %}
     {% set type = '' %}
@@ -25,7 +21,8 @@
         </td>
         <td class="{{ tables.class(dataTable, 'amount') }}">{{ widgets.badge_counter(entry.amount, null, type) }}</td>
         <td class="{{ tables.class(dataTable, 'actions') }}">
-            {{ actions.tag(entry, 'index') }}
+            {% set event = actions(app.user, 'tag', 'index', {'tag': entry}) %}
+            {{ widgets.table_actions(event.actions) }}
         </td>
     </tr>
 {% endblock %}

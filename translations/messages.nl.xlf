@@ -111,10 +111,6 @@
         <source>menu.timesheet</source>
         <target>Mijn tijden</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Exporteren</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>Prestaties</target>
@@ -1199,6 +1195,10 @@
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
         <target state="needs-translation">Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>Over Kimai</target>
       </trans-unit>
     </body>
   </file>

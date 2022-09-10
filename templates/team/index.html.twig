@@ -1,10 +1,6 @@
 {% extends 'datatable.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
-{% import "team/actions.html.twig" as actions %}
-
-{% block page_title %}{{ 'teams.title'|trans({}, 'teams') }}{% endblock %}
-{% block page_actions %}{{ actions.teams('index', dataTable.getQuery()) }}{% endblock %}
 
 {% block datatable_row %}
     <tr{% if is_granted('edit', entry) %} class="open-edit alternative-link" data-href="{{ path('admin_team_edit', {'id': entry.id}) }}"{% endif %}>
@@ -33,7 +29,8 @@
             {% endfor %}
         </td>
         <td class="{{ tables.class(dataTable, 'actions') }}">
-            {{ actions.team(entry, 'index') }}
+            {% set event = actions(app.user, 'team', 'index', {'team': entry}) %}
+            {{ widgets.table_actions(event.actions) }}
         </td>
     </tr>
 {% endblock %}

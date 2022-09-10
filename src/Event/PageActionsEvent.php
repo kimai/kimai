@@ -157,11 +157,6 @@ class PageActionsEvent extends ThemeEvent
         $this->addAction('settings', ['url' => $url, 'class' => 'modal-ajax-form', 'title' => 'settings', 'translation_domain' => 'actions']);
     }
 
-    public function addHelp(string $url): void
-    {
-        $this->addAction('help', ['url' => $url, 'target' => '_blank', 'title' => 'help', 'translation_domain' => 'about']);
-    }
-
     public function addConfig(string $url): void
     {
         $this->addAction('settings', ['url' => $url, 'title' => 'settings', 'translation_domain' => 'actions']);
@@ -179,7 +174,7 @@ class PageActionsEvent extends ThemeEvent
     public function addColumnToggle(string $modal): void
     {
         $modal = '#' . ltrim($modal, '#');
-        $this->addAction('visibility', ['modal' => $modal, 'title' => 'modal.columns.title']);
+        $this->addAction('columns', ['modal' => $modal, 'title' => 'modal.columns.title']);
     }
 
     public function countActions(?string $submenu = null): int

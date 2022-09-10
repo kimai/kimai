@@ -25,11 +25,5 @@ class CustomersSubscriber extends AbstractActionsSubscriber
         }
 
         $event->addQuickExport($this->path('customer_export'));
-
-        if ($this->isGranted('system_configuration')) {
-            $event->addSettings($this->path('system_configuration_section', ['section' => 'customer']));
-        }
-
-        $event->addHelp($this->documentationLink('customer.html'));
     }
 }

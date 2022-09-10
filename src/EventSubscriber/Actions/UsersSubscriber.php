@@ -31,11 +31,5 @@ class UsersSubscriber extends AbstractActionsSubscriber
             $event->addActionToSubmenu('report', 'monthly', ['url' => $this->path('report_monthly_users'), 'translation_domain' => 'reporting', 'title' => 'report_monthly_users']);
             $event->addActionToSubmenu('report', 'yearly', ['url' => $this->path('report_yearly_users'), 'translation_domain' => 'reporting', 'title' => 'report_yearly_users']);
         }
-
-        if ($this->isGranted('system_configuration')) {
-            $event->addSettings($this->path('system_configuration_section', ['section' => 'user']));
-        }
-
-        $event->addHelp($this->documentationLink('users.html'));
     }
 }

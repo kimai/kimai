@@ -1,12 +1,5 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/widgets.html.twig" as widgets %}
-
-{% block page_title %}{{ 'calendar'|trans }}{% endblock %}
-{% block page_actions %}
-    {% set event = actions(app.user, 'calendar', 'index') %}
-    {{ widgets.page_actions(event.actions) }}
-{% endblock %}
 
 {% block main %}
     <div class="row">
@@ -201,10 +194,7 @@
             );
             calendar.render();
 
-            document.querySelector('.fc-dayGridMonth-button').classList.toggle('btn-icon');
-            document.querySelector('.fc-timeGridWeek-button').classList.toggle('btn-icon');
-            document.querySelector('.fc-timeGridDay-button').classList.toggle('btn-icon');
-            document.querySelector('.fc-today-button').classList.toggle('btn-icon');
+            document.querySelector('.fc-today-button').classList.remove('btn-icon');
             document.querySelector('.fc-deleteButton-button').classList.toggle('btn-outline-danger');
             document.querySelector('.fc-header-toolbar').classList.toggle('row');
             const toolbar = document.querySelectorAll('.fc-header-toolbar .fc-toolbar-chunk');

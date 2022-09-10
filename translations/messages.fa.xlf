@@ -359,10 +359,6 @@
         <source>menu.reporting</source>
         <target>گزارش نویسی</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>خروجی گرفتن</target>
-      </trans-unit>
       <trans-unit id="C0W7_BT" resname="menu.timesheet">
         <source>menu.timesheet</source>
         <target>زمان من</target>
@@ -1150,6 +1146,10 @@
       <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
         <target state="translated">متن فاکتور</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>درباره ی کیمیایْ</target>
       </trans-unit>
     </body>
   </file>

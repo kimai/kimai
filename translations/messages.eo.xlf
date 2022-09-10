@@ -131,10 +131,6 @@
         <source>menu.timesheet</source>
         <target>Miaj tempoj</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Eksporto</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>Temposlipoj</target>
@@ -1208,6 +1204,10 @@
       <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
         <target state="translated">Teksto de fakturo</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>Pri Kimai</target>
       </trans-unit>
     </body>
   </file>

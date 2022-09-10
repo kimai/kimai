@@ -39,12 +39,6 @@
     {% set showToggleButton = preview_show and form.exported.vars.value != constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') %}
 {% endif %}
 
-{% block page_title %}{{ 'export'|trans }}{% endblock %}
-{% block page_actions %}
-    {% set event = actions(app.user, 'export', (preview_show ? 'preview' : 'index')) %}
-    {{ widgets.page_actions(event.actions) }}
-{% endblock %}
-
 {% block status %}
     {% from "macros/status.html.twig" import status_duration, status_money %}
     {{ status_duration(totalDuration|duration) }}

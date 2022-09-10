@@ -13,6 +13,7 @@ use App\Entity\Bookmark;
 use App\Entity\User;
 use App\Event\DashboardEvent;
 use App\Repository\BookmarkRepository;
+use App\Utils\PageSetup;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -177,9 +178,16 @@ final class DashboardController extends AbstractController
     {
         $user = $this->getUser();
         $available = $this->getAllAvailableWidgets($user);
+        $widgets = $this->filterWidgets($available, $user);
+
+        $page = new PageSetup('dashboard.title');
+        $page->setHelp('dashboard.html');
+        $page->setActionName('dashboard');
+        $page->setActionPayload(['widgets' => $widgets, 'available' => $available]);
 
         return $this->render('dashboard/index.html.twig', [
-            'widgets' => $this->filterWidgets($available, $user),
+            'page_setup' => $page,
+            'widgets' => $widgets,
             'available' => $available,
         ]);
     }
@@ -285,7 +293,14 @@ final class DashboardController extends AbstractController
             }
         }
 
+        $page = new PageSetup('dashboard.title');
+        $page->setHelp('dashboard.html');
+        $page->setActionName('dashboard');
+        $page->setActionView('edit');
+        $page->setActionPayload(['widgets' => $widgets, 'available' => $available]);
+
         return $this->render('dashboard/grid.html.twig', [
+            'page_setup' => $page,
             'widgets' => $widgets,
             'available' => $available,
             'form' => $form->createView(),

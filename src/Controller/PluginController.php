@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Plugin\PluginManager;
+use App\Utils\PageSetup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,7 +36,11 @@ class PluginController extends AbstractController
             $installed[] = $plugin->getId();
         }
 
+        $page = new PageSetup('menu.plugin');
+        $page->setHelp('plugins.html');
+
         return $this->render('plugin/index.html.twig', [
+            'page_setup' => $page,
             'plugins' => $plugins,
             'installed' => $installed,
             'extensions' => $this->getPluginInformation($client, $cache)

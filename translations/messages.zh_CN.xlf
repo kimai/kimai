@@ -115,10 +115,6 @@
         <source>menu.timesheet</source>
         <target>我的时间</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>输出</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>时间表</target>
@@ -1209,6 +1205,10 @@
       <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
         <target state="translated">允许全局活动</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>关于Kimai</target>
       </trans-unit>
     </body>
   </file>

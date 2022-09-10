@@ -28,7 +28,5 @@ class InvoiceTemplatesSubscriber extends AbstractActionsSubscriber
         if ($this->isGranted('upload_invoice_template')) {
             $event->addAction('upload', ['url' => $this->path('admin_invoice_document_upload'), 'title' => 'invoice_renderer', 'translation_domain' => 'invoice-renderer']);
         }
-
-        $event->addHelp($this->documentationLink('invoices.html'));
     }
 }

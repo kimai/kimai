@@ -175,10 +175,6 @@
         <source>menu.timesheet</source>
         <target>Moja vremena</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Izvoz</target>
-      </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
         <target>Izvještavanje</target>
@@ -1213,6 +1209,10 @@
       <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
         <target state="translated">Dozvoli globalne aktivnosti</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>Kimai informacije</target>
       </trans-unit>
     </body>
   </file>

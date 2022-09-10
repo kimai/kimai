@@ -23,7 +23,5 @@ class TeamsSubscriber extends AbstractActionsSubscriber
         if ($this->isGranted('create_team')) {
             $event->addCreate($this->path('admin_team_create'));
         }
-
-        $event->addHelp($this->documentationLink('teams.html'));
     }
 }

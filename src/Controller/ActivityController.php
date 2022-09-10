@@ -33,6 +33,7 @@ use App\Repository\ActivityRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\TeamRepository;
 use App\Utils\DataTable;
+use App\Utils\PageSetup;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -97,7 +98,12 @@ final class ActivityController extends AbstractController
         $table->addColumn('visible', ['class' => 'd-none text-center w-min']);
         $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
 
+        $page = $this->createPageSetup();
+        $page->setDataTable($table);
+        $page->setActionName('activities');
+
         return $this->render('activity/index.html.twig', [
+            'page_setup' => $page,
             'dataTable' => $table,
             'metaColumns' => $metaColumns,
             'defaultCurrency' => $this->configuration->getCustomerDefaultCurrency(),
@@ -152,7 +158,13 @@ final class ActivityController extends AbstractController
         $this->dispatcher->dispatch($event);
         $boxes = $event->getController();
 
+        $page = $this->createPageSetup();
+        $page->setActionName('activity');
+        $page->setActionView('activity_details');
+        $page->setActionPayload(['activity' => $activity]);
+
         return $this->render('activity/details.html.twig', [
+            'page_setup' => $page,
             'activity' => $activity,
             'stats' => $stats,
             'rates' => $rates,
@@ -205,6 +217,7 @@ final class ActivityController extends AbstractController
         }
 
         return $this->render('activity/rates.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'activity' => $activity,
             'form' => $form->createView()
         ]);
@@ -250,6 +263,7 @@ final class ActivityController extends AbstractController
         }
 
         return $this->render('activity/edit.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'activity' => $activity,
             'form' => $editForm->createView()
         ]);
@@ -284,6 +298,7 @@ final class ActivityController extends AbstractController
         }
 
         return $this->render('activity/permissions.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'activity' => $activity,
             'form' => $form->createView()
         ]);
@@ -339,6 +354,7 @@ final class ActivityController extends AbstractController
         }
 
         return $this->render('activity/edit.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'activity' => $activity,
             'form' => $editForm->createView()
         ]);
@@ -384,14 +400,12 @@ final class ActivityController extends AbstractController
             return $this->redirectToRoute('admin_activity');
         }
 
-        return $this->render(
-            'activity/delete.html.twig',
-            [
-                'activity' => $activity,
-                'stats' => $stats,
-                'form' => $deleteForm->createView(),
-            ]
-        );
+        return $this->render('activity/delete.html.twig', [
+            'page_setup' => $this->createPageSetup(),
+            'activity' => $activity,
+            'stats' => $stats,
+            'form' => $deleteForm->createView(),
+        ]);
     }
 
     /**
@@ -459,5 +473,13 @@ final class ActivityController extends AbstractController
             'include_budget' => $this->isGranted('budget', $activity),
             'include_time' => $this->isGranted('time', $activity),
         ]);
+    }
+
+    private function createPageSetup(): PageSetup
+    {
+        $page = new PageSetup('activities');
+        $page->setHelp('activity.html');
+
+        return $page;
     }
 }

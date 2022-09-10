@@ -167,10 +167,6 @@
         <source>menu.timesheet</source>
         <target>Οι ώρες μου</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Εξαγωγή</target>
-      </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
         <target>Πληροφόρηση</target>
@@ -1204,6 +1200,10 @@
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target>Αυτόματα</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>Σχετικά με το Kimai</target>
       </trans-unit>
     </body>
   </file>

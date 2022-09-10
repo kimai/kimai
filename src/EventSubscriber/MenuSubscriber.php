@@ -70,7 +70,7 @@ final class MenuSubscriber implements EventSubscriberInterface
 
         if ($auth->isGranted('create_export')) {
             $times->addChild(
-                new MenuItemModel('export', 'menu.export', 'export', [], 'export')
+                new MenuItemModel('export', 'export', 'export', [], 'export')
             );
         }
 

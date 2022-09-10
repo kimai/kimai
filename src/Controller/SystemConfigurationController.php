@@ -31,6 +31,7 @@ use App\Form\Type\TrackingModeType;
 use App\Form\Type\WeekDaysType;
 use App\Form\Type\YesNoType;
 use App\Repository\ConfigurationRepository;
+use App\Utils\PageSetup;
 use App\Validator\Constraints\ColorChoices;
 use App\Validator\Constraints\DateTimeFormat;
 use App\Validator\Constraints\TimeFormat;
@@ -79,7 +80,11 @@ final class SystemConfigurationController extends AbstractController
             ];
         }
 
+        $page = new PageSetup('menu.system_configuration');
+        $page->setHelp('configurations.html');
+
         return $this->render('system-configuration/index.html.twig', [
+            'page_setup' => $page,
             'sections' => $configurations,
         ]);
     }
@@ -103,7 +108,11 @@ final class SystemConfigurationController extends AbstractController
             ];
         }
 
+        $page = new PageSetup('menu.system_configuration');
+        $page->setHelp('configurations.html');
+
         return $this->render('system-configuration/section.html.twig', [
+            'page_setup' => $page,
             'sections' => $configurations,
         ]);
     }

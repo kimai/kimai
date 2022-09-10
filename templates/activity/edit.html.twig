@@ -1,8 +1,4 @@
 {% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
-{% import "activity/actions.html.twig" as actions %}
-
-{% block page_title %}{{ 'activities'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.activity(activity, 'edit') }}{% endblock %}
 
 {% block main %}
     {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}

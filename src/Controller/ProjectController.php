@@ -39,6 +39,7 @@ use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\TeamRepository;
 use App\Utils\DataTable;
+use App\Utils\PageSetup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -108,7 +109,12 @@ final class ProjectController extends AbstractController
         $table->addColumn('visible', ['class' => 'd-none text-center w-min']);
         $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
 
+        $page = $this->createPageSetup();
+        $page->setDataTable($table);
+        $page->setActionName('projects');
+
         return $this->render('project/index.html.twig', [
+            'page_setup' => $page,
             'dataTable' => $table,
             'metaColumns' => $metaColumns,
             'now' => $this->getDateTimeFactory()->createDateTime(),
@@ -156,6 +162,7 @@ final class ProjectController extends AbstractController
         }
 
         return $this->render('project/permissions.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'project' => $project,
             'form' => $form->createView()
         ]);
@@ -198,6 +205,7 @@ final class ProjectController extends AbstractController
         }
 
         return $this->render('project/edit.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'project' => $project,
             'form' => $editForm->createView()
         ]);
@@ -332,7 +340,7 @@ final class ProjectController extends AbstractController
      * @Route(path="/{id}/details", name="project_details", methods={"GET", "POST"})
      * @Security("is_granted('view', project)")
      */
-    public function detailsAction(Project $project, TeamRepository $teamRepository, ProjectRateRepository $rateRepository, ProjectStatisticService $statisticService)
+    public function detailsAction(Project $project, TeamRepository $teamRepository, ProjectRateRepository $rateRepository, ProjectStatisticService $statisticService, CsrfTokenManagerInterface $csrfTokenManager)
     {
         $event = new ProjectMetaDefinitionEvent($project);
         $this->dispatcher->dispatch($event);
@@ -371,7 +379,13 @@ final class ProjectController extends AbstractController
         $this->dispatcher->dispatch($event);
         $boxes = $event->getController();
 
+        $page = $this->createPageSetup();
+        $page->setActionName('project');
+        $page->setActionView('project_details');
+        $page->setActionPayload(['project' => $project, 'token' => $csrfTokenManager->getToken('project.duplicate')]);
+
         return $this->render('project/details.html.twig', [
+            'page_setup' => $page,
             'project' => $project,
             'comments' => $comments,
             'commentForm' => $commentForm,
@@ -427,6 +441,7 @@ final class ProjectController extends AbstractController
         }
 
         return $this->render('project/rates.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'project' => $project,
             'form' => $form->createView()
         ]);
@@ -453,6 +468,7 @@ final class ProjectController extends AbstractController
         }
 
         return $this->render('project/edit.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'project' => $project,
             'form' => $editForm->createView()
         ]);
@@ -518,6 +534,7 @@ final class ProjectController extends AbstractController
         }
 
         return $this->render('project/delete.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'project' => $project,
             'stats' => $stats,
             'form' => $deleteForm->createView(),
@@ -595,5 +612,13 @@ final class ProjectController extends AbstractController
             'include_budget' => $this->isGranted('budget', $project),
             'include_time' => $this->isGranted('time', $project),
         ]);
+    }
+
+    private function createPageSetup(): PageSetup
+    {
+        $page = new PageSetup('projects');
+        $page->setHelp('project.html');
+
+        return $page;
     }
 }

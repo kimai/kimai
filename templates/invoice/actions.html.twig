@@ -1,31 +1,8 @@
-{% macro invoices(view) %}
-    {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'invoices', view) %}
-    {{ widgets.page_actions(event.actions) }}
-{% endmacro %}
 
 {% macro invoice(invoice, view) %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set event = actions(app.user, 'invoice', view, {'invoice': invoice, 'token': csrf_token('invoice.status')}) %}
     {{ widgets.table_actions(event.actions) }}
-{% endmacro %}
-
-{% macro invoice_listing(view, query) %}
-    {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'invoice_details', view, {'query': query}) %}
-    {{ widgets.page_actions(event.actions) }}
-{% endmacro %}
-
-{% macro invoice_upload(view) %}
-    {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'invoice_upload', view) %}
-    {{ widgets.page_actions(event.actions) }}
-{% endmacro %}
-
-{% macro invoice_templates(view) %}
-    {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'invoice_templates', view) %}
-    {{ widgets.page_actions(event.actions) }}
 {% endmacro %}
 
 {% macro invoice_template(template, view) %}

@@ -93,9 +93,5 @@ class CustomerSubscriber extends AbstractActionsSubscriber
             $event->addActionToSubmenu('report', 'daterange_projects', ['title' => 'report_project_daterange', 'url' => $this->path('report_project_daterange', ['customer' => $customer->getId()]), 'translation_domain' => 'reporting']);
             $event->addActionToSubmenu('report', 'report_project_view', ['title' => 'report_project_view', 'url' => $this->path('report_project_view', ['customer' => $customer->getId()]), 'translation_domain' => 'reporting']);
         }
-
-        if (!$isListingView) {
-            $event->addHelp($this->documentationLink('customer.html'));
-        }
     }
 }

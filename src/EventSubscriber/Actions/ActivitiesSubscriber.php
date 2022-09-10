@@ -25,11 +25,5 @@ class ActivitiesSubscriber extends AbstractActionsSubscriber
         }
 
         $event->addQuickExport($this->path('activity_export'));
-
-        if ($this->isGranted('system_configuration')) {
-            $event->addSettings($this->path('system_configuration_section', ['section' => 'activity']));
-        }
-
-        $event->addHelp($this->documentationLink('activity.html'));
     }
 }

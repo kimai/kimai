@@ -1,8 +1,8 @@
+{% extends 'invoice/layout.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
-{% extends 'invoice/layout.html.twig' %}
 
-{% block title %}{{ 'menu.export'|trans }}{% endblock %}
+{% block title %}{{ 'export'|trans }}{% endblock %}
 {% block invoice %}
     {% set decimal = decimal|default(false) %}
     {% set showUserColumn = true %}

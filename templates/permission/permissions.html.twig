@@ -1,38 +1,35 @@
 {% extends 'base.html.twig' %}
 {% import "macros/datatables.html.twig" as tables %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "permission/actions.html.twig" as actions %}
-
-{% set roles = roles|reverse %}
-{% set columns = {
-    'name': 'alwaysVisible',
-} %}
-{% set canEditPermissions = is_granted('role_permissions') %}
-{% for role in roles %}
-    {% set class = 'alwaysVisible text-center' %}
-    {% if role.name == 'ROLE_SUPER_ADMIN' %}
-        {% set class = class ~ ' bg-orange-lt' %}
-    {% elseif role.name == 'ROLE_USER' %}
-        {% set class = class ~ ' bg-green-lt' %}
-    {% endif %}
-    {% set options = {'class': class} %}
-    {% if canEditPermissions and role.name not in system_roles|keys %}
-        {% set widget %}
-            &nbsp;<a href="{{ path('admin_user_role_delete', {'id': role.id, 'csrfToken': token}) }}" class="confirmation-link" data-question="confirm.delete">{{ icon('trash') }}</a>
-        {% endset %}
-        {% set options = options|merge({'html_after': widget}) %}
-    {% endif %}
-    {% set columns = columns|merge({
-        (role.name): options,
-    }) %}
-{% endfor %}
-
-{% set tableName = 'user_admin_permissions' %}
-
-{% block page_title %}{{ 'profile.roles'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.user_permissions('index') }}{% endblock %}
 
 {% block main %}
+
+    {% set roles = roles|reverse %}
+    {% set columns = {
+        'name': 'alwaysVisible',
+    } %}
+    {% set canEditPermissions = is_granted('role_permissions') %}
+    {% for role in roles %}
+        {% set class = 'alwaysVisible text-center' %}
+        {% if role.name == 'ROLE_SUPER_ADMIN' %}
+            {% set class = class ~ ' bg-orange-lt' %}
+        {% elseif role.name == 'ROLE_USER' %}
+            {% set class = class ~ ' bg-green-lt' %}
+        {% endif %}
+        {% set options = {'class': class} %}
+        {% if canEditPermissions and role.name not in system_roles|keys %}
+            {% set widget %}
+                &nbsp;<a href="{{ path('admin_user_role_delete', {'id': role.id, 'csrfToken': token}) }}" class="confirmation-link" data-question="confirm.delete">{{ icon('trash') }}</a>
+            {% endset %}
+            {% set options = options|merge({'html_after': widget}) %}
+        {% endif %}
+        {% set columns = columns|merge({
+            (role.name): options,
+        }) %}
+    {% endfor %}
+
+    {% set tableName = 'user_admin_permissions' %}
+
     {{ tables.datatable_header(tableName, columns, null, {'reload': 'kimai.userRoleUpdate'}) }}
     
     {% set colspan = 1 + (roles|length) %}

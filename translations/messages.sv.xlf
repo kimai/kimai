@@ -99,10 +99,6 @@
         <source>menu.timesheet</source>
         <target state="translated">Min tidsredovisning</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target state="translated">Exportera</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target state="translated">Tidsschema</target>
@@ -1221,6 +1217,10 @@
       <trans-unit id="KB9cJM6" resname="budgetIndependent">
         <source>budgetIndependent</source>
         <target state="translated">Visa oavsett "budgettyp"</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>Om Kimai</target>
       </trans-unit>
     </body>
   </file>

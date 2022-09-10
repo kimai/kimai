@@ -1,8 +1,4 @@
-{% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
-{% import "system-configuration/actions.html.twig" as actions %}
-
-{% block page_title %}{{ 'menu.system_configuration'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.system_configuration('index') }}{% endblock %}
+{% extends 'base.html.twig' %}
 
 {% block main %}
 <div class="row">

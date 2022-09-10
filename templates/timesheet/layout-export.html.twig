@@ -1,15 +1,13 @@
 {% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 
-{% block page_title %}{{ 'menu.export'|trans }}{% endblock %}
-
 {% block main %}
     {% if stats.count > 1000 %}
         {{ widgets.alert('warning', ('export.warn_result_amount'|trans({'%count%': stats.count})), null, 'warning') }}
     {% endif %}
     {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {
-        'title': 'menu.export'|trans,
+        'title': 'export'|trans,
         'form': form,
         'back': path(route_back),
         'formStartOptions': {'attr': {'class': 'searchform', 'target': '_blank'}},

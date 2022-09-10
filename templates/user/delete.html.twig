@@ -1,8 +1,6 @@
 {% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 
-{% block page_title %}{{ 'users'|trans }}{% endblock %}
-
 {% block main %}
 
     {% set inUse = (stats.recordsTotal > 0) %}

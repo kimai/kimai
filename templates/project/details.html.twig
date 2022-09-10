@@ -1,9 +1,5 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "project/actions.html.twig" as actions %}
-
-{% block page_title %}{{ 'projects'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.project(project, 'project_details') }}{% endblock %}
 
 {% block main %}
     {% set can_edit = is_granted('edit', project) %}

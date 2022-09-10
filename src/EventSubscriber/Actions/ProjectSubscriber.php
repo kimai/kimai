@@ -86,9 +86,5 @@ class ProjectSubscriber extends AbstractActionsSubscriber
         if ($project->isVisible() && $this->isGranted('report:project') && $this->isGranted('details', $project)) {
             $event->addAction('report_project_details', ['title' => 'report_project_details', 'translation_domain' => 'reporting', 'url' => $this->path('report_project_details', ['project' => $project->getId()]), 'icon' => 'reporting']);
         }
-
-        if (!$isListingView) {
-            $event->addHelp($this->documentationLink('project.html'));
-        }
     }
 }

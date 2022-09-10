@@ -1,9 +1,3 @@
-{% macro projects(view, query) %}
-    {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'projects', view, {'query': query}) %}
-    {{ widgets.page_actions(event.actions) }}
-{% endmacro %}
-
 {% macro project(project, view, isTable) %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set event = actions(app.user, 'project', view, {'project': project, 'token': csrf_token('project.duplicate')}) %}

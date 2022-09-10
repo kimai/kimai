@@ -756,10 +756,6 @@
         <source>menu.plugin</source>
         <target>Дополнения</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Экспорт</target>
-      </trans-unit>
       <trans-unit id="6OKwCUB" resname="menu.system">
         <source>menu.system</source>
         <target>Система</target>
@@ -1195,6 +1191,10 @@
       <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
         <target state="translated">Текст счета</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>О Kimai</target>
       </trans-unit>
     </body>
   </file>

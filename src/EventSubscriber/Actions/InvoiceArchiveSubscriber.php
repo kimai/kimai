@@ -15,12 +15,11 @@ class InvoiceArchiveSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {
-        return 'invoice_details';
+        return 'invoice_archive';
     }
 
     public function onActions(PageActionsEvent $event): void
     {
         $event->addQuickExport($this->path('invoice_export'));
-        $event->addHelp($this->documentationLink('invoices.html'));
     }
 }

@@ -3,11 +3,6 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% import "invoice/actions.html.twig" as actions %}
 
-{% set tableName = 'invoice_template' %}
-
-{% block page_title %}{{ 'admin_invoice_template.title'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.invoice_templates('index') }}{% endblock %}
-
 {% block datatable_row %}
     <tr class="modal-ajax-form open-edit" data-href="{{ path('admin_invoice_template_edit', {'id' : entry.id}) }}">
         <td class="{{ tables.class(dataTable, 'name') }}">{{ entry.name }}</td>

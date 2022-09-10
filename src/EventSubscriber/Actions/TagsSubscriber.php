@@ -23,7 +23,5 @@ class TagsSubscriber extends AbstractActionsSubscriber
         if ($this->isGranted('manage_tag') || $this->isGranted('create_tag')) {
             $event->addCreate($this->path('tags_create'));
         }
-
-        $event->addHelp($this->documentationLink('tags.html'));
     }
 }

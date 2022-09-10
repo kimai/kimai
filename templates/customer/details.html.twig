@@ -1,9 +1,5 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "customer/actions.html.twig" as actions %}
-
-{% block page_actions %}{{ actions.customer(customer, 'customer_details') }}{% endblock %}
-{% block page_title %}{{ 'customers'|trans }}{% endblock %}
 
 {% block main %}
     {% set can_edit = is_granted('edit', customer) %}

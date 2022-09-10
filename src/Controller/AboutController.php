@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Constants;
+use App\Utils\PageSetup;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -42,6 +43,7 @@ class AboutController extends AbstractController
         }
 
         return $this->render('about/license.html.twig', [
+            'page_setup' => new PageSetup('about.title'),
             'license' => $license
         ]);
     }

@@ -2,12 +2,6 @@
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
 
-{% block page_title %}{{ 'menu.plugin'|trans }}{% endblock %}
-{% block page_actions %}
-    {% set event = actions(app.user, 'plugins', 'index') %}
-    {{ widgets.page_actions(event.actions) }}
-{% endblock %}
-
 {% block main %}
 
     {% if plugins|length == 0 %}
@@ -53,8 +47,12 @@
 
     {% if extensions|length > 0 %}
         {% embed '@theme/embeds/card.html.twig' %}
+            {% from "macros/widgets.html.twig" import card_tool_button %}
             {% block box_title %}{{ 'plugin.marketplace'|trans({}, 'plugins') }}{% endblock %}
             {% block box_body_class %}p-0{% endblock %}
+            {% block box_tools %}
+                {{ card_tool_button('shop', {'title': 'shop', 'translation_domain': 'plugins', 'target': '_blank', 'url': constant('App\\Constants::HOMEPAGE') ~ '/store/', 'icon': false}) }}
+            {% endblock %}
             {% block box_body %}
                 {% set columns = {
                     'name': {'class': 'alwaysVisible'},
@@ -75,7 +73,7 @@
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">{{ extension.description }}</td>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
                             {% if extension.buy is defined and extension.buy is not empty %}
-                                <a class="btn btn-outline-secondary" href="{{ extension.buy }}" title="{{ 'buy'|trans({}, 'plugins') }}" target="_blank">{{ icon('shop') }}</a>
+                                <a class="btn btn-icon btn-outline-secondary" href="{{ extension.buy }}" title="{{ 'buy'|trans({}, 'plugins') }}" target="_blank">{{ icon('shop') }}</a>
                             {% endif %}
                         </td>
                     </tr>

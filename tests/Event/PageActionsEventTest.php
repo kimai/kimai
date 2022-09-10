@@ -85,7 +85,6 @@ class PageActionsEventTest extends TestCase
         $sut->addDivider();
         $sut->addColumnToggle('foo2');
         $sut->addDelete('foo3');
-        $sut->addHelp('foo4');
         $sut->addCreate('foo5', true);
         $sut->addCreate('foo6', false);
         $sut->addQuickExport('foo7');

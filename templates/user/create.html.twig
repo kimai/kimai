@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block page_title %}{{ 'users'|trans }}{% endblock %}
-
 {% block main %}
     {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
     {% set formOptions = {

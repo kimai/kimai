@@ -504,10 +504,6 @@
         <source>registration.check_email</source>
         <target>En e-post har blitt sendt til %email%. Den inneholder en invitasjonslenke du må klikke for å aktivere kontoen din.</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Eksporter</target>
-      </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
         <target>Rapportering</target>
@@ -1171,6 +1167,10 @@
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target>Automatisk</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>Om Kimai</target>
       </trans-unit>
     </body>
   </file>

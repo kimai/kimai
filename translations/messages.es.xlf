@@ -111,10 +111,6 @@
         <source>menu.timesheet</source>
         <target>Mis horas</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Exportar</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>Partes de horas</target>
@@ -1205,6 +1201,10 @@
       <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
         <target state="needs-translation">Texto de la factura</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>Acerca de Kimai</target>
       </trans-unit>
     </body>
   </file>

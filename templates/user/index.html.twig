@@ -3,10 +3,6 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% import "user/actions.html.twig" as actions %}
 
-{% block page_title %}{{ 'users'|trans }}{% endblock %}
-
-{% block page_actions %}{{ actions.users('index', dataTable.getQuery()) }}{% endblock %}
-
 {% block datatable_row %}
     <tr {{ widgets.user_row_attr(entry) }}>
         <td class="{{ tables.class(dataTable, 'avatar') }}">{{ widgets.user_avatar(entry, false) }}</td>

@@ -25,11 +25,5 @@ class ProjectsSubscriber extends AbstractActionsSubscriber
         }
 
         $event->addQuickExport($this->path('project_export'));
-
-        if ($this->isGranted('system_configuration')) {
-            $event->addSettings($this->path('system_configuration_section', ['section' => 'project']));
-        }
-
-        $event->addHelp($this->documentationLink('project.html'));
     }
 }

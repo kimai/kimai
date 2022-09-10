@@ -24,6 +24,7 @@ use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use App\User\UserService;
 use App\Utils\DataTable;
+use App\Utils\PageSetup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -86,7 +87,13 @@ final class UserController extends AbstractController
         $table->addColumn('active', ['class' => 'd-none w-min', 'orderBy' => false]);
         $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
 
+        $page = new PageSetup('users');
+        $page->setHelp('users.html');
+        $page->setActionName('users');
+        $page->setDataTable($table);
+
         return $this->render('user/index.html.twig', [
+            'page_setup' => $page,
             'dataTable' => $table,
             'preferences' => $event->getPreferences(),
         ]);
@@ -124,7 +131,11 @@ final class UserController extends AbstractController
             return $this->redirectToRouteAfterCreate('user_profile_edit', ['username' => $user->getUserIdentifier()]);
         }
 
+        $page = new PageSetup('users');
+        $page->setHelp('users.html');
+
         return $this->render('user/create.html.twig', [
+            'page_setup' => $page,
             'user' => $user,
             'form' => $editForm->createView()
         ]);
@@ -173,7 +184,11 @@ final class UserController extends AbstractController
             return $this->redirectToRoute('admin_user');
         }
 
+        $page = new PageSetup('users');
+        $page->setHelp('users.html');
+
         return $this->render('user/delete.html.twig', [
+            'page_setup' => $page,
             'user' => $userToDelete,
             'stats' => $stats,
             'form' => $deleteForm->createView(),

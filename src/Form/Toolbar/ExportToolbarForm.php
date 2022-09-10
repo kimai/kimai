@@ -25,18 +25,18 @@ class ExportToolbarForm extends AbstractToolbarForm
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addSearchTermInputField($builder);
-        $this->addBillableChoice($builder);
-        $this->addExportStateChoice($builder);
-        $this->addTimesheetStateChoice($builder);
-        if ($options['include_user']) {
-            $this->addUsersChoice($builder);
-        }
         $this->addDateRange($builder, ['timezone' => $options['timezone']]);
         $this->addCustomerMultiChoice($builder, ['start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true], true);
         $this->addProjectMultiChoice($builder, ['ignore_date' => true], true, true);
         $this->addActivityMultiChoice($builder, [], true);
-        $this->addExportRenderer($builder);
         $this->addTagInputField($builder);
+        if ($options['include_user']) {
+            $this->addUsersChoice($builder);
+        }
+        $this->addTimesheetStateChoice($builder);
+        $this->addBillableChoice($builder);
+        $this->addExportStateChoice($builder);
+        $this->addExportRenderer($builder);
         if ($options['include_export']) {
             $builder->add('markAsExported', HiddenType::class, [
                 'label' => 'mark_as_exported',

@@ -17,6 +17,7 @@ use App\Form\Toolbar\TagToolbarForm;
 use App\Repository\Query\TagQuery;
 use App\Repository\TagRepository;
 use App\Utils\DataTable;
+use App\Utils\PageSetup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,7 +67,13 @@ class TagController extends AbstractController
         $table->addColumn('amount', ['class' => 'text-center w-min']);
         $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
 
+        $page = new PageSetup('tags');
+        $page->setActionName('tags');
+        $page->setHelp('tags.html');
+        $page->setDataTable($table);
+
         return $this->render('tags/index.html.twig', [
+            'page_setup' => $page,
             'dataTable' => $table,
         ]);
     }
@@ -95,7 +102,11 @@ class TagController extends AbstractController
             }
         }
 
+        $page = new PageSetup('tags');
+        $page->setHelp('tags.html');
+
         return $this->render('tags/edit.html.twig', [
+            'page_setup' => $page,
             'tag' => $tag,
             'form' => $editForm->createView()
         ]);
@@ -127,7 +138,11 @@ class TagController extends AbstractController
             }
         }
 
+        $page = new PageSetup('tags');
+        $page->setHelp('tags.html');
+
         return $this->render('tags/edit.html.twig', [
+            'page_setup' => $page,
             'tag' => $tag,
             'form' => $editForm->createView()
         ]);

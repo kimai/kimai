@@ -102,10 +102,6 @@
         <source>menu.timesheet</source>
         <target>Rögzített órák</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Exportálás</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>Rögzített órák</target>
@@ -1204,6 +1200,10 @@
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target>Automatikus</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>A Kimai névjegye</target>
       </trans-unit>
     </body>
   </file>

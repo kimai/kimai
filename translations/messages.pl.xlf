@@ -119,10 +119,6 @@
         <source>menu.timesheet</source>
         <target state="translated">Moje wpisy</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target state="translated">Eksportowanie</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target state="translated">Ewidencja</target>
@@ -1209,6 +1205,10 @@
       <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
         <target state="translated">Tekst na fakturze</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>O Kimai</target>
       </trans-unit>
     </body>
   </file>

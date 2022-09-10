@@ -3,10 +3,6 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% import "customer/actions.html.twig" as actions %}
 
-{% block page_title %}{{ 'customers'|trans }}{% endblock %}
-
-{% block page_actions %}{{ actions.customers('index', dataTable.getQuery()) }}{% endblock %}
-
 {% block datatable_row %}
     <tr {{ widgets.customer_row_attr(entry, now) }}>
         <td class="{{ tables.class(dataTable, 'name') }}">

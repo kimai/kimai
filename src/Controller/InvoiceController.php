@@ -35,6 +35,7 @@ use App\Repository\Query\BaseQuery;
 use App\Repository\Query\InvoiceArchiveQuery;
 use App\Repository\Query\InvoiceQuery;
 use App\Utils\DataTable;
+use App\Utils\PageSetup;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -120,6 +121,7 @@ final class InvoiceController extends AbstractController
         }
 
         return $this->render('invoice/index.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'models' => $models,
             'forms' => $forms,
             'form' => $form->createView(),
@@ -245,6 +247,7 @@ final class InvoiceController extends AbstractController
             $form->handleRequest($request);
 
             return $this->render('invoice/invoice_edit.html.twig', [
+                'page_setup' => $this->createPageSetup(),
                 'invoice' => $invoice,
                 'form' => $form->createView()
             ]);
@@ -282,6 +285,7 @@ final class InvoiceController extends AbstractController
         }
 
         return $this->render('invoice/invoice_edit.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'invoice' => $invoice,
             'form' => $form->createView()
         ]);
@@ -379,7 +383,12 @@ final class InvoiceController extends AbstractController
         $table->addColumn('total_rate', ['class' => 'd-none d-md-table-cell text-end w-min']);
         $table->addColumn('actions', ['class' => 'actions alwaysVisible', 'orderBy' => false]);
 
+        $page = $this->createPageSetup();
+        $page->setDataTable($table);
+        $page->setActionName('invoice_archive');
+
         return $this->render('invoice/listing.html.twig', [
+            'page_setup' => $page,
             'dataTable' => $table,
             'download' => $invoice,
             'metaColumns' => $metaColumns,
@@ -440,7 +449,12 @@ final class InvoiceController extends AbstractController
         $table->addColumn('language', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
         $table->addColumn('actions', ['class' => 'actions alwaysVisible', 'orderBy' => false]);
 
+        $page = $this->createPageSetup('admin_invoice_template.title');
+        $page->setDataTable($table);
+        $page->setActionName('invoice_templates');
+
         return $this->render('invoice/templates.html.twig', [
+            'page_setup' => $page,
             'dataTable' => $table,
         ]);
     }
@@ -543,7 +557,10 @@ final class InvoiceController extends AbstractController
             }
         }
 
+        $page = $this->createPageSetup('admin_invoice_template.title');
+
         return $this->render('invoice/document_upload.html.twig', [
+            'page_setup' => $page,
             'error_replacer' => ['%max%' => $event->getMaximumAllowedDocuments(), '%dir%' => $dir],
             'upload_error' => $uploadError,
             'can_upload' => $canUpload,
@@ -697,7 +714,10 @@ final class InvoiceController extends AbstractController
             }
         }
 
+        $page = $this->createPageSetup('admin_invoice_template.title');
+
         return $this->render('invoice/template_edit.html.twig', [
+            'page_setup' => $page,
             'template' => $template,
             'form' => $editForm->createView()
         ]);
@@ -764,5 +784,13 @@ final class InvoiceController extends AbstractController
             'method' => 'POST',
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
         ]);
+    }
+
+    private function createPageSetup(string $title = 'invoices'): PageSetup
+    {
+        $page = new PageSetup($title);
+        $page->setHelp('invoices.html');
+
+        return $page;
     }
 }

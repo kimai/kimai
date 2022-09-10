@@ -131,10 +131,6 @@
         <source>menu.timesheet</source>
         <target state="translated">Omat työajat</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target state="translated">Vie</target>
-      </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
         <target state="translated">Raportointi</target>
@@ -1212,6 +1208,10 @@
       <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
         <target state="translated">Salli globaali toiminta</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target state="translated">Tietoa Kimaista</target>
       </trans-unit>
     </body>
   </file>

@@ -53,10 +53,6 @@
         <source>menu.timesheet</source>
         <target>Mínar tíðir</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Útflyt</target>
-      </trans-unit>
       <trans-unit id="IeshU90" resname="customers">
         <source>customers</source>
         <target>Kundar</target>
@@ -1150,6 +1146,10 @@
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target state="translated">Sjálvvirkandi</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target state="needs-translation">About Kimai</target>
       </trans-unit>
     </body>
   </file>

@@ -15,6 +15,7 @@ use App\Export\ServiceExport;
 use App\Export\TooManyItemsExportException;
 use App\Form\Toolbar\ExportToolbarForm;
 use App\Repository\Query\ExportQuery;
+use App\Utils\PageSetup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,7 +79,11 @@ class ExportController extends AbstractController
             }
         }
 
+        $page = new PageSetup('export');
+        $page->setHelp('export.html');
+
         return $this->render('export/index.html.twig', [
+            'page_setup' => $page,
             'too_many' => $tooManyResults,
             'by_customer' => $byCustomer,
             'query' => $query,

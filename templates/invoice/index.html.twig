@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
-{% import "invoice/actions.html.twig" as actions %}
 
 {% set totalDuration = 0 %}
 {% set totalRates = {} %}
@@ -34,9 +33,6 @@
 } %}
 
 {% set tableName = 'invoice_create' %}
-
-{% block page_title %}{{ 'invoice_form.title'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.invoices('index') }}{% endblock %}
 
 {% block status %}
     {% from "macros/status.html.twig" import status_duration, status_money %}

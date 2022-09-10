@@ -841,10 +841,6 @@
         <source>menu.reporting</source>
         <target>Berichte</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Export</target>
-      </trans-unit>
       <trans-unit id="C0W7_BT" resname="menu.timesheet">
         <source>menu.timesheet</source>
         <target>Meine Zeiten</target>
@@ -1148,6 +1144,10 @@
       <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
         <target state="translated">Rechnungstext</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>Über Kimai</target>
       </trans-unit>
     </body>
   </file>

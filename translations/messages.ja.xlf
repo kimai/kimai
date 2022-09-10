@@ -102,10 +102,6 @@
         <source>menu.timesheet</source>
         <target>タイムシート</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>エクスポート</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>タイムシート</target>
@@ -1196,6 +1192,10 @@
       <trans-unit id="ViUuILv" resname="includeBudgetType_month">
         <source>includeBudgetType_month</source>
         <target state="needs-translation">Show entries with "monthly" budget</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>Kimai について</target>
       </trans-unit>
     </body>
   </file>

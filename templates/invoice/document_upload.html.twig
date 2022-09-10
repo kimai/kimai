@@ -1,19 +1,5 @@
 {% extends 'base.html.twig' %}
-{% import "invoice/actions.html.twig" as actions %}
 {% import "macros/widgets.html.twig" as widgets %}
-
-{% block page_title %}{{ 'admin_invoice_template.title'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.invoice_upload('index') }}{% endblock %}
-
-{% block breadcrumb %}
-    {% if is_granted('manage_invoice_template') %}
-        {% from "macros/breadcrumb.html.twig" import breadcrumb %}
-        {{ breadcrumb({
-            ('admin_invoice_template.title'|trans): path('admin_invoice_template'),
-            ('invoice_renderer'|trans({}, 'invoice-renderer')): '#'
-        }) }}
-    {% endif %}
-{% endblock %}
 
 {% block main %}
     {% if can_upload and form is not null %}
@@ -29,6 +15,7 @@
             {% endblock %}
             {% block box_footer %}
                 <button type="submit" class="btn btn-primary">{{ 'action.save'|trans }}</button>
+                <a href="{{ path('admin_invoice_template') }}" class="btn btn-link">{{ 'action.back'|trans }}</a>
             {% endblock %}
         {% endembed %}
     {% elseif upload_error is not null %}

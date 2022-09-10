@@ -127,10 +127,6 @@
         <source>menu.timesheet</source>
         <target>Moje časy</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Export</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>Pracovné výkazy</target>
@@ -1243,6 +1239,10 @@
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target>Automaticky</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>O Kimai</target>
       </trans-unit>
     </body>
   </file>

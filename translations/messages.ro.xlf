@@ -122,10 +122,6 @@
         <source>menu.timesheet</source>
         <target>Pontajul meu</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Export</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>Pontaje</target>
@@ -1149,6 +1145,10 @@
       <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
         <target state="translated">Permiteți activități globale</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>Despre Kimai</target>
       </trans-unit>
     </body>
   </file>

@@ -3,9 +3,6 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% import "activity/actions.html.twig" as actions %}
 
-{% block page_title %}{{ 'activities'|trans }}{% endblock %}
-{% block page_actions %}{{ actions.activities('index', dataTable.getQuery()) }}{% endblock %}
-
 {% block datatable_row %}
     <tr {{ widgets.activity_row_attr(entry, now) }}>
         <td class="{{ tables.class(dataTable, 'name') }}">

@@ -25,9 +25,7 @@ class TimesheetsSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('export_own_timesheet')) {
-            $event->addAction('download', ['url' => $this->path('timesheet_export'), 'class' => 'toolbar-action modal-ajax-form', 'title' => 'menu.export']);
+            $event->addAction('download', ['url' => $this->path('timesheet_export'), 'class' => 'toolbar-action modal-ajax-form', 'title' => 'export']);
         }
-
-        $event->addHelp($this->documentationLink('timesheet.html'));
     }
 }

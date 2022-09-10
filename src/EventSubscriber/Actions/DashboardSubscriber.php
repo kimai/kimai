@@ -72,7 +72,5 @@ class DashboardSubscriber extends AbstractActionsSubscriber
 
             $event->addAction('reset', ['title' => 'action.reset', 'url' => $this->path('dashboard_reset'), 'icon' => 'delete', 'class' => 'confirmation-link', 'attr' => ['data-question' => 'confirm.delete']]);
         }
-
-        $event->addHelp($this->documentationLink('dashboard.html'));
     }
 }

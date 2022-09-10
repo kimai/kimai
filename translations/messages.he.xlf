@@ -122,10 +122,6 @@
         <source>menu.timesheet</source>
         <target>השעות שלי</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>ייצוא נתונים</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>גיליון שעות</target>
@@ -1145,6 +1141,10 @@
       <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
         <target state="translated">לאפשר פעילויות גלובליות</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>על אודות קימאי</target>
       </trans-unit>
     </body>
   </file>

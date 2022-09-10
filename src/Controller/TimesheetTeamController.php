@@ -19,6 +19,7 @@ use App\Form\Model\MultiUserTimesheet;
 use App\Form\TimesheetAdminEditForm;
 use App\Form\TimesheetMultiUserEditForm;
 use App\Repository\Query\TimesheetQuery;
+use App\Utils\PageSetup;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
@@ -46,7 +47,7 @@ class TimesheetTeamController extends TimesheetAbstractController
         $query = $this->createDefaultQuery();
         $query->setPage($page);
 
-        return $this->index($query, $request, 'admin_timesheet', 'admin_timesheet_paginated', 'timesheet-team/index.html.twig', TimesheetMetaDisplayEvent::TEAM_TIMESHEET);
+        return $this->index($query, $request, 'admin_timesheet', 'admin_timesheet_paginated', TimesheetMetaDisplayEvent::TEAM_TIMESHEET);
     }
 
     /**
@@ -64,7 +65,7 @@ class TimesheetTeamController extends TimesheetAbstractController
      */
     public function editAction(Timesheet $entry, Request $request): Response
     {
-        return $this->edit($entry, $request, 'timesheet-team/edit.html.twig');
+        return $this->edit($entry, $request);
     }
 
     /**
@@ -135,7 +136,7 @@ class TimesheetTeamController extends TimesheetAbstractController
                 return $this->redirectToRoute($this->getTimesheetRoute());
             } catch (\Exception $ex) {
                 // FIXME I guess this will save timesheets for some users, but then fail only for single users
-                // FIXME we should run in a arge transaction or disallow to create running timesheets
+                // FIXME we should run in a transaction or disallow to create running timesheets
                 $this->handleFormUpdateException($ex, $createForm);
             }
         }
@@ -171,7 +172,7 @@ class TimesheetTeamController extends TimesheetAbstractController
      */
     public function multiUpdateAction(Request $request): Response
     {
-        return $this->multiUpdate($request, 'timesheet-team/multi-update.html.twig');
+        return $this->multiUpdate($request);
     }
 
     /**
@@ -272,8 +273,31 @@ class TimesheetTeamController extends TimesheetAbstractController
         return true;
     }
 
+    protected function hasMarkdownSupport(): bool
+    {
+        return false;
+    }
+
     protected function getTableName(): string
     {
         return 'timesheet_admin';
+    }
+
+    protected function getActionName(): string
+    {
+        return 'timesheets_team';
+    }
+
+    protected function getActionNameSingle(): string
+    {
+        return 'timesheet_team';
+    }
+
+    protected function createPageSetup(): PageSetup
+    {
+        $page = new PageSetup('menu.admin_timesheet');
+        $page->setHelp('timesheet.html');
+
+        return $page;
     }
 }

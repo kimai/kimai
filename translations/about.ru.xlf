@@ -30,10 +30,6 @@
         <source>support</source>
         <target>Поддержка</target>
       </trans-unit>
-      <trans-unit id="3Clo55j" resname="about.title">
-        <source>about.title</source>
-        <target>О Kimai</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

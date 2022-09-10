@@ -99,10 +99,6 @@
         <source>menu.timesheet</source>
         <target>Meus tempos</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Exportar</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>Quadro de horários</target>
@@ -1209,6 +1205,10 @@
       <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
         <target state="translated">Permitir atividades globais</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>Sobre o Kimai</target>
       </trans-unit>
     </body>
   </file>

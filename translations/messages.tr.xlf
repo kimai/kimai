@@ -111,10 +111,6 @@
         <source>menu.timesheet</source>
         <target state="translated">Çizelgem</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target state="translated">Dışarı aktar</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target state="translated">Çizelgeler</target>
@@ -1209,6 +1205,10 @@
       <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
         <target state="translated">Genel etkinliklere izin ver</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target state="translated">Kimai Hakkında</target>
       </trans-unit>
     </body>
   </file>

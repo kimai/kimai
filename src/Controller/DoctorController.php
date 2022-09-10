@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Utils\FileHelper;
+use App\Utils\PageSetup;
 use App\Utils\ReleaseVersion;
 use Composer\InstalledVersions;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -88,25 +89,25 @@ class DoctorController extends AbstractController
     public function index(): Response
     {
         $logLines = 100;
-
         $canDeleteLogfile = $this->isGranted('system_configuration') && is_writable($this->getLogFilename());
+        $page = new PageSetup('Doctor');
+        $page->setHelp('doctor.html');
 
-        return $this->render('doctor/index.html.twig', array_merge(
-            [
-                'modules' => get_loaded_extensions(),
-                'environment' => $this->kernelEnvironment,
-                'info' => $this->getPhpInfo(),
-                'settings' => $this->getIniSettings(),
-                'extensions' => $this->getLoadedExtensions(),
-                'directories' => $this->getFilePermissions(),
-                'log_delete' => $canDeleteLogfile,
-                'logs' => $this->getLog(),
-                'logLines' => $logLines,
-                'logSize' => $this->getLogSize(),
-                'composer' => $this->getComposerPackages(),
-                'release' => $this->getNextUpdateVersion()
-            ]
-        ));
+        return $this->render('doctor/index.html.twig', [
+            'page_setup' => $page,
+            'modules' => get_loaded_extensions(),
+            'environment' => $this->kernelEnvironment,
+            'info' => $this->getPhpInfo(),
+            'settings' => $this->getIniSettings(),
+            'extensions' => $this->getLoadedExtensions(),
+            'directories' => $this->getFilePermissions(),
+            'log_delete' => $canDeleteLogfile,
+            'logs' => $this->getLog(),
+            'logLines' => $logLines,
+            'logSize' => $this->getLogSize(),
+            'composer' => $this->getComposerPackages(),
+            'release' => $this->getNextUpdateVersion()
+        ]);
     }
 
     /**

@@ -119,10 +119,6 @@
         <source>menu.timesheet</source>
         <target>Nire orduak</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Exportatu</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>Ordu taula</target>
@@ -1200,6 +1196,10 @@
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target state="needs-translation">Updated at</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>Kimairi buruz</target>
       </trans-unit>
     </body>
   </file>

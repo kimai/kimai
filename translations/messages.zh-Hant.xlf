@@ -183,10 +183,6 @@
         <source>menu.timesheet</source>
         <target state="translated">我的時間</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target state="translated">匯出</target>
-      </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
         <target state="translated">報表</target>
@@ -364,6 +360,10 @@
       <trans-unit id="pO8wS6Q" resname="language">
         <source>language</source>
         <target state="translated">語言</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>关于Kimai</target>
       </trans-unit>
     </body>
   </file>

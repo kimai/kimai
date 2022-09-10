@@ -36,6 +36,7 @@ use App\Repository\Query\ProjectQuery;
 use App\Repository\TeamRepository;
 use App\Utils\DataTable;
 use App\Utils\FileHelper;
+use App\Utils\PageSetup;
 use JeroenDesloovere\VCard\VCard;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -115,7 +116,12 @@ final class CustomerController extends AbstractController
         $table->addColumn('visible', ['class' => 'd-none text-center w-min']);
         $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
 
+        $page = $this->createPageSetup();
+        $page->setDataTable($table);
+        $page->setActionName('customers');
+
         return $this->render('customer/index.html.twig', [
+            'page_setup' => $page,
             'dataTable' => $table,
             'metaColumns' => $metaColumns,
             'now' => $this->getDateTimeFactory()->createDateTime(),
@@ -174,6 +180,7 @@ final class CustomerController extends AbstractController
         }
 
         return $this->render('customer/permissions.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'customer' => $customer,
             'form' => $form->createView()
         ]);
@@ -351,7 +358,13 @@ final class CustomerController extends AbstractController
         $this->dispatcher->dispatch($event);
         $boxes = $event->getController();
 
+        $page = $this->createPageSetup();
+        $page->setActionName('customer');
+        $page->setActionView('customer_details');
+        $page->setActionPayload(['customer' => $customer]);
+
         return $this->render('customer/details.html.twig', [
+            'page_setup' => $page,
             'customer' => $customer,
             'comments' => $comments,
             'commentForm' => $commentForm,
@@ -463,6 +476,7 @@ final class CustomerController extends AbstractController
         }
 
         return $this->render('customer/rates.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'customer' => $customer,
             'form' => $form->createView()
         ]);
@@ -515,6 +529,7 @@ final class CustomerController extends AbstractController
         }
 
         return $this->render('customer/delete.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'customer' => $customer,
             'stats' => $stats,
             'form' => $deleteForm->createView(),
@@ -571,6 +586,7 @@ final class CustomerController extends AbstractController
         }
 
         return $this->render('customer/edit.html.twig', [
+            'page_setup' => $this->createPageSetup(),
             'customer' => $customer,
             'form' => $editForm->createView()
         ]);
@@ -615,5 +631,13 @@ final class CustomerController extends AbstractController
             'include_budget' => $this->isGranted('budget', $customer),
             'include_time' => $this->isGranted('time', $customer),
         ]);
+    }
+
+    private function createPageSetup(): PageSetup
+    {
+        $page = new PageSetup('customers');
+        $page->setHelp('customer.html');
+
+        return $page;
     }
 }

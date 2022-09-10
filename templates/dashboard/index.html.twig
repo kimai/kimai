@@ -1,12 +1,6 @@
 {% extends 'base.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 
-{% block page_title %}{{ 'dashboard.title'|trans }}{% endblock %}
-{% block page_actions %}
-    {% set event = actions(app.user, 'dashboard', 'dashboard', {'widgets': widgets, 'available': available}) %}
-    {{ widgets.page_actions(event.actions) }}
-{% endblock %}
-
 {% block page_class %}dashboard{% endblock %}
 
 {% block stylesheets %}
@@ -17,6 +11,12 @@
 {% block head %}
     {{ parent() }}
     {{ encore_entry_script_tags('chart') }}
+{% endblock %}
+
+{% block footer %}
+    {% if 'dashboard' in app.request.attributes.get('_route') %}
+        {{ parent() }}
+    {% endif %}
 {% endblock %}
 
 {% block main %}

@@ -131,10 +131,6 @@
         <source>menu.timesheet</source>
         <target>Registrazioni</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Esporta</target>
-      </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
         <target>Rapporti</target>
@@ -1188,6 +1184,10 @@
       <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
         <target state="translated">Consenti attività globali</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>Approposito di Kimai</target>
       </trans-unit>
     </body>
   </file>

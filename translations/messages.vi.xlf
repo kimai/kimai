@@ -131,10 +131,6 @@
         <source>menu.timesheet</source>
         <target>Bảng chấm công</target>
       </trans-unit>
-      <trans-unit id="I.eil4u" resname="menu.export">
-        <source>menu.export</source>
-        <target>Xuất</target>
-      </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
         <target>Bảng chấm công</target>
@@ -1201,6 +1197,10 @@
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target state="translated">Tự động</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target>Thông tin về Kimai</target>
       </trans-unit>
     </body>
   </file>

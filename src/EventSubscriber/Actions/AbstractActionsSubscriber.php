@@ -9,7 +9,6 @@
 
 namespace App\EventSubscriber\Actions;
 
-use App\Constants;
 use App\Event\PageActionsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -32,11 +31,6 @@ abstract class AbstractActionsSubscriber implements EventSubscriberInterface
     protected function path(string $route, array $parameters = []): string
     {
         return $this->urlGenerator->generate($route, $parameters);
-    }
-
-    protected function documentationLink(string $url): string
-    {
-        return Constants::HOMEPAGE . '/documentation/' . $url;
     }
 
     public static function getSubscribedEvents(): array
