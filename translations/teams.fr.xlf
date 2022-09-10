@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fr" datatype="plaintext" original="teams.en.xlf">
     <body>
-      <trans-unit id="kgxAl_x" resname="teams.title">
-        <source>teams.title</source>
-        <target>Équipes</target>
-      </trans-unit>
       <trans-unit id="A_4Fc7c" resname="teams.project_access">
         <source>teams.project_access</source>
         <target>Accorder l'accès aux projets</target>
