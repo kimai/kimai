@@ -1,5 +1,6 @@
 .inline-search {
     max-width: 200px;
+    /* the entire inline-search should actually use .input-group-flat, but that causes some weird css problems inside the dropdown menu */
     #searchTerm {
         border-right: 0;
     }
