@@ -158,7 +158,7 @@
         <source>tags</source>
         <target>תגיות</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="Doctor">
+      <trans-unit id="JGaf9IK" resname="Doctor">
         <source>Doctor</source>
         <target>דוקטור</target>
       </trans-unit>
@@ -1137,10 +1137,6 @@
       <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
         <target state="translated">טקסט חשבונית</target>
-      </trans-unit>
-      <trans-unit id="8mTf0eZ" resname="budgetIndependent">
-        <source>budgetIndependent</source>
-        <target state="translated">להציג ללא תלות ב־„budget-type” (סוג תקציב)</target>
       </trans-unit>
       <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>

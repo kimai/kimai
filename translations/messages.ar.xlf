@@ -660,7 +660,7 @@
         <source>error.no_comments_found</source>
         <target>لم تكن هناك أيّة تعليقات نُشِرت حتّى الآن.</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="Doctor">
+      <trans-unit id="JGaf9IK" resname="Doctor">
         <source>Doctor</source>
         <target>حالة الخدمات</target>
       </trans-unit>

@@ -77,7 +77,7 @@
         <source>menu.system_configuration</source>
         <target>Stillingar</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="Doctor">
+      <trans-unit id="JGaf9IK" resname="Doctor">
         <source>Doctor</source>
         <target>Lækni</target>
       </trans-unit>
@@ -1147,8 +1147,8 @@
         <source>automatic</source>
         <target state="translated">Sjálvvirkandi</target>
       </trans-unit>
-      <trans-unit id="74pEVx1" resname="label.invoiceText">
-        <source>label.invoiceText</source>
+      <trans-unit id="74pEVx1" resname="invoiceText">
+        <source>invoiceText</source>
         <target state="translated">Tekstur á rokning</target>
       </trans-unit>
       <trans-unit id="3Clo55j" resname="about.title">

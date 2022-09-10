@@ -223,7 +223,7 @@
         <source>tags</source>
         <target state="translated">標籤</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="Doctor">
+      <trans-unit id="JGaf9IK" resname="Doctor">
         <source>Doctor</source>
         <target state="translated">診斷</target>
       </trans-unit>
@@ -365,36 +365,36 @@
         <source>about.title</source>
         <target>关于Kimai</target>
       </trans-unit>
-      <trans-unit id="Z8a2kUf" resname="label.customer">
-        <source>label.customer</source>
+      <trans-unit id="Z8a2kUf" resname="customer">
+        <source>customer</source>
         <target state="translated">客戶</target>
       </trans-unit>
-      <trans-unit id="D2N6_cP" resname="label.email">
-        <source>label.email</source>
+      <trans-unit id="D2N6_cP" resname="email">
+        <source>email</source>
         <target state="translated">Email</target>
       </trans-unit>
-      <trans-unit id="Ss2xe99" resname="label.team">
-        <source>label.team</source>
+      <trans-unit id="Ss2xe99" resname="team">
+        <source>team</source>
         <target state="translated">團隊</target>
       </trans-unit>
-      <trans-unit id="Zpj9UB4" resname="label.teamlead">
-        <source>label.teamlead</source>
+      <trans-unit id="Zpj9UB4" resname="teamlead">
+        <source>teamlead</source>
         <target state="translated">組長</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="label.create_more">
-        <source>label.create_more</source>
+      <trans-unit id="hX.EQKy" resname="create_more">
+        <source>create_more</source>
         <target state="translated">建立更多項目</target>
       </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
         <target state="translated">輸入您的訊息…</target>
       </trans-unit>
-      <trans-unit id="vkHr9AP" resname="label.billable">
-        <source>label.billable</source>
+      <trans-unit id="vkHr9AP" resname="billable">
+        <source>billable</source>
         <target state="translated">可計費</target>
       </trans-unit>
-      <trans-unit id="zldXQq6" resname="label.actions">
-        <source>label.actions</source>
+      <trans-unit id="zldXQq6" resname="actions">
+        <source>actions</source>
         <target state="translated">動作</target>
       </trans-unit>
       <trans-unit id="ovKkXwU" resname="action.edit">
@@ -425,20 +425,20 @@
         <source>more.info.link</source>
         <target state="translated">更多資訊</target>
       </trans-unit>
-      <trans-unit id="4iliLZT" resname="label.toggle_dropdown">
-        <source>label.toggle_dropdown</source>
+      <trans-unit id="4iliLZT" resname="toggle_dropdown">
+        <source>toggle_dropdown</source>
         <target state="translated">顯示選單</target>
       </trans-unit>
-      <trans-unit id="f3KMQJh" resname="label.my_teams">
-        <source>label.my_teams</source>
+      <trans-unit id="f3KMQJh" resname="my_teams">
+        <source>my_teams</source>
         <target state="translated">我的團隊</target>
       </trans-unit>
-      <trans-unit id="jTiYRIu" resname="label.my_team_projects">
-        <source>label.my_team_projects</source>
+      <trans-unit id="jTiYRIu" resname="my_team_projects">
+        <source>my_team_projects</source>
         <target state="translated">我的專案</target>
       </trans-unit>
-      <trans-unit id="1PQHtXu" resname="label.progress">
-        <source>label.progress</source>
+      <trans-unit id="1PQHtXu" resname="progress">
+        <source>progress</source>
         <target state="translated">進度</target>
       </trans-unit>
       <trans-unit id="VXj0Y3h" resname="timesheet.title">
@@ -449,40 +449,40 @@
         <source>timesheet.edit</source>
         <target state="translated">編輯紀錄</target>
       </trans-unit>
-      <trans-unit id="trDJK9W" resname="label.begin">
-        <source>label.begin</source>
+      <trans-unit id="trDJK9W" resname="begin">
+        <source>begin</source>
         <target state="translated">從</target>
       </trans-unit>
-      <trans-unit id="R9typUt" resname="label.end">
-        <source>label.end</source>
+      <trans-unit id="R9typUt" resname="end">
+        <source>end</source>
         <target state="translated">到</target>
       </trans-unit>
-      <trans-unit id="egaNXjp" resname="label.daterange">
-        <source>label.daterange</source>
+      <trans-unit id="egaNXjp" resname="daterange">
+        <source>daterange</source>
         <target state="translated">時間範圍</target>
       </trans-unit>
       <trans-unit id="UbnqJLn" resname="modal.columns.title">
         <source>modal.columns.title</source>
         <target state="translated">變更欄位可見</target>
       </trans-unit>
-      <trans-unit id="5gjqxgK" resname="label.fixedRate">
-        <source>label.fixedRate</source>
+      <trans-unit id="5gjqxgK" resname="fixedRate">
+        <source>fixedRate</source>
         <target state="translated">固定費率</target>
       </trans-unit>
       <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>
         <target state="translated">每次紀錄不管時間長短都會取得同樣的數值</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="label.calendar.initial_view">
-        <source>label.calendar.initial_view</source>
+      <trans-unit id="0sgroZi" resname="calendar.initial_view">
+        <source>calendar.initial_view</source>
         <target state="translated">起始行事曆檢視</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="label.login.initial_view">
-        <source>label.login.initial_view</source>
+      <trans-unit id="iqQsgIW" resname="login.initial_view">
+        <source>login.initial_view</source>
         <target state="translated">登入後檢視</target>
       </trans-unit>
-      <trans-unit id="hO7mkmf" resname="label.lastLogin">
-        <source>label.lastLogin</source>
+      <trans-unit id="hO7mkmf" resname="lastLogin">
+        <source>lastLogin</source>
         <target state="translated">最後登入</target>
       </trans-unit>
       <trans-unit id="pcfRcZ4" resname="month">
@@ -501,68 +501,68 @@
         <source>calendar</source>
         <target state="translated">行事曆</target>
       </trans-unit>
-      <trans-unit id="yLOqEX_" resname="label.project_start">
-        <source>label.project_start</source>
+      <trans-unit id="yLOqEX_" resname="project_start">
+        <source>project_start</source>
         <target state="translated">專案開始</target>
       </trans-unit>
-      <trans-unit id="4kQGReV" resname="label.project_end">
-        <source>label.project_end</source>
+      <trans-unit id="4kQGReV" resname="project_end">
+        <source>project_end</source>
         <target state="translated">專案結束</target>
       </trans-unit>
-      <trans-unit id="7jfRn_1" resname="label.company">
-        <source>label.company</source>
+      <trans-unit id="7jfRn_1" resname="company">
+        <source>company</source>
         <target state="translated">公司名稱</target>
       </trans-unit>
-      <trans-unit id="Dgmh_mv" resname="label.vat_id">
-        <source>label.vat_id</source>
+      <trans-unit id="Dgmh_mv" resname="vat_id">
+        <source>vat_id</source>
         <target state="translated">統一編號</target>
       </trans-unit>
-      <trans-unit id="YNGNfGn" resname="label.tax_rate">
-        <source>label.tax_rate</source>
+      <trans-unit id="YNGNfGn" resname="tax_rate">
+        <source>tax_rate</source>
         <target state="translated">稅率</target>
       </trans-unit>
-      <trans-unit id="0tkOMo1" resname="label.contact">
-        <source>label.contact</source>
+      <trans-unit id="0tkOMo1" resname="contact">
+        <source>contact</source>
         <target state="translated">聯絡人</target>
       </trans-unit>
-      <trans-unit id="c9W5AO4" resname="label.address">
-        <source>label.address</source>
+      <trans-unit id="c9W5AO4" resname="address">
+        <source>address</source>
         <target state="translated">地址</target>
       </trans-unit>
-      <trans-unit id="k7MJQ82" resname="label.country">
-        <source>label.country</source>
+      <trans-unit id="k7MJQ82" resname="country">
+        <source>country</source>
         <target state="translated">國家</target>
       </trans-unit>
-      <trans-unit id="g03c_vw" resname="label.phone">
-        <source>label.phone</source>
+      <trans-unit id="g03c_vw" resname="phone">
+        <source>phone</source>
         <target state="translated">電話</target>
       </trans-unit>
-      <trans-unit id="eRyhERS" resname="label.fax">
-        <source>label.fax</source>
+      <trans-unit id="eRyhERS" resname="fax">
+        <source>fax</source>
         <target state="translated">傳真</target>
       </trans-unit>
-      <trans-unit id="AawT9pW" resname="label.mobile">
-        <source>label.mobile</source>
+      <trans-unit id="AawT9pW" resname="mobile">
+        <source>mobile</source>
         <target state="translated">行動電話</target>
       </trans-unit>
-      <trans-unit id="PS9IH_t" resname="label.homepage">
-        <source>label.homepage</source>
+      <trans-unit id="PS9IH_t" resname="homepage">
+        <source>homepage</source>
         <target state="translated">首頁</target>
       </trans-unit>
-      <trans-unit id="otd2FZd" resname="label.currency">
-        <source>label.currency</source>
+      <trans-unit id="otd2FZd" resname="currency">
+        <source>currency</source>
         <target state="translated">貨幣</target>
       </trans-unit>
-      <trans-unit id="TRDzmCV" resname="label.alias">
-        <source>label.alias</source>
+      <trans-unit id="TRDzmCV" resname="alias">
+        <source>alias</source>
         <target state="translated">名稱</target>
       </trans-unit>
-      <trans-unit id="nWMH_Nr" resname="label.avatar">
-        <source>label.avatar</source>
+      <trans-unit id="nWMH_Nr" resname="avatar">
+        <source>avatar</source>
         <target state="translated">Profile 圖檔 (URL)</target>
       </trans-unit>
-      <trans-unit id="iD6CNOO" resname="label.roles">
-        <source>label.roles</source>
+      <trans-unit id="iD6CNOO" resname="roles">
+        <source>roles</source>
         <target state="translated">角色</target>
       </trans-unit>
       <trans-unit id="ZlZ20pG" resname="user_permissions.title">
@@ -725,8 +725,8 @@
         <source>profile.roles</source>
         <target state="translated">角色</target>
       </trans-unit>
-      <trans-unit id="EoouxGX" resname="label.replaceTags">
-        <source>label.replaceTags</source>
+      <trans-unit id="EoouxGX" resname="replaceTags">
+        <source>replaceTags</source>
         <target state="translated">替換 tags</target>
       </trans-unit>
       <trans-unit id="HWKJZ0T" resname="profile.about_me">
@@ -757,40 +757,40 @@
         <source>dashboard.subtitle</source>
         <target state="translated">歡迎!</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="label.theme.collapsed_sidebar">
-        <source>label.theme.collapsed_sidebar</source>
+      <trans-unit id="Eq78QrH" resname="theme.collapsed_sidebar">
+        <source>theme.collapsed_sidebar</source>
         <target state="translated">最小化左方選單</target>
       </trans-unit>
-      <trans-unit id="YTSS_Q1" resname="label.color">
-        <source>label.color</source>
+      <trans-unit id="YTSS_Q1" resname="color">
+        <source>color</source>
         <target state="translated">色彩</target>
       </trans-unit>
-      <trans-unit id="BxkmaKz" resname="label.appendTags">
-        <source>label.appendTags</source>
+      <trans-unit id="BxkmaKz" resname="appendTags">
+        <source>appendTags</source>
         <target state="translated">添加 tags</target>
       </trans-unit>
       <trans-unit id="1_wnK76" resname="profile.title">
         <source>profile.title</source>
         <target state="translated">使用者個人資料</target>
       </trans-unit>
-      <trans-unit id="dmtPdwq" resname="label.timezone">
-        <source>label.timezone</source>
+      <trans-unit id="dmtPdwq" resname="timezone">
+        <source>timezone</source>
         <target state="translated">時區</target>
       </trans-unit>
-      <trans-unit id="UrRn8xj" resname="label.title">
-        <source>label.title</source>
+      <trans-unit id="UrRn8xj" resname="title">
+        <source>title</source>
         <target state="translated">標題</target>
       </trans-unit>
       <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _">
         <source>Allowed character: A-Z and _</source>
         <target state="translated">允許的字元: A-Z 以及 _</target>
       </trans-unit>
-      <trans-unit id="d75KAlJ" resname="label.version">
-        <source>label.version</source>
+      <trans-unit id="d75KAlJ" resname="version">
+        <source>version</source>
         <target state="translated">版本</target>
       </trans-unit>
-      <trans-unit id="8Rfa01v" resname="label.required_version">
-        <source>label.required_version</source>
+      <trans-unit id="8Rfa01v" resname="required_version">
+        <source>required_version</source>
         <target state="translated">相容於</target>
       </trans-unit>
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">

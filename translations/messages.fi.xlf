@@ -171,7 +171,7 @@
         <source>tags</source>
         <target state="translated">Tunnisteet</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="Doctor">
+      <trans-unit id="JGaf9IK" resname="Doctor">
         <source>Doctor</source>
         <target state="translated">Järjestelmän kunto</target>
       </trans-unit>

@@ -42,7 +42,7 @@ final class TranslationCommand extends Command
             ->addOption('delete-resname', null, InputOption::VALUE_REQUIRED, 'Deletes the translation by resname')
             ->addOption('extension', null, InputOption::VALUE_NONE, 'Find translation files with wrong extensions')
             ->addOption('fill-empty', null, InputOption::VALUE_NONE, 'Pre-fills empty translations with the english version')
-            ->addOption('delete-empty', null, InputOption::VALUE_NONE, 'Delete all empty kyes and files which have no translated key at all')
+            ->addOption('delete-empty', null, InputOption::VALUE_NONE, 'Delete all empty keys and files which have no translated key at all')
             // DEEPL TRANSLATION FEATURE - UNTESTED
             ->addOption('translate-locale', null, InputOption::VALUE_REQUIRED, 'Translate into the given locale with Deepl')
             // @see https://www.deepl.com/de/pro#developer

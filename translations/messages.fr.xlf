@@ -838,7 +838,7 @@
         <source>error.no_comments_found</source>
         <target>Aucun commentaire n'a été publié pour l'instant.</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="Doctor">
+      <trans-unit id="JGaf9IK" resname="Doctor">
         <source>Doctor</source>
         <target>État des services</target>
       </trans-unit>
@@ -1201,10 +1201,6 @@
       <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
         <target state="translated">Texte de la facture</target>
-      </trans-unit>
-      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
-        <source>label.budgetIndependent</source>
-        <target state="translated">Afficher sans tenir compte du « type de budget »</target>
       </trans-unit>
       <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>

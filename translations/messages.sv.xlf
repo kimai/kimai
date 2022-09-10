@@ -802,7 +802,7 @@
         <source>error.no_comments_found</source>
         <target>Det finns inga kommentarer uppladdade ännu.</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="Doctor">
+      <trans-unit id="JGaf9IK" resname="Doctor">
         <source>Doctor</source>
         <target>Doktor</target>
       </trans-unit>
@@ -1213,10 +1213,6 @@
       <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
         <target state="translated">Tillåt globala händelser</target>
-      </trans-unit>
-      <trans-unit id="KB9cJM6" resname="budgetIndependent">
-        <source>budgetIndependent</source>
-        <target state="translated">Visa oavsett "budgettyp"</target>
       </trans-unit>
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>

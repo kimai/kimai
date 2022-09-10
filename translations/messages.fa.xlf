@@ -319,7 +319,7 @@
         <source>error.no_entries_found</source>
         <target>هیچ ورودی بر اساس فیلترهای انتخابی شما پیدا نشد.</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="Doctor">
+      <trans-unit id="JGaf9IK" resname="Doctor">
         <source>Doctor</source>
         <target>دکتر</target>
       </trans-unit>

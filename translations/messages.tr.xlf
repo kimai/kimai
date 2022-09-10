@@ -147,7 +147,7 @@
         <source>tags</source>
         <target state="translated">Etiketler</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="Doctor">
+      <trans-unit id="JGaf9IK" resname="Doctor">
         <source>Doctor</source>
         <target state="translated">Doktor</target>
       </trans-unit>
@@ -1201,10 +1201,6 @@
       <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
         <target state="translated">Fatura metni</target>
-      </trans-unit>
-      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
-        <source>label.budgetIndependent</source>
-        <target state="translated">"Bütçe türü" ne olursa olsun göster</target>
       </trans-unit>
       <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>

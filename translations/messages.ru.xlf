@@ -808,7 +808,7 @@
         <source>team</source>
         <target>Команда</target>
       </trans-unit>
-      <trans-unit id="1kHI0gb" resname="Doctor">
+      <trans-unit id="JGaf9IK" resname="Doctor">
         <source>Doctor</source>
         <target>Доктор</target>
       </trans-unit>
@@ -1187,10 +1187,6 @@
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target>Автоматический</target>
-      </trans-unit>
-      <trans-unit id="8mTf0eZ" resname="budgetIndependent">
-        <source>budgetIndependent</source>
-        <target state="translated">Показывать независимо от "бюджетного типа"</target>
       </trans-unit>
       <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
