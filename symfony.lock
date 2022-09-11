@@ -177,9 +177,6 @@
     "league/csv": {
         "version": "9.4.1"
     },
-    "league/html-to-markdown": {
-        "version": "4.9.1"
-    },
     "lorenzo/pinky": {
         "version": "1.0.5"
     },
@@ -257,9 +254,6 @@
     },
     "phpoffice/phpword": {
         "version": "0.15.0"
-    },
-    "phpspec/prophecy": {
-        "version": "1.7.3"
     },
     "phpstan/phpdoc-parser": {
         "version": "0.4.10"
