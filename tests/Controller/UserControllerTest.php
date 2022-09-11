@@ -37,8 +37,6 @@ class UserControllerTest extends ControllerBaseTest
         $this->assertPageActions($client, [
             'download toolbar-action' => $this->createUrl('/admin/user/export'),
             'create modal-ajax-form' => $this->createUrl('/admin/user/create'),
-            'settings modal-ajax-form' => $this->createUrl('/admin/system-config/edit/user'),
-            'help' => 'https://www.kimai.org/documentation/users.html',
             'dropdown-item action-weekly' => $this->createUrl('/reporting/users/week'),
             'dropdown-item action-monthly' => $this->createUrl('/reporting/users/month'),
             'dropdown-item action-yearly' => $this->createUrl('/reporting/users/year'),

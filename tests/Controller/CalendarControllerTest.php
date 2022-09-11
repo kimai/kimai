@@ -35,11 +35,6 @@ class CalendarControllerTest extends ControllerBaseTest
         $this->request($client, '/calendar/');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $this->assertPageActions($client, [
-            'create modal-ajax-form' => $this->createUrl('/timesheet/create'),
-            'help' => 'https://www.kimai.org/documentation/calendar.html'
-        ]);
-
         $crawler = $client->getCrawler();
         $calendar = $crawler->filter('div#timesheet_calendar');
         $this->assertEquals(1, $calendar->count());
@@ -51,12 +46,6 @@ class CalendarControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/calendar/');
-
-        $this->assertPageActions($client, [
-            'create modal-ajax-form' => $this->createUrl('/timesheet/create'),
-            'settings modal-ajax-form' => $this->createUrl('/admin/system-config/edit/calendar'),
-            'help' => 'https://www.kimai.org/documentation/calendar.html'
-        ]);
     }
 
     public function testCalendarActionWithGoogleSource()

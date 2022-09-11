@@ -46,7 +46,6 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
             'download toolbar-action modal-ajax-form' => $this->createUrl('/team/timesheet/export/'),
             'create create-ts modal-ajax-form' => $this->createUrl('/team/timesheet/create'),
             'multi-user create-ts-mu modal-ajax-form' => $this->createUrl('/team/timesheet/create_mu'),
-            'help' => 'https://www.kimai.org/documentation/timesheet.html'
         ]);
     }
 

@@ -402,9 +402,6 @@ final class ServiceInvoice
             throw new \Exception('Cannot create invoice model without template');
         }
 
-        // prevent that changes on the template will be persisted
-        $this->invoiceRepository->preventTemplateUpdate($template);
-
         $formatter = new DefaultInvoiceFormatter($this->formatter, $template->getLanguage());
 
         $model = $this->invoiceModelFactory->createModel($formatter);

@@ -43,7 +43,6 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertPageActions($client, [
             'download toolbar-action modal-ajax-form' => $this->createUrl('/timesheet/export/'),
             'create modal-ajax-form' => $this->createUrl('/timesheet/create'),
-            'help' => 'https://www.kimai.org/documentation/timesheet.html'
         ]);
     }
 

@@ -46,7 +46,6 @@ class CustomerControllerTest extends ControllerBaseTest
 
         $this->assertPageActions($client, [
             'download toolbar-action' => $this->createUrl('/admin/customer/export'),
-            'help' => 'https://www.kimai.org/documentation/customer.html'
         ]);
     }
 
@@ -59,8 +58,6 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->assertPageActions($client, [
             'download toolbar-action' => $this->createUrl('/admin/customer/export'),
             'create modal-ajax-form' => $this->createUrl('/admin/customer/create'),
-            'settings modal-ajax-form' => $this->createUrl('/admin/system-config/edit/customer'),
-            'help' => 'https://www.kimai.org/documentation/customer.html'
         ]);
     }
 
@@ -83,7 +80,6 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->assertPageActions($client, [
             'download toolbar-action' => $this->createUrl('/admin/customer/export'),
             'create modal-ajax-form' => $this->createUrl('/admin/customer/create'),
-            'help' => 'https://www.kimai.org/documentation/customer.html'
         ]);
 
         $form = $client->getCrawler()->filter('form.searchform')->form();

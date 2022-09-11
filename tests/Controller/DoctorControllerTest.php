@@ -32,7 +32,7 @@ class DoctorControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/doctor');
 
         $result = $client->getCrawler()->filter('.content .card-header');
-        self::assertCount(6, $result);
+        self::assertCount(5, $result);
     }
 
     public function testFlushLogWithInvalidCsrf()

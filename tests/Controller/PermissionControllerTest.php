@@ -36,9 +36,7 @@ class PermissionControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 129);
         $this->assertPageActions($client, [
-            //'back' => $this->createUrl('/admin/user/'),
             'create modal-ajax-form' => $this->createUrl('/admin/permissions/roles/create'),
-            'help' => 'https://www.kimai.org/documentation/permissions.html'
         ]);
 
         $content = $client->getResponse()->getContent();

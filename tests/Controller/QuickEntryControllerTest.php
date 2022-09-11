@@ -50,10 +50,6 @@ class QuickEntryControllerTest extends ControllerBaseTest
         }
         // project + activity + 7 days (duration) + row totals
         self::assertCount(10, $columns);
-
-        $this->assertPageActions($client, [
-            'help' => 'https://www.kimai.org/documentation/weekly-times.html'
-        ]);
     }
 
     public function testIndexActionWith()
@@ -92,9 +88,5 @@ class QuickEntryControllerTest extends ControllerBaseTest
         }
         // project + activity + 7 days (duration) + row totals
         self::assertCount(10, $columns);
-
-        $this->assertPageActions($client, [
-            'help' => 'https://www.kimai.org/documentation/weekly-times.html'
-        ]);
     }
 }

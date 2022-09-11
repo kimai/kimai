@@ -55,7 +55,7 @@ class Team
      * @Assert\NotBlank()
      * @Assert\Length(min=2, max=100)
      */
-    private ?string $name;
+    private ?string $name = null;
     /**
      * All team member (including team leads)
      *

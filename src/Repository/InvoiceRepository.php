@@ -12,7 +12,6 @@ namespace App\Repository;
 use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\InvoiceMeta;
-use App\Entity\InvoiceTemplate;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\Loader\InvoiceLoader;
@@ -29,17 +28,6 @@ use Doctrine\ORM\QueryBuilder;
 class InvoiceRepository extends EntityRepository
 {
     use RepositorySearchTrait;
-
-    /**
-     * @param InvoiceTemplate $invoiceTemplate
-     * @return void
-     * @deprecated replace me in 2.0
-     */
-    public function preventTemplateUpdate(InvoiceTemplate $invoiceTemplate): void
-    {
-        $em = $this->getEntityManager();
-        $em->detach($invoiceTemplate);
-    }
 
     public function saveInvoice(Invoice $invoice)
     {
