@@ -51,7 +51,7 @@
             {% block box_title %}{{ 'plugin.marketplace'|trans({}, 'plugins') }}{% endblock %}
             {% block box_body_class %}p-0{% endblock %}
             {% block box_tools %}
-                {{ card_tool_button('shop', {'title': 'shop', 'translation_domain': 'plugins', 'target': '_blank', 'url': constant('App\\Constants::HOMEPAGE') ~ '/store/', 'icon': false}) }}
+                {{ card_tool_button('shop', {'title': 'shop', 'translation_domain': 'plugins', 'target': '_blank', 'url': constant('App\\Constants::HOMEPAGE') ~ '/store/', 'icon': false, 'class': 'btn-warning'}) }}
             {% endblock %}
             {% block box_body %}
                 {% set columns = {
