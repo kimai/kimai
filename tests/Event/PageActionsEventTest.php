@@ -91,8 +91,7 @@ class PageActionsEventTest extends TestCase
 
         $expected = [
             'divider0' => null,
-            'visibility' => ['modal' => '#foo2', 'title' => 'modal.columns.title'],
-            'help' => ['url' => 'foo4', 'target' => '_blank', 'title' => 'help', 'translation_domain' => 'about'],
+            'columns' => ['modal' => '#foo2', 'title' => 'modal.columns.title'],
             'create' => ['url' => 'foo5', 'class' => 'modal-ajax-form', 'title' => 'create'],
             'download' => ['url' => 'foo7', 'class' => 'toolbar-action', 'title' => 'export'],
             'trash' => ['url' => 'foo3', 'class' => 'modal-ajax-form text-red'],
@@ -108,13 +107,13 @@ class PageActionsEventTest extends TestCase
 
         // make sure that modal always start with #, no matter what was given
         $sut->addColumnToggle('#fooX');
-        $this->assertEquals(['visibility' => ['modal' => '#fooX', 'title' => 'modal.columns.title']], $sut->getActions());
+        $this->assertEquals(['columns' => ['modal' => '#fooX', 'title' => 'modal.columns.title']], $sut->getActions());
         // make sure that a second toggle cannot be added
         $sut->addColumnToggle('fooY');
-        $this->assertEquals(['visibility' => ['modal' => '#fooX', 'title' => 'modal.columns.title']], $sut->getActions());
+        $this->assertEquals(['columns' => ['modal' => '#fooX', 'title' => 'modal.columns.title']], $sut->getActions());
 
-        $sut->removeAction('visibility');
+        $sut->removeAction('columns');
         $sut->addColumnToggle('fooY');
-        $this->assertEquals(['visibility' => ['modal' => '#fooY', 'title' => 'modal.columns.title']], $sut->getActions());
+        $this->assertEquals(['columns' => ['modal' => '#fooY', 'title' => 'modal.columns.title']], $sut->getActions());
     }
 }
