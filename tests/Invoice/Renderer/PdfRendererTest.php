@@ -14,7 +14,6 @@ use App\Pdf\MPdfConverter;
 use App\Tests\Mocks\FileHelperFactory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 use Twig\Loader\FilesystemLoader;
@@ -27,19 +26,6 @@ use Twig\Loader\FilesystemLoader;
 class PdfRendererTest extends KernelTestCase
 {
     use RendererTestTrait;
-
-    public function testDisposition()
-    {
-        $env = new Environment(new ArrayLoader([]));
-        $sut = new PdfRenderer($env, $this->createMock(MPdfConverter::class));
-        $this->assertEquals(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $sut->getDisposition());
-        $sut->setDispositionInline(false);
-        $this->assertEquals(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $sut->getDisposition());
-        $sut->setDispositionInline(true);
-        $this->assertEquals(ResponseHeaderBag::DISPOSITION_INLINE, $sut->getDisposition());
-        $sut->setDispositionInline(false);
-        $this->assertEquals(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $sut->getDisposition());
-    }
 
     public function testSupports()
     {
@@ -77,5 +63,11 @@ class PdfRendererTest extends KernelTestCase
 
         $response = $sut->render($document, $model);
         $this->assertEquals('application/pdf', $response->headers->get('Content-Type'));
+        $this->assertStringContainsString('attachment; filename', $response->headers->get('Content-Disposition'));
+        $this->assertNotEmpty($response->getContent());
+
+        $sut->setDispositionInline(true);
+        $response = $sut->render($document, $model);
+        $this->assertStringContainsString('inline; filename', $response->headers->get('Content-Disposition'));
     }
 }

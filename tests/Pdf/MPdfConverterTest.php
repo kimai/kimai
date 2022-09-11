@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Utils;
+namespace App\Tests\Pdf;
 
 use App\Pdf\MPdfConverter;
 use App\Tests\Mocks\FileHelperFactory;
@@ -19,11 +19,6 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 class MPdfConverterTest extends KernelTestCase
 {
-    public function unicode_hex($unicode_dec)
-    {
-        return (sprintf('%05s', strtoupper(dechex($unicode_dec))));
-    }
-
     public function test()
     {
         $kernel = self::bootKernel();

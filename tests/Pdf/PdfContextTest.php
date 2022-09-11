@@ -7,19 +7,19 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Export;
+namespace App\Tests\Pdf;
 
-use App\Export\ExportContext;
+use App\Pdf\PdfContext;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Export\ExportContext
+ * @covers \App\Export\PdfContext
  */
-class ExportContextTest extends TestCase
+class PdfContextTest extends TestCase
 {
     public function testEmptyObject()
     {
-        $sut = new ExportContext();
+        $sut = new PdfContext();
 
         self::assertIsArray($sut->getOptions());
         self::assertEmpty($sut->getOptions());
@@ -28,7 +28,7 @@ class ExportContextTest extends TestCase
 
     public function testSetterAndGetter()
     {
-        $sut = new ExportContext();
+        $sut = new PdfContext();
 
         self::assertNull($sut->getOption('unknown'));
         $sut->setOption('unknown', 'foo');
