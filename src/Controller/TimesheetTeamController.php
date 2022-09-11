@@ -74,7 +74,7 @@ class TimesheetTeamController extends TimesheetAbstractController
      */
     public function duplicateAction(Timesheet $entry, Request $request): Response
     {
-        return $this->duplicate($entry, $request, 'timesheet-team/edit.html.twig');
+        return $this->duplicate($entry, $request);
     }
 
     /**
@@ -83,7 +83,7 @@ class TimesheetTeamController extends TimesheetAbstractController
      */
     public function createAction(Request $request): Response
     {
-        return $this->create($request, 'timesheet-team/edit.html.twig');
+        return $this->create($request);
     }
 
     /**
@@ -141,9 +141,10 @@ class TimesheetTeamController extends TimesheetAbstractController
             }
         }
 
-        return $this->render('timesheet-team/edit.html.twig', [
+        return $this->render('timesheet/edit.html.twig', [
             'timesheet' => $entry,
             'form' => $createForm->createView(),
+            'template' => $this->getTrackingMode()->getEditTemplate(),
         ]);
     }
 

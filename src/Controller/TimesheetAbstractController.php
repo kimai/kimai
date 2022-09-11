@@ -178,7 +178,7 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    protected function create(Request $request, string $renderTemplate): Response
+    protected function create(Request $request): Response
     {
         $entry = $this->service->createNewTimesheet($this->getUser());
 
@@ -202,7 +202,7 @@ abstract class TimesheetAbstractController extends AbstractController
             }
         }
 
-        return $this->render($renderTemplate, [
+        return $this->render('timesheet/edit.html.twig', [
             'page_setup' => $this->createPageSetup(),
             'route_back' => $this->getTimesheetRoute(),
             'timesheet' => $entry,
@@ -211,7 +211,7 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    protected function duplicate(Timesheet $timesheet, Request $request, string $renderTemplate): Response
+    protected function duplicate(Timesheet $timesheet, Request $request): Response
     {
         $copyTimesheet = clone $timesheet;
 
@@ -234,7 +234,7 @@ abstract class TimesheetAbstractController extends AbstractController
             }
         }
 
-        return $this->render($renderTemplate, [
+        return $this->render('timesheet/edit.html.twig', [
             'timesheet' => $copyTimesheet,
             'form' => $form->createView(),
             'template' => $this->getTrackingMode()->getEditTemplate(),

@@ -13,5 +13,8 @@
     {% if route_back is defined and route_back is not null %}
         {% set formOptions = formOptions|merge({'back': path(route_back)}) %}
     {% endif %}
+    {% if template is not defined %}
+        {% set template 'timesheet/edit-default.html.twig' %}
+    {% endif %}
     {% include template %}
 {% endblock %}

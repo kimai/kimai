@@ -62,7 +62,7 @@ class TimesheetController extends TimesheetAbstractController
      */
     public function duplicateAction(Timesheet $entry, Request $request): Response
     {
-        return $this->duplicate($entry, $request, 'timesheet/edit.html.twig');
+        return $this->duplicate($entry, $request);
     }
 
     /**
@@ -89,7 +89,7 @@ class TimesheetController extends TimesheetAbstractController
      */
     public function createAction(Request $request): Response
     {
-        return $this->create($request, 'timesheet/edit.html.twig');
+        return $this->create($request);
     }
 
     protected function getCreateForm(Timesheet $entry): FormInterface
