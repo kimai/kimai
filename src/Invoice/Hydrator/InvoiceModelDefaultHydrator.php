@@ -69,6 +69,10 @@ class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
 
         if ($begin !== null) {
             $values = array_merge($values, [
+                'query.day' => $begin->format('d'),                             // @deprecated - but impossible to delete
+                'query.month' => $formatter->getFormattedMonthName($begin),     // @deprecated - but impossible to delete
+                'query.month_number' => $begin->format('m'),                    // @deprecated - but impossible to delete
+                'query.year' => $begin->format('Y'),                            // @deprecated - but impossible to delete
                 'query.begin' => $formatter->getFormattedDateTime($begin),
                 'query.begin_day' => $begin->format('d'),
                 'query.begin_month' => $formatter->getFormattedMonthName($begin),
