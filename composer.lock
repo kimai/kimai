@@ -2645,12 +2645,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "502950b1b56e9c9f8d31b7be3918c533cdc08e72"
+                "reference": "908548e4d6ac0ed94eb3e0ab75364c8a76111e1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/502950b1b56e9c9f8d31b7be3918c533cdc08e72",
-                "reference": "502950b1b56e9c9f8d31b7be3918c533cdc08e72",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/908548e4d6ac0ed94eb3e0ab75364c8a76111e1b",
+                "reference": "908548e4d6ac0ed94eb3e0ab75364c8a76111e1b",
                 "shasum": ""
             },
             "require": {
@@ -2712,7 +2712,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-09-11T12:01:28+00:00"
+            "time": "2022-09-11T12:19:16+00:00"
         },
         {
             "name": "laminas/laminas-code",
