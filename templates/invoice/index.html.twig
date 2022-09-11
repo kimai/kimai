@@ -44,45 +44,41 @@
 
 {% block main %}
 
-    {% if is_granted('create_invoice') %}
-        {% embed '@theme/embeds/card.html.twig' %}
-            {% import "macros/search.html.twig" as search %}
-            {% form_theme form 'form/horizontal.html.twig' %}
-            {% block box_title %}{{ 'invoice.filter'|trans }}{% endblock %}
-            {% block box_before %}{{ form_start(form) }}{% endblock %}
-            {% block box_body %}
-                {{ form_errors(form) }}
-                {% if form.searchTerm is defined %}
-                    {{ form_row(form.searchTerm, {'row_attr': {'class': 'mb-3 invoice_search_form_row_searchTerm'}}) }}
-                {% endif %}
-                {{ form_row(form.daterange, {'row_attr': {'class': 'mb-3 invoice_search_form_row_daterange'}}) }}
-                {{ form_row(form.customers, {'row_attr': {'class': 'mb-3 invoice_search_form_row_customers'}}) }}
-                {{ form_row(form.projects, {'row_attr': {'class': 'mb-3 invoice_search_form_row_projects'}}) }}
-                {% if form.activities is defined %}
-                    {{ form_row(form.activities, {'row_attr': {'class': 'mb-3 invoice_search_form_row_activities'}}) }}
-                {% endif %}
-                {% if form.tags is defined %}
-                    {{ form_row(form.tags, {'row_attr': {'class': 'mb-3 invoice_search_form_row_tags'}}) }}
-                {% endif %}
-                {% if form.users is defined %}
-                    {{ form_row(form.users, {'row_attr': {'class': 'mb-3 invoice_search_form_row_users'}}) }}
-                {% endif %}
-                {% if form.exported is defined %}
-                    {{ form_row(form.exported, {'row_attr': {'class': 'mb-3 invoice_search_form_row_exported'}}) }}
-                {% endif %}
-                <div class="d-none">
-                {{ form_row(form.template, {'row_attr': {'class': 'mb-3 invoice_search_form_row_template'}}) }}
-                {{ form_row(form.invoiceDate, {'row_attr': {'class': 'mb-3 invoice_search_form_row_invoiceDate'}}) }}
-                </div>
-            {% endblock %}
-            {% block box_footer%}
-                {{ search.searchButton(form) }}
-            {% endblock %}
-            {% block box_after %}{{ form_end(form) }}{% endblock %}
-        {% endembed %}
-    {% else %}
-        {{ widgets.callout('danger', 'http_error_403.suggestion'|trans({}, 'exceptions')) }}
-    {% endif %}
+    {% embed '@theme/embeds/card.html.twig' %}
+        {% import "macros/search.html.twig" as search %}
+        {% form_theme form 'form/horizontal.html.twig' %}
+        {% block box_title %}{{ 'invoice.filter'|trans }}{% endblock %}
+        {% block box_before %}{{ form_start(form) }}{% endblock %}
+        {% block box_body %}
+            {{ form_errors(form) }}
+            {% if form.searchTerm is defined %}
+                {{ form_row(form.searchTerm, {'row_attr': {'class': 'mb-3 invoice_search_form_row_searchTerm'}}) }}
+            {% endif %}
+            {{ form_row(form.daterange, {'row_attr': {'class': 'mb-3 invoice_search_form_row_daterange'}}) }}
+            {{ form_row(form.customers, {'row_attr': {'class': 'mb-3 invoice_search_form_row_customers'}}) }}
+            {{ form_row(form.projects, {'row_attr': {'class': 'mb-3 invoice_search_form_row_projects'}}) }}
+            {% if form.activities is defined %}
+                {{ form_row(form.activities, {'row_attr': {'class': 'mb-3 invoice_search_form_row_activities'}}) }}
+            {% endif %}
+            {% if form.tags is defined %}
+                {{ form_row(form.tags, {'row_attr': {'class': 'mb-3 invoice_search_form_row_tags'}}) }}
+            {% endif %}
+            {% if form.users is defined %}
+                {{ form_row(form.users, {'row_attr': {'class': 'mb-3 invoice_search_form_row_users'}}) }}
+            {% endif %}
+            {% if form.exported is defined %}
+                {{ form_row(form.exported, {'row_attr': {'class': 'mb-3 invoice_search_form_row_exported'}}) }}
+            {% endif %}
+            <div class="d-none">
+            {{ form_row(form.template, {'row_attr': {'class': 'mb-3 invoice_search_form_row_template'}}) }}
+            {{ form_row(form.invoiceDate, {'row_attr': {'class': 'mb-3 invoice_search_form_row_invoiceDate'}}) }}
+            </div>
+        {% endblock %}
+        {% block box_footer%}
+            {{ search.searchButton(form) }}
+        {% endblock %}
+        {% block box_after %}{{ form_end(form) }}{% endblock %}
+    {% endembed %}
 
     {% if showEmpty %}
         {{ widgets.nothing_found() }}

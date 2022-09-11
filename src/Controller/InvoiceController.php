@@ -66,7 +66,7 @@ final class InvoiceController extends AbstractController
 
     /**
      * @Route(path="/", name="invoice", methods={"GET", "POST"})
-     * @Security("is_granted('view_invoice')")
+     * @Security("is_granted('create_invoice')")
      */
     public function indexAction(Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
@@ -88,7 +88,7 @@ final class InvoiceController extends AbstractController
         $total = 0;
         $searched = false;
 
-        if ($form->isValid() && $this->isGranted('create_invoice') && $query->getTemplate() !== null) {
+        if ($form->isValid() && $query->getTemplate() !== null) {
             try {
                 $models = $this->service->createModels($query);
                 $searched = true;
