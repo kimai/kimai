@@ -8,8 +8,10 @@
     {% set formOptions = {
         'template': kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig',
         'title': (timesheet.id ? 'timesheet.edit'|trans : 'create'|trans),
-        'form': form,
-        'back': path(route_back)
+        'form': form
     } %}
+    {% if route_back is defined and route_back is not null %}
+        {% set formOptions = formOptions|merge({'back': path(route_back)}) %}
+    {% endif %}
     {% include template %}
 {% endblock %}
