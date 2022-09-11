@@ -28,7 +28,7 @@ final class InvoiceFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $faker = Factory::create('at_AT');
+        $faker = Factory::create('en_US');
 
         foreach ($this->getInvoiceConfigs($faker) as $invoiceConfig) {
             // name, title, renderer, calculator, numberGenerator, company, vat, dueDays, address, paymentTerms
@@ -42,7 +42,7 @@ final class InvoiceFixtures extends Fixture
             $template->setVat($invoiceConfig[6]);
             $template->setDueDays($invoiceConfig[7]);
             $template->setPaymentTerms($invoiceConfig[8]);
-            $template->setLanguage('de');
+            $template->setLanguage('en');
             $template->setAddress($this->generateAddress($faker));
             $template->setContact($this->generateContact($faker));
             $template->setPaymentDetails($this->generatePaymentDetails($faker));
