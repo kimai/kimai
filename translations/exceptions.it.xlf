@@ -2,14 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="it" datatype="plaintext" original="exceptions.en.xlf">
     <body>
-      <trans-unit id="DhMUS5c" resname="access.denied">
-        <source>access.denied</source>
-        <target>Accesso rifiutato</target>
-      </trans-unit>
-      <trans-unit id="wSGnVM4" resname="stacktrace">
-        <source>stacktrace</source>
-        <target>Controlla il problema</target>
-      </trans-unit>
       <trans-unit id="rtYKRSj" resname="http_error.title">
         <source>http_error.title</source>
         <target>Errore</target>

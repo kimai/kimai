@@ -2,14 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sv" datatype="plaintext" original="exceptions.en.xlf">
     <body>
-      <trans-unit id="DhMUS5c" resname="access.denied">
-        <source>access.denied</source>
-        <target state="translated">Åtkomst nekad</target>
-      </trans-unit>
-      <trans-unit id="wSGnVM4" resname="stacktrace">
-        <source>stacktrace</source>
-        <target state="translated">Ett problem uppstod här</target>
-      </trans-unit>
       <trans-unit id="rtYKRSj" resname="http_error.title">
         <source>http_error.title</source>
         <target state="translated">Fel</target>
