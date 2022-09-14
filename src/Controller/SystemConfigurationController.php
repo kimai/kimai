@@ -651,6 +651,10 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(IntegerType::class)
                         ->setConstraints([new Range(['min' => 0, 'max' => 20]), new NotNull()]),
                     (new Configuration())
+                        ->setName('calendar.dragdrop_data')
+                        ->setTranslationDomain('system-configuration')
+                        ->setType(CheckboxType::class),
+                    (new Configuration())
                         ->setName('calendar.title_pattern')
                         ->setTranslationDomain('system-configuration')
                         ->setType(CalendarTitlePatternType::class),
