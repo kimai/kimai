@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="vi" datatype="plaintext" original="validators.en.xlf">
     <body>
@@ -15,8 +15,8 @@
         <target>Ngày bắt đầu không thể trong tương lai.</target>
       </trans-unit>
       <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again.">
-        <source>This invoice document cannot be used, please rename the file and upload it again.</source>
-        <target>Tập hóa đơn này không thể sử dụng, vui lòng thay tên tệp và tải lên lại một lần nữa</target>
+        <source>This invoice document cannot be used. Please rename the file and upload it again.</source>
+        <target state="translated">Tập hóa đơn này không thể sử dụng, vui lòng thay tên tệp và tải lên lại một lần nữa.</target>
       </trans-unit>
       <trans-unit id="1V6BsD_" resname="You must select at least one user or team.">
         <source>You must select at least one user or team.</source>
@@ -41,6 +41,50 @@
       <trans-unit id="6WAG.Xj" resname="The entered passwords don't match.">
         <source>The entered passwords don't match.</source>
         <target>Mật khẩu đã nhập không trùng khớp.</target>
+      </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target state="translated">Một dự án cần được chọn.</target>
+      </trans-unit>
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target state="translated">Ít nhất môt đội trưởng phải được chỉ định cho nhóm.</target>
+      </trans-unit>
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
+        <source>Duration cannot be zero.</source>
+        <target state="translated">Không cho phép một khoản thời gian trống.</target>
+      </trans-unit>
+      <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date.">
+        <source>This period is locked. Please choose a later date.</source>
+        <target state="translated">Khoảng thời gian này bị khóa. Vui lòng chọn một ngày sau đó.</target>
+      </trans-unit>
+      <trans-unit id="u2wjm2i" resname="You already have an entry for this time.">
+        <source>You already have an entry for this time.</source>
+        <target state="translated">Bạn đã có một mục nhập cho thời gian này.</target>
+      </trans-unit>
+      <trans-unit id="VJSZSD0" resname="The given value is not a valid time.">
+        <source>The given value is not a valid time.</source>
+        <target state="translated">Giá trị đã cho không phải là một thời gian hợp lệ.</target>
+      </trans-unit>
+      <trans-unit id="1oKCOa5" resname="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target state="translated">Ngân sách đã được sử dụng hết. Trong số %budget% có sẵn, %used% đã được đặt trước, %free% vẫn có thể được sử dụng.</target>
+      </trans-unit>
+      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target state="translated">Cho phép tối đa {{ value }} giờ.</target>
+      </trans-unit>
+      <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
+        <source>An activity needs to be selected.</source>
+        <target state="translated">Một hoạt động cần phải được chọn.</target>
+      </trans-unit>
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target state="translated">Bảng chấm công này đã được xuất.</target>
+      </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">Rất tiếc, ngân sách đã được dùng hết.</target>
       </trans-unit>
     </body>
   </file>
