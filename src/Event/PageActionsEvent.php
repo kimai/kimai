@@ -138,7 +138,7 @@ class PageActionsEvent extends ThemeEvent
             }
         }
 
-        $this->addAction('search', ['modal' => '#modal_search', 'label' => $label]);
+        $this->addAction('search', ['modal' => '#modal_search', 'label' => $label, 'accesskey' => 'q']);
     }
 
     public function addQuickExport(string $url): void
@@ -148,12 +148,12 @@ class PageActionsEvent extends ThemeEvent
 
     public function addCreate(string $url, bool $modal = true): void
     {
-        $this->addAction('create', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' : '')]);
+        $this->addAction('create', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' : ''), 'accesskey' => 'a']);
     }
 
     public function addHelp(string $url): void
     {
-        $this->addAction('help', ['url' => $url, 'target' => '_blank']);
+        $this->addAction('help', ['url' => $url, 'target' => '_blank', 'accesskey' => 'h']);
     }
 
     public function addBack(string $url): void
