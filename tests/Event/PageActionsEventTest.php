@@ -95,12 +95,12 @@ class PageActionsEventTest extends TestCase
         $this->assertEquals(8, $sut->countActions());
 
         $expected = [
-            'search' => ['modal' => '#modal_search', 'label' => null],
+            'search' => ['modal' => '#modal_search', 'label' => null, 'accesskey' => 'q'],
             'divider0' => null,
             'back' => ['url' => 'foo1', 'translation_domain' => 'actions'],
             'visibility' => ['modal' => '#foo2'],
-            'help' => ['url' => 'foo4', 'target' => '_blank'],
-            'create' => ['url' => 'foo5', 'class' => 'modal-ajax-form'],
+            'help' => ['url' => 'foo4', 'target' => '_blank', 'accesskey' => 'h'],
+            'create' => ['url' => 'foo5', 'class' => 'modal-ajax-form', 'accesskey' => 'a'],
             'download' => ['url' => 'foo7', 'class' => 'toolbar-action'],
             'trash' => ['url' => 'foo3', 'class' => 'modal-ajax-form text-red'],
         ];
