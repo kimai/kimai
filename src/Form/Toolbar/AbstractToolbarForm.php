@@ -63,9 +63,9 @@ abstract class AbstractToolbarForm extends AbstractType
         ]);
     }
 
-    protected function addUsersChoice(FormBuilderInterface $builder)
+    protected function addUsersChoice(FormBuilderInterface $builder, string $field = 'users', array $options = [])
     {
-        $builder->add('users', UserType::class, [
+        $builder->add($field, UserType::class, array_merge([
             'documentation' => [
                 'type' => 'array',
                 'items' => ['type' => 'integer', 'description' => 'User ID'],
@@ -74,7 +74,7 @@ abstract class AbstractToolbarForm extends AbstractType
             'label' => 'label.user',
             'multiple' => true,
             'required' => false,
-        ]);
+        ], $options));
     }
 
     protected function addTeamChoice(FormBuilderInterface $builder)

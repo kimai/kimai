@@ -203,7 +203,7 @@
 {% block sidebar_search %}{% endblock %}
 
 {% block navbar_user %}
-    {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    {% if app.user is not null and is_granted('view_own_timesheet') %}
         {% include 'navbar/recent-activities.html.twig' %}
     {% endif %}
     {% import "macros/widgets.html.twig" as widgets %}
