@@ -118,7 +118,7 @@ class QuickEntryController extends AbstractController
             ];
         }
 
-        $beginTime = $this->configuration->getTimesheetDefaultBeginTime();
+        $beginTime = $factory->createDateTime($this->configuration->getTimesheetDefaultBeginTime())->format('H:i:s');
 
         // fill all rows and columns to make sure we do not have missing records
         /** @var QuickEntryModel[] $models */

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="vi" datatype="plaintext" original="actions.en.xlf">
     <body>
@@ -32,11 +32,11 @@
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings">
         <source>settings</source>
-        <target>Sở thích</target>
+        <target state="translated">Tùy chỉnh</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter">
         <source>Filter timesheets</source>
-        <target>Bảng chấm công</target>
+        <target state="translated">Lọc bảng chấm công</target>
       </trans-unit>
       <trans-unit id="xY9_cU2" resname="customer.filter">
         <source>Filter customers</source>
@@ -88,7 +88,19 @@
       </trans-unit>
       <trans-unit id="9M4b2ZN" resname="invoice.paid">
         <source>invoice.paid</source>
-        <target>Đã thanh toán hóa đơn</target>
+        <target state="translated">Hóa đơn đã thanh toán</target>
+      </trans-unit>
+      <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser">
+        <source>create-timesheet-multiuser</source>
+        <target state="translated">Dành cho nhiều người dùng</target>
+      </trans-unit>
+      <trans-unit id="SEyZupT" resname="invoice.cancel">
+        <source>invoice.cancel</source>
+        <target state="translated">Hủy háo đơn</target>
+      </trans-unit>
+      <trans-unit id="38M3a4J" resname="filter">
+        <source>filter</source>
+        <target state="translated">Lọc dữ liệu</target>
       </trans-unit>
     </body>
   </file>

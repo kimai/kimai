@@ -66,6 +66,26 @@
         <source>The entered passwords don't match.</source>
         <target>De ingevulde wachtwoorden komen niet overeen.</target>
       </trans-unit>
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
+        <source>Duration cannot be zero.</source>
+        <target state="translated">Een lege tijdsduur is niet toegestaan.</target>
+      </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target state="translated">Er moet een project geselecteerd worden.</target>
+      </trans-unit>
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target state="translated">Dit tijdrooster is al geëxporteerd.</target>
+      </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">Sorry, het budget is op.</target>
+      </trans-unit>
+      <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
+        <source>An activity needs to be selected.</source>
+        <target state="translated">Er moet een activiteit geselecteerd worden.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

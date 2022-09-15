@@ -284,7 +284,7 @@ class Team
 
     public function hasUser(User $user): bool
     {
-        return (null !== ($member = $this->findMemberByUser($user)));
+        return (null !== $this->findMemberByUser($user));
     }
 
     public function hasUsers(): bool
@@ -305,7 +305,7 @@ class Team
 
     public function addUser(User $user): void
     {
-        if (null !== ($member = $this->findMemberByUser($user))) {
+        if (null !== $this->findMemberByUser($user)) {
             return;
         }
 

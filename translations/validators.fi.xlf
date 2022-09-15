@@ -58,7 +58,7 @@
         <source>An activity needs to be selected.</source>
         <target state="translated">Toiminta on valittava.</target>
       </trans-unit>
-      <trans-unit id="ePrqiLN" resname="Duration cannot be zero.">
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
         <source>Duration cannot be zero.</source>
         <target state="translated">Tyhjä kesto ei ole sallittu.</target>
       </trans-unit>

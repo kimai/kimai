@@ -298,7 +298,7 @@
         <source>label.user_auth_registration</source>
         <target>사용자 등록</target>
       </trans-unit>
-      <trans-unit id="z4tQEPb" resname="label.timesheet.rules.allow_zero_duration">
+      <trans-unit id="g1q7hKi" resname="label.timesheet.rules.allow_zero_duration">
         <source>label.timesheet.rules.allow_zero_duration</source>
         <target state="translated">시간 항목을 비워두는 것을 허용</target>
       </trans-unit>

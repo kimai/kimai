@@ -22,10 +22,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DurationFixedBeginModeTest extends TestCase
 {
-    protected function createSut()
+    protected function createSut($default = '13:47')
     {
         $loader = new TestConfigLoader([]);
-        $configuration = new SystemConfiguration($loader, ['timesheet' => ['default_begin' => '13:47']]);
+        $configuration = new SystemConfiguration($loader, ['timesheet' => ['default_begin' => $default]]);
 
         return new DurationFixedBeginMode($configuration);
     }
@@ -40,6 +40,18 @@ class DurationFixedBeginModeTest extends TestCase
         self::assertFalse($sut->canUpdateTimesWithAPI());
         self::assertFalse($sut->canSeeBeginAndEndTimes());
         self::assertEquals('duration_fixed_begin', $sut->getId());
+    }
+
+    public function testNow()
+    {
+        $seconds = (new \DateTime())->getTimestamp();
+        $timesheet = new Timesheet();
+        $timesheet->setBegin(new \DateTime('18:50:32'));
+        $mode = $this->createSut('now');
+        $mode->create($timesheet);
+        $diff = $timesheet->getBegin()->getTimestamp() - $seconds;
+        // amount of seconds doesn't really matter, it must only be near "now"
+        self::assertLessThanOrEqual(2, $diff);
     }
 
     public function testCreate()

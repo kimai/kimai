@@ -38,7 +38,7 @@
         <source>The begin date cannot be in the future.</source>
         <target>Das Startdatum darf nicht in der Zukunft liegen.</target>
       </trans-unit>
-      <trans-unit id="ePrqiLN" resname="Duration cannot be zero.">
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
         <source>Duration cannot be zero.</source>
         <target>Eine leere Dauer ist nicht erlaubt.</target>
       </trans-unit>
@@ -86,7 +86,7 @@
         <source>This timesheet is already exported.</source>
         <target>Dieser Eintrag wurde bereits exportiert.</target>
       </trans-unit>
-      <trans-unit id="mjlHwer0la" resname="Global activities are forbidden for the selected project.">
+      <trans-unit id="FtWbd_F" resname="Global activities are forbidden for the selected project.">
         <source>Global activities are forbidden for the selected project.</source>
         <target>Globale Aktivitäten sind in dem gewählten Projekt nicht erlaubt.</target>
       </trans-unit>

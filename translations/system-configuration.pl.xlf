@@ -294,7 +294,7 @@
         <source>label.theme.avatar_url</source>
         <target state="translated">Zezwalaj na używanie adresów URL w celu ustawiania awatarów</target>
       </trans-unit>
-      <trans-unit id="z4tQEPb" resname="label.timesheet.rules.allow_zero_duration">
+      <trans-unit id="g1q7hKi" resname="label.timesheet.rules.allow_zero_duration">
         <source>label.timesheet.rules.allow_zero_duration</source>
         <target state="translated">Zezwalaj na wpisy bez długości (pusty czas trwania)</target>
       </trans-unit>

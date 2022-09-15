@@ -133,7 +133,7 @@
                     {% set entry = active_timesheets[0] %}
                     <div class="ddt-small ticktac-single ticktac-running">
                         <div class="ticktac-stop">
-                            <a data-replacer="url" class="api-link" href="{{ path('stop_timesheet', {'id' : entry.id}) }}" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success">
+                            <a accesskey="s" data-replacer="url" class="api-link" href="{{ path('stop_timesheet', {'id' : entry.id}) }}" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success">
                                 <i class="{{ 'stop-small'|icon }} fa-2x"></i><span data-replacer="duration" data-title="true" data-since="{{ entry.begin is null ? '' : entry.begin|date_format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</span>
                             </a>
                         </div>
@@ -151,7 +151,7 @@
                             <ul class="menu">
                                 {% for entry in active_timesheets %}
                                     <li data-template="active-record">
-                                        <a data-replacer="url" href="{{ path('stop_timesheet', {'id' : entry.id}) }}" class="api-link" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success">
+                                        <a accesskey="s" data-replacer="url" href="{{ path('stop_timesheet', {'id' : entry.id}) }}" class="api-link" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success">
                                             <div class="pull-left">
                                                 <i class="{{ 'stop-small'|icon }} fa-2x"></i>
                                             </div>
@@ -174,13 +174,13 @@
             <li class="messages-menu-empty" style="{% if hasActiveRecords %}display:none{% endif %}">
                 {% if active_limit == 1 %}
                     <div class="ddt-small ticktac-single ticktac-stopped">
-                        <a href="{{ path('timesheet_create') }}" class="modal-ajax-form ticktac-start">
+                        <a accesskey="n" href="{{ path('timesheet_create') }}" class="modal-ajax-form ticktac-start">
                             <i class="{{ 'start'|icon }} fa-2x"></i>
                             <span>{{ 0|duration }}</span>
                         </a>
                     </div>
                 {% else %}
-                    <a href="{{ path('timesheet_create') }}" class="ddt-small ticktac-start modal-ajax-form">
+                    <a accesskey="n" href="{{ path('timesheet_create') }}" class="ddt-small ticktac-start modal-ajax-form">
                         <i class="{{ 'start'|icon }} fa-2x"></i>
                     </a>
                 {% endif %}
@@ -203,7 +203,7 @@
 {% block sidebar_search %}{% endblock %}
 
 {% block navbar_user %}
-    {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    {% if app.user is not null and is_granted('view_own_timesheet') %}
         {% include 'navbar/recent-activities.html.twig' %}
     {% endif %}
     {% import "macros/widgets.html.twig" as widgets %}

@@ -102,11 +102,10 @@ final class TimesheetStatisticService
      * @param DateTime $begin
      * @param DateTime $end
      * @param User[] $users
-     * @return array<int, DailyStatistic[]>
+     * @return array
      */
     public function getDailyStatisticsGrouped(DateTime $begin, DateTime $end, array $users): array
     {
-        /** @var array<int, DailyStatistic[]> $stats */
         $stats = [];
         $usersById = [];
 
@@ -179,11 +178,10 @@ final class TimesheetStatisticService
      * @param DateTime $begin
      * @param DateTime $end
      * @param User[] $users
-     * @return array<int, MonthlyStatistic[]>
+     * @return array
      */
     public function getMonthlyStatisticsGrouped(DateTime $begin, DateTime $end, array $users): array
     {
-        /** @var array<int, MonthlyStatistic[]> $stats */
         $stats = [];
         $usersById = [];
 

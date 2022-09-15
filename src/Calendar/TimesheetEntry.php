@@ -13,6 +13,9 @@ use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 
+/**
+ * @internal
+ */
 final class TimesheetEntry implements DragAndDropEntry
 {
     /**
@@ -23,27 +26,31 @@ final class TimesheetEntry implements DragAndDropEntry
      * @var string
      */
     private $color;
+    /**
+     * @var bool
+     */
+    private $copy;
 
-    public function __construct(Timesheet $timesheet, string $color)
+    public function __construct(Timesheet $timesheet, string $color, bool $copy = false)
     {
         $this->timesheet = $timesheet;
         $this->color = $color;
+        $this->copy = $copy;
     }
 
     public function getData(): array
     {
-        $tags = null;
-        if (!empty($this->timesheet->getTagsAsArray())) {
-            $tags = implode(',', $this->timesheet->getTagsAsArray());
-        }
-
-        return [
-            // restarting a timesheet should not copy the description - @version 1.21
-            //'description' => $this->timesheet->getDescription(),
+        $data = [
             'activity' => $this->timesheet->getActivity() !== null ? $this->timesheet->getActivity()->getId() : null,
             'project' => $this->timesheet->getProject() !== null ? $this->timesheet->getProject()->getId() : null,
-            'tags' => $tags,
         ];
+
+        if ($this->copy) {
+            $data['description'] = $this->timesheet->getDescription();
+            $data['tags'] = implode(',', $this->timesheet->getTagsAsArray());
+        }
+
+        return $data;
     }
 
     public function getTitle(): string

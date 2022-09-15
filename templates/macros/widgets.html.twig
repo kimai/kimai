@@ -360,6 +360,7 @@
         {% set disabled = false %}
         {% set attr = {} %}
         {% set label = null %}
+        {% set accesskey = null %}
         {% set translation_domain = 'messages' %}
         {% if type is same as (false) %}
             {% set class = "" %}
@@ -397,6 +398,7 @@
             {% set attr = values.attr ?? {} %}
             {% set label = values.label ?? null %}
             {% set translation_domain = values.translation_domain ?? translation_domain %}
+            {% set accesskey = values.accesskey ?? null %}
         {% endif %}
 
         {% if disabled is same as (true) %}
@@ -410,6 +412,7 @@
                 {%- if modal is not empty %} data-toggle="modal" data-target="{{ modal }}"{% endif %}
                 {%- if onclick is not empty %} onclick="{{ onclick }}"{% endif %}
                 {%- if target is not empty %} target="{{ target }}"{% endif %}
+                {%- if accesskey is not empty %} accesskey="{{ accesskey }}"{% endif %}
                 {%- if attr is not empty %}
                     {% for name, value in attr %}
                     {{ ' ' ~ name }}={% if '"' in value %}'{{ value|raw }}'{% else %}"{{ value|raw }}"{% endif %}

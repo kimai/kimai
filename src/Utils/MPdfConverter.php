@@ -18,12 +18,18 @@ use Mpdf\Output\Destination;
 class MPdfConverter implements HtmlToPdfConverter
 {
     /**
+     * @var FileHelper
+     */
+    private $fileHelper;
+
+    /**
      * @var string
      */
     private $cacheDirectory;
 
-    public function __construct(string $cacheDirectory)
+    public function __construct(FileHelper $fileHelper, string $cacheDirectory)
     {
+        $this->fileHelper = $fileHelper;
         $this->cacheDirectory = $cacheDirectory;
     }
 
@@ -33,7 +39,7 @@ class MPdfConverter implements HtmlToPdfConverter
         $fonts = new FontVariables();
         $allowed = [
             'mode', 'format', 'default_font_size', 'default_font', 'margin_left', 'margin_right', 'margin_top',
-            'margin_bottom', 'margin_header', 'margin_footer', 'orientation'
+            'margin_bottom', 'margin_header', 'margin_footer', 'orientation', 'fonts',
         ];
 
         $filtered = array_filter($options, function ($key) use ($allowed, $configs, $fonts) {
@@ -66,8 +72,7 @@ class MPdfConverter implements HtmlToPdfConverter
             ['tempDir' => $this->cacheDirectory, 'exposeVersion' => false]
         );
 
-        $mpdf = new Mpdf($options);
-        $mpdf->creator = Constants::SOFTWARE;
+        $mpdf = $this->initMpdf($options);
 
         // some OS do not follow the PHP default settings
         if ((int) ini_get('pcre.backtrack_limit') < 1000000) {
@@ -96,5 +101,51 @@ class MPdfConverter implements HtmlToPdfConverter
         }
 
         return $mpdf->Output('', Destination::STRING_RETURN);
+    }
+
+    /**
+     * @param array $options
+     * @return Mpdf
+     * @throws \Mpdf\MpdfException
+     * @throws \Exception
+     */
+    private function initMpdf(array $options): Mpdf
+    {
+        $options['fontDir'] = $this->getFontDirectories();
+        $options['fontdata'] = $this->mergeFontData($options);
+
+        $mpdf = new Mpdf($options);
+        $mpdf->creator = Constants::SOFTWARE;
+
+        return $mpdf;
+    }
+
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    private function getFontDirectories(): array
+    {
+        $defaultConfig = (new ConfigVariables())->getDefaults();
+        $fontDirectories = $defaultConfig['fontDir'];
+        $fontDirectories[] = $this->fileHelper->getDataDirectory('fonts');
+
+        return $fontDirectories;
+    }
+
+    /**
+     * @param array $options
+     * @return array
+     */
+    private function mergeFontData(array $options): array
+    {
+        $defaultFontConfig = (new FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+
+        if (\array_key_exists('fonts', $options)) {
+            $fontData = array_merge($fontData, $options['fonts']);
+        }
+
+        return $fontData;
     }
 }
