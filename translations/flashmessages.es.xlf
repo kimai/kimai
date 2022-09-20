@@ -54,6 +54,10 @@
         <source>action.upload.error</source>
         <target>No se pudo cargar ni guardar el archivo: %reason%</target>
       </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R">
+        <source>action.csrf.error</source>
+        <target state="translated">La acción no puede realizarse: el token de seguridad no es válido.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

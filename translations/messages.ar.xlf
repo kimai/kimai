@@ -1118,7 +1118,7 @@
       </trans-unit>
       <trans-unit id="7J7G3Vr" resname="label.mark_as_exported">
         <source>label.mark_as_exported</source>
-        <target state="needs-translation">Mark as exported</target>
+        <target state="translated">وضع علامة كمصدر</target>
       </trans-unit>
       <trans-unit id="9VxfLLy" resname="label.decimalDuration">
         <source>label.decimalDuration</source>
@@ -1126,11 +1126,11 @@
       </trans-unit>
       <trans-unit id="BhsaLxX" resname="export.clear_all">
         <source>export.clear_all</source>
-        <target state="needs-translation">Mark all shown records as open?</target>
+        <target state="translated">هل تريد وضع علامة على جميع السجلات المعروضة على أنها مفتوحة؟</target>
       </trans-unit>
       <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
+        <target state="translated">عرض الإدخالات في قوائم الاختيار</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
@@ -1138,11 +1138,11 @@
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
-        <target state="needs-translation">Directory "%dir%" is write protected.</target>
+        <target state="translated">الدليل "%dir%" محمي ضد الكتابة.</target>
       </trans-unit>
       <trans-unit id="vTY9SUk" resname="label.plus_more">
         <source>label.plus_more</source>
-        <target state="needs-translation">+%count% more</target>
+        <target state="translated">+%count% more</target>
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
@@ -1194,19 +1194,19 @@
       </trans-unit>
       <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields">
         <source>help.batch_meta_fields</source>
-        <target state="needs-translation">Fields that are to be updated must first be activated by clicking on the associated checkbox.</target>
+        <target state="translated">يجب أولاً تنشيط الحقول المراد تحديثها بالنقر فوق مربع الاختيار المرتبط.</target>
       </trans-unit>
       <trans-unit id="z_YHoZn" resname="label.includeNoWork">
         <source>label.includeNoWork</source>
-        <target state="needs-translation">Show entries without bookings</target>
+        <target state="translated">إظهار الإدخالات بدون حجوزات</target>
       </trans-unit>
       <trans-unit id="Wq.h4nD" resname="label.includeBudgetType_month">
         <source>label.includeBudgetType_month</source>
-        <target state="needs-translation">Show entries with "monthly" budget</target>
+        <target state="translated">إظهار الإدخالات مع الميزانية "الشهرية"</target>
       </trans-unit>
       <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
         <source>label.includeBudgetType_full</source>
-        <target state="needs-translation">Show entries with "life cycle" budget</target>
+        <target state="translated">إظهار الإدخالات مع ميزانية "دورة الحياة"</target>
       </trans-unit>
       <trans-unit id="9Rhadz6" resname="label.budgetType_full">
         <source>label.budgetType_full</source>
@@ -1230,7 +1230,7 @@
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>
-        <target state="needs-translation">Revenues</target>
+        <target state="translated">الإيرادات</target>
       </trans-unit>
       <trans-unit id="ElDyzrx" resname="export.page_of">
         <source>export.page_of</source>
@@ -1262,11 +1262,19 @@
       </trans-unit>
       <trans-unit id="74pEVx1" resname="label.invoiceText">
         <source>label.invoiceText</source>
-        <target state="needs-translation">نص الفاتورة</target>
+        <target state="translated">نص الفاتورة</target>
       </trans-unit>
       <trans-unit id="S0vT92U" resname="label.globalsOnly">
         <source>label.globalsOnly</source>
-        <target state="needs-translation">عالمي فقط</target>
+        <target state="translated">الشاملة فقط</target>
+      </trans-unit>
+      <trans-unit id="G9hBaDJ" resname="label.globalActivities">
+        <source>label.globalActivities</source>
+        <target state="translated">السماح بالأنشطة العالمية</target>
+      </trans-unit>
+      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
+        <source>label.budgetIndependent</source>
+        <target state="translated">عرض بغض النظر عن "نوع الدخل"</target>
       </trans-unit>
     </body>
   </file>

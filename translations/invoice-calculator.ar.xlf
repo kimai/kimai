@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
-        <target state="needs-translation">السعر: إدخال واحد لكل سعر</target>
+        <target state="translated">القيمة: إدخال واحد لكل قيمة</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -28,15 +28,15 @@
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target state="needs-translation">المشروع: إدخال واحد لكل مشروع</target>
+        <target state="translated">المشروع: إدخال واحد لكل مشروع</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
-        <target state="needs-translation">أسبوعيا: إدخال واحد في الأسبوع (يستخدم تاريخ البدء)</target>
+        <target state="translated">أسبوعيا: إدخال واحد في الأسبوع (يستخدم تاريخ البدء)</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="needs-translation">التاريخ: إدخال واحد في اليوم (يستخدم تاريخ البدء)</target>
+        <target state="translated">التاريخ: إدخال واحد في اليوم (يستخدم تاريخ البدء)</target>
       </trans-unit>
     </body>
   </file>
