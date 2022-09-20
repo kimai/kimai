@@ -78,6 +78,10 @@
         <source>javascript</source>
         <target state="translated">JSON</target>
       </trans-unit>
+      <trans-unit id="mC2ePrm" resname="text">
+        <source>text</source>
+        <target state="translated">Texto</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -232,7 +232,7 @@
       </trans-unit>
       <trans-unit id="yVBJECt" resname="label.timesheet.rules.lockdown_period_start">
         <source>label.timesheet.rules.lockdown_period_start</source>
-        <target state="needs-translation">Bắt đầu giai đoạn khóa (ngày tương đối với PHP cho đến nay)</target>
+        <target state="translated">Bắt đầu giai đoạn khóa (ngày tương đối với PHP cho đến nay)</target>
       </trans-unit>
       <trans-unit id=".es2tyO" resname="label.timesheet.rules.lockdown_period_end">
         <source>label.timesheet.rules.lockdown_period_end</source>
@@ -313,6 +313,10 @@
       <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
         <source>label.calendar.title_pattern</source>
         <target state="translated">Hiển thị tiêu đề của các mục lịch</target>
+      </trans-unit>
+      <trans-unit id="eiQKW2A" resname="label.calendar.dragdrop_data">
+        <source>Copies data when adding via drag and drop</source>
+        <target state="translated">Sao chép dữ liệu khi thêm bằng cách kéo và thả</target>
       </trans-unit>
     </body>
   </file>

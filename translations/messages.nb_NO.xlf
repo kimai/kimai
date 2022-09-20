@@ -1244,6 +1244,18 @@
         <source>automatic</source>
         <target>Automatisk</target>
       </trans-unit>
+      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
+        <source>label.budgetIndependent</source>
+        <target state="translated">Vis uavhengig av «budsjett-type»</target>
+      </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="translated">Fakturatekst</target>
+      </trans-unit>
+      <trans-unit id="G9hBaDJ" resname="label.globalActivities">
+        <source>label.globalActivities</source>
+        <target state="needs-translation">Tillat globale begivenheter</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
