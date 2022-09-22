@@ -54,13 +54,14 @@ class SamlProviderTest extends TestCase
         }
 
         $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['saml' => ['activate' => true]]);
+        $samlConfig = new SamlConfiguration($systemConfig);
 
         $repository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
         if ($user !== null) {
             $repository->expects($this->once())->method('loadUserByUsername')->willReturn($user);
         }
         $userProvider = new ChainUserProvider([new DoctrineUserProvider($repository)]);
-        $provider = new SamlProvider($repository, $userProvider, new SamlTokenFactory(), $userFactory, $systemConfig);
+        $provider = new SamlProvider($repository, $userProvider, new SamlTokenFactory(), $userFactory, $samlConfig);
 
         return $provider;
     }

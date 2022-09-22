@@ -12,7 +12,7 @@ services:
             - [setAuth, ['@App\Saml\SamlAuthFactory']]
 
     App\Saml\Provider\SamlProvider:
-        arguments: ['@App\Repository\UserRepository', '', '@App\Saml\SamlTokenFactory', '@App\Saml\User\SamlUserFactory', '@App\Configuration\SystemConfiguration']
+        arguments: ['@App\Repository\UserRepository', '', '@App\Saml\SamlTokenFactory', '@App\Saml\User\SamlUserFactory', '@App\Configuration\SamlConfigurationInterface']
 
     App\Saml\Security\SamlAuthenticationSuccessHandler:
         parent: security.authentication.success_handler

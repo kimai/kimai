@@ -23,13 +23,13 @@
 {% endblock %}
 
 {% block login_social_auth %}
-    {% if kimai_config.samlActive %}
+    {% if saml_config.isActivated() %}
         {% set class = 'btn-primary' %}
         {% if kimai_config.loginFormActive %}
             {% set class = 'btn-google' %}
         {% endif %}
         <a href="{{ path('saml_login') }}" class="btn btn-block {{ class }}">
-            <span>{{ kimai_config.samlTitle|trans }}</span>
+            <span>{{ saml_config.getTitle()|trans }}</span>
         </a>
         <br>
     {% endif %}
