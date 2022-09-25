@@ -9,7 +9,7 @@
 
 namespace App\Saml\Provider;
 
-use App\Configuration\SystemConfiguration;
+use App\Configuration\SamlConfigurationInterface;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Saml\SamlTokenFactory;
@@ -29,7 +29,7 @@ final class SamlProvider implements AuthenticationProviderInterface
     private $repository;
     private $configuration;
 
-    public function __construct(UserRepository $repository, UserProviderInterface $userProvider, SamlTokenFactory $tokenFactory, SamlUserFactory $userFactory, SystemConfiguration $configuration)
+    public function __construct(UserRepository $repository, UserProviderInterface $userProvider, SamlTokenFactory $tokenFactory, SamlUserFactory $userFactory, SamlConfigurationInterface $configuration)
     {
         $this->repository = $repository;
         $this->userProvider = $userProvider;
@@ -74,7 +74,7 @@ final class SamlProvider implements AuthenticationProviderInterface
 
     public function supports(TokenInterface $token)
     {
-        if (!$this->configuration->isSamlActive()) {
+        if (!$this->configuration->isActivated()) {
             return false;
         }
 

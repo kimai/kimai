@@ -311,8 +311,8 @@
         <target>Amount of entries for drag&amp;drop (0 = deactivated)</target>
       </trans-unit>
       <trans-unit id="eiQKW2A" resname="label.calendar.dragdrop_data">
-        <source>label.calendar.dragdrop_data</source>
-        <target>Copies data when adding via drag &amp; drop</target>
+        <source>Copies data when adding via drag and drop</source>
+        <target state="translated">Copies data when adding via drag and drop</target>
       </trans-unit>
       <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
         <source>label.calendar.title_pattern</source>

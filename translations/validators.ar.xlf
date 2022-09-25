@@ -56,7 +56,35 @@
       </trans-unit>
       <trans-unit id="ekO5eXI" resname="An equal username is already used.">
         <source>An equal username is already used.</source>
-        <target state="needs-translation">تم استخدام اسم مستخدم مساوٍ بالفعل.</target>
+        <target state="translated">تم استخدام اسم مستخدم مساوٍ بالفعل.</target>
+      </trans-unit>
+      <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
+        <source>The begin date cannot be in the future.</source>
+        <target state="translated">لا يمكن أن يكون تاريخ البدء في المستقبل.</target>
+      </trans-unit>
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
+        <source>Duration cannot be zero.</source>
+        <target state="translated">المدة الفارغة غير مسموح بها.</target>
+      </trans-unit>
+      <trans-unit id="u2wjm2i" resname="You already have an entry for this time.">
+        <source>You already have an entry for this time.</source>
+        <target state="translated">لديك بالفعل إدخال لهذا الوقت.</target>
+      </trans-unit>
+      <trans-unit id="1oKCOa5" resname="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target state="needs-translation">The budget is used up. Of the available %budget%, %used% has been booked so far, %free% can still be used.</target>
+      </trans-unit>
+      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target state="translated">الحد الأقصى {{ value }} ساعة مسموح بها.</target>
+      </trans-unit>
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target state="translated">تم تصدير الجدول الزمني هذا بالفعل.</target>
+      </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">عذرا ، الميزانية استنفدت.</target>
       </trans-unit>
     </body>
   </file>

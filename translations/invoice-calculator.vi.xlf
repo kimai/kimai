@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="translated">Mặc định: một mục cho mỗi bản ghi thời gian</target>
+        <target state="translated">Mặc định: một mục nhập cho mỗi bản ghi thời gian</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>

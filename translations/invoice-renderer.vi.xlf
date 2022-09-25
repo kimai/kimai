@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="vi" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target>Hóa đơn (mặc định)</target>
+        <target state="translated">Hóa đơn</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
@@ -37,6 +37,50 @@
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
         <target>Chú ý: các tệp hiện có sẽ bị ghi đè. Các loại tệp được phép là: DOCX, ODS, XLSX.</target>
+      </trans-unit>
+      <trans-unit id="E5BwZHT" resname="programmatic">
+        <source>programmatic</source>
+        <target state="translated">Để xử lý thêm</target>
+      </trans-unit>
+      <trans-unit id="nA.KOyM" resname="Html">
+        <source>Html</source>
+        <target state="translated">HTML (Để in qua Trình duyệt)</target>
+      </trans-unit>
+      <trans-unit id="4NNx9U." resname="Docx">
+        <source>Microsoft Word (DOCX)</source>
+        <target state="translated">Microsoft Word (DOCX)</target>
+      </trans-unit>
+      <trans-unit id="sXlZPOC" resname="Xls">
+        <source>Microsoft Excel (XLS)</source>
+        <target state="translated">Microsoft Excel (XLS)</target>
+      </trans-unit>
+      <trans-unit id="QqvUWFt" resname="Ods">
+        <source>Ods</source>
+        <target state="translated">Open Office (Bảng tính)</target>
+      </trans-unit>
+      <trans-unit id="kLKl8xE" resname="Pdf">
+        <source>Pdf</source>
+        <target state="translated">PDF</target>
+      </trans-unit>
+      <trans-unit id="jV1SPRL" resname="default-pdf">
+        <source>default-pdf</source>
+        <target state="translated">Hóa đơn</target>
+      </trans-unit>
+      <trans-unit id="v5KgTmC" resname="xml">
+        <source>xml</source>
+        <target state="translated">XML</target>
+      </trans-unit>
+      <trans-unit id="7acXRsA" resname="javascript">
+        <source>javascript</source>
+        <target state="translated">JSON</target>
+      </trans-unit>
+      <trans-unit id="mC2ePrm" resname="text">
+        <source>text</source>
+        <target state="translated">Văn bản</target>
+      </trans-unit>
+      <trans-unit id="sjwwrr8" resname="Xlsx">
+        <source>Microsoft Excel (XLSX)</source>
+        <target state="translated">Microsoft Excel (XLSX)</target>
       </trans-unit>
     </body>
   </file>

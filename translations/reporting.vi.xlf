@@ -4,47 +4,51 @@
     <body>
       <trans-unit id="XV3FBpu" resname="report_user_week">
         <source>report_user_week</source>
-        <target state="needs-translation">Weekly view for one user</target>
+        <target state="translated">Chế độ xem hàng tuần cho một người dùng</target>
       </trans-unit>
       <trans-unit id="Ng47B75" resname="report_user_month">
         <source>report_user_month</source>
-        <target state="needs-translation">Monthly view for one user</target>
+        <target state="translated">Chế độ xem hàng tháng cho một người dùng</target>
       </trans-unit>
       <trans-unit id="3JLmvfB" resname="report_user_year">
         <source>report_user_year</source>
-        <target state="needs-translation">Yearly view for one user</target>
+        <target state="translated">Chế độ xem hàng năm cho một người dùng</target>
       </trans-unit>
       <trans-unit id="q_A4AHD" resname="report_weekly_users">
         <source>report_weekly_users</source>
-        <target state="needs-translation">Weekly view for all users</target>
+        <target state="translated">Chế độ xem hàng tuần cho tất cả người dùng</target>
       </trans-unit>
       <trans-unit id="zk30bmP" resname="report_monthly_users">
         <source>report_monthly_users</source>
-        <target state="needs-translation">Monthly view for all users</target>
+        <target state="translated">Chế độ xem hàng tháng cho tất cả người dùng</target>
       </trans-unit>
       <trans-unit id="VD98UBN" resname="report_yearly_users">
         <source>report_yearly_users</source>
-        <target state="needs-translation">Yearly view for all users</target>
+        <target state="translated">Chế độ xem hàng năm cho tất cả người dùng</target>
       </trans-unit>
       <trans-unit id="R.9yUkf" resname="report_project_view">
         <source>report_project_view</source>
-        <target state="needs-translation">Project overview</target>
+        <target state="translated">Tổng quan dự án</target>
       </trans-unit>
       <trans-unit id="518eY_l" resname="report_project_details">
         <source>report_project_details</source>
-        <target state="needs-translation">Project details</target>
+        <target state="translated">Thông tin dự án</target>
       </trans-unit>
       <trans-unit id="BQAsynV" resname="report_project_daterange">
         <source>report_project_daterange</source>
-        <target state="needs-translation">Monthly report</target>
+        <target state="translated">Báo cáo hàng tháng</target>
       </trans-unit>
       <trans-unit id="1gBKwGH" resname="report_inactive_project">
         <source>report_inactive_project</source>
-        <target state="needs-translation">Inactive projects</target>
+        <target state="translated">Các dự án không hoạt động</target>
       </trans-unit>
       <trans-unit id="ns_jU13" resname="reporting.initial_view">
         <source>reporting.initial_view</source>
-        <target state="needs-translation">Initial report</target>
+        <target state="translated">Báo cáo ban đầu</target>
+      </trans-unit>
+      <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects">
+        <source>report_customer_monthly_projects</source>
+        <target state="translated">Dự án theo tháng, hoạt động và người dùng</target>
       </trans-unit>
     </body>
   </file>
