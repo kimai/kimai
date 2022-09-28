@@ -14,12 +14,13 @@ namespace DoctrineMigrations;
 use App\Doctrine\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
-/**
- * Initial database structure of Kimai 2.
- * This file is mainly required for testing the migrations.
- */
 final class Version20180701120000 extends AbstractMigration
 {
+    public function getDescription(): string
+    {
+        return 'Initial database structure';
+    }
+
     public function up(Schema $schema): void
     {
         $this->addSql('CREATE TABLE kimai2_users (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(60) NOT NULL, mail VARCHAR(160) NOT NULL, password VARCHAR(254) DEFAULT NULL, alias VARCHAR(60) DEFAULT NULL, active TINYINT(1) NOT NULL, registration_date DATETIME DEFAULT NULL, title VARCHAR(50) DEFAULT NULL, avatar VARCHAR(255) DEFAULT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\', UNIQUE INDEX UNIQ_B9AC5BCE5E237E06 (name), UNIQUE INDEX UNIQ_B9AC5BCE5126AC48 (mail), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
