@@ -4,6 +4,7 @@
     <php>
         <ini name="error_reporting" value="-1"/>
         <ini name="max_execution_time" value="-1"/>
+        <ini name="date.timezone" value="UTC"/>
         <ini name="intl.default_locale" value="en_US"/>
         <env name="KERNEL_CLASS" value="App\Kernel" force="true"/>
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
