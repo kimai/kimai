@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ru" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
@@ -13,6 +13,22 @@
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
         <target>Табель учета времени</target>
+      </trans-unit>
+      <trans-unit id="4NNx9U." resname="Docx">
+        <source>Microsoft Word (DOCX)</source>
+        <target state="translated">Microsoft Word (DOCX)</target>
+      </trans-unit>
+      <trans-unit id="7mEUv6C" resname="help.upload">
+        <source>help.upload</source>
+        <target state="translated">Внимание: существующие файлы будут перезаписаны. Допустимые типы файлов: DOCX, ODS, XLSX.</target>
+      </trans-unit>
+      <trans-unit id="E5BwZHT" resname="programmatic">
+        <source>programmatic</source>
+        <target state="translated">Для дальнейшей обработки</target>
+      </trans-unit>
+      <trans-unit id="nA.KOyM" resname="Html">
+        <source>Html</source>
+        <target state="translated">HTML (для печати через браузер)</target>
       </trans-unit>
     </body>
   </file>

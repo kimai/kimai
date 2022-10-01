@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
-        <target state="translated">Cuidado: los archivos existentes se sobrescribirán. Los tipos de archivo permitidos son: DOCX, ODS, XLSX.</target>
+        <target state="translated">Atención: Los archivos existentes serán sobrescritos. Los tipos de archivo permitidos son: DOCX, ODS, XLSX.</target>
       </trans-unit>
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>
@@ -52,15 +52,15 @@
       </trans-unit>
       <trans-unit id="nA.KOyM" resname="Html">
         <source>Html</source>
-        <target state="translated">HTML (para impresión desde el navegador)</target>
+        <target state="translated">HTML (impresión por Navegador)</target>
       </trans-unit>
       <trans-unit id="sXlZPOC" resname="Xls">
         <source>Microsoft Excel (XLS)</source>
         <target state="translated">Microsoft Excel (XLS)</target>
       </trans-unit>
       <trans-unit id="QqvUWFt" resname="Ods">
-        <source>Ods</source>
-        <target state="translated">Open Office (Spreadsheet)</target>
+        <source>Open Office (ODS - Spreadsheet)</source>
+        <target state="translated">Open Office (Hoja de calculo)</target>
       </trans-unit>
       <trans-unit id="kLKl8xE" resname="Pdf">
         <source>Pdf</source>

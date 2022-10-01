@@ -504,12 +504,7 @@
             -->
       <trans-unit id="jiYDwqZ" resname="admin_project.delete_confirm">
         <source>admin_project.delete_confirm</source>
-        <target>
-                    V súčasnosti projekt %project% pre zákazníka %customer% má %activities%
-                    činnosti a %records% časových záznamov, ktoré sa započítavajú do celkového počtu %duration%.
-                    Tieto aktivity a časové záznamy budú tiež vymazané!
-                    Alternatívne môžete vybrať projekt, do ktorého sa prenesú všetky existujúce aktivity a položky:
-                </target>
+        <target>V súčasnosti projekt %project% pre zákazníka %customer% má %activities% činnosti a %records% časových záznamov, ktoré sa započítavajú do celkového počtu %duration%. Tieto aktivity a časové záznamy budú tiež vymazané! Alternatívne môžete vybrať projekt, do ktorého sa prenesú všetky existujúce aktivity a položky:</target>
       </trans-unit>
       <trans-unit id="yLOqEX_" resname="label.project_start">
         <source>label.project_start</source>
@@ -576,12 +571,7 @@
       </trans-unit>
       <trans-unit id="daVaZGm" resname="admin_customer.delete_confirm">
         <source>admin_customer.delete_confirm</source>
-        <target>
-                    V súčasnosti zákazník %customer% má %project% projektov s %activity% činnosti, ktoré sa počítajú
-                    v %records% časových záznamov do celkového počtu %duration%.
-                    Tieto projekty, aktivity a časové záznamy budú tiež vymazané!
-                    Prípadne môžete vybrať zákazníka, ktorému sa prenesú všetky údaje:
-                </target>
+        <target>V súčasnosti zákazník %customer% má %project% projektov s %activity% činnosti, ktoré sa počítajú v %records% časových záznamov do celkového počtu %duration%. Tieto projekty, aktivity a časové záznamy budú tiež vymazané! Prípadne môžete vybrať zákazníka, ktorému sa prenesú všetky údaje:</target>
       </trans-unit>
       <!--
               Admin: User
@@ -608,10 +598,7 @@
       </trans-unit>
       <trans-unit id="SlSedyD" resname="admin_user.delete_confirm">
         <source>admin_user.delete_confirm</source>
-        <target>
-                    Momentálny používateľ %user% má %records% časových záznamov, ktoré sa počítajú do celkového počtu %duration%.
-                    Tieto časové záznamy budú tiež vymazané!
-                </target>
+        <target>Momentálny používateľ %user% má %records% časových záznamov, ktoré sa počítajú do celkového počtu %duration%. Tieto časové záznamy budú tiež vymazané!</target>
       </trans-unit>
       <trans-unit id="ZlZ20pG" resname="user_permissions.title">
         <source>user_permissions.title</source>
@@ -917,9 +904,7 @@
       </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
-        <target>
-                    Reštartujte poslednú zaznamenanú aktivitu | Reštartujte jednu z vašich %count% posledných aktivít
-                </target>
+        <target>Reštartujte poslednú zaznamenanú aktivitu | Reštartujte jednu z vašich %count% posledných aktivít</target>
       </trans-unit>
       <trans-unit id="SLV47Uu" resname="recent.activities.format">
         <source>recent.activities.format</source>
@@ -1238,7 +1223,7 @@
       </trans-unit>
       <trans-unit id="tSlqVK2" resname="label.timesheet.export_decimal">
         <source>label.timesheet.export_decimal</source>
-        <target state="needs-translation">Use decimal duration in export</target>
+        <target state="translated">Použiť decimálnu dobu počas exportu</target>
       </trans-unit>
       <trans-unit id="5R.QsZ3" resname="theme.update_browser_title">
         <source>theme.update_browser_title</source>
@@ -1246,7 +1231,7 @@
       </trans-unit>
       <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
         <source>calendar.drag_and_drop.delete</source>
-        <target state="needs-translation">If you want to delete an entry, you must drag it onto the button.</target>
+        <target state="translated">Ak chcete vymazať príspevok, musíte ho potiahnuť na tlačidlo.</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>

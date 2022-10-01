@@ -62,6 +62,30 @@
         <source>An equal username is already used.</source>
         <target>Již je použito stejné uživatelské jméno.</target>
       </trans-unit>
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
+        <source>Duration cannot be zero.</source>
+        <target state="translated">Prázdná doba trvání není povolena.</target>
+      </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target state="translated">Musí být vybrán projekt.</target>
+      </trans-unit>
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target state="translated">Tento pracovní výkaz už byl exportován.</target>
+      </trans-unit>
+      <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
+        <source>An activity needs to be selected.</source>
+        <target state="translated">Musí být vybrána aktivita.</target>
+      </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">Rozpočet je bohužel vyčerpán.</target>
+      </trans-unit>
+      <trans-unit id="1oKCOa5" resname="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target state="translated">Rozpočet je vyčerpán. Z plánovaného %budget% bylo použito %used%, může být použito ještě %free%.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

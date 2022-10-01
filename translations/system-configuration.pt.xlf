@@ -314,6 +314,10 @@
         <source>label.quick_entry.minimum_rows</source>
         <target state="translated">Número mínimo de linhas</target>
       </trans-unit>
+      <trans-unit id="eiQKW2A" resname="label.calendar.dragdrop_data">
+        <source>Copies data when adding via drag and drop</source>
+        <target state="translated">Copia os dados ao adicionar via arrastar e largar</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

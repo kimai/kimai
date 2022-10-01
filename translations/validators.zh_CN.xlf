@@ -16,11 +16,11 @@
       </trans-unit>
       <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
         <source>Maximum duration of {{ value }} hours exceeded.</source>
-        <target>允许的最大{{ 值 }}小时数。</target>
+        <target state="translated">最多允许 {{ value }} 个小时。</target>
       </trans-unit>
       <trans-unit id="1oKCOa5" resname="The budget is completely used.">
         <source>The budget is completely used.</source>
-        <target>预算用完了。在可用的%budget%，%used%目前已被预订，%free%仍然可以使用。</target>
+        <target state="translated">预算用完了。在可用的 %budget% 中， %used%目前已被预订，%free%仍然可以使用。</target>
       </trans-unit>
       <trans-unit id="VJSZSD0" resname="The given value is not a valid time.">
         <source>The given value is not a valid time.</source>
