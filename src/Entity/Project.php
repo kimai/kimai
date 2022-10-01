@@ -257,6 +257,9 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * @var bool
      *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     *
      * @ORM\Column(name="global_activities", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
      */
