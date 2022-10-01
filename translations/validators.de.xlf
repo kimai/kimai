@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="validators.en.xlf">
     <body>
@@ -31,8 +31,8 @@
         <target>Dieser Wert ist keine gültige Rolle.</target>
       </trans-unit>
       <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
-        <source>End date must not be earlier then start date.</source>
-        <target>Das Enddatum darf nicht vor dem Startdatum liegen.</target>
+        <source>The end date must not be before the start date.</source>
+        <target state="translated">Das Enddatum darf nicht vor dem Startdatum liegen.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ru" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
@@ -13,6 +13,14 @@
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
         <target>Почасовая основа - сокращенная версия (только одна запись)</target>
+      </trans-unit>
+      <trans-unit id="BPiZbad" resname="user">
+        <source>user</source>
+        <target state="translated">Пользователь: одна запись на пользователя</target>
+      </trans-unit>
+      <trans-unit id="BlGGO.X" resname="activity">
+        <source>activity</source>
+        <target state="translated">Активность: одна запись на активность</target>
       </trans-unit>
     </body>
   </file>

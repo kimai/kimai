@@ -12,15 +12,15 @@
       </trans-unit>
       <trans-unit id="JiEhxTc" resname="edit">
         <source>edit</source>
-        <target state="translated">편집 </target>
+        <target state="translated">편집</target>
       </trans-unit>
       <trans-unit id="4G2jBDS" resname="trash">
         <source>trash</source>
-        <target state="translated">삭제 </target>
+        <target state="translated">삭제</target>
       </trans-unit>
       <trans-unit id="hF6RgxM" resname="report">
         <source>report</source>
-        <target state="translated">보고 </target>
+        <target state="translated">보고</target>
       </trans-unit>
       <trans-unit id="JeK2sQZ" resname="repeat">
         <source>repeat</source>
@@ -56,7 +56,7 @@
       </trans-unit>
       <trans-unit id="TqFAWIF" resname="home">
         <source>home</source>
-        <target state="translated">홈페이지 </target>
+        <target state="translated">홈페이지</target>
       </trans-unit>
       <trans-unit id="PBlIO2x" resname="create-project">
         <source>create-project</source>
@@ -72,7 +72,7 @@
       </trans-unit>
       <trans-unit id="T_PN1AT" resname="permissions">
         <source>permissions</source>
-        <target state="translated">팀 승인 </target>
+        <target state="translated">팀 승인</target>
       </trans-unit>
       <trans-unit id="9M4b2ZN" resname="invoice.paid">
         <source>invoice.paid</source>
@@ -88,7 +88,7 @@
       </trans-unit>
       <trans-unit id="aP9j_4L" resname="download">
         <source>download</source>
-        <target>다운로드</target>
+        <target state="needs-translation">Download</target>
       </trans-unit>
       <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser">
         <source>create-timesheet-multiuser</source>

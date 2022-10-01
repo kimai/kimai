@@ -94,6 +94,14 @@
         <source>create-timesheet-multiuser</source>
         <target>Pro více uživatelů</target>
       </trans-unit>
+      <trans-unit id="SEyZupT" resname="invoice.cancel">
+        <source>invoice.cancel</source>
+        <target state="translated">Stornovat fakturu</target>
+      </trans-unit>
+      <trans-unit id="38M3a4J" resname="filter">
+        <source>filter</source>
+        <target state="translated">Filtrovat</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

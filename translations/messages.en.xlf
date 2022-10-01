@@ -39,10 +39,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>
-                    This data will be deleted as well!
-                    Alternatively, you can select an entry to which all data will be transferred:
-                </target>
+        <target>This data will be deleted as well! Alternatively, you can select an entry to which all data will be transferred:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -161,12 +158,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>resetting.check_email</source>
-        <target>
-                    An email has been sent. It contains a link you must click to reset your password.
-                    Note: You can only request a new password once within %tokenLifetime% hours.
-
-                    If you don't get an email check your spam folder or try again.
-                </target>
+        <target>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</target>
       </trans-unit>
       <!--
               Menu / Navbar items
@@ -1085,8 +1077,8 @@
         <target>Canceled</target>
       </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
-        <source>preview.skipped_rows</source>
-        <target>Skipped preview of %rows% more rows …</target>
+        <source>Skipped preview of %rows% more rows …</source>
+        <target state="translated">Skipped preview of %rows% more rows …</target>
       </trans-unit>
       <!--
               Export

@@ -1278,6 +1278,14 @@
         <source>label.invoiceText</source>
         <target state="translated">Text faktury</target>
       </trans-unit>
+      <trans-unit id="G9hBaDJ" resname="label.globalActivities">
+        <source>label.globalActivities</source>
+        <target state="translated">Povolit všeobecné aktivity</target>
+      </trans-unit>
+      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
+        <source>label.budgetIndependent</source>
+        <target state="translated">Zobrazit bez ohledu na „typ rozpočtu“</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
