@@ -29,6 +29,7 @@ final class ThemeConfiguration implements \ArrayAccess
     /**
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->systemConfiguration->find('theme.' . $offset);
