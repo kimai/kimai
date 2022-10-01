@@ -34,6 +34,10 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
      * @var \DateTime|null
      */
     private $projectEnd;
+    /**
+     * @var null|bool
+     */
+    private $globalActivities = null;
 
     public function __construct()
     {
@@ -43,6 +47,7 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
             'projectStart' => null,
             'projectEnd' => null,
             'visibility' => VisibilityInterface::SHOW_VISIBLE,
+            'globalActivities' => null,
         ]);
     }
 
@@ -125,5 +130,15 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
         $this->projectEnd = $projectEnd;
 
         return $this;
+    }
+
+    public function getGlobalActivities(): ?bool
+    {
+        return $this->globalActivities;
+    }
+
+    public function setGlobalActivities(?bool $globalActivities): void
+    {
+        $this->globalActivities = $globalActivities;
     }
 }

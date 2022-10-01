@@ -367,6 +367,11 @@ class ProjectRepository extends EntityRepository
                 ->setParameter('customer', $query->getCustomers());
         }
 
+        if ($query->getGlobalActivities() !== null) {
+            $qb->andWhere($qb->expr()->eq('p.globalActivities', ':globalActivities'))
+                ->setParameter('globalActivities', $query->getGlobalActivities(), Types::BOOLEAN);
+        }
+
         // this is far from being perfect, possible enhancements:
         // there could also be a range selection to be able to select all projects that were active between from and to
         // begin = null and end = null
