@@ -1278,6 +1278,14 @@
         <source>label.invoiceText</source>
         <target state="translated">송장 텍스트</target>
       </trans-unit>
+      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
+        <source>label.budgetIndependent</source>
+        <target state="translated">'예산 유형'에 관계없이 표시하기</target>
+      </trans-unit>
+      <trans-unit id="G9hBaDJ" resname="label.globalActivities">
+        <source>label.globalActivities</source>
+        <target state="translated">전역 활동 허용하기</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

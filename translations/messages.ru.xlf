@@ -1272,6 +1272,10 @@
         <source>label.invoiceText</source>
         <target state="translated">Текст счета</target>
       </trans-unit>
+      <trans-unit id="G9hBaDJ" resname="label.globalActivities">
+        <source>label.globalActivities</source>
+        <target state="translated">Разрешать глобальные деятельности</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

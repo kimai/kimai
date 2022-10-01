@@ -976,7 +976,7 @@
       </trans-unit>
       <trans-unit id="X3JM9wj" resname="label.exported">
         <source>label.exported</source>
-        <target>Xuất khẩu</target>
+        <target state="translated">Đã xuất</target>
       </trans-unit>
       <trans-unit id="_DDecAV" resname="entryState.exported">
         <source>entryState.exported</source>
@@ -1164,7 +1164,7 @@
       </trans-unit>
       <trans-unit id="3zn5T5e" resname="label.not_exported">
         <source>label.not_exported</source>
-        <target state="translated">Không được xuất khẩu</target>
+        <target state="translated">Không được xuất</target>
       </trans-unit>
       <trans-unit id="LXdqaTH" resname="label.account_number">
         <source>label.account_number</source>

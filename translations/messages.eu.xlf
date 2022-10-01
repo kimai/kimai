@@ -865,7 +865,7 @@
       </trans-unit>
       <trans-unit id="ElDyzrx" resname="export.page_of">
         <source>export.page_of</source>
-        <target>%pages%-tik %page%. orrialdea </target>
+        <target>%pages%-tik %page%. orrialdea</target>
       </trans-unit>
       <trans-unit id="vKY0tof" resname="export.date_copyright">
         <source>export.date_copyright</source>
@@ -1246,8 +1246,8 @@
         <target state="needs-translation">%percent%% used this month</target>
       </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
-        <source>preview.skipped_rows</source>
-        <target state="needs-translation">Skipped preview of %rows% more rows …</target>
+        <source>Skipped preview of %rows% more rows …</source>
+        <target state="translated">Skipped preview of %rows% more rows …</target>
       </trans-unit>
       <trans-unit id="9Rhadz6" resname="label.budgetType_full">
         <source>label.budgetType_full</source>

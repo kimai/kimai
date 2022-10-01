@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="translated">날짜: 하루에 하나의 항목 (시작일 사용)</target>
+        <target state="translated">날짜: 하루에 하나의 항목 (시작 날짜 사용)</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>

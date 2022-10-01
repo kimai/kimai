@@ -809,6 +809,10 @@
         <source>ROLE_TEAMLEAD</source>
         <target state="translated">組長</target>
       </trans-unit>
+      <trans-unit id="GOStgLi" resname="label.vat">
+        <source>label.vat</source>
+        <target state="translated">稅</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

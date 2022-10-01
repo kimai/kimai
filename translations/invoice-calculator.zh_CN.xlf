@@ -32,11 +32,11 @@
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
-        <target state="translated">价格：每个价格一次</target>
+        <target state="translated">价格：每个价格一个条目</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
-        <target state="translated">每周：每周一次（使用开始日期）</target>
+        <target state="translated">每周：每周一个条目（使用开始日期）</target>
       </trans-unit>
     </body>
   </file>

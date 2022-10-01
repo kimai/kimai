@@ -1162,15 +1162,15 @@
       </trans-unit>
       <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
-        <target state="needs-translation">%percent%% used (%left% are still open)</target>
+        <target state="translated">%percent%% المستخدمة (%left% مازالت مفتوحة)</target>
       </trans-unit>
       <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>
-        <target state="needs-translation">%percent%% used this month</target>
+        <target state="translated">%percent%% مستخدمة هذا الشهر</target>
       </trans-unit>
       <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
         <source>stats.percentUsedLeft_month</source>
-        <target state="needs-translation">%percent%% used (%left% are still open this month)</target>
+        <target state="translated">%percent%% مستخدمة (%left% مازالت مفتوحة هذا الشهر)</target>
       </trans-unit>
       <trans-unit id="as948k9" resname="label.orderDate">
         <source>label.orderDate</source>
@@ -1178,7 +1178,7 @@
       </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target state="needs-translation">Skipped preview of %rows% more rows …</target>
+        <target state="translated">معاينة تم تجاوزها من %rows% صفوف أكثر …</target>
       </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
@@ -1214,7 +1214,7 @@
       </trans-unit>
       <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
         <source>delete_warning.short_stats</source>
-        <target state="needs-translation">Currently %records% time-records exists, which sum up to a total duration of %duration%.</target>
+        <target state="translated">حاليا %records% سجلات زمنية موجودة, والتي تلخص إجمالي مدة %duration%.</target>
       </trans-unit>
       <trans-unit id="tp.gIrE" resname="team.add_user.help">
         <source>team.add_user.help</source>
@@ -1222,11 +1222,11 @@
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
-        <target state="needs-translation">Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
+        <target state="translated">لقد وصلت الحد الأقصى ل %max% مستند فاتورة. تستطيع إضافة مستندات أكثر بعد إزالة واحد.</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>resetting.check_email</source>
-        <target state="needs-translation">An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</target>
+        <target state="translated">تم إرسال رسالة على بريدك الإلكتروني۔ تحتوي على رابط يجب عليك الضغط عليه لتغيير كلمة المرور۔ ملاحظة : تستطيع أن تطلب كلمة مرور جديد خلال كل %tokenLifetime% ساعات فقط۔ اذا لم تتلقى الرسالة في صندوق الوارد يرجى البحث في صندوق البريد الغير هام والمحاولة مرة أخرى۔</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>
@@ -1242,7 +1242,7 @@
       </trans-unit>
       <trans-unit id="W92QGbY" resname="export.warn_result_amount">
         <source>export.warn_result_amount</source>
-        <target state="needs-translation">Your search leads to %count% results. If the export fails, you have to narrow down your search further.</target>
+        <target state="translated">بحثك يؤدي إلى %count% نتيجة. إذا فشل التصدير, يجب عليك تضييق نطاق البحث .</target>
       </trans-unit>
       <trans-unit id="pnGDFmf" resname="label.type">
         <source>label.type</source>
