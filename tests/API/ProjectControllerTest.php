@@ -311,7 +311,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'customer' => 1,
-            'globalActivities' => 0,
+            'globalActivities' => '0',
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -330,7 +330,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'customer' => 1,
-            'globalActivities' => 1,
+            'globalActivities' => '1',
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
