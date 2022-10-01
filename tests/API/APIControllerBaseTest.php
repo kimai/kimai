@@ -433,6 +433,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'billable' => 'bool',
                     'color' => '@string',
                     'customer' => 'int',
+                    'globalActivities' => 'bool',
                     'comment' => '@string',
                 ];
 
@@ -445,6 +446,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'billable' => 'bool',
                     'color' => '@string',
                     'customer' => ['result' => 'object', 'type' => 'Customer'],
+                    'globalActivities' => 'bool',
                     'comment' => '@string',
                 ];
 
@@ -461,6 +463,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'parentTitle' => 'string',
                     'start' => '@datetime',
                     'end' => '@datetime',
+                    'globalActivities' => 'bool',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'comment' => '@string',
                 ];
@@ -478,6 +481,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
                     'parentTitle' => 'string',
                     'start' => '@datetime',
                     'end' => '@datetime',
+                    'globalActivities' => 'bool',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'comment' => '@string',
                     'budget' => 'float',

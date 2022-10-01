@@ -298,10 +298,49 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
         $this->assertNotEmpty($result['id']);
+        self::assertTrue($result['globalActivities']);
         self::assertEquals('2018-02-08T13:02:54+0000', $result['orderDate']);
         self::assertEquals('2019-02-01T19:32:17+0000', $result['start']);
         self::assertEquals('2020-02-08T21:11:42+0000', $result['end']);
         self::assertEquals('1234567890/WXYZ/SUBPROJECT/1234/CONTRACT/EMPLOYEE1', $result['orderNumber']);
+    }
+
+    public function testPostActionWithOtherFields()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'customer' => 1,
+            'globalActivities' => '0',
+        ];
+        $this->request($client, '/api/projects', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('ProjectEntity', $result);
+        $this->assertNotEmpty($result['id']);
+        self::assertEquals('foo', $result['name']);
+        self::assertFalse($result['globalActivities']);
+    }
+
+    public function testPostActionWithOtherFields2()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'customer' => 1,
+            'globalActivities' => '1',
+        ];
+        $this->request($client, '/api/projects', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('ProjectEntity', $result);
+        $this->assertNotEmpty($result['id']);
+        self::assertEquals('foo', $result['name']);
+        self::assertTrue($result['globalActivities']);
     }
 
     public function testPostActionWithLeastFields()
