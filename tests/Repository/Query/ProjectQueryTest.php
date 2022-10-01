@@ -31,6 +31,7 @@ class ProjectQueryTest extends BaseQueryTest
 
         self::assertNull($sut->getProjectStart());
         self::assertNull($sut->getProjectEnd());
+        self::assertNull($sut->getGlobalActivities());
     }
 
     public function testSetter()
@@ -44,5 +45,11 @@ class ProjectQueryTest extends BaseQueryTest
         $end = new \DateTime('-1 day');
         $sut->setProjectEnd($end);
         self::assertSame($end, $sut->getProjectEnd());
+
+        $sut->setGlobalActivities(false);
+        self::assertFalse($sut->getGlobalActivities());
+
+        $sut->setGlobalActivities(true);
+        self::assertTrue($sut->getGlobalActivities());
     }
 }
