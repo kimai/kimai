@@ -1522,10 +1522,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@orchidjs/sifter@npm:^0.9.1":
-  version: 0.9.1
-  resolution: "@orchidjs/sifter@npm:0.9.1"
-  checksum: 0d3bada0adf17f20054b517f0fbdbf1df4e623c0f5dbe0997e49a1c5cfeb62091f2576f6450cd929c9267b528583510a7de7693376ab18db3475764afb26e24b
+"@orchidjs/sifter@npm:^0.9.2":
+  version: 0.9.3
+  resolution: "@orchidjs/sifter@npm:0.9.3"
+  checksum: 7092f4d4bba115903b7ba91b98e2d56dc8ae50aa8fb1702e903bc220c3a7da236a20e2329b6ed223a4bc8870cc38635073d65706be80e0d66374a90c39b3874b
   languageName: node
   linkType: hard
 
@@ -7582,11 +7582,11 @@ __metadata:
   linkType: hard
 
 "tom-select@npm:^2.0.0":
-  version: 2.0.3
-  resolution: "tom-select@npm:2.0.3"
+  version: 2.1.0
+  resolution: "tom-select@npm:2.1.0"
   dependencies:
-    "@orchidjs/sifter": ^0.9.1
-  checksum: 53258221367809927278def7de0e07ee32ac8bec305cd2bf9186e4d362a551df9c44a54c1a1f3d0fc25a4026bfb4947a06027d2d8442f477ff6f6abe68988914
+    "@orchidjs/sifter": ^0.9.2
+  checksum: f0516526e62b1742564c74603a753f45823fcc2e96c132b71ccf0712b62d629e385a4aa95d24c2cb4cc74dcb71bce8d70cf9289b1ca5c115d0c07f46c7f71188
   languageName: node
   linkType: hard
 
