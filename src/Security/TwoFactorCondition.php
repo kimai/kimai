@@ -30,6 +30,11 @@ class TwoFactorCondition implements TwoFactorConditionInterface
             return false;
         }
 
+        // never require 2FA on API calls
+        if (str_starts_with($context->getRequest()->getRequestUri(), '/api/')) {
+            return false;
+        }
+
         // if a user is remembered, it means he already passed the TOTP code
         // do not bother again with the code
         return !$this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED');
