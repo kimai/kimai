@@ -12,8 +12,9 @@ namespace App\Event;
 use App\Entity\User;
 
 /**
- * This event is triggered once per side load.
- * It stores all toolbar items, which should be rendered in the upper right corner.
+ * This event is triggered for every action:
+ * - once per side load for table actions
+ * - once for every row item
  */
 class PageActionsEvent extends ThemeEvent
 {
@@ -39,6 +40,11 @@ class PageActionsEvent extends ThemeEvent
     public function getActionName(): string
     {
         return $this->action;
+    }
+
+    public function getEventName(): string
+    {
+        return 'actions.' . $this->getActionName();
     }
 
     public function isView(string $view): bool

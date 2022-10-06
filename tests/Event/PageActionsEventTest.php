@@ -26,6 +26,7 @@ class PageActionsEventTest extends TestCase
         $sut = new PageActionsEvent($user, [], 'foo', 'bar');
         $this->assertEquals('bar', $sut->getView());
         $this->assertEquals('foo', $sut->getActionName());
+        $this->assertEquals('actions.foo', $sut->getEventName());
         $this->assertTrue($sut->isView('bar'));
         $this->assertFalse($sut->isView('foo'));
         $this->assertFalse($sut->isIndexView());

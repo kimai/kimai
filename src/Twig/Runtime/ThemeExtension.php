@@ -55,10 +55,8 @@ final class ThemeExtension implements RuntimeExtensionInterface
     {
         $themeEvent = new PageActionsEvent($user, $payload, $action, $view);
 
-        $eventName = 'actions.' . $action;
-
-        if ($this->eventDispatcher->hasListeners($eventName)) {
-            $this->eventDispatcher->dispatch($themeEvent, $eventName);
+        if ($this->eventDispatcher->hasListeners($themeEvent->getEventName())) {
+            $this->eventDispatcher->dispatch($themeEvent, $themeEvent->getEventName());
         }
 
         return $themeEvent;
