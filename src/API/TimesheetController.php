@@ -11,6 +11,7 @@ namespace App\API;
 
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Event\PageActionsEvent;
 use App\Event\RecentActivityEvent;
 use App\Event\TimesheetDuplicatePostEvent;
 use App\Event\TimesheetDuplicatePreEvent;
@@ -261,6 +262,47 @@ final class TimesheetController extends BaseApiController
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Returns the actions for one timesheet record
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns one timesheet record. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601.",
+     *      @OA\JsonContent(ref="#/components/schemas/TimesheetEntity")
+     * )
+     * @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      description="Timesheet record ID to fetch",
+     *      required=true,
+     * )
+     * @OA\Parameter(
+     *      name="view",
+     *      in="path",
+     *      description="The view to request actions for. Uusually one of 'custom' or 'index'. Default: custom",
+     *      required=false,
+     * )
+     *
+     * @Rest\Get(path="/{id}/actions/{view}", name="get_timesheet_actions", requirements={"id": "\d+"})
+     *
+     * @ApiSecurity(name="apiUser")
+     * @ApiSecurity(name="apiToken")
+     *
+     * @Security("is_granted('view', id)")
+     */
+    public function getActions(Timesheet $id, ?string $view = null): Response
+    {
+        $themeEvent = new PageActionsEvent($this->getUser(), ['timesheet' => $id], 'timesheet', $view ?? 'custom');
+
+        if ($this->dispatcher->hasListeners($themeEvent->getEventName())) {
+            $this->dispatcher->dispatch($themeEvent, $themeEvent->getEventName());
+        }
+
+        return $this->viewHandler->handle(
+            new View($themeEvent->getActions(), 200)
+        );
     }
 
     /**
