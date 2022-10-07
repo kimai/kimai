@@ -7,40 +7,31 @@
 
 # for symfony local webserver
 php.ini
+!.gitkeep
 
 /bin/*
-!bin/console
-/config/packages/local.yaml
-/config/packages/*-local.yaml
-/config/packages/*/local.yaml
-/config/packages/*/*-local.yaml
+!/bin/console
+*local.yaml
 /config/bundles-local.php
 
-public/avatars/*.png
+/public/avatars/*.png
 
-templates/invoice/renderer/.~lock*
-translations/branding.*.xlf
+/templates/invoice/renderer/.~lock*
+/translations/branding.*.xlf
 
 /var/data/*
 !/var/data/.gitkeep
 /var/coverage/
 /var/cache/*
-!var/cache/.gitkeep
 
 /var/invoices/*
 /var/export/*
-
-/var/packages/*
-!var/packages/.gitkeep
-/var/plugins/*
-/var/plugins/*/.disabled
-!var/plugins/.gitkeep
-
 /var/log/*
-!var/log/.gitkeep
-
 /var/sessions/*
-!var/sessions/.gitkeep
+/var/packages/*
+/var/plugins/*
+*.disabled
+
 # ========== KIMAI ==========
 
 ###> symfony/framework-bundle ###
@@ -62,7 +53,6 @@ translations/branding.*.xlf
 
 ###> symfony/phpunit-bridge ###
 .phpunit
-/phpunit.xml
 ###< symfony/phpunit-bridge ###
 
 ###> symfony/webpack-encore-bundle ###
