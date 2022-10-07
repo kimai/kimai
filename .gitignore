@@ -33,6 +33,7 @@ translations/branding.*.xlf
 /var/packages/*
 !var/packages/.gitkeep
 /var/plugins/*
+/var/plugins/*/.disabled
 !var/plugins/.gitkeep
 
 /var/log/*
