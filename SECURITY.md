@@ -6,7 +6,7 @@ As announced in the [README](README.md) I only support the latest available rele
 
 | Version              | Supported          |
 |----------------------|--------------------|
-| master               | :white_check_mark: |
+| main/master branch   | :white_check_mark: |
 | latest minor release | :white_check_mark: |
 | older releases       | :x:                |
 
