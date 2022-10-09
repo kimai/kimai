@@ -122,10 +122,18 @@ export default class KimaiActiveRecords extends KimaiPlugin {
             menuEmpty.style.display = !hasEntries ? 'inline-block' : 'none';
         }
 
+        const stop = this._menu.querySelector('.ticktac-stop');
+
         if (!hasEntries) {
+            if (stop) {
+                stop.accesskey = null;
+            }
             return;
         }
 
+        if (stop) {
+            stop.accesskey = 's';
+        }
         this._replaceInNode(this._menu, entries[0]);
         this._updateDuration();
     }
@@ -133,23 +141,21 @@ export default class KimaiActiveRecords extends KimaiPlugin {
     _replaceInNode(node, timesheet) {
         const date = this.getDateUtils();
         const allReplacer = node.querySelectorAll('[data-replacer]');
-        for (let node of allReplacer) {
-            const replacerName = node.dataset['replacer'];
+        for (let link of allReplacer) {
+            const replacerName = link.dataset['replacer'];
             if (replacerName === 'url') {
-                node.href = this.attributes['href'].replace('000', timesheet.id);
+                link.href = this.attributes['href'].replace('000', timesheet.id);
             } else if (replacerName === 'activity') {
-                node.innerText = timesheet.activity.name;
+                link.innerText = timesheet.activity.name;
             } else if (replacerName === 'project') {
-                node.innerText = timesheet.project.name;
+                link.innerText = timesheet.project.name;
             } else if (replacerName === 'customer') {
-                node.innerText = timesheet.project.customer.name;
+                link.innerText = timesheet.project.customer.name;
             } else if (replacerName === 'duration') {
-                node.dataset['since'] = timesheet.begin;
-                node.innerText = date.formatDuration(timesheet.duration);
+                link.dataset['since'] = timesheet.begin;
+                link.innerText = date.formatDuration(timesheet.duration);
             }
         }
-
-        return node;
     }
 
     reloadActiveRecords() {

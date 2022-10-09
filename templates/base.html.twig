@@ -55,7 +55,7 @@
     {{ event.content|raw }}
     {% if page_setup is defined and page_setup.help is not null %}
         <div class="float-help">
-            <a href="{% if '://' in page_setup.help %}{{ page_setup.help }}{% else %}{{ page_setup.help|docu_link }}{% endif %}" target="_blank">
+            <a href="{% if '://' in page_setup.help %}{{ page_setup.help }}{% else %}{{ page_setup.help|docu_link }}{% endif %}" target="_blank" accesskey="h">
                 <i class="fas fa-question"></i>
             </a>
         </div>
