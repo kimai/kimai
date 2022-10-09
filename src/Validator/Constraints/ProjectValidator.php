@@ -52,7 +52,7 @@ class ProjectValidator extends ConstraintValidator
     protected function validateProject(Project $project, ExecutionContextInterface $context)
     {
         if (null !== $project->getStart() && null !== $project->getEnd() && $project->getStart()->getTimestamp() > $project->getEnd()->getTimestamp()) {
-            $context->buildViolation('End date must not be earlier then start date.')
+            $context->buildViolation(ProjectConstraint::getErrorName(ProjectConstraint::END_BEFORE_BEGIN_ERROR))
                 ->atPath('end')
                 ->setTranslationDomain('validators')
                 ->setCode(ProjectConstraint::END_BEFORE_BEGIN_ERROR)
