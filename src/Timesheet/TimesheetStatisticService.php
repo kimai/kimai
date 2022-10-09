@@ -158,7 +158,6 @@ final class TimesheetStatisticService
             }
         }
 
-        /* @phpstan-ignore-next-line */
         return $stats;
     }
 
@@ -238,7 +237,6 @@ final class TimesheetStatisticService
             }
         }
 
-        /* @phpstan-ignore-next-line */
         return $stats;
     }
 

@@ -296,9 +296,7 @@ final class TimesheetController extends BaseApiController
     {
         $themeEvent = new PageActionsEvent($this->getUser(), ['timesheet' => $id], 'timesheet', $view ?? 'custom');
 
-        if ($this->dispatcher->hasListeners($themeEvent->getEventName())) {
-            $this->dispatcher->dispatch($themeEvent, $themeEvent->getEventName());
-        }
+        $this->dispatcher->dispatch($themeEvent, $themeEvent->getEventName());
 
         return $this->viewHandler->handle(
             new View($themeEvent->getActions(), 200)
