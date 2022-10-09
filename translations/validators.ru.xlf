@@ -58,6 +58,14 @@
         <source>At least one team leader must be assigned to the team.</source>
         <target>В команде должен быть назначен хотя бы один руководитель.</target>
       </trans-unit>
+      <trans-unit id="INlaCgW" resname="An equal email is already used.">
+        <source>An equal email is already used.</source>
+        <target state="translated">Введённый адрес электронной почты уже используется.</target>
+      </trans-unit>
+      <trans-unit id="ekO5eXI" resname="An equal username is already used.">
+        <source>An equal username is already used.</source>
+        <target state="translated">Имя пользователя уже используется.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

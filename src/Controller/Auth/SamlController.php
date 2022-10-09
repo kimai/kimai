@@ -9,7 +9,7 @@
 
 namespace App\Controller\Auth;
 
-use App\Configuration\SamlConfiguration;
+use App\Configuration\SamlConfigurationInterface;
 use App\Saml\SamlAuthFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Security;
  */
 final class SamlController extends AbstractController
 {
-    public function __construct(private SamlAuthFactory $authFactory, private SamlConfiguration $samlConfiguration)
+    public function __construct(private SamlAuthFactory $authFactory, private SamlConfigurationInterface $samlConfiguration)
     {
     }
 

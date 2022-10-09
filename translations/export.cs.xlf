@@ -14,6 +14,10 @@
         <source>default-internal.pdf.twig</source>
         <target>S interními sazbami</target>
       </trans-unit>
+      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig">
+        <source>Timesheet</source>
+        <target state="translated">Pracovní výkaz</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

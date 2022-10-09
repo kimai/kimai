@@ -286,6 +286,11 @@ class SystemConfiguration
         return (int) $this->find('calendar.dragdrop_amount');
     }
 
+    public function isCalendarDragAndDropCopyData(): bool
+    {
+        return (bool) $this->find('calendar.dragdrop_data');
+    }
+
     // ========== Customer configurations ==========
 
     public function getCustomerDefaultTimezone(): ?string

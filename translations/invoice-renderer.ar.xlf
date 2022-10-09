@@ -60,11 +60,27 @@
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
-        <target state="needs-translation">انتباه: سيتم الكتابة فوق الملفات الموجودة. أنواع الملفات المسموح بها هي: DOCX و ODS و XLSX.</target>
+        <target state="translated">انتباه: سيتم الكتابة فوق الملفات الموجودة. أنواع الملفات المسموح بها هي: DOCX و ODS و XLSX.</target>
       </trans-unit>
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>
         <target state="translated">لمزيد من المعالجة</target>
+      </trans-unit>
+      <trans-unit id="4NNx9U." resname="Docx">
+        <source>Microsoft Word (DOCX)</source>
+        <target state="translated">مايكروسوفت وورد (DOCX)</target>
+      </trans-unit>
+      <trans-unit id="sXlZPOC" resname="Xls">
+        <source>Microsoft Excel (XLS)</source>
+        <target state="translated">مايكروسوفت إكسل (XLS)</target>
+      </trans-unit>
+      <trans-unit id="QqvUWFt" resname="Ods">
+        <source>Ods</source>
+        <target state="translated">فتح اوفيس(جدول بيانات)</target>
+      </trans-unit>
+      <trans-unit id="sjwwrr8" resname="Xlsx">
+        <source>Microsoft Excel (XLSX)</source>
+        <target state="translated">مايكروسوفت اكسل(XLSX)</target>
       </trans-unit>
     </body>
   </file>

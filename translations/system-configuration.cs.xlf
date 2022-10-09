@@ -198,6 +198,98 @@
         <source>theme.avatar_url</source>
         <target>Povolit použití adres URL pro obrázky avatarů</target>
       </trans-unit>
+      <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
+        <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
+        <target state="translated">Seznam HTML kódů barev oddělený čárkou. Názvy barev lze nastavit přidáním předpony kódu barvy názvu a znaku "|" oddělovač, např.: Bílá|#ffffff,Černá|#000000.</target>
+      </trans-unit>
+      <trans-unit id="eiQKW2A" resname="label.calendar.dragdrop_data">
+        <source>Copies data when adding via drag and drop</source>
+        <target state="translated">Kopírovat data přidaná pomocí přetažení</target>
+      </trans-unit>
+      <trans-unit id="g1q7hKi" resname="label.timesheet.rules.allow_zero_duration">
+        <source>label.timesheet.rules.allow_zero_duration</source>
+        <target state="translated">Povolit záznamy bez doby trvání</target>
+      </trans-unit>
+      <trans-unit id="VAAaL2t" resname="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target state="translated">Povolit úpravy uložených rozpočtů</target>
+      </trans-unit>
+      <trans-unit id="tuPXa0S" resname="lockdown_period">
+        <source>lockdown_period</source>
+        <target state="translated">Doba uzamčení</target>
+      </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target state="translated">Počet předvyplněných záznamu z přechozího týdne</target>
+      </trans-unit>
+      <trans-unit id="QxQOG3e" resname="label.quick_entry.recent_activity_weeks">
+        <source>label.quick_entry.recent_activity_weeks</source>
+        <target state="translated">Převzít záznamy z posledních X týdnů (prázdné nebo 0 pro neomezené)</target>
+      </trans-unit>
+      <trans-unit id="7Efrrn5" resname="label.quick_entry.minimum_rows">
+        <source>label.quick_entry.minimum_rows</source>
+        <target state="translated">Minimální počet řádků</target>
+      </trans-unit>
+      <trans-unit id=".CeyZwj" resname="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target state="translated">Účetní rok</target>
+      </trans-unit>
+      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
+        <source>label.calendar.title_pattern</source>
+        <target state="translated">Zobrazení názvů položek kalendáře</target>
+      </trans-unit>
+      <trans-unit id="scCc2Xm" resname="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target state="translated">Povolené barvy</target>
+      </trans-unit>
+      <trans-unit id="QHVk7AA" resname="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target state="translated">Limit výběru barev</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target state="translated">Ověření</target>
+      </trans-unit>
+      <trans-unit id="CCXeSFj" resname="label.user_auth_login">
+        <source>label.user_auth_login</source>
+        <target state="translated">Přihlášení</target>
+      </trans-unit>
+      <trans-unit id="jLG6z.w" resname="label.timesheet.rules.break_warning_duration">
+        <source>label.timesheet.rules.break_warning_duration</source>
+        <target state="translated">Maximální doba trvání pracovního výkazu v minutách před zobrazením „upozornění na přestávku“ (0 = deaktivováno)</target>
+      </trans-unit>
+      <trans-unit id="ZUTc3eH" resname="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target state="translated">Množství záznamu pro přetažení (0 = deaktivováno)</target>
+      </trans-unit>
+      <trans-unit id="0Tj.NhS" resname="label.user_auth_password_reset_token_ttl">
+        <source>label.user_auth_password_reset_token_ttl</source>
+        <target state="translated">Zapomenuté heslo - sekund než odkaz vyprší</target>
+      </trans-unit>
+      <trans-unit id=".zZ_MeA" resname="label.user_auth_registration">
+        <source>label.user_auth_registration</source>
+        <target state="translated">Registrování uživatele</target>
+      </trans-unit>
+      <trans-unit id="t2zKRp5" resname="label.user_auth_password_reset">
+        <source>label.user_auth_password_reset</source>
+        <target state="translated">Zapomenuté heslo</target>
+      </trans-unit>
+      <trans-unit id="ufoC1qF" resname="label.user_auth_password_reset_retry_ttl">
+        <source>label.user_auth_password_reset_retry_ttl</source>
+        <target state="translated">Zapomenuté heslo - sekund než může uživatel požádat znova</target>
+      </trans-unit>
+      <trans-unit id="71FjFMp" resname="label.ldap_activate">
+        <source>label.ldap_activate</source>
+        <target state="translated">LDAP přihlášení</target>
+      </trans-unit>
+      <trans-unit id="A3HPT4p" resname="label.saml_activate">
+        <source>label.saml_activate</source>
+        <target state="translated">SAML přihlášení</target>
+      </trans-unit>
+      <trans-unit id="h4bhOny" resname="label.timesheet.rules.long_running_duration">
+        <source>label.timesheet.rules.long_running_duration</source>
+        <target state="translated">Maximální doba trvání pracovního výkazu v minutách před odmítnutím uložení (0 = deaktivováno)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

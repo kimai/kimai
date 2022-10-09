@@ -9,6 +9,7 @@
 
 namespace App\Controller\Security;
 
+use App\Configuration\SamlConfigurationInterface;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 final class SecurityController extends AbstractController
 {
-    public function __construct(private CsrfTokenManagerInterface $tokenManager, private Security $security)
+    public function __construct(private CsrfTokenManagerInterface $tokenManager, private Security $security, private SamlConfigurationInterface $samlConfiguration)
     {
     }
 
@@ -48,6 +49,7 @@ final class SecurityController extends AbstractController
             'last_username' => $lastUsername,
             'error' => $error,
             'csrf_token' => $csrfToken,
+            'saml_config' => $this->samlConfiguration,
         ]);
     }
 

@@ -46,8 +46,9 @@ final class CalendarService
 
         $entries = [];
         $colorHelper = new Color();
+        $copy = $this->configuration->isCalendarDragAndDropCopyData();
         foreach ($recentActivity->getRecentActivities() as $timesheet) {
-            $entries[] = new TimesheetEntry($timesheet, $colorHelper->getTimesheetColor($timesheet));
+            $entries[] = new TimesheetEntry($timesheet, $colorHelper->getTimesheetColor($timesheet), $copy);
         }
 
         $event->addSource(new RecentActivitiesSource($entries));

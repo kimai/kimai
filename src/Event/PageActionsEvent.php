@@ -149,7 +149,7 @@ class PageActionsEvent extends ThemeEvent
 
     public function addCreate(string $url, bool $modal = true): void
     {
-        $this->addAction('create', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' : ''), 'title' => 'create']);
+        $this->addAction('create', ['url' => $url, 'class' => ($modal ? 'modal-ajax-form' : ''), 'title' => 'create', 'accesskey' => 'a']);
     }
 
     /**
@@ -160,7 +160,7 @@ class PageActionsEvent extends ThemeEvent
      */
     public function addSettings(string $url): void
     {
-        $this->addAction('settings', ['url' => $url, 'class' => 'modal-ajax-form', 'title' => 'settings', 'translation_domain' => 'actions']);
+        $this->addAction('settings', ['url' => $url, 'class' => 'modal-ajax-form', 'title' => 'settings', 'translation_domain' => 'actions', 'accesskey' => 'h']);
     }
 
     public function addConfig(string $url): void

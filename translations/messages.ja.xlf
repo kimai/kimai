@@ -35,10 +35,7 @@
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>
-                    こちらのデータも同時に削除されます！
-                    代替手段として、明細を指定してそちらに全データを付け替えることも可能です:
-                </target>
+        <target>こちらのデータも同時に削除されます！ 代替手段として、明細を指定してそちらに全データを付け替えることも可能です:</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -811,7 +808,7 @@
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments">
         <source>attachments</source>
-        <target state="needs-translation">Files</target>
+        <target state="translated">ファイル</target>
       </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
@@ -967,15 +964,15 @@
       </trans-unit>
       <trans-unit id="VSo_gmO" resname="orderBy">
         <source>orderBy</source>
-        <target state="needs-translation">Order by</target>
+        <target state="translated">並べ替え</target>
       </trans-unit>
       <trans-unit id="hBNESu6" resname="my.profile">
         <source>my.profile</source>
-        <target state="needs-translation">My profile</target>
+        <target state="translated">プロフィール</target>
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple">
         <source>update_multiple</source>
-        <target state="needs-translation">%action% %count% entries?</target>
+        <target state="translated">%count%個のエントリーを%action%しますか？</target>
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
@@ -983,7 +980,7 @@
       </trans-unit>
       <trans-unit id="8W_TZI0" resname="searchTerm">
         <source>searchTerm</source>
-        <target state="needs-translation">Search term</target>
+        <target state="translated">検索ワード</target>
       </trans-unit>
       <trans-unit id="CiA4s9E" resname="set_as_default">
         <source>set_as_default</source>
@@ -991,19 +988,19 @@
       </trans-unit>
       <trans-unit id="DUDrvjk" resname="remove_default">
         <source>remove_default</source>
-        <target state="needs-translation">Delete search favourite</target>
+        <target state="translated">お気に入りの検索を削除</target>
       </trans-unit>
       <trans-unit id="1o0.9vf" resname="asc">
         <source>asc</source>
-        <target state="needs-translation">Ascending</target>
+        <target state="translated">昇順</target>
       </trans-unit>
       <trans-unit id="l4ZOh4." resname="desc">
         <source>desc</source>
-        <target state="needs-translation">Descending</target>
+        <target state="translated">降順</target>
       </trans-unit>
       <trans-unit id="O5w1jzb" resname="file">
         <source>file</source>
-        <target state="needs-translation">File</target>
+        <target state="translated">ファイル</target>
       </trans-unit>
       <trans-unit id="0M_Gylq" resname="rates.empty">
         <source>rates.empty</source>
@@ -1011,15 +1008,15 @@
       </trans-unit>
       <trans-unit id="mflwMcX" resname="rates.title">
         <source>rates.title</source>
-        <target state="needs-translation">Fees</target>
+        <target state="translated">料金</target>
       </trans-unit>
       <trans-unit id="zFfl7jw" resname="sum.total">
         <source>sum.total</source>
-        <target state="needs-translation">Total</target>
+        <target state="translated">合計</target>
       </trans-unit>
       <trans-unit id="XP5zkiN" resname="modal.dirty">
         <source>modal.dirty</source>
-        <target state="needs-translation">The form has changed. Please click "Save" to save the changes or "Close" to cancel.</target>
+        <target state="translated">フォームが変更されました。「保存」をクリックして変更を保存するか、「閉じる」をクリックしてキャンセルしてください。</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
@@ -1192,6 +1189,10 @@
       <trans-unit id="ViUuILv" resname="includeBudgetType_month">
         <source>includeBudgetType_month</source>
         <target state="needs-translation">Show entries with "monthly" budget</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic">
+        <source>automatic</source>
+        <target state="translated">自動</target>
       </trans-unit>
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>

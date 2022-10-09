@@ -1054,15 +1054,19 @@
       </trans-unit>
       <trans-unit id="dicW36D" resname="mark_as_exported">
         <source>mark_as_exported</source>
-        <target state="needs-translation">Mark as exported</target>
+        <target state="translated">وضع علامة كمصدر</target>
+      </trans-unit>
+      <trans-unit id="9VxfLLy" resname="decimalDuration">
+        <source>decimalDuration</source>
+        <target state="translated">عرض المدة كرقم عشري</target>
       </trans-unit>
       <trans-unit id="BhsaLxX" resname="export.clear_all">
         <source>export.clear_all</source>
-        <target state="needs-translation">Mark all shown records as open?</target>
+        <target state="translated">هل تريد وضع علامة على جميع السجلات المعروضة على أنها مفتوحة؟</target>
       </trans-unit>
       <trans-unit id="fVA3M2x" resname="choice_pattern">
         <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
+        <target state="translated">عرض الإدخالات في قوائم الاختيار</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
@@ -1070,7 +1074,7 @@
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
-        <target state="needs-translation">Directory "%dir%" is write protected.</target>
+        <target state="translated">الدليل "%dir%" محمي ضد الكتابة.</target>
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
@@ -1090,15 +1094,15 @@
       </trans-unit>
       <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
-        <target state="needs-translation">%percent%% used (%left% are still open)</target>
+        <target state="translated">%percent%% المستخدمة (%left% مازالت مفتوحة)</target>
       </trans-unit>
       <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>
-        <target state="needs-translation">%percent%% used this month</target>
+        <target state="translated">%percent%% مستخدمة هذا الشهر</target>
       </trans-unit>
       <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
         <source>stats.percentUsedLeft_month</source>
-        <target state="needs-translation">%percent%% used (%left% are still open this month)</target>
+        <target state="translated">%percent%% مستخدمة (%left% مازالت مفتوحة هذا الشهر)</target>
       </trans-unit>
       <trans-unit id="tCNBGKG" resname="orderDate">
         <source>orderDate</source>
@@ -1106,7 +1110,7 @@
       </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
-        <target state="needs-translation">Skipped preview of %rows% more rows …</target>
+        <target state="translated">معاينة تم تجاوزها من %rows% صفوف أكثر …</target>
       </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
@@ -1122,19 +1126,19 @@
       </trans-unit>
       <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields">
         <source>help.batch_meta_fields</source>
-        <target state="needs-translation">Fields that are to be updated must first be activated by clicking on the associated checkbox.</target>
+        <target state="translated">يجب أولاً تنشيط الحقول المراد تحديثها بالنقر فوق مربع الاختيار المرتبط.</target>
       </trans-unit>
       <trans-unit id="L27KvC9" resname="includeNoWork">
         <source>includeNoWork</source>
-        <target state="needs-translation">Show entries without bookings</target>
+        <target state="translated">إظهار الإدخالات بدون حجوزات</target>
       </trans-unit>
       <trans-unit id="ViUuILv" resname="includeBudgetType_month">
         <source>includeBudgetType_month</source>
-        <target state="needs-translation">Show entries with "monthly" budget</target>
+        <target state="translated">إظهار الإدخالات مع الميزانية "الشهرية"</target>
       </trans-unit>
       <trans-unit id="KukrzcT" resname="includeBudgetType_full">
         <source>includeBudgetType_full</source>
-        <target state="needs-translation">Show entries with "life cycle" budget</target>
+        <target state="translated">إظهار الإدخالات مع ميزانية "دورة الحياة"</target>
       </trans-unit>
       <trans-unit id="dnQEYoJ" resname="budgetType_full">
         <source>budgetType_full</source>
@@ -1142,7 +1146,7 @@
       </trans-unit>
       <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
         <source>delete_warning.short_stats</source>
-        <target state="needs-translation">Currently %records% time-records exists, which sum up to a total duration of %duration%.</target>
+        <target state="translated">حاليا %records% سجلات زمنية موجودة, والتي تلخص إجمالي مدة %duration%.</target>
       </trans-unit>
       <trans-unit id="tp.gIrE" resname="team.add_user.help">
         <source>team.add_user.help</source>
@@ -1150,15 +1154,15 @@
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
-        <target state="needs-translation">Reached maximum amount of %max% invoice documents. You can add more after removing one.</target>
+        <target state="translated">لقد وصلت الحد الأقصى ل %max% مستند فاتورة. تستطيع إضافة مستندات أكثر بعد إزالة واحد.</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>resetting.check_email</source>
-        <target state="needs-translation">An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</target>
+        <target state="translated">تم إرسال رسالة على بريدك الإلكتروني۔ تحتوي على رابط يجب عليك الضغط عليه لتغيير كلمة المرور۔ ملاحظة : تستطيع أن تطلب كلمة مرور جديد خلال كل %tokenLifetime% ساعات فقط۔ اذا لم تتلقى الرسالة في صندوق الوارد يرجى البحث في صندوق البريد الغير هام والمحاولة مرة أخرى۔</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>
-        <target state="needs-translation">Revenues</target>
+        <target state="translated">الإيرادات</target>
       </trans-unit>
       <trans-unit id="ElDyzrx" resname="export.page_of">
         <source>export.page_of</source>
@@ -1170,7 +1174,7 @@
       </trans-unit>
       <trans-unit id="W92QGbY" resname="export.warn_result_amount">
         <source>export.warn_result_amount</source>
-        <target state="needs-translation">Your search leads to %count% results. If the export fails, you have to narrow down your search further.</target>
+        <target state="translated">بحثك يؤدي إلى %count% نتيجة. إذا فشل التصدير, يجب عليك تضييق نطاق البحث .</target>
       </trans-unit>
       <trans-unit id="EwPAaws" resname="type">
         <source>type</source>
@@ -1190,15 +1194,23 @@
       </trans-unit>
       <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
-        <target state="needs-translation">نص الفاتورة</target>
+        <target state="translated">نص الفاتورة</target>
       </trans-unit>
       <trans-unit id="NNsA8i2" resname="globalsOnly">
         <source>globalsOnly</source>
-        <target state="needs-translation">عالمي فقط</target>
+        <target state="translated">الشاملة فقط</target>
       </trans-unit>
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
         <target>حول Kimai</target>
+      </trans-unit>
+      <trans-unit id="G9hBaDJ" resname="globalActivities">
+        <source>globalActivities</source>
+        <target state="translated">السماح بالأنشطة العالمية</target>
+      </trans-unit>
+      <trans-unit id="8mTf0eZ" resname="budgetIndependent">
+        <source>budgetIndependent</source>
+        <target state="translated">عرض بغض النظر عن "نوع الدخل"</target>
       </trans-unit>
     </body>
   </file>

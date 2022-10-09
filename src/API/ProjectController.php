@@ -73,6 +73,7 @@ final class ProjectController extends BaseApiController
      * @Rest\QueryParam(name="start", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only projects that started before this date will be included. Allowed format: HTML5 (default: now, if end is also empty)")
      * @Rest\QueryParam(name="end", requirements=@Constraints\DateTime(format="Y-m-d\TH:i:s"), strict=true, nullable=true, description="Only projects that ended after this date will be included. Allowed format: HTML5 (default: now, if start is also empty)")
      * @Rest\QueryParam(name="ignoreDates", requirements="1", strict=true, nullable=true, description="If set, start and end are completely ignored. Allowed values: 1 (default: off)")
+     * @Rest\QueryParam(name="globalActivities", requirements="0|1", strict=true, nullable=true, description="If given, filters projects by their 'global activity' support. Allowed values: 1 (supports global activities) and 0 (without global activities) (default: all)")
      * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
      * @Rest\QueryParam(name="orderBy", requirements="id|name|customer", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name, customer (default: name)")
      * @Rest\QueryParam(name="term", description="Free search term")
@@ -111,6 +112,10 @@ final class ProjectController extends BaseApiController
 
         if (null !== ($visible = $paramFetcher->get('visible'))) {
             $query->setVisibility($visible);
+        }
+
+        if (null !== ($globalActivities = $paramFetcher->get('globalActivities'))) {
+            $query->setGlobalActivities((bool) $globalActivities);
         }
 
         $ignoreDates = false;

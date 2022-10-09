@@ -282,6 +282,10 @@
         <source>calendar.title_pattern</source>
         <target state="translated">显示日历条目的标题</target>
       </trans-unit>
+      <trans-unit id="eiQKW2A" resname="label.calendar.dragdrop_data">
+        <source>Copies data when adding via drag and drop</source>
+        <target state="translated">通过拖放添加时复制文件</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

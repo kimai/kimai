@@ -34,6 +34,10 @@
         <source>report_project_daterange</source>
         <target>Ежемесячный отчёт</target>
       </trans-unit>
+      <trans-unit id="3JLmvfB" resname="report_user_year">
+        <source>report_user_year</source>
+        <target state="translated">Годовой просмотр для одного пользователя</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

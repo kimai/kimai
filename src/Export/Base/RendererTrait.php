@@ -59,7 +59,9 @@ trait RendererTrait
             if (!isset($summary[$id])) {
                 $summary[$id] = [
                     'customer' => '',
+                    'customer_item' => null,
                     'project' => '',
+                    'project_item' => null,
                     'activities' => [],
                     'currency' => $currency,
                     'rate' => 0,
@@ -72,7 +74,9 @@ trait RendererTrait
 
                 if ($project !== null) {
                     $summary[$id]['customer'] = $customer->getName();
+                    $summary[$id]['customer_item'] = $customer;
                     $summary[$id]['project'] = $project->getName();
+                    $summary[$id]['project_item'] = $project;
                 }
             }
 
@@ -104,6 +108,7 @@ trait RendererTrait
 
                 if ($activity !== null) {
                     $summary[$id]['activities'][$activityId]['activity'] = $activity->getName();
+                    $summary[$id]['activities'][$activityId]['activity_item'] = $activity;
                 }
             }
 

@@ -1206,6 +1206,14 @@
         <source>about.title</source>
         <target>O Kimai</target>
       </trans-unit>
+      <trans-unit id="G9hBaDJ" resname="globalActivities">
+        <source>globalActivities</source>
+        <target state="translated">Povolit všeobecné aktivity</target>
+      </trans-unit>
+      <trans-unit id="8mTf0eZ" resname="budgetIndependent">
+        <source>budgetIndependent</source>
+        <target state="translated">Zobrazit bez ohledu na „typ rozpočtu“</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

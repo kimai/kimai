@@ -34,6 +34,46 @@
         <source>You must select at least one user or team.</source>
         <target>Debe seleccionar por lo menos un usuario o equipo.</target>
       </trans-unit>
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target state="translated">Debe asignarse al equipo al menos un responsable de equipo.</target>
+      </trans-unit>
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target state="translated">Las contraseñas introducidas no coinciden.</target>
+      </trans-unit>
+      <trans-unit id="6u6oCwB" resname="The email is already used.">
+        <source>The email is already used.</source>
+        <target state="translated">Este correo ya está siendo usado.</target>
+      </trans-unit>
+      <trans-unit id="S14XECA" resname="The username is already used.">
+        <source>The username is already used.</source>
+        <target state="translated">Este nombre de usuario ya está siendo utilizado.</target>
+      </trans-unit>
+      <trans-unit id="ekO5eXI" resname="An equal username is already used.">
+        <source>An equal username is already used.</source>
+        <target state="translated">El mismo nombre de usuario ya está siendo usado.</target>
+      </trans-unit>
+      <trans-unit id="INlaCgW" resname="An equal email is already used.">
+        <source>An equal email is already used.</source>
+        <target state="translated">El mismo correo ya está siendo usando.</target>
+      </trans-unit>
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
+        <source>Duration cannot be zero.</source>
+        <target state="translated">No se permite un valor vacío para la duración.</target>
+      </trans-unit>
+      <trans-unit id="1oKCOa5" resname="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target state="translated">El presupuesto se ha agotado. Del %budget% disponible, el %used% se ha reservado hasta ahora, el %free% aún puede utilizarse.</target>
+      </trans-unit>
+      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target state="translated">Máximo de horas {{ value }} permitidas.</target>
+      </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">Lo siento, el presupuesto se ha agotado.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

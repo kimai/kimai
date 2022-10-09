@@ -89,7 +89,9 @@
         {% if is_granted('create_own_timesheet') %}
             {% include 'partials/ticktack.html.twig' %}
         {% endif %}
-        {% include 'partials/recent-activities.html.twig' %}
+        {% if is_granted('view_own_timesheet') %}
+            {% include 'partials/recent-activities.html.twig' %}
+        {% endif %}
     {% endif %}
 {% endblock %}
 

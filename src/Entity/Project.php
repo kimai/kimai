@@ -247,6 +247,11 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     /**
      * Whether this project allows booking of global activities
      *
+     * @var bool
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"Default"})
+     *
      * @ORM\Column(name="global_activities", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
      */

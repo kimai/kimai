@@ -1152,11 +1152,11 @@
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
-        <target state="needs-translation">Directory "%dir%" is write protected.</target>
+        <target state="translated">Map "%dir%" is beschermd tegen schrijven.</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
-        <target state="needs-translation">The directory “%dir%” does not exist and could not be created.</target>
+        <target state="translated">De map “%dir%” bestaat niet en kon niet worden aangemaakt.</target>
       </trans-unit>
       <trans-unit id="ViUuILv" resname="includeBudgetType_month">
         <source>includeBudgetType_month</source>

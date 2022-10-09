@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="vi" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
@@ -8,11 +8,11 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target>Mặc định: một mục cho mỗi bản</target>
+        <target state="translated">Mặc định: một mục nhập cho mỗi bản ghi thời gian</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
-        <target>Giờ: tổng hợp bản ghi, một mục nhập cho mỗi giờ</target>
+        <target state="translated">Giờ: hồ sơ được tổng hợp, tổng số một mục nhập</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
@@ -28,7 +28,15 @@
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target>Ngày: một mục nhập mỗi ngày (sử dụng ngày bắt đầu)</target>
+        <target state="translated">Ngày: một mục nhập một ngày (sử dụng ngày bắt đầu)</target>
+      </trans-unit>
+      <trans-unit id="aDtTH0H" resname="price">
+        <source>price</source>
+        <target state="translated">Giá: mỗi mục nhập cho mỗi giá</target>
+      </trans-unit>
+      <trans-unit id="iFDs7Zh" resname="weekly">
+        <source>weekly</source>
+        <target state="translated">Hàng tuần: mỗi mục nhập cho mỗi tuần (sử dụng ngày bắt đầu)</target>
       </trans-unit>
     </body>
   </file>

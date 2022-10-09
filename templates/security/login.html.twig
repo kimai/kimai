@@ -45,7 +45,7 @@
 {% endblock %}
 
 {% block login_social_auth %}
-    {% if kimai_config.samlActive %}
+    {% if saml_config.isActivated() %}
         {% if kimai_config.loginFormActive %}
             <div class="hr-text">{{ 'or'|trans({}, 'TablerBundle') }}</div>
         {% endif %}
@@ -57,7 +57,7 @@
                         {% if provider is not null %}
                             <i class="icon fab fa-{{ provider}} text-{{ provider }}"></i>
                         {% endif %}
-                        {{ kimai_config.samlTitle|trans }}
+                        {{ saml_config.getTitle()|trans }}
                     </a>
                 </div>
             </div>

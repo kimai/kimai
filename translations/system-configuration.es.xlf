@@ -186,6 +186,26 @@
         <source>calendar.slot_duration</source>
         <target>Unidad mínima de tiempo para las vistas semanal y diaria (formato: hh:mm:ss)</target>
       </trans-unit>
+      <trans-unit id="g1q7hKi" resname="label.timesheet.rules.allow_zero_duration">
+        <source>label.timesheet.rules.allow_zero_duration</source>
+        <target state="translated">Permitir registros de horas sin duración</target>
+      </trans-unit>
+      <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
+        <source>label.theme.avatar_url</source>
+        <target state="translated">Permitir el uso de URLs para las imágenes de los avatares</target>
+      </trans-unit>
+      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
+        <source>label.theme.random_colors</source>
+        <target state="translated">Usar colores aleatorios para objetos sin color asignado</target>
+      </trans-unit>
+      <trans-unit id="tuPXa0S" resname="lockdown_period">
+        <source>lockdown_period</source>
+        <target state="translated">Periodo de bloqueo</target>
+      </trans-unit>
+      <trans-unit id="HeDzoVE" resname="label.timesheet.rules.lockdown_period_timezone">
+        <source>label.timesheet.rules.lockdown_period_timezone</source>
+        <target state="translated">Zona horaria (si está vacía, se utiliza la zona horaria del usuario correspondiente)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

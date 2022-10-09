@@ -93,7 +93,7 @@ class PageActionsEventTest extends TestCase
         $expected = [
             'divider0' => null,
             'columns' => ['modal' => '#foo2', 'title' => 'modal.columns.title'],
-            'create' => ['url' => 'foo5', 'class' => 'modal-ajax-form', 'title' => 'create'],
+            'create' => ['url' => 'foo5', 'class' => 'modal-ajax-form', 'title' => 'create', 'accesskey' => 'a'],
             'download' => ['url' => 'foo7', 'class' => 'toolbar-action', 'title' => 'export'],
             'trash' => ['url' => 'foo3', 'class' => 'modal-ajax-form text-red'],
         ];
