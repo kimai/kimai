@@ -6,6 +6,9 @@ includes:
     - %rootDir%/../phpstan/conf/bleedingEdge.neon
 
 parameters:
+    level: 5
+    paths:
+        - src
     tmpDir: %rootDir%/../../../var/cache/phpstan
     excludePaths:
         - %rootDir%/../../../src/Ldap/LdapDriver.php

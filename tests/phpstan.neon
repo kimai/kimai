@@ -7,6 +7,9 @@ includes:
     - %rootDir%/../phpstan-phpunit/rules.neon
 
 parameters:
+    level: 5
+    paths:
+        - .
     tmpDir: %rootDir%/../../../var/cache/phpstan
     excludePaths:
         - %rootDir%/../../../tests/Ldap/LdapDriverTest.php

@@ -7,6 +7,10 @@
         {
             "name": "Kevin Papst",
             "homepage": "https://www.kevinpapst.de"
+        },
+        {
+            "name": "All contributors",
+            "homepage": "https://github.com/kevinpapst/kimai2/contributors"
         }
     ],
     "require": {
@@ -175,8 +179,8 @@
         "tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
         "tests-integration": "vendor/bin/phpunit --group integration tests/",
         "phpstan": [
-            "vendor/bin/phpstan analyse src -c phpstan.neon --level=5",
-            "vendor/bin/phpstan analyse tests -c tests/phpstan.neon --level=5"
+            "vendor/bin/phpstan analyse -c phpstan.neon",
+            "vendor/bin/phpstan analyse -c tests/phpstan.neon"
         ],
         "codestyle": "vendor/bin/php-cs-fixer fix --dry-run --verbose --show-progress=none",
         "codestyle-fix": "vendor/bin/php-cs-fixer fix"
