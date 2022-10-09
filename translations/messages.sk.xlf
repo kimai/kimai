@@ -850,10 +850,6 @@
         <source>recent.activities</source>
         <target>Reštartujte poslednú zaznamenanú aktivitu | Reštartujte jednu z vašich %count% posledných aktivít</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% v %project% pre %customer%</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>Vytvoriť nový časový záznam</target>

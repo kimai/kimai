@@ -795,10 +795,6 @@
         <source>recent.activities</source>
         <target>Herstart een van uw laatste activiteiten</target>
       </trans-unit>
-      <trans-unit id="SLV47Uu" resname="recent.activities.format">
-        <source>recent.activities.format</source>
-        <target>%activity% in %project% voor %customer%</target>
-      </trans-unit>
       <trans-unit id="dTHY7Mw" resname="timesheet.start">
         <source>timesheet.start</source>
         <target>Nieuwe teller starten</target>

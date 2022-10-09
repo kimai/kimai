@@ -1056,10 +1056,6 @@
         <source>mark_as_exported</source>
         <target state="translated">وضع علامة كمصدر</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="decimalDuration">
-        <source>decimalDuration</source>
-        <target state="translated">عرض المدة كرقم عشري</target>
-      </trans-unit>
       <trans-unit id="BhsaLxX" resname="export.clear_all">
         <source>export.clear_all</source>
         <target state="translated">هل تريد وضع علامة على جميع السجلات المعروضة على أنها مفتوحة؟</target>

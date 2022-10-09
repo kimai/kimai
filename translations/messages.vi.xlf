@@ -1170,10 +1170,6 @@
         <source>quick_entry.title</source>
         <target state="translated">Giờ làm việc hàng tuần</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="hours_24">
-        <source>hours_24</source>
-        <target state="translated">24 tiếng</target>
-      </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
         <target state="translated">Đã đạt đến số lượng tối đa %max% chứng từ hóa đơn. Bạn có thêm sau khi xóa bớt.</target>

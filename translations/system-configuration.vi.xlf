@@ -154,108 +154,108 @@
         <source>invoice.number_format</source>
         <target>Định dạng số hóa đơn</target>
       </trans-unit>
-      <trans-unit id="t2zKRp5" resname="label.user_auth_password_reset">
-        <source>label.user_auth_password_reset</source>
+      <trans-unit id="t2zKRp5" resname="user_auth_password_reset">
+        <source>user_auth_password_reset</source>
         <target state="translated">Quên mật khẩu</target>
       </trans-unit>
-      <trans-unit id="71FjFMp" resname="label.ldap_activate">
-        <source>label.ldap_activate</source>
+      <trans-unit id="71FjFMp" resname="ldap_activate">
+        <source>ldap_activate</source>
         <target state="translated">Đăng nhập LDAP</target>
       </trans-unit>
-      <trans-unit id="h4bhOny" resname="label.timesheet.rules.long_running_duration">
-        <source>label.timesheet.rules.long_running_duration</source>
+      <trans-unit id="h4bhOny" resname="timesheet.rules.long_running_duration">
+        <source>timesheet.rules.long_running_duration</source>
         <target state="translated">Thời lượng tối đa của một bản ghi bảng chấm công tính bằng phút trước khi lưu bị từ chối (0 = hủy kích hoạt)</target>
       </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
         <target state="translated">Tắt</target>
       </trans-unit>
-      <trans-unit id="ZUTc3eH" resname="label.calendar.dragdrop_amount">
-        <source>label.calendar.dragdrop_amount</source>
+      <trans-unit id="ZUTc3eH" resname="calendar.dragdrop_amount">
+        <source>calendar.dragdrop_amount</source>
         <target state="translated">Số lượng mục nhập cho kéo&amp;thả (0 = hủy kích hoạt)</target>
       </trans-unit>
-      <trans-unit id="ufoC1qF" resname="label.user_auth_password_reset_retry_ttl">
-        <source>label.user_auth_password_reset_retry_ttl</source>
+      <trans-unit id="ufoC1qF" resname="user_auth_password_reset_retry_ttl">
+        <source>user_auth_password_reset_retry_ttl</source>
         <target state="translated">Quên mật khẩu - giây trước khi người dùng có thể yêu cầu email tiếp theo</target>
       </trans-unit>
-      <trans-unit id="0Tj.NhS" resname="label.user_auth_password_reset_token_ttl">
-        <source>label.user_auth_password_reset_token_ttl</source>
+      <trans-unit id="0Tj.NhS" resname="user_auth_password_reset_token_ttl">
+        <source>user_auth_password_reset_token_ttl</source>
         <target state="translated">Quên mật khẩu - giây trước khi liên kết đặt lại hết hạn</target>
       </trans-unit>
-      <trans-unit id="jLG6z.w" resname="label.timesheet.rules.break_warning_duration">
-        <source>label.timesheet.rules.break_warning_duration</source>
+      <trans-unit id="jLG6z.w" resname="timesheet.rules.break_warning_duration">
+        <source>timesheet.rules.break_warning_duration</source>
         <target state="translated">Thời hạn tối đa của một bản ghi bảng chấm công tính bằng phút trước khi một "cảnh báo ngắt" được hiển thị (0 = hủy kích hoạt)</target>
       </trans-unit>
-      <trans-unit id="A3HPT4p" resname="label.saml_activate">
-        <source>label.saml_activate</source>
+      <trans-unit id="A3HPT4p" resname="saml_activate">
+        <source>saml_activate</source>
         <target state="translated">Đăng nhập SAML</target>
       </trans-unit>
-      <trans-unit id="g1q7hKi" resname="label.timesheet.rules.allow_zero_duration">
-        <source>label.timesheet.rules.allow_zero_duration</source>
+      <trans-unit id="g1q7hKi" resname="timesheet.rules.allow_zero_duration">
+        <source>timesheet.rules.allow_zero_duration</source>
         <target state="translated">Cho phép các mục thời gian trống</target>
       </trans-unit>
-      <trans-unit id="VAAaL2t" resname="label.timesheet.rules.allow_overbooking_budget">
-        <source>label.timesheet.rules.allow_overbooking_budget</source>
+      <trans-unit id="VAAaL2t" resname="timesheet.rules.allow_overbooking_budget">
+        <source>timesheet.rules.allow_overbooking_budget</source>
         <target state="translated">Cho phép đặt trước quá ngân sách được lưu trữ</target>
       </trans-unit>
       <trans-unit id="tuPXa0S" resname="lockdown_period">
         <source>lockdown_period</source>
         <target state="translated">Thời gian khóa</target>
       </trans-unit>
-      <trans-unit id="HeDzoVE" resname="label.timesheet.rules.lockdown_period_timezone">
-        <source>label.timesheet.rules.lockdown_period_timezone</source>
+      <trans-unit id="HeDzoVE" resname="timesheet.rules.lockdown_period_timezone">
+        <source>timesheet.rules.lockdown_period_timezone</source>
         <target state="translated">Múi giờ (Nếu trống, múi giờ của người dùng tương ứng sẽ được sử dụng)</target>
       </trans-unit>
-      <trans-unit id="yVBJECt" resname="label.timesheet.rules.lockdown_period_start">
-        <source>label.timesheet.rules.lockdown_period_start</source>
+      <trans-unit id="yVBJECt" resname="timesheet.rules.lockdown_period_start">
+        <source>timesheet.rules.lockdown_period_start</source>
         <target state="translated">Bắt đầu giai đoạn khóa (ngày tương đối với PHP cho đến nay)</target>
       </trans-unit>
-      <trans-unit id=".es2tyO" resname="label.timesheet.rules.lockdown_period_end">
-        <source>label.timesheet.rules.lockdown_period_end</source>
+      <trans-unit id=".es2tyO" resname="timesheet.rules.lockdown_period_end">
+        <source>timesheet.rules.lockdown_period_end</source>
         <target state="translated">Kết thúc giai đoạn khóa (ngày tương đối với PHP cho đến nay)</target>
       </trans-unit>
-      <trans-unit id="y2i0PU3" resname="label.timesheet.rules.lockdown_grace_period">
-        <source>label.timesheet.rules.lockdown_grace_period</source>
+      <trans-unit id="y2i0PU3" resname="timesheet.rules.lockdown_grace_period">
+        <source>timesheet.rules.lockdown_grace_period</source>
         <target state="translated">Kết thúc thời gian gia hạn khóa (ngày tương đối với PHP đến ngày kết thúc thời gian khóa)</target>
       </trans-unit>
-      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
-        <source>label.quick_entry.recent_activities</source>
+      <trans-unit id="zeOPuh6" resname="quick_entry.recent_activities">
+        <source>quick_entry.recent_activities</source>
         <target state="translated">Số lượng các mục nhập được tiếp nhận từ các tuần trước</target>
       </trans-unit>
-      <trans-unit id="QxQOG3e" resname="label.quick_entry.recent_activity_weeks">
-        <source>label.quick_entry.recent_activity_weeks</source>
+      <trans-unit id="QxQOG3e" resname="quick_entry.recent_activity_weeks">
+        <source>quick_entry.recent_activity_weeks</source>
         <target state="translated">Tiếp quản các mục nhập từ X tuần vừa rồi (Trống hoặc 0 cho tất cả)</target>
       </trans-unit>
-      <trans-unit id="7Efrrn5" resname="label.quick_entry.minimum_rows">
-        <source>label.quick_entry.minimum_rows</source>
+      <trans-unit id="7Efrrn5" resname="quick_entry.minimum_rows">
+        <source>quick_entry.minimum_rows</source>
         <target state="translated">Số hàng tối thiểu</target>
       </trans-unit>
-      <trans-unit id=".CeyZwj" resname="label.company.financial_year">
-        <source>label.company.financial_year</source>
+      <trans-unit id=".CeyZwj" resname="company.financial_year">
+        <source>company.financial_year</source>
         <target state="translated">Năm tài chính</target>
       </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>
         <target state="translated">Ngày đầu tiên của tuần</target>
       </trans-unit>
-      <trans-unit id="40i4Xlr" resname="label.timesheet.duration_increment">
-        <source>label.timesheet.duration_increment</source>
+      <trans-unit id="40i4Xlr" resname="timesheet.duration_increment">
+        <source>timesheet.duration_increment</source>
         <target state="translated">Lựa chọn phút cho Thời lượng</target>
       </trans-unit>
-      <trans-unit id="x3AfnWn" resname="label.timesheet.time_increment">
-        <source>label.timesheet.time_increment</source>
+      <trans-unit id="x3AfnWn" resname="timesheet.time_increment">
+        <source>timesheet.time_increment</source>
         <target state="translated">Lựa chọn phút cho Từ &amp; Đến</target>
       </trans-unit>
       <trans-unit id="9C1qkmD" resname="increment_rounding">
         <source>increment_rounding</source>
         <target state="translated">Sử dụng giá trị được cấu hình cho quy tắc làm tròn</target>
       </trans-unit>
-      <trans-unit id="QHVk7AA" resname="label.theme.colors_limited">
-        <source>label.theme.colors_limited</source>
+      <trans-unit id="QHVk7AA" resname="theme.colors_limited">
+        <source>theme.colors_limited</source>
         <target state="translated">Giới hạn lựa chọn màu sắc</target>
       </trans-unit>
-      <trans-unit id="scCc2Xm" resname="label.theme.color_choices">
-        <source>label.theme.color_choices</source>
+      <trans-unit id="scCc2Xm" resname="theme.color_choices">
+        <source>theme.color_choices</source>
         <target state="translated">Các màu sắc được cho phép</target>
       </trans-unit>
       <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
@@ -266,31 +266,31 @@
         <source>authentication</source>
         <target state="translated">Xác thực</target>
       </trans-unit>
-      <trans-unit id="CCXeSFj" resname="label.user_auth_login">
-        <source>label.user_auth_login</source>
+      <trans-unit id="CCXeSFj" resname="user_auth_login">
+        <source>user_auth_login</source>
         <target state="translated">Mẫu đăng nhập</target>
       </trans-unit>
-      <trans-unit id=".zZ_MeA" resname="label.user_auth_registration">
-        <source>label.user_auth_registration</source>
+      <trans-unit id=".zZ_MeA" resname="user_auth_registration">
+        <source>user_auth_registration</source>
         <target state="translated">Đăng ký người dùng</target>
       </trans-unit>
-      <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
-        <source>label.theme.avatar_url</source>
+      <trans-unit id="SCkhv_z" resname="theme.avatar_url">
+        <source>theme.avatar_url</source>
         <target state="translated">Cho phép sử dụng URLs cho ảnh đại diện</target>
       </trans-unit>
-      <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
-        <source>label.theme.random_colors</source>
+      <trans-unit id="JZMT_4o" resname="theme.random_colors">
+        <source>theme.random_colors</source>
         <target state="translated">Sử dụng màu ngẫu nhiên cho các đối tượng không có màu chỉ định</target>
       </trans-unit>
-      <trans-unit id=".NE5mGi" resname="label.timesheet.rules.allow_overlapping_records">
-        <source>label.timesheet.rules.allow_overlapping_records</source>
+      <trans-unit id=".NE5mGi" resname="timesheet.rules.allow_overlapping_records">
+        <source>timesheet.rules.allow_overlapping_records</source>
         <target state="translated">Cho phép các mục thời gian được chồng chéo</target>
       </trans-unit>
-      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
-        <source>label.calendar.title_pattern</source>
+      <trans-unit id="MXabpD7" resname="calendar.title_pattern">
+        <source>calendar.title_pattern</source>
         <target state="translated">Hiển thị tiêu đề của các mục lịch</target>
       </trans-unit>
-      <trans-unit id="eiQKW2A" resname="label.calendar.dragdrop_data">
+      <trans-unit id="eiQKW2A" resname="calendar.dragdrop_data">
         <source>Copies data when adding via drag and drop</source>
         <target state="translated">Sao chép dữ liệu khi thêm bằng cách kéo và thả</target>
       </trans-unit>
