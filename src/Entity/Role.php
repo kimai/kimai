@@ -20,6 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\RoleRepository")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
  * @UniqueEntity("name")
  */
 class Role

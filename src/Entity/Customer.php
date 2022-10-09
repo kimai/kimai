@@ -24,6 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  *
  * @Serializer\ExclusionPolicy("all")
  *
@@ -246,7 +247,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Groups({"Customer"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Team"))
      *
-     * @ORM\ManyToMany(targetEntity="Team", cascade={"persist"}, inversedBy="customers")
+     * @ORM\ManyToMany(targetEntity="Team", cascade={"persist", "remove"}, inversedBy="customers")
      * @ORM\JoinTable(
      *  name="kimai2_customers_teams",
      *  joinColumns={

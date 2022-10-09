@@ -34,7 +34,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TimesheetRepository")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  * @ORM\HasLifecycleCallbacks()
+ *
  * @Constraints\Timesheet
  *
  * @Serializer\ExclusionPolicy("all")

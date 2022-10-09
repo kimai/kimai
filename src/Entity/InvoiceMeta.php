@@ -14,12 +14,14 @@ use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity()
  * @ORM\Table(name="kimai2_invoices_meta",
  *      uniqueConstraints={
  *          @ORM\UniqueConstraint(columns={"invoice_id", "name"})
  *      }
  * )
+ * @ORM\Entity()
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
  * @Serializer\ExclusionPolicy("all")
  */
 class InvoiceMeta implements MetaTableTypeInterface

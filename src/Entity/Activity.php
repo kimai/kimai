@@ -26,6 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ActivityRepository")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  *
  * @Serializer\ExclusionPolicy("all")
  * @Serializer\VirtualProperty(

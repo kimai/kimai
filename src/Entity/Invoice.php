@@ -26,6 +26,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\InvoiceRepository")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
  * @UniqueEntity("invoiceNumber")
  * @UniqueEntity("invoiceFilename")
  *

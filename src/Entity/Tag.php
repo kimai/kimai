@@ -22,6 +22,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
  * @UniqueEntity("name")
  *
  * @Serializer\ExclusionPolicy("all")

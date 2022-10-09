@@ -14,12 +14,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\InvoiceTemplateRepository")
  * @ORM\Table(name="kimai2_invoice_templates",
  *      uniqueConstraints={
  *          @ORM\UniqueConstraint(columns={"name"})
  *      }
  * )
+ * @ORM\Entity(repositoryClass="App\Repository\InvoiceTemplateRepository")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
  * @UniqueEntity("name")
  */
 class InvoiceTemplate

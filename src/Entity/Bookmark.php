@@ -19,8 +19,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @ORM\UniqueConstraint(columns={"user_id", "name"})
  *      }
  * )
- * @UniqueEntity(fields={"user", "name"})
  * @ORM\Entity(repositoryClass="App\Repository\BookmarkRepository")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
+ * @UniqueEntity(fields={"user", "name"})
  */
 class Bookmark
 {

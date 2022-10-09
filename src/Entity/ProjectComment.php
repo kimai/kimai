@@ -13,12 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity()
  * @ORM\Table(name="kimai2_projects_comments",
  *      indexes={
  *          @ORM\Index(columns={"project_id"})
  *      }
  * )
+ * @ORM\Entity()
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 class ProjectComment implements CommentInterface
 {

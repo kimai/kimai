@@ -21,6 +21,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRateRepository")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
  * @UniqueEntity({"user", "customer"}, ignoreNull=false)
  *
  * @Serializer\ExclusionPolicy("all")

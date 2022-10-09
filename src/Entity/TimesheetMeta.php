@@ -14,12 +14,14 @@ use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity()
  * @ORM\Table(name="kimai2_timesheet_meta",
  *      uniqueConstraints={
  *          @ORM\UniqueConstraint(columns={"timesheet_id", "name"})
  *      }
  * )
+ * @ORM\Entity()
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
  * @Serializer\ExclusionPolicy("all")
  */
 class TimesheetMeta implements MetaTableTypeInterface

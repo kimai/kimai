@@ -31,13 +31,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="kimai2_users",
  *      uniqueConstraints={
  *          @ORM\UniqueConstraint(columns={"username"}),
  *          @ORM\UniqueConstraint(columns={"email"})
  *      }
  * )
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
  * @UniqueEntity("username")
  * @UniqueEntity("email")
  * @Constraints\User(groups={"UserCreate", "Registration", "Default"})

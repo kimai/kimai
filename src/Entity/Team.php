@@ -25,6 +25,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TeamRepository")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
  * @UniqueEntity("name")
  *
  * @Serializer\ExclusionPolicy("all")
@@ -65,7 +67,7 @@ class Team
      * @Serializer\Groups({"Team_Entity"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/TeamMember"))
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\TeamMember", mappedBy="team", fetch="LAZY", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\TeamMember", mappedBy="team", fetch="LAZY", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\Count(min="1")
      */
@@ -79,7 +81,7 @@ class Team
      * @Serializer\Groups({"Team_Entity"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Customer"))
      *
-     * @ORM\ManyToMany(targetEntity="Customer", mappedBy="teams", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Customer", mappedBy="teams", fetch="EXTRA_LAZY", cascade={"persist", "remove"})
      */
     private Collection $customers;
     /**
@@ -91,7 +93,7 @@ class Team
      * @Serializer\Groups({"Team_Entity", "Expanded"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Project"))
      *
-     * @ORM\ManyToMany(targetEntity="Project", mappedBy="teams", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Project", mappedBy="teams", fetch="EXTRA_LAZY", cascade={"persist", "remove"})
      */
     private Collection $projects;
     /**
@@ -103,7 +105,7 @@ class Team
      * @Serializer\Groups({"Team_Entity", "Expanded"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Activity"))
      *
-     * @ORM\ManyToMany(targetEntity="Activity", mappedBy="teams", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Activity", mappedBy="teams", fetch="EXTRA_LAZY", cascade={"persist", "remove"})
      */
     private Collection $activities;
 
