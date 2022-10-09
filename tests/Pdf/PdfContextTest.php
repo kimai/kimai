@@ -13,7 +13,7 @@ use App\Pdf\PdfContext;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Export\PdfContext
+ * @covers \App\Pdf\PdfContext
  */
 class PdfContextTest extends TestCase
 {
