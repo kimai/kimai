@@ -24,6 +24,7 @@ use App\Repository\Query\ProjectQuery;
 use App\Utils\Pagination;
 use DateTime;
 use Doctrine\DBAL\ParameterType;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Query;

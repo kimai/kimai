@@ -42,7 +42,7 @@ final class SamlController extends AbstractController
 
         if ($request->attributes->has($authErrorKey)) {
             $error = $request->attributes->get($authErrorKey);
-        } elseif (null !== $session && $session->has($authErrorKey)) {
+        } elseif ($session->has($authErrorKey)) {
             $error = $session->get($authErrorKey);
             $session->remove($authErrorKey);
         }
@@ -84,5 +84,17 @@ final class SamlController extends AbstractController
         }
 
         throw new \RuntimeException('You must configure the check path in your firewall.');
+    }
+
+    /**
+     * @Route(path="/logout", name="saml_logout")
+     */
+    public function logoutAction()
+    {
+        if (!$this->samlConfiguration->isActivated()) {
+            throw $this->createNotFoundException('SAML deactivated');
+        }
+
+        throw new \RuntimeException('You must configure the logout path in your firewall.');
     }
 }

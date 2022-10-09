@@ -130,7 +130,7 @@ services:
     # SAML Services
     # ================================================================================
     App\Saml\SamlProvider:
-        arguments: ['@App\Repository\UserRepository', '@security.user.provider.concrete.kimai_internal', '@App\Configuration\SamlConfiguration']
+        arguments: ['@App\Repository\UserRepository', '@security.user.provider.concrete.kimai_internal', '@App\Configuration\SamlConfigurationInterface']
 
     # ================================================================================
     # REPOSITORIES
