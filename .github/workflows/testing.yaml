@@ -66,9 +66,6 @@ jobs:
             -   name: Lint codebase
                 run: composer linting
 
-            -   name: Check for security issues in packages
-                run: symfony security:check
-
             -   name: Install LDAP package (for tests)
                 run: composer require laminas/laminas-ldap
 
@@ -107,3 +104,6 @@ jobs:
                     DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?serverVersion=5.7
                     APP_ENV: dev
                     MAILER_URL: null://localhost
+
+            -   name: Check for security issues in packages
+                run: symfony security:check
