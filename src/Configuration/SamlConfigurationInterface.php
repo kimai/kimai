@@ -15,6 +15,8 @@ interface SamlConfigurationInterface
 
     public function getTitle(): string;
 
+    public function getProvider(): string;
+
     public function getAttributeMapping(): array;
 
     public function getRolesAttribute(): ?string;

@@ -53,7 +53,7 @@
             <div class="row">
                 <div class="col text-center">
                     <a href="{{ path('saml_login') }}" tabindex="50" class="btn btn-white w-50">
-                        {% set provider = kimai_config.samlProvider %}
+                        {% set provider = saml_config.getProvider() %}
                         {% if provider is not null %}
                             <i class="icon fab fa-{{ provider}} text-{{ provider }}"></i>
                         {% endif %}

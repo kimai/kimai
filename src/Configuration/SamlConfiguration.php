@@ -28,6 +28,11 @@ final class SamlConfiguration implements SamlConfigurationInterface
         return $this->configuration->getSamlTitle();
     }
 
+    public function getProvider(): string
+    {
+        return $this->configuration->getSamlProvider();
+    }
+
     public function getAttributeMapping(): array
     {
         return $this->configuration->findArray('saml.mapping');
