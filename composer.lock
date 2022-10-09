@@ -1553,16 +1553,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.13.2",
+            "version": "2.13.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "a8b02fd70fa777ca8278b9604fdef75c15c6a12f"
+                "reference": "e750360bd52b080c4cbaaee1b48b80f7dc873b36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/a8b02fd70fa777ca8278b9604fdef75c15c6a12f",
-                "reference": "a8b02fd70fa777ca8278b9604fdef75c15c6a12f",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/e750360bd52b080c4cbaaee1b48b80f7dc873b36",
+                "reference": "e750360bd52b080c4cbaaee1b48b80f7dc873b36",
                 "shasum": ""
             },
             "require": {
@@ -1647,9 +1647,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/2.13.2"
+                "source": "https://github.com/doctrine/orm/tree/2.13.3"
             },
-            "time": "2022-09-22T13:36:43+00:00"
+            "time": "2022-10-07T06:37:17+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -2656,12 +2656,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "9b5efa5fb13775d5e67ca3f42e9550fe96bd29a7"
+                "reference": "82cb28ca0b5ade336a491a6a7460f9c3c9222033"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/9b5efa5fb13775d5e67ca3f42e9550fe96bd29a7",
-                "reference": "9b5efa5fb13775d5e67ca3f42e9550fe96bd29a7",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/82cb28ca0b5ade336a491a6a7460f9c3c9222033",
+                "reference": "82cb28ca0b5ade336a491a6a7460f9c3c9222033",
                 "shasum": ""
             },
             "require": {
@@ -2723,7 +2723,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-10-04T17:23:44+00:00"
+            "time": "2022-10-08T15:19:51+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -4354,16 +4354,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.8.0",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "8dd908dd6156e974b9a0f8bb4cd5ad0707830f04"
+                "reference": "5f7eb9724b0ae386b922f34b62b3b55fee3b26cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/8dd908dd6156e974b9a0f8bb4cd5ad0707830f04",
-                "reference": "8dd908dd6156e974b9a0f8bb4cd5ad0707830f04",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/5f7eb9724b0ae386b922f34b62b3b55fee3b26cd",
+                "reference": "5f7eb9724b0ae386b922f34b62b3b55fee3b26cd",
                 "shasum": ""
             },
             "require": {
@@ -4393,9 +4393,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.8.0"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.9.0"
             },
-            "time": "2022-09-04T18:59:06+00:00"
+            "time": "2022-10-06T11:32:36+00:00"
         },
         {
             "name": "psr/cache",
@@ -9926,16 +9926,16 @@
         },
         {
             "name": "thecodingmachine/safe",
-            "version": "v2.3.1",
+            "version": "v2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thecodingmachine/safe.git",
-                "reference": "b141ff557fafcd00a475298883e567fc06bd95dd"
+                "reference": "e788f3d09dcd36f806350aedb77eac348fafadd3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thecodingmachine/safe/zipball/b141ff557fafcd00a475298883e567fc06bd95dd",
-                "reference": "b141ff557fafcd00a475298883e567fc06bd95dd",
+                "url": "https://api.github.com/repos/thecodingmachine/safe/zipball/e788f3d09dcd36f806350aedb77eac348fafadd3",
+                "reference": "e788f3d09dcd36f806350aedb77eac348fafadd3",
                 "shasum": ""
             },
             "require": {
@@ -10059,9 +10059,9 @@
             "description": "PHP core functions that throw exceptions instead of returning FALSE on error",
             "support": {
                 "issues": "https://github.com/thecodingmachine/safe/issues",
-                "source": "https://github.com/thecodingmachine/safe/tree/v2.3.1"
+                "source": "https://github.com/thecodingmachine/safe/tree/v2.4.0"
             },
-            "time": "2022-09-20T12:01:26+00:00"
+            "time": "2022-10-07T14:02:17+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -11483,16 +11483,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.8.7",
+            "version": "1.8.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "536ff0ed719b5679e9f09c17aeaee9b31969cb8e"
+                "reference": "08310ce271984587e2a4cda94e1ac66510a6ea07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/536ff0ed719b5679e9f09c17aeaee9b31969cb8e",
-                "reference": "536ff0ed719b5679e9f09c17aeaee9b31969cb8e",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/08310ce271984587e2a4cda94e1ac66510a6ea07",
+                "reference": "08310ce271984587e2a4cda94e1ac66510a6ea07",
                 "shasum": ""
             },
             "require": {
@@ -11522,7 +11522,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.8.7"
+                "source": "https://github.com/phpstan/phpstan/tree/1.8.8"
             },
             "funding": [
                 {
@@ -11538,20 +11538,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-04T14:09:33+00:00"
+            "time": "2022-10-06T12:51:57+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "1.3.15",
+            "version": "1.3.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "93fe8c18ee955009e2033efeb64284b4e4df66a0"
+                "reference": "2d1ddae7ef9a6263ba708538ef7d0fbe362e6e25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/93fe8c18ee955009e2033efeb64284b4e4df66a0",
-                "reference": "93fe8c18ee955009e2033efeb64284b4e4df66a0",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/2d1ddae7ef9a6263ba708538ef7d0fbe362e6e25",
+                "reference": "2d1ddae7ef9a6263ba708538ef7d0fbe362e6e25",
                 "shasum": ""
             },
             "require": {
@@ -11605,9 +11605,9 @@
             "description": "Doctrine extensions for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-doctrine/issues",
-                "source": "https://github.com/phpstan/phpstan-doctrine/tree/1.3.15"
+                "source": "https://github.com/phpstan/phpstan-doctrine/tree/1.3.16"
             },
-            "time": "2022-09-29T20:11:01+00:00"
+            "time": "2022-10-05T08:47:34+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -11663,16 +11663,16 @@
         },
         {
             "name": "phpstan/phpstan-symfony",
-            "version": "1.2.13",
+            "version": "1.2.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-symfony.git",
-                "reference": "016e441a19a2af79ca0c60920ba0d61747b4e855"
+                "reference": "f7dd737329504115adaa987697a759a66dd2ee8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/016e441a19a2af79ca0c60920ba0d61747b4e855",
-                "reference": "016e441a19a2af79ca0c60920ba0d61747b4e855",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/f7dd737329504115adaa987697a759a66dd2ee8a",
+                "reference": "f7dd737329504115adaa987697a759a66dd2ee8a",
                 "shasum": ""
             },
             "require": {
@@ -11728,9 +11728,9 @@
             "description": "Symfony Framework extensions and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-symfony/issues",
-                "source": "https://github.com/phpstan/phpstan-symfony/tree/1.2.13"
+                "source": "https://github.com/phpstan/phpstan-symfony/tree/1.2.14"
             },
-            "time": "2022-08-28T13:34:45+00:00"
+            "time": "2022-10-05T11:19:29+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
