@@ -117,10 +117,6 @@ class Duration
                 throw new \InvalidArgumentException(sprintf('Unsupported duration format "%s"', $mode));
         }
 
-        if ($seconds < 0) {
-            return 0;
-        }
-
         return $seconds;
     }
 
@@ -155,13 +151,15 @@ class Duration
             );
         }
 
+        $i = 0;
         foreach ($parts as $part) {
             if (\strlen($part) === 0) {
                 throw new \InvalidArgumentException(
                     sprintf('Colon format cannot parse "%s"', $duration)
                 );
             }
-            if (((int) $part) < 0) {
+            // the entire time could be negative
+            if ($i++ > 0 && ((int) $part) < 0) {
                 throw new \InvalidArgumentException(
                     sprintf('Negative input is not allowed in "%s"', $duration)
                 );
@@ -175,7 +173,11 @@ class Duration
         }
 
         $seconds += (int) $parts[1] * 60;
-        $seconds += (int) $parts[0] * 3600;
+        $seconds += abs((int) $parts[0] * 3600);
+
+        if ($duration[0] === '-') {
+            $seconds = $seconds * -1;
+        }
 
         return $seconds;
     }

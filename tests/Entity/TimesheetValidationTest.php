@@ -246,26 +246,4 @@ class TimesheetValidationTest extends KernelTestCase
 
         $this->assertHasViolationForField($entity, []);
     }
-
-    public function testDurationMustBeGreatorOrEqualThanZero()
-    {
-        $entity = $this->getEntity();
-        $begin = new \DateTime();
-        $end = clone $begin;
-        $entity->setBegin($begin);
-        $entity->setEnd($end);
-        $entity->setDuration(-1);
-
-        $this->assertHasViolationForField($entity, 'duration');
-
-        // allow zero duration
-        $entity = $this->getEntity();
-        $begin = new \DateTime();
-        $end = clone $begin;
-        $entity->setBegin($begin);
-        $entity->setEnd($end);
-        $entity->setDuration(0);
-
-        $this->assertHasViolationForField($entity, []);
-    }
 }
