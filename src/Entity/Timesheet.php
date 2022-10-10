@@ -171,7 +171,6 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
      * @Serializer\Groups({"Default"})
      *
      * @ORM\Column(name="duration", type="integer", nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
      */
     private $duration = 0;
     /**
