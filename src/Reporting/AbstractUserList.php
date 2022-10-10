@@ -9,11 +9,17 @@
 
 namespace App\Reporting;
 
+use App\Entity\Team;
+
 abstract class AbstractUserList
 {
     private $date;
     private $decimal = false;
     private $sumType = 'duration';
+    /**
+     * @var Team|null
+     */
+    private $team = null;
 
     public function getDate(): ?\DateTime
     {
@@ -47,5 +53,15 @@ abstract class AbstractUserList
         }
 
         $this->sumType = $sumType;
+    }
+
+    public function getTeam(): ?Team
+    {
+        return $this->team;
+    }
+
+    public function setTeam(?Team $team = null): void
+    {
+        $this->team = $team;
     }
 }

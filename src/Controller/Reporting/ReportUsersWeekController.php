@@ -63,10 +63,6 @@ final class ReportUsersWeekController extends AbstractController
         $currentUser = $this->getUser();
         $dateTimeFactory = $this->getDateTimeFactory();
 
-        $query = new UserQuery();
-        $query->setCurrentUser($currentUser);
-        $allUsers = $userRepository->getUsersForQuery($query);
-
         $values = new WeeklyUserList();
         $values->setDate($dateTimeFactory->getStartOfWeek());
 
@@ -77,9 +73,20 @@ final class ReportUsersWeekController extends AbstractController
 
         $form->submit($request->query->all(), false);
 
-        if ($form->isSubmitted() && !$form->isValid()) {
-            $values->setDate($dateTimeFactory->getStartOfWeek());
+        $query = new UserQuery();
+        $query->setCurrentUser($currentUser);
+
+        if ($form->isSubmitted()) {
+            if (!$form->isValid()) {
+                $values->setDate($dateTimeFactory->getStartOfWeek());
+            } else {
+                if ($values->getTeam() !== null) {
+                    $query->setSearchTeams([$values->getTeam()]);
+                }
+            }
         }
+
+        $allUsers = $userRepository->getUsersForQuery($query);
 
         if ($values->getDate() === null) {
             $values->setDate($dateTimeFactory->getStartOfWeek());

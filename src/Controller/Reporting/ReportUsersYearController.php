@@ -73,9 +73,6 @@ final class ReportUsersYearController extends AbstractController
         $currentUser = $this->getUser();
         $dateTimeFactory = $this->getDateTimeFactory();
 
-        $query = new UserQuery();
-        $query->setCurrentUser($currentUser);
-        $allUsers = $userRepository->getUsersForQuery($query);
         $defaultDate = $dateTimeFactory->createStartOfYear();
 
         if (null !== ($financialYear = $systemConfiguration->getFinancialYearStart())) {
@@ -92,9 +89,20 @@ final class ReportUsersYearController extends AbstractController
 
         $form->submit($request->query->all(), false);
 
-        if ($form->isSubmitted() && !$form->isValid()) {
-            $values->setDate(clone $defaultDate);
+        $query = new UserQuery();
+        $query->setCurrentUser($currentUser);
+
+        if ($form->isSubmitted()) {
+            if (!$form->isValid()) {
+                $values->setDate(clone $defaultDate);
+            } else {
+                if ($values->getTeam() !== null) {
+                    $query->setSearchTeams([$values->getTeam()]);
+                }
+            }
         }
+
+        $allUsers = $userRepository->getUsersForQuery($query);
 
         if ($values->getDate() === null) {
             $values->setDate(clone $defaultDate);

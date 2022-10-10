@@ -14,6 +14,9 @@
         {% endblock %}
         {% block box_title %}
             {{ form_widget(form.date) }}
+            {% if form.team is defined %}
+                {{ form_widget(form.team) }}
+            {% endif %}
             {% if form.sumType.vars.choices|length > 1 %}
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
