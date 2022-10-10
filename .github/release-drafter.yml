@@ -36,11 +36,9 @@ template: |
     [Upgrade Kimai](https://www.kimai.org/documentation/updates.html) - [Install Kimai](https://www.kimai.org/documentation/installation.html) - [Docker](https://tobybatch.github.io/kimai2/)
     
     **PHP Version compatibility:**
-    - PHP 7.3 is [end-of-life](https://www.php.net/supported-versions.php): you need to update now
-    - PHP 7.4, PHP 8 and PHP 8.1 are supported
+    - PHP 7.3 is [end-of-life](https://www.php.net/supported-versions.php): please update now
+    - PHP 7.4 is almost EOL, PHP 8 and PHP 8.1 are supported
     
     $CHANGES
     
-    Thanks to all contributors ❤️ 
-    
-    Involved in this release: $CONTRIBUTORS
+    Involved in this release: $CONTRIBUTORS - thank you!
