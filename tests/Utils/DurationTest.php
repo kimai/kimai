@@ -31,11 +31,11 @@ class DurationTest extends TestCase
     public function testParseDurationStringSpecials()
     {
         $sut = new Duration();
-        $this->assertEquals(0, $sut->parseDuration('-1', Duration::FORMAT_SECONDS));
+        $this->assertEquals(-1, $sut->parseDuration('-1', Duration::FORMAT_SECONDS));
         $this->assertEquals(0, $sut->parseDuration('0', Duration::FORMAT_SECONDS));
         $this->assertEquals(3600, $sut->parseDuration('3600', Duration::FORMAT_SECONDS));
         $this->assertEquals(0, $sut->parseDuration('', Duration::FORMAT_SECONDS));
-        $this->assertEquals(0, $sut->parseDuration('-12', Duration::FORMAT_SECONDS));
+        $this->assertEquals(-12, $sut->parseDuration('-12', Duration::FORMAT_SECONDS));
     }
 
     /**
@@ -64,6 +64,8 @@ class DurationTest extends TestCase
             [3600, '1', Duration::FORMAT_DECIMAL],
             [5400, '1.5', Duration::FORMAT_DECIMAL],
             [5400, '1,5', Duration::FORMAT_DECIMAL],
+            [-5400, '-1.5', Duration::FORMAT_DECIMAL],
+            [-5400, '-1,5', Duration::FORMAT_DECIMAL],
 
             [0, '', Duration::FORMAT_NATURAL],
             [0, 0, Duration::FORMAT_NATURAL],
@@ -82,10 +84,12 @@ class DurationTest extends TestCase
             [12420, '3h27m', Duration::FORMAT_NATURAL],
 
             [48420, '13:27', Duration::FORMAT_COLON],
+            [-48420, '-13:27', Duration::FORMAT_COLON],
             [48474, '13:27:54', Duration::FORMAT_COLON],
             [48474, '12:87:54', Duration::FORMAT_COLON],
             [11257200, '3127:00:00', Duration::FORMAT_COLON],
             [11257200, '3127:00', Duration::FORMAT_COLON],
+            [-11257277, '-3127:01:17', Duration::FORMAT_COLON],
         ];
     }
 
@@ -108,7 +112,6 @@ class DurationTest extends TestCase
             [':3127:00', Duration::FORMAT_COLON],
             ['::3127', Duration::FORMAT_COLON],
             ['3127:-01', Duration::FORMAT_COLON],
-            ['-3127:01:17', Duration::FORMAT_COLON],
         ];
     }
 
