@@ -61,73 +61,6 @@
             "time": "2022-03-14T02:02:36+00:00"
         },
         {
-            "name": "beberlei/assert",
-            "version": "v3.3.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/beberlei/assert.git",
-                "reference": "cb70015c04be1baee6f5f5c953703347c0ac1655"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/beberlei/assert/zipball/cb70015c04be1baee6f5f5c953703347c0ac1655",
-                "reference": "cb70015c04be1baee6f5f5c953703347c0ac1655",
-                "shasum": ""
-            },
-            "require": {
-                "ext-ctype": "*",
-                "ext-json": "*",
-                "ext-mbstring": "*",
-                "ext-simplexml": "*",
-                "php": "^7.0 || ^8.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "*",
-                "phpstan/phpstan": "*",
-                "phpunit/phpunit": ">=6.0.0",
-                "yoast/phpunit-polyfills": "^0.1.0"
-            },
-            "suggest": {
-                "ext-intl": "Needed to allow Assertion::count(), Assertion::isCountable(), Assertion::minCount(), and Assertion::maxCount() to operate on ResourceBundles"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "lib/Assert/functions.php"
-                ],
-                "psr-4": {
-                    "Assert\\": "lib/Assert"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Benjamin Eberlei",
-                    "email": "kontakt@beberlei.de",
-                    "role": "Lead Developer"
-                },
-                {
-                    "name": "Richard Quadling",
-                    "email": "rquadling@gmail.com",
-                    "role": "Collaborator"
-                }
-            ],
-            "description": "Thin assertion library for input validation in business models.",
-            "keywords": [
-                "assert",
-                "assertion",
-                "validation"
-            ],
-            "support": {
-                "issues": "https://github.com/beberlei/assert/issues",
-                "source": "https://github.com/beberlei/assert/tree/v3.3.2"
-            },
-            "time": "2021-12-16T21:41:27+00:00"
-        },
-        {
             "name": "beberlei/doctrineextensions",
             "version": "v1.3.0",
             "source": {
@@ -672,16 +605,16 @@
         },
         {
             "name": "doctrine/common",
-            "version": "3.4.2",
+            "version": "3.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "609c3a7b6af49a7b4b13945ca2fdf4af801946af"
+                "reference": "8b5e5650391f851ed58910b3e3d48a71062eeced"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/609c3a7b6af49a7b4b13945ca2fdf4af801946af",
-                "reference": "609c3a7b6af49a7b4b13945ca2fdf4af801946af",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/8b5e5650391f851ed58910b3e3d48a71062eeced",
+                "reference": "8b5e5650391f851ed58910b3e3d48a71062eeced",
                 "shasum": ""
             },
             "require": {
@@ -743,7 +676,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/common/issues",
-                "source": "https://github.com/doctrine/common/tree/3.4.2"
+                "source": "https://github.com/doctrine/common/tree/3.4.3"
             },
             "funding": [
                 {
@@ -759,7 +692,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-09-28T14:20:50+00:00"
+            "time": "2022-10-09T11:47:59+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -2793,32 +2726,32 @@
         },
         {
             "name": "laminas/laminas-escaper",
-            "version": "2.10.0",
+            "version": "2.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-escaper.git",
-                "reference": "58af67282db37d24e584a837a94ee55b9c7552be"
+                "reference": "ee7a4c37bf3d0e8c03635d5bddb5bb3184ead490"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-escaper/zipball/58af67282db37d24e584a837a94ee55b9c7552be",
-                "reference": "58af67282db37d24e584a837a94ee55b9c7552be",
+                "url": "https://api.github.com/repos/laminas/laminas-escaper/zipball/ee7a4c37bf3d0e8c03635d5bddb5bb3184ead490",
+                "reference": "ee7a4c37bf3d0e8c03635d5bddb5bb3184ead490",
                 "shasum": ""
             },
             "require": {
                 "ext-ctype": "*",
                 "ext-mbstring": "*",
-                "php": "^7.4 || ~8.0.0 || ~8.1.0"
+                "php": "^7.4 || ~8.0.0 || ~8.1.0 || ~8.2.0"
             },
             "conflict": {
                 "zendframework/zend-escaper": "*"
             },
             "require-dev": {
                 "infection/infection": "^0.26.6",
-                "laminas/laminas-coding-standard": "~2.3.0",
+                "laminas/laminas-coding-standard": "~2.4.0",
                 "maglnet/composer-require-checker": "^3.8.0",
                 "phpunit/phpunit": "^9.5.18",
-                "psalm/plugin-phpunit": "^0.16.1",
+                "psalm/plugin-phpunit": "^0.17.0",
                 "vimeo/psalm": "^4.22.0"
             },
             "type": "library",
@@ -2851,7 +2784,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-03-08T20:15:36+00:00"
+            "time": "2022-10-10T10:11:09+00:00"
         },
         {
             "name": "league/csv",
@@ -5171,38 +5104,34 @@
         },
         {
             "name": "spomky-labs/otphp",
-            "version": "v11.0.1",
+            "version": "v11.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Spomky-Labs/otphp.git",
-                "reference": "30b3d20f268538aed4ea8806851d34dc27536b2f"
+                "reference": "8cf16dcb41d35f04842ef38e7e61bfaa228f6c2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Spomky-Labs/otphp/zipball/30b3d20f268538aed4ea8806851d34dc27536b2f",
-                "reference": "30b3d20f268538aed4ea8806851d34dc27536b2f",
+                "url": "https://api.github.com/repos/Spomky-Labs/otphp/zipball/8cf16dcb41d35f04842ef38e7e61bfaa228f6c2b",
+                "reference": "8cf16dcb41d35f04842ef38e7e61bfaa228f6c2b",
                 "shasum": ""
             },
             "require": {
-                "beberlei/assert": "^3.0",
                 "ext-mbstring": "*",
                 "paragonie/constant_time_encoding": "^2.0",
-                "php": "^8.1",
-                "thecodingmachine/safe": "^1.0|^2.0"
+                "php": "^8.1"
             },
             "require-dev": {
                 "ekino/phpstan-banned-code": "^1.0",
                 "infection/infection": "^0.26",
                 "phpstan/phpstan": "^1.0",
-                "phpstan/phpstan-beberlei-assert": "^1.0",
                 "phpstan/phpstan-deprecation-rules": "^1.0",
                 "phpstan/phpstan-phpunit": "^1.0",
                 "phpstan/phpstan-strict-rules": "^1.0",
                 "phpunit/phpunit": "^9.5",
-                "rector/rector": "^0.13",
+                "rector/rector": "^0.14",
                 "symfony/phpunit-bridge": "^6.0",
-                "symplify/easy-coding-standard": "^11.0",
-                "thecodingmachine/phpstan-safe-rule": "^1.0"
+                "symplify/easy-coding-standard": "^11.0"
             },
             "type": "library",
             "autoload": {
@@ -5237,7 +5166,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Spomky-Labs/otphp/issues",
-                "source": "https://github.com/Spomky-Labs/otphp/tree/v11.0.1"
+                "source": "https://github.com/Spomky-Labs/otphp/tree/v11.0.2"
             },
             "funding": [
                 {
@@ -5249,7 +5178,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-07-16T15:07:50+00:00"
+            "time": "2022-10-11T05:29:12+00:00"
         },
         {
             "name": "symfony/asset",
@@ -9923,145 +9852,6 @@
                 }
             ],
             "time": "2022-08-02T16:01:06+00:00"
-        },
-        {
-            "name": "thecodingmachine/safe",
-            "version": "v2.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thecodingmachine/safe.git",
-                "reference": "e788f3d09dcd36f806350aedb77eac348fafadd3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thecodingmachine/safe/zipball/e788f3d09dcd36f806350aedb77eac348fafadd3",
-                "reference": "e788f3d09dcd36f806350aedb77eac348fafadd3",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.0"
-            },
-            "require-dev": {
-                "phpstan/phpstan": "^1.5",
-                "phpunit/phpunit": "^9.5",
-                "squizlabs/php_codesniffer": "^3.2",
-                "thecodingmachine/phpstan-strict-rules": "^1.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.2.x-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "deprecated/apc.php",
-                    "deprecated/array.php",
-                    "deprecated/datetime.php",
-                    "deprecated/libevent.php",
-                    "deprecated/misc.php",
-                    "deprecated/password.php",
-                    "deprecated/mssql.php",
-                    "deprecated/stats.php",
-                    "deprecated/strings.php",
-                    "lib/special_cases.php",
-                    "deprecated/mysqli.php",
-                    "generated/apache.php",
-                    "generated/apcu.php",
-                    "generated/array.php",
-                    "generated/bzip2.php",
-                    "generated/calendar.php",
-                    "generated/classobj.php",
-                    "generated/com.php",
-                    "generated/cubrid.php",
-                    "generated/curl.php",
-                    "generated/datetime.php",
-                    "generated/dir.php",
-                    "generated/eio.php",
-                    "generated/errorfunc.php",
-                    "generated/exec.php",
-                    "generated/fileinfo.php",
-                    "generated/filesystem.php",
-                    "generated/filter.php",
-                    "generated/fpm.php",
-                    "generated/ftp.php",
-                    "generated/funchand.php",
-                    "generated/gettext.php",
-                    "generated/gmp.php",
-                    "generated/gnupg.php",
-                    "generated/hash.php",
-                    "generated/ibase.php",
-                    "generated/ibmDb2.php",
-                    "generated/iconv.php",
-                    "generated/image.php",
-                    "generated/imap.php",
-                    "generated/info.php",
-                    "generated/inotify.php",
-                    "generated/json.php",
-                    "generated/ldap.php",
-                    "generated/libxml.php",
-                    "generated/lzf.php",
-                    "generated/mailparse.php",
-                    "generated/mbstring.php",
-                    "generated/misc.php",
-                    "generated/mysql.php",
-                    "generated/network.php",
-                    "generated/oci8.php",
-                    "generated/opcache.php",
-                    "generated/openssl.php",
-                    "generated/outcontrol.php",
-                    "generated/pcntl.php",
-                    "generated/pcre.php",
-                    "generated/pgsql.php",
-                    "generated/posix.php",
-                    "generated/ps.php",
-                    "generated/pspell.php",
-                    "generated/readline.php",
-                    "generated/rpminfo.php",
-                    "generated/rrd.php",
-                    "generated/sem.php",
-                    "generated/session.php",
-                    "generated/shmop.php",
-                    "generated/sockets.php",
-                    "generated/sodium.php",
-                    "generated/solr.php",
-                    "generated/spl.php",
-                    "generated/sqlsrv.php",
-                    "generated/ssdeep.php",
-                    "generated/ssh2.php",
-                    "generated/stream.php",
-                    "generated/strings.php",
-                    "generated/swoole.php",
-                    "generated/uodbc.php",
-                    "generated/uopz.php",
-                    "generated/url.php",
-                    "generated/var.php",
-                    "generated/xdiff.php",
-                    "generated/xml.php",
-                    "generated/xmlrpc.php",
-                    "generated/yaml.php",
-                    "generated/yaz.php",
-                    "generated/zip.php",
-                    "generated/zlib.php"
-                ],
-                "classmap": [
-                    "lib/DateTime.php",
-                    "lib/DateTimeImmutable.php",
-                    "lib/Exceptions/",
-                    "deprecated/Exceptions/",
-                    "generated/Exceptions/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "PHP core functions that throw exceptions instead of returning FALSE on error",
-            "support": {
-                "issues": "https://github.com/thecodingmachine/safe/issues",
-                "source": "https://github.com/thecodingmachine/safe/tree/v2.4.0"
-            },
-            "time": "2022-10-07T14:02:17+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
