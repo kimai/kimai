@@ -260,6 +260,106 @@ class ServiceInvoiceTest extends TestCase
         self::assertEquals('2020-11-27T23:59:59+0100', $query->getEnd()->format(DATE_ISO8601));
     }
 
+    public function testCreateModelsSkipsModelsWithNegativeTotal()
+    {
+        $timezone = new \DateTimeZone('Europe/Vienna');
+
+        $customer1 = $this->createMock(Customer::class);
+        $customer1->method('getId')->willReturn(1);
+        $project1 = new Project();
+        $project1->setCustomer($customer1);
+
+        $customer2 = $this->createMock(Customer::class);
+        $customer2->method('getId')->willReturn(2);
+        $project2 = new Project();
+        $project2->setCustomer($customer2);
+
+        $customer3 = $this->createMock(Customer::class);
+        $customer3->method('getId')->willReturn(3);
+        $project3 = new Project();
+        $project3->setCustomer($customer3);
+
+        $customer4 = $this->createMock(Customer::class);
+        $customer4->method('getId')->willReturn(4);
+        $project4 = new Project();
+        $project4->setCustomer($customer4);
+
+        $timesheet1 = new Timesheet();
+        $timesheet1->setProject($project1);
+        $timesheet1->setBegin(new \DateTime('2011-01-27 11:11:11', $timezone));
+        $timesheet1->setEnd(new \DateTime('2020-01-27 12:12:12', $timezone));
+        $timesheet1->setRate(-20.01);
+
+        $timesheet2 = new Timesheet();
+        $timesheet2->setProject($project1);
+        $timesheet2->setBegin(new \DateTime('2010-01-28 11:11:11', $timezone));
+        $timesheet2->setEnd(new \DateTime('2019-01-28 12:12:12', $timezone));
+        $timesheet2->setRate(20.0);
+
+        $timesheet3 = new Timesheet();
+        $timesheet3->setProject($project2);
+        $timesheet3->setBegin(new \DateTime('2019-01-27 22:22:22', $timezone));
+        $timesheet3->setEnd(new \DateTime('2020-01-07 23:23:23', $timezone));
+        $timesheet3->setRate(100);
+
+        $timesheet4 = new Timesheet();
+        $timesheet4->setProject($project2);
+        $timesheet4->setBegin(new \DateTime('2019-01-28 22:22:22', $timezone));
+        $timesheet4->setEnd(new \DateTime('2020-01-08 23:22:22', $timezone));
+        $timesheet4->setRate(-200);
+
+        $timesheet5 = new Timesheet();
+        $timesheet5->setProject($project3);
+        $timesheet5->setBegin(new \DateTime('2012-01-27 12:12:12', $timezone));
+        $timesheet5->setEnd(new \DateTime('2018-01-27 12:12:12', $timezone));
+        $timesheet5->setRate(1.73);
+
+        $timesheet6 = new Timesheet();
+        $timesheet6->setProject($project4);
+        $timesheet6->setBegin(new \DateTime('2011-01-27 11:11:11', $timezone));
+        $timesheet6->setEnd(new \DateTime('2020-01-27 12:12:12', $timezone));
+        $timesheet6->setRate(-20.0);
+
+        $timesheet7 = new Timesheet();
+        $timesheet7->setProject($project4);
+        $timesheet7->setBegin(new \DateTime('2010-01-28 11:11:11', $timezone));
+        $timesheet7->setEnd(new \DateTime('2019-01-28 12:12:12', $timezone));
+        $timesheet7->setRate(20.0);
+
+        $repo = $this->createMock(InvoiceItemRepositoryInterface::class);
+        $repo->method('getInvoiceItemsForQuery')->willReturn([
+            $timesheet1,
+            $timesheet2,
+            $timesheet3,
+            $timesheet4,
+            $timesheet5,
+            $timesheet6,
+            $timesheet7,
+        ]);
+
+        $template = new InvoiceTemplate();
+        $template->setNumberGenerator('date');
+        $template->setLanguage('de');
+
+        self::assertEquals('de', $template->getLanguage());
+
+        $query = new InvoiceQuery();
+        $query->setCustomers([$customer3, new Customer(), $customer1, $customer3]);
+        $query->setTemplate($template);
+        self::assertNull($query->getBegin());
+        self::assertNull($query->getEnd());
+
+        $sut = $this->getSut([]);
+        $sut->addCalculator(new DefaultCalculator());
+        $sut->addNumberGenerator($this->getNumberGeneratorSut());
+        $sut->addInvoiceItemRepository($repo);
+        $models = $sut->createModels($query);
+
+        self::assertCount(2, $models);
+        self::assertEquals(1.73, $models[0]->getCalculator()->getTotal());
+        self::assertEquals(0.0, $models[1]->getCalculator()->getTotal());
+    }
+
     private function getNumberGeneratorSut()
     {
         $repository = $this->createMock(InvoiceRepository::class);
