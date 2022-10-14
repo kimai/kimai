@@ -20,9 +20,9 @@ use App\Form\Type\InitialViewType;
 use App\Form\Type\LanguageType;
 use App\Form\Type\SkinType;
 use App\Form\Type\TimezoneType;
+use App\Form\Type\YesNoType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\Range;
@@ -99,7 +99,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
             (new UserPreference('update_browser_title', true))
                 ->setOrder(550)
                 ->setSection('theme')
-                ->setType(CheckboxType::class),
+                ->setType(YesNoType::class),
 
             (new UserPreference('calendar_initial_view', CalendarViewType::DEFAULT_VIEW))
                 ->setOrder(600)
@@ -114,12 +114,12 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
             (new UserPreference('daily_stats', false))
                 ->setOrder(800)
                 ->setSection('behaviour')
-                ->setType(CheckboxType::class),
+                ->setType(YesNoType::class),
 
             (new UserPreference('export_decimal', false))
                 ->setOrder(900)
                 ->setSection('behaviour')
-                ->setType(CheckboxType::class),
+                ->setType(YesNoType::class),
         ];
     }
 

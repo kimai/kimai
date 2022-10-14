@@ -37,7 +37,6 @@ use App\Validator\Constraints\DateTimeFormat;
 use App\Validator\Constraints\TimeFormat;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -312,16 +311,16 @@ final class SystemConfigurationController extends AbstractController
                         ->setConstraints([new DateTimeFormat(), new NotNull()])
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration('timesheet.rules.allow_future_times'))
-                        ->setType(CheckboxType::class)
+                        ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration('timesheet.rules.allow_zero_duration'))
-                        ->setType(CheckboxType::class)
+                        ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration('timesheet.rules.allow_overlapping_records'))
-                        ->setType(CheckboxType::class)
+                        ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration('timesheet.rules.allow_overbooking_budget'))
-                        ->setType(CheckboxType::class)
+                        ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration('timesheet.active_entries.hard_limit'))
                         ->setType(IntegerType::class)
@@ -502,14 +501,14 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration('theme.avatar_url'))
                         ->setRequired(false)
                         ->setLabel('theme.avatar_url')
-                        ->setType(CheckboxType::class)
+                        ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
                 ]),
             (new SystemConfigurationModel('theme'))
                 ->setConfiguration([
                     (new Configuration('timesheet.markdown_content'))
                         ->setLabel('theme.markdown_content')
-                        ->setType(CheckboxType::class)
+                        ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration('theme.color_choices'))
                         ->setRequired(false)
@@ -525,10 +524,10 @@ final class SystemConfigurationController extends AbstractController
                 ->setConfiguration([
                     (new Configuration('calendar.week_numbers'))
                         ->setTranslationDomain('system-configuration')
-                        ->setType(CheckboxType::class),
+                        ->setType(YesNoType::class),
                     (new Configuration('calendar.weekends'))
                         ->setTranslationDomain('system-configuration')
-                        ->setType(CheckboxType::class),
+                        ->setType(YesNoType::class),
                     (new Configuration('calendar.businessHours.begin'))
                         ->setTranslationDomain('system-configuration')
                         ->setType(DayTimeType::class)
@@ -555,7 +554,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setConstraints([new Range(['min' => 0, 'max' => 20]), new NotNull()]),
                     (new Configuration('calendar.dragdrop_data'))
                         ->setTranslationDomain('system-configuration')
-                        ->setType(CheckboxType::class),
+                        ->setType(YesNoType::class),
                     (new Configuration('calendar.title_pattern'))
                         ->setTranslationDomain('system-configuration')
                         ->setType(CalendarTitlePatternType::class),
