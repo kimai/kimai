@@ -108,7 +108,7 @@
                     {% endfor %}
                     {% if showMarkAsExportedButton %}
                     <div class="d-flex">
-                        <div class="form-check">
+                        <div class="form-check form-switch">
                             <input type="checkbox" id="markAsExportedCheck" name="markAsExportedCheck" class="form-check-input" value="1" {% if form.markAsExported.vars.value == '1' %} checked="checked"{% endif %}>
                             <label class="form-check-label" for="markAsExportedCheck">{{ 'mark_as_exported'|trans }}</label>
                         </div>

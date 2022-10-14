@@ -27,6 +27,9 @@ class YesNoType extends AbstractType
             'value' => true,
             'false_values' => [null, 0, false, 'false', '', '0'],
             'required' => false,
+            'label_attr' => [
+                'class' => 'checkbox-switch',
+            ],
         ]);
     }
 
