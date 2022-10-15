@@ -49,6 +49,7 @@ class UserTest extends TestCase
         self::assertFalse($user->canSeeAllData());
         self::assertFalse($user->isSmallLayout());
         self::assertFalse($user->isExportDecimal());
+        self::assertFalse($user->isSystemAccount());
         self::assertTrue($user->is24Hour());
 
         $user->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y');
