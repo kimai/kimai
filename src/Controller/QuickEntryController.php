@@ -207,26 +207,26 @@ class QuickEntryController extends AbstractController
                 }
             }
 
-            if ($this->isGranted('delete_own_timesheet') && \count($deleteTimesheets) > 0) {
-                try {
+            try {
+                $saved = false;
+                if (\count($deleteTimesheets) > 0 && $this->isGranted('delete_own_timesheet')) {
                     $this->timesheetService->deleteMultipleTimesheets($deleteTimesheets);
-
-                    return $this->redirectToRoute('quick_entry', ['begin' => $begin->format('Y-m-d')]);
-                } catch (\Exception $ex) {
-                    $this->flashError('action.delete.error');
-                    $this->logException($ex);
+                    $saved = true;
                 }
-            }
 
-            if (\count($saveTimesheets) > 0) {
-                try {
+                if (\count($saveTimesheets) > 0) {
                     $this->timesheetService->updateMultipleTimesheets($saveTimesheets);
+                    $saved = true;
+                }
+
+                if ($saved) {
+                    $this->flashSuccess('action.update.success');
 
                     return $this->redirectToRoute('quick_entry', ['begin' => $begin->format('Y-m-d')]);
-                } catch (\Exception $ex) {
-                    $this->flashError('action.update.error');
-                    $this->logException($ex);
                 }
+            } catch (\Exception $ex) {
+                $this->flashError('action.update.error');
+                $this->logException($ex);
             }
         }
 
