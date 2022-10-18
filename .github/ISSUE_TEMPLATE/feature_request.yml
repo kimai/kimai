@@ -1,6 +1,6 @@
 name: Feature request
 description: Suggest an idea to make Kimai better
-labels: feature request
+labels: ["feature request"]
 body:
 - type: markdown
   attributes:

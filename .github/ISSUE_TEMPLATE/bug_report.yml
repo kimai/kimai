@@ -1,6 +1,6 @@
 name: Bug report
 description: Create a report to help us improve Kimai
-labels: bug
+labels: ["bug"]
 body:
 - type: markdown
   attributes:
@@ -45,6 +45,14 @@ body:
   attributes:
   label: Screenshots
   description: If applicable, add screenshots to better explain your problem.
+- type: input
+  id: version
+  attributes:
+  label: Kimai version
+  description: Which version of Kimai are you running (check Doctor or About screen)
+  placeholder: 1.xx.x
+  validations:
+  required: true
 - type: dropdown
   id: installation
   attributes:
