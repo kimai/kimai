@@ -1,27 +1,74 @@
----
 name: Bug report
-about: Found a problem? Create a report to help us improve Kimai
-title: ''
+description: Create a report to help us improve Kimai
 labels: bug
-assignees: ''
-
----
-
-**Describe the bug**
-A clear and concise description of what the bug is.
-
-**To Reproduce**
-1. Go to '...'
-2. Click on '....'
-3. See error
-
-**Logfile**
-```
-Add the last lines from your logfile at "var/log/prod.log" or "Doctor > Logs", around the time when the problem happened.
-```
-
-**Additional context**
- - Kimai version: ?.? 
- - PHP version: ?.?
- - Device: [Ubuntu Laptop 16 inch, Windows Desktop 27 inch, iPhone 6s]
- - Browser [e.g. Firefox 81, Chrome 85, Safari 14]
+body:
+- type: markdown
+  attributes:
+  value: |
+  Thank you for reporting an issue on Kimai! This form will guide you to create a useful issue report.
+- type: textarea
+  id: what-happened
+  attributes:
+  label: Describe the issue
+  description: A clear and concise description of the problem you are facing.
+  placeholder: Tell us what you see!
+  validations:
+  required: true
+- type: checkboxes
+  id: tried
+  attributes:
+  label: I already tried
+  description: If you didn’t try already, try to search the documentation and existing issues what you wrote above.
+  options:
+    - label: I've read and searched [the documentation](https://www.kimai.org/documentation/).
+      required: true
+    - label: I've searched for similar issues in this repository.
+      required: true
+    - label: I've searched for similar issues in [the discussions](https://github.com/kevinpapst/kimai2/discussions).
+      required: true
+- type: textarea
+  id: reproducer
+  attributes:
+  label: Steps to reproduce the behavior
+  value: |
+  1. Go to '...'
+  2. Scroll down to '...'
+  3. Click on '...'
+  4. See error
+- type: textarea
+  id: expected
+  attributes:
+  label: Expected behavior
+  description: A clear and concise description of what you expected to happen.
+- type: textarea
+  id: screenshots
+  attributes:
+  label: Screenshots
+  description: If applicable, add screenshots to better explain your problem.
+- type: dropdown
+  id: installation
+  attributes:
+  label: How do you run Kimai?
+  options:
+    - kimai.cloud service
+    - Self-Hosted
+    - Synology
+    - Other
+      validations:
+      required: true
+- type: textarea
+  id: logs
+  attributes:
+  label: Logfile
+  description: >
+  Please paste the last lines from your logfile at "var/log/prod.log" or "Doctor > Logs", around the time when the problem happened.
+- type: textarea
+  id: additional
+  attributes:
+  label: Additional context
+  description: Add any other context about the problem here.
+  value: |
+  Kimai version: ?.?
+  PHP version: ?.?
+  Device: [Ubuntu Laptop 16 inch, Windows Desktop 27 inch, iPhone 6s]
+  Browser [e.g. Firefox 81, Chrome 85, Safari 14]

@@ -1,5 +1,14 @@
 blank_issues_enabled: false
 contact_links:
-    - name: "Support / Questions / Discussions"
+    - name: Read our documentation
+      url: https://www.kimai.org/documentation/
+      about: Save your time! There is an instant solution for many issues in the documentation.
+    - name: Docker image issue tracker
+      url: https://github.com/tobybatch/kimai2/issues
+      about: For issues specific for Kimai Docker deployment
+    - name: Ask a Question
       url: https://github.com/kevinpapst/kimai2/discussions
-      about:  "This forum is for support questions: eg. if you need help with your Kimai installation, want to know how to use a Kimai feature or wonder where to start creating a new Kimai plugin."
+      about: Want to discuss something with a community? Do it in discussions!
+    - name: Get Professional support
+      url: https://www.kimai.org/store/custom-plugins.html
+      about: As a customer, you will always receive fast and helpful replies from the developer.
