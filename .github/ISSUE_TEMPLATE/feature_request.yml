@@ -13,7 +13,6 @@ body:
             description: >
                 Is your feature request related to a problem? If so, please provide
                 a clear and concise description of what the issue is.
-                Ex. I'm always frustrated when [...]
         validations:
             required: true
     -   type: textarea
@@ -33,8 +32,3 @@ body:
         attributes:
             label: Screenshots
             description: If applicable, add screenshots to better explain your problem.
-    -   type: textarea
-        id: additional
-        attributes:
-            label: Additional context
-            description: Add any other context about the problem here.
