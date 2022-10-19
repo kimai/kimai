@@ -81,7 +81,7 @@ class QuickEntryTimesheetType extends AbstractType
                 try {
                     if (null !== $duration) {
                         $end = clone $data->getBegin();
-                        $end->modify('+ ' . $duration . ' seconds');
+                        $end->modify('+ ' . abs($duration) . ' seconds');
                         $data->setEnd($end);
                     } else {
                         $data->setDuration(null);
