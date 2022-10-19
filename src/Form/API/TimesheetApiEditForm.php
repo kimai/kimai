@@ -55,6 +55,10 @@ class TimesheetApiEditForm extends TimesheetEditForm
 
         $builder->remove('metaFields');
 
+        if ($builder->has('duration')) {
+            $builder->remove('duration');
+        }
+
         if ($builder->has('user')) {
             $builder->get('user')->setRequired(false);
         }

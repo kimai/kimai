@@ -1167,4 +1167,9 @@ class User implements UserInterface, EquatableInterface, \Serializable
     {
         $this->accountNumber = $accountNumber;
     }
+
+    public function isSystemAccount(): bool
+    {
+        return false;
+    }
 }
