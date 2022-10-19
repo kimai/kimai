@@ -1282,6 +1282,14 @@
         <source>label.invoiceText</source>
         <target state="translated">Tekst na fakturze</target>
       </trans-unit>
+      <trans-unit id="G9hBaDJ" resname="label.globalActivities">
+        <source>label.globalActivities</source>
+        <target state="translated">Zezwalaj na globalne działania</target>
+      </trans-unit>
+      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
+        <source>label.budgetIndependent</source>
+        <target state="translated">Pokaż niezależnie od "typu budżetu"</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -4,43 +4,43 @@
     <body>
       <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
-        <target>Si el botón no funciona, copie y pegue el URL siguiente en el navegador: %url%</target>
+        <target state="translated">Si el botón no funciona, copie &amp; paste the following URL to your browser: %url%</target>
       </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
-        <target>Este mensaje se generó automáticamente. No responda; no se leen los mensajes enviados a esta dirección.</target>
+        <target state="translated">Este es un correo electrónico generado automáticamente. Por favor, no responda, la dirección no será leída.</target>
       </trans-unit>
       <trans-unit id="pjr3FDv" resname="registration.subject">
         <source>registration.subject</source>
-        <target>Active su cuenta</target>
+        <target state="translated">activa tu cuenta</target>
       </trans-unit>
       <trans-unit id="QtcznHC" resname="registration.title">
         <source>registration.title</source>
-        <target>Le damos la bienvenida, %username%</target>
+        <target state="translated">Bienvenido %username%</target>
       </trans-unit>
       <trans-unit id="YMLel3P" resname="registration.button">
         <source>registration.button</source>
-        <target>Active su cuenta</target>
+        <target state="translated">Activa tu cuenta</target>
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
         <source>registration.intro</source>
-        <target>Se ha dado de alta en el gestor de tiempo Kimai con la cuenta de correo %email%. Tiene unas cuantas horas para activar su cuenta antes de que el enlace caduque.</target>
+        <target state="translated">Te registraste en el rastreador de tiempo de Kimai con el correo electrónico %email%. Por favor, active su cuenta en las próximas horas, antes de que caduque el enlace.</target>
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>
-        <target>Restablezca su contraseña</target>
+        <target state="translated">Restablecer su contraseña</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title">
         <source>reset.title</source>
-        <target>Esto puede pasar…</target>
+        <target state="translated">Eso puede pasar …</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button">
         <source>reset.button</source>
-        <target>Restablecer la contraseña</target>
+        <target state="translated">Restablecer su contraseña</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro">
         <source>reset.intro</source>
-        <target>¿Ha olvidado su contraseña? No se preocupe: Kimai le ayudará a crearse una nueva.</target>
+        <target state="translated">… así que olvidaste tu contraseña? No te preocupes: Kimai te ayudará a crear una nueva:</target>
       </trans-unit>
     </body>
   </file>

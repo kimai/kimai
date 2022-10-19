@@ -660,11 +660,11 @@
       </trans-unit>
       <trans-unit id="unC5MXv" resname="stats.percentUsed">
         <source>stats.percentUsed</source>
-        <target>%percent% % utilizado</target>
+        <target state="translated">%percent%% usado</target>
       </trans-unit>
       <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
-        <target>%percent% % utilizado (quedan %left%)</target>
+        <target state="translated">%percent%% usado (%left% aún está abierto)</target>
       </trans-unit>
       <!--
               Invoice
@@ -739,7 +739,7 @@
       </trans-unit>
       <trans-unit id="86KyrKO" resname="invoice.subtotal">
         <source>invoice.subtotal</source>
-        <target>Subtotal</target>
+        <target state="translated">Total parcial</target>
       </trans-unit>
       <trans-unit id="EO57yXg" resname="invoice.tax">
         <source>invoice.tax</source>
@@ -940,7 +940,7 @@
       </trans-unit>
       <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
-        <target>%month% de %year%</target>
+        <target state="translated">%month% %year%</target>
       </trans-unit>
       <trans-unit id="mflwMcX" resname="rates.title">
         <source>rates.title</source>
@@ -1099,8 +1099,8 @@
         <target>Último registro</target>
       </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
-        <source>preview.skipped_rows</source>
-        <target>Se omitió la previsualización de %rows% filas más…</target>
+        <source>Skipped preview of %rows% more rows …</source>
+        <target state="translated">Vista previa omitida de %rows% filas más…</target>
       </trans-unit>
       <trans-unit id="Xij3oQl" resname="invoice.payment_date">
         <source>invoice.payment_date</source>
@@ -1160,15 +1160,15 @@
       </trans-unit>
       <trans-unit id="W92QGbY" resname="export.warn_result_amount">
         <source>export.warn_result_amount</source>
-        <target>La búsqueda produjo %count% resultados. Si la exportación falla, deberá refinar su búsqueda.</target>
+        <target state="translated">Su búsqueda conduce a %count% resultados. Si la exportación falla, debe reducir aún más su búsqueda.</target>
       </trans-unit>
       <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
         <source>stats.percentUsedLeft_month</source>
-        <target>%percent% % utilizado (%left% aún abiertos este mes)</target>
+        <target state="translated">%percent%% usado (%left% todavía está abierto este mes)</target>
       </trans-unit>
       <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>
-        <target>%percent% % utilizado este mes</target>
+        <target state="translated">%percent%% usado este mes</target>
       </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>
@@ -1184,7 +1184,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>resetting.check_email</source>
-        <target>Se ha enviado un mensaje. Contiene un enlace que debe seguir para restablecer su contraseña. Nota: solo se puede solicitar una contraseña nueva dentro de %tokenLifetime% horas. Si no ha recibido ningún mensaje, revise la carpeta de correo no deseado o vuelva a intentarlo.</target>
+        <target state="translated">Un correo electronico ha sido enviado. Contiene un enlace en el que debe hacer clic para restablecer su contraseña. Nota: Solo puede solicitar una nueva contraseña una vez dentro de %tokenLifetime% horas. Si no recibe un correo electrónico, revise su carpeta de correo no deseado o intente nuevamente.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
@@ -1212,7 +1212,7 @@
       </trans-unit>
       <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
         <source>delete_warning.short_stats</source>
-        <target>Actualmente %records% existen registros de tiempo, que suman una duración total de %duration%.</target>
+        <target state="translated">Actualmente existen %records% de registros de tiempo, que suman una duración total de %duration%.</target>
       </trans-unit>
       <trans-unit id="jdbtx6z" resname="action.add">
         <source>action.add</source>
@@ -1260,11 +1260,11 @@
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
-        <target state="translated">Se ha alcanzado la cantidad máxima de documentos de factura %max%. Puedes añadir más después de eliminar uno.</target>
+        <target state="translated">Se alcanzó la cantidad máxima de %max% documentos de factura. Puede agregar más después de eliminar uno.</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
-        <target state="translated">Semana %week%.</target>
+        <target state="translated">Semana %week%</target>
       </trans-unit>
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
@@ -1276,7 +1276,15 @@
       </trans-unit>
       <trans-unit id="74pEVx1" resname="label.invoiceText">
         <source>label.invoiceText</source>
-        <target state="needs-translation">Texto de la factura</target>
+        <target state="translated">Texto de la factura</target>
+      </trans-unit>
+      <trans-unit id="8mTf0eZ" resname="label.budgetIndependent">
+        <source>label.budgetIndependent</source>
+        <target state="translated">Mostrar independientemente del "tipo de presupuesto"</target>
+      </trans-unit>
+      <trans-unit id="G9hBaDJ" resname="label.globalActivities">
+        <source>label.globalActivities</source>
+        <target state="translated">Permitir actividades globales</target>
       </trans-unit>
     </body>
   </file>
