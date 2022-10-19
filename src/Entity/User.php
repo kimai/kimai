@@ -71,6 +71,8 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public const AUTH_LDAP = 'ldap';
     public const AUTH_SAML = 'saml';
 
+    public const WIZARDS = ['intro', 'profile'];
+
     /**
      * Internal ID
      *
@@ -1126,6 +1128,27 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function getName(): string
     {
         return $this->getDisplayName();
+    }
+
+    public function hasSeenWizard(string $wizard): bool
+    {
+        $wizards = $this->getPreferenceValue('__wizards__', '');
+        $wizards = explode(',', $wizards);
+
+        return \in_array($wizard, $wizards);
+    }
+
+    public function setWizardAsSeen(string $wizard): void
+    {
+        $wizards = $this->getPreferenceValue('__wizards__', '');
+        $wizards = explode(',', $wizards);
+
+        if (\in_array($wizard, $wizards)) {
+            return;
+        }
+
+        $wizards[] = $wizard;
+        $this->setPreferenceValue('__wizards__', implode(',', array_filter($wizards)));
     }
 
     // --------------- 2 Factor Authentication ---------------

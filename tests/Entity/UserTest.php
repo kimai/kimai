@@ -84,6 +84,22 @@ class UserTest extends TestCase
         self::assertTrue($sut->hasColor());
     }
 
+    public function testWizards()
+    {
+        $sut = new User();
+        // internal name may not be changed
+        self::assertNull($sut->getPreferenceValue('__wizards__'));
+        self::assertFalse($sut->hasSeenWizard('intro'));
+        $sut->setWizardAsSeen('intro');
+        self::assertTrue($sut->hasSeenWizard('intro'));
+        self::assertNotNull($sut->getPreferenceValue('__wizards__'));
+        $sut->setWizardAsSeen('intro');
+        self::assertTrue($sut->hasSeenWizard('intro'));
+        self::assertFalse($sut->hasSeenWizard('profile'));
+        $sut->setWizardAsSeen('profile');
+        self::assertTrue($sut->hasSeenWizard('profile'));
+    }
+
     public function testAuth()
     {
         $user = new User();

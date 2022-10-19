@@ -1,0 +1,40 @@
+{% extends '@Tabler/wizard.html.twig' %}
+{% from '@Tabler/components/button.html.twig' import button %}
+{% from '@Tabler/components/buttons.html.twig' import submit_button %}
+{% from '@Tabler/components/progress_bar.html.twig' import progress_bar %}
+
+{% block title %}{{- get_title() -}}{% endblock %}
+{% block container_size %}container-tight{% endblock %}
+{% block wizard_logo %}{% endblock %}
+
+{% block wizard_before %}
+    {% if form is defined %}
+        {{ form_start(form) }}
+    {% endif %}
+{% endblock %}
+
+{% block wizard_after %}
+    {% if form is defined %}
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}
+
+{% block wizard_progress_bar %}
+    {{ progress_bar({current: percent, max: 100, min: 0}) }}
+{% endblock %}
+
+{% block wizard_previous_button %}
+    {% if previous is defined %}
+        {{ button(false, { title : 'Previous'|trans({}, 'TablerBundle'), combined: true, url: path('wizard', {'wizard': previous}) }, 'link') }}
+    {% endif %}
+{% endblock %}
+
+{% block wizard_next_button %}
+    {% if form is defined %}
+        {{ submit_button(false, { title : 'Next'|trans({}, 'TablerBundle'), combined: true }, 'primary') }}
+    {% else %}
+        {% if next is defined %}
+            {{ button(false, { title : 'Next'|trans({}, 'TablerBundle'), combined: true, url: path('wizard', {'wizard': next}) }, 'primary') }}
+        {% endif %}
+    {% endif %}
+{% endblock %}
