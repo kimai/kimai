@@ -80,12 +80,10 @@ class RuntimeExtensionsTest extends TestCase
                     $found_md2html = true;
                     break;
                 case 'desc2html':
-                    self::assertEquals('html', $filters[1]->getPreEscape());
                     self::assertEquals(['html'], $filters[1]->getSafe(new Node()));
                     $found_desc2html = true;
                     break;
                 case 'comment2html':
-                    self::assertEquals('html', $filters[2]->getPreEscape());
                     self::assertEquals(['html'], $filters[2]->getSafe(new Node()));
                     $found_comment2html = true;
                     break;

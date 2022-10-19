@@ -18,7 +18,7 @@ class ParsedownExtension extends \Parsedown
 
     /**
      * Overwritten to prevent # to show up as headings for two reasons:
-     * - Hashes are often used to cross link issues in other systems
+     * - Hashes are often used to cross-link issues in other systems
      * - Headings should not occur in time record listings
      */
     protected $BlockTypes = [
@@ -145,5 +145,18 @@ class ParsedownExtension extends \Parsedown
         $this->ids[$text] = '';
 
         return $text;
+    }
+
+    protected function blockTable($Line, array $Block = null)
+    {
+        $Block = parent::blockTable($Line, $Block);
+
+        if (\is_null($Block)) {
+            return;
+        }
+
+        $Block['element']['attributes']['class'] = 'table';
+
+        return $Block;
     }
 }
