@@ -282,7 +282,7 @@
         <source>quick_entry.minimum_rows</source>
         <target>Minimum broja redaka</target>
       </trans-unit>
-      <trans-unit id="eiQKW2A" resname="calendar.dragdrop_data">
+      <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data">
         <source>Copies data when adding via drag and drop</source>
         <target state="translated">Kopira podatke prilikom dodavanja povlačenjem i ispuštanjem</target>
       </trans-unit>

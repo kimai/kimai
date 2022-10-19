@@ -1206,11 +1206,11 @@
         <source>about.title</source>
         <target state="translated">Kimai 정보</target>
       </trans-unit>
-      <trans-unit id="8mTf0eZ" resname="budgetIndependent">
+      <trans-unit id="KB9cJM6" resname="budgetIndependent">
         <source>budgetIndependent</source>
         <target state="translated">'예산 유형'에 관계없이 표시하기</target>
       </trans-unit>
-      <trans-unit id="G9hBaDJ" resname="globalActivities">
+      <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
         <target state="translated">전역 활동 허용하기</target>
       </trans-unit>

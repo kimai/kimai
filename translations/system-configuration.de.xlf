@@ -278,7 +278,7 @@
         <source>calendar.dragdrop_amount</source>
         <target>Anzahl an Einträgen für Drag&amp;Drop (0 = deaktiviert)</target>
       </trans-unit>
-      <trans-unit id="eiQKW2A" resname="calendar.dragdrop_data">
+      <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data">
         <source>calendar.dragdrop_data</source>
         <target>Kopiert Daten beim Hinzufügen via Drag &amp; Drop</target>
       </trans-unit>

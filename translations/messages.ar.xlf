@@ -1200,11 +1200,11 @@
         <source>about.title</source>
         <target>حول Kimai</target>
       </trans-unit>
-      <trans-unit id="G9hBaDJ" resname="globalActivities">
+      <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
         <target state="translated">السماح بالأنشطة العالمية</target>
       </trans-unit>
-      <trans-unit id="8mTf0eZ" resname="budgetIndependent">
+      <trans-unit id="KB9cJM6" resname="budgetIndependent">
         <source>budgetIndependent</source>
         <target state="translated">عرض بغض النظر عن "نوع الدخل"</target>
       </trans-unit>

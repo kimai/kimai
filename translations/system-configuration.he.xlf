@@ -282,7 +282,7 @@
         <source>timesheet.rules.allow_zero_duration</source>
         <target>לאפשר רשומות זמן עם משך זמן ריק</target>
       </trans-unit>
-      <trans-unit id="eiQKW2A" resname="calendar.dragdrop_data">
+      <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data">
         <source>Copies data when adding via drag and drop</source>
         <target state="translated">מעתיק נתונים בעת הוספה דרך גרירה והשלכה</target>
       </trans-unit>

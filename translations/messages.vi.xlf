@@ -1198,15 +1198,15 @@
         <source>automatic</source>
         <target state="translated">Tự động</target>
       </trans-unit>
-      <trans-unit id="74pEVx1" resname="invoiceText">
+      <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
         <target state="translated">Văn bản hóa đơn</target>
       </trans-unit>
-      <trans-unit id="G9hBaDJ" resname="globalActivities">
+      <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
         <target state="translated">Cho phép các hoạt động toàn cầu</target>
       </trans-unit>
-      <trans-unit id="8mTf0eZ" resname="budgetIndependent">
+      <trans-unit id="KB9cJM6" resname="budgetIndependent">
         <source>budgetIndependent</source>
         <target state="translated">Hiển thị bất kể "loại ngân sách"</target>
       </trans-unit>

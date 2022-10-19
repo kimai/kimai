@@ -1196,7 +1196,7 @@
         <source>about.title</source>
         <target>О Kimai</target>
       </trans-unit>
-      <trans-unit id="G9hBaDJ" resname="globalActivities">
+      <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
         <target state="translated">Разрешать глобальные деятельности</target>
       </trans-unit>

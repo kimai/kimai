@@ -282,7 +282,7 @@
         <source>calendar.title_pattern</source>
         <target state="translated">달력 항목의 제목 표시</target>
       </trans-unit>
-      <trans-unit id="eiQKW2A" resname="calendar.dragdrop_data">
+      <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data">
         <source>Copies data when adding via drag and drop</source>
         <target state="translated">끌어서 놓기를 통해 추가할 때 데이터 복사하기</target>
       </trans-unit>

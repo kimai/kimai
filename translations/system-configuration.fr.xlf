@@ -282,7 +282,7 @@
         <source>quick_entry.minimum_rows</source>
         <target>Nombre minimal de lignes</target>
       </trans-unit>
-      <trans-unit id="eiQKW2A" resname="calendar.dragdrop_data">
+      <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data">
         <source>Copies data when adding via drag and drop</source>
         <target state="translated">Copie les données lors de l'ajout par glisser-déposer</target>
       </trans-unit>
