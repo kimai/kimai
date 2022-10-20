@@ -282,7 +282,7 @@
         <source>calendar.title_pattern</source>
         <target state="translated">Wyświetlanie tytułów na wpisach kalendarza</target>
       </trans-unit>
-      <trans-unit id="eiQKW2A" resname="label.calendar.dragdrop_data">
+      <trans-unit id="eiQKW2A" resname="calendar.dragdrop_data">
         <source>Copies data when adding via drag and drop</source>
         <target state="translated">Kopiuje dane podczas dodawania metodą przeciągnij i upuść</target>
       </trans-unit>

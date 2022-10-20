@@ -493,6 +493,7 @@ class LocaleFormatExtensionsTest extends TestCase
 
         // test negative duration
         $sut = $this->getSut($this->localeEn, 'en');
+        $this->assertEquals('-0.01', $sut->durationDecimal(-40));
         $this->assertEquals('-0.01', $sut->durationDecimal(-50));
 
         // test negative duration - with rounding issue
@@ -501,6 +502,7 @@ class LocaleFormatExtensionsTest extends TestCase
 
         // test zero duration
         $sut = $this->getSut($this->localeEn, 'en');
+        $this->assertEquals('0.00', $sut->durationDecimal(-0));
         $this->assertEquals('0.00', $sut->durationDecimal(0));
 
         $sut = $this->getSut($this->localeEn, 'en');

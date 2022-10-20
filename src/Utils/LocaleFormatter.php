@@ -70,11 +70,8 @@ final class LocaleFormatter
         $seconds = $this->getSecondsForDuration($duration);
 
         $value = round($seconds / 3600, 2);
-        if ($value <= 0) {
-            $value = 0;
-        }
 
-        return $this->decimalFormatter->format((float) $value);
+        return $this->decimalFormatter->format($value);
     }
 
     /**
