@@ -24,8 +24,7 @@ class WizardSubscriber implements EventSubscriberInterface
         private UrlGeneratorInterface $urlGenerator,
         private AuthorizationCheckerInterface $security,
         private TokenStorageInterface $storage
-    )
-    {
+    ) {
     }
 
     public static function getSubscribedEvents(): array

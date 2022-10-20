@@ -25,14 +25,14 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
     private static $cacheAll = [];
     private static $initialized = false;
 
-    public function clearCache()
+    public function clearCache(): void
     {
         self::$cacheByPrefix = [];
         self::$cacheAll = [];
         self::$initialized = false;
     }
 
-    private function prefillCache()
+    private function prefillCache(): void
     {
         if (self::$initialized === true) {
             return;
@@ -56,7 +56,7 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
         return $this->findOneBy(['name' => $name]);
     }
 
-    public function saveConfiguration(Configuration $configuration)
+    public function saveConfiguration(Configuration $configuration): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($configuration);
@@ -64,7 +64,7 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
         $this->clearCache();
     }
 
-    public function deleteConfiguration(Configuration $configuration)
+    public function deleteConfiguration(Configuration $configuration): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->remove($configuration);
@@ -73,7 +73,7 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
     }
 
     /**
-     * @param string $prefix
+     * @param string|null $prefix
      * @return Configuration[]
      */
     public function getConfiguration(?string $prefix = null): array
