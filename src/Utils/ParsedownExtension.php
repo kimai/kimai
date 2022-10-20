@@ -146,4 +146,17 @@ class ParsedownExtension extends \Parsedown
 
         return $text;
     }
+
+    protected function blockTable($Line, array $Block = null)
+    {
+        $Block = parent::blockTable($Line, $Block);
+
+        if (\is_null($Block)) {
+            return;
+        }
+
+        $Block['element']['attributes']['class'] = 'table';
+
+        return $Block;
+    }
 }

@@ -282,6 +282,10 @@
         <source>timesheet.rules.allow_zero_duration</source>
         <target state="translated">Permiteți intrările de timp cu o durată goală</target>
       </trans-unit>
+      <trans-unit id="eiQKW2A" resname="label.calendar.dragdrop_data">
+        <source>Copies data when adding via drag and drop</source>
+        <target state="translated">Copiază datele atunci când se adaugă prin tragere și fixare</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

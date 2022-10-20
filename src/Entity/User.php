@@ -1125,6 +1125,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $this->accountNumber = $accountNumber;
     }
 
+    public function isSystemAccount(): bool
+    {
+        return false;
+    }
+
     public function getName(): string
     {
         return $this->getDisplayName();

@@ -1,4 +1,3 @@
-# ========== KIMAI ==========
 # some hosters require a htaccess to change the PHP version
 .htaccess
 .env-*
@@ -7,45 +6,34 @@
 
 # for symfony local webserver
 php.ini
-
-/bin/*
-!bin/console
-/config/packages/local.yaml
-/config/packages/*-local.yaml
-/config/packages/*/local.yaml
-/config/packages/*/*-local.yaml
-/config/bundles-local.php
-
-templates/invoice/renderer/.~lock*
-translations/branding.*.xlf
-
-/var/data/*
-!/var/data/.gitkeep
-/var/coverage/
-/var/cache/*
-!var/cache/.gitkeep
-
-/var/invoices/*
-/var/export/*
-
-/var/packages/*
-!var/packages/.gitkeep
-/var/plugins/*
-!var/plugins/.gitkeep
-
-/var/log/*
-!var/log/.gitkeep
-
-/var/sessions/*
-!var/sessions/.gitkeep
+.php-version
 
 # YARN 2
 .yarnrc.yml
 .yarn
 
-# symfony-cli
-.php-version
-# ========== KIMAI ==========
+# for keeping empty directories
+!.gitkeep
+
+/bin/*
+!/bin/console
+*local.yaml
+/config/bundles-local.php
+
+/templates/invoice/renderer/.~lock*
+/translations/branding.*.xlf
+
+/var/data/*
+/var/coverage/
+/var/cache/*
+
+/var/invoices/*
+/var/export/*
+/var/log/*
+/var/sessions/*
+/var/packages/*
+/var/plugins/*
+*.disabled
 
 ###> symfony/framework-bundle ###
 /.env.local

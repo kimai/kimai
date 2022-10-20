@@ -112,7 +112,10 @@ class QuickEntryController extends AbstractController
             ];
         }
 
-        $beginTime = $factory->createDateTime($this->configuration->getTimesheetDefaultBeginTime())->format('H:i:s');
+        $defaultBegin = $factory->createDateTime($this->configuration->getTimesheetDefaultBeginTime());
+        $defaultHour = (int) $defaultBegin->format('H');
+        $defaultMinute = (int) $defaultBegin->format('i');
+        $defaultBegin->setTime($defaultHour, $defaultMinute, 0, 0);
 
         // fill all rows and columns to make sure we do not have missing records
         /** @var QuickEntryModel[] $models */
@@ -126,7 +129,7 @@ class QuickEntryController extends AbstractController
                     $tmp->setProject($row['project']);
                     $tmp->setActivity($row['activity']);
                     $tmp->setBegin(clone $day['day']);
-                    $tmp->getBegin()->modify($beginTime);
+                    $tmp->getBegin()->setTime($defaultHour, $defaultMinute, 0, 0);
                     $model->addTimesheet($tmp);
                 } else {
                     $model->addTimesheet($day['entry']);
@@ -141,7 +144,7 @@ class QuickEntryController extends AbstractController
             $tmp = new Timesheet();
             $tmp->setUser($user);
             $tmp->setBegin(clone $day['day']);
-            $tmp->getBegin()->modify($beginTime);
+            $tmp->getBegin()->setTime($defaultHour, $defaultMinute, 0, 0);
             $empty->addTimesheet($tmp);
         }
 
@@ -155,7 +158,7 @@ class QuickEntryController extends AbstractController
                     $tmp = new Timesheet();
                     $tmp->setUser($user);
                     $tmp->setBegin(clone $day['day']);
-                    $tmp->getBegin()->modify($beginTime);
+                    $tmp->getBegin()->setTime($defaultHour, $defaultMinute, 0, 0);
                     $model->addTimesheet($tmp);
                 }
 
@@ -198,26 +201,26 @@ class QuickEntryController extends AbstractController
                 }
             }
 
-            if ($this->isGranted('delete_own_timesheet') && \count($deleteTimesheets) > 0) {
-                try {
+            try {
+                $saved = false;
+                if (\count($deleteTimesheets) > 0 && $this->isGranted('delete_own_timesheet')) {
                     $this->timesheetService->deleteMultipleTimesheets($deleteTimesheets);
-
-                    return $this->redirectToRoute('quick_entry', ['begin' => $begin->format('Y-m-d')]);
-                } catch (\Exception $ex) {
-                    $this->flashError('action.delete.error');
-                    $this->logException($ex);
+                    $saved = true;
                 }
-            }
 
-            if (\count($saveTimesheets) > 0) {
-                try {
+                if (\count($saveTimesheets) > 0) {
                     $this->timesheetService->updateMultipleTimesheets($saveTimesheets);
+                    $saved = true;
+                }
+
+                if ($saved) {
+                    $this->flashSuccess('action.update.success');
 
                     return $this->redirectToRoute('quick_entry', ['begin' => $begin->format('Y-m-d')]);
-                } catch (\Exception $ex) {
-                    $this->flashError('action.update.error');
-                    $this->logException($ex);
                 }
+            } catch (\Exception $ex) {
+                $this->flashError('action.update.error');
+                $this->logException($ex);
             }
         }
 

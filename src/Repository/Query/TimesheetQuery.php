@@ -28,7 +28,7 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
     public const STATE_EXPORTED = 4;
     public const STATE_NOT_EXPORTED = 5;
 
-    public const TIMESHEET_ORDER_ALLOWED = ['begin', 'end', 'duration', 'rate', 'customer', 'project', 'activity', 'description'];
+    public const TIMESHEET_ORDER_ALLOWED = ['begin', 'end', 'duration', 'rate', 'hourlyRate', 'customer', 'project', 'activity', 'description'];
 
     /**
      * @var User|null

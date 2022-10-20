@@ -1,0 +1,34 @@
+name: Feature request
+description: Suggest an idea to make Kimai better
+labels: [ "feature request" ]
+body:
+    -   type: markdown
+        attributes:
+            value: |
+                Thank you for reporting an issue on Kimai! This form will guide you to create a useful issue report.
+    -   type: textarea
+        id: describe
+        attributes:
+            label: Describe the problem
+            description: >
+                Is your feature request related to a problem? If so, please provide
+                a clear and concise description of what the issue is.
+        validations:
+            required: true
+    -   type: textarea
+        id: solution
+        attributes:
+            label: Describe the solution you'd like
+            description: A clear and concise description of what the new feature should do.
+        validations:
+            required: true
+    -   type: textarea
+        id: alternatives
+        attributes:
+            label: Describe alternatives you've considered
+            description: A clear and concise description of any alternative solutions or features you've considered.
+    -   type: textarea
+        id: screenshots
+        attributes:
+            label: Screenshots
+            description: If applicable, add screenshots to better explain your problem.

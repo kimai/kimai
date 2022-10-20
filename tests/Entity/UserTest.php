@@ -46,6 +46,7 @@ class UserTest extends TestCase
         self::assertFalse($user->hasTeamAssignment());
         self::assertFalse($user->canSeeAllData());
         self::assertFalse($user->isExportDecimal());
+        self::assertFalse($user->isSystemAccount());
 
         $user->setUserIdentifier('foo');
         self::assertEquals('foo', $user->getUserIdentifier());
