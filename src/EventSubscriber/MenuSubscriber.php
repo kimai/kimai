@@ -171,9 +171,9 @@ final class MenuSubscriber implements EventSubscriberInterface
         }
 
         if ($auth->isGranted('system_configuration')) {
-            $menu->addChild(
-                new MenuItemModel('system_configuration', 'menu.system_configuration', 'system_configuration', [], 'configuration')
-            );
+            $systemConfig = new MenuItemModel('system_configuration', 'menu.system_configuration', 'system_configuration', [], 'configuration');
+            $systemConfig->setChildRoutes(['system_configuration_update', 'system_configuration_section']);
+            $menu->addChild($systemConfig);
         }
 
         if ($auth->isGranted('system_information')) {
