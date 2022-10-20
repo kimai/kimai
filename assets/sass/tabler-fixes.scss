@@ -1,4 +1,11 @@
+@import '~@tabler/core/src/scss/variables';
+
 /* fix for vertical labels in date-time pickers, if they are used in half-column forms, e.g. "create tasks" or "create expenses" */
 fieldset legend.col-form-label {
     padding-top: 0;
+}
+
+/* fix ONLY for beta 13, can be removed later */
+aside.navbar #navbar-menu a.dropdown-item.active {
+    color: var(--tblr-gray-700);
 }
