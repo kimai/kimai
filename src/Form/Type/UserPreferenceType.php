@@ -46,7 +46,7 @@ class UserPreferenceType extends AbstractType
                     unset($options['required']);
                 }
 
-                if (CheckboxType::class === $preference->getType()) {
+                if (in_array($preference->getType(), [CheckboxType::class, YesNoType::class])) {
                     $required = false;
                 }
 
