@@ -171,9 +171,9 @@ class PageActionsEvent extends ThemeEvent
     public function addDelete(string $url, bool $remoteConfirm = true): void
     {
         if ($remoteConfirm) {
-            $this->addAction('trash', ['url' => $url, 'class' => 'modal-ajax-form text-red']);
+            $this->addAction('trash', ['url' => $url, 'class' => 'modal-ajax-form text-red', 'translation_domain' => 'actions']);
         } else {
-            $this->addAction('trash', ['url' => $url, 'class' => 'confirmation-link text-red', 'attr' => ['data-question' => 'confirm.delete']]);
+            $this->addAction('trash', ['url' => $url, 'class' => 'confirmation-link text-red', 'attr' => ['data-question' => 'confirm.delete'], 'translation_domain' => 'actions']);
         }
     }
 

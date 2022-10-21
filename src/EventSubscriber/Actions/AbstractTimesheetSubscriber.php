@@ -46,10 +46,11 @@ abstract class AbstractTimesheetSubscriber extends AbstractActionsSubscriber
                 $event->addDivider();
             }
 
-            if ($event->isIndexView() && $this->isGranted('delete', $timesheet)) {
+            if (($event->isIndexView() || $event->isView('calendar')) && $this->isGranted('delete', $timesheet)) {
                 $event->addAction('trash', [
                     'url' => $this->path('delete_timesheet', ['id' => $timesheet->getId()]),
-                    'class' => 'api-link',
+                    'class' => 'api-link text-red',
+                    'translation_domain' => 'actions',
                     'attr' => [
                         'data-event' => 'kimai.timesheetDelete',
                         'data-method' => 'DELETE',
