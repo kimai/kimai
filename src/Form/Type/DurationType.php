@@ -54,6 +54,11 @@ class DurationType extends AbstractType
                 return;
             }
 
+            // we track times for humans and no entry should ever be that long
+            if ($maxHours > 24) {
+                $maxHours = 24;
+            }
+
             $maxMinutes = $maxHours * 60;
             $presets = [];
 
