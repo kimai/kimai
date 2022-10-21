@@ -303,8 +303,8 @@ final class TimesheetController extends BaseApiController
         $language = $this->getUser()->getLocale();
         foreach ($themeEvent->getActions() as $id => $action) {
             if ($action !== null) {
-                $domain = array_key_exists('translation_domain', $action) ? $action['translation_domain'] : 'messages';
-                if (!array_key_exists('title', $action)) {
+                $domain = \array_key_exists('translation_domain', $action) ? $action['translation_domain'] : 'messages';
+                if (!\array_key_exists('title', $action)) {
                     $action['title'] = $translator->trans($id, [], $domain, $language);
                 } else {
                     $action['title'] = $translator->trans($action['title'], [], $domain, $language);

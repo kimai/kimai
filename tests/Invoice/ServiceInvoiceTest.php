@@ -213,21 +213,25 @@ class ServiceInvoiceTest extends TestCase
 
         $customer1 = $this->createMock(Customer::class);
         $customer1->method('getId')->willReturn(1);
+        $customer1->method('getName')->willReturn('customer1');
         $project1 = new Project();
         $project1->setCustomer($customer1);
 
         $customer2 = $this->createMock(Customer::class);
         $customer2->method('getId')->willReturn(2);
+        $customer2->method('getName')->willReturn('customer2');
         $project2 = new Project();
         $project2->setCustomer($customer2);
 
         $customer3 = $this->createMock(Customer::class);
         $customer3->method('getId')->willReturn(3);
+        $customer3->method('getName')->willReturn('customer3');
         $project3 = new Project();
         $project3->setCustomer($customer3);
 
         $customer4 = $this->createMock(Customer::class);
         $customer4->method('getId')->willReturn(4);
+        $customer4->method('getName')->willReturn('customer4');
         $project4 = new Project();
         $project4->setCustomer($customer4);
 
@@ -291,7 +295,7 @@ class ServiceInvoiceTest extends TestCase
         self::assertEquals('de', $template->getLanguage());
 
         $query = new InvoiceQuery();
-        $query->setCustomers([$customer3, new Customer(), $customer1, $customer3]);
+        $query->setCustomers([$customer3, new Customer('tröööt'), $customer1, $customer3]);
         $query->setTemplate($template);
         self::assertNull($query->getBegin());
         self::assertNull($query->getEnd());
