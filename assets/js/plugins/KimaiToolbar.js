@@ -143,7 +143,7 @@ export default class KimaiToolbar extends KimaiPlugin {
      */
     _registerPagination(formSelector) {
         document.body.addEventListener('click', (event) => {
-            if (!event.target.matches('ul.pagination li a') && !event.target.parentNode.matches('ul.pagination li a')) {
+            if (!event.target.matches('ul.pagination li a') && (event.target.parentNode === null || !event.target.parentNode.matches('ul.pagination li a'))) {
                 return;
             }
 
