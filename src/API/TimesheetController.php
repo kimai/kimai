@@ -39,6 +39,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route(path="/timesheets")
@@ -292,14 +293,28 @@ final class TimesheetController extends BaseApiController
      *
      * @Security("is_granted('view', id)")
      */
-    public function getActions(Timesheet $id, ?string $view = null): Response
+    public function getActions(TranslatorInterface $translator, Timesheet $id, ?string $view = null): Response
     {
         $themeEvent = new PageActionsEvent($this->getUser(), ['timesheet' => $id], 'timesheet', $view ?? 'custom');
 
         $this->dispatcher->dispatch($themeEvent, $themeEvent->getEventName());
 
+        $all = [];
+        $language = $this->getUser()->getLocale();
+        foreach ($themeEvent->getActions() as $id => $action) {
+            if ($action !== null) {
+                $domain = array_key_exists('translation_domain', $action) ? $action['translation_domain'] : 'messages';
+                if (!array_key_exists('title', $action)) {
+                    $action['title'] = $translator->trans($id, [], $domain, $language);
+                } else {
+                    $action['title'] = $translator->trans($action['title'], [], $domain, $language);
+                }
+            }
+            $all[$id] = $action;
+        }
+
         return $this->viewHandler->handle(
-            new View($themeEvent->getActions(), 200)
+            new View($all, 200)
         );
     }
 
