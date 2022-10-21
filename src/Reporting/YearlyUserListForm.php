@@ -10,6 +10,7 @@
 namespace App\Reporting;
 
 use App\Form\Type\ReportSumType;
+use App\Form\Type\TeamType;
 use App\Form\Type\YearPickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,6 +38,11 @@ class YearlyUserListForm extends AbstractType
             'view_timezone' => $options['timezone'],
             'start_date' => $options['start_date'],
             'show_range' => true,
+        ]);
+        $builder->add('team', TeamType::class, [
+            'multiple' => false,
+            'required' => false,
+            'width' => false,
         ]);
         $builder->add('sumType', ReportSumType::class);
     }

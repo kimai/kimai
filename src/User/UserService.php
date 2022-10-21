@@ -29,6 +29,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class UserService
 {
+    /**
+     * @var array<string, int>
+     */
+    private $cache = [];
+
     private $repository;
     private $dispatcher;
     private $validator;
@@ -42,6 +47,17 @@ class UserService
         $this->validator = $validator;
         $this->configuration = $configuration;
         $this->encoderFactory = $encoderFactory;
+    }
+
+    public function countUser(?bool $enabled = null): int
+    {
+        $key = 'count' . ($enabled === null ? '_all' : ($enabled ? '_visible' : '_invisible'));
+
+        if (!\array_key_exists($key, $this->cache)) {
+            $this->cache[$key] = $this->repository->countUser($enabled);
+        }
+
+        return $this->cache[$key];
     }
 
     public function createNewUser(): User

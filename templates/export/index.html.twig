@@ -47,6 +47,9 @@
             {% if form.users is defined %}
                 {{ form_row(form.users) }}
             {% endif %}
+            {% if form.teams is defined %}
+                {{ form_row(form.teams) }}
+            {% endif %}
             {{ form_row(form.billable) }}
             {{ form_row(form.exported) }}
             {{ form_row(form.state) }}
