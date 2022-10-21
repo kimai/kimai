@@ -31,6 +31,7 @@ class ExportToolbarForm extends AbstractToolbarForm
         $this->addTimesheetStateChoice($builder);
         if ($options['include_user']) {
             $this->addUsersChoice($builder);
+            $this->addTeamsChoice($builder);
         }
         $this->addDateRange($builder, ['timezone' => $options['timezone']]);
         $this->addCustomerMultiChoice($builder, ['start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true], true);
