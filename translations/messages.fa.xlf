@@ -1031,10 +1031,6 @@
         <source>update_browser_title</source>
         <target state="needs-translation">Update browser title</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target state="needs-translation">If you want to delete an entry, you must drag it onto the button.</target>
-      </trans-unit>
       <trans-unit id="Xyjr.V." resname="project_start">
         <source>project_start</source>
         <target state="needs-translation">Project start</target>

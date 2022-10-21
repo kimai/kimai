@@ -732,10 +732,6 @@
         <source>update_browser_title</source>
         <target>Oppdater nettlesertittel</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>Hvis du vil slette en oppføring, må du dra den mot bunnen.</target>
-      </trans-unit>
       <trans-unit id="qX_CKtU" resname="tax_rate">
         <source>tax_rate</source>
         <target>Skattesats</target>

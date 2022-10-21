@@ -1185,10 +1185,6 @@
         <source>update_browser_title</source>
         <target state="needs-translation">Update browser title</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target state="needs-translation">If you want to delete an entry, you must drag it onto the button.</target>
-      </trans-unit>
       <trans-unit id="_YiKaOT" resname="last_record">
         <source>last_record</source>
         <target state="needs-translation">Last entry</target>

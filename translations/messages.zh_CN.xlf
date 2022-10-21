@@ -1026,10 +1026,6 @@
         <source>tax_rate</source>
         <target>税率</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>如果要删除条目，必须将其拖到按钮上。</target>
-      </trans-unit>
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target>更新浏览器标题</target>

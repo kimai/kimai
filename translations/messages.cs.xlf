@@ -1154,10 +1154,6 @@
         <source>status.canceled</source>
         <target>Zrušeno</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>Pokud chcete položku odstranit, musíte ji přetáhnout na tlačítko.</target>
-      </trans-unit>
       <trans-unit id="W92QGbY" resname="export.warn_result_amount">
         <source>export.warn_result_amount</source>
         <target>Vaše vyhledávání vede k %count% výsledkům. Pokud se export nezdaří, musíte vyhledávání dále zúžit.</target>

@@ -1153,10 +1153,6 @@
         <source>update_browser_title</source>
         <target state="translated">Obnoviť titul prehliadača</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target state="translated">Ak chcete vymazať príspevok, musíte ho potiahnuť na tlačidlo.</target>
-      </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
         <target state="translated">Týždeň %week%</target>

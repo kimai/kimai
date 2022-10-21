@@ -114,11 +114,6 @@ export default class KimaiCalendar {
             nextYear: this.options['icons']['previousYear'],
         };
 
-        let endButtons = 'today prev,next';
-        if (options['delete'] === true) {
-            endButtons = 'deleteButton ' + endButtons;
-        }
-
         let calendarOptions = {
             locales: [ enGbLocale, enUsLocale, arLocale, csLocale, daLocale, deLocale, deAtLocale, elLocale,
                 esLocale, euLocale, faLocale, fiLocale, frLocale, heLocale, hrLocale, huLocale, itLocale, jaLocale, koLocale,
@@ -127,21 +122,11 @@ export default class KimaiCalendar {
             initialView: initialView,
             // https://fullcalendar.io/docs/theming
             themeSystem: 'bootstrap5',
-            // https://fullcalendar.io/docs/customButtons
-            customButtons: {
-                deleteButton: {
-                    icon: this.options['icons']['trash'],
-                    text: this.options['translations']['delete'],
-                    click: () => {
-                        ALERT.info(this.options['translations']['dragDropDelete']);
-                    }
-                }
-            },
             // https://fullcalendar.io/docs/headerToolbar
             headerToolbar: {
                 start: 'title',
                 center: 'dayGridMonth,timeGridWeek,timeGridDay',
-                end: endButtons
+                end: 'today prev,next'
             },
             direction: this.kimai.getConfiguration().get('direction'),
             locale: this.kimai.getConfiguration().getLanguage().toLowerCase(),
@@ -242,6 +227,7 @@ export default class KimaiCalendar {
                         placement: 'top',
                         html: true,
                         content: this.renderEventPopoverContent(event),
+                        trigger: 'focus',
                     });
                 }
 
@@ -255,6 +241,51 @@ export default class KimaiCalendar {
                 }
 
                 this.hidePopover(mouseLeaveInfo.el);
+            },
+
+            // ContextMenu
+            eventDidMount: (arg) => {
+                arg.el.addEventListener('contextmenu', (jsEvent) => {
+                    jsEvent.preventDefault();
+                    const event = arg.event;
+                    if (!event.allDay) {
+                        const dropdownElement = document.getElementById('calendar_dropdown');
+                        if (dropdownElement === null) {
+                            return;
+                        }
+                        const url = this.options.url.actions(event.extendedProps.timesheet);
+                        API.get(url, {}, result => {
+                            let html = '';
+                            for (const action in result) {
+                                const options = result[action];
+                                if (options === null || action === 'trash') {
+                                    html += '<div class="dropdown-divider"></div>';
+                                }
+                                if (options !== null) {
+                                    html += '<a class="dropdown-item ' + (options['class'] !== undefined ? options['class'] : '') +
+                                        '" href="' + (options['url'] !== undefined ? options['url'] : '#') + '"';
+                                    if (options['attr'] !== undefined) {
+                                        for (const attrName in options['attr']) {
+                                            html += ' ' + attrName + '="' + options['attr'][attrName].replaceAll('"', '&quot;') + '"';
+                                        }
+                                    }
+                                    html += '>' + (options.title ?? action) + '</a>';
+                                }
+                            }
+
+                            dropdownElement.innerHTML = html;
+                            dropdownElement.style.position = 'fixed';
+                            dropdownElement.style.top = (jsEvent.clientY) + 'px';
+                            dropdownElement.style.left = (jsEvent.clientX) + 'px';
+                            this.registerDropdownListener();
+                            dropdownElement.classList.remove('d-none');
+                            if (!dropdownElement.classList.contains('d-block')) {
+                                dropdownElement.classList.add('d-block');
+                            }
+
+                        }, (e) => { console.log('Failed to load actions', e); });
+                    }
+                })
             },
         };
 
@@ -387,25 +418,6 @@ export default class KimaiCalendar {
                     eventDragStart: (info) => {
                         this.hidePopover(info.el);
                     },
-                    eventDragStop: (info) => {
-                        if (this.hasPermission('delete')) {
-                            const trash = document.querySelector('.fc-deleteButton-button');
-                            const sizes = trash.getBoundingClientRect();
-                            const jsEvent = info.jsEvent;
-                            if (jsEvent.pageX >= sizes.left && jsEvent.pageX <= sizes.right &&
-                                jsEvent.pageY >= sizes.top && jsEvent.pageY <= sizes.bottom) {
-                                API.delete(
-                                    this.options.url.delete(info.event.extendedProps.timesheet),
-                                    () => {
-                                        ALERT.success('action.delete.success');
-                                        info.event.remove();
-                                    }, () => {
-                                        ALERT.success('action.delete.error');
-                                    }
-                                );
-                            }
-                        }
-                    },
                     eventDrop: (eventDropInfo) => {
                         this.changeHandler(eventDropInfo)
                     },
@@ -480,6 +492,22 @@ export default class KimaiCalendar {
 
         // INITIALIZE CALENDAR
         this.calendar = new Calendar(element, calendarOptions);
+    }
+
+    registerDropdownListener() {
+        if (this.dropdownListener === undefined) {
+            this.dropdownListener = function() {
+                const dropdown = document.getElementById('calendar_dropdown');
+                if (dropdown === null) {
+                    return;
+                }
+                dropdown.classList.remove('d-block');
+                if (!dropdown.classList.contains('d-none')) {
+                    dropdown.classList.add('d-none');
+                }
+            }
+            document.addEventListener('click', this.dropdownListener);
+        }
     }
 
     /**

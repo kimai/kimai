@@ -1018,10 +1018,6 @@
         <source>resetting.check_email</source>
         <target>Ett mejl har skickats. Det innehåller en länk som du måste klicka på för att återställa ditt lösenord. Obs: Du kan endast begära ett nytt lösenord en gång inom %tokenLifetime% timmar. Om du inte har fått mejlet kontrollera din spamkorg eller försök igen.</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>Om du vill ta bort en post måste du dra den till knappen.</target>
-      </trans-unit>
       <trans-unit id="_YiKaOT" resname="last_record">
         <source>last_record</source>
         <target>Sista posten</target>

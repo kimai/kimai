@@ -46,6 +46,7 @@
                 {% block box_body_class %}p-3{% endblock %}
                 {% block box_body %}
                     <div id="timesheet_calendar"></div>
+                    <div id="calendar_dropdown" class="dropdown-menu d-none"></div>
                 {% endblock %}
             {% endembed %}
         </div>
@@ -67,7 +68,6 @@
     {% set createParams = '' %}
     {% set createRoute = 'timesheet_create' %}
     {% set editRoute = 'timesheet_edit' %}
-    {% set canDelete = is_granted('delete_own_timesheet') %}
     {% set canCreate = is_granted('create_own_timesheet') %}
     {% set canEdit = is_granted('edit_own_timesheet') %}
     {% set isForeignEdit = false %}
@@ -76,7 +76,6 @@
         {% set createParams = 'user=' ~ user.id ~ '&' %}
         {% set createRoute = 'admin_timesheet_create' %}
         {% set editRoute = 'admin_timesheet_edit' %}
-        {% set canDelete = is_granted('delete_other_timesheet') %}
         {% set canCreate = is_granted('create_other_timesheet') %}
         {% set canEdit = is_granted('edit_other_timesheet') %}
     {% endif %}
@@ -86,9 +85,9 @@
         {# using var, so it can be re-used in the different scopes #}
         var calendar = null;
 
-        document.addEventListener('kimai.timesheetUpdate', function() {
-            calendar.reloadEvents();
-        });
+        const reloader = function() { calendar.reloadEvents(); };
+        document.addEventListener('kimai.timesheetUpdate', reloader);
+        document.addEventListener('kimai.timesheetDelete', reloader);
 
         document.addEventListener('kimai.initialized', function(event) {
             const kimai = event.detail.kimai;
@@ -99,25 +98,20 @@
                     items: '.external-event',
                 },
                 initialView: '{{ app.user.getPreferenceValue('calendar_initial_view') }}',
-                delete: {% if canDelete %}true{% else %}false{% endif %},
                 translations: {
                     customer: '{{ 'customer'|trans }}',
                     project: '{{ 'project'|trans }}',
                     activity: '{{ 'activity'|trans }}',
-                    delete: '{{ 'action.delete'|trans }}',
-                    dragDropDelete: '{{ 'calendar.drag_and_drop.delete'|trans }}',
                 },
                 permissions: {
                     edit: {% if canEdit %}true{% else %}false{% endif %},
                     create: {% if canCreate %}true{% else %}false{% endif %},
-                    delete: {% if canDelete %}true{% else %}false{% endif %},
                     edit_begin: {% if can_edit_begin %}true{% else %}false{% endif %},
                     edit_end: {% if can_edit_end %}true{% else %}false{% endif %},
                     edit_duration: {% if can_edit_duration %}true{% else %}false{% endif %},
                     punch: {% if is_punch_mode %}true{% else %}false{% endif %},
                 },
                 icons: {
-                    trash: '{{ 'trash'|icon(true) }}',
                     next: '{{ 'right'|icon(true) }}',
                     previous: '{{ 'left'|icon(true) }}',
                     nextYear: '{{ 'right2'|icon(true) }}',
@@ -174,8 +168,8 @@
                     edit: (timesheetId) => {
                         return '{{ path(editRoute, {id: '-XX-'}) }}'.replace('-XX-', timesheetId);
                     },
-                    delete: (timesheetId) => {
-                        return '{{ path('delete_timesheet', {id: 1}) }}'.replace('1', timesheetId);
+                    actions: (timesheetId) => {
+                        return '{{ path('get_timesheet_actions', {id: 1, 'view': 'calendar'}) }}'.replace('1', timesheetId);
                     },
                 },
                 preparePayloadForUpdate: (data) => {
@@ -195,7 +189,6 @@
             calendar.render();
 
             document.querySelector('.fc-today-button').classList.remove('btn-icon');
-            document.querySelector('.fc-deleteButton-button').classList.toggle('btn-outline-danger');
             document.querySelector('.fc-header-toolbar').classList.toggle('row');
             const toolbar = document.querySelectorAll('.fc-header-toolbar .fc-toolbar-chunk');
             toolbar[0].classList.add('col-md-4', 'col-xs-12', 'mb-1', 'text-start');

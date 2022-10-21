@@ -1070,10 +1070,6 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Ano fiscal</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>Caso queira excluir uma entrada, arraste-a para o botão.</target>
-      </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>resetting.check_email</source>
         <target>Foi enviado um e-mail. Ele contém um link que você deve clicar para redefinir a sua senha. Nota: Você só pode solicitar uma nova senha uma vez dentro do limite de %tokenLifetime% horas. Caso não receba um e-mail, verifique a sua pasta de spam ou tente novamente.</target>

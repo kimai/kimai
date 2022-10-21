@@ -1061,10 +1061,6 @@
         <source>last_record_before</source>
         <target>Neniu temporezervo ekde</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>Se vi volas forigi elementon, vi devas ŝovi kaj demeti ĝin sur la butonon.</target>
-      </trans-unit>
       <trans-unit id="_YiKaOT" resname="last_record">
         <source>last_record</source>
         <target>Lasta elemento</target>

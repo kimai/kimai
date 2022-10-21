@@ -536,10 +536,6 @@
         <source>calendar</source>
         <target>Ημερολόγιο</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>Εάν θέλετε να διαγράψετε μια καταχώριση, πρέπει να την σύρετε στο αντίστοιχο κουμπί.</target>
-      </trans-unit>
       <!--
               Admin: Timesheet
             -->

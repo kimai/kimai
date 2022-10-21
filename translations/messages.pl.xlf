@@ -1046,10 +1046,6 @@
         <source>tax_rate</source>
         <target state="translated">Wysokość podatku</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target state="translated">Jeśli chcesz usunąć wpis, musisz przeciągnąć go na przycisk.</target>
-      </trans-unit>
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target state="translated">Zaktualizuj tytuł przeglądarki</target>

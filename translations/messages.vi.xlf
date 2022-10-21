@@ -1026,10 +1026,6 @@
         <source>update_browser_title</source>
         <target>Cập nhật tiêu đề trình duyệt</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>Nếu bạn muốn xóa một mục nhập, bạn phải kéo nó vào nút.</target>
-      </trans-unit>
       <trans-unit id="qX_CKtU" resname="tax_rate">
         <source>tax_rate</source>
         <target>Thuế suất</target>

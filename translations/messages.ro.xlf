@@ -1054,10 +1054,6 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Exercițiul financiar</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>Dacă doriți să ștergeți o intrare, trebuie să o trageți pe buton.</target>
-      </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>
         <target>Cererea nu a putut fi procesată. Au fost găsite prea multe rezultate.</target>

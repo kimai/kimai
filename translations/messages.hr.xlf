@@ -548,10 +548,6 @@
         <source>calendar</source>
         <target>Kalendar</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>Ako želiš izbrisati unos, moraš ga povući na gumb.</target>
-      </trans-unit>
       <!--
               Admin: Timesheet
             -->

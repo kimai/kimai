@@ -1122,10 +1122,6 @@
         <source>Display of entries in selection lists</source>
         <target state="needs-translation">Display of entries in selection lists</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target state="needs-translation">If you want to delete an entry, you must drag it onto the button.</target>
-      </trans-unit>
       <trans-unit id="KH2hgil" resname="account_number">
         <source>account_number</source>
         <target state="needs-translation">Staff number</target>

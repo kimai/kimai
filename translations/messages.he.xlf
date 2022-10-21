@@ -962,10 +962,6 @@
         <source>tax_rate</source>
         <target>גובה המס</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>למחיקת רשומה יש לגרור אותה לתחתית.</target>
-      </trans-unit>
       <trans-unit id="O5w1jzb" resname="file">
         <source>file</source>
         <target>קובץ</target>

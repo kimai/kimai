@@ -994,10 +994,6 @@
         <source>last_record_before</source>
         <target>Sem reserva de tempo desde</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>Se quiser eliminar uma entrada, tem de a arrastar para o botão.</target>
-      </trans-unit>
       <trans-unit id="CiA4s9E" resname="set_as_default">
         <source>set_as_default</source>
         <target>Guardar configuração como favorito de pesquisa</target>

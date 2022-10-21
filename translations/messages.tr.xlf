@@ -1062,10 +1062,6 @@
         <source>last_record_before</source>
         <target>O zamandan beri rezervasyon yok</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>Bir kaydı silmek istiyorsanız, onu düğmeye sürüklemelisiniz.</target>
-      </trans-unit>
       <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
         <source>stats.activeUsersFinancialYear</source>
         <target>Bu mali yılın etkin kullanıcıları</target>

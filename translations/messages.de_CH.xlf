@@ -1013,10 +1013,6 @@
         <source>last_record_before</source>
         <target>Keine Zeitbuchung seit</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>Wenn Sie einen Eintrag löschen wollen, müssen Sie ihn auf die Schaltfläche ziehen.</target>
-      </trans-unit>
       <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
         <source>stats.activeUsersFinancialYear</source>
         <target>Aktive Benutzer dieses Geschäftsjahr</target>

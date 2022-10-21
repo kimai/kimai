@@ -1044,10 +1044,6 @@
         <source>update_browser_title</source>
         <target>Обновить заголовок браузера</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>Для удаления записи, перетащите её на кнопку.</target>
-      </trans-unit>
       <trans-unit id="qX_CKtU" resname="tax_rate">
         <source>tax_rate</source>
         <target>Ставка налога</target>

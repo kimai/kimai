@@ -1053,10 +1053,6 @@
         <source>tax_rate</source>
         <target>Veroaste</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>Jos tahdot poistaa merkinnän, raahaa se painikkeen päälle.</target>
-      </trans-unit>
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target>Päivitä selaimen otsikko</target>

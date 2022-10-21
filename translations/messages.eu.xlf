@@ -1185,10 +1185,6 @@
         <source>error.directory_protected</source>
         <target state="needs-translation">Directory "%dir%" is write protected.</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target state="needs-translation">If you want to delete an entry, you must drag it onto the button.</target>
-      </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>
         <target state="needs-translation">Revenues</target>

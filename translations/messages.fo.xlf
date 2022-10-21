@@ -1107,10 +1107,6 @@
         <source>default_value_new</source>
         <target state="needs-translation">Default values for new entries</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target state="needs-translation">If you want to delete an entry, you must drag it onto the button.</target>
-      </trans-unit>
       <trans-unit id="HkxjXDU" resname="required_version">
         <source>required_version</source>
         <target state="needs-translation">Compatible with</target>

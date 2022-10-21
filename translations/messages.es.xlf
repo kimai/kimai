@@ -1054,10 +1054,6 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Año fiscal</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>Si quiere eliminar una entrada, debe arrastrarla sobre el botón.</target>
-      </trans-unit>
       <trans-unit id="VSo_gmO" resname="orderBy">
         <source>orderBy</source>
         <target>Ordenar por</target>

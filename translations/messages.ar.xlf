@@ -1084,10 +1084,6 @@
         <source>daily_stats</source>
         <target state="translated">إظهار الإحصائيات اليومية في ورقة التوقيت</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target state="translated">إن أردت حذف إدخال، فيجب عليك سحبه إلى الزر.</target>
-      </trans-unit>
       <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
         <source>stats.percentUsedLeft</source>
         <target state="translated">%percent%% المستخدمة (%left% مازالت مفتوحة)</target>

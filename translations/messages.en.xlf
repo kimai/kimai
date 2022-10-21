@@ -659,10 +659,6 @@
         <source>calendar</source>
         <target>Calendar</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>If you want to delete an entry, you must drag it onto the button.</target>
-      </trans-unit>
       <!-- Projects -->
       <trans-unit id="Xyjr.V." resname="project_start">
         <source>project_start</source>

@@ -1062,10 +1062,6 @@
         <source>last_record_before</source>
         <target>Aucune réservation de temps depuis</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>Si vous voulez supprimer une entrée, vous devez la faire glisser sur le bouton.</target>
-      </trans-unit>
       <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
         <source>stats.activeUsersFinancialYear</source>
         <target>Utilisateurs actifs cette année fiscale</target>

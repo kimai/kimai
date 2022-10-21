@@ -1030,10 +1030,6 @@
         <source>tax_rate</source>
         <target>세율</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>항목을 삭제하려면 해당 항목을 단추로 끌어다 놓아야 합니다.</target>
-      </trans-unit>
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target>브라우저 제목 업데이트</target>

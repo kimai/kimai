@@ -1081,10 +1081,6 @@
         <source>stats.workingTime</source>
         <target>Munkaidő</target>
       </trans-unit>
-      <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
-        <source>calendar.drag_and_drop.delete</source>
-        <target>Egy bejegyzés törléséhez, húzd a gombra.</target>
-      </trans-unit>
       <trans-unit id="pX_3dNm" resname="stats.revenue">
         <source>stats.revenue</source>
         <target>Bevétel</target>
