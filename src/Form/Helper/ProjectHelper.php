@@ -21,6 +21,7 @@ final class ProjectHelper
     public const PATTERN_DATERANGE = '{daterange}';
     public const PATTERN_START = '{start}';
     public const PATTERN_END = '{end}';
+    public const PATTERN_CUSTOMER = '{parentTitle}';
     public const PATTERN_SPACER = '{spacer}';
     public const SPACER = ' - ';
 
@@ -70,6 +71,7 @@ final class ProjectHelper
         $name = $this->getChoicePattern();
         $name = str_replace(self::PATTERN_NAME, $project->getName(), $name);
         $name = str_replace(self::PATTERN_COMMENT, $project->getComment() ?? '', $name);
+        $name = str_replace(self::PATTERN_CUSTOMER, $project->getCustomer()->getName() ?? '', $name);
         $name = str_replace(self::PATTERN_ORDERNUMBER, $project->getOrderNumber() ?? '', $name);
         $name = str_replace(self::PATTERN_START, $start, $name);
         $name = str_replace(self::PATTERN_END, $end, $name);
