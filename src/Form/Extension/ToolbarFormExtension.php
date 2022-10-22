@@ -11,13 +11,12 @@ namespace App\Form\Extension;
 
 use App\Form\Toolbar\ExportToolbarForm;
 use App\Form\Toolbar\InvoiceToolbarForm;
-use App\Form\Toolbar\InvoiceToolbarSimpleForm;
 use App\Form\Toolbar\TimesheetExportToolbarForm;
 use App\Form\Toolbar\TimesheetToolbarForm;
 use App\Form\Toolbar\UserToolbarForm;
-use App\Reporting\MonthlyUserListForm;
-use App\Reporting\WeeklyUserListForm;
-use App\Reporting\YearlyUserListForm;
+use App\Reporting\MonthlyUserList\MonthlyUserListForm;
+use App\Reporting\WeeklyUserList\WeeklyUserListForm;
+use App\Reporting\YearlyUserList\YearlyUserListForm;
 use App\User\TeamService;
 use App\User\UserService;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -40,7 +39,6 @@ final class ToolbarFormExtension extends AbstractTypeExtension
     {
         return [
             InvoiceToolbarForm::class,
-            InvoiceToolbarSimpleForm::class,
             ExportToolbarForm::class,
             TimesheetToolbarForm::class,
             TimesheetExportToolbarForm::class,
