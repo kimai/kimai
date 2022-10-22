@@ -637,10 +637,6 @@
         <source>dashboard.title</source>
         <target>Dashboard</target>
       </trans-unit>
-      <trans-unit id="Eb7Ygpo" resname="action.back">
-        <source>action.back</source>
-        <target>Zurück</target>
-      </trans-unit>
       <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
         <target>Zurücksetzen</target>
@@ -649,7 +645,7 @@
         <source>action.save</source>
         <target>Speichern</target>
       </trans-unit>
-      <trans-unit id="hTKWQ6g" resname="action.delete">
+      <trans-unit id="YZdZVQP" resname="delete">
         <source>action.delete</source>
         <target>Löschen</target>
       </trans-unit>
@@ -833,7 +829,7 @@
         <source>customers</source>
         <target>Kunden</target>
       </trans-unit>
-      <trans-unit id="WGIhZv1" resname="all_times">
+      <trans-unit id="yxQop43" resname="all_times">
         <source>all_times</source>
         <target>Zeiterfassung</target>
       </trans-unit>
@@ -841,7 +837,7 @@
         <source>menu.reporting</source>
         <target>Berichte</target>
       </trans-unit>
-      <trans-unit id="C0W7_BT" resname="my_times">
+      <trans-unit id="ebTjBb9" resname="my_times">
         <source>my_times</source>
         <target>Meine Zeiten</target>
       </trans-unit>

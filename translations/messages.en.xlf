@@ -198,7 +198,7 @@
         <source>menu.logout</source>
         <target>Logout</target>
       </trans-unit>
-      <trans-unit id="C0W7_BT" resname="my_times">
+      <trans-unit id="ebTjBb9" resname="my_times">
         <source>my_times</source>
         <target>My times</target>
       </trans-unit>
@@ -206,7 +206,7 @@
         <source>menu.reporting</source>
         <target>Reporting</target>
       </trans-unit>
-      <trans-unit id="WGIhZv1" resname="all_times">
+      <trans-unit id="yxQop43" resname="all_times">
         <source>all_times</source>
         <target>All times</target>
       </trans-unit>
@@ -437,7 +437,7 @@
         <source>action.add</source>
         <target>Add</target>
       </trans-unit>
-      <trans-unit id="hTKWQ6g" resname="action.delete">
+      <trans-unit id="YZdZVQP" resname="delete">
         <source>action.delete</source>
         <target>Delete</target>
       </trans-unit>
@@ -448,10 +448,6 @@
       <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
         <target>Reset</target>
-      </trans-unit>
-      <trans-unit id="Eb7Ygpo" resname="action.back">
-        <source>action.back</source>
-        <target>Back</target>
       </trans-unit>
       <trans-unit id="wCazS.X" resname="action.close">
         <source>action.close</source>
@@ -974,7 +970,7 @@
         <source>invoices</source>
         <target>Invoices</target>
       </trans-unit>
-      <trans-unit id="SR2r1Cssdf" resname="all_invoices">
+      <trans-unit id="t.jgy7A" resname="all_invoices">
         <source>all_invoices</source>
         <target>Invoice history</target>
       </trans-unit>

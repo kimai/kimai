@@ -127,11 +127,11 @@
         <source>menu.logout</source>
         <target>Elsaluti</target>
       </trans-unit>
-      <trans-unit id="C0W7_BT" resname="my_times">
+      <trans-unit id="ebTjBb9" resname="my_times">
         <source>my_times</source>
         <target>Miaj tempoj</target>
       </trans-unit>
-      <trans-unit id="WGIhZv1" resname="all_times">
+      <trans-unit id="yxQop43" resname="all_times">
         <source>all_times</source>
         <target>Temposlipoj</target>
       </trans-unit>
@@ -296,7 +296,7 @@
         <source>action.edit</source>
         <target>Redakti</target>
       </trans-unit>
-      <trans-unit id="hTKWQ6g" resname="action.delete">
+      <trans-unit id="YZdZVQP" resname="delete">
         <source>action.delete</source>
         <target>Forigi</target>
       </trans-unit>
@@ -307,10 +307,6 @@
       <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
         <target>Restartigi</target>
-      </trans-unit>
-      <trans-unit id="Eb7Ygpo" resname="action.back">
-        <source>action.back</source>
-        <target>Reen</target>
       </trans-unit>
       <trans-unit id="wCazS.X" resname="action.close">
         <source>action.close</source>

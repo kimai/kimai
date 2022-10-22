@@ -111,11 +111,11 @@
         <source>menu.logout</source>
         <target>退出</target>
       </trans-unit>
-      <trans-unit id="C0W7_BT" resname="my_times">
+      <trans-unit id="ebTjBb9" resname="my_times">
         <source>my_times</source>
         <target>我的时间</target>
       </trans-unit>
-      <trans-unit id="WGIhZv1" resname="all_times">
+      <trans-unit id="yxQop43" resname="all_times">
         <source>all_times</source>
         <target>时间表</target>
       </trans-unit>
@@ -272,7 +272,7 @@
         <source>action.edit</source>
         <target>编辑</target>
       </trans-unit>
-      <trans-unit id="hTKWQ6g" resname="action.delete">
+      <trans-unit id="YZdZVQP" resname="delete">
         <source>action.delete</source>
         <target>删除</target>
       </trans-unit>
@@ -283,10 +283,6 @@
       <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
         <target>重设</target>
-      </trans-unit>
-      <trans-unit id="Eb7Ygpo" resname="action.back">
-        <source>action.back</source>
-        <target>返回</target>
       </trans-unit>
       <trans-unit id="wCazS.X" resname="action.close">
         <source>action.close</source>

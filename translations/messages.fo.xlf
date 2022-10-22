@@ -49,7 +49,7 @@
         <source>menu.logout</source>
         <target>Logga av</target>
       </trans-unit>
-      <trans-unit id="C0W7_BT" resname="my_times">
+      <trans-unit id="ebTjBb9" resname="my_times">
         <source>my_times</source>
         <target>Mínar tíðir</target>
       </trans-unit>
@@ -287,10 +287,6 @@
         <source>action.close</source>
         <target>Lat aftur</target>
       </trans-unit>
-      <trans-unit id="Eb7Ygpo" resname="action.back">
-        <source>action.back</source>
-        <target>Aftur</target>
-      </trans-unit>
       <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
         <target>Tómstilla</target>
@@ -299,7 +295,7 @@
         <source>action.save</source>
         <target>Goym</target>
       </trans-unit>
-      <trans-unit id="hTKWQ6g" resname="action.delete">
+      <trans-unit id="YZdZVQP" resname="delete">
         <source>action.delete</source>
         <target>Strika</target>
       </trans-unit>
@@ -407,7 +403,7 @@
         <source>password_repeat</source>
         <target>Endurtak loyniorð</target>
       </trans-unit>
-      <trans-unit id="WGIhZv1" resname="all_times">
+      <trans-unit id="yxQop43" resname="all_times">
         <source>all_times</source>
         <target>Arbeiðsseðlar</target>
       </trans-unit>

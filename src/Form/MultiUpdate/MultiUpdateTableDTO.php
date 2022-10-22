@@ -65,7 +65,7 @@ class MultiUpdateTableDTO
 
     public function addDelete(string $url): MultiUpdateTableDTO
     {
-        $this->actions['action.delete'] = $url;
+        $this->actions['delete'] = $url;
 
         return $this;
     }

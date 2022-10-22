@@ -179,7 +179,7 @@
         <source>menu.logout</source>
         <target state="translated">登出</target>
       </trans-unit>
-      <trans-unit id="C0W7_BT" resname="my_times">
+      <trans-unit id="ebTjBb9" resname="my_times">
         <source>my_times</source>
         <target state="translated">我的時間</target>
       </trans-unit>
@@ -187,7 +187,7 @@
         <source>menu.reporting</source>
         <target state="translated">報表</target>
       </trans-unit>
-      <trans-unit id="WGIhZv1" resname="all_times">
+      <trans-unit id="yxQop43" resname="all_times">
         <source>all_times</source>
         <target state="translated">時間表</target>
       </trans-unit>
@@ -405,7 +405,7 @@
         <source>action.add</source>
         <target state="translated">新增</target>
       </trans-unit>
-      <trans-unit id="hTKWQ6g" resname="action.delete">
+      <trans-unit id="YZdZVQP" resname="delete">
         <source>action.delete</source>
         <target state="translated">刪除</target>
       </trans-unit>
@@ -740,10 +740,6 @@
       <trans-unit id="DZ7XGML" resname="profile.teams">
         <source>profile.teams</source>
         <target state="translated">團隊</target>
-      </trans-unit>
-      <trans-unit id="Eb7Ygpo" resname="action.back">
-        <source>action.back</source>
-        <target state="translated">退回</target>
       </trans-unit>
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>

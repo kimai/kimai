@@ -37,7 +37,7 @@ final class ThemeJavascriptTranslationsEvent extends Event
         'action.delete.success' => ['action.delete.success', 'flashmessages'],
         'action.delete.error' => ['action.delete.error', 'flashmessages'],
         'confirm.delete' => ['confirm.delete', 'messages'],
-        'delete' => ['action.delete', 'messages'],
+        'delete' => ['delete', 'messages'],
         'login.required' => ['login_required', 'messages'],
         'modal.dirty' => ['modal.dirty', 'messages'],
         'select.search.notfound' => ['search.no_results', 'messages'],

@@ -163,10 +163,6 @@
         <source>action.close</source>
         <target>بستن</target>
       </trans-unit>
-      <trans-unit id="Eb7Ygpo" resname="action.back">
-        <source>action.back</source>
-        <target>بازگشت</target>
-      </trans-unit>
       <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
         <target>تنظیم مجدد</target>
@@ -175,7 +171,7 @@
         <source>action.save</source>
         <target>ذخیره</target>
       </trans-unit>
-      <trans-unit id="hTKWQ6g" resname="action.delete">
+      <trans-unit id="YZdZVQP" resname="delete">
         <source>action.delete</source>
         <target>حذف</target>
       </trans-unit>
@@ -351,7 +347,7 @@
         <source>customers</source>
         <target>مشتریان</target>
       </trans-unit>
-      <trans-unit id="WGIhZv1" resname="all_times">
+      <trans-unit id="yxQop43" resname="all_times">
         <source>all_times</source>
         <target>برنامه های زمانی</target>
       </trans-unit>
@@ -359,7 +355,7 @@
         <source>menu.reporting</source>
         <target>گزارش نویسی</target>
       </trans-unit>
-      <trans-unit id="C0W7_BT" resname="my_times">
+      <trans-unit id="ebTjBb9" resname="my_times">
         <source>my_times</source>
         <target>زمان من</target>
       </trans-unit>

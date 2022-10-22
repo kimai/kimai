@@ -107,11 +107,11 @@
         <source>menu.logout</source>
         <target>Salir</target>
       </trans-unit>
-      <trans-unit id="C0W7_BT" resname="my_times">
+      <trans-unit id="ebTjBb9" resname="my_times">
         <source>my_times</source>
         <target>Mis horas</target>
       </trans-unit>
-      <trans-unit id="WGIhZv1" resname="all_times">
+      <trans-unit id="yxQop43" resname="all_times">
         <source>all_times</source>
         <target>Partes de horas</target>
       </trans-unit>
@@ -268,7 +268,7 @@
         <source>action.edit</source>
         <target>Editar</target>
       </trans-unit>
-      <trans-unit id="hTKWQ6g" resname="action.delete">
+      <trans-unit id="YZdZVQP" resname="delete">
         <source>action.delete</source>
         <target>Eliminar</target>
       </trans-unit>
@@ -279,10 +279,6 @@
       <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
         <target>Restablecer</target>
-      </trans-unit>
-      <trans-unit id="Eb7Ygpo" resname="action.back">
-        <source>action.back</source>
-        <target>Atrás</target>
       </trans-unit>
       <trans-unit id="wCazS.X" resname="action.close">
         <source>action.close</source>
@@ -1202,11 +1198,11 @@
         <source>about.title</source>
         <target state="translated">Acerca de Kimai</target>
       </trans-unit>
-      <trans-unit id="8mTf0eZ" resname="budgetIndependent">
+      <trans-unit id="KB9cJM6" resname="budgetIndependent">
         <source>budgetIndependent</source>
         <target state="translated">Mostrar independientemente del "tipo de presupuesto"</target>
       </trans-unit>
-      <trans-unit id="G9hBaDJ" resname="globalActivities">
+      <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
         <target state="translated">Permitir actividades globales</target>
       </trans-unit>

@@ -98,11 +98,11 @@
         <source>menu.logout</source>
         <target>Kijelentkezés</target>
       </trans-unit>
-      <trans-unit id="C0W7_BT" resname="my_times">
+      <trans-unit id="ebTjBb9" resname="my_times">
         <source>my_times</source>
         <target>Rögzített órák</target>
       </trans-unit>
-      <trans-unit id="WGIhZv1" resname="all_times">
+      <trans-unit id="yxQop43" resname="all_times">
         <source>all_times</source>
         <target>Rögzített órák</target>
       </trans-unit>
@@ -243,17 +243,13 @@
         <source>action.edit</source>
         <target>Szerkesztés</target>
       </trans-unit>
-      <trans-unit id="hTKWQ6g" resname="action.delete">
+      <trans-unit id="YZdZVQP" resname="delete">
         <source>action.delete</source>
         <target>Törlés</target>
       </trans-unit>
       <trans-unit id="HLtdhYw" resname="action.save">
         <source>action.save</source>
         <target>Mentés</target>
-      </trans-unit>
-      <trans-unit id="Eb7Ygpo" resname="action.back">
-        <source>action.back</source>
-        <target>Vissza</target>
       </trans-unit>
       <trans-unit id="wCazS.X" resname="action.close">
         <source>action.close</source>

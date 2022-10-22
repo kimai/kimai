@@ -95,11 +95,11 @@
         <source>menu.logout</source>
         <target state="translated">Logga ut</target>
       </trans-unit>
-      <trans-unit id="C0W7_BT" resname="my_times">
+      <trans-unit id="ebTjBb9" resname="my_times">
         <source>my_times</source>
         <target state="translated">Min tidsredovisning</target>
       </trans-unit>
-      <trans-unit id="WGIhZv1" resname="all_times">
+      <trans-unit id="yxQop43" resname="all_times">
         <source>all_times</source>
         <target state="translated">Tidsschema</target>
       </trans-unit>
@@ -240,17 +240,13 @@
         <source>action.edit</source>
         <target state="translated">Ändra</target>
       </trans-unit>
-      <trans-unit id="hTKWQ6g" resname="action.delete">
+      <trans-unit id="YZdZVQP" resname="delete">
         <source>action.delete</source>
         <target state="translated">Ta bort</target>
       </trans-unit>
       <trans-unit id="HLtdhYw" resname="action.save">
         <source>action.save</source>
         <target state="translated">Spara</target>
-      </trans-unit>
-      <trans-unit id="Eb7Ygpo" resname="action.back">
-        <source>action.back</source>
-        <target state="translated">Tillbaka</target>
       </trans-unit>
       <trans-unit id="wCazS.X" resname="action.close">
         <source>action.close</source>

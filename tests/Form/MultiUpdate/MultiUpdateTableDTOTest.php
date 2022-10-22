@@ -43,7 +43,7 @@ class MultiUpdateTableDTOTest extends TestCase
             [
                 '' => '',
                 'action.edit' => 'foo',
-                'action.delete' => 'bar',
+                'delete' => 'bar',
                 'test' => 'hello/world'
             ],
             $sut->getActions()
