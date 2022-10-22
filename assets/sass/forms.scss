@@ -12,3 +12,19 @@
         min-width: 55px;
     }
 }
+
+#report-form {
+    div.btn-list {
+        width: 100%;
+        div.selectpicker {
+            min-width: 200px;
+            max-width: 400px;
+        }
+
+        li.dropdown-item {
+            .form-check {
+                margin-bottom: 0;
+            }
+        }
+    }
+}

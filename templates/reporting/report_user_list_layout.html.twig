@@ -2,8 +2,11 @@
 
 {% block report_form %}
     {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': 'report-form'}}) }}
-    <div class="btn-list">
+    <div class="btn-list w-100">
         {{ form_widget(form.date) }}
+        {% if form.team is defined %}
+            {{ form_widget(form.team) }}
+        {% endif %}
         {{ form_widget(form.sumType) }}
         {% from '@theme/components/buttons.html.twig' import submit_button %}
         {{ submit_button('download', {'attr': {'formaction': path(export_route)}, 'icon': 'download', 'combined': false}, 'primary') }}

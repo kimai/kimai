@@ -38,7 +38,7 @@
 {% block report_form %}
     {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': 'report-form'}}) }}
     <div class="btn-list w-100">
-        {{ form_row(form.customer, {'label': false, 'placeholder': 'please_choose', 'row_attr': {'class': 'w-50'}}) }}
+        {{ form_row(form.customer, {'label': false, 'placeholder': 'please_choose'}) }}
         {{ form_row(form.month, {'label': false}) }}
         <div class="dropdown">
             <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

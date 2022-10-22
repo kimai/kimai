@@ -20,7 +20,7 @@ abstract class DateByUser extends AbstractUserList
         return $this->user;
     }
 
-    public function setUser(User $user): void
+    public function setUser(?User $user): void
     {
         $this->user = $user;
     }

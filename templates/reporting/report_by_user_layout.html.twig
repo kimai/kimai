@@ -4,12 +4,12 @@
 {% block report_form %}
     {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': 'report-form'}}) }}
     <div class="btn-list w-100">
+        {{ form_widget(form.date) }}
         {% if form.user is defined %}
-            {{ form_row(form.user, {'label': false, 'row_attr': {'class': 'w-25'}}) }}
+            {{ form_row(form.user, {'label': false}) }}
         {% elseif app.user != user %}
             {{ widgets.username(user) }}
         {% endif %}
-        {{ form_widget(form.date) }}
         {{ form_widget(form.sumType) }}
     </div>
     {{ form_end(form) }}
