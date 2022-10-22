@@ -3,10 +3,10 @@
     "app": {
       "js": [
         "/build/runtime.f0079159.js",
-        "/build/app.f28aa840.js"
+        "/build/app.d0fb2602.js"
       ],
       "css": [
-        "/build/app.3b6f55b5.css"
+        "/build/app.7d4bd93a.css"
       ]
     },
     "invoice": {
@@ -36,7 +36,7 @@
     "calendar": {
       "js": [
         "/build/runtime.f0079159.js",
-        "/build/calendar.93d1777f.js"
+        "/build/calendar.3fc8b457.js"
       ],
       "css": [
         "/build/calendar.bb473428.css"
@@ -54,14 +54,14 @@
   },
   "integrity": {
     "/build/runtime.f0079159.js": "sha384-H22sAW1aTvyIPqvHOvGXWSWTxf0y6mptp+MsVmyXCfjx/WJjBbhX9gbUZ+qIuihV",
-    "/build/app.f28aa840.js": "sha384-Uw6ghxHJ7zYNXk/cQbmEyEXIgdw2Db0llItgXhIE+AcpLBVHInTKGBG/3Q+EgFdi",
-    "/build/app.3b6f55b5.css": "sha384-YVMK+wlSvLEV0eWdHmcwT0iGFvFdkQKYaE6S+jBRjkFbNPAdkKFm1zmM/fi4436D",
+    "/build/app.d0fb2602.js": "sha384-0bchwcg55kqkJirFj8zmpTccnWWYpyPRDCzRueEkUhPBgY5xV14sXPdJFm72mfCQ",
+    "/build/app.7d4bd93a.css": "sha384-4howLJ0Agtxno0w96xVBu97dsCoQnqloEh5LUrZyoPaOp3mDdIrqCcvCthQwYuOh",
     "/build/invoice.c8ae95ad.js": "sha384-2eVY7MBiMQxo1vhfizU+fYfEZbz9bYUdzqxnpTQhxpYiLaxeSV4WnaObq2G7/Pks",
     "/build/invoice.7abcff08.css": "sha384-7Amhb/hy+pWEfFEPme/DhVIQovv16kdL/H0pWRGTYwwTCp9iUQcglC2UjSyQ8swG",
     "/build/invoice-pdf.d86b82ee.js": "sha384-A0HJqP+MvEqQr1uG8wViCeEWxBRKyS6l8D+Ao4pFYHUA12gCC1gRYhk9I+SJPvZq",
     "/build/invoice-pdf.c88953bb.css": "sha384-ZvSi1e+ZKGzvZJUtAPLjzOSTh13N9zRevq44GKdYdBja/DAplGE55saY2Ur+83yv",
     "/build/chart.f70a71ec.js": "sha384-ar0ekCpSMNPtTiK5AFWkqtq7SEO1PPakoI7xdUIep3zVyto11QJJYdNH04S4kTzP",
-    "/build/calendar.93d1777f.js": "sha384-6vzmv/pKsU6QQxSJLoftlEzdMsIlRRU53c253TxkAvwmwEcnQWweI7x82mE1l3X4",
+    "/build/calendar.3fc8b457.js": "sha384-T46ko04U/ekL1Twpbs9S7N0c0jFomf7H77pDejwpvv7McBIkCYNv1alqmjx3e+/J",
     "/build/calendar.bb473428.css": "sha384-900W9o8666Qpw21rLP7hn5Ql8tWd40k0IcE3QpFm7E7V6bKva7xQgGlyzVuuh4GK",
     "/build/dashboard.cf749c05.js": "sha384-TYLalQr/PyiV9PuklUakq3xN5gq9fmp69X7UzpSEhuGWmu1f1kz+tS6aJ3+5V7oU",
     "/build/dashboard.484de6cd.css": "sha384-sn0N4AwGldP156fn1NXnjLhB/fbhVruW+Q5Fg1ujATiKywlDzXlZZ/tNts0bo8fo"
