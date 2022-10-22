@@ -25,8 +25,9 @@
   ],
   "packageManager": "yarn@3.2.1",
   "devDependencies": {
-    "@babel/core": "^7.18.6",
+    "@babel/core": "^7.19.6",
     "@babel/eslint-parser": "^7.18.2",
+    "@babel/preset-env": "^7.19.4",
     "@fortawesome/fontawesome-free": "^5.15",
     "@fullcalendar/bootstrap5": "^5.11.0",
     "@fullcalendar/core": "^5.11.0",
@@ -36,7 +37,7 @@
     "@fullcalendar/interaction": "^5.11.0",
     "@fullcalendar/timegrid": "^5.11.0",
     "@popperjs/core": "^2.11.5",
-    "@symfony/webpack-encore": "^2.1",
+    "@symfony/webpack-encore": "^4.0",
     "@tabler/core": "1.0.0-beta14",
     "bootstrap": "^5.1.3",
     "chart.js": "^3.8",
@@ -47,8 +48,10 @@
     "litepicker": "^2.0",
     "luxon": "^2.4.0",
     "node-sass": "^7.0",
-    "sass-loader": "^12.0.0",
-    "tom-select": "^2.0.0",
+    "sass-loader": "^13.0",
+    "tom-select": "^2.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
     "webpack-notifier": "^1.13"
   }
 }
