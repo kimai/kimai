@@ -244,6 +244,9 @@ final class ResetTestCommand extends AbstractResetCommand
         $userEntities = [];
         foreach ($users as $userConf) {
             $user = new User();
+            foreach (User::WIZARDS as $wizard) {
+                $user->setWizardAsSeen($wizard);
+            }
             if ($userConf[1] !== null) {
                 $user->setPreferenceValue(UserPreference::HOURLY_RATE, $userConf[1]);
             }

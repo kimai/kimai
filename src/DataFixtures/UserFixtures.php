@@ -76,13 +76,13 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
             $user->setEnabled($userData[6]);
             $user->setPassword($this->passwordHasher->hashPassword($user, self::DEFAULT_PASSWORD));
             $user->setApiToken($this->passwordHasher->hashPassword($user, self::DEFAULT_API_TOKEN));
-            foreach (User::WIZARDS as $wizard) {
-                $user->setWizardAsSeen($wizard);
-            }
             $manager->persist($user);
 
             $prefs = $this->getUserPreferences($user, $userData[7]);
             $user->setPreferences($prefs);
+            foreach (User::WIZARDS as $wizard) {
+                $user->setWizardAsSeen($wizard);
+            }
             $manager->persist($prefs[0]);
             $manager->persist($prefs[1]);
         }
