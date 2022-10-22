@@ -263,27 +263,6 @@ class LocaleFormatExtensionsTest extends TestCase
         $this->assertEquals('17:53', $sut->time('2016-06-23 17:53'));
     }
 
-    /**
-     * @group legacy
-     */
-    public function testDateTimeFull()
-    {
-        $sut = $this->getSut('en', [
-            'en' => ['date' => 'dd-yyyy-MM-', 'time' => 'HH:mm'],
-        ]);
-
-        $dateTime = new \DateTime('2019-08-17 12:29:47', new \DateTimeZone(date_default_timezone_get()));
-        $dateTime->setDate(2019, 8, 17);
-        $dateTime->setTime(12, 29, 47);
-
-        $this->assertEquals('17-2019-08- 12:29', $sut->dateTimeFull($dateTime));
-        $this->assertEquals('17-2019-08- 12:29', $sut->dateTimeFull('2019-08-17 12:29:47'));
-
-        // next test checks the fallback for errors while converting the date
-        /* @phpstan-ignore-next-line */
-        $this->assertEquals(189.45, $sut->dateTimeFull(189.45));
-    }
-
     public function testCreateDate()
     {
         $user = new User();

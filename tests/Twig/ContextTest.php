@@ -59,17 +59,6 @@ class ContextTest extends TestCase
         ];
     }
 
-    /**
-     * @group legacy
-     */
-    public function testBranding()
-    {
-        $sut = $this->getSut($this->getDefaultSettings());
-        $this->assertEquals('Super Kimai', $sut->getBranding('company'));
-        $this->assertEquals('Logooooo', $sut->getBranding('logo'));
-        $this->assertEquals('Mini2', $sut->getBranding('mini'));
-    }
-
     public function testIsModalRequest()
     {
         $sut = $this->getSut($this->getDefaultSettings());
