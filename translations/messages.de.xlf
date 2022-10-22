@@ -201,17 +201,17 @@
         <source>menu.logout</source>
         <target>Abmelden</target>
       </trans-unit>
-      <trans-unit id="C0W7_BT" resname="menu.timesheet">
-        <source>menu.timesheet</source>
+      <trans-unit id="C0W7_BT" resname="my_times">
+        <source>my_times</source>
         <target>Meine Zeiten</target>
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
         <target>Berichte</target>
       </trans-unit>
-      <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
-        <source>menu.admin_timesheet</source>
-        <target>Zeiterfassung</target>
+      <trans-unit id="WGIhZv1" resname="all_times">
+        <source>all_times</source>
+        <target>Alle Zeiten</target>
       </trans-unit>
       <trans-unit id="IeshU90" resname="customers">
         <source>customers</source>
@@ -976,6 +976,10 @@
       <trans-unit id="SR2r1Cs" resname="invoices">
         <source>invoices</source>
         <target>Rechnungen</target>
+      </trans-unit>
+      <trans-unit id="SR2r1Cssdf" resname="all_invoices">
+        <source>all_invoices</source>
+        <target>Rechnungshistorie</target>
       </trans-unit>
       <trans-unit id="ojfv7Jl" resname="invoice_form.title">
         <source>invoice_form.title</source>

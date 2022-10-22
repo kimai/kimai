@@ -123,12 +123,12 @@
         <source>menu.logout</source>
         <target>Odhlásiť sa</target>
       </trans-unit>
-      <trans-unit id="C0W7_BT" resname="menu.timesheet">
-        <source>menu.timesheet</source>
+      <trans-unit id="C0W7_BT" resname="my_times">
+        <source>my_times</source>
         <target>Moje časy</target>
       </trans-unit>
-      <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
-        <source>menu.admin_timesheet</source>
+      <trans-unit id="WGIhZv1" resname="all_times">
+        <source>all_times</source>
         <target>Pracovné výkazy</target>
       </trans-unit>
       <trans-unit id="IeshU90" resname="customers">

@@ -351,16 +351,16 @@
         <source>customers</source>
         <target>مشتریان</target>
       </trans-unit>
-      <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
-        <source>menu.admin_timesheet</source>
+      <trans-unit id="WGIhZv1" resname="all_times">
+        <source>all_times</source>
         <target>برنامه های زمانی</target>
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
         <target>گزارش نویسی</target>
       </trans-unit>
-      <trans-unit id="C0W7_BT" resname="menu.timesheet">
-        <source>menu.timesheet</source>
+      <trans-unit id="C0W7_BT" resname="my_times">
+        <source>my_times</source>
         <target>زمان من</target>
       </trans-unit>
       <trans-unit id="XP5zkiN" resname="modal.dirty">

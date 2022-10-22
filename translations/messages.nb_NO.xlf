@@ -584,12 +584,12 @@
         <source>teamlead</source>
         <target>Lagleder</target>
       </trans-unit>
-      <trans-unit id="C0W7_BT" resname="menu.timesheet">
-        <source>menu.timesheet</source>
+      <trans-unit id="C0W7_BT" resname="my_times">
+        <source>my_times</source>
         <target state="needs-translation">Min timeseddel</target>
       </trans-unit>
-      <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
-        <source>menu.admin_timesheet</source>
+      <trans-unit id="WGIhZv1" resname="all_times">
+        <source>all_times</source>
         <target state="needs-translation">Timesedler</target>
       </trans-unit>
       <trans-unit id="Cxv_0wG" resname="help.internalRate">

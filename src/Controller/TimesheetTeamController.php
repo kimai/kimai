@@ -296,7 +296,7 @@ class TimesheetTeamController extends TimesheetAbstractController
 
     protected function createPageSetup(): PageSetup
     {
-        $page = new PageSetup('menu.admin_timesheet');
+        $page = new PageSetup('all_times');
         $page->setHelp('timesheet.html');
 
         return $page;

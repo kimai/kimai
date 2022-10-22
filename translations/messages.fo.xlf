@@ -49,8 +49,8 @@
         <source>menu.logout</source>
         <target>Logga av</target>
       </trans-unit>
-      <trans-unit id="C0W7_BT" resname="menu.timesheet">
-        <source>menu.timesheet</source>
+      <trans-unit id="C0W7_BT" resname="my_times">
+        <source>my_times</source>
         <target>Mínar tíðir</target>
       </trans-unit>
       <trans-unit id="IeshU90" resname="customers">
@@ -407,8 +407,8 @@
         <source>password_repeat</source>
         <target>Endurtak loyniorð</target>
       </trans-unit>
-      <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
-        <source>menu.admin_timesheet</source>
+      <trans-unit id="WGIhZv1" resname="all_times">
+        <source>all_times</source>
         <target>Arbeiðsseðlar</target>
       </trans-unit>
       <trans-unit id="ACcM9j_" resname="logout">

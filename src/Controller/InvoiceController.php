@@ -383,7 +383,7 @@ final class InvoiceController extends AbstractController
         $table->addColumn('total_rate', ['class' => 'd-none d-md-table-cell text-end w-min']);
         $table->addColumn('actions', ['class' => 'actions alwaysVisible', 'orderBy' => false]);
 
-        $page = $this->createPageSetup();
+        $page = $this->createPageSetup('all_invoices');
         $page->setDataTable($table);
         $page->setActionName('invoice_archive');
 
