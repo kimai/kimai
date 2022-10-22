@@ -29,6 +29,7 @@ class InvoiceToolbarForm extends AbstractToolbarForm
         $this->addSearchTermInputField($builder);
         if ($options['include_user']) {
             $this->addUsersChoice($builder);
+            $this->addTeamsChoice($builder);
         }
         $this->addActivityMultiChoice($builder, $options, true);
         $this->addTagInputField($builder);

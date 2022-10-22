@@ -32,6 +32,7 @@ class ExportToolbarForm extends AbstractToolbarForm
         $this->addTagInputField($builder);
         if ($options['include_user']) {
             $this->addUsersChoice($builder);
+            $this->addTeamsChoice($builder);
         }
         $this->addTimesheetStateChoice($builder);
         $this->addBillableChoice($builder);

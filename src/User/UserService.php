@@ -31,6 +31,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class UserService
 {
+    /**
+     * @var array<string, int>
+     */
+    private $cache = [];
+
     public function __construct(
         private UserRepository $repository,
         private EventDispatcherInterface $dispatcher,
@@ -38,6 +43,17 @@ class UserService
         private SystemConfiguration $configuration,
         private UserPasswordHasherInterface $passwordHasher
     ) {
+    }
+
+    public function countUser(?bool $enabled = null): int
+    {
+        $key = 'count' . ($enabled === null ? '_all' : ($enabled ? '_visible' : '_invisible'));
+
+        if (!\array_key_exists($key, $this->cache)) {
+            $this->cache[$key] = $this->repository->countUser($enabled);
+        }
+
+        return $this->cache[$key];
     }
 
     public function createNewUser(): User

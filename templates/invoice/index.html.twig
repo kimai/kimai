@@ -66,6 +66,9 @@
             {% if form.users is defined %}
                 {{ form_row(form.users, {'row_attr': {'class': 'mb-3 invoice_search_form_row_users'}}) }}
             {% endif %}
+            {% if form.teams is defined %}
+                {{ form_row(form.teams, {'row_attr': {'class': 'mb-3 invoice_search_form_row_teams'}}) }}
+            {% endif %}
             {% if form.exported is defined %}
                 {{ form_row(form.exported, {'row_attr': {'class': 'mb-3 invoice_search_form_row_exported'}}) }}
             {% endif %}

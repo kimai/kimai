@@ -31,6 +31,7 @@ class ProjectTypePatternType extends AbstractType
         $orderNumber = $this->translator->trans('orderNumber');
         $projectStart = $this->translator->trans('project_start');
         $projectEnd = $this->translator->trans('project_end');
+        $customer = $this->translator->trans('customer');
 
         $spacer = ProjectHelper::SPACER;
 
@@ -39,6 +40,7 @@ class ProjectTypePatternType extends AbstractType
             'choices' => [
                 $name => ProjectHelper::PATTERN_NAME,
                 $comment => ProjectHelper::PATTERN_COMMENT,
+                $name . $spacer . $customer => ProjectHelper::PATTERN_NAME . ProjectHelper::PATTERN_SPACER . ProjectHelper::PATTERN_CUSTOMER,
                 $name . $spacer . $orderNumber => ProjectHelper::PATTERN_NAME . ProjectHelper::PATTERN_SPACER . ProjectHelper::PATTERN_ORDERNUMBER,
                 $name . $spacer . $comment => ProjectHelper::PATTERN_NAME . ProjectHelper::PATTERN_SPACER . ProjectHelper::PATTERN_COMMENT,
                 $name . $spacer . $projectStart . '-' . $projectEnd => ProjectHelper::PATTERN_NAME . ProjectHelper::PATTERN_SPACER . ProjectHelper::PATTERN_DATERANGE,

@@ -11,6 +11,7 @@ namespace App\Reporting\MonthlyUserList;
 
 use App\Form\Type\MonthPickerType;
 use App\Form\Type\ReportSumType;
+use App\Form\Type\TeamType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,6 +27,11 @@ class MonthlyUserListForm extends AbstractType
             'model_timezone' => $options['timezone'],
             'view_timezone' => $options['timezone'],
             'start_date' => $options['start_date'],
+        ]);
+        $builder->add('team', TeamType::class, [
+            'multiple' => false,
+            'required' => false,
+            'width' => false,
         ]);
         $builder->add('sumType', ReportSumType::class);
     }
