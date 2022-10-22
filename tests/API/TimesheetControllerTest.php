@@ -354,67 +354,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
         }
     }
 
-    public function testGetEntityActions()
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $em = $this->getEntityManager();
-
-        $startDate = new \DateTime('2020-03-27 14:35:59', new \DateTimeZone('Pacific/Tongatapu'));
-        $endDate = (clone $startDate)->modify('+ 46385 seconds');
-        $project = $em->getRepository(Project::class)->find(1);
-        $activity = $em->getRepository(Activity::class)->find(1);
-
-        $tag = new Tag();
-        $tag->setName('test');
-        $em->persist($tag);
-
-        $timesheet = new Timesheet();
-        $timesheet
-            ->setHourlyRate(137.21)
-            ->setInternalRate(64.96)
-            ->setBegin($startDate)
-            ->setEnd($endDate)
-            ->setDescription('**foo**' . PHP_EOL . 'bar')
-            ->setUser($this->getUserByRole(User::ROLE_USER))
-            ->setProject($project)
-            ->setActivity($activity)
-            ->addTag($tag)
-        ;
-        $em->persist($timesheet);
-        $em->flush();
-
-        $views = [
-            '' => [
-                'repeat',
-                'edit',
-                'copy',
-                'divider0',
-            ],
-            '/index' => [
-                'repeat',
-                'edit',
-                'copy',
-                'divider0',
-                'trash',
-            ],
-            '/custom' => [
-                'repeat',
-                'edit',
-                'copy',
-                'divider0',
-            ],
-        ];
-
-        foreach ($views as $name => $expected) {
-            $this->assertAccessIsGranted($client, '/api/timesheets/' . $timesheet->getId() . '/actions' . $name);
-            $result = json_decode($client->getResponse()->getContent(), true);
-
-            $this->assertIsArray($result);
-
-            self::assertEquals($expected, array_keys($result));
-        }
-    }
-
     public function testGetEntityAccessDenied()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);

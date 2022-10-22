@@ -83,7 +83,6 @@ class ApiDocControllerTest extends ControllerBaseTest
             '/api/teams/{id}/activities/{activityId}',
             '/api/timesheets',
             '/api/timesheets/{id}',
-            '/api/timesheets/{id}/actions/{view}',
             '/api/timesheets/recent',
             '/api/timesheets/active',
             '/api/timesheets/{id}/stop',

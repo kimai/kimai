@@ -49,7 +49,7 @@ class WizardSubscriber implements EventSubscriberInterface
         $uri = $event->getRequest()->getRequestUri();
 
         // never require 2FA on API calls
-        if (str_starts_with($uri, '/api/')) {
+        if (str_starts_with($uri, '/api/') || stripos($uri, '/register/') !== false) {
             return;
         }
 
