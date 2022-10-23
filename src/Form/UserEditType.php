@@ -73,12 +73,16 @@ class UserEditType extends AbstractType
         }
 
         if ($options['include_active_flag']) {
-            $builder
-                ->add('enabled', YesNoType::class, [
-                    'label' => 'active',
-                ])
-            ;
+            $builder->add('enabled', YesNoType::class, [
+                'label' => 'active',
+                'help' => 'active.help'
+            ]);
         }
+
+        $builder->add('systemAccount', YesNoType::class, [
+            'label' => 'system_account',
+            'help' => 'system_account.help',
+        ]);
     }
 
     /**

@@ -270,6 +270,10 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @ORM\Column(name="totp_enabled", type="boolean", nullable=false, options={"default": false})
      */
     private bool $totpEnabled = false;
+    /**
+     * @ORM\Column(name="system_account", type="boolean", nullable=false)
+     */
+    private bool $systemAccount = false;
 
     use ColorTrait;
 
@@ -1127,7 +1131,12 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function isSystemAccount(): bool
     {
-        return false;
+        return $this->systemAccount;
+    }
+
+    public function setSystemAccount(bool $isSystemAccount): void
+    {
+        $this->systemAccount = $isSystemAccount;
     }
 
     public function getName(): string

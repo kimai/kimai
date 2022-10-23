@@ -45,4 +45,16 @@ class UserQueryTest extends BaseQueryTest
         $this->assertCount(2, $sut->getSearchTeams());
         $this->assertSame($team, $sut->getSearchTeams()[0]);
     }
+
+    public function testSystemAccount()
+    {
+        $sut = new UserQuery();
+        self::assertNull($sut->getSystemAccount());
+        $sut->setSystemAccount(false);
+        self::assertFalse($sut->getSystemAccount());
+        $sut->setSystemAccount(true);
+        self::assertTrue($sut->getSystemAccount());
+        $sut->setSystemAccount(null);
+        self::assertNull($sut->getSystemAccount());
+    }
 }

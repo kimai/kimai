@@ -59,6 +59,9 @@ final class Version20993112235958 extends AbstractMigration
             $timesheet->addIndex(['end_time', 'user'], 'IDX_4F60C6B1415614018D93D649');
         }
 
+        $users = $schema->getTable('kimai2_users');
+        $users->addColumn('system_account', 'boolean', ['notnull' => true, 'default' => false]);
+
         $this->addSql("UPDATE kimai2_invoice_templates SET `language` = 'en' WHERE `language` IS NULL");
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'timesheet_daily_stats' WHERE `name` = 'timesheet.daily_stats'");
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'collapsed_sidebar' WHERE `name` = 'theme.collapsed_sidebar'");

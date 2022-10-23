@@ -63,6 +63,7 @@ final class CustomerMonthlyProjectsController extends AbstractController
         $dateTimeFactory = $this->getDateTimeFactory();
 
         $query = new UserQuery();
+        $query->setSystemAccount(false);
         $query->setCurrentUser($currentUser);
         $allUsers = $userRepository->getUsersForQuery($query);
 

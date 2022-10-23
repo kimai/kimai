@@ -21,6 +21,7 @@ use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
 use App\Utils\Pagination;
 use Doctrine\DBAL\ParameterType;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\QueryBuilder;
@@ -182,6 +183,9 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
             $qb->andWhere($qb->expr()->notIn('u.id', $ids));
         }
 
+        $qb->andWhere($qb->expr()->eq('u.systemAccount', ':system'));
+        $qb->setParameter('system', false, Types::BOOLEAN);
+
         $qb->orderBy('u.username', 'ASC');
 
         $this->addPermissionCriteria($qb, $query->getUser(), $query->getTeams());
@@ -310,6 +314,11 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
                 $qb->setParameter('role1', '%{}');
             }
             $qb->andWhere($rolesWhere);
+        }
+
+        if ($query->getSystemAccount() !== null) {
+            $qb->andWhere($qb->expr()->eq('u.systemAccount', ':system'));
+            $qb->setParameter('system', $query->getSystemAccount(), Types::BOOLEAN);
         }
 
         if ($query->hasSearchTerm()) {

@@ -25,6 +25,7 @@ class UserQuery extends BaseQuery implements VisibilityInterface
      * @var Team[]
      */
     private array $searchTeams = [];
+    private ?bool $systemAccount = null;
 
     public function __construct()
     {
@@ -32,6 +33,7 @@ class UserQuery extends BaseQuery implements VisibilityInterface
             'orderBy' => 'username',
             'searchTeams' => [],
             'visibility' => VisibilityInterface::SHOW_VISIBLE,
+            'systemAccount' => null,
         ]);
     }
 
@@ -61,5 +63,15 @@ class UserQuery extends BaseQuery implements VisibilityInterface
         $this->role = $role;
 
         return $this;
+    }
+
+    public function getSystemAccount(): ?bool
+    {
+        return $this->systemAccount;
+    }
+
+    public function setSystemAccount(?bool $systemAccount): void
+    {
+        $this->systemAccount = $systemAccount;
     }
 }

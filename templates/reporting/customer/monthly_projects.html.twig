@@ -3,8 +3,8 @@
 {% block report_form %}
     {{ form_start(form, {'attr': {'class': 'form-reporting', 'id': 'report-form'}}) }}
     <div class="btn-list w-100">
-        {{ form_row(form.customer, {'label': false, 'placeholder': 'please_choose'}) }}
         {{ form_widget(form.date) }}
+        {{ form_row(form.customer, {'label': false, 'placeholder': 'please_choose'}) }}
         {{ form_widget(form.sumType) }}
         {% from '@theme/components/buttons.html.twig' import submit_button %}
         {{ submit_button('download', {'attr': {'formaction': path(export_route)}, 'icon': 'download', 'combined': false}, 'primary') }}

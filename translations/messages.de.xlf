@@ -737,6 +737,18 @@
         <source>active</source>
         <target>Aktiv</target>
       </trans-unit>
+      <trans-unit id="loeWEWUsdfsd" resname="active.help">
+        <source>active.help</source>
+        <target>Deaktivierte Benutzer können sich nicht mehr anmelden und werden ausgeblendet in Berichten und Auswahlboxen</target>
+      </trans-unit>
+      <trans-unit id="PLLl1E0" resname="system_account">
+        <source>system_account</source>
+        <target>System-Benutzer</target>
+      </trans-unit>
+      <trans-unit id="PLLl1E01212" resname="system_account.help">
+        <source>system_account.help</source>
+        <target>Wird in Berichten und Auswahlboxen ausgeblendet</target>
+      </trans-unit>
       <trans-unit id="Zs9VE7N" resname="roles">
         <source>roles</source>
         <target>Rolle</target>

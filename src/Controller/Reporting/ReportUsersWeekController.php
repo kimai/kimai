@@ -74,6 +74,7 @@ final class ReportUsersWeekController extends AbstractController
         $form->submit($request->query->all(), false);
 
         $query = new UserQuery();
+        $query->setSystemAccount(false);
         $query->setCurrentUser($currentUser);
 
         if ($form->isSubmitted()) {

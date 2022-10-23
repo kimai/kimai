@@ -351,6 +351,16 @@ class UserTest extends TestCase
         self::assertFalse($sut->initCanSeeAllData(true));
     }
 
+    public function testSystemAccount()
+    {
+        $sut = new User();
+        self::assertFalse($sut->isSystemAccount());
+        $sut->setSystemAccount(true);
+        self::assertTrue($sut->isSystemAccount());
+        $sut->setSystemAccount(false);
+        self::assertFalse($sut->isSystemAccount());
+    }
+
     public function testExportAnnotations()
     {
         $sut = new AnnotationExtractor(new AnnotationReader());
