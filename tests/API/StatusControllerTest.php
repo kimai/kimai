@@ -59,8 +59,7 @@ class StatusControllerTest extends APIControllerBaseTest
 
         $this->assertSame(Constants::VERSION, $result['version']);
         $this->assertSame(Constants::VERSION_ID, $result['versionId']);
-        $this->assertEquals(Constants::STATUS, $result['candidate']);
-        $this->assertEquals(Constants::VERSION . '-' . Constants::STATUS, $result['semver']);
+        $this->assertEquals(Constants::VERSION . '-stable', $result['semver']);
         $this->assertEquals(Constants::NAME, $result['name']);
         $this->assertEquals(
             'Kimai ' . Constants::VERSION . ' by Kevin Papst.',

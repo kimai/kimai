@@ -23,10 +23,6 @@ class Constants
      */
     public const VERSION_ID = 20000;
     /**
-     * The current release status, either "stable" or "dev"
-     */
-    public const STATUS = 'dev';
-    /**
      * The software name
      */
     public const SOFTWARE = 'Kimai';

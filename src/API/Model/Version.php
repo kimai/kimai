@@ -38,23 +38,14 @@ class Version
      */
     private int $versionId = Constants::VERSION_ID;
     /**
-     * Candidate: either "prod" or "dev"
+     * Full version including status, eg: "2.0.0-stable"
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Serializer\Type(name="string")
      * @phpstan-ignore-next-line
      */
-    private string $candidate = Constants::STATUS;
-    /**
-     * Full version including status, eg: "1.9-prod"
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     * @Serializer\Type(name="string")
-     * @phpstan-ignore-next-line
-     */
-    private string $semver = Constants::VERSION . '-' . Constants::STATUS;
+    private string $semver = Constants::VERSION . '-stable';
     /**
      * The version name
      *

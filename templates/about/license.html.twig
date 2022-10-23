@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% import '@theme/components/badge.html.twig' as badge %}
 
 {% block main %}
     <div class="row row-cards mb-3">
@@ -8,13 +9,13 @@
 
                     <img src="{{ asset('apple-touch-icon.png') }}" class="avatar avatar-2xl mb-3 avatar-rounded" alt="{{ constant('App\\Constants::SOFTWARE') }}">
 
-                    <h3 class="m-0 mb-1"><a href="{{ constant('App\\Constants::HOMEPAGE') }}" target="_blank">{{ constant('App\\Constants::SOFTWARE') }}</a></h3>
-                    <div class="text-muted">{{ constant('App\\Constants::VERSION') }}
-                        {{ constant('App\\Constants::STATUS') }}
-
+                    <h3 class="m-0 mb-1">
+                        <a href="{{ constant('App\\Constants::HOMEPAGE') }}" target="_blank">{{ constant('App\\Constants::SOFTWARE') }}</a>
+                    </h3>
+                    <div class="text-muted">
+                        {{ constant('App\\Constants::VERSION') }}
                     </div>
                     <div class="mt-3">
-                        {% import '@theme/components/badge.html.twig' as badge %}
                         {{ badge.badge(constant('App\\Constants::NAME'), 'bg-purple-lt') }}
                     </div>
                 </div>
