@@ -52,7 +52,6 @@ class StatusControllerTest extends APIControllerBaseTest
 
         $this->assertArrayHasKey('version', $result);
         $this->assertArrayHasKey('versionId', $result);
-        $this->assertArrayHasKey('candidate', $result);
         $this->assertArrayHasKey('semver', $result);
         $this->assertArrayHasKey('name', $result);
         $this->assertArrayHasKey('copyright', $result);

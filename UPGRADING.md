@@ -40,7 +40,8 @@ Perform EACH version specific task between your version and the new one, otherwi
   - `currency` => `currency_name`
   - `country` => `country_name`
   - `language` => `language_name`
-- Time-tracking mode `duration_only` was removed, existing installations will be switched to `default` 
+- Time-tracking mode `duration_only` was removed, existing installations will be switched to `default`
+- Removed `Constants::STATUS` and `candidate` from `/api/version` result
 
 ## [1.16](https://github.com/kevinpapst/kimai2/releases/tag/1.16)
 
