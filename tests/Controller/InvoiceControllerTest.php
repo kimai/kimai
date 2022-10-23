@@ -116,8 +116,8 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSuccess($client);
 
-        $template = $this->getEntityManager()->getRepository(InvoiceTemplate::class)->find(1);
-        self::assertEquals('name', $template->getName());
+        $template = $this->getEntityManager()->getRepository(InvoiceTemplate::class)->findAll()[0];
+        self::assertEquals('Test', $template->getName());
         self::assertEquals('Test invoice template', $template->getTitle());
         self::assertEquals('Company name', $template->getCompany());
         self::assertEquals('default', $template->getRenderer());
