@@ -68,7 +68,7 @@ class InvoiceTemplateForm extends AbstractType
             ])
             ->add('vat', NumberType::class, [
                 'label' => 'label.tax_rate',
-                'scale' => 2,
+                'scale' => 3,
             ])
             ->add('renderer', InvoiceRendererType::class)
             ->add('calculator', InvoiceCalculatorType::class)
