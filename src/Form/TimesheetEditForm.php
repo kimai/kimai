@@ -187,6 +187,7 @@ class TimesheetEditForm extends AbstractType
                 /** @var Timesheet $data */
                 $data = $event->getData();
 
+                /** @var \DateTime|null $date */
                 $date = $event->getForm()->get('begin_date')->getData();
                 $time = $event->getForm()->get('begin_time')->getData();
 
@@ -197,7 +198,10 @@ class TimesheetEditForm extends AbstractType
                 // mutable datetime are a problem for doctrine
                 $newDate = clone $date;
                 $newDate->setTime($time->format('H'), $time->format('i'));
-                $data->setBegin($newDate);
+
+                if ($data->getBegin() === null || $data->getBegin() != $newDate) {
+                    $data->setBegin($newDate);
+                }
             }
         );
     }
@@ -227,11 +231,12 @@ class TimesheetEditForm extends AbstractType
             function (FormEvent $event) {
                 /** @var Timesheet $timesheet */
                 $timesheet = $event->getData();
-                // reset the end, until we know the value for sure
-                $timesheet->setEnd(null);
+                $oldEnd = $timesheet->getEnd();
 
                 $end = $event->getForm()->get('end_time')->getData();
                 if ($end === null || $end === false) {
+                    $timesheet->setEnd(null);
+
                     return;
                 }
 
@@ -248,7 +253,9 @@ class TimesheetEditForm extends AbstractType
                     $newEnd->modify('+ 1 day');
                 }
 
-                $timesheet->setEnd($newEnd);
+                if ($oldEnd === null || $oldEnd != $newEnd) {
+                    $timesheet->setEnd($newEnd);
+                }
             }
         );
     }

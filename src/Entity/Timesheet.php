@@ -357,10 +357,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
         return $this->begin;
     }
 
-    /**
-     * @param DateTime $begin
-     * @return Timesheet
-     */
     public function setBegin(DateTime $begin): Timesheet
     {
         $this->begin = $begin;

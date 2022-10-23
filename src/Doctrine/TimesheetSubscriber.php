@@ -23,7 +23,7 @@ class TimesheetSubscriber implements EventSubscriber
     /**
      * @var CalculatorInterface[]
      */
-    private $sorted;
+    private ?array $sorted = null;
 
     /**
      * @param CalculatorInterface[] $calculators
@@ -41,7 +41,7 @@ class TimesheetSubscriber implements EventSubscriber
 
     public function onFlush(OnFlushEventArgs $args): void
     {
-        $em = $args->getEntityManager();
+        $em = $args->getObjectManager();
         $uow = $em->getUnitOfWork();
         $meta = $em->getClassMetadata(Timesheet::class);
 
@@ -71,10 +71,7 @@ class TimesheetSubscriber implements EventSubscriber
 
             foreach ($this->calculators as $calculator) {
                 $i = 0;
-                $prio = 1000;
-                if (method_exists($calculator, 'getPriority')) {
-                    $prio = $calculator->getPriority();
-                }
+                $prio = $calculator->getPriority();
 
                 do {
                     $key = $prio + $i++;
