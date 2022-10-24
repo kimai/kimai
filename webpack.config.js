@@ -9,6 +9,7 @@ Encore
     .cleanupOutputBeforeBuild()
 
     .addEntry('app', './assets/app.js')
+    .addEntry('export-pdf', './assets/export-pdf.js')
     .addEntry('invoice', './assets/invoice.js')
     .addEntry('invoice-pdf', './assets/invoice-pdf.js')
     .addEntry('chart', './assets/chart.js')
