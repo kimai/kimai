@@ -12,6 +12,7 @@ namespace App\Form\Type;
 use App\Entity\Tag;
 use App\Repository\Query\TagFormTypeQuery;
 use App\Repository\TagRepository;
+use App\Utils\Color;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
@@ -34,9 +35,18 @@ class TagsSelectType extends AbstractType
             'class' => Tag::class,
             'label' => 'tag',
             'allow_create' => false,
+            'choice_attr' => function (Tag $tag) {
+                $color = $tag->getColor();
+                if ($color === null) {
+                    $color = (new Color())->getRandom($tag->getName());
+                }
+
+                return ['data-color' => $color];
+            },
             'choice_label' => function (Tag $tag) {
                 return $tag->getName();
             },
+            'attr' => ['data-renderer' => 'color'],
         ]);
 
         $resolver->setDefault('query_builder', function (Options $options) {
