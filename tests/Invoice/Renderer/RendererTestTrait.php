@@ -141,8 +141,8 @@ trait RendererTestTrait
             ->setUser($user1)
             ->setActivity($activity)
             ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
+            ->setBegin(new \DateTime('2020-12-13 14:00:00'))
+            ->setEnd(new \DateTime('2020-12-13 15:00:00'))
             ->setMetaField((new TimesheetMeta())->setName('foo-timesheet')->setValue('bar-timesheet')->setIsVisible(true));
 
         $timesheet2 = new Timesheet();
@@ -178,8 +178,8 @@ trait RendererTestTrait
             ->setUser($user2)
             ->setActivity($activity)
             ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
+            ->setBegin(new \DateTime('2020-12-13 14:00:00'))
+            ->setEnd(new \DateTime('2020-12-13 14:06:40'))
             ->setDescription(
                 "foo\n" .
                 "foo\r\n" .
@@ -292,7 +292,7 @@ trait RendererTestTrait
             ->setActivity($activity)
             ->setProject($project)
             ->setBegin(new \DateTime('2020-08-12 18:00:00'))
-            ->setEnd(new \DateTime('2022-10-23 18:30:00'))
+            ->setEnd(new \DateTime('2021-03-12 18:30:00'))
         ;
 
         $entries = [$timesheet];
