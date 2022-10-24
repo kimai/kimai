@@ -152,8 +152,8 @@ trait RendererTestTrait
             ->setUser($user2)
             ->setActivity($activity)
             ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
+            ->setBegin(new \DateTime('2020-08-13 14:00:00'))
+            ->setEnd(new \DateTime('2020-08-13 14:06:40'))
             ->setMetaField((new TimesheetMeta())->setName('foo-timesheet')->setValue('bar-timesheet'))
             ->setMetaField((new TimesheetMeta())->setName('foo-timesheet2')->setValue('bar-timesheet2')->setIsVisible(true))
         ;
@@ -166,8 +166,8 @@ trait RendererTestTrait
             ->setActivity($activity2)
             ->setDescription('== jhg ljhg ') // make sure that spreadsheets don't render it as formula
             ->setProject($project2)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
+            ->setBegin(new \DateTime('2020-08-12 18:00:00'))
+            ->setEnd(new \DateTime('2020-08-12 18:30:00'))
             ->setMetaField((new TimesheetMeta())->setName('foo-timesheet')->setValue('bar-timesheet1')->setIsVisible(true))
         ;
 
@@ -198,8 +198,8 @@ trait RendererTestTrait
             ->setUser((new User())->setUsername('kevin'))
             ->setActivity($activity)
             ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
+            ->setBegin(new \DateTime('2021-03-12 07:13:00'))
+            ->setEnd(new \DateTime('2021-03-12 07:17:40'))
             ->setDescription(
                 "foo\n" .
                 "foo\r\n" .
@@ -291,8 +291,8 @@ trait RendererTestTrait
             ->setUser($user1)
             ->setActivity($activity)
             ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
+            ->setBegin(new \DateTime('2020-08-12 18:00:00'))
+            ->setEnd(new \DateTime('2022-10-23 18:30:00'))
         ;
 
         $entries = [$timesheet];

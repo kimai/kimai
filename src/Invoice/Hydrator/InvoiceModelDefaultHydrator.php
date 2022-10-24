@@ -90,6 +90,27 @@ class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             ]);
         }
 
+        $entries = $model->getEntries();
+        $min = null;
+        $max = null;
+
+        foreach ($entries as $entry) {
+            if ($min === null || $min->getBegin()->getTimestamp() > $entry->getBegin()->getTimestamp()) {
+                $min = $entry;
+            }
+
+            if ($max === null || $max->getBegin()->getTimestamp() < $entry->getBegin()->getTimestamp()) {
+                $max = $entry;
+            }
+        }
+
+        if ($min !== null && $max !== null) {
+            $values = array_merge($values, [
+                'invoice.first' => $formatter->getFormattedDateTime($min->getBegin()),
+                'invoice.last' => $formatter->getFormattedDateTime($max->getEnd()),
+            ]);
+        }
+
         return $values;
     }
 }
