@@ -20,7 +20,7 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
      */
     supportsForm(form)
     {
-        return (form.name === 'timesheet_edit_form' || form.name ==='timesheet_admin_edit_form');
+        return (form.name === 'timesheet_edit_form' || form.name ==='timesheet_admin_edit_form' || form.name ==='timesheet_multi_user_edit_form');
     }
 
     /**
