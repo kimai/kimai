@@ -475,10 +475,12 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration('activity.choice_pattern'))
                         ->setLabel('choice_pattern')
                         ->setType(ActivityTypePatternType::class),
+                    // TODO see DependencyInjection/Configuration::getActivityNode()
+                    /*
                     (new Configuration('activity.allow_inline_create'))
                         ->setLabel('activity.allow_inline_create')
                         ->setType(YesNoType::class)
-                        ->setTranslationDomain('system-configuration'),
+                        ->setTranslationDomain('system-configuration'), */
                 ]),
             (new SystemConfigurationModel('user'))
                 ->setConfiguration([

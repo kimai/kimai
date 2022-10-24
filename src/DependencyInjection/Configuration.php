@@ -93,7 +93,7 @@ class Configuration implements ConfigurationInterface
             ->addDefaultsIfNotSet()
             ->children()
                 ->booleanNode('allow_inline_create')
-                    ->defaultValue(true)
+                    ->defaultValue(false)
                 ->end()
             ->end()
         ;
