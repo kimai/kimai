@@ -107,6 +107,7 @@ class InvoiceControllerTest extends ControllerBaseTest
                 'company' => 'Company name',
                 'renderer' => 'default',
                 'calculator' => 'default',
+                'vat' => '27,937',
             ]
         ]);
 
@@ -114,6 +115,14 @@ class InvoiceControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSuccess($client);
+
+        $template = $this->getEntityManager()->getRepository(InvoiceTemplate::class)->findAll()[0];
+        self::assertEquals('Test', $template->getName());
+        self::assertEquals('Test invoice template', $template->getTitle());
+        self::assertEquals('Company name', $template->getCompany());
+        self::assertEquals('default', $template->getRenderer());
+        self::assertEquals('default', $template->getCalculator());
+        self::assertEquals('27.937', $template->getVat());
     }
 
     public function testCopyTemplateAction()

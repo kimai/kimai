@@ -68,9 +68,9 @@ It is open for changes and input from the community, your [ideas and questions](
 > You don't have to wait for the next official release, upgrade it at any time from the master branch, 
 > which is always deployable - release tags are simple snapshots of the development version.
 
-Release versions will be created on a regular base (approx. one release every 2 months).
+Release versions will be created on a regular basis, every couple of weeks.
 Every code change, whether it's a new feature or a bugfix, will be done on the master branch. 
-Kimai is actively developed in my spare time, I put my effort into the software instead of backporting changes.
+Kimai is actively developed in my spare time, I put my effort into the software instead of back-porting changes.
 
 ## Contributing
 
