@@ -202,8 +202,8 @@ trait RendererTestTrait
             ->setUser($userKevin)
             ->setActivity($activity)
             ->setProject($project)
-            ->setBegin(new \DateTime('2021-03-12 07:13:00'))
-            ->setEnd(new \DateTime('2021-03-12 07:17:40'))
+            ->setBegin(new \DateTime('2021-03-12 12:13:00'))
+            ->setEnd(new \DateTime('2021-03-12 12:17:40'))
             ->setDescription(
                 "foo\n" .
                 "foo\r\n" .

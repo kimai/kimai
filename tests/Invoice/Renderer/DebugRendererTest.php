@@ -71,7 +71,6 @@ class DebugRendererTest extends TestCase
         $begin = $model->getQuery()->getBegin();
         self::assertEquals($begin->format('m'), $data['model']['query.begin_month_number']);
         self::assertEquals($begin->format('d'), $data['model']['query.begin_day']);
-        // TODO check values or formats?
         self::assertEquals('20.08.12', $data['model']['invoice.first']);
         self::assertEquals('21.03.12', $data['model']['invoice.last']);
     }
