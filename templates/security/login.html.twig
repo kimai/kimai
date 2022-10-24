@@ -51,8 +51,11 @@
         {% endif %}
         <div class="card-body">
             <div class="row">
+                {% if not kimai_config.loginFormActive %}
+                    <h2 class="card-title text-center mb-4">{{ block('login_box_msg') }}</h2>
+                {% endif %}
                 <div class="col text-center">
-                    <a href="{{ path('saml_login') }}" tabindex="50" class="btn btn-white w-50">
+                    <a href="{{ path('saml_login') }}" id="social-login-button" tabindex="50" class="btn btn-white w-50">
                         {% set provider = saml_config.getProvider() %}
                         {% if provider is not null %}
                             <i class="icon fab fa-{{ provider}} text-{{ provider }}"></i>
@@ -62,6 +65,12 @@
                 </div>
             </div>
         </div>
+    {% endif %}
+{% endblock %}
+
+{% block login_box %}
+    {% if kimai_config.loginFormActive %}
+        {{ parent() }}
     {% endif %}
 {% endblock %}
 
