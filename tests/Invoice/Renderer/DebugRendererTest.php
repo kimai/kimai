@@ -72,8 +72,8 @@ class DebugRendererTest extends TestCase
         self::assertEquals($begin->format('m'), $data['model']['query.begin_month_number']);
         self::assertEquals($begin->format('d'), $data['model']['query.begin_day']);
         // TODO check values or formats?
-        self::assertEquals('2020.08.12', $data['model']['invoice.first']);
-        self::assertEquals('2021.03.12', $data['model']['invoice.last']);
+        self::assertEquals('20.08.12', $data['model']['invoice.first']);
+        self::assertEquals('21.03.12', $data['model']['invoice.last']);
     }
 
     protected function assertModelStructure(array $model, int $projectCounter = 0, int $activityCounter = 0)

@@ -423,7 +423,7 @@ class ConfigurationTest extends TestCase
                 'minimum_rows' => 3,
             ],
             'activity' => [
-                'allow_inline_create' => true,
+                'allow_inline_create' => false,
             ],
         ];
 

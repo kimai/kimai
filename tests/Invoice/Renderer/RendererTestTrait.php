@@ -72,9 +72,9 @@ trait RendererTestTrait
     {
         $languages = [
             'en' => [
-                'date' => 'Y.m.d',
-                'duration' => '%h:%m',
+                'date' => 'yy.MM.dd',
                 'time' => 'H:i',
+                'rtl' => false,
             ]
         ];
 
