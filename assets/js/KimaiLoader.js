@@ -40,6 +40,7 @@ import KimaiTeamForm from "./forms/KimaiTeamForm";
 import KimaiCopyDataForm from "./forms/KimaiCopyDataForm";
 import KimaiDateNowForm from "./forms/KimaiDateNowForm";
 import KimaiNotification from "./plugins/KimaiNotification";
+import KimaiHotkeys from "./plugins/KimaiHotkeys";
 
 export default class KimaiLoader {
 
@@ -71,6 +72,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiCopyDataForm());
         kimai.registerPlugin(new KimaiDateNowForm());
         kimai.registerPlugin(new KimaiForm());
+        kimai.registerPlugin(new KimaiHotkeys());
 
         // SPECIAL FEATURES
         kimai.registerPlugin(new KimaiConfirmationLink('confirmation-link'));

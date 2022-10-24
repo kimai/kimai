@@ -25,7 +25,7 @@
             <div class="modal-footer">
                 {% block modal_footer %}
                     {% block submit_button %}
-                        <button type="submit" class="btn btn-primary pull-left modal-form-save" data-loading-text="{{ (submit_button|default('action.save'))|trans }}…" id="{{ block('modal_id') }}_save">{{ (submit_button|default('action.save'))|trans }}</button>
+                        <button type="submit" class="btn btn-primary pull-left modal-form-save" data-loading-text="{{ (submit_button|default('action.save'))|trans }}…" id="{{ block('modal_id') }}_save" data-hotkey="ctrl+Enter">{{ (submit_button|default('action.save'))|trans }}</button>
                     {% endblock %}
                     <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">{{ 'action.close'|trans }}</button>
                 {% endblock %}
