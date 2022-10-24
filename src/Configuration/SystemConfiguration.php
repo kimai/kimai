@@ -186,6 +186,10 @@ class SystemConfiguration
 
     public function isSelfRegistrationActive(): bool
     {
+        if (!$this->isLoginFormActive()) {
+            return false;
+        }
+
         return (bool) $this->find('user.registration');
     }
 
@@ -201,6 +205,10 @@ class SystemConfiguration
 
     public function isPasswordResetActive(): bool
     {
+        if (!$this->isLoginFormActive()) {
+            return false;
+        }
+
         return (bool) $this->find('user.password_reset');
     }
 
