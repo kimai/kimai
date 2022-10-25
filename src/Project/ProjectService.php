@@ -40,8 +40,7 @@ class ProjectService
         ProjectRepository $projectRepository,
         EventDispatcherInterface $dispatcher,
         ValidatorInterface $validator
-    )
-    {
+    ) {
         $this->configuration = $configuration;
         $this->repository = $projectRepository;
         $this->dispatcher = $dispatcher;
