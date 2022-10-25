@@ -9,8 +9,11 @@
 
 namespace App\Tests\Project;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\Team;
+use App\Entity\User;
 use App\Event\ProjectCreateEvent;
 use App\Event\ProjectCreatePostEvent;
 use App\Event\ProjectCreatePreEvent;
@@ -19,6 +22,7 @@ use App\Event\ProjectUpdatePostEvent;
 use App\Event\ProjectUpdatePreEvent;
 use App\Project\ProjectService;
 use App\Repository\ProjectRepository;
+use App\Utils\Context;
 use App\Validator\ValidationFailedException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -34,11 +38,9 @@ class ProjectServiceTest extends TestCase
     private function getSut(
         ?EventDispatcherInterface $dispatcher = null,
         ?ValidatorInterface $validator = null,
-        ?ProjectRepository $repository = null
+        bool $copyTeamsOnCreate = false
     ): ProjectService {
-        if ($repository === null) {
-            $repository = $this->createMock(ProjectRepository::class);
-        }
+        $repository = $this->createMock(ProjectRepository::class);
 
         if ($dispatcher === null) {
             $dispatcher = $this->createMock(EventDispatcherInterface::class);
@@ -49,7 +51,10 @@ class ProjectServiceTest extends TestCase
             $validator->method('validate')->willReturn(new ConstraintViolationList());
         }
 
-        $service = new ProjectService($repository, $dispatcher, $validator);
+        $configuration = $this->createMock(SystemConfiguration::class);
+        $configuration->method('isProjectCopyTeamsOnCreate')->willReturn($copyTeamsOnCreate);
+
+        $service = new ProjectService($configuration, $repository, $dispatcher, $validator);
 
         return $service;
     }
@@ -64,7 +69,7 @@ class ProjectServiceTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Cannot create project, already persisted');
 
-        $sut->saveNewProject($project);
+        $sut->saveNewProject($project, new Context(new User()));
     }
 
     public function testSaveNewProjectHasValidationError()
@@ -80,7 +85,7 @@ class ProjectServiceTest extends TestCase
         $this->expectException(ValidationFailedException::class);
         $this->expectExceptionMessage('Validation Failed');
 
-        $sut->saveNewProject(new Project());
+        $sut->saveNewProject(new Project(), new Context(new User()));
     }
 
     public function testUpdateDispatchesEvents()
@@ -141,7 +146,26 @@ class ProjectServiceTest extends TestCase
         $sut = $this->getSut($dispatcher);
 
         $project = new Project();
-        $sut->saveNewProject($project);
+        $sut->saveNewProject($project, new Context(new User()));
+        self::assertCount(0, $project->getTeams());
+    }
+
+    public function testCreateNewProjectCopiesTeam()
+    {
+        $dispatcher = $this->createMock(EventDispatcherInterface::class);
+
+        $sut = $this->getSut($dispatcher, null, true);
+
+        $team1 = new Team();
+        $team2 = new Team();
+
+        $user = new User();
+        $user->addTeam($team1);
+        $user->addTeam($team2);
+
+        $project = new Project();
+        $sut->saveNewProject($project, new Context($user));
+        self::assertCount(2, $project->getTeams());
     }
 
     public function testCreateNewProjectWithoutCustomer()

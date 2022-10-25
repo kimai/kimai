@@ -423,4 +423,11 @@ class SystemConfiguration implements SystemBundleConfiguration
     {
         return (bool) $this->find('theme.tags_create');
     }
+
+    // ========== Projects ==========
+
+    public function isProjectCopyTeamsOnCreate(): bool
+    {
+        return $this->find('project.copy_teams_on_create') === true;
+    }
 }

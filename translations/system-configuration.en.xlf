@@ -318,6 +318,10 @@
         <source>label.calendar.title_pattern</source>
         <target>Display of the titles of calendar entries</target>
       </trans-unit>
+      <trans-unit id="MXasdfgbpD7" resname="label.copy_teams_on_create" approved="yes">
+        <source>label.copy_teams_on_create</source>
+        <target>Take over teams from the logged-in user when creating new entries</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

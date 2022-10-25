@@ -70,6 +70,7 @@ class Configuration implements ConfigurationInterface
                 ->append($this->getLdapNode())
                 ->append($this->getSamlNode())
                 ->append($this->getQuickEntryNode())
+                ->append($this->getProjectNode())
             ->end()
         ->end();
 
@@ -93,6 +94,24 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->integerNode('minimum_rows')
                     ->defaultValue(3)
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    private function getProjectNode()
+    {
+        $builder = new TreeBuilder('project');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->booleanNode('copy_teams_on_create')
+                    ->defaultValue(false)
                 ->end()
             ->end()
         ;
