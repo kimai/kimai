@@ -119,6 +119,7 @@ class BaseQueryTest extends TestCase
         $team = new Team();
         self::assertInstanceOf(BaseQuery::class, $sut->setTeams([$team]));
         self::assertEquals(1, \count($sut->getTeams()));
+        /* @phpstan-ignore-next-line  */
         self::assertSame($team, $sut->getTeams()[0]);
     }
 
