@@ -734,7 +734,7 @@
         <source>active</source>
         <target>Active</target>
       </trans-unit>
-      <trans-unit id="loeWEsdfgWU" resname="active.help">
+      <trans-unit id="52lzpZE" resname="active.help">
         <source>active.help</source>
         <target>Deactivated users can no longer log in and are hidden in reports and selection boxes</target>
       </trans-unit>
@@ -742,7 +742,7 @@
         <source>system_account</source>
         <target>System-Account</target>
       </trans-unit>
-      <trans-unit id="PLLl1E0asd" resname="system_account.help">
+      <trans-unit id="0Hhg4zQ" resname="system_account.help">
         <source>system_account.help</source>
         <target>Will be hidden in reports and dropdowns</target>
       </trans-unit>
