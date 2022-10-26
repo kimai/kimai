@@ -15,6 +15,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ColorChoiceType extends AbstractType implements DataTransformerInterface
@@ -23,17 +25,11 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addViewTransformer($this);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $options = [
@@ -54,9 +50,15 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
 
         $options['choices'] = $choices;
         $options['search'] = false;
-        $options['attr']['data-renderer'] = 'color';
 
         $resolver->setDefaults($options);
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        $view->vars['attr'] = array_merge($view->vars['attr'], [
+            'data-renderer' => 'color',
+        ]);
     }
 
     private function convertStringToColorArray(string $config): array
@@ -90,17 +92,11 @@ class ColorChoiceType extends AbstractType implements DataTransformerInterface
         return array_unique($colors);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function transform(mixed $data): mixed
     {
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseTransform(mixed $value): mixed
     {
         return $value;
