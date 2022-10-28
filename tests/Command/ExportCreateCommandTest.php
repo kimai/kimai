@@ -222,7 +222,7 @@ class ExportCreateCommandTest extends KernelTestCase
 
         $data = $this->prepareFixtures($start);
 
-        $commandTester = $this->createExport(['--template' => 'csv', '--project' => [$data[1]->getId()], '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+        $commandTester = $this->createExport(['--template' => 'csv', '--project' => [$data[1][0]->getId()], '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
 
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString('Saved export to: ', $output);
