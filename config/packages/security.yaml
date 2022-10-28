@@ -16,6 +16,17 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        api:
+            request_matcher: App\Security\ApiRequestMatcher
+            user_checker: App\Security\UserChecker
+            anonymous: false
+            stateless: true
+            remember_me: false
+            provider: chain_provider
+            guard:
+                authenticators:
+                    - App\Security\TokenAuthenticator
+
         secured_area:
             kimai_saml: ~
             kimai_ldap: ~
@@ -26,7 +37,7 @@ security:
 
             guard:
                 authenticators:
-                    - App\Security\TokenAuthenticator
+                    - App\Security\ApiAuthenticator
 
             remember_me:
                 secret:   '%kernel.secret%'

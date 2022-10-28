@@ -15,9 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 /**
- * @covers \App\Security\TokenAuthenticator
+ * @covers \App\Security\ApiAuthenticator
  */
-class TokenAuthenticatorTest extends TestCase
+class ApiAuthenticatorTest extends TestCase
 {
     public function testRememberMe()
     {

@@ -14,22 +14,20 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
-class TokenAuthenticator extends AbstractGuardAuthenticator
+class ApiAuthenticator extends AbstractGuardAuthenticator
 {
-    public const HEADER_USERNAME = 'X-AUTH-USER';
-    public const HEADER_TOKEN = 'X-AUTH-TOKEN';
+    public const HEADER_JAVASCRIPT = 'X-AUTH-SESSION';
 
-    private $encoderFactory;
+    private $authenticator;
 
-    public function __construct(EncoderFactoryInterface $encoderFactory)
+    public function __construct(TokenAuthenticator $authenticator)
     {
-        $this->encoderFactory = $encoderFactory;
+        $this->authenticator = $authenticator;
     }
 
     /**
@@ -46,7 +44,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
         // only try to use this authenticator, when the URL contains the /api/ path
         if (strpos($request->getRequestUri(), '/api/') !== false) {
             // javascript requests can set a header to disable this authenticator and use the existing session
-            return $request->headers->has(self::HEADER_USERNAME) && $request->headers->has(self::HEADER_TOKEN);
+            return !$request->headers->has(self::HEADER_JAVASCRIPT);
         }
 
         return false;
@@ -58,10 +56,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        return [
-            'user' => $request->headers->get(self::HEADER_USERNAME),
-            'token' => $request->headers->get(self::HEADER_TOKEN),
-        ];
+        return $this->authenticator->getCredentials($request);
     }
 
     /**
@@ -71,14 +66,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        $token = $credentials['token'] ?? null;
-        $user = $credentials['user'] ?? null;
-
-        if (empty($token) || empty($user)) {
-            return null;
-        }
-
-        return $userProvider->loadUserByUsername($user);
+        return $this->authenticator->getUser($credentials, $userProvider);
     }
 
     /**
@@ -88,15 +76,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
-        $token = $credentials['token'];
-
-        if (!empty($token) && $user instanceof User && !empty($user->getApiToken())) {
-            $encoder = $this->encoderFactory->getEncoder($user);
-
-            return $encoder->isPasswordValid($user->getApiToken(), $token, $user->getSalt());
-        }
-
-        return false;
+        return $this->authenticator->checkCredentials($credentials, $user);
     }
 
     /**
@@ -107,7 +87,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        return null;
+        return $this->authenticator->onAuthenticationSuccess($request, $token, $providerKey);
     }
 
     /**
@@ -117,22 +97,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        if (!$request->headers->has(self::HEADER_USERNAME) || !$request->headers->has(self::HEADER_TOKEN)) {
-            return new JsonResponse(
-                ['message' => 'Authentication required, missing headers: ' . self::HEADER_USERNAME . ', ' . self::HEADER_TOKEN],
-                Response::HTTP_FORBIDDEN
-            );
-        }
-
-        $data = [
-            'message' => 'Invalid credentials'
-
-            // security measure: do not leak real reason (unknown user, invalid credentials ...)
-            // you can uncomment this for debugging
-            // 'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
-        ];
-
-        return new JsonResponse($data, Response::HTTP_FORBIDDEN);
+        return $this->authenticator->onAuthenticationFailure($request, $exception);
     }
 
     /**
@@ -142,11 +107,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        $data = [
-            'message' => 'Authentication required, missing headers: ' . self::HEADER_USERNAME . ', ' . self::HEADER_TOKEN
-        ];
-
-        return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
+        return $this->authenticator->start($request, $authException);
     }
 
     /**
