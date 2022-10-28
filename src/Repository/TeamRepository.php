@@ -55,6 +55,26 @@ class TeamRepository extends EntityRepository
     }
 
     /**
+     * @param int[] $teamIds
+     * @return Team[]
+     */
+    public function findByIds(array $teamIds): array
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb
+            ->where($qb->expr()->in('t.id', ':id'))
+            ->setParameter('id', $teamIds)
+        ;
+
+        $teams = $qb->getQuery()->getResult();
+
+        $loader = new TeamLoader($qb->getEntityManager());
+        $loader->loadResults($teams);
+
+        return $teams;
+    }
+
+    /**
      * @param Team $team
      * @throws ORMException
      * @throws \Doctrine\ORM\OptimisticLockException

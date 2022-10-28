@@ -33,7 +33,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -71,7 +71,7 @@ abstract class AbstractSpreadsheetRenderer
      */
     protected $dispatcher;
     /**
-     * @var AuthorizationCheckerInterface
+     * @var Security
      */
     protected $voter;
     /**
@@ -111,16 +111,21 @@ abstract class AbstractSpreadsheetRenderer
         'order_number' => [],
     ];
 
-    public function __construct(TranslatorInterface $translator, LocaleFormatExtensions $dateExtension, EventDispatcherInterface $dispatcher, AuthorizationCheckerInterface $voter)
+    public function __construct(TranslatorInterface $translator, LocaleFormatExtensions $dateExtension, EventDispatcherInterface $dispatcher, Security $security)
     {
         $this->translator = $translator;
         $this->dateExtension = $dateExtension;
         $this->dispatcher = $dispatcher;
-        $this->voter = $voter;
+        $this->voter = $security;
     }
 
     protected function isRenderRate(TimesheetQuery $query): bool
     {
+        if ($this->voter->getUser() === null) {
+            // for command line export
+            return true;
+        }
+
         if (null !== $query->getUser()) {
             return $this->voter->isGranted('view_rate_own_timesheet');
         }
