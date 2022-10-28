@@ -109,11 +109,6 @@ class ExportCreateCommand extends Command
         }
 
         $locale = $input->getOption('locale');
-        if ($locale === null) {
-            $io->error('You need to set a "locale"');
-
-            return 1;
-        }
         \Locale::setDefault($locale);
         $this->translator->setLocale($locale);
 
@@ -121,7 +116,6 @@ class ExportCreateCommand extends Command
         if ($timezone === null) {
             $timezone = date_default_timezone_get();
         }
-
         $timezone = new \DateTimeZone($timezone);
         $dateFactory = new DateTimeFactory($timezone);
 
