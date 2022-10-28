@@ -26,7 +26,7 @@ class ProjectApiEditForm extends ProjectEditForm
         $builder->remove('metaFields');
         $builder->remove('globalActivities');
         $builder->add('globalActivities', APITrueFalseType::class, [
-            'label' => 'label.globalActivities',
+            'label' => 'globalActivities',
             'empty_data' => '1',
         ]);
     }
