@@ -63,19 +63,26 @@ class ExportCreateCommandTest extends KernelTestCase
     {
         parent::setUp();
         $this->clearExportFiles();
+        $this->application = $this->createApplication();
+    }
+
+    private function createApplication($mailer = null): Application
+    {
         $kernel = self::bootKernel();
-        $this->application = new Application($kernel);
+        $application = new Application($kernel);
         $container = self::$container;
 
-        $this->application->add(new ExportCreateCommand(
+        $application->add(new ExportCreateCommand(
             $container->get(ServiceExport::class),
             $container->get(CustomerRepository::class),
             $container->get(ProjectRepository::class),
             $container->get(TeamRepository::class),
             $container->get(UserRepository::class),
             $container->get(Translator::class),
-            $container->get(KimaiMailer::class),
+            $mailer ?? $container->get(KimaiMailer::class),
         ));
+
+        return $application;
     }
 
     /**
@@ -167,7 +174,11 @@ class ExportCreateCommandTest extends KernelTestCase
 
     public function testCreateWithMissingEntries()
     {
-        $this->assertCommandResult(['--set-exported' => null, '--customer' => [1], '--template' => 'csv', '--start' => '2020-01-01', '--end' => '2020-03-01'], 'No entries found, skipping');
+        $options = ['--set-exported' => null, '--customer' => [1], '--template' => 'csv', '--start' => '2020-01-01', '--end' => '2020-03-01'];
+        $commandTester = $this->createExport($options);
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('[OK] No entries found, skipping', $output);
     }
 
     protected function prepareFixtures(\DateTime $start)
@@ -179,16 +190,16 @@ class ExportCreateCommandTest extends KernelTestCase
         $fixture = new ProjectFixtures();
         $fixture->setCustomers([$customer]);
         $fixture->setAmount(1);
-        $projects = $this->importFixture($fixture);
+        $project = $this->importFixture($fixture);
 
         $fixture = new TimesheetFixtures();
         $fixture->setUser($this->getUserByName(UserFixtures::USERNAME_SUPER_ADMIN));
         $fixture->setAmount(20);
         $fixture->setStartDate($start);
-        $fixture->setProjects($projects);
+        $fixture->setProjects($project);
         $this->importFixture($fixture);
 
-        return [$customer];
+        return [$customer, $project];
     }
 
     public function testCreateExportByCustomer()
@@ -196,13 +207,47 @@ class ExportCreateCommandTest extends KernelTestCase
         $start = new \DateTime('-2 months');
         $end = new \DateTime();
 
-        $customers = $this->prepareFixtures($start);
+        $data = $this->prepareFixtures($start);
 
-        $commandTester = $this->createExport(['--template' => 'csv', '--customer' => [$customers[0]->getId()], '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+        $commandTester = $this->createExport(['--template' => 'csv', '--customer' => [$data[0]->getId()], '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
 
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString('Saved export to: ', $output);
     }
 
-    // TODO add test to verify emails
+    public function testCreateExportByProject()
+    {
+        $start = new \DateTime('-2 months');
+        $end = new \DateTime();
+
+        $data = $this->prepareFixtures($start);
+
+        $commandTester = $this->createExport(['--template' => 'csv', '--project' => [$data[1]->getId()], '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('Saved export to: ', $output);
+    }
+
+    public function testCreateExportWithEmail()
+    {
+        $start = new \DateTime('-2 months');
+        $end = new \DateTime();
+
+        $this->prepareFixtures($start);
+        $options = ['--template' => 'csv', '--email' => ['foo@example.com', 'foo2@example.com'], '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')];
+
+        $mailer = $this->createMock(KimaiMailer::class);
+        $mailer->expects($this->exactly(2))->method('send');
+
+        $application = $this->createApplication($mailer);
+        $command = $application->find('kimai:export:create');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute(array_merge($options, [
+            'command' => $command->getName(),
+        ]));
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('Send email with report to: foo@example.com', $output);
+        $this->assertStringContainsString('Send email with report to: foo2@example.com', $output);
+    }
 }
