@@ -68,11 +68,23 @@
       </trans-unit>
       <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
         <source>Maximum duration of {{ value }} hours exceeded.</source>
-        <target state="translated">Máximo de horas {{ value }} permitidas.</target>
+        <target state="translated">Máximo de {{ value }} horas permitidas.</target>
       </trans-unit>
       <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
         <source>Sorry, the budget is used up.</source>
         <target state="translated">Lo siento, el presupuesto se ha agotado.</target>
+      </trans-unit>
+      <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
+        <source>An activity needs to be selected.</source>
+        <target state="translated">Hay que seleccionar una actividad.</target>
+      </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target state="translated">Es necesario seleccionar un proyecto.</target>
+      </trans-unit>
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target state="translated">Esta hoja de horas ya se ha exportado.</target>
       </trans-unit>
     </body>
   </file>

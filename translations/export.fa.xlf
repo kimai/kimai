@@ -4,19 +4,19 @@
     <body>
       <trans-unit id="oRRnhwf" resname="default.pdf.twig">
         <source>Default</source>
-        <target state="needs-translation">Default</target>
+        <target state="translated">پیش فرض</target>
       </trans-unit>
       <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig">
         <source>With remaining budget</source>
-        <target state="needs-translation">With remaining budget</target>
+        <target state="translated">با بودجه باقی مانده</target>
       </trans-unit>
       <trans-unit id="AuhL8Sb" resname="default-internal.pdf.twig">
         <source>With internal rates</source>
-        <target state="needs-translation">With internal rates</target>
+        <target state="translated">با نرخ داخلی</target>
       </trans-unit>
       <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig">
         <source>Timesheet</source>
-        <target state="needs-translation">Timesheet</target>
+        <target state="translated">تایم شیت</target>
       </trans-unit>
     </body>
   </file>

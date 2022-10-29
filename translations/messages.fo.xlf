@@ -1223,6 +1223,10 @@
         <source>label.invoiceText</source>
         <target state="translated">Tekstur á rokning</target>
       </trans-unit>
+      <trans-unit id="G9hBaDJ" resname="label.globalActivities">
+        <source>label.globalActivities</source>
+        <target state="translated">Loyv heiltøk virksemi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

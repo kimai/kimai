@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="translated">Predeterminado: una entrada por registro de tiempo</target>
+        <target state="translated">Por defecto: una entrada por registro de tiempo</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="translated">Fecha: una entrada por día (usa la fecha de inicio)</target>
+        <target state="translated">Fecha: una entrada por día (utiliza la fecha de inicio)</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
