@@ -28,6 +28,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ExportCreateCommand extends Command
 {
@@ -45,7 +47,7 @@ class ExportCreateCommand extends Command
         ProjectRepository $projectRepository,
         TeamRepository $teamRepository,
         UserRepository $userRepository,
-        Translator $translator,
+        TranslatorInterface $translator,
         KimaiMailer $mailer
     ) {
         $this->serviceExport = $serviceExport;
@@ -110,7 +112,9 @@ class ExportCreateCommand extends Command
 
         $locale = $input->getOption('locale');
         \Locale::setDefault($locale);
-        $this->translator->setLocale($locale);
+        if ($this->translator instanceof LocaleAwareInterface) {
+            $this->translator->setLocale($locale);
+        }
 
         $timezone = $input->getOption('timezone');
         if ($timezone === null) {
