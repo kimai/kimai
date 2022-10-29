@@ -23,10 +23,10 @@ use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\KernelTestTrait;
-use App\Utils\Translator;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @covers \App\Command\ExportCreateCommand
@@ -78,7 +78,7 @@ class ExportCreateCommandTest extends KernelTestCase
             $container->get(ProjectRepository::class),
             $container->get(TeamRepository::class),
             $container->get(UserRepository::class),
-            $container->get(Translator::class),
+            $container->get(TranslatorInterface::class),
             $mailer ?? $container->get(KimaiMailer::class),
         ));
 
