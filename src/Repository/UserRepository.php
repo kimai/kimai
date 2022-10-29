@@ -70,6 +70,26 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     }
 
     /**
+     * @param int[] $userIds
+     * @return User[]
+     */
+    public function findByIds(array $userIds): array
+    {
+        $qb = $this->createQueryBuilder('u');
+        $qb
+            ->where($qb->expr()->in('u.id', ':id'))
+            ->setParameter('id', $userIds)
+        ;
+
+        $users = $qb->getQuery()->getResult();
+
+        $loader = new UserLoader($qb->getEntityManager(), true);
+        $loader->loadResults($users);
+
+        return $users;
+    }
+
+    /**
      * Overwritten to fetch preferences when using the Profile controller actions.
      * Depends on the query, some magic mechanisms like the ParamConverter will use this method to fetch the user.
      */
