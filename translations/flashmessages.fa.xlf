@@ -4,59 +4,59 @@
     <body>
       <trans-unit id="S9k1S7Z" resname="warning">
         <source>warning</source>
-        <target state="needs-translation">Warning</target>
+        <target state="translated">هشدار</target>
       </trans-unit>
       <trans-unit id="WmrEP_5" resname="timesheet.stop.success">
         <source>timesheet.stop.success</source>
-        <target state="needs-translation">Time recording was stopped</target>
+        <target state="translated">ثبت زمان متوقف شد</target>
       </trans-unit>
       <trans-unit id="NPBnpK_" resname="timesheet.stop.error">
         <source>timesheet.stop.error</source>
-        <target state="needs-translation">Time recording could not be stopped</target>
+        <target state="translated">ثبت زمان نمی تواند متوقف شود</target>
       </trans-unit>
       <trans-unit id="CCUoZga" resname="timesheet.start.success">
         <source>timesheet.start.success</source>
-        <target state="needs-translation">Time recording was started</target>
+        <target state="translated">ثبت زمان شروع شد</target>
       </trans-unit>
       <trans-unit id="3w9tuox" resname="timesheet.start.error">
         <source>timesheet.start.error</source>
-        <target state="needs-translation">Time recording could not be started</target>
+        <target state="translated">ثبت زمان شروع نشد</target>
       </trans-unit>
       <trans-unit id="srhs0gp" resname="timesheet.start.exceeded_limit">
         <source>The limit of active time records has been reached. Please stop at least one running time measurement first.</source>
-        <target state="needs-translation">The limit of active time records has been reached. Please stop at least one running time measurement first.</target>
+        <target state="translated">به حد مجاز رکوردهای زمانی فعال رسیده است. لطفاً ابتدا حداقل یک اندازه گیری زمان اجرا را متوقف کنید.</target>
       </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning">
         <source>timesheet.locked.warning</source>
-        <target state="needs-translation">You are editing an exported record</target>
+        <target state="translated">شما در حال ویرایش یک رکورد صادر شده هستید</target>
       </trans-unit>
       <trans-unit id="72Ih8zO" resname="action.update.success">
         <source>action.update.success</source>
-        <target state="needs-translation">Saved changes</target>
+        <target state="translated">تغییرات ذخیره شده</target>
       </trans-unit>
       <trans-unit id="xeu1LSy" resname="action.update.error">
         <source>action.update.error</source>
-        <target state="needs-translation">Changes could not be saved: %reason%</target>
+        <target state="translated">تغییرات ذخیره نشد: %reason%</target>
       </trans-unit>
       <trans-unit id="YV50HDB" resname="action.delete.success">
         <source>action.delete.success</source>
-        <target state="needs-translation">Entry was deleted</target>
+        <target state="translated">ورودی حذف شد</target>
       </trans-unit>
       <trans-unit id="mW91Tmb" resname="action.delete.error">
         <source>action.delete.error</source>
-        <target state="needs-translation">Entry could not be deleted: %reason%</target>
+        <target state="translated">ورودی حذف نشد: %reason%</target>
       </trans-unit>
       <trans-unit id="B_cz49z" resname="invoice.first_template">
         <source>invoice.first_template</source>
-        <target state="needs-translation">Please create an invoice template first</target>
+        <target state="translated">لطفا ابتدا یک الگوی فاکتور ایجاد کنید</target>
       </trans-unit>
       <trans-unit id="wejAEcR" resname="action.upload.error">
         <source>action.upload.error</source>
-        <target state="needs-translation">The file could not be uploaded or saved: %reason%</target>
+        <target state="translated">فایل آپلود یا ذخیره نشد: %reason%</target>
       </trans-unit>
       <trans-unit resname="action.csrf.error" id="bOE_q5R">
         <source>action.csrf.error</source>
-        <target state="needs-translation">The action could not be performed: invalid security token.</target>
+        <target state="translated">این عمل انجام نشد: کد امنیتی نامعتبر است.</target>
       </trans-unit>
     </body>
   </file>

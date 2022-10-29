@@ -4,103 +4,103 @@
     <body>
       <trans-unit id="bEXLcqN" resname="stop">
         <source>stop</source>
-        <target state="needs-translation">Stop</target>
+        <target state="translated">توقف</target>
       </trans-unit>
       <trans-unit id="PEgjRvN" resname="back">
         <source>back</source>
-        <target state="needs-translation">Back</target>
+        <target state="translated">بازگشت</target>
       </trans-unit>
       <trans-unit id="JiEhxTc" resname="edit">
-        <source>edit</source>
-        <target state="needs-translation">Edit</target>
+        <source>Edit</source>
+        <target state="translated">ویرایش</target>
       </trans-unit>
       <trans-unit id="4G2jBDS" resname="trash">
         <source>trash</source>
-        <target state="needs-translation">Delete</target>
+        <target state="translated">حذف</target>
       </trans-unit>
       <trans-unit id="hF6RgxM" resname="report">
         <source>report</source>
-        <target state="needs-translation">Report</target>
+        <target state="translated">گزارش</target>
       </trans-unit>
       <trans-unit id="JeK2sQZ" resname="repeat">
         <source>repeat</source>
-        <target state="needs-translation">Start again</target>
+        <target state="translated">شروع دوباره</target>
       </trans-unit>
       <trans-unit id="J0sRBY_" resname="profile-stats">
         <source>profile-stats</source>
-        <target state="needs-translation">Profile</target>
+        <target state="translated">پروفایل</target>
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings">
         <source>settings</source>
-        <target state="needs-translation">Preferences</target>
+        <target state="translated">ترجیحات</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter">
         <source>Filter timesheets</source>
-        <target state="needs-translation">Filter timesheets</target>
+        <target state="translated">فیلتر تایم شیت ها</target>
       </trans-unit>
       <trans-unit id="xY9_cU2" resname="customer.filter">
         <source>Filter customers</source>
-        <target state="needs-translation">Filter customers</target>
+        <target state="translated">فیلتر مشتریان</target>
       </trans-unit>
       <trans-unit id="UFgOnc6" resname="project.filter">
         <source>Filter projects</source>
-        <target state="needs-translation">Filter projects</target>
+        <target state="translated">فیلتر پروژه ها</target>
       </trans-unit>
       <trans-unit id="5G3QNHA" resname="activity.filter">
         <source>Filter activities</source>
-        <target state="needs-translation">Filter activities</target>
+        <target state="translated">فیلتر فعالیت ها</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
-        <target state="needs-translation">Create copy</target>
+        <target state="translated">ایجاد کپی</target>
       </trans-unit>
       <trans-unit id="TqFAWIF" resname="home">
         <source>home</source>
-        <target state="needs-translation">Homepage</target>
+        <target state="translated">صفحه اصلی</target>
       </trans-unit>
       <trans-unit id="PBlIO2x" resname="create-project">
         <source>create-project</source>
-        <target state="needs-translation">Create project</target>
+        <target state="translated">ایجاد پروژه</target>
       </trans-unit>
       <trans-unit id="UbouFOs" resname="create-activity">
         <source>create-activity</source>
-        <target state="needs-translation">Create activity</target>
+        <target state="translated">ایجاد فعالیت</target>
       </trans-unit>
       <trans-unit id="QR1nvcR" resname="create-timesheet">
         <source>create-timesheet</source>
-        <target state="needs-translation">Create timesheet</target>
+        <target state="translated">ایجاد تایم شیت</target>
       </trans-unit>
       <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser">
         <source>create-timesheet-multiuser</source>
-        <target state="needs-translation">For multiple users</target>
+        <target state="translated">برای چندین کاربر</target>
       </trans-unit>
       <trans-unit id="T_PN1AT" resname="permissions">
         <source>permissions</source>
-        <target state="needs-translation">Team permissions</target>
+        <target state="translated">مجوزهای تیم</target>
       </trans-unit>
       <trans-unit id="Qf.Yt2r" resname="details">
         <source>details</source>
-        <target state="needs-translation">Show</target>
+        <target state="translated">نمایش</target>
       </trans-unit>
       <trans-unit id="aP9j_4L" resname="download">
         <source>download</source>
-        <target state="needs-translation">Download</target>
+        <target state="translated">دانلود</target>
       </trans-unit>
       <trans-unit id="hHIeqOW" resname="invoice.pending">
         <source>invoice.pending</source>
-        <target state="needs-translation">Waiting for payment</target>
+        <target state="translated">در انتظار پرداخت</target>
       </trans-unit>
       <trans-unit id="9M4b2ZN" resname="invoice.paid">
         <source>invoice.paid</source>
-        <target state="needs-translation">Invoice paid</target>
+        <target state="translated">فاکتور پرداخت شد</target>
       </trans-unit>
       <trans-unit id="SEyZupT" resname="invoice.cancel">
         <source>invoice.cancel</source>
-        <target state="needs-translation">Cancel invoice</target>
+        <target state="translated">لغو فاکتور</target>
       </trans-unit>
       <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>
-        <target state="needs-translation">Filter data</target>
+        <target state="translated">فیلتر کردن داده ها</target>
       </trans-unit>
     </body>
   </file>

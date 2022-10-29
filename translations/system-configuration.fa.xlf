@@ -4,31 +4,31 @@
     <body>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Time tracking</source>
-        <target state="needs-translation">Time tracking</target>
+        <target state="translated">پیگیری زمان</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
-        <target state="needs-translation">Theme</target>
+        <target state="translated">تم</target>
       </trans-unit>
       <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
         <source>label.theme.markdown_content</source>
-        <target state="needs-translation">Allow markdown-formattings in descriptions and comments</target>
+        <target state="translated">در توضیحات و نظرات، قالب‌بندی‌های نشانه‌گذاری را مجاز کنید</target>
       </trans-unit>
       <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
         <source>label.theme.tags_create</source>
-        <target state="needs-translation">Tags: use auto-complete search and allow tag creation</target>
+        <target state="translated">برچسب ها: از جستجو با تکمیل خودکار استفاده کنید و اجازه ایجاد برچسب را بدهید</target>
       </trans-unit>
       <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
         <source>label.theme.avatar_url</source>
-        <target state="needs-translation">Allow the use of URLs for avatar images</target>
+        <target state="translated">اجازه استفاده از URL ها برای تصاویر آواتار</target>
       </trans-unit>
       <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
         <source>label.theme.random_colors</source>
-        <target state="needs-translation">Use random colors for objects without assigned color</target>
+        <target state="translated">از رنگ های تصادفی برای اشیا بدون رنگ اختصاص داده شده استفاده کنید</target>
       </trans-unit>
       <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
         <source>label.timesheet.mode</source>
-        <target state="needs-translation">Timetracking mode</target>
+        <target state="translated">حالت پیگیری زمان</target>
       </trans-unit>
       <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
         <source>label.timesheet.mode_default</source>

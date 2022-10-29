@@ -314,6 +314,14 @@
         <source>label.calendar.title_pattern</source>
         <target>Vis kalenderoppføringsnavn</target>
       </trans-unit>
+      <trans-unit id="eiQKW2A" resname="label.calendar.dragdrop_data">
+        <source>Copies data when adding via drag and drop</source>
+        <target state="needs-translation">Kopierer data når lagt til via dra-og-slipp</target>
+      </trans-unit>
+      <trans-unit id="MXasdfgbpD7" resname="label.copy_teams_on_create" approved="no">
+        <source>label.copy_teams_on_create</source>
+        <target state="needs-translation">Ta over lag fra innlogget bruker ved opprettelse av nye oppføringer</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -8,11 +8,11 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="translated">Factura</target>
+        <target state="translated">Inicio de Invoice</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
-        <target>Hoja de tiempo</target>
+        <target state="translated">Horas de trabajo</target>
       </trans-unit>
       <trans-unit id="M82JFjR" resname="freelancer">
         <source>freelancer</source>
@@ -36,11 +36,11 @@
       </trans-unit>
       <trans-unit id="4NNx9U." resname="Docx">
         <source>Microsoft Word (DOCX)</source>
-        <target state="translated">Microsoft Word (DOCX)</target>
+        <target state="translated">Microsoft Office Word (DOCX)</target>
       </trans-unit>
       <trans-unit id="sjwwrr8" resname="Xlsx">
         <source>Microsoft Excel (XLSX)</source>
-        <target state="translated">Microsoft Excel (XLSX)</target>
+        <target state="translated">Microsoft Office Excel (XLSX)</target>
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
@@ -56,7 +56,7 @@
       </trans-unit>
       <trans-unit id="sXlZPOC" resname="Xls">
         <source>Microsoft Excel (XLS)</source>
-        <target state="translated">Microsoft Excel (XLS)</target>
+        <target state="translated">Microsoft Office Excel (XLS)</target>
       </trans-unit>
       <trans-unit id="QqvUWFt" resname="Ods">
         <source>Open Office (ODS - Spreadsheet)</source>

@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fa" datatype="plaintext" original="about.en.xlf">
     <body>
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>
-        <target>درباره ی کیمیایْ</target>
+        <target state="translated">درباره ی کیمایْ</target>
       </trans-unit>
       <trans-unit id="oYYDCG5" resname="support">
         <source>support</source>
@@ -21,6 +21,18 @@
       <trans-unit id="A0nWoXZ" resname="special_thanks">
         <source>special_thanks</source>
         <target>سپاس ویژه از…</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target state="translated">برای آینده کیمایی کمک مالی کنید</target>
+      </trans-unit>
+      <trans-unit id="L7cff3Q" resname="library_authors">
+        <source>library_authors</source>
+        <target state="translated">… نویسندگان نرم‌افزار-کتابخانه‌های زیر، کیمایی بدون شما امکان‌پذیر نیست</target>
+      </trans-unit>
+      <trans-unit id="DwbowBh" resname="published_under">
+        <source>published_under</source>
+        <target state="translated">%kimai% تحت این عنوان منتشر شده است</target>
       </trans-unit>
     </body>
   </file>
