@@ -18,7 +18,6 @@ use App\Repository\Query\TimesheetQuery;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
 use App\Timesheet\DateTimeFactory;
-use App\Utils\Translator;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
