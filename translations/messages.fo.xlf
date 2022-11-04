@@ -1147,8 +1147,8 @@
         <source>about.title</source>
         <target state="needs-translation">About Kimai</target>
       </trans-unit>
-      <trans-unit id="G9hBaDJ" resname="label.globalActivities">
-        <source>label.globalActivities</source>
+      <trans-unit id="G9hBaDJ" resname="globalActivities">
+        <source>globalActivities</source>
         <target state="translated">Loyv heiltøk virksemi</target>
       </trans-unit>
     </body>

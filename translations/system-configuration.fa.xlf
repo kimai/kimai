@@ -10,8 +10,8 @@
         <source>theme</source>
         <target state="translated">تم</target>
       </trans-unit>
-      <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
-        <source>label.theme.markdown_content</source>
+      <trans-unit id="EPBzIy7" resname="theme.markdown_content">
+        <source>theme.markdown_content</source>
         <target state="translated">در توضیحات و نظرات، قالب‌بندی‌های نشانه‌گذاری را مجاز کنید</target>
       </trans-unit>
       <trans-unit id="SnkW0Pk" resname="theme.avatar_url">

@@ -286,8 +286,8 @@
         <source>Copies data when adding via drag and drop</source>
         <target state="translated">通过拖放添加时复制文件</target>
       </trans-unit>
-      <trans-unit id="MXasdfgbpD7" resname="label.copy_teams_on_create" approved="no">
-        <source>label.copy_teams_on_create</source>
+      <trans-unit id="MXasdfgbpD7" resname="copy_teams_on_create" approved="no">
+        <source>copy_teams_on_create</source>
         <target state="translated">创建新条目时从登录用户接管团队</target>
       </trans-unit>
     </body>

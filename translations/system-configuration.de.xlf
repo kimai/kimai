@@ -290,8 +290,8 @@
         <source>activity.allow_inline_create</source>
         <target>Erlaube die Erstellung von Tätigkeiten im Zeiterfassungsformular</target>
       </trans-unit>
-      <trans-unit id="MXasdfgbpD7" resname="label.copy_teams_on_create" approved="yes">
-        <source>label.copy_teams_on_create</source>
+      <trans-unit id="MXasdfgbpD7" resname="copy_teams_on_create" approved="yes">
+        <source>copy_teams_on_create</source>
         <target>Übernehme Teams beim Erstellen neuer Einträge vom angemeldeten Benutzer</target>
       </trans-unit>
     </body>
