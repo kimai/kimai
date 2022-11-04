@@ -9,6 +9,7 @@
 
 namespace App\Project;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Event\ProjectCreateEvent;
@@ -18,6 +19,7 @@ use App\Event\ProjectMetaDefinitionEvent;
 use App\Event\ProjectUpdatePostEvent;
 use App\Event\ProjectUpdatePreEvent;
 use App\Repository\ProjectRepository;
+use App\Utils\Context;
 use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -28,7 +30,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class ProjectService
 {
-    public function __construct(private ProjectRepository $repository, private EventDispatcherInterface $dispatcher, private ValidatorInterface $validator)
+    public function __construct(private SystemConfiguration $configuration, private ProjectRepository $repository, private EventDispatcherInterface $dispatcher, private ValidatorInterface $validator)
     {
     }
 
@@ -46,13 +48,20 @@ class ProjectService
         return $project;
     }
 
-    public function saveNewProject(Project $project): Project
+    public function saveNewProject(Project $project, ?Context $context = null): Project
     {
         if (null !== $project->getId()) {
             throw new InvalidArgumentException('Cannot create project, already persisted');
         }
 
         $this->validateProject($project);
+
+        if ($context !== null && $this->configuration->isProjectCopyTeamsOnCreate()) {
+            foreach ($context->getUser()->getTeams() as $team) {
+                $project->addTeam($team);
+                $team->addProject($project);
+            }
+        }
 
         $this->dispatcher->dispatch(new ProjectCreatePreEvent($project));
         $this->repository->saveProject($project);

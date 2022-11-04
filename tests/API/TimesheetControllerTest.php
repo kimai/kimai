@@ -345,7 +345,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'exported' => true,
             'metaFields' => [],
             'hourlyRate' => 137.21,
-            'rate' => 1772.3,
+            'rate' => 1772.2958,
             'internalRate' => 0.0,
         ];
 

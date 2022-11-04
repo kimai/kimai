@@ -98,6 +98,10 @@
         <source>filter</source>
         <target>Фильтрация данных</target>
       </trans-unit>
+      <trans-unit id="SEyZupT" resname="invoice.cancel">
+        <source>invoice.cancel</source>
+        <target state="translated">Отменить счет</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

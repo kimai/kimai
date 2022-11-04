@@ -286,6 +286,10 @@
         <source>Copies data when adding via drag and drop</source>
         <target state="translated">Kopira podatke prilikom dodavanja povlačenjem i ispuštanjem</target>
       </trans-unit>
+      <trans-unit id="MXasdfgbpD7" resname="label.copy_teams_on_create" approved="no">
+        <source>label.copy_teams_on_create</source>
+        <target state="translated">Preuzmi timove od prijavljenog korisnika prilikom stvaranja novih unosa</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

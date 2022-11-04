@@ -56,6 +56,26 @@ class CustomerRepository extends EntityRepository
     }
 
     /**
+     * @param int[] $customerIDs
+     * @return Customer[]
+     */
+    public function findByIds(array $customerIDs): array
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb
+            ->where($qb->expr()->in('c.id', ':id'))
+            ->setParameter('id', $customerIDs)
+        ;
+
+        $customers = $qb->getQuery()->getResult();
+
+        $loader = new CustomerLoader($qb->getEntityManager(), true);
+        $loader->loadResults($customers);
+
+        return $customers;
+    }
+
+    /**
      * @param Customer $customer
      * @throws ORMException
      */

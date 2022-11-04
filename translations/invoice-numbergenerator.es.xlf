@@ -8,11 +8,11 @@
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target>Fecha</target>
+        <target state="translated">Fecha</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="translated">Formato configurado</target>
+        <target state="translated">Configurado formato</target>
       </trans-unit>
     </body>
   </file>

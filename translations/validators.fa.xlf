@@ -4,79 +4,87 @@
     <body>
       <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
         <source>At least one team leader must be assigned to the team.</source>
-        <target>At least one team leader must be assigned to the team.</target>
+        <target state="translated">حداقل یک سرپرست باید به تیم اختصاص داده شود.</target>
       </trans-unit>
       <trans-unit id="6WAG.Xj" resname="The entered passwords don't match.">
         <source>The entered passwords don't match.</source>
-        <target>The entered passwords don't match.</target>
+        <target state="translated">پسوردهای وارد شده مطابقت ندارند.</target>
       </trans-unit>
       <trans-unit id="6u6oCwB" resname="The email is already used.">
         <source>The email is already used.</source>
-        <target>The email is already used.</target>
+        <target state="translated">ایمیل قبلا استفاده شده است.</target>
       </trans-unit>
       <trans-unit id="S14XECA" resname="The username is already used.">
         <source>The username is already used.</source>
-        <target>The username is already used.</target>
+        <target state="translated">نام کاربری قبلاً استفاده شده است.</target>
       </trans-unit>
       <trans-unit id="ekO5eXI" resname="An equal username is already used.">
         <source>An equal username is already used.</source>
-        <target>An equal username is already used.</target>
+        <target state="translated">یک نام کاربری برابر قبلاً استفاده شده است.</target>
       </trans-unit>
       <trans-unit id="INlaCgW" resname="An equal email is already used.">
         <source>An equal email is already used.</source>
-        <target>An equal email is already used.</target>
+        <target state="translated">یک نام کاربری برابر قبلاً استفاده شده است.</target>
       </trans-unit>
       <trans-unit id="IkNxbBI" resname="This value is not a valid role.">
         <source>This value is not a valid role.</source>
-        <target>This value is not a valid role.</target>
+        <target state="translated">این مقدار یک نقش معتبر نیست.</target>
       </trans-unit>
       <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
-        <source>End date must not be earlier then start date.</source>
-        <target>End date must not be earlier then start date.</target>
+        <source>The end date must not be before the start date.</source>
+        <target state="translated">تاریخ پایان نباید زودتر از تاریخ شروع باشد.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
-        <target>The begin date cannot be in the future.</target>
+        <target state="translated">تاریخ شروع نمی تواند در آینده باشد.</target>
       </trans-unit>
       <trans-unit id="1V6BsD_" resname="You must select at least one user or team.">
         <source>You must select at least one user or team.</source>
-        <target>You must select at least one user or team.</target>
+        <target state="translated">شما باید حداقل یک کاربر یا تیم را انتخاب کنید.</target>
       </trans-unit>
       <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again.">
         <source>This invoice document cannot be used. Please rename the file and upload it again.</source>
-        <target>This invoice document cannot be used. Please rename the file and upload it again.</target>
+        <target state="translated">این سند فاکتور قابل استفاده نیست. لطفا نام فایل را تغییر دهید و دوباره آپلود کنید.</target>
       </trans-unit>
       <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date.">
         <source>This period is locked. Please choose a later date.</source>
-        <target>This period is locked. Please choose a later date.</target>
+        <target state="translated">این دوره قفل شده است. لطفاً تاریخ بعدی را انتخاب کنید.</target>
       </trans-unit>
       <trans-unit id="u2wjm2i" resname="You already have an entry for this time.">
         <source>You already have an entry for this time.</source>
-        <target>You already have an entry for this time.</target>
+        <target state="translated">شما از قبل برای این زمان ورودی دارید.</target>
       </trans-unit>
       <trans-unit id="VJSZSD0" resname="The given value is not a valid time.">
         <source>The given value is not a valid time.</source>
-        <target>The given value is not a valid time.</target>
+        <target state="translated">مقدار داده شده زمان معتبری نیست.</target>
       </trans-unit>
       <trans-unit id="1oKCOa5" resname="The budget is completely used.">
         <source>The budget is completely used.</source>
-        <target>The budget is used up. Of the available %budget%, %used% has been booked so far, %free% can still be used.</target>
+        <target state="translated">بودجه تمام شده است. از %budget% موجود، %used% تا کنون رزرو شده است، %free% همچنان قابل استفاده است.</target>
       </trans-unit>
       <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
         <source>Maximum duration of {{ value }} hours exceeded.</source>
-        <target>Maximum {{ value }} hours allowed.</target>
+        <target state="translated">حداکثر {{ value }} ساعت مجاز است.</target>
       </trans-unit>
       <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
         <source>An activity needs to be selected.</source>
-        <target>An activity needs to be selected.</target>
+        <target state="translated">یک فعالیت باید انتخاب شود.</target>
       </trans-unit>
       <trans-unit id="rHd9_aA" resname="A project needs to be selected.">
         <source>A project needs to be selected.</source>
-        <target>A project needs to be selected.</target>
+        <target state="translated">یک پروژه باید انتخاب شود.</target>
       </trans-unit>
       <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
         <source>This timesheet is already exported.</source>
-        <target>This timesheet is already exported.</target>
+        <target state="translated">این تایم شیت قبلاً صادر شده است.</target>
+      </trans-unit>
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
+        <source>Duration cannot be zero.</source>
+        <target state="translated">مدت زمان خالی مجاز نیست.</target>
+      </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">با عرض پوزش، بودجه تمام شده است.</target>
       </trans-unit>
     </body>
   </file>

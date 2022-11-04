@@ -4,23 +4,23 @@
     <body>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Time tracking</source>
-        <target state="needs-translation">Time tracking</target>
+        <target state="translated">پیگیری زمان</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
-        <target state="needs-translation">Theme</target>
+        <target state="translated">تم</target>
       </trans-unit>
-      <trans-unit id="mPRUBFX" resname="theme.markdown_content">
-        <source>theme.markdown_content</source>
-        <target state="needs-translation">Allow markdown-formattings in descriptions and comments</target>
+      <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
+        <source>label.theme.markdown_content</source>
+        <target state="translated">در توضیحات و نظرات، قالب‌بندی‌های نشانه‌گذاری را مجاز کنید</target>
       </trans-unit>
       <trans-unit id="SnkW0Pk" resname="theme.avatar_url">
         <source>theme.avatar_url</source>
-        <target state="needs-translation">Allow the use of URLs for avatar images</target>
+        <target state="translated">اجازه استفاده از URL ها برای تصاویر آواتار</target>
       </trans-unit>
       <trans-unit id="FaGqoTT" resname="timesheet.mode">
         <source>timesheet.mode</source>
-        <target state="needs-translation">Timetracking mode</target>
+        <target state="translated">حالت پیگیری زمان</target>
       </trans-unit>
       <trans-unit id="A11vhSN" resname="timesheet.mode_default">
         <source>timesheet.mode_default</source>

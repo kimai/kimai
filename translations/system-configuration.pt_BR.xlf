@@ -286,6 +286,10 @@
         <source>Copies data when adding via drag and drop</source>
         <target state="translated">Copia os dados ao adicionar via arrastar e soltar</target>
       </trans-unit>
+      <trans-unit id="MXasdfgbpD7" resname="label.copy_teams_on_create" approved="no">
+        <source>label.copy_teams_on_create</source>
+        <target state="translated">Assuma as equipes do usuário conectado ao criar novas entradas</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

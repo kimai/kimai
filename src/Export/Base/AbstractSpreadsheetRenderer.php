@@ -33,7 +33,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -99,12 +99,17 @@ abstract class AbstractSpreadsheetRenderer
         protected TranslatorInterface $translator,
         protected LocaleFormatExtensions $dateExtension,
         protected EventDispatcherInterface $dispatcher,
-        protected AuthorizationCheckerInterface $voter
+        protected Security $security
     ) {
     }
 
     protected function isRenderRate(TimesheetQuery $query): bool
     {
+        if ($this->voter->getUser() === null) {
+            // for command line export
+            return true;
+        }
+
         if (null !== $query->getUser()) {
             return $this->voter->isGranted('view_rate_own_timesheet');
         }

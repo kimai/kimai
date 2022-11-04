@@ -192,8 +192,6 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
     protected function prepareFixtures(\DateTime $start)
     {
-        $em = $this->getEntityManager();
-
         $fixture = new CustomerFixtures();
         $fixture->setAmount(1);
         $fixture->setCallback(function (Customer $customer) {

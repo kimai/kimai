@@ -469,6 +469,11 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration('project.choice_pattern'))
                         ->setLabel('choice_pattern')
                         ->setType(ProjectTypePatternType::class),
+                    (new Configuration())
+                        ->setName('project.copy_teams_on_create')
+                        ->setLabel('copy_teams_on_create')
+                        ->setType(YesNoType::class)
+                        ->setTranslationDomain('system-configuration'),
                 ]),
             (new SystemConfigurationModel('activity'))
                 ->setConfiguration([

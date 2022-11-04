@@ -508,4 +508,11 @@ class SystemConfiguration
 
         return 'Silver|#c0c0c0';
     }
+
+    // ========== Projects ==========
+
+    public function isProjectCopyTeamsOnCreate(): bool
+    {
+        return $this->find('project.copy_teams_on_create') === true;
+    }
 }

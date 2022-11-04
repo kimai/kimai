@@ -38,6 +38,7 @@ use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\TeamRepository;
+use App\Utils\Context;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -195,7 +196,7 @@ final class ProjectController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->projectService->saveNewProject($project);
+                $this->projectService->saveNewProject($project, new Context($this->getUser()));
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRouteAfterCreate('project_details', ['id' => $project->getId()]);

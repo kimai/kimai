@@ -422,6 +422,9 @@ class ConfigurationTest extends TestCase
                 'recent_activity_weeks' => null,
                 'minimum_rows' => 3,
             ],
+            'project' => [
+                'copy_teams_on_create' => false,
+            ],
             'activity' => [
                 'allow_inline_create' => false,
             ],
