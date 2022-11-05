@@ -95,7 +95,7 @@ final class ProjectController extends AbstractController
         $table->addColumn('project_end', ['class' => 'd-none']);
 
         foreach ($metaColumns as $metaColumn) {
-            $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false]);
+            $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false, 'data' => $metaColumn]);
         }
 
         if ($this->isGranted('budget_money', 'project')) {
@@ -106,6 +106,7 @@ final class ProjectController extends AbstractController
             $table->addColumn('timeBudget', ['class' => 'd-none text-end w-min', 'title' => 'timeBudget']);
         }
 
+        $table->addColumn('billable', ['class' => 'd-none text-center w-min', 'orderBy' => false]);
         $table->addColumn('team', ['class' => 'text-center w-min', 'orderBy' => false]);
         $table->addColumn('visible', ['class' => 'd-none text-center w-min']);
         $table->addColumn('actions', ['class' => 'actions']);

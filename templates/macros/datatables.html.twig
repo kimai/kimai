@@ -272,12 +272,8 @@
 {% endmacro %}
 
 {% macro datatable_meta_column(entry, field) %}
-    {% import "macros/widgets.html.twig" as widgets %}
-    {% set metaField = entry.metaField(field.name) %}
-    {% if not metaField is null and metaField.value is not null and metaField.value is not empty %}
-        {% set metaField = metaField.merge(field) %}
-        {{ widgets.form_type_value(metaField.type, metaField.value, entry) }}
-    {% endif %}
+    {% from "macros/widgets.html.twig" import meta_field_value %}
+    {{ meta_field_value(entry, field) }}
 {% endmacro %}
 
 {% macro datatable_multiupdate_row(id) %}

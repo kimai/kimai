@@ -1,47 +1,46 @@
 {% extends 'datatable.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/datatables.html.twig" as tables %}
 {% import "activity/actions.html.twig" as actions %}
 
-{% block datatable_row %}
-    <tr {{ widgets.activity_row_attr(entry, now) }}>
-        <td class="{{ tables.class(dataTable, 'name') }}">
-            {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
-        </td>
-        <td class="{{ tables.class(dataTable, 'project') }}">
-            {# only none-global activities have a project and customer assigned #}
-            {% if entry.project %}
-                {{ widgets.label_project(entry.project) }}
-                {% if entry.project.customer %}
-                    <br>
-                    <small>
-                        {{ widgets.label_customer(entry.project.customer) }}
-                    </small>
-                {% endif %}
+{% block datatable_row_attr %} {{ widgets.activity_row_attr(entry, now) }}{% endblock %}
+
+{% block datatable_column_value %}
+    {% if column == 'name' %}
+        {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
+    {% elseif column == 'project' %}
+        {# only none-global activities have a project and customer assigned #}
+        {% if entry.project %}
+            {{ widgets.label_project(entry.project) }}
+            {% if entry.project.customer %}
+                <br>
+                <small>
+                    {{ widgets.label_customer(entry.project.customer) }}
+                </small>
             {% endif %}
-        </td>
-        <td class="{{ tables.class(dataTable, 'comment') }}">{{ entry.comment|comment1line }}</td>
-        {% for field in metaColumns %}
-            <td class="{{ tables.class(dataTable, 'mf_' ~ field.name) }}">
-                {{ tables.datatable_meta_column(entry, field) }}
-            </td>
-        {% endfor %}
-        <td class="{{ tables.class(dataTable, 'budget') }}">
-            {% if entry.hasBudget() and is_granted('budget', entry) %}
-                {{ entry.budget|money((entry.project is null ? defaultCurrency : entry.project.customer.currency)) }}
-            {% else %}
-                &ndash;
-            {% endif %}
-        </td>
-        <td class="{{ tables.class(dataTable, 'timeBudget') }}">
-            {% if entry.hasTimeBudget() and is_granted('time', entry) %}
-                {{ entry.timeBudget|duration }}
-            {% else %}
-                &ndash;
-            {% endif %}
-        </td>
-        <td class="{{ tables.class(dataTable, 'team') }}">{{ widgets.badge_team_access(entry.teams) }}</td>
-        <td class="{{ tables.class(dataTable, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
-        <td class="{{ tables.class(dataTable, 'actions') }}">{{ actions.activity(entry, 'index') }}</td>
-    </tr>
+        {% endif %}
+    {% elseif column == 'comment' %}
+        {{ entry.comment|comment1line }}
+    {% elseif column == 'budget' %}
+        {% if entry.hasBudget() and is_granted('budget', entry) %}
+            {{ entry.budget|money((entry.project is null ? defaultCurrency : entry.project.customer.currency)) }}
+        {% else %}
+            &ndash;
+        {% endif %}
+    {% elseif column == 'timeBudget' %}
+        {% if entry.hasTimeBudget() and is_granted('time', entry) %}
+            {{ entry.timeBudget|duration }}
+        {% else %}
+            &ndash;
+        {% endif %}
+    {% elseif column == 'billable' %}
+        {{ widgets.label_boolean(entry.billable) }}
+    {% elseif column == 'team' %}
+        {{ widgets.badge_team_access(entry.teams) }}
+    {% elseif column == 'visible' %}
+        {{ widgets.label_visible(entry.visible) }}
+    {% elseif column == 'actions' %}
+        {{ actions.activity(entry, 'index') }}
+    {% elseif column starts with 'mf_' %}
+        {{ widgets.meta_field_value(entry, data) }}
+    {% endif %}
 {% endblock %}

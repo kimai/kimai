@@ -93,6 +93,16 @@ final class DataTable implements \Countable, \IteratorAggregate
         }
     }
 
+    public function getSortedColumnNames(): array
+    {
+        $columns = [];
+        foreach ($this->columns as $key => $options) {
+            $columns[$key] = \array_key_exists('data', $options) ? $options['data'] : [];
+        }
+
+        return $columns;
+    }
+
     public function getColumns(): array
     {
         return $this->columns;

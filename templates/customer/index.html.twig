@@ -1,47 +1,59 @@
 {% extends 'datatable.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/datatables.html.twig" as tables %}
 {% import "customer/actions.html.twig" as actions %}
 
-{% block datatable_row %}
-    <tr {{ widgets.customer_row_attr(entry, now) }}>
-        <td class="{{ tables.class(dataTable, 'name') }}">
-            {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
-        </td>
-        <td class="{{ tables.class(dataTable, 'comment') }}">{{ entry.comment|comment1line }}</td>
-        <td class="{{ tables.class(dataTable, 'number') }}">{{ entry.number }}</td>
-        <td class="{{ tables.class(dataTable, 'company') }}">{{ entry.company }}</td>
-        <td class="{{ tables.class(dataTable, 'vat_id') }}">{{ entry.vatId }}</td>
-        <td class="{{ tables.class(dataTable, 'contact') }}">{{ entry.contact }}</td>
-        <td class="{{ tables.class(dataTable, 'address') }}">{{ entry.address }}</td>
-        <td class="{{ tables.class(dataTable, 'country') }}">{{ entry.country|country_name }}</td>
-        <td class="{{ tables.class(dataTable, 'currency') }}">{{ entry.currency|currency_name }}</td>
-        <td class="{{ tables.class(dataTable, 'phone') }}">{{ entry.phone }}</td>
-        <td class="{{ tables.class(dataTable, 'fax') }}">{{ entry.fax }}</td>
-        <td class="{{ tables.class(dataTable, 'mobile') }}">{{ entry.mobile }}</td>
-        <td class="{{ tables.class(dataTable, 'email') }}">{{ entry.email }}</td>
-        <td class="{{ tables.class(dataTable, 'homepage') }}">{{ entry.homepage }}</td>
-        {% for field in metaColumns %}
-            <td class="{{ tables.class(dataTable, 'mf_' ~ field.name) }}">
-                {{ tables.datatable_meta_column(entry, field) }}
-            </td>
-        {% endfor %}
-        <td class="{{ tables.class(dataTable, 'budget') }}">
-            {% if entry.hasBudget() and is_granted('budget', entry) %}
-                {{ entry.budget|money(entry.currency) }}
-            {% else %}
-                &ndash;
-            {% endif %}
-        </td>
-        <td class="{{ tables.class(dataTable, 'timeBudget') }}">
-            {% if entry.hasTimeBudget() and is_granted('time', entry) %}
-                {{ entry.timeBudget|duration }}
-            {% else %}
-                &ndash;
-            {% endif %}
-        </td>
-        <td class="{{ tables.class(dataTable, 'team') }}">{{ widgets.badge_team_access(entry.teams) }}</td>
-        <td class="{{ tables.class(dataTable, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
-        <td class="{{ tables.class(dataTable, 'actions') }}">{{ actions.customer(entry, 'index') }}</td>
-    </tr>
+{% block datatable_row_attr %} {{ widgets.customer_row_attr(entry, now) }}{% endblock %}
+
+{% block datatable_column_value %}
+    {% if column == 'name' %}
+        {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
+    {% elseif column == 'comment' %}
+        {{ entry.comment|comment1line }}
+    {% elseif column == 'number' %}
+        {{ entry.number }}
+    {% elseif column == 'company' %}
+        {{ entry.company }}
+    {% elseif column == 'vat_id' %}
+        {{ entry.vatId }}
+    {% elseif column == 'contact' %}
+        {{ entry.contact }}
+    {% elseif column == 'address' %}
+        {{ entry.address }}
+    {% elseif column == 'country' %}
+        {{ entry.country|country_name }}
+    {% elseif column == 'currency' %}
+        {{ entry.currency|currency_name }}
+    {% elseif column == 'phone' %}
+        {{ entry.phone }}
+    {% elseif column == 'fax' %}
+        {{ entry.fax }}
+    {% elseif column == 'mobile' %}
+        {{ entry.mobile }}
+    {% elseif column == 'email' %}
+        {{ entry.email }}
+    {% elseif column == 'homepage' %}
+        {{ entry.homepage }}
+    {% elseif column == 'budget' %}
+        {% if entry.hasBudget() and is_granted('budget', entry) %}
+            {{ entry.budget|money(entry.currency) }}
+        {% else %}
+            &ndash;
+        {% endif %}
+    {% elseif column == 'timeBudget' %}
+        {% if entry.hasTimeBudget() and is_granted('time', entry) %}
+            {{ entry.timeBudget|duration }}
+        {% else %}
+            &ndash;
+        {% endif %}
+    {% elseif column == 'billable' %}
+        {{ widgets.label_boolean(entry.billable) }}
+    {% elseif column == 'team' %}
+        {{ widgets.badge_team_access(entry.teams) }}
+    {% elseif column == 'visible' %}
+        {{ widgets.label_visible(entry.visible) }}
+    {% elseif column == 'actions' %}
+        {{ actions.customer(entry, 'index') }}
+    {% elseif column starts with 'mf_' %}
+        {{ widgets.meta_field_value(entry, data) }}
+    {% endif %}
 {% endblock %}

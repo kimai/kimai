@@ -1,40 +1,45 @@
 {% extends 'datatable.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
-{% import "macros/datatables.html.twig" as tables %}
 {% import "project/actions.html.twig" as actions %}
 
-{% block datatable_row %}
-    <tr {{ widgets.project_row_attr(entry, now) }}>
-        <td class="{{ tables.class(dataTable, 'name') }}">
-            {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
-        </td>
-        <td class="{{ tables.class(dataTable, 'customer') }}">{{ widgets.label_customer(entry.customer) }}</td>
-        <td class="{{ tables.class(dataTable, 'comment') }}">{{ entry.comment|comment1line }}</td>
-        <td class="{{ tables.class(dataTable, 'orderNumber') }}">{{ entry.orderNumber }}</td>
-        <td class="{{ tables.class(dataTable, 'orderDate') }}">{% if entry.orderDate is not null %}{{ entry.orderDate|date_short }}{% endif %}</td>
-        <td class="{{ tables.class(dataTable, 'project_start') }}">{% if entry.start is not null %}{{ entry.start|date_short }}{% endif %}</td>
-        <td class="{{ tables.class(dataTable, 'project_end') }}">{% if entry.end is not null %}{{ entry.end|date_short }}{% endif %}</td>
-        {% for field in metaColumns %}
-            <td class="{{ tables.class(dataTable, 'mf_' ~ field.name) }}">
-                {{ tables.datatable_meta_column(entry, field) }}
-            </td>
-        {% endfor %}
-        <td class="{{ tables.class(dataTable, 'budget') }}">
-            {% if entry.hasBudget() and is_granted('budget', entry) %}
-                {{ entry.budget|money(entry.customer.currency) }}
-            {% else %}
-                &ndash;
-            {% endif %}
-        </td>
-        <td class="{{ tables.class(dataTable, 'timeBudget') }}">
-            {% if entry.hasTimeBudget() and is_granted('time', entry) %}
-                {{ entry.timeBudget|duration }}
-            {% else %}
-                &ndash;
-            {% endif %}
-        </td>
-        <td class="{{ tables.class(dataTable, 'team') }}">{{ widgets.badge_team_access(entry.teams) }}</td>
-        <td class="{{ tables.class(dataTable, 'visible') }}">{{ widgets.label_visible(entry.visible) }}</td>
-        <td class="{{ tables.class(dataTable, 'actions') }}">{{ actions.project(entry, 'index') }}</td>
-    </tr>
+{% block datatable_row_attr %} {{ widgets.project_row_attr(entry, now) }}{% endblock %}
+
+{% block datatable_column_value %}
+    {% if column == 'name' %}
+        {{ widgets.label_name(entry.name, entry.color|colorize(entry.name)) }}
+    {% elseif column == 'customer' %}
+        {{ widgets.label_customer(entry.customer) }}
+    {% elseif column == 'comment' %}
+        {{ entry.comment|comment1line }}
+    {% elseif column == 'orderNumber' %}
+        {{ entry.orderNumber }}
+    {% elseif column == 'orderDate' %}
+        {% if entry.orderDate is not null %}{{ entry.orderDate|date_short }}{% endif %}
+    {% elseif column == 'project_start' %}
+        {% if entry.start is not null %}{{ entry.start|date_short }}{% endif %}
+    {% elseif column == 'project_end' %}
+        {% if entry.end is not null %}{{ entry.end|date_short }}{% endif %}
+    {% elseif column == 'budget' %}
+        {% if entry.hasBudget() and is_granted('budget', entry) %}
+            {{ entry.budget|money(entry.customer.currency) }}
+        {% else %}
+            &ndash;
+        {% endif %}
+    {% elseif column == 'timeBudget' %}
+        {% if entry.hasTimeBudget() and is_granted('time', entry) %}
+            {{ entry.timeBudget|duration }}
+        {% else %}
+            &ndash;
+        {% endif %}
+    {% elseif column == 'billable' %}
+        {{ widgets.label_boolean(entry.billable) }}
+    {% elseif column == 'team' %}
+        {{ widgets.badge_team_access(entry.teams) }}
+    {% elseif column == 'visible' %}
+        {{ widgets.label_visible(entry.visible) }}
+    {% elseif column == 'actions' %}
+        {{ actions.project(entry, 'index') }}
+    {% elseif column starts with 'mf_' %}
+        {{ widgets.meta_field_value(entry, data) }}
+    {% endif %}
 {% endblock %}

@@ -275,6 +275,14 @@
     {% endfor %}
 {% endmacro %}
 
+{% macro meta_field_value(entity, field) %}
+    {% set metaField = entity.metaField(field.name) %}
+    {% if not metaField is null and metaField.value is not null and metaField.value is not empty %}
+        {% set metaField = metaField.merge(field) %}
+        {{ _self.form_type_value(metaField.type, metaField.value, entity) }}
+    {% endif %}
+{% endmacro %}
+
 {% macro form_type_value(type, value, entity) %}
     {% if '\\ColorPickerType' in type %}
         <span class="label-color" data-toggle="tooltip" data-placement="top" title="{{ value }}">
