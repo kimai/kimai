@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="X0ws5mu" resname="wizard.intro.description">
         <source>wizard.intro.description</source>
-        <target>This wizard will help you customize Kimai to your needs. Let's start with the necessary settings.</target>
+        <target>This wizard will help you customize Kimai to your needs.</target>
       </trans-unit>
       <trans-unit id="FCMK0ph" resname="wizard.separator">
         <source>wizard.separator</source>

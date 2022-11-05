@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="X0ws5mu" resname="wizard.intro.description">
         <source>wizard.intro.description</source>
-        <target>Dieser Assistent ist Ihnen dabei behilflich, Kimai an Ihre Bedürfnisse anzupassen. Starten wir mit den notwendigen Einstellungen.</target>
+        <target>Dieser Assistent ist Ihnen dabei behilflich, Kimai an Ihre Bedürfnisse anzupassen.</target>
       </trans-unit>
       <trans-unit id="FCMK0ph" resname="wizard.separator">
         <source>wizard.separator</source>
