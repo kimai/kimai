@@ -66,7 +66,7 @@ final class TeamController extends AbstractController
         $table->addColumn('teamlead', ['class' => 'd-none badges', 'orderBy' => false]);
         $table->addColumn('teamlead_avatar', ['title' => 'team.member', 'translation_domain' => 'teams', 'class' => 'd-none d-lg-table-cell avatars avatar-list avatar-list-stacked', 'orderBy' => false]);
         $table->addColumn('user', ['class' => 'd-none badges', 'orderBy' => false, 'title' => 'user']);
-        $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
+        $table->addColumn('actions', ['class' => 'actions']);
 
         $page = new PageSetup('teams');
         $page->setActionName('teams');

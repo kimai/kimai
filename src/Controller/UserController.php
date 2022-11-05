@@ -85,7 +85,7 @@ final class UserController extends AbstractController
 
         $table->addColumn('team', ['class' => 'text-center w-min', 'orderBy' => false]);
         $table->addColumn('active', ['class' => 'd-none w-min', 'orderBy' => false]);
-        $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
+        $table->addColumn('actions', ['class' => 'actions']);
 
         $page = new PageSetup('users');
         $page->setHelp('users.html');

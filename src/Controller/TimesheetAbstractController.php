@@ -117,7 +117,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
         $table->addColumn('billable', ['class' => 'text-center d-none w-min', 'orderBy' => false]);
         $table->addColumn('exported', ['class' => 'text-center d-none w-min', 'orderBy' => false]);
-        $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
+        $table->addColumn('actions', ['class' => 'actions']);
 
         $page = $this->createPageSetup();
         $page->setActionName($this->getActionName());

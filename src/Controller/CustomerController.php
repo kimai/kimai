@@ -114,7 +114,7 @@ final class CustomerController extends AbstractController
 
         $table->addColumn('team', ['class' => 'text-center w-min', 'orderBy' => false]);
         $table->addColumn('visible', ['class' => 'd-none text-center w-min']);
-        $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
+        $table->addColumn('actions', ['class' => 'actions']);
 
         $page = $this->createPageSetup();
         $page->setDataTable($table);

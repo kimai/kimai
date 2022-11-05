@@ -31,8 +31,9 @@ export default class KimaiDatatable extends KimaiPlugin {
             return;
         }
 
-        const events = dataTable.dataset['reloadEvent'];
+        this.registerContextMenu();
 
+        const events = dataTable.dataset['reloadEvent'];
         if (events === undefined) {
             return;
         }
@@ -47,7 +48,69 @@ export default class KimaiDatatable extends KimaiPlugin {
         document.addEventListener('filter-change', handle);
     }
 
-    reloadDatatable() {
+    registerContextMenu()
+    {
+        const dataTable = document.querySelector(this._selector);
+        const contextMenuId = dataTable.dataset['contextMenu'];
+        if (contextMenuId !== undefined) {
+            dataTable.addEventListener('contextmenu', (jsEvent) => {
+                const dropdownElement = document.getElementById(contextMenuId);
+                if (dropdownElement === null) {
+                    return;
+                }
+
+                let target = jsEvent.target;
+                while (target !== null) {
+                    const tagName = target.tagName.toUpperCase();
+                    if (tagName === 'TH' || tagName === 'TABLE' || tagName === 'BODY') {
+                        return;
+                    }
+
+                    if (tagName === 'TR') {
+                        break;
+                    }
+
+                    target = target.parentNode;
+                }
+
+                if (target === null || !target.matches('table.dataTable tbody tr')) {
+                    return;
+                }
+
+                const actions = target.querySelector('td.actions div.dropdown-menu');
+                if (actions === null) {
+                    return;
+                }
+
+                jsEvent.preventDefault();
+
+                if (dropdownElement.dataset['_listener'] === undefined) {
+                    const dropdownListener = function() {
+                        dropdownElement.classList.remove('d-block');
+                        if (!dropdownElement.classList.contains('d-none')) {
+                            dropdownElement.classList.add('d-none');
+                        }
+                    }
+                    dropdownElement.addEventListener('click', dropdownListener);
+                    document.addEventListener('click', dropdownListener);
+                    dropdownElement.dataset['_listener'] = 'true';
+                }
+
+                dropdownElement.style.zIndex = '1021';
+                dropdownElement.innerHTML = actions.innerHTML;
+                dropdownElement.style.position = 'fixed';
+                dropdownElement.style.top = (jsEvent.clientY) + 'px';
+                dropdownElement.style.left = (jsEvent.clientX) + 'px';
+                dropdownElement.classList.remove('d-none');
+                if (!dropdownElement.classList.contains('d-block')) {
+                    dropdownElement.classList.add('d-block');
+                }
+            });
+        }
+    }
+
+    reloadDatatable()
+    {
         const toolbarSelector = this.getContainer().getPlugin('toolbar').getSelector();
 
         /** @type {HTMLFormElement} form */
@@ -57,6 +120,7 @@ export default class KimaiDatatable extends KimaiPlugin {
             temp.innerHTML = text;
             const newContent = temp.querySelector(this._contentArea);
             document.querySelector(this._contentArea).replaceWith(newContent);
+            this.registerContextMenu();
             document.dispatchEvent(new Event('kimai.reloadedContent'));
         };
 

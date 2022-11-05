@@ -65,7 +65,7 @@ class TagController extends AbstractController
 
         $table->addColumn('name', ['class' => 'alwaysVisible']);
         $table->addColumn('amount', ['class' => 'text-center w-min']);
-        $table->addColumn('actions', ['class' => 'actions alwaysVisible']);
+        $table->addColumn('actions', ['class' => 'actions']);
 
         $page = new PageSetup('tags');
         $page->setActionName('tags');

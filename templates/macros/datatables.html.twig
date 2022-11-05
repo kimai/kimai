@@ -179,7 +179,8 @@
     <div class="{{ boxClass }} datatable_{{ tableName }}">
         <div class="card-body p-0{% if responsive %} table-responsive{% endif %}">
             <div class="dataTables_wrapper form-inline">
-                <table class="table table-hover dataTable" role="grid" data-reload-event="kimai.reset_column_visibility {{ reloadEvent }}">
+                <div id="datatable_{{ tableName }}_contextmenu" class="dropdown-menu d-none"></div>
+                <table class="table table-hover dataTable" role="grid" data-reload-event="kimai.reset_column_visibility {{ reloadEvent }}" data-context-menu="datatable_{{ tableName }}_contextmenu">
                     <thead{% if sticky %} class="sticky-top"{% endif %}>
                         <tr>
                         {%- for title, headerOptions in columns -%}
