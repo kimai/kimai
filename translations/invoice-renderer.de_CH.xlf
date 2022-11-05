@@ -19,26 +19,6 @@
         <source>Html</source>
         <target state="needs-translation">HTML (zum Drucken via Browser)</target>
       </trans-unit>
-      <trans-unit id="4NNx9U." resname="Docx">
-        <source>Microsoft Word (DOCX)</source>
-        <target state="needs-translation">Microsoft Word (Docx)</target>
-      </trans-unit>
-      <trans-unit id="sXlZPOC" resname="Xls">
-        <source>Microsoft Excel (XLS)</source>
-        <target state="needs-translation">Microsoft Excel (Xls)</target>
-      </trans-unit>
-      <trans-unit id="QqvUWFt" resname="Ods">
-        <source>Ods</source>
-        <target state="needs-translation">Open Office (Tabelle)</target>
-      </trans-unit>
-      <trans-unit id="sjwwrr8" resname="Xlsx">
-        <source>Microsoft Excel (XLSX)</source>
-        <target state="needs-translation">Microsoft Excel (Xlsx)</target>
-      </trans-unit>
-      <trans-unit id="kLKl8xE" resname="Pdf">
-        <source>Pdf</source>
-        <target state="needs-translation">PDF</target>
-      </trans-unit>
       <!-- Renderer -->
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
@@ -47,14 +27,6 @@
       <trans-unit id="jV1SPRL" resname="default-pdf">
         <source>default-pdf</source>
         <target state="needs-translation">Rechnung</target>
-      </trans-unit>
-      <trans-unit id="v5KgTmC" resname="xml">
-        <source>xml</source>
-        <target state="needs-translation">XML</target>
-      </trans-unit>
-      <trans-unit id="7acXRsA" resname="javascript">
-        <source>javascript</source>
-        <target state="needs-translation">JSON</target>
       </trans-unit>
       <trans-unit id="mC2ePrm" resname="text">
         <source>text</source>

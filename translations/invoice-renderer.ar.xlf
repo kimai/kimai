@@ -38,21 +38,9 @@
         <source>Html</source>
         <target>HTML (للطباعة عبر المتصفح)</target>
       </trans-unit>
-      <trans-unit id="kLKl8xE" resname="Pdf">
-        <source>Pdf</source>
-        <target>ملف PDF</target>
-      </trans-unit>
       <trans-unit id="jV1SPRL" resname="default-pdf">
         <source>default-pdf</source>
         <target>فاتورة</target>
-      </trans-unit>
-      <trans-unit id="v5KgTmC" resname="xml">
-        <source>xml</source>
-        <target>ملف XML</target>
-      </trans-unit>
-      <trans-unit id="7acXRsA" resname="javascript">
-        <source>javascript</source>
-        <target>ملف JSON</target>
       </trans-unit>
       <trans-unit id="mC2ePrm" resname="text">
         <source>text</source>
@@ -65,22 +53,6 @@
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>
         <target state="translated">لمزيد من المعالجة</target>
-      </trans-unit>
-      <trans-unit id="4NNx9U." resname="Docx">
-        <source>Microsoft Word (DOCX)</source>
-        <target state="translated">مايكروسوفت وورد (DOCX)</target>
-      </trans-unit>
-      <trans-unit id="sXlZPOC" resname="Xls">
-        <source>Microsoft Excel (XLS)</source>
-        <target state="translated">مايكروسوفت إكسل (XLS)</target>
-      </trans-unit>
-      <trans-unit id="QqvUWFt" resname="Ods">
-        <source>Ods</source>
-        <target state="translated">فتح اوفيس(جدول بيانات)</target>
-      </trans-unit>
-      <trans-unit id="sjwwrr8" resname="Xlsx">
-        <source>Microsoft Excel (XLSX)</source>
-        <target state="translated">مايكروسوفت اكسل(XLSX)</target>
       </trans-unit>
     </body>
   </file>

@@ -38,10 +38,6 @@
         <source>help.upload</source>
         <target>שים לב: קבצים קיימים ידרסו וימחקו. סוגי קבצים מותרים: DOCX, ODS, XLSX.</target>
       </trans-unit>
-      <trans-unit id="sjwwrr8" resname="Xlsx">
-        <source>Microsoft Excel (XLSX)</source>
-        <target state="translated">Microsoft Excel (XLSX)</target>
-      </trans-unit>
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>
         <target>לעיבוד נוסף</target>
@@ -50,37 +46,13 @@
         <source>Html</source>
         <target>HTML (להדפסה דרך הדפדפן)</target>
       </trans-unit>
-      <trans-unit id="QqvUWFt" resname="Ods">
-        <source>Ods</source>
-        <target>Open Office (גיליון נתונים)</target>
-      </trans-unit>
-      <trans-unit id="kLKl8xE" resname="Pdf">
-        <source>Pdf</source>
-        <target>PDF</target>
-      </trans-unit>
       <trans-unit id="jV1SPRL" resname="default-pdf">
         <source>default-pdf</source>
         <target>חשבונית</target>
       </trans-unit>
-      <trans-unit id="v5KgTmC" resname="xml">
-        <source>xml</source>
-        <target>XML</target>
-      </trans-unit>
-      <trans-unit id="7acXRsA" resname="javascript">
-        <source>javascript</source>
-        <target>JSON</target>
-      </trans-unit>
       <trans-unit id="mC2ePrm" resname="text">
         <source>text</source>
         <target>טקסט</target>
-      </trans-unit>
-      <trans-unit id="4NNx9U." resname="Docx">
-        <source>Microsoft Word (DOCX)</source>
-        <target state="translated">Microsoft Word (DOCX)</target>
-      </trans-unit>
-      <trans-unit id="sXlZPOC" resname="Xls">
-        <source>Microsoft Excel (XLS)</source>
-        <target state="translated">Microsoft Excel (XLS)</target>
       </trans-unit>
     </body>
   </file>

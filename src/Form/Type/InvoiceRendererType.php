@@ -53,6 +53,12 @@ class InvoiceRendererType extends AbstractType
             'choices' => array_flip($documents),
             'group_by' => [$this, 'getGroupBy'],
             'choice_label' => function ($choiceValue, $key, $value) {
+                switch (strtolower($choiceValue)) {
+                    case 'xml':
+                        return 'XML';
+                    case 'javascript':
+                        return 'JSON';
+                }
                 return $choiceValue;
             },
             'translation_domain' => 'invoice-renderer',
@@ -81,6 +87,22 @@ class InvoiceRendererType extends AbstractType
 
         if (\in_array(strtolower($type), ['json', 'txt', 'xml'])) {
             return 'programmatic';
+        }
+
+        switch (strtolower($type)) {
+            case 'pdf':
+                return 'PDF';
+
+            case 'docx':
+            case 'doc':
+                return 'Word';
+
+            case 'xls':
+            case 'xlsx':
+                return 'Excel';
+
+            case 'ods':
+                return 'LibreOffice';
         }
 
         return ucfirst($type);

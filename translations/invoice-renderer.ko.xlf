@@ -34,14 +34,6 @@
         <source>company</source>
         <target state="translated">회사 청구서</target>
       </trans-unit>
-      <trans-unit id="4NNx9U." resname="Docx">
-        <source>Microsoft Word (DOCX)</source>
-        <target>Microsoft 워드 (DOCX)</target>
-      </trans-unit>
-      <trans-unit id="sjwwrr8" resname="Xlsx">
-        <source>Microsoft Excel (XLSX)</source>
-        <target>Microsoft 엑셀 (XLSX)</target>
-      </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
         <target>주의: 기존 파일을 덮어씁니다. 허용되는 파일 형식은 DOCX, ODS, XLSX입니다.</target>
@@ -49,18 +41,6 @@
       <trans-unit id="nA.KOyM" resname="Html">
         <source>Html</source>
         <target>HTML (브라우저를 통한 인쇄용)</target>
-      </trans-unit>
-      <trans-unit id="kLKl8xE" resname="Pdf">
-        <source>Pdf</source>
-        <target>PDF</target>
-      </trans-unit>
-      <trans-unit id="v5KgTmC" resname="xml">
-        <source>xml</source>
-        <target>XML</target>
-      </trans-unit>
-      <trans-unit id="7acXRsA" resname="javascript">
-        <source>javascript</source>
-        <target>JSON</target>
       </trans-unit>
       <trans-unit id="mC2ePrm" resname="text">
         <source>text</source>
@@ -73,14 +53,6 @@
       <trans-unit id="jV1SPRL" resname="default-pdf">
         <source>default-pdf</source>
         <target>청구서</target>
-      </trans-unit>
-      <trans-unit id="sXlZPOC" resname="Xls">
-        <source>Microsoft Excel (XLS)</source>
-        <target>Microsoft 엑셀 (XLS)</target>
-      </trans-unit>
-      <trans-unit id="QqvUWFt" resname="Ods">
-        <source>Ods</source>
-        <target>Open Office (스프레드시트)</target>
       </trans-unit>
     </body>
   </file>
