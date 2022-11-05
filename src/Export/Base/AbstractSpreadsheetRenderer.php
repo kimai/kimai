@@ -99,7 +99,7 @@ abstract class AbstractSpreadsheetRenderer
         protected TranslatorInterface $translator,
         protected LocaleFormatExtensions $dateExtension,
         protected EventDispatcherInterface $dispatcher,
-        protected Security $security
+        protected Security $voter
     ) {
     }
 
