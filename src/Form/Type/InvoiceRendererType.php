@@ -59,6 +59,7 @@ class InvoiceRendererType extends AbstractType
                     case 'javascript':
                         return 'JSON';
                 }
+
                 return $choiceValue;
             },
             'translation_domain' => 'invoice-renderer',
