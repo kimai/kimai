@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fa" datatype="plaintext" original="email.en.xlf">
     <body>
       <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
         <source>button_copy_url_to_browser</source>
-        <target>اگر دکمه کار نکرد، لطفا آدرس زیر را در مروگر خود کپی و جایگذاری نمایید : %url%</target>
+        <target state="translated">اگر دکمه کار نکرد، لطفا آدرس زیر را در مروگر خود کپی &amp; جایگذاری نمایید : %url%</target>
       </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
         <source>registration.intro</source>
-        <target>شما در رهگیر زمان kimai با ایمیل %email% ثبت نام کرده اید. اکنون باید ایمیل خود را در همین زمان، قبل از باطل شدن لینک فعال کنید.</target>
+        <target state="translated">شما در رهگیر زمان Kimai با ایمیل %email% ثبت نام کرده اید. اکنون باید ایمیل خود را در همین زمان، قبل از باطل شدن لینک فعال کنید.</target>
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject">
         <source>reset.subject</source>

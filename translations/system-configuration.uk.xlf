@@ -1,326 +1,326 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="fa" datatype="plaintext" original="system-configuration.en.xlf">
+  <file source-language="en" target-language="uk" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Time tracking</source>
-        <target state="translated">پیگیری زمان</target>
+        <target></target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
-        <target state="translated">تم</target>
+        <target></target>
       </trans-unit>
       <trans-unit id="EPBzIy7" resname="label.theme.markdown_content">
         <source>label.theme.markdown_content</source>
-        <target state="translated">در توضیحات و نظرات، قالب‌بندی‌های نشانه‌گذاری را مجاز کنید</target>
+        <target></target>
       </trans-unit>
       <trans-unit id="NA.6x_i" resname="label.theme.tags_create">
         <source>label.theme.tags_create</source>
-        <target state="translated">برچسب ها: از جستجو با تکمیل خودکار استفاده کنید و اجازه ایجاد برچسب را بدهید</target>
+        <target></target>
       </trans-unit>
       <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
         <source>label.theme.avatar_url</source>
-        <target state="translated">اجازه استفاده از URL ها برای تصاویر آواتار</target>
+        <target></target>
       </trans-unit>
       <trans-unit id="JZMT_4o" resname="label.theme.random_colors">
         <source>label.theme.random_colors</source>
-        <target state="translated">از رنگ های تصادفی برای اشیا بدون رنگ اختصاص داده شده استفاده کنید</target>
+        <target></target>
       </trans-unit>
       <trans-unit id="Fkvn6pR" resname="label.timesheet.mode">
         <source>label.timesheet.mode</source>
-        <target state="translated">حالت پیگیری زمان</target>
+        <target></target>
       </trans-unit>
       <trans-unit id="LJEKQMG" resname="label.timesheet.mode_default">
         <source>label.timesheet.mode_default</source>
-        <target state="translated">[پیش‌فرض] زمان شروع و پایان قابل ویرایش است</target>
+        <target></target>
       </trans-unit>
       <trans-unit id="euxlcwF" resname="label.timesheet.mode_duration_only">
         <source>label.timesheet.mode_duration_only</source>
-        <target state="translated">[دوره] زمان پایان را با یک فیلد ورودی مدت زمان جایگزین می کند</target>
+        <target></target>
       </trans-unit>
       <trans-unit id="Q5sVtFy" resname="label.timesheet.mode_duration_fixed_begin">
         <source>label.timesheet.mode_duration_fixed_begin</source>
-        <target state="translated">[دوره] زمان شروع ثابت قابل تنظیم، فقط مدت زمان قابل تغییر است</target>
+        <target></target>
       </trans-unit>
       <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
         <source>label.timesheet.mode_punch</source>
-        <target state="translated">[زمان-ساعت] کاربر می تواند رکوردها را شروع و متوقف کند، اما زمان یا مدت زمان را ویرایش نمی کند</target>
+        <target></target>
       </trans-unit>
       <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
         <source>label.timesheet.rules.allow_future_times</source>
-        <target state="translated">اجازه ورود زمان در آینده را بدهید</target>
-      </trans-unit>
-      <trans-unit id="VAAaL2t" resname="label.timesheet.rules.allow_overbooking_budget">
-        <source>label.timesheet.rules.allow_overbooking_budget</source>
-        <target state="translated">اجازه رزرو بیش از حد بودجه های ذخیره شده را بدهید</target>
-      </trans-unit>
-      <trans-unit id=".NE5mGi" resname="label.timesheet.rules.allow_overlapping_records">
-        <source>label.timesheet.rules.allow_overlapping_records</source>
-        <target state="translated">اجازه دادن به ورودی‌های زمانی متداخل</target>
-      </trans-unit>
-      <trans-unit id="tuPXa0S" resname="lockdown_period">
-        <source>lockdown_period</source>
-        <target state="translated">دوره قفل</target>
-      </trans-unit>
-      <trans-unit id="HeDzoVE" resname="label.timesheet.rules.lockdown_period_timezone">
-        <source>label.timesheet.rules.lockdown_period_timezone</source>
-        <target state="translated">منطقه زمانی (در صورت خالی بودن، منطقه زمانی کاربر مربوطه استفاده می شود)</target>
-      </trans-unit>
-      <trans-unit id="yVBJECt" resname="label.timesheet.rules.lockdown_period_start">
-        <source>label.timesheet.rules.lockdown_period_start</source>
-        <target state="translated">شروع دوره قفل (تاریخ نسبی PHP تا کنون)</target>
-      </trans-unit>
-      <trans-unit id=".es2tyO" resname="label.timesheet.rules.lockdown_period_end">
-        <source>label.timesheet.rules.lockdown_period_end</source>
-        <target state="translated">پایان دوره قفل (تاریخ نسبی PHP تا کنون)</target>
-      </trans-unit>
-      <trans-unit id="y2i0PU3" resname="label.timesheet.rules.lockdown_grace_period">
-        <source>label.timesheet.rules.lockdown_grace_period</source>
-        <target state="translated">پایان دوره مهلت قفل (تاریخ نسبی PHP تا پایان دوره قفل)</target>
-      </trans-unit>
-      <trans-unit id="oIueXaX" resname="label.timesheet.active_entries.hard_limit">
-        <source>label.timesheet.active_entries.hard_limit</source>
-        <target state="translated">تعداد مجاز ورودی های زمان در حال اجرا به طور همزمان</target>
-      </trans-unit>
-      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
-        <source>label.quick_entry.recent_activities</source>
-        <target state="translated">تعداد ورودی های گرفته شده از هفته های گذشته</target>
-      </trans-unit>
-      <trans-unit id="iZLna_g" resname="label.theme.autocomplete_chars">
-        <source>label.theme.autocomplete_chars</source>
-        <target state="translated">حداقل تعداد حروف برای شروع تکمیل خودکار</target>
-      </trans-unit>
-      <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
-        <source>label.calendar.week_numbers</source>
-        <target state="translated">نمایش اعداد هفته</target>
-      </trans-unit>
-      <trans-unit id="NULxaYp" resname="label.calendar.weekends">
-        <source>label.calendar.weekends</source>
-        <target state="translated">نمایش آخر هفته ها</target>
-      </trans-unit>
-      <trans-unit id="AMCb58W" resname="label.calendar.businessHours.begin">
-        <source>label.calendar.businessHours.begin</source>
-        <target state="translated">شروع ساعات کاری عادی (برجسته خواهد شد)</target>
-      </trans-unit>
-      <trans-unit id="3nfAkqy" resname="label.calendar.businessHours.end">
-        <source>label.calendar.businessHours.end</source>
-        <target state="translated">پایان ساعات کاری عادی (برجسته خواهد شد)</target>
-      </trans-unit>
-      <trans-unit id="Yl4Ztfv" resname="label.calendar.visibleHours.begin">
-        <source>label.calendar.visibleHours.begin</source>
-        <target state="translated">شروع محدوده زمانی قابل مشاهده</target>
-      </trans-unit>
-      <trans-unit id="UJGYdCt" resname="label.calendar.visibleHours.end">
-        <source>label.calendar.visibleHours.end</source>
-        <target state="translated">پایان محدوده زمانی قابل مشاهده</target>
-      </trans-unit>
-      <trans-unit id="AlBuZhv" resname="label.calendar.slot_duration">
-        <source>label.calendar.slot_duration</source>
-        <target state="translated">مدت زمان اسلات برای نمای هفته و روز (قالب: hh:mm:ss)</target>
-      </trans-unit>
-      <trans-unit id="nwuLBP4" resname="branding">
-        <source>branding</source>
-        <target state="translated">شرکت من</target>
-      </trans-unit>
-      <trans-unit id="m5dLCoB" resname="label.theme.branding.logo">
-        <source>label.theme.branding.logo</source>
-        <target state="translated">URL لوگو (جایگزین نام شرکت در صفحه ورود به سیستم)</target>
-      </trans-unit>
-      <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
-        <source>label.theme.branding.company</source>
-        <target state="translated">نام شرکت</target>
-      </trans-unit>
-      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
-        <source>label.theme.branding.mini</source>
-        <target state="translated">لوگوی کوچک (نوار کناری جمع شونده)</target>
-      </trans-unit>
-      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
-        <source>label.theme.branding.title</source>
-        <target state="translated">عنوان مرورگر</target>
-      </trans-unit>
-      <trans-unit id=".CeyZwj" resname="label.company.financial_year">
-        <source>label.company.financial_year</source>
-        <target state="translated">سال مالی</target>
-      </trans-unit>
-      <trans-unit id="Gdb5M4w" resname="rounding">
-        <source>rounding</source>
-        <target state="translated">گرد کردن زمان</target>
-      </trans-unit>
-      <trans-unit id="0wyl4Bb" resname="label.timesheet.rounding.default.begin">
-        <source>label.timesheet.rounding.default.begin</source>
-        <target state="translated">گرد کردن زمان شروع به دقیقه (0 = غیرفعال)</target>
-      </trans-unit>
-      <trans-unit id="Jx6bTVr" resname="label.timesheet.rounding.default.end">
-        <source>label.timesheet.rounding.default.end</source>
-        <target state="translated">گرد کردن زمان پایان در دقیقه (0 = غیرفعال)</target>
-      </trans-unit>
-      <trans-unit id="Hnl7Jxt" resname="label.timesheet.rounding.default.duration">
-        <source>label.timesheet.rounding.default.duration</source>
-        <target state="translated">گرد کردن مدت زمان در دقیقه (0 = غیرفعال شده)</target>
-      </trans-unit>
-      <trans-unit id="aenIpDV" resname="label.timesheet.rounding.default.mode">
-        <source>label.timesheet.rounding.default.mode</source>
-        <target state="translated">حالت گرد کردن</target>
-      </trans-unit>
-      <trans-unit id="D1NSPl5" resname="label.timesheet.rounding.default.days">
-        <source>label.timesheet.rounding.default.days</source>
-        <target state="translated">روزهایی از هفته که گردگیری اعمال می شود</target>
-      </trans-unit>
-      <trans-unit id="agDfwdy" resname="Monday">
-        <source>Monday</source>
-        <target state="translated">دوشنبه</target>
-      </trans-unit>
-      <trans-unit id="fYrx3hJ" resname="Tuesday">
-        <source>Tuesday</source>
-        <target state="translated">سهشنبه</target>
-      </trans-unit>
-      <trans-unit id="wKbMgpz" resname="Wednesday">
-        <source>Wednesday</source>
-        <target state="translated">چهار شنبه</target>
-      </trans-unit>
-      <trans-unit id=".CZiBi." resname="Thursday">
-        <source>Thursday</source>
-        <target state="translated">پنج شنبه</target>
-      </trans-unit>
-      <trans-unit id="4h8.Nyp" resname="Friday">
-        <source>Friday</source>
-        <target state="translated">جمعه</target>
-      </trans-unit>
-      <trans-unit id="2_Ncc2P" resname="Saturday">
-        <source>Saturday</source>
-        <target state="translated">شنبه</target>
-      </trans-unit>
-      <trans-unit id="hz.vdg5" resname="Sunday">
-        <source>Sunday</source>
-        <target state="translated">یکشنبه</target>
-      </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
-        <source>Ceil</source>
-        <target state="translated">سقف: شروع، پایان و مدت زمان گرد می شود</target>
-      </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
-        <source>Closest</source>
-        <target state="translated">نزدیکترین: گرد کردن اعداد به نزدیکترین مقدار</target>
-      </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
-        <source>Default</source>
-        <target state="translated">استاندارد: شروع به پایین، پایان و مدت به بالا گرد می شود</target>
-      </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
-        <source>Floor</source>
-        <target state="translated">کف: شروع، پایان و مدت زمان به پایین گرد می شود</target>
-      </trans-unit>
-      <trans-unit id="DY_cM92" resname="label.timesheet.default_begin">
-        <source>label.timesheet.default_begin</source>
-        <target state="translated">زمان شروع پیش‌فرض (در همه حالت‌های ردیابی زمان استفاده نمی‌شود)</target>
-      </trans-unit>
-      <trans-unit id="cRbnwyP" resname="label.simple_form">
-        <source>label.simple_form</source>
-        <target state="translated">جستجوی ساده</target>
-      </trans-unit>
-      <trans-unit id="HrEBLUr" resname="label.invoice.number_format">
-        <source>label.invoice.number_format</source>
-        <target state="translated">فرمت شماره فاکتور</target>
-      </trans-unit>
-      <trans-unit id="6CSB6iM" resname="first_weekday">
-        <source>first_weekday</source>
-        <target state="translated">روز اول هفته</target>
-      </trans-unit>
-      <trans-unit id="40i4Xlr" resname="label.timesheet.duration_increment">
-        <source>label.timesheet.duration_increment</source>
-        <target state="translated">انتخاب دقیقه برای مدت زمان</target>
-      </trans-unit>
-      <trans-unit id="x3AfnWn" resname="label.timesheet.time_increment">
-        <source>label.timesheet.time_increment</source>
-        <target state="translated">انتخاب دقیقه برای از &amp; به</target>
-      </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target state="translated">از مقدار پیکربندی شده قانون گرد کردن استفاده کنید</target>
-      </trans-unit>
-      <trans-unit id="tNxm3eg" resname="off">
-        <source>off</source>
-        <target state="translated">خاموش</target>
-      </trans-unit>
-      <trans-unit id="QHVk7AA" resname="label.theme.colors_limited">
-        <source>label.theme.colors_limited</source>
-        <target state="translated">انتخاب رنگ را محدود کنید</target>
-      </trans-unit>
-      <trans-unit id="scCc2Xm" resname="label.theme.color_choices">
-        <source>label.theme.color_choices</source>
-        <target state="translated">رنگ های مجاز</target>
-      </trans-unit>
-      <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
-        <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
-        <target state="translated">فهرستی از کدهای رنگی HTML جدا شده با کاما. نام رنگ ها را می توان با پیشوند کد رنگ با یک نام و "|" تنظیم کرد. جداکننده، به عنوان مثال: White|#ffffff,Black|#000000.</target>
-      </trans-unit>
-      <trans-unit id="udkGKEU" resname="authentication">
-        <source>authentication</source>
-        <target state="translated">احراز هویت</target>
-      </trans-unit>
-      <trans-unit id="CCXeSFj" resname="label.user_auth_login">
-        <source>label.user_auth_login</source>
-        <target state="translated">فرم ورود</target>
-      </trans-unit>
-      <trans-unit id=".zZ_MeA" resname="label.user_auth_registration">
-        <source>label.user_auth_registration</source>
-        <target state="translated">ثبت نام کاربر</target>
-      </trans-unit>
-      <trans-unit id="t2zKRp5" resname="label.user_auth_password_reset">
-        <source>label.user_auth_password_reset</source>
-        <target state="translated">رمز عبور را فراموش کرده اید</target>
-      </trans-unit>
-      <trans-unit id="ufoC1qF" resname="label.user_auth_password_reset_retry_ttl">
-        <source>label.user_auth_password_reset_retry_ttl</source>
-        <target state="translated">رمز عبور فراموش شده - چند ثانیه قبل از اینکه کاربر بتواند ایمیل بعدی را درخواست کند</target>
-      </trans-unit>
-      <trans-unit id="0Tj.NhS" resname="label.user_auth_password_reset_token_ttl">
-        <source>label.user_auth_password_reset_token_ttl</source>
-        <target state="translated">رمز عبور فراموش شده - چند ثانیه قبل از انقضای پیوند بازنشانی</target>
-      </trans-unit>
-      <trans-unit id="71FjFMp" resname="label.ldap_activate">
-        <source>label.ldap_activate</source>
-        <target state="translated">ورود به سیستم LDAP</target>
-      </trans-unit>
-      <trans-unit id="A3HPT4p" resname="label.saml_activate">
-        <source>label.saml_activate</source>
-        <target state="translated">ورود SAML</target>
-      </trans-unit>
-      <trans-unit id="jLG6z.w" resname="label.timesheet.rules.break_warning_duration">
-        <source>label.timesheet.rules.break_warning_duration</source>
-        <target state="translated">حداکثر مدت یک رکورد تایم شیت در دقیقه قبل از نمایش "هشدار" (0 = غیرفعال)</target>
-      </trans-unit>
-      <trans-unit id="h4bhOny" resname="label.timesheet.rules.long_running_duration">
-        <source>label.timesheet.rules.long_running_duration</source>
-        <target state="translated">حداکثر مدت زمان یک رکورد تایم شیت بر حسب دقیقه قبل از رد شدن ذخیره (0 = غیرفعال شده)</target>
-      </trans-unit>
-      <trans-unit id="ZUTc3eH" resname="label.calendar.dragdrop_amount">
-        <source>label.calendar.dragdrop_amount</source>
-        <target state="translated">تعداد ورودی‌ها برای drag&amp;drop کردن (0 = غیرفعال)</target>
-      </trans-unit>
-      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
-        <source>label.calendar.title_pattern</source>
-        <target state="translated">نمایش عناوین ورودی های تقویم</target>
-      </trans-unit>
-      <trans-unit id="eiQKW2A" resname="label.calendar.dragdrop_data">
-        <source>Copies data when adding via drag and drop</source>
-        <target state="translated">داده ها را هنگام افزودن از طریق drag&amp;drop کردن کپی می کند</target>
-      </trans-unit>
-      <trans-unit id="MXasdfgbpD7" resname="label.copy_teams_on_create" approved="no">
-        <source>label.copy_teams_on_create</source>
-        <target state="translated">هنگام ایجاد ورودی‌های جدید، تیم‌هایی را از کاربر وارد شده تحویل بگیرید</target>
+        <target></target>
       </trans-unit>
       <trans-unit id="g1q7hKi" resname="label.timesheet.rules.allow_zero_duration">
         <source>label.timesheet.rules.allow_zero_duration</source>
-        <target state="translated">اجازه ورود زمانی با مدت زمان خالی را بدهید</target>
+        <target></target>
       </trans-unit>
-      <trans-unit id="7Efrrn5" resname="label.quick_entry.minimum_rows">
-        <source>label.quick_entry.minimum_rows</source>
-        <target state="translated">حداقل تعداد ردیف</target>
+      <trans-unit id="VAAaL2t" resname="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id=".NE5mGi" resname="label.timesheet.rules.allow_overlapping_records">
+        <source>label.timesheet.rules.allow_overlapping_records</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="tuPXa0S" resname="lockdown_period">
+        <source>lockdown_period</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="HeDzoVE" resname="label.timesheet.rules.lockdown_period_timezone">
+        <source>label.timesheet.rules.lockdown_period_timezone</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="yVBJECt" resname="label.timesheet.rules.lockdown_period_start">
+        <source>label.timesheet.rules.lockdown_period_start</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id=".es2tyO" resname="label.timesheet.rules.lockdown_period_end">
+        <source>label.timesheet.rules.lockdown_period_end</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="y2i0PU3" resname="label.timesheet.rules.lockdown_grace_period">
+        <source>label.timesheet.rules.lockdown_grace_period</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="oIueXaX" resname="label.timesheet.active_entries.hard_limit">
+        <source>label.timesheet.active_entries.hard_limit</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target></target>
       </trans-unit>
       <trans-unit id="QxQOG3e" resname="label.quick_entry.recent_activity_weeks">
         <source>label.quick_entry.recent_activity_weeks</source>
-        <target state="translated">دریافت ورودی‌های X هفته گذشته (خالی یا 0 برای همیشه)</target>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="7Efrrn5" resname="label.quick_entry.minimum_rows">
+        <source>label.quick_entry.minimum_rows</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="iZLna_g" resname="label.theme.autocomplete_chars">
+        <source>label.theme.autocomplete_chars</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id=".9O397A" resname="label.calendar.week_numbers">
+        <source>label.calendar.week_numbers</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="NULxaYp" resname="label.calendar.weekends">
+        <source>label.calendar.weekends</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="AMCb58W" resname="label.calendar.businessHours.begin">
+        <source>label.calendar.businessHours.begin</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="3nfAkqy" resname="label.calendar.businessHours.end">
+        <source>label.calendar.businessHours.end</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="Yl4Ztfv" resname="label.calendar.visibleHours.begin">
+        <source>label.calendar.visibleHours.begin</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="UJGYdCt" resname="label.calendar.visibleHours.end">
+        <source>label.calendar.visibleHours.end</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="AlBuZhv" resname="label.calendar.slot_duration">
+        <source>label.calendar.slot_duration</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="nwuLBP4" resname="branding">
+        <source>branding</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="m5dLCoB" resname="label.theme.branding.logo">
+        <source>label.theme.branding.logo</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="nDS7Pav" resname="label.theme.branding.company">
+        <source>label.theme.branding.company</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="zGGSDo_" resname="label.theme.branding.mini">
+        <source>label.theme.branding.mini</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="t2p1HlE" resname="label.theme.branding.title">
+        <source>label.theme.branding.title</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id=".CeyZwj" resname="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="Gdb5M4w" resname="rounding">
+        <source>rounding</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="0wyl4Bb" resname="label.timesheet.rounding.default.begin">
+        <source>label.timesheet.rounding.default.begin</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="Jx6bTVr" resname="label.timesheet.rounding.default.end">
+        <source>label.timesheet.rounding.default.end</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="Hnl7Jxt" resname="label.timesheet.rounding.default.duration">
+        <source>label.timesheet.rounding.default.duration</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="aenIpDV" resname="label.timesheet.rounding.default.mode">
+        <source>label.timesheet.rounding.default.mode</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="D1NSPl5" resname="label.timesheet.rounding.default.days">
+        <source>label.timesheet.rounding.default.days</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="agDfwdy" resname="Monday">
+        <source>Monday</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="fYrx3hJ" resname="Tuesday">
+        <source>Tuesday</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="wKbMgpz" resname="Wednesday">
+        <source>Wednesday</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id=".CZiBi." resname="Thursday">
+        <source>Thursday</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="4h8.Nyp" resname="Friday">
+        <source>Friday</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="2_Ncc2P" resname="Saturday">
+        <source>Saturday</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="hz.vdg5" resname="Sunday">
+        <source>Sunday</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="jmsE4EY" resname="Ceil">
+        <source>Ceil</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="Y_qmsDz" resname="Closest">
+        <source>Closest</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="IbERy.5" resname="Default">
+        <source>Default</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="0mjJxEk" resname="Floor">
+        <source>Floor</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="DY_cM92" resname="label.timesheet.default_begin">
+        <source>label.timesheet.default_begin</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="cRbnwyP" resname="label.simple_form">
+        <source>label.simple_form</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="HrEBLUr" resname="label.invoice.number_format">
+        <source>label.invoice.number_format</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="6CSB6iM" resname="first_weekday">
+        <source>first_weekday</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="40i4Xlr" resname="label.timesheet.duration_increment">
+        <source>label.timesheet.duration_increment</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="x3AfnWn" resname="label.timesheet.time_increment">
+        <source>label.timesheet.time_increment</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="9C1qkmD" resname="increment_rounding">
+        <source>increment_rounding</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="tNxm3eg" resname="off">
+        <source>off</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="QHVk7AA" resname="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="scCc2Xm" resname="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
+        <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="CCXeSFj" resname="label.user_auth_login">
+        <source>label.user_auth_login</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id=".zZ_MeA" resname="label.user_auth_registration">
+        <source>label.user_auth_registration</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="t2zKRp5" resname="label.user_auth_password_reset">
+        <source>label.user_auth_password_reset</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="ufoC1qF" resname="label.user_auth_password_reset_retry_ttl">
+        <source>label.user_auth_password_reset_retry_ttl</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="0Tj.NhS" resname="label.user_auth_password_reset_token_ttl">
+        <source>label.user_auth_password_reset_token_ttl</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="71FjFMp" resname="label.ldap_activate">
+        <source>label.ldap_activate</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="A3HPT4p" resname="label.saml_activate">
+        <source>label.saml_activate</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="jLG6z.w" resname="label.timesheet.rules.break_warning_duration">
+        <source>label.timesheet.rules.break_warning_duration</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="h4bhOny" resname="label.timesheet.rules.long_running_duration">
+        <source>label.timesheet.rules.long_running_duration</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="ZUTc3eH" resname="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="eiQKW2A" resname="label.calendar.dragdrop_data">
+        <source>Copies data when adding via drag and drop</source>
+        <target state="translated"></target>
+      </trans-unit>
+      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
+        <source>label.calendar.title_pattern</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="MXasdfgbpD7" resname="label.copy_teams_on_create" approved="no">
+        <source>label.copy_teams_on_create</source>
+        <target></target>
       </trans-unit>
     </body>
   </file>

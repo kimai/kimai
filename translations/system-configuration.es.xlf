@@ -230,6 +230,10 @@
         <source>label.timesheet.rules.lockdown_period_timezone</source>
         <target state="translated">Zona horaria (si está vacía, se utiliza la zona horaria del usuario correspondiente)</target>
       </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target state="translated">Cantidad de elementos de semanas anteriores</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

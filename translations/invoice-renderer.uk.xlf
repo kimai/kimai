@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="fa" datatype="plaintext" original="invoice-renderer.en.xlf">
+  <file source-language="en" target-language="uk" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
       <trans-unit id=".Bji8X5" resname="label.invoice_renderer">
         <source>label.invoice_renderer</source>
-        <target state="translated">سند فاکتور</target>
+        <target state="translated">Документ рахунку</target>
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
-        <target state="translated">توجه: فایل های موجود رونویسی خواهند شد. فایل های مجاز عبارتند از: DOCX، ODS، XLSX.</target>
+        <target state="translated">Увага: існуючі файли будуть перезаписані. Дозволені типи файлів: DOCX, ODS, XLSX.</target>
       </trans-unit>
       <!-- Optgroups -->
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>
-        <target state="translated">برای پردازش بیشتر</target>
+        <target state="translated">Для подальшої обробки</target>
       </trans-unit>
       <trans-unit id="nA.KOyM" resname="Html">
         <source>Html</source>
-        <target state="translated">HTML (برای چاپ از طریق مرورگر)</target>
+        <target state="translated">HTML (для друку через браузер)</target>
       </trans-unit>
       <trans-unit id="4NNx9U." resname="Docx">
         <source>Microsoft Word (DOCX)</source>
@@ -29,7 +29,7 @@
       </trans-unit>
       <trans-unit id="QqvUWFt" resname="Ods">
         <source>Open Office (ODS - Spreadsheet)</source>
-        <target state="translated">Open Office (Spreadsheet)</target>
+        <target state="translated">LibreOffice (ODS - Електронні таблиці)</target>
       </trans-unit>
       <trans-unit id="sjwwrr8" resname="Xlsx">
         <source>Microsoft Excel (XLSX)</source>
@@ -42,11 +42,11 @@
       <!-- Renderer -->
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="translated">صورتحساب</target>
+        <target state="translated">Рахунок</target>
       </trans-unit>
       <trans-unit id="jV1SPRL" resname="default-pdf">
         <source>default-pdf</source>
-        <target state="translated">صورتحساب</target>
+        <target state="translated">Рахунок</target>
       </trans-unit>
       <trans-unit id="v5KgTmC" resname="xml">
         <source>xml</source>
@@ -58,27 +58,27 @@
       </trans-unit>
       <trans-unit id="mC2ePrm" resname="text">
         <source>text</source>
-        <target state="translated">متن</target>
+        <target state="translated">Текст</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
-        <target state="translated">تایم شیت</target>
+        <target state="translated">Табель</target>
       </trans-unit>
-      <trans-unit id="M82JFjR" resname="freelancer">
+      <trans-unit id="M82JFjR" resname="freelancer" approved="no">
         <source>Single service date</source>
-        <target state="translated">تاریخ تک سرویس</target>
+        <target state="translated">Єдина сервісна дата</target>
       </trans-unit>
       <trans-unit id="XUbhXLF" resname="open-spreadsheet">
         <source>open-spreadsheet</source>
-        <target state="translated">صورتحساب</target>
+        <target state="translated">Рахунок</target>
       </trans-unit>
       <trans-unit id="U_VP0mi" resname="spreadsheet">
         <source>spreadsheet</source>
-        <target state="translated">صورتحساب</target>
+        <target state="translated">Рахунок</target>
       </trans-unit>
       <trans-unit id="8WjM3ZF" resname="company">
         <source>company</source>
-        <target state="translated">صورتحساب</target>
+        <target state="translated">Рахунок</target>
       </trans-unit>
     </body>
   </file>

@@ -4,39 +4,39 @@
     <body>
       <trans-unit id="1inO2IF" resname="label.invoice_calculator">
         <source>label.invoice_calculator</source>
-        <target state="needs-translation">Sum calculation</target>
+        <target state="translated">محاسبه مجموع</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="needs-translation">Default: one entry per time record</target>
+        <target state="translated">پیش فرض: یک ورودی در هر رکورد زمانی</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short">
         <source>short</source>
-        <target state="needs-translation">Hours: records summed up, one entry total</target>
+        <target state="translated">ساعت: رکوردها خلاصه شده، یک ورودی درکل</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
-        <target state="needs-translation">User: one entry per user</target>
+        <target state="translated">کاربر: یک ورودی برای هر کاربر</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
-        <target state="needs-translation">Activity: one entry per activity</target>
+        <target state="translated">فعالیت: یک ورودی در هر فعالیت</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
-        <target state="needs-translation">Project: one entry per project</target>
+        <target state="translated">پروژه: یک ورودی در هر پروژه</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="needs-translation">Date: one entry per day (uses start date)</target>
+        <target state="translated">تاریخ: یک ورودی در روز (از تاریخ شروع استفاده می کند)</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
-        <target state="needs-translation">Weekly: one entry per week (uses start date)</target>
+        <target state="translated">هفتگی: یک ورودی در هفته (از تاریخ شروع استفاده می کند)</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price">
         <source>price</source>
-        <target state="needs-translation">Price: one entry per price</target>
+        <target state="translated">قیمت: یک ورودی به ازای هر قیمت</target>
       </trans-unit>
     </body>
   </file>
