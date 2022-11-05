@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Security;
+namespace App\API\Authentication;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;

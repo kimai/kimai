@@ -9,7 +9,7 @@
 
 namespace App\Tests\API\Authentication;
 
-use App\API\Authentication\ApiAuthenticator;
+use App\API\Authentication\TokenAuthenticator;
 use App\Entity\User;
 use App\Repository\ApiUserRepository;
 use PHPUnit\Framework\TestCase;
@@ -23,11 +23,11 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCre
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
 /**
- * @covers \App\API\Authentication\ApiAuthenticator
+ * @covers \App\API\Authentication\TokenAuthenticator
  */
-class ApiAuthenticatorTest extends TestCase
+class TokenAuthenticatorTest extends TestCase
 {
-    private function getSut(bool $verify = true): ApiAuthenticator
+    private function getSut(bool $verify = true): TokenAuthenticator
     {
         $userProvider = $this->createMock(ApiUserRepository::class);
         $passwordHasherFactory = $this->createMock(PasswordHasherFactoryInterface::class);
@@ -35,7 +35,7 @@ class ApiAuthenticatorTest extends TestCase
         $passwordHasher->method('verify')->willReturn($verify);
         $passwordHasherFactory->method('getPasswordHasher')->willReturn($passwordHasher);
 
-        return new ApiAuthenticator($userProvider, $passwordHasherFactory);
+        return new TokenAuthenticator($userProvider, $passwordHasherFactory);
     }
 
     public function testSupports()
@@ -46,13 +46,17 @@ class ApiAuthenticatorTest extends TestCase
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => 'dfghj/api/doc/dfghj']);
         self::assertFalse($sut->supports($request));
 
-        // supporting because path starts with /api
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/api/fooo']);
-        self::assertTrue($sut->supports($request));
+        self::assertFalse($sut->supports($request));
 
-        // not supporting because session is used
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/api/fooo', 'HTTP_X-AUTH-SESSION' => true]);
         self::assertFalse($sut->supports($request));
+
+        $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/api/fooo', 'HTTP_X-AUTH-USER' => 'foo', 'HTTP_X-AUTH-TOKEN' => 'bar']);
+        self::assertTrue($sut->supports($request));
+
+        $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/api/fooo', 'HTTP_X-AUTH-USER' => 'foo', 'HTTP_X-AUTH-TOKEN' => 'bar', 'HTTP_X-AUTH-SESSION' => true]);
+        self::assertTrue($sut->supports($request));
     }
 
     public function testAuthenticateWithMissingAuthHeader()

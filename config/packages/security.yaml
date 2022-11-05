@@ -19,16 +19,14 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-#        api:
-#            request_matcher: App\Security\ApiRequestMatcher
-#            user_checker: App\Security\UserChecker
-#            anonymous: false
-#            stateless: true
-#            remember_me: false
-#            provider: chain_provider
-#            guard:
-#                authenticators:
-#                    - App\Security\TokenAuthenticator
+        api:
+            request_matcher: App\API\Authentication\ApiRequestMatcher
+            user_checker: App\Security\UserChecker
+            stateless: true
+            remember_me: false
+            provider: chain_provider
+            custom_authenticators:
+                - App\API\Authentication\SessionAuthenticator
 
         secured_area:
             kimai_ldap: ~
@@ -39,7 +37,7 @@ security:
             entry_point: form_login
 
             custom_authenticators:
-                - App\API\Authentication\ApiAuthenticator
+                - App\API\Authentication\TokenAuthenticator
                 - App\Saml\SamlAuthenticator
 
             remember_me:

@@ -1,0 +1,57 @@
+<?php
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace App\API\Authentication;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
+
+class SessionAuthenticator extends AbstractAuthenticator
+{
+    public const HEADER_JAVASCRIPT = 'X-AUTH-SESSION';
+
+    public function __construct(private TokenAuthenticator $authenticator)
+    {
+    }
+
+    public function supports(Request $request): ?bool
+    {
+        // API docs can only be access, when the user is logged in
+        if (strpos($request->getRequestUri(), '/api/doc') !== false) {
+            return false;
+        }
+
+        // only try to use this authenticator, when the URL contains the /api/ path
+        if (strpos($request->getRequestUri(), '/api/') !== false) {
+            // javascript requests can set a header to disable this authenticator and use the existing session
+            return !$request->headers->has(self::HEADER_JAVASCRIPT);
+        }
+
+        return false;
+    }
+
+    public function authenticate(Request $request): Passport
+    {
+        return $this->authenticator->authenticate($request);
+    }
+
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
+    {
+        return $this->authenticator->onAuthenticationSuccess($request, $token, $firewallName);
+    }
+
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
+    {
+        return $this->authenticator->onAuthenticationFailure($request, $exception);
+    }
+}
