@@ -35,7 +35,7 @@
         "friendsofsymfony/rest-bundle": "^3.0",
         "gedmo/doctrine-extensions": "^3.6",
         "jeroendesloovere/vcard": "^1.7",
-        "jms/serializer-bundle": "^4.0",
+        "jms/serializer-bundle": "^5.0",
         "kevinpapst/tabler-bundle": "dev-main",
         "league/csv": "^9.4",
         "mpdf/mpdf": "^8.0",
