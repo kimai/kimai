@@ -43,12 +43,12 @@ class UserValidator extends ConstraintValidator
     {
         if ($user->hasEmail()) {
             $this->validateEmailExists($user->getId(), $user->getEmail(), 'email', User::USER_EXISTING_EMAIL, $context);
-            $this->validateEmailExists($user->getId(), $user->getUserIdentifier(), 'username', User::USER_EXISTING_NAME_AS_EMAIL, $context);
+            $this->validateUsernameExists($user->getId(), $user->getEmail(), 'email', User::USER_EXISTING_EMAIL_AS_NAME, $context);
         }
 
         if ($user->hasUsername()) {
+            $this->validateEmailExists($user->getId(), $user->getUserIdentifier(), 'username', User::USER_EXISTING_NAME_AS_EMAIL, $context);
             $this->validateUsernameExists($user->getId(), $user->getUserIdentifier(), 'username', User::USER_EXISTING_NAME, $context);
-            $this->validateUsernameExists($user->getId(), $user->getEmail(), 'email', User::USER_EXISTING_EMAIL_AS_NAME, $context);
         }
     }
 
