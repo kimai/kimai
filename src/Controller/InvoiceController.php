@@ -591,13 +591,17 @@ final class InvoiceController extends AbstractController
 
         foreach ($documentRepository->findBuiltIn() as $doc) {
             if ($doc->getId() === $id) {
-                throw new \Exception('Document is built-in and cannot be deleted');
+                $this->flashError('Document is built-in and cannot be deleted.');
+
+                return $this->redirectToRoute('admin_invoice_document_upload');
             }
         }
 
         foreach ($this->templateRepository->findAll() as $template) {
             if ($template->getRenderer() === $id) {
-                throw new \Exception('Document is used and cannot be deleted');
+                $this->flashError('Document is used and cannot be deleted.');
+
+                return $this->redirectToRoute('admin_invoice_document_upload');
             }
         }
 
