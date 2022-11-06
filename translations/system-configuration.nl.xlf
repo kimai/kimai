@@ -246,6 +246,26 @@
         <source>theme.avatar_url</source>
         <target>Sta het gebruik van URLs voor profielfoto's toe</target>
       </trans-unit>
+      <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
+        <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
+        <target state="translated">Door komma's gescheiden lijst met HTML kleur-codes. Kleur namen kunnen ingesteld worden door voor de kleur code de naam te plaatsen gescheiden door '|', vb: Wit|#ffffff,Zwart|#000000.</target>
+      </trans-unit>
+      <trans-unit id="g1q7hKi" resname="label.timesheet.rules.allow_zero_duration">
+        <source>label.timesheet.rules.allow_zero_duration</source>
+        <target state="translated">Sta tijdinvoer met lege duur toe</target>
+      </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target state="translated">Aantal velden overgenomen van vorige weken</target>
+      </trans-unit>
+      <trans-unit id="QxQOG3e" resname="label.quick_entry.recent_activity_weeks">
+        <source>label.quick_entry.recent_activity_weeks</source>
+        <target state="translated">Neem velden van de laatste X weken (leeg of 0 voor altijd)</target>
+      </trans-unit>
+      <trans-unit id="7Efrrn5" resname="label.quick_entry.minimum_rows">
+        <source>label.quick_entry.minimum_rows</source>
+        <target state="translated">Minimale aantal rijen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

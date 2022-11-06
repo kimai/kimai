@@ -776,15 +776,15 @@
       </trans-unit>
       <trans-unit id="X_NRsed" resname="status.new">
         <source>status.new</source>
-        <target>חדש</target>
+        <target state="translated">חדשה</target>
       </trans-unit>
       <trans-unit id="Uvo1CbP" resname="status.pending">
         <source>status.pending</source>
-        <target>ממתין</target>
+        <target state="translated">ממתינה</target>
       </trans-unit>
       <trans-unit id="PHJwR4w" resname="status.paid">
         <source>status.paid</source>
-        <target>שולם</target>
+        <target state="translated">שולמה</target>
       </trans-unit>
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
@@ -1096,7 +1096,7 @@
       </trans-unit>
       <trans-unit id="gT9W2pZ" resname="status.canceled">
         <source>status.canceled</source>
-        <target>בוטל</target>
+        <target state="translated">בוטלה</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>

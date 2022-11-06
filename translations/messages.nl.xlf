@@ -1116,7 +1116,7 @@
       </trans-unit>
       <trans-unit id="fVA3M2x" resname="choice_pattern">
         <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
+        <target state="translated">Weergave van vermeldingen in selectie lijst</target>
       </trans-unit>
       <trans-unit id="KH2hgil" resname="account_number">
         <source>account_number</source>
@@ -1189,6 +1189,10 @@
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target state="translated">Automatisch</target>
+      </trans-unit>
+      <trans-unit id="74pEVx1" resname="invoiceText">
+        <source>invoiceText</source>
+        <target state="translated">Factuur text</target>
       </trans-unit>
       <trans-unit id="3Clo55j" resname="about.title">
         <source>about.title</source>

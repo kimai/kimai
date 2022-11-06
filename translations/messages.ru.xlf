@@ -496,11 +496,11 @@
       </trans-unit>
       <trans-unit id="4XKFnWh" resname="invoice.from">
         <source>invoice.from</source>
-        <target>Исполнитель</target>
+        <target state="translated">От</target>
       </trans-unit>
       <trans-unit id="hx7vsMA" resname="invoice.to">
         <source>invoice.to</source>
-        <target>Заказчик</target>
+        <target state="translated">К</target>
       </trans-unit>
       <trans-unit id="x_W5sV4" resname="invoice.number">
         <source>invoice.number</source>

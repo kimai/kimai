@@ -16,8 +16,8 @@
         <target>No</target>
       </trans-unit>
       <trans-unit id=".3dyBTq" resname="both">
-        <source>both</source>
-        <target>Both</target>
+        <source>Both</source>
+        <target state="needs-translation">Both</target>
       </trans-unit>
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
@@ -157,13 +157,8 @@
         <target>An email has been sent to %email%. It contains an activation link you must click to activate your account.</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
-        <source>resetting.check_email</source>
-        <target>
-          An email has been sent. It contains a link you must click to reset your password.
-          Note: You can only request a new password once within %tokenLifetime% hours.
-
-          If you don't get an email check your spam folder or try again.
-        </target>
+        <source>An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</source>
+        <target state="needs-translation">An email has been sent. It contains a link you must click to reset your password. Note: You can only request a new password once within %tokenLifetime% hours. If you don't get an email check your spam folder or try again.</target>
       </trans-unit>
       <trans-unit id="fQ3Prt4" resname="security.unlock.title">
         <source>security.unlock.title</source>
@@ -329,7 +324,7 @@
         <target>ID</target>
       </trans-unit>
       <trans-unit id="1C7xSXk" resname="visible">
-        <source>visible</source>
+        <source>Visible</source>
         <target>Visible</target>
       </trans-unit>
       <trans-unit id="AeMGtJO" resname="help.visible">

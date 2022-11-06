@@ -4,15 +4,15 @@
     <body>
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
-        <target state="needs-translation">Invoicenumber-Generator</target>
+        <target state="translated">مولد شماره فاکتور</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="needs-translation">Date</target>
+        <target state="translated">تاریخ</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="needs-translation">Configured format</target>
+        <target state="translated">فرمت پیکربندی شده</target>
       </trans-unit>
     </body>
   </file>
