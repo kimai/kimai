@@ -231,7 +231,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
 
         if ($extraFields) {
             self::assertArrayHasKey('errors', $result['errors']);
-            self::assertEquals($result['errors']['errors'][0], 'This form should not contain extra fields.');
+            self::assertEquals('This form should not contain extra fields.', $result['errors']['errors'][0]);
         }
 
         if (\count($globalError) > 0) {
