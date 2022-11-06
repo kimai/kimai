@@ -47,10 +47,13 @@ class TokenAuthenticatorTest extends TestCase
         self::assertFalse($sut->supports($request));
 
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/api/fooo']);
+        self::assertTrue($sut->supports($request));
+
+        $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/api/doc']);
         self::assertFalse($sut->supports($request));
 
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/api/fooo', 'HTTP_X-AUTH-SESSION' => true]);
-        self::assertFalse($sut->supports($request));
+        self::assertTrue($sut->supports($request));
 
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/api/fooo', 'HTTP_X-AUTH-USER' => 'foo', 'HTTP_X-AUTH-TOKEN' => 'bar']);
         self::assertTrue($sut->supports($request));
