@@ -27,12 +27,12 @@ class SessionAuthenticator extends AbstractAuthenticator
     public function supports(Request $request): ?bool
     {
         // API docs can only be access, when the user is logged in
-        if (strpos($request->getRequestUri(), '/api/doc') !== false) {
+        if (str_contains($request->getRequestUri(), '/api/doc')) {
             return false;
         }
 
         // only try to use this authenticator, when the URL contains the /api/ path
-        if (strpos($request->getRequestUri(), '/api/') !== false) {
+        if (str_contains($request->getRequestUri(), '/api/')) {
             // javascript requests can set a header to disable this authenticator and use the existing session
             return !$request->headers->has(self::HEADER_JAVASCRIPT);
         }

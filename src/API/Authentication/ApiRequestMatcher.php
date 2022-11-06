@@ -16,14 +16,16 @@ class ApiRequestMatcher implements RequestMatcherInterface
 {
     public function matches(Request $request): bool
     {
-        if (strpos($request->getRequestUri(), '/api/doc') !== false) {
+        if (str_contains($request->getRequestUri(), '/api/doc')) {
             return false;
         }
 
-        if (!preg_match('{^/api/}', rawurldecode($request->getPathInfo()))) {
+        if (str_contains($request->getRequestUri(), '/api/')) {
             return false;
         }
 
-        return $request->headers->has(TokenAuthenticator::HEADER_USERNAME) && $request->headers->has(TokenAuthenticator::HEADER_TOKEN);
+        return !$request->headers->has(SessionAuthenticator::HEADER_JAVASCRIPT) &&
+                $request->headers->has(TokenAuthenticator::HEADER_USERNAME) &&
+                $request->headers->has(TokenAuthenticator::HEADER_TOKEN);
     }
 }
