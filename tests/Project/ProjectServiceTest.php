@@ -165,8 +165,8 @@ class ProjectServiceTest extends TestCase
 
         $sut = $this->getSut($dispatcher, null, true);
 
-        $team1 = new Team();
-        $team2 = new Team();
+        $team1 = new Team('foo');
+        $team2 = new Team('bar');
 
         $user = new User();
         $user->addTeam($team1);

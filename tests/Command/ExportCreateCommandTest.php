@@ -36,10 +36,7 @@ class ExportCreateCommandTest extends KernelTestCase
 {
     use KernelTestTrait;
 
-    /**
-     * @var Application
-     */
-    protected $application;
+    protected Application $application;
 
     private function clearExportFiles()
     {
@@ -70,7 +67,7 @@ class ExportCreateCommandTest extends KernelTestCase
     {
         $kernel = self::bootKernel();
         $application = new Application($kernel);
-        $container = self::$container;
+        $container = self::getContainer();
 
         $application->add(new ExportCreateCommand(
             $container->get(ServiceExport::class),
