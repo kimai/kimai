@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="uk" datatype="plaintext" original="about.en.xlf">
+    <body>
+      <trans-unit id="3Clo55j" resname="about.title">
+        <source>about.title</source>
+        <target state="translated">Про Kimai</target>
+      </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support">
+        <source>support</source>
+        <target state="translated">Підтримка</target>
+      </trans-unit>
+      <trans-unit id="dHqPOYO" resname="website">
+        <source>website</source>
+        <target state="translated">Домашня сторінка</target>
+      </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help">
+        <source>help</source>
+        <target state="translated">Документація</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate">
+        <source>donate</source>
+        <target state="translated">Пожертвувати на майбутнє Kimai</target>
+      </trans-unit>
+      <trans-unit id="DwbowBh" resname="published_under">
+        <source>published_under</source>
+        <target state="translated">%kimai% публікується під</target>
+      </trans-unit>
+      <trans-unit id="A0nWoXZ" resname="special_thanks">
+        <source>special_thanks</source>
+        <target state="translated">Особлива подяка …</target>
+      </trans-unit>
+      <trans-unit id="L7cff3Q" resname="library_authors">
+        <source>library_authors</source>
+        <target state="translated">... авторам програмних бібліотек. Без вас Kimai був би неможливий 👍</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1192,7 +1192,7 @@
       </trans-unit>
       <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
-        <target state="needs-translation">Display of entries in selection lists</target>
+        <target state="translated">Weergave van vermeldingen in selectie lijst</target>
       </trans-unit>
       <trans-unit id="75kjTF9" resname="calendar.drag_and_drop.delete">
         <source>calendar.drag_and_drop.delete</source>
@@ -1273,6 +1273,10 @@
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
         <target state="translated">Automatisch</target>
+      </trans-unit>
+      <trans-unit id="74pEVx1" resname="label.invoiceText">
+        <source>label.invoiceText</source>
+        <target state="translated">Factuur text</target>
       </trans-unit>
     </body>
   </file>

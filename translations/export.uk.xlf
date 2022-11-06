@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="uk" datatype="plaintext" original="export.en.xlf">
+    <body>
+      <trans-unit id="oRRnhwf" resname="default.pdf.twig">
+        <source>Default</source>
+        <target state="translated">Типово</target>
+      </trans-unit>
+      <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig">
+        <source>With remaining budget</source>
+        <target state="translated">Із залишком бюджету</target>
+      </trans-unit>
+      <trans-unit id="AuhL8Sb" resname="default-internal.pdf.twig">
+        <source>With internal rates</source>
+        <target state="translated">З внутрішніми ставками</target>
+      </trans-unit>
+      <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig">
+        <source>Timesheet</source>
+        <target state="translated">Табель робочого часу</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

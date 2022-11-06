@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="uk" datatype="plaintext" original="messages.en.xlf">
+    <body>
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target state="translated">До складу команди повинен бути призначений щонайменше один лідер.</target>
+      </trans-unit>
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match.">
+        <source>The entered passwords don't match.</source>
+        <target state="translated">Введені паролі не збігаються.</target>
+      </trans-unit>
+      <trans-unit id="6u6oCwB" resname="The email is already used.">
+        <source>The email is already used.</source>
+        <target state="translated">Ця адреса ел.пошти вже використовується.</target>
+      </trans-unit>
+      <trans-unit id="S14XECA" resname="The username is already used.">
+        <source>The username is already used.</source>
+        <target state="translated">Це ім'я користувача вже використовується.</target>
+      </trans-unit>
+      <trans-unit id="ekO5eXI" resname="An equal username is already used.">
+        <source>An equal username is already used.</source>
+        <target state="translated">Таке саме ім'я користувача вже використовується.</target>
+      </trans-unit>
+      <trans-unit id="INlaCgW" resname="An equal email is already used.">
+        <source>An equal email is already used.</source>
+        <target state="translated">Така сама електронна пошта вже використовується.</target>
+      </trans-unit>
+      <trans-unit id="IkNxbBI" resname="This value is not a valid role.">
+        <source>This value is not a valid role.</source>
+        <target state="translated">Це значення не є дійсною роллю.</target>
+      </trans-unit>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
+        <source>The end date must not be before the start date.</source>
+        <target state="translated">Дата закінчення не повинна передувати даті початку.</target>
+      </trans-unit>
+      <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
+        <source>The begin date cannot be in the future.</source>
+        <target state="translated">Дата початку не може бути в майбутньому.</target>
+      </trans-unit>
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
+        <source>Duration cannot be zero.</source>
+        <target state="translated">Порожня тривалість не допускається.</target>
+      </trans-unit>
+      <trans-unit id="1V6BsD_" resname="You must select at least one user or team.">
+        <source>You must select at least one user or team.</source>
+        <target state="translated">Ви повинні вибрати хоча б одного користувача або команду.</target>
+      </trans-unit>
+      <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date.">
+        <source>This period is locked. Please choose a later date.</source>
+        <target state="translated">Цей період заблокований. Виберіть пізнішу дату.</target>
+      </trans-unit>
+      <trans-unit id="u2wjm2i" resname="You already have an entry for this time.">
+        <source>You already have an entry for this time.</source>
+        <target state="translated">У Вас вже є запис на цей час.</target>
+      </trans-unit>
+      <trans-unit id="VJSZSD0" resname="The given value is not a valid time.">
+        <source>The given value is not a valid time.</source>
+        <target state="translated">Задане значення не є дійсним часом.</target>
+      </trans-unit>
+      <trans-unit id="1oKCOa5" resname="The budget is completely used.">
+        <source>The budget is completely used.</source>
+        <target state="translated">Бюджет вичерпано. З доступних %budget% поки що заброньовано %used%, %free% ще можна використати.</target>
+      </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">Вибачте, бюджет вичерпано.</target>
+      </trans-unit>
+      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target state="translated">Максимально дозволено {{ value }} годин.</target>
+      </trans-unit>
+      <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
+        <source>An activity needs to be selected.</source>
+        <target state="translated">Потрібно обрати діяльність.</target>
+      </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected.">
+        <source>A project needs to be selected.</source>
+        <target state="translated">Потрібно обрати проєкт.</target>
+      </trans-unit>
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
+        <source>This timesheet is already exported.</source>
+        <target state="translated">Цей табель уже експортований.</target>
+      </trans-unit>
+      <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again.">
+        <source>This invoice document cannot be used. Please rename the file and upload it again.</source>
+        <target state="translated">Цей рахунок не може бути використаний. Будь ласка, перейменуйте файл і завантажте його знову.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
