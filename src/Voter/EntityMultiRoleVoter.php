@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 final class EntityMultiRoleVoter extends Voter
 {
     /**
-     * support rules based on the given activity
+     * support rules based on the given activity/project/customer
      */
     private const ALLOWED_ATTRIBUTES = [
         'budget_money',
