@@ -92,15 +92,15 @@ class UserValidatorTest extends ConstraintValidatorTestCase
             ->buildViolation('The email is already used.')
             ->atPath('property.path.email')
             ->setCode(User::USER_EXISTING_EMAIL)
+            ->buildNextViolation('An equal username is already used.')
+            ->atPath('property.path.email')
+            ->setCode(User::USER_EXISTING_EMAIL_AS_NAME)
             ->buildNextViolation('An equal email is already used.')
             ->atPath('property.path.username')
             ->setCode(User::USER_EXISTING_NAME_AS_EMAIL)
             ->buildNextViolation('The username is already used.')
             ->atPath('property.path.username')
             ->setCode(User::USER_EXISTING_NAME)
-            ->buildNextViolation('An equal username is already used.')
-            ->atPath('property.path.email')
-            ->setCode(User::USER_EXISTING_EMAIL_AS_NAME)
             ->assertRaised();
     }
 }

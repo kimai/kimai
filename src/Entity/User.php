@@ -35,7 +35,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @UniqueEntity("username")
  * @UniqueEntity("email")
- * @Constraints\User(groups={"UserCreate", "Registration", "Default"})
+ * @Constraints\User(groups={"UserCreate", "Registration", "Default", "Profile"})
  *
  * @Serializer\ExclusionPolicy("all")
  * @Serializer\VirtualProperty(

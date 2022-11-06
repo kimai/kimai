@@ -44,15 +44,14 @@ class UserValidator extends ConstraintValidator
 
     protected function validateUser(UserEntity $user, ExecutionContextInterface $context)
     {
-        $matchedEmail = false;
         if ($user->getEmail() !== null) {
             $this->validateEmailExists($user->getId(), $user->getEmail(), 'email', User::USER_EXISTING_EMAIL, $context);
-            $this->validateEmailExists($user->getId(), $user->getUsername(), 'username', User::USER_EXISTING_NAME_AS_EMAIL, $context);
+            $this->validateUsernameExists($user->getId(), $user->getEmail(), 'email', User::USER_EXISTING_EMAIL_AS_NAME, $context);
         }
 
         if ($user->getUsername() !== null) {
+            $this->validateEmailExists($user->getId(), $user->getUsername(), 'username', User::USER_EXISTING_NAME_AS_EMAIL, $context);
             $this->validateUsernameExists($user->getId(), $user->getUsername(), 'username', User::USER_EXISTING_NAME, $context);
-            $this->validateUsernameExists($user->getId(), $user->getEmail(), 'email', User::USER_EXISTING_EMAIL_AS_NAME, $context);
         }
     }
 
