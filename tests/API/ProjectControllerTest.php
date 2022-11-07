@@ -280,7 +280,6 @@ class ProjectControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'customer' => 1,
-            'visible' => true,
             'orderDate' => '2018-04-17',
             'start' => '2019-02-01',
             'end' => '2020-02-08',
@@ -295,11 +294,13 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
         $this->assertNotEmpty($result['id']);
-        self::assertTrue($result['globalActivities']);
         self::assertEquals('2018-04-17', $result['orderDate']);
         self::assertEquals('2019-02-01', $result['start']);
         self::assertEquals('2020-02-08', $result['end']);
         self::assertEquals('1234567890/WXYZ/SUBPROJECT/1234/CONTRACT/EMPLOYEE1', $result['orderNumber']);
+        self::assertFalse($result['globalActivities']);
+        self::assertFalse($result['billable']);
+        self::assertFalse($result['visible']);
     }
 
     public function testPostActionWithOtherFields()
@@ -308,7 +309,32 @@ class ProjectControllerTest extends APIControllerBaseTest
         $data = [
             'name' => 'foo',
             'customer' => 1,
-            'globalActivities' => '0',
+            'globalActivities' => true,
+            'billable' => 1,
+            'visible' => '',
+        ];
+        $this->request($client, '/api/projects', 'POST', [], json_encode($data));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+        $this->assertIsArray($result);
+        self::assertApiResponseTypeStructure('ProjectEntity', $result);
+        $this->assertNotEmpty($result['id']);
+        self::assertEquals('foo', $result['name']);
+        self::assertTrue($result['globalActivities']);
+        self::assertTrue($result['billable']);
+        self::assertTrue($result['visible']);
+    }
+
+    public function testPostActionWithOtherFieldsAndFalse()
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'customer' => 1,
+            'globalActivities' => false,
+            'billable' => false,
+            'visible' => false,
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -319,15 +345,19 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['name']);
         self::assertFalse($result['globalActivities']);
+        self::assertFalse($result['billable']);
+        self::assertFalse($result['visible']);
     }
 
-    public function testPostActionWithOtherFields2()
+    public function testPostActionWithOtherFields3()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
             'customer' => 1,
-            'globalActivities' => '1',
+            'globalActivities' => true,
+            'billable' => true,
+            'visible' => true,
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -338,6 +368,8 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['name']);
         self::assertTrue($result['globalActivities']);
+        self::assertTrue($result['billable']);
+        self::assertTrue($result['visible']);
     }
 
     public function testPostActionWithLeastFields()
@@ -355,6 +387,9 @@ class ProjectControllerTest extends APIControllerBaseTest
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
         $this->assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['name']);
+        self::assertFalse($result['globalActivities']);
+        self::assertFalse($result['billable']);
+        self::assertFalse($result['visible']);
     }
 
     public function testPostActionWithInvalidUser()

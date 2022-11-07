@@ -27,17 +27,19 @@ class TimesheetApiEditForm extends TimesheetEditForm
             return;
         }
 
-        $builder->add('billable', BillableType::class, []);
+        $builder->add('billable', BillableType::class);
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) {
                 $data = $event->getData();
                 if (\array_key_exists('billable', $data)) {
+                    $data['billableMode'] = Timesheet::BILLABLE_AUTOMATIC;
                     $event->getForm()->add('billableMode', TimesheetBillableType::class, []);
-                    if ($data['billable'] === true) {
+                    $billable = $data['billable'] === null ? false : (bool) $data['billable'];
+                    if ($billable === true) {
                         $data['billableMode'] = Timesheet::BILLABLE_YES;
-                    } elseif ($data['billable'] === false) {
+                    } elseif ($billable === false) {
                         $data['billableMode'] = Timesheet::BILLABLE_NO;
                     }
                 }
@@ -53,7 +55,9 @@ class TimesheetApiEditForm extends TimesheetEditForm
     {
         parent::buildForm($builder, $options);
 
-        $builder->remove('metaFields');
+        if ($builder->has('metaFields')) {
+            $builder->remove('metaFields');
+        }
 
         if ($builder->has('duration')) {
             $builder->remove('duration');

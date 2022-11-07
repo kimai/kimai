@@ -13,7 +13,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 **!! This release requires minimum PHP version to 8.1 !!**
 
-- Removed unused `public/avatars/` directory from git
+- Removed unused `public/avatars/` directory 
 - Removed support for custom translation files (use TranslationBundle instead or write your own plugin)
 - local.yaml is not compatible with old version, best is to remove it before the update and then re-create it after everything works 
   - dashboard default config

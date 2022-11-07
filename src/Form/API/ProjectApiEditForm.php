@@ -10,36 +10,7 @@
 namespace App\Form\API;
 
 use App\Form\ProjectEditForm;
-use App\Form\Type\APITrueFalseType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProjectApiEditForm extends ProjectEditForm
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        parent::buildForm($builder, $options);
-
-        $builder->remove('metaFields');
-        $builder->remove('globalActivities');
-        $builder->add('globalActivities', APITrueFalseType::class, [
-            'label' => 'globalActivities',
-            'empty_data' => '1',
-        ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        parent::configureOptions($resolver);
-
-        $resolver->setDefaults([
-            'csrf_protection' => false,
-        ]);
-    }
 }

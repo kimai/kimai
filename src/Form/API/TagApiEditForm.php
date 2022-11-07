@@ -10,19 +10,7 @@
 namespace App\Form\API;
 
 use App\Form\TagEditForm;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TagApiEditForm extends TagEditForm
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        parent::configureOptions($resolver);
-
-        $resolver->setDefaults([
-            'csrf_protection' => false,
-        ]);
-    }
 }

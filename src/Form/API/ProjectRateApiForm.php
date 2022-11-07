@@ -10,19 +10,7 @@
 namespace App\Form\API;
 
 use App\Form\ProjectRateForm;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProjectRateApiForm extends ProjectRateForm
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        parent::configureOptions($resolver);
-
-        $resolver->setDefaults([
-            'csrf_protection' => false,
-        ]);
-    }
 }
