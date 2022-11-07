@@ -4,4 +4,5 @@
  */
 require('gridstack/dist/gridstack.min.css');
 require('gridstack/dist/gridstack-extra.min.css');
-global.GridStack = require('gridstack/dist/gridstack-h5');
+import { GridStack } from 'gridstack';
+global.GridStack = GridStack;
