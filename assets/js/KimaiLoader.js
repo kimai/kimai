@@ -47,11 +47,7 @@ export default class KimaiLoader {
     constructor(configurations, translations) {
         // set the current locale for all javascript components
         Settings.defaultLocale = configurations['locale'].replace('_', '-').toLowerCase();
-        console.log(configurations);
-        console.log(Settings.defaultZone);
-        console.log(Settings.defaultZone);
-
-        //Settings.defaultZone = '';
+        Settings.defaultZone = configurations['timezone'];
 
         const kimai = new KimaiContainer(
             new KimaiConfiguration(configurations),

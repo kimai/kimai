@@ -447,9 +447,12 @@ class LocaleFormatExtensionsTest extends TestCase
             'defaultColor' => '#d2d6de',
             'twentyFourHours' => false,
             'updateBrowserTitle' => false,
+            'timezone' => 'America/Edmonton',
         ];
+        $user = new User();
+        $user->setTimezone('America/Edmonton');
         $sut = $this->getSut('en', $this->localeEn);
-        self::assertEquals($expected, $sut->getJavascriptConfiguration(new User()));
+        self::assertEquals($expected, $sut->getJavascriptConfiguration($user));
     }
 
     public function testDurationDecimal()

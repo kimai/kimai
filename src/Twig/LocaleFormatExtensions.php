@@ -243,6 +243,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
             'defaultColor' => Constants::DEFAULT_COLOR,
             'twentyFourHours' => $this->localeService->is24Hour($this->locale),
             'updateBrowserTitle' => (bool) $user->getPreferenceValue('update_browser_title'),
+            'timezone' => $user->getTimezone(),
         ];
     }
 
