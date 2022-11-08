@@ -28,7 +28,8 @@ class Configuration
     #[Assert\NotNull]
     #[Assert\Length(min: 2, max: 100)]
     private ?string $name = null;
-    #[ORM\Column(name: 'value', type: 'text', nullable: true)]
+    #[ORM\Column(name: 'value', type: 'text', length: 65535, nullable: true)]
+    #[Assert\Length(max: 65535)]
     private ?string $value = null;
 
     public function getId(): ?int
