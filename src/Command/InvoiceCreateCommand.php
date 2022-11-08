@@ -66,7 +66,6 @@ final class InvoiceCreateCommand extends Command
             ->addOption('by-project', null, InputOption::VALUE_NONE, 'If set, one invoice for each active project in the given timerange is created')
             ->addOption('set-exported', null, InputOption::VALUE_NONE, 'Whether the invoice items should be marked as exported')
             ->addOption('template', null, InputOption::VALUE_OPTIONAL, 'Invoice template', null)
-            ->addOption('template-meta', null, InputOption::VALUE_OPTIONAL, 'Fetch invoice template from a meta-field', null)
             ->addOption('search', null, InputOption::VALUE_OPTIONAL, 'Search term to filter invoice entries', null)
             ->addOption('exported', null, InputOption::VALUE_OPTIONAL, 'Exported filter for invoice entries (possible values: exported, all), by default only "not exported" items are fetched', null)
             ->addOption('preview', null, InputOption::VALUE_OPTIONAL, 'Absolute path for a rendered preview of the invoice, which will neither be saved nor the items be marked as exported.', null)
@@ -143,12 +142,6 @@ final class InvoiceCreateCommand extends Command
         $projectIDs = $input->getOption('project');
         if (!$byActiveCustomer && !$byActiveProject && empty($customersIDs) && empty($projectIDs)) {
             $io->error('Could not determine generation mode, you need to set one of: customer, project, by-customer, by-project');
-
-            return 1;
-        }
-
-        if (null === $input->getOption('template') && null === $input->getOption('template-meta')) {
-            $io->error('You must either pass the "template" or "template-meta" option');
 
             return 1;
         }
@@ -278,7 +271,7 @@ final class InvoiceCreateCommand extends Command
             $query->addProject($project);
             $query->addCustomer($project->getCustomer());
 
-            $tpl = $this->getTemplateForProject($input, $project);
+            $tpl = $this->getTemplateForCustomer($input, $project->getCustomer());
             if (null === $tpl) {
                 $io->warning(sprintf('Could not find invoice template for project "%s", skipping!', $project->getName()));
                 continue;
@@ -434,49 +427,17 @@ final class InvoiceCreateCommand extends Command
     {
         $template = $input->getOption('template');
 
-        $meta = $input->getOption('template-meta');
-        if (!empty($meta)) {
-            $metaField = $customer->getMetaField($meta);
-            if (null !== $metaField && !empty($metaField->getValue())) {
-                $template = $metaField->getValue();
-            }
-        }
-
         if (null === $template) {
-            return null;
+            return $customer->getInvoiceTemplate();
         }
 
-        return $this->findTemplate($template);
-    }
-
-    private function findTemplate(string $idOrName): ?InvoiceTemplate
-    {
-        $tpl = $this->invoiceTemplateRepository->find($idOrName);
+        $tpl = $this->invoiceTemplateRepository->find($template);
 
         if (null !== $tpl) {
             return $tpl;
         }
 
-        return $this->invoiceTemplateRepository->findOneBy(['name' => $idOrName]);
-    }
-
-    private function getTemplateForProject(InputInterface $input, Project $project): ?InvoiceTemplate
-    {
-        $template = $this->getTemplateForCustomer($input, $project->getCustomer());
-
-        $meta = $input->getOption('template-meta');
-        if (!empty($meta)) {
-            $metaField = $project->getMetaField($meta);
-            if (null !== $metaField && !empty($metaField->getValue())) {
-                $template = $metaField->getValue();
-            }
-        }
-
-        if (null === $template) {
-            return null;
-        }
-
-        return $this->findTemplate($template);
+        return $this->invoiceTemplateRepository->findOneBy(['name' => $template]);
     }
 
     /**
