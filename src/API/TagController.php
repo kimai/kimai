@@ -134,7 +134,6 @@ final class TagController extends BaseApiController
      * )
      * @Rest\Delete(path="/{id}", name="delete_tag")
      *
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */

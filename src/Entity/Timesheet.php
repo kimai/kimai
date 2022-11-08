@@ -90,7 +90,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
     #[Assert\NotNull]
     private ?DateTime $date = null;
     /**
-     *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      */
     #[ORM\Column(name: 'start_time', type: 'datetime', nullable: false)]
@@ -101,7 +100,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
     #[Serializer\Accessor(getter: 'getBegin')]
     private ?DateTime $begin = null;
     /**
-     *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      */
     #[ORM\Column(name: 'end_time', type: 'datetime', nullable: true)]

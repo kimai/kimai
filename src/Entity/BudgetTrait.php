@@ -19,7 +19,6 @@ trait BudgetTrait
     /**
      * The total monetary budget, will be zero if not configured.
      *
-     *
      * @Exporter\Expose(label="budget", type="float")
      */
     #[ORM\Column(name: 'budget', type: 'float', nullable: false)]
@@ -30,7 +29,6 @@ trait BudgetTrait
     private float $budget = 0.00;
     /**
      * The time budget in seconds, will be zero if not configured.
-     *
      *
      * @Exporter\Expose(label="timeBudget", type="duration")
      */

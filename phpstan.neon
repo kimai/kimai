@@ -19,3 +19,6 @@ parameters:
         allowNullablePropertyForRequiredField: true
     symfony:
         containerXmlPath: %rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml
+    ignoreErrors:
+        - '#Property (.*) is never read, only written.#'
+

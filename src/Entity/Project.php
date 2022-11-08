@@ -42,7 +42,6 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     /**
      * Unique Project ID
      *
-     *
      * @Exporter\Expose(label="id", type="integer")
      */
     #[ORM\Column(name: 'id', type: 'integer')]
@@ -65,7 +64,6 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     /**
      * Project name
      *
-     *
      * @Exporter\Expose(label="name")
      */
     #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
@@ -77,7 +75,6 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     /**
      * Project order number
      *
-     *
      * @Exporter\Expose(label="orderNumber")
      */
     #[ORM\Column(name: 'order_number', type: 'text', length: 50, nullable: true)]
@@ -87,7 +84,6 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     private ?string $orderNumber = null;
     /**
      * Order date for the project
-     *
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      *
@@ -102,7 +98,6 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     /**
      * Project start date (times before this date cannot be recorded)
      *
-     *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      *
      * @Exporter\Expose(label="project_start", type="datetime")
@@ -115,7 +110,6 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     private ?\DateTime $start = null;
     /**
      * Project end time (times after this date cannot be recorded)
-     *
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      *
@@ -131,7 +125,6 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     private ?string $timezone = null;
     private bool $localized = false;
     /**
-     *
      * @Exporter\Expose(label="comment")
      */
     #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
@@ -141,7 +134,6 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     /**
      * If the project is not visible, times cannot be recorded
      *
-     *
      * @Exporter\Expose(label="visible", type="boolean")
      */
     #[ORM\Column(name: 'visible', type: 'boolean', nullable: false)]
@@ -150,7 +142,6 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     #[Serializer\Groups(['Default'])]
     private bool $visible = true;
     /**
-     *
      * @Exporter\Expose(label="billable", type="boolean")
      */
     #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]

@@ -17,8 +17,6 @@ class Version
 {
     /**
      * Kimai Version, eg. "2.0.0"
-     *
-     * @phpstan-ignore-next-line
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -28,8 +26,6 @@ class Version
      * Kimai Version as integer, eg. 20000
      *
      * Follows the same logic as PHP_VERSION_ID, see https://www.php.net/manual/de/function.phpversion.php
-     *
-     * @phpstan-ignore-next-line
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -37,8 +33,6 @@ class Version
     private int $versionId = Constants::VERSION_ID;
     /**
      * Full version including status, eg: "2.0.0-stable"
-     *
-     * @phpstan-ignore-next-line
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -46,8 +40,6 @@ class Version
     private string $semver = Constants::VERSION . '-stable';
     /**
      * The version name
-     *
-     * @phpstan-ignore-next-line
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -55,8 +47,6 @@ class Version
     private string $name = Constants::NAME;
     /**
      * A full copyright notice
-     *
-     * @phpstan-ignore-next-line
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]

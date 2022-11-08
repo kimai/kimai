@@ -178,7 +178,6 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
     /**
      * Timezone of begin and end
      *
-     *
      * @Exporter\Expose(label="timezone")
      */
     #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: false)]

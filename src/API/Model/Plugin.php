@@ -17,8 +17,6 @@ class Plugin
 {
     /**
      * The plugin name, eg. "ExpensesBundle"
-     *
-     * @phpstan-ignore-next-line
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -26,8 +24,6 @@ class Plugin
     private ?string $name = null;
     /**
      * The plugin version, eg. "1.14"
-     *
-     * @phpstan-ignore-next-line
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]

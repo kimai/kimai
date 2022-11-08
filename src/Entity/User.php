@@ -72,7 +72,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * Unique User ID
      *
-     *
      * @Exporter\Expose(label="id", type="integer")
      */
     #[ORM\Id]
@@ -83,7 +82,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     private ?int $id = null;
     /**
      * The user alias will be displayed in the frontend instead of the username
-     *
      *
      * @Exporter\Expose(label="alias")
      */
@@ -213,7 +211,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     private ?\DateTime $passwordRequestedAt = null;
     /**
      * List of all role names
-     *
      *
      * @Constraints\Role(groups={"RolesUpdate"})
      */

@@ -16,8 +16,6 @@ final class TimesheetConfig
 {
     /**
      * The time-tracking mode, see also: https://www.kimai.org/documentation/timesheet.html#tracking-modes
-     *
-     * @phpstan-ignore-next-line
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -25,8 +23,6 @@ final class TimesheetConfig
     private string $trackingMode = 'default';
     /**
      * Default begin datetime in PHP format
-     *
-     * @phpstan-ignore-next-line
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -34,8 +30,6 @@ final class TimesheetConfig
     private string $defaultBeginTime = 'now';
     /**
      * How many running timesheets a user is allowed to have at the same time
-     *
-     * @phpstan-ignore-next-line
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -43,8 +37,6 @@ final class TimesheetConfig
     private int $activeEntriesHardLimit = 1;
     /**
      * Whether entries for future times are allowed
-     *
-     * @phpstan-ignore-next-line
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -52,8 +44,6 @@ final class TimesheetConfig
     private bool $isAllowFutureTimes = true;
     /**
      * Whether overlapping entries are allowed
-     *
-     * @phpstan-ignore-next-line
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]

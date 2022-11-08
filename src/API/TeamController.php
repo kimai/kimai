@@ -374,7 +374,6 @@ final class TeamController extends BaseApiController
      * )
      * @Rest\Post(path="/{id}/customers/{customerId}", name="post_team_customer", requirements={"id": "\d+", "customerId": "\d+"})
      *
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
@@ -431,7 +430,6 @@ final class TeamController extends BaseApiController
      *      required=true,
      * )
      * @Rest\Delete(path="/{id}/customers/{customerId}", name="delete_team_customer", requirements={"id": "\d+", "customerId": "\d+"})
-     *
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -490,7 +488,6 @@ final class TeamController extends BaseApiController
      * )
      * @Rest\Post(path="/{id}/projects/{projectId}", name="post_team_project", requirements={"id": "\d+", "projectId": "\d+"})
      *
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
@@ -547,7 +544,6 @@ final class TeamController extends BaseApiController
      *      required=true,
      * )
      * @Rest\Delete(path="/{id}/projects/{projectId}", name="delete_team_project", requirements={"id": "\d+", "projectId": "\d+"})
-     *
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
@@ -606,7 +602,6 @@ final class TeamController extends BaseApiController
      * )
      * @Rest\Post(path="/{id}/activities/{activityId}", name="post_team_activity", requirements={"id": "\d+", "activityId": "\d+"})
      *
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
@@ -663,7 +658,6 @@ final class TeamController extends BaseApiController
      *      required=true,
      * )
      * @Rest\Delete(path="/{id}/activities/{activityId}", name="delete_team_activity", requirements={"id": "\d+", "activityId": "\d+"})
-     *
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")

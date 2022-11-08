@@ -38,7 +38,6 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     /**
      * Unique activity ID
      *
-     *
      * @Exporter\Expose(label="id", type="integer")
      */
     #[ORM\Column(name: 'id', type: 'integer')]
