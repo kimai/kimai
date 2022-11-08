@@ -48,7 +48,7 @@ class Team
      * @Assert\Length(min=2, max=100)
      */
     #[ORM\Column(name: 'name', type: 'string', length: 100, nullable: false)]
-    private string $name;
+    private ?string $name = null;
     /**
      * All team member (including team leads)
      *
