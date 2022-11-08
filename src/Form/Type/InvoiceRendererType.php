@@ -40,7 +40,11 @@ final class InvoiceRendererType extends AbstractType
             'choices' => array_flip($documents),
             'group_by' => [$this, 'getGroupBy'],
             'choice_label' => function ($choiceValue, $key, $value) {
-                return $choiceValue;
+                return match (strtolower($choiceValue)) {
+                    'xml' => 'XML',
+                    'javascript' => 'JSON',
+                    default => $choiceValue,
+                };
             },
             'translation_domain' => 'invoice-renderer',
             'search' => false,
@@ -49,9 +53,7 @@ final class InvoiceRendererType extends AbstractType
 
     public function getGroupBy(string $value, string $label, string $index): string
     {
-        $renderer = $label;
-
-        $parts = explode('.', $renderer);
+        $parts = explode('.', $label);
 
         if (\count($parts) > 2) {
             array_pop($parts);
@@ -59,11 +61,14 @@ final class InvoiceRendererType extends AbstractType
 
         $type = array_pop($parts);
 
-        if (\in_array(strtolower($type), ['json', 'txt', 'xml'])) {
-            return 'programmatic';
-        }
-
-        return ucfirst($type);
+        return match (strtolower($type)) {
+            'json', 'txt', 'xml' => 'programmatic',
+            'pdf' => 'PDF',
+            'docx', 'doc' => 'Word',
+            'xls', 'xlsx' => 'Excel',
+            'ods' => 'LibreOffice',
+            default => ucfirst($type),
+        };
     }
 
     public function getParent(): string

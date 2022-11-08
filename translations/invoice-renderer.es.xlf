@@ -34,14 +34,6 @@
         <source>company</source>
         <target>Factura de empresa</target>
       </trans-unit>
-      <trans-unit id="4NNx9U." resname="Docx">
-        <source>Microsoft Word (DOCX)</source>
-        <target state="translated">Microsoft Office Word (DOCX)</target>
-      </trans-unit>
-      <trans-unit id="sjwwrr8" resname="Xlsx">
-        <source>Microsoft Excel (XLSX)</source>
-        <target state="translated">Microsoft Office Excel (XLSX)</target>
-      </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>
         <target state="translated">Atención: Los archivos existentes serán sobrescritos. Los tipos de archivo permitidos son: DOCX, ODS, XLSX.</target>
@@ -54,29 +46,9 @@
         <source>Html</source>
         <target state="translated">HTML (impresión por Navegador)</target>
       </trans-unit>
-      <trans-unit id="sXlZPOC" resname="Xls">
-        <source>Microsoft Excel (XLS)</source>
-        <target state="translated">Microsoft Office Excel (XLS)</target>
-      </trans-unit>
-      <trans-unit id="QqvUWFt" resname="Ods">
-        <source>Open Office (ODS - Spreadsheet)</source>
-        <target state="translated">Open Office (Hoja de calculo)</target>
-      </trans-unit>
-      <trans-unit id="kLKl8xE" resname="Pdf">
-        <source>Pdf</source>
-        <target state="translated">PDF</target>
-      </trans-unit>
       <trans-unit id="jV1SPRL" resname="default-pdf">
         <source>default-pdf</source>
         <target state="translated">Factura</target>
-      </trans-unit>
-      <trans-unit id="v5KgTmC" resname="xml">
-        <source>xml</source>
-        <target state="translated">XML</target>
-      </trans-unit>
-      <trans-unit id="7acXRsA" resname="javascript">
-        <source>javascript</source>
-        <target state="translated">JSON</target>
       </trans-unit>
       <trans-unit id="mC2ePrm" resname="text">
         <source>text</source>
