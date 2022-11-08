@@ -28,9 +28,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @Route(path="/resetting")
- */
+#[Route(path: '/resetting')]
 final class PasswordResetController extends AbstractController
 {
     public function __construct(
@@ -42,9 +40,8 @@ final class PasswordResetController extends AbstractController
 
     /**
      * Request reset user password: show form.
-     *
-     * @Route(path="/request", name="resetting_request", methods={"GET"})
      */
+    #[Route(path: '/request', name: 'resetting_request', methods: ['GET'])]
     public function requestAction(): Response
     {
         if (!$this->configuration->isPasswordResetActive()) {
@@ -56,9 +53,8 @@ final class PasswordResetController extends AbstractController
 
     /**
      * Request reset user password: submit form and send email.
-     *
-     * @Route(path="/send-email", name="resetting_send_email", methods={"POST"})
      */
+    #[Route(path: '/send-email', name: 'resetting_send_email', methods: ['POST'])]
     public function sendEmailAction(Request $request): Response
     {
         if (!$this->configuration->isPasswordResetActive()) {
@@ -95,9 +91,8 @@ final class PasswordResetController extends AbstractController
 
     /**
      * Tell the user to check his email provider.
-     *
-     * @Route(path="/check-email", name="resetting_check_email", methods={"GET"})
      */
+    #[Route(path: '/check-email', name: 'resetting_check_email', methods: ['GET'])]
     public function checkEmailAction(Request $request): Response
     {
         if (!$this->configuration->isPasswordResetActive()) {
@@ -118,9 +113,8 @@ final class PasswordResetController extends AbstractController
 
     /**
      * Reset user password.
-     *
-     * @Route(path="/reset/{token}", name="resetting_reset", methods={"GET", "POST"})
      */
+    #[Route(path: '/reset/{token}', name: 'resetting_reset', methods: ['GET', 'POST'])]
     public function resetAction(Request $request, LoginManager $loginManager, ?string $token): Response
     {
         if (!$this->configuration->isPasswordResetActive()) {

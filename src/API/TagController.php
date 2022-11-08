@@ -25,11 +25,10 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route(path="/tags")
  * @OA\Tag(name="Tag")
- *
- * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
+#[Route(path: '/tags')]
+#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
 final class TagController extends BaseApiController
 {
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Tag'];
@@ -135,11 +134,11 @@ final class TagController extends BaseApiController
      * )
      * @Rest\Delete(path="/{id}", name="delete_tag")
      *
-     * @Security("is_granted('delete_tag')")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('delete_tag')")]
     public function deleteAction(int $id): Response
     {
         $tag = $this->repository->find($id);

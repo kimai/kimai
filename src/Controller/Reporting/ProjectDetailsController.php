@@ -10,7 +10,6 @@
 namespace App\Controller\Reporting;
 
 use App\Controller\AbstractController;
-use App\Entity\Project;
 use App\Project\ProjectStatisticService;
 use App\Reporting\ProjectDetails\ProjectDetailsForm;
 use App\Reporting\ProjectDetails\ProjectDetailsQuery;
@@ -20,10 +19,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class ProjectDetailsController extends AbstractController
 {
-    /**
-     * @Route(path="/reporting/project_details", name="report_project_details", methods={"GET"})
-     * @Security("is_granted('report:project') and is_granted('details', 'project')")
-     */
+    #[Route(path: '/reporting/project_details', name: 'report_project_details', methods: ['GET'])]
+    #[Security("is_granted('report:project') and is_granted('details', 'project')")]
     public function __invoke(Request $request, ProjectStatisticService $service)
     {
         $dateFactory = $this->getDateTimeFactory();

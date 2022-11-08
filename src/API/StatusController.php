@@ -23,9 +23,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @OA\Tag(name="Default")
- *
- * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
+#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
 final class StatusController extends BaseApiController
 {
     public function __construct(private ViewHandlerInterface $viewHandler)

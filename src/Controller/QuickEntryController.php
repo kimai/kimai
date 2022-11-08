@@ -24,19 +24,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used to enter times in weekly form.
- *
- * @Route(path="/quick_entry")
- * @Security("is_granted('quick-entry')")
  */
+#[Route(path: '/quick_entry')]
+#[Security("is_granted('quick-entry')")]
 class QuickEntryController extends AbstractController
 {
     public function __construct(private SystemConfiguration $configuration, private TimesheetService $timesheetService, private TimesheetRepository $repository)
     {
     }
 
-    /**
-     * @Route(path="/{begin}", name="quick_entry", methods={"GET", "POST"})
-     */
+    #[Route(path: '/{begin}', name: 'quick_entry', methods: ['GET', 'POST'])]
     public function quickEntry(Request $request, ?string $begin = null)
     {
         $factory = $this->getDateTimeFactory();

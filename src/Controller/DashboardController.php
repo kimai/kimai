@@ -26,10 +26,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Dashboard controller for the admin area.
- *
- * @Route(path="/dashboard")
- * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
+#[Route(path: '/dashboard')]
+#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
 final class DashboardController extends AbstractController
 {
     public const BOOKMARK_TYPE = 'dashboard';
@@ -171,9 +170,7 @@ final class DashboardController extends AbstractController
         return $filteredWidgets;
     }
 
-    /**
-     * @Route(path="/", defaults={}, name="dashboard", methods={"GET"})
-     */
+    #[Route(path: '/', defaults: [], name: 'dashboard', methods: ['GET'])]
     public function index(): Response
     {
         $user = $this->getUser();
@@ -192,9 +189,7 @@ final class DashboardController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/reset/", defaults={}, name="dashboard_reset", methods={"GET", "POST"})
-     */
+    #[Route(path: '/reset/', defaults: [], name: 'dashboard_reset', methods: ['GET', 'POST'])]
     public function reset(): RedirectResponse
     {
         $bookmark = $this->getBookmark($this->getUser());
@@ -205,9 +200,7 @@ final class DashboardController extends AbstractController
         return $this->redirectToRoute('dashboard');
     }
 
-    /**
-     * @Route(path="/add-widget/{widget}", defaults={}, name="dashboard_add", methods={"GET"})
-     */
+    #[Route(path: '/add-widget/{widget}', defaults: [], name: 'dashboard_add', methods: ['GET'])]
     public function add(string $widget): Response
     {
         $user = $this->getUser();
@@ -242,9 +235,7 @@ final class DashboardController extends AbstractController
         $this->repository->saveBookmark($bookmark);
     }
 
-    /**
-     * @Route(path="/edit/", defaults={}, name="dashboard_edit", methods={"GET", "POST"})
-     */
+    #[Route(path: '/edit/', defaults: [], name: 'dashboard_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request): Response
     {
         $user = $this->getUser();

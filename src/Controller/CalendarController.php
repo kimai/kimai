@@ -22,20 +22,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used to display calendars.
- *
- * @Route(path="/calendar")
- * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
+#[Route(path: '/calendar')]
+#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
 class CalendarController extends AbstractController
 {
     public function __construct(private CalendarService $calendarService, private SystemConfiguration $configuration, private TrackingModeService $service)
     {
     }
 
-    /**
-     * @Route(path="/", name="calendar", methods={"GET"})
-     * @Route(path="/{profile}", name="calendar_user", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'calendar', methods: ['GET'])]
+    #[Route(path: '/{profile}', name: 'calendar_user', methods: ['GET'])]
     public function userCalendar(Request $request): Response
     {
         $form = null;

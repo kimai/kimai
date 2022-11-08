@@ -20,10 +20,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class ProjectDateRangeController extends AbstractController
 {
-    /**
-     * @Route(path="/reporting/project_daterange", name="report_project_daterange", methods={"GET","POST"})
-     * @Security("is_granted('report:project') and is_granted('budget_any', 'project')")
-     */
+    #[Route(path: '/reporting/project_daterange', name: 'report_project_daterange', methods: ['GET', 'POST'])]
+    #[Security("is_granted('report:project') and is_granted('budget_any', 'project')")]
     public function __invoke(Request $request, ProjectStatisticService $service)
     {
         $dateFactory = $this->getDateTimeFactory();

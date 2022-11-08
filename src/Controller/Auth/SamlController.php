@@ -17,18 +17,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
-/**
- * @Route(path="/saml")
- */
+#[Route(path: '/saml')]
 final class SamlController extends AbstractController
 {
     public function __construct(private SamlAuthFactory $authFactory, private SamlConfigurationInterface $samlConfiguration)
     {
     }
 
-    /**
-     * @Route(path="/login", name="saml_login")
-     */
+    #[Route(path: '/login', name: 'saml_login')]
     public function loginAction(Request $request)
     {
         if (!$this->samlConfiguration->isActivated()) {
@@ -57,9 +53,7 @@ final class SamlController extends AbstractController
         $this->authFactory->create()->login($session->get('_security.main.target_path'));
     }
 
-    /**
-     * @Route(path="/metadata", name="saml_metadata")
-     */
+    #[Route(path: '/metadata', name: 'saml_metadata')]
     public function metadataAction()
     {
         if (!$this->samlConfiguration->isActivated()) {
@@ -74,9 +68,7 @@ final class SamlController extends AbstractController
         return $response;
     }
 
-    /**
-     * @Route(path="/acs", name="saml_acs")
-     */
+    #[Route(path: '/acs', name: 'saml_acs')]
     public function assertionConsumerServiceAction()
     {
         if (!$this->samlConfiguration->isActivated()) {
@@ -86,9 +78,7 @@ final class SamlController extends AbstractController
         throw new \RuntimeException('You must configure the check path in your firewall.');
     }
 
-    /**
-     * @Route(path="/logout", name="saml_logout")
-     */
+    #[Route(path: '/logout', name: 'saml_logout')]
     public function logoutAction()
     {
         if (!$this->samlConfiguration->isActivated()) {

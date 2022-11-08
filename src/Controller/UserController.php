@@ -35,20 +35,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used to manage users in the admin part of the site.
- *
- * @Route(path="/admin/user")
- * @Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('view_user')")
  */
+#[Route(path: '/admin/user')]
+#[Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('view_user')")]
 final class UserController extends AbstractController
 {
     public function __construct(private UserPasswordHasherInterface $passwordHasher, private UserRepository $repository, private EventDispatcherInterface $dispatcher)
     {
     }
 
-    /**
-     * @Route(path="/", defaults={"page": 1}, name="admin_user", methods={"GET"})
-     * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_user_paginated", methods={"GET"})
-     */
+    #[Route(path: '/', defaults: ['page' => 1], name: 'admin_user', methods: ['GET'])]
+    #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_user_paginated', methods: ['GET'])]
     public function indexAction($page, Request $request): Response
     {
         $query = new UserQuery();
@@ -110,10 +107,8 @@ final class UserController extends AbstractController
         return $user;
     }
 
-    /**
-     * @Route(path="/create", name="admin_user_create", methods={"GET", "POST"})
-     * @Security("is_granted('create_user')")
-     */
+    #[Route(path: '/create', name: 'admin_user_create', methods: ['GET', 'POST'])]
+    #[Security("is_granted('create_user')")]
     public function createAction(Request $request, SystemConfiguration $config, UserRepository $userRepository): Response
     {
         $user = $this->createNewDefaultUser($config);
@@ -141,10 +136,8 @@ final class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/{id}/delete", name="admin_user_delete", methods={"GET", "POST"})
-     * @Security("is_granted('delete', userToDelete)")
-     */
+    #[Route(path: '/{id}/delete', name: 'admin_user_delete', methods: ['GET', 'POST'])]
+    #[Security("is_granted('delete', userToDelete)")]
     public function deleteAction(User $userToDelete, Request $request, TimesheetRepository $repository, UserService $userService): Response
     {
         // $userToDelete MUST not be called $user, as $user is always the current user!
@@ -195,10 +188,8 @@ final class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/export", name="user_export", methods={"GET"})
-     * @Security("is_granted('view_user')")
-     */
+    #[Route(path: '/export', name: 'user_export', methods: ['GET'])]
+    #[Security("is_granted('view_user')")]
     public function exportAction(Request $request, UserExporter $exporter)
     {
         $query = new UserQuery();

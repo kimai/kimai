@@ -24,10 +24,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(path="/admin/teams")
- * @Security("is_granted('view_team')")
- */
+#[Route(path: '/admin/teams')]
+#[Security("is_granted('view_team')")]
 final class TeamController extends AbstractController
 {
     public function __construct(private TeamRepository $repository)
@@ -35,14 +33,13 @@ final class TeamController extends AbstractController
     }
 
     /**
-     * @Route(path="/", defaults={"page": 1}, name="admin_team", methods={"GET"})
-     * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_team_paginated", methods={"GET"})
-     *
      * @param TeamRepository $repository
      * @param Request $request
      * @param int $page
      * @return Response
      */
+    #[Route(path: '/', defaults: ['page' => 1], name: 'admin_team', methods: ['GET'])]
+    #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_team_paginated', methods: ['GET'])]
     public function listTeams(TeamRepository $repository, Request $request, $page): Response
     {
         $query = new TeamQuery();
@@ -80,21 +77,18 @@ final class TeamController extends AbstractController
     }
 
     /**
-     * @Route(path="/create", name="admin_team_create", methods={"GET", "POST"})
-     * @Security("is_granted('create_team')")
-     *
      * @param Request $request
      * @return Response
      */
+    #[Route(path: '/create', name: 'admin_team_create', methods: ['GET', 'POST'])]
+    #[Security("is_granted('create_team')")]
     public function createTeam(Request $request): Response
     {
         return $this->renderEditScreen(new Team(''), $request, true);
     }
 
-    /**
-     * @Route(path="/{id}/duplicate", name="team_duplicate", methods={"GET", "POST"})
-     * @Security("is_granted('edit', team) and is_granted('create_team')")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'team_duplicate', methods: ['GET', 'POST'])]
+    #[Security("is_granted('edit', team) and is_granted('create_team')")]
     public function duplicateTeam(Team $team, Request $request)
     {
         $newTeam = clone $team;
@@ -108,19 +102,15 @@ final class TeamController extends AbstractController
         return $this->renderEditScreen($newTeam, $request, true);
     }
 
-    /**
-     * @Route(path="/{id}/edit", name="admin_team_edit", methods={"GET", "POST"})
-     * @Security("is_granted('edit', team)")
-     */
+    #[Route(path: '/{id}/edit', name: 'admin_team_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('edit', team)")]
     public function editAction(Team $team, Request $request)
     {
         return $this->renderEditScreen($team, $request);
     }
 
-    /**
-     * @Route(path="/{id}/edit_member", name="admin_team_member", methods={"GET", "POST"})
-     * @Security("is_granted('edit', team)")
-     */
+    #[Route(path: '/{id}/edit_member', name: 'admin_team_member', methods: ['GET', 'POST'])]
+    #[Security("is_granted('edit', team)")]
     public function editMemberAction(Team $team, Request $request)
     {
         $editForm = $this->createForm(TeamEditForm::class, $team, [

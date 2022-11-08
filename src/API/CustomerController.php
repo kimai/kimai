@@ -34,11 +34,10 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route(path="/customers")
  * @OA\Tag(name="Customer")
- *
- * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
+#[Route(path: '/customers')]
+#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
 final class CustomerController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Customer', 'Customer_Entity'];

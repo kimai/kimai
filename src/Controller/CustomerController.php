@@ -51,20 +51,17 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * Controller used to manage customer in the admin part of the site.
- *
- * @Route(path="/admin/customer")
- * @Security("is_granted('view_customer') or is_granted('view_teamlead_customer') or is_granted('view_team_customer')")
  */
+#[Route(path: '/admin/customer')]
+#[Security("is_granted('view_customer') or is_granted('view_teamlead_customer') or is_granted('view_team_customer')")]
 final class CustomerController extends AbstractController
 {
     public function __construct(private CustomerRepository $repository, private EventDispatcherInterface $dispatcher)
     {
     }
 
-    /**
-     * @Route(path="/", defaults={"page": 1}, name="admin_customer", methods={"GET"})
-     * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_customer_paginated", methods={"GET"})
-     */
+    #[Route(path: '/', defaults: ['page' => 1], name: 'admin_customer', methods: ['GET'])]
+    #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_customer_paginated', methods: ['GET'])]
     public function indexAction($page, Request $request)
     {
         $query = new CustomerQuery();
@@ -141,10 +138,8 @@ final class CustomerController extends AbstractController
         return $event->getFields();
     }
 
-    /**
-     * @Route(path="/create", name="admin_customer_create", methods={"GET", "POST"})
-     * @Security("is_granted('create_customer')")
-     */
+    #[Route(path: '/create', name: 'admin_customer_create', methods: ['GET', 'POST'])]
+    #[Security("is_granted('create_customer')")]
     public function createAction(Request $request, CustomerService $customerService)
     {
         $customer = $customerService->createNewCustomer('');
@@ -152,10 +147,8 @@ final class CustomerController extends AbstractController
         return $this->renderCustomerForm($customer, $request, true);
     }
 
-    /**
-     * @Route(path="/{id}/permissions", name="admin_customer_permissions", methods={"GET", "POST"})
-     * @Security("is_granted('permissions', customer)")
-     */
+    #[Route(path: '/{id}/permissions', name: 'admin_customer_permissions', methods: ['GET', 'POST'])]
+    #[Security("is_granted('permissions', customer)")]
     public function teamPermissionsAction(Customer $customer, Request $request)
     {
         $form = $this->createForm(CustomerTeamPermissionForm::class, $customer, [
@@ -187,10 +180,8 @@ final class CustomerController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/{id}/comment_delete/{token}", name="customer_comment_delete", methods={"GET"})
-     * @Security("is_granted('edit', comment.getCustomer()) and is_granted('comments', comment.getCustomer())")
-     */
+    #[Route(path: '/{id}/comment_delete/{token}', name: 'customer_comment_delete', methods: ['GET'])]
+    #[Security("is_granted('edit', comment.getCustomer()) and is_granted('comments', comment.getCustomer())")]
     public function deleteCommentAction(CustomerComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager)
     {
         $customerId = $comment->getCustomer()->getId();
@@ -212,10 +203,8 @@ final class CustomerController extends AbstractController
         return $this->redirectToRoute('customer_details', ['id' => $customerId]);
     }
 
-    /**
-     * @Route(path="/{id}/comment_add", name="customer_comment_add", methods={"POST"})
-     * @Security("is_granted('comments', customer)")
-     */
+    #[Route(path: '/{id}/comment_add', name: 'customer_comment_add', methods: ['POST'])]
+    #[Security("is_granted('comments', customer)")]
     public function addCommentAction(Customer $customer, Request $request)
     {
         $comment = new CustomerComment($customer);
@@ -234,10 +223,8 @@ final class CustomerController extends AbstractController
         return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
     }
 
-    /**
-     * @Route(path="/{id}/comment_pin/{token}", name="customer_comment_pin", methods={"GET"})
-     * @Security("is_granted('edit', comment.getCustomer()) and is_granted('comments', comment.getCustomer())")
-     */
+    #[Route(path: '/{id}/comment_pin/{token}', name: 'customer_comment_pin', methods: ['GET'])]
+    #[Security("is_granted('edit', comment.getCustomer()) and is_granted('comments', comment.getCustomer())")]
     public function pinCommentAction(CustomerComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager)
     {
         $customerId = $comment->getCustomer()->getId();
@@ -260,10 +247,8 @@ final class CustomerController extends AbstractController
         return $this->redirectToRoute('customer_details', ['id' => $customerId]);
     }
 
-    /**
-     * @Route(path="/{id}/create_team", name="customer_team_create", methods={"GET"})
-     * @Security("is_granted('create_team') and is_granted('permissions', customer)")
-     */
+    #[Route(path: '/{id}/create_team', name: 'customer_team_create', methods: ['GET'])]
+    #[Security("is_granted('create_team') and is_granted('permissions', customer)")]
     public function createDefaultTeamAction(Customer $customer, TeamRepository $teamRepository)
     {
         $defaultTeam = $teamRepository->findOneBy(['name' => $customer->getName()]);
@@ -286,10 +271,8 @@ final class CustomerController extends AbstractController
         return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
     }
 
-    /**
-     * @Route(path="/{id}/projects/{page}", defaults={"page": 1}, name="customer_projects", methods={"GET", "POST"})
-     * @Security("is_granted('view', customer)")
-     */
+    #[Route(path: '/{id}/projects/{page}', defaults: ['page' => 1], name: 'customer_projects', methods: ['GET', 'POST'])]
+    #[Security("is_granted('view', customer)")]
     public function projectsAction(Customer $customer, int $page, ProjectRepository $projectRepository)
     {
         $query = new ProjectQuery();
@@ -311,10 +294,8 @@ final class CustomerController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/{id}/details", name="customer_details", methods={"GET", "POST"})
-     * @Security("is_granted('view', customer)")
-     */
+    #[Route(path: '/{id}/details', name: 'customer_details', methods: ['GET', 'POST'])]
+    #[Security("is_granted('view', customer)")]
     public function detailsAction(Customer $customer, TeamRepository $teamRepository, CustomerRateRepository $rateRepository, CustomerStatisticService $statisticService)
     {
         $event = new CustomerMetaDefinitionEvent($customer);
@@ -380,10 +361,8 @@ final class CustomerController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/{id}/vcard", name="customer_vcard", methods={"GET"})
-     * @Security("is_granted('view', customer)")
-     */
+    #[Route(path: '/{id}/vcard', name: 'customer_vcard', methods: ['GET'])]
+    #[Security("is_granted('view', customer)")]
     public function downloadVCard(Customer $customer): Response
     {
         $vcard = new VCard();
@@ -435,19 +414,15 @@ final class CustomerController extends AbstractController
         return $response;
     }
 
-    /**
-     * @Route(path="/{id}/rate/{rate}", name="admin_customer_rate_edit", methods={"GET", "POST"})
-     * @Security("is_granted('edit', customer)")
-     */
+    #[Route(path: '/{id}/rate/{rate}', name: 'admin_customer_rate_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('edit', customer)")]
     public function editRateAction(Customer $customer, CustomerRate $rate, Request $request, CustomerRateRepository $repository): Response
     {
         return $this->rateFormAction($customer, $rate, $request, $repository, $this->generateUrl('admin_customer_rate_edit', ['id' => $customer->getId(), 'rate' => $rate->getId()]));
     }
 
-    /**
-     * @Route(path="/{id}/rate", name="admin_customer_rate_add", methods={"GET", "POST"})
-     * @Security("is_granted('edit', customer)")
-     */
+    #[Route(path: '/{id}/rate', name: 'admin_customer_rate_add', methods: ['GET', 'POST'])]
+    #[Security("is_granted('edit', customer)")]
     public function addRateAction(Customer $customer, Request $request, CustomerRateRepository $repository): Response
     {
         $rate = new CustomerRate();
@@ -483,19 +458,15 @@ final class CustomerController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/{id}/edit", name="admin_customer_edit", methods={"GET", "POST"})
-     * @Security("is_granted('edit', customer)")
-     */
+    #[Route(path: '/{id}/edit', name: 'admin_customer_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('edit', customer)")]
     public function editAction(Customer $customer, Request $request)
     {
         return $this->renderCustomerForm($customer, $request);
     }
 
-    /**
-     * @Route(path="/{id}/delete", name="admin_customer_delete", methods={"GET", "POST"})
-     * @Security("is_granted('delete', customer)")
-     */
+    #[Route(path: '/{id}/delete', name: 'admin_customer_delete', methods: ['GET', 'POST'])]
+    #[Security("is_granted('delete', customer)")]
     public function deleteAction(Customer $customer, Request $request, CustomerStatisticService $statisticService)
     {
         $stats = $statisticService->getCustomerStatistics($customer);
@@ -537,9 +508,7 @@ final class CustomerController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/export", name="customer_export", methods={"GET"})
-     */
+    #[Route(path: '/export', name: 'customer_export', methods: ['GET'])]
     public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter)
     {
         $query = new CustomerQuery();

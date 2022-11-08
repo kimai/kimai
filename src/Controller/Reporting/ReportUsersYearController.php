@@ -26,19 +26,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(path="/reporting/users")
- * @Security("is_granted('report:other')")
- */
+#[Route(path: '/reporting/users')]
+#[Security("is_granted('report:other')")]
 final class ReportUsersYearController extends AbstractController
 {
     /**
-     * @Route(path="/year", name="report_yearly_users", methods={"GET","POST"})
-     *
      * @param Request $request
      * @return Response
      * @throws Exception
      */
+    #[Route(path: '/year', name: 'report_yearly_users', methods: ['GET', 'POST'])]
     public function report(Request $request, SystemConfiguration $systemConfiguration, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {
         return $this->render(
@@ -48,12 +45,11 @@ final class ReportUsersYearController extends AbstractController
     }
 
     /**
-     * @Route(path="/year_export", name="report_yearly_users_export", methods={"GET","POST"})
-     *
      * @param Request $request
      * @return Response
      * @throws Exception
      */
+    #[Route(path: '/year_export', name: 'report_yearly_users_export', methods: ['GET', 'POST'])]
     public function export(Request $request, SystemConfiguration $systemConfiguration, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {
         $data = $this->getData($request, $systemConfiguration, $statisticService, $userRepository);

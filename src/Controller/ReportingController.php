@@ -17,15 +17,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used to render reports.
- *
- * @Route(path="/reporting")
- * @Security("is_granted('view_reporting')")
  */
+#[Route(path: '/reporting')]
+#[Security("is_granted('view_reporting')")]
 final class ReportingController extends AbstractController
 {
-    /**
-     * @Route(path="/", name="reporting", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'reporting', methods: ['GET'])]
     public function defaultReport(ReportingService $reportingService): Response
     {
         $page = new PageSetup('menu.reporting');

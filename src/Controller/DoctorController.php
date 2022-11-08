@@ -21,10 +21,8 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
-/**
- * @Route(path="/doctor")
- * @Security("is_granted('system_information')")
- */
+#[Route(path: '/doctor')]
+#[Security("is_granted('system_information')")]
 class DoctorController extends AbstractController
 {
     /**
@@ -52,10 +50,8 @@ class DoctorController extends AbstractController
     {
     }
 
-    /**
-     * @Route(path="/flush-log/{token}", name="doctor_flush_log", methods={"GET"})
-     * @Security("is_granted('system_configuration')")
-     */
+    #[Route(path: '/flush-log/{token}', name: 'doctor_flush_log', methods: ['GET'])]
+    #[Security("is_granted('system_configuration')")]
     public function deleteLogfileAction(string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$csrfTokenManager->isTokenValid(new CsrfToken('doctor.flush_log', $token))) {
@@ -83,9 +79,7 @@ class DoctorController extends AbstractController
         return $this->redirectToRoute('doctor');
     }
 
-    /**
-     * @Route(path="", name="doctor", methods={"GET"})
-     */
+    #[Route(path: '', name: 'doctor', methods: ['GET'])]
     public function index(): Response
     {
         $logLines = 100;

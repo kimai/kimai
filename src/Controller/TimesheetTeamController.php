@@ -27,21 +27,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(path="/team/timesheet")
- * @Security("is_granted('view_other_timesheet')")
- */
+#[Route(path: '/team/timesheet')]
+#[Security("is_granted('view_other_timesheet')")]
 class TimesheetTeamController extends TimesheetAbstractController
 {
     /**
-     * @Route(path="/", defaults={"page": 1}, name="admin_timesheet", methods={"GET"})
-     * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_timesheet_paginated", methods={"GET"})
-     * @Security("is_granted('view_other_timesheet')")
-     *
      * @param int $page
      * @param Request $request
      * @return Response
      */
+    #[Route(path: '/', defaults: ['page' => 1], name: 'admin_timesheet', methods: ['GET'])]
+    #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_timesheet_paginated', methods: ['GET'])]
+    #[Security("is_granted('view_other_timesheet')")]
     public function indexAction(int $page, Request $request): Response
     {
         $query = $this->createDefaultQuery();
@@ -50,46 +47,36 @@ class TimesheetTeamController extends TimesheetAbstractController
         return $this->index($query, $request, 'admin_timesheet', 'admin_timesheet_paginated', TimesheetMetaDisplayEvent::TEAM_TIMESHEET);
     }
 
-    /**
-     * @Route(path="/export/", name="admin_timesheet_export", methods={"GET", "POST"})
-     * @Security("is_granted('export_other_timesheet')")
-     */
+    #[Route(path: '/export/', name: 'admin_timesheet_export', methods: ['GET', 'POST'])]
+    #[Security("is_granted('export_other_timesheet')")]
     public function exportAction(Request $request, ServiceExport $serviceExport): Response
     {
         return $this->export($request, $serviceExport);
     }
 
-    /**
-     * @Route(path="/{id}/edit", name="admin_timesheet_edit", methods={"GET", "POST"})
-     * @Security("is_granted('edit', entry)")
-     */
+    #[Route(path: '/{id}/edit', name: 'admin_timesheet_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('edit', entry)")]
     public function editAction(Timesheet $entry, Request $request): Response
     {
         return $this->edit($entry, $request);
     }
 
-    /**
-     * @Route(path="/{id}/duplicate", name="admin_timesheet_duplicate", methods={"GET", "POST"})
-     * @Security("is_granted('duplicate', entry)")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'admin_timesheet_duplicate', methods: ['GET', 'POST'])]
+    #[Security("is_granted('duplicate', entry)")]
     public function duplicateAction(Timesheet $entry, Request $request): Response
     {
         return $this->duplicate($entry, $request);
     }
 
-    /**
-     * @Route(path="/create", name="admin_timesheet_create", methods={"GET", "POST"})
-     * @Security("is_granted('create_other_timesheet')")
-     */
+    #[Route(path: '/create', name: 'admin_timesheet_create', methods: ['GET', 'POST'])]
+    #[Security("is_granted('create_other_timesheet')")]
     public function createAction(Request $request): Response
     {
         return $this->create($request);
     }
 
-    /**
-     * @Route(path="/create_mu", name="admin_timesheet_create_multiuser", methods={"GET", "POST"})
-     * @Security("is_granted('create_other_timesheet')")
-     */
+    #[Route(path: '/create_mu', name: 'admin_timesheet_create_multiuser', methods: ['GET', 'POST'])]
+    #[Security("is_granted('create_other_timesheet')")]
     public function createForMultiUserAction(Request $request): Response
     {
         $entry = new MultiUserTimesheet();
@@ -167,19 +154,15 @@ class TimesheetTeamController extends TimesheetAbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/multi-update", name="admin_timesheet_multi_update", methods={"POST"})
-     * @Security("is_granted('edit_other_timesheet')")
-     */
+    #[Route(path: '/multi-update', name: 'admin_timesheet_multi_update', methods: ['POST'])]
+    #[Security("is_granted('edit_other_timesheet')")]
     public function multiUpdateAction(Request $request): Response
     {
         return $this->multiUpdate($request);
     }
 
-    /**
-     * @Route(path="/multi-delete", name="admin_timesheet_multi_delete", methods={"POST"})
-     * @Security("is_granted('delete_other_timesheet')")
-     */
+    #[Route(path: '/multi-delete', name: 'admin_timesheet_multi_delete', methods: ['POST'])]
+    #[Security("is_granted('delete_other_timesheet')")]
     public function multiDeleteAction(Request $request): Response
     {
         return $this->multiDelete($request);

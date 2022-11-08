@@ -23,15 +23,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(path="/reporting/customer/monthly_projects")
- * @Security("is_granted('report:customer') and is_granted('report:other')")
- */
+#[Route(path: '/reporting/customer/monthly_projects')]
+#[Security("is_granted('report:customer') and is_granted('report:other')")]
 final class CustomerMonthlyProjectsController extends AbstractController
 {
-    /**
-     * @Route(path="/view", name="report_customer_monthly_projects", methods={"GET","POST"})
-     */
+    #[Route(path: '/view', name: 'report_customer_monthly_projects', methods: ['GET', 'POST'])]
     public function report(Request $request, CustomerMonthlyProjectsRepository $repository, UserRepository $userRepository): Response
     {
         return $this->render(
@@ -40,9 +36,7 @@ final class CustomerMonthlyProjectsController extends AbstractController
         );
     }
 
-    /**
-     * @Route(path="/export", name="report_customer_monthly_projects_export", methods={"GET","POST"})
-     */
+    #[Route(path: '/export', name: 'report_customer_monthly_projects_export', methods: ['GET', 'POST'])]
     public function export(Request $request, CustomerMonthlyProjectsRepository $repository, UserRepository $userRepository): Response
     {
         $data = $this->getData($request, $repository, $userRepository);

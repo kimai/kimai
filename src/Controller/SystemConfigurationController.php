@@ -54,19 +54,16 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * Controller used for executing system relevant tasks.
- *
- * @Route(path="/admin/system-config")
- * @Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('system_configuration')")
  */
+#[Route(path: '/admin/system-config')]
+#[Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('system_configuration')")]
 final class SystemConfigurationController extends AbstractController
 {
     public function __construct(private EventDispatcherInterface $eventDispatcher, private ConfigurationRepository $repository, private SystemConfiguration $systemConfiguration)
     {
     }
 
-    /**
-     * @Route(path="/", name="system_configuration", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'system_configuration', methods: ['GET'])]
     public function indexAction(): Response
     {
         $configSettings = $this->getInitializedConfigurations();
@@ -88,9 +85,7 @@ final class SystemConfigurationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/edit/{section}", name="system_configuration_section", methods={"GET"})
-     */
+    #[Route(path: '/edit/{section}', name: 'system_configuration_section', methods: ['GET'])]
     public function sectionAction(string $section): Response
     {
         $configSettings = $this->getInitializedConfigurations();
@@ -117,13 +112,12 @@ final class SystemConfigurationController extends AbstractController
     }
 
     /**
-     * @Route(path="/update/{section}/{single}", defaults={"single": "0"}, name="system_configuration_update", methods={"POST"})
-     *
      * @internal do not link directly to this route
      * @param Request $request
      * @param string $section
      * @return RedirectResponse|Response
      */
+    #[Route(path: '/update/{section}/{single}', defaults: ['single' => 0], name: 'system_configuration_update', methods: ['POST'])]
     public function configUpdate(Request $request, string $section, string $single): Response
     {
         $single = (bool) $single;

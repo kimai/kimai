@@ -21,9 +21,8 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * This does not go into the API, because it is ONLY related to the Web UI.
- *
- * @Route(path="/bookmark")
  */
+#[Route(path: '/bookmark')]
 class BookmarkController extends AbstractController
 {
     public const DATATABLE_TOKEN = 'datatable_update';
@@ -35,9 +34,7 @@ class BookmarkController extends AbstractController
     {
     }
 
-    /**
-     * @Route(path="/datatable/profile", name="bookmark_profile", methods={"POST"})
-     */
+    #[Route(path: '/datatable/profile', name: 'bookmark_profile', methods: ['POST'])]
     public function datatableProfile(Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$request->request->has(self::PARAM_TOKEN_NAME) || !$request->request->has(self::PARAM_PROFILE)) {
@@ -59,9 +56,7 @@ class BookmarkController extends AbstractController
         return new Response();
     }
 
-    /**
-     * @Route(path="/datatable/save", name="bookmark_save_datatable", methods={"POST"})
-     */
+    #[Route(path: '/datatable/save', name: 'bookmark_save_datatable', methods: ['POST'])]
     public function datatableSave(Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$request->request->has(self::PARAM_TOKEN_NAME) || !$request->request->has(self::PARAM_DATATABLE) || !$request->request->has(self::PARAM_PROFILE)) {
@@ -114,9 +109,7 @@ class BookmarkController extends AbstractController
         return new Response();
     }
 
-    /**
-     * @Route(path="/datatable/delete", name="bookmark_delete", methods={"POST"})
-     */
+    #[Route(path: '/datatable/delete', name: 'bookmark_delete', methods: ['POST'])]
     public function datatableDelete(Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$request->request->has(self::PARAM_TOKEN_NAME) || !$request->request->has(self::PARAM_DATATABLE) || !$request->request->has(self::PARAM_PROFILE)) {

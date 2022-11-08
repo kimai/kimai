@@ -24,15 +24,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(path="/reporting/users")
- * @Security("is_granted('report:other')")
- */
+#[Route(path: '/reporting/users')]
+#[Security("is_granted('report:other')")]
 final class ReportUsersWeekController extends AbstractController
 {
-    /**
-     * @Route(path="/week", name="report_weekly_users", methods={"GET","POST"})
-     */
+    #[Route(path: '/week', name: 'report_weekly_users', methods: ['GET', 'POST'])]
     public function report(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {
         return $this->render(
@@ -41,9 +37,7 @@ final class ReportUsersWeekController extends AbstractController
         );
     }
 
-    /**
-     * @Route(path="/week_export", name="report_weekly_users_export", methods={"GET","POST"})
-     */
+    #[Route(path: '/week_export', name: 'report_weekly_users_export', methods: ['GET', 'POST'])]
     public function export(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {
         $data = $this->getData($request, $statisticService, $userRepository);

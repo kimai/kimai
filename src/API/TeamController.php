@@ -32,11 +32,10 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route(path="/teams")
  * @OA\Tag(name="Team")
- *
- * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
+#[Route(path: '/teams')]
+#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
 final class TeamController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Team', 'Team_Entity', 'Not_Expanded'];
@@ -60,11 +59,10 @@ final class TeamController extends BaseApiController
      * )
      * @Rest\Get(path="", name="get_teams")
      *
-     * @Security("is_granted('view_team')")
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('view_team')")]
     public function cgetAction(): Response
     {
         $data = $this->repository->findAll();
@@ -85,11 +83,10 @@ final class TeamController extends BaseApiController
      * )
      * @Rest\Get(path="/{id}", name="get_team", requirements={"id": "\d+"})
      *
-     * @Security("is_granted('view_team')")
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('view_team')")]
     public function getAction(Team $id): Response
     {
         $view = new View($id, 200);
@@ -116,11 +113,10 @@ final class TeamController extends BaseApiController
      *
      * @Rest\Delete(path="/{id}", name="delete_team", requirements={"id": "\d+"})
      *
-     * @Security("is_granted('delete_team')")
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('delete_team')")]
     public function deleteAction(Team $id): Response
     {
         $this->repository->deleteTeam($id);
@@ -147,11 +143,10 @@ final class TeamController extends BaseApiController
      * )
      * @Rest\Post(path="", name="post_team")
      *
-     * @Security("is_granted('create_team')")
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('create_team')")]
     public function postAction(Request $request): Response
     {
         $team = new Team('');
@@ -197,11 +192,10 @@ final class TeamController extends BaseApiController
      * )
      * @Rest\Patch(path="/{id}", name="patch_team", requirements={"id": "\d+"})
      *
-     * @Security("is_granted('edit_team')")
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('edit_team')")]
     public function patchAction(Request $request, int $id): Response
     {
         $team = $this->repository->find($id);
@@ -262,11 +256,10 @@ final class TeamController extends BaseApiController
      * )
      * @Rest\Post(path="/{id}/members/{userId}", name="post_team_member", requirements={"id": "\d+", "userId": "\d+"})
      *
-     * @Security("is_granted('edit_team')")
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('edit_team')")]
     public function postMemberAction(int $id, int $userId, UserRepository $repository): Response
     {
         $team = $this->repository->find($id);
@@ -320,11 +313,10 @@ final class TeamController extends BaseApiController
      * )
      * @Rest\Delete(path="/{id}/members/{userId}", name="delete_team_member", requirements={"id": "\d+", "userId": "\d+"})
      *
-     * @Security("is_granted('edit_team')")
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('edit_team')")]
     public function deleteMemberAction(int $id, int $userId, UserRepository $repository): Response
     {
         $team = $this->repository->find($id);
@@ -382,11 +374,11 @@ final class TeamController extends BaseApiController
      * )
      * @Rest\Post(path="/{id}/customers/{customerId}", name="post_team_customer", requirements={"id": "\d+", "customerId": "\d+"})
      *
-     * @Security("is_granted('edit_team')")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('edit_team')")]
     public function postCustomerAction(int $id, int $customerId, CustomerRepository $repository): Response
     {
         $team = $this->repository->find($id);
@@ -440,11 +432,11 @@ final class TeamController extends BaseApiController
      * )
      * @Rest\Delete(path="/{id}/customers/{customerId}", name="delete_team_customer", requirements={"id": "\d+", "customerId": "\d+"})
      *
-     * @Security("is_granted('edit_team')")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('edit_team')")]
     public function deleteCustomerAction(int $id, int $customerId, CustomerRepository $repository): Response
     {
         $team = $this->repository->find($id);
@@ -498,11 +490,11 @@ final class TeamController extends BaseApiController
      * )
      * @Rest\Post(path="/{id}/projects/{projectId}", name="post_team_project", requirements={"id": "\d+", "projectId": "\d+"})
      *
-     * @Security("is_granted('edit_team')")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('edit_team')")]
     public function postProjectAction(int $id, int $projectId, ProjectRepository $repository): Response
     {
         $team = $this->repository->find($id);
@@ -556,11 +548,11 @@ final class TeamController extends BaseApiController
      * )
      * @Rest\Delete(path="/{id}/projects/{projectId}", name="delete_team_project", requirements={"id": "\d+", "projectId": "\d+"})
      *
-     * @Security("is_granted('edit_team')")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('edit_team')")]
     public function deleteProjectAction(int $id, int $projectId, ProjectRepository $repository): Response
     {
         $team = $this->repository->find($id);
@@ -614,11 +606,11 @@ final class TeamController extends BaseApiController
      * )
      * @Rest\Post(path="/{id}/activities/{activityId}", name="post_team_activity", requirements={"id": "\d+", "activityId": "\d+"})
      *
-     * @Security("is_granted('edit_team')")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('edit_team')")]
     public function postActivityAction(int $id, int $activityId, ActivityRepository $repository): Response
     {
         $team = $this->repository->find($id);
@@ -672,11 +664,11 @@ final class TeamController extends BaseApiController
      * )
      * @Rest\Delete(path="/{id}/activities/{activityId}", name="delete_team_activity", requirements={"id": "\d+", "activityId": "\d+"})
      *
-     * @Security("is_granted('edit_team')")
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('edit_team')")]
     public function deleteActivityAction(int $id, int $activityId, ActivityRepository $repository): Response
     {
         $team = $this->repository->find($id);

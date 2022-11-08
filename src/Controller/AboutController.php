@@ -14,18 +14,14 @@ use App\Utils\PageSetup;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(path="/about")
- */
+#[Route(path: '/about')]
 class AboutController extends AbstractController
 {
     public function __construct(private string $projectDirectory)
     {
     }
 
-    /**
-     * @Route(path="", name="about", methods={"GET"})
-     */
+    #[Route(path: '', name: 'about', methods: ['GET'])]
     public function license(): Response
     {
         $filename = $this->projectDirectory . '/LICENSE';

@@ -32,10 +32,9 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * Controller used to manage user roles and role permissions.
- *
- * @Route(path="/admin/permissions")
- * @Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('role_permissions')")
  */
+#[Route(path: '/admin/permissions')]
+#[Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('role_permissions')")]
 final class PermissionController extends AbstractController
 {
     public const TOKEN_NAME = 'user_role_permissions';
@@ -44,10 +43,8 @@ final class PermissionController extends AbstractController
     {
     }
 
-    /**
-     * @Route(path="", name="admin_user_permissions", methods={"GET", "POST"})
-     * @Security("is_granted('role_permissions')")
-     */
+    #[Route(path: '', name: 'admin_user_permissions', methods: ['GET', 'POST'])]
+    #[Security("is_granted('role_permissions')")]
     public function permissions(EventDispatcherInterface $dispatcher, CsrfTokenManagerInterface $csrfTokenManager, RoleService $roleService)
     {
         $all = $this->roleRepository->findAll();
@@ -164,10 +161,8 @@ final class PermissionController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/roles/create", name="admin_user_roles", methods={"GET", "POST"})
-     * @Security("is_granted('role_permissions')")
-     */
+    #[Route(path: '/roles/create', name: 'admin_user_roles', methods: ['GET', 'POST'])]
+    #[Security("is_granted('role_permissions')")]
     public function createRole(Request $request): Response
     {
         $role = new Role();
@@ -200,10 +195,8 @@ final class PermissionController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/roles/{id}/delete/{csrfToken}", name="admin_user_role_delete", methods={"GET", "POST"})
-     * @Security("is_granted('role_permissions')")
-     */
+    #[Route(path: '/roles/{id}/delete/{csrfToken}', name: 'admin_user_role_delete', methods: ['GET', 'POST'])]
+    #[Security("is_granted('role_permissions')")]
     public function deleteRole(Role $role, string $csrfToken, UserRepository $userRepository, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$this->isCsrfTokenValid(self::TOKEN_NAME, $csrfToken)) {
@@ -232,10 +225,8 @@ final class PermissionController extends AbstractController
         return $this->redirectToRoute('admin_user_permissions');
     }
 
-    /**
-     * @Route(path="/roles/{id}/{name}/{value}/{csrfToken}", name="admin_user_permission_save", methods={"POST"})
-     * @Security("is_granted('role_permissions')")
-     */
+    #[Route(path: '/roles/{id}/{name}/{value}/{csrfToken}', name: 'admin_user_permission_save', methods: ['POST'])]
+    #[Security("is_granted('role_permissions')")]
     public function savePermission(Role $role, string $name, bool $value, string $csrfToken, RolePermissionRepository $rolePermissionRepository, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         if (!$this->isCsrfTokenValid(self::TOKEN_NAME, $csrfToken)) {

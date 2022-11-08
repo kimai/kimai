@@ -32,11 +32,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route(path="/users")
  * @OA\Tag(name="User")
- *
- * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
+#[Route(path: '/users')]
+#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
 final class UserController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'User', 'User_Entity'];
@@ -70,11 +69,10 @@ final class UserController extends BaseApiController
      *
      * @Rest\Get(path="", name="get_users")
      *
-     * @Security("is_granted('view_user')")
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('view_user')")]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $query = new UserQuery();
@@ -183,11 +181,10 @@ final class UserController extends BaseApiController
      * )
      * @Rest\Post(path="", name="post_user")
      *
-     * @Security("is_granted('create_user')")
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('create_user')")]
     public function postAction(Request $request): Response
     {
         $user = new User();

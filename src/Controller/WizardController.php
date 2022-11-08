@@ -18,16 +18,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(path="/wizard")
- * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
- */
+#[Route(path: '/wizard')]
+#[Security("is_granted('IS_AUTHENTICATED_FULLY')")]
 final class WizardController extends AbstractController
 {
-    /**
-     * @Route(path="/{wizard}", name="wizard", methods={"GET", "POST"})
-     * @Security("is_granted('view_own_timesheet')")
-     */
+    #[Route(path: '/{wizard}', name: 'wizard', methods: ['GET', 'POST'])]
+    #[Security("is_granted('view_own_timesheet')")]
     public function wizard(Request $request, UserService $userService, string $wizard): Response
     {
         $user = $this->getUser();

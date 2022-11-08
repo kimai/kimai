@@ -24,21 +24,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route(path="/admin/tags")
- * @Security("is_granted('view_tag')")
- */
+#[Route(path: '/admin/tags')]
+#[Security("is_granted('view_tag')")]
 class TagController extends AbstractController
 {
     /**
-     * @Route(path="/", defaults={"page": 1}, name="tags", methods={"GET"})
-     * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="tags_paginated", methods={"GET"})
-     *
      * @param TagRepository $repository
      * @param Request $request
      * @param int $page
      * @return Response
      */
+    #[Route(path: '/', defaults: ['page' => 1], name: 'tags', methods: ['GET'])]
+    #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'tags_paginated', methods: ['GET'])]
     public function listTags(TagRepository $repository, Request $request, $page): Response
     {
         $query = new TagQuery();
@@ -78,10 +75,8 @@ class TagController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/{id}/edit", name="tags_edit", methods={"GET", "POST"})
-     * @Security("is_granted('manage_tag')")
-     */
+    #[Route(path: '/{id}/edit', name: 'tags_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('manage_tag')")]
     public function editAction(Tag $tag, TagRepository $repository, Request $request)
     {
         $editForm = $this->createForm(TagEditForm::class, $tag, [
@@ -112,10 +107,8 @@ class TagController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/create", name="tags_create", methods={"GET", "POST"})
-     * @Security("is_granted('manage_tag')")
-     */
+    #[Route(path: '/create', name: 'tags_create', methods: ['GET', 'POST'])]
+    #[Security("is_granted('manage_tag')")]
     public function createAction(TagRepository $repository, Request $request)
     {
         $tag = new Tag();
@@ -148,10 +141,8 @@ class TagController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/multi-delete", name="tags_multi_delete", methods={"POST"})
-     * @Security("is_granted('delete_tag')")
-     */
+    #[Route(path: '/multi-delete', name: 'tags_multi_delete', methods: ['POST'])]
+    #[Security("is_granted('delete_tag')")]
     public function multiDelete(TagRepository $repository, Request $request)
     {
         $form = $this->getMultiUpdateForm($repository);

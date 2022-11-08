@@ -24,19 +24,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controller used to export timesheet data.
- *
- * @Route(path="/export")
- * @Security("is_granted('create_export')")
  */
+#[Route(path: '/export')]
+#[Security("is_granted('create_export')")]
 class ExportController extends AbstractController
 {
     public function __construct(private ServiceExport $export)
     {
     }
 
-    /**
-     * @Route(path="/", name="export", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'export', methods: ['GET'])]
     public function indexAction(Request $request): Response
     {
         $query = $this->getDefaultQuery();
@@ -96,9 +93,7 @@ class ExportController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/data", name="export_data", methods={"POST"})
-     */
+    #[Route(path: '/data', name: 'export_data', methods: ['POST'])]
     public function export(Request $request): Response
     {
         $query = $this->getDefaultQuery();

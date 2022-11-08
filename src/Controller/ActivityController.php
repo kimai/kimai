@@ -43,21 +43,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Controller used to manage activities in the admin part of the site.
- *
- * @Route(path="/admin/activity")
- * @Security("is_granted('view_activity') or is_granted('view_teamlead_activity') or is_granted('view_team_activity')")
+ * Controller used to manage activities.
  */
+#[Route(path: '/admin/activity')]
+#[Security("is_granted('view_activity') or is_granted('view_teamlead_activity') or is_granted('view_team_activity')")]
 final class ActivityController extends AbstractController
 {
     public function __construct(private ActivityRepository $repository, private SystemConfiguration $configuration, private EventDispatcherInterface $dispatcher, private ActivityService $activityService)
     {
     }
 
-    /**
-     * @Route(path="/", defaults={"page": 1}, name="admin_activity", methods={"GET"})
-     * @Route(path="/page/{page}", requirements={"page": "[1-9]\d*"}, name="admin_activity_paginated", methods={"GET"})
-     */
+    #[Route(path: '/', defaults: ['page' => 1], name: 'admin_activity', methods: ['GET'])]
+    #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_activity_paginated', methods: ['GET'])]
     public function indexAction($page, Request $request)
     {
         $query = new ActivityQuery();
@@ -124,10 +121,8 @@ final class ActivityController extends AbstractController
         return $event->getFields();
     }
 
-    /**
-     * @Route(path="/{id}/details", name="activity_details", methods={"GET", "POST"})
-     * @Security("is_granted('view', activity)")
-     */
+    #[Route(path: '/{id}/details', name: 'activity_details', methods: ['GET', 'POST'])]
+    #[Security("is_granted('view', activity)")]
     public function detailsAction(Activity $activity, TeamRepository $teamRepository, ActivityRateRepository $rateRepository, ActivityStatisticService $statisticService)
     {
         $event = new ActivityMetaDefinitionEvent($activity);
@@ -176,19 +171,15 @@ final class ActivityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/{id}/rate/{rate}", name="admin_activity_rate_edit", methods={"GET", "POST"})
-     * @Security("is_granted('edit', activity)")
-     */
+    #[Route(path: '/{id}/rate/{rate}', name: 'admin_activity_rate_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('edit', activity)")]
     public function editRateAction(Activity $activity, ActivityRate $rate, Request $request, ActivityRateRepository $repository): Response
     {
         return $this->rateFormAction($activity, $rate, $request, $repository, $this->generateUrl('admin_activity_rate_edit', ['id' => $activity->getId(), 'rate' => $rate->getId()]));
     }
 
-    /**
-     * @Route(path="/{id}/rate", name="admin_activity_rate_add", methods={"GET", "POST"})
-     * @Security("is_granted('edit', activity)")
-     */
+    #[Route(path: '/{id}/rate', name: 'admin_activity_rate_add', methods: ['GET', 'POST'])]
+    #[Security("is_granted('edit', activity)")]
     public function addRateAction(Activity $activity, Request $request, ActivityRateRepository $repository): Response
     {
         $rate = new ActivityRate();
@@ -224,19 +215,15 @@ final class ActivityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/create/{project}", name="admin_activity_create_with_project", methods={"GET", "POST"})
-     * @Security("is_granted('create_activity')")
-     */
+    #[Route(path: '/create/{project}', name: 'admin_activity_create_with_project', methods: ['GET', 'POST'])]
+    #[Security("is_granted('create_activity')")]
     public function createWithProjectAction(Request $request, Project $project): Response
     {
         return $this->createActivity($request, $project);
     }
 
-    /**
-     * @Route(path="/create", name="admin_activity_create", methods={"GET", "POST"})
-     * @Security("is_granted('create_activity')")
-     */
+    #[Route(path: '/create', name: 'admin_activity_create', methods: ['GET', 'POST'])]
+    #[Security("is_granted('create_activity')")]
     public function createAction(Request $request): Response
     {
         return $this->createActivity($request, null);
@@ -270,10 +257,8 @@ final class ActivityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/{id}/permissions", name="admin_activity_permissions", methods={"GET", "POST"})
-     * @Security("is_granted('permissions', activity)")
-     */
+    #[Route(path: '/{id}/permissions', name: 'admin_activity_permissions', methods: ['GET', 'POST'])]
+    #[Security("is_granted('permissions', activity)")]
     public function teamPermissionsAction(Activity $activity, Request $request): Response
     {
         $form = $this->createForm(ActivityTeamPermissionForm::class, $activity, [
@@ -305,10 +290,8 @@ final class ActivityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/{id}/create_team", name="activity_team_create", methods={"GET"})
-     * @Security("is_granted('create_team') and is_granted('permissions', activity)")
-     */
+    #[Route(path: '/{id}/create_team', name: 'activity_team_create', methods: ['GET'])]
+    #[Security("is_granted('create_team') and is_granted('permissions', activity)")]
     public function createDefaultTeamAction(Activity $activity, TeamRepository $teamRepository): Response
     {
         $defaultTeam = $teamRepository->findOneBy(['name' => $activity->getName()]);
@@ -331,10 +314,8 @@ final class ActivityController extends AbstractController
         return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
     }
 
-    /**
-     * @Route(path="/{id}/edit", name="admin_activity_edit", methods={"GET", "POST"})
-     * @Security("is_granted('edit', activity)")
-     */
+    #[Route(path: '/{id}/edit', name: 'admin_activity_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('edit', activity)")]
     public function editAction(Activity $activity, Request $request): Response
     {
         $event = new ActivityMetaDefinitionEvent($activity);
@@ -361,10 +342,8 @@ final class ActivityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/{id}/delete", name="admin_activity_delete", methods={"GET", "POST"})
-     * @Security("is_granted('delete', activity)")
-     */
+    #[Route(path: '/{id}/delete', name: 'admin_activity_delete', methods: ['GET', 'POST'])]
+    #[Security("is_granted('delete', activity)")]
     public function deleteAction(Activity $activity, Request $request, ActivityStatisticService $statisticService): Response
     {
         $stats = $statisticService->getActivityStatistics($activity);
@@ -409,9 +388,7 @@ final class ActivityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/export", name="activity_export", methods={"GET"})
-     */
+    #[Route(path: '/export', name: 'activity_export', methods: ['GET'])]
     public function exportAction(Request $request, EntityWithMetaFieldsExporter $exporter): Response
     {
         $query = new ActivityQuery();

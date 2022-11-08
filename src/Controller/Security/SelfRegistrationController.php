@@ -29,9 +29,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @Route(path="/register")
- */
+#[Route(path: '/register')]
 class SelfRegistrationController extends AbstractController
 {
     public function __construct(
@@ -42,9 +40,7 @@ class SelfRegistrationController extends AbstractController
     ) {
     }
 
-    /**
-     * @Route(path="/", name="registration_register", methods={"GET", "POST"})
-     */
+    #[Route(path: '/', name: 'registration_register', methods: ['GET', 'POST'])]
     public function registerAction(Request $request): Response
     {
         if (!$this->configuration->isSelfRegistrationActive()) {
@@ -84,9 +80,8 @@ class SelfRegistrationController extends AbstractController
 
     /**
      * Tell the user to check their email provider.
-     *
-     * @Route(path="/check-email", name="user_registration_check_email", methods={"GET"})
      */
+    #[Route(path: '/check-email', name: 'user_registration_check_email', methods: ['GET'])]
     public function checkEmailAction(Request $request): Response
     {
         if (!$this->configuration->isSelfRegistrationActive()) {
@@ -113,9 +108,8 @@ class SelfRegistrationController extends AbstractController
 
     /**
      * Receive the confirmation token from user email provider, login the user.
-     *
-     * @Route(path="/confirm/{token}", name="registration_confirm", methods={"GET"})
      */
+    #[Route(path: '/confirm/{token}', name: 'registration_confirm', methods: ['GET'])]
     public function confirmAction(LoginManager $loginManager, ?string $token): Response
     {
         if (!$this->configuration->isSelfRegistrationActive()) {
@@ -141,9 +135,8 @@ class SelfRegistrationController extends AbstractController
 
     /**
      * Tell the user his account is now confirmed.
-     *
-     * @Route(path="/confirmed", name="registration_confirmed", methods={"GET"})
      */
+    #[Route(path: '/confirmed', name: 'registration_confirmed', methods: ['GET'])]
     public function confirmedAction(Request $request): Response
     {
         if (!$this->configuration->isSelfRegistrationActive()) {

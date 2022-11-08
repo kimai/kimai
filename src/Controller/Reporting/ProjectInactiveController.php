@@ -19,10 +19,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class ProjectInactiveController extends AbstractController
 {
-    /**
-     * @Route(path="/reporting/project_inactive", name="report_project_inactive", methods={"GET","POST"})
-     * @Security("is_granted('report:project') and is_granted('budget_any', 'project')")
-     */
+    #[Route(path: '/reporting/project_inactive', name: 'report_project_inactive', methods: ['GET', 'POST'])]
+    #[Security("is_granted('report:project') and is_granted('budget_any', 'project')")]
     public function __invoke(Request $request, ProjectStatisticService $service)
     {
         $dateFactory = $this->getDateTimeFactory();

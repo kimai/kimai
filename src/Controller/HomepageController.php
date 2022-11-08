@@ -19,15 +19,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Homepage controller is a redirect controller with user specific logic.
- *
- * @Route(path="/homepage")
- * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
+#[Route(path: '/homepage')]
+#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
 class HomepageController extends AbstractController
 {
-    /**
-     * @Route(path="", defaults={}, name="homepage", methods={"GET"})
-     */
+    #[Route(path: '', defaults: [], name: 'homepage', methods: ['GET'])]
     public function indexAction(Request $request, LocaleService $service): Response
     {
         /** @var User $user */

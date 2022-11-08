@@ -40,11 +40,10 @@ use Symfony\Component\Validator\Constraints;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @Route(path="/timesheets")
  * @OA\Tag(name="Timesheet")
- *
- * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
+#[Route(path: '/timesheets')]
+#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
 final class TimesheetController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Timesheet', 'Timesheet_Entity', 'Not_Expanded'];
@@ -102,11 +101,10 @@ final class TimesheetController extends BaseApiController
      *
      * @Rest\Get(path="", name="get_timesheets")
      *
-     * @Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $query = new TimesheetQuery(false);
@@ -252,9 +250,8 @@ final class TimesheetController extends BaseApiController
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
-     *
-     * @Security("is_granted('view', id)")
      */
+    #[Security("is_granted('view', id)")]
     public function getAction(Timesheet $id): Response
     {
         $view = new View($id, 200);
@@ -283,11 +280,10 @@ final class TimesheetController extends BaseApiController
      *
      * @Rest\Post(path="", name="post_timesheet")
      *
-     * @Security("is_granted('create_own_timesheet')")
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('create_own_timesheet')")]
     public function postAction(Request $request, ParamFetcherInterface $paramFetcher): Response
     {
         /** @var User $user */
@@ -355,12 +351,10 @@ final class TimesheetController extends BaseApiController
      *      @OA\JsonContent(ref="#/components/schemas/TimesheetEditForm"),
      * )
      * @Rest\Patch(path="/{id}", name="patch_timesheet", requirements={"id": "\d+"})
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
-     *
-     * @Security("is_granted('edit', id)")
      */
+    #[Security("is_granted('edit', id)")]
     public function patchAction(Request $request, Timesheet $id): Response
     {
         $timesheet = $id;
@@ -416,9 +410,8 @@ final class TimesheetController extends BaseApiController
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
-     *
-     * @Security("is_granted('delete', id)")
      */
+    #[Security("is_granted('delete', id)")]
     public function deleteAction(Timesheet $id): Response
     {
         $this->service->deleteTimesheet($id);
@@ -445,11 +438,10 @@ final class TimesheetController extends BaseApiController
      *
      * @Rest\Get(path="/recent", name="recent_timesheet")
      *
-     * @Security("is_granted('view_own_timesheet')")
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('view_own_timesheet')")]
     public function recentAction(ParamFetcherInterface $paramFetcher): Response
     {
         $user = $this->getUser();
@@ -489,11 +481,10 @@ final class TimesheetController extends BaseApiController
      *
      * @Rest\Get(path="/active", name="active_timesheet")
      *
-     * @Security("is_granted('view_own_timesheet')")
-     *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
      */
+    #[Security("is_granted('view_own_timesheet')")]
     public function activeAction(): Response
     {
         /** @var User $user */
@@ -525,9 +516,8 @@ final class TimesheetController extends BaseApiController
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
-     *
-     * @Security("is_granted('stop', id)")
      */
+    #[Security("is_granted('stop', id)")]
     public function stopAction(Timesheet $id): Response
     {
         $this->service->stopTimesheet($id);
@@ -560,9 +550,8 @@ final class TimesheetController extends BaseApiController
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
-     *
-     * @Security("is_granted('start', id)")
      */
+    #[Security("is_granted('start', id)")]
     public function restartAction(Timesheet $id, ParamFetcherInterface $paramFetcher): Response
     {
         $timesheet = $id;
@@ -632,9 +621,8 @@ final class TimesheetController extends BaseApiController
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
-     *
-     * @Security("is_granted('duplicate', id)")
      */
+    #[Security("is_granted('duplicate', id)")]
     public function duplicateAction(Timesheet $id): Response
     {
         $timesheet = $id;
@@ -668,9 +656,8 @@ final class TimesheetController extends BaseApiController
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
-     *
-     * @Security("is_granted('edit_export', id)")
      */
+    #[Security("is_granted('edit_export', id)")]
     public function exportAction(Timesheet $id): Response
     {
         $timesheet = $id;
@@ -710,9 +697,8 @@ final class TimesheetController extends BaseApiController
      *
      * @ApiSecurity(name="apiUser")
      * @ApiSecurity(name="apiToken")
-     *
-     * @Security("is_granted('edit', id)")
      */
+    #[Security("is_granted('edit', id)")]
     public function metaAction(Timesheet $id, ParamFetcherInterface $paramFetcher): Response
     {
         $timesheet = $id;

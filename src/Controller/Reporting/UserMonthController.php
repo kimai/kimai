@@ -19,19 +19,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-/**
- * @Route(path="/reporting/user")
- * @Security("is_granted('report:user')")
- */
+#[Route(path: '/reporting/user')]
+#[Security("is_granted('report:user')")]
 final class UserMonthController extends AbstractUserReportController
 {
     /**
-     * @Route(path="/month", name="report_user_month", methods={"GET","POST"})
-     *
      * @param Request $request
      * @return Response
      * @throws Exception
      */
+    #[Route(path: '/month', name: 'report_user_month', methods: ['GET', 'POST'])]
     public function monthByUser(Request $request): Response
     {
         return $this->render('reporting/report_by_user.html.twig', $this->getData($request));

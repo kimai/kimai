@@ -35,11 +35,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints;
 
 /**
- * @Route(path="/projects")
  * @OA\Tag(name="Project")
- *
- * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
  */
+#[Route(path: '/projects')]
+#[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
 final class ProjectController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
