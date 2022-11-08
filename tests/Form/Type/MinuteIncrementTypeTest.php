@@ -28,7 +28,7 @@ class MinuteIncrementTypeTest extends TypeTestCase
         $form = $form->getForm();
 
         $expected = new TypeTestModel([
-            'increment' => 4
+            'increment' => 5
         ]);
 
         $form->submit($data);
@@ -41,8 +41,8 @@ class MinuteIncrementTypeTest extends TypeTestCase
     {
         $view = $this->factory->create(MinuteIncrementType::class, 3600, [])->createView();
         self::assertArrayHasKey('choices', $view->vars);
-        self::assertCount(15, $view->vars['choices']);
-        self::assertEquals(null, $view->vars['choices'][0]->data);
+        self::assertCount(13, $view->vars['choices']);
+        self::assertEquals(0, $view->vars['choices'][0]->data);
         self::assertEquals(20, $view->vars['choices'][8]->data);
     }
 }
