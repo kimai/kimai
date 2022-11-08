@@ -18,19 +18,15 @@ use OpenApi\Annotations as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_customers",
- *     indexes={
- *          @ORM\Index(columns={"visible"})
- *     }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
- *
  * @Serializer\ExclusionPolicy("all")
  *
  * @Exporter\Order({"id", "name", "company", "number", "vatId", "address", "contact","email", "phone", "mobile", "fax", "homepage", "country", "currency", "timezone", "budget", "timeBudget", "budgetType", "color", "visible", "teams", "comment", "billable"})
  * @ Exporter\Expose("teams", label="team", exp="object.getTeams().toArray()", type="array")
  */
+#[ORM\Table(name: 'kimai2_customers')]
+#[ORM\Index(columns: ['visible'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\CustomerRepository')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class Customer implements EntityWithMetaFields, EntityWithBudget
 {
     public const DEFAULT_CURRENCY = 'EUR';
@@ -39,149 +35,140 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
     use ColorTrait;
 
     /**
-     * @var int|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="id", type="integer")
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private ?int $id = null;
     /**
-     * @var null|string
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="name")
      *
-     * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotBlank()
      * @Assert\Length(min=3, max=150)
      */
+    #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
     private ?string $name;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="number")
      *
-     * @ORM\Column(name="number", type="string", length=50, nullable=true)
      * @Assert\Length(max=50)
      */
+    #[ORM\Column(name: 'number', type: 'string', length: 50, nullable: true)]
     private ?string $number = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="comment")
-     *
-     * @ORM\Column(name="comment", type="text", nullable=true)
      */
+    #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
     private ?string $comment = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="visible", type="boolean")
      *
-     * @ORM\Column(name="visible", type="boolean", nullable=false)
      * @Assert\NotNull()
      */
+    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false)]
     private bool $visible = true;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="billable", type="boolean")
      *
-     * @ORM\Column(name="billable", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
      */
+    #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
     private bool $billable = true;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="company")
      *
-     * @ORM\Column(name="company", type="string", length=100, nullable=true)
      * @Assert\Length(max=100)
      */
+    #[ORM\Column(name: 'company', type: 'string', length: 100, nullable: true)]
     private ?string $company = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="vat_id")
      *
-     * @ORM\Column(name="vat_id", type="string", length=50, nullable=true)
      * @Assert\Length(max=50)
      */
+    #[ORM\Column(name: 'vat_id', type: 'string', length: 50, nullable: true)]
     private ?string $vatId = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="contact")
      *
-     * @ORM\Column(name="contact", type="string", length=100, nullable=true)
      * @Assert\Length(max=100)
      */
+    #[ORM\Column(name: 'contact', type: 'string', length: 100, nullable: true)]
     private ?string $contact = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="address")
-     *
-     * @ORM\Column(name="address", type="text", nullable=true)
      */
+    #[ORM\Column(name: 'address', type: 'text', nullable: true)]
     private ?string $address = null;
     /**
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="country")
      *
-     * @ORM\Column(name="country", type="string", length=2, nullable=false)
      * @Assert\NotBlank()
      * @Assert\Country()
      * @Assert\Length(max=2)
      */
+    #[ORM\Column(name: 'country', type: 'string', length: 2, nullable: false)]
     private ?string $country = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer"})
      * @Exporter\Expose(label="currency")
      *
-     * @ORM\Column(name="currency", type="string", length=3, nullable=false)
      * @Assert\NotBlank()
      * @Assert\Currency()
      * @Assert\Length(max=3)
      */
+    #[ORM\Column(name: 'currency', type: 'string', length: 3, nullable: false)]
     private string $currency = self::DEFAULT_CURRENCY;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="phone")
      *
-     * @ORM\Column(name="phone", type="string", length=30, nullable=true)
      * @Assert\Length(max=30)
      */
+    #[ORM\Column(name: 'phone', type: 'string', length: 30, nullable: true)]
     private ?string $phone = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="fax")
      *
-     * @ORM\Column(name="fax", type="string", length=30, nullable=true)
      * @Assert\Length(max=30)
      */
+    #[ORM\Column(name: 'fax', type: 'string', length: 30, nullable: true)]
     private ?string $fax = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="mobile")
      *
-     * @ORM\Column(name="mobile", type="string", length=30, nullable=true)
      * @Assert\Length(max=30)
      */
+    #[ORM\Column(name: 'mobile', type: 'string', length: 30, nullable: true)]
     private ?string $mobile = null;
     /**
      * Customers contact email
@@ -190,35 +177,31 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="email")
      *
-     * @ORM\Column(name="email", type="string", length=75, nullable=true)
      * @Assert\Length(max=75)
      */
+    #[ORM\Column(name: 'email', type: 'string', length: 75, nullable: true)]
     private ?string $email = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="homepage")
      *
-     * @ORM\Column(name="homepage", type="string", length=100, nullable=true)
      * @Assert\Length(max=100)
      */
+    #[ORM\Column(name: 'homepage', type: 'string', length: 100, nullable: true)]
     private ?string $homepage = null;
     /**
      * Timezone of begin and end
-     *
-     * Length was determined by a MySQL column via "use mysql;describe time_zone_name;"
-     *
-     * @var string|null
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      *
      * @Exporter\Expose(label="timezone")
      *
-     * @ORM\Column(name="timezone", type="string", length=64, nullable=false)
      * @Assert\NotBlank()
      * @Assert\Length(max=64)
      */
+    #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: false)]
     private ?string $timezone = null;
     /**
      * Meta fields
@@ -232,9 +215,8 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Type(name="array<App\Entity\CustomerMeta>")
      * @Serializer\SerializedName("metaFields")
      * @Serializer\Accessor(getter="getVisibleMetaFields")
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\CustomerMeta", mappedBy="customer", cascade={"persist"})
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\CustomerMeta', mappedBy: 'customer', cascade: ['persist'])]
     private Collection $meta;
     /**
      * Teams
@@ -246,29 +228,19 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Team"))
-     *
-     * @ORM\ManyToMany(targetEntity="Team", cascade={"persist", "remove"}, inversedBy="customers")
-     * @ORM\JoinTable(
-     *  name="kimai2_customers_teams",
-     *  joinColumns={
-     *      @ORM\JoinColumn(name="customer_id", referencedColumnName="id", onDelete="CASCADE")
-     *  },
-     *  inverseJoinColumns={
-     *      @ORM\JoinColumn(name="team_id", referencedColumnName="id", onDelete="CASCADE")
-     *  }
-     * )
      */
+    #[ORM\JoinTable(name: 'kimai2_customers_teams')]
+    #[ORM\JoinColumn(name: 'customer_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(name: 'team_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Team', cascade: ['persist', 'remove'], inversedBy: 'customers')]
     private Collection $teams;
     /**
      * Default invoice template for this customer
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\InvoiceTemplate")
-     * @ORM\JoinColumn(onDelete="SET NULL", nullable=true)
      */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\InvoiceTemplate')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL', nullable: true)]
     private ?InvoiceTemplate $invoiceTemplate = null;
-    /**
-     * @ORM\Column(name="invoice_text", type="text", nullable=true)
-     */
+    #[ORM\Column(name: 'invoice_text', type: 'text', nullable: true)]
     private ?string $invoiceText = null;
 
     public function __construct(string $name)

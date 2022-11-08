@@ -14,45 +14,33 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_roles_permissions",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(name="role_permission", columns={"role_id","permission"})
- *      }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\RolePermissionRepository")
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
- *
  * @UniqueEntity({"role", "permission"})
  */
+#[ORM\Table(name: 'kimai2_roles_permissions')]
+#[ORM\UniqueConstraint(name: 'role_permission', columns: ['role_id', 'permission'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\RolePermissionRepository')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class RolePermission
 {
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-    /**
-     * @var Role
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Role")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
-    private $role;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Role')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    private ?Role $role = null;
     /**
-     * @var string
-     *
-     * @ORM\Column(name="permission", type="string", length=50, nullable=false)
      * @Assert\Length(max=50)
      */
-    private $permission;
+    #[ORM\Column(name: 'permission', type: 'string', length: 50, nullable: false)]
+    private ?string $permission = null;
     /**
-     * @ORM\Column(name="allowed", type="boolean", nullable=false, options={"default": false})
      * @Assert\NotNull()
      */
+    #[ORM\Column(name: 'allowed', type: 'boolean', nullable: false, options: ['default' => false])]
     private bool $allowed = false;
 
     public function getId(): ?int

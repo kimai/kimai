@@ -10,62 +10,53 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_tags",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"name"})
- *      }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
- *
  * @UniqueEntity("name")
  *
  * @Serializer\ExclusionPolicy("all")
  */
+#[ORM\Table(name: 'kimai2_tags')]
+#[ORM\UniqueConstraint(columns: ['name'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\TagRepository')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class Tag
 {
     /**
-     * The internal ID
-     *
-     * @var int
+     * Internal Tag ID
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
     /**
      * The tag name
      *
-     * @var string
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @ORM\Column(name="name", type="string", length=100, nullable=false)
      * @Assert\NotBlank()
      * @Assert\Length(min=2, max=100, normalizer="trim")
      * @Assert\Regex(pattern="/,/",match=false,message="Tag name cannot contain comma")
      */
-    private $name;
+    #[ORM\Column(name: 'name', type: 'string', length: 100, nullable: false)]
+    private ?string $name = null;
 
     use ColorTrait;
 
     /**
-     * @var Timesheet[]|ArrayCollection
-     *
-     * @ORM\ManyToMany(targetEntity="Timesheet", mappedBy="tags", fetch="EXTRA_LAZY")
+     * @var Collection<Timesheet>
      */
-    private $timesheets;
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Timesheet', mappedBy: 'tags', fetch: 'EXTRA_LAZY')]
+    private Collection $timesheets;
 
     public function __construct()
     {
@@ -89,7 +80,7 @@ class Tag
         return $this->name;
     }
 
-    public function addTimesheet(Timesheet $timesheet)
+    public function addTimesheet(Timesheet $timesheet): void
     {
         if ($this->timesheets->contains($timesheet)) {
             return;
@@ -99,7 +90,7 @@ class Tag
         $timesheet->addTag($this);
     }
 
-    public function removeTimesheet(Timesheet $timesheet)
+    public function removeTimesheet(Timesheet $timesheet): void
     {
         if (!$this->timesheets->contains($timesheet)) {
             return;

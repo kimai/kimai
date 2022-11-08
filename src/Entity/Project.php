@@ -19,15 +19,6 @@ use OpenApi\Annotations as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_projects",
- *     indexes={
- *          @ORM\Index(columns={"customer_id","visible","name"}),
- *          @ORM\Index(columns={"customer_id","visible","id"})
- *     }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
- *
  * @Constraints\Project
  *
  * @Serializer\ExclusionPolicy("all")
@@ -54,55 +45,53 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Exporter\Expose("customer", label="customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
  * @ Exporter\Expose("teams", label="team", exp="object.getTeams().toArray()", type="array")
  */
+#[ORM\Table(name: 'kimai2_projects')]
+#[ORM\Index(columns: ['customer_id', 'visible', 'name'])]
+#[ORM\Index(columns: ['customer_id', 'visible', 'id'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\ProjectRepository')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class Project implements EntityWithMetaFields, EntityWithBudget
 {
     use BudgetTrait;
     use ColorTrait;
 
     /**
-     * Internal ID
-     *
-     * @var int|null
+     * Unique Project ID
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="id", type="integer")
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
     /**
      * Customer for this project
-     *
-     * @var Customer
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Subresource", "Expanded"})
      * @OA\Property(ref="#/components/schemas/Customer")
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Customer")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
-    private $customer;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Customer')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    private ?Customer $customer = null;
     /**
      * Project name
-     *
-     * @var string
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="name")
      *
-     * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotNull()
      * @Assert\Length(min=3, max=150)
      */
-    private $name;
+    #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
+    private ?string $name = null;
     /**
      * Project order number
      *
@@ -111,9 +100,9 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * @Exporter\Expose(label="orderNumber")
      *
-     * @ORM\Column(name="order_number", type="text", length=50, nullable=true)
      * @Assert\Length(max=50)
      */
+    #[ORM\Column(name: 'order_number', type: 'text', length: 50, nullable: true)]
     private ?string $orderNumber = null;
     /**
      * Order date for the project
@@ -126,9 +115,8 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      *
      * @Exporter\Expose(label="orderDate", type="datetime")
-     *
-     * @ORM\Column(name="order_date", type="datetime", nullable=true)
      */
+    #[ORM\Column(name: 'order_date', type: 'datetime', nullable: true)]
     private ?\DateTime $orderDate = null;
     /**
      * Project start date (times before this date cannot be recorded)
@@ -141,9 +129,8 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      *
      * @Exporter\Expose(label="project_start", type="datetime")
-     *
-     * @ORM\Column(name="start", type="datetime", nullable=true)
      */
+    #[ORM\Column(name: 'start', type: 'datetime', nullable: true)]
     private ?\DateTime $start = null;
     /**
      * Project end time (times after this date cannot be recorded)
@@ -156,28 +143,19 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      *
      * @Exporter\Expose(label="project_end", type="datetime")
-     *
-     * @ORM\Column(name="end", type="datetime", nullable=true)
      */
+    #[ORM\Column(name: 'end', type: 'datetime', nullable: true)]
     private ?\DateTime $end = null;
-    /**
-     * @internal used for storing the timezone for "order", "start" and "end" date
-     *
-     * @ORM\Column(name="timezone", type="string", length=64, nullable=true)
-     */
+    #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: true)]
     private ?string $timezone = null;
-    /**
-     * @internal used for having the localization state of the dates (see $timezone)
-     */
     private bool $localized = false;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="comment")
-     *
-     * @ORM\Column(name="comment", type="text", nullable=true)
      */
+    #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
     private ?string $comment = null;
     /**
      * If the project is not visible, times cannot be recorded
@@ -187,9 +165,9 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * @Exporter\Expose(label="visible", type="boolean")
      *
-     * @ORM\Column(name="visible", type="boolean", nullable=false)
      * @Assert\NotNull()
      */
+    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false)]
     private bool $visible = true;
     /**
      * @Serializer\Expose()
@@ -197,64 +175,52 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * @Exporter\Expose(label="billable", type="boolean")
      *
-     * @ORM\Column(name="billable", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
      */
+    #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
     private bool $billable = true;
     /**
      * Meta fields
      *
      * All visible meta (custom) fields registered with this project
      *
-     * @var ProjectMeta[]|Collection
+     * @var Collection<ProjectMeta>
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Project"})
      * @Serializer\Type(name="array<App\Entity\ProjectMeta>")
      * @Serializer\SerializedName("metaFields")
      * @Serializer\Accessor(getter="getVisibleMetaFields")
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\ProjectMeta", mappedBy="project", cascade={"persist"})
      */
-    private $meta;
+    #[ORM\OneToMany(targetEntity: 'App\Entity\ProjectMeta', mappedBy: 'project', cascade: ['persist'])]
+    private Collection $meta;
     /**
      * Teams
      *
      * If no team is assigned, everyone can access the project (also depends on the teams of the customer)
      *
-     * @var Team[]|ArrayCollection
+     * @var Collection<Team>
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Project"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Team"))
-     *
-     * @ORM\ManyToMany(targetEntity="Team", cascade={"persist"}, inversedBy="projects")
-     * @ORM\JoinTable(
-     *  name="kimai2_projects_teams",
-     *  joinColumns={
-     *      @ORM\JoinColumn(name="project_id", referencedColumnName="id", onDelete="CASCADE")
-     *  },
-     *  inverseJoinColumns={
-     *      @ORM\JoinColumn(name="team_id", referencedColumnName="id", onDelete="CASCADE")
-     *  }
-     * )
      */
-    private $teams;
-    /**
-     * @ORM\Column(name="invoice_text", type="text", nullable=true)
-     */
+    #[ORM\JoinTable(name: 'kimai2_projects_teams')]
+    #[ORM\JoinColumn(name: 'project_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(name: 'team_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Team', cascade: ['persist'], inversedBy: 'projects')]
+    private Collection $teams;
+    #[ORM\Column(name: 'invoice_text', type: 'text', nullable: true)]
     private ?string $invoiceText = null;
     /**
      * Whether this project allows booking of global activities
      *
-     * @var bool
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @ORM\Column(name="global_activities", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
      */
+    #[ORM\Column(name: 'global_activities', type: 'boolean', nullable: false, options: ['default' => true])]
     private bool $globalActivities = true;
 
     public function __construct()

@@ -8,40 +8,34 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
-
 ## [2.0](https://github.com/kevinpapst/kimai2/releases/tag/2.0)
 
 **!! This release requires minimum PHP version to 8.1 !!**
 
 - Removed unused `public/avatars/` directory 
-- Removed support for custom translation files (use TranslationBundle instead or write your own plugin)
+- Removed support for custom translation files (use [TranslationBundle](https://www.kimai.org/store/translation-bundle.html) instead or write your own plugin)
 - local.yaml is not compatible with old version, best is to remove it before the update and then re-create it after everything works 
   - dashboard default config
   - removed: theme.branding.translation
   - removed: kimai.plugin_dir
-- API: upgraded to [Open API specification v3](https://blog.readme.com/an-example-filled-guide-to-swagger-3-2/)
-- API: config/timesheet removed activeEntriesSoftLimit
-- API: removed route `config/i18n`
-- API: Team removed `teamlead` and `users` - access `members` instead
-- API: Project start/end/order dates are now plain dates without time (start and order are set to 00:00:00 and end is set to 23:59:59)
-- All deprecated code was removed
-- User preference constructor has mandatory parameter
-- User preference names cannot contain dots `.` anymore
-- Removed all 3rd party mailer packages, you need to install them manually: 
-  - `symfony/amazon-mailer`
-  - `symfony/google-mailer`
-  - `symfony/mailchimp-mailer`
-  - `symfony/mailgun-mailer`
-  - `symfony/postmark-mailer`
-  - `symfony/sendgrid-mailer`
-- Removed Twig filters. You have to replace them in your custom export/invoice templates:
+- Removed all 3rd party mailer packages, you need to install them manually (ONLY if you used a short syntax to configure the `MAILER_URL` in `.emv`): 
+  - `composer require symfony/amazon-mailer`
+  - `composer require symfony/google-mailer`
+  - `composer require symfony/mailchimp-mailer`
+  - `composer require symfony/mailgun-mailer`
+  - `composer require symfony/postmark-mailer`
+  - `composer require symfony/sendgrid-mailer`
+- Time-tracking mode `duration_only` was removed, existing installations will be switched to `default`
+- Removed Twig filters. You might have to replace them in your custom export/invoice templates:
   - `date_full` => `date_time`
   - `duration_decimal` => `duration(true)`
   - `currency` => `currency_name`
   - `country` => `country_name`
   - `language` => `language_name`
-- Time-tracking mode `duration_only` was removed, existing installations will be switched to `default`
-- Removed `Constants::STATUS` and `candidate` from `/api/version` result
+
+**Developer**
+
+Please read the full documentation at [https://www.kimai.org/documentation/migration-v2.html](https://www.kimai.org/documentation/migration-v2.html).
 
 ## [1.16](https://github.com/kevinpapst/kimai2/releases/tag/1.16)
 

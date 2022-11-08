@@ -14,28 +14,22 @@ use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_projects_meta",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"project_id", "name"})
- *      }
- * )
- * @ORM\Entity()
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
- *
  * @Serializer\ExclusionPolicy("all")
  */
+#[ORM\Table(name: 'kimai2_projects_meta')]
+#[ORM\UniqueConstraint(columns: ['project_id', 'name'])]
+#[ORM\Entity]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class ProjectMeta implements MetaTableTypeInterface
 {
     use MetaTableTypeTrait;
 
     /**
-     * @var Project
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="meta")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
-    private $project;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Project', inversedBy: 'meta')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    private ?Project $project = null;
 
     public function setEntity(EntityWithMetaFields $entity): MetaTableTypeInterface
     {

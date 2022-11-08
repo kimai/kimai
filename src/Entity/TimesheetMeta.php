@@ -14,28 +14,22 @@ use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_timesheet_meta",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"timesheet_id", "name"})
- *      }
- * )
- * @ORM\Entity()
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
- *
  * @Serializer\ExclusionPolicy("all")
  */
+#[ORM\Table(name: 'kimai2_timesheet_meta')]
+#[ORM\UniqueConstraint(columns: ['timesheet_id', 'name'])]
+#[ORM\Entity]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class TimesheetMeta implements MetaTableTypeInterface
 {
     use MetaTableTypeTrait;
 
     /**
-     * @var Timesheet
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Timesheet", inversedBy="meta")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
-    private $timesheet;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Timesheet', inversedBy: 'meta')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    private ?Timesheet $timesheet = null;
 
     public function setEntity(EntityWithMetaFields $entity): MetaTableTypeInterface
     {

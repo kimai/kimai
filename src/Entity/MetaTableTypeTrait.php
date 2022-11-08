@@ -21,46 +21,39 @@ use Symfony\Component\Validator\Constraints as Assert;
 trait MetaTableTypeTrait
 {
     /**
-     * @var int|null
-     *
      * @Serializer\Exclude()
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(name="id", type="integer")
      */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'id', type: 'integer')]
+    private ?int $id = null;
     /**
      * Name of the meta (custom) field
-     *
-     * @var string
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @ORM\Column(name="name", type="string", length=50, nullable=false)
      * @Assert\NotNull()
      * @Assert\Length(min=2, max=50)
      */
-    private $name;
+    #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
+    private ?string $name = null;
     /**
      * Value of the meta (custom) field
      *
      * This field can be used to temporary hold data in another format (e.g. array) during form transformation.
      *
-     * @var string|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @ORM\Column(name="value", type="text", length=65535, nullable=true)
      * @Assert\Length(max=65535)
      */
-    private $value = null;
+    #[ORM\Column(name: 'value', type: 'text', length: 65535, nullable: true)]
+    private ?string $value = null;
     /**
-     * @ORM\Column(name="visible", type="boolean", nullable=false, options={"default": false})
      * @Assert\NotNull()
      */
+    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => false])]
     private bool $visible = false;
     private ?string $label = null;
     private ?string $type = null;
@@ -68,12 +61,12 @@ trait MetaTableTypeTrait
     /**
      * @var Constraint[]
      */
-    private $constraints = [];
+    private array $constraints = [];
     /**
      * An array of options for the form element
      * @var array
      */
-    private $options = [];
+    private array $options = [];
     private int $order = 0;
 
     public function getName(): ?string

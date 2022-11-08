@@ -18,16 +18,6 @@ use OpenApi\Annotations as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_activities",
- *      indexes={
- *          @ORM\Index(columns={"visible","project_id"}),
- *          @ORM\Index(columns={"visible","project_id","name"}),
- *          @ORM\Index(columns={"visible","name"})
- *      }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\ActivityRepository")
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
- *
  * @Serializer\ExclusionPolicy("all")
  * @Serializer\VirtualProperty(
  *      "ProjectName",
@@ -51,6 +41,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Exporter\Order({"id", "name", "project", "budget", "timeBudget", "budgetType", "color", "visible", "comment", "billable"})
  * @Exporter\Expose("project", label="project", exp="object.getProject() === null ? null : object.getProject().getName()")
  */
+#[ORM\Table(name: 'kimai2_activities')]
+#[ORM\Index(columns: ['visible', 'project_id'])]
+#[ORM\Index(columns: ['visible', 'project_id', 'name'])]
+#[ORM\Index(columns: ['visible', 'name'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\ActivityRepository')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class Activity implements EntityWithMetaFields, EntityWithBudget
 {
     use BudgetTrait;
@@ -59,52 +55,43 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     /**
      * Unique activity ID
      *
-     * @var int|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="id", type="integer")
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
     /**
-     * @var Project|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Subresource", "Expanded"})
      * @OA\Property(ref="#/components/schemas/Project")
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Project")
-     * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    private $project;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Project')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    private ?Project $project = null;
     /**
      * Name of this activity
-     *
-     * @var string
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="name")
      *
-     * @ORM\Column(name="name", type="string", length=150, nullable=false)
      * @Assert\NotBlank()
      * @Assert\Length(min=3, max=150)
      */
-    private $name;
+    #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
+    private ?string $name = null;
     /**
      * Description of this activity
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="comment")
-     *
-     * @ORM\Column(name="comment", type="text", nullable=true)
      */
+    #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
     private ?string $comment = null;
     /**
      * Whether this activity is visible and can be used for timesheets
@@ -113,61 +100,51 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="visible", type="boolean")
      *
-     * @ORM\Column(name="visible", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
      */
+    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => true])]
     private bool $visible = true;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="billable", type="boolean")
      *
-     * @ORM\Column(name="billable", type="boolean", nullable=false, options={"default": true})
      * @Assert\NotNull()
      */
+    #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
     private bool $billable = true;
     /**
      * Meta fields
      *
      * All visible meta (custom) fields registered with this activity
      *
-     * @var ActivityMeta[]|Collection
+     * @var Collection<ActivityMeta>
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity"})
      * @Serializer\Type(name="array<App\Entity\ActivityMeta>")
      * @Serializer\SerializedName("metaFields")
      * @Serializer\Accessor(getter="getVisibleMetaFields")
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\ActivityMeta", mappedBy="activity", cascade={"persist"})
      */
-    private $meta;
+    #[ORM\OneToMany(targetEntity: 'App\Entity\ActivityMeta', mappedBy: 'activity', cascade: ['persist'])]
+    private Collection $meta;
     /**
      * Teams
      *
      * If no team is assigned, everyone can access the activity
      *
-     * @var Team[]|ArrayCollection
+     * @var Collection<Team>
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Activity"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Team"))
-     *
-     * @ORM\ManyToMany(targetEntity="Team", cascade={"persist"}, inversedBy="activities")
-     * @ORM\JoinTable(
-     *  name="kimai2_activities_teams",
-     *  joinColumns={
-     *      @ORM\JoinColumn(name="activity_id", referencedColumnName="id", onDelete="CASCADE")
-     *  },
-     *  inverseJoinColumns={
-     *      @ORM\JoinColumn(name="team_id", referencedColumnName="id", onDelete="CASCADE")
-     *  }
-     * )
      */
-    private $teams;
-    /**
-     * @ORM\Column(name="invoice_text", type="text", nullable=true)
-     */
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Team', cascade: ['persist'], inversedBy: 'activities')]
+    #[ORM\JoinTable(name: 'kimai2_activities_teams')]
+    #[ORM\JoinColumn(name: 'activity_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(name: 'team_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    private Collection $teams;
+    #[ORM\Column(name: 'invoice_text', type: 'text', nullable: true)]
     private ?string $invoiceText = null;
 
     public function __construct()

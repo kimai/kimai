@@ -15,30 +15,24 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_customers_rates",
- *     uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"user_id", "customer_id"}),
- *     }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\CustomerRateRepository")
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
- *
  * @UniqueEntity({"user", "customer"}, ignoreNull=false)
  *
  * @Serializer\ExclusionPolicy("all")
  */
+#[ORM\Table(name: 'kimai2_customers_rates')]
+#[ORM\UniqueConstraint(columns: ['user_id', 'customer_id'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\CustomerRateRepository')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class CustomerRate implements RateInterface
 {
     use Rate;
 
     /**
-     * @var Customer
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Customer")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
-    private $customer;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Customer')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    private ?Customer $customer = null;
 
     public function setCustomer(?Customer $customer): CustomerRate
     {

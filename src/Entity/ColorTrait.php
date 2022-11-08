@@ -24,9 +24,9 @@ trait ColorTrait
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="color")
      *
-     * @ORM\Column(name="color", type="string", length=7, nullable=true)
      * @Constraints\HexColor()
      */
+    #[ORM\Column(name: 'color', type: 'string', length: 7, nullable: true)]
     private ?string $color = null;
 
     public function getColor(): ?string

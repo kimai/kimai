@@ -35,7 +35,7 @@ doctrine:
                 auto_mapping: true
                 mappings:
                     App:
-                        type: annotation
+                        type: attribute
                         dir: '%kernel.project_dir%/src/Entity'
                         prefix: 'App\Entity'
                         alias: Kimai

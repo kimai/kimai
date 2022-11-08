@@ -18,16 +18,12 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_user_preferences",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"user_id", "name"})
- *      }
- * )
- * @ORM\Entity()
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
- *
  * @Serializer\ExclusionPolicy("all")
  */
+#[ORM\Table(name: 'kimai2_user_preferences')]
+#[ORM\UniqueConstraint(columns: ['user_id', 'name'])]
+#[ORM\Entity]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class UserPreference
 {
     public const HOURLY_RATE = 'hourly_rate';
@@ -37,39 +33,30 @@ class UserPreference
     public const TIMEZONE = 'timezone';
     public const FIRST_WEEKDAY = 'first_weekday';
 
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'id', type: 'integer')]
+    private ?int $id = null;
     /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(name="id", type="integer")
-     */
-    private $id;
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="preferences")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      * @Assert\NotNull()
      */
-    private $user;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'preferences')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private ?User $user = null;
     /**
-     * @var string
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @ORM\Column(name="name", type="string", length=50, nullable=false)
      * @Assert\NotNull()
      * @Assert\Length(min=2, max=50)
      */
-    private $name;
+    #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
+    private string $name;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
-     * @ORM\Column(name="value", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'value', type: 'string', length: 255, nullable: true)]
     private ?string $value;
     private ?string $type = null;
     private bool $enabled = true;

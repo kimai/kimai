@@ -19,45 +19,36 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_teams",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"name"})
- *      }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\TeamRepository")
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
- *
  * @UniqueEntity("name")
  *
  * @Serializer\ExclusionPolicy("all")
  * @Constraints\Team
  */
+#[ORM\Table(name: 'kimai2_teams')]
+#[ORM\UniqueConstraint(columns: ['name'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\TeamRepository')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class Team
 {
     /**
-     * @var int|null
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private ?int $id = null;
     /**
      * Team name
      *
-     * @var null|string
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @ORM\Column(name="name", type="string", length=100, nullable=false)
      * @Assert\NotBlank()
      * @Assert\Length(min=2, max=100)
      */
-    private ?string $name = null;
+    #[ORM\Column(name: 'name', type: 'string', length: 100, nullable: false)]
+    private string $name;
     /**
      * All team member (including team leads)
      *
@@ -67,10 +58,10 @@ class Team
      * @Serializer\Groups({"Team_Entity"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/TeamMember"))
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\TeamMember", mappedBy="team", fetch="LAZY", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\Count(min="1")
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\TeamMember', mappedBy: 'team', fetch: 'LAZY', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private Collection $members;
     /**
      * Customers assigned to the team
@@ -80,9 +71,8 @@ class Team
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Customer"))
-     *
-     * @ORM\ManyToMany(targetEntity="Customer", mappedBy="teams", fetch="EXTRA_LAZY", cascade={"persist", "remove"})
      */
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Customer', mappedBy: 'teams', fetch: 'EXTRA_LAZY', cascade: ['persist', 'remove'])]
     private Collection $customers;
     /**
      * Projects assigned to the team
@@ -92,9 +82,8 @@ class Team
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity", "Expanded"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Project"))
-     *
-     * @ORM\ManyToMany(targetEntity="Project", mappedBy="teams", fetch="EXTRA_LAZY", cascade={"persist", "remove"})
      */
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Project', mappedBy: 'teams', fetch: 'EXTRA_LAZY', cascade: ['persist', 'remove'])]
     private Collection $projects;
     /**
      * Activities assigned to the team
@@ -104,9 +93,8 @@ class Team
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity", "Expanded"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Activity"))
-     *
-     * @ORM\ManyToMany(targetEntity="Activity", mappedBy="teams", fetch="EXTRA_LAZY", cascade={"persist", "remove"})
      */
+    #[ORM\ManyToMany(targetEntity: 'App\Entity\Activity', mappedBy: 'teams', fetch: 'EXTRA_LAZY', cascade: ['persist', 'remove'])]
     private Collection $activities;
 
     use ColorTrait;

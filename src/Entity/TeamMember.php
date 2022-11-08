@@ -15,57 +15,45 @@ use OpenApi\Annotations as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_users_teams",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"user_id", "team_id"})
- *      }
- * )
- * @ORM\Entity
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
- *
  * @Serializer\ExclusionPolicy("all")
  */
+#[ORM\Table(name: 'kimai2_users_teams')]
+#[ORM\UniqueConstraint(columns: ['user_id', 'team_id'])]
+#[ORM\Entity]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class TeamMember
 {
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    private ?int $id = null;
     /**
-     * @var int|null
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-    /**
-     * @var User
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default", "Entity", "Team_Entity"})
      * @OA\Property(ref="#/components/schemas/User")
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="memberships")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
-    private $user;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'memberships')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    private ?User $user = null;
     /**
-     * @var Team
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default", "Entity", "User_Entity"})
      * @OA\Property(ref="#/components/schemas/Team")
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="members")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
-    private $team;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Team', inversedBy: 'members')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    private ?Team $team = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default", "Entity", "Team_Entity", "User_Entity"})
      *
-     * @ORM\Column(name="teamlead", type="boolean", nullable=false, options={"default": false})
      * @Assert\NotNull()
      */
+    #[ORM\Column(name: 'teamlead', type: 'boolean', nullable: false, options: ['default' => false])]
     private bool $teamlead = false;
 
     public function getId(): ?int

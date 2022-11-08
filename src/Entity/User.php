@@ -31,15 +31,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="kimai2_users",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(columns={"username"}),
- *          @ORM\UniqueConstraint(columns={"email"})
- *      }
- * )
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
- *
  * @UniqueEntity("username")
  * @UniqueEntity("email")
  * @Constraints\User(groups={"UserCreate", "Registration", "Default", "Profile"})
@@ -56,6 +47,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ Exporter\Expose("teams", label="team", exp="object.getTeams()", type="array")
  * @Exporter\Expose("active", label="active", exp="object.isEnabled()", type="boolean")
  */
+#[ORM\Table(name: 'kimai2_users')]
+#[ORM\UniqueConstraint(columns: ['username'])]
+#[ORM\UniqueConstraint(columns: ['email'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
     public const ROLE_USER = 'ROLE_USER';
@@ -74,20 +70,17 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public const WIZARDS = ['intro', 'profile'];
 
     /**
-     * Internal ID
-     *
-     * @var int
+     * Unique User ID
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="id", type="integer")
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(name="id", type="integer")
      */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'id', type: 'integer')]
+    private ?int $id = null;
     /**
      * The user alias will be displayed in the frontend instead of the username
      *
@@ -96,17 +89,16 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      *
      * @Exporter\Expose(label="alias")
      *
-     * @ORM\Column(name="alias", type="string", length=60, nullable=true)
      * @Assert\Length(max=60)
      */
+    #[ORM\Column(name: 'alias', type: 'string', length: 60, nullable: true)]
     private ?string $alias = null;
     /**
      * Registration date for the user
      *
      * @Exporter\Expose(label="profile.registration_date", type="datetime")
-     *
-     * @ORM\Column(name="registration_date", type="datetime", nullable=true)
      */
+    #[ORM\Column(name: 'registration_date', type: 'datetime', nullable: true)]
     private ?\DateTime $registeredAt = null;
     /**
      * An additional title for the user, like the Job position or Department
@@ -115,9 +107,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="title")
      *
-     * @ORM\Column(name="title", type="string", length=50, nullable=true)
      * @Assert\Length(max=50)
      */
+    #[ORM\Column(name: 'title', type: 'string', length: 50, nullable: true)]
     private ?string $title = null;
     /**
      * URL to the user avatar, will be auto-generated if empty
@@ -125,15 +117,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @Serializer\Expose()
      * @Serializer\Groups({"User_Entity"})
      *
-     * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
      * @Assert\Length(max=255)
      */
+    #[ORM\Column(name: 'avatar', type: 'string', length: 255, nullable: true)]
     private ?string $avatar = null;
     /**
      * API token (password) for this user
-     *
-     * @ORM\Column(name="api_token", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'api_token', type: 'string', length: 255, nullable: true)]
     private ?string $apiToken = null;
     /**
      * @internal to be set via form, must not be persisted
@@ -147,11 +138,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      *
      * List of preferences for this user, required ones have dedicated fields/methods
      *
-     * @var Collection<UserPreference>
+     * This Collection can be null for one edge case ONLY:
+     * if a currently logged-in user will be deleted and then refreshed from the session from one of the UserProvider
+     * e.g. see LdapUserProvider::refreshUser() it might crash if $user->getPreferenceValue() is called
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\UserPreference", mappedBy="user", cascade={"persist"})
+     * @var Collection<UserPreference>|null
      */
-    private $preferences;
+    #[ORM\OneToMany(targetEntity: 'App\Entity\UserPreference', mappedBy: 'user', cascade: ['persist'])]
+    private ?Collection $preferences = null;
     /**
      * List of all team memberships.
      *
@@ -161,19 +155,19 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @Serializer\Groups({"User_Entity"})
      * @OA\Property(ref="#/components/schemas/TeamMembership")
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\TeamMember", mappedBy="user", fetch="LAZY", cascade={"persist"}, orphanRemoval=true)
-     * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\NotNull()
      */
-    private $memberships;
+    #[ORM\OneToMany(targetEntity: 'App\Entity\TeamMember', mappedBy: 'user', fetch: 'LAZY', cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    private Collection $memberships;
     /**
      * The type of authentication used by the user (e.g. "kimai", "ldap", "saml")
      *
      * @internal for internal usage only
      *
-     * @ORM\Column(name="auth", type="string", length=20, nullable=true)
      * @Assert\Length(max=20)
      */
+    #[ORM\Column(name: 'auth', type: 'string', length: 20, nullable: true)]
     private ?string $auth = self::AUTH_INTERNAL;
     /**
      * This flag will be initialized in UserEnvironmentSubscriber.
@@ -182,72 +176,56 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     private ?bool $isAllowedToSeeAllData = null;
     /**
-     * @var string
-     *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
-     * @ORM\Column(name="username", type="string", length=180)
      * @Assert\NotBlank(groups={"Registration", "UserCreate", "Profile"})
      * @Assert\Length(min="2", max="60", groups={"Registration", "UserCreate", "Profile"})
      */
-    private $username;
+    #[ORM\Column(name: 'username', type: 'string', length: 180, nullable: false)]
+    private ?string $username = null;
     /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=180)
      * @Assert\NotBlank(groups={"Registration", "UserCreate", "Profile"})
      * @Assert\Length(min="2", max="180")
      * @Assert\Email(groups={"Registration", "UserCreate", "Profile"})
      */
-    private $email;
+    #[ORM\Column(name: 'email', type: 'string', length: 180, nullable: false)]
+    private ?string $email = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="account_number")
      *
-     * @ORM\Column(name="account", type="string", length=30, nullable=true)
      * @Assert\Length(max="30", groups={"Registration", "UserCreate", "Profile"})
      */
+    #[ORM\Column(name: 'account', type: 'string', length: 30, nullable: true)]
     private ?string $accountNumber = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
-     * @ORM\Column(name="enabled", type="boolean")
      */
+    #[ORM\Column(name: 'enabled', type: 'boolean', nullable: false)]
     private bool $enabled = false;
     /**
      * Encrypted password. Must be persisted.
-     *
-     * @var string
-     * @ORM\Column(name="password", type="string")
      */
-    private $password;
+    #[ORM\Column(name: 'password', type: 'string', nullable: false)]
+    private ?string $password = null;
     /**
      * Plain password. Used for model validation, not persisted.
      *
-     * TODO make the password rules configurable
-     *
-     * @var string|null
      * @Assert\NotBlank(groups={"Registration", "PasswordUpdate", "UserCreate"})
      * @Assert\Length(min="8", max="60", groups={"Registration", "PasswordUpdate", "UserCreate", "ResetPassword", "ChangePassword"})
      */
-    private $plainPassword;
-    /**
-     * @var \DateTime|null
-     * @ORM\Column(name="last_login", type="datetime", nullable=true)
-     */
-    private $lastLogin;
+    private ?string $plainPassword = null;
+    #[ORM\Column(name: 'last_login', type: 'datetime', nullable: true)]
+    private ?DateTime $lastLogin = null;
     /**
      * Random string sent to the user email address in order to verify it.
-     *
-     * @ORM\Column(name="confirmation_token", type="string", length=180, unique=true, nullable=true)
      */
+    #[ORM\Column(name: 'confirmation_token', type: 'string', length: 180, unique: true, nullable: true)]
     private ?string $confirmationToken = null;
-    /**
-     * @ORM\Column(name="password_requested_at", type="datetime", nullable=true)
-     */
+    #[ORM\Column(name: 'password_requested_at', type: 'datetime', nullable: true)]
     private ?\DateTime $passwordRequestedAt = null;
     /**
      * List of all role names
@@ -256,23 +234,18 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @Serializer\Groups({"User_Entity"})
      * @Serializer\Type("array<string>")
      *
-     * @ORM\Column(name="roles", type="array")
      * @Constraints\Role(groups={"RolesUpdate"})
      */
+    #[ORM\Column(name: 'roles', type: 'array', nullable: false)]
     private array $roles = [];
     /**
      * If not empty two-factor authentication is enabled.
-     *
-     * @ORM\Column(name="totp_secret", type="string", nullable=true)
      */
+    #[ORM\Column(name: 'totp_secret', type: 'string', nullable: true)]
     private ?string $totpSecret;
-    /**
-     * @ORM\Column(name="totp_enabled", type="boolean", nullable=false, options={"default": false})
-     */
+    #[ORM\Column(name: 'totp_enabled', type: 'boolean', nullable: false, options: ['default' => false])]
     private bool $totpEnabled = false;
-    /**
-     * @ORM\Column(name="system_account", type="boolean", nullable=false)
-     */
+    #[ORM\Column(name: 'system_account', type: 'boolean', nullable: false, options: ['default' => false])]
     private bool $systemAccount = false;
 
     use ColorTrait;
@@ -440,8 +413,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function getPreference(string $name): ?UserPreference
     {
-        // this code will be triggered, if a currently logged-in user will be deleted and then refreshed from the session
-        // via one of the UserProvider - e.g. see LdapUserProvider::refreshUser() which calls $user->getPreferenceValue()
         if ($this->preferences === null) {
             return null;
         }

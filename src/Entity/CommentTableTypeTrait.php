@@ -14,40 +14,30 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 trait CommentTableTypeTrait
 {
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'id', type: 'integer')]
+    private ?int $id = null;
     /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(name="id", type="integer")
-     */
-    private $id;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="message", type="text", nullable=false)
      * @Assert\NotNull()
      */
-    private $message;
+    #[ORM\Column(name: 'message', type: 'text', nullable: false)]
+    private ?string $message = null;
     /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
-    private $createdBy;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    private ?User $createdBy = null;
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      * @Assert\NotNull()
      */
-    private $createdAt;
+    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
+    private ?\DateTime $createdAt = null;
     /**
-     * @ORM\Column(name="pinned", type="boolean", nullable=false, options={"default": false})
      * @Assert\NotNull()
      */
+    #[ORM\Column(name: 'pinned', type: 'boolean', nullable: false, options: ['default' => false])]
     private bool $pinned = false;
 
     public function getId(): ?int

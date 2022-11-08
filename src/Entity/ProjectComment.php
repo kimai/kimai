@@ -12,24 +12,19 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="kimai2_projects_comments",
- *      indexes={
- *          @ORM\Index(columns={"project_id"})
- *      }
- * )
- * @ORM\Entity()
- * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
- */
+#[ORM\Table(name: 'kimai2_projects_comments')]
+#[ORM\Index(columns: ['project_id'])]
+#[ORM\Entity]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class ProjectComment implements CommentInterface
 {
     use CommentTableTypeTrait;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Project")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * @Assert\NotNull()
      */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Project')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     private Project $project;
 
     public function __construct(Project $project)
