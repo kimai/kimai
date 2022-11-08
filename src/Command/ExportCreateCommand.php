@@ -19,6 +19,7 @@ use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
 use App\Timesheet\DateTimeFactory;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -30,32 +31,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[AsCommand(name: 'kimai:export:create')]
 class ExportCreateCommand extends Command
 {
-    private $serviceExport;
-    private $customerRepository;
-    private $projectRepository;
-    private $teamRepository;
-    private $userRepository;
-    private $translator;
-    private $mailer;
-
     public function __construct(
-        ServiceExport $serviceExport,
-        CustomerRepository $customerRepository,
-        ProjectRepository $projectRepository,
-        TeamRepository $teamRepository,
-        UserRepository $userRepository,
-        TranslatorInterface $translator,
-        KimaiMailer $mailer
+        private ServiceExport $serviceExport,
+        private CustomerRepository $customerRepository,
+        private ProjectRepository $projectRepository,
+        private TeamRepository $teamRepository,
+        private UserRepository $userRepository,
+        private TranslatorInterface $translator,
+        private KimaiMailer $mailer
     ) {
-        $this->serviceExport = $serviceExport;
-        $this->customerRepository = $customerRepository;
-        $this->projectRepository = $projectRepository;
-        $this->teamRepository = $teamRepository;
-        $this->userRepository = $userRepository;
-        $this->translator = $translator;
-        $this->mailer = $mailer;
         parent::__construct();
     }
 
@@ -65,7 +52,6 @@ class ExportCreateCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('kimai:export:create')
             ->setDescription('Create exports')
             ->setHelp('Create exports by several different filters and sent them via email.')
             ->addOption('start', null, InputOption::VALUE_OPTIONAL, 'Start date (format: 2020-01-01, default: start of the month)', null)

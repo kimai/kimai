@@ -23,7 +23,7 @@ class ResetDevelopmentCommandTest extends KernelTestCase
     {
         $kernel = self::bootKernel();
         $application = new Application($kernel);
-        $application->add(new ResetDevelopmentCommand());
+        $application->add(new ResetDevelopmentCommand('dev'));
 
         self::assertTrue($application->has('kimai:reset:dev'));
         $command = $application->find('kimai:reset:dev');
@@ -34,7 +34,7 @@ class ResetDevelopmentCommandTest extends KernelTestCase
     {
         $kernel = self::bootKernel(['environment' => 'prod']);
         $application = new Application($kernel);
-        $application->add(new ResetDevelopmentCommand());
+        $application->add(new ResetDevelopmentCommand('prod'));
 
         self::assertFalse($application->has('kimai:reset:dev'));
     }

@@ -26,11 +26,14 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 abstract class AbstractResetCommand extends Command
 {
+    public function __construct(private string $kernelEnvironment)
+    {
+        parent::__construct();
+    }
+
     protected function configure(): void
     {
         $this
-            ->setName('kimai:reset:' . $this->getEnvName())
-            ->setDescription('Resets the "' . $this->getEnvName() . '" environment')
             ->setHelp(
                 <<<EOT
     This command will drop and re-create the database and its schemas, load data and clear the cache.
@@ -43,16 +46,7 @@ EOT
 
     public function isEnabled(): bool
     {
-        return $this->getEnv() !== 'prod';
-    }
-
-    private function getEnv(): string
-    {
-        /** @var Application $application */
-        $application = $this->getApplication();
-        $kernel = $application->getKernel();
-
-        return $kernel->getEnvironment();
+        return $this->kernelEnvironment !== 'prod';
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -154,8 +148,6 @@ EOT
 
         return $questionHelper->ask($input, $output, $question);
     }
-
-    abstract protected function getEnvName(): string;
 
     abstract protected function loadData(InputInterface $input, OutputInterface $output): void;
 }

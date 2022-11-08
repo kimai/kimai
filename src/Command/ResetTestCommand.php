@@ -17,6 +17,7 @@ use App\Entity\User;
 use App\Entity\UserPreference;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -29,16 +30,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * This is one of the cases where I don't feel like it is necessary to add tests, so lets "cheat" with:
  * @codeCoverageIgnore
  */
+#[AsCommand(name: 'kimai:reset:test', description: 'Resets the "test" environment')]
 final class ResetTestCommand extends AbstractResetCommand
 {
-    public function __construct(private EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager, string $kernelEnvironment)
     {
-        parent::__construct();
-    }
-
-    protected function getEnvName(): string
-    {
-        return 'test';
+        parent::__construct($kernelEnvironment);
     }
 
     protected function loadData(InputInterface $input, OutputInterface $output): void

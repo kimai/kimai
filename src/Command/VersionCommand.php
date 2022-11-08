@@ -10,21 +10,19 @@
 namespace App\Command;
 
 use App\Constants;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-/**
- * Command used to fetch Kimai version information.
- */
+#[AsCommand(name: 'kimai:version')]
 final class VersionCommand extends Command
 {
     protected function configure(): void
     {
         $this
-            ->setName('kimai:version')
             ->setDescription('Receive version information')
             ->setHelp('This command allows you to fetch various version information about Kimai.')
             ->addOption('short', null, InputOption::VALUE_NONE, 'Display the version only')
