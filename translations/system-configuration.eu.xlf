@@ -66,10 +66,6 @@
         <source>off</source>
         <target>Desgaituta</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target>Erabili biribiltze arauaren balio konfiguratua</target>
-      </trans-unit>
       <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
         <source>timesheet.time_increment</source>
         <target>Minutuen hautapena Nondik Nora</target>

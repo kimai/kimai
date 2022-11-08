@@ -71,6 +71,7 @@ final class Version20993112235958 extends AbstractMigration
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'export_decimal' WHERE `name` = 'timesheet.export_decimal'");
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'update_browser_title' WHERE `name` = 'theme.update_browser_title'");
         $this->addSql("UPDATE kimai2_configuration SET `value` = '15' WHERE `name` = 'timesheet.time_increment' and `value` = '0'");
+        $this->addSql("UPDATE kimai2_configuration SET `value` = '5' WHERE `name` = 'timesheet.time_increment' and `value` IN ('1', '2', '3', '4')");
     }
 
     public function down(Schema $schema): void

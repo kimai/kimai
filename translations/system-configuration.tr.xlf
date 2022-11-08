@@ -178,10 +178,6 @@
         <source>off</source>
         <target>Kapalı</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target>Yuvarlama kuralının yapılandırılan değerini kullan</target>
-      </trans-unit>
       <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
         <source>timesheet.time_increment</source>
         <target>Başlangıç &amp; Bitiş için dakika seçimi</target>

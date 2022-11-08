@@ -186,10 +186,6 @@
         <source>timesheet.time_increment</source>
         <target>اختيار الدقيقة لـ amp من و إلى</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target>استخدم القيمة المكونة لقاعدة التقريب</target>
-      </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
         <target>إيقاف</target>

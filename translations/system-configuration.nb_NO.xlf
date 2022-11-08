@@ -210,10 +210,6 @@
         <source>timesheet.time_increment</source>
         <target state="needs-translation">Minuttutvalg for «Fra og til»</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target>Bruk oppsatt verdi for avrundingsregel</target>
-      </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
         <target>Av</target>

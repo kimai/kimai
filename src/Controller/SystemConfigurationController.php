@@ -330,10 +330,9 @@ final class SystemConfigurationController extends AbstractController
                         ]),
                     (new Configuration('timesheet.time_increment'))
                         ->setType(MinuteIncrementType::class)
-                        ->setOptions(['max_one_hour' => true])
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new Range(['min' => 1, 'max' => 60])
+                            new Range(['min' => 0, 'max' => 60])
                         ]),
                     (new Configuration('timesheet.duration_increment'))
                         ->setType(MinuteIncrementType::class)

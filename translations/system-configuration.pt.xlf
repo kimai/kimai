@@ -230,10 +230,6 @@
         <source>off</source>
         <target>Desativado</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target>Usar o valor configurado da regra de arredondamento</target>
-      </trans-unit>
       <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
         <source>timesheet.time_increment</source>
         <target>Seleção de minutos para De e Para</target>

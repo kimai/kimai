@@ -137,7 +137,7 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('markdown_content')
                     ->defaultValue(false)
                 ->end()
-                ->scalarNode('duration_increment')
+                ->integerNode('duration_increment')
                     ->defaultValue(15)
                     ->validate()
                         ->ifTrue(function ($value) {
@@ -150,7 +150,7 @@ class Configuration implements ConfigurationInterface
                         ->thenInvalid('Duration increment is invalid')
                     ->end()
                 ->end()
-                ->scalarNode('time_increment')
+                ->integerNode('time_increment')
                     ->defaultValue(15)
                     ->validate()
                         ->ifTrue(function ($value) {

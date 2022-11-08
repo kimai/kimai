@@ -230,10 +230,6 @@
         <source>off</source>
         <target>Oprit</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target>Utilizați valoarea configurată a regulii de rotunjire</target>
-      </trans-unit>
       <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
         <source>timesheet.time_increment</source>
         <target>Selecție de minute pentru De la &amp; Până la</target>

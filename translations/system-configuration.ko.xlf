@@ -218,10 +218,6 @@
         <source>timesheet.duration_increment</source>
         <target>지속시간의 분 선택</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target>반올림 규칙의 구성된 값 사용</target>
-      </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
         <target>끄기</target>

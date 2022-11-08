@@ -178,10 +178,6 @@
         <source>off</source>
         <target>Uit</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target>Gebruik de geconfigureerde waarde van de afrondingsregel</target>
-      </trans-unit>
       <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
         <source>timesheet.time_increment</source>
         <target>Minuut selectie voor From &amp; To</target>

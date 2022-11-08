@@ -178,10 +178,6 @@
         <source>off</source>
         <target>Désactivé</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target>Utiliser la valeur configurée de la règle d'arrondi</target>
-      </trans-unit>
       <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
         <source>timesheet.time_increment</source>
         <target>Sélection des minutes pour Du et Au</target>

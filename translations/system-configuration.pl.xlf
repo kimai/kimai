@@ -174,10 +174,6 @@
         <source>timesheet.rules.allow_overlapping_records</source>
         <target>Zezwalaj na nakładające się wpisy czasu</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target>Użyj ustawionej wartości reguły zaokrąglania</target>
-      </trans-unit>
       <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
         <source>timesheet.time_increment</source>
         <target state="translated">Wybór minut dla „od” i „do”</target>

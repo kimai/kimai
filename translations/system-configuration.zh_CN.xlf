@@ -258,10 +258,6 @@
         <source>calendar.dragdrop_amount</source>
         <target>用于拖放的条目数量（0=停用）</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target>使用四舍五入规则的配置值</target>
-      </trans-unit>
       <trans-unit id="Rf_fb9x" resname="timesheet.rules.break_warning_duration">
         <source>timesheet.rules.break_warning_duration</source>
         <target>在显示 "休息警告 "之前，记录的最大持续时间（分钟）（0=停用）</target>

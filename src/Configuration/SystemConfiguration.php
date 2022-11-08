@@ -446,7 +446,7 @@ class SystemConfiguration
         return !empty($this->find('timesheet.rules.lockdown_period_start')) && !empty($this->find('timesheet.rules.lockdown_period_end'));
     }
 
-    private function getIncrement(string $key, int $fallback, int $min = 1): ?int
+    private function getIncrement(string $key, int $fallback, int $min = 1): int
     {
         $config = $this->find($key);
 
@@ -456,22 +456,22 @@ class SystemConfiguration
 
         $config = (int) $config;
 
-        return $config < $min ? null : $config;
+        return max($config, $min);
     }
 
-    public function getTimesheetIncrementDuration(): ?int
+    public function getTimesheetIncrementDuration(): int
     {
-        return $this->getIncrement('timesheet.duration_increment', $this->getTimesheetDefaultRoundingDuration(), 1);
+        return $this->getIncrement('timesheet.duration_increment', $this->getTimesheetDefaultRoundingDuration(), 0);
     }
 
-    public function getTimesheetIncrementMinutes(): ?int
+    public function getTimesheetIncrementMinutes(): int
     {
         return $this->getIncrement('timesheet.time_increment', $this->getTimesheetDefaultRoundingDuration(), 0);
     }
 
     public function getQuickEntriesRecentAmount(): int
     {
-        return $this->getIncrement('quick_entry.recent_activities', 5, 0) ?? 5;
+        return $this->getIncrement('quick_entry.recent_activities', 5, 5);
     }
 
     // ========== Company configurations ==========

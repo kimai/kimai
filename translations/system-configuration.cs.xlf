@@ -70,10 +70,6 @@
         <source>off</source>
         <target>Konec</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target>Použít nastavenou hodnotu pravidla zaokrouhlování</target>
-      </trans-unit>
       <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
         <source>timesheet.time_increment</source>
         <target>Výběr minut pro Od &amp; Do</target>

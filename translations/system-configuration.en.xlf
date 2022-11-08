@@ -218,10 +218,6 @@
         <source>timesheet.time_increment</source>
         <target>Minute selection for From &amp; To</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target>Use configured value of the rounding rule</target>
-      </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
         <target>Off</target>

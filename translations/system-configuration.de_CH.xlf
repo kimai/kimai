@@ -210,10 +210,6 @@
         <source>timesheet.time_increment</source>
         <target state="needs-translation">Minuten Auswahl für Von &amp; Bis</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target state="needs-translation">Verwende konfigurierten Wert der Rundungsregel</target>
-      </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
         <target state="needs-translation">Aus</target>

@@ -182,10 +182,6 @@
         <source>off</source>
         <target>כבוי</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target>להשתמש בערכים המוגדרים של כלל העיגול</target>
-      </trans-unit>
       <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
         <source>timesheet.time_increment</source>
         <target>בחירת דקות מזמן עד זמן</target>

@@ -230,10 +230,6 @@
         <source>theme.color_choices</source>
         <target>Доступные цвета</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target>Использовать настроенное значение правила округления</target>
-      </trans-unit>
       <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
         <source>timesheet.time_increment</source>
         <target>Выбор минут для С &amp; По</target>

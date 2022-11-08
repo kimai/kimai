@@ -242,10 +242,6 @@
         <source>calendar.dragdrop_amount</source>
         <target state="translated">Vedä&amp;pudota merkintöjen määrä (0 = ei käytössä)</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target state="translated">Käytä pyöristyssäännön määritettyä arvoa</target>
-      </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
         <target state="translated">Pois</target>

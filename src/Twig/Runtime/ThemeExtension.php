@@ -119,7 +119,7 @@ final class ThemeExtension implements RuntimeExtensionInterface
 
         $intervalMinutes = $this->configuration->getTimesheetIncrementMinutes();
 
-        if ($intervalMinutes === null || $intervalMinutes < 5) {
+        if ($intervalMinutes < 5) {
             return [];
         }
 

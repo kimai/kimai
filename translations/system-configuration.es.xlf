@@ -146,10 +146,6 @@
         <source>timesheet.rules.lockdown_period_start</source>
         <target>Inicio de período de cierre (fecha relativa PHP hasta hoy)</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target>Usar el valor configurado para la regla de redondeo</target>
-      </trans-unit>
       <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
         <source>timesheet.time_increment</source>
         <target>Selección de minuto para De &amp; Para</target>

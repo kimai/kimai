@@ -190,10 +190,6 @@
         <source>off</source>
         <target>Diattivato</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target>Usa il valore configurato per l'arrotondamento</target>
-      </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>
         <target>Primo giorno della settimana</target>

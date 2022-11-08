@@ -210,10 +210,6 @@
         <source>timesheet.time_increment</source>
         <target state="translated">انتخاب دقیقه برای از &amp; به</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target state="translated">از مقدار پیکربندی شده قانون گرد کردن استفاده کنید</target>
-      </trans-unit>
       <trans-unit id="tNxm3eg" resname="off">
         <source>off</source>
         <target state="translated">خاموش</target>

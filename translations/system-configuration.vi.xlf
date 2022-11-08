@@ -246,10 +246,6 @@
         <source>timesheet.time_increment</source>
         <target state="translated">Lựa chọn phút cho Từ &amp; Đến</target>
       </trans-unit>
-      <trans-unit id="9C1qkmD" resname="increment_rounding">
-        <source>increment_rounding</source>
-        <target state="translated">Sử dụng giá trị được cấu hình cho quy tắc làm tròn</target>
-      </trans-unit>
       <trans-unit id="1isLKYz" resname="theme.colors_limited">
         <source>theme.colors_limited</source>
         <target state="translated">Giới hạn lựa chọn màu sắc</target>

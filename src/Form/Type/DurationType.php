@@ -23,9 +23,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DurationType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -34,6 +31,7 @@ class DurationType extends AbstractType
             'preset_hours' => null,
             'preset_minutes' => null,
             'toggle' => false,
+            'max_hours' => 24,
         ]);
     }
 
@@ -55,8 +53,8 @@ class DurationType extends AbstractType
             }
 
             // we track times for humans and no entry should ever be that long
-            if ($maxHours > 24) {
-                $maxHours = 24;
+            if ($maxHours > $options['max_hours']) {
+                $maxHours = $options['max_hours'];
             }
 
             $maxMinutes = $maxHours * 60;
