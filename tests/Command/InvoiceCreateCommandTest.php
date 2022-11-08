@@ -12,7 +12,6 @@ namespace App\Tests\Command;
 use App\Command\InvoiceCreateCommand;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Customer;
-use App\Entity\CustomerMeta;
 use App\Entity\Project;
 use App\Invoice\ServiceInvoice;
 use App\Repository\CustomerRepository;
