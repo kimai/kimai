@@ -28,11 +28,6 @@ class TeamMemberType extends AbstractType
         ]);
     }
 
-    public function getBlockPrefix(): string
-    {
-        return 'team_member';
-    }
-
     /**
      * {@inheritdoc}
      */
