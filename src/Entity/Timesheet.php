@@ -60,16 +60,22 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          @Serializer\Groups({"Default"})
  *      }
  * )
+ *
+ * IDX_4F60C6B1415614018D93D649 (for ticktac in v1)
+ *
  */
 #[ORM\Table(name: 'kimai2_timesheet')]
-#[ORM\Index(columns: ['user'])]
-#[ORM\Index(columns: ['activity_id'])]
-#[ORM\Index(columns: ['user', 'start_time'])]
-#[ORM\Index(columns: ['start_time'])]
-#[ORM\Index(columns: ['start_time', 'end_time'])]
-#[ORM\Index(columns: ['start_time', 'end_time', 'user'])]
-#[ORM\Index(columns: ['end_time', 'user'])]
-#[ORM\Index(columns: ['date_tz', 'user'])]
+#[ORM\Index(columns: ['user'], name: 'IDX_4F60C6B18D93D649')]
+#[ORM\Index(columns: ['activity_id'], name: 'IDX_4F60C6B181C06096')]
+#[ORM\Index(columns: ['user', 'start_time'], name: 'IDX_4F60C6B18D93D649502DF587')]
+#[ORM\Index(columns: ['start_time'], name: 'IDX_4F60C6B1502DF587')]
+#[ORM\Index(columns: ['start_time', 'end_time'], name: 'IDX_4F60C6B1502DF58741561401')]
+#[ORM\Index(columns: ['start_time', 'end_time', 'user'], name: 'IDX_4F60C6B1502DF587415614018D93D649')]
+#[ORM\Index(columns: ['end_time', 'user'], name: 'IDX_4F60C6B1415614018D93D649')]
+#[ORM\Index(columns: ['date_tz', 'user'], name: 'IDX_4F60C6B1BDF467148D93D649')]
+#[ORM\Index(columns: ['end_time', 'user', 'start_time'], name: 'IDX_TIMESHEET_TICKTAC')]
+#[ORM\Index(columns: ['user', 'project_id', 'activity_id'], name: 'IDX_TIMESHEET_RECENT_ACTIVITIES')]
+#[ORM\Index(columns: ['user', 'id', 'duration'], name: 'IDX_TIMESHEET_RESULT_STATS')]
 #[ORM\Entity(repositoryClass: 'App\Repository\TimesheetRepository')]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[ORM\HasLifecycleCallbacks]

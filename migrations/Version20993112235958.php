@@ -15,6 +15,9 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
+ * All the checks for hasIndex() and hasColumn() are here to simplify testing and development,
+ * as it allows to run the migration multiple times without causing issues.
+ *
  * @version 2.0
  */
 final class Version20993112235958 extends AbstractMigration
@@ -42,6 +45,9 @@ final class Version20993112235958 extends AbstractMigration
             $users->addColumn('totp_secret', 'string', ['notnull' => false, 'default' => null]);
             $users->addColumn('totp_enabled', 'boolean', ['notnull' => true, 'default' => false]);
         }
+        if (!$users->hasColumn('system_account')) {
+            $users->addColumn('system_account', 'boolean', ['notnull' => true, 'default' => false]);
+        }
 
         // new invoice features
         if (!$customers->hasColumn('invoice_template_id')) {
@@ -58,9 +64,15 @@ final class Version20993112235958 extends AbstractMigration
         if (!$timesheet->hasIndex('IDX_4F60C6B1415614018D93D649')) {
             $timesheet->addIndex(['end_time', 'user'], 'IDX_4F60C6B1415614018D93D649');
         }
-
-        $users = $schema->getTable('kimai2_users');
-        $users->addColumn('system_account', 'boolean', ['notnull' => true, 'default' => false]);
+        if (!$timesheet->hasIndex('IDX_TIMESHEET_TICKTAC')) {
+            $timesheet->addIndex(['end_time', 'user', 'start_time'], 'IDX_TIMESHEET_TICKTAC');
+        }
+        if (!$timesheet->hasIndex('IDX_TIMESHEET_RECENT_ACTIVITIES')) {
+            $timesheet->addIndex(['user', 'project_id', 'activity_id'], 'IDX_TIMESHEET_RECENT_ACTIVITIES');
+        }
+        if (!$timesheet->hasIndex('IDX_TIMESHEET_RESULT_STATS')) {
+            $timesheet->addIndex(['user', 'id', 'duration'], 'IDX_TIMESHEET_RESULT_STATS');
+        }
 
         $this->addSql("UPDATE kimai2_invoice_templates SET `language` = 'en' WHERE `language` IS NULL");
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'timesheet_daily_stats' WHERE `name` = 'timesheet.daily_stats'");
@@ -92,6 +104,15 @@ final class Version20993112235958 extends AbstractMigration
         $timesheet = $schema->getTable('kimai2_timesheet');
         if ($timesheet->hasIndex('IDX_4F60C6B1415614018D93D649')) {
             $timesheet->dropIndex('IDX_4F60C6B1415614018D93D649');
+        }
+        if ($timesheet->hasIndex('IDX_TIMESHEET_TICKTAC')) {
+            $timesheet->dropIndex('IDX_TIMESHEET_TICKTAC');
+        }
+        if ($timesheet->hasIndex('IDX_TIMESHEET_RECENT_ACTIVITIES')) {
+            $timesheet->dropIndex('IDX_TIMESHEET_RECENT_ACTIVITIES');
+        }
+        if ($timesheet->hasIndex('IDX_TIMESHEET_RESULT_STATS')) {
+            $timesheet->dropIndex('IDX_TIMESHEET_RESULT_STATS');
         }
 
         $this->addSql("UPDATE kimai2_user_preferences SET `name` = 'theme.collapsed_sidebar' WHERE `name` = 'collapsed_sidebar'");
