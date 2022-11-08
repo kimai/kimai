@@ -32,10 +32,7 @@ class ResetDevelopmentCommandTest extends KernelTestCase
 
     public function testCommandNameIsNotEnabledInProd()
     {
-        $kernel = self::bootKernel(['environment' => 'prod']);
-        $application = new Application($kernel);
-        $application->add(new ResetDevelopmentCommand('prod'));
-
-        self::assertFalse($application->has('kimai:reset:dev'));
+        $sut = new ResetDevelopmentCommand('prod');
+        self::assertFalse($sut->isEnabled());
     }
 }

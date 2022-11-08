@@ -33,10 +33,7 @@ class ResetTestCommandTest extends KernelTestCase
 
     public function testCommandNameIsNotEnabledInProd()
     {
-        $kernel = self::bootKernel(['environment' => 'prod']);
-        $application = new Application($kernel);
-        $application->add(new ResetTestCommand($this->createMock(EntityManagerInterface::class), 'prod'));
-
-        self::assertFalse($application->has('kimai:reset:test'));
+        $sut = new ResetTestCommand($this->createMock(EntityManagerInterface::class), 'prod');
+        self::assertFalse($sut->isEnabled());
     }
 }
