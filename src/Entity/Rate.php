@@ -35,10 +35,9 @@ trait Rate
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
-     * @Assert\GreaterThanOrEqual(0)
      */
     #[ORM\Column(name: 'rate', type: 'float', nullable: false)]
+    #[Assert\GreaterThanOrEqual(0)]
     private float $rate = 0.00;
     /**
      * @Serializer\Expose()
@@ -49,10 +48,9 @@ trait Rate
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'fixed', type: 'boolean', nullable: false)]
+    #[Assert\NotNull]
     private bool $isFixed = false;
 
     /**

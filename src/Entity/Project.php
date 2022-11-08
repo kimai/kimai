@@ -73,11 +73,10 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Expose()
      * @Serializer\Groups({"Subresource", "Expanded"})
      * @OA\Property(ref="#/components/schemas/Customer")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Customer')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
     private ?Customer $customer = null;
     /**
      * Project name
@@ -86,11 +85,10 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="name")
-     *
-     * @Assert\NotNull()
-     * @Assert\Length(min=3, max=150)
      */
     #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 3, max: 150)]
     private ?string $name = null;
     /**
      * Project order number
@@ -99,10 +97,9 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Groups({"Project_Entity"})
      *
      * @Exporter\Expose(label="orderNumber")
-     *
-     * @Assert\Length(max=50)
      */
     #[ORM\Column(name: 'order_number', type: 'text', length: 50, nullable: true)]
+    #[Assert\Length(max: 50)]
     private ?string $orderNumber = null;
     /**
      * Order date for the project
@@ -164,20 +161,18 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="visible", type="boolean")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'visible', type: 'boolean', nullable: false)]
+    #[Assert\NotNull]
     private bool $visible = true;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="billable", type="boolean")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[Assert\NotNull]
     private bool $billable = true;
     /**
      * Meta fields
@@ -217,10 +212,9 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'global_activities', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[Assert\NotNull]
     private bool $globalActivities = true;
 
     public function __construct()

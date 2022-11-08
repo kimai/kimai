@@ -78,11 +78,10 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="name")
-     *
-     * @Assert\NotBlank()
-     * @Assert\Length(min=3, max=150)
      */
     #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3, max: 150)]
     private ?string $name = null;
     /**
      * Description of this activity
@@ -99,19 +98,17 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="visible", type="boolean")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[Assert\NotNull]
     private bool $visible = true;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="billable", type="boolean")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[Assert\NotNull]
     private bool $billable = true;
     /**
      * Meta fields

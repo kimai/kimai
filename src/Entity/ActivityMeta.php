@@ -24,11 +24,9 @@ class ActivityMeta implements MetaTableTypeInterface
 {
     use MetaTableTypeTrait;
 
-    /**
-     * @Assert\NotNull()
-     */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Activity', inversedBy: 'meta')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
     private ?Activity $activity = null;
 
     public function setEntity(EntityWithMetaFields $entity): MetaTableTypeInterface

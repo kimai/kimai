@@ -15,23 +15,20 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @UniqueEntity({"user", "project"}, ignoreNull=false)
- *
  * @Serializer\ExclusionPolicy("all")
  */
 #[ORM\Table(name: 'kimai2_projects_rates')]
 #[ORM\UniqueConstraint(columns: ['user_id', 'project_id'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\ProjectRateRepository')]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[UniqueEntity(['user', 'project'], ignoreNull: false)]
 class ProjectRate implements RateInterface
 {
     use Rate;
 
-    /**
-     * @Assert\NotNull
-     */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Project')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
     private ?Project $project = null;
 
     public function setProject(?Project $project): ProjectRate

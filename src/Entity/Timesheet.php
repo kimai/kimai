@@ -114,10 +114,9 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
     /**
      * Reflects the date in the users timezone (not in UTC).
      * This value is automatically set through the begin column and ONLY used in statistic queries.
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'date_tz', type: 'date', nullable: false)]
+    #[Assert\NotNull]
     private ?DateTime $date = null;
     /**
      * @Serializer\Expose()
@@ -126,10 +125,9 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
      * @Serializer\Accessor(getter="getBegin")
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'start_time', type: 'datetime', nullable: false)]
+    #[Assert\NotNull]
     private ?DateTime $begin = null;
     /**
      * @Serializer\Expose()
@@ -143,10 +141,9 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
     private ?\DateTime $end = null;
     /**
      * @internal for storing the timezone of "begin" and "end" date
-     *
-     * @Assert\Timezone
      */
     #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: false)]
+    #[Assert\Timezone]
     private ?string $timezone = null;
     /**
      * @internal for storing the localized state of dates (see $timezone)
@@ -162,31 +159,28 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
      * @Serializer\Expose()
      * @Serializer\Groups({"Subresource", "Expanded"})
      * @OA\Property(ref="#/components/schemas/User")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
     #[ORM\JoinColumn(name: '`user`', referencedColumnName: 'id', onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
     private ?User $user = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Subresource", "Expanded"})
      * @OA\Property(ref="#/components/schemas/ActivityExpanded")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Activity')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
     private ?Activity $activity = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Subresource", "Expanded"})
      * @OA\Property(ref="#/components/schemas/ProjectExpanded")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Project')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
     private ?Project $project = null;
     /**
      * @Serializer\Expose()
@@ -197,10 +191,9 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
-     * @Assert\GreaterThanOrEqual(0)
      */
     #[ORM\Column(name: 'rate', type: 'float', nullable: false)]
+    #[Assert\GreaterThanOrEqual(0)]
     private float $rate = 0.00;
     /**
      * @Serializer\Expose()
@@ -211,43 +204,37 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Entity"})
-     *
-     * @Assert\GreaterThanOrEqual(0)
      */
     #[ORM\Column(name: 'fixed_rate', type: 'float', nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
     private ?float $fixedRate = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Entity"})
-     *
-     * @Assert\GreaterThanOrEqual(0)
      */
     #[ORM\Column(name: 'hourly_rate', type: 'float', nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
     private ?float $hourlyRate = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'exported', type: 'boolean', nullable: false, options: ['default' => false])]
+    #[Assert\NotNull]
     private bool $exported = false;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[Assert\NotNull]
     private bool $billable = true;
     /**
      * Internal property used to determine whether the billable field should be calculated automatically.
      */
     private string $billableMode = self::BILLABLE_DEFAULT;
-    /**
-     * @Assert\NotNull()
-     */
     #[ORM\Column(name: 'category', type: 'string', length: 10, nullable: false, options: ['default' => 'work'])]
+    #[Assert\NotNull]
     private ?string $category = self::WORK;
     /**
      * @internal used for limiting queries, eg. via API sync
@@ -260,13 +247,12 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
      * Tags
      *
      * @var Collection<Tag>
-     *
-     * @Assert\Valid()
      */
     #[ORM\JoinTable(name: 'kimai2_timesheet_tags')]
     #[ORM\JoinColumn(name: 'timesheet_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\InverseJoinColumn(name: 'tag_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\ManyToMany(targetEntity: 'App\Entity\Tag', inversedBy: 'timesheets', cascade: ['persist'])]
+    #[Assert\Valid]
     private Collection $tags;
     /**
      * Meta fields

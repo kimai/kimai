@@ -37,20 +37,17 @@ class UserPreference
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'id', type: 'integer')]
     private ?int $id = null;
-    /**
-     * @Assert\NotNull()
-     */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'preferences')]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[Assert\NotNull]
     private ?User $user = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
-     * @Assert\NotNull()
-     * @Assert\Length(min=2, max=50)
      */
     #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 2, max: 50)]
     private string $name;
     /**
      * @Serializer\Expose()

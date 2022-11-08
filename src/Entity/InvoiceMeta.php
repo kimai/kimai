@@ -24,11 +24,9 @@ class InvoiceMeta implements MetaTableTypeInterface
 {
     use MetaTableTypeTrait;
 
-    /**
-     * @Assert\NotNull()
-     */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Invoice', inversedBy: 'meta')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
     private ?Invoice $invoice = null;
 
     public function setEntity(EntityWithMetaFields $entity): MetaTableTypeInterface

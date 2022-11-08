@@ -31,8 +31,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @UniqueEntity("username")
- * @UniqueEntity("email")
  * @Constraints\User(groups={"UserCreate", "Registration", "Default", "Profile"})
  *
  * @Serializer\ExclusionPolicy("all")
@@ -52,6 +50,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\UniqueConstraint(columns: ['email'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[UniqueEntity('username')]
+#[UniqueEntity('email')]
 class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
     public const ROLE_USER = 'ROLE_USER';
@@ -88,10 +88,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="alias")
-     *
-     * @Assert\Length(max=60)
      */
     #[ORM\Column(name: 'alias', type: 'string', length: 60, nullable: true)]
+    #[Assert\Length(max: 60)]
     private ?string $alias = null;
     /**
      * Registration date for the user
@@ -106,20 +105,18 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="title")
-     *
-     * @Assert\Length(max=50)
      */
     #[ORM\Column(name: 'title', type: 'string', length: 50, nullable: true)]
+    #[Assert\Length(max: 50)]
     private ?string $title = null;
     /**
      * URL to the user avatar, will be auto-generated if empty
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"User_Entity"})
-     *
-     * @Assert\Length(max=255)
      */
     #[ORM\Column(name: 'avatar', type: 'string', length: 255, nullable: true)]
+    #[Assert\Length(max: 255)]
     private ?string $avatar = null;
     /**
      * API token (password) for this user
@@ -128,10 +125,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     private ?string $apiToken = null;
     /**
      * @internal to be set via form, must not be persisted
-     *
-     * @Assert\NotBlank(groups={"ApiTokenUpdate"})
-     * @Assert\Length(min="8", max="60", groups={"ApiTokenUpdate"})
      */
+    #[Assert\NotBlank(groups: ['ApiTokenUpdate'])]
+    #[Assert\Length(min: 8, max: 60, groups: ['ApiTokenUpdate'])]
     private ?string $plainApiToken = null;
     /**
      * User preferences
@@ -154,20 +150,18 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @Serializer\Expose()
      * @Serializer\Groups({"User_Entity"})
      * @OA\Property(ref="#/components/schemas/TeamMembership")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\OneToMany(targetEntity: 'App\Entity\TeamMember', mappedBy: 'user', fetch: 'LAZY', cascade: ['persist'], orphanRemoval: true)]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    #[Assert\NotNull]
     private Collection $memberships;
     /**
      * The type of authentication used by the user (e.g. "kimai", "ldap", "saml")
      *
      * @internal for internal usage only
-     *
-     * @Assert\Length(max=20)
      */
     #[ORM\Column(name: 'auth', type: 'string', length: 20, nullable: true)]
+    #[Assert\Length(max: 20)]
     private ?string $auth = self::AUTH_INTERNAL;
     /**
      * This flag will be initialized in UserEnvironmentSubscriber.
@@ -178,27 +172,23 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
-     * @Assert\NotBlank(groups={"Registration", "UserCreate", "Profile"})
-     * @Assert\Length(min="2", max="60", groups={"Registration", "UserCreate", "Profile"})
      */
     #[ORM\Column(name: 'username', type: 'string', length: 180, nullable: false)]
+    #[Assert\NotBlank(groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Assert\Length(min: 2, max: 60, groups: ['Registration', 'UserCreate', 'Profile'])]
     private ?string $username = null;
-    /**
-     * @Assert\NotBlank(groups={"Registration", "UserCreate", "Profile"})
-     * @Assert\Length(min="2", max="180")
-     * @Assert\Email(groups={"Registration", "UserCreate", "Profile"})
-     */
     #[ORM\Column(name: 'email', type: 'string', length: 180, nullable: false)]
+    #[Assert\NotBlank(groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Assert\Length(min: 2, max: 180)]
+    #[Assert\Email(groups: ['Registration', 'UserCreate', 'Profile'])]
     private ?string $email = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="account_number")
-     *
-     * @Assert\Length(max="30", groups={"Registration", "UserCreate", "Profile"})
      */
     #[ORM\Column(name: 'account', type: 'string', length: 30, nullable: true)]
+    #[Assert\Length(max: 30, groups: ['Registration', 'UserCreate', 'Profile'])]
     private ?string $accountNumber = null;
     /**
      * @Serializer\Expose()
@@ -213,10 +203,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     private ?string $password = null;
     /**
      * Plain password. Used for model validation, not persisted.
-     *
-     * @Assert\NotBlank(groups={"Registration", "PasswordUpdate", "UserCreate"})
-     * @Assert\Length(min="8", max="60", groups={"Registration", "PasswordUpdate", "UserCreate", "ResetPassword", "ChangePassword"})
      */
+    #[Assert\NotBlank(groups: ['Registration', 'PasswordUpdate', 'UserCreate'])]
+    #[Assert\Length(min: 8, max: 60, groups: ['Registration', 'PasswordUpdate', 'UserCreate', 'ResetPassword', 'ChangePassword'])]
     private ?string $plainPassword = null;
     #[ORM\Column(name: 'last_login', type: 'datetime', nullable: true)]
     private ?DateTime $lastLogin = null;

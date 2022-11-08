@@ -15,25 +15,20 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @UniqueEntity({"user", "activity"}, ignoreNull=false)
- *
  * @Serializer\ExclusionPolicy("all")
  */
 #[ORM\Table(name: 'kimai2_activities_rates')]
 #[ORM\UniqueConstraint(columns: ['user_id', 'activity_id'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\ActivityRateRepository')]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[UniqueEntity(['user', 'activity'], ignoreNull: false)]
 class ActivityRate implements RateInterface
 {
     use Rate;
 
-    /**
-     * @var Activity|null
-     *
-     * @Assert\NotNull()
-     */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Activity')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
     private ?Activity $activity = null;
 
     public function setActivity(?Activity $activity): ActivityRate

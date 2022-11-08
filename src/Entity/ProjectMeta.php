@@ -24,11 +24,9 @@ class ProjectMeta implements MetaTableTypeInterface
 {
     use MetaTableTypeTrait;
 
-    /**
-     * @Assert\NotNull()
-     */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Project', inversedBy: 'meta')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
     private ?Project $project = null;
 
     public function setEntity(EntityWithMetaFields $entity): MetaTableTypeInterface

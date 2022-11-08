@@ -17,14 +17,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @UniqueEntity("name")
- *
  * @Serializer\ExclusionPolicy("all")
  */
 #[ORM\Table(name: 'kimai2_tags')]
 #[ORM\UniqueConstraint(columns: ['name'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\TagRepository')]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[UniqueEntity('name')]
 class Tag
 {
     /**
@@ -42,12 +41,11 @@ class Tag
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
-     * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=100, normalizer="trim")
-     * @Assert\Regex(pattern="/,/",match=false,message="Tag name cannot contain comma")
      */
     #[ORM\Column(name: 'name', type: 'string', length: 100, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 100, normalizer: 'trim')]
+    #[Assert\Regex(pattern: '/,/', match: false, message: 'Tag name cannot contain comma')]
     private ?string $name = null;
 
     use ColorTrait;

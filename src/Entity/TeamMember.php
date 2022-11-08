@@ -31,29 +31,26 @@ class TeamMember
      * @Serializer\Expose()
      * @Serializer\Groups({"Default", "Entity", "Team_Entity"})
      * @OA\Property(ref="#/components/schemas/User")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'memberships')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
     private ?User $user = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default", "Entity", "User_Entity"})
      * @OA\Property(ref="#/components/schemas/Team")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Team', inversedBy: 'members')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
     private ?Team $team = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default", "Entity", "Team_Entity", "User_Entity"})
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'teamlead', type: 'boolean', nullable: false, options: ['default' => false])]
+    #[Assert\NotNull]
     private bool $teamlead = false;
 
     public function getId(): ?int

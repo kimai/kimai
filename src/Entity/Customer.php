@@ -47,20 +47,18 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="name")
-     *
-     * @Assert\NotBlank()
-     * @Assert\Length(min=3, max=150)
      */
     #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3, max: 150)]
     private ?string $name;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="number")
-     *
-     * @Assert\Length(max=50)
      */
     #[ORM\Column(name: 'number', type: 'string', length: 50, nullable: true)]
+    #[Assert\Length(max: 50)]
     private ?string $number = null;
     /**
      * @Serializer\Expose()
@@ -73,46 +71,41 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="visible", type="boolean")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'visible', type: 'boolean', nullable: false)]
+    #[Assert\NotNull]
     private bool $visible = true;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="billable", type="boolean")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[Assert\NotNull]
     private bool $billable = true;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="company")
-     *
-     * @Assert\Length(max=100)
      */
     #[ORM\Column(name: 'company', type: 'string', length: 100, nullable: true)]
+    #[Assert\Length(max: 100)]
     private ?string $company = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="vat_id")
-     *
-     * @Assert\Length(max=50)
      */
     #[ORM\Column(name: 'vat_id', type: 'string', length: 50, nullable: true)]
+    #[Assert\Length(max: 50)]
     private ?string $vatId = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="contact")
-     *
-     * @Assert\Length(max=100)
      */
     #[ORM\Column(name: 'contact', type: 'string', length: 100, nullable: true)]
+    #[Assert\Length(max: 100)]
     private ?string $contact = null;
     /**
      * @Serializer\Expose()
@@ -125,50 +118,45 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="country")
-     *
-     * @Assert\NotBlank()
-     * @Assert\Country()
-     * @Assert\Length(max=2)
      */
     #[ORM\Column(name: 'country', type: 'string', length: 2, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Country]
+    #[Assert\Length(max: 2)]
     private ?string $country = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer"})
      * @Exporter\Expose(label="currency")
-     *
-     * @Assert\NotBlank()
-     * @Assert\Currency()
-     * @Assert\Length(max=3)
      */
     #[ORM\Column(name: 'currency', type: 'string', length: 3, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Currency]
+    #[Assert\Length(max: 3)]
     private string $currency = self::DEFAULT_CURRENCY;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="phone")
-     *
-     * @Assert\Length(max=30)
      */
     #[ORM\Column(name: 'phone', type: 'string', length: 30, nullable: true)]
+    #[Assert\Length(max: 30)]
     private ?string $phone = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="fax")
-     *
-     * @Assert\Length(max=30)
      */
     #[ORM\Column(name: 'fax', type: 'string', length: 30, nullable: true)]
+    #[Assert\Length(max: 30)]
     private ?string $fax = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="mobile")
-     *
-     * @Assert\Length(max=30)
      */
     #[ORM\Column(name: 'mobile', type: 'string', length: 30, nullable: true)]
+    #[Assert\Length(max: 30)]
     private ?string $mobile = null;
     /**
      * Customers contact email
@@ -176,19 +164,17 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="email")
-     *
-     * @Assert\Length(max=75)
      */
     #[ORM\Column(name: 'email', type: 'string', length: 75, nullable: true)]
+    #[Assert\Length(max: 75)]
     private ?string $email = null;
     /**
      * @Serializer\Expose()
      * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="homepage")
-     *
-     * @Assert\Length(max=100)
      */
     #[ORM\Column(name: 'homepage', type: 'string', length: 100, nullable: true)]
+    #[Assert\Length(max: 100)]
     private ?string $homepage = null;
     /**
      * Timezone of begin and end
@@ -197,11 +183,10 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      * @Serializer\Groups({"Customer_Entity"})
      *
      * @Exporter\Expose(label="timezone")
-     *
-     * @Assert\NotBlank()
-     * @Assert\Length(max=64)
      */
     #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 64)]
     private ?string $timezone = null;
     /**
      * Meta fields

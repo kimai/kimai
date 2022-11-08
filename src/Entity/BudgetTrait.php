@@ -23,11 +23,10 @@ trait BudgetTrait
      * @Serializer\Groups({"Activity_Entity", "Project_Entity", "Customer_Entity"})
      *
      * @Exporter\Expose(label="budget", type="float")
-     *
-     * @Assert\Range(min=0.00, max=900000000000.00)
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'budget', type: 'float', nullable: false)]
+    #[Assert\Range(min: 0.00, max: 900000000000.00)]
+    #[Assert\NotNull]
     private float $budget = 0.00;
     /**
      * The time budget in seconds, will be zero if not configured.
@@ -36,11 +35,10 @@ trait BudgetTrait
      * @Serializer\Groups({"Activity_Entity", "Project_Entity", "Customer_Entity"})
      *
      * @Exporter\Expose(label="timeBudget", type="duration")
-     *
-     * @Assert\Range(min=0, max=2145600000)
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'time_budget', type: 'integer', nullable: false)]
+    #[Assert\Range(min: 0, max: 2145600000)]
+    #[Assert\NotNull]
     private int $timeBudget = 0;
     /**
      * The type of budget:

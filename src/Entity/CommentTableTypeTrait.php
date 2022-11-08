@@ -18,26 +18,18 @@ trait CommentTableTypeTrait
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'id', type: 'integer')]
     private ?int $id = null;
-    /**
-     * @Assert\NotNull()
-     */
     #[ORM\Column(name: 'message', type: 'text', nullable: false)]
+    #[Assert\NotNull]
     private ?string $message = null;
-    /**
-     * @Assert\NotNull()
-     */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
     private ?User $createdBy = null;
-    /**
-     * @Assert\NotNull()
-     */
     #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
+    #[Assert\NotNull]
     private ?\DateTime $createdAt = null;
-    /**
-     * @Assert\NotNull()
-     */
     #[ORM\Column(name: 'pinned', type: 'boolean', nullable: false, options: ['default' => false])]
+    #[Assert\NotNull]
     private bool $pinned = false;
 
     public function getId(): ?int

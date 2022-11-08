@@ -19,8 +19,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @UniqueEntity("name")
- *
  * @Serializer\ExclusionPolicy("all")
  * @Constraints\Team
  */
@@ -28,6 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\UniqueConstraint(columns: ['name'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\TeamRepository')]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[UniqueEntity('name')]
 class Team
 {
     /**
@@ -43,11 +42,10 @@ class Team
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
-     * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=100)
      */
     #[ORM\Column(name: 'name', type: 'string', length: 100, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 100)]
     private ?string $name = null;
     /**
      * All team member (including team leads)
@@ -57,11 +55,10 @@ class Team
      * @Serializer\Expose()
      * @Serializer\Groups({"Team_Entity"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/TeamMember"))
-     *
-     * @Assert\Count(min="1")
      */
     #[ORM\OneToMany(targetEntity: 'App\Entity\TeamMember', mappedBy: 'team', fetch: 'LAZY', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    #[Assert\Count(min: 1)]
     private Collection $members;
     /**
      * Customers assigned to the team

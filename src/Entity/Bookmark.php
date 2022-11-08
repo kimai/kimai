@@ -13,13 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @UniqueEntity(fields={"user", "name"})
- */
 #[ORM\Table(name: 'kimai2_bookmarks')]
 #[ORM\UniqueConstraint(columns: ['user_id', 'name'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\BookmarkRepository')]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[UniqueEntity(fields: ['user', 'name'])]
 class Bookmark
 {
     public const SEARCH_DEFAULT = 'search-default';
@@ -30,23 +28,17 @@ class Bookmark
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private ?int $id = null;
-    /**
-     * @Assert\NotNull()
-     */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
     private ?User $user = null;
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=20)
-     */
     #[ORM\Column(name: 'type', type: 'string', length: 20, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 20)]
     private ?string $type = null;
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=50)
-     */
     #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 50)]
     private ?string $name = null;
     #[ORM\Column(name: 'content', type: 'text', nullable: false)]
     private ?string $content = null;

@@ -32,11 +32,10 @@ trait MetaTableTypeTrait
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
-     * @Assert\NotNull()
-     * @Assert\Length(min=2, max=50)
      */
     #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 2, max: 50)]
     private ?string $name = null;
     /**
      * Value of the meta (custom) field
@@ -45,15 +44,12 @@ trait MetaTableTypeTrait
      *
      * @Serializer\Expose()
      * @Serializer\Groups({"Default"})
-     *
-     * @Assert\Length(max=65535)
      */
     #[ORM\Column(name: 'value', type: 'text', length: 65535, nullable: true)]
+    #[Assert\Length(max: 65535)]
     private ?string $value = null;
-    /**
-     * @Assert\NotNull()
-     */
     #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => false])]
+    #[Assert\NotNull]
     private bool $visible = false;
     private ?string $label = null;
     private ?string $type = null;

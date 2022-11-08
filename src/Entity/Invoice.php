@@ -19,9 +19,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @UniqueEntity("invoiceNumber")
- * @UniqueEntity("invoiceFilename")
- *
  * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "subtotal", "total", "tax", "currency", "vat", "dueDays", "dueDate", "paymentDate", "user", "invoiceFilename", "customerNumber", "comment"})
  * @Exporter\Expose("customer", label="customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
  * @Exporter\Expose("customerNumber", label="number", exp="object.getCustomer() === null ? null : object.getCustomer().getNumber()")
@@ -34,6 +31,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\UniqueConstraint(columns: ['invoice_filename'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\InvoiceRepository')]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[UniqueEntity('invoiceNumber')]
+#[UniqueEntity('invoiceFilename')]
 class Invoice implements EntityWithMetaFields
 {
     public const STATUS_PENDING = 'pending';
@@ -52,10 +51,9 @@ class Invoice implements EntityWithMetaFields
     private ?int $id = null;
     /**
      * @Exporter\Expose(label="invoice.number", type="string")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'invoice_number', type: 'string', length: 50, nullable: false)]
+    #[Assert\NotNull]
     private ?string $invoiceNumber = null;
     /**
      * @Serializer\Expose()
@@ -64,79 +62,67 @@ class Invoice implements EntityWithMetaFields
      */
     #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
     private ?string $comment = null;
-    /**
-     * @Assert\NotNull()
-     */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Customer')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
     private ?Customer $customer = null;
-    /**
-     * @Assert\NotNull()
-     */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
     private ?User $user = null;
     /**
      * @Exporter\Expose(label="date", type="datetime")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
+    #[Assert\NotNull]
     private ?\DateTime $createdAt = null;
     #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: false)]
     private ?string $timezone = null;
     /**
      * @Exporter\Expose(label="total_rate", type="float")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'total', type: 'float', nullable: false)]
+    #[Assert\NotNull]
     private float $total = 0.00;
     /**
      * @Exporter\Expose(label="invoice.tax", type="float")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'tax', type: 'float', nullable: false)]
+    #[Assert\NotNull]
     private float $tax = 0.00;
     /**
      * @Exporter\Expose(label="currency", type="string")
-     *
-     * @Assert\NotNull()
-     * @Assert\Length(max=3)
      */
     #[ORM\Column(name: 'currency', type: 'string', length: 3, nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Length(max: 3)]
     private ?string $currency = null;
     /**
      * @Exporter\Expose(label="due_days", type="integer")
-     *
-     * @Assert\NotNull()
-     * @Assert\Range(min = 0, max = 999)
      */
     #[ORM\Column(name: 'due_days', type: 'integer', length: 3, nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Range(min: 0, max: 999)]
     private int $dueDays = 30;
     /**
      * @Exporter\Expose(label="tax_rate", type="float")
-     *
-     * @Assert\NotNull()
-     * @Assert\Range(min = 0.0, max = 99.99)
      */
     #[ORM\Column(name: 'vat', type: 'float', nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Range(min: 0.0, max: 99.99)]
     private float $vat = 0.00;
     /**
      * @Exporter\Expose(label="status", type="string")
-     *
-     * @Assert\NotNull()
      */
     #[ORM\Column(name: 'status', type: 'string', length: 20, nullable: false)]
+    #[Assert\NotNull]
     private string $status = self::STATUS_NEW;
     /**
      * @Exporter\Expose(label="file", type="string")
-     *
-     * @Assert\NotNull()
-     * @Assert\Length(min=1, max=150)
      */
     #[ORM\Column(name: 'invoice_filename', type: 'string', length: 150, nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 1, max: 150)]
     private ?string $invoiceFilename = null;
     private bool $localized = false;
     #[ORM\Column(name: 'payment_date', type: 'date', nullable: true)]

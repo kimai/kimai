@@ -13,34 +13,26 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @UniqueEntity({"role", "permission"})
- */
 #[ORM\Table(name: 'kimai2_roles_permissions')]
 #[ORM\UniqueConstraint(name: 'role_permission', columns: ['role_id', 'permission'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\RolePermissionRepository')]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[UniqueEntity(['role', 'permission'])]
 class RolePermission
 {
     #[ORM\Column(name: 'id', type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private ?int $id = null;
-    /**
-     * @Assert\NotNull()
-     */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Role')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[Assert\NotNull]
     private ?Role $role = null;
-    /**
-     * @Assert\Length(max=50)
-     */
     #[ORM\Column(name: 'permission', type: 'string', length: 50, nullable: false)]
+    #[Assert\Length(max: 50)]
     private ?string $permission = null;
-    /**
-     * @Assert\NotNull()
-     */
     #[ORM\Column(name: 'allowed', type: 'boolean', nullable: false, options: ['default' => false])]
+    #[Assert\NotNull]
     private bool $allowed = false;
 
     public function getId(): ?int

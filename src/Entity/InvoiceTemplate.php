@@ -13,71 +13,51 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @UniqueEntity("name")
- */
 #[ORM\Table(name: 'kimai2_invoice_templates')]
 #[ORM\UniqueConstraint(columns: ['name'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\InvoiceTemplateRepository')]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[UniqueEntity('name')]
 class InvoiceTemplate
 {
     #[ORM\Column(name: 'id', type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private ?int $id = null;
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(min=1, max=60)
-     */
     #[ORM\Column(name: 'name', type: 'string', length: 60, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 1, max: 60)]
     private ?string $name = null;
-    /**
-     * @Assert\NotBlank()
-     */
     #[ORM\Column(name: 'title', type: 'string', length: 255, nullable: false)]
+    #[Assert\NotBlank]
     private ?string $title = null;
-    /**
-     * @Assert\NotBlank()
-     */
     #[ORM\Column(name: 'company', type: 'string', length: 255, nullable: false)]
+    #[Assert\NotBlank]
     private ?string $company = null;
-    /**
-     * @Assert\Length(max=50)
-     */
     #[ORM\Column(name: 'vat_id', type: 'string', length: 50, nullable: true)]
+    #[Assert\Length(max: 50)]
     private ?string $vatId = null;
     #[ORM\Column(name: 'address', type: 'text', nullable: true)]
     private ?string $address = null;
     #[ORM\Column(name: 'contact', type: 'text', nullable: true)]
     private ?string $contact = null;
-    /**
-     * @Assert\Range(min = 0, max = 999)
-     */
     #[ORM\Column(name: 'due_days', type: 'integer', length: 3, nullable: false)]
+    #[Assert\Range(min: 0, max: 999)]
     private int $dueDays = 30;
-    /**
-     * @Assert\Range(min = 0.0, max = 99.99)
-     */
     #[ORM\Column(name: 'vat', type: 'float', nullable: false)]
+    #[Assert\Range(min: 0.0, max: 99.99)]
     private float $vat = 0.00;
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max=20)
-     */
     #[ORM\Column(name: 'calculator', type: 'string', length: 20, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 20)]
     private string $calculator = 'default';
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max=20)
-     */
     #[ORM\Column(name: 'number_generator', type: 'string', length: 20, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 20)]
     private string $numberGenerator = 'default';
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max=20)
-     */
     #[ORM\Column(name: 'renderer', type: 'string', length: 20, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 20)]
     private string $renderer = 'default';
     #[ORM\Column(name: 'payment_terms', type: 'text', nullable: true)]
     private ?string $paymentTerms = null;
@@ -85,10 +65,9 @@ class InvoiceTemplate
     private ?string $paymentDetails = null;
     /**
      * Used for translations and formatting money, numbers, dates and time.
-     *
-     * @Assert\NotBlank()
      */
     #[ORM\Column(name: 'language', type: 'string', length: 6, nullable: false)]
+    #[Assert\NotBlank]
     private ?string $language = 'en';
 
     public function getId(): ?int
