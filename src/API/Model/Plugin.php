@@ -12,28 +12,26 @@ namespace App\API\Model;
 use App\Plugin\Plugin as CorePlugin;
 use JMS\Serializer\Annotation as Serializer;
 
-/**
- * @Serializer\ExclusionPolicy("all")
- */
+#[Serializer\ExclusionPolicy('all')]
 class Plugin
 {
     /**
      * The plugin name, eg. "ExpensesBundle"
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     * @Serializer\Type(name="string")
      * @phpstan-ignore-next-line
      */
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Serializer\Type(name: 'string')]
     private ?string $name = null;
     /**
      * The plugin version, eg. "1.14"
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     * @Serializer\Type(name="string")
      * @phpstan-ignore-next-line
      */
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Serializer\Type(name: 'string')]
     private ?string $version = null;
 
     public function __construct(CorePlugin $plugin)

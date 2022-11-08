@@ -56,11 +56,11 @@ class Invoice implements EntityWithMetaFields
     #[Assert\NotNull]
     private ?string $invoiceNumber = null;
     /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Customer_Entity"})
      * @Exporter\Expose(label="comment")
      */
     #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Customer_Entity'])]
     private ?string $comment = null;
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Customer')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
@@ -133,14 +133,13 @@ class Invoice implements EntityWithMetaFields
      * All visible meta (custom) fields registered with this invoice
      *
      * @var Collection<InvoiceMeta>
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Invoice"})
-     * @Serializer\Type(name="array<App\Entity\InvoiceMeta>")
-     * @Serializer\SerializedName("metaFields")
-     * @Serializer\Accessor(getter="getVisibleMetaFields")
      */
     #[ORM\OneToMany(targetEntity: 'App\Entity\InvoiceMeta', mappedBy: 'invoice', cascade: ['persist'])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Invoice'])]
+    #[Serializer\Type(name: 'array<App\Entity\InvoiceMeta>')]
+    #[Serializer\SerializedName('metaFields')]
+    #[Serializer\Accessor(getter: 'getVisibleMetaFields')]
     private Collection $meta;
 
     public function __construct()

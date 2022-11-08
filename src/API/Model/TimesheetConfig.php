@@ -11,55 +11,53 @@ namespace App\API\Model;
 
 use JMS\Serializer\Annotation as Serializer;
 
-/**
- * @Serializer\ExclusionPolicy("none")
- */
+#[Serializer\ExclusionPolicy('none')]
 final class TimesheetConfig
 {
     /**
      * The time-tracking mode, see also: https://www.kimai.org/documentation/timesheet.html#tracking-modes
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     * @Serializer\Type(name="string")
      * @phpstan-ignore-next-line
      */
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Serializer\Type(name: 'string')]
     private string $trackingMode = 'default';
     /**
      * Default begin datetime in PHP format
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     * @Serializer\Type(name="string")
      * @phpstan-ignore-next-line
      */
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Serializer\Type(name: 'string')]
     private string $defaultBeginTime = 'now';
     /**
      * How many running timesheets a user is allowed to have at the same time
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     * @Serializer\Type(name="integer")
      * @phpstan-ignore-next-line
      */
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Serializer\Type(name: 'integer')]
     private int $activeEntriesHardLimit = 1;
     /**
      * Whether entries for future times are allowed
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     * @Serializer\Type(name="boolean")
      * @phpstan-ignore-next-line
      */
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Serializer\Type(name: 'boolean')]
     private bool $isAllowFutureTimes = true;
     /**
      * Whether overlapping entries are allowed
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     * @Serializer\Type(name="boolean")
      * @phpstan-ignore-next-line
      */
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Serializer\Type(name: 'boolean')]
     private bool $isAllowOverlapping = true;
 
     public function setTrackingMode(string $trackingMode): void

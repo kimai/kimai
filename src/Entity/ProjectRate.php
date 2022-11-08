@@ -14,14 +14,12 @@ use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @Serializer\ExclusionPolicy("all")
- */
 #[ORM\Table(name: 'kimai2_projects_rates')]
 #[ORM\UniqueConstraint(columns: ['user_id', 'project_id'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\ProjectRateRepository')]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity(['user', 'project'], ignoreNull: false)]
+#[Serializer\ExclusionPolicy('all')]
 class ProjectRate implements RateInterface
 {
     use Rate;

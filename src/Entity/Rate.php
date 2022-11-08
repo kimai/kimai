@@ -16,41 +16,33 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 trait Rate
 {
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     */
     #[ORM\Column(name: 'id', type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?int $id = null;
     /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
      * @OA\Property(ref="#/components/schemas/User")
      */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?User $user = null;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     */
     #[ORM\Column(name: 'rate', type: 'float', nullable: false)]
     #[Assert\GreaterThanOrEqual(0)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private float $rate = 0.00;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     */
     #[ORM\Column(name: 'internal_rate', type: 'float', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?float $internalRate = null;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     */
     #[ORM\Column(name: 'fixed', type: 'boolean', nullable: false)]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private bool $isFixed = false;
 
     /**

@@ -20,13 +20,13 @@ trait ColorTrait
     /**
      * The assigned color in HTML hex format, eg. #dd1d00
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="color")
      *
      * @Constraints\HexColor()
      */
     #[ORM\Column(name: 'color', type: 'string', length: 7, nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?string $color = null;
 
     public function getColor(): ?string

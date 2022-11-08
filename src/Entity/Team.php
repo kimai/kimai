@@ -19,7 +19,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @Serializer\ExclusionPolicy("all")
  * @Constraints\Team
  */
 #[ORM\Table(name: 'kimai2_teams')]
@@ -27,71 +26,69 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: 'App\Repository\TeamRepository')]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity('name')]
+#[Serializer\ExclusionPolicy('all')]
 class Team
 {
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     */
     #[ORM\Column(name: 'id', type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?int $id = null;
     /**
      * Team name
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
      */
     #[ORM\Column(name: 'name', type: 'string', length: 100, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 100)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?string $name = null;
     /**
      * All team member (including team leads)
      *
      * @var Collection<TeamMember>
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Team_Entity"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/TeamMember"))
      */
     #[ORM\OneToMany(targetEntity: 'App\Entity\TeamMember', mappedBy: 'team', fetch: 'LAZY', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     #[Assert\Count(min: 1)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Team_Entity'])]
     private Collection $members;
     /**
      * Customers assigned to the team
      *
      * @var Collection<Customer>
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Team_Entity"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Customer"))
      */
     #[ORM\ManyToMany(targetEntity: 'App\Entity\Customer', mappedBy: 'teams', fetch: 'EXTRA_LAZY', cascade: ['persist', 'remove'])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Team_Entity'])]
     private Collection $customers;
     /**
      * Projects assigned to the team
      *
      * @var Collection<Project>
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Team_Entity", "Expanded"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Project"))
      */
     #[ORM\ManyToMany(targetEntity: 'App\Entity\Project', mappedBy: 'teams', fetch: 'EXTRA_LAZY', cascade: ['persist', 'remove'])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Team_Entity', 'Expanded'])]
     private Collection $projects;
     /**
      * Activities assigned to the team
      *
      * @var Collection<Activity>
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Team_Entity", "Expanded"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Activity"))
      */
     #[ORM\ManyToMany(targetEntity: 'App\Entity\Activity', mappedBy: 'teams', fetch: 'EXTRA_LAZY', cascade: ['persist', 'remove'])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Team_Entity', 'Expanded'])]
     private Collection $activities;
 
     use ColorTrait;

@@ -13,13 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @Serializer\ExclusionPolicy("all")
- */
 #[ORM\Table(name: 'kimai2_activities_meta')]
 #[ORM\UniqueConstraint(columns: ['activity_id', 'name'])]
 #[ORM\Entity]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[Serializer\ExclusionPolicy('all')]
 class ActivityMeta implements MetaTableTypeInterface
 {
     use MetaTableTypeTrait;

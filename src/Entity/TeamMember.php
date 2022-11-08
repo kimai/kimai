@@ -14,13 +14,11 @@ use JMS\Serializer\Annotation as Serializer;
 use OpenApi\Annotations as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @Serializer\ExclusionPolicy("all")
- */
 #[ORM\Table(name: 'kimai2_users_teams')]
 #[ORM\UniqueConstraint(columns: ['user_id', 'team_id'])]
 #[ORM\Entity]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[Serializer\ExclusionPolicy('all')]
 class TeamMember
 {
     #[ORM\Column(name: 'id', type: 'integer')]
@@ -28,29 +26,27 @@ class TeamMember
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private ?int $id = null;
     /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default", "Entity", "Team_Entity"})
      * @OA\Property(ref="#/components/schemas/User")
      */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'memberships')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default', 'Entity', 'Team_Entity'])]
     private ?User $user = null;
     /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default", "Entity", "User_Entity"})
      * @OA\Property(ref="#/components/schemas/Team")
      */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Team', inversedBy: 'members')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default', 'Entity', 'User_Entity'])]
     private ?Team $team = null;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default", "Entity", "Team_Entity", "User_Entity"})
-     */
     #[ORM\Column(name: 'teamlead', type: 'boolean', nullable: false, options: ['default' => false])]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default', 'Entity', 'Team_Entity', 'User_Entity'])]
     private bool $teamlead = false;
 
     public function getId(): ?int

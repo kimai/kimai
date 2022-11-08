@@ -17,13 +17,11 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @Serializer\ExclusionPolicy("all")
- */
 #[ORM\Table(name: 'kimai2_user_preferences')]
 #[ORM\UniqueConstraint(columns: ['user_id', 'name'])]
 #[ORM\Entity]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[Serializer\ExclusionPolicy('all')]
 class UserPreference
 {
     public const HOURLY_RATE = 'hourly_rate';
@@ -41,19 +39,15 @@ class UserPreference
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     private ?User $user = null;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     */
     #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Length(min: 2, max: 50)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private string $name;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     */
     #[ORM\Column(name: 'value', type: 'string', length: 255, nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?string $value;
     private ?string $type = null;
     private bool $enabled = true;

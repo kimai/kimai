@@ -33,7 +33,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @Constraints\User(groups={"UserCreate", "Registration", "Default", "Profile"})
  *
- * @Serializer\ExclusionPolicy("all")
  *
  * @Exporter\Order({"id", "username", "alias", "title", "email", "last_login", "language", "timezone", "active", "registeredAt", "roles", "teams", "color", "accountNumber"})
  * @Exporter\Expose("email", label="email", exp="object.getEmail()")
@@ -52,6 +51,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity('username')]
 #[UniqueEntity('email')]
+#[Serializer\ExclusionPolicy('all')]
 class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
     public const ROLE_USER = 'ROLE_USER';
@@ -72,25 +72,25 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * Unique User ID
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="id", type="integer")
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'id', type: 'integer')]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?int $id = null;
     /**
      * The user alias will be displayed in the frontend instead of the username
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="alias")
      */
     #[ORM\Column(name: 'alias', type: 'string', length: 60, nullable: true)]
     #[Assert\Length(max: 60)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?string $alias = null;
     /**
      * Registration date for the user
@@ -102,21 +102,20 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * An additional title for the user, like the Job position or Department
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="title")
      */
     #[ORM\Column(name: 'title', type: 'string', length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?string $title = null;
     /**
      * URL to the user avatar, will be auto-generated if empty
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"User_Entity"})
      */
     #[ORM\Column(name: 'avatar', type: 'string', length: 255, nullable: true)]
     #[Assert\Length(max: 255)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['User_Entity'])]
     private ?string $avatar = null;
     /**
      * API token (password) for this user
@@ -147,13 +146,13 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      *
      * @var Collection<TeamMember>
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"User_Entity"})
      * @OA\Property(ref="#/components/schemas/TeamMembership")
      */
     #[ORM\OneToMany(targetEntity: 'App\Entity\TeamMember', mappedBy: 'user', fetch: 'LAZY', cascade: ['persist'], orphanRemoval: true)]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['User_Entity'])]
     private Collection $memberships;
     /**
      * The type of authentication used by the user (e.g. "kimai", "ldap", "saml")
@@ -169,13 +168,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @internal has no database mapping as the value is calculated from a permission
      */
     private ?bool $isAllowedToSeeAllData = null;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     */
     #[ORM\Column(name: 'username', type: 'string', length: 180, nullable: false)]
     #[Assert\NotBlank(groups: ['Registration', 'UserCreate', 'Profile'])]
     #[Assert\Length(min: 2, max: 60, groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?string $username = null;
     #[ORM\Column(name: 'email', type: 'string', length: 180, nullable: false)]
     #[Assert\NotBlank(groups: ['Registration', 'UserCreate', 'Profile'])]
@@ -183,18 +180,16 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Assert\Email(groups: ['Registration', 'UserCreate', 'Profile'])]
     private ?string $email = null;
     /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
      * @Exporter\Expose(label="account_number")
      */
     #[ORM\Column(name: 'account', type: 'string', length: 30, nullable: true)]
     #[Assert\Length(max: 30, groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?string $accountNumber = null;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     */
     #[ORM\Column(name: 'enabled', type: 'boolean', nullable: false)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private bool $enabled = false;
     /**
      * Encrypted password. Must be persisted.
@@ -219,13 +214,13 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * List of all role names
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"User_Entity"})
-     * @Serializer\Type("array<string>")
      *
      * @Constraints\Role(groups={"RolesUpdate"})
      */
     #[ORM\Column(name: 'roles', type: 'array', nullable: false)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['User_Entity'])]
+    #[Serializer\Type('array<string>')]
     private array $roles = [];
     /**
      * If not empty two-factor authentication is enabled.
@@ -326,14 +321,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * Read-only list of of all visible user preferences.
      *
-     * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("preferences"),
-     * @Serializer\Groups({"User_Entity"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/UserPreference"))
      *
      * @internal only for API usage
      * @return UserPreference[]
      */
+    #[Serializer\VirtualProperty]
+    #[Serializer\SerializedName('preferences')]
+    #[Serializer\Groups(['User_Entity'])]
     public function getVisiblePreferences(): array
     {
         // hide all internal preferences, which are either available in other fields
@@ -416,26 +411,26 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
-     * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("language"),
-     * @Serializer\Groups({"User_Entity"})
      * @OA\Property(type="string")
      *
      * @return string
      */
+    #[Serializer\VirtualProperty]
+    #[Serializer\SerializedName('language')]
+    #[Serializer\Groups(['User_Entity'])]
     public function getLocale(): string
     {
         return $this->getPreferenceValue(UserPreference::LOCALE, User::DEFAULT_LANGUAGE);
     }
 
     /**
-     * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("timezone"),
-     * @Serializer\Groups({"User_Entity"})
      * @OA\Property(type="string")
      *
      * @return string
      */
+    #[Serializer\VirtualProperty]
+    #[Serializer\SerializedName('timezone')]
+    #[Serializer\Groups(['User_Entity'])]
     public function getTimezone(): string
     {
         return $this->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get());
@@ -627,13 +622,13 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * List of all teams, this user is part of
      *
-     * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("teams"),
-     * @Serializer\Groups({"User_Entity"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Team"))
      *
      * @return Team[]
      */
+    #[Serializer\VirtualProperty]
+    #[Serializer\SerializedName('teams')]
+    #[Serializer\Groups(['User_Entity'])]
     public function getTeams(): iterable
     {
         $teams = [];
@@ -1036,13 +1031,13 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
-     * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("initials"),
-     * @Serializer\Groups({"Default"})
      * @OA\Property(type="string")
      *
      * @return string
      */
+    #[Serializer\VirtualProperty]
+    #[Serializer\SerializedName('initials')]
+    #[Serializer\Groups(['Default'])]
     public function getInitials(): string
     {
         $length = 2;

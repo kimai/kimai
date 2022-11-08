@@ -21,25 +21,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @Constraints\Project
  *
- * @Serializer\ExclusionPolicy("all")
- * @Serializer\VirtualProperty(
- *      "CustomerName",
- *      exp="object.getCustomer() === null ? null : object.getCustomer().getName()",
- *      options={
- *          @Serializer\SerializedName("parentTitle"),
- *          @Serializer\Type(name="string"),
- *          @Serializer\Groups({"Project"})
- *      }
- * )
- * @Serializer\VirtualProperty(
- *      "CustomerAsId",
- *      exp="object.getCustomer() === null ? null : object.getCustomer().getId()",
- *      options={
- *          @Serializer\SerializedName("customer"),
- *          @Serializer\Type(name="integer"),
- *          @Serializer\Groups({"Project", "Team", "Not_Expanded"})
- *      }
- * )
  *
  * @Exporter\Order({"id", "name", "customer", "orderNumber", "orderDate", "start", "end", "budget", "timeBudget", "budgetType", "color", "visible", "teams", "comment", "billable"})
  * @Exporter\Expose("customer", label="customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
@@ -50,6 +31,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Index(columns: ['customer_id', 'visible', 'id'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\ProjectRepository')]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[Serializer\ExclusionPolicy('all')]
+#[Serializer\VirtualProperty('CustomerName', exp: 'object.getCustomer() === null ? null : object.getCustomer().getName()', options: [new Serializer\SerializedName('parentTitle'), new Serializer\Type(name: 'string'), new Serializer\Groups(['Project'])])]
+#[Serializer\VirtualProperty('CustomerAsId', exp: 'object.getCustomer() === null ? null : object.getCustomer().getId()', options: [new Serializer\SerializedName('customer'), new Serializer\Type(name: 'integer'), new Serializer\Groups(['Project', 'Team', 'Not_Expanded'])])]
 class Project implements EntityWithMetaFields, EntityWithBudget
 {
     use BudgetTrait;
@@ -58,121 +42,121 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     /**
      * Unique Project ID
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="id", type="integer")
      */
     #[ORM\Column(name: 'id', type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?int $id = null;
     /**
      * Customer for this project
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Subresource", "Expanded"})
      * @OA\Property(ref="#/components/schemas/Customer")
      */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Customer')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Subresource', 'Expanded'])]
     private ?Customer $customer = null;
     /**
      * Project name
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="name")
      */
     #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Length(min: 3, max: 150)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?string $name = null;
     /**
      * Project order number
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Project_Entity"})
      *
      * @Exporter\Expose(label="orderNumber")
      */
     #[ORM\Column(name: 'order_number', type: 'text', length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Project_Entity'])]
     private ?string $orderNumber = null;
     /**
      * Order date for the project
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Project_Entity"})
-     * @Serializer\Type(name="DateTime<'Y-m-d'>")
-     * @Serializer\Accessor(getter="getOrderDate")
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      *
      * @Exporter\Expose(label="orderDate", type="datetime")
      */
     #[ORM\Column(name: 'order_date', type: 'datetime', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Project_Entity'])]
+    #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
+    #[Serializer\Accessor(getter: 'getOrderDate')]
     private ?\DateTime $orderDate = null;
     /**
      * Project start date (times before this date cannot be recorded)
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Project"})
-     * @Serializer\Type(name="DateTime<'Y-m-d'>")
-     * @Serializer\Accessor(getter="getStart")
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      *
      * @Exporter\Expose(label="project_start", type="datetime")
      */
     #[ORM\Column(name: 'start', type: 'datetime', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Project'])]
+    #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
+    #[Serializer\Accessor(getter: 'getStart')]
     private ?\DateTime $start = null;
     /**
      * Project end time (times after this date cannot be recorded)
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Project"})
-     * @Serializer\Type(name="DateTime<'Y-m-d'>")
-     * @Serializer\Accessor(getter="getEnd")
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      *
      * @Exporter\Expose(label="project_end", type="datetime")
      */
     #[ORM\Column(name: 'end', type: 'datetime', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Project'])]
+    #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
+    #[Serializer\Accessor(getter: 'getEnd')]
     private ?\DateTime $end = null;
     #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: true)]
     private ?string $timezone = null;
     private bool $localized = false;
     /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="comment")
      */
     #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?string $comment = null;
     /**
      * If the project is not visible, times cannot be recorded
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="visible", type="boolean")
      */
     #[ORM\Column(name: 'visible', type: 'boolean', nullable: false)]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private bool $visible = true;
     /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
      *
      * @Exporter\Expose(label="billable", type="boolean")
      */
     #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private bool $billable = true;
     /**
      * Meta fields
@@ -180,14 +164,13 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * All visible meta (custom) fields registered with this project
      *
      * @var Collection<ProjectMeta>
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Project"})
-     * @Serializer\Type(name="array<App\Entity\ProjectMeta>")
-     * @Serializer\SerializedName("metaFields")
-     * @Serializer\Accessor(getter="getVisibleMetaFields")
      */
     #[ORM\OneToMany(targetEntity: 'App\Entity\ProjectMeta', mappedBy: 'project', cascade: ['persist'])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Project'])]
+    #[Serializer\Type(name: 'array<App\Entity\ProjectMeta>')]
+    #[Serializer\SerializedName('metaFields')]
+    #[Serializer\Accessor(getter: 'getVisibleMetaFields')]
     private Collection $meta;
     /**
      * Teams
@@ -196,25 +179,24 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      *
      * @var Collection<Team>
      *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Project"})
      * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Team"))
      */
     #[ORM\JoinTable(name: 'kimai2_projects_teams')]
     #[ORM\JoinColumn(name: 'project_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\InverseJoinColumn(name: 'team_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[ORM\ManyToMany(targetEntity: 'App\Entity\Team', cascade: ['persist'], inversedBy: 'projects')]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Project'])]
     private Collection $teams;
     #[ORM\Column(name: 'invoice_text', type: 'text', nullable: true)]
     private ?string $invoiceText = null;
     /**
      * Whether this project allows booking of global activities
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
      */
     #[ORM\Column(name: 'global_activities', type: 'boolean', nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private bool $globalActivities = true;
 
     public function __construct()

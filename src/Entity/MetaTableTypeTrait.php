@@ -20,33 +20,29 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 trait MetaTableTypeTrait
 {
-    /**
-     * @Serializer\Exclude()
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'id', type: 'integer')]
+    #[Serializer\Exclude]
     private ?int $id = null;
     /**
      * Name of the meta (custom) field
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
      */
     #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Length(min: 2, max: 50)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?string $name = null;
     /**
      * Value of the meta (custom) field
      *
      * This field can be used to temporary hold data in another format (e.g. array) during form transformation.
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
      */
     #[ORM\Column(name: 'value', type: 'text', length: 65535, nullable: true)]
     #[Assert\Length(max: 65535)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?string $value = null;
     #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => false])]
     #[Assert\NotNull]

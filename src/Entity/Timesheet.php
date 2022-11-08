@@ -23,46 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @Constraints\Timesheet
  *
- * @Serializer\ExclusionPolicy("all")
- * @Serializer\VirtualProperty(
- *      "ActivityAsId",
- *      exp="object.getActivity() === null ? null : object.getActivity().getId()",
- *      options={
- *          @Serializer\SerializedName("activity"),
- *          @Serializer\Type(name="integer"),
- *          @Serializer\Groups({"Not_Expanded"})
- *      }
- * )
- * @Serializer\VirtualProperty(
- *      "ProjectAsId",
- *      exp="object.getProject() === null ? null : object.getProject().getId()",
- *      options={
- *          @Serializer\SerializedName("project"),
- *          @Serializer\Type(name="integer"),
- *          @Serializer\Groups({"Not_Expanded"})
- *      }
- * )
- * @Serializer\VirtualProperty(
- *      "UserAsId",
- *      exp="object.getUser().getId()",
- *      options={
- *          @Serializer\SerializedName("user"),
- *          @Serializer\Type(name="integer"),
- *          @Serializer\Groups({"Not_Expanded"})
- *      }
- * )
- * @Serializer\VirtualProperty(
- *      "TagsAsArray",
- *      exp="object.getTagsAsArray()",
- *      options={
- *          @Serializer\SerializedName("tags"),
- *          @Serializer\Type(name="array<string>"),
- *          @Serializer\Groups({"Default"})
- *      }
- * )
- *
  * IDX_4F60C6B1415614018D93D649 (for ticktac in v1)
- *
  */
 #[ORM\Table(name: 'kimai2_timesheet')]
 #[ORM\Index(columns: ['user'], name: 'IDX_4F60C6B18D93D649')]
@@ -79,6 +40,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: 'App\Repository\TimesheetRepository')]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[ORM\HasLifecycleCallbacks]
+#[Serializer\ExclusionPolicy('all')]
+#[Serializer\VirtualProperty('ActivityAsId', exp: 'object.getActivity() === null ? null : object.getActivity().getId()', options: [new Serializer\SerializedName('activity'), new Serializer\Type(name: 'integer'), new Serializer\Groups(['Not_Expanded'])])]
+#[Serializer\VirtualProperty('ProjectAsId', exp: 'object.getProject() === null ? null : object.getProject().getId()', options: [new Serializer\SerializedName('project'), new Serializer\Type(name: 'integer'), new Serializer\Groups(['Not_Expanded'])])]
+#[Serializer\VirtualProperty('UserAsId', exp: 'object.getUser().getId()', options: [new Serializer\SerializedName('user'), new Serializer\Type(name: 'integer'), new Serializer\Groups(['Not_Expanded'])])]
+#[Serializer\VirtualProperty('TagsAsArray', exp: 'object.getTagsAsArray()', options: [new Serializer\SerializedName('tags'), new Serializer\Type(name: 'array<string>'), new Serializer\Groups(['Default'])])]
 class Timesheet implements EntityWithMetaFields, ExportableItem
 {
     /**
@@ -109,41 +75,40 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
 
     /**
      * Unique Timesheet ID
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
      */
     #[ORM\Column(name: 'id', type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?int $id = null;
     /**
-     * Reflects the date in the users timezone (not in UTC).
+     * Reflects the date in the user timezone (not in UTC).
      * This value is automatically set through the begin column and ONLY used in statistic queries.
      */
     #[ORM\Column(name: 'date_tz', type: 'date', nullable: false)]
     #[Assert\NotNull]
     private ?DateTime $date = null;
     /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     * @Serializer\Type(name="DateTime")
-     * @Serializer\Accessor(getter="getBegin")
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      */
     #[ORM\Column(name: 'start_time', type: 'datetime', nullable: false)]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Serializer\Type(name: 'DateTime')]
+    #[Serializer\Accessor(getter: 'getBegin')]
     private ?DateTime $begin = null;
     /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     * @Serializer\Type(name="DateTime")
-     * @Serializer\Accessor(getter="getEnd")
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      */
     #[ORM\Column(name: 'end_time', type: 'datetime', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Serializer\Type(name: 'DateTime')]
+    #[Serializer\Accessor(getter: 'getEnd')]
     private ?\DateTime $end = null;
     /**
      * @internal for storing the timezone of "begin" and "end" date
@@ -155,85 +120,69 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
      * @internal for storing the localized state of dates (see $timezone)
      */
     private bool $localized = false;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     */
     #[ORM\Column(name: 'duration', type: 'integer', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?int $duration = 0;
     /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Subresource", "Expanded"})
      * @OA\Property(ref="#/components/schemas/User")
      */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
     #[ORM\JoinColumn(name: '`user`', referencedColumnName: 'id', onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Subresource', 'Expanded'])]
     private ?User $user = null;
     /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Subresource", "Expanded"})
      * @OA\Property(ref="#/components/schemas/ActivityExpanded")
      */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Activity')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Subresource', 'Expanded'])]
     private ?Activity $activity = null;
     /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Subresource", "Expanded"})
      * @OA\Property(ref="#/components/schemas/ProjectExpanded")
      */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Project')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Subresource', 'Expanded'])]
     private ?Project $project = null;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     */
     #[ORM\Column(name: 'description', type: 'text', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?string $description = null;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     */
     #[ORM\Column(name: 'rate', type: 'float', nullable: false)]
     #[Assert\GreaterThanOrEqual(0)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private float $rate = 0.00;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     */
     #[ORM\Column(name: 'internal_rate', type: 'float', nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?float $internalRate = null;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Entity"})
-     */
     #[ORM\Column(name: 'fixed_rate', type: 'float', nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Entity'])]
     private ?float $fixedRate = null;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Entity"})
-     */
     #[ORM\Column(name: 'hourly_rate', type: 'float', nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Entity'])]
     private ?float $hourlyRate = null;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     */
     #[ORM\Column(name: 'exported', type: 'boolean', nullable: false, options: ['default' => false])]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private bool $exported = false;
-    /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Default"})
-     */
     #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private bool $billable = true;
     /**
      * Internal property used to determine whether the billable field should be calculated automatically.
@@ -266,14 +215,13 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
      * All visible meta (custom) fields registered with this timesheet
      *
      * @var Collection<TimesheetMeta>
-     *
-     * @Serializer\Expose()
-     * @Serializer\Groups({"Timesheet"})
-     * @Serializer\Type(name="array<App\Entity\TimesheetMeta>")
-     * @Serializer\SerializedName("metaFields")
-     * @Serializer\Accessor(getter="getVisibleMetaFields")
      */
     #[ORM\OneToMany(targetEntity: 'App\Entity\TimesheetMeta', mappedBy: 'timesheet', cascade: ['persist'])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Timesheet'])]
+    #[Serializer\Type(name: 'array<App\Entity\TimesheetMeta>')]
+    #[Serializer\SerializedName('metaFields')]
+    #[Serializer\Accessor(getter: 'getVisibleMetaFields')]
     private Collection $meta;
 
     public function __construct()
