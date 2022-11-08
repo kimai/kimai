@@ -241,7 +241,7 @@ final class KimaiImporterCommand extends Command
         if (!$this->validateOptions($options, $io)) {
             $io->error('Invalid importer configuration, exiting');
 
-            return 1;
+            return (int) Command::FAILURE;
         }
 
         $this->options = $options;
@@ -260,7 +260,7 @@ final class KimaiImporterCommand extends Command
         foreach ($options['prefix'] as $prefix) {
             $this->dbPrefix = $prefix;
             if (!$this->checkDatabaseVersion($connection, $io)) {
-                return 1;
+                return (int) Command::FAILURE;
             }
         }
 
@@ -318,7 +318,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to load users: ' . $ex->getMessage());
 
-                return 1;
+                return (int) Command::FAILURE;
             }
 
             try {
@@ -326,7 +326,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to load customers: ' . $ex->getMessage());
 
-                return 1;
+                return (int) Command::FAILURE;
             }
 
             try {
@@ -334,7 +334,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to load projects: ' . $ex->getMessage());
 
-                return 1;
+                return (int) Command::FAILURE;
             }
 
             try {
@@ -342,7 +342,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to load activities: ' . $ex->getMessage());
 
-                return 1;
+                return (int) Command::FAILURE;
             }
 
             try {
@@ -350,7 +350,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to load fixedRates: ' . $ex->getMessage());
 
-                return 1;
+                return (int) Command::FAILURE;
             }
 
             try {
@@ -358,7 +358,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to load rates: ' . $ex->getMessage());
 
-                return 1;
+                return (int) Command::FAILURE;
             }
 
             $io->success('Fetched Kimai v1 data, validating now');
@@ -368,7 +368,7 @@ final class KimaiImporterCommand extends Command
                     $io->error($errorMessage);
                 }
 
-                return 1;
+                return (int) Command::FAILURE;
             }
             $io->success('Pre-validated data, importing now');
 
@@ -379,7 +379,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import users: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return 1;
+                return (int) Command::FAILURE;
             }
 
             try {
@@ -390,7 +390,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import customers: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return 1;
+                return (int) Command::FAILURE;
             }
 
             try {
@@ -401,7 +401,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import projects: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return 1;
+                return (int) Command::FAILURE;
             }
 
             try {
@@ -410,7 +410,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import activities: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return 1;
+                return (int) Command::FAILURE;
             }
 
             try {
@@ -420,7 +420,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import groups/teams: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return 1;
+                return (int) Command::FAILURE;
             }
 
             try {
@@ -430,7 +430,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to create instance team: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return 1;
+                return (int) Command::FAILURE;
             }
 
             try {
@@ -442,7 +442,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import timesheet records: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return 1;
+                return (int) Command::FAILURE;
             }
         }
 
@@ -457,7 +457,7 @@ final class KimaiImporterCommand extends Command
             'Total memory usage: ' . $this->bytesHumanReadable($bytesImported - $bytesStart)
         );
 
-        return 0;
+        return (int) Command::SUCCESS;
     }
 
     private function validateKimai1Data(array $options, array $users, array $customer, array $projects, array $activities, array $rates): array

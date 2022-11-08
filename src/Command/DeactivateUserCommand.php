@@ -56,6 +56,6 @@ EOT
             $io->warning(sprintf('User "%s" is already deactivated.', $username));
         }
 
-        return 0;
+        return (int) Command::SUCCESS;
     }
 }

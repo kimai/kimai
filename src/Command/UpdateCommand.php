@@ -109,7 +109,7 @@ final class UpdateCommand extends Command
             );
         }
 
-        return 0;
+        return (int) Command::SUCCESS;
     }
 
     private function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output)

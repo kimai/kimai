@@ -83,7 +83,7 @@ final class InvoiceCreateCommand extends Command
         if (empty($username)) {
             $io->error('You must set a "user" to create invoices');
 
-            return 1;
+            return (int) Command::FAILURE;
         }
 
         try {
@@ -93,7 +93,7 @@ final class InvoiceCreateCommand extends Command
                 sprintf('The given username "%s" could not be resolved', $username)
             );
 
-            return 1;
+            return (int) Command::FAILURE;
         }
 
         $exportedFilter = TimesheetQuery::STATE_NOT_EXPORTED;
@@ -112,7 +112,7 @@ final class InvoiceCreateCommand extends Command
             default:
                 $io->error('Unknown "exported" filter given');
 
-                return 1;
+                return (int) Command::FAILURE;
         }
 
         $timezone = $input->getOption('timezone');
@@ -126,7 +126,7 @@ final class InvoiceCreateCommand extends Command
         if (!empty($input->getOption('start')) && empty($input->getOption('end'))) {
             $io->error('You need to supply a end date if a start date was given');
 
-            return 1;
+            return (int) Command::FAILURE;
         }
 
         $byActiveCustomer = $input->getOption('by-customer');
@@ -135,7 +135,7 @@ final class InvoiceCreateCommand extends Command
         if ($byActiveCustomer && $byActiveProject) {
             $io->error('You cannot mix "by-customer" and "by-project"');
 
-            return 1;
+            return (int) Command::FAILURE;
         }
 
         $customersIDs = $input->getOption('customer');
@@ -143,7 +143,7 @@ final class InvoiceCreateCommand extends Command
         if (!$byActiveCustomer && !$byActiveProject && empty($customersIDs) && empty($projectIDs)) {
             $io->error('Could not determine generation mode, you need to set one of: customer, project, by-customer, by-project');
 
-            return 1;
+            return (int) Command::FAILURE;
         }
 
         $start = $input->getOption('start');
@@ -153,7 +153,7 @@ final class InvoiceCreateCommand extends Command
             } catch (\Exception $ex) {
                 $io->error('Invalid start date given');
 
-                return 1;
+                return (int) Command::FAILURE;
             }
         }
         if (!$start instanceof \DateTime) {
@@ -168,7 +168,7 @@ final class InvoiceCreateCommand extends Command
             } catch (\Exception $ex) {
                 $io->error('Invalid end date given');
 
-                return 1;
+                return (int) Command::FAILURE;
             }
         }
         if (!$end instanceof \DateTime) {
@@ -188,7 +188,7 @@ final class InvoiceCreateCommand extends Command
             if (!is_dir($this->previewDirectory) || !is_writable($this->previewDirectory)) {
                 $io->error('Invalid preview directory given');
 
-                return 1;
+                return (int) Command::FAILURE;
             }
         } elseif ($input->getOption('set-exported')) {
             $markAsExported = true;
@@ -216,7 +216,7 @@ final class InvoiceCreateCommand extends Command
                 if (null === $tmp) {
                     $io->error('Unknown customer ID: ' . $id);
 
-                    return 1;
+                    return (int) Command::FAILURE;
                 }
                 $customers[] = $tmp;
             }
@@ -231,7 +231,7 @@ final class InvoiceCreateCommand extends Command
                 if (null === $tmp) {
                     $io->error('Unknown project ID: ' . $id);
 
-                    return 1;
+                    return (int) Command::FAILURE;
                 }
                 $projects[] = $tmp;
             }
@@ -245,7 +245,7 @@ final class InvoiceCreateCommand extends Command
         } else {
             $io->error('Could not determine generation mode'); //-///9==8=//99/96//////-*/-*//96* <= by Ayumi
 
-            return 1;
+            return (int) Command::FAILURE;
         }
 
         return $this->renderInvoiceResult($input, $output, $invoices);

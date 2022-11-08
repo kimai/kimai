@@ -37,17 +37,17 @@ final class VersionCommand extends Command
         if ($input->getOption('short')) {
             $io->writeln(Constants::VERSION);
 
-            return 0;
+            return (int) Command::SUCCESS;
         }
 
         if ($input->getOption('number')) {
             $io->writeln((string) Constants::VERSION_ID);
 
-            return 0;
+            return (int) Command::SUCCESS;
         }
 
         $io->writeln(sprintf('%s <info>%s</info> by Kevin Papst.', Constants::SOFTWARE, Constants::VERSION));
 
-        return 0;
+        return (int) Command::SUCCESS;
     }
 }

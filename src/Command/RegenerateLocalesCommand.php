@@ -128,6 +128,6 @@ final class RegenerateLocalesCommand extends Command
 
         $io->success('Created new locale definition at: ' . $filename);
 
-        return 0;
+        return (int) Command::SUCCESS;
     }
 }

@@ -111,14 +111,14 @@ final class ReloadCommand extends Command
                 ]
             );
 
-            return $cacheResult;
+            return (int) $cacheResult;
         }
 
         $io->success(
             sprintf('Kimai config was reloaded')
         );
 
-        return 0;
+        return (int) Command::SUCCESS;
     }
 
     private function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output)

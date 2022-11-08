@@ -61,13 +61,13 @@ EOT
             } catch (Exception $ex) {
                 $io->error('Failed to create database: ' . $ex->getMessage());
 
-                return 1;
+                return (int) Command::FAILURE;
             }
         }
 
         if ($this->askConfirmation($input, $output, 'Do you want to drop and re-create the schema y/N ?')) {
             if (($result = $this->dropSchema($io, $output)) !== 0) {
-                return $result;
+                return (int) $result;
             }
 
             try {
@@ -101,7 +101,7 @@ EOT
             }
         }
 
-        return 0;
+        return (int) Command::SUCCESS;
     }
 
     protected function dropSchema(SymfonyStyle $io, OutputInterface $output): int

@@ -32,7 +32,7 @@ final class TimesheetStopAllCommand extends Command
         $this->setDescription('Stop all running timesheets immediately');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $amount = $this->timesheetService->stopAll();
 
@@ -41,6 +41,6 @@ final class TimesheetStopAllCommand extends Command
             $io->success(sprintf('Stopped %s timesheet records.', $amount));
         }
 
-        return 0;
+        return (int) Command::SUCCESS;
     }
 }

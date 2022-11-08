@@ -112,7 +112,7 @@ final class TranslationCommand extends Command
                         if (!file_exists($fromLocaleName)) {
                             $io->error('Could not find translation file: ' . $fromLocaleName);
 
-                            return 1;
+                            return (int) Command::FAILURE;
                         }
                         $translations[$fromLocale][$name] = $this->getTranslations($fromLocaleName);
                     }
@@ -189,13 +189,13 @@ final class TranslationCommand extends Command
         if ($locale !== null && $deepl === null) {
             $io->error('Missing "DeepL API Free" auth-key');
 
-            return 1;
+            return (int) Command::FAILURE;
         }
 
         if ($locale === null && $deepl !== null) {
             $io->error('Missing translation locale');
 
-            return 1;
+            return (int) Command::FAILURE;
         }
 
         if ($locale !== null && $deepl !== null) {
@@ -219,13 +219,13 @@ final class TranslationCommand extends Command
             if (!$this->localeService->isKnownLocale($locale)) {
                 $io->error('Unknown locale given: ' . $locale);
 
-                return 1;
+                return (int) Command::FAILURE;
             }
 
             if (!\array_key_exists($locale, $deeplySupportedLanguages)) {
                 $io->error('Locale not supported by Deeply: ' . $locale);
 
-                return 1;
+                return (int) Command::FAILURE;
             }
 
             $allKeys = 0;
@@ -296,7 +296,7 @@ final class TranslationCommand extends Command
                     } catch (\Exception $exception) {
                         $io->error($exception->getMessage());
 
-                        return 1;
+                        return (int) Command::FAILURE;
                     }
 
                     $json = json_decode($rawResponseData->getContent(), true);
@@ -312,7 +312,7 @@ final class TranslationCommand extends Command
             }
         }
 
-        return 0;
+        return (int) Command::SUCCESS;
     }
 
     private function getTranslations(string $file): array

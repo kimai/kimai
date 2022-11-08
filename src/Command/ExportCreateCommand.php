@@ -92,7 +92,7 @@ class ExportCreateCommand extends Command
             default:
                 $io->error('Unknown "exported" filter given');
 
-                return 1;
+                return (int) Command::FAILURE;
         }
 
         $locale = $input->getOption('locale');
@@ -136,7 +136,7 @@ class ExportCreateCommand extends Command
         if ($template === null) {
             $io->error('You must pass the "template" option');
 
-            return 1;
+            return (int) Command::FAILURE;
         }
         $renderer = $this->serviceExport->getRendererById($template);
         if ($renderer === null) {
@@ -147,7 +147,7 @@ class ExportCreateCommand extends Command
             }
             $io->table(['ID'], $rows);
 
-            return 1;
+            return (int) Command::FAILURE;
         }
 
         $start = $input->getOption('start');
@@ -157,7 +157,7 @@ class ExportCreateCommand extends Command
             } catch (\Exception $ex) {
                 $io->error('Invalid start date given');
 
-                return 1;
+                return (int) Command::FAILURE;
             }
         }
         if (!$start instanceof \DateTime) {
@@ -172,7 +172,7 @@ class ExportCreateCommand extends Command
             } catch (\Exception $ex) {
                 $io->error('Invalid end date given');
 
-                return 1;
+                return (int) Command::FAILURE;
             }
         }
 
@@ -194,7 +194,7 @@ class ExportCreateCommand extends Command
         if (!is_dir($directory) || !is_writable($directory)) {
             $io->error('Invalid "directory" given: ' . $directory);
 
-            return 1;
+            return (int) Command::FAILURE;
         }
 
         $subject = 'Export data available';
@@ -208,7 +208,7 @@ class ExportCreateCommand extends Command
                 if ($result === false) {
                     $io->error('Invalid "email" given: ' . $email);
 
-                    return 1;
+                    return (int) Command::FAILURE;
                 }
                 $emails[] = $email;
             }
@@ -248,7 +248,7 @@ class ExportCreateCommand extends Command
         if (\count($entries) === 0) {
             $io->success('No entries found, skipping');
 
-            return 0;
+            return (int) Command::SUCCESS;
         }
 
         $response = $renderer->render($entries, $query);
@@ -279,7 +279,7 @@ class ExportCreateCommand extends Command
             $io->success('Saved export to: ' . $file);
         }
 
-        return 0;
+        return (int) Command::SUCCESS;
     }
 
     private function savePreview(Response $response, string $directory): string
