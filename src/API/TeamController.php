@@ -15,16 +15,13 @@ use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Form\API\TeamApiEditForm;
-use App\Repository\ActivityRepository;
-use App\Repository\CustomerRepository;
-use App\Repository\ProjectRepository;
 use App\Repository\TeamRepository;
-use App\Repository\UserRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,9 +67,9 @@ final class TeamController extends BaseApiController
     #[Rest\Get(path: '/{id}', name: 'get_team', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function getAction(Team $id): Response
+    public function getAction(Team $team): Response
     {
-        $view = new View($id, 200);
+        $view = new View($team, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
@@ -87,9 +84,9 @@ final class TeamController extends BaseApiController
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\Delete(path: '/{id}', name: 'delete_team', requirements: ['id' => '\d+'])]
-    public function deleteAction(Team $id): Response
+    public function deleteAction(Team $team): Response
     {
-        $this->repository->deleteTeam($id);
+        $this->repository->deleteTeam($team);
 
         $view = new View(null, Response::HTTP_NO_CONTENT);
 
@@ -137,14 +134,8 @@ final class TeamController extends BaseApiController
     #[Rest\Patch(path: '/{id}', name: 'patch_team', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function patchAction(Request $request, int $id): Response
+    public function patchAction(Request $request, Team $team): Response
     {
-        $team = $this->repository->find($id);
-
-        if (null === $team) {
-            throw new NotFoundException();
-        }
-
         if ($request->request->has('members')) {
             foreach ($team->getMembers() as $member) {
                 $team->removeMember($member);
@@ -183,26 +174,14 @@ final class TeamController extends BaseApiController
     #[Rest\Post(path: '/{id}/members/{userId}', name: 'post_team_member', requirements: ['id' => '\d+', 'userId' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function postMemberAction(int $id, int $userId, UserRepository $repository): Response
+    #[Entity('member', expr: 'repository.find(userId)')]
+    public function postMemberAction(Team $team, User $member): Response
     {
-        $team = $this->repository->find($id);
-
-        if (null === $team) {
-            throw new NotFoundException('Team not found');
-        }
-
-        /** @var User|null $user */
-        $user = $repository->find($userId);
-
-        if (null === $user) {
-            throw new NotFoundException('User not found');
-        }
-
-        if ($user->isInTeam($team)) {
+        if ($member->isInTeam($team)) {
             throw new BadRequestHttpException('User is already member of the team');
         }
 
-        $team->addUser($user);
+        $team->addUser($member);
 
         $this->repository->saveTeam($team);
 
@@ -222,30 +201,18 @@ final class TeamController extends BaseApiController
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\Delete(path: '/{id}/members/{userId}', name: 'delete_team_member', requirements: ['id' => '\d+', 'userId' => '\d+'])]
-    public function deleteMemberAction(int $id, int $userId, UserRepository $repository): Response
+    #[Entity('member', expr: 'repository.find(userId)')]
+    public function deleteMemberAction(Team $team, User $member): Response
     {
-        $team = $this->repository->find($id);
-
-        if (null === $team) {
-            throw new NotFoundException('Team not found');
-        }
-
-        /** @var User|null $user */
-        $user = $repository->find($userId);
-
-        if (null === $user) {
-            throw new NotFoundException('User not found');
-        }
-
-        if (!$user->isInTeam($team)) {
+        if (!$member->isInTeam($team)) {
             throw new BadRequestHttpException('User is not a member of the team');
         }
 
-        if ($team->isTeamlead($user)) {
+        if ($team->isTeamlead($member)) {
             throw new BadRequestHttpException('Cannot remove teamlead');
         }
 
-        $team->removeUser($user);
+        $team->removeUser($member);
 
         $this->repository->saveTeam($team);
 
@@ -265,21 +232,9 @@ final class TeamController extends BaseApiController
     #[Rest\Post(path: '/{id}/customers/{customerId}', name: 'post_team_customer', requirements: ['id' => '\d+', 'customerId' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function postCustomerAction(int $id, int $customerId, CustomerRepository $repository): Response
+    #[Entity('customer', expr: 'repository.find(customerId)')]
+    public function postCustomerAction(Team $team, Customer $customer): Response
     {
-        $team = $this->repository->find($id);
-
-        if (null === $team) {
-            throw new NotFoundException('Team not found');
-        }
-
-        /** @var Customer|null $customer */
-        $customer = $repository->find($customerId);
-
-        if (null === $customer) {
-            throw new NotFoundException('Customer not found');
-        }
-
         if ($team->hasCustomer($customer)) {
             throw new BadRequestHttpException('Team has already access to customer');
         }
@@ -304,21 +259,9 @@ final class TeamController extends BaseApiController
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\Delete(path: '/{id}/customers/{customerId}', name: 'delete_team_customer', requirements: ['id' => '\d+', 'customerId' => '\d+'])]
-    public function deleteCustomerAction(int $id, int $customerId, CustomerRepository $repository): Response
+    #[Entity('customer', expr: 'repository.find(customerId)')]
+    public function deleteCustomerAction(Team $team, Customer $customer): Response
     {
-        $team = $this->repository->find($id);
-
-        if (null === $team) {
-            throw new NotFoundException('Team not found');
-        }
-
-        /** @var Customer|null $customer */
-        $customer = $repository->find($customerId);
-
-        if (null === $customer) {
-            throw new NotFoundException('Customer not found');
-        }
-
         if (!$team->hasCustomer($customer)) {
             throw new BadRequestHttpException('Customer is not assigned to the team');
         }
@@ -343,21 +286,9 @@ final class TeamController extends BaseApiController
     #[Rest\Post(path: '/{id}/projects/{projectId}', name: 'post_team_project', requirements: ['id' => '\d+', 'projectId' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function postProjectAction(int $id, int $projectId, ProjectRepository $repository): Response
+    #[Entity('project', expr: 'repository.find(projectId)')]
+    public function postProjectAction(Team $team, Project $project): Response
     {
-        $team = $this->repository->find($id);
-
-        if (null === $team) {
-            throw new NotFoundException('Team not found');
-        }
-
-        /** @var Project|null $project */
-        $project = $repository->find($projectId);
-
-        if (null === $project) {
-            throw new NotFoundException('Project not found');
-        }
-
         if ($team->hasProject($project)) {
             throw new BadRequestHttpException('Team has already access to project');
         }
@@ -382,21 +313,9 @@ final class TeamController extends BaseApiController
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\Delete(path: '/{id}/projects/{projectId}', name: 'delete_team_project', requirements: ['id' => '\d+', 'projectId' => '\d+'])]
-    public function deleteProjectAction(int $id, int $projectId, ProjectRepository $repository): Response
+    #[Entity('project', expr: 'repository.find(projectId)')]
+    public function deleteProjectAction(Team $team, Project $project): Response
     {
-        $team = $this->repository->find($id);
-
-        if (null === $team) {
-            throw new NotFoundException('Team not found');
-        }
-
-        /** @var Project|null $project */
-        $project = $repository->find($projectId);
-
-        if (null === $project) {
-            throw new NotFoundException('Project not found');
-        }
-
         if (!$team->hasProject($project)) {
             throw new BadRequestHttpException('Project is not assigned to the team');
         }
@@ -421,21 +340,9 @@ final class TeamController extends BaseApiController
     #[Rest\Post(path: '/{id}/activities/{activityId}', name: 'post_team_activity', requirements: ['id' => '\d+', 'activityId' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function postActivityAction(int $id, int $activityId, ActivityRepository $repository): Response
+    #[Entity('activity', expr: 'repository.find(activityId)')]
+    public function postActivityAction(Team $team, Activity $activity): Response
     {
-        $team = $this->repository->find($id);
-
-        if (null === $team) {
-            throw new NotFoundException('Team not found');
-        }
-
-        /** @var Activity|null $activity */
-        $activity = $repository->find($activityId);
-
-        if (null === $activity) {
-            throw new NotFoundException('Activity not found');
-        }
-
         if ($team->hasActivity($activity)) {
             throw new BadRequestHttpException('Team has already access to activity');
         }
@@ -460,21 +367,9 @@ final class TeamController extends BaseApiController
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\Delete(path: '/{id}/activities/{activityId}', name: 'delete_team_activity', requirements: ['id' => '\d+', 'activityId' => '\d+'])]
-    public function deleteActivityAction(int $id, int $activityId, ActivityRepository $repository): Response
+    #[Entity('activity', expr: 'repository.find(activityId)')]
+    public function deleteActivityAction(Team $team, Activity $activity): Response
     {
-        $team = $this->repository->find($id);
-
-        if (null === $team) {
-            throw new NotFoundException('Team not found');
-        }
-
-        /** @var Activity|null $activity */
-        $activity = $repository->find($activityId);
-
-        if (null === $activity) {
-            throw new NotFoundException('Activity not found');
-        }
-
         if (!$team->hasActivity($activity)) {
             throw new BadRequestHttpException('Activity is not assigned to the team');
         }

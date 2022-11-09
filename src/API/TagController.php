@@ -101,14 +101,8 @@ final class TagController extends BaseApiController
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\Delete(path: '/{id}', name: 'delete_tag')]
-    public function deleteAction(int $id): Response
+    public function deleteAction(Tag $tag): Response
     {
-        $tag = $this->repository->find($id);
-
-        if (null === $tag) {
-            throw new NotFoundException();
-        }
-
         $this->repository->deleteTag($tag);
 
         $view = new View(null, Response::HTTP_NO_CONTENT);

@@ -27,7 +27,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -91,28 +90,19 @@ final class UserController extends BaseApiController
     /**
      * Return one user entity
      */
+    #[Security("is_granted('view', profile)")]
     #[OA\Response(response: 200, description: 'Return one user entity.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to fetch', required: true)]
     #[Rest\Get(path: '/{id}', name: 'get_user', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function getAction(int $id, EventDispatcherInterface $dispatcher): Response
+    public function getAction(User $profile, EventDispatcherInterface $dispatcher): Response
     {
-        $user = $this->repository->find($id);
-
-        if (null === $user) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('view', $user)) {
-            throw new AccessDeniedHttpException('You are not allowed to view this profile');
-        }
-
         // we need to prepare the user preferences, which is done via an EventSubscriber
-        $event = new PrepareUserEvent($user);
+        $event = new PrepareUserEvent($profile);
         $dispatcher->dispatch($event);
 
-        $view = new View($user, 200);
+        $view = new View($profile, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
@@ -185,31 +175,22 @@ final class UserController extends BaseApiController
     /**
      * Update an existing user
      */
+    #[Security("is_granted('edit', profile)")]
     #[OA\Patch(description: 'Update an existing user, you can pass all or just a subset of all attributes (passing roles will replace all existing ones)', responses: [new OA\Response(response: 200, description: 'Returns the updated user', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/UserEditForm'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to update', required: true)]
     #[Rest\Patch(path: '/{id}', name: 'patch_user', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function patchAction(Request $request, int $id): Response
+    public function patchAction(Request $request, User $profile): Response
     {
-        $user = $this->repository->getUserById($id);
-
-        if (null === $user) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $user)) {
-            throw new AccessDeniedHttpException('Not allowed to edit user');
-        }
-
-        $form = $this->createForm(UserApiEditForm::class, $user, [
-            'include_roles' => $this->isGranted('roles', $user),
-            'include_active_flag' => ($user->getId() !== $this->getUser()->getId()),
-            'include_preferences' => $this->isGranted('preferences', $user),
+        $form = $this->createForm(UserApiEditForm::class, $profile, [
+            'include_roles' => $this->isGranted('roles', $profile),
+            'include_active_flag' => ($profile->getId() !== $this->getUser()->getId()),
+            'include_preferences' => $this->isGranted('preferences', $profile),
         ]);
 
-        $form->setData($user);
+        $form->setData($profile);
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
@@ -219,9 +200,9 @@ final class UserController extends BaseApiController
             return $this->viewHandler->handle($view);
         }
 
-        $this->repository->saveUser($user);
+        $this->repository->saveUser($profile);
 
-        $view = new View($user, Response::HTTP_OK);
+        $view = new View($profile, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);

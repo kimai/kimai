@@ -221,15 +221,15 @@ final class TimesheetController extends BaseApiController
     /**
      * Returns one timesheet record
      */
-    #[Security("is_granted('view', id)")]
+    #[Security("is_granted('view', timesheet)")]
     #[OA\Response(response: 200, description: 'Returns one timesheet record. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to fetch', required: true)]
     #[Rest\Get(path: '/{id}', name: 'get_timesheet', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function getAction(Timesheet $id): Response
+    public function getAction(Timesheet $timesheet): Response
     {
-        $view = new View($id, 200);
+        $view = new View($timesheet, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
@@ -293,16 +293,15 @@ final class TimesheetController extends BaseApiController
     /**
      * Update an existing timesheet record
      */
-    #[Security("is_granted('edit', id)")]
+    #[Security("is_granted('edit', timesheet)")]
     #[OA\Patch(description: 'Update an existing timesheet record, you can pass all or just a subset of the attributes.', responses: [new OA\Response(response: 200, description: 'Returns the updated timesheet', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to update', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEditForm'))]
     #[Rest\Patch(path: '/{id}', name: 'patch_timesheet', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function patchAction(Request $request, Timesheet $id): Response
+    public function patchAction(Request $request, Timesheet $timesheet): Response
     {
-        $timesheet = $id;
         $event = new TimesheetMetaDefinitionEvent($timesheet);
         $this->dispatcher->dispatch($event);
 
@@ -339,15 +338,15 @@ final class TimesheetController extends BaseApiController
     /**
      * Delete an existing timesheet record
      */
-    #[Security("is_granted('delete', id)")]
+    #[Security("is_granted('delete', timesheet)")]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one timesheet record')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to delete', required: true)]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\Delete(path: '/{id}', name: 'delete_timesheet', requirements: ['id' => '\d+'])]
-    public function deleteAction(Timesheet $id): Response
+    public function deleteAction(Timesheet $timesheet): Response
     {
-        $this->service->deleteTimesheet($id);
+        $this->service->deleteTimesheet($timesheet);
 
         $view = new View(null, Response::HTTP_NO_CONTENT);
 
@@ -413,17 +412,17 @@ final class TimesheetController extends BaseApiController
     /**
      * Stops an active timesheet record
      */
-    #[Security("is_granted('stop', id)")]
+    #[Security("is_granted('stop', timesheet)")]
     #[OA\Response(response: 200, description: 'Stops an active timesheet record and returns it afterwards.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to stop', required: true)]
     #[Rest\Patch(path: '/{id}/stop', name: 'stop_timesheet', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function stopAction(Timesheet $id): Response
+    public function stopAction(Timesheet $timesheet): Response
     {
-        $this->service->stopTimesheet($id);
+        $this->service->stopTimesheet($timesheet);
 
-        $view = new View($id, 200);
+        $view = new View($timesheet, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
@@ -432,7 +431,7 @@ final class TimesheetController extends BaseApiController
     /**
      * Restarts a previously stopped timesheet record for the current user
      */
-    #[Security("is_granted('start', id)")]
+    #[Security("is_granted('start', timesheet)")]
     #[OA\Response(response: 200, description: 'Restarts a timesheet record for the same customer, project, activity combination. The current user will be the owner of the new record. Kimai tries to stop running records, which is expected to fail depending on the configured rules. Data will be copied from the original record if requested.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to restart', required: true)]
     #[Rest\Patch(path: '/{id}/restart', name: 'restart_timesheet', requirements: ['id' => '\d+'])]
@@ -440,9 +439,8 @@ final class TimesheetController extends BaseApiController
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\RequestParam(name: 'copy', requirements: 'all', strict: true, nullable: true, description: 'Whether data should be copied to the new entry. Allowed values: all (default: nothing is copied)')]
     #[Rest\RequestParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Changes the restart date to the given one (default: now)')]
-    public function restartAction(Timesheet $id, ParamFetcherInterface $paramFetcher): Response
+    public function restartAction(Timesheet $timesheet, ParamFetcherInterface $paramFetcher): Response
     {
-        $timesheet = $id;
         /** @var User $user */
         $user = $this->getUser();
 
@@ -494,15 +492,14 @@ final class TimesheetController extends BaseApiController
     /**
      * Duplicates an existing timesheet record
      */
-    #[Security("is_granted('duplicate', id)")]
+    #[Security("is_granted('duplicate', timesheet)")]
     #[OA\Response(response: 200, description: 'Duplicates a timesheet record, resetting the export state only.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to duplicate', required: true)]
     #[Rest\Patch(path: '/{id}/duplicate', name: 'duplicate_timesheet', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function duplicateAction(Timesheet $id): Response
+    public function duplicateAction(Timesheet $timesheet): Response
     {
-        $timesheet = $id;
         $copyTimesheet = clone $timesheet;
 
         $this->dispatcher->dispatch(new TimesheetDuplicatePreEvent($copyTimesheet, $timesheet));
@@ -518,16 +515,14 @@ final class TimesheetController extends BaseApiController
     /**
      * Switch the export state of a timesheet record to (un-)lock it
      */
-    #[Security("is_granted('edit_export', id)")]
+    #[Security("is_granted('edit_export', timesheet)")]
     #[OA\Response(response: 200, description: 'Switches the exported state on the record and therefor locks / unlocks it for further updates. Needs edit_export_*_timesheet permission.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to switch export state', required: true)]
     #[Rest\Patch(path: '/{id}/export', name: 'export_timesheet', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function exportAction(Timesheet $id): Response
+    public function exportAction(Timesheet $timesheet): Response
     {
-        $timesheet = $id;
-
         if ($timesheet->isExported() && !$this->isGranted('edit_exported_timesheet')) {
             throw new AccessDeniedHttpException('User cannot edit an exported timesheet');
         }
@@ -545,7 +540,7 @@ final class TimesheetController extends BaseApiController
     /**
      * Sets the value of a meta-field for an existing timesheet.
      */
-    #[Security("is_granted('edit', id)")]
+    #[Security("is_granted('edit', timesheet)")]
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet record ID to set the meta-field value for', required: true)]
     #[Rest\Patch(path: '/{id}/meta', requirements: ['id' => '\d+'])]
@@ -553,9 +548,8 @@ final class TimesheetController extends BaseApiController
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
-    public function metaAction(Timesheet $id, ParamFetcherInterface $paramFetcher): Response
+    public function metaAction(Timesheet $timesheet, ParamFetcherInterface $paramFetcher): Response
     {
-        $timesheet = $id;
         $event = new TimesheetMetaDefinitionEvent($timesheet);
         $this->dispatcher->dispatch($event);
 

@@ -26,6 +26,7 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -100,9 +101,9 @@ final class CustomerController extends BaseApiController
     #[Rest\Get(path: '/{id}', name: 'get_customer', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function getAction(Customer $id): Response
+    public function getAction(Customer $customer): Response
     {
-        $view = new View($id, 200);
+        $view = new View($customer, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
@@ -152,24 +153,15 @@ final class CustomerController extends BaseApiController
     /**
      * Update an existing customer
      */
+    #[Security("is_granted('edit', customer)")]
     #[OA\Patch(description: 'Update an existing customer, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated customer', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CustomerEditForm'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Customer ID to update', required: true)]
     #[Rest\Patch(path: '/{id}', name: 'patch_customer', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function patchAction(Request $request, int $id): Response
+    public function patchAction(Request $request, Customer $customer): Response
     {
-        $customer = $this->repository->find($id);
-
-        if (null === $customer) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $customer)) {
-            throw new AccessDeniedHttpException('User cannot update customer');
-        }
-
         $event = new CustomerMetaDefinitionEvent($customer);
         $this->dispatcher->dispatch($event);
 
@@ -199,6 +191,7 @@ final class CustomerController extends BaseApiController
     /**
      * Sets the value of a meta-field for an existing customer
      */
+    #[Security("is_granted('edit', customer)")]
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Customer record ID to set the meta-field value for', required: true)]
     #[Rest\Patch(path: '/{id}/meta', requirements: ['id' => '\d+'])]
@@ -206,18 +199,8 @@ final class CustomerController extends BaseApiController
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
-    public function metaAction(int $id, ParamFetcherInterface $paramFetcher): Response
+    public function metaAction(Customer $customer, ParamFetcherInterface $paramFetcher): Response
     {
-        $customer = $this->repository->find($id);
-
-        if (null === $customer) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $customer)) {
-            throw new AccessDeniedHttpException('You are not allowed to update this customer');
-        }
-
         $event = new CustomerMetaDefinitionEvent($customer);
         $this->dispatcher->dispatch($event);
 
@@ -241,24 +224,14 @@ final class CustomerController extends BaseApiController
     /**
      * Returns a collection of all rates for one customer
      */
+    #[Security("is_granted('edit', customer)")]
     #[OA\Response(response: 200, description: 'Returns a collection of customer rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/CustomerRate')))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The customer whose rates will be returned', required: true)]
     #[Rest\Get(path: '/{id}/rates', name: 'get_customer_rates', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function getRatesAction(int $id): Response
+    public function getRatesAction(Customer $customer): Response
     {
-        /** @var Customer|null $customer */
-        $customer = $this->repository->find($id);
-
-        if (null === $customer) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $customer)) {
-            throw new AccessDeniedHttpException('Access denied.');
-        }
-
         $rates = $this->customerRateRepository->getRatesForCustomer($customer);
 
         $view = new View($rates, 200);
@@ -270,29 +243,17 @@ final class CustomerController extends BaseApiController
     /**
      * Deletes one rate for a customer
      */
+    #[Security("is_granted('edit', customer)")]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The customer whose rate will be removed', required: true)]
     #[OA\Parameter(name: 'rateId', in: 'path', description: 'The rate to remove', required: true)]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\Delete(path: '/{id}/rates/{rateId}', name: 'delete_customer_rate', requirements: ['id' => '\d+', 'rateId' => '\d+'])]
-    public function deleteRateAction(string $id, string $rateId): Response
+    #[Entity('rate', expr: 'repository.find(rateId)')]
+    public function deleteRateAction(Customer $customer, CustomerRate $rate): Response
     {
-        /** @var Customer|null $customer */
-        $customer = $this->repository->find($id);
-
-        if (null === $customer) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $customer)) {
-            throw new AccessDeniedHttpException('Access denied.');
-        }
-
-        /** @var CustomerRate|null $rate */
-        $rate = $this->customerRateRepository->find($rateId);
-
-        if (null === $rate || $rate->getCustomer() !== $customer) {
+        if ($rate->getCustomer() !== $customer) {
             throw new NotFoundException();
         }
 
@@ -306,25 +267,15 @@ final class CustomerController extends BaseApiController
     /**
      * Adds a new rate to a customer
      */
+    #[Security("is_granted('edit', customer)")]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/CustomerRate'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The customer to add the rate for', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CustomerRateForm'))]
     #[Rest\Post(path: '/{id}/rates', name: 'post_customer_rate', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function postRateAction(int $id, Request $request): Response
+    public function postRateAction(Customer $customer, Request $request): Response
     {
-        /** @var Customer|null $customer */
-        $customer = $this->repository->find($id);
-
-        if (null === $customer) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $customer)) {
-            throw new AccessDeniedHttpException('Access denied.');
-        }
-
         $rate = new CustomerRate();
         $rate->setCustomer($customer);
 

@@ -25,6 +25,7 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
 use OpenApi\Attributes as OA;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -118,9 +119,9 @@ final class ActivityController extends BaseApiController
     #[Rest\Get(path: '/{id}', name: 'get_activity', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function getAction(Activity $id): Response
+    public function getAction(Activity $activity): Response
     {
-        $view = new View($id, 200);
+        $view = new View($activity, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
@@ -170,24 +171,15 @@ final class ActivityController extends BaseApiController
     /**
      * Update an existing activity
      */
+    #[Security("is_granted('edit', activity)")]
     #[OA\Patch(description: 'Update an existing activity, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated activity', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ActivityEditForm'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Activity ID to update', required: true)]
     #[Rest\Patch(path: '/{id}', name: 'patch_activity', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function patchAction(Request $request, int $id): Response
+    public function patchAction(Request $request, Activity $activity): Response
     {
-        $activity = $this->repository->find($id);
-
-        if (null === $activity) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $activity)) {
-            throw new AccessDeniedHttpException('User cannot update activity');
-        }
-
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
 
@@ -217,6 +209,7 @@ final class ActivityController extends BaseApiController
     /**
      * Sets the value of a meta-field for an existing activity
      */
+    #[Security("is_granted('edit', activity)")]
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Activity record ID to set the meta-field value for', required: true)]
     #[Rest\Patch(path: '/{id}/meta', requirements: ['id' => '\d+'])]
@@ -224,18 +217,8 @@ final class ActivityController extends BaseApiController
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
-    public function metaAction(int $id, ParamFetcherInterface $paramFetcher): Response
+    public function metaAction(Activity $activity, ParamFetcherInterface $paramFetcher): Response
     {
-        $activity = $this->repository->find($id);
-
-        if (null === $activity) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $activity)) {
-            throw new AccessDeniedHttpException('You are not allowed to update this activity');
-        }
-
         $event = new ActivityMetaDefinitionEvent($activity);
         $this->dispatcher->dispatch($event);
 
@@ -259,24 +242,14 @@ final class ActivityController extends BaseApiController
     /**
      * Returns a collection of all rates for one activity
      */
+    #[Security("is_granted('edit', activity)")]
     #[OA\Response(response: 200, description: 'Returns a collection of activity rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ActivityRate')))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The activity whose rates will be returned', required: true)]
     #[Rest\Get(path: '/{id}/rates', name: 'get_activity_rates', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function getRatesAction(int $id): Response
+    public function getRatesAction(Activity $activity): Response
     {
-        /** @var Activity|null $activity */
-        $activity = $this->repository->find($id);
-
-        if (null === $activity) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $activity)) {
-            throw new AccessDeniedHttpException('Access denied.');
-        }
-
         $rates = $this->activityRateRepository->getRatesForActivity($activity);
 
         $view = new View($rates, 200);
@@ -288,29 +261,17 @@ final class ActivityController extends BaseApiController
     /**
      * Deletes one rate for an activity
      */
+    #[Security("is_granted('edit', activity)")]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The activity whose rate will be removed', required: true)]
     #[OA\Parameter(name: 'rateId', in: 'path', description: 'The rate to remove', required: true)]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\Delete(path: '/{id}/rates/{rateId}', name: 'delete_activity_rate', requirements: ['id' => '\d+', 'rateId' => '\d+'])]
-    public function deleteRateAction(string $id, string $rateId): Response
+    #[Entity('rate', expr: 'repository.find(rateId)')]
+    public function deleteRateAction(Activity $activity, ActivityRate $rate): Response
     {
-        /** @var Activity|null $activity */
-        $activity = $this->repository->find($id);
-
-        if (null === $activity) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $activity)) {
-            throw new AccessDeniedHttpException('Access denied.');
-        }
-
-        /** @var ActivityRate|null $rate */
-        $rate = $this->activityRateRepository->find($rateId);
-
-        if (null === $rate || $rate->getActivity() !== $activity) {
+        if ($rate->getActivity() !== $activity) {
             throw new NotFoundException();
         }
 
@@ -324,25 +285,15 @@ final class ActivityController extends BaseApiController
     /**
      * Adds a new rate to an activity
      */
+    #[Security("is_granted('edit', activity)")]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/ActivityRate'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The activity to add the rate for', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ActivityRateForm'))]
     #[Rest\Post(path: '/{id}/rates', name: 'post_activity_rate', requirements: ['id' => '\d+'])]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    public function postRateAction(int $id, Request $request): Response
+    public function postRateAction(Activity $activity, Request $request): Response
     {
-        /** @var Activity|null $activity */
-        $activity = $this->repository->find($id);
-
-        if (null === $activity) {
-            throw new NotFoundException();
-        }
-
-        if (!$this->isGranted('edit', $activity)) {
-            throw new AccessDeniedHttpException('Access denied.');
-        }
-
         $rate = new ActivityRate();
         $rate->setActivity($activity);
 
