@@ -91,7 +91,7 @@ class SystemConfiguration
     {
         $this->prepare();
 
-        $result = array_filter($this->settings, function ($settingName) use ($key) {
+        $result = array_filter($this->settings, function ($settingName) use ($key): bool {
             return str_starts_with($settingName, $key);
         }, ARRAY_FILTER_USE_KEY);
 
@@ -130,7 +130,7 @@ class SystemConfiguration
             return true;
         }
 
-        $result = array_filter($this->settings, function ($settingName) use ($key) {
+        $result = array_filter($this->settings, function ($settingName) use ($key): bool {
             return str_starts_with($settingName, $key);
         }, ARRAY_FILTER_USE_KEY);
 

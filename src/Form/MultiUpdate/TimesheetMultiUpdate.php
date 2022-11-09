@@ -218,7 +218,7 @@ class TimesheetMultiUpdate extends AbstractType
 
         $builder->get('entities')->addModelTransformer(
             new CallbackTransformer(
-                function ($timesheets) {
+                function ($timesheets): string {
                     $ids = [];
                     /** @var \App\Entity\Timesheet $timesheet */
                     foreach ($timesheets as $timesheet) {

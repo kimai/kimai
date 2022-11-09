@@ -742,7 +742,7 @@ final class KimaiImporterCommand extends Command
      * @param object $object
      * @return bool
      */
-    private function validateImport(SymfonyStyle $io, $object)
+    private function validateImport(SymfonyStyle $io, $object): bool
     {
         $errors = $this->validator->validate($object);
 

@@ -304,7 +304,7 @@ abstract class AbstractSpreadsheetRenderer
                 };
             }
             if (!isset($columns['username']['header'])) {
-                $columns['username']['header'] = function (Worksheet $sheet, $row, $column) {
+                $columns['username']['header'] = function (Worksheet $sheet, $row, $column): int {
                     $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('name'));
 
                     return 1;
@@ -420,14 +420,14 @@ abstract class AbstractSpreadsheetRenderer
             $timesheetMetaFields = $this->findMetaColumns(new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT));
 
             $columns['timesheet-meta'] = [
-                'header' => function (Worksheet $sheet, $row, $column) use ($timesheetMetaFields) {
+                'header' => function (Worksheet $sheet, $row, $column) use ($timesheetMetaFields): int {
                     foreach ($timesheetMetaFields as $metaField) {
                         $sheet->setCellValueByColumnAndRow($column++, $row, $this->translator->trans($metaField->getLabel()));
                     }
 
                     return \count($timesheetMetaFields);
                 },
-                'render' => function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) use ($timesheetMetaFields) {
+                'render' => function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) use ($timesheetMetaFields): int {
                     foreach ($timesheetMetaFields as $metaField) {
                         $metaFieldValue = '';
                         $metaField = $entity->getMetaField($metaField->getName());
@@ -448,14 +448,14 @@ abstract class AbstractSpreadsheetRenderer
             $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($customerQuery, CustomerMetaDisplayEvent::EXPORT));
 
             $columns['customer-meta'] = [
-                'header' => function (Worksheet $sheet, $row, $column) use ($customerMetaFields) {
+                'header' => function (Worksheet $sheet, $row, $column) use ($customerMetaFields): int {
                     foreach ($customerMetaFields as $metaField) {
                         $sheet->setCellValueByColumnAndRow($column++, $row, $this->translator->trans($metaField->getLabel()));
                     }
 
                     return \count($customerMetaFields);
                 },
-                'render' => function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) use ($customerMetaFields) {
+                'render' => function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) use ($customerMetaFields): int {
                     foreach ($customerMetaFields as $metaField) {
                         $metaFieldValue = '';
                         if (null !== $entity->getProject()) {
@@ -475,14 +475,14 @@ abstract class AbstractSpreadsheetRenderer
         if (isset($columns['project-meta'])) {
             $projectMetaFields = $this->findMetaColumns(new ProjectMetaDisplayEvent($query, ProjectMetaDisplayEvent::EXPORT));
             $columns['project-meta'] = [
-                'header' => function (Worksheet $sheet, $row, $column) use ($projectMetaFields) {
+                'header' => function (Worksheet $sheet, $row, $column) use ($projectMetaFields): int {
                     foreach ($projectMetaFields as $metaField) {
                         $sheet->setCellValueByColumnAndRow($column++, $row, $this->translator->trans($metaField->getLabel()));
                     }
 
                     return \count($projectMetaFields);
                 },
-                'render' => function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) use ($projectMetaFields) {
+                'render' => function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) use ($projectMetaFields): int {
                     foreach ($projectMetaFields as $metaField) {
                         $metaFieldValue = '';
                         if (null !== $entity->getProject()) {
@@ -502,14 +502,14 @@ abstract class AbstractSpreadsheetRenderer
         if (isset($columns['activity-meta'])) {
             $activityMetaFields = $this->findMetaColumns(new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::EXPORT));
             $columns['activity-meta'] = [
-                'header' => function (Worksheet $sheet, $row, $column) use ($activityMetaFields) {
+                'header' => function (Worksheet $sheet, $row, $column) use ($activityMetaFields): int {
                     foreach ($activityMetaFields as $metaField) {
                         $sheet->setCellValueByColumnAndRow($column++, $row, $this->translator->trans($metaField->getLabel()));
                     }
 
                     return \count($activityMetaFields);
                 },
-                'render' => function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) use ($activityMetaFields) {
+                'render' => function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) use ($activityMetaFields): int {
                     foreach ($activityMetaFields as $metaField) {
                         $metaFieldValue = '';
                         if (null !== $entity->getActivity()) {
@@ -531,14 +531,14 @@ abstract class AbstractSpreadsheetRenderer
             $this->dispatcher->dispatch($event);
             $userPreferences = $event->getPreferences();
             $columns['user-meta'] = [
-                'header' => function (Worksheet $sheet, $row, $column) use ($userPreferences) {
+                'header' => function (Worksheet $sheet, $row, $column) use ($userPreferences): int {
                     foreach ($userPreferences as $metaField) {
                         $sheet->setCellValueByColumnAndRow($column++, $row, $this->translator->trans($metaField->getLabel()));
                     }
 
                     return \count($userPreferences);
                 },
-                'render' => function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) use ($userPreferences) {
+                'render' => function (Worksheet $sheet, int $row, int $column, ExportableItem $entity) use ($userPreferences): int {
                     foreach ($userPreferences as $preference) {
                         $metaFieldValue = '';
                         if (null !== $entity->getUser()) {
@@ -569,7 +569,7 @@ abstract class AbstractSpreadsheetRenderer
 
         if (isset($columns['customer_number'])) {
             if (!isset($columns['customer_number']['header'])) {
-                $columns['customer_number']['header'] = function (Worksheet $sheet, $row, $column) {
+                $columns['customer_number']['header'] = function (Worksheet $sheet, $row, $column): int {
                     $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('number'));
 
                     return 1;
@@ -589,7 +589,7 @@ abstract class AbstractSpreadsheetRenderer
 
         if (isset($columns['customer_vat']) && !isset($columns['customer_vat']['render'])) {
             if (!isset($columns['customer_vat']['header'])) {
-                $columns['customer_vat']['header'] = function (Worksheet $sheet, $row, $column) {
+                $columns['customer_vat']['header'] = function (Worksheet $sheet, $row, $column): int {
                     $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('vat_id'));
 
                     return 1;
@@ -609,7 +609,7 @@ abstract class AbstractSpreadsheetRenderer
 
         if (isset($columns['order_number']) && !isset($columns['order_number']['render'])) {
             if (!isset($columns['order_number']['header'])) {
-                $columns['order_number']['header'] = function (Worksheet $sheet, $row, $column) {
+                $columns['order_number']['header'] = function (Worksheet $sheet, $row, $column): int {
                     $sheet->setCellValueByColumnAndRow($column, $row, $this->translator->trans('orderNumber'));
 
                     return 1;

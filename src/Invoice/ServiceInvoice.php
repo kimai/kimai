@@ -435,7 +435,7 @@ final class ServiceInvoice
         return $model;
     }
 
-    private function prepareModelQueryDates(InvoiceModel $model)
+    private function prepareModelQueryDates(InvoiceModel $model): void
     {
         $begin = $model->getQuery()->getBegin();
         $end = $model->getQuery()->getEnd();
@@ -505,7 +505,7 @@ final class ServiceInvoice
             return [];
         }
 
-        uasort($customerEntries, function ($a, $b) {
+        uasort($customerEntries, function ($a, $b): int {
             return strcmp($a['customer']->getName(), $b['customer']->getName());
         });
 

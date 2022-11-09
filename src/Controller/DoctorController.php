@@ -118,7 +118,7 @@ class DoctorController extends AbstractController
             }
 
             // remove kimai from the package list
-            $versions = array_filter($versions, function ($version, $name) use ($rootPackage) {
+            $versions = array_filter($versions, function ($version, $name) use ($rootPackage): bool {
                 if ($name === $rootPackage) {
                     return false;
                 }
@@ -276,7 +276,7 @@ class DoctorController extends AbstractController
      */
     private function getPhpInfo(): array
     {
-        $plainText = function ($input) {
+        $plainText = function ($input): string {
             return trim(html_entity_decode(strip_tags($input)));
         };
 

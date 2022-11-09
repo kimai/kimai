@@ -23,10 +23,10 @@ class WeekDaysType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new CallbackTransformer(
-            function ($weekdays) {
+            function ($weekdays): array {
                 return explode(',', $weekdays);
             },
-            function ($weekdays) {
+            function ($weekdays): string {
                 return implode(',', $weekdays);
             }
         ));

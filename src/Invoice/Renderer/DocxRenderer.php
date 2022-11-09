@@ -21,11 +21,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class DocxRenderer extends AbstractRenderer implements RendererInterface
 {
-    /**
-     * @param InvoiceDocument $document
-     * @param InvoiceModel $model
-     * @return Response
-     */
     public function render(InvoiceDocument $document, InvoiceModel $model): Response
     {
         Settings::setOutputEscapingEnabled(false);
@@ -71,18 +66,12 @@ final class DocxRenderer extends AbstractRenderer implements RendererInterface
         return $this->getFileResponse(new Stream($cacheFile), $filename);
     }
 
-    /**
-     * @return string[]
-     */
-    protected function getFileExtensions()
+    protected function getFileExtensions(): array
     {
         return ['.docx'];
     }
 
-    /**
-     * @return string
-     */
-    protected function getContentType()
+    protected function getContentType(): string
     {
         return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
     }

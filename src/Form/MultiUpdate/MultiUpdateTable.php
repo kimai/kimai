@@ -33,7 +33,7 @@ class MultiUpdateTable extends AbstractType
 
         $builder->get('entities')->addModelTransformer(
             new CallbackTransformer(
-                function ($ids) {
+                function ($ids): string {
                     return implode(',', $ids);
                 },
                 function ($ids) use ($repository) {

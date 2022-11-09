@@ -15,27 +15,16 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 final class XlsxRenderer extends AbstractSpreadsheetRenderer implements RendererInterface
 {
-    /**
-     * @return string[]
-     */
-    protected function getFileExtensions()
+    protected function getFileExtensions(): array
     {
         return ['.xlsx', '.xls'];
     }
 
-    /**
-     * @return string
-     */
-    protected function getContentType()
+    protected function getContentType(): string
     {
         return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
     }
 
-    /**
-     * @param Spreadsheet $spreadsheet
-     * @return string
-     * @throws \Exception
-     */
     protected function saveSpreadsheet(Spreadsheet $spreadsheet)
     {
         $filename = @tempnam(sys_get_temp_dir(), 'kimai-invoice-xlsx');

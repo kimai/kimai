@@ -31,7 +31,7 @@ class MPdfConverter implements HtmlToPdfConverter
             'margin_bottom', 'margin_header', 'margin_footer', 'orientation',
         ];
 
-        $filtered = array_filter($options, function ($key) use ($allowed, $configs, $fonts) {
+        $filtered = array_filter($options, function ($key) use ($allowed, $configs, $fonts): bool {
             if (!\in_array($key, $allowed)) {
                 if (!\array_key_exists($key, $configs->getDefaults())) {
                     return \array_key_exists($key, $fonts->getDefaults());
