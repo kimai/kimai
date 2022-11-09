@@ -11,19 +11,8 @@ namespace App\Model;
 
 class PermissionSection implements PermissionSectionInterface
 {
-    /**
-     * @var string
-     */
-    private $title;
-    /**
-     * @var string
-     */
-    private $filter;
-
-    public function __construct(string $title, string $strposFilter)
+    public function __construct(private string $title, private string $filter)
     {
-        $this->title = $title;
-        $this->filter = $strposFilter;
     }
 
     public function getTitle(): string
@@ -33,6 +22,6 @@ class PermissionSection implements PermissionSectionInterface
 
     public function filter(string $permission): bool
     {
-        return strpos($permission, $this->filter) !== false;
+        return str_contains($permission, $this->filter);
     }
 }
