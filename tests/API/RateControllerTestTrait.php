@@ -9,6 +9,9 @@
 
 namespace App\Tests\API;
 
+use App\Entity\ActivityRate;
+use App\Entity\CustomerRate;
+use App\Entity\ProjectRate;
 use App\Entity\RateInterface;
 use App\Entity\User;
 
@@ -197,9 +200,12 @@ trait RateControllerTestTrait
     public function testDeleteNotAllowed()
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importTestRates(1);
+        $rates = $this->importTestRates(1);
 
-        $this->request($client, $this->getRateUrl(1, 1), 'DELETE');
+        /** @var ActivityRate|ProjectRate|CustomerRate $rate */
+        $rate = $rates[0];
+
+        $this->request($client, $this->getRateUrl(1, $rate->getId()), 'DELETE');
         $this->assertApiResponseAccessDenied($client->getResponse(), 'Access denied.');
     }
 
