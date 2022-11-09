@@ -11,7 +11,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
 trait Rate
@@ -22,13 +22,11 @@ trait Rate
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?int $id = null;
-    /**
-     * @OA\Property(ref="#/components/schemas/User")
-     */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[OA\Property(ref: '#/components/schemas/User')]
     private ?User $user = null;
     #[ORM\Column(name: 'rate', type: 'float', nullable: false)]
     #[Assert\GreaterThanOrEqual(0)]

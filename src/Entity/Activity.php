@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'kimai2_activities')]
@@ -43,13 +43,11 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'id', type: 'integer')]
     private ?int $id = null;
-    /**
-     * @OA\Property(ref="#/components/schemas/Project")
-     */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Project')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     #[Serializer\Expose]
     #[Serializer\Groups(['Subresource', 'Expanded'])]
+    #[OA\Property(ref: '#/components/schemas/Project')]
     private ?Project $project = null;
     /**
      * Name of this activity
@@ -104,8 +102,6 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
      * If no team is assigned, everyone can access the activity
      *
      * @var Collection<Team>
-     *
-     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Team"))
      */
     #[ORM\ManyToMany(targetEntity: 'App\Entity\Team', cascade: ['persist'], inversedBy: 'activities')]
     #[ORM\JoinTable(name: 'kimai2_activities_teams')]
@@ -113,6 +109,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     #[ORM\InverseJoinColumn(name: 'team_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     #[Serializer\Expose]
     #[Serializer\Groups(['Activity'])]
+    #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Team'))]
     private Collection $teams;
     #[ORM\Column(name: 'invoice_text', type: 'text', nullable: true)]
     private ?string $invoiceText = null;

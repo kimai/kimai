@@ -11,7 +11,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'kimai2_users_teams')]
@@ -25,23 +25,19 @@ class TeamMember
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private ?int $id = null;
-    /**
-     * @OA\Property(ref="#/components/schemas/User")
-     */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'memberships')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default', 'Entity', 'Team_Entity'])]
+    #[OA\Property(ref: '#/components/schemas/User')]
     private ?User $user = null;
-    /**
-     * @OA\Property(ref="#/components/schemas/Team")
-     */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Team', inversedBy: 'members')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default', 'Entity', 'User_Entity'])]
+    #[OA\Property(ref: '#/components/schemas/Team')]
     private ?Team $team = null;
     #[ORM\Column(name: 'teamlead', type: 'boolean', nullable: false, options: ['default' => false])]
     #[Assert\NotNull]

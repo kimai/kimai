@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -48,47 +48,43 @@ class Team
      * All team member (including team leads)
      *
      * @var Collection<TeamMember>
-     *
-     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/TeamMember"))
      */
     #[ORM\OneToMany(targetEntity: 'App\Entity\TeamMember', mappedBy: 'team', fetch: 'LAZY', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     #[Assert\Count(min: 1)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Team_Entity'])]
+    #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/TeamMember'))]
     private Collection $members;
     /**
      * Customers assigned to the team
      *
      * @var Collection<Customer>
-     *
-     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Customer"))
      */
     #[ORM\ManyToMany(targetEntity: 'App\Entity\Customer', mappedBy: 'teams', fetch: 'EXTRA_LAZY', cascade: ['persist', 'remove'])]
     #[Serializer\Expose]
     #[Serializer\Groups(['Team_Entity'])]
+    #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Customer'))]
     private Collection $customers;
     /**
      * Projects assigned to the team
      *
      * @var Collection<Project>
-     *
-     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Project"))
      */
     #[ORM\ManyToMany(targetEntity: 'App\Entity\Project', mappedBy: 'teams', fetch: 'EXTRA_LAZY', cascade: ['persist', 'remove'])]
     #[Serializer\Expose]
     #[Serializer\Groups(['Team_Entity', 'Expanded'])]
+    #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Project'))]
     private Collection $projects;
     /**
      * Activities assigned to the team
      *
      * @var Collection<Activity>
-     *
-     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Activity"))
      */
     #[ORM\ManyToMany(targetEntity: 'App\Entity\Activity', mappedBy: 'teams', fetch: 'EXTRA_LAZY', cascade: ['persist', 'remove'])]
     #[Serializer\Expose]
     #[Serializer\Groups(['Team_Entity', 'Expanded'])]
+    #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Activity'))]
     private Collection $activities;
 
     use ColorTrait;

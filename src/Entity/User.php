@@ -20,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use JMS\Serializer\Annotation as Serializer;
 use KevinPapst\TablerBundle\Model\UserInterface as ThemeUserInterface;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Scheb\TwoFactorBundle\Model\Totp\TotpConfiguration;
 use Scheb\TwoFactorBundle\Model\Totp\TotpConfigurationInterface;
 use Scheb\TwoFactorBundle\Model\Totp\TwoFactorInterface;
@@ -136,14 +136,13 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * List of all team memberships.
      *
      * @var Collection<TeamMember>
-     *
-     * @OA\Property(ref="#/components/schemas/TeamMembership")
      */
     #[ORM\OneToMany(targetEntity: 'App\Entity\TeamMember', mappedBy: 'user', fetch: 'LAZY', cascade: ['persist'], orphanRemoval: true)]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['User_Entity'])]
+    #[OA\Property(ref: '#/components/schemas/TeamMembership')]
     private Collection $memberships;
     /**
      * The type of authentication used by the user (e.g. "kimai", "ldap", "saml")
@@ -309,14 +308,13 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * Read-only list of of all visible user preferences.
      *
-     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/UserPreference"))
-     *
      * @internal only for API usage
      * @return UserPreference[]
      */
     #[Serializer\VirtualProperty]
     #[Serializer\SerializedName('preferences')]
     #[Serializer\Groups(['User_Entity'])]
+    #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/UserPreference'))]
     public function getVisiblePreferences(): array
     {
         // hide all internal preferences, which are either available in other fields
@@ -398,27 +396,19 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return null;
     }
 
-    /**
-     * @OA\Property(type="string")
-     *
-     * @return string
-     */
     #[Serializer\VirtualProperty]
     #[Serializer\SerializedName('language')]
     #[Serializer\Groups(['User_Entity'])]
+    #[OA\Property(type: 'string')]
     public function getLocale(): string
     {
         return $this->getPreferenceValue(UserPreference::LOCALE, User::DEFAULT_LANGUAGE);
     }
 
-    /**
-     * @OA\Property(type="string")
-     *
-     * @return string
-     */
     #[Serializer\VirtualProperty]
     #[Serializer\SerializedName('timezone')]
     #[Serializer\Groups(['User_Entity'])]
+    #[OA\Property(type: 'string')]
     public function getTimezone(): string
     {
         return $this->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get());
@@ -610,13 +600,12 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * List of all teams, this user is part of
      *
-     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Team"))
-     *
      * @return Team[]
      */
     #[Serializer\VirtualProperty]
     #[Serializer\SerializedName('teams')]
     #[Serializer\Groups(['User_Entity'])]
+    #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Team'))]
     public function getTeams(): iterable
     {
         $teams = [];
@@ -1018,14 +1007,10 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->getDisplayName();
     }
 
-    /**
-     * @OA\Property(type="string")
-     *
-     * @return string
-     */
     #[Serializer\VirtualProperty]
     #[Serializer\SerializedName('initials')]
     #[Serializer\Groups(['Default'])]
+    #[OA\Property(type: 'string')]
     public function getInitials(): string
     {
         $length = 2;

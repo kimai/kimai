@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'kimai2_customers')]
@@ -169,8 +169,6 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
      * If no team is assigned, everyone can access the customer
      *
      * @var Collection<Team>
-     *
-     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Team"))
      */
     #[ORM\JoinTable(name: 'kimai2_customers_teams')]
     #[ORM\JoinColumn(name: 'customer_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
@@ -178,6 +176,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
     #[ORM\ManyToMany(targetEntity: 'App\Entity\Team', cascade: ['persist', 'remove'], inversedBy: 'customers')]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer'])]
+    #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Team'))]
     private Collection $teams;
     /**
      * Default invoice template for this customer

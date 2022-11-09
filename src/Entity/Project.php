@@ -15,7 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -48,14 +48,13 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     private ?int $id = null;
     /**
      * Customer for this project
-     *
-     * @OA\Property(ref="#/components/schemas/Customer")
      */
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Customer')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Subresource', 'Expanded'])]
+    #[OA\Property(ref: '#/components/schemas/Customer')]
     private ?Customer $customer = null;
     /**
      * Project name
@@ -155,8 +154,6 @@ class Project implements EntityWithMetaFields, EntityWithBudget
      * If no team is assigned, everyone can access the project (also depends on the teams of the customer)
      *
      * @var Collection<Team>
-     *
-     * @OA\Property(type="array", @OA\Items(ref="#/components/schemas/Team"))
      */
     #[ORM\JoinTable(name: 'kimai2_projects_teams')]
     #[ORM\JoinColumn(name: 'project_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
@@ -164,6 +161,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     #[ORM\ManyToMany(targetEntity: 'App\Entity\Team', cascade: ['persist'], inversedBy: 'projects')]
     #[Serializer\Expose]
     #[Serializer\Groups(['Project'])]
+    #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Team'))]
     private Collection $teams;
     #[ORM\Column(name: 'invoice_text', type: 'text', nullable: true)]
     private ?string $invoiceText = null;
