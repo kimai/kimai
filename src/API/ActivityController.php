@@ -24,7 +24,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,11 +32,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @OA\Tag(name="Activity")
- */
 #[Route(path: '/activities')]
 #[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
+#[OA\Tag(name: 'Activity')]
 final class ActivityController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Activity', 'Activity_Entity'];
@@ -54,28 +52,18 @@ final class ActivityController extends BaseApiController
 
     /**
      * Returns a collection of activities
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns a collection of activity entities",
-     *      @OA\JsonContent(
-     *          type="array",
-     *          @OA\Items(ref="#/components/schemas/ActivityCollection")
-     *      )
-     * )
-     * @Rest\QueryParam(name="project", requirements="\d+", strict=true, nullable=true, description="Project ID to filter activities")
-     * @Rest\QueryParam(name="projects", requirements="[\d|,]+", strict=true, nullable=true, description="Comma separated list of project IDs to filter activities")
-     * @Rest\QueryParam(name="visible", requirements="1|2|3", strict=true, nullable=true, description="Visibility status to filter activities. Allowed values: 1=visible, 2=hidden, 3=all (default: 1)")
-     * @Rest\QueryParam(name="globals", requirements="true", strict=true, nullable=true, description="Use if you want to fetch only global activities. Allowed values: true (default: false)")
-     * @Rest\QueryParam(name="orderBy", requirements="id|name|project", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name, project (default: name)")
-     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
-     * @Rest\QueryParam(name="term", description="Free search term")
-     *
-     * @Rest\Get(path="", name="get_activities")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Response(response: 200, description: 'Returns a collection of activity entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ActivityCollection')))]
+    #[Rest\Get(path: '', name: 'get_activities')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\QueryParam(name: 'project', requirements: '\d+', strict: true, nullable: true, description: 'Project ID to filter activities')]
+    #[Rest\QueryParam(name: 'projects', requirements: '[\d|,]+', strict: true, nullable: true, description: 'Comma separated list of project IDs to filter activities')]
+    #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', strict: true, nullable: true, description: 'Visibility status to filter activities. Allowed values: 1=visible, 2=hidden, 3=all (default: 1)')]
+    #[Rest\QueryParam(name: 'globals', requirements: 'true', strict: true, nullable: true, description: 'Use if you want to fetch only global activities. Allowed values: true (default: false)')]
+    #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|project', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, project (default: name)')]
+    #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
+    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         /** @var User $user */
@@ -124,23 +112,12 @@ final class ActivityController extends BaseApiController
 
     /**
      * Returns one activity
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns one activity entity",
-     *      @OA\JsonContent(ref="#/components/schemas/ActivityEntity"),
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="Activity ID to fetch",
-     *      required=true,
-     * )
-     * @Rest\Get(path="/{id}", name="get_activity", requirements={"id": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Response(response: 200, description: 'Returns one activity entity', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Activity ID to fetch', required: true)]
+    #[Rest\Get(path: '/{id}', name: 'get_activity', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function getAction(Activity $id): Response
     {
         $view = new View($id, 200);
@@ -151,24 +128,12 @@ final class ActivityController extends BaseApiController
 
     /**
      * Creates a new activity
-     *
-     * @OA\Post(
-     *      description="Creates a new activity and returns it afterwards",
-     *      @OA\Response(
-     *          response=200,
-     *          description="Returns the new created activity",
-     *          @OA\JsonContent(ref="#/components/schemas/ActivityEntity"),
-     *      )
-     * )
-     * @OA\RequestBody(
-     *      required=true,
-     *      @OA\JsonContent(ref="#/components/schemas/ActivityEditForm"),
-     * )
-     * @Rest\Post(path="", name="post_activity")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Post(description: 'Creates a new activity and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created activity', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))])]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ActivityEditForm'))]
+    #[Rest\Post(path: '', name: 'post_activity')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function postAction(Request $request): Response
     {
         if (!$this->isGranted('create_activity')) {
@@ -204,30 +169,13 @@ final class ActivityController extends BaseApiController
 
     /**
      * Update an existing activity
-     *
-     * @OA\Patch(
-     *      description="Update an existing activity, you can pass all or just a subset of all attributes",
-     *      @OA\Response(
-     *          response=200,
-     *          description="Returns the updated activity",
-     *          @OA\JsonContent(ref="#/components/schemas/ActivityEntity")
-     *      )
-     * )
-     * @OA\RequestBody(
-     *      required=true,
-     *      @OA\JsonContent(ref="#/components/schemas/ActivityEditForm"),
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="Activity ID to update",
-     *      required=true,
-     * )
-     * @Rest\Patch(path="/{id}", name="patch_activity", requirements={"id": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Patch(description: 'Update an existing activity, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated activity', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))])]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ActivityEditForm'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Activity ID to update', required: true)]
+    #[Rest\Patch(path: '/{id}', name: 'patch_activity', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function patchAction(Request $request, int $id): Response
     {
         $activity = $this->repository->find($id);
@@ -268,26 +216,14 @@ final class ActivityController extends BaseApiController
 
     /**
      * Sets the value of a meta-field for an existing activity
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.",
-     *      @OA\JsonContent(ref="#/components/schemas/ActivityEntity")
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="Activity record ID to set the meta-field value for",
-     *      required=true,
-     * )
-     * @Rest\RequestParam(name="name", strict=true, nullable=false, description="The meta-field name")
-     * @Rest\RequestParam(name="value", strict=true, nullable=false, description="The meta-field value")
-     *
-     * @Rest\Patch(path="/{id}/meta", requirements={"id": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Activity record ID to set the meta-field value for', required: true)]
+    #[Rest\Patch(path: '/{id}/meta', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
+    #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
     public function metaAction(int $id, ParamFetcherInterface $paramFetcher): Response
     {
         $activity = $this->repository->find($id);
@@ -322,26 +258,12 @@ final class ActivityController extends BaseApiController
 
     /**
      * Returns a collection of all rates for one activity
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns a collection of activity rate entities",
-     *      @OA\JsonContent(
-     *          type="array",
-     *          @OA\Items(ref="#/components/schemas/ActivityRate")
-     *      )
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="The activity whose rates will be returned",
-     *      required=true,
-     * )
-     * @Rest\Get(path="/{id}/rates", name="get_activity_rates", requirements={"id": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Response(response: 200, description: 'Returns a collection of activity rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ActivityRate')))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The activity whose rates will be returned', required: true)]
+    #[Rest\Get(path: '/{id}/rates', name: 'get_activity_rates', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function getRatesAction(int $id): Response
     {
         /** @var Activity|null $activity */
@@ -365,30 +287,13 @@ final class ActivityController extends BaseApiController
 
     /**
      * Deletes one rate for an activity
-     *
-     * @OA\Delete(
-     *      @OA\Response(
-     *          response=204,
-     *          description="Returns no content: 204 on successful delete"
-     *      )
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="The activity whose rate will be removed",
-     *      required=true,
-     * )
-     * @OA\Parameter(
-     *      name="rateId",
-     *      in="path",
-     *      description="The rate to remove",
-     *      required=true,
-     * )
-     * @Rest\Delete(path="/{id}/rates/{rateId}", name="delete_activity_rate", requirements={"id": "\d+", "rateId": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The activity whose rate will be removed', required: true)]
+    #[OA\Parameter(name: 'rateId', in: 'path', description: 'The rate to remove', required: true)]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\Delete(path: '/{id}/rates/{rateId}', name: 'delete_activity_rate', requirements: ['id' => '\d+', 'rateId' => '\d+'])]
     public function deleteRateAction(string $id, string $rateId): Response
     {
         /** @var Activity|null $activity */
@@ -418,29 +323,13 @@ final class ActivityController extends BaseApiController
 
     /**
      * Adds a new rate to an activity
-     *
-     * @OA\Post(
-     *  @OA\Response(
-     *      response=200,
-     *      description="Returns the new created rate",
-     *      @OA\JsonContent(ref="#/components/schemas/ActivityRate")
-     *  )
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="The activity to add the rate for",
-     *      required=true,
-     * )
-     * @OA\RequestBody(
-     *      required=true,
-     *      @OA\JsonContent(ref="#/components/schemas/ActivityRateForm"),
-     * )
-     * @Rest\Post(path="/{id}/rates", name="post_activity_rate", requirements={"id": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/ActivityRate'))])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The activity to add the rate for', required: true)]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ActivityRateForm'))]
+    #[Rest\Post(path: '/{id}/rates', name: 'post_activity_rate', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function postRateAction(int $id, Request $request): Response
     {
         /** @var Activity|null $activity */

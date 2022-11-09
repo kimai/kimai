@@ -17,14 +17,12 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @OA\Tag(name="Default")
- */
 #[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
+#[OA\Tag(name: 'Default')]
 final class StatusController extends BaseApiController
 {
     public function __construct(private ViewHandlerInterface $viewHandler)
@@ -33,18 +31,11 @@ final class StatusController extends BaseApiController
 
     /**
      * A testing route for the API
-     *
-     * @OA\Response(
-     *     response=200,
-     *     description="A simple route that returns a 'pong', which you can use for testing the API",
-     *     @OA\JsonContent(example="{'message': 'pong'}")
-     * )
-     *
-     * @Rest\Get(path="/ping")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Response(response: 200, description: "A simple route that returns a 'pong', which you can use for testing the API", content: new OA\JsonContent(example: "{'message': 'pong'}"))]
+    #[Rest\Get(path: '/ping')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function pingAction(): Response
     {
         $view = new View(['message' => 'pong'], 200);
@@ -54,18 +45,11 @@ final class StatusController extends BaseApiController
 
     /**
      * Returns information about the Kimai release
-     *
-     * @OA\Response(
-     *     response=200,
-     *     description="Returns version information about the current release",
-     *     @OA\JsonContent(ref=@Model(type=Version::class))
-     * )
-     *
-     * @Rest\Get(path="/version")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Response(response: 200, description: 'Returns version information about the current release', content: new OA\JsonContent(ref: new Model(type: Version::class)))]
+    #[Rest\Get(path: '/version')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function versionAction(): Response
     {
         return $this->viewHandler->handle(new View(new Version(), 200));
@@ -73,21 +57,11 @@ final class StatusController extends BaseApiController
 
     /**
      * Returns information about installed Plugins
-     *
-     * @OA\Response(
-     *     response=200,
-     *     description="Returns a list of plugin names and versions",
-     *      @OA\JsonContent(
-     *          type="array",
-     *          @OA\Items(ref=@Model(type=Plugin::class))
-     *      )
-     * )
-     *
-     * @Rest\Get(path="/plugins")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Response(response: 200, description: 'Returns a list of plugin names and versions', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: new Model(type: Plugin::class))))]
+    #[Rest\Get(path: '/plugins')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function pluginAction(PluginManager $pluginManager): Response
     {
         $plugins = [];

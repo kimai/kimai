@@ -22,7 +22,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,11 +31,9 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @OA\Tag(name="User")
- */
 #[Route(path: '/users')]
 #[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
+#[OA\Tag(name: 'User')]
 final class UserController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'User', 'User_Entity'];
@@ -52,27 +50,16 @@ final class UserController extends BaseApiController
 
     /**
      * Returns the collection of all registered users
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns the collection of all registered users. Required permission: view_user",
-     *      @OA\JsonContent(
-     *          type="array",
-     *          @OA\Items(ref="#/components/schemas/UserCollection")
-     *      )
-     * )
-     *
-     * @Rest\QueryParam(name="visible", requirements="1|2|3", strict=true, nullable=true, description="Visibility status to filter users. Allowed values: 1=visible, 2=hidden, 3=all (default: 1)")
-     * @Rest\QueryParam(name="orderBy", requirements="id|username|alias|email", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, username, alias, email (default: username)")
-     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
-     * @Rest\QueryParam(name="term", description="Free search term")
-     *
-     * @Rest\Get(path="", name="get_users")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
     #[Security("is_granted('view_user')")]
+    #[OA\Response(response: 200, description: 'Returns the collection of all registered users. Required permission: view_user', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/UserCollection')))]
+    #[Rest\Get(path: '', name: 'get_users')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', strict: true, nullable: true, description: 'Visibility status to filter users. Allowed values: 1=visible, 2=hidden, 3=all (default: 1)')]
+    #[Rest\QueryParam(name: 'orderBy', requirements: 'id|username|alias|email', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, username, alias, email (default: username)')]
+    #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
+    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $query = new UserQuery();
@@ -103,23 +90,12 @@ final class UserController extends BaseApiController
 
     /**
      * Return one user entity
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Return one user entity.",
-     *      @OA\JsonContent(ref="#/components/schemas/UserEntity"),
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="User ID to fetch",
-     *      required=true,
-     * )
-     * @Rest\Get(path="/{id}", name="get_user", requirements={"id": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Response(response: 200, description: 'Return one user entity.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to fetch', required: true)]
+    #[Rest\Get(path: '/{id}', name: 'get_user', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function getAction(int $id, EventDispatcherInterface $dispatcher): Response
     {
         $user = $this->repository->find($id);
@@ -144,18 +120,11 @@ final class UserController extends BaseApiController
 
     /**
      * Return the current user entity
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Return the current user entity.",
-     *      @OA\JsonContent(ref="#/components/schemas/UserEntity"),
-     * )
-     *
-     * @Rest\Get(path="/me", name="me_user")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Response(response: 200, description: 'Return the current user entity.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
+    #[Rest\Get(path: '/me', name: 'me_user')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function meAction(): Response
     {
         $view = new View($this->getUser(), 200);
@@ -166,25 +135,13 @@ final class UserController extends BaseApiController
 
     /**
      * Creates a new user
-     *
-     * @OA\Post(
-     *      description="Creates a new user and returns it afterwards",
-     *      @OA\Response(
-     *          response=200,
-     *          description="Returns the new created user",
-     *          @OA\JsonContent(ref="#/components/schemas/UserEntity",),
-     *      )
-     * )
-     * @OA\RequestBody(
-     *      required=true,
-     *      @OA\JsonContent(ref="#/components/schemas/UserCreateForm"),
-     * )
-     * @Rest\Post(path="", name="post_user")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
     #[Security("is_granted('create_user')")]
+    #[OA\Post(description: 'Creates a new user and returns it afterwards')]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/UserCreateForm'))]
+    #[Rest\Post(path: '', name: 'post_user')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function postAction(Request $request): Response
     {
         $user = new User();
@@ -227,30 +184,13 @@ final class UserController extends BaseApiController
 
     /**
      * Update an existing user
-     *
-     * @OA\Patch(
-     *      description="Update an existing user, you can pass all or just a subset of all attributes (passing roles will replace all existing ones)",
-     *      @OA\Response(
-     *          response=200,
-     *          description="Returns the updated user",
-     *          @OA\JsonContent(ref="#/components/schemas/UserEntity")
-     *      )
-     * )
-     * @OA\RequestBody(
-     *      required=true,
-     *      @OA\JsonContent(ref="#/components/schemas/UserEditForm"),
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="User ID to update",
-     *      required=true,
-     * )
-     * @Rest\Patch(path="/{id}", name="patch_user", requirements={"id": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Patch(description: 'Update an existing user, you can pass all or just a subset of all attributes (passing roles will replace all existing ones)', responses: [new OA\Response(response: 200, description: 'Returns the updated user', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))])]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/UserEditForm'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to update', required: true)]
+    #[Rest\Patch(path: '/{id}', name: 'patch_user', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function patchAction(Request $request, int $id): Response
     {
         $user = $this->repository->getUserById($id);

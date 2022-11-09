@@ -24,18 +24,16 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @OA\Tag(name="Team")
- */
 #[Route(path: '/teams')]
 #[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
+#[OA\Tag(name: 'Team')]
 final class TeamController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Team', 'Team_Entity', 'Not_Expanded'];
@@ -48,21 +46,12 @@ final class TeamController extends BaseApiController
 
     /**
      * Fetch all existing teams
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns the collection of all existing teams",
-     *      @OA\JsonContent(
-     *          type="array",
-     *          @OA\Items(ref="#/components/schemas/TeamCollection")
-     *      )
-     * )
-     * @Rest\Get(path="", name="get_teams")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
     #[Security("is_granted('view_team')")]
+    #[OA\Response(response: 200, description: 'Returns the collection of all existing teams', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TeamCollection')))]
+    #[Rest\Get(path: '', name: 'get_teams')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function cgetAction(): Response
     {
         $data = $this->repository->findAll();
@@ -75,18 +64,12 @@ final class TeamController extends BaseApiController
 
     /**
      * Returns one team
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns one team entity",
-     *      @OA\JsonContent(ref="#/components/schemas/Team"),
-     * )
-     * @Rest\Get(path="/{id}", name="get_team", requirements={"id": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
     #[Security("is_granted('view_team')")]
+    #[OA\Response(response: 200, description: 'Returns one team entity', content: new OA\JsonContent(ref: '#/components/schemas/Team'))]
+    #[Rest\Get(path: '/{id}', name: 'get_team', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function getAction(Team $id): Response
     {
         $view = new View($id, 200);
@@ -97,26 +80,13 @@ final class TeamController extends BaseApiController
 
     /**
      * Delete a team
-     *
-     * @OA\Delete(
-     *      @OA\Response(
-     *          response=204,
-     *          description="Delete one team"
-     *      ),
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="Team ID to delete",
-     *      required=true,
-     * )
-     *
-     * @Rest\Delete(path="/{id}", name="delete_team", requirements={"id": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
     #[Security("is_granted('delete_team')")]
+    #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one team')])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Team ID to delete', required: true)]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\Delete(path: '/{id}', name: 'delete_team', requirements: ['id' => '\d+'])]
     public function deleteAction(Team $id): Response
     {
         $this->repository->deleteTeam($id);
@@ -128,25 +98,13 @@ final class TeamController extends BaseApiController
 
     /**
      * Creates a new team
-     *
-     * @OA\Post(
-     *      description="Creates a new team and returns it afterwards",
-     *      @OA\Response(
-     *          response=200,
-     *          description="Returns the new created team",
-     *          @OA\JsonContent(ref="#/components/schemas/Team"),
-     *      )
-     * )
-     * @OA\RequestBody(
-     *      required=true,
-     *      @OA\JsonContent(ref="#/components/schemas/TeamEditForm"),
-     * )
-     * @Rest\Post(path="", name="post_team")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
     #[Security("is_granted('create_team')")]
+    #[OA\Post(description: 'Creates a new team and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created team', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/TeamEditForm'))]
+    #[Rest\Post(path: '', name: 'post_team')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function postAction(Request $request): Response
     {
         $team = new Team('');
@@ -171,31 +129,14 @@ final class TeamController extends BaseApiController
 
     /**
      * Update an existing team
-     *
-     * @OA\Patch(
-     *      description="Update an existing team, you can pass all or just a subset of all attributes (passing members will replace all existing ones)",
-     *      @OA\Response(
-     *          response=200,
-     *          description="Returns the updated team",
-     *          @OA\JsonContent(ref="#/components/schemas/Team")
-     *      )
-     * )
-     * @OA\RequestBody(
-     *      required=true,
-     *      @OA\JsonContent(ref="#/components/schemas/TeamEditForm"),
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="Team ID to update",
-     *      required=true,
-     * )
-     * @Rest\Patch(path="/{id}", name="patch_team", requirements={"id": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
     #[Security("is_granted('edit_team')")]
+    #[OA\Patch(description: 'Update an existing team, you can pass all or just a subset of all attributes (passing members will replace all existing ones)', responses: [new OA\Response(response: 200, description: 'Returns the updated team', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/TeamEditForm'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Team ID to update', required: true)]
+    #[Rest\Patch(path: '/{id}', name: 'patch_team', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function patchAction(Request $request, int $id): Response
     {
         $team = $this->repository->find($id);
@@ -234,32 +175,14 @@ final class TeamController extends BaseApiController
 
     /**
      * Add a new member to a team
-     *
-     * @OA\Post(
-     *  @OA\Response(
-     *      response=200,
-     *      description="Adds a new user to a team.",
-     *      @OA\JsonContent(ref="#/components/schemas/Team")
-     *  )
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="The team which will receive the new member",
-     *      required=true,
-     * )
-     * @OA\Parameter(
-     *      name="userId",
-     *      in="path",
-     *      description="The team member to add (User ID)",
-     *      required=true,
-     * )
-     * @Rest\Post(path="/{id}/members/{userId}", name="post_team_member", requirements={"id": "\d+", "userId": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
     #[Security("is_granted('edit_team')")]
+    #[OA\Post(responses: [new OA\Response(response: 200, description: 'Adds a new user to a team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The team which will receive the new member', required: true)]
+    #[OA\Parameter(name: 'userId', in: 'path', description: 'The team member to add (User ID)', required: true)]
+    #[Rest\Post(path: '/{id}/members/{userId}', name: 'post_team_member', requirements: ['id' => '\d+', 'userId' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function postMemberAction(int $id, int $userId, UserRepository $repository): Response
     {
         $team = $this->repository->find($id);
@@ -291,32 +214,14 @@ final class TeamController extends BaseApiController
 
     /**
      * Removes a member from the team
-     *
-     * @OA\Delete(
-     *      @OA\Response(
-     *          response=200,
-     *          description="Removes a user from the team. The teamlead cannot be removed.",
-     *          @OA\JsonContent(ref="#/components/schemas/Team")
-     *      )
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="The team from which the member will be removed",
-     *      required=true,
-     * )
-     * @OA\Parameter(
-     *      name="userId",
-     *      in="path",
-     *      description="The team member to remove (User ID)",
-     *      required=true,
-     * )
-     * @Rest\Delete(path="/{id}/members/{userId}", name="delete_team_member", requirements={"id": "\d+", "userId": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
     #[Security("is_granted('edit_team')")]
+    #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Removes a user from the team. The teamlead cannot be removed.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The team from which the member will be removed', required: true)]
+    #[OA\Parameter(name: 'userId', in: 'path', description: 'The team member to remove (User ID)', required: true)]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\Delete(path: '/{id}/members/{userId}', name: 'delete_team_member', requirements: ['id' => '\d+', 'userId' => '\d+'])]
     public function deleteMemberAction(int $id, int $userId, UserRepository $repository): Response
     {
         $team = $this->repository->find($id);
@@ -352,32 +257,14 @@ final class TeamController extends BaseApiController
 
     /**
      * Grant the team access to a customer
-     *
-     * @OA\Post(
-     *  @OA\Response(
-     *      response=200,
-     *      description="Adds a new customer to a team.",
-     *      @OA\JsonContent(ref="#/components/schemas/Team")
-     *  )
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="The team that is granted access",
-     *      required=true,
-     * )
-     * @OA\Parameter(
-     *      name="customerId",
-     *      in="path",
-     *      description="The customer to grant acecess to (Customer ID)",
-     *      required=true,
-     * )
-     * @Rest\Post(path="/{id}/customers/{customerId}", name="post_team_customer", requirements={"id": "\d+", "customerId": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
     #[Security("is_granted('edit_team')")]
+    #[OA\Post(responses: [new OA\Response(response: 200, description: 'Adds a new customer to a team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The team that is granted access', required: true)]
+    #[OA\Parameter(name: 'customerId', in: 'path', description: 'The customer to grant acecess to (Customer ID)', required: true)]
+    #[Rest\Post(path: '/{id}/customers/{customerId}', name: 'post_team_customer', requirements: ['id' => '\d+', 'customerId' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function postCustomerAction(int $id, int $customerId, CustomerRepository $repository): Response
     {
         $team = $this->repository->find($id);
@@ -409,32 +296,14 @@ final class TeamController extends BaseApiController
 
     /**
      * Revokes access for a customer from a team
-     *
-     * @OA\Delete(
-     *      @OA\Response(
-     *          response=200,
-     *          description="Removes a customer from the team.",
-     *          @OA\JsonContent(ref="#/components/schemas/Team")
-     *      )
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="The team whose permission will be revoked",
-     *      required=true,
-     * )
-     * @OA\Parameter(
-     *      name="customerId",
-     *      in="path",
-     *      description="The customer to remove (Customer ID)",
-     *      required=true,
-     * )
-     * @Rest\Delete(path="/{id}/customers/{customerId}", name="delete_team_customer", requirements={"id": "\d+", "customerId": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
     #[Security("is_granted('edit_team')")]
+    #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Removes a customer from the team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The team whose permission will be revoked', required: true)]
+    #[OA\Parameter(name: 'customerId', in: 'path', description: 'The customer to remove (Customer ID)', required: true)]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\Delete(path: '/{id}/customers/{customerId}', name: 'delete_team_customer', requirements: ['id' => '\d+', 'customerId' => '\d+'])]
     public function deleteCustomerAction(int $id, int $customerId, CustomerRepository $repository): Response
     {
         $team = $this->repository->find($id);
@@ -466,32 +335,14 @@ final class TeamController extends BaseApiController
 
     /**
      * Grant the team access to a project
-     *
-     * @OA\Post(
-     *  @OA\Response(
-     *      response=200,
-     *      description="Adds a new project to a team.",
-     *      @OA\JsonContent(ref="#/components/schemas/Team")
-     *  )
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="The team that is granted access",
-     *      required=true,
-     * )
-     * @OA\Parameter(
-     *      name="projectId",
-     *      in="path",
-     *      description="The project to grant acecess to (Project ID)",
-     *      required=true,
-     * )
-     * @Rest\Post(path="/{id}/projects/{projectId}", name="post_team_project", requirements={"id": "\d+", "projectId": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
     #[Security("is_granted('edit_team')")]
+    #[OA\Post(responses: [new OA\Response(response: 200, description: 'Adds a new project to a team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The team that is granted access', required: true)]
+    #[OA\Parameter(name: 'projectId', in: 'path', description: 'The project to grant acecess to (Project ID)', required: true)]
+    #[Rest\Post(path: '/{id}/projects/{projectId}', name: 'post_team_project', requirements: ['id' => '\d+', 'projectId' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function postProjectAction(int $id, int $projectId, ProjectRepository $repository): Response
     {
         $team = $this->repository->find($id);
@@ -523,32 +374,14 @@ final class TeamController extends BaseApiController
 
     /**
      * Revokes access for a project from a team
-     *
-     * @OA\Delete(
-     *      @OA\Response(
-     *          response=200,
-     *          description="Removes a project from the team.",
-     *          @OA\JsonContent(ref="#/components/schemas/Team")
-     *      )
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="The team whose permission will be revoked",
-     *      required=true,
-     * )
-     * @OA\Parameter(
-     *      name="projectId",
-     *      in="path",
-     *      description="The project to remove (Project ID)",
-     *      required=true,
-     * )
-     * @Rest\Delete(path="/{id}/projects/{projectId}", name="delete_team_project", requirements={"id": "\d+", "projectId": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
     #[Security("is_granted('edit_team')")]
+    #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Removes a project from the team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The team whose permission will be revoked', required: true)]
+    #[OA\Parameter(name: 'projectId', in: 'path', description: 'The project to remove (Project ID)', required: true)]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\Delete(path: '/{id}/projects/{projectId}', name: 'delete_team_project', requirements: ['id' => '\d+', 'projectId' => '\d+'])]
     public function deleteProjectAction(int $id, int $projectId, ProjectRepository $repository): Response
     {
         $team = $this->repository->find($id);
@@ -580,32 +413,14 @@ final class TeamController extends BaseApiController
 
     /**
      * Grant the team access to an activity
-     *
-     * @OA\Post(
-     *  @OA\Response(
-     *      response=200,
-     *      description="Adds a new activity to a team.",
-     *      @OA\JsonContent(ref="#/components/schemas/Team")
-     *  )
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="The team that is granted access",
-     *      required=true,
-     * )
-     * @OA\Parameter(
-     *      name="activityId",
-     *      in="path",
-     *      description="The activity to grant acecess to (Activity ID)",
-     *      required=true,
-     * )
-     * @Rest\Post(path="/{id}/activities/{activityId}", name="post_team_activity", requirements={"id": "\d+", "activityId": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
     #[Security("is_granted('edit_team')")]
+    #[OA\Post(responses: [new OA\Response(response: 200, description: 'Adds a new activity to a team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The team that is granted access', required: true)]
+    #[OA\Parameter(name: 'activityId', in: 'path', description: 'The activity to grant acecess to (Activity ID)', required: true)]
+    #[Rest\Post(path: '/{id}/activities/{activityId}', name: 'post_team_activity', requirements: ['id' => '\d+', 'activityId' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function postActivityAction(int $id, int $activityId, ActivityRepository $repository): Response
     {
         $team = $this->repository->find($id);
@@ -637,32 +452,14 @@ final class TeamController extends BaseApiController
 
     /**
      * Revokes access for an activity from a team
-     *
-     * @OA\Delete(
-     *      @OA\Response(
-     *          response=200,
-     *          description="Removes a activity from the team.",
-     *          @OA\JsonContent(ref="#/components/schemas/Team")
-     *      )
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="The team whose permission will be revoked",
-     *      required=true,
-     * )
-     * @OA\Parameter(
-     *      name="activityId",
-     *      in="path",
-     *      description="The activity to remove (Activity ID)",
-     *      required=true,
-     * )
-     * @Rest\Delete(path="/{id}/activities/{activityId}", name="delete_team_activity", requirements={"id": "\d+", "activityId": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
     #[Security("is_granted('edit_team')")]
+    #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Removes a activity from the team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The team whose permission will be revoked', required: true)]
+    #[OA\Parameter(name: 'activityId', in: 'path', description: 'The activity to remove (Activity ID)', required: true)]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\Delete(path: '/{id}/activities/{activityId}', name: 'delete_team_activity', requirements: ['id' => '\d+', 'activityId' => '\d+'])]
     public function deleteActivityAction(int $id, int $activityId, ActivityRepository $repository): Response
     {
         $team = $this->repository->find($id);

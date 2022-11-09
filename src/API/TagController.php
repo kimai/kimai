@@ -17,18 +17,16 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @OA\Tag(name="Tag")
- */
 #[Route(path: '/tags')]
 #[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
+#[OA\Tag(name: 'Tag')]
 final class TagController extends BaseApiController
 {
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Tag'];
@@ -41,23 +39,12 @@ final class TagController extends BaseApiController
 
     /**
      * Fetch all existing tags
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns the collection of all existing tags as string array",
-     *      @OA\JsonContent(
-     *          type="array",
-     *          @OA\Items(type="string")
-     *      )
-     * )
-     *
-     * @Rest\QueryParam(name="name", strict=true, nullable=true, description="Search term to filter tag list")
-     *
-     * @Rest\Get(name="get_tags")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Response(response: 200, description: 'Returns the collection of all existing tags as string array', content: new OA\JsonContent(type: 'array', items: new OA\Items(type: 'string')))]
+    #[Rest\Get(name: 'get_tags')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\QueryParam(name: 'name', strict: true, nullable: true, description: 'Search term to filter tag list')]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $filter = $paramFetcher->get('name');
@@ -72,24 +59,12 @@ final class TagController extends BaseApiController
 
     /**
      * Creates a new tag
-     *
-     * @OA\Post(
-     *      description="Creates a new tag and returns it afterwards",
-     *      @OA\Response(
-     *          response=200,
-     *          description="Returns the new created tag",
-     *          @OA\JsonContent(ref="#/components/schemas/TagEntity"),
-     *      )
-     * )
-     * @OA\RequestBody(
-     *      required=true,
-     *      @OA\JsonContent(ref="#/components/schemas/TagEditForm"),
-     * )
-     * @Rest\Post(name="post_tag")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Post(description: 'Creates a new tag and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created tag', content: new OA\JsonContent(ref: '#/components/schemas/TagEntity'))])]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/TagEditForm'))]
+    #[Rest\Post(name: 'post_tag')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function postAction(Request $request): Response
     {
         if (!$this->isGranted('manage_tag') && !$this->isGranted('create_tag')) {
@@ -119,25 +94,13 @@ final class TagController extends BaseApiController
 
     /**
      * Delete a tag
-     *
-     * @OA\Delete(
-     *      @OA\Response(
-     *          response=204,
-     *          description="HTTP code 204 for a successful delete"
-     *      ),
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="Tag ID to delete",
-     *      required=true,
-     * )
-     * @Rest\Delete(path="/{id}", name="delete_tag")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
     #[Security("is_granted('delete_tag')")]
+    #[OA\Delete(responses: [new OA\Response(response: 204, description: 'HTTP code 204 for a successful delete')])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Tag ID to delete', required: true)]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\Delete(path: '/{id}', name: 'delete_tag')]
     public function deleteAction(int $id): Response
     {
         $tag = $this->repository->find($id);

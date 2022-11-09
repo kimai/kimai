@@ -25,7 +25,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as ApiSecurity;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,11 +33,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @OA\Tag(name="Customer")
- */
 #[Route(path: '/customers')]
 #[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
+#[OA\Tag(name: 'Customer')]
 final class CustomerController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Customer', 'Customer_Entity'];
@@ -55,25 +53,15 @@ final class CustomerController extends BaseApiController
 
     /**
      * Returns a collection of customers
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns a collection of customer entities",
-     *      @OA\JsonContent(
-     *          type="array",
-     *          @OA\Items(ref="#/components/schemas/CustomerCollection")
-     *      )
-     * )
-     * @Rest\QueryParam(name="visible", requirements="\d+", strict=true, nullable=true, description="Visibility status to filter activities (1=visible, 2=hidden, 3=both)")
-     * @Rest\QueryParam(name="order", requirements="ASC|DESC", strict=true, nullable=true, description="The result order. Allowed values: ASC, DESC (default: ASC)")
-     * @Rest\QueryParam(name="orderBy", requirements="id|name", strict=true, nullable=true, description="The field by which results will be ordered. Allowed values: id, name (default: name)")
-     * @Rest\QueryParam(name="term", description="Free search term")
-     *
-     * @Rest\Get(path="", name="get_customers")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Response(response: 200, description: 'Returns a collection of customer entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/CustomerCollection')))]
+    #[Rest\Get(path: '', name: 'get_customers')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\QueryParam(name: 'visible', requirements: '\d+', strict: true, nullable: true, description: 'Visibility status to filter activities (1=visible, 2=hidden, 3=both)')]
+    #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
+    #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name (default: name)')]
+    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         /** @var User $user */
@@ -107,17 +95,11 @@ final class CustomerController extends BaseApiController
 
     /**
      * Returns one customer
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns one customer entity",
-     *      @OA\JsonContent(ref="#/components/schemas/CustomerEntity"),
-     * )
-     * @Rest\Get(path="/{id}", name="get_customer", requirements={"id": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Response(response: 200, description: 'Returns one customer entity', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))]
+    #[Rest\Get(path: '/{id}', name: 'get_customer', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function getAction(Customer $id): Response
     {
         $view = new View($id, 200);
@@ -128,24 +110,12 @@ final class CustomerController extends BaseApiController
 
     /**
      * Creates a new customer
-     *
-     * @OA\Post(
-     *      description="Creates a new customer and returns it afterwards",
-     *      @OA\Response(
-     *          response=200,
-     *          description="Returns the new created customer",
-     *          @OA\JsonContent(ref="#/components/schemas/CustomerEntity"),
-     *      )
-     * )
-     * @OA\RequestBody(
-     *      required=true,
-     *      @OA\JsonContent(ref="#/components/schemas/CustomerEditForm"),
-     * )
-     * @Rest\Post(path="", name="post_customer")
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Post(description: 'Creates a new customer and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created customer', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))])]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CustomerEditForm'))]
+    #[Rest\Post(path: '', name: 'post_customer')]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function postAction(Request $request, CustomerService $customerService): Response
     {
         if (!$this->isGranted('create_customer')) {
@@ -181,30 +151,13 @@ final class CustomerController extends BaseApiController
 
     /**
      * Update an existing customer
-     *
-     * @OA\Patch(
-     *      description="Update an existing customer, you can pass all or just a subset of all attributes",
-     *      @OA\Response(
-     *          response=200,
-     *          description="Returns the updated customer",
-     *          @OA\JsonContent(ref="#/components/schemas/CustomerEntity")
-     *      )
-     * )
-     * @OA\RequestBody(
-     *      required=true,
-     *      @OA\JsonContent(ref="#/components/schemas/CustomerEditForm"),
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="Customer ID to update",
-     *      required=true,
-     * )
-     * @Rest\Patch(path="/{id}", name="patch_customer", requirements={"id": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Patch(description: 'Update an existing customer, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated customer', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))])]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CustomerEditForm'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Customer ID to update', required: true)]
+    #[Rest\Patch(path: '/{id}', name: 'patch_customer', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function patchAction(Request $request, int $id): Response
     {
         $customer = $this->repository->find($id);
@@ -245,26 +198,14 @@ final class CustomerController extends BaseApiController
 
     /**
      * Sets the value of a meta-field for an existing customer
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.",
-     *      @OA\JsonContent(ref="#/components/schemas/CustomerEntity")
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="Customer record ID to set the meta-field value for",
-     *      required=true,
-     * )
-     * @Rest\RequestParam(name="name", strict=true, nullable=false, description="The meta-field name")
-     * @Rest\RequestParam(name="value", strict=true, nullable=false, description="The meta-field value")
-     *
-     * @Rest\Patch(path="/{id}/meta", requirements={"id": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Customer record ID to set the meta-field value for', required: true)]
+    #[Rest\Patch(path: '/{id}/meta', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
+    #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
     public function metaAction(int $id, ParamFetcherInterface $paramFetcher): Response
     {
         $customer = $this->repository->find($id);
@@ -299,26 +240,12 @@ final class CustomerController extends BaseApiController
 
     /**
      * Returns a collection of all rates for one customer
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Returns a collection of customer rate entities",
-     *      @OA\JsonContent(
-     *          type="array",
-     *          @OA\Items(ref="#/components/schemas/CustomerRate")
-     *      )
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="The customer whose rates will be returned",
-     *      required=true,
-     * )
-     * @Rest\Get(path="/{id}/rates", name="get_customer_rates", requirements={"id": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Response(response: 200, description: 'Returns a collection of customer rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/CustomerRate')))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The customer whose rates will be returned', required: true)]
+    #[Rest\Get(path: '/{id}/rates', name: 'get_customer_rates', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function getRatesAction(int $id): Response
     {
         /** @var Customer|null $customer */
@@ -342,30 +269,13 @@ final class CustomerController extends BaseApiController
 
     /**
      * Deletes one rate for a customer
-     *
-     * @OA\Delete(
-     *      @OA\Response(
-     *          response=204,
-     *          description="Returns no content: 204 on successful delete"
-     *      )
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="The customer whose rate will be removed",
-     *      required=true,
-     * )
-     * @OA\Parameter(
-     *      name="rateId",
-     *      in="path",
-     *      description="The rate to remove",
-     *      required=true,
-     * )
-     * @Rest\Delete(path="/{id}/rates/{rateId}", name="delete_customer_rate", requirements={"id": "\d+", "rateId": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The customer whose rate will be removed', required: true)]
+    #[OA\Parameter(name: 'rateId', in: 'path', description: 'The rate to remove', required: true)]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
+    #[Rest\Delete(path: '/{id}/rates/{rateId}', name: 'delete_customer_rate', requirements: ['id' => '\d+', 'rateId' => '\d+'])]
     public function deleteRateAction(string $id, string $rateId): Response
     {
         /** @var Customer|null $customer */
@@ -395,29 +305,13 @@ final class CustomerController extends BaseApiController
 
     /**
      * Adds a new rate to a customer
-     *
-     * @OA\Post(
-     *  @OA\Response(
-     *      response=200,
-     *      description="Returns the new created rate",
-     *      @OA\JsonContent(ref="#/components/schemas/CustomerRate")
-     *  )
-     * )
-     * @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      description="The customer to add the rate for",
-     *      required=true,
-     * )
-     * @OA\RequestBody(
-     *      required=true,
-     *      @OA\JsonContent(ref="#/components/schemas/CustomerRateForm"),
-     * )
-     * @Rest\Post(path="/{id}/rates", name="post_customer_rate", requirements={"id": "\d+"})
-     *
-     * @ApiSecurity(name="apiUser")
-     * @ApiSecurity(name="apiToken")
      */
+    #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/CustomerRate'))])]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'The customer to add the rate for', required: true)]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CustomerRateForm'))]
+    #[Rest\Post(path: '/{id}/rates', name: 'post_customer_rate', requirements: ['id' => '\d+'])]
+    #[ApiSecurity(name: 'apiUser')]
+    #[ApiSecurity(name: 'apiToken')]
     public function postRateAction(int $id, Request $request): Response
     {
         /** @var Customer|null $customer */
