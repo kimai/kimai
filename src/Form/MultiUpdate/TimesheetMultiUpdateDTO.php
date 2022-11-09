@@ -17,13 +17,14 @@ use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
+use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * @App\Validator\Constraints\TimesheetMultiUpdate
  * @internal
  */
+#[Constraints\TimesheetMultiUpdate]
 class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements EntityWithMetaFields
 {
     /**
@@ -32,40 +33,22 @@ class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements EntityWithM
     private $tags = [];
     private bool $replaceTags = false;
     private bool $recalculateRates = false;
-    /**
-     * @var Customer|null
-     */
-    private $customer;
-    /**
-     * @var Project|null
-     */
-    private $project;
-    /**
-     * @var Activity|null
-     */
-    private $activity;
-    /**
-     * @var User|null
-     */
-    private $user;
+    private ?Customer $customer = null;
+    private ?Project $project = null;
+    private ?Activity $activity = null;
+    private ?User $user;
     private ?bool $exported = null;
     private ?bool $billable = null;
+    private ?float $fixedRate = null;
+    private ?float $hourlyRate = null;
     /**
-     * @var float|null
+     * @var Collection<TimesheetMeta>
      */
-    private $fixedRate = null;
+    private Collection $meta;
     /**
-     * @var float|null
+     * @var array<string>
      */
-    private $hourlyRate = null;
-    /**
-     * @var TimesheetMeta[]|Collection
-     */
-    private $meta;
-    /**
-     * @var string[]
-     */
-    private $updateMeta = [];
+    private array $updateMeta = [];
 
     public function __construct()
     {

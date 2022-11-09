@@ -21,9 +21,8 @@ use OpenApi\Attributes as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @Constraints\Timesheet
- *
- * IDX_4F60C6B1415614018D93D649 (for ticktac in v1)
+ * Internal docs:
+ * - IDX_4F60C6B1415614018D93D649 (for ticktac in v1)
  */
 #[ORM\Table(name: 'kimai2_timesheet')]
 #[ORM\Index(columns: ['user'], name: 'IDX_4F60C6B18D93D649')]
@@ -45,6 +44,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Serializer\VirtualProperty('ProjectAsId', exp: 'object.getProject() === null ? null : object.getProject().getId()', options: [new Serializer\SerializedName('project'), new Serializer\Type(name: 'integer'), new Serializer\Groups(['Not_Expanded'])])]
 #[Serializer\VirtualProperty('UserAsId', exp: 'object.getUser().getId()', options: [new Serializer\SerializedName('user'), new Serializer\Type(name: 'integer'), new Serializer\Groups(['Not_Expanded'])])]
 #[Serializer\VirtualProperty('TagsAsArray', exp: 'object.getTagsAsArray()', options: [new Serializer\SerializedName('tags'), new Serializer\Type(name: 'array<string>'), new Serializer\Groups(['Default'])])]
+#[Constraints\Timesheet]
 class Timesheet implements EntityWithMetaFields, ExportableItem
 {
     /**

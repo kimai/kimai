@@ -9,13 +9,9 @@
 
 namespace App\Validator\Constraints;
 
-use Doctrine\Common\Annotations\Annotation\Target;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- * @Target({"CLASS", "PROPERTY", "METHOD", "ANNOTATION"})
- */
+#[\Attribute(\Attribute::TARGET_CLASS)]
 class TimesheetMultiUser extends Constraint
 {
     public const MISSING_USER_OR_TEAM = 'ts-multi-user-01';

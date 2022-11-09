@@ -30,9 +30,6 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @Constraints\User(groups={"UserCreate", "Registration", "Default", "Profile"})
- */
 #[ORM\Table(name: 'kimai2_users')]
 #[ORM\UniqueConstraint(columns: ['username'])]
 #[ORM\UniqueConstraint(columns: ['email'])]
@@ -49,6 +46,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Exporter\Expose(name: 'last_login', label: 'lastLogin', exp: 'object.getLastLogin()', type: 'datetime')]
 #[Exporter\Expose(name: 'roles', label: 'roles', exp: 'object.getRoles()', type: 'array')]
 #[Exporter\Expose(name: 'active', label: 'active', exp: 'object.isEnabled()', type: 'boolean')]
+#[Constraints\User(groups: ['UserCreate', 'Registration', 'Default', 'Profile'])]
 class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
     public const ROLE_USER = 'ROLE_USER';
@@ -201,13 +199,12 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     private ?\DateTime $passwordRequestedAt = null;
     /**
      * List of all role names
-     *
-     * @Constraints\Role(groups={"RolesUpdate"})
      */
     #[ORM\Column(name: 'roles', type: 'array', nullable: false)]
     #[Serializer\Expose]
     #[Serializer\Groups(['User_Entity'])]
     #[Serializer\Type('array<string>')]
+    #[Constraints\Role(groups: ['RolesUpdate'])]
     private array $roles = [];
     /**
      * If not empty two-factor authentication is enabled.

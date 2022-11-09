@@ -18,9 +18,6 @@ use JMS\Serializer\Annotation as Serializer;
 use OpenApi\Attributes as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @Constraints\Project
- */
 #[ORM\Table(name: 'kimai2_projects')]
 #[ORM\Index(columns: ['customer_id', 'visible', 'name'])]
 #[ORM\Index(columns: ['customer_id', 'visible', 'id'])]
@@ -31,6 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Serializer\VirtualProperty('CustomerAsId', exp: 'object.getCustomer() === null ? null : object.getCustomer().getId()', options: [new Serializer\SerializedName('customer'), new Serializer\Type(name: 'integer'), new Serializer\Groups(['Project', 'Team', 'Not_Expanded'])])]
 #[Exporter\Order(['id', 'name', 'customer', 'orderNumber', 'orderDate', 'start', 'end', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'teams', 'comment', 'billable'])]
 #[Exporter\Expose(name: 'customer', label: 'customer', exp: 'object.getCustomer() === null ? null : object.getCustomer().getName()')]
+#[Constraints\Project]
 class Project implements EntityWithMetaFields, EntityWithBudget
 {
     use BudgetTrait;

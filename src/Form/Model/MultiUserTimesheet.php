@@ -12,12 +12,11 @@ namespace App\Form\Model;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-/**
- * @App\Validator\Constraints\TimesheetMultiUser
- */
+#[Constraints\TimesheetMultiUser]
 final class MultiUserTimesheet extends Timesheet
 {
     /**

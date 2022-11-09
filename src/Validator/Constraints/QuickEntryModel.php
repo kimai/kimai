@@ -11,10 +11,6 @@ namespace App\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- * @Target({"CLASS"})
- */
 class QuickEntryModel extends Constraint
 {
     public const ACTIVITY_REQUIRED = 'quick-entry-model-01';

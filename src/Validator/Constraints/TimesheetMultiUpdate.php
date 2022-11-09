@@ -9,13 +9,9 @@
 
 namespace App\Validator\Constraints;
 
-use Doctrine\Common\Annotations\Annotation\Target;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- * @Target({"CLASS", "PROPERTY", "METHOD", "ANNOTATION"})
- */
+#[\Attribute(\Attribute::TARGET_CLASS)]
 class TimesheetMultiUpdate extends Constraint
 {
     public const MISSING_ACTIVITY_ERROR = 'ts-multi-update-84';

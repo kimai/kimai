@@ -11,10 +11,6 @@ namespace App\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraints\Regex;
 
-/**
- * @Annotation
- * @Target({"PROPERTY", "METHOD", "ANNOTATION"})
- */
 class Duration extends Regex
 {
     public function __construct($options = null)

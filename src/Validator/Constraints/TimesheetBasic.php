@@ -9,12 +9,6 @@
 
 namespace App\Validator\Constraints;
 
-use Doctrine\Common\Annotations\Annotation\Target;
-
-/**
- * @Annotation
- * @Target({"CLASS", "PROPERTY", "METHOD", "ANNOTATION"})
- */
 class TimesheetBasic extends TimesheetConstraint
 {
     public const MISSING_BEGIN_ERROR = 'kimai-timesheet-81';
