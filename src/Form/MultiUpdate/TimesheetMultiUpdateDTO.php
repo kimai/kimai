@@ -36,7 +36,7 @@ class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements EntityWithM
     private ?Customer $customer = null;
     private ?Project $project = null;
     private ?Activity $activity = null;
-    private ?User $user;
+    private ?User $user = null;
     private ?bool $exported = null;
     private ?bool $billable = null;
     private ?float $fixedRate = null;
