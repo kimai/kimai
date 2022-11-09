@@ -29,7 +29,7 @@ class ProjectValidator extends ConstraintValidator
      * @param Project|mixed $value
      * @param Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof ProjectConstraint)) {
             throw new UnexpectedTypeException($constraint, ProjectConstraint::class);

@@ -20,7 +20,7 @@ class TimeFormatValidator extends ConstraintValidator
      * @param string|mixed $value
      * @param Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof TimeFormat)) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\TimeFormat');

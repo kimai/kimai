@@ -19,7 +19,7 @@ class DateTimeFormatValidator extends ConstraintValidator
      * @param string|mixed $value
      * @param Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof DateTimeFormat)) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\DateTimeFormat');

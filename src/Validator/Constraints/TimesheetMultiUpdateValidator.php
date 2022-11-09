@@ -22,7 +22,7 @@ final class TimesheetMultiUpdateValidator extends ConstraintValidator
      * @param TimesheetMultiUpdateDTO|mixed $value
      * @param Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetMultiUpdateConstraint)) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\TimesheetMultiUpdate');

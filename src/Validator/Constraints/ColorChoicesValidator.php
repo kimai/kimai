@@ -15,10 +15,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ColorChoicesValidator extends ConstraintValidator
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof ColorChoices) {
             throw new UnexpectedTypeException($constraint, ColorChoices::class);

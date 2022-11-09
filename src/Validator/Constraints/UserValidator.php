@@ -26,7 +26,7 @@ class UserValidator extends ConstraintValidator
      * @param UserEntity $value
      * @param Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof User)) {
             throw new UnexpectedTypeException($constraint, User::class);

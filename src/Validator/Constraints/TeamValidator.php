@@ -20,7 +20,7 @@ class TeamValidator extends ConstraintValidator
      * @param TeamEntity $value
      * @param Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof Team)) {
             throw new UnexpectedTypeException($constraint, Team::class);
