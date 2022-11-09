@@ -18,14 +18,6 @@ use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @Exporter\Order({"id", "createdAt", "invoiceNumber", "status", "customer", "subtotal", "total", "tax", "currency", "vat", "dueDays", "dueDate", "paymentDate", "user", "invoiceFilename", "customerNumber", "comment"})
- * @Exporter\Expose("customer", label="customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
- * @Exporter\Expose("customerNumber", label="number", exp="object.getCustomer() === null ? null : object.getCustomer().getNumber()")
- * @Exporter\Expose("dueDate", label="invoice.due_days", type="datetime", exp="object.getDueDate() === null ? null : object.getDueDate()")
- * @Exporter\Expose("user", label="username", type="string", exp="object.getUser() === null ? null : object.getUser().getDisplayName()")
- * @Exporter\Expose("paymentDate", label="invoice.payment_date", type="date", exp="object.getPaymentDate() === null ? null : object.getPaymentDate()")
- */
 #[ORM\Table(name: 'kimai2_invoices')]
 #[ORM\UniqueConstraint(columns: ['invoice_number'])]
 #[ORM\UniqueConstraint(columns: ['invoice_filename'])]
@@ -33,6 +25,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity('invoiceNumber')]
 #[UniqueEntity('invoiceFilename')]
+#[Exporter\Order(['id', 'createdAt', 'invoiceNumber', 'status', 'customer', 'subtotal', 'total', 'tax', 'currency', 'vat', 'dueDays', 'dueDate', 'paymentDate', 'user', 'invoiceFilename', 'customerNumber', 'comment'])]
+#[Exporter\Expose(name: 'customer', label: 'customer', exp: 'object.getCustomer() === null ? null : object.getCustomer().getName()')]
+#[Exporter\Expose(name: 'customerNumber', label: 'number', exp: 'object.getCustomer() === null ? null : object.getCustomer().getNumber()')]
+#[Exporter\Expose(name: 'dueDate', label: 'invoice.due_days', type: 'datetime', exp: 'object.getDueDate() === null ? null : object.getDueDate()')]
+#[Exporter\Expose(name: 'user', label: 'username', type: 'string', exp: 'object.getUser() === null ? null : object.getUser().getDisplayName()')]
+#[Exporter\Expose(name: 'paymentDate', label: 'invoice.payment_date', type: 'date', exp: 'object.getPaymentDate() === null ? null : object.getPaymentDate()')]
 class Invoice implements EntityWithMetaFields
 {
     public const STATUS_PENDING = 'pending';
@@ -42,25 +40,20 @@ class Invoice implements EntityWithMetaFields
 
     /**
      * Unique invoice ID
-     *
-     * @Exporter\Expose(label="id", type="integer")
      */
     #[ORM\Column(name: 'id', type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Exporter\Expose(label: 'id', type: 'integer')]
     private ?int $id = null;
-    /**
-     * @Exporter\Expose(label="invoice.number", type="string")
-     */
     #[ORM\Column(name: 'invoice_number', type: 'string', length: 50, nullable: false)]
     #[Assert\NotNull]
+    #[Exporter\Expose(label: 'invoice.number', type: 'string')]
     private ?string $invoiceNumber = null;
-    /**
-     * @Exporter\Expose(label="comment")
-     */
     #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
+    #[Exporter\Expose(label: 'comment')]
     private ?string $comment = null;
     #[ORM\ManyToOne(targetEntity: 'App\Entity\Customer')]
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
@@ -70,59 +63,43 @@ class Invoice implements EntityWithMetaFields
     #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     #[Assert\NotNull]
     private ?User $user = null;
-    /**
-     * @Exporter\Expose(label="date", type="datetime")
-     */
     #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
     #[Assert\NotNull]
+    #[Exporter\Expose(label: 'date', type: 'datetime')]
     private ?\DateTime $createdAt = null;
     #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: false)]
     private ?string $timezone = null;
-    /**
-     * @Exporter\Expose(label="total_rate", type="float")
-     */
     #[ORM\Column(name: 'total', type: 'float', nullable: false)]
     #[Assert\NotNull]
+    #[Exporter\Expose(label: 'total_rate', type: 'float')]
     private float $total = 0.00;
-    /**
-     * @Exporter\Expose(label="invoice.tax", type="float")
-     */
     #[ORM\Column(name: 'tax', type: 'float', nullable: false)]
     #[Assert\NotNull]
+    #[Exporter\Expose(label: 'invoice.tax', type: 'float')]
     private float $tax = 0.00;
-    /**
-     * @Exporter\Expose(label="currency", type="string")
-     */
     #[ORM\Column(name: 'currency', type: 'string', length: 3, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Length(max: 3)]
+    #[Exporter\Expose(label: 'currency', type: 'string')]
     private ?string $currency = null;
-    /**
-     * @Exporter\Expose(label="due_days", type="integer")
-     */
     #[ORM\Column(name: 'due_days', type: 'integer', length: 3, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Range(min: 0, max: 999)]
+    #[Exporter\Expose(label: 'due_days', type: 'integer')]
     private int $dueDays = 30;
-    /**
-     * @Exporter\Expose(label="tax_rate", type="float")
-     */
     #[ORM\Column(name: 'vat', type: 'float', nullable: false)]
     #[Assert\NotNull]
     #[Assert\Range(min: 0.0, max: 99.99)]
+    #[Exporter\Expose(label: 'tax_rate', type: 'float')]
     private float $vat = 0.00;
-    /**
-     * @Exporter\Expose(label="status", type="string")
-     */
     #[ORM\Column(name: 'status', type: 'string', length: 20, nullable: false)]
     #[Assert\NotNull]
+    #[Exporter\Expose(label: 'status', type: 'string')]
     private string $status = self::STATUS_NEW;
-    /**
-     * @Exporter\Expose(label="file", type="string")
-     */
     #[ORM\Column(name: 'invoice_filename', type: 'string', length: 150, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Length(min: 1, max: 150)]
+    #[Exporter\Expose(label: 'file', type: 'string')]
     private ?string $invoiceFilename = null;
     private bool $localized = false;
     #[ORM\Column(name: 'payment_date', type: 'date', nullable: true)]
@@ -320,10 +297,7 @@ class Invoice implements EntityWithMetaFields
         return $this->invoiceFilename;
     }
 
-    /**
-     * @Exporter\Expose(label="invoice.subtotal", type="float", name="subtotal")
-     * @return float
-     */
+    #[Exporter\Expose(label: 'invoice.subtotal', type: 'float', name: 'subtotal')]
     public function getSubtotal(): float
     {
         return $this->total - $this->tax;

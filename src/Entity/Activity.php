@@ -17,10 +17,6 @@ use JMS\Serializer\Annotation as Serializer;
 use OpenApi\Annotations as OA;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @Exporter\Order({"id", "name", "project", "budget", "timeBudget", "budgetType", "color", "visible", "comment", "billable"})
- * @Exporter\Expose("project", label="project", exp="object.getProject() === null ? null : object.getProject().getName()")
- */
 #[ORM\Table(name: 'kimai2_activities')]
 #[ORM\Index(columns: ['visible', 'project_id'])]
 #[ORM\Index(columns: ['visible', 'project_id', 'name'])]
@@ -30,6 +26,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Serializer\ExclusionPolicy('all')]
 #[Serializer\VirtualProperty('ProjectName', exp: 'object.getProject() === null ? null : object.getProject().getName()', options: [new Serializer\SerializedName('parentTitle'), new Serializer\Type(name: 'string'), new Serializer\Groups(['Activity'])])]
 #[Serializer\VirtualProperty('ProjectAsId', exp: 'object.getProject() === null ? null : object.getProject().getId()', options: [new Serializer\SerializedName('project'), new Serializer\Type(name: 'integer'), new Serializer\Groups(['Activity', 'Team', 'Not_Expanded'])])]
+#[Exporter\Order(['id', 'name', 'project', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable'])]
+#[Exporter\Expose(name: 'project', label: 'project', exp: 'object.getProject() === null ? null : object.getProject().getName()')]
 class Activity implements EntityWithMetaFields, EntityWithBudget
 {
     use BudgetTrait;
@@ -37,14 +35,13 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
 
     /**
      * Unique activity ID
-     *
-     * @Exporter\Expose(label="id", type="integer")
      */
     #[ORM\Column(name: 'id', type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'id', type: 'integer')]
     private ?int $id = null;
     /**
      * @OA\Property(ref="#/components/schemas/Project")
@@ -56,41 +53,36 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     private ?Project $project = null;
     /**
      * Name of this activity
-     *
-     * @Exporter\Expose(label="name")
      */
     #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 3, max: 150)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'name')]
     private ?string $name = null;
     /**
      * Description of this activity
-     *
-     * @Exporter\Expose(label="comment")
      */
     #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'comment')]
     private ?string $comment = null;
     /**
-     * Whether this activity is visible and can be used for timesheets
-     *
-     * @Exporter\Expose(label="visible", type="boolean")
+     * Whether this activity is visible and can be selected
      */
     #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'visible', type: 'boolean')]
     private bool $visible = true;
-    /**
-     * @Exporter\Expose(label="billable", type="boolean")
-     */
     #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'billable', type: 'boolean')]
     private bool $billable = true;
     /**
      * Meta fields

@@ -16,7 +16,6 @@ use App\Entity\ProjectMeta;
 use App\Entity\Team;
 use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
-use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Collections\Collection;
 
 /**
@@ -167,7 +166,7 @@ class ProjectTest extends AbstractEntityTest
 
     public function testExportAnnotations()
     {
-        $sut = new AnnotationExtractor(new AnnotationReader());
+        $sut = new AnnotationExtractor();
 
         $columns = $sut->extract(Project::class);
 

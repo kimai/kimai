@@ -16,3 +16,7 @@ parameters:
     inferPrivatePropertyTypeFromConstructor: true
     doctrine:
         objectManagerLoader: %rootDir%/../../../tests/phpstan-doctrine.php
+    ignoreErrors:
+        - '#Property (.*) is never read, only written.#'
+        - '#Property (.*) is unused.#'
+        - '#Method (.*) is unused.#'

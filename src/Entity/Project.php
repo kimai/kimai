@@ -20,11 +20,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @Constraints\Project
- *
- *
- * @Exporter\Order({"id", "name", "customer", "orderNumber", "orderDate", "start", "end", "budget", "timeBudget", "budgetType", "color", "visible", "teams", "comment", "billable"})
- * @Exporter\Expose("customer", label="customer", exp="object.getCustomer() === null ? null : object.getCustomer().getName()")
- * @ Exporter\Expose("teams", label="team", exp="object.getTeams().toArray()", type="array")
  */
 #[ORM\Table(name: 'kimai2_projects')]
 #[ORM\Index(columns: ['customer_id', 'visible', 'name'])]
@@ -34,6 +29,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Serializer\ExclusionPolicy('all')]
 #[Serializer\VirtualProperty('CustomerName', exp: 'object.getCustomer() === null ? null : object.getCustomer().getName()', options: [new Serializer\SerializedName('parentTitle'), new Serializer\Type(name: 'string'), new Serializer\Groups(['Project'])])]
 #[Serializer\VirtualProperty('CustomerAsId', exp: 'object.getCustomer() === null ? null : object.getCustomer().getId()', options: [new Serializer\SerializedName('customer'), new Serializer\Type(name: 'integer'), new Serializer\Groups(['Project', 'Team', 'Not_Expanded'])])]
+#[Exporter\Order(['id', 'name', 'customer', 'orderNumber', 'orderDate', 'start', 'end', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'teams', 'comment', 'billable'])]
+#[Exporter\Expose(name: 'customer', label: 'customer', exp: 'object.getCustomer() === null ? null : object.getCustomer().getName()')]
 class Project implements EntityWithMetaFields, EntityWithBudget
 {
     use BudgetTrait;
@@ -41,14 +38,13 @@ class Project implements EntityWithMetaFields, EntityWithBudget
 
     /**
      * Unique Project ID
-     *
-     * @Exporter\Expose(label="id", type="integer")
      */
     #[ORM\Column(name: 'id', type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'id', type: 'integer')]
     private ?int $id = null;
     /**
      * Customer for this project
@@ -63,91 +59,81 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     private ?Customer $customer = null;
     /**
      * Project name
-     *
-     * @Exporter\Expose(label="name")
      */
     #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Length(min: 3, max: 150)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'name')]
     private ?string $name = null;
     /**
      * Project order number
-     *
-     * @Exporter\Expose(label="orderNumber")
      */
     #[ORM\Column(name: 'order_number', type: 'text', length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Project_Entity'])]
+    #[Exporter\Expose(label: 'orderNumber')]
     private ?string $orderNumber = null;
     /**
      * Order date for the project
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
-     *
-     * @Exporter\Expose(label="orderDate", type="datetime")
      */
     #[ORM\Column(name: 'order_date', type: 'datetime', nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Project_Entity'])]
     #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
     #[Serializer\Accessor(getter: 'getOrderDate')]
+    #[Exporter\Expose(label: 'orderDate', type: 'datetime')]
     private ?\DateTime $orderDate = null;
     /**
      * Project start date (times before this date cannot be recorded)
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
-     *
-     * @Exporter\Expose(label="project_start", type="datetime")
      */
     #[ORM\Column(name: 'start', type: 'datetime', nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Project'])]
     #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
     #[Serializer\Accessor(getter: 'getStart')]
+    #[Exporter\Expose(label: 'project_start', type: 'datetime')]
     private ?\DateTime $start = null;
     /**
      * Project end time (times after this date cannot be recorded)
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
-     *
-     * @Exporter\Expose(label="project_end", type="datetime")
      */
     #[ORM\Column(name: 'end', type: 'datetime', nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Project'])]
     #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
     #[Serializer\Accessor(getter: 'getEnd')]
+    #[Exporter\Expose(label: 'project_end', type: 'datetime')]
     private ?\DateTime $end = null;
     #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: true)]
     private ?string $timezone = null;
     private bool $localized = false;
-    /**
-     * @Exporter\Expose(label="comment")
-     */
     #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'comment')]
     private ?string $comment = null;
     /**
      * If the project is not visible, times cannot be recorded
-     *
-     * @Exporter\Expose(label="visible", type="boolean")
      */
     #[ORM\Column(name: 'visible', type: 'boolean', nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'visible', type: 'boolean')]
     private bool $visible = true;
-    /**
-     * @Exporter\Expose(label="billable", type="boolean")
-     */
     #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'billable', type: 'boolean')]
     private bool $billable = true;
     /**
      * Meta fields

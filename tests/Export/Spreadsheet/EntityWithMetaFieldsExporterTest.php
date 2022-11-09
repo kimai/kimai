@@ -18,7 +18,6 @@ use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Export\Spreadsheet\Extractor\MetaFieldExtractor;
 use App\Export\Spreadsheet\SpreadsheetExporter;
 use App\Repository\Query\ProjectQuery;
-use Doctrine\Common\Annotations\AnnotationReader;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -40,7 +39,7 @@ class EntityWithMetaFieldsExporterTest extends TestCase
         });
 
         $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class));
-        $annotationExtractor = new AnnotationExtractor(new AnnotationReader());
+        $annotationExtractor = new AnnotationExtractor();
         $metaFieldExtractor = new MetaFieldExtractor($dispatcher);
 
         $project = new Project();

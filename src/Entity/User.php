@@ -32,17 +32,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @Constraints\User(groups={"UserCreate", "Registration", "Default", "Profile"})
- *
- *
- * @Exporter\Order({"id", "username", "alias", "title", "email", "last_login", "language", "timezone", "active", "registeredAt", "roles", "teams", "color", "accountNumber"})
- * @Exporter\Expose("email", label="email", exp="object.getEmail()")
- * @Exporter\Expose("username", label="username", exp="object.getUserIdentifier()")
- * @Exporter\Expose("timezone", label="timezone", exp="object.getTimezone()")
- * @Exporter\Expose("language", label="language", exp="object.getLanguage()")
- * @Exporter\Expose("last_login", label="lastLogin", exp="object.getLastLogin()", type="datetime")
- * @Exporter\Expose("roles", label="roles", exp="object.getRoles()", type="array")
- * @ Exporter\Expose("teams", label="team", exp="object.getTeams()", type="array")
- * @Exporter\Expose("active", label="active", exp="object.isEnabled()", type="boolean")
  */
 #[ORM\Table(name: 'kimai2_users')]
 #[ORM\UniqueConstraint(columns: ['username'])]
@@ -52,6 +41,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity('username')]
 #[UniqueEntity('email')]
 #[Serializer\ExclusionPolicy('all')]
+#[Exporter\Order(['id', 'username', 'alias', 'title', 'email', 'last_login', 'language', 'timezone', 'active', 'registeredAt', 'roles', 'teams', 'color', 'accountNumber'])]
+#[Exporter\Expose(name: 'email', label: 'email', exp: 'object.getEmail()')]
+#[Exporter\Expose(name: 'username', label: 'username', exp: 'object.getUserIdentifier()')]
+#[Exporter\Expose(name: 'timezone', label: 'timezone', exp: 'object.getTimezone()')]
+#[Exporter\Expose(name: 'language', label: 'language', exp: 'object.getLanguage()')]
+#[Exporter\Expose(name: 'last_login', label: 'lastLogin', exp: 'object.getLastLogin()', type: 'datetime')]
+#[Exporter\Expose(name: 'roles', label: 'roles', exp: 'object.getRoles()', type: 'array')]
+#[Exporter\Expose(name: 'active', label: 'active', exp: 'object.isEnabled()', type: 'boolean')]
 class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
     public const ROLE_USER = 'ROLE_USER';
@@ -71,41 +68,37 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     /**
      * Unique User ID
-     *
-     * @Exporter\Expose(label="id", type="integer")
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'id', type: 'integer')]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'id', type: 'integer')]
     private ?int $id = null;
     /**
      * The user alias will be displayed in the frontend instead of the username
-     *
-     * @Exporter\Expose(label="alias")
      */
     #[ORM\Column(name: 'alias', type: 'string', length: 60, nullable: true)]
     #[Assert\Length(max: 60)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'alias')]
     private ?string $alias = null;
     /**
      * Registration date for the user
-     *
-     * @Exporter\Expose(label="profile.registration_date", type="datetime")
      */
     #[ORM\Column(name: 'registration_date', type: 'datetime', nullable: true)]
+    #[Exporter\Expose(label: 'profile.registration_date', type: 'datetime')]
     private ?\DateTime $registeredAt = null;
     /**
      * An additional title for the user, like the Job position or Department
-     *
-     * @Exporter\Expose(label="title")
      */
     #[ORM\Column(name: 'title', type: 'string', length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'title')]
     private ?string $title = null;
     /**
      * URL to the user avatar, will be auto-generated if empty
@@ -177,13 +170,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Assert\Length(min: 2, max: 180)]
     #[Assert\Email(groups: ['Registration', 'UserCreate', 'Profile'])]
     private ?string $email = null;
-    /**
-     * @Exporter\Expose(label="account_number")
-     */
     #[ORM\Column(name: 'account', type: 'string', length: 30, nullable: true)]
     #[Assert\Length(max: 30, groups: ['Registration', 'UserCreate', 'Profile'])]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'account_number')]
     private ?string $accountNumber = null;
     #[ORM\Column(name: 'enabled', type: 'boolean', nullable: false)]
     #[Serializer\Expose]
