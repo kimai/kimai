@@ -39,7 +39,7 @@ class PagerfantaExceptionSubscriberTest extends TestCase
         $kernel = $this->createMock(HttpKernelInterface::class);
         $request = $this->createMock(Request::class);
         $exception = new \Exception();
-        $requestType = HttpKernelInterface::MASTER_REQUEST;
+        $requestType = HttpKernelInterface::MAIN_REQUEST;
 
         $event = new ExceptionEvent($kernel, $request, $requestType, $exception);
         $sut->onCoreException($event);
