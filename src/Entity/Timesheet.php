@@ -191,10 +191,9 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
     private ?string $category = self::WORK;
     /**
      * @internal used for limiting queries, eg. via API sync
-     *
-     * @Gedmo\Timestampable
      */
     #[ORM\Column(name: 'modified_at', type: 'datetime', nullable: true)]
+    #[Gedmo\Timestampable]
     private ?\DateTime $modifiedAt = null;
     /**
      * Tags
