@@ -105,9 +105,7 @@ class Invoice implements EntityWithMetaFields
     #[ORM\Column(name: 'payment_date', type: 'date', nullable: true)]
     private ?\DateTime $paymentDate = null;
     /**
-     * Meta fields
-     *
-     * All visible meta (custom) fields registered with this invoice
+     * Meta fields registered with the invoice
      *
      * @var Collection<InvoiceMeta>
      */

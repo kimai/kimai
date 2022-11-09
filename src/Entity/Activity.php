@@ -83,9 +83,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     #[Exporter\Expose(label: 'billable', type: 'boolean')]
     private bool $billable = true;
     /**
-     * Meta fields
-     *
-     * All visible meta (custom) fields registered with this activity
+     * Meta fields registered with the activity
      *
      * @var Collection<ActivityMeta>
      */
@@ -97,9 +95,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     #[Serializer\Accessor(getter: 'getVisibleMetaFields')]
     private Collection $meta;
     /**
-     * Teams
-     *
-     * If no team is assigned, everyone can access the activity
+     * Teams with access to the activity
      *
      * @var Collection<Team>
      */

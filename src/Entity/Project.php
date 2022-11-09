@@ -135,9 +135,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     #[Exporter\Expose(label: 'billable', type: 'boolean')]
     private bool $billable = true;
     /**
-     * Meta fields
-     *
-     * All visible meta (custom) fields registered with this project
+     * Meta fields registered with the project
      *
      * @var Collection<ProjectMeta>
      */
@@ -149,9 +147,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget
     #[Serializer\Accessor(getter: 'getVisibleMetaFields')]
     private Collection $meta;
     /**
-     * Teams
-     *
-     * If no team is assigned, everyone can access the project (also depends on the teams of the customer)
+     * Teams with access to the project
      *
      * @var Collection<Team>
      */

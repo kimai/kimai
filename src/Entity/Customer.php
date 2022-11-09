@@ -150,9 +150,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
     #[Exporter\Expose(label: 'timezone')]
     private ?string $timezone = null;
     /**
-     * Meta fields
-     *
-     * All visible meta (custom) fields registered with this customer
+     * Meta fields registered with the customer
      *
      * @var Collection<CustomerMeta>
      */
@@ -164,9 +162,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget
     #[Serializer\Accessor(getter: 'getVisibleMetaFields')]
     private Collection $meta;
     /**
-     * Teams
-     *
-     * If no team is assigned, everyone can access the customer
+     * Teams with access to the customer
      *
      * @var Collection<Team>
      */

@@ -201,9 +201,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
     #[Assert\Valid]
     private Collection $tags;
     /**
-     * Meta fields
-     *
-     * All visible meta (custom) fields registered with this timesheet
+     * Meta fields registered with the timesheet
      *
      * @var Collection<TimesheetMeta>
      */
