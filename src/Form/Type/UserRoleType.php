@@ -35,7 +35,7 @@ class UserRoleType extends AbstractType
             'include_default' => false,
         ]);
 
-        $resolver->setDefault('choices', function (Options $options) {
+        $resolver->setDefault('choices', function (Options $options): array {
             $roles = [];
             foreach ($this->roles->getAvailableNames() as $name) {
                 $roles[$name] = strtoupper($name);

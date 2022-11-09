@@ -95,7 +95,7 @@ final class TimesheetLoader implements LoaderInterface
         if ($this->fullyHydrated) {
             $activityIds = array_filter(array_map(function (Timesheet $timesheet) {
                 return $timesheet->getActivity()?->getId();
-            }, $timesheets), function ($id) {
+            }, $timesheets), function ($id): bool {
                 return $id !== null;
             });
 

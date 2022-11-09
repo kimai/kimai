@@ -63,7 +63,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
     {
         return [
             new TwigTest('weekend', [$this, 'isWeekend']),
-            new TwigTest('today', function ($dateTime) {
+            new TwigTest('today', function ($dateTime): bool {
                 if (!$dateTime instanceof \DateTime) {
                     return false;
                 }

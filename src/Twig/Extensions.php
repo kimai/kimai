@@ -53,7 +53,7 @@ class Extensions extends AbstractExtension
     public function getTests(): array
     {
         return [
-            new TwigTest('number', function ($value) {
+            new TwigTest('number', function ($value): bool {
                 return !\is_string($value) && is_numeric($value);
             }),
         ];

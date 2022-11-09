@@ -177,12 +177,12 @@ class AppExtension extends Extension
 
     private function getFilteredPermissions(array $permissions): array
     {
-        $deleteFromArray = array_filter($permissions, function ($permission) {
-            return $permission[0] == '!';
+        $deleteFromArray = array_filter($permissions, function ($permission): bool {
+            return $permission[0] === '!';
         });
 
-        return array_filter($permissions, function ($permission) use ($deleteFromArray) {
-            if ($permission[0] == '!') {
+        return array_filter($permissions, function ($permission) use ($deleteFromArray): bool {
+            if ($permission[0] === '!') {
                 return false;
             }
 

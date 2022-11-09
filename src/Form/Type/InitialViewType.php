@@ -60,7 +60,7 @@ class InitialViewType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('required', true);
-        $resolver->setDefault('choices', function (Options $options) {
+        $resolver->setDefault('choices', function (Options $options): array {
             $choices = [];
             foreach (self::ROUTE_PERMISSION as $route => $permission) {
                 if (empty($permission) || $this->voter->isGranted($permission)) {
