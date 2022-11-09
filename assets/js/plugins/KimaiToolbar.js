@@ -87,8 +87,8 @@ export default class KimaiToolbar extends KimaiPlugin {
                     if (form === null) {
                         return;
                     }
-                    const prevAction = form.action;
-                    const prevMethod = form.method;
+                    const prevAction = form.getAttribute('action');
+                    const prevMethod = form.getAttribute('method');
                     form.target = '_blank';
                     form.action = target.href;
                     if (target.dataset.method !== undefined) {

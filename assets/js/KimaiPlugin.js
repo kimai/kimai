@@ -127,8 +127,8 @@ export default class KimaiPlugin {
      * @returns {Promise<Response>}
      */
     fetchForm(form, options = {}, url = null) {
-        url = url || form.action;
-        const method = form.method.toUpperCase();
+        url = url || form.getAttribute('action');
+        const method = form.getAttribute('method').toUpperCase();
 
         if (method === 'GET') {
             const data = this.getPlugin('form').convertFormDataToQueryString(form, {}, true);
