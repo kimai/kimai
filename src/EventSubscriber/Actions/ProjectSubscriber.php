@@ -83,7 +83,7 @@ class ProjectSubscriber extends AbstractActionsSubscriber
             $event->addDelete($this->path('admin_project_delete', ['id' => $project->getId()]));
         }
 
-        if (!$event->isView('project_details_report') && $project->isVisible() && $this->isGranted('report:project') && $this->isGranted('details', $project)) {
+        if (!$event->isView('project_details_report') && $this->isGranted('report:project') && $this->isGranted('details', $project)) {
             $event->addAction('report_project_details', ['title' => 'report_project_details', 'translation_domain' => 'reporting', 'url' => $this->path('report_project_details', ['project' => $project->getId()]), 'icon' => 'reporting']);
         }
     }
