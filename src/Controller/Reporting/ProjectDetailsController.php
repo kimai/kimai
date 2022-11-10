@@ -13,6 +13,7 @@ use App\Controller\AbstractController;
 use App\Project\ProjectStatisticService;
 use App\Reporting\ProjectDetails\ProjectDetailsForm;
 use App\Reporting\ProjectDetails\ProjectDetailsQuery;
+use App\Utils\PageSetup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,16 +33,27 @@ final class ProjectDetailsController extends AbstractController
 
         $projectView = null;
         $projectDetails = null;
+        $project = $query->getProject();
 
-        if ($query->getProject() !== null && $this->isGranted('details', $query->getProject())) {
-            $projectViews = $service->getProjectView($user, [$query->getProject()], $query->getToday());
+        if ($project !== null && $this->isGranted('details', $project)) {
+            $projectViews = $service->getProjectView($user, [$project], $query->getToday());
             $projectView = $projectViews[0];
             $projectDetails = $service->getProjectsDetails($query);
         }
 
+        $page = new PageSetup('projects');
+        $page->setHelp('project.html');
+        $page->setActionName('project');
+        $page->setActionView('project_details_report');
+        $page->setActionPayload([
+            'project' => $project,
+            //'token' => $csrfTokenManager->getToken('project.duplicate')
+        ]);
+
         return $this->render('reporting/project_details.html.twig', [
+            'page_setup' => $page,
             'report_title' => 'report_project_details',
-            'project' => $query->getProject(),
+            'project' => $project,
             'project_view' => $projectView,
             'project_details' => $projectDetails,
             'form' => $form->createView(),

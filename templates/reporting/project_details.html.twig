@@ -31,7 +31,6 @@
         [].slice.call(document.querySelectorAll('a[data-bs-toggle="tab"]')).forEach(function (triggerEl) {
             triggerEl.addEventListener('shown.bs.tab', function (event) {
                 renderChart(event.target.dataset.chart);
-                //event.preventDefault()
             });
             {% if project is not null %}
             renderChart('project{{ project.id }}Budget');
@@ -96,9 +95,19 @@
 
     <div class="card mb-3">
         <div class="card-header">
-            <h3 class="card-title">
+            <h3 class="card-title me-3">
                 {{ title }}
             </h3>
+            <ul class="nav nav-pills" data-bs-toggle="tabs">
+                <li class="nav-item"><a class="nav-link active" data-chart="{{ chartPrefix }}Duration" href="#time-chart-{{ id }}" data-bs-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
+                {% if view_revenue %}
+                    <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Rate" href="#revenue-chart-{{ id }}" data-bs-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
+                {% endif %}
+                {% if see_users %}
+                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}User" href="#user-chart-{{ id}}" data-bs-toggle="tab">{{ 'user'|trans }}</a></li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Activity" href="#activity-chart-{{ id}}" data-bs-toggle="tab">{{ 'activity'|trans }}</a></li>
+            </ul>
             <div class="card-actions">
                 {{ widgets.badge_counter(yearStat.duration|duration) }}
                 {% if view_revenue %}
@@ -106,16 +115,6 @@
                 {% endif %}
             </div>
         </div>
-        <ul class="nav nav-tabs" data-bs-toggle="tabs">
-            <li class="nav-item"><a class="nav-link active" data-chart="{{ chartPrefix }}Duration" href="#time-chart-{{ id }}" data-bs-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
-            {% if view_revenue %}
-                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Rate" href="#revenue-chart-{{ id }}" data-bs-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
-            {% endif %}
-            {% if see_users %}
-            <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}User" href="#user-chart-{{ id}}" data-bs-toggle="tab">{{ 'user'|trans }}</a></li>
-            {% endif %}
-            <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Activity" href="#activity-chart-{{ id}}" data-bs-toggle="tab">{{ 'activity'|trans }}</a></li>
-        </ul>
         <div class="tab-content mt-2 p-2">
             <div class="chart tab-pane active" id="time-chart-{{ id }}">
                 <div class="row">
@@ -266,9 +265,24 @@
 
     <div class="card mb-3">
         <div class="card-header">
-            <h3 class="card-title">
+            <h3 class="card-title me-3">
                 {{ widgets.label_project(project, {'inherit': false}) }}
             </h3>
+            <ul class="nav nav-pills" data-bs-toggle="tabs">
+                <li class="nav-item"><a class="nav-link active" href="#details-chart" data-bs-toggle="tab">{{ 'report_project_details'|trans({}, 'reporting') }}</a></li>
+                {% if showTotalDurationChart %}
+                    <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Duration" href="#time-chart" data-bs-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
+                {% endif %}
+                {% if showTotalRevenueChart  %}
+                    <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-bs-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
+                {% endif %}
+                {% if see_users and project_details.userStats|length > 0 %}
+                    <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}User" href="#user-chart" data-bs-toggle="tab">{{ 'user'|trans }}</a></li>
+                {% endif %}
+                {% if activities is not empty %}
+                    <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Activity" href="#activity-chart" data-bs-toggle="tab">{{ 'activity'|trans }}</a></li>
+                {% endif %}
+            </ul>
             <div class="card-actions">
                 {{ widgets.badge_counter(project_view.durationTotal|duration) }}
                 {% if view_revenue %}
@@ -276,101 +290,86 @@
                 {% endif %}
             </div>
         </div>
-        <ul class="nav nav-tabs" data-bs-toggle="tabs">
-            <li class="nav-item"><a class="nav-link active" href="#details-chart" data-bs-toggle="tab">{{ 'report_project_details'|trans({}, 'reporting') }}</a></li>
-            {% if showTotalDurationChart %}
-                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Duration" href="#time-chart" data-bs-toggle="tab">{{ 'stats.workingTime'|trans }}</a></li>
-            {% endif %}
-            {% if showTotalRevenueChart  %}
-                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Rate" href="#revenue-chart" data-bs-toggle="tab">{{ 'stats.revenue'|trans }}</a></li>
-            {% endif %}
-            {% if see_users and project_details.userStats|length > 0 %}
-                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}User" href="#user-chart" data-bs-toggle="tab">{{ 'user'|trans }}</a></li>
-            {% endif %}
-            {% if activities is not empty %}
-                <li class="nav-item"><a class="nav-link" data-chart="{{ chartPrefix }}Activity" href="#activity-chart" data-bs-toggle="tab">{{ 'activity'|trans }}</a></li>
-            {% endif %}
-        </ul>
-        <div class="tab-content mt-2 p-2">
+        <div class="tab-content mt-2 p-2 ps-3">
             <div class="chart tab-pane active" id="details-chart">
                 <div class="row">
-                    <div class="col-xs-12 col-md-6">
-                        <table class="table table-hover dataTable">
-                            <tr {{ widgets.customer_row_attr(project.customer) }}>
-                                <th class="w-min">
+                    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7 col-xl-6 col-xxl-5">
+                        <div class="datagrid" style="--tblr-datagrid-item-width: 12rem">
+                            <div class="datagrid-item" {{ widgets.customer_row_attr(project.customer) }}>
+                                <div class="datagrid-title">
                                     {{ 'customer'|trans }}
-                                </th>
-                                <td>
+                                </div>
+                                <div class="datagrid-content">
                                     {{ widgets.label_customer(project.customer) }}
-                                </td>
-                            </tr>
-                            <tr {{ widgets.project_row_attr(project) }}>
-                                <th class="w-min">
+                                </div>
+                            </div>
+                            <div class="datagrid-item" {{ widgets.project_row_attr(project) }}>
+                                <div class="datagrid-title">
                                     {{ 'project'|trans }}
-                                </th>
-                                <td>
+                                </div>
+                                <div class="datagrid-content">
                                     {{ widgets.label_project(project) }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th class="w-min">
+                                </div>
+                            </div>
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">
                                     {{ 'stats.durationTotal'|trans }}
-                                </th>
-                                <td>{{ project_view.durationTotal|duration }}</td>
-                            </tr>
+                                </div>
+                                <div class="datagrid-content">{{ project_view.durationTotal|duration }}</div>
+                            </div>
                             {% if view_revenue %}
-                            <tr>
-                                <th class="w-min">
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">
                                     {{ 'stats.amountTotal'|trans }}
-                                </th>
-                                <td>{{ project_view.rateTotal|money(currency) }}</td>
-                            </tr>
-                            <tr>
-                                <th class="w-min">
+                                </div>
+                                <div class="datagrid-content">{{ project_view.rateTotal|money(currency) }}</div>
+                            </div>
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">
                                     {{ 'billable'|trans }}
-                                </th>
-                                <td>{{ project_view.billableRate|money(currency) }}</td>
-                            </tr>
+                                </div>
+                                <div class="datagrid-content">{{ project_view.billableRate|money(currency) }}</div>
+                            </div>
                             {% endif %}
-                            <tr>
-                                <th class="w-min">
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">
                                     {{ 'last_record'|trans }}
-                                </th>
-                                <td>
+                                </div>
+                                <div class="datagrid-content">
                                     {% if project_view.lastRecord is not null %}
                                         {{ project_view.lastRecord|date_short }}
                                     {% else %}
                                         &ndash;
                                     {% endif %}
-                                </td>
-                            </tr>
+                                </div>
+                            </div>
                             {% if is_granted('create_export') %}
-                            <tr>
-                                <th class="w-min">
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">
                                     {{ 'not_exported'|trans }}
-                                </th>
-                                <td>
+                                </div>
+                                <div class="datagrid-content">
                                     <a href="{{ path('export', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': '', 'preview': true}) }}">
                                         {{ project_view.notExportedDuration|duration }}
                                     </a>
-                                </td>
-                            </tr>
+                                </div>
+                            </div>
                             {% endif %}
                             {% if is_granted('view_invoice') %}
-                            <tr>
-                                <th class="w-min">
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">
                                     {{ 'not_invoiced'|trans }}
-                                </th>
-                                <td>
+                                </div>
+                                <div class="datagrid-content">
                                     <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
                                         {{ project_view.notBilledRate|money(currency) }}
                                     </a>
-                                </td>
-                            </tr>
+                                </div>
+                            </div>
                             {% endif %}
-                        </table>
+                        </div>
                     </div>
-                    <div class="col-xs-12 col-md-6">
+                    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 col-xl-6 col-xxl-7">
                         {% if (showMoneyBudget and project.hasBudget()) or (showTimeBudget and project.hasTimeBudget()) %}
                             {% from "project/charts.html.twig" import project_budget %}
                             {{ project_budget(project, project_details, chartPrefix) }}
@@ -381,7 +380,7 @@
                     {% set budgetStats = project_details.budgetStatisticModel %}
                     <div class="row">
                         <div class="col-xs-12">
-                            <table class="table table-hover dataTable">
+                            <table class="table table-borderless">
                                 {% if showTimeBudget and project.hasTimeBudget() %}
                                     <tr>
                                         <th class="w-min">
