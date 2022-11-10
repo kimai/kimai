@@ -72,7 +72,7 @@ class ProjectSubscriber extends AbstractActionsSubscriber
             }
         }
 
-        if ($this->isGranted('edit', $project) && $this->isGranted('create_project')) {
+        if (array_key_exists('token', $payload) && $this->isGranted('edit', $project) && $this->isGranted('create_project')) {
             $event->addAction(
                 'copy',
                 ['title' => 'copy', 'translation_domain' => 'actions', 'url' => $this->path('admin_project_duplicate', ['id' => $project->getId(), 'token' => $payload['token']])]
@@ -83,7 +83,7 @@ class ProjectSubscriber extends AbstractActionsSubscriber
             $event->addDelete($this->path('admin_project_delete', ['id' => $project->getId()]));
         }
 
-        if ($project->isVisible() && $this->isGranted('report:project') && $this->isGranted('details', $project)) {
+        if (!$event->isView('project_details_report') && $project->isVisible() && $this->isGranted('report:project') && $this->isGranted('details', $project)) {
             $event->addAction('report_project_details', ['title' => 'report_project_details', 'translation_domain' => 'reporting', 'url' => $this->path('report_project_details', ['project' => $project->getId()]), 'icon' => 'reporting']);
         }
     }
