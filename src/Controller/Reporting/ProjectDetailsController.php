@@ -43,12 +43,12 @@ final class ProjectDetailsController extends AbstractController
 
         $page = new PageSetup('projects');
         $page->setHelp('project.html');
-        $page->setActionName('project');
-        $page->setActionView('project_details_report');
-        $page->setActionPayload([
-            'project' => $project,
-            //'token' => $csrfTokenManager->getToken('project.duplicate')
-        ]);
+
+        if ($project !== null) {
+            $page->setActionName('project');
+            $page->setActionView('project_details_report');
+            $page->setActionPayload(['project' => $project]);
+        }
 
         return $this->render('reporting/project_details.html.twig', [
             'page_setup' => $page,
