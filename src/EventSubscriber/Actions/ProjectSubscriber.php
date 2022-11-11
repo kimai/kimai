@@ -72,7 +72,7 @@ class ProjectSubscriber extends AbstractActionsSubscriber
             }
         }
 
-        if (array_key_exists('token', $payload) && $this->isGranted('edit', $project) && $this->isGranted('create_project')) {
+        if (\array_key_exists('token', $payload) && $this->isGranted('edit', $project) && $this->isGranted('create_project')) {
             $event->addAction(
                 'copy',
                 ['title' => 'copy', 'translation_domain' => 'actions', 'url' => $this->path('admin_project_duplicate', ['id' => $project->getId(), 'token' => $payload['token']])]

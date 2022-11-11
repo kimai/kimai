@@ -10,8 +10,6 @@
 namespace App\Reporting\ProjectDetails;
 
 use App\Form\Type\ProjectType;
-use App\Repository\ProjectRepository;
-use App\Repository\Query\ProjectFormTypeQuery;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
