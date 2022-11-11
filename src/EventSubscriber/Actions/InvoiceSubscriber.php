@@ -35,7 +35,7 @@ class InvoiceSubscriber extends AbstractActionsSubscriber
         $allowCustomer = $this->isGranted('access', $invoice->getCustomer());
 
         if ($allowCustomer && $allowCreate) {
-            $event->addAction('edit', ['url' => $this->path('admin_invoice_edit', ['id' => $invoice->getId()]), 'class' => 'modal-ajax-form' ]);
+            $event->addAction('edit', ['url' => $this->path('admin_invoice_edit', ['id' => $invoice->getId()]), 'class' => 'modal-ajax-form']);
         }
 
         if ($allowCustomer && $allowView) {
