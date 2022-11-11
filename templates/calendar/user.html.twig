@@ -189,10 +189,12 @@
 
             document.querySelector('.fc-today-button').classList.remove('btn-icon');
             document.querySelector('.fc-header-toolbar').classList.toggle('row');
+            document.querySelector('.fc-header-toolbar').classList.add('p-3');
             const toolbar = document.querySelectorAll('.fc-header-toolbar .fc-toolbar-chunk');
-            toolbar[0].classList.add('col-md-4', 'col-xs-12', 'mb-1', 'text-start');
-            toolbar[1].classList.add('col-md-4', 'col-xs-12', 'mb-1', 'text-center');
-            toolbar[2].classList.add('col-md-4', 'col-xs-12', 'mb-1', 'text-end');
+            toolbar[0].parentElement.classList.add('p-3');
+            toolbar[0].classList.add('col-md-4', 'col-6', 'mb-1', 'text-start', 'order-xs-1');
+            toolbar[1].classList.add('col-md-4', 'col-12', 'mb-1', 'text-center', 'order-3');
+            toolbar[2].classList.add('col-md-4', 'col-6', 'mb-1', 'text-end', 'order-md-4', 'order-xs-2');
 
             KimaiReloadPageWidget.create('kimai.systemConfigUpdate', true);
         });
