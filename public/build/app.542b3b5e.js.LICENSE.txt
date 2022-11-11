@@ -69,6 +69,10 @@
  */
 
 /*!
+ * [KIMAI] KimaiContextMenu: help to create, position and display context menus
+ */
+
+/*!
  * [KIMAI] KimaiDatatable: handles functionality for the datatable
  */
 

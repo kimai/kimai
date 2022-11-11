@@ -48,6 +48,7 @@ import viLocale from '@fullcalendar/core/locales/vi';
 import enGbLocale from '@fullcalendar/core/locales/en-gb';
 import enUsLocale from '@fullcalendar/core/locales/en-gb';
 import KimaiColor from './KimaiColor';
+import KimaiContextMenu from "./KimaiContextMenu";
 
 export default class KimaiCalendar {
 
@@ -134,6 +135,7 @@ export default class KimaiCalendar {
             // https://fullcalendar.io/docs/height
             // auto makes the calendar too small
             // height: 'auto',
+            height: '80vh',
 
             // allow clicking e.g. week-numbers to change the view to this week
             navLinks: true,
@@ -249,41 +251,11 @@ export default class KimaiCalendar {
                     jsEvent.preventDefault();
                     const event = arg.event;
                     if (!event.allDay) {
-                        const dropdownElement = document.getElementById('calendar_dropdown');
-                        if (dropdownElement === null) {
-                            return;
-                        }
                         const url = this.options.url.actions(event.extendedProps.timesheet);
                         API.get(url, {}, result => {
-                            let html = '';
-                            for (const action in result) {
-                                const options = result[action];
-                                if (options === null || action === 'trash') {
-                                    html += '<div class="dropdown-divider"></div>';
-                                }
-                                if (options !== null) {
-                                    html += '<a class="dropdown-item ' + (options['class'] !== undefined ? options['class'] : '') +
-                                        '" href="' + (options['url'] !== undefined ? options['url'] : '#') + '"';
-                                    if (options['attr'] !== undefined) {
-                                        for (const attrName in options['attr']) {
-                                            html += ' ' + attrName + '="' + options['attr'][attrName].replaceAll('"', '&quot;') + '"';
-                                        }
-                                    }
-                                    html += '>' + (options.title ?? action) + '</a>';
-                                }
-                            }
-
-                            dropdownElement.innerHTML = html;
-                            dropdownElement.style.position = 'fixed';
-                            dropdownElement.style.top = (jsEvent.clientY) + 'px';
-                            dropdownElement.style.left = (jsEvent.clientX) + 'px';
-                            this.registerDropdownListener();
-                            dropdownElement.classList.remove('d-none');
-                            if (!dropdownElement.classList.contains('d-block')) {
-                                dropdownElement.classList.add('d-block');
-                            }
-
-                        }, (e) => { console.log('Failed to load actions', e); });
+                            const contextMenu = new KimaiContextMenu('calendar_contextMenu');
+                            contextMenu.createFromApi(jsEvent, result);
+                        }, (e) => { console.log('Failed to load actions for context menu', e); });
                     }
                 })
             },
@@ -492,22 +464,6 @@ export default class KimaiCalendar {
 
         // INITIALIZE CALENDAR
         this.calendar = new Calendar(element, calendarOptions);
-    }
-
-    registerDropdownListener() {
-        if (this.dropdownListener === undefined) {
-            this.dropdownListener = function() {
-                const dropdown = document.getElementById('calendar_dropdown');
-                if (dropdown === null) {
-                    return;
-                }
-                dropdown.classList.remove('d-block');
-                if (!dropdown.classList.contains('d-none')) {
-                    dropdown.classList.add('d-none');
-                }
-            }
-            document.addEventListener('click', this.dropdownListener);
-        }
     }
 
     /**
