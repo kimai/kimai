@@ -18,18 +18,17 @@ use Faker\Factory;
  */
 final class CustomerFixtures implements TestFixture
 {
-    /**
-     * @var int
-     */
-    private $amount = 0;
-    /**
-     * @var bool
-     */
-    private $isVisible = null;
+    private int $amount = 0;
+    private ?bool $isVisible = null;
     /**
      * @var callable
      */
     private $callback;
+
+    public function __construct(int $amount = 0)
+    {
+        $this->amount = $amount;
+    }
 
     /**
      * Will be called prior to persisting the object.

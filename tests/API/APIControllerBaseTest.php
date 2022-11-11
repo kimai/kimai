@@ -284,6 +284,16 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
     protected static function getExpectedResponseStructure(string $type): array
     {
         switch ($type) {
+            case 'PageActionItem':
+                return [
+                    'id' => 'string',
+                    'title' => '@string',
+                    'url' => '@string',
+                    'class' => '@string',
+                    'attr' => 'array',
+                    'divider' => 'bool'
+                ];
+
             case 'TagEntity':
                 return [
                     'id' => 'int',

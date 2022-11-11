@@ -63,12 +63,14 @@ class PageAction
     public function __construct(string $title, ?array $settings = null)
     {
         $this->id = $title;
+
         if ($settings !== null) {
             $this->title = $settings['title'] ?? $title;
-            $this->url = $settings['url'] ?? '';
-            $this->class = $settings['class'] ?? '';
+            $this->url = $settings['url'] ?? null;
+            $this->class = $settings['class'] ?? null;
             $this->attr = $settings['attr'] ?? [];
         }
+
         if ($title === 'trash' || (str_contains($title, 'divider') && empty($this->url))) {
             $this->divider = true;
         }

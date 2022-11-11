@@ -48,7 +48,7 @@ export default class KimaiContextMenu {
             }
 
             if (options['url'] !== null) {
-                html += '<a class="dropdown-item ' + (options['class'] !== undefined ? options['class'] : '') + '" href="' + options['url'] + '"';
+                html += '<a class="dropdown-item ' + (options['class'] !== null ? options['class'] : '') + '" href="' + options['url'] + '"';
 
                 if (options['attr'] !== undefined) {
                     for (const attrName in options['attr']) {

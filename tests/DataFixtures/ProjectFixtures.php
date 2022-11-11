@@ -19,14 +19,8 @@ use Faker\Factory;
  */
 final class ProjectFixtures implements TestFixture
 {
-    /**
-     * @var int
-     */
-    private $amount = 0;
-    /**
-     * @var bool
-     */
-    private $isVisible = null;
+    private int $amount = 0;
+    private ?bool $isVisible = null;
     /**
      * @var callable
      */
@@ -34,7 +28,12 @@ final class ProjectFixtures implements TestFixture
     /**
      * @var Customer[]
      */
-    private $customers = [];
+    private array $customers = [];
+
+    public function __construct(int $amount = 0)
+    {
+        $this->amount = $amount;
+    }
 
     public function getAmount(): int
     {

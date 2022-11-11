@@ -19,26 +19,22 @@ use Faker\Factory;
  */
 final class ActivityFixtures implements TestFixture
 {
-    /**
-     * @var int
-     */
-    private $amount = 0;
-    /**
-     * @var bool
-     */
-    private $isGlobal = false;
-    /**
-     * @var bool
-     */
-    private $isVisible = null;
+    private int $amount = 0;
+    private bool $isGlobal = false;
+    private ?bool $isVisible = null;
     /**
      * @var callable
      */
     private $callback;
     /**
-     * @var Project[]
+     * @var array<Project>
      */
-    private $projects = [];
+    private array $projects = [];
+
+    public function __construct(int $amount = 0)
+    {
+        $this->amount = $amount;
+    }
 
     /**
      * Will be called prior to persisting the object.
@@ -53,9 +49,6 @@ final class ActivityFixtures implements TestFixture
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getAmount(): int
     {
         return $this->amount;
