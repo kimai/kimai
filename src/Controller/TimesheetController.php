@@ -10,7 +10,6 @@
 namespace App\Controller;
 
 use App\Entity\Timesheet;
-use App\Event\PageActionsEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Export\ServiceExport;
 use App\Form\TimesheetEditForm;
@@ -33,31 +32,6 @@ class TimesheetController extends TimesheetAbstractController
         $query->setPage($page);
 
         return $this->index($query, $request, 'timesheet', 'timesheet_paginated', TimesheetMetaDisplayEvent::TIMESHEET);
-    }
-
-    #[Route(path: '/{id}/actions/{view}', name: 'get_timesheet_actions', requirements: ['id' => '\d+'], defaults: ['view' => 'custom'], methods: ['GET'])]
-    #[Security("is_granted('view', timesheet)")]
-    public function getActions(Timesheet $timesheet, string $view): Response
-    {
-        $themeEvent = new PageActionsEvent($this->getUser(), ['timesheet' => $timesheet], 'timesheet', $view);
-        $this->dispatcher->dispatch($themeEvent, $themeEvent->getEventName());
-
-        $translator = $this->getTranslator();
-
-        $all = [];
-        foreach ($themeEvent->getActions() as $timesheet => $action) {
-            if ($action !== null) {
-                $domain = \array_key_exists('translation_domain', $action) ? $action['translation_domain'] : 'messages';
-                if (!\array_key_exists('title', $action)) {
-                    $action['title'] = $translator->trans($timesheet, [], $domain);
-                } else {
-                    $action['title'] = $translator->trans($action['title'], [], $domain);
-                }
-            }
-            $all[$timesheet] = $action;
-        }
-
-        return $this->json($all);
     }
 
     #[Route(path: '/export/', name: 'timesheet_export', methods: ['GET', 'POST'])]

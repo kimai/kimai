@@ -168,7 +168,7 @@
                         return '{{ path(editRoute, {id: '-XX-'}) }}'.replace('-XX-', timesheetId);
                     },
                     actions: (timesheetId) => {
-                        return '{{ path('get_timesheet_actions', {id: 1, 'view': 'calendar'}) }}'.replace('1', timesheetId);
+                        return '{{ path('get_timesheet_actions', {id: 1, 'view': 'calendar', 'locale': (app.request.locale)}) }}'.replace('1', timesheetId);
                     },
                 },
                 preparePayloadForUpdate: (data) => {
