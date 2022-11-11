@@ -38,7 +38,7 @@ class ApiDocControllerTest extends ControllerBaseTest
             }
         }
 
-        $expectedKeys = ['Activity', 'Default', 'Customer', 'Project', 'Tag', 'Team', 'Timesheet', 'User'];
+        $expectedKeys = ['Actions', 'Activity', 'Default', 'Customer', 'Project', 'Tag', 'Team', 'Timesheet', 'User'];
         $actual = array_keys($tags);
 
         sort($actual);
@@ -54,6 +54,10 @@ class ApiDocControllerTest extends ControllerBaseTest
         $json = json_decode($client->getResponse()->getContent(), true);
 
         $paths = [
+            '/api/actions/timesheet/{id}/{view}/{locale}',
+            '/api/actions/activity/{id}/{view}/{locale}',
+            '/api/actions/project/{id}/{view}/{locale}',
+            '/api/actions/customer/{id}/{view}/{locale}',
             '/api/activities',
             '/api/activities/{id}',
             '/api/activities/{id}/meta',
