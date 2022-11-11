@@ -11,8 +11,6 @@ namespace App\Tests\Controller;
 
 use App\Entity\Activity;
 use App\Entity\Configuration;
-use App\Entity\Project;
-use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
