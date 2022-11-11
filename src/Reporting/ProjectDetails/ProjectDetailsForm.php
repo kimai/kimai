@@ -34,7 +34,7 @@ class ProjectDetailsForm extends AbstractType
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($builder, $projectOptions) {
+            function (FormEvent $event) use ($projectOptions) {
                 $data = $event->getData();
                 if (isset($data['project']) && !empty($data['project'])) {
                     $projectId = $data['project'];
