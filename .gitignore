@@ -3,6 +3,7 @@
 .env-*
 .idea/
 .DS_Store
+rector.php
 
 # for symfony local webserver
 php.ini
