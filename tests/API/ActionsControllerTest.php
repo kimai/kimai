@@ -30,18 +30,45 @@ class ActionsControllerTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $items = $this->importFixture(new TimesheetFixtures($this->getUserByRole(User::ROLE_USER), 1));
-        $this->assertAccessIsGranted($client, sprintf('/api/actions/timesheet/%s/index/en', $items[0]->getId()));
-        $result = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertIsArray($result);
-        foreach ($result as $item) {
-            self::assertApiResponseTypeStructure('PageActionItem', $item);
+        $views = [
+            'index' => [
+                'repeat',
+                'edit',
+                'copy',
+                'divider0',
+                'trash',
+            ],
+            'calendar' => [
+                'repeat',
+                'edit',
+                'copy',
+                'divider0',
+                'trash',
+            ],
+            'custom' => [
+                'repeat',
+                'edit',
+                'copy',
+                'divider0',
+            ],
+        ];
+
+        foreach ($views as $view => $entries) {
+            $this->assertAccessIsGranted($client, sprintf('/api/actions/timesheet/%s/%s/en', $items[0]->getId(), $view));
+            $result = json_decode($client->getResponse()->getContent(), true);
+
+            $this->assertIsArray($result);
+            foreach ($result as $item) {
+                self::assertApiResponseTypeStructure('PageActionItem', $item);
+            }
+
+            $i = 0;
+            foreach ($entries as $id) {
+                self::assertEquals($id, $result[$i]['id'], sprintf('Failed action "%s" with name "%s" in view "%s"', $i, $id, $view));
+                $i++;
+            }
         }
-
-        self::assertEquals('repeat', $result[0]['id']);
-        self::assertEquals('edit', $result[1]['id']);
-        self::assertEquals('copy', $result[2]['id']);
-        self::assertEquals('divider0', $result[3]['id']);
     }
 
     public function test_getActivityActions()
@@ -58,21 +85,40 @@ class ActionsControllerTest extends APIControllerBaseTest
         $activityFixture->setProjects($projects);
         $activities = $this->importFixture($activityFixture);
 
-        $this->assertAccessIsGranted($client, sprintf('/api/actions/activity/%s/index/en', $activities[0]->getId()));
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $views = [
+            'index' => [
+                'details',
+                'edit',
+                'permissions',
+                'divider0',
+                'filter',
+                'divider1',
+                'trash',
+            ],
+            'custom' => [
+                'details',
+                'edit',
+                'permissions',
+                'divider0',
+                'filter',
+            ],
+        ];
 
-        $this->assertIsArray($result);
-        foreach ($result as $item) {
-            self::assertApiResponseTypeStructure('PageActionItem', $item);
+        foreach ($views as $view => $entries) {
+            $this->assertAccessIsGranted($client, sprintf('/api/actions/activity/%s/%s/en', $activities[0]->getId(), $view));
+            $result = json_decode($client->getResponse()->getContent(), true);
+
+            $this->assertIsArray($result);
+            foreach ($result as $item) {
+                self::assertApiResponseTypeStructure('PageActionItem', $item);
+            }
+
+            $i = 0;
+            foreach ($entries as $id) {
+                self::assertEquals($id, $result[$i]['id'], sprintf('Failed action "%s" with name "%s" in view "%s"', $i, $id, $view));
+                $i++;
+            }
         }
-
-        self::assertEquals('details', $result[0]['id']);
-        self::assertEquals('edit', $result[1]['id']);
-        self::assertEquals('permissions', $result[2]['id']);
-        self::assertEquals('divider0', $result[3]['id']);
-        self::assertEquals('filter', $result[4]['id']);
-        self::assertEquals('divider1', $result[5]['id']);
-        self::assertEquals('trash', $result[6]['id']);
     }
 
     public function test_getProjectActions()
@@ -85,22 +131,43 @@ class ActionsControllerTest extends APIControllerBaseTest
         $projectFixture->setCustomers($customers);
         $projects = $this->importFixture($projectFixture);
 
-        $this->assertAccessIsGranted($client, sprintf('/api/actions/project/%s/index/en', $projects[0]->getId()));
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $views = [
+            'index' => [
+                'details',
+                'edit',
+                'permissions',
+                'divider0',
+                'filter',
+                'divider1',
+                'report_project_details',
+                'trash',
+            ],
+            'custom' => [
+                'details',
+                'edit',
+                'permissions',
+                'divider0',
+                'filter',
+                'divider1',
+                'report_project_details',
+            ],
+        ];
 
-        $this->assertIsArray($result);
-        foreach ($result as $item) {
-            self::assertApiResponseTypeStructure('PageActionItem', $item);
+        foreach ($views as $view => $entries) {
+            $this->assertAccessIsGranted($client, sprintf('/api/actions/project/%s/%s/en', $projects[0]->getId(), $view));
+            $result = json_decode($client->getResponse()->getContent(), true);
+
+            $this->assertIsArray($result);
+            foreach ($result as $item) {
+                self::assertApiResponseTypeStructure('PageActionItem', $item);
+            }
+
+            $i = 0;
+            foreach ($entries as $id) {
+                self::assertEquals($id, $result[$i]['id'], sprintf('Failed action "%s" with name "%s" in view "%s"', $i, $id, $view));
+                $i++;
+            }
         }
-
-        self::assertEquals('details', $result[0]['id']);
-        self::assertEquals('edit', $result[1]['id']);
-        self::assertEquals('permissions', $result[2]['id']);
-        self::assertEquals('divider0', $result[3]['id']);
-        self::assertEquals('filter', $result[4]['id']);
-        self::assertEquals('divider1', $result[5]['id']);
-        self::assertEquals('report_project_details', $result[6]['id']);
-        self::assertEquals('trash', $result[7]['id']);
     }
 
     public function test_getCustomerActions()
@@ -109,22 +176,43 @@ class ActionsControllerTest extends APIControllerBaseTest
 
         $customers = $this->importFixture(new CustomerFixtures(1));
 
-        $this->assertAccessIsGranted($client, sprintf('/api/actions/customer/%s/index/en', $customers[0]->getId()));
-        $result = json_decode($client->getResponse()->getContent(), true);
+        $views = [
+            'index' => [
+                'details',
+                'edit',
+                'permissions',
+                'vcard',
+                'divider0',
+                'filter',
+                'divider1',
+                'report',
+                'trash',
+            ],
+            'custom' => [
+                'details',
+                'edit',
+                'permissions',
+                'divider0',
+                'filter',
+                'divider1',
+                'report',
+            ],
+        ];
 
-        $this->assertIsArray($result);
-        foreach ($result as $item) {
-            self::assertApiResponseTypeStructure('PageActionItem', $item);
+        foreach ($views as $view => $entries) {
+            $this->assertAccessIsGranted($client, sprintf('/api/actions/customer/%s/%s/en', $customers[0]->getId(), $view));
+            $result = json_decode($client->getResponse()->getContent(), true);
+
+            $this->assertIsArray($result);
+            foreach ($result as $item) {
+                self::assertApiResponseTypeStructure('PageActionItem', $item);
+            }
+
+            $i = 0;
+            foreach ($entries as $id) {
+                self::assertEquals($id, $result[$i]['id'], sprintf('Failed action "%s" with name "%s" in view "%s"', $i, $id, $view));
+                $i++;
+            }
         }
-
-        self::assertEquals('details', $result[0]['id']);
-        self::assertEquals('edit', $result[1]['id']);
-        self::assertEquals('permissions', $result[2]['id']);
-        self::assertEquals('vcard', $result[3]['id']);
-        self::assertEquals('divider0', $result[4]['id']);
-        self::assertEquals('filter', $result[5]['id']);
-        self::assertEquals('divider1', $result[6]['id']);
-        self::assertEquals('report', $result[7]['id']);
-        self::assertEquals('trash', $result[8]['id']);
     }
 }
