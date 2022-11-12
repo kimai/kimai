@@ -76,7 +76,7 @@ export default class KimaiContextMenu {
         dropdownElement.style.top = (event.clientY) + 'px';
         dropdownElement.style.left = (event.clientX) + 'px';
 
-         const dropdownListener = () => {
+        const dropdownListener = () => {
             dropdownElement.classList.remove('d-block');
             if (!dropdownElement.classList.contains('d-none')) {
                 dropdownElement.classList.add('d-none');
