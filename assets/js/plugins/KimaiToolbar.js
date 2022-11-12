@@ -89,7 +89,9 @@ export default class KimaiToolbar extends KimaiPlugin {
                     }
                     const prevAction = form.getAttribute('action');
                     const prevMethod = form.getAttribute('method');
-                    form.target = '_blank';
+                    if (target.dataset.target !== undefined) {
+                        form.target = target.dataset.target;
+                    }
                     form.action = target.href;
                     if (target.dataset.method !== undefined) {
                         form.method = target.dataset.method;
@@ -105,7 +107,7 @@ export default class KimaiToolbar extends KimaiPlugin {
 
                 target = target.parentNode;
             }
-        });        
+        });
     }
 
     /**
