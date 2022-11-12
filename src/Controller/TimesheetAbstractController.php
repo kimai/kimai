@@ -540,7 +540,7 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    protected function getExportForm(TimesheetQuery $query): FormInterface
+    private function getExportForm(TimesheetQuery $query): FormInterface
     {
         return $this->createForm(TimesheetExportToolbarForm::class, $query, [
             'action' => $this->generateUrl($this->getExportRoute()),

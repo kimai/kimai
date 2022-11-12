@@ -127,7 +127,7 @@ final class ExportController extends AbstractController
         return $response;
     }
 
-    protected function getDefaultQuery(): ExportQuery
+    private function getDefaultQuery(): ExportQuery
     {
         $begin = $this->getDateTimeFactory()->getStartOfMonth();
         $end = $this->getDateTimeFactory()->getEndOfMonth();
@@ -145,7 +145,7 @@ final class ExportController extends AbstractController
      * @return ExportableItem[]
      * @throws TooManyItemsExportException
      */
-    protected function getEntries(ExportQuery $query): array
+    private function getEntries(ExportQuery $query): array
     {
         if (null !== $query->getBegin()) {
             $query->getBegin()->setTime(0, 0, 0);
@@ -157,7 +157,7 @@ final class ExportController extends AbstractController
         return $this->export->getExportItems($query);
     }
 
-    protected function getToolbarForm(ExportQuery $query, string $method): FormInterface
+    private function getToolbarForm(ExportQuery $query, string $method): FormInterface
     {
         return $this->createForm(ExportToolbarForm::class, $query, [
             'action' => $this->generateUrl('export', []),

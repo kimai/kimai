@@ -123,7 +123,7 @@ final class ProjectController extends AbstractController
      * @param ProjectQuery $query
      * @return MetaTableTypeInterface[]
      */
-    protected function findMetaColumns(ProjectQuery $query): array
+    private function findMetaColumns(ProjectQuery $query): array
     {
         $event = new ProjectMetaDisplayEvent($query, ProjectMetaDisplayEvent::PROJECT);
         $this->dispatcher->dispatch($event);
@@ -537,7 +537,7 @@ final class ProjectController extends AbstractController
         return $writer->getFileResponse($spreadsheet);
     }
 
-    protected function getToolbarForm(ProjectQuery $query): FormInterface
+    private function getToolbarForm(ProjectQuery $query): FormInterface
     {
         return $this->createForm(ProjectToolbarForm::class, $query, [
             'action' => $this->generateUrl('admin_project', [

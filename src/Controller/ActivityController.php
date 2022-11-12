@@ -113,7 +113,7 @@ final class ActivityController extends AbstractController
      * @param ActivityQuery $query
      * @return MetaTableTypeInterface[]
      */
-    protected function findMetaColumns(ActivityQuery $query): array
+    private function findMetaColumns(ActivityQuery $query): array
     {
         $event = new ActivityMetaDisplayEvent($query, ActivityMetaDisplayEvent::ACTIVITY);
         $this->dispatcher->dispatch($event);
@@ -414,11 +414,7 @@ final class ActivityController extends AbstractController
         return $writer->getFileResponse($spreadsheet);
     }
 
-    /**
-     * @param ActivityQuery $query
-     * @return FormInterface
-     */
-    protected function getToolbarForm(ActivityQuery $query): FormInterface
+    private function getToolbarForm(ActivityQuery $query): FormInterface
     {
         return $this->createForm(ActivityToolbarForm::class, $query, [
             'action' => $this->generateUrl('admin_activity', [
@@ -428,10 +424,6 @@ final class ActivityController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Activity $activity
-     * @return FormInterface
-     */
     private function createEditForm(Activity $activity): FormInterface
     {
         $currency = $this->configuration->getCustomerDefaultCurrency();
