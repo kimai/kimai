@@ -20,7 +20,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[Route(path: '/admin/plugins')]
 #[Security("is_granted('plugins')")]
-class PluginController extends AbstractController
+final class PluginController extends AbstractController
 {
     #[Route(path: '/', name: 'plugins', methods: ['GET'])]
     public function indexAction(PluginManager $manager, HttpClientInterface $client, CacheInterface $cache): Response

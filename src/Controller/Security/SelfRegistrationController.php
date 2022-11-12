@@ -30,7 +30,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[Route(path: '/register')]
-class SelfRegistrationController extends AbstractController
+final class SelfRegistrationController extends AbstractController
 {
     public function __construct(
         private EventDispatcherInterface $eventDispatcher,

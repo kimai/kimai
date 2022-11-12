@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 #[Route(path: '/homepage')]
 #[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
-class HomepageController extends AbstractController
+final class HomepageController extends AbstractController
 {
     #[Route(path: '', defaults: [], name: 'homepage', methods: ['GET'])]
     public function indexAction(Request $request, LocaleService $service): Response

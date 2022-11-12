@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/admin/tags')]
 #[Security("is_granted('view_tag')")]
-class TagController extends AbstractController
+final class TagController extends AbstractController
 {
     /**
      * @param TagRepository $repository

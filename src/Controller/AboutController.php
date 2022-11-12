@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/about')]
-class AboutController extends AbstractController
+final class AboutController extends AbstractController
 {
     public function __construct(private string $projectDirectory)
     {

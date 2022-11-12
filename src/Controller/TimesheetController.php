@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/timesheet')]
 #[Security("is_granted('view_own_timesheet')")]
-class TimesheetController extends TimesheetAbstractController
+final class TimesheetController extends TimesheetAbstractController
 {
     #[Route(path: '/', defaults: ['page' => 1], name: 'timesheet', methods: ['GET'])]
     #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'timesheet_paginated', methods: ['GET'])]

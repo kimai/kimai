@@ -29,7 +29,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/team/timesheet')]
 #[Security("is_granted('view_other_timesheet')")]
-class TimesheetTeamController extends TimesheetAbstractController
+final class TimesheetTeamController extends TimesheetAbstractController
 {
     /**
      * @param int $page

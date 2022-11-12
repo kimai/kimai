@@ -25,7 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 #[Route(path: '/calendar')]
 #[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
-class CalendarController extends AbstractController
+final class CalendarController extends AbstractController
 {
     public function __construct(private CalendarService $calendarService, private SystemConfiguration $configuration, private TrackingModeService $service)
     {

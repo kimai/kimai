@@ -27,7 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 #[Route(path: '/export')]
 #[Security("is_granted('create_export')")]
-class ExportController extends AbstractController
+final class ExportController extends AbstractController
 {
     public function __construct(private ServiceExport $export)
     {

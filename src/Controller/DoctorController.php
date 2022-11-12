@@ -23,7 +23,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 #[Route(path: '/doctor')]
 #[Security("is_granted('system_information')")]
-class DoctorController extends AbstractController
+final class DoctorController extends AbstractController
 {
     /**
      * Required PHP extensions for Kimai.

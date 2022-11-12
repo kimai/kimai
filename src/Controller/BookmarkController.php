@@ -23,7 +23,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  * This does not go into the API, because it is ONLY related to the Web UI.
  */
 #[Route(path: '/bookmark')]
-class BookmarkController extends AbstractController
+final class BookmarkController extends AbstractController
 {
     public const DATATABLE_TOKEN = 'datatable_update';
     public const PARAM_TOKEN_NAME = 'datatable_token';

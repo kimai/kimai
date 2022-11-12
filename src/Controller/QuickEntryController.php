@@ -27,7 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 #[Route(path: '/quick_entry')]
 #[Security("is_granted('quick-entry')")]
-class QuickEntryController extends AbstractController
+final class QuickEntryController extends AbstractController
 {
     public function __construct(private SystemConfiguration $configuration, private TimesheetService $timesheetService, private TimesheetRepository $repository)
     {
