@@ -41,7 +41,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         // there are no records by default in the test database
         $this->assertHasNoEntriesWithFilter($client);
         $this->assertPageActions($client, [
-            'download toolbar-action modal-ajax-form' => $this->createUrl('/timesheet/export/'),
+            'download modal-ajax-form' => $this->createUrl('/timesheet/export/'),
             'create modal-ajax-form' => $this->createUrl('/timesheet/create'),
         ]);
     }
@@ -146,11 +146,9 @@ class TimesheetControllerTest extends ControllerBaseTest
         $dateRange = $this->formatDateRange(new \DateTime('-10 days'), new \DateTime());
 
         $client->submitForm('export-btn-print', [
-            'export' => [
-                'state' => 1,
-                'daterange' => $dateRange,
-                'customers' => [],
-            ]
+            'state' => 1,
+            'daterange' => $dateRange,
+            'customers' => [],
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());

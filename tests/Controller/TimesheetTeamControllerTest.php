@@ -43,7 +43,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertHasNoEntriesWithFilter($client);
 
         $this->assertPageActions($client, [
-            'download toolbar-action modal-ajax-form' => $this->createUrl('/team/timesheet/export/'),
+            'download modal-ajax-form' => $this->createUrl('/team/timesheet/export/'),
             'create create-ts modal-ajax-form' => $this->createUrl('/team/timesheet/create'),
             'multi-user create-ts-mu modal-ajax-form' => $this->createUrl('/team/timesheet/create_mu'),
         ]);
@@ -142,11 +142,9 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $dateRange = $this->formatDateRange(new \DateTime('-10 days'), new \DateTime());
 
         $client->submitForm('export-btn-print', [
-            'export' => [
-                'state' => 1,
-                'daterange' => $dateRange,
-                'customers' => [],
-            ]
+            'state' => 1,
+            'daterange' => $dateRange,
+            'customers' => [],
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
