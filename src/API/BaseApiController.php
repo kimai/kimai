@@ -13,6 +13,8 @@ use App\Entity\User;
 use App\Timesheet\DateTimeFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method null|User getUser()
@@ -22,6 +24,13 @@ abstract class BaseApiController extends AbstractController
     public const DATE_ONLY_FORMAT = 'yyyy-MM-dd';
     public const DATE_FORMAT = DateTimeType::HTML5_FORMAT;
     public const DATE_FORMAT_PHP = 'Y-m-d\TH:i:s';
+
+    protected function createSearchForm(string $type = FormType::class, $data = null, array $options = []): FormInterface
+    {
+        return $this->container
+            ->get('form.factory')
+            ->createNamed('', $type, $data, array_merge(['method' => 'GET'], $options));
+    }
 
     protected function getDateTimeFactory(?User $user = null): DateTimeFactory
     {
