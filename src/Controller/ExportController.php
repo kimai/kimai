@@ -159,7 +159,7 @@ final class ExportController extends AbstractController
 
     private function getToolbarForm(ExportQuery $query, string $method): FormInterface
     {
-        return $this->createForm(ExportToolbarForm::class, $query, [
+        return $this->createSearchForm(ExportToolbarForm::class, $query, [
             'action' => $this->generateUrl('export', []),
             'include_user' => $this->isGranted('view_other_timesheet'),
             'include_export' => $this->isGranted('edit_export_other_timesheet'),

@@ -10,22 +10,17 @@
 namespace App\Form\Toolbar;
 
 use App\Repository\Query\TimesheetQuery;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used for filtering the timesheet.
  */
-class TimesheetExportToolbarForm extends AbstractToolbarForm
+class TimesheetExportToolbarForm extends AbstractType
 {
-    public function getBlockPrefix(): string
-    {
-        return 'export';
-    }
+    use ToolbarFormTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $newOptions = [];
@@ -49,9 +44,6 @@ class TimesheetExportToolbarForm extends AbstractToolbarForm
         $this->addOrderBy($builder, TimesheetQuery::TIMESHEET_ORDER_ALLOWED);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

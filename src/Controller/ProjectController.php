@@ -539,11 +539,10 @@ final class ProjectController extends AbstractController
 
     private function getToolbarForm(ProjectQuery $query): FormInterface
     {
-        return $this->createForm(ProjectToolbarForm::class, $query, [
+        return $this->createSearchForm(ProjectToolbarForm::class, $query, [
             'action' => $this->generateUrl('admin_project', [
                 'page' => $query->getPage(),
             ]),
-            'method' => 'GET',
         ]);
     }
 

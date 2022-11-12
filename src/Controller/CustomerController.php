@@ -564,11 +564,10 @@ final class CustomerController extends AbstractController
 
     private function getToolbarForm(CustomerQuery $query): FormInterface
     {
-        return $this->createForm(CustomerToolbarForm::class, $query, [
+        return $this->createSearchForm(CustomerToolbarForm::class, $query, [
             'action' => $this->generateUrl('admin_customer', [
                 'page' => $query->getPage(),
-            ]),
-            'method' => 'GET',
+            ])
         ]);
     }
 

@@ -10,6 +10,7 @@
 namespace App\Form\Toolbar;
 
 use App\Repository\Query\ExportQuery;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,11 +18,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Defines the form used for filtering timesheet entries for exports.
  */
-class ExportToolbarForm extends AbstractToolbarForm
+class ExportToolbarForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
+    use ToolbarFormTrait;
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addSearchTermInputField($builder);
@@ -37,7 +37,7 @@ class ExportToolbarForm extends AbstractToolbarForm
         $this->addTimesheetStateChoice($builder);
         $this->addBillableChoice($builder);
         $this->addExportStateChoice($builder);
-        $this->addExportRenderer($builder);
+        $builder->add('renderer', HiddenType::class, []);
         if ($options['include_export']) {
             $builder->add('markAsExported', HiddenType::class, [
                 'label' => 'mark_as_exported',
@@ -46,17 +46,6 @@ class ExportToolbarForm extends AbstractToolbarForm
         }
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     */
-    protected function addExportRenderer(FormBuilderInterface $builder)
-    {
-        $builder->add('renderer', HiddenType::class, []);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

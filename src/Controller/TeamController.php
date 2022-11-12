@@ -222,11 +222,10 @@ final class TeamController extends AbstractController
 
     private function getToolbarForm(TeamQuery $query): FormInterface
     {
-        return $this->createForm(TeamToolbarForm::class, $query, [
+        return $this->createSearchForm(TeamToolbarForm::class, $query, [
             'action' => $this->generateUrl('admin_team', [
                 'page' => $query->getPage(),
             ]),
-            'method' => 'GET',
         ]);
     }
 }

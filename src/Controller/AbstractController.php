@@ -37,11 +37,16 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         return $this->container->get('translator');
     }
 
+    protected function createSearchForm(string $type = FormType::class, $data = null, array $options = []): FormInterface
+    {
+        return $this->createFormForGetRequest($type, $data, $options);
+    }
+
     protected function createFormForGetRequest(string $type = FormType::class, $data = null, array $options = []): FormInterface
     {
         return $this->container
             ->get('form.factory')
-            ->createNamed('', $type, $data, $options);
+            ->createNamed('', $type, $data, array_merge(['method' => 'GET'], $options));
     }
 
     protected function createFormWithName(string $name, string $type, mixed $data = null, array $options = []): FormInterface
@@ -271,12 +276,17 @@ abstract class AbstractController extends BaseAbstractController implements Serv
             return true;
         }
 
-        $submitData = $request->query->all();
-        // allow using forms with block-prefix
+        $queryKey = null;
         if (!empty($formName = $form->getConfig()->getName()) && $request->request->has($formName)) {
-            $submitData = $request->request->all($formName);
+            // allow using forms with block-prefix
+            $queryKey = $formName;
         }
 
+        if ($request->isMethod(Request::METHOD_POST)) {
+            $submitData = $request->request->all($queryKey);
+        } else {
+            $submitData = $request->query->all($queryKey);
+        }
         $searchName = $this->getSearchName($data);
 
         /** @var BookmarkRepository $bookmarkRepo */

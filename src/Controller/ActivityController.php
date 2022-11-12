@@ -416,11 +416,10 @@ final class ActivityController extends AbstractController
 
     private function getToolbarForm(ActivityQuery $query): FormInterface
     {
-        return $this->createForm(ActivityToolbarForm::class, $query, [
+        return $this->createSearchForm(ActivityToolbarForm::class, $query, [
             'action' => $this->generateUrl('admin_activity', [
                 'page' => $query->getPage(),
-            ]),
-            'method' => 'GET',
+            ])
         ]);
     }
 

@@ -182,11 +182,10 @@ final class TagController extends AbstractController
 
     private function getToolbarForm(TagQuery $query): FormInterface
     {
-        return $this->createForm(TagToolbarForm::class, $query, [
+        return $this->createSearchForm(TagToolbarForm::class, $query, [
             'action' => $this->generateUrl('tags', [
                 'page' => $query->getPage(),
             ]),
-            'method' => 'GET',
         ]);
     }
 }

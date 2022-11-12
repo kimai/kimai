@@ -690,9 +690,8 @@ final class InvoiceController extends AbstractController
 
     private function getToolbarForm(InvoiceQuery $query): FormInterface
     {
-        return $this->createFormForGetRequest(InvoiceToolbarForm::class, $query, [
+        return $this->createSearchForm(InvoiceToolbarForm::class, $query, [
             'action' => $this->generateUrl('invoice', []),
-            'method' => 'GET',
             'include_user' => $this->isGranted('view_other_timesheet'),
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'attr' => [
@@ -703,9 +702,8 @@ final class InvoiceController extends AbstractController
 
     private function getArchiveToolbarForm(InvoiceArchiveQuery $query): FormInterface
     {
-        return $this->createForm(InvoiceArchiveForm::class, $query, [
+        return $this->createSearchForm(InvoiceArchiveForm::class, $query, [
             'action' => $this->generateUrl('admin_invoice_list', []),
-            'method' => 'GET',
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'attr' => [
                 'id' => 'invoice-archive-form'

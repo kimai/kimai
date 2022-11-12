@@ -10,6 +10,7 @@
 namespace App\Form\Toolbar;
 
 use App\Repository\Query\ActivityQuery;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,11 +18,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Defines the form used for filtering the activities.
  */
-class ActivityToolbarForm extends AbstractToolbarForm
+class ActivityToolbarForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
+    use ToolbarFormTrait;
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $newOptions = [];
@@ -49,9 +49,6 @@ class ActivityToolbarForm extends AbstractToolbarForm
         $this->addOrderBy($builder, ActivityQuery::ACTIVITY_ORDER_ALLOWED);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

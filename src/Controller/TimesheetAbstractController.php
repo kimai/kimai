@@ -530,19 +530,18 @@ abstract class TimesheetAbstractController extends AbstractController
 
     protected function getToolbarForm(TimesheetQuery $query): FormInterface
     {
-        return $this->createForm(TimesheetToolbarForm::class, $query, [
+        return $this->createSearchForm(TimesheetToolbarForm::class, $query, [
             'action' => $this->generateUrl($this->getTimesheetRoute(), [
                 'page' => $query->getPage(),
             ]),
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
-            'method' => Request::METHOD_GET,
             'include_user' => $this->includeUserInForms('toolbar'),
         ]);
     }
 
     private function getExportForm(TimesheetQuery $query): FormInterface
     {
-        return $this->createForm(TimesheetExportToolbarForm::class, $query, [
+        return $this->createSearchForm(TimesheetExportToolbarForm::class, $query, [
             'action' => $this->generateUrl($this->getExportRoute()),
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'method' => Request::METHOD_POST,

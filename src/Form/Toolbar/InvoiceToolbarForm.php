@@ -12,14 +12,17 @@ namespace App\Form\Toolbar;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\InvoiceTemplateType;
 use App\Repository\Query\InvoiceQuery;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Defines the form used for filtering timesheet entries for invoices.
  */
-class InvoiceToolbarForm extends AbstractToolbarForm
+class InvoiceToolbarForm extends AbstractType
 {
+    use ToolbarFormTrait;
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addTemplateChoice($builder);
