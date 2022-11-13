@@ -6,7 +6,7 @@
         "/build/app.3b60521e.js"
       ],
       "css": [
-        "/build/app.afec2bc7.css"
+        "/build/app.10e516b9.css"
       ]
     },
     "export-pdf": {
@@ -64,7 +64,7 @@
   "integrity": {
     "/build/runtime.f0079159.js": "sha384-H22sAW1aTvyIPqvHOvGXWSWTxf0y6mptp+MsVmyXCfjx/WJjBbhX9gbUZ+qIuihV",
     "/build/app.3b60521e.js": "sha384-nDclNGPAA9kowoChCrnpOoaDlbvSX2ntUc5ASo/17lvzpSpAe6deYWsW6UYTPzVt",
-    "/build/app.afec2bc7.css": "sha384-rCmFJ+H41y9OyWg39b89UWlGq5SK5Kq7XY0UfFTiRbLSfHWgZsdK9cGXxrhTlu4g",
+    "/build/app.10e516b9.css": "sha384-6BrC/k2+2ecGniq1VHI9SX+4moyoRSmA2VfbNGIrNgfqSPi63hJuUl+MXjPqNlTx",
     "/build/export-pdf.587575e7.js": "sha384-J50GStmmfVwUTN4dIRQ02eg9hyzGFPSzpTtpPody92j0V6zCqw+s5l8+ZhVTugeW",
     "/build/export-pdf.d8a6c23b.css": "sha384-ztepocHE4rnGE9eKZ4kL6jTKaePUyiwiB9TjJjstjpf/ckcKg1HedrEOOk/8ElJg",
     "/build/invoice.c8ae95ad.js": "sha384-2eVY7MBiMQxo1vhfizU+fYfEZbz9bYUdzqxnpTQhxpYiLaxeSV4WnaObq2G7/Pks",

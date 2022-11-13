@@ -21,13 +21,18 @@
         width: 500px;
     }
 }
-/*
-@include media-breakpoint-down(md) {
-    h1.navbar-brand {
-        display: none;
+
+/* Format the company title in the left navigation, as Tabler is optimized for an image only */
+h1.navbar-brand a {
+    span {
+        display: inline-block;
+        padding-top: 0.5rem;
+    }
+    &:hover {
+        text-decoration: none;
     }
 }
-*/
+
 .page-actions .dropdown-menu,
 #export-buttons .dropdown-menu,
 .inline-search .dropdown-menu {
