@@ -66,7 +66,7 @@ class UserType extends AbstractType
             ],
             'attr' => [
                 'data-select-attributes' => 'color,title,username,initials,accountNumber,alias',
-                'data-renderer' =>'color',
+                'data-renderer' => 'color',
             ],
         ]);
 
