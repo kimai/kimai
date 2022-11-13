@@ -92,6 +92,7 @@ jobs:
                     TEST_WITH_BUNDLES: 1
 
             -   name: Upload code coverage
+                if: matrix.php == '8.1'
                 uses: codecov/codecov-action@v3
                 with:
                     token: ${{ secrets.CODECOV_TOKEN }}
