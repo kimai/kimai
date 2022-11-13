@@ -240,10 +240,6 @@ abstract class AbstractController extends BaseAbstractController implements Serv
         return substr($query->getName(), 0, 50);
     }
 
-    /**
-     * @param Request $request
-     * @internal
-     */
     protected function ignorePersistedSearch(Request $request): void
     {
         $request->query->set('performSearch', true);
