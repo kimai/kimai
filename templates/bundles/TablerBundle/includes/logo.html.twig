@@ -1,0 +1,16 @@
+<a href="{{ path('tabler_welcome'|tabler_route) }}" title="{{ 'dashboard.title'|trans }}" data-toggle="tooltip" data-placement="bottom">
+    {% set logo = config('theme.branding.logo') %}
+    {% set company = config('theme.branding.company') %}
+    {% if company is not empty %}
+        <span>{{ company }}</span>
+    {% elseif logo is not empty %}
+        <img src="{{ logo }}" class="navbar-brand-image" style="max-height:32px" alt="">
+    {% elseif tabler_bundle.getLogoUrl() is not empty %}
+        <img
+                class="navbar-brand-image"
+                src="{% if '://' in tabler_bundle.getLogoUrl() %}{{ tabler_bundle.getLogoUrl() }}{% else %}{{ asset(tabler_bundle.getLogoUrl()) }}{% endif %}"
+                width="110" height="32"
+                alt=""
+        >
+    {% endif %}
+</a>
