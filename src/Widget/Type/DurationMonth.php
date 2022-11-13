@@ -33,7 +33,7 @@ final class DurationMonth extends AbstractCounterDuration
         return 'stats.durationMonth';
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         $this->setQueryWithUser(false);
         $this->setBegin('first day of this month 00:00:00');

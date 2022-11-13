@@ -23,7 +23,7 @@ final class AmountMonth extends AbstractAmountPeriod
         return 'AmountMonth';
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         return $this->getRevenue('first day of this month 00:00:00', 'last day of this month 23:59:59', $options);
     }

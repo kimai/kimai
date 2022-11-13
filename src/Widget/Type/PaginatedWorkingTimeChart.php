@@ -81,7 +81,7 @@ final class PaginatedWorkingTimeChart extends AbstractWidget
         return $lastWeekInYear->format('W') === '53' ? 53 : 52;
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         $user = $this->getUser();
 

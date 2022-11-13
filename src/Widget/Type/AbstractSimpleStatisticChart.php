@@ -114,7 +114,7 @@ abstract class AbstractSimpleStatisticChart extends AbstractWidgetType
      * @return mixed|null
      * @throws WidgetException
      */
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         try {
             $user = null;

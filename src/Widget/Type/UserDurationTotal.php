@@ -28,7 +28,7 @@ final class UserDurationTotal extends AbstractCounterDuration
         return 'userDurationTotal';
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         $this->setQueryWithUser(true);
 

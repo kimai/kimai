@@ -20,7 +20,7 @@ abstract class AbstractCounterDuration extends AbstractSimpleStatisticChart
         ], parent::getOptions($options));
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         $this->setQuery(TimesheetRepository::STATS_QUERY_DURATION);
 

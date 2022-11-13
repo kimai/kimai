@@ -28,7 +28,7 @@ final class UserDurationMonth extends AbstractCounterDuration
         return 'userDurationMonth';
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         $this->setQueryWithUser(true);
         $this->setBegin('first day of this month 00:00:00');

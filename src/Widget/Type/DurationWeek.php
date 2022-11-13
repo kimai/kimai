@@ -33,7 +33,7 @@ final class DurationWeek extends AbstractCounterDuration
         return 'stats.durationWeek';
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         $this->setQueryWithUser(false);
         $this->setBegin('monday this week 00:00:00');

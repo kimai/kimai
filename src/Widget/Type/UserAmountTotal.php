@@ -23,7 +23,7 @@ final class UserAmountTotal extends AbstractUserRevenuePeriod
         return 'UserAmountTotal';
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         return $this->getRevenue(null, null, $options);
     }

@@ -34,7 +34,7 @@ final class ActiveTimesheets extends AbstractSimpleStatisticChart
         return 'stats.activeRecordings';
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         $this->setQueryWithUser(false);
         $this->setQuery(TimesheetRepository::STATS_QUERY_ACTIVE);

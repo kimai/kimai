@@ -23,7 +23,7 @@ final class UserAmountToday extends AbstractUserRevenuePeriod
         return 'UserAmountToday';
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         return $this->getRevenue('00:00:00', '23:59:59', $options);
     }

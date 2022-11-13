@@ -23,7 +23,7 @@ final class ActiveUsersToday extends AbstractActiveUsers
         return 'activeUsersToday';
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         $this->setBegin('00:00:00');
         $this->setEnd('23:59:59');

@@ -23,7 +23,7 @@ final class ActiveUsersWeek extends AbstractActiveUsers
         return 'activeUsersWeek';
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         $this->setBegin('monday this week 00:00:00');
         $this->setEnd('sunday this week 23:59:59');

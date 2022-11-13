@@ -51,7 +51,7 @@ final class UserAmountYear extends AbstractCounterYear
         ], parent::getOptions($options));
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         $this->setQuery(TimesheetRepository::STATS_QUERY_RATE);
         $this->setQueryWithUser(true);

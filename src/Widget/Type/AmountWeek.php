@@ -23,7 +23,7 @@ final class AmountWeek extends AbstractAmountPeriod
         return 'AmountWeek';
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         return $this->getRevenue('monday this week 00:00:00', 'sunday this week 23:59:59', $options);
     }

@@ -23,7 +23,7 @@ final class ActiveUsersTotal extends AbstractActiveUsers
         return 'activeUsersTotal';
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         return parent::getData($options);
     }

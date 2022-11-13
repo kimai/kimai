@@ -28,7 +28,7 @@ final class UserDurationToday extends AbstractCounterDuration
         return 'userDurationToday';
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         $this->setQueryWithUser(true);
         $this->setBegin('00:00:00');

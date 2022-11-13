@@ -59,7 +59,7 @@ class UserTeamProjects extends AbstractWidget
         return 'UserTeamProjects';
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         $user = $this->getUser();
         $now = new \DateTime('now', new \DateTimeZone($user->getTimezone()));

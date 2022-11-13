@@ -22,7 +22,7 @@ final class DurationYear extends AbstractCounterYear
         ], parent::getOptions($options));
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         $this->setQuery(TimesheetRepository::STATS_QUERY_DURATION);
         $this->setQueryWithUser(false);

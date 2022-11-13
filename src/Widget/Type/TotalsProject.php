@@ -33,7 +33,7 @@ final class TotalsProject extends AbstractWidget
         ], parent::getOptions($options));
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         $user = $this->getUser();
         $query = new ProjectQuery();

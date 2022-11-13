@@ -33,7 +33,7 @@ final class DurationToday extends AbstractCounterDuration
         return 'stats.durationToday';
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         $this->setQueryWithUser(false);
         $this->setBegin('00:00:00');

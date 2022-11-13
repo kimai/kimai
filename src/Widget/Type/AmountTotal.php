@@ -28,7 +28,7 @@ final class AmountTotal extends AbstractAmountPeriod
         return ['view_all_data'];
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         return $this->getRevenue(null, null, $options);
     }

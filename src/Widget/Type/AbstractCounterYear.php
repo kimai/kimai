@@ -22,7 +22,7 @@ abstract class AbstractCounterYear extends AbstractSimpleStatisticChart
         parent::__construct($repository);
     }
 
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         $this->setBegin('01 january this year 00:00:00');
         $this->setEnd('31 december this year 23:59:59');

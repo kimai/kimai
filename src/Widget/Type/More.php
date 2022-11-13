@@ -27,7 +27,7 @@ class More extends AbstractWidgetType
      * @param array $options
      * @return mixed|null
      */
-    public function getData(array $options = [])
+    public function getData(array $options = []): mixed
     {
         return $this->data;
     }
