@@ -41,12 +41,12 @@ jobs:
 
             -   name: Determine composer cache directory
                 id: composer-cache
-                run: "echo \"::set-output name=directory::$(composer config cache-dir)\""
+                run: echo "composer_cache_directory=$(composer config cache-dir)" >> $GITHUB_STATE
 
             -   name: Cache Composer dependencies
                 uses: actions/cache@v3
                 with:
-                    path: "${{ steps.composer-cache.outputs.directory }}"
+                    path: "${{ env.composer_cache_directory }}"
                     key: ${{ runner.os }}-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
 
             -   name: Install dependencies
@@ -92,7 +92,7 @@ jobs:
                     TEST_WITH_BUNDLES: 1
 
             -   name: Upload code coverage
-                uses: codecov/codecov-action@v2
+                uses: codecov/codecov-action@v3
                 with:
                     token: ${{ secrets.CODECOV_TOKEN }}
                     files: ./coverage.xml
