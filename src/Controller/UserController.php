@@ -69,7 +69,9 @@ final class UserController extends AbstractController
         $table->setReloadEvents('kimai.userUpdate');
 
         $table->addColumn('avatar', ['class' => 'alwaysVisible w-avatar', 'title' => null, 'orderBy' => false]);
-        $table->addColumn('alias', ['class' => 'alwaysVisible']);
+        $table->addColumn('user', ['class' => 'alwaysVisible', 'orderBy' => 'user']);
+        $table->addColumn('username', ['class' => 'd-none']);
+        $table->addColumn('alias', ['class' => 'd-none']);
         $table->addColumn('account_number', ['class' => 'd-none']);
         $table->addColumn('title', ['class' => 'd-none']);
         $table->addColumn('email', ['class' => 'd-none', 'orderBy' => false]);
@@ -77,7 +79,7 @@ final class UserController extends AbstractController
         $table->addColumn('roles', ['class' => 'd-none', 'orderBy' => false]);
 
         foreach ($event->getPreferences() as $userPreference) {
-            $table->addColumn('mf_' . $userPreference->getName(), ['title' => $userPreference->getLabel(), 'class' => 'd-none', 'orderBy' => false, 'translation_domain' => 'messages']);
+            $table->addColumn('mf_' . $userPreference->getName(), ['title' => $userPreference->getLabel(), 'class' => 'd-none', 'orderBy' => false, 'translation_domain' => 'messages', 'data' => $userPreference]);
         }
 
         $table->addColumn('team', ['class' => 'text-center w-min', 'orderBy' => false]);

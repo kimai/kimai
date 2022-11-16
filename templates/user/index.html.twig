@@ -3,34 +3,42 @@
 {% import "macros/datatables.html.twig" as tables %}
 {% import "user/actions.html.twig" as actions %}
 
-{% block datatable_row %}
-    <tr {{ widgets.user_row_attr(entry) }}>
-        <td class="{{ tables.class(dataTable, 'avatar') }}">{{ widgets.user_avatar(entry, false) }}</td>
-        <td class="{{ tables.class(dataTable, 'alias') }}">{{ widgets.username(entry) }}</td>
-        <td class="{{ tables.class(dataTable, 'account_number') }}">{{ entry.accountNumber }}</td>
-        <td class="{{ tables.class(dataTable, 'title') }}">{{ entry.title }}</td>
-        <td class="{{ tables.class(dataTable, 'email') }}">{{ entry.email }}</td>
-        <td class="{{ tables.class(dataTable, 'lastLogin') }}">{% if entry.lastLogin is not null %}{{ entry.lastLogin|date_time }}{% endif %}</td>
-        <td class="{{ tables.class(dataTable, 'roles') }}">
-            {% set showUserRole = entry.roles|length == 1 %}
-            {% for role in entry.roles %}
-                {% if showUserRole or role != 'ROLE_USER' %}
-                    {{ widgets.label_role(role) }}
-                {% endif %}
-            {% endfor %}
-        </td>
-        {% for pref in preferences %}
-            <td class="{{ tables.class(dataTable, 'mf_' ~ pref.name) }}">
-                {% set metaField = entry.preference(pref.name) %}
-                {% if not metaField is null and metaField.value is not null and metaField.value is not empty %}
-                    {{ widgets.form_type_value(pref.type, metaField.value, entry) }}
-                {% endif %}
-            </td>
+{% block datatable_row_attr %} {{ widgets.user_row_attr(entry) }}{% endblock %}
+
+{% block datatable_column_value %}
+    {% if column == 'avatar' %}
+        {{ widgets.user_avatar(entry, false) }}
+    {% elseif column == 'alias' %}
+        {{ entry.alias }}
+    {% elseif column == 'user' %}
+        {{ widgets.username(entry) }}
+    {% elseif column == 'username' %}
+        {{ entry.username }}
+    {% elseif column == 'account_number' %}
+        {{ entry.accountNumber }}
+    {% elseif column == 'title' %}
+        {{ entry.title }}
+    {% elseif column == 'email' %}
+        {{ entry.email }}
+    {% elseif column == 'lastLogin' %}
+        {% if entry.lastLogin is not null %}{{ entry.lastLogin|date_time }}{% endif %}
+    {% elseif column == 'roles' %}
+        {% set showUserRole = entry.roles|length == 1 %}
+        {% for role in entry.roles %}
+            {% if showUserRole or role != 'ROLE_USER' %}
+                {{ widgets.label_role(role) }}
+            {% endif %}
         {% endfor %}
-        <td class="{{ tables.class(dataTable, 'team') }}">
-            {{ widgets.badge_team_access(entry.teams) }}
-        </td>
-        <td class="{{ tables.class(dataTable, 'active') }}">{{ widgets.label_visible(entry.enabled) }}</td>
-        <td class="{{ tables.class(dataTable, 'actions') }}">{{ actions.user(entry, 'index') }}</td>
-    </tr>
+    {% elseif column == 'team' %}
+        {{ widgets.badge_team_access(entry.teams) }}
+    {% elseif column == 'active' %}
+        {{ widgets.label_visible(entry.enabled) }}
+    {% elseif column == 'actions' %}
+        {{ actions.user(entry, 'index') }}
+    {% elseif column starts with 'mf_' %}
+        {% set metaField = entry.preference(data.name) %}
+        {% if not metaField is null and metaField.value is not null and metaField.value is not empty %}
+            {{ widgets.form_type_value(data.type, metaField.value, entry) }}
+        {% endif %}
+    {% endif %}
 {% endblock %}

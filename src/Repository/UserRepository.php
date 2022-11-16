@@ -301,8 +301,20 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         $qb
             ->select('u')
             ->from(User::class, 'u')
-            ->orderBy('u.' . $query->getOrderBy(), $query->getOrder())
         ;
+
+        foreach ($query->getOrderGroups() as $orderBy => $order) {
+            switch ($orderBy) {
+                case 'user':
+                    $qb->addSelect('COALESCE(u.alias, u.username) as HIDDEN userOrder');
+                    $orderBy = 'userOrder';
+                    break;
+                default:
+                    $orderBy = 'u.' . $orderBy;
+                    break;
+            }
+            $qb->addOrderBy($orderBy, $order);
+        }
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
