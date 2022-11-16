@@ -1,8 +1,0 @@
-framework:
-    mailer:
-        dsn: 'null://null'
-
-when@prod:
-    framework:
-        mailer:
-            dsn: '%env(MAILER_URL)%'

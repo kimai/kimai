@@ -23,6 +23,15 @@ framework:
     php_errors:
         log: true
 
+    mailer:
+        # prevent that emails are sent out in dev systems
+        dsn: 'null://null'
+
+when@prod:
+    framework:
+        mailer:
+            dsn: '%env(MAILER_URL)%'
+
 when@test:
     framework:
         test: true
