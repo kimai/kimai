@@ -27,6 +27,7 @@ class CalendarTitlePatternType extends AbstractType
     public const PATTERN_ACTIVITY_DESCRIPTION = self::PATTERN_ACTIVITY . self::SPACER . self::PATTERN_DESCRIPTION;
     public const PATTERN_PROJECT_DESCRIPTION = self::PATTERN_PROJECT . self::SPACER . self::PATTERN_DESCRIPTION;
     public const PATTERN_CUSTOMER_DESCRIPTION = self::PATTERN_CUSTOMER . self::SPACER . self::PATTERN_DESCRIPTION;
+    public const PATTERN_PROJECT_CUSTOMER = self::PATTERN_PROJECT . self::SPACER . self::PATTERN_CUSTOMER;
 
     private $translator;
 
@@ -52,6 +53,7 @@ class CalendarTitlePatternType extends AbstractType
                 $activity . self::SPACER . $description => CalendarTitlePatternType::PATTERN_ACTIVITY_DESCRIPTION,
                 $project . self::SPACER . $description => CalendarTitlePatternType::PATTERN_PROJECT_DESCRIPTION,
                 $customer . self::SPACER . $description => CalendarTitlePatternType::PATTERN_CUSTOMER_DESCRIPTION,
+                $project . self::SPACER . $customer => CalendarTitlePatternType::PATTERN_PROJECT_CUSTOMER,
             ]
         ]);
     }
