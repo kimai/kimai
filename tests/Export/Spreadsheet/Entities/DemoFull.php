@@ -18,11 +18,11 @@ use App\Export\Annotation as Exporter;
 class DemoFull
 {
     #[Exporter\Expose(label: 'Public-Property', type: 'string')]
-    public $publicProperty = 'public-property';
+    public string $publicProperty = 'public-property';
     #[Exporter\Expose(name: 'fake-name', label: 'Protected-Property', type: 'boolean')]
-    protected $protectedProperty = false;
+    protected bool $protectedProperty = false;
     #[Exporter\Expose(label: 'Private-Property', type: 'integer')]
-    private $privateProperty = 123;
+    private int $privateProperty = 123; // @phpstan-ignore-line
 
     #[Exporter\Expose(label: 'Public-Method')]
     public function publicMethod(): string
@@ -47,6 +47,7 @@ class DemoFull
         return 12345;
     }
 
+    // @phpstan-ignore-next-line
     #[Exporter\Expose(name: 'fake-method', label: 'Private-Method', type: 'boolean')]
     private function privateMethod(): bool
     {

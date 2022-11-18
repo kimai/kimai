@@ -52,13 +52,12 @@ final class ActionsController extends BaseApiController
 
         $all = [];
         foreach ($event->getActions() as $name => $action) {
-            if ($action !== null) {
-                $domain = \array_key_exists('translation_domain', $action) ? $action['translation_domain'] : 'messages';
-                if (!\array_key_exists('title', $action)) {
-                    $action['title'] = $translator->trans($name, [], $domain, $locale);
-                } else {
-                    $action['title'] = $translator->trans($action['title'], [], $domain, $locale);
-                }
+            $action = $action === null ? [] : $action;
+            $domain = \array_key_exists('translation_domain', $action) ? $action['translation_domain'] : 'messages';
+            if (!\array_key_exists('title', $action)) {
+                $action['title'] = $translator->trans($name, [], $domain, $locale);
+            } else {
+                $action['title'] = $translator->trans($action['title'], [], $domain, $locale);
             }
             $all[] = new PageAction($name, $action);
         }

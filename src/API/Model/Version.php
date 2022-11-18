@@ -13,7 +13,7 @@ use App\Constants;
 use JMS\Serializer\Annotation as Serializer;
 
 #[Serializer\ExclusionPolicy('all')]
-class Version
+final class Version
 {
     /**
      * Kimai Version, eg. "2.0.0"
@@ -21,7 +21,7 @@ class Version
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'string')]
-    private string $version = Constants::VERSION;
+    public readonly string $version;
     /**
      * Kimai Version as integer, eg. 20000
      *
@@ -30,26 +30,19 @@ class Version
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'integer')]
-    private int $versionId = Constants::VERSION_ID;
-    /**
-     * Full version including status, eg: "2.0.0-stable"
-     */
-    #[Serializer\Expose]
-    #[Serializer\Groups(['Default'])]
-    #[Serializer\Type(name: 'string')]
-    private string $semver = Constants::VERSION . '-stable';
-    /**
-     * The version name
-     */
-    #[Serializer\Expose]
-    #[Serializer\Groups(['Default'])]
-    #[Serializer\Type(name: 'string')]
-    private string $name = Constants::NAME;
+    public readonly int $versionId;
     /**
      * A full copyright notice
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'string')]
-    private string $copyright = Constants::SOFTWARE . ' ' . Constants::VERSION . ' by Kevin Papst.';
+    public readonly string $copyright;
+
+    public function __construct()
+    {
+        $this->version = Constants::VERSION;
+        $this->versionId = Constants::VERSION_ID;
+        $this->copyright = Constants::SOFTWARE . ' ' . Constants::VERSION . ' by Kevin Papst.';
+    }
 }

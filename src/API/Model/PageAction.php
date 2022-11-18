@@ -23,56 +23,51 @@ class PageAction
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'string')]
-    private ?string $id = null;
+    public readonly string $id;
     /**
      * Translated title to show the user
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'string')]
-    private ?string $title = null;
+    public readonly string $title;
     /**
      * URL of the action
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'string')]
-    private ?string $url = null;
+    public readonly ?string $url;
     /**
      * HTML classes to be used
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'string')]
-    private ?string $class = null;
+    public readonly ?string $class;
     /**
      * HTML (data) attributes to render the action
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'array<string, string>')]
-    private array $attr = [];
+    public readonly array $attr;
     /**
      * Whether to render a divider before this item
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'boolean')]
-    private bool $divider = false;
+    public readonly bool $divider;
 
-    public function __construct(string $title, ?array $settings = null)
+    public function __construct(string $title, array $settings = [])
     {
         $this->id = $title;
+        $this->title = $settings['title'] ?? $title;
+        $this->url = $settings['url'] ?? null;
+        $this->class = $settings['class'] ?? null;
+        $this->attr = $settings['attr'] ?? [];
 
-        if ($settings !== null) {
-            $this->title = $settings['title'] ?? $title;
-            $this->url = $settings['url'] ?? null;
-            $this->class = $settings['class'] ?? null;
-            $this->attr = $settings['attr'] ?? [];
-        }
-
-        if ($title === 'trash' || (str_contains($title, 'divider') && empty($this->url))) {
-            $this->divider = true;
-        }
+        $this->divider = ($title === 'trash' || (str_contains($title, 'divider') && empty($this->url)));
     }
 }

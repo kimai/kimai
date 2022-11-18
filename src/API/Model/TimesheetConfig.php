@@ -20,35 +20,35 @@ final class TimesheetConfig
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'string')]
-    private string $trackingMode = 'default';
+    public string $trackingMode = 'default';
     /**
      * Default begin datetime in PHP format
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'string')]
-    private string $defaultBeginTime = 'now';
+    public string $defaultBeginTime = 'now';
     /**
      * How many running timesheets a user is allowed to have at the same time
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'integer')]
-    private int $activeEntriesHardLimit = 1;
+    public int $activeEntriesHardLimit = 1;
     /**
      * Whether entries for future times are allowed
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'boolean')]
-    private bool $isAllowFutureTimes = true;
+    public bool $isAllowFutureTimes = true;
     /**
      * Whether overlapping entries are allowed
      */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'boolean')]
-    private bool $isAllowOverlapping = true;
+    public bool $isAllowOverlapping = true;
 
     public function setTrackingMode(string $trackingMode): void
     {

@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PageActionTest extends TestCase
 {
-    public function testEmptySettings()
+    public function testEmptySettings(): void
     {
         $options = [];
 
@@ -33,7 +33,7 @@ class PageActionTest extends TestCase
         self::assertIsArray($obj->getProperty('attr')->getValue($sut));
     }
 
-    public function testWithSettings()
+    public function testWithSettings(): void
     {
         $options = [
             'title' => 'bar',
@@ -53,7 +53,7 @@ class PageActionTest extends TestCase
         self::assertIsArray($obj->getProperty('attr')->getValue($sut));
     }
 
-    public function testDivider()
+    public function testDivider(): void
     {
         $options = [
             'title' => 'bar',
