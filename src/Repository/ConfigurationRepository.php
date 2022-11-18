@@ -21,7 +21,6 @@ use Doctrine\ORM\Exception\ORMException;
  */
 class ConfigurationRepository extends EntityRepository implements ConfigLoaderInterface
 {
-    private const CACHE_KEY = 'ConfigurationRepository_All';
     /**
      * @var array<string, array<Configuration>>
      */
