@@ -21,9 +21,16 @@ use Doctrine\ORM\Exception\ORMException;
  */
 class ConfigurationRepository extends EntityRepository implements ConfigLoaderInterface
 {
-    private static $cacheByPrefix = [];
-    private static $cacheAll = [];
-    private static $initialized = false;
+    private const CACHE_KEY = 'ConfigurationRepository_All';
+    /**
+     * @var array<string, array<Configuration>>
+     */
+    private static array $cacheByPrefix = [];
+    /**
+     * @var array<Configuration>
+     */
+    private static array $cacheAll = [];
+    private static bool $initialized = false;
 
     public function clearCache(): void
     {
@@ -38,7 +45,6 @@ class ConfigurationRepository extends EntityRepository implements ConfigLoaderIn
             return;
         }
 
-        /** @var Configuration[] $configs */
         $configs = $this->findAll();
         foreach ($configs as $config) {
             $key = substr($config->getName(), 0, strpos($config->getName(), '.'));

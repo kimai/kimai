@@ -34,19 +34,19 @@ final class ServiceInvoice
     /**
      * @var CalculatorInterface[]
      */
-    private $calculator = [];
+    private array $calculator = [];
     /**
      * @var RendererInterface[]
      */
-    private $renderer = [];
+    private array $renderer = [];
     /**
      * @var NumberGeneratorInterface[]
      */
-    private $numberGenerator = [];
+    private array $numberGenerator = [];
     /**
      * @var array InvoiceItemRepositoryInterface[]
      */
-    private $invoiceItemRepositories = [];
+    private array $invoiceItemRepositories = [];
 
     public function __construct(
         private InvoiceDocumentRepository $documents,
