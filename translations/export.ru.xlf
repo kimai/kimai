@@ -16,7 +16,7 @@
       </trans-unit>
       <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig">
         <source>Timesheet</source>
-        <target state="translated">Табель учета рабочего времени</target>
+        <target state="translated">Табель рабочего времени</target>
       </trans-unit>
     </body>
   </file>

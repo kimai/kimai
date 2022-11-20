@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="zVtBsSo" resname="plugin.marketplace">
         <source>plugin.marketplace</source>
-        <target state="translated">Розширення Kimai</target>
+        <target state="translated">Маркетплейс Kimai</target>
       </trans-unit>
     </body>
   </file>

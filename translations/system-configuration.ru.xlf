@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="AVPV9ii" resname="label.timesheet.mode_punch">
         <source>label.timesheet.mode_punch</source>
-        <target>[Часы] пользователь может начинать и останавливать записи, но не может изменять время или длительность</target>
+        <target state="translated">[Секундомер] пользователь может начинать и останавливать записи, но не может изменять время или длительность</target>
       </trans-unit>
       <trans-unit id="z4tQEPa" resname="label.timesheet.rules.allow_future_times">
         <source>label.timesheet.rules.allow_future_times</source>
@@ -208,11 +208,11 @@
       </trans-unit>
       <trans-unit id="h4bhOny" resname="label.timesheet.rules.long_running_duration">
         <source>label.timesheet.rules.long_running_duration</source>
-        <target>Максимальная длительность записи учета отработанного времени, при превышении которого система отклонит попытку её сохранения (0 = выключено), минут</target>
+        <target state="translated">Максимальная длительность записи отработанного времени в минутах до отказа её сохранения (0 = выключено)</target>
       </trans-unit>
       <trans-unit id="jLG6z.w" resname="label.timesheet.rules.break_warning_duration">
         <source>label.timesheet.rules.break_warning_duration</source>
-        <target>Максимальная длительность записи учета отработанного времени до показа уведомления о перерыве (0 = отключено), минут</target>
+        <target state="translated">Максимальная длительность записи времени в минутах до показа уведомления о "необходимом перерыве" (0 = отключено)</target>
       </trans-unit>
       <trans-unit id="A3HPT4p" resname="label.saml_activate">
         <source>label.saml_activate</source>
@@ -289,6 +289,38 @@
       <trans-unit id="SCkhv_z" resname="label.theme.avatar_url">
         <source>label.theme.avatar_url</source>
         <target>Разрешить использование URL для картинок пользователей</target>
+      </trans-unit>
+      <trans-unit id="eiQKW2A" resname="label.calendar.dragdrop_data">
+        <source>Copies data when adding via drag and drop</source>
+        <target state="translated">Копирует данные при добавлении с помощью перетаскивания</target>
+      </trans-unit>
+      <trans-unit id="MXasdfgbpD7" resname="label.copy_teams_on_create" approved="no">
+        <source>label.copy_teams_on_create</source>
+        <target state="translated">Принимать команды (teams) от вошедшего в систему пользователя при создании новых записей</target>
+      </trans-unit>
+      <trans-unit id="g1q7hKi" resname="label.timesheet.rules.allow_zero_duration">
+        <source>label.timesheet.rules.allow_zero_duration</source>
+        <target state="translated">Разрешить записи времени с пустой продолжительностью</target>
+      </trans-unit>
+      <trans-unit id="zeOPuh6" resname="label.quick_entry.recent_activities">
+        <source>label.quick_entry.recent_activities</source>
+        <target state="translated">Количество записей, которые переходят с предыдущей недели</target>
+      </trans-unit>
+      <trans-unit id="QxQOG3e" resname="label.quick_entry.recent_activity_weeks">
+        <source>label.quick_entry.recent_activity_weeks</source>
+        <target state="translated">Взять записи за последние X недель (пустые или 0 за все время)</target>
+      </trans-unit>
+      <trans-unit id="7Efrrn5" resname="label.quick_entry.minimum_rows">
+        <source>label.quick_entry.minimum_rows</source>
+        <target state="translated">Минимальное количество строк</target>
+      </trans-unit>
+      <trans-unit id="ZUTc3eH" resname="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target state="translated">Количество записей для drag&amp;drop перетаскивания (0 = деактивировано)</target>
+      </trans-unit>
+      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
+        <source>label.calendar.title_pattern</source>
+        <target state="translated">Отображение заголовков записей календаря</target>
       </trans-unit>
     </body>
   </file>

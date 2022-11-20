@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter">
         <source>Filter timesheets</source>
-        <target>Расписания</target>
+        <target state="translated">Фильтр табелей</target>
       </trans-unit>
       <trans-unit id="xY9_cU2" resname="customer.filter">
         <source>Filter customers</source>
@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="5G3QNHA" resname="activity.filter">
         <source>Filter activities</source>
-        <target>Фильтр действий</target>
+        <target state="translated">Фильтр активности</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
@@ -60,11 +60,11 @@
       </trans-unit>
       <trans-unit id="UbouFOs" resname="create-activity">
         <source>create-activity</source>
-        <target>Создать действие</target>
+        <target state="translated">Создать активность</target>
       </trans-unit>
       <trans-unit id="QR1nvcR" resname="create-timesheet">
         <source>create-timesheet</source>
-        <target>Создать расписание</target>
+        <target state="translated">Создать табель</target>
       </trans-unit>
       <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser">
         <source>create-timesheet-multiuser</source>
@@ -80,7 +80,7 @@
       </trans-unit>
       <trans-unit id="aP9j_4L" resname="download">
         <source>download</source>
-        <target>Скачать</target>
+        <target state="translated">Скачать</target>
       </trans-unit>
       <trans-unit id="hHIeqOW" resname="invoice.pending">
         <source>invoice.pending</source>

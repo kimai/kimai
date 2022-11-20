@@ -318,6 +318,10 @@
         <source>Copies data when adding via drag and drop</source>
         <target state="translated">끌어서 놓기를 통해 추가할 때 데이터 복사하기</target>
       </trans-unit>
+      <trans-unit id="MXasdfgbpD7" resname="label.copy_teams_on_create" approved="no">
+        <source>label.copy_teams_on_create</source>
+        <target state="translated">신규가입을 할 때 로그인 된 사용자로부터 팀을 인계받으십시오</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -29,7 +29,7 @@
       </trans-unit>
       <trans-unit id="QqvUWFt" resname="Ods">
         <source>Open Office (ODS - Spreadsheet)</source>
-        <target state="translated">LibreOffice (ODS - Електронні таблиці)</target>
+        <target state="translated">Open Office (ODS - електронні таблиці)</target>
       </trans-unit>
       <trans-unit id="sjwwrr8" resname="Xlsx">
         <source>Microsoft Excel (XLSX)</source>
@@ -62,7 +62,7 @@
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
-        <target state="translated">Табель</target>
+        <target state="translated">Табель робочого часу</target>
       </trans-unit>
       <trans-unit id="M82JFjR" resname="freelancer" approved="no">
         <source>Single service date</source>

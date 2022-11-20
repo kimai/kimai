@@ -194,11 +194,11 @@
       </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
-        <target state="translated">Табло</target>
+        <target state="translated">Інформпанель</target>
       </trans-unit>
       <trans-unit id="wvvYSw_" resname="menu.admin">
         <source>menu.admin</source>
-        <target state="translated">Адміністрація</target>
+        <target state="translated">Адміністрування</target>
       </trans-unit>
       <trans-unit id="6OKwCUB" resname="menu.system">
         <source>menu.system</source>
@@ -222,7 +222,7 @@
       </trans-unit>
       <trans-unit id="N7mikjJ" resname="time_tracking">
         <source>time_tracking</source>
-        <target state="translated">Відстеження часу</target>
+        <target state="translated">Облік часу</target>
       </trans-unit>
       <trans-unit id="PyZ8KrQ" resname="confirm">
         <source>confirm</source>
@@ -454,7 +454,7 @@
       </trans-unit>
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
-        <target state="translated">Табло</target>
+        <target state="translated">Інформпанель</target>
       </trans-unit>
       <trans-unit id="3PYadzb" resname="dashboard.subtitle">
         <source>dashboard.subtitle</source>
@@ -810,7 +810,7 @@
       </trans-unit>
       <trans-unit id="WVU_S.A" resname="recent.activities">
         <source>recent.activities</source>
-        <target state="translated">Перезапустити одну з Ваших останніх дій</target>
+        <target state="translated">Перезапустіть одну з Ваших останніх дій</target>
       </trans-unit>
       <trans-unit id="SLV47Uu" resname="recent.activities.format">
         <source>recent.activities.format</source>
@@ -922,7 +922,7 @@
       </trans-unit>
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
-        <target state="translated">Щотижневі робочі години</target>
+        <target state="translated">Робочий час за тиждень</target>
       </trans-unit>
       <trans-unit id="61p_ckr" resname="label.hours_24">
         <source>label.hours_24</source>
