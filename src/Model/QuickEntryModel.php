@@ -42,14 +42,6 @@ class QuickEntryModel
 
     public function isPrototype(): bool
     {
-        if ($this->hasExistingTimesheet()) {
-            return false;
-        }
-
-        if ($this->hasNewTimesheet()) {
-            return false;
-        }
-
         return $this->prototype;
     }
 
