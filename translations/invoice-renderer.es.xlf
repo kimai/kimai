@@ -8,11 +8,11 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="translated">Inicio de Invoice</target>
+        <target state="translated">Factura</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
-        <target state="translated">Horas de trabajo</target>
+        <target state="translated">Parte de horas</target>
       </trans-unit>
       <trans-unit id="M82JFjR" resname="freelancer">
         <source>freelancer</source>

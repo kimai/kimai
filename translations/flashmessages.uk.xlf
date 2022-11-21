@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="72Ih8zO" resname="action.update.success">
         <source>action.update.success</source>
-        <target state="translated">Збережені зміни</target>
+        <target state="translated">Зміни збережені</target>
       </trans-unit>
       <trans-unit id="xeu1LSy" resname="action.update.error">
         <source>action.update.error</source>

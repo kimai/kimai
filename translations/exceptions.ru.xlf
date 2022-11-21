@@ -20,10 +20,7 @@
       </trans-unit>
       <trans-unit id="ru5FEGk" resname="http_error.suggestion">
         <source>http_error.suggestion</source>
-        <target>
-                    Произошла непредвиденная ошибка.
-                    Возможно, обнаружилась ошибка в программе. Cвяжитесь с Вашим администратором, если ошибка все еще возникает при повторной загрузке.
-                </target>
+        <target>Произошла непредвиденная ошибка. Возможно, обнаружилась ошибка в программе. Cвяжитесь с Вашим администратором, если ошибка все еще возникает при повторной загрузке.</target>
       </trans-unit>
       <trans-unit id="_W1eNz2" resname="http_error_404.description">
         <source>http_error_404.description</source>
@@ -31,10 +28,7 @@
       </trans-unit>
       <trans-unit id="MWNS5dg" resname="http_error_404.suggestion">
         <source>http_error_404.suggestion</source>
-        <target>
-                    Извините, но запрашиваемая Вами страница не найдена.
-                    Пожалуйста, вернитесь в панель управления и попробуйте заново.
-                </target>
+        <target state="translated">Извините, но запрашиваемая Вами страница не найдена. Пожалуйста, вернитесь к информпанели и попробуйте заново.</target>
       </trans-unit>
       <trans-unit id="Qn5rwdU" resname="http_error_403.description">
         <source>http_error_403.description</source>
@@ -42,10 +36,7 @@
       </trans-unit>
       <trans-unit id="zDeeh7L" resname="http_error_403.suggestion">
         <source>http_error_403.suggestion</source>
-        <target>
-                    К сожалению, у Вас нет прав для просмотра этой страницы.
-                    Пожалуйста, обратитесь за помощью к Вашему администратору.
-                </target>
+        <target>К сожалению, у Вас нет прав для просмотра этой страницы. Пожалуйста, обратитесь за помощью к Вашему администратору.</target>
       </trans-unit>
     </body>
   </file>

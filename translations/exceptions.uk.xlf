@@ -28,7 +28,7 @@
       </trans-unit>
       <trans-unit id="MWNS5dg" resname="http_error_404.suggestion">
         <source>http_error_404.suggestion</source>
-        <target state="translated">Ми не змогли знайти сторінку, яку Ви шукали. Будь ласка, поверніться до свого табла і почніть спочатку.</target>
+        <target state="translated">Ми не змогли знайти сторінку, яку Ви шукали. Будь ласка, поверніться до своєї інформпанелі та почніть спочатку.</target>
       </trans-unit>
       <trans-unit id="Qn5rwdU" resname="http_error_403.description">
         <source>http_error_403.description</source>

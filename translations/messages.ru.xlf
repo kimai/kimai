@@ -65,7 +65,7 @@
             -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
-        <target>Панель управления</target>
+        <target state="translated">Информпанель</target>
       </trans-unit>
       <trans-unit id="wvvYSw_" resname="menu.admin">
         <source>menu.admin</source>
@@ -81,7 +81,7 @@
       </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
-        <target>Время работы сотрудников</target>
+        <target state="translated">Табели</target>
       </trans-unit>
       <trans-unit id="IeshU90" resname="customers">
         <source>customers</source>
@@ -233,7 +233,7 @@
             -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
-        <target>Панель управления</target>
+        <target state="translated">Информпанель</target>
       </trans-unit>
       <trans-unit id="3PYadzb" resname="dashboard.subtitle">
         <source>dashboard.subtitle</source>
@@ -489,7 +489,7 @@
       </trans-unit>
       <trans-unit id="Bor.76M" resname="stats.activityTotal">
         <source>stats.activityTotal</source>
-        <target>Объем деятельности</target>
+        <target state="translated">Активности</target>
       </trans-unit>
       <trans-unit id="67uSaR3" resname="stats.projectTotal">
         <source>stats.projectTotal</source>
@@ -810,7 +810,7 @@
       </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
-        <target>Дополнения</target>
+        <target state="translated">Плагины</target>
       </trans-unit>
       <trans-unit id="I.eil4u" resname="menu.export">
         <source>menu.export</source>
@@ -862,7 +862,7 @@
       </trans-unit>
       <trans-unit id="rYzHCFd" resname="label.timesheet.daily_stats">
         <source>label.timesheet.daily_stats</source>
-        <target>Показать дневную статистику в таблице</target>
+        <target state="translated">Показывать дневную статистику в табеле</target>
       </trans-unit>
       <trans-unit id="Ss2xe99" resname="label.team">
         <source>label.team</source>

@@ -54,6 +54,10 @@
         <source>warning</source>
         <target>Предупреждение</target>
       </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R">
+        <source>action.csrf.error</source>
+        <target state="translated">Действие выполнить не удалось: недействительный токен безопасности.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
