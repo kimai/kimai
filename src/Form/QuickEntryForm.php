@@ -63,13 +63,6 @@ class QuickEntryForm extends AbstractType
             }
         ));
 
-        $startDate = new \DateTime();
-        if ($builder->getData() !== null) {
-            /** @var QuickEntryWeek $data */
-            $data = $builder->getData();
-            $startDate = $data->getDate();
-        }
-
         $builder->add('date', WeekPickerType::class, [
             'model_timezone' => $options['timezone'],
             'view_timezone' => $options['timezone'],
@@ -83,7 +76,8 @@ class QuickEntryForm extends AbstractType
             'entry_options' => [
                 'label' => false,
                 'duration_minutes' => $this->configuration->getTimesheetIncrementDuration(),
-                'start_date' => $startDate,
+                'start_date' => $options['start_date'],
+                'end_date' => $options['end_date'],
                 'empty_data' => function (FormInterface $form) use ($options) {
                     return clone $options['prototype_data'];
                 },
@@ -103,13 +97,21 @@ class QuickEntryForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $start = new \DateTime();
+        $start->setTime(0, 0, 0);
+
+        $end = clone $start;
+        $end->add(new \DateInterval('P1W'));
+        $end->setTime(23, 59, 59);
+
         $resolver->setDefaults([
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'timesheet_quick_edit',
             'data_class' => QuickEntryWeek::class,
             'timezone' => date_default_timezone_get(),
-            'start_date' => new \DateTime(),
+            'start_date' => $start,
+            'end_date' => $end,
             'prototype_data' => null,
         ]);
     }

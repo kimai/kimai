@@ -24,10 +24,7 @@ use Symfony\Component\Validator\Constraints\Valid;
 
 class QuickEntryWeekType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $projectOptions = [
             'label' => false,
@@ -35,7 +32,9 @@ class QuickEntryWeekType extends AbstractType
             'join_customer' => true,
             'query_builder_for_user' => true,
             'placeholder' => '',
-            'activity_enabled' => true
+            'activity_enabled' => true,
+            'project_date_start' => $options['start_date'],
+            'project_date_end' => $options['end_date'],
         ];
 
         $builder->add('project', ProjectType::class, $projectOptions);
@@ -47,13 +46,6 @@ class QuickEntryWeekType extends AbstractType
                 return;
             }
 
-            $begin = clone $data->getFirstEntry()->getBegin();
-            $begin->setTime(0, 0, 0);
-            $projectOptions['project_date_start'] = $begin;
-
-            $end = clone $data->getLatestEntry()->getBegin();
-            $end->setTime(23, 59, 59);
-            $projectOptions['project_date_end'] = $begin;
             $projectOptions['projects'] = [$data->getProject()];
 
             $event->getForm()->add('project', ProjectType::class, $projectOptions);
@@ -177,10 +169,7 @@ class QuickEntryWeekType extends AbstractType
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => QuickEntryModel::class,
@@ -188,6 +177,7 @@ class QuickEntryWeekType extends AbstractType
             'duration_minutes' => null,
             'duration_hours' => 10,
             'start_date' => new DateTime(),
+            'end_date' => new DateTime(),
             'prototype_data' => null,
         ]);
     }

@@ -22,6 +22,7 @@ class QuickEntryModel
     private $user;
     private $project;
     private $activity;
+    private $prototype = false;
     /**
      * @var Timesheet[]
      */
@@ -34,6 +35,11 @@ class QuickEntryModel
         $this->activity = $activity;
     }
 
+    public function markAsPrototype(): void
+    {
+        $this->prototype = true;
+    }
+
     public function isPrototype(): bool
     {
         if ($this->hasExistingTimesheet()) {
@@ -44,7 +50,7 @@ class QuickEntryModel
             return false;
         }
 
-        return $this->getUser() === null && $this->getProject() === null && $this->getActivity() === null;
+        return $this->prototype;
     }
 
     public function getUser(): ?User

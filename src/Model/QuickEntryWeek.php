@@ -9,27 +9,45 @@
 
 namespace App\Model;
 
+use App\Entity\Activity;
+use App\Entity\Project;
+use App\Entity\User;
+
 /**
  * @internal
  */
 class QuickEntryWeek
 {
-    private $date;
-    private $rows;
+    private $startDate;
+    private $rows = [];
 
-    /**
-     * @param \DateTime $startDate
-     * @param QuickEntryModel[] $rows
-     */
-    public function __construct(\DateTime $startDate, array $rows)
+    public function __construct(\DateTime $startDate)
     {
-        $this->date = $startDate;
-        $this->rows = $rows;
+        $this->startDate = $startDate;
+    }
+
+    public function addRow(?User $user = null, ?Project $project = null, ?Activity $activity = null): QuickEntryModel
+    {
+        $model = $this->createRow($user, $project, $activity);
+
+        $this->rows[] = $model;
+
+        return $model;
+    }
+
+    public function createRow(?User $user = null, ?Project $project = null, ?Activity $activity = null): QuickEntryModel
+    {
+        return new QuickEntryModel($user, $project, $activity);
     }
 
     public function getDate(): \DateTime
     {
-        return $this->date;
+        return $this->startDate;
+    }
+
+    public function countRows(): int
+    {
+        return \count($this->rows);
     }
 
     /**
@@ -37,7 +55,30 @@ class QuickEntryWeek
      */
     public function getRows(): array
     {
-        return $this->rows;
+        $rows = $this->rows;
+
+        // sort rows by projects - make it configurable in the future
+        uasort($rows, [$this, 'sortByProjectName']);
+
+        return $rows;
+    }
+
+    private function sortByProjectName(QuickEntryModel $a, QuickEntryModel $b): int
+    {
+        $aName = $a->getProject() !== null ? $a->getProject()->getName() : null;
+        $bName = $b->getProject() !== null ? $b->getProject()->getName() : null;
+
+        if ($aName === null && $bName === null) {
+            $result = 0;
+        } elseif ($aName === null && $bName !== null) {
+            $result = 1;
+        } elseif ($aName !== null && $bName === null) {
+            $result = -1;
+        } else {
+            $result = strcmp($aName, $bName);
+        }
+
+        return  $result < 0 ? -1 : 1;
     }
 
     /**
