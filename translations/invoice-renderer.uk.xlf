@@ -34,7 +34,7 @@
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
-        <target state="translated">Табель</target>
+        <target state="translated">Табель робочого часу</target>
       </trans-unit>
       <trans-unit id="M82JFjR" resname="freelancer" approved="no">
         <source>Single service date</source>

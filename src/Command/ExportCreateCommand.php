@@ -54,6 +54,7 @@ class ExportCreateCommand extends Command
         $this
             ->setDescription('Create exports')
             ->setHelp('Create exports by several different filters and sent them via email.')
+            ->addOption('username', null, InputOption::VALUE_REQUIRED, 'The user to be used for generating the export (e.g. used for permissions and decimal setting)')
             ->addOption('start', null, InputOption::VALUE_OPTIONAL, 'Start date (format: 2020-01-01, default: start of the month)', null)
             ->addOption('end', null, InputOption::VALUE_OPTIONAL, 'End date (format: 2020-01-31, default: end of the month)', null)
             ->addOption('timezone', null, InputOption::VALUE_OPTIONAL, 'Timezone for start and end date query (fallback: server timezone)', null)
@@ -222,14 +223,21 @@ class ExportCreateCommand extends Command
             $body = trim($input->getOption('body'));
         }
 
-        $markAsExported = false;
-        if ($input->getOption('set-exported')) {
-            $markAsExported = true;
+        $query = new ExportQuery();
+
+        $username = $input->getOption('username');
+        if (!empty($username)) {
+            $user = $this->userRepository->loadUserByUsername($username);
+            if (null === $user) {
+                $io->error(
+                    sprintf('The given username "%s" could not be resolved', $username)
+                );
+
+                return 1;
+            }
+            $query->setCurrentUser($user);
         }
 
-        // =============== VALIDATION END ===============
-
-        $query = new ExportQuery();
         $query->setBegin($start);
         $query->setEnd($end);
         $query->setExported($exportedFilter);
@@ -239,8 +247,6 @@ class ExportCreateCommand extends Command
         foreach ($users as $user) {
             $query->addUser($user);
         }
-        //$query->setRenderer($template);
-        //$query->setMarkAsExported($markAsExported);
 
         $io = new SymfonyStyle($input, $output);
 
@@ -254,7 +260,7 @@ class ExportCreateCommand extends Command
         $response = $renderer->render($entries, $query);
         $file = $this->savePreview($response, $directory);
 
-        if ($markAsExported) {
+        if ($input->getOption('set-exported')) {
             $this->serviceExport->setExported($entries);
         }
 

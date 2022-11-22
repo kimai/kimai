@@ -206,6 +206,94 @@
         <source>quick_entry.recent_activities</source>
         <target state="translated">Cantidad de elementos de semanas anteriores</target>
       </trans-unit>
+      <trans-unit id="jLG6z.w" resname="label.timesheet.rules.break_warning_duration">
+        <source>label.timesheet.rules.break_warning_duration</source>
+        <target state="translated">Duración máxima de un registro de horas en minutos antes de que se muestre un "aviso de pausa" (0 = desactivado)</target>
+      </trans-unit>
+      <trans-unit id="h4bhOny" resname="label.timesheet.rules.long_running_duration">
+        <source>label.timesheet.rules.long_running_duration</source>
+        <target state="translated">Duración máxima de un registro de horas en minutos antes de que se rechace la grabación (0 = desactivado)</target>
+      </trans-unit>
+      <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
+        <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
+        <target state="translated">Lista separada por comas de códigos de color HTML. Los nombres de los colores se pueden especificar dando un nombre al código de color y al separador "|" tiene prefijo, por ejemplo: Blanco|#ffffff,Negro|#000000.</target>
+      </trans-unit>
+      <trans-unit id="MXabpD7" resname="label.calendar.title_pattern">
+        <source>label.calendar.title_pattern</source>
+        <target state="translated">Visualización de los títulos de las entradas de la agenda</target>
+      </trans-unit>
+      <trans-unit id="eiQKW2A" resname="label.calendar.dragdrop_data">
+        <source>Copies data when adding via drag and drop</source>
+        <target state="translated">Copia los datos al añadirlos mediante la función de arrastrar y soltar</target>
+      </trans-unit>
+      <trans-unit id="MXasdfgbpD7" resname="label.copy_teams_on_create" approved="no">
+        <source>label.copy_teams_on_create</source>
+        <target state="translated">Los equipos toman el relevo del usuario que ha iniciado sesión al crear nuevas entradas</target>
+      </trans-unit>
+      <trans-unit id="tNxm3eg" resname="off">
+        <source>off</source>
+        <target state="translated">Fuera de</target>
+      </trans-unit>
+      <trans-unit id="scCc2Xm" resname="label.theme.color_choices">
+        <source>label.theme.color_choices</source>
+        <target state="translated">Colores permitidos</target>
+      </trans-unit>
+      <trans-unit id=".zZ_MeA" resname="label.user_auth_registration">
+        <source>label.user_auth_registration</source>
+        <target state="translated">Registro de usuario</target>
+      </trans-unit>
+      <trans-unit id="t2zKRp5" resname="label.user_auth_password_reset">
+        <source>label.user_auth_password_reset</source>
+        <target state="translated">Has olvidado tu contraseña</target>
+      </trans-unit>
+      <trans-unit id="0Tj.NhS" resname="label.user_auth_password_reset_token_ttl">
+        <source>label.user_auth_password_reset_token_ttl</source>
+        <target state="translated">Olvidé mi contraseña: segundos antes de que caduque un enlace de restablecimiento</target>
+      </trans-unit>
+      <trans-unit id="71FjFMp" resname="label.ldap_activate">
+        <source>label.ldap_activate</source>
+        <target state="translated">Inicio de sesión LDAP</target>
+      </trans-unit>
+      <trans-unit id="ZUTc3eH" resname="label.calendar.dragdrop_amount">
+        <source>label.calendar.dragdrop_amount</source>
+        <target state="translated">Cantidad de entradas para arrastrar&amp;soltar (0= desactivado)</target>
+      </trans-unit>
+      <trans-unit id="VAAaL2t" resname="label.timesheet.rules.allow_overbooking_budget">
+        <source>label.timesheet.rules.allow_overbooking_budget</source>
+        <target state="translated">Permitir el overbooking de presupuestos almacenados</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target state="translated">Autentificación</target>
+      </trans-unit>
+      <trans-unit id="ufoC1qF" resname="label.user_auth_password_reset_retry_ttl">
+        <source>label.user_auth_password_reset_retry_ttl</source>
+        <target state="translated">Olvidé mi contraseña: segundos antes de que un usuario pueda solicitar el siguiente correo electrónico</target>
+      </trans-unit>
+      <trans-unit id="QxQOG3e" resname="label.quick_entry.recent_activity_weeks">
+        <source>label.quick_entry.recent_activity_weeks</source>
+        <target state="translated">Usar las entradas de las últimas X semanas (en blanco o 0 para el tiempo total)</target>
+      </trans-unit>
+      <trans-unit id="7Efrrn5" resname="label.quick_entry.minimum_rows">
+        <source>label.quick_entry.minimum_rows</source>
+        <target state="translated">Número mínimo de filas</target>
+      </trans-unit>
+      <trans-unit id=".CeyZwj" resname="label.company.financial_year">
+        <source>label.company.financial_year</source>
+        <target state="translated">Año fiscal</target>
+      </trans-unit>
+      <trans-unit id="QHVk7AA" resname="label.theme.colors_limited">
+        <source>label.theme.colors_limited</source>
+        <target state="translated">Limite de las opciones de color</target>
+      </trans-unit>
+      <trans-unit id="CCXeSFj" resname="label.user_auth_login">
+        <source>label.user_auth_login</source>
+        <target state="translated">Formulario de inscripción</target>
+      </trans-unit>
+      <trans-unit id="A3HPT4p" resname="label.saml_activate">
+        <source>label.saml_activate</source>
+        <target state="translated">Inicio de sesión SAML</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

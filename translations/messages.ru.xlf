@@ -65,7 +65,7 @@
             -->
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
-        <target>Панель управления</target>
+        <target state="translated">Информпанель</target>
       </trans-unit>
       <trans-unit id="wvvYSw_" resname="menu.admin">
         <source>menu.admin</source>
@@ -81,7 +81,7 @@
       </trans-unit>
       <trans-unit id="yxQop43" resname="all_times">
         <source>all_times</source>
-        <target>Время работы сотрудников</target>
+        <target state="translated">Табели</target>
       </trans-unit>
       <trans-unit id="IeshU90" resname="customers">
         <source>customers</source>
@@ -217,7 +217,15 @@
             -->
       <trans-unit id="3bqLM8Q" resname="dashboard.title">
         <source>dashboard.title</source>
-        <target>Панель управления</target>
+        <target state="translated">Информпанель</target>
+      </trans-unit>
+      <trans-unit id="3PYadzb" resname="dashboard.subtitle">
+        <source>dashboard.subtitle</source>
+        <target>Добро пожаловать!</target>
+      </trans-unit>
+      <trans-unit id="yEa1Yz3" resname="dashboard.all">
+        <source>dashboard.all</source>
+        <target>Все пользователи</target>
       </trans-unit>
       <!--
               Widgets
@@ -453,7 +461,7 @@
       </trans-unit>
       <trans-unit id="Bor.76M" resname="stats.activityTotal">
         <source>stats.activityTotal</source>
-        <target>Объем деятельности</target>
+        <target state="translated">Активности</target>
       </trans-unit>
       <trans-unit id="67uSaR3" resname="stats.projectTotal">
         <source>stats.projectTotal</source>
@@ -750,7 +758,11 @@
       </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
-        <target>Дополнения</target>
+        <target state="translated">Плагины</target>
+      </trans-unit>
+      <trans-unit id="I.eil4u" resname="menu.export">
+        <source>menu.export</source>
+        <target>Экспорт</target>
       </trans-unit>
       <trans-unit id="6OKwCUB" resname="menu.system">
         <source>menu.system</source>
@@ -796,9 +808,9 @@
         <source>invoice.filter</source>
         <target>Фильтровать данные счетов</target>
       </trans-unit>
-      <trans-unit id="r49TNAg" resname="daily_stats">
+      <trans-unit id="rYzHCFd" resname="daily_stats">
         <source>daily_stats</source>
-        <target>Показать дневную статистику в таблице</target>
+        <target state="translated">Показывать дневную статистику в табеле</target>
       </trans-unit>
       <trans-unit id="yosi0Nu" resname="team">
         <source>team</source>

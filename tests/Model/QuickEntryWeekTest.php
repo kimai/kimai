@@ -21,9 +21,8 @@ class QuickEntryWeekTest extends TestCase
     public function testModel()
     {
         $date = new \DateTime();
-        $rows = [];
 
-        $sut = new QuickEntryWeek($date, $rows);
+        $sut = new QuickEntryWeek($date);
         self::assertSame($date, $sut->getDate());
         self::assertEquals([], $sut->getRows());
 
