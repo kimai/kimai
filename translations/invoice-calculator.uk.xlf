@@ -2,7 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="uk" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
-      <trans-unit id="1inO2IF" resname="invoice_calculator">
+      <trans-unit id="MviRJeB" resname="invoice_calculator">
         <source>invoice_calculator</source>
         <target state="translated">Підрахунок суми</target>
       </trans-unit>

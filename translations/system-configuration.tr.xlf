@@ -282,7 +282,7 @@
         <source>Copies data when adding via drag and drop</source>
         <target state="translated">Sürükle ve bırak yoluyla eklerken verileri kopyalar</target>
       </trans-unit>
-      <trans-unit id="MXasdfgbpD7" resname="copy_teams_on_create" approved="no">
+      <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no">
         <source>copy_teams_on_create</source>
         <target state="translated">Yeni kayıtlar oluştururken oturum açan kullanıcıdan takımları devralın</target>
       </trans-unit>

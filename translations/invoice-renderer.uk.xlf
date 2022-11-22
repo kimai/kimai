@@ -2,7 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="uk" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
-      <trans-unit id=".Bji8X5" resname="invoice_renderer">
+      <trans-unit id="hOcTt2G" resname="invoice_renderer">
         <source>invoice_renderer</source>
         <target state="translated">Документ рахунку</target>
       </trans-unit>

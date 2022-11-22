@@ -10,7 +10,7 @@
         <source>theme</source>
         <target state="translated">تم</target>
       </trans-unit>
-      <trans-unit id="EPBzIy7" resname="theme.markdown_content">
+      <trans-unit id="mPRUBFX" resname="theme.markdown_content">
         <source>theme.markdown_content</source>
         <target state="translated">در توضیحات و نظرات، قالب‌بندی‌های نشانه‌گذاری را مجاز کنید</target>
       </trans-unit>
@@ -22,27 +22,27 @@
         <source>timesheet.mode</source>
         <target state="translated">حالت پیگیری زمان</target>
       </trans-unit>
-      <trans-unit id="LJEKQMG" resname="timesheet.mode_default">
+      <trans-unit id="A11vhSN" resname="timesheet.mode_default">
         <source>timesheet.mode_default</source>
         <target state="translated">[پیش‌فرض] زمان شروع و پایان قابل ویرایش است</target>
       </trans-unit>
-      <trans-unit id="Q5sVtFy" resname="timesheet.mode_duration_fixed_begin">
+      <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin">
         <source>timesheet.mode_duration_fixed_begin</source>
         <target state="translated">[دوره] زمان شروع ثابت قابل تنظیم، فقط مدت زمان قابل تغییر است</target>
       </trans-unit>
-      <trans-unit id="AVPV9ii" resname="timesheet.mode_punch">
+      <trans-unit id="3tlkqJC" resname="timesheet.mode_punch">
         <source>timesheet.mode_punch</source>
         <target state="translated">[زمان-ساعت] کاربر می تواند رکوردها را شروع و متوقف کند، اما زمان یا مدت زمان را ویرایش نمی کند</target>
       </trans-unit>
-      <trans-unit id="z4tQEPa" resname="timesheet.rules.allow_future_times">
+      <trans-unit id="k4pl27g" resname="timesheet.rules.allow_future_times">
         <source>timesheet.rules.allow_future_times</source>
         <target state="translated">اجازه ورود زمان در آینده را بدهید</target>
       </trans-unit>
-      <trans-unit id="VAAaL2t" resname="timesheet.rules.allow_overbooking_budget">
+      <trans-unit id="2KUm56c" resname="timesheet.rules.allow_overbooking_budget">
         <source>timesheet.rules.allow_overbooking_budget</source>
         <target state="translated">اجازه رزرو بیش از حد بودجه های ذخیره شده را بدهید</target>
       </trans-unit>
-      <trans-unit id=".NE5mGi" resname="timesheet.rules.allow_overlapping_records">
+      <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records">
         <source>timesheet.rules.allow_overlapping_records</source>
         <target state="translated">اجازه دادن به ورودی‌های زمانی متداخل</target>
       </trans-unit>
@@ -50,27 +50,27 @@
         <source>lockdown_period</source>
         <target state="translated">دوره قفل</target>
       </trans-unit>
-      <trans-unit id="HeDzoVE" resname="timesheet.rules.lockdown_period_timezone">
+      <trans-unit id="wrnXs_a" resname="timesheet.rules.lockdown_period_timezone">
         <source>timesheet.rules.lockdown_period_timezone</source>
         <target state="translated">منطقه زمانی (در صورت خالی بودن، منطقه زمانی کاربر مربوطه استفاده می شود)</target>
       </trans-unit>
-      <trans-unit id="yVBJECt" resname="timesheet.rules.lockdown_period_start">
+      <trans-unit id="_PvFlQ9" resname="timesheet.rules.lockdown_period_start">
         <source>timesheet.rules.lockdown_period_start</source>
         <target state="translated">شروع دوره قفل (تاریخ نسبی PHP تا کنون)</target>
       </trans-unit>
-      <trans-unit id=".es2tyO" resname="timesheet.rules.lockdown_period_end">
+      <trans-unit id="M1iVHeQ" resname="timesheet.rules.lockdown_period_end">
         <source>timesheet.rules.lockdown_period_end</source>
         <target state="translated">پایان دوره قفل (تاریخ نسبی PHP تا کنون)</target>
       </trans-unit>
-      <trans-unit id="y2i0PU3" resname="timesheet.rules.lockdown_grace_period">
+      <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period">
         <source>timesheet.rules.lockdown_grace_period</source>
         <target state="translated">پایان دوره مهلت قفل (تاریخ نسبی PHP تا پایان دوره قفل)</target>
       </trans-unit>
-      <trans-unit id="oIueXaX" resname="timesheet.active_entries.hard_limit">
+      <trans-unit id="Fe18zp4" resname="timesheet.active_entries.hard_limit">
         <source>timesheet.active_entries.hard_limit</source>
         <target state="translated">تعداد مجاز ورودی های زمان در حال اجرا به طور همزمان</target>
       </trans-unit>
-      <trans-unit id="zeOPuh6" resname="quick_entry.recent_activities">
+      <trans-unit id="xa6f6fq" resname="quick_entry.recent_activities">
         <source>quick_entry.recent_activities</source>
         <target state="translated">تعداد ورودی های گرفته شده از هفته های گذشته</target>
       </trans-unit>
@@ -78,27 +78,27 @@
         <source>calendar.week_numbers</source>
         <target state="translated">نمایش اعداد هفته</target>
       </trans-unit>
-      <trans-unit id="NULxaYp" resname="calendar.weekends">
+      <trans-unit id="qaoBvYU" resname="calendar.weekends">
         <source>calendar.weekends</source>
         <target state="translated">نمایش آخر هفته ها</target>
       </trans-unit>
-      <trans-unit id="AMCb58W" resname="calendar.businessHours.begin">
+      <trans-unit id="yUeuM2_" resname="calendar.businessHours.begin">
         <source>calendar.businessHours.begin</source>
         <target state="translated">شروع ساعات کاری عادی (برجسته خواهد شد)</target>
       </trans-unit>
-      <trans-unit id="3nfAkqy" resname="calendar.businessHours.end">
+      <trans-unit id="Aa_Ushz" resname="calendar.businessHours.end">
         <source>calendar.businessHours.end</source>
         <target state="translated">پایان ساعات کاری عادی (برجسته خواهد شد)</target>
       </trans-unit>
-      <trans-unit id="Yl4Ztfv" resname="calendar.visibleHours.begin">
+      <trans-unit id="1bHgx7p" resname="calendar.visibleHours.begin">
         <source>calendar.visibleHours.begin</source>
         <target state="translated">شروع محدوده زمانی قابل مشاهده</target>
       </trans-unit>
-      <trans-unit id="UJGYdCt" resname="calendar.visibleHours.end">
+      <trans-unit id="6nayLDB" resname="calendar.visibleHours.end">
         <source>calendar.visibleHours.end</source>
         <target state="translated">پایان محدوده زمانی قابل مشاهده</target>
       </trans-unit>
-      <trans-unit id="AlBuZhv" resname="calendar.slot_duration">
+      <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
         <target state="translated">مدت زمان اسلات برای نمای هفته و روز (قالب: hh:mm:ss)</target>
       </trans-unit>
@@ -106,11 +106,11 @@
         <source>branding</source>
         <target state="translated">شرکت من</target>
       </trans-unit>
-      <trans-unit id="m5dLCoB" resname="theme.branding.logo">
+      <trans-unit id="o9mON14" resname="theme.branding.logo">
         <source>theme.branding.logo</source>
         <target state="translated">URL لوگو (جایگزین نام شرکت در صفحه ورود به سیستم)</target>
       </trans-unit>
-      <trans-unit id="nDS7Pav" resname="theme.branding.company">
+      <trans-unit id="en0.Ahu" resname="theme.branding.company">
         <source>theme.branding.company</source>
         <target state="translated">نام شرکت</target>
       </trans-unit>
@@ -122,23 +122,23 @@
         <source>rounding</source>
         <target state="translated">گرد کردن زمان</target>
       </trans-unit>
-      <trans-unit id="0wyl4Bb" resname="timesheet.rounding.default.begin">
+      <trans-unit id="ZMvZTTx" resname="timesheet.rounding.default.begin">
         <source>timesheet.rounding.default.begin</source>
         <target state="translated">گرد کردن زمان شروع به دقیقه (0 = غیرفعال)</target>
       </trans-unit>
-      <trans-unit id="Jx6bTVr" resname="timesheet.rounding.default.end">
+      <trans-unit id="AUc43eR" resname="timesheet.rounding.default.end">
         <source>timesheet.rounding.default.end</source>
         <target state="translated">گرد کردن زمان پایان در دقیقه (0 = غیرفعال)</target>
       </trans-unit>
-      <trans-unit id="Hnl7Jxt" resname="timesheet.rounding.default.duration">
+      <trans-unit id="t.YW9eU" resname="timesheet.rounding.default.duration">
         <source>timesheet.rounding.default.duration</source>
         <target state="translated">گرد کردن مدت زمان در دقیقه (0 = غیرفعال شده)</target>
       </trans-unit>
-      <trans-unit id="aenIpDV" resname="timesheet.rounding.default.mode">
+      <trans-unit id="O8E4Hj5" resname="timesheet.rounding.default.mode">
         <source>timesheet.rounding.default.mode</source>
         <target state="translated">حالت گرد کردن</target>
       </trans-unit>
-      <trans-unit id="D1NSPl5" resname="timesheet.rounding.default.days">
+      <trans-unit id="oL_eD_9" resname="timesheet.rounding.default.days">
         <source>timesheet.rounding.default.days</source>
         <target state="translated">روزهایی از هفته که گردگیری اعمال می شود</target>
       </trans-unit>
@@ -186,15 +186,15 @@
         <source>Floor</source>
         <target state="translated">کف: شروع، پایان و مدت زمان به پایین گرد می شود</target>
       </trans-unit>
-      <trans-unit id="DY_cM92" resname="timesheet.default_begin">
+      <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>
         <target state="translated">زمان شروع پیش‌فرض (در همه حالت‌های ردیابی زمان استفاده نمی‌شود)</target>
       </trans-unit>
-      <trans-unit id="cRbnwyP" resname="simple_form">
+      <trans-unit id="bKumt5c" resname="simple_form">
         <source>simple_form</source>
         <target state="translated">جستجوی ساده</target>
       </trans-unit>
-      <trans-unit id="HrEBLUr" resname="invoice.number_format">
+      <trans-unit id="UTurPF1" resname="invoice.number_format">
         <source>invoice.number_format</source>
         <target state="translated">فرمت شماره فاکتور</target>
       </trans-unit>
@@ -202,11 +202,11 @@
         <source>first_weekday</source>
         <target state="translated">روز اول هفته</target>
       </trans-unit>
-      <trans-unit id="40i4Xlr" resname="timesheet.duration_increment">
+      <trans-unit id="nqWKu27" resname="timesheet.duration_increment">
         <source>timesheet.duration_increment</source>
         <target state="translated">انتخاب دقیقه برای مدت زمان</target>
       </trans-unit>
-      <trans-unit id="x3AfnWn" resname="timesheet.time_increment">
+      <trans-unit id="OIvZ_wc" resname="timesheet.time_increment">
         <source>timesheet.time_increment</source>
         <target state="translated">انتخاب دقیقه برای از &amp; به</target>
       </trans-unit>
@@ -226,67 +226,67 @@
         <source>authentication</source>
         <target state="translated">احراز هویت</target>
       </trans-unit>
-      <trans-unit id="CCXeSFj" resname="user_auth_login">
+      <trans-unit id="BGHQ8YO" resname="user_auth_login">
         <source>user_auth_login</source>
         <target state="translated">فرم ورود</target>
       </trans-unit>
-      <trans-unit id=".zZ_MeA" resname="user_auth_registration">
+      <trans-unit id="C26_mL7" resname="user_auth_registration">
         <source>user_auth_registration</source>
         <target state="translated">ثبت نام کاربر</target>
       </trans-unit>
-      <trans-unit id="t2zKRp5" resname="user_auth_password_reset">
+      <trans-unit id="5RSshEN" resname="user_auth_password_reset">
         <source>user_auth_password_reset</source>
         <target state="translated">رمز عبور را فراموش کرده اید</target>
       </trans-unit>
-      <trans-unit id="ufoC1qF" resname="user_auth_password_reset_retry_ttl">
+      <trans-unit id="E9URNEx" resname="user_auth_password_reset_retry_ttl">
         <source>user_auth_password_reset_retry_ttl</source>
         <target state="translated">رمز عبور فراموش شده - چند ثانیه قبل از اینکه کاربر بتواند ایمیل بعدی را درخواست کند</target>
       </trans-unit>
-      <trans-unit id="0Tj.NhS" resname="user_auth_password_reset_token_ttl">
+      <trans-unit id="55s60b4" resname="user_auth_password_reset_token_ttl">
         <source>user_auth_password_reset_token_ttl</source>
         <target state="translated">رمز عبور فراموش شده - چند ثانیه قبل از انقضای پیوند بازنشانی</target>
       </trans-unit>
-      <trans-unit id="71FjFMp" resname="ldap_activate">
+      <trans-unit id="ihORk9W" resname="ldap_activate">
         <source>ldap_activate</source>
         <target state="translated">ورود به سیستم LDAP</target>
       </trans-unit>
-      <trans-unit id="A3HPT4p" resname="saml_activate">
+      <trans-unit id="0noFWbL" resname="saml_activate">
         <source>saml_activate</source>
         <target state="translated">ورود SAML</target>
       </trans-unit>
-      <trans-unit id="jLG6z.w" resname="timesheet.rules.break_warning_duration">
+      <trans-unit id="Rf_fb9x" resname="timesheet.rules.break_warning_duration">
         <source>timesheet.rules.break_warning_duration</source>
         <target state="translated">حداکثر مدت یک رکورد تایم شیت در دقیقه قبل از نمایش "هشدار" (0 = غیرفعال)</target>
       </trans-unit>
-      <trans-unit id="h4bhOny" resname="timesheet.rules.long_running_duration">
+      <trans-unit id="vg5G_9i" resname="timesheet.rules.long_running_duration">
         <source>timesheet.rules.long_running_duration</source>
         <target state="translated">حداکثر مدت زمان یک رکورد تایم شیت بر حسب دقیقه قبل از رد شدن ذخیره (0 = غیرفعال شده)</target>
       </trans-unit>
-      <trans-unit id="ZUTc3eH" resname="calendar.dragdrop_amount">
+      <trans-unit id="xlNjElF" resname="calendar.dragdrop_amount">
         <source>calendar.dragdrop_amount</source>
         <target state="translated">تعداد ورودی‌ها برای drag&amp;drop کردن (0 = غیرفعال)</target>
       </trans-unit>
-      <trans-unit id="MXabpD7" resname="calendar.title_pattern">
+      <trans-unit id="winWMI1" resname="calendar.title_pattern">
         <source>calendar.title_pattern</source>
         <target state="translated">نمایش عناوین ورودی های تقویم</target>
       </trans-unit>
-      <trans-unit id="eiQKW2A" resname="calendar.dragdrop_data">
+      <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data">
         <source>Copies data when adding via drag and drop</source>
         <target state="translated">داده ها را هنگام افزودن از طریق drag&amp;drop کردن کپی می کند</target>
       </trans-unit>
-      <trans-unit id="MXasdfgbpD7" resname="copy_teams_on_create" approved="no">
+      <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no">
         <source>copy_teams_on_create</source>
         <target state="translated">هنگام ایجاد ورودی‌های جدید، تیم‌هایی را از کاربر وارد شده تحویل بگیرید</target>
       </trans-unit>
-      <trans-unit id="g1q7hKi" resname="timesheet.rules.allow_zero_duration">
+      <trans-unit id="yBBvkfb" resname="timesheet.rules.allow_zero_duration">
         <source>timesheet.rules.allow_zero_duration</source>
         <target state="translated">اجازه ورود زمانی با مدت زمان خالی را بدهید</target>
       </trans-unit>
-      <trans-unit id="7Efrrn5" resname="quick_entry.minimum_rows">
+      <trans-unit id="KbAqHBa" resname="quick_entry.minimum_rows">
         <source>quick_entry.minimum_rows</source>
         <target state="translated">حداقل تعداد ردیف</target>
       </trans-unit>
-      <trans-unit id="QxQOG3e" resname="quick_entry.recent_activity_weeks">
+      <trans-unit id="Vp1e9qb" resname="quick_entry.recent_activity_weeks">
         <source>quick_entry.recent_activity_weeks</source>
         <target state="translated">دریافت ورودی‌های X هفته گذشته (خالی یا 0 برای همیشه)</target>
       </trans-unit>

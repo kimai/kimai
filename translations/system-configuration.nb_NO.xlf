@@ -282,11 +282,11 @@
         <source>calendar.title_pattern</source>
         <target>Vis kalenderoppføringsnavn</target>
       </trans-unit>
-      <trans-unit id="eiQKW2A" resname="calendar.dragdrop_data">
+      <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data">
         <source>Copies data when adding via drag and drop</source>
         <target state="needs-translation">Kopierer data når lagt til via dra-og-slipp</target>
       </trans-unit>
-      <trans-unit id="MXasdfgbpD7" resname="copy_teams_on_create" approved="no">
+      <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no">
         <source>copy_teams_on_create</source>
         <target state="needs-translation">Ta over lag fra innlogget bruker ved opprettelse av nye oppføringer</target>
       </trans-unit>
