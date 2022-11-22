@@ -116,23 +116,23 @@
         <source>search</source>
         <target state="translated">Пошук</target>
       </trans-unit>
-      <trans-unit id="IolBPQD" resname="searchTerm">
+      <trans-unit id="8W_TZI0" resname="searchTerm">
         <source>searchTerm</source>
         <target state="translated">Пошуковий запит</target>
       </trans-unit>
-      <trans-unit id="BytPihM" resname="set_as_default">
+      <trans-unit id="CiA4s9E" resname="set_as_default">
         <source>set_as_default</source>
         <target state="translated">Зберегти налаштування як обране для пошуку</target>
       </trans-unit>
-      <trans-unit id="31x84Dt" resname="asc">
+      <trans-unit id="1o0.9vf" resname="asc">
         <source>asc</source>
         <target state="translated">Висхідний</target>
       </trans-unit>
-      <trans-unit id="0D_zaYd" resname="desc">
+      <trans-unit id="l4ZOh4." resname="desc">
         <source>desc</source>
         <target state="translated">Спадний</target>
       </trans-unit>
-      <trans-unit id="Z8Fxbvf" resname="orderBy">
+      <trans-unit id="VSo_gmO" resname="orderBy">
         <source>orderBy</source>
         <target state="translated">Впорядкувати за</target>
       </trans-unit>
@@ -156,31 +156,31 @@
         <source>sum.total</source>
         <target state="translated">Всього</target>
       </trans-unit>
-      <trans-unit id="DpdNns0" resname="choice_pattern">
+      <trans-unit id="fVA3M2x" resname="choice_pattern">
         <source>Display of entries in selection lists</source>
         <target state="translated">Показ записів у списках відбору</target>
       </trans-unit>
-      <trans-unit id="9pvowqn" resname="password">
+      <trans-unit id="XohImNo" resname="password">
         <source>password</source>
         <target state="translated">Пароль</target>
       </trans-unit>
-      <trans-unit id="WxAnbP0" resname="password_repeat">
+      <trans-unit id="hLEZkoC" resname="password_repeat">
         <source>password_repeat</source>
         <target state="translated">Повторіть пароль</target>
       </trans-unit>
-      <trans-unit id="II4DGnv" resname="logout">
+      <trans-unit id="ACcM9j_" resname="logout">
         <source>logout</source>
         <target state="translated">Вихід</target>
       </trans-unit>
-      <trans-unit id="hFFZGp_" resname="user_profile">
+      <trans-unit id="_x2He8M" resname="user_profile">
         <source>user_profile</source>
         <target state="translated">Мій профіль</target>
       </trans-unit>
-      <trans-unit id="gXZR.hV" resname="api_token">
+      <trans-unit id="T4nAM7X" resname="api_token">
         <source>api_token</source>
         <target state="translated">Пароль API</target>
       </trans-unit>
-      <trans-unit id="s_X2xpI" resname="api_token_repeat">
+      <trans-unit id="aq59Sk8" resname="api_token_repeat">
         <source>api_token_repeat</source>
         <target state="translated">Повторіть пароль API</target>
       </trans-unit>
@@ -232,7 +232,7 @@
         <source>cancel</source>
         <target state="translated">Скасувати</target>
       </trans-unit>
-      <trans-unit id="NNKq04n" resname="remove_default">
+      <trans-unit id="DUDrvjk" resname="remove_default">
         <source>remove_default</source>
         <target state="translated">Видалити обране в пошуку</target>
       </trans-unit>
@@ -304,75 +304,75 @@
         <source>error.directory_protected</source>
         <target state="translated">Каталог "%dir%" захищений від запису.</target>
       </trans-unit>
-      <trans-unit id="eJPDE76" resname="starttime">
+      <trans-unit id="BHk4pZ3" resname="starttime">
         <source>starttime</source>
         <target state="translated">Початок</target>
       </trans-unit>
-      <trans-unit id="LDhDPrF" resname="username">
+      <trans-unit id="FveKfWM" resname="username">
         <source>username</source>
         <target state="translated">Користувач</target>
       </trans-unit>
-      <trans-unit id="ysOvPSq" resname="name">
+      <trans-unit id="gqNTf.D" resname="name">
         <source>name</source>
         <target state="translated">Ім'я</target>
       </trans-unit>
-      <trans-unit id="WqTho4C" resname="comment">
+      <trans-unit id="xEuy.VF" resname="comment">
         <source>comment</source>
         <target state="translated">Коментар</target>
       </trans-unit>
-      <trans-unit id="txRonia" resname="id">
+      <trans-unit id="pWFFJwz" resname="id">
         <source>id</source>
         <target state="translated">ID</target>
       </trans-unit>
-      <trans-unit id="CYpZwBz" resname="visible">
+      <trans-unit id="1C7xSXk" resname="visible">
         <source>Visible</source>
         <target state="new">Видимий</target>
       </trans-unit>
-      <trans-unit id="2ktNwkr" resname="budget">
+      <trans-unit id="CvlqjtY" resname="budget">
         <source>budget</source>
         <target state="translated">Бюджет</target>
       </trans-unit>
-      <trans-unit id="x8TrOec" resname="timeBudget">
+      <trans-unit id="qbD0dHa" resname="timeBudget">
         <source>timeBudget</source>
         <target state="translated">Бюджет часу</target>
       </trans-unit>
-      <trans-unit id="l1wiL0h" resname="activity">
+      <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
         <target state="translated">Діяльність</target>
       </trans-unit>
-      <trans-unit id="KtnqJcg" resname="project">
+      <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>
         <target state="translated">Проєкт</target>
       </trans-unit>
-      <trans-unit id="VNCQ7YU" resname="tag">
+      <trans-unit id="KhBzpuZ" resname="tag">
         <source>tag</source>
         <target state="translated">Мітки</target>
       </trans-unit>
-      <trans-unit id="ijQyGRo" resname="tags">
+      <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
         <target state="translated">Мітки</target>
       </trans-unit>
-      <trans-unit id="VAbtieW" resname="hourlyRate">
+      <trans-unit id="E_bHhGR" resname="hourlyRate">
         <source>hourlyRate</source>
         <target state="translated">Погодинна ставка</target>
       </trans-unit>
-      <trans-unit id="IQ.tlua" resname="hourly_rate">
+      <trans-unit id="Oyzbm9c" resname="hourly_rate">
         <source>hourly_rate</source>
         <target state="translated">Погодинна ставка</target>
       </trans-unit>
-      <trans-unit id="dezCZWf" resname="skin">
+      <trans-unit id="KgBw0BS" resname="skin">
         <source>skin</source>
         <target state="translated">Кольорова тема</target>
       </trans-unit>
-      <trans-unit id="42BRM3Q" resname="theme.layout">
+      <trans-unit id="iZtaQs8" resname="theme.layout">
         <source>theme.layout</source>
         <target state="translated">Макет теми</target>
       </trans-unit>
-      <trans-unit id="w8T34A6" resname="hours">
+      <trans-unit id="QEMUsfS" resname="hours">
         <source>hours</source>
         <target state="translated">Години</target>
       </trans-unit>
-      <trans-unit id="Ih3IFXj" resname="rate">
+      <trans-unit id="xUl3nXn" resname="rate">
         <source>rate</source>
         <target state="translated">Ставка</target>
       </trans-unit>
@@ -380,7 +380,7 @@
         <source>help.rate</source>
         <target state="translated">Погодинна ставка до нарахування</target>
       </trans-unit>
-      <trans-unit id="QzvjNwg" resname="rate_internal">
+      <trans-unit id="Gc9jlJc" resname="rate_internal">
         <source>rate_internal</source>
         <target state="translated">Внутрішня ставка</target>
       </trans-unit>
@@ -388,27 +388,27 @@
         <source>help.rate_internal</source>
         <target state="translated">Внутрішні витрати (якщо не вказано, використовується звичайна ставка)</target>
       </trans-unit>
-      <trans-unit id="v72sA1c" resname="recalculate_rates">
+      <trans-unit id="Qc5nsFn" resname="recalculate_rates">
         <source>recalculate_rates</source>
         <target state="translated">Перерахувати ставки</target>
       </trans-unit>
-      <trans-unit id="Z8a2kUf" resname="customer">
+      <trans-unit id="tsRYY4d" resname="customer">
         <source>customer</source>
         <target state="translated">Клієнт</target>
       </trans-unit>
-      <trans-unit id="D2N6_cP" resname="email">
+      <trans-unit id="giREF.l" resname="email">
         <source>email</source>
         <target state="translated">Ел.пошта</target>
       </trans-unit>
-      <trans-unit id="Ss2xe99" resname="team">
+      <trans-unit id="yosi0Nu" resname="team">
         <source>team</source>
         <target state="translated">Команда</target>
       </trans-unit>
-      <trans-unit id="Zpj9UB4" resname="teamlead">
+      <trans-unit id="evFI7nW" resname="teamlead">
         <source>teamlead</source>
         <target state="translated">Лідер команди</target>
       </trans-unit>
-      <trans-unit id="hX.EQKy" resname="create_more">
+      <trans-unit id="YF9s6rH" resname="create_more">
         <source>create_more</source>
         <target state="translated">Створити додаткові записи</target>
       </trans-unit>
@@ -416,7 +416,7 @@
         <source>placeholder.type_message</source>
         <target state="translated">Напишіть своє повідомлення…</target>
       </trans-unit>
-      <trans-unit id="74pEVx1" resname="invoiceText">
+      <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
         <target state="translated">Текст рахунку</target>
       </trans-unit>
@@ -464,15 +464,15 @@
         <source>help.fixedRate</source>
         <target state="translated">Кожен запис часу отримує однакове значення, незалежно від його тривалості</target>
       </trans-unit>
-      <trans-unit id="YTSS_Q1" resname="color">
+      <trans-unit id="dChNncv" resname="color">
         <source>color</source>
         <target state="translated">Колір</target>
       </trans-unit>
-      <trans-unit id="EoouxGX" resname="replaceTags">
+      <trans-unit id="tl01EdS" resname="replaceTags">
         <source>replaceTags</source>
         <target state="translated">Заміна міток</target>
       </trans-unit>
-      <trans-unit id="BxkmaKz" resname="appendTags">
+      <trans-unit id="ICpl9sx" resname="appendTags">
         <source>appendTags</source>
         <target state="translated">Додати мітки</target>
       </trans-unit>
@@ -516,31 +516,31 @@
         <source>month</source>
         <target state="translated">Місяць</target>
       </trans-unit>
-      <trans-unit id="39AtPxQ" resname="number">
+      <trans-unit id="EohvnQA" resname="number">
         <source>number</source>
         <target state="translated">Обліковий запис</target>
       </trans-unit>
-      <trans-unit id="7jfRn_1" resname="company">
+      <trans-unit id="8WjM3ZF" resname="company">
         <source>company</source>
         <target state="translated">Назва компанії</target>
       </trans-unit>
-      <trans-unit id="GOStgLi" resname="vat">
+      <trans-unit id="fFErSLq" resname="vat">
         <source>vat</source>
         <target state="translated">Податок</target>
       </trans-unit>
-      <trans-unit id="Dgmh_mv" resname="vat_id">
+      <trans-unit id="EJDS9HY" resname="vat_id">
         <source>vat_id</source>
         <target state="translated">ПДВ-ID</target>
       </trans-unit>
-      <trans-unit id="YNGNfGn" resname="tax_rate">
+      <trans-unit id="qX_CKtU" resname="tax_rate">
         <source>tax_rate</source>
         <target state="translated">Ставка податку</target>
       </trans-unit>
-      <trans-unit id="0tkOMo1" resname="contact">
+      <trans-unit id="CT59X9u" resname="contact">
         <source>contact</source>
         <target state="translated">Контакт</target>
       </trans-unit>
-      <trans-unit id="c9W5AO4" resname="address">
+      <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>
         <target state="translated">Адреса</target>
       </trans-unit>
@@ -716,15 +716,15 @@
         <source>button.xlsx</source>
         <target state="translated">Excel</target>
       </trans-unit>
-      <trans-unit id="7J7G3Vr" resname="mark_as_exported">
+      <trans-unit id="dicW36D" resname="mark_as_exported">
         <source>mark_as_exported</source>
         <target state="translated">Позначити як експортований</target>
       </trans-unit>
-      <trans-unit id="p0IprAw" resname="template">
+      <trans-unit id="XN4PEpj" resname="template">
         <source>template</source>
         <target state="translated">Шаблон</target>
       </trans-unit>
-      <trans-unit id="zfIRxJh" resname="due_days">
+      <trans-unit id="ohNu8DK" resname="due_days">
         <source>due_days</source>
         <target state="translated">Термін оплати в днях</target>
       </trans-unit>
@@ -796,7 +796,7 @@
         <source>export.warn_result_amount</source>
         <target state="translated">Ваш пошук дав %count% результатів. Якщо експорт не вдається, потрібно звузити пошук.</target>
       </trans-unit>
-      <trans-unit id="pnGDFmf" resname="type">
+      <trans-unit id="EwPAaws" resname="type">
         <source>type</source>
         <target state="translated">Тип</target>
       </trans-unit>
@@ -820,15 +820,15 @@
         <source>timesheet.start</source>
         <target state="translated">Створити новий запис</target>
       </trans-unit>
-      <trans-unit id="MPimOps" resname="pageSize">
+      <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
         <target state="translated">Розмір сторінки</target>
       </trans-unit>
-      <trans-unit id="KhyA_PW" resname="entryState">
+      <trans-unit id="cjgNYUB" resname="entryState">
         <source>entryState</source>
         <target state="translated">Записи</target>
       </trans-unit>
-      <trans-unit id="X3JM9wj" resname="exported">
+      <trans-unit id="Qn2ouiL" resname="exported">
         <source>exported</source>
         <target state="translated">Експортовано</target>
       </trans-unit>
@@ -860,15 +860,15 @@
         <source>export.mark_all</source>
         <target state="translated">Позначити всі показані записи як очищені?</target>
       </trans-unit>
-      <trans-unit id="S0vT92U" resname="globalsOnly">
+      <trans-unit id="NNsA8i2" resname="globalsOnly">
         <source>globalsOnly</source>
         <target state="translated">Тільки глобальні</target>
       </trans-unit>
-      <trans-unit id="G9hBaDJ" resname="globalActivities">
+      <trans-unit id="HNFpvnH" resname="globalActivities">
         <source>globalActivities</source>
         <target state="translated">Дозволити глобальну діяльність</target>
       </trans-unit>
-      <trans-unit id="2Ek7sXu" resname="batch_meta_fields">
+      <trans-unit id="8BPmHPa" resname="batch_meta_fields">
         <source>batch_meta_fields</source>
         <target state="translated">Додаткові поля</target>
       </trans-unit>
@@ -876,35 +876,35 @@
         <source>help.batch_meta_fields</source>
         <target state="translated">Поля, які необхідно оновити, повинні бути попередньо активовані кліком на відповідній позначці.</target>
       </trans-unit>
-      <trans-unit id="z_YHoZn" resname="includeNoWork">
+      <trans-unit id="L27KvC9" resname="includeNoWork">
         <source>includeNoWork</source>
         <target state="translated">Показати записи без бронювань</target>
       </trans-unit>
-      <trans-unit id="B.Dbbob" resname="includeNoBudget">
+      <trans-unit id="L0hRlcf" resname="includeNoBudget">
         <source>includeNoBudget</source>
         <target state="translated">Показати записи без бюджету</target>
       </trans-unit>
-      <trans-unit id="Wq.h4nD" resname="includeBudgetType_month">
+      <trans-unit id="ViUuILv" resname="includeBudgetType_month">
         <source>includeBudgetType_month</source>
         <target state="translated">Показати записи з "щомісячним" бюджетом</target>
       </trans-unit>
-      <trans-unit id="8mTf0eZ" resname="budgetIndependent">
+      <trans-unit id="KB9cJM6" resname="budgetIndependent">
         <source>budgetIndependent</source>
         <target state="translated">Показати незалежно від "типу бюджету"</target>
       </trans-unit>
-      <trans-unit id="nVulc7." resname="includeBudgetType_full">
+      <trans-unit id="KukrzcT" resname="includeBudgetType_full">
         <source>includeBudgetType_full</source>
         <target state="translated">Показати записи з бюджетом "життєвого циклу"</target>
       </trans-unit>
-      <trans-unit id="3zn5T5e" resname="not_exported">
+      <trans-unit id="2dm.ZWM" resname="not_exported">
         <source>not_exported</source>
         <target state="translated">Не експортовано</target>
       </trans-unit>
-      <trans-unit id="csF1D35" resname="not_invoiced">
+      <trans-unit id="o0yOFHL" resname="not_invoiced">
         <source>not_invoiced</source>
         <target state="translated">Неоплачене</target>
       </trans-unit>
-      <trans-unit id="AJ6dwR." resname="last_record_before">
+      <trans-unit id="vpqPF8v" resname="last_record_before">
         <source>last_record_before</source>
         <target state="translated">Бронювання часу не здійснюється з</target>
       </trans-unit>
@@ -924,7 +924,7 @@
         <source>quick_entry.title</source>
         <target state="translated">Робочий час за тиждень</target>
       </trans-unit>
-      <trans-unit id="61p_ckr" resname="hours_24">
+      <trans-unit id="rHgZPZi" resname="hours_24">
         <source>hours_24</source>
         <target state="translated">24 години</target>
       </trans-unit>
@@ -936,7 +936,7 @@
         <source>invoice_document.max_reached</source>
         <target state="translated">Досягнуто максимальної кількості %max% рахунків. Ви з можете додати ще, якщо якийсь вилучите.</target>
       </trans-unit>
-      <trans-unit id="4cEApe1" resname="description">
+      <trans-unit id="yQRveje" resname="description">
         <source>description</source>
         <target state="translated">Опис</target>
       </trans-unit>
@@ -944,7 +944,7 @@
         <source>menu.admin_team</source>
         <target state="translated">Команди</target>
       </trans-unit>
-      <trans-unit id="uZlpDFh" resname="endtime">
+      <trans-unit id="eI_tMbq" resname="endtime">
         <source>endtime</source>
         <target state="translated">Кінець</target>
       </trans-unit>
@@ -952,31 +952,31 @@
         <source>error.no_comments_found</source>
         <target state="translated">Коментарів ще не було.</target>
       </trans-unit>
-      <trans-unit id="cgpmY0I" resname="duration">
+      <trans-unit id="yqea9Nt" resname="duration">
         <source>duration</source>
         <target state="translated">Тривалість</target>
       </trans-unit>
-      <trans-unit id="O2X4xZH" resname="user">
+      <trans-unit id="BPiZbad" resname="user">
         <source>user</source>
         <target state="translated">Користувач</target>
       </trans-unit>
-      <trans-unit id="H1qEi4d" resname="date">
+      <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target state="translated">Дата</target>
       </trans-unit>
-      <trans-unit id="foM2o5T" resname="language">
+      <trans-unit id="pO8wS6Q" resname="language">
         <source>language</source>
         <target state="translated">Мова</target>
       </trans-unit>
-      <trans-unit id="vkHr9AP" resname="billable">
+      <trans-unit id="aVwNQcX" resname="billable">
         <source>billable</source>
         <target state="translated">Підлягає оплаті</target>
       </trans-unit>
-      <trans-unit id="zldXQq6" resname="actions">
+      <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
         <target state="translated">Дії</target>
       </trans-unit>
-      <trans-unit id="f3KMQJh" resname="my_teams">
+      <trans-unit id="L05Qw2x" resname="my_teams">
         <source>my_teams</source>
         <target state="translated">Мої команди</target>
       </trans-unit>
@@ -988,19 +988,19 @@
         <source>dashboard.all</source>
         <target state="translated">Всі користувачі</target>
       </trans-unit>
-      <trans-unit id="4iliLZT" resname="toggle_dropdown">
+      <trans-unit id="muzkQpM" resname="toggle_dropdown">
         <source>toggle_dropdown</source>
         <target state="translated">Показати меню</target>
       </trans-unit>
-      <trans-unit id="jTiYRIu" resname="my_team_projects">
+      <trans-unit id="Ia0kvPi" resname="my_team_projects">
         <source>my_team_projects</source>
         <target state="translated">Мої проєкти</target>
       </trans-unit>
-      <trans-unit id="1PQHtXu" resname="progress">
+      <trans-unit id="tfkKlua" resname="progress">
         <source>progress</source>
         <target state="translated">Прогрес</target>
       </trans-unit>
-      <trans-unit id="vTY9SUk" resname="plus_more">
+      <trans-unit id="8z89f8B" resname="plus_more">
         <source>plus_more</source>
         <target state="translated">+ ще %count%</target>
       </trans-unit>
@@ -1008,7 +1008,7 @@
         <source>timesheet.title</source>
         <target state="translated">Мій час</target>
       </trans-unit>
-      <trans-unit id="trDJK9W" resname="begin">
+      <trans-unit id="5vB9Q7X" resname="begin">
         <source>begin</source>
         <target state="translated">З</target>
       </trans-unit>
@@ -1016,11 +1016,11 @@
         <source>timesheet.edit</source>
         <target state="translated">Редагувати запис</target>
       </trans-unit>
-      <trans-unit id="R9typUt" resname="end">
+      <trans-unit id="Nh5I0DC" resname="end">
         <source>end</source>
         <target state="translated">До</target>
       </trans-unit>
-      <trans-unit id="egaNXjp" resname="daterange">
+      <trans-unit id="iNOVZRh" resname="daterange">
         <source>daterange</source>
         <target state="translated">Часовий діапазон</target>
       </trans-unit>
@@ -1036,11 +1036,11 @@
         <source>modal.columns.description</source>
         <target state="translated">При збереженні не відмічені стовпчики будуть приховані, а це налаштування буде збережено в cookie браузера. Якщо Ви видалите свої cookie, налаштування будуть скасовані.</target>
       </trans-unit>
-      <trans-unit id="5gjqxgK" resname="fixedRate">
+      <trans-unit id="_0tuMNE" resname="fixedRate">
         <source>fixedRate</source>
         <target state="translated">Фіксована ставка</target>
       </trans-unit>
-      <trans-unit id="hO7mkmf" resname="lastLogin">
+      <trans-unit id="gRIArHS" resname="lastLogin">
         <source>lastLogin</source>
         <target state="translated">Останній вхід</target>
       </trans-unit>
@@ -1048,15 +1048,15 @@
         <source>profile.preferences</source>
         <target state="translated">Налаштування</target>
       </trans-unit>
-      <trans-unit id="Eq78QrH" resname="theme.collapsed_sidebar">
+      <trans-unit id="GKOzjYa" resname="theme.collapsed_sidebar">
         <source>theme.collapsed_sidebar</source>
         <target state="translated">Згорнути ліву бічну панель</target>
       </trans-unit>
-      <trans-unit id="0sgroZi" resname="calendar.initial_view">
+      <trans-unit id="Twttynb" resname="calendar.initial_view">
         <source>calendar.initial_view</source>
         <target state="translated">Початковий вигляд календаря</target>
       </trans-unit>
-      <trans-unit id="iqQsgIW" resname="login.initial_view">
+      <trans-unit id="byxKRrH" resname="login.initial_view">
         <source>login.initial_view</source>
         <target state="translated">Початковий вигляд після входу</target>
       </trans-unit>
@@ -1068,15 +1068,15 @@
         <source>agendaWeek</source>
         <target state="translated">Тиждень</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="timesheet.daily_stats">
+      <trans-unit id="411MyBj" resname="timesheet_daily_stats">
         <source>timesheet.daily_stats</source>
         <target state="translated">Показувати щоденну статистику в табелі</target>
       </trans-unit>
-      <trans-unit id="TRDzmCV" resname="alias">
+      <trans-unit id="GgpqNso" resname="alias">
         <source>alias</source>
         <target state="translated">Ім'я</target>
       </trans-unit>
-      <trans-unit id="tSlqVK2" resname="timesheet.export_decimal">
+      <trans-unit id="xKLFar8" resname="timesheet_export_decimal">
         <source>timesheet.export_decimal</source>
         <target state="translated">Використовувати десяткову тривалість в експорті</target>
       </trans-unit>
@@ -1088,31 +1088,31 @@
         <source>calendar.drag_and_drop.delete</source>
         <target state="translated">Якщо Ви хочете видалити запис, Ви повинні перетягнути його на кнопку.</target>
       </trans-unit>
-      <trans-unit id="yLOqEX_" resname="project_start">
+      <trans-unit id="Xyjr.V." resname="project_start">
         <source>project_start</source>
         <target state="translated">Початок проєкту</target>
       </trans-unit>
-      <trans-unit id="4kQGReV" resname="project_end">
+      <trans-unit id="TBWoUYf" resname="project_end">
         <source>project_end</source>
         <target state="translated">Кінець проєкту</target>
       </trans-unit>
-      <trans-unit id="AawT9pW" resname="mobile">
+      <trans-unit id="1STBoIE" resname="mobile">
         <source>mobile</source>
         <target state="translated">Мобільний</target>
       </trans-unit>
-      <trans-unit id="otd2FZd" resname="currency">
+      <trans-unit id="Rm5bnNV" resname="currency">
         <source>currency</source>
         <target state="translated">Валюта</target>
       </trans-unit>
-      <trans-unit id="UrRn8xj" resname="title">
+      <trans-unit id="qvIyBkY" resname="title">
         <source>title</source>
         <target state="translated">Титул</target>
       </trans-unit>
-      <trans-unit id="nWMH_Nr" resname="avatar">
+      <trans-unit id="h7voece" resname="avatar">
         <source>avatar</source>
         <target state="translated">Зображення профілю (URL)</target>
       </trans-unit>
-      <trans-unit id="KtTP.Sh" resname="active">
+      <trans-unit id="loeWEWU" resname="active">
         <source>active</source>
         <target state="translated">Активний</target>
       </trans-unit>
@@ -1120,27 +1120,27 @@
         <source>user_permissions.title</source>
         <target state="translated">Дозволи користувача</target>
       </trans-unit>
-      <trans-unit id="k7MJQ82" resname="country">
+      <trans-unit id="r.ZOT9U" resname="country">
         <source>country</source>
         <target state="translated">Країна</target>
       </trans-unit>
-      <trans-unit id="PS9IH_t" resname="homepage">
+      <trans-unit id="pcWhXux" resname="homepage">
         <source>homepage</source>
         <target state="translated">Домашня сторінка</target>
       </trans-unit>
-      <trans-unit id="g03c_vw" resname="phone">
+      <trans-unit id="RVadpX9" resname="phone">
         <source>phone</source>
         <target state="translated">Телефон</target>
       </trans-unit>
-      <trans-unit id="eRyhERS" resname="fax">
+      <trans-unit id="SvTiF8B" resname="fax">
         <source>fax</source>
         <target state="translated">Факс</target>
       </trans-unit>
-      <trans-unit id="dmtPdwq" resname="timezone">
+      <trans-unit id="OWLt7pw" resname="timezone">
         <source>timezone</source>
         <target state="translated">Часовий пояс</target>
       </trans-unit>
-      <trans-unit id="iD6CNOO" resname="roles">
+      <trans-unit id="Zs9VE7N" resname="roles">
         <source>roles</source>
         <target state="translated">Роль</target>
       </trans-unit>
@@ -1152,11 +1152,11 @@
         <source>Allowed character: A-Z and _</source>
         <target state="translated">Дозволені символи: A-Z і _</target>
       </trans-unit>
-      <trans-unit id="d75KAlJ" resname="version">
+      <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
         <target state="translated">Версія</target>
       </trans-unit>
-      <trans-unit id="8Rfa01v" resname="required_version">
+      <trans-unit id="HkxjXDU" resname="required_version">
         <source>required_version</source>
         <target state="translated">Сумісний з</target>
       </trans-unit>
@@ -1196,7 +1196,7 @@
         <source>invoice.service_date</source>
         <target state="translated">Дата надання послуги</target>
       </trans-unit>
-      <trans-unit id="as948k9" resname="orderDate">
+      <trans-unit id="tCNBGKG" resname="orderDate">
         <source>orderDate</source>
         <target state="translated">Дата замовлення</target>
       </trans-unit>
@@ -1208,19 +1208,19 @@
         <source>invoice.tax</source>
         <target state="translated">Податок</target>
       </trans-unit>
-      <trans-unit id="6x24VVR" resname="amount">
+      <trans-unit id="zzjZXJx" resname="amount">
         <source>amount</source>
         <target state="translated">Кількість</target>
       </trans-unit>
-      <trans-unit id="g7EpaPY" resname="total_rate">
+      <trans-unit id="BAkWQqr" resname="total_rate">
         <source>total_rate</source>
         <target state="translated">Загальна вартість</target>
       </trans-unit>
-      <trans-unit id="MF3MdTu" resname="unit_price">
+      <trans-unit id="IoKfYkz" resname="unit_price">
         <source>unit_price</source>
         <target state="translated">Ціна за одиницю</target>
       </trans-unit>
-      <trans-unit id="77aZC3r" resname="payment_terms">
+      <trans-unit id="033t0aO" resname="payment_terms">
         <source>payment_terms</source>
         <target state="translated">Умови оплати</target>
       </trans-unit>
@@ -1232,11 +1232,11 @@
         <source>invoice.signature_customer</source>
         <target state="translated">Підтвердження: Дата / ПІБ клієнта / Підпис</target>
       </trans-unit>
-      <trans-unit id="BS00SS7" resname="orderNumber">
+      <trans-unit id="3tegKgk" resname="orderNumber">
         <source>orderNumber</source>
         <target state="translated">Номер замовлення</target>
       </trans-unit>
-      <trans-unit id="RRj6PYN" resname="invoice_tax_number">
+      <trans-unit id="WMJwy8r" resname="invoice_tax_number">
         <source>invoice_tax_number</source>
         <target state="translated">Свід.ПДВ №:</target>
       </trans-unit>
@@ -1248,15 +1248,15 @@
         <source>status.paid</source>
         <target state="translated">Сплачено</target>
       </trans-unit>
-      <trans-unit id="uFZA7Uf" resname="invoice_bank_account">
+      <trans-unit id="lswYe8s" resname="invoice_bank_account">
         <source>invoice_bank_account</source>
         <target state="translated">Розрахунковий рахунок</target>
       </trans-unit>
-      <trans-unit id="9VxfLLy" resname="decimalDuration">
+      <trans-unit id="LSFSF8u" resname="decimalDuration">
         <source>decimalDuration</source>
         <target state="translated">Показувати тривалість десятковим числом</target>
       </trans-unit>
-      <trans-unit id="hzhzbqw" resname="status">
+      <trans-unit id="BzwWNMS" resname="status">
         <source>status</source>
         <target state="translated">Стан</target>
       </trans-unit>
@@ -1268,23 +1268,23 @@
         <source>status.canceled</source>
         <target state="translated">Скасовано</target>
       </trans-unit>
-      <trans-unit id="PoF7hD8" resname="budgetType">
+      <trans-unit id="4Ndj7Xo" resname="budgetType">
         <source>budgetType</source>
         <target state="translated">Тип бюджету</target>
       </trans-unit>
-      <trans-unit id="qDnURk7" resname="last_record">
+      <trans-unit id="_YiKaOT" resname="last_record">
         <source>last_record</source>
         <target state="translated">Останній запис</target>
       </trans-unit>
-      <trans-unit id="cHfLJtL" resname="budgetType_month">
+      <trans-unit id="wYqyL6A" resname="budgetType_month">
         <source>budgetType_month</source>
         <target state="translated">Щомісячний</target>
       </trans-unit>
-      <trans-unit id="LXdqaTH" resname="account_number">
+      <trans-unit id="KH2hgil" resname="account_number">
         <source>account_number</source>
         <target state="translated">Штатний номер</target>
       </trans-unit>
-      <trans-unit id="9Rhadz6" resname="budgetType_full">
+      <trans-unit id="dnQEYoJ" resname="budgetType_full">
         <source>budgetType_full</source>
         <target state="translated">Життєвий цикл</target>
       </trans-unit>

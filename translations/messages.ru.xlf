@@ -808,7 +808,7 @@
         <source>invoice.filter</source>
         <target>Фильтровать данные счетов</target>
       </trans-unit>
-      <trans-unit id="rYzHCFd" resname="daily_stats">
+      <trans-unit id="r49TNAg" resname="daily_stats">
         <source>daily_stats</source>
         <target state="translated">Показывать дневную статистику в табеле</target>
       </trans-unit>
