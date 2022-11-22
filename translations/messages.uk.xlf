@@ -2,76 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="uk" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <!--
-              Global template keys
-            -->
-      <!--
-              Login / Security
-            -->
-      <!--
-              Menu / Navbar items
-            -->
-      <!--
-              Error templates
-            -->
-      <!--
-              General labels
-            -->
-      <!--
-              Buttons & Actions
-            -->
-      <!--
-              Dashboard
-            -->
-      <!--
-              Widgets
-            -->
-      <!--
-              Timesheet
-            -->
-      <!--
-              User profile
-            -->
-      <!-- Options for user-preference calendar.initial_view -->
-      <!--
-              User timesheet calendar
-            -->
-      <!--
-              Admin: Timesheet
-            -->
-      <!--
-              Admin: Projects
-            -->
-      <!--
-              Admin: Customer
-            -->
-      <!--
-              Admin: Users
-            -->
-      <!--
-              Admin: Plugins
-            -->
-      <!--
-              ROLES
-            -->
-      <!--
-              Statistics data for Dashboard & Users profile
-            -->
-      <!--
-              Invoice
-            -->
-      <!--
-              Export
-            -->
-      <!--
-             Navbar - recent entries and activities
-            -->
-      <!--
-              TOOLBARS
-            -->
-      <!--
-          QUICK ENTRIES
-      -->
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
         <target state="translated">Так</target>
@@ -279,10 +209,6 @@
       <trans-unit id="IXtkHRw" resname="menu.system_configuration">
         <source>menu.system_configuration</source>
         <target state="translated">Налаштування</target>
-      </trans-unit>
-      <trans-unit id="l4wviUE" resname="tags">
-        <source>tags</source>
-        <target state="translated">Мітки</target>
       </trans-unit>
       <trans-unit id="1kHI0gb" resname="menu.doctor">
         <source>menu.doctor</source>
