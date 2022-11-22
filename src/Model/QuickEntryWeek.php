@@ -18,12 +18,13 @@ use App\Entity\User;
  */
 class QuickEntryWeek
 {
-    private $startDate;
-    private $rows = [];
+    /**
+     * @var array<QuickEntryModel>
+     */
+    private array $rows = [];
 
-    public function __construct(\DateTime $startDate)
+    public function __construct(private \DateTime $startDate)
     {
-        $this->startDate = $startDate;
     }
 
     public function addRow(?User $user = null, ?Project $project = null, ?Activity $activity = null): QuickEntryModel
@@ -75,7 +76,7 @@ class QuickEntryWeek
         } elseif ($aName !== null && $bName === null) {
             $result = -1;
         } else {
-            $result = strcmp($aName, $bName);
+            $result = strcmp((string) $aName, (string) $bName);
         }
 
         return  $result < 0 ? -1 : 1;

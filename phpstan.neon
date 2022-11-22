@@ -8726,21 +8726,6 @@ parameters:
             path: src/Form/Type/QuickEntryWeekType.php
 
         -
-            message: "#^Cannot call method getBegin\\(\\) on App\\\\Entity\\\\Timesheet\\|null\\.$#"
-            count: 2
-            path: src/Form/Type/QuickEntryWeekType.php
-
-        -
-            message: "#^Cannot call method setTime\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: src/Form/Type/QuickEntryWeekType.php
-
-        -
-            message: "#^Cannot clone DateTime\\|null\\.$#"
-            count: 2
-            path: src/Form/Type/QuickEntryWeekType.php
-
-        -
             message: "#^Cannot clone mixed\\.$#"
             count: 1
             path: src/Form/Type/QuickEntryWeekType.php

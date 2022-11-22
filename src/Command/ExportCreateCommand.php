@@ -226,9 +226,10 @@ class ExportCreateCommand extends Command
         $query = new ExportQuery();
 
         $username = $input->getOption('username');
-        if (!empty($username)) {
-            $user = $this->userRepository->loadUserByUsername($username);
-            if (null === $user) {
+        if (\is_string($username) && !empty($username)) {
+            try {
+                $user = $this->userRepository->loadUserByIdentifier($username);
+            } catch(\Exception) {
                 $io->error(
                     sprintf('The given username "%s" could not be resolved', $username)
                 );

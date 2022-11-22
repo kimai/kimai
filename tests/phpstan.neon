@@ -9723,31 +9723,6 @@ parameters:
             path: Model/QuickEntryModelTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Model\\\\QuickEntryModelTest\\:\\:testDefaultModel\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Model/QuickEntryModelTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Model\\\\QuickEntryModelTest\\:\\:testEmptyModel\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Model/QuickEntryModelTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Model\\\\QuickEntryModelTest\\:\\:testFullModel\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Model/QuickEntryModelTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Model\\\\QuickEntryModelTest\\:\\:testHasExistingTimesheet\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Model/QuickEntryModelTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Model\\\\QuickEntryWeekTest\\:\\:testModel\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Model/QuickEntryWeekTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Model\\\\Statistic\\\\AbstractTimesheetTest\\:\\:assertDefaultValues\\(\\) has no return type specified\\.$#"
             count: 1
             path: Model/Statistic/AbstractTimesheetTest.php
