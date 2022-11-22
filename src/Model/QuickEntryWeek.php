@@ -65,8 +65,8 @@ class QuickEntryWeek
 
     private function sortByProjectName(QuickEntryModel $a, QuickEntryModel $b): int
     {
-        $aName = $a->getProject() !== null ? $a->getProject()->getName() : null;
-        $bName = $b->getProject() !== null ? $b->getProject()->getName() : null;
+        $aName = $a->getProject()?->getName();
+        $bName = $b->getProject()?->getName();
 
         if ($aName === null && $bName === null) {
             $result = 0;
