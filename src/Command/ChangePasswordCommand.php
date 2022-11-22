@@ -36,17 +36,17 @@ final class ChangePasswordCommand extends AbstractUserCommand
             ])
             ->setHelp(
                 <<<'EOT'
-The <info>kimai:user:password</info> command changes the password of a user:
+                    The <info>kimai:user:password</info> command changes the password of a user:
 
-  <info>php %command.full_name% matthieu</info>
+                      <info>php %command.full_name% matthieu</info>
 
-This interactive shell will first ask you for a password.
+                    This interactive shell will first ask you for a password.
 
-You can alternatively specify the password as a second argument:
+                    You can alternatively specify the password as a second argument:
 
-  <info>php %command.full_name% susan_super newpassword</info>
+                      <info>php %command.full_name% susan_super newpassword</info>
 
-EOT
+                    EOT
             );
     }
 

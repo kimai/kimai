@@ -34,10 +34,10 @@ final class ActivateUserCommand extends Command
             ])
             ->setHelp(
                 <<<'EOT'
-The <info>kimai:user:activate</info> command activates a user (so they will be able to log in):
+                    The <info>kimai:user:activate</info> command activates a user (so they will be able to log in):
 
-  <info>php %command.full_name% susan_super</info>
-EOT
+                      <info>php %command.full_name% susan_super</info>
+                    EOT
             );
     }
 

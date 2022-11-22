@@ -64,8 +64,8 @@ class CeilRoundingTest extends TestCase
                 0,
                 (clone $start)->setTime(12, 17, 35),
                 (clone $start)->setTime(13, 32, 52),
-                (clone $start)->setTime(12, 30, 00),
-                (clone $start)->setTime(13, 45, 00),
+                (clone $start)->setTime(12, 30, 0),
+                (clone $start)->setTime(13, 45, 0),
                 4500
             ],
             [
@@ -84,8 +84,8 @@ class CeilRoundingTest extends TestCase
                 0,
                 (clone $start)->setTime(12, 17, 35),
                 (clone $start)->setTime(13, 32, 52),
-                (clone $start)->setTime(12, 18, 00),
-                (clone $start)->setTime(13, 33, 00),
+                (clone $start)->setTime(12, 18, 0),
+                (clone $start)->setTime(13, 33, 0),
                 4500
             ],
             [
@@ -105,7 +105,7 @@ class CeilRoundingTest extends TestCase
                 (clone $start)->setTime(12, 27, 35), // 12:15
                 (clone $start)->setTime(14, 32, 52), // 14:33 => 2:18 => 2:30
                 (clone $start)->setTime(12, 27, 35),
-                (clone $start)->setTime(14, 33, 00),
+                (clone $start)->setTime(14, 33, 0),
                 9000
             ],
             [
@@ -114,7 +114,7 @@ class CeilRoundingTest extends TestCase
                 30,
                 (clone $start)->setTime(12, 27, 35), // 12:15
                 (clone $start)->setTime(14, 32, 52), // 14:33 => 2:18 (second duration will not be rounded)
-                (clone $start)->setTime(12, 30, 00), // 12:15
+                (clone $start)->setTime(12, 30, 0), // 12:15
                 (clone $start)->setTime(14, 32, 52), // 14:33 => 2:18 (second duration will not be rounded)
                 9000
             ],
@@ -132,10 +132,10 @@ class CeilRoundingTest extends TestCase
                 1,
                 1,
                 1,
-                (clone $start)->setTime(12, 27, 00), // no diff, to test ...
-                (clone $start)->setTime(12, 27, 00), // ... that no rounding is applied
-                (clone $start)->setTime(12, 27, 00), // no diff, to test ...
-                (clone $start)->setTime(12, 27, 00), // ... that no rounding is applied
+                (clone $start)->setTime(12, 27, 0), // no diff, to test ...
+                (clone $start)->setTime(12, 27, 0), // ... that no rounding is applied
+                (clone $start)->setTime(12, 27, 0), // no diff, to test ...
+                (clone $start)->setTime(12, 27, 0), // ... that no rounding is applied
                 0
             ],
             [

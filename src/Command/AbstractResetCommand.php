@@ -36,9 +36,9 @@ abstract class AbstractResetCommand extends Command
         $this
             ->setHelp(
                 <<<EOT
-    This command will drop and re-create the database and its schemas, load data and clear the cache.
-    Use the <info>-n</info> switch to skip the question.
-EOT
+                        This command will drop and re-create the database and its schemas, load data and clear the cache.
+                        Use the <info>-n</info> switch to skip the question.
+                    EOT
             )
             ->addOption('no-cache', null, InputOption::VALUE_NONE, 'Skip cache flushing')
         ;

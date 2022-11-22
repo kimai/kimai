@@ -482,7 +482,7 @@ final class InvoiceController extends AbstractController
         }
 
         if (!file_exists($invoiceDir)) {
-            @mkdir($invoiceDir, 0777);
+            @mkdir($invoiceDir, 0o777);
         }
 
         if (!is_dir($invoiceDir)) {

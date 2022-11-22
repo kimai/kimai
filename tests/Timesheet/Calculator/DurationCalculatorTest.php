@@ -195,8 +195,8 @@ class DurationCalculatorTest extends TestCase
                         'mode' => 'default',
                     ],
                 ],
-                (clone $start)->setTime(12, 27, 00), // no diff, to test ...
-                (clone $start)->setTime(12, 27, 00), // ... that no rounding is applied
+                (clone $start)->setTime(12, 27, 0), // no diff, to test ...
+                (clone $start)->setTime(12, 27, 0), // ... that no rounding is applied
                 0
             ],
             [

@@ -25,11 +25,11 @@ final class PromoteUserCommand extends AbstractRoleCommand
             ->setDescription('Promotes a user by adding a role')
             ->setHelp(
                 <<<'EOT'
-The <info>kimai:user:promote</info> command promotes a user by adding a role
+                    The <info>kimai:user:promote</info> command promotes a user by adding a role
 
-  <info>php %command.full_name% susan_super ROLE_TEAMLEAD</info>
-  <info>php %command.full_name% --super susan_super</info>
-EOT
+                      <info>php %command.full_name% susan_super ROLE_TEAMLEAD</info>
+                      <info>php %command.full_name% --super susan_super</info>
+                    EOT
             );
     }
 

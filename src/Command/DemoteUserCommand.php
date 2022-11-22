@@ -25,11 +25,11 @@ final class DemoteUserCommand extends AbstractRoleCommand
             ->setDescription('Demote a user by removing a role')
             ->setHelp(
                 <<<'EOT'
-The <info>kimai:user:demote</info> command demotes a user by removing a role
+                    The <info>kimai:user:demote</info> command demotes a user by removing a role
 
-  <info>php %command.full_name% susan_super ROLE_TEAMLEAD</info>
-  <info>php %command.full_name% --super susan_super</info>
-EOT
+                      <info>php %command.full_name% susan_super ROLE_TEAMLEAD</info>
+                      <info>php %command.full_name% --super susan_super</info>
+                    EOT
             );
     }
 

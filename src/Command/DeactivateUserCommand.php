@@ -34,10 +34,10 @@ final class DeactivateUserCommand extends Command
             ])
             ->setHelp(
                 <<<'EOT'
-The <info>kimai:user:deactivate</info> command deactivates a user (will not be able to log in)
+                    The <info>kimai:user:deactivate</info> command deactivates a user (will not be able to log in)
 
-  <info>php %command.full_name% susan_super</info>
-EOT
+                      <info>php %command.full_name% susan_super</info>
+                    EOT
             );
     }
 
