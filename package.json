@@ -4,7 +4,6 @@
   "maintainers": [
     {
       "name": "Kevin Papst",
-      "email": "kpapst@gmx.net",
       "url": "https://www.kevinpapst.de"
     }
   ],
@@ -37,7 +36,7 @@
     "@fullcalendar/interaction": "^5.11",
     "@fullcalendar/timegrid": "^5.11",
     "@symfony/webpack-encore": "^4.0",
-    "@tabler/core": "1.0.0-beta15",
+    "@tabler/core": "1.0.0-beta16",
     "chart.js": "^3.9",
     "core-js": "^3.6",
     "eslint": "^8.0",
@@ -45,7 +44,7 @@
     "gridstack": "^7.1",
     "litepicker": "^2.0",
     "luxon": "^3.0",
-    "node-sass": "^7.0",
+    "node-sass": "^8.0",
     "sass-loader": "^13.0",
     "tom-select": "^2.0",
     "webpack": "^5.74.0",
