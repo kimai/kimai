@@ -200,7 +200,7 @@ final class ServiceInvoice
             $disposition = $event->getResponse()->headers->get('Content-Disposition');
             $parts = explode(';', $disposition);
             foreach ($parts as $part) {
-                if (stripos($part, 'filename=') === false) {
+                if ($part === null || stripos($part, 'filename=') === false) {
                     continue;
                 }
                 $filename = explode('filename=', $part);
