@@ -74,7 +74,11 @@
                             {% if title != 'actions' and not headerOptions.orderBy is same as(false) %}
                                 {% if orderBy == headerOptions.orderBy %}
                                     {% set headerClass = headerClass ~ ' sortable sorting_' ~ (order) %}
-                                    {% set ariaSort = order ~ 'ending' %}
+                                    {% if order == 'asc' %}
+                                        {% set ariaSort = 'ascending' %}
+                                    {% else %}
+                                        {% set ariaSort = 'descending' %}
+                                    {% endif %}
                                 {% else %}
                                     {% set headerClass = headerClass ~ ' sortable sorting' %}
                                 {% endif %}
