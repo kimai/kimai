@@ -73,6 +73,7 @@ class DateRangeType extends AbstractType
             'thisYear' => [$factory->createStartOfYear(), $factory->createEndOfYear()],
             'thisYearUntilNow' => [$factory->createStartOfYear(), $factory->createDateTime('23:59:59')],
             'lastYear' => [$factory->createStartOfYear('-1 year'), $factory->createEndOfYear('-1 year')],
+            'allTime' => [null, null],
         ];
         $view->vars['rangeFormat'] = $options['format'];
 
