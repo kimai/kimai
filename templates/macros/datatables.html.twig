@@ -74,6 +74,7 @@
                             {% if title != 'actions' and not headerOptions.orderBy is same as(false) %}
                                 {% if orderBy == headerOptions.orderBy %}
                                     {% set headerClass = headerClass ~ ' sortable sorting_' ~ (order) %}
+                                    {% set ariaSort = order ~ 'ending' %}
                                 {% else %}
                                     {% set headerClass = headerClass ~ ' sortable sorting' %}
                                 {% endif %}
@@ -84,7 +85,7 @@
                             {% elseif title is not empty and title != 'actions' %}
                                 {% set headerTitle = (translationPrefix ~ title)|trans({}, translationDomain) %}
                             {% endif %}
-                            <th data-field="{{ title }}" {% if not headerOptions.orderBy is same as(false) %}data-order="{{ headerOptions.orderBy }}" {% endif %}class="{{ headerClass }}">
+                            <th data-field="{{ title }}" {% if not headerOptions.orderBy is same as(false) %}data-order="{{ headerOptions.orderBy }}" role="button" {% endif %}{% if ariaSort %}aria-sort="{{ ariaSort }}" {% endif %}class="{{ headerClass }}">
                                 {% if headerOptions.html_before is defined %}
                                     {{ headerOptions.html_before|raw }}
                                 {% endif %}
