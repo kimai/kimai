@@ -296,6 +296,7 @@ class TimesheetCountedStatistic implements \JsonSerializable
         $this->recordRateExported = $recordRate;
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return [
