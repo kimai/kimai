@@ -1,7 +1,4 @@
 {
-    "beberlei/doctrineextensions": {
-        "version": "v1.2.0"
-    },
     "behat/transliterator": {
         "version": "v1.2.0"
     },

@@ -24,7 +24,6 @@
         "ext-xml": "*",
         "ext-xsl": "*",
         "ext-zip": "*",
-        "beberlei/doctrineextensions": "^1.2",
         "composer/package-versions-deprecated": "^1.8",
         "composer/semver": "^3.3",
         "doctrine/doctrine-bundle": "^2.0",
