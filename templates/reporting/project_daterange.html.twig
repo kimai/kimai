@@ -44,11 +44,11 @@
     {{ tables.data_table_column_modal(tableName, columns) }}
 {% endblock %}
 
-{% block report_form %}
-    {{ form_start(form, {'attr': {'class': 'd-flex form-reporting align-middle', 'id': 'report-form'}}) }}
+{% block report_form_layout %}
+    {{ form_start(form, {'attr': {'class': 'form-reporting', 'id': 'report-form'}}) }}
     <div class="btn-list w-100">
-        {{ form_row(form.customer, {'label': false, 'placeholder': 'please_choose'}) }}
-        {{ form_row(form.month, {'label': false}) }}
+        {{ form_widget(form.month, {'label': false}) }}
+        {{ form_widget(form.customer, {'label': false, 'placeholder': 'please_choose'}) }}
         <div class="dropdown">
             <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ icon('filter', true) }}
