@@ -119,14 +119,14 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
                     if (data.color !== undefined) {
                         color = data.color;
                     }
-                    return '<div class="list-group-item border-0 p-1 ps-2"><span style="background-color:' + color + '" class="color-choice-item">&nbsp;</span>' + escape(data.text) + '</div>';
+                    return '<div class="list-group-item border-0 p-1 ps-2 text-nowrap"><span style="background-color:' + color + '" class="color-choice-item">&nbsp;</span>' + escape(data.text) + '</div>';
                 },
                 item: function(data, escape) {
                     let color = data.value;
                     if (data.color !== undefined) {
                         color = data.color;
                     }
-                    return '<div><span style="background-color:' + color + '" class="color-choice-item">&nbsp;</span>' + escape(data.text) + '</div>';
+                    return '<div class="text-nowrap"><span style="background-color:' + color + '" class="color-choice-item">&nbsp;</span>' + escape(data.text) + '</div>';
                 }
             }};
         } else {
