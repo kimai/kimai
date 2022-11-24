@@ -31,7 +31,7 @@ class DateTimeFormatValidator extends ConstraintValidator
 
         $valid = true;
 
-        if (!is_string($value)) {
+        if (!\is_string($value)) {
             $valid = false;
         } else {
             try {
