@@ -45,33 +45,45 @@ final class LocaleHelper
     /**
      * Transforms seconds into a decimal formatted duration string.
      *
-     * @param int $seconds
+     * @param int|null $seconds
      * @return string
      */
-    public function durationDecimal(int $seconds)
+    public function durationDecimal(?int $seconds): string
     {
+        if ($seconds === null) {
+            $seconds = 0;
+        }
+
         $value = round($seconds / 3600, 2);
 
-        return $this->getDurationFormatter()->format((float) $value);
+        return $this->getDurationFormatter()->format($value);
     }
 
     /**
      * Only used in twig filter |amount and invoice templates
      *
-     * @param string|float $amount
+     * @param string|float|null $amount
      * @return bool|false|string
      */
     public function amount($amount)
     {
+        if ($amount === null) {
+            $amount = 0.00;
+        }
+
         return $this->getNumberFormatter()->format($amount);
     }
 
     /**
-     * @param string $currency
+     * @param string|null $currency
      * @return string
      */
-    public function currency($currency)
+    public function currency(?string $currency)
     {
+        if ($currency === null) {
+            return '';
+        }
+
         try {
             return Currencies::getSymbol(strtoupper($currency), $this->locale);
         } catch (\Exception $ex) {
@@ -109,7 +121,7 @@ final class LocaleHelper
     }
 
     /**
-     * @param int|float $amount
+     * @param int|float|null $amount
      * @param string|null $currency
      * @param bool $withCurrency
      * @return string
@@ -118,6 +130,10 @@ final class LocaleHelper
     {
         if (null === $currency) {
             $withCurrency = false;
+        }
+
+        if ($amount === null) {
+            $amount = 0;
         }
 
         if (false === $withCurrency) {

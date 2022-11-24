@@ -25,12 +25,20 @@ class DateTimeFormatValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\DateTimeFormat');
         }
 
+        if ($value === null) {
+            return;
+        }
+
         $valid = true;
 
-        try {
-            $test = new \DateTime($value);
-        } catch (\Exception $ex) {
+        if (!\is_string($value)) {
             $valid = false;
+        } else {
+            try {
+                $test = new \DateTime($value);
+            } catch (\Exception $ex) {
+                $valid = false;
+            }
         }
 
         if (false === $valid) {

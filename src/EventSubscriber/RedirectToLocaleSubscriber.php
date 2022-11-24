@@ -53,7 +53,8 @@ class RedirectToLocaleSubscriber implements EventSubscriberInterface
 
         // Ignore requests from referrers with the same HTTP host in order to prevent
         // changing language for users who possibly already selected it for this application.
-        if (0 === stripos($request->headers->get('referer'), $request->getSchemeAndHttpHost())) {
+        $referer = $request->headers->get('referer');
+        if ($referer !== null && 0 === stripos($referer, $request->getSchemeAndHttpHost())) {
             return;
         }
 

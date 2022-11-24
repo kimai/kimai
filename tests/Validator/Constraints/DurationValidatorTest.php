@@ -69,7 +69,10 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
     {
         $constraint = new Duration();
         $this->validator->validate($input, $constraint);
-        $this->validator->validate(strtoupper($input), $constraint);
+        if ($input !== null) {
+            $input = strtoupper($input);
+        }
+        $this->validator->validate($input, $constraint);
         $this->assertNoViolation();
     }
 
