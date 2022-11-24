@@ -11,6 +11,7 @@ namespace App\Invoice;
 
 use App\Configuration\LanguageFormattings;
 use App\Constants;
+use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\InvoiceDocument;
 use App\Event\InvoiceCreatedEvent;
@@ -580,7 +581,22 @@ final class ServiceInvoice
         }
 
         uasort($customerEntries, function ($a, $b) {
-            return strcmp($a['customer']->getName(), $b['customer']->getName());
+            $customerA = $a['customer'] ?? null;
+            $customerB = $b['customer'] ?? null;
+            $nameA = ($customerA instanceof Customer) ? $customerA->getName() : null;
+            $nameB = ($customerB instanceof Customer) ? $customerB->getName() : null;
+
+            if ($nameA === null && $nameB === null) {
+                $result = 0;
+            } elseif ($nameA === null && $nameB !== null) {
+                $result = 1;
+            } elseif ($nameA !== null && $nameB === null) {
+                $result = -1;
+            } else {
+                $result = strcmp($nameA, $nameB);
+            }
+
+            return $result;
         });
 
         foreach ($customerEntries as $id => $settings) {
