@@ -4,9 +4,7 @@ monolog:
             type: fingers_crossed
             action_level: error
             handler: nested
-            excluded_404s:
-                # regex: exclude all 404 errors from the logs
-                - ^/
+            excluded_http_codes: [403, 404]
         nested:
             type: stream
             level: info
