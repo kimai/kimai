@@ -77,8 +77,10 @@ table.table-bordered {
     }
 }
 
-table.dataTable.table > tbody > tr > td {
-    vertical-align: middle;
+@include media-breakpoint-up(xl) {
+    table.dataTable.table > tbody > tr > td {
+        vertical-align: middle;
+    }
 }
 
 table.dataTable {

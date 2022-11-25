@@ -11,9 +11,6 @@
     }
 }
 @include media-breakpoint-up(md) {
-    #dashboard_nav {
-        display: none;
-    }
     .inline-search {
         max-width: 325px;
     }
