@@ -1366,11 +1366,6 @@ parameters:
             path: src/Configuration/SystemConfiguration.php
 
         -
-            message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:getTimesheetLockdownTimeZone\\(\\) should return string\\|null but returns bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 1
-            path: src/Configuration/SystemConfiguration.php
-
-        -
             message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:getUserDefaultCurrency\\(\\) should return string but returns bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
             path: src/Configuration/SystemConfiguration.php
@@ -12164,11 +12159,6 @@ parameters:
             message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
             count: 1
             path: src/Validator/Constraints/ColorChoicesValidator.php
-
-        -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\DateTimeFormat\\:\\:\\$message has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/DateTimeFormat.php
 
         -
             message: "#^Parameter \\#1 \\$datetime of class DateTime constructor expects string, mixed given\\.$#"

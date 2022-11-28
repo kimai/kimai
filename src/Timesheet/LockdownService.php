@@ -11,6 +11,7 @@ namespace App\Timesheet;
 
 use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
+use App\Entity\User;
 
 final class LockdownService
 {
@@ -23,10 +24,149 @@ final class LockdownService
     public function isLockdownActive(): bool
     {
         if ($this->isActive === null) {
-            $this->isActive = $this->configuration->isTimesheetLockdownActive();
+            $this->isActive = $this->getLockdownPeriodStart() !== null && $this->getLockdownPeriodEnd() !== null;
         }
 
         return $this->isActive;
+    }
+
+    public function getLockdownTimezone(): ?string
+    {
+        $timezone = $this->configuration->find('timesheet.rules.lockdown_period_timezone');
+
+        if ($timezone === null || $timezone === '') {
+            return null;
+        }
+
+        return (string) $timezone;
+    }
+
+    private function getTimezone(User $user): \DateTimeZone
+    {
+        $timezone = $this->getLockdownTimezone();
+
+        if ($timezone === null) {
+            $timezone = $user->getTimezone();
+        }
+
+        return new \DateTimeZone($timezone);
+    }
+
+    public function getLockdownStart(User $user): ?\DateTime
+    {
+        $start = $this->getLockdownPeriodStart();
+        if ($start === null) {
+            return null;
+        }
+
+        $start = new \DateTime($start, $this->getTimezone($user));
+        $start->setTimezone(new \DateTimeZone($user->getTimezone()));
+
+        return $start;
+    }
+
+    private function getLockdownPeriodStart(): ?string
+    {
+        $start = $this->configuration->find('timesheet.rules.lockdown_period_start');
+
+        if ($start === null || $start === '') {
+            return null;
+        }
+
+        $start = explode(',', (string) $start);
+        if (\count($start) === 1) {
+            return $start[0];
+        }
+
+        $min = null;
+        $date = null;
+        foreach ($start as $dateString) {
+            $tmp = new \DateTime($dateString);
+            if ($min === null) {
+                $min = $dateString;
+                $date = $tmp;
+                continue;
+            }
+            if ($tmp > $date) {
+                $min = $dateString;
+                $date = $tmp;
+            }
+        }
+
+        return $min;
+    }
+
+    public function getLockdownEnd(User $user): ?\DateTime
+    {
+        $end = $this->getLockdownPeriodEnd();
+        if ($end === null) {
+            return null;
+        }
+
+        $end = new \DateTime($end, $this->getTimezone($user));
+        $end->setTimezone(new \DateTimeZone($user->getTimezone()));
+
+        return $end;
+    }
+
+    private function getLockdownPeriodEnd(): ?string
+    {
+        $end = $this->configuration->find('timesheet.rules.lockdown_period_end');
+
+        if ($end === null || $end === '') {
+            return null;
+        }
+
+        $end = explode(',', (string) $end);
+        if (\count($end) === 1) {
+            return $end[0];
+        }
+
+        $min = null;
+        $date = null;
+        foreach ($end as $dateString) {
+            $tmp = new \DateTime($dateString);
+            if ($min === null) {
+                $min = $dateString;
+                $date = $tmp;
+                continue;
+            }
+            if ($tmp < $date) {
+                $min = $dateString;
+                $date = $tmp;
+            }
+        }
+
+        return $min;
+    }
+
+    public function getLockdownGrace(User $user): ?\DateTime
+    {
+        $gracePeriod = $this->getLockdownGracePeriod();
+        if ($gracePeriod === null) {
+            return null;
+        }
+
+        $end = $this->getLockdownEnd($user);
+        if ($end === null) {
+            return null;
+        }
+
+        $grace = clone $end;
+        $grace->modify($gracePeriod);
+
+        return $grace;
+    }
+
+    private function getLockdownGracePeriod(): ?string
+    {
+        $grace = $this->configuration->find('timesheet.rules.lockdown_grace_period');
+
+        if ($grace === null || $grace === '') {
+            return null;
+        }
+
+        return (string) $grace;
     }
 
     /**
@@ -50,10 +190,15 @@ final class LockdownService
             return true;
         }
 
-        $lockedStart = $this->configuration->getTimesheetLockdownPeriodStart();
-        $lockedEnd = $this->configuration->getTimesheetLockdownPeriodEnd();
-        $gracePeriod = $this->configuration->getTimesheetLockdownGracePeriod();
-        $timezone = $this->configuration->getTimesheetLockdownTimeZone();
+        $lockedStart = $this->getLockdownPeriodStart();
+        $lockedEnd = $this->getLockdownPeriodEnd();
+
+        if ($lockedStart === null || $lockedEnd === null) {
+            return true;
+        }
+
+        $gracePeriod = $this->getLockdownGracePeriod();
+        $timezone = $this->getLockdownTimezone();
 
         if ($timezone === null) {
             $timezone = $timesheetStart->getTimezone();

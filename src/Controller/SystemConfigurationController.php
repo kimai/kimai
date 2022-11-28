@@ -31,6 +31,7 @@ use App\Form\Type\TrackingModeType;
 use App\Form\Type\WeekDaysType;
 use App\Form\Type\YesNoType;
 use App\Repository\ConfigurationRepository;
+use App\Timesheet\LockdownService;
 use App\Utils\PageSetup;
 use App\Validator\Constraints\ColorChoices;
 use App\Validator\Constraints\DateTimeFormat;
@@ -59,7 +60,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 #[Security("is_granted('IS_AUTHENTICATED_FULLY') and is_granted('system_configuration')")]
 final class SystemConfigurationController extends AbstractController
 {
-    public function __construct(private EventDispatcherInterface $eventDispatcher, private ConfigurationRepository $repository, private SystemConfiguration $systemConfiguration)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private ConfigurationRepository $repository, private SystemConfiguration $systemConfiguration, private LockdownService $lockdownService)
     {
     }
 
@@ -220,39 +221,31 @@ final class SystemConfigurationController extends AbstractController
      */
     private function getConfigurationTypes(): array
     {
+        $user = $this->getUser();
+        if ($user === null) {
+            throw $this->createAccessDeniedException('Missing user');
+        }
+
         $lockdownStartHelp = null;
         $lockdownEndHelp = null;
         $lockdownGraceHelp = null;
         $dateFormat = 'D, d M Y H:i:s';
 
-        if ($this->systemConfiguration->isTimesheetLockdownActive()) {
-            $userTimezone = $this->getDateTimeFactory()->getTimezone();
-            $timezone = $this->systemConfiguration->getTimesheetLockdownTimeZone();
-
-            if ($timezone !== null) {
-                $timezone = new \DateTimeZone($timezone);
-            }
-
-            if ($timezone === null) {
-                $timezone = $userTimezone;
-            }
-
+        if ($this->lockdownService->isLockdownActive()) {
             try {
-                if (!empty($this->systemConfiguration->getTimesheetLockdownPeriodStart())) {
-                    $lockdownStartHelp = new \DateTime($this->systemConfiguration->getTimesheetLockdownPeriodStart(), $timezone);
-                    $lockdownStartHelp->setTimezone($userTimezone);
-                    $lockdownStartHelp = $lockdownStartHelp->format($dateFormat);
+                $start = $this->lockdownService->getLockdownStart($user);
+                if ($start !== null) {
+                    $lockdownStartHelp = $start->format($dateFormat);
                 }
-                if (!empty($this->systemConfiguration->getTimesheetLockdownPeriodEnd())) {
-                    $lockdownEndHelp = new \DateTime($this->systemConfiguration->getTimesheetLockdownPeriodEnd(), $timezone);
-                    if (!empty($this->systemConfiguration->getTimesheetLockdownGracePeriod())) {
-                        $lockdownGraceHelp = clone $lockdownEndHelp;
-                        $lockdownGraceHelp->modify($this->systemConfiguration->getTimesheetLockdownGracePeriod());
-                        $lockdownGraceHelp->setTimezone($userTimezone);
-                        $lockdownGraceHelp = $lockdownGraceHelp->format($dateFormat);
-                    }
-                    $lockdownEndHelp->setTimezone($userTimezone);
-                    $lockdownEndHelp = $lockdownEndHelp->format($dateFormat);
+
+                $end = $this->lockdownService->getLockdownEnd($user);
+                if ($end !== null) {
+                    $lockdownEndHelp = $end->format($dateFormat);
+                }
+
+                $grace = $this->lockdownService->getLockdownGrace($user);
+                if ($grace !== null) {
+                    $lockdownGraceHelp = $grace->format($dateFormat);
                 }
             } catch (\Exception $ex) {
                 $lockdownStartHelp = 'invalid';
@@ -380,7 +373,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setOptions(['help' => $lockdownStartHelp])
                         ->setType(TextType::class)
                         ->setRequired(false)
-                        ->setConstraints([new DateTimeFormat()])
+                        ->setConstraints([new DateTimeFormat(['separator' => ','])])
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration('timesheet.rules.lockdown_period_end'))
                         ->setOptions(['help' => $lockdownEndHelp])

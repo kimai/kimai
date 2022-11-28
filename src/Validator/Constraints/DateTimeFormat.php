@@ -19,7 +19,8 @@ class DateTimeFormat extends Constraint
         self::INVALID_FORMAT => 'The given value is not a valid datetime format.',
     ];
 
-    public $message = 'This datetime format is invalid.';
+    public ?string $separator = null;
+    public ?string $message = 'This datetime format is invalid.';
 
     public function getTargets(): string|array
     {

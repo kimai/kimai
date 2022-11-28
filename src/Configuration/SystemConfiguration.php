@@ -421,31 +421,6 @@ class SystemConfiguration
         return (int) $this->find('timesheet.rounding.default.duration');
     }
 
-    public function getTimesheetLockdownPeriodStart(): string
-    {
-        return (string) $this->find('timesheet.rules.lockdown_period_start');
-    }
-
-    public function getTimesheetLockdownPeriodEnd(): string
-    {
-        return (string) $this->find('timesheet.rules.lockdown_period_end');
-    }
-
-    public function getTimesheetLockdownGracePeriod(): string
-    {
-        return (string) $this->find('timesheet.rules.lockdown_grace_period');
-    }
-
-    public function getTimesheetLockdownTimeZone(): ?string
-    {
-        return $this->find('timesheet.rules.lockdown_period_timezone');
-    }
-
-    public function isTimesheetLockdownActive(): bool
-    {
-        return !empty($this->find('timesheet.rules.lockdown_period_start')) && !empty($this->find('timesheet.rules.lockdown_period_end'));
-    }
-
     private function getIncrement(string $key, int $fallback, int $min = 1): int
     {
         $config = $this->find($key);

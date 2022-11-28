@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class DateTimeFormatValidator extends ConstraintValidator
 {
     /**
-     * @param string|mixed $value
+     * @param string|mixed|null $value
      * @param Constraint $constraint
      */
     public function validate(mixed $value, Constraint $constraint): void
@@ -25,11 +25,31 @@ class DateTimeFormatValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\DateTimeFormat');
         }
 
-        $valid = true;
-
-        if ($value === null) {
+        if ($value === null || !\is_string($value)) {
             return;
         }
+
+        if ($constraint->separator === null || $constraint->separator === '') {
+            if (str_contains($value, ',')) {
+                $this->context->buildViolation('The given value should not contain a comma.')
+                    ->setTranslationDomain('validators')
+                    ->setCode(DateTimeFormat::INVALID_FORMAT)
+                    ->addViolation();
+            }
+
+            $this->validateDateTime($value);
+
+            return;
+        }
+
+        foreach (explode($constraint->separator, $value) as $v) {
+            $this->validateDateTime($v);
+        }
+    }
+
+    private function validateDateTime(mixed $value): void
+    {
+        $valid = true;
 
         try {
             $test = new \DateTime($value);
