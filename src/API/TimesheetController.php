@@ -206,9 +206,11 @@ final class TimesheetController extends BaseApiController
         }
 
         $data = $this->repository->getPagerfantaForQuery($query);
-        $data = (array) $data->getCurrentPageResults();
+        $results = (array) $data->getCurrentPageResults();
 
-        $view = new View($data, 200);
+        $view = new View($results, 200);
+        $this->addPagination($view, $data);
+
         if ('true' === $paramFetcher->get('full')) {
             $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
         } else {

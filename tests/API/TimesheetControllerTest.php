@@ -32,16 +32,15 @@ class TimesheetControllerTest extends APIControllerBaseTest
     public const TEST_TIMEZONE = 'Europe/London';
 
     /**
-     * @param string $role
      * @return Timesheet[]
      */
-    protected function importFixtureForUser(string $role): array
+    protected function importFixtureForUser(string $role, int $amount = 10): array
     {
         $fixture = new TimesheetFixtures();
         $fixture
             ->setFixedRate(true)
             ->setHourlyRate(true)
-            ->setAmount(10)
+            ->setAmount($amount)
             ->setUser($this->getUserByRole($role))
             ->setAllowEmptyDescriptions(false)
             ->setStartDate((new \DateTime('first day of this month'))->setTime(0, 0, 1))
@@ -155,7 +154,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'projects' => '1',
             'activities' => '1',
             'page' => 2,
-            'size' => 5,
+            'size' => 4,
             'order' => 'DESC',
             'orderBy' => 'rate',
             'active' => 0,
@@ -166,13 +165,14 @@ class TimesheetControllerTest extends APIControllerBaseTest
         ];
 
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $this->importFixtureForUser(User::ROLE_USER, 22);
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
 
+        $this->assertPagination($client->getResponse(), 2, 4, 6, 22);
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertEquals(5, \count($result));
+        $this->assertEquals(4, \count($result));
         self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
     }
 

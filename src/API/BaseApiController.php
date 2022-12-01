@@ -11,6 +11,8 @@ namespace App\API;
 
 use App\Entity\User;
 use App\Timesheet\DateTimeFactory;
+use App\Utils\Pagination;
+use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -39,5 +41,13 @@ abstract class BaseApiController extends AbstractController
         }
 
         return DateTimeFactory::createByUser($user);
+    }
+
+    protected function addPagination(View $view, Pagination $pagination): void
+    {
+        $view->setHeader('X-Page', $pagination->getCurrentPage());
+        $view->setHeader('X-Total-Count', $pagination->getNbResults());
+        $view->setHeader('X-Total-Pages', $pagination->getNbPages());
+        $view->setHeader('X-Per-Page', $pagination->getMaxPerPage());
     }
 }
