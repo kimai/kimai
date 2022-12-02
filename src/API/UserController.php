@@ -95,7 +95,6 @@ final class UserController extends BaseApiController
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         $query = new UserQuery();
-        $query->setCurrentUser($this->getUser());
 
         if (null !== ($visible = $paramFetcher->get('visible'))) {
             $query->setVisibility($visible);
