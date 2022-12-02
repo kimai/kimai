@@ -545,7 +545,6 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
             return $this;
         }
         $this->tags->add($tag);
-        $tag->addTimesheet($this);
 
         return $this;
     }
@@ -559,7 +558,6 @@ class Timesheet implements EntityWithMetaFields, ExportItemInterface
             return;
         }
         $this->tags->removeElement($tag);
-        $tag->removeTimesheet($this);
     }
 
     /**
