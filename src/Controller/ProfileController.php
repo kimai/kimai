@@ -262,7 +262,7 @@ final class ProfileController extends AbstractController
                 // switch locale ONLY if updated profile is the current user
                 $locale = $request->getLocale();
                 if ($this->getUser()->getId() === $profile->getId()) {
-                    $locale = $profile->getPreferenceValue('language', $locale);
+                    $locale = $profile->getPreferenceValue('language', $locale, false);
                 }
 
                 return $this->redirectToRoute('user_profile_preferences', [

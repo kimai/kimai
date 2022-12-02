@@ -481,17 +481,17 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     public function is24Hour(): bool
     {
-        return (bool) $this->getPreferenceValue(UserPreference::HOUR_24, true);
+        return (bool) $this->getPreferenceValue(UserPreference::HOUR_24, true, false);
     }
 
     public function getLocale(): string
     {
-        return $this->getPreferenceValue(UserPreference::LOCALE, User::DEFAULT_LANGUAGE);
+        return $this->getPreferenceValue(UserPreference::LOCALE, User::DEFAULT_LANGUAGE, false);
     }
 
     public function getTimezone(): string
     {
-        return $this->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get());
+        return $this->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get(), false);
     }
 
     public function getLanguage(): string
@@ -514,17 +514,17 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     public function getFirstDayOfWeek(): string
     {
-        return $this->getPreferenceValue(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY);
+        return $this->getPreferenceValue(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY, false);
     }
 
     public function isSmallLayout(): bool
     {
-        return $this->getPreferenceValue('theme.layout', 'fixed') === 'boxed';
+        return $this->getPreferenceValue('theme.layout', 'fixed', false) === 'boxed';
     }
 
     public function isExportDecimal(): bool
     {
-        return (bool) $this->getPreferenceValue('timesheet.export_decimal', false);
+        return (bool) $this->getPreferenceValue('timesheet.export_decimal', false, false);
     }
 
     public function setTimezone(?string $timezone)
@@ -538,16 +538,19 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * @param string $name
      * @param mixed $default
+     * @param bool $allowNull
      * @return bool|int|string|null
      */
-    public function getPreferenceValue(string $name, $default = null)
+    public function getPreferenceValue(string $name, $default = null, bool $allowNull = true)
     {
         $preference = $this->getPreference($name);
         if (null === $preference) {
             return $default;
         }
 
-        return $preference->getValue();
+        $value = $preference->getValue();
+
+        return $allowNull ? $value : ($value ?? $default);
     }
 
     /**

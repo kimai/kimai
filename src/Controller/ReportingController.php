@@ -32,7 +32,7 @@ final class ReportingController extends AbstractController
         $user = $this->getUser();
         $route = null;
 
-        $defaultReport = $user->getPreferenceValue('reporting.initial_view', ReportingService::DEFAULT_VIEW);
+        $defaultReport = $user->getPreferenceValue('reporting.initial_view', ReportingService::DEFAULT_VIEW, false);
         $allReports = $reportingService->getAvailableReports($user);
 
         foreach ($allReports as $report) {
@@ -43,7 +43,7 @@ final class ReportingController extends AbstractController
         }
 
         // fallback, if the configured report could not be found
-        // eg. when it was deleted or replaced by an enhanced version with a new id
+        // e.g. when it was deleted or replaced by an enhanced version with a new id
         if ($route === null && \count($allReports) > 0) {
             $report = $allReports[array_keys($allReports)[0]];
             $route = $report->getRoute();
