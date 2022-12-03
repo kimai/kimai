@@ -44,7 +44,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
             new TwigFilter('day_name', [$this, 'dayName']),
             new TwigFilter('date_short', [$this, 'dateShort']),
             new TwigFilter('date_time', [$this, 'dateTime']),
-            new TwigFilter('date_full', [$this, 'dateTimeFull']), // deprecated: needs to be kept for invoice and export templates
+            new TwigFilter('date_full', [$this, 'dateTime']), // deprecated: needs to be kept for invoice and export templates
             new TwigFilter('date_format', [$this, 'dateFormat']),
             new TwigFilter('date_weekday', [$this, 'dateWeekday']),
             new TwigFilter('time', [$this, 'time']),
@@ -116,11 +116,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return $this->locale;
     }
 
-    /**
-     * @param DateTime $dateTime
-     * @return bool
-     */
-    public function isWeekend($dateTime): bool
+    public function isWeekend(DateTime|string|null $dateTime): bool
     {
         if (!$dateTime instanceof \DateTime) {
             return false;
@@ -145,33 +141,14 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return ($day === 0 || $day === 6);
     }
 
-    /**
-     * @param DateTime|string $date
-     * @return string
-     */
-    public function dateShort($date)
+    public function dateShort(DateTime|string|null $date): string
     {
-        return $this->getFormatter()->dateShort($date);
+        return (string) $this->getFormatter()->dateShort($date);
     }
 
-    /**
-     * @param DateTime|string $date
-     * @return string
-     */
-    public function dateTime($date)
+    public function dateTime(DateTime|string|null $date): string
     {
-        return $this->getFormatter()->dateTime($date);
-    }
-
-    /**
-     * @param DateTime|string $date
-     * @return bool|false|string
-     */
-    public function dateTimeFull($date)
-    {
-        @trigger_error('Twig filter "date_full" is deprecated and will be removed soon. Use "date_time" instead', E_USER_DEPRECATED);
-
-        return $this->getFormatter()->dateTime($date);
+        return (string) $this->getFormatter()->dateTime($date);
     }
 
     public function createDate(string $date, ?User $user = null): \DateTime
@@ -181,15 +158,9 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return new DateTime($date, new \DateTimeZone($timezone));
     }
 
-    /**
-     * @param DateTime|string $date
-     * @param string $format
-     * @return false|string
-     * @throws \Exception
-     */
-    public function dateFormat($date, string $format)
+    public function dateFormat(DateTime|string|null $date, string $format): string
     {
-        return $this->getFormatter()->dateFormat($date, $format);
+        return (string) $this->getFormatter()->dateFormat($date, $format);
     }
 
     public function dateWeekday(DateTime $date): string
@@ -197,13 +168,9 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return $this->dayName($date, true) . ' ' . $this->getFormatter()->dateFormat($date, 'd');
     }
 
-    /**
-     * @param DateTime|string $date
-     * @return string
-     */
-    public function time($date)
+    public function time(DateTime|string|null $date): string
     {
-        return $this->getFormatter()->time($date);
+        return (string) $this->getFormatter()->time($date);
     }
 
     /**
@@ -281,48 +248,46 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
      * @param bool $decimal
      * @return string
      */
-    public function duration($duration, $decimal = false)
+    public function duration(Timesheet|int|string|null $duration, bool $decimal = false): string
     {
         return $this->getFormatter()->duration($duration, $decimal);
     }
 
     /**
      * Transforms seconds into a decimal formatted duration string.
-     *
-     * @param int|Timesheet|null $duration
-     * @return string
      */
-    public function durationDecimal($duration)
+    public function durationDecimal(Timesheet|int|string|null $duration): string
     {
         return $this->getFormatter()->durationDecimal($duration);
     }
 
-    public function durationChart($duration): string
-    {
-        return number_format(($duration / 3600), 2, '.', '');
-    }
-
-    public function moneyChart($money): string
-    {
-        return number_format($money, 2, '.', '');
-    }
-
     /**
-     * @param string|float $amount
-     * @return bool|false|string
+     * Transforms seconds into a decimal formatted duration string, for usage with the chart library.
      */
-    public function amount($amount)
+    public function durationChart(int|null $duration): string
+    {
+        if ($duration === null) {
+            $duration = 0;
+        }
+
+        return number_format(\floatval($duration / 3600), 2, '.', '');
+    }
+
+    public function moneyChart(int|float|string|null $money): string
+    {
+        if ($money === null) {
+            $money = 0;
+        }
+
+        return number_format(\floatval($money), 2, '.', '');
+    }
+
+    public function amount(null|int|float|string $amount): string
     {
         return $this->getFormatter()->amount($amount);
     }
 
-    /**
-     * @param float $amount
-     * @param string|null $currency
-     * @param bool $withCurrency
-     * @return string
-     */
-    public function money($amount, ?string $currency = null, bool $withCurrency = true)
+    public function money(float|int|null $amount, ?string $currency = null, bool $withCurrency = true): string
     {
         return $this->getFormatter()->money($amount, $currency, $withCurrency);
     }

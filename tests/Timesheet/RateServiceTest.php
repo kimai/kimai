@@ -39,7 +39,7 @@ class RateServiceTest extends TestCase
 
     private function createDateTime(string $datetime = null): \DateTime
     {
-        return new \DateTime($datetime, new \DateTimeZone('UTC'));
+        return new \DateTime($datetime ?? 'now', new \DateTimeZone('UTC'));
     }
 
     public function testCalculateWithTimesheetHourlyRate()

@@ -155,24 +155,19 @@ class UserTest extends TestCase
         $user = new User();
         self::assertNull($user->getPreference('test'));
         self::assertNull($user->getPreferenceValue('test'));
-        self::assertNull($user->getMetaFieldValue('test'));
         self::assertEquals('foo', $user->getPreferenceValue('test', 'foo'));
 
         $preference = new UserPreference('test', 'foobar');
         $user->addPreference($preference);
         self::assertEquals('foobar', $user->getPreferenceValue('test', 'foo'));
-        self::assertEquals('foobar', $user->getMetaFieldValue('test'));
         self::assertEquals($preference, $user->getPreference('test'));
 
         $user->setPreferenceValue('test', 'Hello World');
         self::assertEquals('Hello World', $user->getPreferenceValue('test', 'foo'));
-        self::assertEquals('Hello World', $user->getMetaFieldValue('test'));
 
         self::assertNull($user->getPreferenceValue('test2'));
-        self::assertNull($user->getMetaFieldValue('test2'));
         $user->setPreferenceValue('test2', 'I like rain');
         self::assertEquals('I like rain', $user->getPreferenceValue('test2'));
-        self::assertEquals('I like rain', $user->getMetaFieldValue('test2'));
 
         $user->setPreferenceValue('export_decimal', true);
         self::assertTrue($user->isExportDecimal());

@@ -1243,9 +1243,12 @@ final class KimaiImporterCommand extends Command
         $projects = $entityManager->getRepository(Project::class)->findAll();
         $loader = new ProjectLoader($entityManager);
         $loader->loadResults($projects);
+        /** @var Project $project */
         foreach ($projects as $project) {
-            $oldId = $project->getMetaFieldValue(self::METAFIELD_NAME);
-            $this->setProjectCache($oldId, $project);
+            $oldId = $project->getMetaField(self::METAFIELD_NAME)?->getValue();
+            if (\is_int($oldId)) {
+                $this->setProjectCache($oldId, $project);
+            }
         }
 
         // re-cache all activities
@@ -1253,10 +1256,13 @@ final class KimaiImporterCommand extends Command
         $activities = $entityManager->getRepository(Activity::class)->findAll();
         $loader = new ActivityLoader($entityManager);
         $loader->loadResults($activities);
+        /** @var Activity $activity */
         foreach ($activities as $activity) {
-            $oldActivity = $activity->getMetaFieldValue(self::METAFIELD_NAME);
+            $oldActivity = $activity->getMetaField(self::METAFIELD_NAME)?->getValue();
             $projectId = $activity->getProject()?->getId();
-            $this->setActivityCache($oldActivity, $activity, $projectId);
+            if (\is_int($oldActivity)) {
+                $this->setActivityCache($oldActivity, $activity, $projectId);
+            }
         }
 
         // re-cache all users
@@ -1264,9 +1270,12 @@ final class KimaiImporterCommand extends Command
         $users = $entityManager->getRepository(User::class)->findAll();
         $loader = new UserLoader($entityManager);
         $loader->loadResults($users);
+        /** @var User $user */
         foreach ($users as $user) {
             $oldId = $user->getPreferenceValue(self::METAFIELD_NAME);
-            $this->setUserCache($oldId, $user);
+            if (\is_int($oldId)) {
+                $this->setUserCache($oldId, $user);
+            }
         }
     }
 

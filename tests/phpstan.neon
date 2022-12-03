@@ -18,27 +18,7 @@ parameters:
         objectManagerLoader: %rootDir%/../../../tests/phpstan-doctrine.php
     ignoreErrors:
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertApi500Exception\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertApiAccessDenied\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertApiCallValidationError\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertApiCallValidationError\\(\\) has parameter \\$globalError with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertApiException\\(\\) has no return type specified\\.$#"
+            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertApiResponseTypeStructure\\(\\) has parameter \\$result with no value type specified in iterable type array\\.$#"
             count: 1
             path: API/APIControllerBaseTest.php
 
@@ -48,52 +28,12 @@ parameters:
             path: API/APIControllerBaseTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertApiResponseAccessDenied\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertApiResponseTypeStructure\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertApiResponseTypeStructure\\(\\) has parameter \\$result with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertBadRequest\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertEntityNotFound\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertEntityNotFoundForPatch\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertEntityNotFoundForPatch\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
             count: 1
             path: API/APIControllerBaseTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertEntityNotFoundForPost\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertEntityNotFoundForPost\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForDeleteAction\\(\\) has no return type specified\\.$#"
             count: 1
             path: API/APIControllerBaseTest.php
 
@@ -108,22 +48,12 @@ parameters:
             path: API/APIControllerBaseTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForMethod\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForMethod\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
             count: 1
             path: API/APIControllerBaseTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForMethod\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForPatchAction\\(\\) has no return type specified\\.$#"
             count: 1
             path: API/APIControllerBaseTest.php
 
@@ -138,11 +68,6 @@ parameters:
             path: API/APIControllerBaseTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForPostAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForPostAction\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
             count: 1
             path: API/APIControllerBaseTest.php
@@ -153,37 +78,12 @@ parameters:
             path: API/APIControllerBaseTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForRole\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForRole\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
             count: 1
             path: API/APIControllerBaseTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertExceptionForRole\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertNotFoundForDelete\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertRequestIsSecured\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertResponseIsSecured\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/APIControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:assertUrlIsSecuredForRole\\(\\) has no return type specified\\.$#"
             count: 1
             path: API/APIControllerBaseTest.php
 
@@ -5868,11 +5768,6 @@ parameters:
             path: Entity/ActivityTest.php
 
         -
-            message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Activity\\:\\:getMetaFieldValue\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: Entity/ActivityTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Entity\\\\BookmarkTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"
             count: 1
             path: Entity/BookmarkTest.php
@@ -5954,11 +5849,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Customer\\:\\:getMetaField\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: Entity/CustomerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Customer\\:\\:getMetaFieldValue\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: Entity/CustomerTest.php
 
@@ -6109,11 +5999,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Project\\:\\:getMetaField\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: Entity/ProjectTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Project\\:\\:getMetaFieldValue\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: Entity/ProjectTest.php
 
@@ -6269,11 +6154,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Timesheet\\:\\:getMetaField\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: Entity/TimesheetTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Timesheet\\:\\:getMetaFieldValue\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: Entity/TimesheetTest.php
 
@@ -11088,47 +10968,12 @@ parameters:
             path: Timesheet/DateTimeFactoryTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\LockdownServiceTest\\:\\:createService\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/LockdownServiceTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\LockdownServiceTest\\:\\:getConfigTestData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Timesheet/LockdownServiceTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\LockdownServiceTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/LockdownServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\LockdownServiceTest\\:\\:testLockdown\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/LockdownServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\LockdownServiceTest\\:\\:testLockdownConfig\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/LockdownServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\LockdownServiceTest\\:\\:testValidatorWithEmptyTimesheet\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/LockdownServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\LockdownServiceTest\\:\\:testValidatorWithEndBeforeStartPeriod\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/LockdownServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\LockdownServiceTest\\:\\:testValidatorWithoutNowConstraint\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/LockdownServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\LockdownServiceTest\\:\\:testValidatorWithoutNowStringConstraint\\(\\) has no return type specified\\.$#"
             count: 1
             path: Timesheet/LockdownServiceTest.php
 
@@ -11284,11 +11129,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has parameter \\$userRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$datetime of class DateTime constructor expects string, string\\|null given\\.$#"
             count: 1
             path: Timesheet/RateServiceTest.php
 
@@ -11878,42 +11718,17 @@ parameters:
             path: Twig/ExtensionsTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:getAmountData\\(\\) has no return type specified\\.$#"
+            message: "#^Property App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:\\$localeEn type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Twig/LocaleFormatExtensionsTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:getDateShortData\\(\\) has no return type specified\\.$#"
+            message: "#^Property App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:\\$localeDe type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Twig/LocaleFormatExtensionsTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:getDateTimeData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:getDayNameTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:getMoneyData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:getMoneyData62_1\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:getMoneyNoCurrencyData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:getMonthNameTestData\\(\\) has no return type specified\\.$#"
+            message: "#^Property App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:\\$localeFake type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Twig/LocaleFormatExtensionsTest.php
 
@@ -11928,17 +11743,7 @@ parameters:
             path: Twig/LocaleFormatExtensionsTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:getTimesheet\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:getTimesheet\\(\\) has parameter \\$seconds with no type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testAmount\\(\\) has no return type specified\\.$#"
             count: 1
             path: Twig/LocaleFormatExtensionsTest.php
 
@@ -11954,116 +11759,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testAmount\\(\\) has parameter \\$result with no type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testCharDuration\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testChartMoney\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testCreateDate\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testDateFormat\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testDateShort\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testDateTime\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testDayName\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testDuration\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testDurationChart\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testDurationDecimal\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testGetFilters\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testGetFunctions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testGetTests\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testIsToday\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testIsWeekend\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testJavascriptConfigurations\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testMoney\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testMoney\\(\\) has parameter \\$amount with no type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testMoney\\(\\) has parameter \\$currency with no type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testMoney\\(\\) has parameter \\$locale with no type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testMoney\\(\\) has parameter \\$result with no type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testMoney62_1\\(\\) has no return type specified\\.$#"
             count: 1
             path: Twig/LocaleFormatExtensionsTest.php
 
@@ -12088,11 +11783,6 @@ parameters:
             path: Twig/LocaleFormatExtensionsTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testMoneyNoCurrency\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testMoneyNoCurrency\\(\\) has parameter \\$amount with no type specified\\.$#"
             count: 1
             path: Twig/LocaleFormatExtensionsTest.php
@@ -12113,23 +11803,8 @@ parameters:
             path: Twig/LocaleFormatExtensionsTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testMoneyWithoutCurrency\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testMonthName\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:testTime\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
             message: "#^Parameter \\#1 \\$callback of function call_user_func expects callable\\(\\)\\: mixed, \\(callable\\(\\)\\: mixed\\)\\|null given\\.$#"
-            count: 23
+            count: 5
             path: Twig/LocaleFormatExtensionsTest.php
 
         -
@@ -12144,26 +11819,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$timezoneId of function date_default_timezone_set expects string, string\\|null given\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$string of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringStartsWith\\(\\) expects string, string\\|false given\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Property App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:\\$localeDe has no type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Property App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:\\$localeEn has no type specified\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Property App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:\\$localeFake has no type specified\\.$#"
             count: 1
             path: Twig/LocaleFormatExtensionsTest.php
 

@@ -23,7 +23,7 @@ interface MetaTableTypeInterface
      */
     public function setName(string $name): MetaTableTypeInterface;
 
-    public function getValue(): mixed;
+    public function getValue(): bool|int|float|string|null;
 
     /**
      * Value will not be serialized before its stored, so it should be a primitive type.

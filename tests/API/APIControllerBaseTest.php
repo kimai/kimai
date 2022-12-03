@@ -65,7 +65,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         return '/' . ltrim($url, '/');
     }
 
-    protected function assertPagination(Response $response, int $page, int $pageSize, int $totalPages, int $totalResults)
+    protected function assertPagination(Response $response, int $page, int $pageSize, int $totalPages, int $totalResults): void
     {
         $this->assertTrue($response->headers->has('X-Page'), 'Missing "X-Page" header');
         $this->assertTrue($response->headers->has('X-Total-Count'), 'Missing "X-Total-Count" header');
@@ -78,7 +78,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         $this->assertEquals($pageSize, $response->headers->get('X-Per-Page'));
     }
 
-    protected function assertRequestIsSecured(HttpKernelBrowser $client, string $url, $method = 'GET')
+    protected function assertRequestIsSecured(HttpKernelBrowser $client, string $url, $method = 'GET'): void
     {
         $this->request($client, $url, $method);
         $this->assertResponseIsSecured($client->getResponse(), $url);
@@ -88,7 +88,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
      * @param Response $response
      * @param string $url
      */
-    protected function assertResponseIsSecured(Response $response, string $url)
+    protected function assertResponseIsSecured(Response $response, string $url): void
     {
         $data = ['message' => 'Authentication required, missing user header: X-AUTH-USER'];
 
@@ -110,7 +110,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
      * @param string $url
      * @param string $method
      */
-    protected function assertUrlIsSecuredForRole(string $role, string $url, string $method = 'GET')
+    protected function assertUrlIsSecuredForRole(string $role, string $url, string $method = 'GET'): void
     {
         $client = $this->getClientForAuthenticatedUser($role);
         $client->request($method, $this->createUrl($url));
@@ -133,7 +133,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         return $client->request($method, $this->createUrl($url), $parameters, [], $server, $content);
     }
 
-    protected function assertEntityNotFound(string $role, string $url, string $method = 'GET', ?string $message = null)
+    protected function assertEntityNotFound(string $role, string $url, string $method = 'GET', ?string $message = null): void
     {
         $client = $this->getClientForAuthenticatedUser($role);
         $this->request($client, $url, $method);
@@ -143,7 +143,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         ]);
     }
 
-    protected function assertNotFoundForDelete(HttpKernelBrowser $client, string $url)
+    protected function assertNotFoundForDelete(HttpKernelBrowser $client, string $url): void
     {
         $this->assertExceptionForMethod($client, $url, 'DELETE', [], [
             'code' => Response::HTTP_NOT_FOUND,
@@ -151,7 +151,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         ]);
     }
 
-    protected function assertEntityNotFoundForPatch(string $role, string $url, array $data)
+    protected function assertEntityNotFoundForPatch(string $role, string $url, array $data): void
     {
         $this->assertExceptionForPatchAction($role, $url, $data, [
             'code' => Response::HTTP_NOT_FOUND,
@@ -159,7 +159,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         ]);
     }
 
-    protected function assertEntityNotFoundForPost(HttpKernelBrowser $client, string $url, array $data = [])
+    protected function assertEntityNotFoundForPost(HttpKernelBrowser $client, string $url, array $data = []): void
     {
         $this->assertExceptionForMethod($client, $url, 'POST', $data, [
             'code' => Response::HTTP_NOT_FOUND,
@@ -167,46 +167,46 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         ]);
     }
 
-    protected function assertExceptionForDeleteAction(string $role, string $url, array $data, array $expectedErrors)
+    protected function assertExceptionForDeleteAction(string $role, string $url, array $data, array $expectedErrors): void
     {
         $this->assertExceptionForRole($role, $url, 'DELETE', $data, $expectedErrors);
     }
 
-    protected function assertExceptionForPatchAction(string $role, string $url, array $data, array $expectedErrors)
+    protected function assertExceptionForPatchAction(string $role, string $url, array $data, array $expectedErrors): void
     {
         $this->assertExceptionForRole($role, $url, 'PATCH', $data, $expectedErrors);
     }
 
-    protected function assertExceptionForPostAction(string $role, string $url, array $data, array $expectedErrors)
+    protected function assertExceptionForPostAction(string $role, string $url, array $data, array $expectedErrors): void
     {
         $this->assertExceptionForRole($role, $url, 'POST', $data, $expectedErrors);
     }
 
-    protected function assertExceptionForMethod(HttpKernelBrowser $client, string $url, string $method, array $data, array $expectedErrors)
+    protected function assertExceptionForMethod(HttpKernelBrowser $client, string $url, string $method, array $data, array $expectedErrors): void
     {
         $this->request($client, $url, $method, [], json_encode($data));
         $this->assertApiException($client->getResponse(), $expectedErrors);
     }
 
-    protected function assertApiException(Response $response, array $expectedErrors)
+    protected function assertApiException(Response $response, array $expectedErrors): void
     {
         self::assertFalse($response->isSuccessful());
         self::assertEquals($expectedErrors['code'], $response->getStatusCode());
         self::assertEquals($expectedErrors, json_decode($response->getContent(), true));
     }
 
-    protected function assertExceptionForRole(string $role, string $url, string $method, array $data, array $expectedErrors)
+    protected function assertExceptionForRole(string $role, string $url, string $method, array $data, array $expectedErrors): void
     {
         $client = $this->getClientForAuthenticatedUser($role);
         $this->assertExceptionForMethod($client, $url, $method, $data, $expectedErrors);
     }
 
-    protected function assertApi500Exception(Response $response, string $message)
+    protected function assertApi500Exception(Response $response, string $message): void
     {
         $this->assertApiException($response, ['code' => Response::HTTP_INTERNAL_SERVER_ERROR, 'message' => $message]);
     }
 
-    protected function assertBadRequest(HttpKernelBrowser $client, string $url, string $method)
+    protected function assertBadRequest(HttpKernelBrowser $client, string $url, string $method): void
     {
         $this->assertExceptionForMethod($client, $url, $method, [], [
             'code' => Response::HTTP_BAD_REQUEST,
@@ -214,13 +214,13 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
         ]);
     }
 
-    protected function assertApiAccessDenied(HttpKernelBrowser $client, string $url, string $message = 'Forbidden')
+    protected function assertApiAccessDenied(HttpKernelBrowser $client, string $url, string $message = 'Forbidden'): void
     {
         $this->request($client, $url);
         $this->assertApiResponseAccessDenied($client->getResponse(), $message);
     }
 
-    protected function assertApiResponseAccessDenied(Response $response, string $message = 'Forbidden')
+    protected function assertApiResponseAccessDenied(Response $response, string $message = 'Forbidden'): void
     {
         // APP_DEBUG = 1 means "real exception messages" - it is always overwritten
         $message = 'Forbidden';
@@ -235,8 +235,9 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
      * @param Response $response
      * @param array<int, string>|array<string, mixed> $failedFields
      * @param bool $extraFields test for the error "This form should not contain extra fields"
+     * @param array<int, string>|array<string, mixed> $globalError
      */
-    protected function assertApiCallValidationError(Response $response, array $failedFields, bool $extraFields = false, array $globalError = [])
+    protected function assertApiCallValidationError(Response $response, array $failedFields, bool $extraFields = false, array $globalError = []): void
     {
         self::assertFalse($response->isSuccessful());
         $result = json_decode($response->getContent(), true);
@@ -670,7 +671,7 @@ abstract class APIControllerBaseTest extends ControllerBaseTest
      * @param array $result
      * @throws \Exception
      */
-    protected function assertApiResponseTypeStructure(string $type, array $result)
+    protected function assertApiResponseTypeStructure(string $type, array $result): void
     {
         $expected = self::getExpectedResponseStructure($type);
         $expectedKeys = array_keys($expected);

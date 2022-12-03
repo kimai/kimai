@@ -450,7 +450,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * @param string $name
      * @param mixed $default
-     * @return bool|int|string|null
+     * @return bool|int|float|string|null
      */
     public function getPreferenceValue(string $name, $default = null)
     {
@@ -460,15 +460,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         }
 
         return $preference->getValue();
-    }
-
-    /**
-     * @param string $name
-     * @return bool|int|string|null
-     */
-    public function getMetaFieldValue(string $name)
-    {
-        return $this->getPreferenceValue($name);
     }
 
     /**
@@ -1071,23 +1062,32 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function hasSeenWizard(string $wizard): bool
     {
-        $wizards = $this->getPreferenceValue('__wizards__', '');
-        $wizards = explode(',', $wizards);
+        $wizards = $this->getPreferenceValue('__wizards__');
 
-        return \in_array($wizard, $wizards);
+        if (\is_string($wizards)) {
+            $wizards = explode(',', $wizards);
+
+            return \in_array($wizard, $wizards);
+        }
+
+        return false;
     }
 
     public function setWizardAsSeen(string $wizard): void
     {
-        $wizards = $this->getPreferenceValue('__wizards__', '');
-        $wizards = explode(',', $wizards);
+        $wizards = $this->getPreferenceValue('__wizards__');
+        $values = [];
 
-        if (\in_array($wizard, $wizards)) {
+        if (\is_string($wizards)) {
+            $values = explode(',', $wizards);
+        }
+
+        if (\in_array($wizard, $values)) {
             return;
         }
 
-        $wizards[] = $wizard;
-        $this->setPreferenceValue('__wizards__', implode(',', array_filter($wizards)));
+        $values[] = $wizard;
+        $this->setPreferenceValue('__wizards__', implode(',', array_filter($values)));
     }
 
     // --------------- 2 Factor Authentication ---------------

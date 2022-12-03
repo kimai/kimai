@@ -57,11 +57,6 @@ final class InvoiceItem
         return $default;
     }
 
-    public function getMetaFieldValue(string $field)
-    {
-        return $this->getAdditionalField($field, null);
-    }
-
     public function getActivity(): ?Activity
     {
         return $this->activity;

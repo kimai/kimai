@@ -77,7 +77,7 @@ trait MetaTableTypeTrait
         return $this;
     }
 
-    public function getValue(): mixed
+    public function getValue(): bool|int|float|string|null
     {
         return match ($this->type) {
             YesNoType::class, CheckboxType::class => (bool) $this->value,

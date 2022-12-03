@@ -37,12 +37,8 @@ final class LocaleFormatter
 
     /**
      * Transforms seconds into a duration string.
-     *
-     * @param int|string|Timesheet|null $duration
-     * @param bool $decimal
-     * @return string
      */
-    public function duration($duration, $decimal = false)
+    public function duration(int|Timesheet|string|null $duration, bool $decimal = false): string
     {
         if ($decimal) {
             return $this->durationDecimal($duration);
@@ -56,11 +52,8 @@ final class LocaleFormatter
 
     /**
      * Transforms seconds into a decimal formatted duration string.
-     *
-     * @param int|Timesheet|null $duration
-     * @return string
      */
-    public function durationDecimal(int|Timesheet|null $duration)
+    public function durationDecimal(Timesheet|int|string|null $duration): string
     {
         if (null === $this->numberFormatter) {
             $this->decimalFormatter = new NumberFormatter($this->locale, NumberFormatter::DECIMAL);
@@ -74,10 +67,6 @@ final class LocaleFormatter
         return $this->decimalFormatter->format($value);
     }
 
-    /**
-     * @param string|int|Timesheet|null $duration
-     * @return int
-     */
     private function getSecondsForDuration(string|int|Timesheet|null $duration): int
     {
         if (null === $duration) {
@@ -88,7 +77,7 @@ final class LocaleFormatter
             if (null === $duration->getEnd()) {
                 $duration = time() - $duration->getBegin()->getTimestamp();
             } else {
-                $duration = $duration->getDuration();
+                $duration = $duration->getDuration() ?? 0;
             }
         }
 
@@ -106,11 +95,8 @@ final class LocaleFormatter
 
     /**
      * Used in twig filter |amount and invoice templates.
-     *
-     * @param int|float $amount
-     * @return bool|false|string
      */
-    public function amount(null|int|float|string $amount): bool|string
+    public function amount(null|int|float|string $amount): string
     {
         if ($amount === null) {
             return '0';
@@ -120,17 +106,24 @@ final class LocaleFormatter
             $this->numberFormatter = new NumberFormatter($this->locale, NumberFormatter::DECIMAL);
         }
 
-        return $this->numberFormatter->format($amount);
+        $formatted = $this->numberFormatter->format($amount);
+
+        if (!\is_string($formatted)) {
+            throw new \Exception('Could not convert into monetary string: ' . $amount);
+        }
+
+        return $formatted;
     }
 
     /**
      * Returns the currency symbol.
-     *
-     * @param string $currency
-     * @return string
      */
-    public function currency(string $currency): string
+    public function currency(?string $currency): string
     {
+        if ($currency === null) {
+            return '';
+        }
+
         try {
             return Currencies::getSymbol(strtoupper($currency), $this->locale);
         } catch (\Exception $ex) {
@@ -141,7 +134,7 @@ final class LocaleFormatter
 
     public function money(null|int|float $amount, ?string $currency = null, bool $withCurrency = true): string
     {
-        if (null === $currency) {
+        if ($currency === null) {
             $withCurrency = false;
         }
 
@@ -168,8 +161,12 @@ final class LocaleFormatter
         return $this->moneyFormatter->formatCurrency($amount, $currency);
     }
 
-    public function dateShort(\DateTimeInterface|string|null $date): string
+    public function dateShort(\DateTimeInterface|string|null $date): ?string
     {
+        if ($date === null) {
+            return null;
+        }
+
         if (null === $this->dateFormatter) {
             $this->dateFormatter = new IntlDateFormatter(
                 $this->locale,
@@ -183,21 +180,27 @@ final class LocaleFormatter
 
         if (!$date instanceof \DateTimeInterface) {
             try {
-                $date = new \DateTimeImmutable($date ?? 'now');
+                $date = new \DateTimeImmutable($date);
             } catch (Exception $ex) {
-                return $date;
+                return null;
             }
         }
 
-        return $this->dateFormatter->format($date);
+        $formatted = $this->dateFormatter->format($date);
+
+        if ($formatted === false) {
+            return null;
+        }
+
+        return (string) $formatted;
     }
 
-    /**
-     * @param DateTime|string $date
-     * @return string
-     */
-    public function dateTime($date)
+    public function dateTime(DateTime|string|null $date): ?string
     {
+        if ($date === null) {
+            return null;
+        }
+
         if (null === $this->dateTimeFormatter) {
             $this->dateTimeFormatter = new IntlDateFormatter(
                 $this->locale,
@@ -213,33 +216,42 @@ final class LocaleFormatter
             try {
                 $date = new \DateTimeImmutable($date);
             } catch (Exception $ex) {
-                return $date;
+                return null;
             }
         }
 
-        return $this->dateTimeFormatter->format($date);
+        $formatted = $this->dateTimeFormatter->format($date);
+
+        if ($formatted === false) {
+            return null;
+        }
+
+        return (string) $formatted;
     }
 
-    public function dateFormat(\DateTimeInterface|string $date, string $format): bool|string
+    public function dateFormat(\DateTimeInterface|string|null $date, string $format): ?string
     {
+        if ($date === null) {
+            return null;
+        }
+
         if (!$date instanceof \DateTimeInterface) {
             try {
                 $date = new \DateTimeImmutable($date);
             } catch (Exception $ex) {
-                return $date;
+                return null;
             }
         }
 
         return $date->format($format);
     }
 
-    /**
-     * @param DateTime|string $date
-     * @return string
-     * @throws Exception
-     */
-    public function time(\DateTimeInterface|string $date): string
+    public function time(\DateTimeInterface|string|null $date): ?string
     {
+        if ($date === null) {
+            return null;
+        }
+
         if (null === $this->timeFormatter) {
             $this->timeFormatter = new IntlDateFormatter(
                 $this->locale,
@@ -259,16 +271,17 @@ final class LocaleFormatter
             }
         }
 
-        return $this->timeFormatter->format($date);
+        $formatted = $this->timeFormatter->format($date);
+
+        if ($formatted === false) {
+            return null;
+        }
+
+        return (string) $formatted;
     }
 
     /**
-     * @see https://framework.zend.com/manual/1.12/en/zend.date.constants.html#zend.date.constants.selfdefinedformats
-     * @see http://userguide.icu-project.org/formatparse/datetime
-     *
-     * @param DateTime $dateTime
-     * @param string $format
-     * @return string
+     * @see https://unicode-org.github.io/icu/userguide/format_parse/datetime/
      */
     private function formatIntl(\DateTime $dateTime, string $format): string
     {
@@ -281,7 +294,13 @@ final class LocaleFormatter
             $format
         );
 
-        return $formatter->format($dateTime);
+        $formatted = $formatter->format($dateTime);
+
+        if ($formatted === false) {
+            throw new \Exception('Invalid dateformat given for formatIntl()');
+        }
+
+        return (string) $formatted;
     }
 
     public function monthName(\DateTime $dateTime, bool $withYear = false): string

@@ -39,7 +39,6 @@ class ActivityTest extends AbstractEntityTest
         $this->assertInstanceOf(Collection::class, $sut->getMetaFields());
         $this->assertEquals(0, $sut->getMetaFields()->count());
         $this->assertNull($sut->getMetaField('foo'));
-        $this->assertNull($sut->getMetaFieldValue('foo'));
         $this->assertInstanceOf(Collection::class, $sut->getTeams());
     }
 
@@ -94,7 +93,6 @@ class ActivityTest extends AbstractEntityTest
         self::assertSame($result, $meta);
         self::assertEquals('test', $result->getType());
         self::assertEquals('bar2', $result->getValue());
-        self::assertEquals('bar2', $sut->getMetaFieldValue('foo'));
 
         $meta2 = new ActivityMeta();
         $meta2->setName('foo')->setValue('bar')->setType('test2');
@@ -105,7 +103,6 @@ class ActivityTest extends AbstractEntityTest
         $result = $sut->getMetaField('foo');
         self::assertSame($result, $meta);
         self::assertEquals('test2', $result->getType());
-        self::assertEquals('bar2', $sut->getMetaFieldValue('foo'));
 
         $sut->setMetaField((new ActivityMeta())->setName('blub')->setIsVisible(true));
         $sut->setMetaField((new ActivityMeta())->setName('blab')->setIsVisible(true));
@@ -204,7 +201,6 @@ class ActivityTest extends AbstractEntityTest
         foreach ($sut->getMetaFields() as $metaField) {
             $cloneMeta = $clone->getMetaField($metaField->getName());
             self::assertEquals($cloneMeta->getValue(), $metaField->getValue());
-            self::assertEquals($metaField->getValue(), $clone->getMetaFieldValue($metaField->getName()));
         }
         self::assertEquals($clone->getBudget(), $sut->getBudget());
         self::assertEquals($clone->getTimeBudget(), $sut->getTimeBudget());

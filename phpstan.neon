@@ -1031,21 +1031,6 @@ parameters:
             path: src/Command/KimaiImporterCommand.php
 
         -
-            message: "#^Parameter \\#1 \\$oldActivity of method App\\\\Command\\\\KimaiImporterCommand\\:\\:setActivityCache\\(\\) expects array\\|int, bool\\|int\\|string\\|null given\\.$#"
-            count: 1
-            path: src/Command/KimaiImporterCommand.php
-
-        -
-            message: "#^Parameter \\#1 \\$oldProject of method App\\\\Command\\\\KimaiImporterCommand\\:\\:setProjectCache\\(\\) expects array\\|int, bool\\|int\\|string\\|null given\\.$#"
-            count: 1
-            path: src/Command/KimaiImporterCommand.php
-
-        -
-            message: "#^Parameter \\#1 \\$oldUser of method App\\\\Command\\\\KimaiImporterCommand\\:\\:setUserCache\\(\\) expects array\\|int, bool\\|int\\|string\\|null given\\.$#"
-            count: 1
-            path: src/Command/KimaiImporterCommand.php
-
-        -
             message: "#^Parameter \\#1 \\$string of function strtolower expects string, string\\|null given\\.$#"
             count: 1
             path: src/Command/KimaiImporterCommand.php
@@ -1886,7 +1871,7 @@ parameters:
             path: src/Controller/ExportController.php
 
         -
-            message: "#^Parameter \\#1 \\$route of method Symfony\\\\Bundle\\\\FrameworkBundle\\\\Controller\\\\AbstractController\\:\\:redirectToRoute\\(\\) expects string, bool\\|int\\|string\\|null given\\.$#"
+            message: "#^Parameter \\#1 \\$route of method Symfony\\\\Bundle\\\\FrameworkBundle\\\\Controller\\\\AbstractController\\:\\:redirectToRoute\\(\\) expects string, bool\\|float\\|int\\|string\\|null given\\.$#"
             count: 1
             path: src/Controller/HomepageController.php
 
@@ -2951,7 +2936,7 @@ parameters:
             path: src/DataFixtures/TimesheetFixtures.php
 
         -
-            message: "#^Parameter \\#1 \\$timezone of class DateTimeZone constructor expects string, bool\\|int\\|string\\|null given\\.$#"
+            message: "#^Parameter \\#1 \\$timezone of class DateTimeZone constructor expects string, bool\\|float\\|int\\|string\\|null given\\.$#"
             count: 1
             path: src/DataFixtures/TimesheetFixtures.php
 
@@ -3616,12 +3601,12 @@ parameters:
             path: src/Entity/User.php
 
         -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:getFirstDayOfWeek\\(\\) should return string but returns bool\\|int\\|string\\|null\\.$#"
+            message: "#^Method App\\\\Entity\\\\User\\:\\:getFirstDayOfWeek\\(\\) should return string but returns bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
             path: src/Entity/User.php
 
         -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:getLocale\\(\\) should return string but returns bool\\|int\\|string\\|null\\.$#"
+            message: "#^Method App\\\\Entity\\\\User\\:\\:getLocale\\(\\) should return string but returns bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
             path: src/Entity/User.php
 
@@ -3636,8 +3621,8 @@ parameters:
             path: src/Entity/User.php
 
         -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:getPreferenceValue\\(\\) should return bool\\|int\\|string\\|null but returns mixed\\.$#"
-            count: 2
+            message: "#^Method App\\\\Entity\\\\User\\:\\:getPreferenceValue\\(\\) should return bool\\|float\\|int\\|string\\|null but returns mixed\\.$#"
+            count: 1
             path: src/Entity/User.php
 
         -
@@ -3656,7 +3641,7 @@ parameters:
             path: src/Entity/User.php
 
         -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:getTimezone\\(\\) should return string but returns bool\\|int\\|string\\|null\\.$#"
+            message: "#^Method App\\\\Entity\\\\User\\:\\:getTimezone\\(\\) should return string but returns bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
             path: src/Entity/User.php
 
@@ -3728,11 +3713,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$string of function mb_substr expects string, string\\|null given\\.$#"
             count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Parameter \\#2 \\$string of function explode expects string, bool\\|int\\|string\\|null given\\.$#"
-            count: 2
             path: src/Entity/User.php
 
         -
@@ -8851,7 +8831,7 @@ parameters:
             path: src/Invoice/Calculator/DefaultCalculator.php
 
         -
-            message: "#^Parameter \\#2 \\$value of method App\\\\Invoice\\\\InvoiceItem\\:\\:addAdditionalField\\(\\) expects string\\|null, bool\\|int\\|string\\|null given\\.$#"
+            message: "#^Parameter \\#2 \\$value of method App\\\\Invoice\\\\InvoiceItem\\:\\:addAdditionalField\\(\\) expects string\\|null, bool\\|float\\|int\\|string\\|null given\\.$#"
             count: 1
             path: src/Invoice/Calculator/DefaultCalculator.php
 
@@ -9177,11 +9157,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Invoice\\\\InvoiceItem\\:\\:getAdditionalFields\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Invoice/InvoiceItem.php
-
-        -
-            message: "#^Method App\\\\Invoice\\\\InvoiceItem\\:\\:getMetaFieldValue\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Invoice/InvoiceItem.php
 
@@ -9576,7 +9551,7 @@ parameters:
             path: src/Ldap/LdapManager.php
 
         -
-            message: "#^Parameter \\#1 \\$baseDn of method App\\\\Ldap\\\\LdapDriver\\:\\:search\\(\\) expects string, bool\\|int\\|string given\\.$#"
+            message: "#^Parameter \\#1 \\$baseDn of method App\\\\Ldap\\\\LdapDriver\\:\\:search\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
             count: 1
             path: src/Ldap/LdapManager.php
 
@@ -10596,11 +10571,6 @@ parameters:
             path: src/Repository/Query/BaseFormTypeQuery.php
 
         -
-            message: "#^Call to an undefined method Symfony\\\\Component\\\\Form\\\\FormError\\|Symfony\\\\Component\\\\Form\\\\FormErrorIterator\\:\\:getOrigin\\(\\)\\.$#"
-            count: 1
-            path: src/Repository/Query/BaseQuery.php
-
-        -
             message: "#^Cannot call method getName\\(\\) on Symfony\\\\Component\\\\Form\\\\FormInterface\\|null\\.$#"
             count: 1
             path: src/Repository/Query/BaseQuery.php
@@ -10622,11 +10592,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:matchesFilter\\(\\) has parameter \\$expectedValue with no type specified\\.$#"
-            count: 1
-            path: src/Repository/Query/BaseQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:resetByFormError\\(\\) has parameter \\$errors with generic class Symfony\\\\Component\\\\Form\\\\FormErrorIterator but does not specify its types\\: T$#"
             count: 1
             path: src/Repository/Query/BaseQuery.php
 
@@ -11661,22 +11626,7 @@ parameters:
             path: src/Twig/Extensions.php
 
         -
-            message: "#^Method App\\\\Twig\\\\LocaleFormatExtensions\\:\\:dateFormat\\(\\) should return string\\|false but returns bool\\|string\\.$#"
-            count: 1
-            path: src/Twig/LocaleFormatExtensions.php
-
-        -
-            message: "#^Method App\\\\Twig\\\\LocaleFormatExtensions\\:\\:durationChart\\(\\) has parameter \\$duration with no type specified\\.$#"
-            count: 1
-            path: src/Twig/LocaleFormatExtensions.php
-
-        -
             message: "#^Method App\\\\Twig\\\\LocaleFormatExtensions\\:\\:getJavascriptConfiguration\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Twig/LocaleFormatExtensions.php
-
-        -
-            message: "#^Method App\\\\Twig\\\\LocaleFormatExtensions\\:\\:moneyChart\\(\\) has parameter \\$money with no type specified\\.$#"
             count: 1
             path: src/Twig/LocaleFormatExtensions.php
 
@@ -11891,21 +11841,6 @@ parameters:
             path: src/Utils/LocaleFormatter.php
 
         -
-            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:dateShort\\(\\) should return string but returns bool\\|string\\.$#"
-            count: 1
-            path: src/Utils/LocaleFormatter.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:dateShort\\(\\) should return string but returns string\\|null\\.$#"
-            count: 1
-            path: src/Utils/LocaleFormatter.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:dateTime\\(\\) should return string but returns bool\\|string\\.$#"
-            count: 1
-            path: src/Utils/LocaleFormatter.php
-
-        -
             message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:durationDecimal\\(\\) should return string but returns bool\\|string\\.$#"
             count: 1
             path: src/Utils/LocaleFormatter.php
@@ -11916,22 +11851,7 @@ parameters:
             path: src/Utils/LocaleFormatter.php
 
         -
-            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:formatIntl\\(\\) should return string but returns bool\\|string\\.$#"
-            count: 1
-            path: src/Utils/LocaleFormatter.php
-
-        -
             message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:money\\(\\) should return string but returns bool\\|string\\.$#"
-            count: 1
-            path: src/Utils/LocaleFormatter.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:time\\(\\) should return string but returns bool\\|string\\.$#"
-            count: 1
-            path: src/Utils/LocaleFormatter.php
-
-        -
-            message: "#^Parameter \\#1 \\$duration of method App\\\\Utils\\\\LocaleFormatter\\:\\:durationDecimal\\(\\) expects App\\\\Entity\\\\Timesheet\\|int\\|null, App\\\\Entity\\\\Timesheet\\|int\\|string\\|null given\\.$#"
             count: 1
             path: src/Utils/LocaleFormatter.php
 

@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -112,11 +113,12 @@ class UserPreference
         return str_replace(['.', '-'], '_', $name);
     }
 
-    public function getValue(): mixed
+    public function getValue(): bool|int|float|string|null
     {
         return match ($this->type) {
             YesNoType::class, CheckboxType::class => (bool) $this->value,
             IntegerType::class => (int) $this->value,
+            NumberType::class => (float) $this->value,
             default => $this->value,
         };
     }

@@ -13,6 +13,7 @@ use App\Entity\Bookmark;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Utils\SearchTerm;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormErrorIterator;
 
 /**
@@ -232,7 +233,7 @@ class BaseQuery
             return;
         }
 
-        if (substr($name, -1) === 's') {
+        if (str_ends_with($name, 's')) {
             $method = 'add' . ucfirst(substr($name, 0, \strlen($name) - 1));
             if (method_exists($this, $method) && \is_array($value)) {
                 foreach ($value as $v) {
@@ -279,7 +280,7 @@ class BaseQuery
     }
 
     /**
-     * @param FormErrorIterator $errors
+     * @param FormErrorIterator<FormError> $errors
      * @return self
      */
     public function resetByFormError(FormErrorIterator $errors)
