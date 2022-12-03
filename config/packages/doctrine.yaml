@@ -15,8 +15,9 @@ doctrine:
                 #schema_filter: ~^(?!(bundle_migration_|kimai2_sessions))~
                 url: '%env(DATABASE_URL)%'
                 driver: 'pdo_mysql'
-                # this setting prevents automatic database detection and finds a lot of false-negatives on doctrine:migrations:diff
-                # for null columns with MariaDB. Each migration tries to convert EVERY nullable column.
+                # If this is wrong, automatic database detection might fail and find false-negatives when running
+                # doctrine:migrations:diff on null columns with MariaDB.
+                # This here is mainly a fallback for times, when users have not configured the database version in the URL
                 server_version: '%env(string:DATABASE_VERSION)%'
                 charset: utf8mb4
                 default_table_options:
@@ -66,13 +67,13 @@ when@prod:
 
     services:
         doctrine.result_cache_provider:
-            factory: [ 'Doctrine\Common\Cache\Psr6\DoctrineProvider', 'wrap' ]
+            factory: ['Doctrine\Common\Cache\Psr6\DoctrineProvider', 'wrap']
             class: Doctrine\Common\Cache\Psr6\DoctrineProvider
             public: false
             arguments:
                 - '@doctrine.result_cache_pool'
         doctrine.system_cache_provider:
-            factory: [ 'Doctrine\Common\Cache\Psr6\DoctrineProvider', 'wrap' ]
+            factory: ['Doctrine\Common\Cache\Psr6\DoctrineProvider', 'wrap']
             class: Doctrine\Common\Cache\Psr6\DoctrineProvider
             public: false
             arguments:
