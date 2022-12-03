@@ -152,7 +152,7 @@ class LocaleFormatExtensionsTest extends TestCase
     }
 
     /**
-     * @return array<int, array<int, \DateTime|string|float>>
+     * @return array<int, array<int, \DateTime|string|null>>
      * @throws \Exception
      */
     public function getDateShortData(): array
@@ -165,7 +165,8 @@ class LocaleFormatExtensionsTest extends TestCase
             ['de', new \DateTime('1980-12-14 12:00:00', $timezone), '14.12.1980'],
             ['ru', new \DateTime('1980-12-14 12:00:00', $timezone), '14.12.1980'],
             ['ru', '1980-12-14 12:00:00', '14.12.1980'],
-            ['ru', 1.2345, ''],
+            ['ru', null, ''],
+            ['ru', '', ''],
         ];
     }
 
@@ -182,7 +183,7 @@ class LocaleFormatExtensionsTest extends TestCase
     }
 
     /**
-     * @return array<int, array<int, \DateTime|string|float>>
+     * @return array<int, array<int, \DateTime|string|null>>
      * @throws \Exception
      */
     public function getDateTimeData(): array
@@ -193,7 +194,8 @@ class LocaleFormatExtensionsTest extends TestCase
             ['en', new \DateTime('7 January 2010 00:01:00', $timezone), '2010-01-07 12:01 AM'],
             ['de', (new \DateTime('1980-12-14', $timezone))->setTime(13, 27, 55), '14.12.1980 13:27:55'],
             ['de', '1980-12-14 13:27:55', '14.12.1980 13:27:55'],
-            ['de', 1.2345, ''],
+            ['de', null, ''],
+            ['de', '', ''],
         ];
     }
 

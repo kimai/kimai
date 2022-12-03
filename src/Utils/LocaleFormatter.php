@@ -69,7 +69,7 @@ final class LocaleFormatter
 
     private function getSecondsForDuration(string|int|Timesheet|null $duration): int
     {
-        if (null === $duration) {
+        if ($duration === null || $duration === '') {
             return 0;
         }
 
@@ -98,7 +98,7 @@ final class LocaleFormatter
      */
     public function amount(null|int|float|string $amount): string
     {
-        if ($amount === null) {
+        if ($amount === null || $amount === '') {
             return '0';
         }
 
@@ -163,7 +163,7 @@ final class LocaleFormatter
 
     public function dateShort(\DateTimeInterface|string|null $date): ?string
     {
-        if ($date === null) {
+        if ($date === null || $date === '') {
             return null;
         }
 
@@ -197,7 +197,7 @@ final class LocaleFormatter
 
     public function dateTime(DateTime|string|null $date): ?string
     {
-        if ($date === null) {
+        if ($date === null || $date === '') {
             return null;
         }
 
@@ -231,7 +231,7 @@ final class LocaleFormatter
 
     public function dateFormat(\DateTimeInterface|string|null $date, string $format): ?string
     {
-        if ($date === null) {
+        if ($date === null || $date === '') {
             return null;
         }
 
@@ -248,7 +248,7 @@ final class LocaleFormatter
 
     public function time(\DateTimeInterface|string|null $date): ?string
     {
-        if ($date === null) {
+        if ($date === null || $date === '') {
             return null;
         }
 
