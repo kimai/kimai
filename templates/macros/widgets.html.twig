@@ -284,10 +284,12 @@
 {% endmacro %}
 
 {% macro form_type_value(type, value, entity) %}
-    {% if '\\ColorPickerType' in type %}
-        <span class="label-color" data-toggle="tooltip" data-placement="top" title="{{ value }}">
-            <i class="dot {{ 'dot'|icon(true) }} fa-fw"{% if value is not empty %} style="color:{{ value }}"{% endif %}></i>
-        </span>
+    {% if '\\ColorPickerType' in type or '\\ColorChoiceType' in type %}
+        {% if value is not empty %}
+            <span class="label-color" data-toggle="tooltip" data-placement="top" title="{{ value }}">
+                <i class="dot {{ 'dot'|icon(true) }} fa-fw" style="color:{{ value }}"></i>
+            </span>
+        {% endif %}
     {% elseif '\\DurationType' in type %}
         {{ value|duration }}
     {% elseif '\\YesNoType' in type or '\\CheckBoxType' in type %}
