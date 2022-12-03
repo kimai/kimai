@@ -45,9 +45,9 @@ abstract class BaseApiController extends AbstractController
 
     protected function addPagination(View $view, Pagination $pagination): void
     {
-        $view->setHeader('X-Page', $pagination->getCurrentPage());
-        $view->setHeader('X-Total-Count', $pagination->getNbResults());
-        $view->setHeader('X-Total-Pages', $pagination->getNbPages());
-        $view->setHeader('X-Per-Page', $pagination->getMaxPerPage());
+        $view->setHeader('X-Page', (string) $pagination->getCurrentPage());
+        $view->setHeader('X-Total-Count', (string) $pagination->getNbResults());
+        $view->setHeader('X-Total-Pages', (string) $pagination->getNbPages());
+        $view->setHeader('X-Per-Page', (string) $pagination->getMaxPerPage());
     }
 }
