@@ -9326,28 +9326,13 @@ parameters:
             path: src/Invoice/ServiceInvoice.php
 
         -
-            message: "#^Cannot call method getBegin\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
-            count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
-            message: "#^Cannot call method getEnd\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
             count: 1
             path: src/Invoice/ServiceInvoice.php
 
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
-            message: "#^Cannot call method getName\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 2
             path: src/Invoice/ServiceInvoice.php
 
         -
@@ -12079,11 +12064,6 @@ parameters:
             message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
             count: 1
             path: src/Validator/Constraints/ColorChoicesValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$datetime of class DateTime constructor expects string, mixed given\\.$#"
-            count: 1
-            path: src/Validator/Constraints/DateTimeFormatValidator.php
 
         -
             message: "#^Cannot access offset 'pattern' on mixed\\.$#"

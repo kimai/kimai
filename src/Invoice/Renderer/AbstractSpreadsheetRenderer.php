@@ -71,9 +71,6 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
                     continue;
                 }
                 $replacer = null;
-                if ($value === null) {
-                    continue;
-                }
                 $firstReplacerPos = stripos($value, '${');
                 if ($firstReplacerPos === false) {
                     continue;

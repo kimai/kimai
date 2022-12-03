@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class InvoiceDocumentTest extends TestCase
 {
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $dir = realpath(__DIR__ . '/../../templates/invoice/renderer');
         $sut = new InvoiceDocument(new \SplFileInfo($dir . '/default.html.twig'));
@@ -29,11 +29,15 @@ class InvoiceDocumentTest extends TestCase
         self::assertIsInt($sut->getLastChange());
     }
 
-    public function testThrowsOnDeletedFile()
+    public function testThrowsOnDeletedFile(): void
     {
         $catchedException = false;
 
         $dir = realpath(__DIR__ . '/../../templates/invoice/renderer');
+        if ($dir === false) {
+            throw new \Exception('Directory for invoice renderer could not be accessed');
+        }
+
         $file = tempnam($dir, 'invoice-renderer');
 
         if ($file !== false) {

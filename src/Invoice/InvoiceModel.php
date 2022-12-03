@@ -98,19 +98,12 @@ final class InvoiceModel
         $this->addItemHydrator(new InvoiceItemDefaultHydrator());
     }
 
-    /**
-     * @return InvoiceQuery
-     */
     public function getQuery(): ?InvoiceQuery
     {
         return $this->query;
     }
 
-    /**
-     * @param InvoiceQuery $query
-     * @return InvoiceModel
-     */
-    public function setQuery(InvoiceQuery $query)
+    public function setQuery(InvoiceQuery $query): InvoiceModel
     {
         $this->query = $query;
 

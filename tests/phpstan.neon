@@ -5853,11 +5853,6 @@ parameters:
             path: Entity/CustomerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\InvoiceDocumentTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/InvoiceDocumentTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Entity\\\\InvoiceMetaTest\\:\\:testSetEntityThrowsException\\(\\) has no return type specified\\.$#"
             count: 1
             path: Entity/InvoiceMetaTest.php
