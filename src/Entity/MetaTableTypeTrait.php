@@ -77,10 +77,7 @@ trait MetaTableTypeTrait
         return $this;
     }
 
-    /**
-     * @return int|bool|string|float|null
-     */
-    public function getValue()
+    public function getValue(): mixed
     {
         return match ($this->type) {
             YesNoType::class, CheckboxType::class => (bool) $this->value,
@@ -96,7 +93,7 @@ trait MetaTableTypeTrait
      * @param mixed $value
      * @return MetaTableTypeInterface
      */
-    public function setValue($value): MetaTableTypeInterface
+    public function setValue(mixed $value): MetaTableTypeInterface
     {
         // unchecked checkboxes / false bool would save an empty string in the database
         // those cannot be searched in the database
@@ -205,7 +202,7 @@ trait MetaTableTypeTrait
         return $this->label;
     }
 
-    public function setLabel(string $label): MetaTableTypeInterface
+    public function setLabel(?string $label): MetaTableTypeInterface
     {
         $this->label = $label;
 
