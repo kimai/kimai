@@ -801,6 +801,18 @@
         <source>vat</source>
         <target state="translated">稅</target>
       </trans-unit>
+      <trans-unit id="as948k9" resname="label.orderDate">
+        <source>label.orderDate</source>
+        <target state="translated">按照日期排序</target>
+      </trans-unit>
+      <trans-unit id="BS00SS7" resname="label.orderNumber">
+        <source>label.orderNumber</source>
+        <target state="translated">按照號碼排序</target>
+      </trans-unit>
+      <trans-unit id="hzhzbqw" resname="label.status">
+        <source>label.status</source>
+        <target state="translated">狀態</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

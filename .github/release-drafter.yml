@@ -34,10 +34,13 @@ version-resolver:
     default: patch
 template: |
     [Upgrade Kimai](https://www.kimai.org/documentation/updates.html) - [Install Kimai](https://www.kimai.org/documentation/installation.html) - [Docker](https://tobybatch.github.io/kimai2/)
-    
+
     **PHP Version compatibility:**
-    - PHP 7.3 is [end-of-life](https://www.php.net/supported-versions.php): please update now
-    - PHP 7.4 is almost EOL, PHP 8 and PHP 8.1 are supported
+    - PHP 7.3 is [end-of-life](https://www.php.net/supported-versions.php)
+    - PHP 7.4 is [end-of-life](https://www.php.net/supported-versions.php) in a few days!
+    - PHP 8.0 and PHP 8.1 are supported
+      
+    **Next release will be PHP 8 ONLY, as [announced one year ago](https://www.kimai.org/blog/2021/sunsetting-php-7/).**    
     
     $CHANGES
     

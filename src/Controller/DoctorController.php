@@ -256,6 +256,8 @@ final class DoctorController extends AbstractController
             'open_basedir',
             'post_max_size',
             'sys_temp_dir',
+            'date.timezone',
+            'session.gc_maxlifetime',
         ];
 
         $settings = [];

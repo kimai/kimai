@@ -29,7 +29,12 @@ final class InvoiceDocument
 
     public function getFilename(): string
     {
-        return $this->file->getRealPath();
+        $path = $this->file->getRealPath();
+        if ($path === false) {
+            throw new \Exception('Invoice template got deleted from filesystem');
+        }
+
+        return $path;
     }
 
     public function getFileExtension(): string
@@ -39,6 +44,11 @@ final class InvoiceDocument
 
     public function getLastChange(): int
     {
-        return $this->file->getMTime();
+        $modified = $this->file->getMTime();
+        if ($modified === false) {
+            throw new \Exception('Invoice template got deleted from filesystem');
+        }
+
+        return $modified;
     }
 }

@@ -28,4 +28,27 @@ class InvoiceDocumentTest extends TestCase
         self::assertEquals('default.html.twig', $sut->getName());
         self::assertIsInt($sut->getLastChange());
     }
+
+    public function testThrowsOnDeletedFile()
+    {
+        $catchedException = false;
+
+        $dir = realpath(__DIR__ . '/../../templates/invoice/renderer');
+        $file = tempnam($dir, 'invoice-renderer');
+
+        if ($file !== false) {
+            touch($file);
+            $sut = new InvoiceDocument(new \SplFileInfo($file));
+            unlink($file);
+
+            try {
+                // names are cached by SplFileInfo, so we need to trigger a function that does access the file
+                $sut->getLastChange();
+            } catch (\Exception $exception) {
+                $catchedException = true;
+            }
+        }
+
+        self::assertTrue($catchedException, 'Invoice document did not throw exception');
+    }
 }
