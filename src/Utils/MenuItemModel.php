@@ -44,6 +44,9 @@ class MenuItemModel implements MenuItemInterface
         $this->icon = $icon;
     }
 
+    /**
+     * @return MenuItemModel[]
+     */
     public function getChildren(): array
     {
         return $this->children;
@@ -60,6 +63,10 @@ class MenuItemModel implements MenuItemInterface
         return null;
     }
 
+    /**
+     * @param array<MenuItemModel> $children
+     * @return void
+     */
     public function setChildren(array $children): void
     {
         $this->children = $children;

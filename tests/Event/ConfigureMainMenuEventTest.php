@@ -33,5 +33,22 @@ class ConfigureMainMenuEventTest extends TestCase
         self::assertSame($admin, $sut->getAdminMenu());
         self::assertSame($apps, $sut->getAppsMenu());
         self::assertSame($system, $sut->getSystemMenu());
+
+        self::assertNull($sut->getTimesheetMenu());
+        self::assertNull($sut->getInvoiceMenu());
+        self::assertNull($sut->getReportingMenu());
+
+        $timesheet = new MenuItemModel('timesheet', 'timesheet');
+        $menu->addChild($timesheet);
+
+        $invoice = new MenuItemModel('invoice', 'invoice');
+        $menu->addChild($invoice);
+
+        $reporting = new MenuItemModel('reporting', 'reporting');
+        $menu->addChild($reporting);
+
+        self::assertSame($timesheet, $sut->getTimesheetMenu());
+        self::assertSame($invoice, $sut->getInvoiceMenu());
+        self::assertSame($reporting, $sut->getReportingMenu());
     }
 }

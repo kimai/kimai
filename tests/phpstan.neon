@@ -3138,11 +3138,6 @@ parameters:
             path: Controller/ControllerBaseTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertAccessDenied\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertAccessIsGranted\\(\\) has no return type specified\\.$#"
             count: 1
             path: Controller/ControllerBaseTest.php
@@ -3284,16 +3279,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertSuccessResponse\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertUrlIsSecured\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ControllerBaseTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ControllerBaseTest\\:\\:assertUrlIsSecuredForRole\\(\\) has no return type specified\\.$#"
             count: 1
             path: Controller/ControllerBaseTest.php
 
@@ -4013,92 +3998,12 @@ parameters:
             path: Controller/ProfileControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:assertHasAboutMeBox\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:assertHasProfileBox\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:getPreferencesTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:getTabTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testApiTokenAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testApiTokenActionFailsIfPasswordLengthToShort\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testEditAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testEditActionTabs\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testEditActionTabs\\(\\) has parameter \\$role with no type specified\\.$#"
             count: 1
             path: Controller/ProfileControllerTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testEditActionTabs\\(\\) has parameter \\$username with no type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testEditActionWithActiveFlag\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testIndexAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testIndexActionWithDifferentUsername\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testIndexActionWithoutData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testIsSecure\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testPasswordAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testPasswordActionFailsIfPasswordLengthToShort\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testPreferencesAction\\(\\) has no return type specified\\.$#"
             count: 1
             path: Controller/ProfileControllerTest.php
 
@@ -4123,31 +4028,6 @@ parameters:
             path: Controller/ProfileControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testRolesAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testRolesActionIsSecured\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testTeamsAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testTeamsActionIsSecured\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testTeamsActionIsSecuredForRole\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
             message: "#^Parameter \\#1 \\$hashedPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\PasswordHasherInterface\\:\\:verify\\(\\) expects string, string\\|null given\\.$#"
             count: 8
             path: Controller/ProfileControllerTest.php
@@ -4165,6 +4045,16 @@ parameters:
         -
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 6
+            path: Controller/ProfileControllerTest.php
+
+        -
+            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:getTabTestData\\(\\) return type has no value type specified in iterable type array\\.$#"
+            count: 1
+            path: Controller/ProfileControllerTest.php
+
+        -
+            message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:getPreferencesTestData\\(\\) return type has no value type specified in iterable type array\\.$#"
+            count: 1
             path: Controller/ProfileControllerTest.php
 
         -

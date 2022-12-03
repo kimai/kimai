@@ -207,22 +207,13 @@ abstract class ControllerBaseTest extends WebTestCase
         self::assertThat($response, new ResponseConstraint\ResponseIsSuccessful(), 'Response is not successful, got code: ' . $response->getStatusCode());
     }
 
-    /**
-     * @param string $url
-     * @param string $method
-     */
-    protected function assertUrlIsSecured(string $url, $method = 'GET')
+    protected function assertUrlIsSecured(string $url, string $method = 'GET'): void
     {
         $client = self::createClient();
         $this->assertRequestIsSecured($client, $url, $method);
     }
 
-    /**
-     * @param string $role
-     * @param string $url
-     * @param string $method
-     */
-    protected function assertUrlIsSecuredForRole(string $role, string $url, string $method = 'GET')
+    protected function assertUrlIsSecuredForRole(string $role, string $url, string $method = 'GET'): void
     {
         $client = $this->getClientForAuthenticatedUser($role);
         $client->request($method, $this->createUrl($url));
@@ -233,7 +224,7 @@ abstract class ControllerBaseTest extends WebTestCase
         $this->assertAccessDenied($client);
     }
 
-    protected function assertAccessDenied(HttpKernelBrowser $client)
+    protected function assertAccessDenied(HttpKernelBrowser $client): void
     {
         self::assertFalse(
             $client->getResponse()->isSuccessful(),

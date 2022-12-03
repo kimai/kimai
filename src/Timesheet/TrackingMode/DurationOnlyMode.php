@@ -15,9 +15,10 @@ use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * TODO @2.1 remove me with the next release
- *
  * This is a copy of the DefaultMode from 2.0
+ * FIXME 2.1 remove me with the next release
+ * @deprecated since 2.0
+ * @codeCoverageIgnore
  */
 final class DurationOnlyMode extends AbstractTrackingMode
 {
