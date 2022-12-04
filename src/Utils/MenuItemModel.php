@@ -92,9 +92,7 @@ class MenuItemModel implements MenuItemInterface
 
     public function setIsActive(bool $isActive): void
     {
-        if ($this->hasParent()) {
-            $this->getParent()->setIsActive($isActive);
-        }
+        $this->getParent()?->setIsActive($isActive);
 
         $this->isActive = $isActive;
     }
