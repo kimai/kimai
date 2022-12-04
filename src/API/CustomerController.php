@@ -53,9 +53,9 @@ final class CustomerController extends BaseApiController
     }
 
     /**
-     * Returns a collection of customers
+     * Returns a collection of customers (which are visible to the user)
      */
-    #[OA\Response(response: 200, description: 'Returns a collection of customer entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/CustomerCollection')))]
+    #[OA\Response(response: 200, description: 'Returns a collection of customers', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/CustomerCollection')))]
     #[Rest\Get(path: '', name: 'get_customers')]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]

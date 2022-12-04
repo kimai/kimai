@@ -48,10 +48,10 @@ final class UserController extends BaseApiController
     }
 
     /**
-     * Returns the collection of all registered users
+     * Returns the collection of users (which are visible to the user)
      */
     #[Security("is_granted('view_user')")]
-    #[OA\Response(response: 200, description: 'Returns the collection of all registered users. Required permission: view_user', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/UserCollection')))]
+    #[OA\Response(response: 200, description: 'Returns the collection of users. Required permission: view_user', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/UserCollection')))]
     #[Rest\Get(path: '', name: 'get_users')]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]

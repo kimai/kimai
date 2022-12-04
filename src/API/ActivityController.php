@@ -52,9 +52,9 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Returns a collection of activities
+     * Returns a collection of activities (which are visible to the user)
      */
-    #[OA\Response(response: 200, description: 'Returns a collection of activity entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ActivityCollection')))]
+    #[OA\Response(response: 200, description: 'Returns a collection of activities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ActivityCollection')))]
     #[Rest\Get(path: '', name: 'get_activities')]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]

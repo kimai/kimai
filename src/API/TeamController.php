@@ -42,10 +42,10 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Fetch all existing teams
+     * Fetch all existing teams (which are visible to the user)
      */
     #[Security("is_granted('view_team')")]
-    #[OA\Response(response: 200, description: 'Returns the collection of all existing teams', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TeamCollection')))]
+    #[OA\Response(response: 200, description: 'Returns the collection of teams', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TeamCollection')))]
     #[Rest\Get(path: '', name: 'get_teams')]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]

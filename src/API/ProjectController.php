@@ -55,9 +55,9 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Returns a collection of projects.
+     * Returns a collection of projects (which are visible to the user)
      */
-    #[OA\Response(response: 200, description: 'Returns a collection of project entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ProjectCollection')))]
+    #[OA\Response(response: 200, description: 'Returns a collection of projects', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ProjectCollection')))]
     #[Rest\Get(path: '', name: 'get_projects')]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]

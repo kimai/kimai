@@ -65,10 +65,10 @@ final class TimesheetController extends BaseApiController
     }
 
     /**
-     * Returns a collection of timesheet records
+     * Returns a collection of timesheet records (which are visible to the user)
      */
     #[Security("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')")]
-    #[OA\Response(response: 200, description: 'Returns a collection of timesheets records. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601.', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TimesheetCollection')))]
+    #[OA\Response(response: 200, description: 'Returns a collection of timesheet records. The datetime fields are given in the users local time including the timezone offset (ISO-8601).', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TimesheetCollection')))]
     #[Rest\Get(path: '', name: 'get_timesheets')]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
