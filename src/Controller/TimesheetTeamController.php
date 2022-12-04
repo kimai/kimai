@@ -31,11 +31,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Security("is_granted('view_other_timesheet')")]
 final class TimesheetTeamController extends TimesheetAbstractController
 {
-    /**
-     * @param int $page
-     * @param Request $request
-     * @return Response
-     */
     #[Route(path: '/', defaults: ['page' => 1], name: 'admin_timesheet', methods: ['GET'])]
     #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_timesheet_paginated', methods: ['GET'])]
     #[Security("is_granted('view_other_timesheet')")]
