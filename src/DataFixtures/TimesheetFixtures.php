@@ -210,7 +210,7 @@ class TimesheetFixtures extends Fixture implements FixtureGroupInterface
     {
         $start = $this->getRandomFirstDay();
         $start = $start->modify('- ' . (rand(1, 86400)) . ' seconds');
-        $start->setTimezone(new \DateTimeZone($user->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get())));
+        $start->setTimezone(new \DateTimeZone($user->getTimezone()));
 
         $entry = new Timesheet();
         $entry
