@@ -31,6 +31,7 @@ class SamlConfigurationTest extends TestCase
         return [
             'activate' => true,
             'title' => 'SAML title',
+            'provider' => 'google',
             'connection' => [
                 'host' => '1.2.3.4',
             ],
@@ -40,6 +41,7 @@ class SamlConfigurationTest extends TestCase
             ],
             'roles' => [
                 'attribute' => 'Roles',
+                'resetOnLogin' => true,
                 'mapping' => [
                     ['saml' => 'Kimai - Admin', 'kimai' => 'ROLE_SUPER_ADMIN'],
                     ['saml' => 'Management', 'kimai' => 'ROLE_TEAMLEAD'],
@@ -57,13 +59,16 @@ class SamlConfigurationTest extends TestCase
         $this->assertEquals([], $sut->getRolesMapping());
         $this->assertEquals('', $sut->getRolesAttribute());
         $this->assertEquals([], $sut->getAttributeMapping());
+        $this->assertFalse($sut->isRolesResetOnLogin());
     }
 
     public function testDefaultSettings()
     {
         $sut = $this->getSut($this->getDefaultSettings());
         $this->assertTrue($sut->isActivated());
+        $this->assertTrue($sut->isRolesResetOnLogin());
         $this->assertEquals('SAML title', $sut->getTitle());
+        $this->assertEquals('google', $sut->getProvider());
         $this->assertEquals([
             'host' => '1.2.3.4',
         ], $sut->getConnection());
