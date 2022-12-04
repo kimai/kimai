@@ -206,6 +206,14 @@
         <source>invoice.number_format</source>
         <target>Rechnungsnummer Format</target>
       </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format">
+        <source>customer.number_format</source>
+        <target>Kundennummer Format</target>
+      </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer">
+        <source>allowed_replacer</source>
+        <target>Erlaubte Ersetzer: %replacer%</target>
+      </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>
         <target>Erster Tag der Woche</target>

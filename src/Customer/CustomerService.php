@@ -18,6 +18,7 @@ use App\Event\CustomerMetaDefinitionEvent;
 use App\Event\CustomerUpdatePostEvent;
 use App\Event\CustomerUpdatePreEvent;
 use App\Repository\CustomerRepository;
+use App\Utils\NumberGenerator;
 use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -51,6 +52,7 @@ class CustomerService
         $customer->setTimezone($this->getDefaultTimezone());
         $customer->setCountry($this->configuration->getCustomerDefaultCountry());
         $customer->setCurrency($this->configuration->getCustomerDefaultCurrency());
+        $customer->setNumber($this->calculateNextCustomerNumber());
 
         $this->dispatcher->dispatch(new CustomerMetaDefinitionEvent($customer));
         $this->dispatcher->dispatch(new CustomerCreateEvent($customer));
@@ -106,5 +108,22 @@ class CustomerService
     public function findCustomerByNumber(string $number): ?Customer
     {
         return $this->repository->findOneBy(['number' => $number]);
+    }
+
+    public function calculateNextCustomerNumber(): string
+    {
+        $format = $this->configuration->find('customer.number_format');
+        if (empty($format) || !\is_string($format)) {
+            $format = '{cc,4}';
+        }
+
+        $numberGenerator = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy): string|int {
+            return match ($format) {
+                'cc' => $this->repository->count([]) + $increaseBy,
+                default => $originalFormat,
+            };
+        });
+
+        return $numberGenerator->getNumber();
     }
 }

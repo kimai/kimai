@@ -9191,47 +9191,7 @@ parameters:
             path: src/Invoice/InvoiceModelHydrator.php
 
         -
-            message: "#^Cannot call method getCustomer\\(\\) on App\\\\Invoice\\\\InvoiceModel\\|null\\.$#"
-            count: 8
-            path: src/Invoice/NumberGenerator/ConfigurableNumberGenerator.php
-
-        -
             message: "#^Cannot call method getInvoiceDate\\(\\) on App\\\\Invoice\\\\InvoiceModel\\|null\\.$#"
-            count: 1
-            path: src/Invoice/NumberGenerator/ConfigurableNumberGenerator.php
-
-        -
-            message: "#^Cannot call method getUser\\(\\) on App\\\\Invoice\\\\InvoiceModel\\|null\\.$#"
-            count: 8
-            path: src/Invoice/NumberGenerator/ConfigurableNumberGenerator.php
-
-        -
-            message: "#^Method App\\\\Invoice\\\\NumberGenerator\\\\ConfigurableNumberGenerator\\:\\:parseReplacer\\(\\) should return string but returns int\\|string\\|null\\.$#"
-            count: 1
-            path: src/Invoice/NumberGenerator/ConfigurableNumberGenerator.php
-
-        -
-            message: "#^Parameter \\#1 \\$array of function array_shift expects array, array\\<int, string\\>\\|false given\\.$#"
-            count: 1
-            path: src/Invoice/NumberGenerator/ConfigurableNumberGenerator.php
-
-        -
-            message: "#^Parameter \\#1 \\$invoiceNumber of method App\\\\Repository\\\\InvoiceRepository\\:\\:hasInvoice\\(\\) expects string, bool\\|float\\|int\\|string\\|null given\\.$#"
-            count: 1
-            path: src/Invoice/NumberGenerator/ConfigurableNumberGenerator.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function str_pad expects string, int\\|string\\|null given\\.$#"
-            count: 1
-            path: src/Invoice/NumberGenerator/ConfigurableNumberGenerator.php
-
-        -
-            message: "#^Parameter \\#2 \\$subject of function preg_match_all expects string, bool\\|float\\|int\\|string\\|null given\\.$#"
-            count: 1
-            path: src/Invoice/NumberGenerator/ConfigurableNumberGenerator.php
-
-        -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, bool\\|float\\|int\\|string\\|null given\\.$#"
             count: 1
             path: src/Invoice/NumberGenerator/ConfigurableNumberGenerator.php
 

@@ -428,6 +428,9 @@ class ConfigurationTest extends TestCase
             'activity' => [
                 'allow_inline_create' => false,
             ],
+            'customer' => [
+                'number_format' => '{cc,4}',
+            ],
         ];
 
         $this->assertConfig($this->getMinConfig(), $fullDefaultConfig);

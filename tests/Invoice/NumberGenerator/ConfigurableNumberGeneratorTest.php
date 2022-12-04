@@ -20,6 +20,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Invoice\NumberGenerator\ConfigurableNumberGenerator
+ * @covers \App\Utils\NumberGenerator
  */
 class ConfigurableNumberGeneratorTest extends TestCase
 {

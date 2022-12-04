@@ -41,6 +41,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->append($this->getUserNode())
+                ->append($this->getCustomerNode())
                 ->append($this->getTimesheetNode())
                 ->append($this->getInvoiceNode())
                 ->append($this->getExportNode())
@@ -511,6 +512,24 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->integerNode('password_reset_token_ttl')
                     ->defaultValue(86400)
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    private function getCustomerNode(): ArrayNodeDefinition
+    {
+        $builder = new TreeBuilder('customer');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->scalarNode('number_format')
+                    ->defaultValue('{cc,4}')
                 ->end()
             ->end()
         ;

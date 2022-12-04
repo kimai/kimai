@@ -426,6 +426,12 @@ final class SystemConfigurationController extends AbstractController
                     // TODO that should be a custom type with validation
                     (new Configuration('invoice.number_format'))
                         ->setLabel('invoice.number_format')
+                        ->setOptions([
+                            'help' => 'allowed_replacer',
+                            'help_translation_parameters' => [
+                                '%replacer%' => '{Y}, {y}, {M}, {m}, {D}, {d}, {date}, {cc}, {ccy}, {ccm}, {ccd}, {cu}, {cuy}, {cum}, {cud}, {ustaff}, {uid}, {c}, {cy}, {cm}, {cd}, {cname}, {cnumber}'
+                            ]
+                        ])
                         ->setRequired(true)
                         ->setType(TextType::class)
                         ->setTranslationDomain('system-configuration'),
@@ -449,6 +455,12 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration('customer.choice_pattern'))
                         ->setLabel('choice_pattern')
                         ->setType(CustomerTypePatternType::class),
+                    (new Configuration('customer.number_format'))
+                        ->setLabel('customer.number_format')
+                        ->setOptions(['help' => 'allowed_replacer', 'help_translation_parameters' => ['%replacer%' => '{cc}']])
+                        ->setRequired(true)
+                        ->setType(TextType::class)
+                        ->setTranslationDomain('system-configuration'),
                 ]),
             (new SystemConfigurationModel('project'))
                 ->setConfiguration([
