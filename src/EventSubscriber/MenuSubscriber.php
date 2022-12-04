@@ -81,6 +81,7 @@ final class MenuSubscriber implements EventSubscriberInterface
         }
 
         if ($times->hasChildren()) {
+            $times->setExpanded(true); // Kimai is all about time-tracking, so we expand this menu always
             $menu->addChild($times);
         }
 

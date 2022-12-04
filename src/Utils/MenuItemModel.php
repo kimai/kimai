@@ -15,12 +15,10 @@ class MenuItemModel implements MenuItemInterface
 {
     private string $identifier;
     private string $label;
-    private ?string $route = null;
+    private ?string $route;
     private array $routeArgs;
     private bool $isActive = false;
-    /**
-     * @var array<MenuItemModel>
-     */
+    /** @var array<MenuItemModel> */
     private array $children = [];
     private ?string $icon;
     private ?MenuItemModel $parent = null;
@@ -29,6 +27,7 @@ class MenuItemModel implements MenuItemInterface
     private static int $dividerId = 0;
     private bool $divider = false;
     private bool $lastWasDivider = false;
+    private bool $expanded = false;
 
     public function __construct(
         string $id,
@@ -65,7 +64,6 @@ class MenuItemModel implements MenuItemInterface
 
     /**
      * @param array<MenuItemModel> $children
-     * @return void
      */
     public function setChildren(array $children): void
     {
@@ -95,10 +93,7 @@ class MenuItemModel implements MenuItemInterface
     public function setIsActive(bool $isActive): void
     {
         if ($this->hasParent()) {
-            $parent = $this->getParent();
-            if ($parent instanceof MenuItemModel) {
-                $parent->setIsActive($isActive);
-            }
+            $this->getParent()->setIsActive($isActive);
         }
 
         $this->isActive = $isActive;
@@ -272,5 +267,15 @@ class MenuItemModel implements MenuItemInterface
     public function setDivider(bool $divider): void
     {
         $this->divider = $divider;
+    }
+
+    public function isExpanded(): bool
+    {
+        return $this->expanded;
+    }
+
+    public function setExpanded(bool $expanded): void
+    {
+        $this->expanded = $expanded;
     }
 }
