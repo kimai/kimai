@@ -125,6 +125,7 @@
 
 {% block app_logo %}
     {% set mylogo %}{{ parent() }}{% endset %}
+    {# only for mobile view #}
     <div class="d-flex justify-content-start flex-fill d-lg-none">
         <h2 class="page-title d-lg-none ps-2 text-white">
             {{- block('page_title') -}}
@@ -135,6 +136,7 @@
 {% endblock %}
 
 {% block navbar_search %}
+    {# normal desktop view #}
     <h2 class="page-title me-2">
         {{- block('page_title') -}}
     </h2>

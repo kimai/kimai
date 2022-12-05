@@ -10,6 +10,7 @@
 namespace App\EventSubscriber;
 
 use App\Configuration\SystemConfiguration;
+use App\Controller\HomepageController;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
@@ -106,7 +107,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setSection('behaviour')
                 ->setType(CalendarViewType::class),
 
-            (new UserPreference('login_initial_view', InitialViewType::DEFAULT_VIEW))
+            (new UserPreference('login_initial_view', HomepageController::DEFAULT_ROUTE))
                 ->setOrder(700)
                 ->setSection('behaviour')
                 ->setType(InitialViewType::class),

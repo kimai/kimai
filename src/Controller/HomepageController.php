@@ -11,7 +11,6 @@ namespace App\Controller;
 
 use App\Configuration\LocaleService;
 use App\Entity\User;
-use App\Form\Type\InitialViewType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,12 +23,14 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")]
 final class HomepageController extends AbstractController
 {
+    public const DEFAULT_ROUTE = 'timesheet';
+
     #[Route(path: '', defaults: [], name: 'homepage', methods: ['GET'])]
     public function indexAction(Request $request, LocaleService $service): Response
     {
         /** @var User $user */
         $user = $this->getUser();
-        $userRoute = $user->getPreferenceValue('login_initial_view', InitialViewType::DEFAULT_VIEW);
+        $userRoute = $user->getPreferenceValue('login_initial_view', self::DEFAULT_ROUTE);
         $userLanguage = $user->getLanguage();
         $requestLanguage = $request->getLocale();
 
@@ -51,8 +52,8 @@ final class HomepageController extends AbstractController
             [$userRoute, $userLanguage],
             [$userRoute, $requestLanguage],
             [$userRoute, User::DEFAULT_LANGUAGE],
-            [InitialViewType::DEFAULT_VIEW, $userLanguage],
-            [InitialViewType::DEFAULT_VIEW, $requestLanguage],
+            [self::DEFAULT_ROUTE, $userLanguage],
+            [self::DEFAULT_ROUTE, $requestLanguage],
         ];
 
         foreach ($routes as $routeSettings) {
@@ -66,6 +67,6 @@ final class HomepageController extends AbstractController
             }
         }
 
-        return $this->redirectToRoute(InitialViewType::DEFAULT_VIEW, ['_locale' => User::DEFAULT_LANGUAGE]);
+        return $this->redirectToRoute(self::DEFAULT_ROUTE, ['_locale' => User::DEFAULT_LANGUAGE]);
     }
 }

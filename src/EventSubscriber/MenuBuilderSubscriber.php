@@ -15,7 +15,7 @@ use KevinPapst\TablerBundle\Event\MenuEvent;
 use KevinPapst\TablerBundle\Model\MenuItemInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * Class MenuBuilder configures the main navigation.
@@ -23,7 +23,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 class MenuBuilderSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private EventDispatcherInterface $eventDispatcher, private TokenStorageInterface $tokenStorage)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private Security $security)
     {
     }
 
@@ -36,18 +36,10 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
 
     public function onSetupNavbar(MenuEvent $event): void
     {
-        $request = $event->getRequest();
-
-        $menuEvent = new ConfigureMainMenuEvent(
-            $request,
-            new MenuItemModel('main', 'menu.root'),
-            new MenuItemModel('apps', 'menu.apps', '', [], 'applications'),
-            new MenuItemModel('admin', 'menu.admin', '', [], 'administration'),
-            new MenuItemModel('system', 'menu.system', '', [], 'configuration')
-        );
+        $menuEvent = new ConfigureMainMenuEvent();
 
         // error pages don't have a user and will fail when is_granted() is called
-        if (null !== $this->tokenStorage->getToken()) {
+        if (null !== ($user = $this->security->getUser())) {
             $this->eventDispatcher->dispatch($menuEvent);
         }
 

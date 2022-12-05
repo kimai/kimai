@@ -12,7 +12,6 @@ namespace App\Tests\Event;
 use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @covers \App\Event\ConfigureMainMenuEvent
@@ -21,34 +20,30 @@ class ConfigureMainMenuEventTest extends TestCase
 {
     public function testGetterAndSetter()
     {
-        $request = new Request();
-        $menu = new MenuItemModel('main', 'menu.root');
-        $admin = new MenuItemModel('admin', 'admin', 'admin');
-        $apps = new MenuItemModel('apps', 'apps', 'apps');
-        $system = new MenuItemModel('system', 'system', 'system');
-        $sut = new ConfigureMainMenuEvent($request, $menu, $apps, $admin, $system);
+        $sut = new ConfigureMainMenuEvent();
 
-        self::assertSame($request, $sut->getRequest());
-        self::assertSame($menu, $sut->getMenu());
-        self::assertSame($admin, $sut->getAdminMenu());
-        self::assertSame($apps, $sut->getAppsMenu());
-        self::assertSame($system, $sut->getSystemMenu());
+        self::assertNotNull($sut->getMenu());
+        self::assertNotNull($sut->getAdminMenu());
+        self::assertNotNull($sut->getAppsMenu());
+        self::assertNotNull($sut->getSystemMenu());
 
         self::assertNull($sut->getTimesheetMenu());
         self::assertNull($sut->getInvoiceMenu());
         self::assertNull($sut->getReportingMenu());
 
         $timesheet = new MenuItemModel('timesheet', 'timesheet');
-        $menu->addChild($timesheet);
+        $sut->getMenu()->addChild($timesheet);
+        self::assertNotNull($sut->getTimesheetMenu());
+        self::assertSame($timesheet, $sut->getTimesheetMenu());
 
         $invoice = new MenuItemModel('invoice', 'invoice');
-        $menu->addChild($invoice);
+        $sut->getMenu()->addChild($invoice);
+        self::assertNotNull($sut->getInvoiceMenu());
+        self::assertSame($invoice, $sut->getInvoiceMenu());
 
         $reporting = new MenuItemModel('reporting', 'reporting');
-        $menu->addChild($reporting);
-
-        self::assertSame($timesheet, $sut->getTimesheetMenu());
-        self::assertSame($invoice, $sut->getInvoiceMenu());
+        $sut->getMenu()->addChild($reporting);
+        self::assertNotNull($sut->getReportingMenu());
         self::assertSame($reporting, $sut->getReportingMenu());
     }
 }

@@ -10,7 +10,6 @@
 namespace App\Event;
 
 use App\Utils\MenuItemModel;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
@@ -18,13 +17,17 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class ConfigureMainMenuEvent extends Event
 {
-    public function __construct(private Request $request, private MenuItemModel $menu, private MenuItemModel $apps, private MenuItemModel $admin, private MenuItemModel $system)
-    {
-    }
+    private MenuItemModel $menu;
+    private MenuItemModel $apps;
+    private MenuItemModel $admin;
+    private MenuItemModel $system;
 
-    public function getRequest(): Request
+    public function __construct()
     {
-        return $this->request;
+        $this->menu = new MenuItemModel('main', 'menu.root');
+        $this->apps = new MenuItemModel('apps', 'menu.apps', '', [], 'applications');
+        $this->admin = new MenuItemModel('admin', 'menu.admin', '', [], 'administration');
+        $this->system = new MenuItemModel('system', 'menu.system', '', [], 'configuration');
     }
 
     public function getMenu(): MenuItemModel
