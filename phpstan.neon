@@ -5226,17 +5226,7 @@ parameters:
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addActivityChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addActivityMultiChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
@@ -5246,22 +5236,7 @@ parameters:
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addActivitySelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addBillableChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addCustomerChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
@@ -5271,27 +5246,12 @@ parameters:
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addCustomerSelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addDateRange\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
@@ -5311,11 +5271,6 @@ parameters:
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addDateRangeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/AbstractToolbarForm.php
@@ -5326,37 +5281,7 @@ parameters:
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addExportStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addHiddenPagination\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addOrder\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addOrderBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addPageSizeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addProjectChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
@@ -5366,17 +5291,7 @@ parameters:
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addProjectMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addProjectSelect\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
@@ -5386,57 +5301,12 @@ parameters:
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addSearchTermInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addTagInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addTeamChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addTeamsChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addTimesheetStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addUserChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addUserRoleChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addUsersChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addVisibilityChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
@@ -5491,17 +5361,7 @@ parameters:
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addActivityChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addActivityMultiChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
@@ -5511,22 +5371,7 @@ parameters:
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addActivitySelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addBillableChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addCustomerChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
@@ -5536,27 +5381,12 @@ parameters:
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addCustomerSelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addDateRange\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
@@ -5576,11 +5406,6 @@ parameters:
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addDateRangeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ActivityToolbarForm.php
@@ -5591,37 +5416,7 @@ parameters:
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addExportStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addHiddenPagination\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addOrder\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addOrderBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addPageSizeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addProjectChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
@@ -5631,17 +5426,7 @@ parameters:
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addProjectMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addProjectSelect\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
@@ -5651,57 +5436,12 @@ parameters:
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addSearchTermInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addTagInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addTeamChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addTeamsChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addTimesheetStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addUserChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addUserRoleChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addUsersChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addVisibilityChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
@@ -5756,17 +5496,7 @@ parameters:
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addActivityChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addActivityMultiChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
@@ -5776,22 +5506,7 @@ parameters:
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addActivitySelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addBillableChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addCustomerChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
@@ -5801,27 +5516,12 @@ parameters:
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addCustomerSelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addDateRange\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
@@ -5841,11 +5541,6 @@ parameters:
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addDateRangeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/CustomerToolbarForm.php
@@ -5856,37 +5551,7 @@ parameters:
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addExportStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addHiddenPagination\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addOrder\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addOrderBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addPageSizeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addProjectChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
@@ -5896,17 +5561,7 @@ parameters:
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addProjectMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addProjectSelect\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
@@ -5916,57 +5571,12 @@ parameters:
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addSearchTermInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addTagInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addTeamChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addTeamsChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addTimesheetStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addUserChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addUserRoleChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addUsersChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addVisibilityChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
@@ -6021,17 +5631,7 @@ parameters:
             path: src/Form/Toolbar/ExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addActivityChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addActivityMultiChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ExportToolbarForm.php
 
@@ -6041,22 +5641,7 @@ parameters:
             path: src/Form/Toolbar/ExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addActivitySelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addBillableChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addCustomerChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ExportToolbarForm.php
 
@@ -6066,27 +5651,12 @@ parameters:
             path: src/Form/Toolbar/ExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/ExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addCustomerSelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addDateRange\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ExportToolbarForm.php
 
@@ -6106,11 +5676,6 @@ parameters:
             path: src/Form/Toolbar/ExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addDateRangeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ExportToolbarForm.php
@@ -6121,37 +5686,7 @@ parameters:
             path: src/Form/Toolbar/ExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addExportStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addHiddenPagination\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addOrder\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addOrderBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addPageSizeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addProjectChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ExportToolbarForm.php
 
@@ -6161,17 +5696,7 @@ parameters:
             path: src/Form/Toolbar/ExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addProjectMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addProjectSelect\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ExportToolbarForm.php
 
@@ -6181,57 +5706,12 @@ parameters:
             path: src/Form/Toolbar/ExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addSearchTermInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addTagInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addTeamChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addTeamsChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/ExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addTimesheetStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addUserChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addUserRoleChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addUsersChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addVisibilityChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ExportToolbarForm.php
 
@@ -6286,17 +5766,7 @@ parameters:
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addActivityChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addActivityMultiChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
@@ -6306,22 +5776,7 @@ parameters:
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addActivitySelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addBillableChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addCustomerChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
@@ -6331,27 +5786,12 @@ parameters:
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addCustomerMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addCustomerSelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addDateRange\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
@@ -6371,11 +5811,6 @@ parameters:
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addDateRangeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceArchiveForm.php
@@ -6386,37 +5821,7 @@ parameters:
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addExportStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addHiddenPagination\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addOrder\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addOrderBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addPageSizeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addProjectChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
@@ -6426,17 +5831,7 @@ parameters:
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addProjectMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addProjectSelect\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
@@ -6446,57 +5841,12 @@ parameters:
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addSearchTermInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addTagInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addTeamChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addTeamsChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addTimesheetStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addUserChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addUserRoleChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addUsersChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addVisibilityChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
@@ -6551,17 +5901,7 @@ parameters:
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addActivityChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addActivityMultiChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
@@ -6571,22 +5911,7 @@ parameters:
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addActivitySelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addBillableChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addCustomerChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
@@ -6596,27 +5921,12 @@ parameters:
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addCustomerSelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addDateRange\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
@@ -6636,11 +5946,6 @@ parameters:
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addDateRangeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceToolbarForm.php
@@ -6651,37 +5956,7 @@ parameters:
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addExportStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addHiddenPagination\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addOrder\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addOrderBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addPageSizeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addProjectChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
@@ -6691,17 +5966,7 @@ parameters:
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addProjectMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addProjectSelect\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
@@ -6711,57 +5976,12 @@ parameters:
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addSearchTermInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addTagInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addTeamChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addTeamsChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addTimesheetStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addUserChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addUserRoleChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addUsersChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addVisibilityChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
@@ -6816,17 +6036,7 @@ parameters:
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addActivityChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addActivityMultiChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
@@ -6836,22 +6046,7 @@ parameters:
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addActivitySelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addBillableChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addCustomerChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
@@ -6861,27 +6056,12 @@ parameters:
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addCustomerSelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addDateRange\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
@@ -6901,11 +6081,6 @@ parameters:
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addDateRangeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ProjectToolbarForm.php
@@ -6916,37 +6091,7 @@ parameters:
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addExportStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addHiddenPagination\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addOrder\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addOrderBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addPageSizeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addProjectChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
@@ -6956,17 +6101,7 @@ parameters:
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addProjectMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addProjectSelect\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
@@ -6976,57 +6111,12 @@ parameters:
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addSearchTermInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addTagInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addTeamChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addTeamsChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addTimesheetStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addUserChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addUserRoleChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addUsersChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addVisibilityChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
@@ -7081,17 +6171,7 @@ parameters:
             path: src/Form/Toolbar/TagToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addActivityChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addActivityMultiChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TagToolbarForm.php
 
@@ -7101,22 +6181,7 @@ parameters:
             path: src/Form/Toolbar/TagToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addActivitySelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addBillableChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addCustomerChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TagToolbarForm.php
 
@@ -7126,27 +6191,12 @@ parameters:
             path: src/Form/Toolbar/TagToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TagToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addCustomerSelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addDateRange\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TagToolbarForm.php
 
@@ -7166,11 +6216,6 @@ parameters:
             path: src/Form/Toolbar/TagToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addDateRangeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TagToolbarForm.php
@@ -7181,37 +6226,7 @@ parameters:
             path: src/Form/Toolbar/TagToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addExportStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addHiddenPagination\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addOrder\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addOrderBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addPageSizeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addProjectChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TagToolbarForm.php
 
@@ -7221,17 +6236,7 @@ parameters:
             path: src/Form/Toolbar/TagToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addProjectMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addProjectSelect\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TagToolbarForm.php
 
@@ -7241,57 +6246,12 @@ parameters:
             path: src/Form/Toolbar/TagToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addSearchTermInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addTagInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addTeamChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addTeamsChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TagToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addTimesheetStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addUserChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addUserRoleChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addUsersChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addVisibilityChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TagToolbarForm.php
 
@@ -7346,17 +6306,7 @@ parameters:
             path: src/Form/Toolbar/TeamToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addActivityChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addActivityMultiChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TeamToolbarForm.php
 
@@ -7366,22 +6316,7 @@ parameters:
             path: src/Form/Toolbar/TeamToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addActivitySelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addBillableChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addCustomerChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TeamToolbarForm.php
 
@@ -7391,27 +6326,12 @@ parameters:
             path: src/Form/Toolbar/TeamToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TeamToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addCustomerSelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addDateRange\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TeamToolbarForm.php
 
@@ -7431,11 +6351,6 @@ parameters:
             path: src/Form/Toolbar/TeamToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addDateRangeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TeamToolbarForm.php
@@ -7446,37 +6361,7 @@ parameters:
             path: src/Form/Toolbar/TeamToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addExportStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addHiddenPagination\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addOrder\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addOrderBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addPageSizeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addProjectChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TeamToolbarForm.php
 
@@ -7486,17 +6371,7 @@ parameters:
             path: src/Form/Toolbar/TeamToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addProjectMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addProjectSelect\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TeamToolbarForm.php
 
@@ -7506,57 +6381,12 @@ parameters:
             path: src/Form/Toolbar/TeamToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addSearchTermInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addTagInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addTeamChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addTeamsChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TeamToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addTimesheetStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addUserChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addUserRoleChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addUsersChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addVisibilityChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TeamToolbarForm.php
 
@@ -7611,17 +6441,7 @@ parameters:
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addActivityChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addActivityMultiChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
@@ -7631,22 +6451,7 @@ parameters:
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addActivitySelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addBillableChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addCustomerChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
@@ -7656,27 +6461,12 @@ parameters:
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addCustomerSelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addDateRange\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
@@ -7696,11 +6486,6 @@ parameters:
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addDateRangeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
@@ -7711,37 +6496,7 @@ parameters:
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addExportStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addHiddenPagination\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addOrder\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addOrderBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addPageSizeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addProjectChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
@@ -7751,17 +6506,7 @@ parameters:
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addProjectMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addProjectSelect\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
@@ -7771,57 +6516,12 @@ parameters:
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addSearchTermInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addTagInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addTeamChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addTeamsChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addTimesheetStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addUserChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addUserRoleChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addUsersChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addVisibilityChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
@@ -7876,17 +6576,7 @@ parameters:
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addActivityChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addActivityMultiChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
@@ -7896,22 +6586,7 @@ parameters:
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addActivitySelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addBillableChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addCustomerChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
@@ -7921,27 +6596,12 @@ parameters:
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addCustomerSelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addDateRange\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
@@ -7961,11 +6621,6 @@ parameters:
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addDateRangeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetToolbarForm.php
@@ -7976,37 +6631,7 @@ parameters:
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addExportStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addHiddenPagination\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addOrder\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addOrderBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addPageSizeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addProjectChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
@@ -8016,17 +6641,7 @@ parameters:
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addProjectMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addProjectSelect\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
@@ -8036,57 +6651,12 @@ parameters:
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addSearchTermInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addTagInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addTeamChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addTeamsChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addTimesheetStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addUserChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addUserRoleChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addUsersChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addVisibilityChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
@@ -8141,17 +6711,7 @@ parameters:
             path: src/Form/Toolbar/UserToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addActivityChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addActivityMultiChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/UserToolbarForm.php
 
@@ -8161,22 +6721,7 @@ parameters:
             path: src/Form/Toolbar/UserToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addActivitySelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addBillableChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addCustomerChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/UserToolbarForm.php
 
@@ -8186,27 +6731,12 @@ parameters:
             path: src/Form/Toolbar/UserToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/UserToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addCustomerSelect\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addDateRange\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/UserToolbarForm.php
 
@@ -8226,11 +6756,6 @@ parameters:
             path: src/Form/Toolbar/UserToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addDateRangeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addDateRangeChoice\\(\\) has parameter \\$allowEmpty with no type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/UserToolbarForm.php
@@ -8241,37 +6766,7 @@ parameters:
             path: src/Form/Toolbar/UserToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addExportStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addHiddenPagination\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addOrder\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addOrderBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addPageSizeChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addProjectChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/UserToolbarForm.php
 
@@ -8281,17 +6776,7 @@ parameters:
             path: src/Form/Toolbar/UserToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addProjectMultiChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addProjectSelect\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/UserToolbarForm.php
 
@@ -8301,57 +6786,12 @@ parameters:
             path: src/Form/Toolbar/UserToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addSearchTermInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addTagInputField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addTeamChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addTeamsChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/UserToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addTimesheetStateChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addUserChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addUserRoleChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addUsersChoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addVisibilityChoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Toolbar/UserToolbarForm.php
 
@@ -8389,21 +6829,6 @@ parameters:
             message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 2
             path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Cannot call method getCurrency\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Form/Type/ActivityType.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Type\\\\ActivityType\\:\\:getChoiceAttributes\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Type/ActivityType.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Type\\\\ActivityType\\:\\:groupBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Type/ActivityType.php
 
         -
             message: "#^Method App\\\\Form\\\\Type\\\\ActivityType\\:\\:groupBy\\(\\) has parameter \\$index with no type specified\\.$#"
@@ -8529,16 +6954,6 @@ parameters:
             message: "#^Cannot clone non\\-object variable \\$date of type mixed\\.$#"
             count: 2
             path: src/Form/Type/MonthPickerType.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Type\\\\ProjectType\\:\\:getChoiceAttributes\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Type/ProjectType.php
-
-        -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Form\\\\Helper\\\\CustomerHelper\\:\\:getChoiceLabel\\(\\) expects App\\\\Entity\\\\Customer, App\\\\Entity\\\\Customer\\|null given\\.$#"
-            count: 1
-            path: src/Form/Type/ProjectType.php
 
         -
             message: "#^Cannot call method modify\\(\\) on DateTime\\|null\\.$#"

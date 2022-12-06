@@ -35,10 +35,7 @@ class ActivityType extends AbstractType
         return $this->activityHelper->getChoiceLabel($activity);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function groupBy(Activity $activity, $key, $index)
+    public function groupBy(Activity $activity, $key, $index): ?string
     {
         if (null === $activity->getProject()) {
             return null;
@@ -51,20 +48,17 @@ class ActivityType extends AbstractType
      * @param Activity $activity
      * @param string $key
      * @param mixed $value
-     * @return array
+     * @return array<string, string|int|null>
      */
-    public function getChoiceAttributes(Activity $activity, $key, $value)
+    public function getChoiceAttributes(Activity $activity, $key, $value): array
     {
         if (null !== ($project = $activity->getProject())) {
-            return ['data-project' => $project->getId(), 'data-currency' => $project->getCustomer()->getCurrency()];
+            return ['data-project' => $project->getId(), 'data-currency' => $project->getCustomer()?->getCurrency()];
         }
 
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

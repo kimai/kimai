@@ -43,7 +43,7 @@ use Symfony\Component\Form\FormEvents;
  */
 trait ToolbarFormTrait
 {
-    protected function addUserChoice(FormBuilderInterface $builder)
+    protected function addUserChoice(FormBuilderInterface $builder): void
     {
         $builder->add('user', UserType::class, [
             'label' => 'user',
@@ -51,7 +51,7 @@ trait ToolbarFormTrait
         ]);
     }
 
-    protected function addUsersChoice(FormBuilderInterface $builder, string $field = 'users', array $options = [])
+    protected function addUsersChoice(FormBuilderInterface $builder, string $field = 'users', array $options = []): void
     {
         $builder->add($field, UserType::class, array_merge([
             'documentation' => [
@@ -65,7 +65,7 @@ trait ToolbarFormTrait
         ], $options));
     }
 
-    protected function addTeamChoice(FormBuilderInterface $builder)
+    protected function addTeamChoice(FormBuilderInterface $builder): void
     {
         $builder->add('team', TeamType::class, [
             'label' => 'team',
@@ -73,7 +73,7 @@ trait ToolbarFormTrait
         ]);
     }
 
-    protected function addTeamsChoice(FormBuilderInterface $builder, string $field = 'teams', array $options = [])
+    protected function addTeamsChoice(FormBuilderInterface $builder, string $field = 'teams', array $options = []): void
     {
         $builder->add($field, TeamType::class, array_merge([
             'documentation' => [
@@ -87,17 +87,17 @@ trait ToolbarFormTrait
         ], $options));
     }
 
-    protected function addCustomerChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false)
+    protected function addCustomerChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false): void
     {
         $this->addCustomerSelect($builder, $options, false, $multiProject);
     }
 
-    protected function addCustomerMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false)
+    protected function addCustomerMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false): void
     {
         $this->addCustomerSelect($builder, $options, true, $multiProject);
     }
 
-    private function addCustomerSelect(FormBuilderInterface $builder, array $options, bool $multiCustomer, bool $multiProject)
+    private function addCustomerSelect(FormBuilderInterface $builder, array $options, bool $multiCustomer, bool $multiProject): void
     {
         $name = 'customer';
         if ($multiCustomer) {
@@ -122,7 +122,7 @@ trait ToolbarFormTrait
                 $event->getForm()->add($name, CustomerType::class, array_merge([
                     'multiple' => $multiCustomer,
                     'required' => false,
-                    'project_enabled' => $multiCustomer ? 'customers' : 'customer',
+                    'project_enabled' => $multiCustomer ? 'customers[]' : 'customer',
                     'project_select' => $multiProject ? 'projects' : 'project',
                     'end_date_param' => '%daterange%',
                     'start_date_param' => '%daterange%',
@@ -145,7 +145,7 @@ trait ToolbarFormTrait
         );
     }
 
-    protected function addVisibilityChoice(FormBuilderInterface $builder, string $label = 'visible')
+    protected function addVisibilityChoice(FormBuilderInterface $builder, string $label = 'visible'): void
     {
         $builder->add('visibility', VisibilityType::class, [
             'required' => false,
@@ -155,7 +155,7 @@ trait ToolbarFormTrait
         ]);
     }
 
-    protected function addPageSizeChoice(FormBuilderInterface $builder)
+    protected function addPageSizeChoice(FormBuilderInterface $builder): void
     {
         $builder->add('pageSize', PageSizeType::class, [
             'required' => false,
@@ -163,14 +163,14 @@ trait ToolbarFormTrait
         ]);
     }
 
-    protected function addUserRoleChoice(FormBuilderInterface $builder)
+    protected function addUserRoleChoice(FormBuilderInterface $builder): void
     {
         $builder->add('role', UserRoleType::class, [
             'required' => false,
         ]);
     }
 
-    protected function addDateRange(FormBuilderInterface $builder, array $options, $allowEmpty = true, $required = false)
+    protected function addDateRange(FormBuilderInterface $builder, array $options, $allowEmpty = true, $required = false): void
     {
         $params = [
             'required' => $required,
@@ -184,22 +184,22 @@ trait ToolbarFormTrait
         $builder->add('daterange', DateRangeType::class, $params);
     }
 
-    protected function addDateRangeChoice(FormBuilderInterface $builder, $allowEmpty = true, $required = false)
+    protected function addDateRangeChoice(FormBuilderInterface $builder, $allowEmpty = true, $required = false): void
     {
         $this->addDateRange($builder, [], $allowEmpty, $required);
     }
 
-    protected function addProjectChoice(FormBuilderInterface $builder, array $options = [], bool $multiCustomer = false, bool $multiActivity = false)
+    protected function addProjectChoice(FormBuilderInterface $builder, array $options = [], bool $multiCustomer = false, bool $multiActivity = false): void
     {
         $this->addProjectSelect($builder, $options, false, $multiCustomer, $multiActivity);
     }
 
-    protected function addProjectMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiCustomer = false, bool $multiActivity = false)
+    protected function addProjectMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiCustomer = false, bool $multiActivity = false): void
     {
         $this->addProjectSelect($builder, $options, true, $multiCustomer, $multiActivity);
     }
 
-    private function addProjectSelect(FormBuilderInterface $builder, array $options, bool $multiProject, bool $multiCustomer, bool $multiActivity)
+    private function addProjectSelect(FormBuilderInterface $builder, array $options, bool $multiProject, bool $multiCustomer, bool $multiActivity): void
     {
         $name = 'project';
         if ($multiProject) {
@@ -223,7 +223,7 @@ trait ToolbarFormTrait
                 $event->getForm()->add($name, ProjectType::class, array_merge([
                     'multiple' => $multiProject,
                     'required' => false,
-                    'activity_enabled' => $multiProject ? 'projects' : 'project',
+                    'activity_enabled' => $multiProject ? 'projects[]' : 'project',
                     'activity_select' => $multiActivity ? 'activities' : 'activity',
                     'query_builder' => function (ProjectRepository $repo) use ($builder, $data, $options, $multiCustomer, $multiProject) {
                         $query = new ProjectFormTypeQuery();
@@ -258,17 +258,17 @@ trait ToolbarFormTrait
         );
     }
 
-    protected function addActivityChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false)
+    protected function addActivityChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false): void
     {
         $this->addActivitySelect($builder, $options, false, $multiProject);
     }
 
-    protected function addActivityMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false)
+    protected function addActivityMultiChoice(FormBuilderInterface $builder, array $options = [], bool $multiProject = false): void
     {
         $this->addActivitySelect($builder, $options, true, $multiProject);
     }
 
-    private function addActivitySelect(FormBuilderInterface $builder, array $options = [], bool $multiActivity = false, bool $multiProject = false)
+    private function addActivitySelect(FormBuilderInterface $builder, array $options = [], bool $multiActivity = false, bool $multiProject = false): void
     {
         $name = 'activity';
         if ($multiActivity) {
@@ -331,7 +331,7 @@ trait ToolbarFormTrait
         );
     }
 
-    protected function addHiddenPagination(FormBuilderInterface $builder)
+    protected function addHiddenPagination(FormBuilderInterface $builder): void
     {
         $builder->add('page', HiddenType::class, [
             'documentation' => [
@@ -342,7 +342,7 @@ trait ToolbarFormTrait
         ]);
     }
 
-    protected function addOrder(FormBuilderInterface $builder)
+    protected function addOrder(FormBuilderInterface $builder): void
     {
         $builder->add('order', ChoiceType::class, [
             'documentation' => [
@@ -357,7 +357,7 @@ trait ToolbarFormTrait
         ]);
     }
 
-    protected function addOrderBy(FormBuilderInterface $builder, array $allowedColumns)
+    protected function addOrderBy(FormBuilderInterface $builder, array $allowedColumns): void
     {
         $all = [];
         foreach ($allowedColumns as $id => $name) {
@@ -371,19 +371,19 @@ trait ToolbarFormTrait
         ]);
     }
 
-    protected function addTagInputField(FormBuilderInterface $builder)
+    protected function addTagInputField(FormBuilderInterface $builder): void
     {
         $builder->add('tags', TagsType::class, [
             'required' => false
         ]);
     }
 
-    protected function addSearchTermInputField(FormBuilderInterface $builder)
+    protected function addSearchTermInputField(FormBuilderInterface $builder): void
     {
         $builder->add('searchTerm', SearchTermType::class);
     }
 
-    protected function addTimesheetStateChoice(FormBuilderInterface $builder)
+    protected function addTimesheetStateChoice(FormBuilderInterface $builder): void
     {
         $builder->add('state', ChoiceType::class, [
             'label' => 'entryState',
@@ -398,7 +398,7 @@ trait ToolbarFormTrait
         ]);
     }
 
-    protected function addExportStateChoice(FormBuilderInterface $builder)
+    protected function addExportStateChoice(FormBuilderInterface $builder): void
     {
         $builder->add('exported', ChoiceType::class, [
             'label' => 'exported',
@@ -413,7 +413,7 @@ trait ToolbarFormTrait
         ]);
     }
 
-    protected function addBillableChoice(FormBuilderInterface $builder)
+    protected function addBillableChoice(FormBuilderInterface $builder): void
     {
         $builder->add('billable', BillableSearchType::class, [
             'required' => false,

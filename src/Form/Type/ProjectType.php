@@ -40,7 +40,7 @@ class ProjectType extends AbstractType
      * @param Project $project
      * @param string $key
      * @param mixed $value
-     * @return array
+     * @return array<string, string|int|null>
      */
     public function getChoiceAttributes(Project $project, $key, $value): array
     {
@@ -64,6 +64,9 @@ class ProjectType extends AbstractType
             'choice_label' => [$this, 'getChoiceLabel'],
             'choice_attr' => [$this, 'getChoiceAttributes'],
             'group_by' => function (Project $project, $key, $index) {
+                if ($project->getCustomer() === null) {
+                    return null;
+                }
                 return $this->customerHelper->getChoiceLabel($project->getCustomer());
             },
             'query_builder_for_user' => true,
