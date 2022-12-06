@@ -476,7 +476,9 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
             const decoded = decodeURIComponent(value);
             const test = decoded.match(/%(.*)%/);
             if (test !== null) {
-                const targetField = document.getElementById(formPrefix + test[1]);
+                const originalFieldName = test[1];
+                const targetFieldName = (formPrefix + originalFieldName).replace(/\[/, '').replace(/]/, '');
+                const targetField = document.getElementById(targetFieldName);
                 let newValue = '';
                 if (targetField === null) {
                     // happens for example:
@@ -487,9 +489,7 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
                         newValue = targetField.value;
                         if (targetField.tagName === 'SELECT' && targetField.multiple) {
                             newValue = [...targetField.selectedOptions].map(o => o.value);
-                        }
-
-                        if (newValue !== '') {
+                        } else if (newValue !== '') {
                             if (targetField.type === 'date') {
                                 const timeId = targetField.id.replace('_date', '_time')
                                 const timeElement = document.getElementById(timeId);
@@ -528,11 +528,16 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
                     }
                 }
 
-                if (Array.isArray(newValue)) {
-                    newValue = newValue.join(',');
-                }
 
-                newApiUrl = newApiUrl.replace(value, newValue);
+                if (Array.isArray(newValue)) {
+                    let urlParams = [];
+                    for (let tmpValue of newValue) {
+                        urlParams.push(originalFieldName + '=' + tmpValue);
+                    }
+                    newApiUrl = newApiUrl.replace(item, urlParams.join('&'));
+                } else {
+                    newApiUrl = newApiUrl.replace(value, newValue);
+                }
             }
         });
 
