@@ -61,13 +61,13 @@ abstract class AbstractResetCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to create database: ' . $ex->getMessage());
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
         }
 
         if ($this->askConfirmation($input, $output, 'Do you want to drop and re-create the schema y/N ?')) {
-            if (($result = $this->dropSchema($io, $output)) !== 0) {
-                return (int) $result;
+            if (($result = $this->dropSchema($io, $output)) !== Command::SUCCESS) {
+                return $result;
             }
 
             try {
@@ -101,7 +101,7 @@ abstract class AbstractResetCommand extends Command
             }
         }
 
-        return (int) Command::SUCCESS;
+        return Command::SUCCESS;
     }
 
     protected function dropSchema(SymfonyStyle $io, OutputInterface $output): int
@@ -112,7 +112,7 @@ abstract class AbstractResetCommand extends Command
         } catch (Exception $ex) {
             $io->error('Failed to drop database schema: ' . $ex->getMessage());
 
-            return 2;
+            return Command::FAILURE;
         }
 
         try {
@@ -121,7 +121,7 @@ abstract class AbstractResetCommand extends Command
         } catch (Exception $ex) {
             $io->error('Failed to drop migration_versions table: ' . $ex->getMessage());
 
-            return 3;
+            return Command::FAILURE;
         }
 
         try {
@@ -130,10 +130,10 @@ abstract class AbstractResetCommand extends Command
         } catch (Exception $ex) {
             $io->error('Failed to drop kimai2_sessions table: ' . $ex->getMessage());
 
-            return 4;
+            return Command::FAILURE;
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function askConfirmation(InputInterface $input, OutputInterface $output, string $question): bool

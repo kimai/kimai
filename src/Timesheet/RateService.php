@@ -19,19 +19,8 @@ use App\Repository\TimesheetRepository;
  */
 final class RateService implements RateServiceInterface
 {
-    /**
-     * @var array
-     */
-    private $rates;
-    /**
-     * @var TimesheetRepository
-     */
-    private $repository;
-
-    public function __construct(array $rates, TimesheetRepository $repository)
+    public function __construct(private array $rates, private TimesheetRepository $repository)
     {
-        $this->rates = $rates;
-        $this->repository = $repository;
     }
 
     public function calculate(Timesheet $record): Rate
@@ -91,8 +80,8 @@ final class RateService implements RateServiceInterface
             $factor = $this->getRateFactor($record);
         }
 
-        $factoredHourlyRate = (float) ($hourlyRate * $factor);
-        $factoredInternalRate = (float) ($internalRate * $factor);
+        $factoredHourlyRate = $hourlyRate * $factor;
+        $factoredInternalRate = $internalRate * $factor;
         $totalRate = 0;
         $totalInternalRate = 0;
 
@@ -135,7 +124,7 @@ final class RateService implements RateServiceInterface
             $weekday = $record->getEnd()->format('l');
             $days = array_map('strtolower', $rateFactor['days']);
             if (\in_array(strtolower($weekday), $days)) {
-                $factor += $rateFactor['factor'];
+                $factor += (float) $rateFactor['factor'];
             }
         }
 
@@ -143,6 +132,6 @@ final class RateService implements RateServiceInterface
             $factor = 1.00;
         }
 
-        return (float) $factor;
+        return $factor;
     }
 }

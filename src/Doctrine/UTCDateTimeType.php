@@ -18,7 +18,7 @@ class UTCDateTimeType extends DateTimeType
     /**
      * @var \DateTimeZone|null
      */
-    private static $utc;
+    private static ?\DateTimeZone $utc = null;
 
     /**
      * @param mixed $value
@@ -36,12 +36,13 @@ class UTCDateTimeType extends DateTimeType
         return parent::convertToDatabaseValue($value, $platform);
     }
 
-    /**
-     * @return \DateTimeZone
-     */
     public static function getUtc(): \DateTimeZone
     {
-        return self::$utc ? self::$utc : self::$utc = new \DateTimeZone('UTC');
+        if (self::$utc === null) {
+            self::$utc = new \DateTimeZone('UTC');
+        }
+
+        return self::$utc;
     }
 
     /**

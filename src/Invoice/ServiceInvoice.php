@@ -527,7 +527,7 @@ final class ServiceInvoice
             return $result;
         });
 
-        foreach ($customerEntries as $id => $settings) {
+        foreach ($customerEntries as $settings) {
             if (!($settings['customer'] instanceof Customer)) {
                 throw new \Exception('Cannot create invoice without customer');
             }

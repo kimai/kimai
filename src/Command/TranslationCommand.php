@@ -112,7 +112,7 @@ final class TranslationCommand extends Command
                         if (!file_exists($fromLocaleName)) {
                             $io->error('Could not find translation file: ' . $fromLocaleName);
 
-                            return (int) Command::FAILURE;
+                            return Command::FAILURE;
                         }
                         $translations[$fromLocale][$name] = $this->getTranslations($fromLocaleName);
                     }
@@ -189,13 +189,13 @@ final class TranslationCommand extends Command
         if ($locale !== null && $deepl === null) {
             $io->error('Missing "DeepL API Free" auth-key');
 
-            return (int) Command::FAILURE;
+            return Command::FAILURE;
         }
 
         if ($locale === null && $deepl !== null) {
             $io->error('Missing translation locale');
 
-            return (int) Command::FAILURE;
+            return Command::FAILURE;
         }
 
         if ($locale !== null && $deepl !== null) {
@@ -219,13 +219,13 @@ final class TranslationCommand extends Command
             if (!$this->localeService->isKnownLocale($locale)) {
                 $io->error('Unknown locale given: ' . $locale);
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
 
             if (!\array_key_exists($locale, $deeplySupportedLanguages)) {
                 $io->error('Locale not supported by Deeply: ' . $locale);
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
 
             $allKeys = 0;
@@ -296,7 +296,7 @@ final class TranslationCommand extends Command
                     } catch (\Exception $exception) {
                         $io->error($exception->getMessage());
 
-                        return (int) Command::FAILURE;
+                        return Command::FAILURE;
                     }
 
                     $json = json_decode($rawResponseData->getContent(), true);
@@ -312,7 +312,7 @@ final class TranslationCommand extends Command
             }
         }
 
-        return (int) Command::SUCCESS;
+        return Command::SUCCESS;
     }
 
     private function getTranslations(string $file): array
@@ -353,7 +353,7 @@ final class TranslationCommand extends Command
         $xmlDocument->formatOutput = true;
         $xmlDocument->loadXML($xml->asXML());
 
-        $xpath = new \DOMXpath($xmlDocument);
+        $xpath = new \DOMXPath($xmlDocument);
         $xpath->registerNamespace('ns', $xmlDocument->documentElement->namespaceURI);
 
         $xmlContent = '';
@@ -368,7 +368,7 @@ final class TranslationCommand extends Command
         }
 
         $fragment = $xmlDocument->createDocumentFragment();
-        $fragment->appendXml('<body>' . $xmlContent . '</body>');
+        $fragment->appendXML('<body>' . $xmlContent . '</body>');
 
         /** @var \DOMElement $element */
         $element = $xpath->evaluate('/ns:xliff/ns:file')->item(0);

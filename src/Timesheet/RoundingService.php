@@ -56,6 +56,9 @@ final class RoundingService
     public function roundBegin(Timesheet $record): void
     {
         foreach ($this->getRoundingRules() as $rounding) {
+            if ($record->getBegin() === null) {
+                continue;
+            }
             $weekday = $record->getBegin()->format('l');
 
             if (\in_array(strtolower($weekday), $rounding['days'])) {
@@ -68,6 +71,9 @@ final class RoundingService
     public function roundEnd(Timesheet $record): void
     {
         foreach ($this->getRoundingRules() as $rounding) {
+            if ($record->getEnd() === null) {
+                continue;
+            }
             $weekday = $record->getEnd()->format('l');
 
             if (\in_array(strtolower($weekday), $rounding['days'])) {
@@ -80,6 +86,9 @@ final class RoundingService
     public function roundDuration(Timesheet $record): void
     {
         foreach ($this->getRoundingRules() as $rounding) {
+            if ($record->getEnd() === null) {
+                continue;
+            }
             $weekday = $record->getEnd()->format('l');
 
             if (\in_array(strtolower($weekday), $rounding['days'])) {
@@ -96,6 +105,9 @@ final class RoundingService
         }
 
         foreach ($this->getRoundingRules() as $rounding) {
+            if ($record->getEnd() === null) {
+                continue;
+            }
             $weekday = $record->getEnd()->format('l');
 
             if (\in_array(strtolower($weekday), $rounding['days'])) {
@@ -103,10 +115,12 @@ final class RoundingService
                 $rounder->roundBegin($record, $rounding['begin']);
                 $rounder->roundEnd($record, $rounding['end']);
 
-                $duration = $record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp();
-                $record->setDuration($duration);
+                if ($record->getBegin() !== null) {
+                    $duration = $record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp();
+                    $record->setDuration($duration);
 
-                $rounder->roundDuration($record, $rounding['duration']);
+                    $rounder->roundDuration($record, $rounding['duration']);
+                }
             }
         }
     }

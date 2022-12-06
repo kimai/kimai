@@ -200,7 +200,7 @@ class AppExtension extends Extension
         $result = [];
 
         foreach ($permissions['sets'][$name] as $permissionName) {
-            if ($permissionName[0] == '@') {
+            if ($permissionName[0] === '@') {
                 $result = array_merge(
                     $result,
                     $this->extractSinglePermissionsFromSet($permissions, substr($permissionName, 1))

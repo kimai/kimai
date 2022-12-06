@@ -47,19 +47,19 @@ final class CustomerFixtures extends Fixture
 
         $amountCustomers = rand(self::MIN_CUSTOMERS, self::MAX_CUSTOMERS);
         for ($c = 1; $c <= $amountCustomers; $c++) {
-            $visibleCustomer = 0 != $c % 5;
+            $visibleCustomer = 0 !== $c % 5;
             $customer = $this->createCustomer($faker, $visibleCustomer);
             $manager->persist($customer);
 
             $projectForCustomer = rand(self::MIN_PROJECTS_PER_CUSTOMER, self::MAX_PROJECTS_PER_CUSTOMER);
             for ($p = 1; $p <= $projectForCustomer; $p++) {
-                $visibleProject = 0 != $p % 7;
+                $visibleProject = 0 !== $p % 7;
                 $project = $this->createProject($faker, $customer, $visibleProject);
                 $manager->persist($project);
 
                 $activityForProject = rand(self::MIN_ACTIVITIES_PER_PROJECT, self::MAX_ACTIVITIES_PER_PROJECT);
                 for ($a = 1; $a <= $activityForProject; $a++) {
-                    $visibleActivity = 0 != $a % 6;
+                    $visibleActivity = 0 !== $a % 6;
                     $activity = $this->createActivity($faker, $project, $visibleActivity);
                     $manager->persist($activity);
                 }
@@ -71,7 +71,7 @@ final class CustomerFixtures extends Fixture
 
         $amountGlobalActivities = rand(self::MIN_GLOBAL_ACTIVITIES, self::MAX_GLOBAL_ACTIVITIES);
         for ($c = 1; $c <= $amountGlobalActivities; $c++) {
-            $visibleActivity = 0 != $c % 4;
+            $visibleActivity = 0 !== $c % 4;
             $activity = $this->createActivity($faker, null, $visibleActivity);
             $manager->persist($activity);
         }

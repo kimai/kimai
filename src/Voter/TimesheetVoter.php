@@ -137,7 +137,7 @@ final class TimesheetVoter extends Voter
         $permission .= '_';
 
         // extend me for "team" support later on
-        if ($subject->getUser()->getId() == $user->getId()) {
+        if ($subject->getUser()->getId() === $user->getId()) {
             $permission .= 'own';
         } else {
             $permission .= 'other';
@@ -170,7 +170,7 @@ final class TimesheetVoter extends Voter
             return false;
         }
 
-        if ($timesheet->getActivity() !== null && !$timesheet->getActivity()->isVisible()) {
+        if (!$timesheet->getActivity()->isVisible()) {
             return false;
         }
 

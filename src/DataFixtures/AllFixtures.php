@@ -11,6 +11,7 @@ namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 /**
@@ -21,7 +22,7 @@ use Doctrine\Persistence\ObjectManager;
 final class AllFixtures extends Fixture implements DependentFixtureInterface
 {
     /**
-     * @return class-string[]
+     * @return array<class-string<FixtureInterface>>
      */
     public function getDependencies(): array
     {

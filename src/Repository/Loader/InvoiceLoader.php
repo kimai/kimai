@@ -32,7 +32,7 @@ final class InvoiceLoader implements LoaderInterface
                 return $invoice->getId();
             }
 
-            return (int) $invoice;
+            return $invoice;
         }, $results);
 
         $em = $this->entityManager;

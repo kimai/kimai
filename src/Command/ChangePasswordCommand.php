@@ -71,9 +71,9 @@ final class ChangePasswordCommand extends AbstractUserCommand
         } catch (ValidationFailedException $ex) {
             $io->validationError($ex);
 
-            return (int) Command::FAILURE;
+            return Command::FAILURE;
         }
 
-        return (int) Command::SUCCESS;
+        return Command::SUCCESS;
     }
 }

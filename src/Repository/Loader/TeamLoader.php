@@ -32,7 +32,7 @@ final class TeamLoader implements LoaderInterface
                 return $team->getId();
             }
 
-            return (int) $team;
+            return $team;
         }, $results);
 
         $em = $this->entityManager;

@@ -125,8 +125,9 @@ final class SystemConfigurationController extends AbstractController
         $configModel = null;
         $configSettings = $this->getInitializedConfigurations();
 
-        foreach ($configSettings as $configModel) {
-            if ($configModel->getSection() === $section) {
+        foreach ($configSettings as $model) {
+            if ($model->getSection() === $section) {
+                $configModel = $model;
                 break;
             }
         }
@@ -156,18 +157,18 @@ final class SystemConfigurationController extends AbstractController
         $configSettings = $this->getInitializedConfigurations();
 
         $configurations = [];
-        foreach ($configSettings as $configModel) {
-            if ($single && $section !== $configModel->getSection()) {
+        foreach ($configSettings as $model) {
+            if ($single && $section !== $model->getSection()) {
                 continue;
             }
 
-            if ($section !== $configModel->getSection()) {
-                $form2 = $this->createConfigurationsForm($configModel, $single);
+            if ($section !== $model->getSection()) {
+                $form2 = $this->createConfigurationsForm($model, $single);
             } else {
                 $form2 = $form;
             }
             $configurations[] = [
-                'model' => $configModel,
+                'model' => $model,
                 'form' => $form2->createView(),
             ];
         }

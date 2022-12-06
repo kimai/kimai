@@ -37,7 +37,7 @@ final class ProjectLoader implements LoaderInterface
                 return $project->getId();
             }
 
-            return (int) $project;
+            return $project;
         }, $results);
 
         $em = $this->entityManager;

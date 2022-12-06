@@ -139,10 +139,10 @@ class DatatableExtensions extends AbstractExtension
         return $result;
     }
 
-    private function makeVisible(string $class): string
+    private function makeVisible(string $allClasses): string
     {
         $newClass = [];
-        foreach (explode(' ', $class) as $class) {
+        foreach (explode(' ', $allClasses) as $class) {
             if (!str_contains($class, '-none')) {
                 $newClass[] = $class;
             }
@@ -151,10 +151,10 @@ class DatatableExtensions extends AbstractExtension
         return implode(' ', $newClass);
     }
 
-    private function makeHidden(string $class): string
+    private function makeHidden(string $allClasses): string
     {
         $newClass = [];
-        foreach (explode(' ', $class) as $class) {
+        foreach (explode(' ', $allClasses) as $class) {
             if (!str_contains($class, '-table-cell')) {
                 $newClass[] = $class;
             }

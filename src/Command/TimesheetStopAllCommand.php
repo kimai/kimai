@@ -41,6 +41,6 @@ final class TimesheetStopAllCommand extends Command
             $io->success(sprintf('Stopped %s timesheet records.', $amount));
         }
 
-        return (int) Command::SUCCESS;
+        return Command::SUCCESS;
     }
 }

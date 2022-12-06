@@ -199,7 +199,7 @@ class TimesheetEditForm extends AbstractType
                 $newDate = clone $date;
                 $newDate->setTime($time->format('H'), $time->format('i'));
 
-                if ($data->getBegin() === null || $data->getBegin() != $newDate) {
+                if ($data->getBegin() === null || $data->getBegin()->getTimestamp() !== $newDate->getTimestamp()) {
                     $data->setBegin($newDate);
                 }
             }
@@ -246,6 +246,9 @@ class TimesheetEditForm extends AbstractType
                 // end is assumed to be the same day then start, if not we raise the day by one
                 //$time = $event->getForm()->get('begin_time')->getData();
                 $time = $timesheet->getBegin();
+                if ($time === null) {
+                    throw new \Exception('Cannot work with timesheets without start time');
+                }
                 $newEnd = clone $time;
                 $newEnd->setTime($end->format('H'), $end->format('i'));
 
@@ -253,7 +256,7 @@ class TimesheetEditForm extends AbstractType
                     $newEnd->modify('+ 1 day');
                 }
 
-                if ($oldEnd === null || $oldEnd != $newEnd) {
+                if ($oldEnd === null || $oldEnd->getTimestamp() !== $newEnd->getTimestamp()) {
                     $timesheet->setEnd($newEnd);
                 }
             }

@@ -56,6 +56,6 @@ final class DeactivateUserCommand extends Command
             $io->warning(sprintf('User "%s" is already deactivated.', $username));
         }
 
-        return (int) Command::SUCCESS;
+        return Command::SUCCESS;
     }
 }

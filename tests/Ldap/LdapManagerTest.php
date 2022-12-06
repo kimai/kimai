@@ -555,6 +555,33 @@ class LdapManagerTest extends TestCase
         self::assertEquals('Karl-Heinz', $user->getEmail());
     }
 
+    public function testThrowsOnMissingMethod(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Unknown mapping method: setAlias2');
+        $ldapConfig = [
+            'connection' => [
+                'host' => '1.1.1.1'
+            ],
+            'user' => [
+                'usernameAttribute' => 'foo',
+                'attributes' => [
+                    ['ldap_attr' => 'foo', 'user_method' => 'setAlias2'],
+                ]
+            ],
+            'role' => [],
+        ];
+        $systemConfig = SystemConfigurationFactory::create(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
+        $config = new LdapConfiguration($systemConfig);
+
+        $ldapEntry = [
+            'foo' => ['count' => 1, 0 => 'bar'],
+        ];
+
+        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]));
+        $user = $sut->hydrate($ldapEntry);
+    }
+
     /**
      * @group legacy
      */

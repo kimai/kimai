@@ -330,7 +330,7 @@ class BaseQuery
         $currentValue = $this->get($filter);
 
         if (\is_object($currentValue)) {
-            if ($currentValue != $expectedValue) {
+            if ($currentValue !== $expectedValue) {
                 return false;
             }
         } else {

@@ -801,7 +801,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     {
         if ($this->lastLogin !== null) {
             // make sure to use the users own timezone
-            $this->lastLogin->setTimeZone(new \DateTimeZone($this->getTimezone()));
+            $this->lastLogin->setTimezone(new \DateTimeZone($this->getTimezone()));
         }
 
         return $this->lastLogin;

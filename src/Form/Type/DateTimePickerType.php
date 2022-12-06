@@ -26,10 +26,6 @@ class DateTimePickerType extends AbstractType
         $dateParts = ['year', 'month', 'day'];
         $timeParts = ['hour', 'minute'];
 
-        // when the form is compound the entries of the array are ignored in favor of children data
-        // so we need to handle the cascade setting here
-        $emptyData = $builder->getEmptyData() ?: [];
-
         // Only pass a subset of the options to children
         $dateOptions = array_intersect_key($options, array_flip([
             'years',

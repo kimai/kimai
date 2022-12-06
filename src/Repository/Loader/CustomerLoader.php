@@ -36,7 +36,7 @@ final class CustomerLoader implements LoaderInterface
                 return $customer->getId();
             }
 
-            return (int) $customer;
+            return $customer;
         }, $results);
 
         $em = $this->entityManager;

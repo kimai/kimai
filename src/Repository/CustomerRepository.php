@@ -89,7 +89,7 @@ class CustomerRepository extends EntityRepository
     public function countCustomer(bool $visible = false): int
     {
         if ($visible) {
-            return $this->count(['visible' => (bool) $visible]);
+            return $this->count(['visible' => $visible]);
         }
 
         return $this->count([]);

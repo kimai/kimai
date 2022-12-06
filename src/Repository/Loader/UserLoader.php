@@ -33,7 +33,7 @@ final class UserLoader implements LoaderInterface
                 return $user->getId();
             }
 
-            return (int) $user;
+            return $user;
         }, $results);
 
         $em = $this->entityManager;

@@ -35,7 +35,7 @@ final class ActivityLoader implements LoaderInterface
                 return $activity->getId();
             }
 
-            return (int) $activity;
+            return $activity;
         }, $results);
 
         $em = $this->entityManager;

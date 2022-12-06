@@ -21,7 +21,7 @@ class ColorChoicesValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, ColorChoices::class);
         }
 
-        if ($value === null || (\is_string($value) && trim($value) === '')) {
+        if (!\is_string($value) || trim($value) === '') {
             return;
         }
 
@@ -39,7 +39,7 @@ class ColorChoicesValidator extends ConstraintValidator
                 $name = $code;
             }
 
-            if (!\is_string($code) || 1 !== preg_match('/^#[0-9a-fA-F]{6}$/i', $code)) {
+            if (1 !== preg_match('/^#[0-9a-fA-F]{6}$/i', $code)) {
                 $this->context->buildViolation($constraint->message)
                     ->setParameter('{{ value }}', $this->formatValue($code))
                     ->setCode(ColorChoices::COLOR_CHOICES_ERROR)
@@ -55,7 +55,7 @@ class ColorChoicesValidator extends ConstraintValidator
             $name = str_replace(['-', ' '], '', $name);
             $length = mb_strlen($name);
 
-            if (!\is_string($name) || $length > $constraint->maxLength || !ctype_alnum($name)) {
+            if ($length > $constraint->maxLength || !preg_match('/^[a-zA-Z0-9]+$/', $name)) {
                 $this->context->buildViolation($constraint->invalidNameMessage)
                     ->setParameter('{{ name }}', $this->formatValue($name))
                     ->setParameter('{{ color }}', $this->formatValue($code))

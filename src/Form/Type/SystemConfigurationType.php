@@ -45,7 +45,7 @@ class SystemConfigurationType extends AbstractType
                 }
 
                 $required = $preference->isRequired();
-                if (CheckboxType::class == $preference->getType() || YesNoType::class == $preference->getType()) {
+                if (CheckboxType::class === $preference->getType() || YesNoType::class === $preference->getType()) {
                     $required = false;
                 }
 

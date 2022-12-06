@@ -240,11 +240,11 @@ class Timesheet implements EntityWithMetaFields, ExportableItem
         }
 
         if (null !== $this->begin) {
-            $this->begin->setTimeZone(new DateTimeZone($this->timezone));
+            $this->begin->setTimezone(new DateTimeZone($this->timezone));
         }
 
         if (null !== $this->end) {
-            $this->end->setTimeZone(new DateTimeZone($this->timezone));
+            $this->end->setTimezone(new DateTimeZone($this->timezone));
         }
 
         $this->localized = true;

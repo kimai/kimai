@@ -266,15 +266,15 @@ class Project implements EntityWithMetaFields, EntityWithBudget
         $timezone = new \DateTimeZone($this->timezone);
 
         if (null !== $this->orderDate) {
-            $this->orderDate->setTimeZone($timezone);
+            $this->orderDate->setTimezone($timezone);
         }
 
         if (null !== $this->start) {
-            $this->start->setTimeZone($timezone);
+            $this->start->setTimezone($timezone);
         }
 
         if (null !== $this->end) {
-            $this->end->setTimeZone($timezone);
+            $this->end->setTimezone($timezone);
         }
 
         $this->localized = true;

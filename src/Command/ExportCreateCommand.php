@@ -93,7 +93,7 @@ class ExportCreateCommand extends Command
             default:
                 $io->error('Unknown "exported" filter given');
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
         }
 
         $locale = $input->getOption('locale');
@@ -137,18 +137,18 @@ class ExportCreateCommand extends Command
         if ($template === null) {
             $io->error('You must pass the "template" option');
 
-            return (int) Command::FAILURE;
+            return Command::FAILURE;
         }
         $renderer = $this->serviceExport->getRendererById($template);
         if ($renderer === null) {
             $io->error('Unknown export "template", available are:');
             $rows = [];
-            foreach ($this->serviceExport->getRenderer() as $renderer) {
-                $rows[] = [$renderer->getId()];
+            foreach ($this->serviceExport->getRenderer() as $tmp) {
+                $rows[] = [$tmp->getId()];
             }
             $io->table(['ID'], $rows);
 
-            return (int) Command::FAILURE;
+            return Command::FAILURE;
         }
 
         $start = $input->getOption('start');
@@ -158,7 +158,7 @@ class ExportCreateCommand extends Command
             } catch (\Exception $ex) {
                 $io->error('Invalid start date given');
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
         }
         if (!$start instanceof \DateTime) {
@@ -173,16 +173,12 @@ class ExportCreateCommand extends Command
             } catch (\Exception $ex) {
                 $io->error('Invalid end date given');
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
         }
 
         if (empty($end)) {
             $end = $dateFactory->getEndOfMonth($start);
-        }
-
-        if (!$end instanceof \DateTime) {
-            $end = $dateFactory->getEndOfMonth();
         }
 
         $end->setTime(23, 59, 59);
@@ -195,7 +191,7 @@ class ExportCreateCommand extends Command
         if (!is_dir($directory) || !is_writable($directory)) {
             $io->error('Invalid "directory" given: ' . $directory);
 
-            return (int) Command::FAILURE;
+            return Command::FAILURE;
         }
 
         $subject = 'Export data available';
@@ -209,7 +205,7 @@ class ExportCreateCommand extends Command
                 if ($result === false) {
                     $io->error('Invalid "email" given: ' . $email);
 
-                    return (int) Command::FAILURE;
+                    return Command::FAILURE;
                 }
                 $emails[] = $email;
             }
@@ -255,7 +251,7 @@ class ExportCreateCommand extends Command
         if (\count($entries) === 0) {
             $io->success('No entries found, skipping');
 
-            return (int) Command::SUCCESS;
+            return Command::SUCCESS;
         }
 
         $response = $renderer->render($entries, $query);
@@ -286,7 +282,7 @@ class ExportCreateCommand extends Command
             $io->success('Saved export to: ' . $file);
         }
 
-        return (int) Command::SUCCESS;
+        return Command::SUCCESS;
     }
 
     private function savePreview(Response $response, string $directory): string

@@ -585,8 +585,8 @@ class ProjectStatisticService
             }
         }
 
-        foreach ($yearActivities as $year => $activities) {
-            foreach ($activities as $activity) {
+        foreach ($yearActivities as $year => $yearlyActivities) {
+            foreach ($yearlyActivities as $activity) {
                 $model->addYearActivity($year, $activity);
             }
         }

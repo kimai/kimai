@@ -136,8 +136,9 @@ trait ToolbarFormTrait
                         if (\array_key_exists($name, $data) && $data[$name] !== null && $data[$name] !== '') {
                             $customers = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
                             foreach ($customers as $customer) {
-                                if (!($customer instanceof Customer)) {
-                                    throw new \Exception('Need a customer object for customer select');
+                                $customer = \is_string($customer) ? (int) $customer : $customer;
+                                if (!is_int($customer) && !($customer instanceof Customer)) {
+                                    throw new \Exception('Need a customer object or an ID for customer select');
                                 }
                                 $query->addCustomer($customer);
                             }
@@ -239,8 +240,9 @@ trait ToolbarFormTrait
                         if (\array_key_exists($name, $data) && $data[$name] !== null && $data[$name] !== '') {
                             $customers = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
                             foreach ($customers as $customer) {
-                                if (!($customer instanceof Customer)) {
-                                    throw new \Exception('Need a customer object for project select');
+                                $customer = \is_string($customer) ? (int) $customer : $customer;
+                                if (!is_int($customer) && !($customer instanceof Customer)) {
+                                    throw new \Exception('Need a customer object or an ID for project select');
                                 }
                                 $query->addCustomer($customer);
                             }
@@ -250,8 +252,9 @@ trait ToolbarFormTrait
                         if (\array_key_exists($name, $data) && $data[$name] !== null && $data[$name] !== '') {
                             $projects = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
                             foreach ($projects as $project) {
-                                if (!($project instanceof Project)) {
-                                    throw new \Exception('Need a project object for project select');
+                                $project = \is_string($project) ? (int) $project : $project;
+                                if (!is_int($project) && !($project instanceof Project)) {
+                                    throw new \Exception('Need a project object or an ID for project select');
                                 }
                                 $query->addProject($project);
                             }
@@ -312,8 +315,9 @@ trait ToolbarFormTrait
                             // we need to pre-fetch the activities to see if they are global, see ActivityFormTypeQuery::isGlobalsOnly()
                             $activities = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
                             foreach ($activities as $activity) {
-                                if (!($activity instanceof Activity)) {
-                                    throw new \Exception('Need an activity object for activity select');
+                                $activity = \is_string($activity) ? (int) $activity : $activity;
+                                if (!is_int($activity) && !($activity instanceof Activity)) {
+                                    throw new \Exception('Need an activity object or an ID for activity select');
                                 }
                                 $query->addActivity($activity);
                             }
@@ -323,8 +327,9 @@ trait ToolbarFormTrait
                         if (\array_key_exists($name, $data) && $data[$name] !== null && $data[$name] !== '') {
                             $projects = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
                             foreach ($projects as $project) {
-                                if (!($project instanceof Project)) {
-                                    throw new \Exception('Need a project object for activity select');
+                                $project = \is_string($project) ? (int) $project : $project;
+                                if (!is_int($project) && !($project instanceof Project)) {
+                                    throw new \Exception('Need a project object or an ID for activity select');
                                 }
                                 $query->addProject($project);
                             }

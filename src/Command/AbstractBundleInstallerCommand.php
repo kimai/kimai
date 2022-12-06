@@ -124,7 +124,7 @@ abstract class AbstractBundleInstallerCommand extends Command
                 sprintf('Failed to install database for bundle %s. %s', $bundleName, $ex->getMessage())
             );
 
-            return (int) Command::FAILURE;
+            return Command::FAILURE;
         }
 
         if ($this->hasAssets()) {
@@ -135,7 +135,7 @@ abstract class AbstractBundleInstallerCommand extends Command
                     sprintf('Failed to install assets for bundle %s. %s', $bundleName, $ex->getMessage())
                 );
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
         }
 
@@ -145,7 +145,7 @@ abstract class AbstractBundleInstallerCommand extends Command
             sprintf('Congratulations! Plugin was successful installed: %s', $bundleName)
         );
 
-        return (int) Command::SUCCESS;
+        return Command::SUCCESS;
     }
 
     protected function installAssets(SymfonyStyle $io, OutputInterface $output)

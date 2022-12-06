@@ -211,14 +211,14 @@ final class KimaiImporterCommand extends Command
         }
 
         $country = $options['country'];
-        if (null === $country || 2 != \strlen(trim($country))) {
+        if (null === $country || 2 !== \strlen(trim($country))) {
             $io->error('Country code needs to be exactly 2 character');
 
             return false;
         }
 
         $currency = $options['currency'];
-        if (null === $currency || 3 != \strlen(trim($currency))) {
+        if (null === $currency || 3 !== \strlen(trim($currency))) {
             $io->error('Currency code needs to be exactly 3 character');
 
             return false;
@@ -241,7 +241,7 @@ final class KimaiImporterCommand extends Command
         if (!$this->validateOptions($options, $io)) {
             $io->error('Invalid importer configuration, exiting');
 
-            return (int) Command::FAILURE;
+            return Command::FAILURE;
         }
 
         $this->options = $options;
@@ -260,7 +260,7 @@ final class KimaiImporterCommand extends Command
         foreach ($options['prefix'] as $prefix) {
             $this->dbPrefix = $prefix;
             if (!$this->checkDatabaseVersion($connection, $io)) {
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
         }
 
@@ -318,7 +318,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to load users: ' . $ex->getMessage());
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
 
             try {
@@ -326,7 +326,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to load customers: ' . $ex->getMessage());
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
 
             try {
@@ -334,7 +334,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to load projects: ' . $ex->getMessage());
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
 
             try {
@@ -342,7 +342,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to load activities: ' . $ex->getMessage());
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
 
             try {
@@ -350,7 +350,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to load fixedRates: ' . $ex->getMessage());
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
 
             try {
@@ -358,7 +358,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to load rates: ' . $ex->getMessage());
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
 
             $io->success('Fetched Kimai v1 data, validating now');
@@ -368,7 +368,7 @@ final class KimaiImporterCommand extends Command
                     $io->error($errorMessage);
                 }
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
             $io->success('Pre-validated data, importing now');
 
@@ -379,7 +379,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import users: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
 
             try {
@@ -390,7 +390,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import customers: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
 
             try {
@@ -401,7 +401,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import projects: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
 
             try {
@@ -410,7 +410,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import activities: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
 
             try {
@@ -420,7 +420,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import groups/teams: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
 
             try {
@@ -430,7 +430,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to create instance team: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
 
             try {
@@ -442,7 +442,7 @@ final class KimaiImporterCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to import timesheet records: ' . $ex->getMessage() . PHP_EOL . $ex->getTraceAsString());
 
-                return (int) Command::FAILURE;
+                return Command::FAILURE;
             }
         }
 
@@ -457,7 +457,7 @@ final class KimaiImporterCommand extends Command
             'Total memory usage: ' . $this->bytesHumanReadable($bytesImported - $bytesStart)
         );
 
-        return (int) Command::SUCCESS;
+        return Command::SUCCESS;
     }
 
     private function validateKimai1Data(array $options, array $users, array $customer, array $projects, array $activities, array $rates): array
@@ -599,7 +599,7 @@ final class KimaiImporterCommand extends Command
         $requiredVersion = self::MIN_VERSION;
         $requiredRevision = self::MIN_REVISION;
 
-        if (1 == version_compare($requiredVersion, $version)) {
+        if (1 === version_compare($requiredVersion, $version)) {
             $io->error(
                 'Import can only performed from an up-to-date Kimai version:' . PHP_EOL .
                 'Needs at least ' . $requiredVersion . ' but found ' . $version
@@ -616,7 +616,7 @@ final class KimaiImporterCommand extends Command
             ->executeQuery()
             ->fetchOne();
 
-        if (1 == version_compare($requiredRevision, $revision)) {
+        if (1 === version_compare($requiredRevision, $revision)) {
             $io->error(
                 'Import can only performed from an up-to-date Kimai version:' . PHP_EOL .
                 'Database revision needs to be ' . $requiredRevision . ' but found ' . $revision
@@ -876,7 +876,7 @@ final class KimaiImporterCommand extends Command
             }
 
             $isActive = $oldUser['active'] && !(bool) $oldUser['trash'] && !(bool) $oldUser['ban'];
-            $role = (1 == $oldUser['globalRoleID']) ? User::ROLE_SUPER_ADMIN : User::DEFAULT_ROLE;
+            $role = (1 === (int) $oldUser['globalRoleID']) ? User::ROLE_SUPER_ADMIN : User::DEFAULT_ROLE;
 
             $user = new User();
             $user->setUserIdentifier($oldUser['name']);
@@ -1180,7 +1180,7 @@ final class KimaiImporterCommand extends Command
                 if ($fixedRow['activityID'] !== null || $fixedRow['projectID'] === null) {
                     continue;
                 }
-                if ($fixedRow['projectID'] == $oldProject['projectID']) {
+                if ($fixedRow['projectID'] === $oldProject['projectID']) {
                     $projectRate = new ProjectRate();
                     $projectRate->setProject($project);
                     $projectRate->setRate($fixedRow['rate']);
@@ -1201,7 +1201,7 @@ final class KimaiImporterCommand extends Command
                 if ($ratesRow['activityID'] !== null || $ratesRow['projectID'] === null) {
                     continue;
                 }
-                if ($ratesRow['projectID'] == $oldProject['projectID']) {
+                if ($ratesRow['projectID'] === $oldProject['projectID']) {
                     $projectRate = new ProjectRate();
                     $projectRate->setProject($project);
                     $projectRate->setRate($ratesRow['rate']);
@@ -1472,7 +1472,7 @@ final class KimaiImporterCommand extends Command
                 continue;
             }
 
-            if ($fixedRow['activityID'] == $oldActivityId) {
+            if ($fixedRow['activityID'] === $oldActivityId) {
                 $activityRate = new ActivityRate();
                 $activityRate->setActivity($activity);
                 $activityRate->setRate($fixedRow['rate']);
@@ -1497,7 +1497,7 @@ final class KimaiImporterCommand extends Command
                 continue;
             }
 
-            if ($ratesRow['activityID'] == $oldActivityId) {
+            if ($ratesRow['activityID'] === $oldActivityId) {
                 $activityRate = new ActivityRate();
                 $activityRate->setActivity($activity);
                 $activityRate->setRate($ratesRow['rate']);
@@ -1658,19 +1658,19 @@ final class KimaiImporterCommand extends Command
             $timesheet = new Timesheet();
 
             $fixedRate = $oldRecord['fixedRate'];
-            if (!empty($fixedRate) && 0.00 != $fixedRate) {
+            if (!empty($fixedRate) && 0.00 < (float) $fixedRate) {
                 $timesheet->setFixedRate($fixedRate);
             }
 
             $hourlyRate = $oldRecord['rate'];
-            if (!empty($hourlyRate) && 0.00 != $hourlyRate) {
+            if (!empty($hourlyRate) && 0.00 < (float) $hourlyRate) {
                 $timesheet->setHourlyRate($hourlyRate);
             }
 
             if ($timesheet->getFixedRate() !== null) {
                 $timesheet->setRate($timesheet->getFixedRate());
             } elseif ($timesheet->getHourlyRate() !== null) {
-                $hourlyRate = (float) $timesheet->getHourlyRate();
+                $hourlyRate = $timesheet->getHourlyRate();
                 $rate = Util::calculateRate($hourlyRate, $duration);
                 $timesheet->setRate($rate);
             }

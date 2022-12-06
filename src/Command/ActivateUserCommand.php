@@ -56,6 +56,6 @@ final class ActivateUserCommand extends Command
             $io->warning(sprintf('User "%s" is already active.', $username));
         }
 
-        return (int) Command::SUCCESS;
+        return Command::SUCCESS;
     }
 }

@@ -60,11 +60,7 @@ class Duration
             return $this->parseDuration($duration, self::FORMAT_COLON);
         }
 
-        if (strpos($duration, '.') !== false || strpos($duration, ',') !== false) {
-            return $this->parseDuration($duration, self::FORMAT_DECIMAL);
-        }
-
-        if (is_numeric($duration) && $duration == (int) $duration) {
+        if (str_contains($duration, '.') || str_contains($duration, ',') || is_numeric($duration)) {
             return $this->parseDuration($duration, self::FORMAT_DECIMAL);
         }
 
@@ -85,22 +81,12 @@ class Duration
             return 0;
         }
 
-        switch ($mode) {
-            case self::FORMAT_COLON:
-                $seconds = $this->parseColonFormat($duration);
-                break;
-
-            case self::FORMAT_NATURAL:
-                $seconds = $this->parseNaturalFormat($duration);
-                break;
-
-            case self::FORMAT_DECIMAL:
-                $seconds = $this->parseDecimalFormat($duration);
-                break;
-
-            default:
-                throw new \InvalidArgumentException(sprintf('Unsupported duration format "%s"', $mode));
-        }
+        $seconds = match ($mode) {
+            self::FORMAT_COLON => $this->parseColonFormat($duration),
+            self::FORMAT_NATURAL => $this->parseNaturalFormat($duration),
+            self::FORMAT_DECIMAL => $this->parseDecimalFormat($duration),
+            default => throw new \InvalidArgumentException(sprintf('Unsupported duration format "%s"', $mode)),
+        };
 
         return $seconds;
     }
@@ -153,7 +139,7 @@ class Duration
 
         $seconds = 0;
 
-        if (3 == \count($parts)) {
+        if (3 === \count($parts)) {
             $seconds += (int) array_pop($parts);
         }
 

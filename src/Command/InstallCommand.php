@@ -82,7 +82,7 @@ final class InstallCommand extends Command
             sprintf('Congratulations! Successfully installed %s version %s', Constants::SOFTWARE, Constants::VERSION)
         );
 
-        return (int) Command::SUCCESS;
+        return Command::SUCCESS;
     }
 
     private function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output)

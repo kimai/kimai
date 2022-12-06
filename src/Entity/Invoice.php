@@ -151,7 +151,7 @@ class Invoice implements EntityWithMetaFields
     {
         if (!$this->localized) {
             if (null !== $this->createdAt && null !== $this->timezone) {
-                $this->createdAt->setTimeZone(new \DateTimeZone($this->timezone));
+                $this->createdAt->setTimezone(new \DateTimeZone($this->timezone));
             }
 
             $this->localized = true;

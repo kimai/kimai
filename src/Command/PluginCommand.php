@@ -43,7 +43,7 @@ final class PluginCommand extends Command
         if (empty($plugins)) {
             $io->warning('No plugins installed');
 
-            return (int) Command::SUCCESS;
+            return Command::SUCCESS;
         }
 
         $rows = [];
@@ -59,6 +59,6 @@ final class PluginCommand extends Command
         }
         $io->table(['Name', 'Version', 'Requires', 'Directory'], $rows);
 
-        return (int) Command::SUCCESS;
+        return Command::SUCCESS;
     }
 }

@@ -30,7 +30,7 @@ final class NumberGenerator
             $result = str_replace($part, $partialResult, $result);
         }
 
-        return (string) $result;
+        return $result;
     }
 
     private function parseReplacer(string $originalFormat, int $increaseBy): string

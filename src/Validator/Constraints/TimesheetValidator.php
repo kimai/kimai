@@ -38,11 +38,11 @@ final class TimesheetValidator extends ConstraintValidator
             throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
         }
 
-        foreach ($this->constraints as $constraint) {
+        foreach ($this->constraints as $innerConstraint) {
             $this->context
                 ->getValidator()
                 ->inContext($this->context)
-                ->validate($timesheet, $constraint, [Constraint::DEFAULT_GROUP]);
+                ->validate($timesheet, $innerConstraint, [Constraint::DEFAULT_GROUP]);
         }
     }
 }

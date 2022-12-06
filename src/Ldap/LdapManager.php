@@ -9,6 +9,7 @@
 
 namespace App\Ldap;
 
+use _PHPStan_582a9cb8b\Nette\Neon\Exception;
 use App\Configuration\LdapConfiguration;
 use App\Entity\User;
 use App\Security\RoleService;
@@ -270,6 +271,10 @@ class LdapManager
                 }
             } elseif ($attr['user_method'] === 'setUserIdentifier') {
                 $sawUsername = true;
+            }
+
+            if (!method_exists($user, $attr['user_method'])) {
+                throw new Exception('Unknown mapping method: ' . $attr['user_method']);
             }
 
             $user->{$attr['user_method']}($value);

@@ -35,7 +35,7 @@ final class TimesheetLoader implements LoaderInterface
                 return $timesheet->getId();
             }
 
-            return (int) $timesheet;
+            return $timesheet;
         }, $results);
 
         $em = $this->entityManager;

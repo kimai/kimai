@@ -117,7 +117,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
      */
     public function findOneBy(array $criteria, array $orderBy = null): ?object
     {
-        if (\count($criteria) == 1 && isset($criteria['username'])) {
+        if (\count($criteria) === 1 && isset($criteria['username'])) {
             return $this->loadUserByIdentifier($criteria['username']);
         }
 
@@ -132,7 +132,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
     public function countUser(?bool $enabled = null): int
     {
         if (null !== $enabled) {
-            return $this->count(['enabled' => (bool) $enabled]);
+            return $this->count(['enabled' => $enabled]);
         }
 
         return $this->count([]);
@@ -252,8 +252,8 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         if (\count($teams) > 0) {
             $userIds = [];
             foreach ($teams as $team) {
-                foreach ($team->getUsers() as $user) {
-                    $userIds[] = $user->getId();
+                foreach ($team->getUsers() as $teamMember) {
+                    $userIds[] = $teamMember->getId();
                 }
             }
             $userIds = array_unique($userIds);

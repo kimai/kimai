@@ -35,7 +35,7 @@ abstract class BaseFormTypeQuery
      */
     private array $teams = [];
 
-    public function addActivity(Activity $activity): void
+    public function addActivity(Activity|int $activity): void
     {
         $this->activities[] = $activity;
     }
@@ -61,7 +61,7 @@ abstract class BaseFormTypeQuery
         return \count($this->activities) > 0;
     }
 
-    public function addProject(Project $project): void
+    public function addProject(Project|int $project): void
     {
         $this->projects[] = $project;
     }
@@ -95,7 +95,7 @@ abstract class BaseFormTypeQuery
         $this->customers = $customers;
     }
 
-    public function addCustomer(Customer $customer): void
+    public function addCustomer(Customer|int $customer): void
     {
         $this->customers[] = $customer;
     }
