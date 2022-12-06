@@ -58,6 +58,10 @@ class ProjectSubscriber extends AbstractActionsSubscriber
             $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', ['customers[]' => $project->getCustomer()->getId(), 'projects[]' => $project->getId()])]);
         }
 
+        if ($this->isGranted('create_export')) {
+            $event->addActionToSubmenu('filter', 'export', ['title' => 'export', 'url' => $this->path('export', ['customers[]' => $project->getCustomer()->getId(), 'projects[]' => $project->getId(), 'exported' => 1, 'daterange' => ''])]);
+        }
+
         if ($event->hasSubmenu('filter')) {
             $event->addDivider();
         }
