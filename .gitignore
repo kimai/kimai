@@ -4,6 +4,7 @@
 .idea/
 .DS_Store
 rector.php
+phpstan.sh
 
 # for symfony local webserver
 php.ini

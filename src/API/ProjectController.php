@@ -16,6 +16,7 @@ use App\Event\ProjectMetaDefinitionEvent;
 use App\Form\API\ProjectApiEditForm;
 use App\Form\API\ProjectRateApiForm;
 use App\Project\ProjectService;
+use App\Repository\CustomerRepository;
 use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
@@ -62,7 +63,7 @@ final class ProjectController extends BaseApiController
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\QueryParam(name: 'customer', requirements: '\d+', strict: true, nullable: true, description: 'Customer ID to filter projects')]
-    #[Rest\QueryParam(name: 'customers', requirements: '[\d|,]+', strict: true, nullable: true, description: 'Comma separated list of customer IDs to filter projects')]
+    #[Rest\QueryParam(name: 'customers', map: true, requirements: '\d+', strict: true, nullable: false, default: [], description: 'List of customer IDs to filter, e.g.: customers[]=1&customers[]=2')]
     #[Rest\QueryParam(name: 'visible', requirements: '\d+', strict: true, nullable: true, description: 'Visibility status to filter projects. Allowed values: 1=visible, 2=hidden, 3=both (default: 1)')]
     #[Rest\QueryParam(name: 'start', requirements: [new Constraints\AtLeastOneOf(constraints: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s', message: 'This value is not a valid datetime, expected format: Y-m-d (2022-01-27T20:13:57).'), new Constraints\DateTime(format: 'Y-m-d', message: 'This value is not a valid datetime, expected format: Y-m-d (2022-01-27).')])], strict: true, nullable: true, description: 'Only projects that started before this date will be included. Allowed format: HTML5 (default: now, if end is also empty)')]
     #[Rest\QueryParam(name: 'end', requirements: [new Constraints\AtLeastOneOf(constraints: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s', message: 'This value is not a valid datetime, expected format: Y-m-d (2022-01-27T20:13:57).'), new Constraints\DateTime(format: 'Y-m-d', message: 'This value is not a valid datetime, expected format: Y-m-d (2022-01-27).')])], strict: true, nullable: true, description: 'Only projects that ended after this date will be included. Allowed format: HTML5 (default: now, if start is also empty)')]
@@ -71,7 +72,7 @@ final class ProjectController extends BaseApiController
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|customer', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, customer (default: name)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term')]
-    public function cgetAction(ParamFetcherInterface $paramFetcher): Response
+    public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -87,14 +88,17 @@ final class ProjectController extends BaseApiController
             $query->setOrderBy($orderBy);
         }
 
-        if (!empty($customers = $paramFetcher->get('customers'))) {
-            if (!\is_array($customers)) {
-                $customers = explode(',', $customers);
-            }
-            $query->setCustomers($customers);
+        /** @var array<int> $customers */
+        $customers = $paramFetcher->get('customers');
+        if (!empty($customer = $paramFetcher->get('customer'))) {
+            $customers[] = $customer;
         }
 
-        if (!empty($customer = $paramFetcher->get('customer'))) {
+        foreach ($customers as $customerId) {
+            $customer = $customerRepository->find($customerId);
+            if ($customer === null) {
+                throw $this->createNotFoundException('Unknown customer: ' . $customerId);
+            }
             $query->addCustomer($customer);
         }
 

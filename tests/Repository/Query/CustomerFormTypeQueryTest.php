@@ -18,7 +18,7 @@ use App\Repository\Query\CustomerFormTypeQuery;
  */
 class CustomerFormTypeQueryTest extends BaseFormTypeQueryTest
 {
-    public function testQuery()
+    public function testQuery(): void
     {
         $sut = new CustomerFormTypeQuery();
 

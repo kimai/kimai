@@ -31,11 +31,12 @@ class InvoiceModelProjectHydrator implements InvoiceModelHydrator
         $values = [];
         $i = 0;
 
-        if (\count($model->getQuery()->getProjects()) === 1) {
-            $values['project'] = $model->getQuery()->getProjects()[0]->getName();
+        $projects = $model->getQuery()->getProjects();
+        if (\count($projects) === 1) {
+            $values['project'] = $projects[0]->getName();
         }
 
-        foreach ($model->getQuery()->getProjects() as $project) {
+        foreach ($projects as $project) {
             $prefix = '';
             if ($i > 0) {
                 $prefix = $i . '.';

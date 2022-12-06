@@ -12,19 +12,13 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 **!! This release requires minimum PHP version to 8.1 !!**
 
+Developer read the full documentation at [https://www.kimai.org/documentation/migration-v2.html](https://www.kimai.org/documentation/migration-v2.html).
+
 - Removed unused `public/avatars/` directory 
-- Removed support for custom translation files (use [TranslationBundle](https://www.kimai.org/store/translation-bundle.html) instead or write your own plugin)
-- local.yaml is not compatible with old version, best is to remove it before the update and then re-create it after everything works 
+- `local.yaml` is not compatible with old version, remove it before the update and then re-create it after everything works 
   - dashboard default config
   - removed: theme.branding.translation
   - removed: kimai.plugin_dir
-- Removed all 3rd party mailer packages, you need to install them manually (ONLY if you used a short syntax to configure the `MAILER_URL` in `.emv`): 
-  - `composer require symfony/amazon-mailer`
-  - `composer require symfony/google-mailer`
-  - `composer require symfony/mailchimp-mailer`
-  - `composer require symfony/mailgun-mailer`
-  - `composer require symfony/postmark-mailer`
-  - `composer require symfony/sendgrid-mailer`
 - Time-tracking mode `duration_only` was removed, existing installations will be switched to `default`
 - Removed Twig filters. You might have to replace them in your custom export/invoice templates:
   - `date_full` => `date_time`
@@ -32,10 +26,14 @@ Perform EACH version specific task between your version and the new one, otherwi
   - `currency` => `currency_name`
   - `country` => `country_name`
   - `language` => `language_name`
-
-**Developer**
-
-Please read the full documentation at [https://www.kimai.org/documentation/migration-v2.html](https://www.kimai.org/documentation/migration-v2.html).
+- Removed support for custom translation files (use [TranslationBundle](https://www.kimai.org/store/translation-bundle.html) instead or write your own plugin)
+- Removed all 3rd party mailer packages, you need to install them manually (ONLY if you used a short syntax to configure the `MAILER_URL` in `.env`): 
+  - `composer require symfony/amazon-mailer`
+  - `composer require symfony/google-mailer`
+  - `composer require symfony/mailchimp-mailer`
+  - `composer require symfony/mailgun-mailer`
+  - `composer require symfony/postmark-mailer`
+  - `composer require symfony/sendgrid-mailer`
 
 ## [1.16](https://github.com/kevinpapst/kimai2/releases/tag/1.16)
 

@@ -14,9 +14,6 @@ use App\Entity\Tag;
 use App\Entity\User;
 use App\Form\Model\DateRange;
 
-/**
- * Can be used for advanced timesheet repository queries.
- */
 class TimesheetQuery extends ActivityQuery implements BillableInterface
 {
     use BillableTrait;
@@ -30,38 +27,21 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
 
     public const TIMESHEET_ORDER_ALLOWED = ['begin', 'end', 'duration', 'rate', 'hourlyRate', 'customer', 'project', 'activity', 'description'];
 
+    private ?User $timesheetUser = null;
+    /** @var array<Activity> */
+    private array $activities = [];
+    private int $state = self::STATE_ALL;
+    private int $exported = self::STATE_ALL;
+    private ?int $maxResults = null;
+    private ?\DateTime $modifiedAfter = null;
     /**
-     * @var User|null
+     * @var iterable<Tag>
      */
-    protected $timesheetUser;
+    private iterable $tags = [];
     /**
-     * @var array
+     * @var array<User>
      */
-    private $activities = [];
-    /**
-     * @var int
-     */
-    protected $state = self::STATE_ALL;
-    /**
-     * @var int
-     */
-    protected $exported = self::STATE_ALL;
-    /**
-     * @var \DateTime|null
-     */
-    private $modifiedAfter;
-    /**
-     * @var iterable
-     */
-    protected $tags = [];
-    /**
-     * @var User[]
-     */
-    private $users = [];
-    /**
-     * @var int|null
-     */
-    private $maxResults;
+    private array $users = [];
 
     public function __construct(bool $resetTimes = true)
     {
@@ -114,38 +94,44 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
     }
 
     /**
-     * Limit the data exclusively to the user (eg. users own timesheets).
-     *
-     * @return User|int|null
+     * Limit the data exclusively to the user.
      */
-    public function getUser()
+    public function getUser(): User|int|null
     {
         return $this->timesheetUser;
     }
 
     /**
-     * Limit the data exclusively to the user (eg. users own timesheets).
-     *
-     * @param User|int|null $user
-     * @return TimesheetQuery
+     * Limit the data exclusively to the user.
      */
-    public function setUser($user = null)
+    public function setUser(User|int|null $user = null): TimesheetQuery
     {
         $this->timesheetUser = $user;
 
         return $this;
     }
 
+    /**
+     * @return array<int>
+     */
+    public function getActivityIds(): array
+    {
+        return array_values(array_filter(array_unique(array_map(function (Activity $activity) {
+            return $activity->getId();
+        }, $this->activities)), function ($id) {
+            return $id !== null;
+        }));
+    }
+
+    /**
+     * @return array<Activity>
+     */
     public function getActivities(): array
     {
         return $this->activities;
     }
 
-    /**
-     * @param Activity|int $activity
-     * @return $this
-     */
-    public function addActivity($activity): TimesheetQuery
+    public function addActivity(Activity $activity): TimesheetQuery
     {
         $this->activities[] = $activity;
 
@@ -153,8 +139,7 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
     }
 
     /**
-     * @param Activity[]|int[] $activities
-     * @return $this
+     * @param array<Activity> $activities
      */
     public function setActivities(array $activities): TimesheetQuery
     {
@@ -185,7 +170,6 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
 
     public function setState(int $state): TimesheetQuery
     {
-        $state = (int) $state;
         if (\in_array($state, [self::STATE_ALL, self::STATE_RUNNING, self::STATE_STOPPED], true)) {
             $this->state = $state;
         }

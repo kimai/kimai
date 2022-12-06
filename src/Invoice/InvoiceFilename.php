@@ -9,15 +9,11 @@
 
 namespace App\Invoice;
 
-use App\Entity\Project;
 use App\Utils\FileHelper;
 
 final class InvoiceFilename
 {
-    /**
-     * @var string
-     */
-    private $filename;
+    private string $filename;
 
     public function __construct(InvoiceModel $model)
     {
@@ -37,10 +33,7 @@ final class InvoiceFilename
         if (null !== $model->getQuery()) {
             $projects = $model->getQuery()->getProjects();
             if (\count($projects) === 1) {
-                $pName = $projects[0];
-                if ($pName instanceof Project) {
-                    $filename .= '-' . $this->convert($pName->getName());
-                }
+                $filename .= '-' . $this->convert($projects[0]->getName());
             }
         }
 
@@ -52,12 +45,12 @@ final class InvoiceFilename
         return FileHelper::convertToAsciiFilename($filename);
     }
 
-    public function getFilename()
+    public function getFilename(): string
     {
         return $this->filename;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getFilename();
     }

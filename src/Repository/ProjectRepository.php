@@ -268,7 +268,7 @@ class ProjectRepository extends EntityRepository
 
         if ($query->hasCustomers()) {
             $qb->andWhere($qb->expr()->in('p.customer', ':customer'))
-                ->setParameter('customer', $query->getCustomers());
+                ->setParameter('customer', $query->getCustomerIds());
         }
 
         if ($query->getGlobalActivities() !== null) {

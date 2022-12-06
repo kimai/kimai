@@ -41,22 +41,12 @@ parameters:
             path: src/API/ActivityController.php
 
         -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Repository\\\\Query\\\\ActivityQuery\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project\\|int, mixed given\\.$#"
-            count: 1
-            path: src/API/ActivityController.php
-
-        -
             message: "#^Parameter \\#1 \\$searchTerm of class App\\\\Utils\\\\SearchTerm constructor expects string, mixed given\\.$#"
             count: 1
             path: src/API/ActivityController.php
 
         -
             message: "#^Parameter \\#1 \\$visibility of method App\\\\Repository\\\\Query\\\\ProjectQuery\\:\\:setVisibility\\(\\) expects int, mixed given\\.$#"
-            count: 1
-            path: src/API/ActivityController.php
-
-        -
-            message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
             count: 1
             path: src/API/ActivityController.php
 
@@ -141,11 +131,6 @@ parameters:
             path: src/API/NotFoundException.php
 
         -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Repository\\\\Query\\\\ProjectQuery\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|int, mixed given\\.$#"
-            count: 1
-            path: src/API/ProjectController.php
-
-        -
             message: "#^Parameter \\#1 \\$datetime of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createDateTime\\(\\) expects string, mixed given\\.$#"
             count: 2
             path: src/API/ProjectController.php
@@ -172,11 +157,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$visibility of method App\\\\Repository\\\\Query\\\\ProjectQuery\\:\\:setVisibility\\(\\) expects int, mixed given\\.$#"
-            count: 1
-            path: src/API/ProjectController.php
-
-        -
-            message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
             count: 1
             path: src/API/ProjectController.php
 
@@ -216,22 +196,7 @@ parameters:
             path: src/API/TimesheetController.php
 
         -
-            message: "#^Parameter \\#1 \\$activities of method App\\\\Repository\\\\Query\\\\TimesheetQuery\\:\\:setActivities\\(\\) expects array\\<App\\\\Entity\\\\Activity\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/API/TimesheetController.php
-
-        -
             message: "#^Parameter \\#1 \\$activity of method App\\\\Entity\\\\Timesheet\\:\\:setActivity\\(\\) expects App\\\\Entity\\\\Activity, App\\\\Entity\\\\Activity\\|null given\\.$#"
-            count: 1
-            path: src/API/TimesheetController.php
-
-        -
-            message: "#^Parameter \\#1 \\$activity of method App\\\\Repository\\\\Query\\\\TimesheetQuery\\:\\:addActivity\\(\\) expects App\\\\Entity\\\\Activity\\|int, mixed given\\.$#"
-            count: 1
-            path: src/API/TimesheetController.php
-
-        -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Repository\\\\Query\\\\ProjectQuery\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|int, mixed given\\.$#"
             count: 1
             path: src/API/TimesheetController.php
 
@@ -261,22 +226,7 @@ parameters:
             path: src/API/TimesheetController.php
 
         -
-            message: "#^Parameter \\#1 \\$page of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setPage\\(\\) expects int, mixed given\\.$#"
-            count: 1
-            path: src/API/TimesheetController.php
-
-        -
-            message: "#^Parameter \\#1 \\$pageSize of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setPageSize\\(\\) expects int, mixed given\\.$#"
-            count: 1
-            path: src/API/TimesheetController.php
-
-        -
             message: "#^Parameter \\#1 \\$project of method App\\\\Entity\\\\Timesheet\\:\\:setProject\\(\\) expects App\\\\Entity\\\\Project, App\\\\Entity\\\\Project\\|null given\\.$#"
-            count: 1
-            path: src/API/TimesheetController.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Repository\\\\Query\\\\ActivityQuery\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project\\|int, mixed given\\.$#"
             count: 1
             path: src/API/TimesheetController.php
 
@@ -306,11 +256,6 @@ parameters:
             path: src/API/TimesheetController.php
 
         -
-            message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
-            count: 3
-            path: src/API/TimesheetController.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
             count: 1
             path: src/API/UserController.php
@@ -327,11 +272,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$searchTerm of class App\\\\Utils\\\\SearchTerm constructor expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/UserController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setCurrentUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: src/API/UserController.php
 
@@ -706,11 +646,6 @@ parameters:
             path: src/Command/InvoiceCreateCommand.php
 
         -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Repository\\\\Query\\\\ProjectQuery\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|int, App\\\\Entity\\\\Customer\\|null given\\.$#"
-            count: 1
-            path: src/Command/InvoiceCreateCommand.php
-
-        -
             message: "#^Parameter \\#1 \\$datetime of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createDateTime\\(\\) expects string, mixed given\\.$#"
             count: 2
             path: src/Command/InvoiceCreateCommand.php
@@ -742,11 +677,6 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\$content of method Symfony\\\\Component\\\\Filesystem\\\\Filesystem\\:\\:dumpFile\\(\\) expects resource\\|string, string\\|false given\\.$#"
-            count: 1
-            path: src/Command/InvoiceCreateCommand.php
-
-        -
-            message: "#^Parameter \\#2 \\$customer of method App\\\\Command\\\\InvoiceCreateCommand\\:\\:getTemplateForCustomer\\(\\) expects App\\\\Entity\\\\Customer, App\\\\Entity\\\\Customer\\|null given\\.$#"
             count: 1
             path: src/Command/InvoiceCreateCommand.php
 
@@ -1531,11 +1461,6 @@ parameters:
             path: src/Controller/ActivityController.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setCurrentUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 2
-            path: src/Controller/ActivityController.php
-
-        -
             message: "#^Parameter \\#2 \\$entries of method App\\\\Export\\\\Spreadsheet\\\\EntityWithMetaFieldsExporter\\:\\:export\\(\\) expects array, iterable\\<App\\\\Entity\\\\Activity\\> given\\.$#"
             count: 1
             path: src/Controller/ActivityController.php
@@ -1726,11 +1651,6 @@ parameters:
             path: src/Controller/CustomerController.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setCurrentUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 3
-            path: src/Controller/CustomerController.php
-
-        -
             message: "#^Parameter \\#2 \\$entries of method App\\\\Export\\\\Spreadsheet\\\\EntityWithMetaFieldsExporter\\:\\:export\\(\\) expects array, iterable\\<App\\\\Entity\\\\Customer\\> given\\.$#"
             count: 1
             path: src/Controller/CustomerController.php
@@ -1866,11 +1786,6 @@ parameters:
             path: src/Controller/ExportController.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setCurrentUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/ExportController.php
-
-        -
             message: "#^Parameter \\#1 \\$route of method Symfony\\\\Bundle\\\\FrameworkBundle\\\\Controller\\\\AbstractController\\:\\:redirectToRoute\\(\\) expects string, bool\\|float\\|int\\|string\\|null given\\.$#"
             count: 1
             path: src/Controller/HomepageController.php
@@ -1903,11 +1818,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$string of function substr expects string, string\\|false given\\.$#"
             count: 1
-            path: src/Controller/InvoiceController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setCurrentUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 3
             path: src/Controller/InvoiceController.php
 
         -
@@ -2061,11 +1971,6 @@ parameters:
             path: src/Controller/ProjectController.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setCurrentUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 3
-            path: src/Controller/ProjectController.php
-
-        -
             message: "#^Parameter \\#2 \\$entries of method App\\\\Export\\\\Spreadsheet\\\\EntityWithMetaFieldsExporter\\:\\:export\\(\\) expects array, iterable\\<App\\\\Entity\\\\Project\\> given\\.$#"
             count: 1
             path: src/Controller/ProjectController.php
@@ -2137,11 +2042,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$content of method PhpOffice\\\\PhpSpreadsheet\\\\Reader\\\\Html\\:\\:loadFromString\\(\\) expects string, string\\|false given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/CustomerMonthlyProjectsController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setCurrentUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/CustomerMonthlyProjectsController.php
 
@@ -2271,11 +2171,6 @@ parameters:
             path: src/Controller/Reporting/ReportUsersMonthController.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setCurrentUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ReportUsersMonthController.php
-
-        -
             message: "#^Parameter \\#2 \\$end of class App\\\\Model\\\\DailyStatistic constructor expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/ReportUsersMonthController.php
@@ -2297,11 +2192,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Controller\\\\Reporting\\\\ReportUsersWeekController\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ReportUsersWeekController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setCurrentUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/ReportUsersWeekController.php
 
@@ -2332,11 +2222,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$financialYear of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createEndOfFinancialYear\\(\\) expects DateTimeInterface, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ReportUsersYearController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setCurrentUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/ReportUsersYearController.php
 
@@ -2581,11 +2466,6 @@ parameters:
             path: src/Controller/TeamController.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setCurrentUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/TeamController.php
-
-        -
             message: "#^Call to an undefined method object\\:\\:addTag\\(\\)\\.$#"
             count: 1
             path: src/Controller/TimesheetAbstractController.php
@@ -2736,11 +2616,6 @@ parameters:
             path: src/Controller/TimesheetTeamController.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setCurrentUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/TimesheetTeamController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\UserController\\:\\:exportAction\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Controller/UserController.php
@@ -2758,11 +2633,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
-            path: src/Controller/UserController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setCurrentUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 2
             path: src/Controller/UserController.php
 
         -
@@ -4094,11 +3964,6 @@ parameters:
             message: "#^Method App\\\\EventSubscriber\\\\LastLoginSubscriber\\:\\:onImplicitLogin\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/EventSubscriber/LastLoginSubscriber.php
-
-        -
-            message: "#^Parameter \\#1 \\$route of method App\\\\EventSubscriber\\\\MenuBuilderSubscriber\\:\\:activateByRoute\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/EventSubscriber/MenuBuilderSubscriber.php
 
         -
             message: "#^Method App\\\\EventSubscriber\\\\MenuSubscriber\\:\\:onMainMenuConfigure\\(\\) has no return type specified\\.$#"
@@ -8922,7 +8787,7 @@ parameters:
 
         -
             message: "#^Cannot call method getActivities\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
-            count: 3
+            count: 1
             path: src/Invoice/Hydrator/InvoiceModelActivityHydrator.php
 
         -
@@ -9092,7 +8957,7 @@ parameters:
 
         -
             message: "#^Cannot call method getProjects\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
-            count: 3
+            count: 1
             path: src/Invoice/Hydrator/InvoiceModelProjectHydrator.php
 
         -
@@ -9132,11 +8997,6 @@ parameters:
 
         -
             message: "#^Cannot call method getName\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Invoice/InvoiceFilename.php
-
-        -
-            message: "#^Method App\\\\Invoice\\\\InvoiceFilename\\:\\:getFilename\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Invoice/InvoiceFilename.php
 
@@ -10476,16 +10336,6 @@ parameters:
             path: src/Repository/Query/ActivityFormTypeQuery.php
 
         -
-            message: "#^Method App\\\\Repository\\\\Query\\\\ActivityQuery\\:\\:getProjects\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/Query/ActivityQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Query\\\\ActivityQuery\\:\\:setProjects\\(\\) has parameter \\$projects with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/Query/ActivityQuery.php
-
-        -
             message: "#^Method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:getActivities\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Repository/Query/BaseFormTypeQuery.php
@@ -10516,21 +10366,6 @@ parameters:
             path: src/Repository/Query/BaseFormTypeQuery.php
 
         -
-            message: "#^Cannot call method getName\\(\\) on Symfony\\\\Component\\\\Form\\\\FormInterface\\|null\\.$#"
-            count: 1
-            path: src/Repository/Query/BaseQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:get\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/Query/BaseQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:get\\(\\) has parameter \\$name with no type specified\\.$#"
-            count: 1
-            path: src/Repository/Query/BaseQuery.php
-
-        -
             message: "#^Method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:getOrderGroups\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Repository/Query/BaseQuery.php
@@ -10541,38 +10376,8 @@ parameters:
             path: src/Repository/Query/BaseQuery.php
 
         -
-            message: "#^Method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:set\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/Query/BaseQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:set\\(\\) has parameter \\$name with no type specified\\.$#"
-            count: 1
-            path: src/Repository/Query/BaseQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:set\\(\\) has parameter \\$value with no type specified\\.$#"
-            count: 1
-            path: src/Repository/Query/BaseQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setDefaults\\(\\) has parameter \\$defaults with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/Query/BaseQuery.php
-
-        -
             message: "#^Parameter \\#1 \\$callback of function call_user_func expects callable\\(\\)\\: mixed, array\\{\\$this\\(App\\\\Repository\\\\Query\\\\BaseQuery\\), non\\-falsy\\-string\\} given\\.$#"
             count: 3
-            path: src/Repository/Query/BaseQuery.php
-
-        -
-            message: "#^Parameter \\#1 \\$filter of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:isDefaultFilter\\(\\) expects string, int\\|string given\\.$#"
-            count: 1
-            path: src/Repository/Query/BaseQuery.php
-
-        -
-            message: "#^Property App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:\\$defaults has no type specified\\.$#"
-            count: 1
             path: src/Repository/Query/BaseQuery.php
 
         -
@@ -10606,16 +10411,6 @@ parameters:
             path: src/Repository/Query/ProjectFormTypeQuery.php
 
         -
-            message: "#^Method App\\\\Repository\\\\Query\\\\ProjectQuery\\:\\:getCustomers\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/Query/ProjectQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Query\\\\ProjectQuery\\:\\:setCustomers\\(\\) has parameter \\$customers with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/Query/ProjectQuery.php
-
-        -
             message: "#^Cannot call method setBegin\\(\\) on App\\\\Form\\\\Model\\\\DateRange\\|null\\.$#"
             count: 1
             path: src/Repository/Query/TimesheetQuery.php
@@ -10626,27 +10421,12 @@ parameters:
             path: src/Repository/Query/TimesheetQuery.php
 
         -
-            message: "#^Method App\\\\Repository\\\\Query\\\\TimesheetQuery\\:\\:getActivities\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/Query/TimesheetQuery.php
-
-        -
             message: "#^Method App\\\\Repository\\\\Query\\\\TimesheetQuery\\:\\:getTags\\(\\) return type has no value type specified in iterable type iterable\\.$#"
             count: 1
             path: src/Repository/Query/TimesheetQuery.php
 
         -
             message: "#^Method App\\\\Repository\\\\Query\\\\TimesheetQuery\\:\\:setTags\\(\\) has parameter \\$tags with no value type specified in iterable type iterable\\.$#"
-            count: 1
-            path: src/Repository/Query/TimesheetQuery.php
-
-        -
-            message: "#^Property App\\\\Repository\\\\Query\\\\TimesheetQuery\\:\\:\\$activities type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/Query/TimesheetQuery.php
-
-        -
-            message: "#^Property App\\\\Repository\\\\Query\\\\TimesheetQuery\\:\\:\\$tags type has no value type specified in iterable type iterable\\.$#"
             count: 1
             path: src/Repository/Query/TimesheetQuery.php
 

@@ -18,7 +18,7 @@ use App\Repository\Query\UserFormTypeQuery;
  */
 class UserFormTypeQueryTest extends BaseFormTypeQueryTest
 {
-    public function testQuery()
+    public function testQuery(): void
     {
         $sut = new UserFormTypeQuery();
 

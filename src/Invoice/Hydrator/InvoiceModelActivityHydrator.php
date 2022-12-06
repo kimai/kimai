@@ -31,11 +31,12 @@ class InvoiceModelActivityHydrator implements InvoiceModelHydrator
         $values = [];
         $i = 0;
 
-        if (\count($model->getQuery()->getActivities()) === 1) {
-            $values['activity'] = $model->getQuery()->getActivities()[0]->getName();
+        $activities = $model->getQuery()->getActivities();
+        if (\count($activities) === 1) {
+            $values['activity'] = $activities[0]->getName();
         }
 
-        foreach ($model->getQuery()->getActivities() as $activity) {
+        foreach ($activities as $activity) {
             $prefix = '';
             if ($i > 0) {
                 $prefix = $i . '.';

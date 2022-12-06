@@ -18,7 +18,7 @@ use App\Repository\Query\VisibilityInterface;
  */
 class UserQueryTest extends BaseQueryTest
 {
-    public function testQuery()
+    public function testQuery(): void
     {
         $sut = new UserQuery();
         $this->assertBaseQuery($sut, 'user');

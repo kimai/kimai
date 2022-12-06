@@ -17,7 +17,7 @@ use App\Repository\Query\InvoiceQuery;
  */
 class InvoiceQueryTest extends TimesheetQueryTest
 {
-    public function testQuery()
+    public function testQuery(): void
     {
         $sut = new InvoiceQuery();
 

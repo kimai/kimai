@@ -333,13 +333,7 @@ class ActivityRepository extends EntityRepository
                 // projects have a setting to disallow global activities, and we check for it only
                 // if we query for exactly one project (usually used in dropdown queries)
                 if (\count($query->getProjects()) === 1) {
-                    $project = $query->getProjects()[0];
-                    if (!$project instanceof Project) {
-                        $project = $this->getEntityManager()->getRepository(Project::class)->find($project);
-                    }
-                    if ($project instanceof Project) {
-                        $includeGlobals = $project->isGlobalActivities();
-                    }
+                    $includeGlobals = $query->getProjects()[0]->isGlobalActivities();
                 }
                 if ($includeGlobals) {
                     $orX->add($qb->expr()->isNull('a.project'));
@@ -347,10 +341,10 @@ class ActivityRepository extends EntityRepository
             }
 
             $where->add($orX);
-            $qb->setParameter('project', $query->getProjects());
+            $qb->setParameter('project', $query->getProjectIds());
         } elseif ($query->hasCustomers()) {
             $where->add($qb->expr()->in('p.customer', ':customer'));
-            $qb->setParameter('customer', $query->getCustomers());
+            $qb->setParameter('customer', $query->getCustomerIds());
         }
 
         if ($where->count() > 0) {

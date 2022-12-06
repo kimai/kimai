@@ -17,22 +17,10 @@ use App\Utils\FileHelper;
 
 final class ExportFilename
 {
-    /**
-     * @var string
-     */
-    private $filename;
-    /**
-     * @var Customer|null
-     */
-    private $customer;
-    /**
-     * @var Project|null
-     */
-    private $project;
-    /**
-     * @var User|null
-     */
-    private $user;
+    private ?string $filename = null;
+    private ?Customer $customer = null;
+    private ?Project $project = null;
+    private ?User $user = null;
 
     public function __construct(TimesheetQuery $query)
     {

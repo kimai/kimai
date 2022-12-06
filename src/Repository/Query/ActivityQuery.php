@@ -21,7 +21,7 @@ class ActivityQuery extends ProjectQuery
     ];
 
     /**
-     * @var array<Project|int>
+     * @var array<Project>
      */
     private array $projects = [];
     private bool $globalsOnly = false;
@@ -38,12 +38,9 @@ class ActivityQuery extends ProjectQuery
         ]);
     }
 
-    /**
-     * @return bool
-     */
     public function isGlobalsOnly(): bool
     {
-        return (bool) $this->globalsOnly;
+        return $this->globalsOnly;
     }
 
     /**
@@ -69,17 +66,17 @@ class ActivityQuery extends ProjectQuery
         return $this;
     }
 
-    /**
-     * @param Project|int $project
-     * @return self
-     */
-    public function addProject($project): self
+    public function addProject(Project $project): self
     {
         $this->projects[] = $project;
 
         return $this;
     }
 
+    /**
+     * @param array<Project> $projects
+     * @return $this
+     */
     public function setProjects(array $projects): self
     {
         $this->projects = $projects;
@@ -87,9 +84,24 @@ class ActivityQuery extends ProjectQuery
         return $this;
     }
 
+    /**
+     * @return array<Project>
+     */
     public function getProjects(): array
     {
         return $this->projects;
+    }
+
+    /**
+     * @return array<int>
+     */
+    public function getProjectIds(): array
+    {
+        return array_values(array_filter(array_unique(array_map(function (Project $project) {
+            return $project->getId();
+        }, $this->projects)), function ($id) {
+            return $id !== null;
+        }));
     }
 
     public function hasProjects(): bool

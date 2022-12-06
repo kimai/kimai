@@ -507,10 +507,12 @@ final class ServiceInvoice
         }
 
         uasort($customerEntries, function ($a, $b): int {
-            $customerA = $a['customer'] ?? null;
-            $customerB = $b['customer'] ?? null;
-            $nameA = ($customerA instanceof Customer) ? $customerA->getName() : null;
-            $nameB = ($customerB instanceof Customer) ? $customerB->getName() : null;
+            if (!($a['customer'] instanceof Customer) || !($b['customer'] instanceof Customer)) {
+                throw new \Exception('Cannot create invoice without customer');
+            }
+
+            $nameA = $a['customer']->getName();
+            $nameB = $b['customer']->getName();
 
             if ($nameA === null && $nameB === null) {
                 $result = 0;
@@ -526,6 +528,9 @@ final class ServiceInvoice
         });
 
         foreach ($customerEntries as $id => $settings) {
+            if (!($settings['customer'] instanceof Customer)) {
+                throw new \Exception('Cannot create invoice without customer');
+            }
             $customerQuery = clone $query;
             $customerQuery->setCustomers([$settings['customer']]);
             $model = $this->createModelWithoutEntries($customerQuery);

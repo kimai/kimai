@@ -21,7 +21,7 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
     ];
 
     /**
-     * @var array<Customer|int>
+     * @var array<Customer>
      */
     private array $customers = [];
     private ?\DateTime $projectStart = null;
@@ -40,17 +40,17 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
         ]);
     }
 
-    /**
-     * @param Customer|int $customer
-     * @return $this
-     */
-    public function addCustomer($customer)
+    public function addCustomer(Customer $customer): self
     {
         $this->customers[] = $customer;
 
         return $this;
     }
 
+    /**
+     * @param array<Customer> $customers
+     * @return $this
+     */
     public function setCustomers(array $customers): self
     {
         $this->customers = $customers;
@@ -58,9 +58,24 @@ class ProjectQuery extends BaseQuery implements VisibilityInterface
         return $this;
     }
 
+    /**
+     * @return array<Customer>
+     */
     public function getCustomers(): array
     {
         return $this->customers;
+    }
+
+    /**
+     * @return array<int>
+     */
+    public function getCustomerIds(): array
+    {
+        return array_filter(array_values(array_unique(array_map(function (Customer $customer) {
+            return $customer->getId();
+        }, $this->customers))), function ($id) {
+            return $id !== null;
+        });
     }
 
     public function hasCustomers(): bool

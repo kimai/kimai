@@ -18,7 +18,7 @@ use App\Repository\Query\TimesheetQuery;
  */
 class TimesheetQueryTest extends BaseQueryTest
 {
-    public function testQuery()
+    public function testQuery(): void
     {
         $sut = new TimesheetQuery();
 
@@ -51,14 +51,14 @@ class TimesheetQueryTest extends BaseQueryTest
         $this->assertResetByFormError(new TimesheetQuery(), 'begin', 'DESC');
     }
 
-    protected function assertMaxResults(TimesheetQuery $sut)
+    protected function assertMaxResults(TimesheetQuery $sut): void
     {
         self::assertNull($sut->getMaxResults());
         $sut->setMaxResults(999);
         self::assertEquals(999, $sut->getMaxResults());
     }
 
-    protected function assertUser(TimesheetQuery $sut)
+    protected function assertUser(TimesheetQuery $sut): void
     {
         self::assertNull($sut->getUser());
 
@@ -68,7 +68,7 @@ class TimesheetQueryTest extends BaseQueryTest
         self::assertEquals($expected, $sut->getUser());
     }
 
-    protected function assertUsers(TimesheetQuery $sut)
+    protected function assertUsers(TimesheetQuery $sut): void
     {
         self::assertEmpty($sut->getUsers());
 
@@ -92,7 +92,7 @@ class TimesheetQueryTest extends BaseQueryTest
         self::assertCount(2, $sut->getUsers());
     }
 
-    protected function assertState(TimesheetQuery $sut)
+    protected function assertState(TimesheetQuery $sut): void
     {
         self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getState());
         self::assertFalse($sut->isRunning());
@@ -101,7 +101,7 @@ class TimesheetQueryTest extends BaseQueryTest
         $this->assertStateWith($sut, TimesheetQuery::STATE_ALL);
     }
 
-    protected function assertStateWith(TimesheetQuery $sut, int $defaultState)
+    protected function assertStateWith(TimesheetQuery $sut, int $defaultState): void
     {
         self::assertInstanceOf(TimesheetQuery::class, $sut->setState(PHP_INT_MAX));
         self::assertEquals($defaultState, $sut->getState());
@@ -120,7 +120,7 @@ class TimesheetQueryTest extends BaseQueryTest
         self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getState());
     }
 
-    protected function assertExported(TimesheetQuery $sut)
+    protected function assertExported(TimesheetQuery $sut): void
     {
         self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
         self::assertFalse($sut->isExported());
@@ -129,7 +129,7 @@ class TimesheetQueryTest extends BaseQueryTest
         $this->assertExportedWith($sut, TimesheetQuery::STATE_ALL);
     }
 
-    protected function assertExportedWith(TimesheetQuery $sut, int $defaultState)
+    protected function assertExportedWith(TimesheetQuery $sut, int $defaultState): void
     {
         self::assertInstanceOf(TimesheetQuery::class, $sut->setExported(PHP_INT_MAX));
         self::assertEquals($defaultState, $sut->getExported());
@@ -151,7 +151,7 @@ class TimesheetQueryTest extends BaseQueryTest
         self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
     }
 
-    protected function assertModifiedAfter(TimesheetQuery $sut)
+    protected function assertModifiedAfter(TimesheetQuery $sut): void
     {
         self::assertNull($sut->getModifiedAfter());
         $date = new \DateTime('-3 hours');
@@ -161,7 +161,7 @@ class TimesheetQueryTest extends BaseQueryTest
         self::assertSame($date, $sut->getModifiedAfter());
     }
 
-    protected function assertBillable(TimesheetQuery $sut)
+    protected function assertBillable(TimesheetQuery $sut): void
     {
         $sut->setBillable(null);
         self::assertNull($sut->getBillable());

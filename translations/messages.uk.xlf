@@ -306,14 +306,6 @@
         <source>help.rate</source>
         <target state="translated">Погодинна ставка до нарахування</target>
       </trans-unit>
-      <trans-unit id="Gc9jlJc" resname="rate_internal">
-        <source>rate_internal</source>
-        <target state="translated">Внутрішня ставка</target>
-      </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
-        <target state="translated">Внутрішні витрати (якщо не вказано, використовується звичайна ставка)</target>
-      </trans-unit>
       <trans-unit id="Qc5nsFn" resname="recalculate_rates">
         <source>recalculate_rates</source>
         <target state="translated">Перерахувати ставки</target>

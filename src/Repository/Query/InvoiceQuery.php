@@ -15,7 +15,7 @@ use App\Entity\InvoiceTemplate;
 use App\Entity\Project;
 
 /**
- * Find items (eg timesheets) for creating a new invoice.
+ * Find items (e.g. timesheets) for creating a new invoice.
  */
 class InvoiceQuery extends TimesheetQuery
 {
@@ -48,7 +48,7 @@ class InvoiceQuery extends TimesheetQuery
     }
 
     /**
-     * This method ONLY exists, because many templates out there access {{ model.query.customer }} directly.
+     * Helper method, because many templates access {{ model.query.customer }} directly.
      *
      * @return Customer|null
      */
@@ -56,17 +56,14 @@ class InvoiceQuery extends TimesheetQuery
     {
         $customers = $this->getCustomers();
         if (\count($customers) === 1) {
-            $customer = $customers[0];
-            if ($customer instanceof Customer) {
-                return $customer;
-            }
+            return $customers[0];
         }
 
         return null;
     }
 
     /**
-     * This method ONLY exists, because many templates out there access {{ model.query.project }} directly.
+     * Helper method, because many templates access {{ model.query.project }} directly.
      *
      * @return Project|null
      */
@@ -74,17 +71,14 @@ class InvoiceQuery extends TimesheetQuery
     {
         $projects = $this->getProjects();
         if (\count($projects) === 1) {
-            $project = $projects[0];
-            if ($project instanceof Project) {
-                return $project;
-            }
+            return $projects[0];
         }
 
         return null;
     }
 
     /**
-     * This method ONLY exists, because many templates out there access {{ model.query.activity }} directly.
+     * Helper method, because many templates access {{ model.query.activity }} directly.
      *
      * @return Activity|null
      */
@@ -92,10 +86,7 @@ class InvoiceQuery extends TimesheetQuery
     {
         $activities = $this->getActivities();
         if (\count($activities) === 1) {
-            $activity = $activities[0];
-            if ($activity instanceof Activity) {
-                return $activity;
-            }
+            return $activities[0];
         }
 
         return null;

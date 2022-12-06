@@ -9,6 +9,7 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\User;
 use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel;
 use KevinPapst\TablerBundle\Event\MenuEvent;
@@ -38,8 +39,11 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
     {
         $menuEvent = new ConfigureMainMenuEvent();
 
+        /** @var User $user */
+        $user = $this->security->getUser();
+
         // error pages don't have a user and will fail when is_granted() is called
-        if (null !== ($user = $this->security->getUser())) {
+        if (null !== $user) {
             $this->eventDispatcher->dispatch($menuEvent);
         }
 

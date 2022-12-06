@@ -107,7 +107,7 @@ class MenuItemModel implements MenuItemInterface
         return $this->parent;
     }
 
-    public function setParent(MenuItemInterface|MenuItemModel $parent): void
+    public function setParent(MenuItemInterface $parent): void
     {
         if (!($parent instanceof MenuItemModel)) {
             throw new \Exception('MenuItemModel::setParent() expects a MenuItemModel');
@@ -160,7 +160,7 @@ class MenuItemModel implements MenuItemInterface
         return false;
     }
 
-    public function addChild(MenuItemInterface|MenuItemModel $child): void
+    public function addChild(MenuItemInterface $child): void
     {
         if (!($child instanceof MenuItemModel)) {
             throw new \Exception('MenuItemModel::addChild() expects a MenuItemModel');
@@ -181,12 +181,8 @@ class MenuItemModel implements MenuItemInterface
         $this->children[] = $child;
     }
 
-    public function removeChild(MenuItemInterface|MenuItemModel $child): void
+    public function removeChild(MenuItemInterface $child): void
     {
-        if (!($child instanceof MenuItemModel)) {
-            throw new \Exception('MenuItemModel::removeChild() expects a MenuItemModel');
-        }
-
         if (false !== ($key = array_search($child, $this->children))) {
             unset($this->children[$key]);
         }

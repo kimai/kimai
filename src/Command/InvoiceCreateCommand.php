@@ -267,11 +267,16 @@ final class InvoiceCreateCommand extends Command
         $invoices = [];
 
         foreach ($projects as $project) {
+            $customer = $project->getCustomer();
+            if ($customer === null) {
+                throw new \Exception('Project has no customer: ' . $project->getId());
+            }
+
             $query = clone $defaultQuery;
             $query->addProject($project);
-            $query->addCustomer($project->getCustomer());
+            $query->addCustomer($customer);
 
-            $tpl = $this->getTemplateForCustomer($input, $project->getCustomer());
+            $tpl = $this->getTemplateForCustomer($input, $customer);
             if (null === $tpl) {
                 $io->warning(sprintf('Could not find invoice template for project "%s", skipping!', $project->getName()));
                 continue;

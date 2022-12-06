@@ -17,7 +17,7 @@ use App\Repository\Query\TagFormTypeQuery;
  */
 class TagFormTypeQueryTest extends BaseFormTypeQueryTest
 {
-    public function testQuery()
+    public function testQuery(): void
     {
         $sut = new TagFormTypeQuery();
 

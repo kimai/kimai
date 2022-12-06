@@ -8403,16 +8403,6 @@ parameters:
             path: Invoice/Hydrator/InvoiceModelUserHydratorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\InvoiceFilenameTest\\:\\:getNumberGeneratorSut\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/InvoiceFilenameTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\InvoiceFilenameTest\\:\\:testInvoiceFilename\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/InvoiceFilenameTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\InvoiceItemTest\\:\\:testEmptyObject\\(\\) has no return type specified\\.$#"
             count: 1
             path: Invoice/InvoiceItemTest.php
@@ -10003,16 +9993,6 @@ parameters:
             path: Repository/Paginator/QueryBuilderPaginatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\ActivityFormTypeQueryTest\\:\\:testQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/ActivityFormTypeQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\ActivityQueryTest\\:\\:testQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/ActivityQueryTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseFormTypeQueryTest\\:\\:assertActivity\\(\\) has no return type specified\\.$#"
             count: 1
             path: Repository/Query/BaseFormTypeQueryTest.php
@@ -10043,16 +10023,6 @@ parameters:
             path: Repository/Query/BaseFormTypeQueryTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertActivity\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertBaseQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertBaseQuery\\(\\) has parameter \\$order with no type specified\\.$#"
             count: 1
             path: Repository/Query/BaseQueryTest.php
@@ -10063,32 +10033,7 @@ parameters:
             path: Repository/Query/BaseQueryTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertBookmark\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertCustomer\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertDateRangeTrait\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertDateRangeTrait\\(\\) has parameter \\$sut with no type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertFilter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertOrder\\(\\) has no return type specified\\.$#"
             count: 1
             path: Repository/Query/BaseQueryTest.php
 
@@ -10098,32 +10043,7 @@ parameters:
             path: Repository/Query/BaseQueryTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertOrderBy\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertOrderBy\\(\\) has parameter \\$column with no type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertPage\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertPageSize\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertProject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertResetByFormError\\(\\) has no return type specified\\.$#"
             count: 1
             path: Repository/Query/BaseQueryTest.php
 
@@ -10138,44 +10058,9 @@ parameters:
             path: Repository/Query/BaseQueryTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertSearchTerm\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:assertTeams\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:getFormBuilder\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:resetByFormError\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:resetByFormError\\(\\) has parameter \\$invalidFields with no value type specified in iterable type array\\.$#"
             count: 1
             path: Repository/Query/BaseQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\BaseQueryTest\\:\\:testQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/BaseQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\CustomerFormTypeQueryTest\\:\\:testQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/CustomerFormTypeQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\CustomerQueryTest\\:\\:testQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/CustomerQueryTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\ExportQueryTest\\:\\:assertMarkAsExported\\(\\) has no return type specified\\.$#"
@@ -10188,109 +10073,14 @@ parameters:
             path: Repository/Query/ExportQueryTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\ExportQueryTest\\:\\:testQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/ExportQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\InvoiceArchiveQueryTest\\:\\:testQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/InvoiceArchiveQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\InvoiceQueryTest\\:\\:testQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/InvoiceQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\ProjectFormTypeQueryTest\\:\\:testQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/ProjectFormTypeQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\ProjectQueryTest\\:\\:testQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/ProjectQueryTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\ProjectQueryTest\\:\\:testSetter\\(\\) has no return type specified\\.$#"
             count: 1
             path: Repository/Query/ProjectQueryTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\TagFormTypeQueryTest\\:\\:testQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/TagFormTypeQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\TagQueryTest\\:\\:testQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/TagQueryTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\TeamQueryTest\\:\\:assertUsers\\(\\) has no return type specified\\.$#"
             count: 1
             path: Repository/Query/TeamQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\TeamQueryTest\\:\\:testQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/TeamQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\TimesheetQueryTest\\:\\:assertBillable\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/TimesheetQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\TimesheetQueryTest\\:\\:assertExported\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/TimesheetQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\TimesheetQueryTest\\:\\:assertExportedWith\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/TimesheetQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\TimesheetQueryTest\\:\\:assertMaxResults\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/TimesheetQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\TimesheetQueryTest\\:\\:assertModifiedAfter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/TimesheetQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\TimesheetQueryTest\\:\\:assertState\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/TimesheetQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\TimesheetQueryTest\\:\\:assertStateWith\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/TimesheetQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\TimesheetQueryTest\\:\\:assertUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/TimesheetQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\TimesheetQueryTest\\:\\:assertUsers\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/TimesheetQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\TimesheetQueryTest\\:\\:testQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/TimesheetQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\UserFormTypeQueryTest\\:\\:testQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/UserFormTypeQueryTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\UserFormTypeQueryTest\\:\\:testUsersAreAlwaysIncluded\\(\\) has no return type specified\\.$#"
@@ -10304,11 +10094,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\UserQueryTest\\:\\:assertSearchTeam\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/Query/UserQueryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\Query\\\\UserQueryTest\\:\\:testQuery\\(\\) has no return type specified\\.$#"
             count: 1
             path: Repository/Query/UserQueryTest.php
 

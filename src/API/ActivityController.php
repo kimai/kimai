@@ -17,6 +17,7 @@ use App\Form\API\ActivityApiEditForm;
 use App\Form\API\ActivityRateApiForm;
 use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Utils\SearchTerm;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -59,13 +60,13 @@ final class ActivityController extends BaseApiController
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\QueryParam(name: 'project', requirements: '\d+', strict: true, nullable: true, description: 'Project ID to filter activities')]
-    #[Rest\QueryParam(name: 'projects', requirements: '[\d|,]+', strict: true, nullable: true, description: 'Comma separated list of project IDs to filter activities')]
+    #[Rest\QueryParam(name: 'projects', map: true, requirements: '\d+', strict: true, nullable: false, default: [], description: 'List of project IDs to filter activities, e.g.: projects[]=1&projects[]=2')]
     #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', strict: true, nullable: true, description: 'Visibility status to filter activities. Allowed values: 1=visible, 2=hidden, 3=all (default: 1)')]
     #[Rest\QueryParam(name: 'globals', requirements: 'true', strict: true, nullable: true, description: 'Use if you want to fetch only global activities. Allowed values: true (default: false)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|project', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, project (default: name)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term')]
-    public function cgetAction(ParamFetcherInterface $paramFetcher): Response
+    public function cgetAction(ParamFetcherInterface $paramFetcher, ProjectRepository $projectRepository): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -85,14 +86,17 @@ final class ActivityController extends BaseApiController
             $query->setGlobalsOnly(true);
         }
 
-        if (!empty($projects = $paramFetcher->get('projects'))) {
-            if (!\is_array($projects)) {
-                $projects = explode(',', $projects);
-            }
-            $query->setProjects($projects);
+        /** @var array<int> $projects */
+        $projects = $paramFetcher->get('projects');
+        if (!empty($project = $paramFetcher->get('project'))) {
+            $projects[] = $project;
         }
 
-        if (!empty($project = $paramFetcher->get('project'))) {
+        foreach ($projects as $projectId) {
+            $project = $projectRepository->find($projectId);
+            if ($project === null) {
+                throw $this->createNotFoundException('Unknown project: ' . $projectId);
+            }
             $query->addProject($project);
         }
 

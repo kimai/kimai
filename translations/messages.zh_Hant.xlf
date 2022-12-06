@@ -345,14 +345,6 @@
         <source>help.rate</source>
         <target state="translated">每小時費用</target>
       </trans-unit>
-      <trans-unit id="Gc9jlJc" resname="rate_internal">
-        <source>rate_internal</source>
-        <target state="translated">內部費率</target>
-      </trans-unit>
-      <trans-unit id="uz4SmfP" resname="help.rate_internal">
-        <source>help.rate_internal</source>
-        <target state="translated">內部成本（如果未指定，則使用正常費率）</target>
-      </trans-unit>
       <trans-unit id="Qc5nsFn" resname="recalculate_rates">
         <source>recalculate_rates</source>
         <target state="translated">重新計算費率</target>

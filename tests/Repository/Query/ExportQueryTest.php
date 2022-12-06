@@ -17,7 +17,7 @@ use App\Repository\Query\ExportQuery;
  */
 class ExportQueryTest extends TimesheetQueryTest
 {
-    public function testQuery()
+    public function testQuery(): void
     {
         $sut = new ExportQuery();
 

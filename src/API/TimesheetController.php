@@ -16,6 +16,9 @@ use App\Event\TimesheetDuplicatePostEvent;
 use App\Event\TimesheetDuplicatePreEvent;
 use App\Event\TimesheetMetaDefinitionEvent;
 use App\Form\API\TimesheetApiEditForm;
+use App\Repository\ActivityRepository;
+use App\Repository\CustomerRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
@@ -74,14 +77,14 @@ final class TimesheetController extends BaseApiController
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\QueryParam(name: 'user', requirements: '\d+|all', strict: true, nullable: true, description: "User ID to filter timesheets. Needs permission 'view_other_timesheet', pass 'all' to fetch data for all user (default: current user)")]
     #[Rest\QueryParam(name: 'customer', requirements: '\d+', strict: true, nullable: true, description: 'Customer ID to filter timesheets')]
-    #[Rest\QueryParam(name: 'customers', requirements: '[\d|,]+', strict: true, nullable: true, description: 'Comma separated list of customer IDs to filter timesheets')]
+    #[Rest\QueryParam(name: 'customers', map: true, requirements: '\d+', strict: true, nullable: false, default: [], description: 'List of customer IDs to filter, e.g.: customers[]=1&customers[]=2')]
     #[Rest\QueryParam(name: 'project', requirements: '\d+', strict: true, nullable: true, description: 'Project ID to filter timesheets')]
-    #[Rest\QueryParam(name: 'projects', requirements: '[\d|,]+', strict: true, nullable: true, description: 'Comma separated list of project IDs to filter timesheets')]
+    #[Rest\QueryParam(name: 'projects', map: true, requirements: '\d+', strict: true, nullable: false, default: [], description: 'List of project IDs to filter, e.g.: projects[]=1&projects[]=2')]
     #[Rest\QueryParam(name: 'activity', requirements: '\d+', strict: true, nullable: true, description: 'Activity ID to filter timesheets')]
-    #[Rest\QueryParam(name: 'activities', requirements: '[\d|,]+', strict: true, nullable: true, description: 'Comma separated list of activity IDs to filter timesheets')]
+    #[Rest\QueryParam(name: 'activities', map: true, requirements: '\d+', strict: true, nullable: false, default: [], description: 'List of activity IDs to filter, e.g.: activities[]=1&activities[]=2')]
     #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found (default: 1)')]
     #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50)')]
-    #[Rest\QueryParam(name: 'tags', strict: true, nullable: true, description: 'Comma separated list of tag names')]
+    #[Rest\QueryParam(name: 'tags', map: true, strict: true, nullable: true, default: [], description: 'List of tag names, e.g. tags[]=bar&tags[]=foo')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|begin|end|rate', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, begin, end, rate (default: begin)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: DESC)')]
     #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records after this date will be included (format: HTML5)')]
@@ -92,7 +95,7 @@ final class TimesheetController extends BaseApiController
     #[Rest\QueryParam(name: 'full', requirements: 'true', strict: true, nullable: true, description: 'Allows to fetch fully serialized objects including subresources. Allowed values: true (default: false)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term')]
     #[Rest\QueryParam(name: 'modified_after', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records changed after this date will be included (format: HTML5). Available since Kimai 1.10 and works only for records that were created/updated since then.')]
-    public function cgetAction(ParamFetcherInterface $paramFetcher): Response
+    public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository, ProjectRepository $projectRepository, ActivityRepository $activityRepository): Response
     {
         $query = new TimesheetQuery(false);
         $query->setUser($this->getUser());
@@ -104,44 +107,53 @@ final class TimesheetController extends BaseApiController
             $query->setUser($user);
         }
 
-        if (!empty($customers = $paramFetcher->get('customers'))) {
-            if (!\is_array($customers)) {
-                $customers = explode(',', $customers);
-            }
-            $query->setCustomers($customers);
+        /** @var array<int> $customers */
+        $customers = $paramFetcher->get('customers');
+        if (!empty($customer = $paramFetcher->get('customer'))) {
+            $customers[] = $customer;
         }
 
-        if (!empty($customer = $paramFetcher->get('customer'))) {
+        foreach ($customers as $customerId) {
+            $customer = $customerRepository->find($customerId);
+            if ($customer === null) {
+                throw $this->createNotFoundException('Unknown customer: ' . $customerId);
+            }
             $query->addCustomer($customer);
         }
 
-        if (!empty($projects = $paramFetcher->get('projects'))) {
-            if (!\is_array($projects)) {
-                $projects = explode(',', $projects);
-            }
-            $query->setProjects($projects);
+        /** @var array<int> $projects */
+        $projects = $paramFetcher->get('projects');
+        if (!empty($project = $paramFetcher->get('project'))) {
+            $projects[] = $project;
         }
 
-        if (!empty($project = $paramFetcher->get('project'))) {
+        foreach ($projects as $projectId) {
+            $project = $projectRepository->find($projectId);
+            if ($project === null) {
+                throw $this->createNotFoundException('Unknown project: ' . $project);
+            }
             $query->addProject($project);
         }
 
-        if (!empty($activities = $paramFetcher->get('activities'))) {
-            if (!\is_array($activities)) {
-                $activities = explode(',', $activities);
-            }
-            $query->setActivities($activities);
+        /** @var array<int> $activities */
+        $activities = $paramFetcher->get('activities');
+        if (!empty($activity = $paramFetcher->get('activity'))) {
+            $activities[] = $activity;
         }
 
-        if (!empty($activity = $paramFetcher->get('activity'))) {
+        foreach ($activities as $activityId) {
+            $activity = $activityRepository->find($activityId);
+            if ($activity === null) {
+                throw $this->createNotFoundException('Unknown activity: ' . $activity);
+            }
             $query->addActivity($activity);
         }
 
-        if (null !== ($page = $paramFetcher->get('page'))) {
+        if (null !== ($page = $paramFetcher->get('page')) && \is_int($page)) {
             $query->setPage($page);
         }
 
-        if (null !== ($size = $paramFetcher->get('size'))) {
+        if (null !== ($size = $paramFetcher->get('size')) && \is_int($size)) {
             $query->setPageSize($size);
         }
 
