@@ -52,9 +52,9 @@ abstract class BaseFormTypeQueryTest extends TestCase
         /* @phpstan-ignore-next-line  */
         self::assertSame($team, $sut->getTeams()[0]);
 
-        self::assertInstanceOf(BaseFormTypeQuery::class, $sut->setTeams([]));
+        $sut->setTeams([]);
         self::assertEmpty($sut->getTeams());
-        self::assertInstanceOf(BaseFormTypeQuery::class, $sut->setTeams([new Team('foo'), new Team('foo')]));
+        $sut->setTeams([new Team('foo'), new Team('foo')]);
         self::assertCount(2, $sut->getTeams());
     }
 
@@ -78,10 +78,6 @@ abstract class BaseFormTypeQueryTest extends TestCase
         $this->assertEquals([], $sut->getActivities());
         $this->assertFalse($sut->hasActivities());
         $this->assertFalse($sut->hasActivities());
-
-        // make sure int is allowed as well
-        $sut->setActivities([99]);
-        $this->assertEquals([99], $sut->getActivities());
     }
 
     protected function assertCustomer(BaseFormTypeQuery $sut)
@@ -102,10 +98,6 @@ abstract class BaseFormTypeQueryTest extends TestCase
         $this->assertEquals([], $sut->getCustomers());
         $this->assertFalse($sut->hasCustomers());
         $this->assertFalse($sut->hasCustomers());
-
-        // make sure int is allowed as well
-        $sut->setCustomers([99]);
-        $this->assertEquals([99], $sut->getCustomers());
     }
 
     protected function assertProject(BaseFormTypeQuery $sut)

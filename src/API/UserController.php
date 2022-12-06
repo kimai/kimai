@@ -27,6 +27,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -55,7 +56,7 @@ final class UserController extends BaseApiController
     #[Rest\Get(path: '', name: 'get_users')]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', strict: true, nullable: true, description: 'Visibility status to filter users. Allowed values: 1=visible, 2=hidden, 3=all (default: 1)')]
+    #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', default: 1, strict: true, nullable: true, description: 'Visibility status to filter users: 1=visible, 2=hidden, 3=all')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|username|alias|email', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, username, alias, email (default: username)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term')]
@@ -64,19 +65,23 @@ final class UserController extends BaseApiController
         $query = new UserQuery();
         $query->setCurrentUser($this->getUser());
 
-        if (null !== ($visible = $paramFetcher->get('visible'))) {
-            $query->setVisibility($visible);
+        $visible = $paramFetcher->get('visible');
+        if (\is_string($visible) && $visible !== '') {
+            $query->setVisibility((int) $visible);
         }
 
-        if (null !== ($order = $paramFetcher->get('order'))) {
+        $order = $paramFetcher->get('order');
+        if (\is_string($order) && $order !== '') {
             $query->setOrder($order);
         }
 
-        if (null !== ($orderBy = $paramFetcher->get('orderBy'))) {
+        $orderBy = $paramFetcher->get('orderBy');
+        if (\is_string($orderBy) && $orderBy !== '') {
             $query->setOrderBy($orderBy);
         }
 
-        if (!empty($term = $paramFetcher->get('term'))) {
+        $term = $paramFetcher->get('term');
+        if (\is_string($term) && $term !== '') {
             $query->setSearchTerm(new SearchTerm($term));
         }
 
@@ -149,7 +154,11 @@ final class UserController extends BaseApiController
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $password = $this->passwordHasher->hashPassword($user, $user->getPlainPassword());
+            $plainPassword = $user->getPlainPassword();
+            if ($plainPassword === null) {
+                throw new BadRequestHttpException('Password cannot be empty');
+            }
+            $password = $this->passwordHasher->hashPassword($user, $plainPassword);
             $user->setPassword($password);
 
             if ($user->getPlainApiToken() !== null) {

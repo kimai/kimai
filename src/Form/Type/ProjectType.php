@@ -67,6 +67,7 @@ class ProjectType extends AbstractType
                 if ($project->getCustomer() === null) {
                     return null;
                 }
+
                 return $this->customerHelper->getChoiceLabel($project->getCustomer());
             },
             'query_builder_for_user' => true,

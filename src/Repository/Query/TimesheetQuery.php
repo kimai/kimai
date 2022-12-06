@@ -35,9 +35,9 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
     private ?int $maxResults = null;
     private ?\DateTime $modifiedAfter = null;
     /**
-     * @var iterable<Tag>
+     * @var array<Tag>
      */
-    private iterable $tags = [];
+    private array $tags = [];
     /**
      * @var array<User>
      */
@@ -96,7 +96,7 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
     /**
      * Limit the data exclusively to the user.
      */
-    public function getUser(): User|int|null
+    public function getUser(): ?User
     {
         return $this->timesheetUser;
     }
@@ -104,11 +104,9 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
     /**
      * Limit the data exclusively to the user.
      */
-    public function setUser(User|int|null $user = null): TimesheetQuery
+    public function setUser(?User $user): void
     {
         $this->timesheetUser = $user;
-
-        return $this;
     }
 
     /**
@@ -192,39 +190,33 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface
         return $this->exported === self::STATE_NOT_EXPORTED;
     }
 
-    public function setExported(int $exported): TimesheetQuery
+    public function setExported(int $exported): void
     {
-        $exported = (int) $exported;
-        if (\in_array($exported, [self::STATE_ALL, self::STATE_EXPORTED, self::STATE_NOT_EXPORTED], true)) {
-            $this->exported = $exported;
+        if (!\in_array($exported, [self::STATE_ALL, self::STATE_EXPORTED, self::STATE_NOT_EXPORTED], true)) {
+            throw new \InvalidArgumentException('Unknown export state given');
         }
 
-        return $this;
+        $this->exported = $exported;
     }
 
-    public function getTags(bool $allowUnknown = false): iterable
+    /**
+     * @return array<Tag>
+     */
+    public function getTags(): array
     {
-        if (empty($this->tags)) {
-            return [];
-        }
-
-        $result = [];
-
-        foreach ($this->tags as $tag) {
-            if (!$allowUnknown && $tag instanceof Tag && null === $tag->getId()) {
-                continue;
-            }
-            $result[] = $tag;
-        }
-
-        return $result;
+        return array_values($this->tags);
     }
 
-    public function setTags(iterable $tags): TimesheetQuery
+    public function removeTag(Tag $tag): void
     {
-        $this->tags = $tags;
+        if (isset($this->tags[$tag->getId()])) {
+            unset($this->tags[$tag->getId()]);
+        }
+    }
 
-        return $this;
+    public function addTag(Tag $tag): void
+    {
+        $this->tags[$tag->getId()] = $tag;
     }
 
     public function getModifiedAfter(): ?\DateTime

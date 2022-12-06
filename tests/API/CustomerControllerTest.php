@@ -338,8 +338,8 @@ class CustomerControllerTest extends APIControllerBaseTest
     public function testMetaActionThrowsExceptionOnMissingMetafield()
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['name' => 'X', 'value' => 'Y'], [
-            'code' => 500,
-            'message' => 'Internal Server Error'
+            'code' => 404,
+            'message' => 'Not Found'
         ]);
     }
 

@@ -31,7 +31,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/activities')]
@@ -60,9 +59,9 @@ final class ActivityController extends BaseApiController
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\QueryParam(name: 'project', requirements: '\d+', strict: true, nullable: true, description: 'Project ID to filter activities')]
-    #[Rest\QueryParam(name: 'projects', map: true, requirements: '\d+', strict: true, nullable: false, default: [], description: 'List of project IDs to filter activities, e.g.: projects[]=1&projects[]=2')]
-    #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', strict: true, nullable: true, description: 'Visibility status to filter activities. Allowed values: 1=visible, 2=hidden, 3=all (default: 1)')]
-    #[Rest\QueryParam(name: 'globals', requirements: 'true', strict: true, nullable: true, description: 'Use if you want to fetch only global activities. Allowed values: true (default: false)')]
+    #[Rest\QueryParam(name: 'projects', map: true, requirements: '\d+', strict: true, nullable: true, default: [], description: 'List of project IDs to filter activities, e.g.: projects[]=1&projects[]=2')]
+    #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', default: 1, strict: true, nullable: true, description: 'Visibility status to filter activities: 1=visible, 2=hidden, 3=all')]
+    #[Rest\QueryParam(name: 'globals', strict: true, nullable: true, description: 'Use if you want to fetch only global activities. Allowed values: true (default: false)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|project', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, project (default: name)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term')]
@@ -74,11 +73,13 @@ final class ActivityController extends BaseApiController
         $query = new ActivityQuery();
         $query->setCurrentUser($user);
 
-        if (null !== ($order = $paramFetcher->get('order'))) {
+        $order = $paramFetcher->get('order');
+        if (\is_string($order) && $order !== '') {
             $query->setOrder($order);
         }
 
-        if (null !== ($orderBy = $paramFetcher->get('orderBy'))) {
+        $orderBy = $paramFetcher->get('orderBy');
+        if (\is_string($orderBy) && $orderBy !== '') {
             $query->setOrderBy($orderBy);
         }
 
@@ -88,11 +89,12 @@ final class ActivityController extends BaseApiController
 
         /** @var array<int> $projects */
         $projects = $paramFetcher->get('projects');
-        if (!empty($project = $paramFetcher->get('project'))) {
+        $project = $paramFetcher->get('project');
+        if (\is_string($project) && $project !== '') {
             $projects[] = $project;
         }
 
-        foreach ($projects as $projectId) {
+        foreach (array_unique($projects) as $projectId) {
             $project = $projectRepository->find($projectId);
             if ($project === null) {
                 throw $this->createNotFoundException('Unknown project: ' . $projectId);
@@ -100,11 +102,13 @@ final class ActivityController extends BaseApiController
             $query->addProject($project);
         }
 
-        if (null !== ($visible = $paramFetcher->get('visible'))) {
-            $query->setVisibility($visible);
+        $visible = $paramFetcher->get('visible');
+        if (\is_string($visible) && $visible !== '') {
+            $query->setVisibility((int) $visible);
         }
 
-        if (!empty($term = $paramFetcher->get('term'))) {
+        $term = $paramFetcher->get('term');
+        if (\is_string($term) && $term !== '') {
             $query->setSearchTerm(new SearchTerm($term));
         }
 
@@ -142,7 +146,7 @@ final class ActivityController extends BaseApiController
     public function postAction(Request $request): Response
     {
         if (!$this->isGranted('create_activity')) {
-            throw new AccessDeniedHttpException('User cannot create activities');
+            throw $this->createAccessDeniedException('User cannot create activities');
         }
 
         $activity = new Activity();
@@ -230,7 +234,7 @@ final class ActivityController extends BaseApiController
         $value = $paramFetcher->get('value');
 
         if (null === ($meta = $activity->getMetaField($name))) {
-            throw new \InvalidArgumentException('Unknown meta-field requested');
+            throw $this->createNotFoundException('Unknown meta-field requested');
         }
 
         $meta->setValue($value);
@@ -276,7 +280,7 @@ final class ActivityController extends BaseApiController
     public function deleteRateAction(Activity $activity, ActivityRate $rate): Response
     {
         if ($rate->getActivity() !== $activity) {
-            throw new NotFoundException();
+            throw $this->createNotFoundException();
         }
 
         $this->activityRateRepository->deleteRate($rate);

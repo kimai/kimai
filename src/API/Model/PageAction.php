@@ -68,6 +68,6 @@ class PageAction
         $this->class = $settings['class'] ?? null;
         $this->attr = $settings['attr'] ?? [];
 
-        $this->divider = ($title === 'trash' || (str_contains($title, 'divider') && empty($this->url)));
+        $this->divider = ($title === 'trash' || (str_contains($title, 'divider') && ($this->url === null || $this->url === '')));
     }
 }

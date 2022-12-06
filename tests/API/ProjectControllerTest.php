@@ -159,7 +159,7 @@ class ProjectControllerTest extends APIControllerBaseTest
     /**
      * @dataProvider getCollectionTestData
      */
-    public function testGetCollectionWithParams($url, $customer, $parameters, $expected)
+    public function testGetCollectionWithParams($url, $customer, $parameters, $expected): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $imports = $this->loadProjectTestData($client);
@@ -169,11 +169,18 @@ class ProjectControllerTest extends APIControllerBaseTest
         if ($customerId !== null) {
             if (\array_key_exists('customer', $parameters)) {
                 $parameters['customer'] = $customerId;
-            } elseif (\array_key_exists('customers', $parameters)) {
-                if (stripos($parameters['customers'], ',') !== false) {
-                    $parameters['customers'] = $customerId . ',' . $customerId;
+            }
+            if (\array_key_exists('customers', $parameters)) {
+                if (!\is_array($parameters['customers'])) {
+                    throw new \InvalidArgumentException('customers needs to be an array');
+                }
+                $count = \count($parameters['customers']);
+                if ($count === 2) {
+                    $parameters['customers'] = [$customerId, $customerId];
+                } elseif ($count === 1) {
+                    $parameters['customers'] = [$customerId];
                 } else {
-                    $parameters['customers'] = (string) $customerId;
+                    throw new \InvalidArgumentException('Invalid count for customers');
                 }
             }
         }
@@ -193,7 +200,10 @@ class ProjectControllerTest extends APIControllerBaseTest
         }
     }
 
-    public function getCollectionTestData()
+    /**
+     * @return \Generator<array<mixed>>
+     */
+    public function getCollectionTestData(): iterable
     {
         // if you wonder why: case-sensitive ordering feels strange ... "Title" > "fifth”
         yield ['/api/projects', null, [], [[true, 1], [false, 1], [false, 3]]];
@@ -201,15 +211,15 @@ class ProjectControllerTest extends APIControllerBaseTest
         yield ['/api/projects', 0, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_VISIBLE], [[true, 1], [false, 1]]];
         yield ['/api/projects', 0, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_BOTH], [[true, 1], [false, 1], [false, 1]]];
         yield ['/api/projects', 0, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_HIDDEN], [[false, 1]]];
-        // customer is invisible, so nothing should be returned
+        // customer is invisible => query only returns results for VisibilityInterface::SHOW_BOTH
         yield ['/api/projects', 1, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_VISIBLE], []];
         yield ['/api/projects', 1, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
-        yield ['/api/projects', 1, ['customer' => '2', 'customers' => '2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
-        yield ['/api/projects', 1, ['customer' => '2', 'customers' => '2,2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
-        // customer is invisible, so nothing should be returned
+        yield ['/api/projects', 1, ['customer' => '2', 'customers' => ['2'], 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
+        yield ['/api/projects', 1, ['customers' => ['2', '2'], 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
+        yield ['/api/projects', 1, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN], []];
         yield ['/api/projects', 1, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
-        yield ['/api/projects', 1, ['customers' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
-        yield ['/api/projects', 1, ['customers' => '2,2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
+        yield ['/api/projects', 1, ['customers' => ['2'], 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
+        yield ['/api/projects', 1, ['customers' => ['2', '2'], 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
     }
 
     public function testGetEntity()
@@ -498,8 +508,8 @@ class ProjectControllerTest extends APIControllerBaseTest
     public function testMetaActionThrowsExceptionOnMissingMetafield()
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/projects/1/meta', ['name' => 'X', 'value' => 'Y'], [
-            'code' => 500,
-            'message' => 'Internal Server Error'
+            'code' => 404,
+            'message' => 'Not Found'
         ]);
     }
 

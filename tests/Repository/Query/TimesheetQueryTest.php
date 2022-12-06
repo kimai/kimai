@@ -64,7 +64,7 @@ class TimesheetQueryTest extends BaseQueryTest
 
         $expected = new User();
         $expected->setUserIdentifier('foo-bar');
-        self::assertInstanceOf(TimesheetQuery::class, $sut->setUser($expected));
+        $sut->setUser($expected);
         self::assertEquals($expected, $sut->getUser());
     }
 
@@ -131,7 +131,6 @@ class TimesheetQueryTest extends BaseQueryTest
 
     protected function assertExportedWith(TimesheetQuery $sut, int $defaultState): void
     {
-        self::assertInstanceOf(TimesheetQuery::class, $sut->setExported(PHP_INT_MAX));
         self::assertEquals($defaultState, $sut->getExported());
 
         $sut->setExported(TimesheetQuery::STATE_EXPORTED);
@@ -147,8 +146,15 @@ class TimesheetQueryTest extends BaseQueryTest
         $sut->setExported(TimesheetQuery::STATE_ALL);
         self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
 
-        $sut->setExported(2);
-        self::assertEquals(TimesheetQuery::STATE_ALL, $sut->getExported());
+        $catched = false;
+        try {
+            $sut->setExported(2);
+        } catch (\InvalidArgumentException $exception) {
+            $catched = true;
+            $this->assertEquals('Unknown export state given', $exception->getMessage());
+        }
+
+        self::assertTrue($catched);
     }
 
     protected function assertModifiedAfter(TimesheetQuery $sut): void

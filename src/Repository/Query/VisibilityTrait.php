@@ -18,14 +18,12 @@ trait VisibilityTrait
         return $this->visibility;
     }
 
-    public function setVisibility($visibility)
+    public function setVisibility(int $visibility): void
     {
-        $visibility = (int) $visibility;
-        if (\in_array($visibility, VisibilityInterface::ALLOWED_VISIBILITY_STATES, true)) {
-            $this->visibility = $visibility;
+        if (!\in_array($visibility, VisibilityInterface::ALLOWED_VISIBILITY_STATES, true)) {
+            throw new \InvalidArgumentException('Unknown visibility given');
         }
-
-        return $this;
+        $this->visibility = $visibility;
     }
 
     public function isShowHidden(): bool

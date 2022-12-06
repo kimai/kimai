@@ -33,7 +33,6 @@ use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
@@ -61,15 +60,6 @@ abstract class TimesheetAbstractController extends AbstractController
         $form = $this->getToolbarForm($query);
         if ($this->handleSearch($form, $request)) {
             return $this->redirectToRoute($route);
-        }
-
-        $tags = $query->getTags(true);
-        if (!empty($tags)) {
-            $query->setTags(
-                new ArrayCollection(
-                    $this->tagRepository->findIdsByTagNameList(implode(',', $tags))
-                )
-            );
         }
 
         $canSeeRate = $this->canSeeRate();

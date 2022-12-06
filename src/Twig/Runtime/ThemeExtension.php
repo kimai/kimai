@@ -128,7 +128,9 @@ final class ThemeExtension implements RuntimeExtensionInterface
         $date = new \DateTime('now', new \DateTimeZone($timezone));
         $date->setTime(0, 0, 0);
 
-        $presets[] = $date->format($format);
+        $presets = [
+            $date->format($format)
+        ];
 
         for ($minutes = $intervalMinutes; $minutes <= $maxMinutes; $minutes += $intervalMinutes) {
             $date->modify('+' . $intervalMinutes . ' minutes');

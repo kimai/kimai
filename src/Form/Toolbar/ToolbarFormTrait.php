@@ -10,6 +10,8 @@
 namespace App\Form\Toolbar;
 
 use App\Entity\Activity;
+use App\Entity\Customer;
+use App\Entity\Project;
 use App\Form\Type\ActivityType;
 use App\Form\Type\BillableSearchType;
 use App\Form\Type\CustomerType;
@@ -118,6 +120,7 @@ trait ToolbarFormTrait
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) use ($builder, $options, $name, $multiCustomer, $multiProject) {
+                /** @var array<string, mixed> $data */
                 $data = $event->getData();
                 $event->getForm()->add($name, CustomerType::class, array_merge([
                     'multiple' => $multiCustomer,
@@ -126,15 +129,17 @@ trait ToolbarFormTrait
                     'project_select' => $multiProject ? 'projects' : 'project',
                     'end_date_param' => '%daterange%',
                     'start_date_param' => '%daterange%',
-                    'query_builder' => function (CustomerRepository $repo) use ($builder, $data, $name, $multiCustomer) {
+                    'query_builder' => function (CustomerRepository $repo) use ($builder, $data, $name) {
                         $query = new CustomerFormTypeQuery();
                         $query->setUser($builder->getOption('user'));
 
-                        if (isset($data[$name]) && !empty($data[$name])) {
-                            if ($multiCustomer) {
-                                $query->setCustomers($data[$name]);
-                            } else {
-                                $query->addCustomer($data[$name]);
+                        if (\array_key_exists($name, $data) && $data[$name] !== null && $data[$name] !== '') {
+                            $customers = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
+                            foreach ($customers as $customer) {
+                                if (!($customer instanceof Customer)) {
+                                    throw new \Exception('Need a customer object for customer select');
+                                }
+                                $query->addCustomer($customer);
                             }
                         }
 
@@ -219,6 +224,7 @@ trait ToolbarFormTrait
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) use ($builder, $options, $name, $multiCustomer, $multiProject, $multiActivity) {
+                /** @var array<string, mixed> $data */
                 $data = $event->getData();
                 $event->getForm()->add($name, ProjectType::class, array_merge([
                     'multiple' => $multiProject,
@@ -230,20 +236,24 @@ trait ToolbarFormTrait
                         $query->setUser($builder->getOption('user'));
 
                         $name = $multiCustomer ? 'customers' : 'customer';
-                        if (isset($data[$name]) && !empty($data[$name])) {
-                            if (\is_array($data[$name])) {
-                                $query->setCustomers($data[$name]);
-                            } else {
-                                $query->addCustomer($data[$name]);
+                        if (\array_key_exists($name, $data) && $data[$name] !== null && $data[$name] !== '') {
+                            $customers = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
+                            foreach ($customers as $customer) {
+                                if (!($customer instanceof Customer)) {
+                                    throw new \Exception('Need a customer object for project select');
+                                }
+                                $query->addCustomer($customer);
                             }
                         }
 
                         $name = $multiProject ? 'projects' : 'project';
-                        if (isset($data[$name]) && !empty($data[$name])) {
-                            if (\is_array($data[$name])) {
-                                $query->setProjects($data[$name]);
-                            } else {
-                                $query->addProject($data[$name]);
+                        if (\array_key_exists($name, $data) && $data[$name] !== null && $data[$name] !== '') {
+                            $projects = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
+                            foreach ($projects as $project) {
+                                if (!($project instanceof Project)) {
+                                    throw new \Exception('Need a project object for project select');
+                                }
+                                $query->addProject($project);
                             }
                         }
 
@@ -289,6 +299,7 @@ trait ToolbarFormTrait
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) use ($name, $multiActivity, $multiProject) {
+                /** @var array<string, mixed> $data */
                 $data = $event->getData();
                 $event->getForm()->add($name, ActivityType::class, [
                     'multiple' => $multiActivity,
@@ -297,30 +308,25 @@ trait ToolbarFormTrait
                         $query = new ActivityFormTypeQuery();
 
                         $name = $multiActivity ? 'activities' : 'activity';
-                        if (isset($data[$name]) && !empty($data[$name])) {
+                        if (\array_key_exists($name, $data) && $data[$name] !== null && $data[$name] !== '') {
                             // we need to pre-fetch the activities to see if they are global, see ActivityFormTypeQuery::isGlobalsOnly()
-                            $activities = $data[$name];
-                            if (!\is_array($activities)) {
-                                $activities = [$activities];
-                            }
+                            $activities = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
                             foreach ($activities as $activity) {
-                                if ($activity instanceof Activity) {
-                                    $query->addActivity($activity);
-                                } elseif ($activity !== null) {
-                                    $tmp = $repo->find($activity);
-                                    if (null !== $tmp) {
-                                        $query->addActivity($tmp);
-                                    }
+                                if (!($activity instanceof Activity)) {
+                                    throw new \Exception('Need an activity object for activity select');
                                 }
+                                $query->addActivity($activity);
                             }
                         }
 
                         $name = $multiProject ? 'projects' : 'project';
-                        if (isset($data[$name]) && !empty($data[$name])) {
-                            if ($multiProject) {
-                                $query->setProjects($data[$name]);
-                            } else {
-                                $query->addProject($data[$name]);
+                        if (\array_key_exists($name, $data) && $data[$name] !== null && $data[$name] !== '') {
+                            $projects = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
+                            foreach ($projects as $project) {
+                                if (!($project instanceof Project)) {
+                                    throw new \Exception('Need a project object for activity select');
+                                }
+                                $query->addProject($project);
                             }
                         }
 
@@ -374,7 +380,8 @@ trait ToolbarFormTrait
     protected function addTagInputField(FormBuilderInterface $builder): void
     {
         $builder->add('tags', TagsType::class, [
-            'required' => false
+            'required' => false,
+            'allow_create' => false,
         ]);
     }
 

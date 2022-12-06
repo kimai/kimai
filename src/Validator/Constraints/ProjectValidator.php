@@ -41,11 +41,11 @@ class ProjectValidator extends ConstraintValidator
 
         $this->validateProject($value, $this->context);
 
-        foreach ($this->constraints as $constraint) {
+        foreach ($this->constraints as $innerConstraint) {
             $this->context
                 ->getValidator()
                 ->inContext($this->context)
-                ->validate($value, $constraint, [Constraint::DEFAULT_GROUP]);
+                ->validate($value, $innerConstraint, [Constraint::DEFAULT_GROUP]);
         }
     }
 

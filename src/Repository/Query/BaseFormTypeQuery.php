@@ -18,50 +18,39 @@ use App\Entity\User;
 abstract class BaseFormTypeQuery
 {
     /**
-     * @var array
+     * @var array<Activity|int>
      */
-    private $activities = [];
+    private array $activities = [];
     /**
-     * @var array
+     * @var array<Project|int>
      */
-    private $projects = [];
+    private array $projects = [];
     /**
-     * @var array
+     * @var array<Customer|int>
      */
-    private $customers = [];
-    /**
-     * @var User
-     */
-    private $user;
+    private array $customers = [];
+    private ?User $user = null;
     /**
      * @var array<Team>
      */
-    private $teams = [];
+    private array $teams = [];
 
-    /**
-     * @param Activity|int $activity
-     * @return self
-     */
-    public function addActivity($activity): self
+    public function addActivity(Activity $activity): void
     {
-        if (null !== $activity) {
-            $this->activities[] = $activity;
-        }
-
-        return $this;
+        $this->activities[] = $activity;
     }
 
     /**
-     * @param Activity[]|int[] $activities
-     * @return self
+     * @param array<Activity|int> $activities
      */
-    public function setActivities(array $activities): self
+    public function setActivities(array $activities): void
     {
         $this->activities = $activities;
-
-        return $this;
     }
 
+    /**
+     * @return array<Activity|int>
+     */
     public function getActivities(): array
     {
         return $this->activities;
@@ -69,35 +58,24 @@ abstract class BaseFormTypeQuery
 
     public function hasActivities(): bool
     {
-        return !empty($this->activities);
+        return \count($this->activities) > 0;
     }
 
-    /**
-     * @param Project|int $project
-     * @return self
-     */
-    public function addProject($project): self
+    public function addProject(Project $project): void
     {
-        if (null !== $project) {
-            $this->projects[] = $project;
-        }
-
-        return $this;
+        $this->projects[] = $project;
     }
 
     /**
-     * @param Project[]|int[] $projects
-     * @return self
+     * @param array<Project|int> $projects
      */
-    public function setProjects(array $projects): self
+    public function setProjects(array $projects): void
     {
         $this->projects = $projects;
-
-        return $this;
     }
 
     /**
-     * @return array
+     * @return array<Project|int>
      */
     public function getProjects(): array
     {
@@ -106,31 +84,25 @@ abstract class BaseFormTypeQuery
 
     public function hasProjects(): bool
     {
-        return !empty($this->projects);
+        return \count($this->projects) > 0;
     }
 
     /**
-     * @param Customer[]|int[] $customers
-     * @return self
+     * @param array<Customer|int> $customers
      */
-    public function setCustomers(array $customers): self
+    public function setCustomers(array $customers): void
     {
         $this->customers = $customers;
+    }
 
-        return $this;
+    public function addCustomer(Customer $customer): void
+    {
+        $this->customers[] = $customer;
     }
 
     /**
-     * @param Customer|int $customer
-     * @return self
+     * @return array<Customer|int>
      */
-    public function addCustomer($customer): self
-    {
-        $this->customers[] = $customer;
-
-        return $this;
-    }
-
     public function getCustomers(): array
     {
         return $this->customers;
@@ -138,7 +110,7 @@ abstract class BaseFormTypeQuery
 
     public function hasCustomers(): bool
     {
-        return !empty($this->customers);
+        return \count($this->customers) > 0;
     }
 
     public function getUser(): ?User
@@ -161,18 +133,15 @@ abstract class BaseFormTypeQuery
     }
 
     /**
-     * @param Team[] $teams
-     * @return self
+     * @param array<Team> $teams
      */
-    public function setTeams(array $teams): self
+    public function setTeams(array $teams): void
     {
         $this->teams = $teams;
-
-        return $this;
     }
 
     /**
-     * @return Team[]
+     * @return array<Team>
      */
     public function getTeams(): array
     {

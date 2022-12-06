@@ -21,13 +21,11 @@ class ColorChoicesValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, ColorChoices::class);
         }
 
-        $color = $value;
-
-        if ($color === null || (\is_string($color) && empty(trim($color)))) {
+        if ($value === null || (\is_string($value) && trim($value) === '')) {
             return;
         }
 
-        $colors = explode(',', $color);
+        $colors = explode(',', $value);
 
         foreach ($colors as $color) {
             $color = explode('|', $color);

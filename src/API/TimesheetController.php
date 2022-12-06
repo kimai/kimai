@@ -22,11 +22,11 @@ use App\Repository\ProjectRepository;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TagRepository;
 use App\Repository\TimesheetRepository;
+use App\Repository\UserRepository;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Utils\SearchTerm;
 use App\Validator\ValidationFailedException;
-use Doctrine\Common\Collections\ArrayCollection;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
@@ -37,7 +37,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -77,11 +76,11 @@ final class TimesheetController extends BaseApiController
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\QueryParam(name: 'user', requirements: '\d+|all', strict: true, nullable: true, description: "User ID to filter timesheets. Needs permission 'view_other_timesheet', pass 'all' to fetch data for all user (default: current user)")]
     #[Rest\QueryParam(name: 'customer', requirements: '\d+', strict: true, nullable: true, description: 'Customer ID to filter timesheets')]
-    #[Rest\QueryParam(name: 'customers', map: true, requirements: '\d+', strict: true, nullable: false, default: [], description: 'List of customer IDs to filter, e.g.: customers[]=1&customers[]=2')]
+    #[Rest\QueryParam(name: 'customers', map: true, requirements: '\d+', strict: true, nullable: true, default: [], description: 'List of customer IDs to filter, e.g.: customers[]=1&customers[]=2')]
     #[Rest\QueryParam(name: 'project', requirements: '\d+', strict: true, nullable: true, description: 'Project ID to filter timesheets')]
-    #[Rest\QueryParam(name: 'projects', map: true, requirements: '\d+', strict: true, nullable: false, default: [], description: 'List of project IDs to filter, e.g.: projects[]=1&projects[]=2')]
+    #[Rest\QueryParam(name: 'projects', map: true, requirements: '\d+', strict: true, nullable: true, default: [], description: 'List of project IDs to filter, e.g.: projects[]=1&projects[]=2')]
     #[Rest\QueryParam(name: 'activity', requirements: '\d+', strict: true, nullable: true, description: 'Activity ID to filter timesheets')]
-    #[Rest\QueryParam(name: 'activities', map: true, requirements: '\d+', strict: true, nullable: false, default: [], description: 'List of activity IDs to filter, e.g.: activities[]=1&activities[]=2')]
+    #[Rest\QueryParam(name: 'activities', map: true, requirements: '\d+', strict: true, nullable: true, default: [], description: 'List of activity IDs to filter, e.g.: activities[]=1&activities[]=2')]
     #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found (default: 1)')]
     #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50)')]
     #[Rest\QueryParam(name: 'tags', map: true, strict: true, nullable: true, default: [], description: 'List of tag names, e.g. tags[]=bar&tags[]=foo')]
@@ -92,28 +91,37 @@ final class TimesheetController extends BaseApiController
     #[Rest\QueryParam(name: 'exported', requirements: '0|1', strict: true, nullable: true, description: 'Use this flag if you want to filter for export state. Allowed values: 0=not exported, 1=exported (default: all)')]
     #[Rest\QueryParam(name: 'active', requirements: '0|1', strict: true, nullable: true, description: 'Filter for running/active records. Allowed values: 0=stopped, 1=active (default: all)')]
     #[Rest\QueryParam(name: 'billable', requirements: '0|1', strict: true, nullable: true, description: 'Filter for non-/billable records. Allowed values: 0=non-billable, 1=billable (default: all)')]
-    #[Rest\QueryParam(name: 'full', requirements: 'true', strict: true, nullable: true, description: 'Allows to fetch fully serialized objects including subresources. Allowed values: true (default: false)')]
+    #[Rest\QueryParam(name: 'full', strict: true, nullable: true, description: 'Allows to fetch fully serialized objects including subresources. Allowed values: true (default: false)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term')]
     #[Rest\QueryParam(name: 'modified_after', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records changed after this date will be included (format: HTML5). Available since Kimai 1.10 and works only for records that were created/updated since then.')]
-    public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository, ProjectRepository $projectRepository, ActivityRepository $activityRepository): Response
+    public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository, ProjectRepository $projectRepository, ActivityRepository $activityRepository, UserRepository $userRepository): Response
     {
         $query = new TimesheetQuery(false);
         $query->setUser($this->getUser());
 
-        if ($this->isGranted('view_other_timesheet') && null !== ($user = $paramFetcher->get('user'))) {
-            if ('all' === $user) {
-                $user = null;
+        if ($this->isGranted('view_other_timesheet')) {
+            $userId = $paramFetcher->get('user');
+            if (\is_string($userId) && $userId !== '') {
+                if ('all' === $userId) {
+                    $query->setUser(null);
+                } else {
+                    $user = $userRepository->find($userId);
+                    if ($user === null) {
+                        throw $this->createNotFoundException('Unknown user: ' . $userId);
+                    }
+                    $query->setUser($user);
+                }
             }
-            $query->setUser($user);
         }
 
         /** @var array<int> $customers */
         $customers = $paramFetcher->get('customers');
-        if (!empty($customer = $paramFetcher->get('customer'))) {
+        $customer = $paramFetcher->get('customer');
+        if (\is_string($customer) && $customer !== '') {
             $customers[] = $customer;
         }
 
-        foreach ($customers as $customerId) {
+        foreach (array_unique($customers) as $customerId) {
             $customer = $customerRepository->find($customerId);
             if ($customer === null) {
                 throw $this->createNotFoundException('Unknown customer: ' . $customerId);
@@ -123,11 +131,12 @@ final class TimesheetController extends BaseApiController
 
         /** @var array<int> $projects */
         $projects = $paramFetcher->get('projects');
-        if (!empty($project = $paramFetcher->get('project'))) {
+        $project = $paramFetcher->get('project');
+        if (\is_string($project) && $project !== '') {
             $projects[] = $project;
         }
 
-        foreach ($projects as $projectId) {
+        foreach (array_unique($projects) as $projectId) {
             $project = $projectRepository->find($projectId);
             if ($project === null) {
                 throw $this->createNotFoundException('Unknown project: ' . $project);
@@ -137,11 +146,12 @@ final class TimesheetController extends BaseApiController
 
         /** @var array<int> $activities */
         $activities = $paramFetcher->get('activities');
-        if (!empty($activity = $paramFetcher->get('activity'))) {
+        $activity = $paramFetcher->get('activity');
+        if (\is_string($activity) && $activity !== '') {
             $activities[] = $activity;
         }
 
-        foreach ($activities as $activityId) {
+        foreach (array_unique($activities) as $activityId) {
             $activity = $activityRepository->find($activityId);
             if ($activity === null) {
                 throw $this->createNotFoundException('Unknown activity: ' . $activity);
@@ -149,40 +159,48 @@ final class TimesheetController extends BaseApiController
             $query->addActivity($activity);
         }
 
-        if (null !== ($page = $paramFetcher->get('page')) && \is_int($page)) {
-            $query->setPage($page);
+        $page = $paramFetcher->get('page');
+        if (\is_string($page) && $page !== '') {
+            $query->setPage((int) $page);
         }
 
-        if (null !== ($size = $paramFetcher->get('size')) && \is_int($size)) {
-            $query->setPageSize($size);
+        $size = $paramFetcher->get('size');
+        if (\is_string($size) && $size !== '') {
+            $query->setPageSize((int) $size);
         }
 
-        if (null !== ($tags = $paramFetcher->get('tags'))) {
-            $ids = $this->tagRepository->findIdsByTagNameList($tags);
-            if (\count($ids) > 0) {
-                $query->setTags(new ArrayCollection($ids));
+        $tags = $paramFetcher->get('tags');
+        if (\is_array($tags) && \count($tags) > 0) {
+            $tags = $this->tagRepository->findTagsByName($tags);
+            foreach ($tags as $tag) {
+                $query->addTag($tag);
             }
         }
 
-        if (null !== ($order = $paramFetcher->get('order'))) {
+        $order = $paramFetcher->get('order');
+        if (\is_string($order) && $order !== '') {
             $query->setOrder($order);
         }
 
-        if (null !== ($orderBy = $paramFetcher->get('orderBy'))) {
+        $orderBy = $paramFetcher->get('orderBy');
+        if (\is_string($orderBy) && $orderBy !== '') {
             $query->setOrderBy($orderBy);
         }
 
         $factory = $this->getDateTimeFactory();
 
-        if (null !== ($begin = $paramFetcher->get('begin'))) {
+        $begin = $paramFetcher->get('begin');
+        if (\is_string($begin) && $begin !== '') {
             $query->setBegin($factory->createDateTime($begin));
         }
 
-        if (null !== ($end = $paramFetcher->get('end'))) {
+        $end = $paramFetcher->get('end');
+        if (\is_string($end) && $end !== '') {
             $query->setEnd($factory->createDateTime($end));
         }
 
-        if (null !== ($active = $paramFetcher->get('active'))) {
+        $active = $paramFetcher->get('active');
+        if (\is_string($active) && $active !== '') {
             $active = (int) $active;
             if ($active === 1) {
                 $query->setState(TimesheetQuery::STATE_RUNNING);
@@ -191,7 +209,8 @@ final class TimesheetController extends BaseApiController
             }
         }
 
-        if (null !== ($billable = $paramFetcher->get('billable'))) {
+        $billable = $paramFetcher->get('billable');
+        if (\is_string($billable) && $billable !== '') {
             $billable = (int) $billable;
             if ($billable === 1) {
                 $query->setBillable(true);
@@ -200,7 +219,8 @@ final class TimesheetController extends BaseApiController
             }
         }
 
-        if (null !== ($exported = $paramFetcher->get('exported'))) {
+        $exported = $paramFetcher->get('exported');
+        if (\is_string($exported) && $exported !== '') {
             $exported = (int) $exported;
             if ($exported === 1) {
                 $query->setExported(TimesheetQuery::STATE_EXPORTED);
@@ -209,7 +229,8 @@ final class TimesheetController extends BaseApiController
             }
         }
 
-        if (!empty($term = $paramFetcher->get('term'))) {
+        $term = $paramFetcher->get('term');
+        if (\is_string($term) && $term !== '') {
             $query->setSearchTerm(new SearchTerm($term));
         }
 
@@ -223,7 +244,7 @@ final class TimesheetController extends BaseApiController
         $view = new View($results, 200);
         $this->addPagination($view, $data);
 
-        if ('true' === $paramFetcher->get('full')) {
+        if (null !== $paramFetcher->get('full')) {
             $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
         } else {
             $view->getContext()->setGroups(self::GROUPS_COLLECTION);
@@ -258,7 +279,7 @@ final class TimesheetController extends BaseApiController
     #[Rest\Post(path: '', name: 'post_timesheet')]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    #[Rest\QueryParam(name: 'full', requirements: 'true', strict: true, nullable: true, description: 'Allows to fetch fully serialized objects including subresources (TimesheetExpanded). Allowed values: true (default: false)')]
+    #[Rest\QueryParam(name: 'full', strict: true, nullable: true, description: 'Allows to fetch fully serialized objects including subresources (TimesheetExpanded). Allowed values: true (default: false)')]
     public function postAction(Request $request, ParamFetcherInterface $paramFetcher): Response
     {
         /** @var User $user */
@@ -286,7 +307,7 @@ final class TimesheetController extends BaseApiController
 
                 $view = new View($timesheet, 200);
 
-                if ('true' === $paramFetcher->get('full')) {
+                if (null !== $paramFetcher->get('full')) {
                     $view->getContext()->setGroups(self::GROUPS_ENTITY_FULL);
                 } else {
                     $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -383,7 +404,8 @@ final class TimesheetController extends BaseApiController
         $begin = null;
         $limit = 10;
 
-        if (null !== ($reqLimit = $paramFetcher->get('size'))) {
+        $reqLimit = $paramFetcher->get('size');
+        if (\is_string($reqLimit) && $reqLimit !== '') {
             $limit = (int) $reqLimit;
         }
 
@@ -473,7 +495,8 @@ final class TimesheetController extends BaseApiController
             ->setProject($timesheet->getProject())
         ;
 
-        if (null !== ($copy = $paramFetcher->get('copy'))) {
+        $copy = $paramFetcher->get('copy');
+        if ($copy === 'all') {
             $copyTimesheet->setHourlyRate($timesheet->getHourlyRate());
             $copyTimesheet->setFixedRate($timesheet->getFixedRate());
             $copyTimesheet->setDescription($timesheet->getDescription());
@@ -538,7 +561,7 @@ final class TimesheetController extends BaseApiController
     public function exportAction(Timesheet $timesheet): Response
     {
         if ($timesheet->isExported() && !$this->isGranted('edit_exported_timesheet')) {
-            throw new AccessDeniedHttpException('User cannot edit an exported timesheet');
+            throw $this->createAccessDeniedException('User cannot edit an exported timesheet');
         }
 
         $timesheet->setExported(!$timesheet->isExported());
@@ -568,13 +591,12 @@ final class TimesheetController extends BaseApiController
         $this->dispatcher->dispatch($event);
 
         $name = $paramFetcher->get('name');
-        $value = $paramFetcher->get('value');
 
-        if (null === ($meta = $timesheet->getMetaField($name))) {
-            throw new \InvalidArgumentException('Unknown meta-field requested');
+        if (!\is_string($name) || null === ($meta = $timesheet->getMetaField($name))) {
+            throw $this->createNotFoundException('Unknown meta-field requested');
         }
 
-        $meta->setValue($value);
+        $meta->setValue($paramFetcher->get('value'));
 
         $this->service->updateTimesheet($timesheet);
 

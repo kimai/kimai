@@ -528,7 +528,7 @@ class TimesheetRepository extends EntityRepository
 
         $user = array_merge($user, $query->getUsers());
 
-        if (empty($user) && null !== ($currentUser = $query->getCurrentUser()) && !$currentUser->canSeeAllData()) {
+        if (\count($user) === 0 && null !== ($currentUser = $query->getCurrentUser()) && !$currentUser->canSeeAllData()) {
             // make sure that the user himself is in the list of users, if he is part of a team
             // if teams are used and the user is not a teamlead, the list of users would be empty and then leading to NOT limit the select by user IDs
             $user[] = $currentUser;
@@ -540,25 +540,18 @@ class TimesheetRepository extends EntityRepository
             }
         }
 
-        if (!empty($query->getTeams())) {
-            foreach ($query->getTeams() as $team) {
-                foreach ($team->getUsers() as $teamUser) {
-                    $user[] = $teamUser;
-                }
+        foreach ($query->getTeams() as $team) {
+            foreach ($team->getUsers() as $teamUser) {
+                $user[] = $teamUser;
             }
         }
 
-        $user = array_map(function ($user) {
-            if ($user instanceof User) {
-                return $user->getId();
-            }
+        $userIds = array_unique(array_map(function (User $user) {
+            return $user->getId();
+        }, $user));
 
-            return $user;
-        }, $user);
-        $user = array_unique($user);
-
-        if (!empty($user)) {
-            $qb->andWhere($qb->expr()->in('t.user', $user));
+        if (\count($userIds) > 0) {
+            $qb->andWhere($qb->expr()->in('t.user', $userIds));
         }
 
         if (null !== $query->getBegin()) {
@@ -609,9 +602,9 @@ class TimesheetRepository extends EntityRepository
         }
 
         $tags = $query->getTags();
-        if (!empty($tags)) {
+        if (\count($tags) > 0) {
             $qb->andWhere($qb->expr()->isMemberOf(':tags', 't.tags'))
-                ->setParameter('tags', $query->getTags());
+                ->setParameter('tags', $tags);
         }
 
         $requiresTeams = $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());

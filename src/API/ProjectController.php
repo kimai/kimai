@@ -32,7 +32,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints;
 
@@ -63,8 +62,8 @@ final class ProjectController extends BaseApiController
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
     #[Rest\QueryParam(name: 'customer', requirements: '\d+', strict: true, nullable: true, description: 'Customer ID to filter projects')]
-    #[Rest\QueryParam(name: 'customers', map: true, requirements: '\d+', strict: true, nullable: false, default: [], description: 'List of customer IDs to filter, e.g.: customers[]=1&customers[]=2')]
-    #[Rest\QueryParam(name: 'visible', requirements: '\d+', strict: true, nullable: true, description: 'Visibility status to filter projects. Allowed values: 1=visible, 2=hidden, 3=both (default: 1)')]
+    #[Rest\QueryParam(name: 'customers', map: true, requirements: '\d+', strict: true, nullable: true, default: [], description: 'List of customer IDs to filter, e.g.: customers[]=1&customers[]=2')]
+    #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', default: 1, strict: true, nullable: true, description: 'Visibility status to filter projects: 1=visible, 2=hidden, 3=both')]
     #[Rest\QueryParam(name: 'start', requirements: [new Constraints\AtLeastOneOf(constraints: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s', message: 'This value is not a valid datetime, expected format: Y-m-d (2022-01-27T20:13:57).'), new Constraints\DateTime(format: 'Y-m-d', message: 'This value is not a valid datetime, expected format: Y-m-d (2022-01-27).')])], strict: true, nullable: true, description: 'Only projects that started before this date will be included. Allowed format: HTML5 (default: now, if end is also empty)')]
     #[Rest\QueryParam(name: 'end', requirements: [new Constraints\AtLeastOneOf(constraints: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s', message: 'This value is not a valid datetime, expected format: Y-m-d (2022-01-27T20:13:57).'), new Constraints\DateTime(format: 'Y-m-d', message: 'This value is not a valid datetime, expected format: Y-m-d (2022-01-27).')])], strict: true, nullable: true, description: 'Only projects that ended after this date will be included. Allowed format: HTML5 (default: now, if start is also empty)')]
     #[Rest\QueryParam(name: 'ignoreDates', requirements: 1, strict: true, nullable: true, description: 'If set, start and end are completely ignored. Allowed values: 1 (default: off)')]
@@ -80,21 +79,24 @@ final class ProjectController extends BaseApiController
         $query = new ProjectQuery();
         $query->setCurrentUser($user);
 
-        if (null !== ($order = $paramFetcher->get('order'))) {
+        $order = $paramFetcher->get('order');
+        if (\is_string($order) && $order !== '') {
             $query->setOrder($order);
         }
 
-        if (null !== ($orderBy = $paramFetcher->get('orderBy'))) {
+        $orderBy = $paramFetcher->get('orderBy');
+        if (\is_string($orderBy) && $orderBy !== '') {
             $query->setOrderBy($orderBy);
         }
 
         /** @var array<int> $customers */
         $customers = $paramFetcher->get('customers');
-        if (!empty($customer = $paramFetcher->get('customer'))) {
+        $customer = $paramFetcher->get('customer');
+        if (\is_string($customer) && $customer !== '') {
             $customers[] = $customer;
         }
 
-        foreach ($customers as $customerId) {
+        foreach (array_unique($customers) as $customerId) {
             $customer = $customerRepository->find($customerId);
             if ($customer === null) {
                 throw $this->createNotFoundException('Unknown customer: ' . $customerId);
@@ -102,11 +104,13 @@ final class ProjectController extends BaseApiController
             $query->addCustomer($customer);
         }
 
-        if (null !== ($visible = $paramFetcher->get('visible'))) {
-            $query->setVisibility($visible);
+        $visible = $paramFetcher->get('visible');
+        if (\is_string($visible) && $visible !== '') {
+            $query->setVisibility((int) $visible);
         }
 
-        if (null !== ($globalActivities = $paramFetcher->get('globalActivities'))) {
+        $globalActivities = $paramFetcher->get('globalActivities');
+        if ($globalActivities !== null) {
             $query->setGlobalActivities((bool) $globalActivities);
         }
 
@@ -117,22 +121,26 @@ final class ProjectController extends BaseApiController
 
         if (!$ignoreDates) {
             $factory = $this->getDateTimeFactory();
-            if (null !== ($begin = $paramFetcher->get('start')) && !empty($begin)) {
+            $now = $factory->createDateTime();
+            $begin = $paramFetcher->get('start');
+            $end = $paramFetcher->get('end');
+
+            if (\is_string($begin) && $begin !== '') {
                 $query->setProjectStart($factory->createDateTime($begin));
             }
 
-            if (null !== ($end = $paramFetcher->get('end')) && !empty($end)) {
+            if (\is_string($end) && $end !== '') {
                 $query->setProjectEnd($factory->createDateTime($end));
             }
 
-            if (empty($begin) && empty($end)) {
-                $now = $factory->createDateTime();
+            if ($query->getProjectStart() === null && $query->getProjectEnd() === null) {
                 $query->setProjectStart($now);
                 $query->setProjectEnd($now);
             }
         }
 
-        if (!empty($term = $paramFetcher->get('term'))) {
+        $term = $paramFetcher->get('term');
+        if (\is_string($term) && $term !== '') {
             $query->setSearchTerm(new SearchTerm($term));
         }
 
@@ -169,7 +177,7 @@ final class ProjectController extends BaseApiController
     public function postAction(Request $request): Response
     {
         if (!$this->isGranted('create_project')) {
-            throw new AccessDeniedHttpException('User cannot create projects');
+            throw $this->createAccessDeniedException('User cannot create projects');
         }
 
         $project = $this->projectService->createNewProject();
@@ -258,7 +266,7 @@ final class ProjectController extends BaseApiController
         $value = $paramFetcher->get('value');
 
         if (null === ($meta = $project->getMetaField($name))) {
-            throw new \InvalidArgumentException('Unknown meta-field requested');
+            throw $this->createNotFoundException('Unknown meta-field requested');
         }
 
         $meta->setValue($value);
@@ -304,7 +312,7 @@ final class ProjectController extends BaseApiController
     public function deleteRateAction(Project $project, ProjectRate $rate): Response
     {
         if ($rate->getProject() !== $project) {
-            throw new NotFoundException();
+            throw $this->createNotFoundException();
         }
 
         $this->projectRateRepository->deleteRate($rate);

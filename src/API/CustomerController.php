@@ -31,7 +31,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/customers')]
@@ -59,7 +58,7 @@ final class CustomerController extends BaseApiController
     #[Rest\Get(path: '', name: 'get_customers')]
     #[ApiSecurity(name: 'apiUser')]
     #[ApiSecurity(name: 'apiToken')]
-    #[Rest\QueryParam(name: 'visible', requirements: '\d+', strict: true, nullable: true, description: 'Visibility status to filter activities (1=visible, 2=hidden, 3=both)')]
+    #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', default: 1, strict: true, nullable: true, description: 'Visibility status to filter customers: 1=visible, 2=hidden, 3=both')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name (default: name)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term')]
@@ -71,19 +70,23 @@ final class CustomerController extends BaseApiController
         $query = new CustomerQuery();
         $query->setCurrentUser($user);
 
-        if (null !== ($order = $paramFetcher->get('order'))) {
+        $order = $paramFetcher->get('order');
+        if (\is_string($order) && $order !== '') {
             $query->setOrder($order);
         }
 
-        if (null !== ($orderBy = $paramFetcher->get('orderBy'))) {
+        $orderBy = $paramFetcher->get('orderBy');
+        if (\is_string($orderBy) && $orderBy !== '') {
             $query->setOrderBy($orderBy);
         }
 
-        if (null !== ($visible = $paramFetcher->get('visible'))) {
-            $query->setVisibility($visible);
+        $visible = $paramFetcher->get('visible');
+        if (\is_string($visible) && $visible !== '') {
+            $query->setVisibility((int) $visible);
         }
 
-        if (!empty($term = $paramFetcher->get('term'))) {
+        $term = $paramFetcher->get('term');
+        if (\is_string($term) && $term !== '') {
             $query->setSearchTerm(new SearchTerm($term));
         }
 
@@ -120,7 +123,7 @@ final class CustomerController extends BaseApiController
     public function postAction(Request $request, CustomerService $customerService): Response
     {
         if (!$this->isGranted('create_customer')) {
-            throw new AccessDeniedHttpException('User cannot create customers');
+            throw $this->createAccessDeniedException('User cannot create customers');
         }
 
         $customer = $customerService->createNewCustomer('');
@@ -208,7 +211,7 @@ final class CustomerController extends BaseApiController
         $value = $paramFetcher->get('value');
 
         if (null === ($meta = $customer->getMetaField($name))) {
-            throw new \InvalidArgumentException('Unknown meta-field requested');
+            throw $this->createNotFoundException('Unknown meta-field requested');
         }
 
         $meta->setValue($value);
@@ -254,7 +257,7 @@ final class CustomerController extends BaseApiController
     public function deleteRateAction(Customer $customer, CustomerRate $rate): Response
     {
         if ($rate->getCustomer() !== $customer) {
-            throw new NotFoundException();
+            throw $this->createNotFoundException();
         }
 
         $this->customerRateRepository->deleteRate($rate);

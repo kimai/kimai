@@ -17,14 +17,14 @@ final class ProjectFormTypeQuery extends BaseFormTypeQuery
     private ?\DateTime $projectStart = null;
     private ?\DateTime $projectEnd = null;
     private ?Project $projectToIgnore = null;
-    private $ignoreDate = false;
-    private $withCustomer = false;
+    private bool $ignoreDate = false;
+    private bool $withCustomer = false;
 
     /**
-     * @param Project|int|null|array<int>|array<Project> $project
-     * @param Customer|int|null|array<int>|array<Customer> $customer
+     * @param Project|array<Project>|int|null $project
+     * @param Customer|array<Customer>|int|null $customer
      */
-    public function __construct($project = null, $customer = null)
+    public function __construct(Project|array|int|null $project = null, Customer|array|int|null $customer = null)
     {
         if (null !== $project) {
             if (!\is_array($project)) {
@@ -46,8 +46,6 @@ final class ProjectFormTypeQuery extends BaseFormTypeQuery
 
     /**
      * Whether customers should be joined
-     *
-     * @return bool
      */
     public function withCustomer(): bool
     {
@@ -56,17 +54,12 @@ final class ProjectFormTypeQuery extends BaseFormTypeQuery
 
     /**
      * Directly join the customer
-     *
-     * @param bool $withCustomer
      */
     public function setWithCustomer(bool $withCustomer): void
     {
         $this->withCustomer = $withCustomer;
     }
 
-    /**
-     * @return Project|null
-     */
     public function getProjectToIgnore(): ?Project
     {
         return $this->projectToIgnore;

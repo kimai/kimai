@@ -23,9 +23,11 @@ class WidgetService
 
     public function registerWidget(WidgetInterface $widget): void
     {
-        if (!empty($widget->getId())) {
-            $this->widgets[$widget->getId()] = $widget;
+        $id = trim($widget->getId());
+        if ($id === '') {
+            throw new \InvalidArgumentException('Widget needs a non-empty ID');
         }
+        $this->widgets[$id] = $widget;
     }
 
     /**

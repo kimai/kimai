@@ -34,19 +34,18 @@ class QuickEntryTimesheetValidator extends ConstraintValidator
             throw new UnexpectedTypeException($value, TimesheetEntity::class);
         }
 
-        /** @var TimesheetEntity $timesheet */
         $timesheet = $value;
 
         if ($timesheet->getId() === null && $timesheet->getDuration(false) === null) {
             return;
         }
 
-        foreach ($this->constraints as $constraint) {
+        foreach ($this->constraints as $innerConstraint) {
             $this->context
                 ->getValidator()
                 ->inContext($this->context)
                 ->atPath('duration')
-                ->validate($timesheet, $constraint, [Constraint::DEFAULT_GROUP]);
+                ->validate($timesheet, $innerConstraint, [Constraint::DEFAULT_GROUP]);
         }
     }
 }

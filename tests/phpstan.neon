@@ -193,11 +193,6 @@ parameters:
             path: API/ActivityControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\ActivityControllerTest\\:\\:getCollectionTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/ActivityControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\API\\\\ActivityControllerTest\\:\\:getRateUrl\\(\\) has parameter \\$id with no type specified\\.$#"
             count: 1
             path: API/ActivityControllerTest.php
@@ -264,11 +259,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\API\\\\ActivityControllerTest\\:\\:testDeleteRateWithInvalidAssignment\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/ActivityControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ActivityControllerTest\\:\\:testGetCollection\\(\\) has no return type specified\\.$#"
             count: 1
             path: API/ActivityControllerTest.php
 
@@ -848,11 +838,6 @@ parameters:
             path: API/ProjectControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:getCollectionTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:getRateUrl\\(\\) has parameter \\$id with no type specified\\.$#"
             count: 1
             path: API/ProjectControllerTest.php
@@ -929,11 +914,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:testGetCollection\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\API\\\\ProjectControllerTest\\:\\:testGetCollectionWithParams\\(\\) has no return type specified\\.$#"
             count: 1
             path: API/ProjectControllerTest.php
 

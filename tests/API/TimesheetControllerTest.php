@@ -150,9 +150,9 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $end->setTime(23, 59, 59);
 
         $query = [
-            'customers' => '1',
-            'projects' => '1',
-            'activities' => '1',
+            'customers' => ['1'],
+            'projects' => ['1'],
+            'activities' => ['1'],
             'page' => 2,
             'size' => 4,
             'order' => 'DESC',
@@ -897,7 +897,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
             ->setTags(['Test', 'Administration']);
         $this->importFixture($fixture);
 
-        $query = ['tags' => 'Test'];
+        $query = ['tags' => ['Test']];
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
 
@@ -906,7 +906,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertEquals(10, \count($result));
         self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
 
-        $query = ['tags' => 'Test,Admin'];
+        $query = ['tags' => ['Test', 'Admin']];
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
 
@@ -915,7 +915,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $this->assertEquals(10, \count($result));
         self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
 
-        $query = ['tags' => 'Nothing-2-see,here'];
+        $query = ['tags' => ['Nothing-2-see', 'here']];
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
         $result = json_decode($client->getResponse()->getContent(), true);
 
@@ -933,7 +933,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $data = [
             'description' => 'foo',
-            'tags' => 'another,testing,bar'
+            'tags' => ['another', 'testing', 'bar']
         ];
         $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], json_encode($data));
 
@@ -964,7 +964,7 @@ class TimesheetControllerTest extends APIControllerBaseTest
 
         $data = [
             'description' => 'foo',
-            'tags' => 'another,testing,bar'
+            'tags' => ['another', 'testing', 'bar']
         ];
         $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], json_encode($data));
 
@@ -1165,8 +1165,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $id = $timesheets[0]->getId();
 
         $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['name' => 'X'], [
-            'code' => 400,
-            'message' => 'Bad Request'
+            'code' => 404,
+            'message' => 'Not Found'
         ]);
     }
 
@@ -1177,8 +1177,8 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $id = $timesheets[0]->getId();
 
         $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['name' => 'X', 'value' => 'Y'], [
-            'code' => 500,
-            'message' => 'Internal Server Error'
+            'code' => 404,
+            'message' => 'Not Found'
         ]);
     }
 

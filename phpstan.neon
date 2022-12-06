@@ -3,6 +3,7 @@ includes:
     - %rootDir%/../phpstan-symfony/rules.neon
     - %rootDir%/../phpstan-doctrine/extension.neon
     - %rootDir%/../phpstan-doctrine/rules.neon
+#    - %rootDir%/../phpstan-strict-rules/rules.neon
     - %rootDir%/../phpstan/conf/bleedingEdge.neon
 
 parameters:
@@ -27,26 +28,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Activity\\:\\:getMetaField\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/ActivityController.php
-
-        -
-            message: "#^Parameter \\#1 \\$order of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setOrder\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/ActivityController.php
-
-        -
-            message: "#^Parameter \\#1 \\$orderBy of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setOrderBy\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/ActivityController.php
-
-        -
-            message: "#^Parameter \\#1 \\$searchTerm of class App\\\\Utils\\\\SearchTerm constructor expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/ActivityController.php
-
-        -
-            message: "#^Parameter \\#1 \\$visibility of method App\\\\Repository\\\\Query\\\\ProjectQuery\\:\\:setVisibility\\(\\) expects int, mixed given\\.$#"
             count: 1
             path: src/API/ActivityController.php
 
@@ -81,26 +62,6 @@ parameters:
             path: src/API/CustomerController.php
 
         -
-            message: "#^Parameter \\#1 \\$order of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setOrder\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/CustomerController.php
-
-        -
-            message: "#^Parameter \\#1 \\$orderBy of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setOrderBy\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/CustomerController.php
-
-        -
-            message: "#^Parameter \\#1 \\$searchTerm of class App\\\\Utils\\\\SearchTerm constructor expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/CustomerController.php
-
-        -
-            message: "#^Parameter \\#1 \\$visibility of method App\\\\Repository\\\\Query\\\\CustomerQuery\\:\\:setVisibility\\(\\) expects int, mixed given\\.$#"
-            count: 1
-            path: src/API/CustomerController.php
-
-        -
             message: "#^Method App\\\\API\\\\Model\\\\PageAction\\:\\:__construct\\(\\) has parameter \\$settings with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/API/Model/PageAction.php
@@ -131,32 +92,7 @@ parameters:
             path: src/API/NotFoundException.php
 
         -
-            message: "#^Parameter \\#1 \\$datetime of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createDateTime\\(\\) expects string, mixed given\\.$#"
-            count: 2
-            path: src/API/ProjectController.php
-
-        -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Project\\:\\:getMetaField\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/ProjectController.php
-
-        -
-            message: "#^Parameter \\#1 \\$order of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setOrder\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/ProjectController.php
-
-        -
-            message: "#^Parameter \\#1 \\$orderBy of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setOrderBy\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/ProjectController.php
-
-        -
-            message: "#^Parameter \\#1 \\$searchTerm of class App\\\\Utils\\\\SearchTerm constructor expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/ProjectController.php
-
-        -
-            message: "#^Parameter \\#1 \\$visibility of method App\\\\Repository\\\\Query\\\\ProjectQuery\\:\\:setVisibility\\(\\) expects int, mixed given\\.$#"
             count: 1
             path: src/API/ProjectController.php
 
@@ -191,37 +127,17 @@ parameters:
             path: src/API/TagController.php
 
         -
-            message: "#^Cannot cast mixed to int\\.$#"
-            count: 4
-            path: src/API/TimesheetController.php
-
-        -
             message: "#^Parameter \\#1 \\$activity of method App\\\\Entity\\\\Timesheet\\:\\:setActivity\\(\\) expects App\\\\Entity\\\\Activity, App\\\\Entity\\\\Activity\\|null given\\.$#"
             count: 1
             path: src/API/TimesheetController.php
 
         -
             message: "#^Parameter \\#1 \\$datetime of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createDateTime\\(\\) expects string, mixed given\\.$#"
-            count: 5
+            count: 3
             path: src/API/TimesheetController.php
 
         -
             message: "#^Parameter \\#1 \\$description of method App\\\\Entity\\\\Timesheet\\:\\:setDescription\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/API/TimesheetController.php
-
-        -
-            message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Timesheet\\:\\:getMetaField\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/TimesheetController.php
-
-        -
-            message: "#^Parameter \\#1 \\$order of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setOrder\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/TimesheetController.php
-
-        -
-            message: "#^Parameter \\#1 \\$orderBy of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setOrderBy\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/API/TimesheetController.php
 
@@ -231,22 +147,7 @@ parameters:
             path: src/API/TimesheetController.php
 
         -
-            message: "#^Parameter \\#1 \\$searchTerm of class App\\\\Utils\\\\SearchTerm constructor expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/TimesheetController.php
-
-        -
-            message: "#^Parameter \\#1 \\$tagNames of method App\\\\Repository\\\\TagRepository\\:\\:findIdsByTagNameList\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/TimesheetController.php
-
-        -
             message: "#^Parameter \\#1 \\$user of class App\\\\Event\\\\RecentActivityEvent constructor expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/API/TimesheetController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\TimesheetQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User\\|int\\|null, mixed given\\.$#"
             count: 1
             path: src/API/TimesheetController.php
 
@@ -257,31 +158,6 @@ parameters:
 
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: src/API/UserController.php
-
-        -
-            message: "#^Parameter \\#1 \\$order of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setOrder\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/UserController.php
-
-        -
-            message: "#^Parameter \\#1 \\$orderBy of method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:setOrderBy\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/UserController.php
-
-        -
-            message: "#^Parameter \\#1 \\$searchTerm of class App\\\\Utils\\\\SearchTerm constructor expects string, mixed given\\.$#"
-            count: 1
-            path: src/API/UserController.php
-
-        -
-            message: "#^Parameter \\#1 \\$visibility of method App\\\\Repository\\\\Query\\\\UserQuery\\:\\:setVisibility\\(\\) expects int, mixed given\\.$#"
-            count: 1
-            path: src/API/UserController.php
-
-        -
-            message: "#^Parameter \\#2 \\$plainPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\Hasher\\\\UserPasswordHasherInterface\\:\\:hashPassword\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/API/UserController.php
 
@@ -2581,11 +2457,6 @@ parameters:
             path: src/Controller/TimesheetAbstractController.php
 
         -
-            message: "#^Parameter \\#2 \\$array of function implode expects array\\|null, iterable given\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
             message: "#^Parameter \\#2 \\$page of method App\\\\Controller\\\\TimesheetAbstractController\\:\\:getEditForm\\(\\) expects int, mixed given\\.$#"
             count: 1
             path: src/Controller/TimesheetAbstractController.php
@@ -4281,16 +4152,6 @@ parameters:
             path: src/Export/Base/HtmlRenderer.php
 
         -
-            message: "#^Cannot call method getTimezone\\(\\) on App\\\\Entity\\\\User\\|int\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Cannot call method isExportDecimal\\(\\) on App\\\\Entity\\\\User\\|int\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
             message: "#^Cannot call method jsonSerialize\\(\\) on App\\\\Model\\\\Statistic\\\\BudgetStatistic\\|null\\.$#"
             count: 2
             path: src/Export/Base/HtmlRenderer.php
@@ -4352,16 +4213,6 @@ parameters:
 
         -
             message: "#^Cannot call method getTimeBudget\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Cannot call method getTimezone\\(\\) on App\\\\Entity\\\\User\\|int\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Cannot call method isExportDecimal\\(\\) on App\\\\Entity\\\\User\\|int\\.$#"
             count: 1
             path: src/Export/Base/PDFRenderer.php
 
@@ -4971,16 +4822,6 @@ parameters:
             path: src/Form/TimesheetAdminEditForm.php
 
         -
-            message: "#^Cannot access offset 'customer' on mixed\\.$#"
-            count: 3
-            path: src/Form/TimesheetEditForm.php
-
-        -
-            message: "#^Cannot access offset 'project' on mixed\\.$#"
-            count: 6
-            path: src/Form/TimesheetEditForm.php
-
-        -
             message: "#^Cannot call method format\\(\\) on mixed\\.$#"
             count: 4
             path: src/Form/TimesheetEditForm.php
@@ -5021,11 +4862,6 @@ parameters:
             path: src/Form/TimesheetEditForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addActivity\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/TimesheetEditForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addActivity\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/TimesheetEditForm.php
@@ -5052,11 +4888,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addBillable\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/TimesheetEditForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addCustomer\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/TimesheetEditForm.php
 
@@ -5092,11 +4923,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addExported\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/TimesheetEditForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addProject\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/TimesheetEditForm.php
 
@@ -5141,37 +4967,12 @@ parameters:
             path: src/Form/TimesheetEditForm.php
 
         -
-            message: "#^Parameter \\#1 \\$project of class App\\\\Repository\\\\Query\\\\ProjectFormTypeQuery constructor expects App\\\\Entity\\\\Project\\|array\\<App\\\\Entity\\\\Project\\|int\\>\\|int\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Form/TimesheetEditForm.php
-
-        -
             message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 1
             path: src/Form/TimesheetEditForm.php
 
         -
-            message: "#^Parameter \\#2 \\$customer of class App\\\\Repository\\\\Query\\\\ProjectFormTypeQuery constructor expects App\\\\Entity\\\\Customer\\|array\\<App\\\\Entity\\\\Customer\\|int\\>\\|int\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Form/TimesheetEditForm.php
-
-        -
-            message: "#^Cannot access offset 'customer' on mixed\\.$#"
-            count: 3
-            path: src/Form/TimesheetPreCreateForm.php
-
-        -
-            message: "#^Cannot access offset 'project' on mixed\\.$#"
-            count: 6
-            path: src/Form/TimesheetPreCreateForm.php
-
-        -
             message: "#^Cannot call method isVisible\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Form/TimesheetPreCreateForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\TimesheetPreCreateForm\\:\\:addActivity\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/TimesheetPreCreateForm.php
 
@@ -5181,22 +4982,7 @@ parameters:
             path: src/Form/TimesheetPreCreateForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\TimesheetPreCreateForm\\:\\:addCustomer\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/TimesheetPreCreateForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\TimesheetPreCreateForm\\:\\:addProject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/TimesheetPreCreateForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\TimesheetPreCreateForm\\:\\:addProject\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/TimesheetPreCreateForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of class App\\\\Repository\\\\Query\\\\ProjectFormTypeQuery constructor expects App\\\\Entity\\\\Project\\|array\\<App\\\\Entity\\\\Project\\|int\\>\\|int\\|null, mixed given\\.$#"
             count: 1
             path: src/Form/TimesheetPreCreateForm.php
 
@@ -5204,26 +4990,6 @@ parameters:
             message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 1
             path: src/Form/TimesheetPreCreateForm.php
-
-        -
-            message: "#^Parameter \\#2 \\$customer of class App\\\\Repository\\\\Query\\\\ProjectFormTypeQuery constructor expects App\\\\Entity\\\\Customer\\|array\\<App\\\\Entity\\\\Customer\\|int\\>\\|int\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Form/TimesheetPreCreateForm.php
-
-        -
-            message: "#^Cannot access offset 'activities'\\|'activity' on mixed\\.$#"
-            count: 3
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'customer'\\|'customers' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'project'\\|'projects' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/AbstractToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -5311,54 +5077,9 @@ parameters:
             path: src/Form/Toolbar/AbstractToolbarForm.php
 
         -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
             message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 2
             path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'activities'\\|'activity' on mixed\\.$#"
-            count: 3
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'customer'\\|'customers' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'project'\\|'projects' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/ActivityToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -5446,54 +5167,9 @@ parameters:
             path: src/Form/Toolbar/ActivityToolbarForm.php
 
         -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
             message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 2
             path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'activities'\\|'activity' on mixed\\.$#"
-            count: 3
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'customer'\\|'customers' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'project'\\|'projects' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/CustomerToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -5581,54 +5257,9 @@ parameters:
             path: src/Form/Toolbar/CustomerToolbarForm.php
 
         -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
             message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 2
             path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'activities'\\|'activity' on mixed\\.$#"
-            count: 3
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'customer'\\|'customers' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'project'\\|'projects' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/ExportToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -5716,54 +5347,9 @@ parameters:
             path: src/Form/Toolbar/ExportToolbarForm.php
 
         -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
             message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 2
             path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'activities'\\|'activity' on mixed\\.$#"
-            count: 3
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Cannot access offset 'customer'\\|'customers' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Cannot access offset 'project'\\|'projects' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -5851,54 +5437,9 @@ parameters:
             path: src/Form/Toolbar/InvoiceArchiveForm.php
 
         -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
             message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 2
             path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Cannot access offset 'activities'\\|'activity' on mixed\\.$#"
-            count: 3
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'customer'\\|'customers' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'project'\\|'projects' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -5986,54 +5527,9 @@ parameters:
             path: src/Form/Toolbar/InvoiceToolbarForm.php
 
         -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
             message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 2
             path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'activities'\\|'activity' on mixed\\.$#"
-            count: 3
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'customer'\\|'customers' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'project'\\|'projects' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/ProjectToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -6121,54 +5617,9 @@ parameters:
             path: src/Form/Toolbar/ProjectToolbarForm.php
 
         -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
             message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 2
             path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'activities'\\|'activity' on mixed\\.$#"
-            count: 3
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'customer'\\|'customers' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'project'\\|'projects' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/TagToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -6256,54 +5707,9 @@ parameters:
             path: src/Form/Toolbar/TagToolbarForm.php
 
         -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
             message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 2
             path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'activities'\\|'activity' on mixed\\.$#"
-            count: 3
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'customer'\\|'customers' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'project'\\|'projects' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/TeamToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -6391,54 +5797,9 @@ parameters:
             path: src/Form/Toolbar/TeamToolbarForm.php
 
         -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
             message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 2
             path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'activities'\\|'activity' on mixed\\.$#"
-            count: 3
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'customer'\\|'customers' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'project'\\|'projects' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -6526,54 +5887,9 @@ parameters:
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
 
         -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
             message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 2
             path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'activities'\\|'activity' on mixed\\.$#"
-            count: 3
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'customer'\\|'customers' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'project'\\|'projects' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -6661,54 +5977,9 @@ parameters:
             path: src/Form/Toolbar/TimesheetToolbarForm.php
 
         -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
             message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 2
             path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'activities'\\|'activity' on mixed\\.$#"
-            count: 3
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'customer'\\|'customers' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Cannot access offset 'project'\\|'projects' on mixed\\.$#"
-            count: 9
-            path: src/Form/Toolbar/UserToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addActivityChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -6792,36 +6063,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customer of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$customers of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setCustomers\\(\\) expects array\\<App\\\\Entity\\\\Customer\\|int\\>, mixed given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project\\|int, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, array given\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$projects of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\|int\\>, mixed given\\.$#"
             count: 1
             path: src/Form/Toolbar/UserToolbarForm.php
 
@@ -8741,46 +7982,6 @@ parameters:
             path: src/Repository/ProjectRepository.php
 
         -
-            message: "#^Method App\\\\Repository\\\\Query\\\\ActivityFormTypeQuery\\:\\:__construct\\(\\) has parameter \\$activity with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/Query/ActivityFormTypeQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Query\\\\ActivityFormTypeQuery\\:\\:__construct\\(\\) has parameter \\$project with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/Query/ActivityFormTypeQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:getActivities\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/Query/BaseFormTypeQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:getCustomers\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/Query/BaseFormTypeQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:getProjects\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/Query/BaseFormTypeQuery.php
-
-        -
-            message: "#^Property App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:\\$activities type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/Query/BaseFormTypeQuery.php
-
-        -
-            message: "#^Property App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:\\$customers type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/Query/BaseFormTypeQuery.php
-
-        -
-            message: "#^Property App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:\\$projects type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/Query/BaseFormTypeQuery.php
-
-        -
             message: "#^Method App\\\\Repository\\\\Query\\\\BaseQuery\\:\\:getOrderGroups\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Repository/Query/BaseQuery.php
@@ -8816,16 +8017,6 @@ parameters:
             path: src/Repository/Query/InvoiceArchiveQuery.php
 
         -
-            message: "#^Property App\\\\Repository\\\\Query\\\\ProjectFormTypeQuery\\:\\:\\$ignoreDate has no type specified\\.$#"
-            count: 1
-            path: src/Repository/Query/ProjectFormTypeQuery.php
-
-        -
-            message: "#^Property App\\\\Repository\\\\Query\\\\ProjectFormTypeQuery\\:\\:\\$withCustomer has no type specified\\.$#"
-            count: 1
-            path: src/Repository/Query/ProjectFormTypeQuery.php
-
-        -
             message: "#^Cannot call method setBegin\\(\\) on App\\\\Form\\\\Model\\\\DateRange\\|null\\.$#"
             count: 1
             path: src/Repository/Query/TimesheetQuery.php
@@ -8834,36 +8025,6 @@ parameters:
             message: "#^Cannot call method setEnd\\(\\) on App\\\\Form\\\\Model\\\\DateRange\\|null\\.$#"
             count: 1
             path: src/Repository/Query/TimesheetQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Query\\\\TimesheetQuery\\:\\:getTags\\(\\) return type has no value type specified in iterable type iterable\\.$#"
-            count: 1
-            path: src/Repository/Query/TimesheetQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Query\\\\TimesheetQuery\\:\\:setTags\\(\\) has parameter \\$tags with no value type specified in iterable type iterable\\.$#"
-            count: 1
-            path: src/Repository/Query/TimesheetQuery.php
-
-        -
-            message: "#^Property App\\\\Repository\\\\Query\\\\TimesheetQuery\\:\\:\\$timesheetUser \\(App\\\\Entity\\\\User\\|null\\) does not accept App\\\\Entity\\\\User\\|int\\|null\\.$#"
-            count: 1
-            path: src/Repository/Query/TimesheetQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Query\\\\UserFormTypeQuery\\:\\:setUsersAlwaysIncluded\\(\\) has parameter \\$users with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Repository/Query/UserFormTypeQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Query\\\\UserFormTypeQuery\\:\\:setVisibility\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/Query/UserFormTypeQuery.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\Query\\\\UserFormTypeQuery\\:\\:setVisibility\\(\\) has parameter \\$visibility with no type specified\\.$#"
-            count: 1
-            path: src/Repository/Query/UserFormTypeQuery.php
 
         -
             message: "#^Cannot access offset 'counter' on mixed\\.$#"
@@ -10187,11 +9348,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Utils\\\\SearchTerm\\:\\:getSearchFields\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Utils/SearchTerm.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\SearchTerm\\:\\:parse\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Utils/SearchTerm.php
 

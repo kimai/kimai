@@ -25,9 +25,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TagsSelectType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

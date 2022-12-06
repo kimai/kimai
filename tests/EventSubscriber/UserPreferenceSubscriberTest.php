@@ -35,6 +35,7 @@ class UserPreferenceSubscriberTest extends TestCase
         'login_initial_view',
         'daily_stats',
         'export_decimal',
+        'favorite_routes',
     ];
 
     public function testGetSubscribedEvents()

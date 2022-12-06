@@ -21,7 +21,6 @@ use OpenApi\Attributes as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/tags')]
@@ -68,7 +67,7 @@ final class TagController extends BaseApiController
     public function postAction(Request $request): Response
     {
         if (!$this->isGranted('manage_tag') && !$this->isGranted('create_tag')) {
-            throw new AccessDeniedHttpException('User cannot create tags');
+            throw $this->createAccessDeniedException('User cannot create tags');
         }
 
         $tag = new Tag();
