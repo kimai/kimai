@@ -37,13 +37,14 @@ trait MetaTableTypeTrait
     /**
      * Value of the meta (custom) field
      *
-     * This field can be used to temporary hold data in another format (e.g. array) during form transformation.
+     * ATTENTION:
+     * This field can be used to temporary hold data in another format (e.g. array) during form transformation,
      */
     #[ORM\Column(name: 'value', type: 'text', length: 65535, nullable: true)]
     #[Assert\Length(max: 65535)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
-    private ?string $value = null;
+    private mixed $value = null;
     #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => false])]
     #[Assert\NotNull]
     private bool $visible = false;
@@ -56,7 +57,7 @@ trait MetaTableTypeTrait
     private array $constraints = [];
     /**
      * An array of options for the form element
-     * @var array
+     * @var array<string, mixed>
      */
     private array $options = [];
     private int $order = 0;
@@ -77,12 +78,16 @@ trait MetaTableTypeTrait
         return $this;
     }
 
-    public function getValue(): bool|int|float|string|null
+    public function getValue(): mixed
     {
+        if ($this->value === null) {
+            return null;
+        }
+
         return match ($this->type) {
-            YesNoType::class, CheckboxType::class => (bool) $this->value,
-            IntegerType::class => (int) $this->value,
-            NumberType::class => (float) $this->value,
+            YesNoType::class, CheckboxType::class => (\is_string($this->value) || \is_int($this->value)) ? (bool) $this->value : $this->value,
+            IntegerType::class => (\is_string($this->value) || \is_int($this->value)) ? (int) $this->value : $this->value,
+            NumberType::class => (\is_string($this->value) || \is_float($this->value)) ? (float) $this->value : $this->value,
             default => $this->value,
         };
     }
@@ -101,7 +106,11 @@ trait MetaTableTypeTrait
             switch ($this->type) {
                 case YesNoType::class:
                 case CheckboxType::class:
-                    $value = (int) $value;
+                    if (\is_string($value) || \is_bool($value)) {
+                        $value = (int) $value;
+                    } else {
+                        throw new \InvalidArgumentException('Failed converting meta-field bool value');
+                    }
             }
         }
 
@@ -209,6 +218,10 @@ trait MetaTableTypeTrait
         return $this;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @return MetaTableTypeInterface
+     */
     public function setOptions(array $options): MetaTableTypeInterface
     {
         $this->options = $options;
@@ -216,6 +229,9 @@ trait MetaTableTypeTrait
         return $this;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getOptions(): array
     {
         return $this->options;

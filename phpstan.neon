@@ -2826,31 +2826,6 @@ parameters:
             path: src/Entity/Activity.php
 
         -
-            message: "#^Cannot cast mixed to int\\.$#"
-            count: 1
-            path: src/Entity/ActivityMeta.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\ActivityMeta\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/ActivityMeta.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\ActivityMeta\\:\\:setOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/ActivityMeta.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\ActivityMeta\\:\\:\\$options type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/ActivityMeta.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\ActivityMeta\\:\\:\\$value \\(string\\|null\\) does not accept mixed\\.$#"
-            count: 1
-            path: src/Entity/ActivityMeta.php
-
-        -
             message: "#^Method App\\\\Entity\\\\Bookmark\\:\\:getContent\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Entity/Bookmark.php
@@ -2956,31 +2931,6 @@ parameters:
             path: src/Entity/CustomerComment.php
 
         -
-            message: "#^Cannot cast mixed to int\\.$#"
-            count: 1
-            path: src/Entity/CustomerMeta.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\CustomerMeta\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/CustomerMeta.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\CustomerMeta\\:\\:setOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/CustomerMeta.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\CustomerMeta\\:\\:\\$options type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/CustomerMeta.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\CustomerMeta\\:\\:\\$value \\(string\\|null\\) does not accept mixed\\.$#"
-            count: 1
-            path: src/Entity/CustomerMeta.php
-
-        -
             message: "#^Method App\\\\Entity\\\\EntityWithMetaFields\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/EntityWithMetaFields.php
@@ -3031,44 +2981,9 @@ parameters:
             path: src/Entity/Invoice.php
 
         -
-            message: "#^Cannot cast mixed to int\\.$#"
-            count: 1
-            path: src/Entity/InvoiceMeta.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\InvoiceMeta\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/InvoiceMeta.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\InvoiceMeta\\:\\:setOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/InvoiceMeta.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\InvoiceMeta\\:\\:\\$options type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/InvoiceMeta.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\InvoiceMeta\\:\\:\\$value \\(string\\|null\\) does not accept mixed\\.$#"
-            count: 1
-            path: src/Entity/InvoiceMeta.php
-
-        -
             message: "#^Method App\\\\Entity\\\\InvoiceTemplate\\:\\:__toString\\(\\) should return string but returns string\\|null\\.$#"
             count: 1
             path: src/Entity/InvoiceTemplate.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\MetaTableTypeInterface\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/MetaTableTypeInterface.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\MetaTableTypeInterface\\:\\:setOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/MetaTableTypeInterface.php
 
         -
             message: "#^Method App\\\\Entity\\\\Project\\:\\:__toString\\(\\) should return string but returns string\\|null\\.$#"
@@ -3139,31 +3054,6 @@ parameters:
             message: "#^Method App\\\\Entity\\\\ProjectComment\\:\\:setPinned\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Entity/ProjectComment.php
-
-        -
-            message: "#^Cannot cast mixed to int\\.$#"
-            count: 1
-            path: src/Entity/ProjectMeta.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\ProjectMeta\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/ProjectMeta.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\ProjectMeta\\:\\:setOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/ProjectMeta.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\ProjectMeta\\:\\:\\$options type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/ProjectMeta.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\ProjectMeta\\:\\:\\$value \\(string\\|null\\) does not accept mixed\\.$#"
-            count: 1
-            path: src/Entity/ProjectMeta.php
 
         -
             message: "#^Method App\\\\Entity\\\\Tag\\:\\:__toString\\(\\) should return string but returns string\\|null\\.$#"
@@ -3294,31 +3184,6 @@ parameters:
             message: "#^Property App\\\\Entity\\\\Timesheet\\:\\:\\$tags with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Timesheet.php
-
-        -
-            message: "#^Cannot cast mixed to int\\.$#"
-            count: 1
-            path: src/Entity/TimesheetMeta.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\TimesheetMeta\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/TimesheetMeta.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\TimesheetMeta\\:\\:setOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/TimesheetMeta.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\TimesheetMeta\\:\\:\\$options type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/TimesheetMeta.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\TimesheetMeta\\:\\:\\$value \\(string\\|null\\) does not accept mixed\\.$#"
-            count: 1
-            path: src/Entity/TimesheetMeta.php
 
         -
             message: "#^Argument of an invalid type \\(Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\UserPreference\\>\\)\\|null supplied for foreach, only iterables are supported\\.$#"
@@ -6356,11 +6221,6 @@ parameters:
             path: src/Invoice/Calculator/DefaultCalculator.php
 
         -
-            message: "#^Parameter \\#2 \\$value of method App\\\\Invoice\\\\InvoiceItem\\:\\:addAdditionalField\\(\\) expects string\\|null, bool\\|float\\|int\\|string\\|null given\\.$#"
-            count: 1
-            path: src/Invoice/Calculator/DefaultCalculator.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 2
             path: src/Invoice/Calculator/ProjectInvoiceCalculator.php
@@ -6664,26 +6524,6 @@ parameters:
             message: "#^Parameter \\#1 \\$filename of method App\\\\Invoice\\\\InvoiceFilename\\:\\:convert\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Invoice/InvoiceFilename.php
-
-        -
-            message: "#^Method App\\\\Invoice\\\\InvoiceItem\\:\\:getAdditionalField\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Invoice/InvoiceItem.php
-
-        -
-            message: "#^Method App\\\\Invoice\\\\InvoiceItem\\:\\:getAdditionalField\\(\\) has parameter \\$default with no type specified\\.$#"
-            count: 1
-            path: src/Invoice/InvoiceItem.php
-
-        -
-            message: "#^Method App\\\\Invoice\\\\InvoiceItem\\:\\:getAdditionalFields\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Invoice/InvoiceItem.php
-
-        -
-            message: "#^Property App\\\\Invoice\\\\InvoiceItem\\:\\:\\$additionalFields type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Invoice/InvoiceItem.php
 
         -
             message: "#^Method App\\\\Invoice\\\\InvoiceItemHydrator\\:\\:hydrate\\(\\) return type has no value type specified in iterable type array\\.$#"

@@ -28,6 +28,7 @@ final class InvoiceItem
     private ?User $user = null;
     private ?Activity $activity = null;
     private ?Project $project = null;
+    /** @var array<string, mixed> */
     private array $additionalFields = [];
     private ?string $type = null;
     private ?string $category = null;
@@ -36,19 +37,22 @@ final class InvoiceItem
      */
     private array $tags = [];
 
-    public function addAdditionalField(string $name, ?string $value): InvoiceItem
+    public function addAdditionalField(string $name, mixed $value): InvoiceItem
     {
         $this->additionalFields[$name] = $value;
 
         return $this;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getAdditionalFields(): array
     {
         return $this->additionalFields;
     }
 
-    public function getAdditionalField(string $name, $default = null)
+    public function getAdditionalField(string $name, mixed $default = null): mixed
     {
         if (\array_key_exists($name, $this->additionalFields)) {
             return $this->additionalFields[$name];

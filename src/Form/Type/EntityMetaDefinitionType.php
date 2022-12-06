@@ -37,7 +37,7 @@ class EntityMetaDefinitionType extends AbstractType
                 $attr = ['data-name' => $definition->getName(), 'class' => ''];
                 $options = $definition->getOptions();
 
-                if (\array_key_exists('attr', $options)) {
+                if (\array_key_exists('attr', $options) && \is_array($options['attr'])) {
                     $attr = array_merge($attr, $options['attr']);
                     unset($options['attr']);
                 }

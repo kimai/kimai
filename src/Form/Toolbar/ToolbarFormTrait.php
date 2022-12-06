@@ -137,7 +137,7 @@ trait ToolbarFormTrait
                             $customers = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
                             foreach ($customers as $customer) {
                                 $customer = \is_string($customer) ? (int) $customer : $customer;
-                                if (!is_int($customer) && !($customer instanceof Customer)) {
+                                if (!\is_int($customer) && !($customer instanceof Customer)) {
                                     throw new \Exception('Need a customer object or an ID for customer select');
                                 }
                                 $query->addCustomer($customer);
@@ -241,7 +241,7 @@ trait ToolbarFormTrait
                             $customers = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
                             foreach ($customers as $customer) {
                                 $customer = \is_string($customer) ? (int) $customer : $customer;
-                                if (!is_int($customer) && !($customer instanceof Customer)) {
+                                if (!\is_int($customer) && !($customer instanceof Customer)) {
                                     throw new \Exception('Need a customer object or an ID for project select');
                                 }
                                 $query->addCustomer($customer);
@@ -253,7 +253,7 @@ trait ToolbarFormTrait
                             $projects = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
                             foreach ($projects as $project) {
                                 $project = \is_string($project) ? (int) $project : $project;
-                                if (!is_int($project) && !($project instanceof Project)) {
+                                if (!\is_int($project) && !($project instanceof Project)) {
                                     throw new \Exception('Need a project object or an ID for project select');
                                 }
                                 $query->addProject($project);
@@ -316,7 +316,7 @@ trait ToolbarFormTrait
                             $activities = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
                             foreach ($activities as $activity) {
                                 $activity = \is_string($activity) ? (int) $activity : $activity;
-                                if (!is_int($activity) && !($activity instanceof Activity)) {
+                                if (!\is_int($activity) && !($activity instanceof Activity)) {
                                     throw new \Exception('Need an activity object or an ID for activity select');
                                 }
                                 $query->addActivity($activity);
@@ -328,7 +328,7 @@ trait ToolbarFormTrait
                             $projects = \is_array($data[$name]) ? $data[$name] : [$data[$name]];
                             foreach ($projects as $project) {
                                 $project = \is_string($project) ? (int) $project : $project;
-                                if (!is_int($project) && !($project instanceof Project)) {
+                                if (!\is_int($project) && !($project instanceof Project)) {
                                     throw new \Exception('Need a project object or an ID for activity select');
                                 }
                                 $query->addProject($project);

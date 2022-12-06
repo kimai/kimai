@@ -23,7 +23,7 @@ interface MetaTableTypeInterface
      */
     public function setName(string $name): MetaTableTypeInterface;
 
-    public function getValue(): bool|int|float|string|null;
+    public function getValue(): mixed;
 
     /**
      * Value will not be serialized before its stored, so it should be a primitive type.
@@ -109,11 +109,16 @@ interface MetaTableTypeInterface
 
     /**
      * Set an array of options for the FormType.
+     *
+     * @param array<string, mixed> $options
+     * @return MetaTableTypeInterface
      */
     public function setOptions(array $options): MetaTableTypeInterface;
 
     /**
      * Returns an array with options for the FormType.
+     *
+     * @return array<string, mixed>
      */
     public function getOptions(): array;
 
