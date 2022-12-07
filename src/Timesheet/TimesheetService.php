@@ -90,6 +90,7 @@ final class TimesheetService
     {
         $timesheet = new Timesheet();
         $timesheet->setUser($user);
+        $timesheet->setBillableMode(Timesheet::BILLABLE_AUTOMATIC);
 
         if (null !== $request) {
             $this->prepareNewTimesheet($timesheet, $request);
@@ -109,8 +110,6 @@ final class TimesheetService
 
         $mode = $this->trackingModeService->getActiveMode();
         $mode->create($timesheet, $request);
-
-        $timesheet->setBillableMode(Timesheet::BILLABLE_AUTOMATIC);
 
         return $timesheet;
     }
