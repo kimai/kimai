@@ -16,7 +16,7 @@
         {% block box_title %}
             {{ form_widget(form.date) }}
         {% endblock %}
-        {% block box_body_class %}no-padding{% endblock %}
+        {% block box_body_class %}no-padding maybe-table-responsive{% endblock %}
         {% block box_footer %}
             <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
             <button type="button" class="btn btn-success add-item-link" data-collection-prototype="{{ form.rows.vars.id }}" data-collection-holder="ts-collection">
@@ -63,6 +63,13 @@
             const kimai = event.detail.kimai;
             const DATES = kimai.getPlugin('date');
             const FORMS = kimai.getPlugin('form-select');
+
+            if (window.matchMedia("(max-width: 1000px)").matches) {
+                for (let dropdowns of document.querySelectorAll('tr.qe-entry-week-row .input-group-btn')) {
+                    dropdowns.style.display = 'none';
+                }
+                document.querySelector('form[name=quick_entry_form] div.maybe-table-responsive').classList.replace('maybe-table-responsive', 'table-responsive');
+            }
 
             const recalculateTotals = function(e) {
                 const allFields = document.getElementsByClassName('duration-input');
