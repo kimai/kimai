@@ -189,10 +189,10 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
      */
     activateForm(form)
     {
-        const fields = form.querySelectorAll(this._selector);
-        for (const field of fields) {
-            this.activateSelectPickerByElement(field);
-        }
+        [].slice.call(form.querySelectorAll(this._selector)).map((node) => {
+            this.activateSelectPickerByElement(node);
+        });
+
         this._activateApiSelects(this._apiSelects);
     }
 
@@ -201,10 +201,11 @@ export default class KimaiFormSelect extends KimaiFormPlugin {
      */
     destroyForm(form)
     {
-        const node = form.querySelector(this._selector);
-        if (node.tomselect) {
-            node.tomselect.destroy();
-        }
+        [].slice.call(form.querySelectorAll(this._selector)).map((node) => {
+            if (node.tomselect) {
+                node.tomselect.destroy();
+            }
+        });
     }
 
     /**
