@@ -508,7 +508,7 @@ class ImportTimesheetCommand extends Command
     {
         $tmpActivity = null;
 
-        $tmpActivities = $this->activities->findBy(['project' => $project, 'name' => $activity]);
+        $tmpActivities = $this->activities->findBy(['project' => $project->getId(), 'name' => $activity]);
 
         if (\count($tmpActivities) === 0) {
             $tmpActivity = $this->activities->findOneBy(['project' => null, 'name' => $activity]);
