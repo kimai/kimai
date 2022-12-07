@@ -176,12 +176,13 @@
     {% set columnModal = options.columnConfig ?? true %}
     {% set responsive = options.responsive ?? false %}
     {% set sticky = options.sticky ?? true %}
+    {% set contextMenuId = options.contextMenuId is defined ? options.contextMenuId : 'datatable_' ~ tableName ~ '_contextmenu' %}
 
     <div class="{{ boxClass }} datatable_{{ tableName }}">
         <div class="card-body p-0{% if responsive %} table-responsive{% endif %}">
             <div class="dataTables_wrapper form-inline">
-                <div id="datatable_{{ tableName }}_contextmenu" class="dropdown-menu d-none"></div>
-                <table class="table table-hover dataTable" role="grid" data-reload-event="kimai.reset_column_visibility {{ reloadEvent }}" data-context-menu="datatable_{{ tableName }}_contextmenu">
+                <div id="{{ contextMenuId }}" class="dropdown-menu d-none"></div>
+                <table class="table table-hover dataTable" role="grid" data-reload-event="kimai.reset_column_visibility {{ reloadEvent }}" data-context-menu="{{ contextMenuId }}">
                     <thead{% if sticky %} class="sticky-top"{% endif %}>
                         <tr>
                         {%- for title, headerOptions in columns -%}
