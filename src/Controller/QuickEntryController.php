@@ -125,12 +125,12 @@ final class QuickEntryController extends AbstractController
             foreach ($row['days'] as $dayId => $day) {
                 if (!\array_key_exists('entry', $day)) {
                     // fill all rows and columns to make sure we do not have missing records
-                    $tmp = new Timesheet();
-                    $tmp->setUser($user);
+                    $tmp = $this->timesheetService->createNewTimesheet($user);
                     $tmp->setProject($row['project']);
                     $tmp->setActivity($row['activity']);
                     $tmp->setBegin(clone $day['day']);
                     $tmp->getBegin()->setTime($defaultHour, $defaultMinute, 0, 0);
+                    $this->timesheetService->prepareNewTimesheet($tmp);
                     $model->addTimesheet($tmp);
                 } else {
                     $model->addTimesheet($day['entry']);
@@ -142,10 +142,10 @@ final class QuickEntryController extends AbstractController
         $empty = $formModel->createRow($user);
         $empty->markAsPrototype();
         foreach ($week as $dayId => $day) {
-            $tmp = new Timesheet();
-            $tmp->setUser($user);
+            $tmp = $this->timesheetService->createNewTimesheet($user);
             $tmp->setBegin(clone $day['day']);
             $tmp->getBegin()->setTime($defaultHour, $defaultMinute, 0, 0);
+            $this->timesheetService->prepareNewTimesheet($tmp);
             $empty->addTimesheet($tmp);
         }
 
@@ -156,10 +156,10 @@ final class QuickEntryController extends AbstractController
             for ($a = 0; $a < $newRows; $a++) {
                 $model = $formModel->addRow($user);
                 foreach ($week as $dayId => $day) {
-                    $tmp = new Timesheet();
-                    $tmp->setUser($user);
+                    $tmp = $this->timesheetService->createNewTimesheet($user);
                     $tmp->setBegin(clone $day['day']);
                     $tmp->getBegin()->setTime($defaultHour, $defaultMinute, 0, 0);
+                    $this->timesheetService->prepareNewTimesheet($tmp);
                     $model->addTimesheet($tmp);
                 }
             }

@@ -15,7 +15,7 @@
             {{ form_widget(form.date) }}
         {% endblock %}
         {# "table-responsive" does not work, because that would render dropdowns at the bottom behind the container #}
-        {% block box_body_class %}p-0{% endblock %}
+        {% block box_body_class %}p-0 maybe-table-responsive{% endblock %}
         {% block box_body %}
             <table class="table dataTable">
                 <thead class="sticky-top">
@@ -63,6 +63,13 @@
             const DATES = kimai.getPlugin('date');
             /** @type {KimaiFormSelect} FORM_SELECT */
             const FORM_SELECT = kimai.getPlugin('form-select');
+
+            if (window.matchMedia("(max-width: 1000px)").matches) {
+                for (let dropdowns of document.querySelectorAll('tr.qe-entry-week-row .input-group-btn')) {
+                    dropdowns.style.display = 'none';
+                }
+                document.querySelector('form[name=quick_entry_form] div.maybe-table-responsive').classList.replace('maybe-table-responsive', 'table-responsive');
+            }
 
             const recalculateTotals = () => {
                 const allFields = document.getElementsByClassName('duration-input');
