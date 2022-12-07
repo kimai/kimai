@@ -16,6 +16,7 @@ use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\Event\UserPreferenceEvent;
 use App\Form\Type\CalendarViewType;
+use App\Form\Type\FavoriteMenuType;
 use App\Form\Type\FirstWeekDayType;
 use App\Form\Type\InitialViewType;
 use App\Form\Type\LanguageType;
@@ -26,6 +27,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Range;
 
 final class UserPreferenceSubscriber implements EventSubscriberInterface
@@ -111,6 +113,13 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setOrder(700)
                 ->setSection('behaviour')
                 ->setType(InitialViewType::class),
+
+            (new UserPreference('favorite_routes', ''))
+                ->setOrder(710)
+                ->setSection('behaviour')
+                ->setOptions(['required' => false])
+                ->addConstraint(new Length(['max' => 75]))
+                ->setType(FavoriteMenuType::class),
 
             (new UserPreference('daily_stats', false))
                 ->setOrder(800)

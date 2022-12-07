@@ -42,6 +42,12 @@ class MenuChoiceType extends AbstractType
         });
     }
 
+    /**
+     * @param User $user
+     * @param bool $withReports
+     * @param array<string> $filter
+     * @return array<string, string>
+     */
     private function getChoices(User $user, bool $withReports, array $filter): array
     {
         $event = new ConfigureMainMenuEvent();
@@ -62,12 +68,17 @@ class MenuChoiceType extends AbstractType
         return $choices;
     }
 
+    /**
+     * @param MenuItemModel $menu
+     * @param array<string> $filter
+     * @return array<string, string>
+     */
     private function getChoicesFromMenu(MenuItemModel $menu, array $filter): array
     {
         $choices = [];
 
         foreach ($menu->getChildren() as $child) {
-            if (in_array($child->getIdentifier(), $filter)) {
+            if (\in_array($child->getIdentifier(), $filter)) {
                 continue;
             }
             if (!$child->hasChildren()) {

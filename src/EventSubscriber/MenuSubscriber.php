@@ -43,11 +43,13 @@ final class MenuSubscriber implements EventSubscriberInterface
             return;
         }
 
-        // ------------------- main menu -------------------
+        // main menu
         $menu = $event->getMenu();
 
-        $menu->addChild(new MenuItemModel('dashboard_nav', 'dashboard.title', 'dashboard', [], 'dashboard'));
+        $menu->addChild(new MenuItemModel('dashboard', 'dashboard.title', 'dashboard', [], 'dashboard'));
+        $menu->addChild(new MenuItemModel('favorites', 'favorite_routes', null, [], 'bookmarked'));
 
+        // ------------------- timesheet menu -------------------
         $times = new MenuItemModel('timesheet', 'time_tracking', null, [], 'timesheet');
 
         if ($auth->isGranted('view_own_timesheet')) {

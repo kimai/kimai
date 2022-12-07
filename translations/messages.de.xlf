@@ -611,6 +611,10 @@
         <source>login_initial_view</source>
         <target>Initiale Ansicht nach Anmeldung</target>
       </trans-unit>
+      <trans-unit id="SdLZTel" resname="favorite_routes">
+        <source>favorite_routes</source>
+        <target>Favoriten</target>
+      </trans-unit>
       <trans-unit id="gRIArHS" resname="lastLogin">
         <source>lastLogin</source>
         <target>Letzte Anmeldung</target>

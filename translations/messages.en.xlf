@@ -603,6 +603,10 @@
         <source>login_initial_view</source>
         <target>Initial view after login</target>
       </trans-unit>
+      <trans-unit id="SdLZTel" resname="favorite_routes">
+        <source>favorite_routes</source>
+        <target>Favorites</target>
+      </trans-unit>
       <trans-unit id="gRIArHS" resname="lastLogin">
         <source>lastLogin</source>
         <target>Last login</target>

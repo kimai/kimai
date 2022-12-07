@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Security;
  * Class MenuBuilder configures the main navigation.
  * @internal
  */
-class MenuBuilderSubscriber implements EventSubscriberInterface
+final class MenuBuilderSubscriber implements EventSubscriberInterface
 {
     public function __construct(private EventDispatcherInterface $eventDispatcher, private Security $security)
     {
@@ -64,34 +64,43 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
             $event->addItem($menuEvent->getSystemMenu());
         }
 
-        $this->activateByRoute(
-            $event->getRequest()->get('_route'),
-            $event->getItems()
-        );
+        $route = $event->getRequest()->get('_route');
+        if (!\is_string($route)) {
+            return;
+        }
+
+        $this->activateByRoute($route, $event->getItems());
     }
 
     /**
      * @param string $route
      * @param MenuItemInterface[] $items
+     * @return bool
      */
-    protected function activateByRoute(string $route, array $items): void
+    private function activateByRoute(string $route, array $items): bool
     {
         foreach ($items as $item) {
             if ($item instanceof MenuItemModel) {
                 if ($item->isChildRoute($route)) {
                     $item->setIsActive(true);
-                    continue;
+
+                    return true;
                 }
             }
 
             if ($item->getRoute() === $route) {
                 $item->setIsActive(true);
-                continue;
+
+                return true;
             }
 
             if ($item->hasChildren()) {
-                $this->activateByRoute($route, $item->getChildren());
+                if ($this->activateByRoute($route, $item->getChildren())) {
+                    return true;
+                }
             }
         }
+
+        return false;
     }
 }
