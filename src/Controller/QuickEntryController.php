@@ -139,6 +139,7 @@ class QuickEntryController extends AbstractController
                     $tmp->setActivity($row['activity']);
                     $tmp->setBegin(clone $day['day']);
                     $tmp->getBegin()->setTime($defaultHour, $defaultMinute, 0, 0);
+                    $this->timesheetService->prepareNewTimesheet($tmp);
                     $model->addTimesheet($tmp);
                 } else {
                     $model->addTimesheet($day['entry']);
@@ -153,6 +154,7 @@ class QuickEntryController extends AbstractController
             $tmp = $this->timesheetService->createNewTimesheet($user);
             $tmp->setBegin(clone $day['day']);
             $tmp->getBegin()->setTime($defaultHour, $defaultMinute, 0, 0);
+            $this->timesheetService->prepareNewTimesheet($tmp);
             $empty->addTimesheet($tmp);
         }
 
@@ -166,6 +168,7 @@ class QuickEntryController extends AbstractController
                     $tmp = $this->timesheetService->createNewTimesheet($user);
                     $tmp->setBegin(clone $day['day']);
                     $tmp->getBegin()->setTime($defaultHour, $defaultMinute, 0, 0);
+                    $this->timesheetService->prepareNewTimesheet($tmp);
                     $model->addTimesheet($tmp);
                 }
             }
