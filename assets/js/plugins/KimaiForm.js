@@ -21,34 +21,24 @@ export default class KimaiForm extends KimaiPlugin {
 
     activateForm(formSelector)
     {
-        const forms = document.querySelectorAll(formSelector);
-        if (forms.length === 0) {
-            return;
-        }
-
-        for (const form of forms) {
+        [].slice.call(document.querySelectorAll(formSelector)).map((form) => {
             for (const plugin of this.getContainer().getPlugins()) {
                 if (plugin instanceof KimaiFormPlugin && plugin.supportsForm(form)) {
                     plugin.activateForm(form);
                 }
             }
-        }
+        });
     }
 
     destroyForm(formSelector)
     {
-        const forms = document.querySelectorAll(formSelector);
-        if (forms.length === 0) {
-            return;
-        }
-
-        for (const form of forms) {
+        [].slice.call(document.querySelectorAll(formSelector)).map((form) => {
             for (const plugin of this.getContainer().getPlugins()) {
                 if (plugin instanceof KimaiFormPlugin && plugin.supportsForm(form)) {
                     plugin.destroyForm(form);
                 }
             }
-        }
+        });
     }
 
     /**
