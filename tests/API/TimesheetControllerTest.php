@@ -310,7 +310,6 @@ class TimesheetControllerTest extends APIControllerBaseTest
         $timesheet = new Timesheet();
         $timesheet
             ->setHourlyRate(137.21)
-            ->setInternalRate(64.96)
             ->setBegin($startDate)
             ->setEnd($endDate)
             ->setExported(true)
@@ -346,11 +345,11 @@ class TimesheetControllerTest extends APIControllerBaseTest
             'metaFields' => [],
             'hourlyRate' => 137.21,
             'rate' => 1772.2958,
-            'internalRate' => 0.0,
+            'internalRate' => 1772.2958,
         ];
 
         foreach ($expected as $key => $value) {
-            self::assertEquals($value, $result[$key]);
+            self::assertEquals($value, $result[$key], sprintf('Field %s has invalid value', $key));
         }
     }
 

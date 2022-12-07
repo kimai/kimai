@@ -10,7 +10,6 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Tag;
-use App\Entity\Timesheet;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -39,21 +38,5 @@ class TagTest extends TestCase
 
         $sut->setColor('#fffccc');
         $this->assertEquals('#fffccc', $sut->getColor());
-    }
-
-    public function testWithTimesheet()
-    {
-        $sut = new Tag();
-        $timesheet = new Timesheet();
-
-        $this->assertEmpty($timesheet->getTags());
-
-        $sut->setName('bar');
-        $sut->addTimesheet($timesheet);
-
-        $this->assertSame($sut, $timesheet->getTags()[0]);
-
-        $sut->removeTimesheet($timesheet);
-        $this->assertEmpty($timesheet->getTags());
     }
 }

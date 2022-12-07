@@ -399,7 +399,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[OA\Property(type: 'string')]
     public function getLocale(): string
     {
-        return $this->getPreferenceValue(UserPreference::LOCALE, User::DEFAULT_LANGUAGE);
+        return $this->getPreferenceValue(UserPreference::LOCALE, User::DEFAULT_LANGUAGE, false);
     }
 
     #[Serializer\VirtualProperty]
@@ -408,7 +408,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[OA\Property(type: 'string')]
     public function getTimezone(): string
     {
-        return $this->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get());
+        return $this->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get(), false);
     }
 
     public function getLanguage(): string
@@ -431,12 +431,12 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function getFirstDayOfWeek(): string
     {
-        return $this->getPreferenceValue(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY);
+        return $this->getPreferenceValue(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY, false);
     }
 
     public function isExportDecimal(): bool
     {
-        return (bool) $this->getPreferenceValue('export_decimal', false);
+        return (bool) $this->getPreferenceValue('export_decimal', false, false);
     }
 
     public function setTimezone(?string $timezone)
@@ -450,16 +450,19 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * @param string $name
      * @param mixed $default
+     * @param bool $allowNull
      * @return bool|int|float|string|null
      */
-    public function getPreferenceValue(string $name, $default = null)
+    public function getPreferenceValue(string $name, $default = null, bool $allowNull = true): mixed
     {
         $preference = $this->getPreference($name);
         if (null === $preference) {
             return $default;
         }
 
-        return $preference->getValue();
+        $value = $preference->getValue();
+
+        return $allowNull ? $value : ($value ?? $default);
     }
 
     /**

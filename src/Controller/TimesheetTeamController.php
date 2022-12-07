@@ -99,7 +99,7 @@ final class TimesheetTeamController extends TimesheetAbstractController
                 $tags = [];
                 /** @var Tag $tag */
                 foreach ($entry->getTags() as $tag) {
-                    $tag->removeTimesheet($entry);
+                    $entry->addTag($tag);
                     $tags[] = $tag;
                 }
 
