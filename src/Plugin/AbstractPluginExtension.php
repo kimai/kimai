@@ -14,13 +14,13 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 abstract class AbstractPluginExtension extends Extension
 {
-    protected function registerBundleConfiguration(ContainerBuilder $container, array $configs)
+    protected function registerBundleConfiguration(ContainerBuilder $container, array $configs): void
     {
         $bundleConfig = [$this->getAlias() => $configs];
 
         if ($container->hasParameter('kimai.bundles.config')) { // @phpstan-ignore-line
             $config = $container->getParameter('kimai.bundles.config');
-            if (!\is_array($config)) {
+            if (!\is_array($config)) { // @phpstan-ignore-line
                 throw new \Exception('Invalid bundle configuration registered for ' . $this->getAlias());
             }
             $bundleConfig = array_merge($config, $bundleConfig);

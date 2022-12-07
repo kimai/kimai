@@ -72,7 +72,7 @@ class AppExtension extends Extension
         /* @phpstan-ignore-next-line */
         if ($container->hasParameter('kimai.bundles.config')) {
             $bundleConfig = $container->getParameter('kimai.bundles.config');
-            if (!\is_array($bundleConfig)) {
+            if (!\is_array($bundleConfig)) { // @phpstan-ignore-line
                 trigger_error('Invalid bundle configuration found, skipping all bundle configuration');
             } else {
                 foreach ($bundleConfig as $key => $value) {

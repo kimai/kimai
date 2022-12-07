@@ -6986,11 +6986,6 @@ parameters:
             path: src/Pdf/PdfContext.php
 
         -
-            message: "#^Method App\\\\Plugin\\\\AbstractPluginExtension\\:\\:registerBundleConfiguration\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Plugin/AbstractPluginExtension.php
-
-        -
             message: "#^Method App\\\\Plugin\\\\AbstractPluginExtension\\:\\:registerBundleConfiguration\\(\\) has parameter \\$configs with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Plugin/AbstractPluginExtension.php
@@ -10189,11 +10184,6 @@ parameters:
             path: src/Controller/QuickEntryController.php
 
         -
-            message: "#^Call to function is_array\\(\\) with array\\{codeweavers\\: array\\{default_pto\\: int\\}, small_business_rule\\: array\\{enable\\: bool\\}, kiosk\\: array\\{login_type\\: string, barcode_types\\: string, with_text\\: bool, result_duration\\: int, activity\\: string, with_ip\\: bool, hide_code\\: bool, hide_result_logo\\: bool, \\.\\.\\.\\}, expenses\\: array\\{include_budget\\: bool\\}, demo\\: array\\{some_setting\\: string\\}\\} will always evaluate to true\\.$#"
-            count: 1
-            path: src/DependencyInjection/AppExtension.php
-
-        -
             message: "#^Parameter \\#1 \\$value \\(string\\) of method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\AnnotationExtractor\\:\\:extract\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\ExtractorInterface\\:\\:extract\\(\\)$#"
             count: 1
             path: src/Export/Spreadsheet/Extractor/AnnotationExtractor.php
@@ -10267,11 +10257,6 @@ parameters:
             message: "#^Instanceof between Symfony\\\\Component\\\\Security\\\\Http\\\\Authenticator\\\\Passport\\\\Passport and Symfony\\\\Component\\\\Security\\\\Http\\\\Authenticator\\\\Passport\\\\Passport will always evaluate to true\\.$#"
             count: 1
             path: src/Ldap/LdapCredentialsSubscriber.php
-
-        -
-            message: "#^Call to function is_array\\(\\) with array\\{codeweavers\\: array\\{default_pto\\: int\\}, small_business_rule\\: array\\{enable\\: bool\\}, kiosk\\: array\\{login_type\\: string, barcode_types\\: string, with_text\\: bool, result_duration\\: int, activity\\: string, with_ip\\: bool, hide_code\\: bool, hide_result_logo\\: bool, \\.\\.\\.\\}, expenses\\: array\\{include_budget\\: bool\\}, demo\\: array\\{some_setting\\: string\\}\\} will always evaluate to true\\.$#"
-            count: 1
-            path: src/Plugin/AbstractPluginExtension.php
 
         -
             message: "#^Strict comparison using \\!\\=\\= between DateTime and false will always evaluate to true\\.$#"
