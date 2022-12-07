@@ -16,7 +16,7 @@
         {% block box_title %}
             {{ form_widget(form.date) }}
         {% endblock %}
-        {% block box_body_class %}no-padding table-responsive{% endblock %}
+        {% block box_body_class %}no-padding{% endblock %}
         {% block box_footer %}
             <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
             <button type="button" class="btn btn-success add-item-link" data-collection-prototype="{{ form.rows.vars.id }}" data-collection-holder="ts-collection">
