@@ -188,12 +188,12 @@ class MenuItemModel implements MenuItemInterface
         }
     }
 
-    public function findChild(string $identifier): ?MenuItemInterface
+    public function findChild(string $identifier): ?MenuItemModel
     {
         return $this->find($identifier, $this);
     }
 
-    private function find(string $identifier, MenuItemInterface $menu): ?MenuItemInterface
+    private function find(string $identifier, MenuItemModel $menu): ?MenuItemModel
     {
         if ($menu->getIdentifier() === $identifier) {
             return $this;

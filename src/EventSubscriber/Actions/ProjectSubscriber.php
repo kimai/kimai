@@ -25,8 +25,9 @@ class ProjectSubscriber extends AbstractActionsSubscriber
 
         /** @var Project $project */
         $project = $payload['project'];
+        $customer = $project->getCustomer();
 
-        if ($project->getId() === null) {
+        if ($project->getId() === null || $customer === null) {
             return;
         }
 
@@ -51,15 +52,15 @@ class ProjectSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('view_activity')) {
-            $event->addActionToSubmenu('filter', 'activity', ['title' => 'activity.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_activity', ['customers[]' => $project->getCustomer()->getId(), 'projects[]' => $project->getId()])]);
+            $event->addActionToSubmenu('filter', 'activity', ['title' => 'activity.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_activity', ['customers[]' => $customer->getId(), 'projects[]' => $project->getId()])]);
         }
 
         if ($this->isGranted('view_other_timesheet')) {
-            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', ['customers[]' => $project->getCustomer()->getId(), 'projects[]' => $project->getId()])]);
+            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', ['customers[]' => $customer->getId(), 'projects[]' => $project->getId()])]);
         }
 
         if ($this->isGranted('create_export')) {
-            $event->addActionToSubmenu('filter', 'export', ['title' => 'export', 'url' => $this->path('export', ['customers[]' => $project->getCustomer()->getId(), 'projects[]' => $project->getId(), 'exported' => 1, 'daterange' => ''])]);
+            $event->addActionToSubmenu('filter', 'export', ['title' => 'export', 'url' => $this->path('export', ['customers[]' => $customer->getId(), 'projects[]' => $project->getId(), 'exported' => 1, 'daterange' => ''])]);
         }
 
         if ($event->hasSubmenu('filter')) {
@@ -67,7 +68,7 @@ class ProjectSubscriber extends AbstractActionsSubscriber
         }
 
         if ($isListingView) {
-            if ($project->isVisible() && $project->getCustomer()->isVisible() && $this->isGranted('create_activity')) {
+            if ($project->isVisible() && $customer->isVisible() && $this->isGranted('create_activity')) {
                 $event->addAction('create-activity', [
                     'icon' => 'create',
                     'url' => $this->path('admin_activity_create_with_project', ['project' => $project->getId()]),

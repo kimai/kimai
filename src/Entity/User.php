@@ -449,11 +449,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     /**
      * @param string $name
-     * @param mixed $default
+     * @param bool|int|float|string|null $default
      * @param bool $allowNull
      * @return bool|int|float|string|null
      */
-    public function getPreferenceValue(string $name, $default = null, bool $allowNull = true): mixed
+    public function getPreferenceValue(string $name, mixed $default = null, bool $allowNull = true): bool|int|float|string|null
     {
         $preference = $this->getPreference($name);
         if (null === $preference) {

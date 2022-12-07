@@ -19,11 +19,12 @@ use PHPUnit\Framework\TestCase;
  */
 class MenuFavoritesSubscriberTest extends TestCase
 {
-    public function testGetSubscribedEvents()
+    public function testGetSubscribedEvents(): void
     {
         $events = MenuFavoritesSubscriber::getSubscribedEvents();
         $this->assertArrayHasKey(ConfigureMainMenuEvent::class, $events);
         $methodName = $events[ConfigureMainMenuEvent::class][0];
+        self::assertIsString($methodName);
         $this->assertTrue(method_exists(MenuSubscriber::class, $methodName));
     }
 }

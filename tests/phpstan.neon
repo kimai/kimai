@@ -5898,11 +5898,6 @@ parameters:
             path: Entity/TagTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\TagTest\\:\\:testWithTimesheet\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/TagTest.php
-
-        -
             message: "#^Cannot access offset 0 on iterable\\<App\\\\Entity\\\\Team\\>\\.$#"
             count: 1
             path: Entity/TeamTest.php
