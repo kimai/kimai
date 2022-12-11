@@ -101,7 +101,7 @@ class ChangePasswordCommandTest extends KernelTestCase
         $commandTester = $this->callCommand('john_user', '1');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[ERROR] plainPassword: This value is too short. It should have 8 characters or more.', $output);
+        $this->assertStringContainsString('[ERROR] plainPassword: This value is too short.', $output);
     }
 
     public function testWithMissingUsername(): void

@@ -23,10 +23,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class CreateUserCommandTest extends KernelTestCase
 {
-    /**
-     * @var Application
-     */
-    private $application;
+    private Application $application;
 
     protected function setUp(): void
     {
@@ -40,15 +37,15 @@ class CreateUserCommandTest extends KernelTestCase
         ));
     }
 
-    public function testCreateUserFailsForShortPassword()
+    public function testCreateUserFailsForShortPassword(): void
     {
         $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[ERROR] plainPassword: This value is too short. It should have 8 characters or more.', $output);
+        $this->assertStringContainsString('[ERROR] plainPassword: This value is too short.', $output);
     }
 
-    public function testCreateUser()
+    public function testCreateUser(): void
     {
         $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar12');
 
@@ -63,7 +60,7 @@ class CreateUserCommandTest extends KernelTestCase
         self::assertNotNull($user);
     }
 
-    protected function createUser($username, $email, $role, $password)
+    protected function createUser($username, $email, $role, $password): CommandTester
     {
         $command = $this->application->find('kimai:user:create');
         $commandTester = new CommandTester($command);
@@ -78,16 +75,16 @@ class CreateUserCommandTest extends KernelTestCase
         return $commandTester;
     }
 
-    public function testUserWithEmptyFieldsTriggersValidationProblem()
+    public function testUserWithEmptyFieldsTriggersValidationProblem(): void
     {
         $commandTester = $this->createUser('xx', '', 'ROLE_USER', '');
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString('[ERROR] email: This value should not be blank', $output);
         $this->assertStringContainsString('[ERROR] plainPassword: This value should not be blank', $output);
-        $this->assertStringContainsString('[ERROR] plainPassword: This value is too short. It should have 8 characters or more', $output);
+        $this->assertStringContainsString('[ERROR] plainPassword: This value is too short.', $output);
     }
 
-    public function testUserAlreadyExisting()
+    public function testUserAlreadyExisting(): void
     {
         $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar123');
         $commandTester = $this->createUser('MyTestUser', 'user2@example.com', 'ROLE_USER', 'foobar123');
@@ -96,7 +93,7 @@ class CreateUserCommandTest extends KernelTestCase
         $this->assertStringContainsString('[ERROR] username: The username is already used.', $output);
     }
 
-    public function testEmailAlreadyExisting()
+    public function testEmailAlreadyExisting(): void
     {
         $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar12');
         $commandTester = $this->createUser('MyTestUser2', 'user@example.com', 'ROLE_USER', 'foobar');
@@ -105,7 +102,7 @@ class CreateUserCommandTest extends KernelTestCase
         $this->assertStringContainsString('[ERROR] email: The email is already used.', $output);
     }
 
-    public function testUserEmail()
+    public function testUserEmail(): void
     {
         $commandTester = $this->createUser('MyTestUser', 'ROLE_USER', 'ROLE_USER', 'foobar12');
 

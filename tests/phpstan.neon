@@ -2028,11 +2028,6 @@ parameters:
             path: Command/CreateUserCommandTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Command\\\\CreateUserCommandTest\\:\\:createUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/CreateUserCommandTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Command\\\\CreateUserCommandTest\\:\\:createUser\\(\\) has parameter \\$email with no type specified\\.$#"
             count: 1
             path: Command/CreateUserCommandTest.php
@@ -2049,36 +2044,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Command\\\\CreateUserCommandTest\\:\\:createUser\\(\\) has parameter \\$username with no type specified\\.$#"
-            count: 1
-            path: Command/CreateUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\CreateUserCommandTest\\:\\:testCreateUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/CreateUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\CreateUserCommandTest\\:\\:testCreateUserFailsForShortPassword\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/CreateUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\CreateUserCommandTest\\:\\:testEmailAlreadyExisting\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/CreateUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\CreateUserCommandTest\\:\\:testUserAlreadyExisting\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/CreateUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\CreateUserCommandTest\\:\\:testUserEmail\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/CreateUserCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\CreateUserCommandTest\\:\\:testUserWithEmptyFieldsTriggersValidationProblem\\(\\) has no return type specified\\.$#"
             count: 1
             path: Command/CreateUserCommandTest.php
 
