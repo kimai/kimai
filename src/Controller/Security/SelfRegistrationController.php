@@ -145,6 +145,7 @@ final class SelfRegistrationController extends AbstractController
         }
 
         return $this->render('security/self-registration/confirmed.html.twig', [
+            'user' => $this->getUser(),
             'targetUrl' => $this->getTargetUrlFromSession($request->getSession()),
         ]);
     }
@@ -159,7 +160,7 @@ final class SelfRegistrationController extends AbstractController
     private function getTargetUrlFromSession(SessionInterface $session): ?string
     {
         $token = $this->tokenStorage->getToken();
-        if (!method_exists($token, 'getProviderKey')) {
+        if ($token === null || !method_exists($token, 'getProviderKey')) {
             return null;
         }
 
