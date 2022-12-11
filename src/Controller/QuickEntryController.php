@@ -46,10 +46,6 @@ final class QuickEntryController extends AbstractController
         $endWeek = $factory->getEndOfWeek($begin);
         $user = $this->getUser();
 
-        if ($user === null) {
-            throw $this->createAccessDeniedException();
-        }
-
         $tmpDay = clone $startWeek;
         $week = [];
         while ($tmpDay < $endWeek) {
@@ -220,8 +216,7 @@ final class QuickEntryController extends AbstractController
                     return $this->redirectToRoute('quick_entry', ['begin' => $begin->format('Y-m-d')]);
                 }
             } catch (\Exception $ex) {
-                $this->flashError('action.update.error');
-                $this->logException($ex);
+                $this->flashUpdateException($ex);
             }
         }
 

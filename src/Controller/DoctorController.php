@@ -66,10 +66,10 @@ final class DoctorController extends AbstractController
 
         if (file_exists($logfile)) {
             if (!is_writable($logfile)) {
-                $this->flashError('action.delete.error', ['%reason%' => 'Logfile cannot be written']);
+                $this->flashError('action.delete.error', 'Logfile cannot be written');
             } else {
                 if (false === file_put_contents($logfile, '')) {
-                    $this->flashError('action.delete.error', ['%reason%' => 'Failed writing to logfile']);
+                    $this->flashError('action.delete.error', 'Failed writing to logfile');
                 } else {
                     $this->flashSuccess('action.delete.success');
                 }

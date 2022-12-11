@@ -1256,11 +1256,6 @@ parameters:
             path: src/Configuration/SystemConfiguration.php
 
         -
-            message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:addFlashTranslated\\(\\) has parameter \\$parameter with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/AbstractController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:createFormForGetRequest\\(\\) has parameter \\$data with no type specified\\.$#"
             count: 1
             path: src/Controller/AbstractController.php
@@ -1286,26 +1281,6 @@ parameters:
             path: src/Controller/AbstractController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:flashError\\(\\) has parameter \\$parameter with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/AbstractController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:flashException\\(\\) has parameter \\$parameter with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/AbstractController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:flashSuccess\\(\\) has parameter \\$parameter with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/AbstractController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:flashWarning\\(\\) has parameter \\$parameter with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/AbstractController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:getLastSearch\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Controller/AbstractController.php
@@ -1317,21 +1292,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:redirectToRouteAfterCreate\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/AbstractController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Bookmark\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/AbstractController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\BookmarkRepository\\:\\:getSearchDefaultOptions\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/AbstractController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of static method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createByUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: src/Controller/AbstractController.php
 
@@ -1357,11 +1317,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$name of class App\\\\Entity\\\\Team constructor expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/ActivityController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Team\\:\\:addTeamlead\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: src/Controller/ActivityController.php
 
@@ -1416,16 +1371,6 @@ parameters:
             path: src/Controller/BookmarkController.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Bookmark\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/BookmarkController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\BookmarkRepository\\:\\:findBookmark\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 2
-            path: src/Controller/BookmarkController.php
-
-        -
             message: "#^Parameter \\#2 \\$profile of method App\\\\Utils\\\\ProfileManager\\:\\:getDatatableName\\(\\) expects string\\|null, bool\\|float\\|int\\|string given\\.$#"
             count: 2
             path: src/Controller/BookmarkController.php
@@ -1443,16 +1388,6 @@ parameters:
         -
             message: "#^Cannot access offset 'user' on mixed\\.$#"
             count: 2
-            path: src/Controller/CalendarController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Calendar\\\\CalendarService\\:\\:getDragAndDropResources\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/CalendarController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Calendar\\\\CalendarService\\:\\:getGoogleSources\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
             path: src/Controller/CalendarController.php
 
         -
@@ -1536,22 +1471,12 @@ parameters:
             path: src/Controller/CustomerController.php
 
         -
-            message: "#^Parameter \\#1 \\$createdBy of method App\\\\Entity\\\\CustomerComment\\:\\:setCreatedBy\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
             message: "#^Parameter \\#1 \\$filename of static method App\\\\Utils\\\\FileHelper\\:\\:convertToAsciiFilename\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Controller/CustomerController.php
 
         -
             message: "#^Parameter \\#1 \\$name of class App\\\\Entity\\\\Team constructor expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Team\\:\\:addTeamlead\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: src/Controller/CustomerController.php
 
@@ -1593,36 +1518,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$name of method App\\\\Widget\\\\WidgetInterface\\:\\:setOption\\(\\) expects string, mixed given\\.$#"
             count: 1
-            path: src/Controller/DashboardController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of class App\\\\Event\\\\DashboardEvent constructor expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/DashboardController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Controller\\\\DashboardController\\:\\:getAllAvailableWidgets\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 2
-            path: src/Controller/DashboardController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Controller\\\\DashboardController\\:\\:getBookmark\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/DashboardController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Controller\\\\DashboardController\\:\\:getUserConfig\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 2
-            path: src/Controller/DashboardController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Controller\\\\DashboardController\\:\\:saveBookmark\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 2
-            path: src/Controller/DashboardController.php
-
-        -
-            message: "#^Parameter \\#2 \\$user of method App\\\\Controller\\\\DashboardController\\:\\:filterWidgets\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 2
             path: src/Controller/DashboardController.php
 
         -
@@ -1686,11 +1581,6 @@ parameters:
             path: src/Controller/ExportController.php
 
         -
-            message: "#^Cannot call method isExportDecimal\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: src/Controller/ExportController.php
-
-        -
             message: "#^Parameter \\#1 \\$route of method Symfony\\\\Bundle\\\\FrameworkBundle\\\\Controller\\\\AbstractController\\:\\:redirectToRoute\\(\\) expects string, bool\\|float\\|int\\|string\\|null given\\.$#"
             count: 1
             path: src/Controller/HomepageController.php
@@ -1749,16 +1639,6 @@ parameters:
             message: "#^Method App\\\\Controller\\\\PluginController\\:\\:getPluginInformation\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Controller/PluginController.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 3
-            path: src/Controller/ProfileController.php
-
-        -
-            message: "#^Cannot call method getUserIdentifier\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: src/Controller/ProfileController.php
 
         -
             message: "#^PHPDoc tag @var for variable \\$iterator contains generic class ArrayIterator but does not specify its types\\: TKey, TValue$#"
@@ -1856,22 +1736,7 @@ parameters:
             path: src/Controller/ProjectController.php
 
         -
-            message: "#^Parameter \\#1 \\$createdBy of method App\\\\Entity\\\\ProjectComment\\:\\:setCreatedBy\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
             message: "#^Parameter \\#1 \\$name of class App\\\\Entity\\\\Team constructor expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of class App\\\\Utils\\\\Context constructor expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Team\\:\\:addTeamlead\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: src/Controller/ProjectController.php
 
@@ -1956,11 +1821,6 @@ parameters:
             path: src/Controller/Reporting/ProjectDateRangeController.php
 
         -
-            message: "#^Cannot call method getTimezone\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectDateRangeController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\Reporting\\\\ProjectDateRangeController\\:\\:__invoke\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Controller/Reporting/ProjectDateRangeController.php
@@ -1976,11 +1836,6 @@ parameters:
             path: src/Controller/Reporting/ProjectDateRangeController.php
 
         -
-            message: "#^Parameter \\#2 \\$user of class App\\\\Reporting\\\\ProjectDateRange\\\\ProjectDateRangeQuery constructor expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectDateRangeController.php
-
-        -
             message: "#^Parameter \\#3 \\$end of method App\\\\Project\\\\ProjectStatisticService\\:\\:getBudgetStatisticModelForProjectsByDateRange\\(\\) expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/ProjectDateRangeController.php
@@ -1991,37 +1846,12 @@ parameters:
             path: src/Controller/Reporting/ProjectDetailsController.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Project\\\\ProjectStatisticService\\:\\:getProjectView\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectDetailsController.php
-
-        -
-            message: "#^Parameter \\#2 \\$user of class App\\\\Reporting\\\\ProjectDetails\\\\ProjectDetailsQuery constructor expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectDetailsController.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 3
             path: src/Controller/Reporting/ProjectInactiveController.php
 
         -
-            message: "#^Cannot call method getTimezone\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectInactiveController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\Reporting\\\\ProjectInactiveController\\:\\:__invoke\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectInactiveController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Project\\\\ProjectStatisticService\\:\\:getProjectView\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectInactiveController.php
-
-        -
-            message: "#^Parameter \\#2 \\$user of class App\\\\Reporting\\\\ProjectInactive\\\\ProjectInactiveQuery constructor expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/ProjectInactiveController.php
 
@@ -2032,16 +1862,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Controller\\\\Reporting\\\\ProjectViewController\\:\\:__invoke\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectViewController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Project\\\\ProjectStatisticService\\:\\:getProjectView\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ProjectViewController.php
-
-        -
-            message: "#^Parameter \\#2 \\$user of class App\\\\Reporting\\\\ProjectView\\\\ProjectViewQuery constructor expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/ProjectViewController.php
 
@@ -2081,22 +1901,12 @@ parameters:
             path: src/Controller/Reporting/ReportUsersMonthController.php
 
         -
-            message: "#^Parameter \\#3 \\$user of class App\\\\Model\\\\DailyStatistic constructor expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ReportUsersMonthController.php
-
-        -
             message: "#^Parameter \\#3 \\$users of method App\\\\Timesheet\\\\TimesheetStatisticService\\:\\:getDailyStatistics\\(\\) expects array\\<App\\\\Entity\\\\User\\>, iterable\\<App\\\\Entity\\\\User\\> given\\.$#"
             count: 1
             path: src/Controller/Reporting/ReportUsersMonthController.php
 
         -
             message: "#^Method App\\\\Controller\\\\Reporting\\\\ReportUsersWeekController\\:\\:getData\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ReportUsersWeekController.php
-
-        -
-            message: "#^Parameter \\#3 \\$user of class App\\\\Model\\\\DailyStatistic constructor expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/ReportUsersWeekController.php
 
@@ -2122,11 +1932,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$financialYear of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createEndOfFinancialYear\\(\\) expects DateTimeInterface, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Reporting/ReportUsersYearController.php
-
-        -
-            message: "#^Parameter \\#3 \\$user of class App\\\\Model\\\\MonthlyStatistic constructor expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/ReportUsersYearController.php
 
@@ -2239,11 +2044,6 @@ parameters:
             message: "#^Parameter \\#3 \\$user of method App\\\\Controller\\\\Reporting\\\\AbstractUserReportController\\:\\:prepareReport\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: src/Controller/Reporting/UserYearController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Reporting\\\\ReportingService\\:\\:getAvailableReports\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/ReportingController.php
 
         -
             message: "#^Parameter \\#1 \\$address of class Symfony\\\\Component\\\\Mime\\\\Address constructor expects string, string\\|null given\\.$#"
@@ -2436,11 +2236,6 @@ parameters:
             path: src/Controller/TimesheetAbstractController.php
 
         -
-            message: "#^Cannot call method getPreferenceValue\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
             message: "#^Cannot call method setEntities\\(\\) on mixed\\.$#"
             count: 1
             path: src/Controller/TimesheetAbstractController.php
@@ -2471,11 +2266,6 @@ parameters:
             path: src/Controller/TimesheetAbstractController.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Timesheet\\\\TimesheetService\\:\\:createNewTimesheet\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
             message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, iterable\\<object\\> given\\.$#"
             count: 1
             path: src/Controller/TimesheetAbstractController.php
@@ -2501,11 +2291,6 @@ parameters:
             path: src/Controller/TimesheetTeamController.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Timesheet\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/Controller/TimesheetTeamController.php
-
-        -
             message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Timesheet\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 1
             path: src/Controller/TimesheetTeamController.php
@@ -2522,11 +2307,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$entries of method App\\\\Export\\\\Spreadsheet\\\\UserExporter\\:\\:export\\(\\) expects array\\<App\\\\Entity\\\\User\\>, iterable\\<App\\\\Entity\\\\User\\> given\\.$#"
-            count: 1
-            path: src/Controller/UserController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: src/Controller/UserController.php
 
@@ -2549,41 +2329,6 @@ parameters:
             message: "#^Method App\\\\Controller\\\\WidgetController\\:\\:workingtimechartAction\\(\\) has parameter \\$year with no type specified\\.$#"
             count: 1
             path: src/Controller/WidgetController.php
-
-        -
-            message: "#^Cannot access offset 'language' on mixed\\.$#"
-            count: 2
-            path: src/Controller/WizardController.php
-
-        -
-            message: "#^Cannot access offset 'timezone' on mixed\\.$#"
-            count: 1
-            path: src/Controller/WizardController.php
-
-        -
-            message: "#^Cannot call method getTimezone\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: src/Controller/WizardController.php
-
-        -
-            message: "#^Cannot call method setLanguage\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: src/Controller/WizardController.php
-
-        -
-            message: "#^Cannot call method setTimezone\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: src/Controller/WizardController.php
-
-        -
-            message: "#^Cannot call method setWizardAsSeen\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 2
-            path: src/Controller/WizardController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\User\\\\UserService\\:\\:updateUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 2
-            path: src/Controller/WizardController.php
 
         -
             message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"

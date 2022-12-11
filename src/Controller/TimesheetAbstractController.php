@@ -239,7 +239,7 @@ abstract class TimesheetAbstractController extends AbstractController
         $form = $this->getExportForm($query);
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            $this->ignorePersistedSearch($request);
+            $request->query->set('performSearch', true);
         }
 
         if ($this->handleSearch($form, $request)) {

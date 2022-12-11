@@ -28,6 +28,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route(path: '/register')]
 final class SelfRegistrationController extends AbstractController
@@ -41,7 +42,7 @@ final class SelfRegistrationController extends AbstractController
     }
 
     #[Route(path: '/', name: 'registration_register', methods: ['GET', 'POST'])]
-    public function registerAction(Request $request): Response
+    public function registerAction(Request $request, TranslatorInterface $translator): Response
     {
         if (!$this->configuration->isSelfRegistrationActive()) {
             throw $this->createNotFoundException();
@@ -59,7 +60,7 @@ final class SelfRegistrationController extends AbstractController
             $user->setEnabled(false);
             $user->setConfirmationToken($this->userService->generateSecurityToken());
 
-            $mail = $this->generateConfirmationEmail($user);
+            $mail = $this->generateConfirmationEmail($user, $translator);
             $event = new EmailSelfRegistrationEvent($user, $mail);
             $this->eventDispatcher->dispatch($event);
 
@@ -143,13 +144,7 @@ final class SelfRegistrationController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $user = $this->getUser();
-        if ($user === null) {
-            throw $this->createAccessDeniedException('This user does not have access to this section.');
-        }
-
         return $this->render('security/self-registration/confirmed.html.twig', [
-            'user' => $user,
             'targetUrl' => $this->getTargetUrlFromSession($request->getSession()),
         ]);
     }
@@ -177,7 +172,7 @@ final class SelfRegistrationController extends AbstractController
         return null;
     }
 
-    private function generateConfirmationEmail(User $user): Email
+    private function generateConfirmationEmail(User $user, TranslatorInterface $translator): Email
     {
         $username = $user->getDisplayName();
         $language = $user->getLanguage();
@@ -187,7 +182,7 @@ final class SelfRegistrationController extends AbstractController
         return (new TemplatedEmail())
             ->to(new Address($user->getEmail()))
             ->subject(
-                $this->getTranslator()->trans('registration.subject', ['%username%' => $username], 'email', $language)
+                $translator->trans('registration.subject', ['%username%' => $username], 'email', $language)
             )
             ->htmlTemplate('emails/confirmation.html.twig')
             ->context([

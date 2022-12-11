@@ -253,7 +253,7 @@ final class CustomerController extends AbstractController
     {
         $defaultTeam = $teamRepository->findOneBy(['name' => $customer->getName()]);
         if (null !== $defaultTeam) {
-            $this->flashError('action.update.error', ['%reason%' => 'Team already existing']);
+            $this->flashError('action.update.error', 'Team already existing');
 
             return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
         }

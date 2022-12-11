@@ -67,6 +67,8 @@ final class InvoiceController extends AbstractController
     #[Security("is_granted('create_invoice')")]
     public function indexAction(Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
+        $this->flashError('action.delete.error', 'Logfile cannot be written');
+
         if (!$this->templateRepository->hasTemplate()) {
             if ($this->isGranted('manage_invoice_template')) {
                 return $this->redirectToRoute('admin_invoice_template_create');
@@ -90,8 +92,7 @@ final class InvoiceController extends AbstractController
                 $models = $this->service->createModels($query);
                 $searched = true;
             } catch (Exception $ex) {
-                $this->logException($ex);
-                $this->flashError($ex->getMessage());
+                $this->flashUpdateException($ex);
             }
         }
 
@@ -158,8 +159,7 @@ final class InvoiceController extends AbstractController
 
                 return $this->service->renderInvoice($model, $this->dispatcher, true);
             } catch (Exception $ex) {
-                $this->logException($ex);
-                $this->flashError('action.update.error', ['%reason%' => $ex->getMessage()]);
+                $this->flashUpdateException($ex);
             }
         } else {
             $this->flashFormError($form);
@@ -659,7 +659,7 @@ final class InvoiceController extends AbstractController
             $err .= PHP_EOL . '[' . $error->getOrigin()->getName() . '] ' . $error->getMessage();
         }
 
-        $this->flashError('action.update.error', ['%reason%' => $err]);
+        $this->flashError('action.update.error', $err);
     }
 
     private function renderTemplateForm(InvoiceTemplate $template, Request $request): Response

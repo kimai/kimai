@@ -276,7 +276,7 @@ final class ProjectController extends AbstractController
     {
         $defaultTeam = $teamRepository->findOneBy(['name' => $project->getName()]);
         if (null !== $defaultTeam) {
-            $this->flashError('action.update.error', ['%reason%' => 'Team already existing']);
+            $this->flashError('action.update.error', 'Team already existing');
 
             return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
         }

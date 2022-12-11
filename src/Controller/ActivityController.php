@@ -296,7 +296,7 @@ final class ActivityController extends AbstractController
     {
         $defaultTeam = $teamRepository->findOneBy(['name' => $activity->getName()]);
         if (null !== $defaultTeam) {
-            $this->flashError('action.update.error', ['%reason%' => 'Team already existing']);
+            $this->flashError('action.update.error', 'Team already existing');
 
             return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
         }

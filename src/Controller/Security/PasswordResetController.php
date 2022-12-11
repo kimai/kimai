@@ -27,6 +27,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route(path: '/resetting')]
 final class PasswordResetController extends AbstractController
@@ -55,7 +56,7 @@ final class PasswordResetController extends AbstractController
      * Request reset user password: submit form and send email.
      */
     #[Route(path: '/send-email', name: 'resetting_send_email', methods: ['POST'])]
-    public function sendEmailAction(Request $request): Response
+    public function sendEmailAction(Request $request, TranslatorInterface $translator): Response
     {
         if (!$this->configuration->isPasswordResetActive()) {
             throw $this->createNotFoundException();
@@ -75,7 +76,7 @@ final class PasswordResetController extends AbstractController
                 $user->setConfirmationToken($this->userService->generateSecurityToken());
             }
 
-            $mail = $this->generateResettingEmailMessage($user);
+            $mail = $this->generateResettingEmailMessage($user, $translator);
             $event = new EmailPasswordResetEvent($user, $mail);
             $this->eventDispatcher->dispatch($event);
 
@@ -162,7 +163,7 @@ final class PasswordResetController extends AbstractController
         return $this->createFormBuilder()->create('resetting_form', PasswordResetForm::class, $options)->getForm();
     }
 
-    private function generateResettingEmailMessage(User $user): Email
+    private function generateResettingEmailMessage(User $user, TranslatorInterface $translator): Email
     {
         $username = $user->getDisplayName();
         $language = $user->getLanguage();
@@ -172,7 +173,7 @@ final class PasswordResetController extends AbstractController
         return (new TemplatedEmail())
             ->to(new Address($user->getEmail()))
             ->subject(
-                $this->getTranslator()->trans('reset.subject', ['%username%' => $username], 'email', $language)
+                $translator->trans('reset.subject', ['%username%' => $username], 'email', $language)
             )
             ->htmlTemplate('emails/password-reset.html.twig')
             ->context([

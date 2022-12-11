@@ -15,7 +15,6 @@ use App\Controller\Security\SecurityController;
 use App\Entity\User;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Controller\ControllerBaseTest;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
@@ -124,7 +123,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $csrf = $this->createMock(CsrfTokenManagerInterface::class);
         $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['saml' => ['activate' => true]]);
         $samlConfig = new SamlConfiguration($systemConfig);
-        $sut = new SecurityController($csrf, $this->getSecurityMock(), $samlConfig);
+        $sut = new SecurityController($csrf, $samlConfig);
         $sut->checkAction();
     }
 
@@ -137,12 +136,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $csrf = $this->createMock(CsrfTokenManagerInterface::class);
         $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['saml' => ['activate' => true]]);
         $samlConfig = new SamlConfiguration($systemConfig);
-        $sut = new SecurityController($csrf, $this->getSecurityMock(), $samlConfig);
+        $sut = new SecurityController($csrf, $samlConfig);
         $sut->logoutAction();
-    }
-
-    private function getSecurityMock(): Security
-    {
-        return new Security($this->getContainer());
     }
 }

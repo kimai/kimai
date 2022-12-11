@@ -223,10 +223,6 @@ final class SystemConfigurationController extends AbstractController
     private function getConfigurationTypes(): array
     {
         $user = $this->getUser();
-        if ($user === null) {
-            throw $this->createAccessDeniedException('Missing user');
-        }
-
         $lockdownStartHelp = null;
         $lockdownEndHelp = null;
         $lockdownGraceHelp = null;
