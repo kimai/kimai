@@ -12,3 +12,19 @@
         </div>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        window.addEventListener('load', function() {
+            const skinChooser = document.getElementById('form_skin');
+            if (skinChooser !== null) {
+                skinChooser.addEventListener('change', () => {
+                    document.body.classList.remove('theme-light');
+                    document.body.classList.remove('theme-default');
+                    document.body.classList.remove('theme-dark');
+                    document.body.classList.add('theme-' + skinChooser.value);
+                });
+            }
+        });
+    </script>
+{% endblock %}

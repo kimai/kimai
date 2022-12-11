@@ -10,7 +10,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\UserPreference;
 use App\Form\Type\LanguageType;
+use App\Form\Type\SkinType;
 use App\Form\Type\TimezoneType;
 use App\User\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -45,8 +47,13 @@ final class WizardController extends AbstractController
             ];
 
             $form = $this->createFormBuilder($data)
-                ->add('language', LanguageType::class)
-                ->add('timezone', TimezoneType::class)
+                ->add(UserPreference::LOCALE, LanguageType::class)
+                ->add(UserPreference::TIMEZONE, TimezoneType::class)
+                ->add(UserPreference::SKIN, SkinType::class, [
+                    'attr' => [
+                        'onchange' => "document.body.classList.remove('theme-light');document.body.classList.remove('theme-light');"
+                    ],
+                ])
                 ->setAction($this->generateUrl('wizard', ['wizard' => 'profile']))
                 ->setMethod('POST')
                 ->getForm();
@@ -54,9 +61,11 @@ final class WizardController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                /** @var array<string, string> $data */
                 $data = $form->getData();
-                $user->setLanguage($data['language']);
-                $user->setTimezone($data['timezone']);
+                $user->setLanguage($data[UserPreference::LOCALE]);
+                $user->setTimezone($data[UserPreference::TIMEZONE]);
+                $user->setPreferenceValue(UserPreference::SKIN, $data[UserPreference::SKIN]);
                 $user->setWizardAsSeen('profile');
                 $userService->updateUser($user);
 

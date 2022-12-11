@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="Mo1506M" resname="wizard.profile.description">
         <source>wizard.profile.description</source>
-        <target>Die folgenden Daten sind notwendig, um korrekte Daten in Kimai erfassen zu können.</target>
+        <target>Einige Grundeinstellungen um Ihnen die Arbeit mit Kimai zu erleichtern.</target>
       </trans-unit>
       <trans-unit id="8p.2pXa" resname="wizard.done.title">
         <source>wizard.done.title</source>
