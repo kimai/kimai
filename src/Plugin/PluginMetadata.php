@@ -13,26 +13,11 @@ use App\Constants;
 
 class PluginMetadata
 {
-    /**
-     * @var string
-     */
-    private $version;
-    /**
-     * @var int
-     */
-    private $kimaiVersion;
-    /**
-     * @var string
-     */
-    private $homepage;
-    /**
-     * @var string
-     */
-    private $description;
-    /**
-     * @var string
-     */
-    private $name;
+    private ?string $version = null;
+    private ?int $kimaiVersion = null;
+    private ?string $homepage = null;
+    private ?string $description = null;
+    private ?string $name = null;
 
     /**
      * @param string $path

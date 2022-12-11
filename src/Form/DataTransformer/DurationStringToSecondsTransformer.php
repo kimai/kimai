@@ -14,7 +14,7 @@ use App\Validator\Constraints\Duration as DurationConstraint;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
-class DurationStringToSecondsTransformer implements DataTransformerInterface
+final class DurationStringToSecondsTransformer implements DataTransformerInterface
 {
     /**
      * @param int $intToFormat

@@ -28,7 +28,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select a date range
  */
-class DateRangeType extends AbstractType
+final class DateRangeType extends AbstractType
 {
     public const DATE_SPACER = ' - ';
 
@@ -36,9 +36,6 @@ class DateRangeType extends AbstractType
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $format = $this->localeService->getDateFormat(\Locale::getDefault());
@@ -82,9 +79,6 @@ class DateRangeType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $formatDate = $options['format'];

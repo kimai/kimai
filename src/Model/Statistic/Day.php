@@ -11,7 +11,7 @@ namespace App\Model\Statistic;
 
 use DateTime;
 
-class Day extends Timesheet
+final class Day extends Timesheet
 {
     private int $totalDurationBillable = 0;
     private array $details = [];

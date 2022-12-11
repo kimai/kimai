@@ -18,15 +18,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select the language.
  */
-class LanguageType extends AbstractType
+final class LanguageType extends AbstractType
 {
     public function __construct(private LocaleService $localeService)
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $choices = [];

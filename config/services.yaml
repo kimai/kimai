@@ -79,6 +79,10 @@ services:
     App\API\Serializer\ValidationFailedExceptionErrorHandler:
         arguments: ['@translator.default', '@fos_rest.serializer.flatten_exception_handler']
 
+    App\Command\ExportCreateCommand:
+        arguments:
+            $mailer: '@App\Mail\KimaiMailer'
+
     # ================================================================================
     # DATABASE
     # ================================================================================

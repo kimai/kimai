@@ -21,7 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to handle duration strings.
  */
-class DurationType extends AbstractType
+final class DurationType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -71,9 +71,6 @@ class DurationType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new DurationStringToSecondsTransformer());

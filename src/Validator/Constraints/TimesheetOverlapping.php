@@ -17,7 +17,7 @@ final class TimesheetOverlapping extends TimesheetConstraint
         self::RECORD_OVERLAPPING => 'You already have an entry for this time.',
     ];
 
-    public $message = 'You already have an entry for this time.';
+    public string $message = 'You already have an entry for this time.';
 
     public function getTargets(): string|array
     {

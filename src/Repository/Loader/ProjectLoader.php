@@ -14,9 +14,6 @@ use App\Entity\Project;
 use App\Entity\Team;
 use Doctrine\ORM\EntityManagerInterface;
 
-/**
- * @internal
- */
 final class ProjectLoader implements LoaderInterface
 {
     public function __construct(private EntityManagerInterface $entityManager, private bool $hydrateTeamMembers = false, private bool $hydrateTeams = true, private bool $hydrateMeta = true)

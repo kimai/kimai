@@ -11,20 +11,15 @@ namespace App\User;
 
 use App\Repository\TeamRepository;
 
-/**
- * @final
- */
-class TeamService
+final class TeamService
 {
     /**
      * @var array<string, int>
      */
-    private $cache = [];
-    private $repository;
+    private array $cache = [];
 
-    public function __construct(TeamRepository $repository)
+    public function __construct(private TeamRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     public function countTeams(): int

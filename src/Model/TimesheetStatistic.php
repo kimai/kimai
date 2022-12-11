@@ -17,7 +17,7 @@ class TimesheetStatistic
     /**
      * @var \DateTime|null
      */
-    protected $firstEntry;
+    protected ?\DateTime $firstEntry = null;
     protected int $durationThisMonth = 0;
     protected int $durationTotal = 0;
     protected float $amountThisMonth = 0.0;

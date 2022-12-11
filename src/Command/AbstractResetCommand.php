@@ -78,7 +78,7 @@ abstract class AbstractResetCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to execute a migrations: ' . $ex->getMessage());
 
-                return 5;
+                return Command::FAILURE;
             }
         }
 
@@ -87,7 +87,7 @@ abstract class AbstractResetCommand extends Command
         } catch (Exception $ex) {
             $io->error('Failed to import data: ' . $ex->getMessage());
 
-            return 6;
+            return Command::FAILURE;
         }
 
         if (!$input->getOption('no-cache')) {
@@ -97,7 +97,7 @@ abstract class AbstractResetCommand extends Command
             } catch (Exception $ex) {
                 $io->error('Failed to clear cache: ' . $ex->getMessage());
 
-                return 7;
+                return Command::FAILURE;
             }
         }
 

@@ -11,6 +11,6 @@ namespace App\Form\API;
 
 use App\Form\CustomerRateForm;
 
-class CustomerRateApiForm extends CustomerRateForm
+final class CustomerRateApiForm extends CustomerRateForm
 {
 }

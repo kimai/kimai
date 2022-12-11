@@ -13,12 +13,9 @@ use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceItemHydrator;
 use App\Invoice\InvoiceModel;
 
-class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
+final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
 {
-    /**
-     * @var InvoiceModel
-     */
-    private $model;
+    private InvoiceModel $model;
 
     public function setInvoiceModel(InvoiceModel $model)
     {

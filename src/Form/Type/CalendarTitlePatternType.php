@@ -17,7 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Select the pattern that will be used for calendar entry titles.
  */
-class CalendarTitlePatternType extends AbstractType
+final class CalendarTitlePatternType extends AbstractType
 {
     public const PATTERN_CUSTOMER = '{customer}';
     public const PATTERN_PROJECT = '{project}';

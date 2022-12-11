@@ -9,6 +9,6 @@
 
 namespace App\Widget;
 
-class WidgetException extends \Exception
+final class WidgetException extends \Exception
 {
 }

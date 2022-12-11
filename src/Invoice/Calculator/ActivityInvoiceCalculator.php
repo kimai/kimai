@@ -16,7 +16,7 @@ use App\Invoice\InvoiceItem;
 /**
  * A calculator that sums up the invoice item records by activity.
  */
-class ActivityInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
+final class ActivityInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
 {
     protected function calculateSumIdentifier(ExportableItem $invoiceItem): string
     {
@@ -40,9 +40,6 @@ class ActivityInvoiceCalculator extends AbstractSumInvoiceCalculator implements 
         }
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return 'activity';

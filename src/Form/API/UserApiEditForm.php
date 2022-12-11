@@ -14,11 +14,8 @@ use App\Form\UserEditType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserApiEditForm extends UserEditType
+final class UserApiEditForm extends UserEditType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);

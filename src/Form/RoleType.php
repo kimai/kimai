@@ -17,28 +17,20 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * The form used to edit roles.
- */
-class RoleType extends AbstractType
+final class RoleType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('name', TextType::class, [
-                'label' => 'name',
-                'help' => 'Allowed character: A-Z and _',
-                'constraints' => [
-                    new Regex(['pattern' => '/^[a-zA-Z_]{5,}$/'])
-                ],
-                'attr' => [
-                    'maxlength' => 50
-                ]
-            ])
-        ;
+        $builder->add('name', TextType::class, [
+            'label' => 'name',
+            'help' => 'Allowed character: A-Z and _',
+            'constraints' => [
+                new Regex(['pattern' => '/^[a-zA-Z_]{5,}$/'])
+            ],
+            'attr' => [
+                'maxlength' => 50
+            ]
+        ]);
 
         // help the user to figure out the allowed name
         $builder->get('name')->addViewTransformer(
@@ -59,9 +51,6 @@ class RoleType extends AbstractType
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

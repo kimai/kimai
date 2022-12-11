@@ -22,9 +22,9 @@ class PluginTest extends TestCase
     public function testEmptyObject()
     {
         $plugin = new Plugin($this->createMock(PluginInterface::class));
-        $this->assertNull($plugin->getId());
-        $this->assertNull($plugin->getName());
-        $this->assertNull($plugin->getPath());
+        $this->assertEquals('', $plugin->getId());
+        $this->assertEquals('', $plugin->getName());
+        $this->assertEquals('', $plugin->getPath());
         $this->assertNull($plugin->getMetadata());
     }
 

@@ -12,7 +12,7 @@ namespace App\Security;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-class SessionHandler extends PdoSessionHandler
+final class SessionHandler extends PdoSessionHandler
 {
     public function __construct(Connection $connection)
     {

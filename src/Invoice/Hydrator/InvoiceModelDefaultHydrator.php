@@ -12,7 +12,7 @@ namespace App\Invoice\Hydrator;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
 
-class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
+final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
 {
     public function hydrate(InvoiceModel $model): array
     {

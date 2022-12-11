@@ -46,6 +46,10 @@ final class QuickEntryController extends AbstractController
         $endWeek = $factory->getEndOfWeek($begin);
         $user = $this->getUser();
 
+        if ($user === null) {
+            throw $this->createAccessDeniedException();
+        }
+
         $tmpDay = clone $startWeek;
         $week = [];
         while ($tmpDay < $endWeek) {

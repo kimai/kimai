@@ -16,16 +16,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select the themes skin.
  */
-class SkinType extends AbstractType
+final class SkinType extends AbstractType
 {
     public const THEMES = [
         'skin.light' => 'default',
         'skin.dark' => 'dark',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

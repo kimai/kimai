@@ -13,7 +13,7 @@ use App\Customer\CustomerStatisticService;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
 
-class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
+final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
 {
     use BudgetHydratorTrait;
 

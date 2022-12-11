@@ -10,9 +10,9 @@
 namespace App\Tests\Ldap;
 
 use App\Configuration\LdapConfiguration;
-use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Ldap\LdapDriver;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use Laminas\Ldap\Exception\LdapException;
 use Laminas\Ldap\Ldap;
 use PHPUnit\Framework\TestCase;
@@ -32,7 +32,11 @@ class LdapDriverTest extends TestCase
 
     private function getTestLdapDriver(Ldap $ldap): TestLdapDriver
     {
-        $config = $this->createMock(SystemConfiguration::class);
+        $config = SystemConfigurationFactory::createStub(['ldap' => [
+            'role' => [],
+            'user' => [],
+            'connection' => [],
+        ]]);
 
         return new TestLdapDriver(new LdapConfiguration($config), $ldap);
     }

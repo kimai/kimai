@@ -16,7 +16,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class ProjectValidator extends ConstraintValidator
+final class ProjectValidator extends ConstraintValidator
 {
     /**
      * @param Constraint[] $constraints
@@ -49,7 +49,7 @@ class ProjectValidator extends ConstraintValidator
         }
     }
 
-    protected function validateProject(Project $project, ExecutionContextInterface $context)
+    protected function validateProject(Project $project, ExecutionContextInterface $context): void
     {
         if (null !== $project->getStart() && null !== $project->getEnd() && $project->getStart()->getTimestamp() > $project->getEnd()->getTimestamp()) {
             $context->buildViolation(ProjectConstraint::getErrorName(ProjectConstraint::END_BEFORE_BEGIN_ERROR))

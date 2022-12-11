@@ -15,11 +15,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Form field type to select if something is billable.
  */
-class BillableType extends AbstractType
+final class BillableType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

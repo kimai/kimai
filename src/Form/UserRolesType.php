@@ -18,11 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Defines the form used to set roles for a User.
  */
-class UserRolesType extends AbstractType
+final class UserRolesType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -33,9 +30,6 @@ class UserRolesType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

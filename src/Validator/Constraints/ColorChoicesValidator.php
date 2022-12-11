@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class ColorChoicesValidator extends ConstraintValidator
+final class ColorChoicesValidator extends ConstraintValidator
 {
     public function validate(mixed $value, Constraint $constraint): void
     {

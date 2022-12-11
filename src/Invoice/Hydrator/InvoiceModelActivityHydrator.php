@@ -14,7 +14,7 @@ use App\Entity\Activity;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
 
-class InvoiceModelActivityHydrator implements InvoiceModelHydrator
+final class InvoiceModelActivityHydrator implements InvoiceModelHydrator
 {
     use BudgetHydratorTrait;
 

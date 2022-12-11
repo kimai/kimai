@@ -15,7 +15,7 @@ use App\Invoice\CalculatorInterface;
 /**
  * A calculator that sums up the invoice item records by user.
  */
-class UserInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
+final class UserInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
 {
     protected function calculateSumIdentifier(ExportableItem $invoiceItem): string
     {
@@ -26,9 +26,6 @@ class UserInvoiceCalculator extends AbstractSumInvoiceCalculator implements Calc
         return (string) $invoiceItem->getUser()->getId();
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return 'user';

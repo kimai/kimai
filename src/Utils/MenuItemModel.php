@@ -11,7 +11,7 @@ namespace App\Utils;
 
 use KevinPapst\TablerBundle\Model\MenuItemInterface;
 
-class MenuItemModel implements MenuItemInterface
+final class MenuItemModel implements MenuItemInterface
 {
     private string $identifier;
     private string $label;

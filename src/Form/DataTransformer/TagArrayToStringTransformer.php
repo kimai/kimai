@@ -14,7 +14,7 @@ use App\Repository\TagRepository;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
-class TagArrayToStringTransformer implements DataTransformerInterface
+final class TagArrayToStringTransformer implements DataTransformerInterface
 {
     public function __construct(private TagRepository $tagRepository)
     {

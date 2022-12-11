@@ -11,7 +11,7 @@ namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
 
-class TagsSubscriber extends AbstractActionsSubscriber
+final class TagsSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {

@@ -24,10 +24,7 @@ use InvalidArgumentException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-/**
- * @final
- */
-class CustomerService
+final class CustomerService
 {
     public function __construct(
         private CustomerRepository $repository,

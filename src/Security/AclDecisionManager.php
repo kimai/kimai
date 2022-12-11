@@ -12,7 +12,7 @@ namespace App\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 
-class AclDecisionManager
+final class AclDecisionManager
 {
     public function __construct(private AccessDecisionManagerInterface $decisionManager)
     {

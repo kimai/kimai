@@ -11,6 +11,6 @@ namespace App\Form\API;
 
 use App\Form\ActivityEditForm;
 
-class ActivityApiEditForm extends ActivityEditForm
+final class ActivityApiEditForm extends ActivityEditForm
 {
 }

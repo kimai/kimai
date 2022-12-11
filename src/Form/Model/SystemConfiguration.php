@@ -11,18 +11,12 @@ namespace App\Form\Model;
 
 final class SystemConfiguration
 {
-    /**
-     * @var string|null
-     */
-    private $translation;
-    /**
-     * @var string|null
-     */
-    private $translationDomain = 'system-configuration';
+    private ?string $translation = null;
+    private string $translationDomain = 'system-configuration';
     /**
      * @var Configuration[]
      */
-    private $configuration = [];
+    private array $configuration = [];
 
     public function __construct(private ?string $section = null)
     {

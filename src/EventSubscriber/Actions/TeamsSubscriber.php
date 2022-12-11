@@ -11,7 +11,7 @@ namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
 
-class TeamsSubscriber extends AbstractActionsSubscriber
+final class TeamsSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {

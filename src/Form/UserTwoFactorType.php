@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class UserTwoFactorType extends AbstractType
+final class UserTwoFactorType extends AbstractType
 {
     public function __construct(private TotpAuthenticatorInterface $totpAuthenticator)
     {

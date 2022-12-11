@@ -12,7 +12,7 @@ namespace App\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 #[\Attribute(\Attribute::TARGET_CLASS)]
-class Project extends Constraint
+final class Project extends Constraint
 {
     public const END_BEFORE_BEGIN_ERROR = 'kimai-project-00';
 

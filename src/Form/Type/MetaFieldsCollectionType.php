@@ -21,7 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to edit entity meta fields.
  */
-class MetaFieldsCollectionType extends AbstractType
+final class MetaFieldsCollectionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

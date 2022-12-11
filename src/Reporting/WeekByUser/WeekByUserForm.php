@@ -16,12 +16,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class WeekByUserForm extends AbstractType
+final class WeekByUserForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('date', WeekPickerType::class, [
             'model_timezone' => $options['timezone'],
@@ -35,10 +32,7 @@ class WeekByUserForm extends AbstractType
         $builder->add('sumType', ReportSumType::class);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => WeekByUser::class,

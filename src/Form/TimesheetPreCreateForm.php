@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Values that are allowed to be pre-set via URL.
  */
-class TimesheetPreCreateForm extends AbstractType
+final class TimesheetPreCreateForm extends AbstractType
 {
     use FormTrait;
 

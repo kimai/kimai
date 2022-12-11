@@ -24,7 +24,7 @@ final class FileHelper
     /**
      * @CloudRequired
      */
-    public function setDataDirectory(string $directory)
+    public function setDataDirectory(string $directory): void
     {
         $this->dataDir = $directory;
     }

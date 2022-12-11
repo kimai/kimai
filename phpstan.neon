@@ -471,21 +471,6 @@ parameters:
             path: src/Command/InstallCommand.php
 
         -
-            message: "#^Method App\\\\Command\\\\InstallCommand\\:\\:createDatabase\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Command/InstallCommand.php
-
-        -
-            message: "#^Method App\\\\Command\\\\InstallCommand\\:\\:importMigrations\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Command/InstallCommand.php
-
-        -
-            message: "#^Method App\\\\Command\\\\InstallCommand\\:\\:rebuildCaches\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Command/InstallCommand.php
-
-        -
             message: "#^Binary operation \"\\.\" between non\\-empty\\-string and non\\-empty\\-list\\<string\\>\\|string results in an error\\.$#"
             count: 1
             path: src/Command/InvoiceCreateCommand.php
@@ -951,6 +936,41 @@ parameters:
             path: src/Command/ResetTestCommand.php
 
         -
+            message: "#^Strict comparison using \\!\\=\\= between '\\$2y\\$13\\$X8…' and null will always evaluate to true\\.$#"
+            count: 1
+            path: src/Command/ResetTestCommand.php
+
+        -
+            message: "#^Strict comparison using \\!\\=\\= between 'Administrator'\\|'CFO'\\|'Developer'\\|'Developer \\(left…'\\|'Head of Development'\\|'Quality Tester 1'\\|'Quality Tester 2'\\|'Super Administrator' and null will always evaluate to true\\.$#"
+            count: 1
+            path: src/Command/ResetTestCommand.php
+
+        -
+            message: "#^Strict comparison using \\!\\=\\= between 'anna_admin'\\|'chris_user'\\|'clara_customer'\\|'john_user'\\|'susan_super'\\|'test_user_1'\\|'test_user_2'\\|'tony_teamlead' and null will always evaluate to true\\.$#"
+            count: 1
+            path: src/Command/ResetTestCommand.php
+
+        -
+            message: "#^Strict comparison using \\!\\=\\= between 'anna_admin@example…'\\|'chris_user@example…'\\|'clara_customer…'\\|'john_user@example…'\\|'susan_super@example…'\\|'test_user_1@example…'\\|'test_user_2@example…'\\|'tony_teamlead…' and null will always evaluate to true\\.$#"
+            count: 2
+            path: src/Command/ResetTestCommand.php
+
+        -
+            message: "#^Strict comparison using \\!\\=\\= between 0\\|1 and null will always evaluate to true\\.$#"
+            count: 1
+            path: src/Command/ResetTestCommand.php
+
+        -
+            message: "#^Strict comparison using \\!\\=\\= between array\\{\\}\\|array\\{'ROLE_ADMIN'\\}\\|array\\{'ROLE_CUSTOMER'\\}\\|array\\{'ROLE_SUPER_ADMIN'\\}\\|array\\{'ROLE_TEAMLEAD'\\} and null will always evaluate to true\\.$#"
+            count: 1
+            path: src/Command/ResetTestCommand.php
+
+        -
+            message: "#^Access to an undefined property SimpleXMLElement\\|false\\:\\:\\$file\\.$#"
+            count: 1
+            path: src/Command/TranslationCommand.php
+
+        -
             message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
             count: 7
             path: src/Command/TranslationCommand.php
@@ -1043,11 +1063,6 @@ parameters:
         -
             message: "#^Cannot call method find\\(\\) on Symfony\\\\Component\\\\Console\\\\Application\\|null\\.$#"
             count: 3
-            path: src/Command/UpdateCommand.php
-
-        -
-            message: "#^Method App\\\\Command\\\\UpdateCommand\\:\\:rebuildCaches\\(\\) has no return type specified\\.$#"
-            count: 1
             path: src/Command/UpdateCommand.php
 
         -
@@ -1871,6 +1886,11 @@ parameters:
             path: src/Controller/ProjectController.php
 
         -
+            message: "#^Call to function array_key_exists\\(\\) with 'entry' and array\\{day\\: DateTime, entry\\: App\\\\Entity\\\\Timesheet\\} will always evaluate to true\\.$#"
+            count: 1
+            path: src/Controller/QuickEntryController.php
+
+        -
             message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
             count: 1
             path: src/Controller/QuickEntryController.php
@@ -1902,16 +1922,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$project of method App\\\\Entity\\\\Timesheet\\:\\:setProject\\(\\) expects App\\\\Entity\\\\Project, App\\\\Entity\\\\Project\\|null given\\.$#"
-            count: 1
-            path: src/Controller/QuickEntryController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Timesheet\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 3
-            path: src/Controller/QuickEntryController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\TimesheetRepository\\:\\:getRecentActivities\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: src/Controller/QuickEntryController.php
 
@@ -3676,46 +3686,6 @@ parameters:
             path: src/EventSubscriber/Actions/UserSubscriber.php
 
         -
-            message: "#^Method App\\\\EventSubscriber\\\\AjaxAuthenticationSubscriber\\:\\:onCoreException\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/EventSubscriber/AjaxAuthenticationSubscriber.php
-
-        -
-            message: "#^Method App\\\\EventSubscriber\\\\EmailSubscriber\\:\\:onMailEvent\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/EventSubscriber/EmailSubscriber.php
-
-        -
-            message: "#^Method App\\\\EventSubscriber\\\\LastLoginSubscriber\\:\\:onFormLogin\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/EventSubscriber/LastLoginSubscriber.php
-
-        -
-            message: "#^Method App\\\\EventSubscriber\\\\LastLoginSubscriber\\:\\:onImplicitLogin\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/EventSubscriber/LastLoginSubscriber.php
-
-        -
-            message: "#^Method App\\\\EventSubscriber\\\\MenuSubscriber\\:\\:onMainMenuConfigure\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/EventSubscriber/MenuSubscriber.php
-
-        -
-            message: "#^Method App\\\\EventSubscriber\\\\PagerfantaExceptionSubscriber\\:\\:onCoreException\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/EventSubscriber/PagerfantaExceptionSubscriber.php
-
-        -
-            message: "#^Method App\\\\EventSubscriber\\\\ProfileSubscriber\\:\\:onFormLogin\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/EventSubscriber/ProfileSubscriber.php
-
-        -
-            message: "#^Method App\\\\EventSubscriber\\\\RedirectToLocaleSubscriber\\:\\:onKernelRequest\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/EventSubscriber/RedirectToLocaleSubscriber.php
-
-        -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\User\\:\\:getPreference\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/EventSubscriber/UserPreferenceSubscriber.php
@@ -4166,12 +4136,22 @@ parameters:
             path: src/Export/Spreadsheet/Extractor/AnnotationExtractor.php
 
         -
+            message: "#^Parameter \\#1 \\$value \\(string\\) of method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\AnnotationExtractor\\:\\:extract\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\ExtractorInterface\\:\\:extract\\(\\)$#"
+            count: 1
+            path: src/Export/Spreadsheet/Extractor/AnnotationExtractor.php
+
+        -
             message: "#^Parameter \\#1 \\$label of class App\\\\Export\\\\Spreadsheet\\\\ColumnDefinition constructor expects string, string\\|null given\\.$#"
             count: 1
             path: src/Export/Spreadsheet/Extractor/MetaFieldExtractor.php
 
         -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\EntityWithMetaFields\\:\\:getMetaField\\(\\) expects string, string\\|null given\\.$#"
+            count: 1
+            path: src/Export/Spreadsheet/Extractor/MetaFieldExtractor.php
+
+        -
+            message: "#^Parameter \\#1 \\$value \\(App\\\\Event\\\\MetaDisplayEventInterface\\) of method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\MetaFieldExtractor\\:\\:extract\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\ExtractorInterface\\:\\:extract\\(\\)$#"
             count: 1
             path: src/Export/Spreadsheet/Extractor/MetaFieldExtractor.php
 
@@ -4186,12 +4166,12 @@ parameters:
             path: src/Export/Spreadsheet/Extractor/UserPreferenceExtractor.php
 
         -
-            message: "#^Method App\\\\Export\\\\Spreadsheet\\\\SpreadsheetExporter\\:\\:export\\(\\) has parameter \\$entries with no value type specified in iterable type array\\.$#"
+            message: "#^Parameter \\#1 \\$value \\(App\\\\Event\\\\UserPreferenceDisplayEvent\\) of method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\UserPreferenceExtractor\\:\\:extract\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\ExtractorInterface\\:\\:extract\\(\\)$#"
             count: 1
-            path: src/Export/Spreadsheet/SpreadsheetExporter.php
+            path: src/Export/Spreadsheet/Extractor/UserPreferenceExtractor.php
 
         -
-            message: "#^Method App\\\\Export\\\\Spreadsheet\\\\SpreadsheetExporter\\:\\:registerCellFormatter\\(\\) has no return type specified\\.$#"
+            message: "#^Method App\\\\Export\\\\Spreadsheet\\\\SpreadsheetExporter\\:\\:export\\(\\) has parameter \\$entries with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Export/Spreadsheet/SpreadsheetExporter.php
 
@@ -4216,9 +4196,9 @@ parameters:
             path: src/Export/Spreadsheet/Writer/XlsxWriter.php
 
         -
-            message: "#^Method App\\\\Form\\\\API\\\\TimesheetApiEditForm\\:\\:addBegin\\(\\) has no return type specified\\.$#"
+            message: "#^Parameter \\#1 \\$items \\(array\\<App\\\\Entity\\\\Timesheet\\>\\) of method App\\\\Export\\\\TimesheetExportRepository\\:\\:setExported\\(\\) should be contravariant with parameter \\$items \\(array\\<App\\\\Entity\\\\ExportableItem\\>\\) of method App\\\\Export\\\\ExportRepositoryInterface\\:\\:setExported\\(\\)$#"
             count: 1
-            path: src/Form/API/TimesheetApiEditForm.php
+            path: src/Export/TimesheetExportRepository.php
 
         -
             message: "#^Method App\\\\Form\\\\API\\\\TimesheetApiEditForm\\:\\:addBegin\\(\\) has parameter \\$dateTimeOptions with no value type specified in iterable type array\\.$#"
@@ -4231,17 +4211,7 @@ parameters:
             path: src/Form/API/TimesheetApiEditForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\API\\\\TimesheetApiEditForm\\:\\:addBillable\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/API/TimesheetApiEditForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\API\\\\TimesheetApiEditForm\\:\\:addBillable\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/API/TimesheetApiEditForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\API\\\\TimesheetApiEditForm\\:\\:addEnd\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/API/TimesheetApiEditForm.php
 
@@ -4257,6 +4227,11 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\$array of function array_key_exists expects array, mixed given\\.$#"
+            count: 1
+            path: src/Form/API/TimesheetApiEditForm.php
+
+        -
+            message: "#^Strict comparison using \\=\\=\\= between false and false will always evaluate to true\\.$#"
             count: 1
             path: src/Form/API/TimesheetApiEditForm.php
 
@@ -4326,9 +4301,34 @@ parameters:
             path: src/Form/DataTransformer/DurationStringToSecondsTransformer.php
 
         -
+            message: "#^Parameter \\#1 \\$formatToInt \\(string\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\DurationStringToSecondsTransformer\\:\\:reverseTransform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:reverseTransform\\(\\)$#"
+            count: 1
+            path: src/Form/DataTransformer/DurationStringToSecondsTransformer.php
+
+        -
+            message: "#^Parameter \\#1 \\$intToFormat \\(int\\) of method App\\\\Form\\\\DataTransformer\\\\DurationStringToSecondsTransformer\\:\\:transform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:transform\\(\\)$#"
+            count: 1
+            path: src/Form/DataTransformer/DurationStringToSecondsTransformer.php
+
+        -
             message: "#^Class App\\\\Form\\\\DataTransformer\\\\SearchTermTransformer implements generic interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface but does not specify its types\\: T, R$#"
             count: 1
             path: src/Form/DataTransformer/SearchTermTransformer.php
+
+        -
+            message: "#^Parameter \\#1 \\$searchTerm \\(App\\\\Utils\\\\SearchTerm\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\SearchTermTransformer\\:\\:transform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:transform\\(\\)$#"
+            count: 1
+            path: src/Form/DataTransformer/SearchTermTransformer.php
+
+        -
+            message: "#^Parameter \\#1 \\$searchTerm \\(string\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\SearchTermTransformer\\:\\:reverseTransform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:reverseTransform\\(\\)$#"
+            count: 1
+            path: src/Form/DataTransformer/SearchTermTransformer.php
+
+        -
+            message: "#^Parameter \\#1 \\$value \\(array\\<string\\>\\) of method App\\\\Form\\\\DataTransformer\\\\StringToArrayTransformer\\:\\:transform\\(\\) should be contravariant with parameter \\$value \\(array\\|null\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<array,string\\>\\:\\:transform\\(\\)$#"
+            count: 1
+            path: src/Form/DataTransformer/StringToArrayTransformer.php
 
         -
             message: "#^Class App\\\\Form\\\\DataTransformer\\\\TagArrayToStringTransformer implements generic interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface but does not specify its types\\: T, R$#"
@@ -4336,9 +4336,14 @@ parameters:
             path: src/Form/DataTransformer/TagArrayToStringTransformer.php
 
         -
-            message: "#^Method App\\\\Form\\\\Extension\\\\ApiFormExtension\\:\\:buildForm\\(\\) has no return type specified\\.$#"
+            message: "#^Parameter \\#1 \\$stringOfTags \\(string\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\TagArrayToStringTransformer\\:\\:reverseTransform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:reverseTransform\\(\\)$#"
             count: 1
-            path: src/Form/Extension/ApiFormExtension.php
+            path: src/Form/DataTransformer/TagArrayToStringTransformer.php
+
+        -
+            message: "#^Parameter \\#1 \\$tags \\(array\\<App\\\\Entity\\\\Tag\\>\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\TagArrayToStringTransformer\\:\\:transform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:transform\\(\\)$#"
+            count: 1
+            path: src/Form/DataTransformer/TagArrayToStringTransformer.php
 
         -
             message: "#^Method App\\\\Form\\\\Extension\\\\DocumentationLinkExtension\\:\\:buildView\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -4376,9 +4381,9 @@ parameters:
             path: src/Form/Extension/SelectWithApiDataExtension.php
 
         -
-            message: "#^Method App\\\\Form\\\\Extension\\\\ToolbarFormExtension\\:\\:buildForm\\(\\) has no return type specified\\.$#"
+            message: "#^Strict comparison using \\!\\=\\= between non\\-falsy\\-string and '' will always evaluate to true\\.$#"
             count: 1
-            path: src/Form/Extension/ToolbarFormExtension.php
+            path: src/Form/Extension/SelectWithApiDataExtension.php
 
         -
             message: "#^Parameter \\#1 \\$haystack of function stripos expects string, bool\\|float\\|int\\|string given\\.$#"
@@ -4461,21 +4466,6 @@ parameters:
             path: src/Form/Helper/ProjectHelper.php
 
         -
-            message: "#^Method App\\\\Form\\\\Helper\\\\ToolbarHelper\\:\\:cleanupForm\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Helper/ToolbarHelper.php
-
-        -
-            message: "#^Property App\\\\Form\\\\Helper\\\\ToolbarHelper\\:\\:\\$teamNames has no type specified\\.$#"
-            count: 1
-            path: src/Form/Helper/ToolbarHelper.php
-
-        -
-            message: "#^Property App\\\\Form\\\\Helper\\\\ToolbarHelper\\:\\:\\$userNames has no type specified\\.$#"
-            count: 1
-            path: src/Form/Helper/ToolbarHelper.php
-
-        -
             message: "#^Method App\\\\Form\\\\InvoiceDocumentUploadForm\\:\\:validateDocument\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/InvoiceDocumentUploadForm.php
@@ -4516,32 +4506,12 @@ parameters:
             path: src/Form/Model/Configuration.php
 
         -
-            message: "#^Method App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:addTeam\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Model/MultiUserTimesheet.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:addUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Model/MultiUserTimesheet.php
-
-        -
             message: "#^Method App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Form/Model/MultiUserTimesheet.php
 
         -
             message: "#^Method App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:getUsers\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/Model/MultiUserTimesheet.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:removeTeam\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Model/MultiUserTimesheet.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:removeUser\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/Model/MultiUserTimesheet.php
 
@@ -4561,19 +4531,9 @@ parameters:
             path: src/Form/Model/SystemConfiguration.php
 
         -
-            message: "#^Method App\\\\Form\\\\Model\\\\SystemConfiguration\\:\\:getTranslationDomain\\(\\) should return string but returns string\\|null\\.$#"
-            count: 1
-            path: src/Form/Model/SystemConfiguration.php
-
-        -
             message: "#^PHPDoc tag @var for variable \\$repository contains generic class Doctrine\\\\ORM\\\\EntityRepository but does not specify its types\\: TEntityClass$#"
             count: 1
             path: src/Form/MultiUpdate/MultiUpdateTable.php
-
-        -
-            message: "#^Property App\\\\Form\\\\MultiUpdate\\\\MultiUpdateTableDTO\\:\\:\\$entities \\(array\\<object\\>\\) does not accept iterable\\<object\\>\\.$#"
-            count: 1
-            path: src/Form/MultiUpdate/MultiUpdateTableDTO.php
 
         -
             message: "#^Cannot access offset 'customer' on mixed\\.$#"
@@ -4716,11 +4676,6 @@ parameters:
             path: src/Form/TimesheetEditForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addBegin\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/TimesheetEditForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addBegin\\(\\) has parameter \\$dateTimeOptions with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/TimesheetEditForm.php
@@ -4731,27 +4686,12 @@ parameters:
             path: src/Form/TimesheetEditForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addBillable\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/TimesheetEditForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addBillable\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/TimesheetEditForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addDuration\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/TimesheetEditForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addDuration\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/TimesheetEditForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addEnd\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/TimesheetEditForm.php
 
@@ -4766,11 +4706,6 @@ parameters:
             path: src/Form/TimesheetEditForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addExported\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/TimesheetEditForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addExported\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/TimesheetEditForm.php
@@ -4781,22 +4716,12 @@ parameters:
             path: src/Form/TimesheetEditForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addRates\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/TimesheetEditForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addRates\\(\\) has parameter \\$currency with no type specified\\.$#"
             count: 1
             path: src/Form/TimesheetEditForm.php
 
         -
             message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addRates\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/TimesheetEditForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\TimesheetEditForm\\:\\:addUser\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Form/TimesheetEditForm.php
 
@@ -6101,11 +6026,6 @@ parameters:
             path: src/Form/Type/TimePickerType.php
 
         -
-            message: "#^Method App\\\\Form\\\\Type\\\\TimePickerType\\:\\:buildForm\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/Type/TimePickerType.php
-
-        -
             message: "#^Parameter \\#1 \\$format of static method DateTime\\:\\:createFromFormat\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/Form/Type/TimePickerType.php
@@ -6596,6 +6516,11 @@ parameters:
             path: src/Invoice/Renderer/AbstractTwigRenderer.php
 
         -
+            message: "#^Strict comparison using \\!\\=\\= between float and \\-1 will always evaluate to true\\.$#"
+            count: 1
+            path: src/Invoice/Renderer/AdvancedValueBinder.php
+
+        -
             message: "#^Cannot call method getEntries\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
             count: 3
             path: src/Invoice/Renderer/DocxRenderer.php
@@ -6751,6 +6676,11 @@ parameters:
             path: src/Ldap/LdapAuthenticator.php
 
         -
+            message: "#^Instanceof between Symfony\\\\Component\\\\Security\\\\Http\\\\Authenticator\\\\Passport\\\\Passport and Symfony\\\\Component\\\\Security\\\\Http\\\\Authenticator\\\\Passport\\\\Passport will always evaluate to true\\.$#"
+            count: 1
+            path: src/Ldap/LdapCredentialsSubscriber.php
+
+        -
             message: "#^Method App\\\\Ldap\\\\LdapCredentialsSubscriber\\:\\:onCheckPassport\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Ldap/LdapCredentialsSubscriber.php
@@ -6901,51 +6831,6 @@ parameters:
             path: src/Model/Statistic/Month.php
 
         -
-            message: "#^Property App\\\\Model\\\\Statistic\\\\Month\\:\\:\\$billableDuration has no type specified\\.$#"
-            count: 1
-            path: src/Model/Statistic/Month.php
-
-        -
-            message: "#^Property App\\\\Model\\\\Statistic\\\\Month\\:\\:\\$billableRate has no type specified\\.$#"
-            count: 1
-            path: src/Model/Statistic/Month.php
-
-        -
-            message: "#^Property App\\\\Model\\\\Statistic\\\\StatisticDate\\:\\:\\$billableDuration has no type specified\\.$#"
-            count: 1
-            path: src/Model/Statistic/StatisticDate.php
-
-        -
-            message: "#^Property App\\\\Model\\\\Statistic\\\\StatisticDate\\:\\:\\$billableRate has no type specified\\.$#"
-            count: 1
-            path: src/Model/Statistic/StatisticDate.php
-
-        -
-            message: "#^Property App\\\\Model\\\\Statistic\\\\Timesheet\\:\\:\\$totalDuration has no type specified\\.$#"
-            count: 1
-            path: src/Model/Statistic/Timesheet.php
-
-        -
-            message: "#^Property App\\\\Model\\\\Statistic\\\\Timesheet\\:\\:\\$totalInternalRate has no type specified\\.$#"
-            count: 1
-            path: src/Model/Statistic/Timesheet.php
-
-        -
-            message: "#^Property App\\\\Model\\\\Statistic\\\\Timesheet\\:\\:\\$totalRate has no type specified\\.$#"
-            count: 1
-            path: src/Model/Statistic/Timesheet.php
-
-        -
-            message: "#^Property App\\\\Model\\\\Statistic\\\\Year\\:\\:\\$billableDuration has no type specified\\.$#"
-            count: 1
-            path: src/Model/Statistic/Year.php
-
-        -
-            message: "#^Property App\\\\Model\\\\Statistic\\\\Year\\:\\:\\$billableRate has no type specified\\.$#"
-            count: 1
-            path: src/Model/Statistic/Year.php
-
-        -
             message: "#^Method App\\\\Pdf\\\\HtmlToPdfConverter\\:\\:convertToPdf\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Pdf/HtmlToPdfConverter.php
@@ -6989,11 +6874,6 @@ parameters:
             message: "#^Method App\\\\Plugin\\\\AbstractPluginExtension\\:\\:registerBundleConfiguration\\(\\) has parameter \\$configs with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Plugin/AbstractPluginExtension.php
-
-        -
-            message: "#^Parameter \\#1 \\$path of static method App\\\\Plugin\\\\PluginMetadata\\:\\:loadFromComposer\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Plugin/PluginManager.php
 
         -
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
@@ -7201,6 +7081,16 @@ parameters:
             path: src/Project/ProjectStatisticService.php
 
         -
+            message: "#^Strict comparison using \\!\\=\\= between DateTime and false will always evaluate to true\\.$#"
+            count: 1
+            path: src/Project/ProjectStatisticService.php
+
+        -
+            message: "#^Strict comparison using \\!\\=\\= between null and array\\<array\\{id\\: int\\|numeric\\-string, duration\\: int\\|numeric\\-string, rate\\: float\\|int\\|numeric\\-string, internalRate\\: float\\|int\\|numeric\\-string, counter\\: int\\<0, max\\>\\|numeric\\-string, billable\\: bool, exported\\: bool\\}\\> will always evaluate to true\\.$#"
+            count: 1
+            path: src/Project/ProjectStatisticService.php
+
+        -
             message: "#^Property App\\\\Reporting\\\\AbstractUserList\\:\\:\\$date has no type specified\\.$#"
             count: 1
             path: src/Reporting/AbstractUserList.php
@@ -7216,54 +7106,9 @@ parameters:
             path: src/Reporting/AbstractUserList.php
 
         -
-            message: "#^Method App\\\\Reporting\\\\CustomerMonthlyProjects\\\\CustomerMonthlyProjectsForm\\:\\:buildForm\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/CustomerMonthlyProjects/CustomerMonthlyProjectsForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\CustomerMonthlyProjects\\\\CustomerMonthlyProjectsForm\\:\\:configureOptions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/CustomerMonthlyProjects/CustomerMonthlyProjectsForm.php
-
-        -
             message: "#^Method App\\\\Reporting\\\\CustomerMonthlyProjects\\\\CustomerMonthlyProjectsRepository\\:\\:getGroupedByCustomerProjectActivityUser\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Reporting/CustomerMonthlyProjects/CustomerMonthlyProjectsRepository.php
-
-        -
-            message: "#^Property App\\\\Reporting\\\\DateByUser\\:\\:\\$user has no type specified\\.$#"
-            count: 1
-            path: src/Reporting/DateByUser.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\MonthByUser\\\\MonthByUserForm\\:\\:buildForm\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/MonthByUser/MonthByUserForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\MonthByUser\\\\MonthByUserForm\\:\\:configureOptions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/MonthByUser/MonthByUserForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\MonthlyUserList\\\\MonthlyUserListForm\\:\\:buildForm\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/MonthlyUserList/MonthlyUserListForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\MonthlyUserList\\\\MonthlyUserListForm\\:\\:configureOptions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/MonthlyUserList/MonthlyUserListForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\ProjectDateRange\\\\ProjectDateRangeForm\\:\\:buildForm\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/ProjectDateRange/ProjectDateRangeForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\ProjectDateRange\\\\ProjectDateRangeForm\\:\\:configureOptions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/ProjectDateRange/ProjectDateRangeForm.php
 
         -
             message: "#^Property App\\\\Reporting\\\\ProjectDateRange\\\\ProjectDateRangeQuery\\:\\:\\$month \\(DateTime\\) does not accept DateTime\\|null\\.$#"
@@ -7273,16 +7118,6 @@ parameters:
         -
             message: "#^Cannot access offset 'project' on mixed\\.$#"
             count: 3
-            path: src/Reporting/ProjectDetails/ProjectDetailsForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\ProjectDetails\\\\ProjectDetailsForm\\:\\:buildForm\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/ProjectDetails/ProjectDetailsForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\ProjectDetails\\\\ProjectDetailsForm\\:\\:configureOptions\\(\\) has no return type specified\\.$#"
-            count: 1
             path: src/Reporting/ProjectDetails/ProjectDetailsForm.php
 
         -
@@ -7301,69 +7136,9 @@ parameters:
             path: src/Reporting/ProjectDetails/ProjectDetailsModel.php
 
         -
-            message: "#^Method App\\\\Reporting\\\\ProjectInactive\\\\ProjectInactiveForm\\:\\:buildForm\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/ProjectInactive/ProjectInactiveForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\ProjectInactive\\\\ProjectInactiveForm\\:\\:configureOptions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/ProjectInactive/ProjectInactiveForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\ProjectView\\\\ProjectViewForm\\:\\:buildForm\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/ProjectView/ProjectViewForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\ProjectView\\\\ProjectViewForm\\:\\:configureOptions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/ProjectView/ProjectViewForm.php
-
-        -
             message: "#^Method App\\\\Reporting\\\\ProjectView\\\\ProjectViewModel\\:\\:getBudgetStatisticModel\\(\\) should return App\\\\Model\\\\BudgetStatisticModelInterface but returns App\\\\Model\\\\BudgetStatisticModelInterface\\|null\\.$#"
             count: 1
             path: src/Reporting/ProjectView/ProjectViewModel.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\WeekByUser\\\\WeekByUserForm\\:\\:buildForm\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/WeekByUser/WeekByUserForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\WeekByUser\\\\WeekByUserForm\\:\\:configureOptions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/WeekByUser/WeekByUserForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\WeeklyUserList\\\\WeeklyUserListForm\\:\\:buildForm\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/WeeklyUserList/WeeklyUserListForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\WeeklyUserList\\\\WeeklyUserListForm\\:\\:configureOptions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/WeeklyUserList/WeeklyUserListForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\YearByUser\\\\YearByUserForm\\:\\:buildForm\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/YearByUser/YearByUserForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\YearByUser\\\\YearByUserForm\\:\\:configureOptions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/YearByUser/YearByUserForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\YearlyUserList\\\\YearlyUserListForm\\:\\:buildForm\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/YearlyUserList/YearlyUserListForm.php
-
-        -
-            message: "#^Method App\\\\Reporting\\\\YearlyUserList\\\\YearlyUserListForm\\:\\:configureOptions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Reporting/YearlyUserList/YearlyUserListForm.php
 
         -
             message: "#^Method App\\\\Repository\\\\ActivityRateRepository\\:\\:deleteRate\\(\\) has no return type specified\\.$#"
@@ -7416,7 +7191,17 @@ parameters:
             path: src/Repository/ActivityRepository.php
 
         -
+            message: "#^Parameter \\#2 \\$lockMode \\(null\\) of method App\\\\Repository\\\\ActivityRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockMode \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Activity\\>\\:\\:find\\(\\)$#"
+            count: 1
+            path: src/Repository/ActivityRepository.php
+
+        -
             message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\Team\\> given\\.$#"
+            count: 1
+            path: src/Repository/ActivityRepository.php
+
+        -
+            message: "#^Parameter \\#3 \\$lockVersion \\(null\\) of method App\\\\Repository\\\\ActivityRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockVersion \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Activity\\>\\:\\:find\\(\\)$#"
             count: 1
             path: src/Repository/ActivityRepository.php
 
@@ -7531,7 +7316,17 @@ parameters:
             path: src/Repository/CustomerRepository.php
 
         -
+            message: "#^Parameter \\#2 \\$lockMode \\(null\\) of method App\\\\Repository\\\\CustomerRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockMode \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Customer\\>\\:\\:find\\(\\)$#"
+            count: 1
+            path: src/Repository/CustomerRepository.php
+
+        -
             message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\Team\\> given\\.$#"
+            count: 1
+            path: src/Repository/CustomerRepository.php
+
+        -
+            message: "#^Parameter \\#3 \\$lockVersion \\(null\\) of method App\\\\Repository\\\\CustomerRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockVersion \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Customer\\>\\:\\:find\\(\\)$#"
             count: 1
             path: src/Repository/CustomerRepository.php
 
@@ -7626,9 +7421,24 @@ parameters:
             path: src/Repository/Loader/ActivityLoader.php
 
         -
+            message: "#^Parameter \\#1 \\$results \\(array\\<App\\\\Entity\\\\Activity\\|int\\>\\) of method App\\\\Repository\\\\Loader\\\\ActivityLoader\\:\\:loadResults\\(\\) should be contravariant with parameter \\$results \\(array\\) of method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\)$#"
+            count: 1
+            path: src/Repository/Loader/ActivityLoader.php
+
+        -
+            message: "#^Parameter \\#1 \\$results \\(array\\<App\\\\Entity\\\\Customer\\|int\\>\\) of method App\\\\Repository\\\\Loader\\\\CustomerLoader\\:\\:loadResults\\(\\) should be contravariant with parameter \\$results \\(array\\) of method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\)$#"
+            count: 1
+            path: src/Repository/Loader/CustomerLoader.php
+
+        -
             message: "#^Method App\\\\Repository\\\\Loader\\\\DefaultLoader\\:\\:loadResults\\(\\) has parameter \\$results with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Repository/Loader/DefaultLoader.php
+
+        -
+            message: "#^Parameter \\#1 \\$results \\(array\\<App\\\\Entity\\\\Invoice\\|int\\>\\) of method App\\\\Repository\\\\Loader\\\\InvoiceLoader\\:\\:loadResults\\(\\) should be contravariant with parameter \\$results \\(array\\) of method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\)$#"
+            count: 1
+            path: src/Repository/Loader/InvoiceLoader.php
 
         -
             message: "#^Method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\) has parameter \\$results with no value type specified in iterable type array\\.$#"
@@ -7639,6 +7449,16 @@ parameters:
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Repository/Loader/ProjectLoader.php
+
+        -
+            message: "#^Parameter \\#1 \\$results \\(array\\<App\\\\Entity\\\\Project\\|int\\>\\) of method App\\\\Repository\\\\Loader\\\\ProjectLoader\\:\\:loadResults\\(\\) should be contravariant with parameter \\$results \\(array\\) of method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\)$#"
+            count: 1
+            path: src/Repository/Loader/ProjectLoader.php
+
+        -
+            message: "#^Parameter \\#1 \\$results \\(array\\<App\\\\Entity\\\\Team\\|int\\>\\) of method App\\\\Repository\\\\Loader\\\\TeamLoader\\:\\:loadResults\\(\\) should be contravariant with parameter \\$results \\(array\\) of method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\)$#"
+            count: 1
+            path: src/Repository/Loader/TeamLoader.php
 
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
@@ -7661,9 +7481,19 @@ parameters:
             path: src/Repository/Loader/TimesheetLoader.php
 
         -
+            message: "#^Parameter \\#1 \\$results \\(array\\<App\\\\Entity\\\\Timesheet\\|int\\>\\) of method App\\\\Repository\\\\Loader\\\\TimesheetLoader\\:\\:loadResults\\(\\) should be contravariant with parameter \\$results \\(array\\) of method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\)$#"
+            count: 1
+            path: src/Repository/Loader/TimesheetLoader.php
+
+        -
             message: "#^Parameter \\#2 \\$array of function array_map expects array, mixed given\\.$#"
             count: 3
             path: src/Repository/Loader/TimesheetLoader.php
+
+        -
+            message: "#^Parameter \\#1 \\$results \\(array\\<App\\\\Entity\\\\User\\|int\\>\\) of method App\\\\Repository\\\\Loader\\\\UserLoader\\:\\:loadResults\\(\\) should be contravariant with parameter \\$results \\(array\\) of method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\)$#"
+            count: 1
+            path: src/Repository/Loader/UserLoader.php
 
         -
             message: "#^Method App\\\\Repository\\\\Paginator\\\\LoaderPaginator\\:\\:getAll\\(\\) return type has no value type specified in iterable type iterable\\.$#"
@@ -7786,7 +7616,17 @@ parameters:
             path: src/Repository/ProjectRepository.php
 
         -
+            message: "#^Parameter \\#2 \\$lockMode \\(null\\) of method App\\\\Repository\\\\ProjectRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockMode \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Project\\>\\:\\:find\\(\\)$#"
+            count: 1
+            path: src/Repository/ProjectRepository.php
+
+        -
             message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\Team\\> given\\.$#"
+            count: 1
+            path: src/Repository/ProjectRepository.php
+
+        -
+            message: "#^Parameter \\#3 \\$lockVersion \\(null\\) of method App\\\\Repository\\\\ProjectRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockVersion \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Project\\>\\:\\:find\\(\\)$#"
             count: 1
             path: src/Repository/ProjectRepository.php
 
@@ -7966,6 +7806,16 @@ parameters:
             path: src/Repository/TeamRepository.php
 
         -
+            message: "#^Return type \\(array\\<App\\\\Entity\\\\Team\\>\\) of method App\\\\Repository\\\\TeamRepository\\:\\:findAll\\(\\) should be covariant with return type \\(array\\<int, App\\\\Entity\\\\Team\\>\\) of method Doctrine\\\\Persistence\\\\ObjectRepository\\<App\\\\Entity\\\\Team\\>\\:\\:findAll\\(\\)$#"
+            count: 1
+            path: src/Repository/TeamRepository.php
+
+        -
+            message: "#^Return type \\(array\\<App\\\\Entity\\\\Team\\>\\) of method App\\\\Repository\\\\TeamRepository\\:\\:findAll\\(\\) should be covariant with return type \\(list\\<App\\\\Entity\\\\Team\\>\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Team\\>\\:\\:findAll\\(\\)$#"
+            count: 1
+            path: src/Repository/TeamRepository.php
+
+        -
             message: "#^Argument of an invalid type array\\<string\\>\\|string supplied for foreach, only iterables are supported\\.$#"
             count: 1
             path: src/Repository/TimesheetRepository.php
@@ -8111,7 +7961,17 @@ parameters:
             path: src/Repository/TimesheetRepository.php
 
         -
+            message: "#^Parameter \\#2 \\$lockMode \\(null\\) of method App\\\\Repository\\\\TimesheetRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockMode \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Timesheet\\>\\:\\:find\\(\\)$#"
+            count: 1
+            path: src/Repository/TimesheetRepository.php
+
+        -
             message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\Team\\> given\\.$#"
+            count: 1
+            path: src/Repository/TimesheetRepository.php
+
+        -
+            message: "#^Parameter \\#3 \\$lockVersion \\(null\\) of method App\\\\Repository\\\\TimesheetRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockVersion \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Timesheet\\>\\:\\:find\\(\\)$#"
             count: 1
             path: src/Repository/TimesheetRepository.php
 
@@ -8286,11 +8146,6 @@ parameters:
             path: src/Security/RoleService.php
 
         -
-            message: "#^Method App\\\\Security\\\\RoleService\\:\\:cacheNames\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Security/RoleService.php
-
-        -
             message: "#^Method App\\\\Security\\\\RoleService\\:\\:getAvailableNames\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Security/RoleService.php
@@ -8309,16 +8164,6 @@ parameters:
             message: "#^Parameter \\#1 \\$pdoOrDsn of method Symfony\\\\Component\\\\HttpFoundation\\\\Session\\\\Storage\\\\Handler\\\\PdoSessionHandler\\:\\:__construct\\(\\) expects PDO\\|string\\|null, object\\|resource given\\.$#"
             count: 1
             path: src/Security/SessionHandler.php
-
-        -
-            message: "#^Method App\\\\Security\\\\UserChecker\\:\\:checkPostAuth\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Security/UserChecker.php
-
-        -
-            message: "#^Method App\\\\Security\\\\UserChecker\\:\\:checkPreAuth\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Security/UserChecker.php
 
         -
             message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
@@ -8716,16 +8561,6 @@ parameters:
             path: src/User/LoginManager.php
 
         -
-            message: "#^Method App\\\\User\\\\UserService\\:\\:hashApiToken\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/User/UserService.php
-
-        -
-            message: "#^Method App\\\\User\\\\UserService\\:\\:hashPassword\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/User/UserService.php
-
-        -
             message: "#^Method App\\\\User\\\\UserService\\:\\:updateUser\\(\\) has parameter \\$groups with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/User/UserService.php
@@ -8832,11 +8667,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Utils\\\\FileHelper\\:\\:saveFile\\(\\) has parameter \\$data with no type specified\\.$#"
-            count: 1
-            path: src/Utils/FileHelper.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\FileHelper\\:\\:setDataDirectory\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Utils/FileHelper.php
 
@@ -8951,6 +8781,11 @@ parameters:
             path: src/Utils/PaginationTemplate.php
 
         -
+            message: "#^Parameter \\#2 \\$text \\(string\\) of method App\\\\Utils\\\\PaginationTemplate\\:\\:spanLi\\(\\) should be contravariant with parameter \\$text \\(int\\|string\\) of method Pagerfanta\\\\View\\\\Template\\\\TwitterBootstrap4Template\\:\\:spanLi\\(\\)$#"
+            count: 1
+            path: src/Utils/PaginationTemplate.php
+
+        -
             message: "#^Method App\\\\Utils\\\\ParsedownExtension\\:\\:blockHeader\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Utils/ParsedownExtension.php
@@ -8992,11 +8827,6 @@ parameters:
 
         -
             message: "#^Property App\\\\Utils\\\\ParsedownExtension\\:\\:\\$BlockTypes has no type specified\\.$#"
-            count: 1
-            path: src/Utils/ParsedownExtension.php
-
-        -
-            message: "#^Property App\\\\Utils\\\\ParsedownExtension\\:\\:\\$ids has no type specified\\.$#"
             count: 1
             path: src/Utils/ParsedownExtension.php
 
@@ -9076,21 +8906,6 @@ parameters:
             path: src/Utils/SearchTerm.php
 
         -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\ColorChoices\\:\\:\\$invalidNameMessage has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/ColorChoices.php
-
-        -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\ColorChoices\\:\\:\\$maxLength has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/ColorChoices.php
-
-        -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\ColorChoices\\:\\:\\$message has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/ColorChoices.php
-
-        -
             message: "#^Cannot access offset 'pattern' on mixed\\.$#"
             count: 1
             path: src/Validator/Constraints/Duration.php
@@ -9101,29 +8916,9 @@ parameters:
             path: src/Validator/Constraints/Duration.php
 
         -
-            message: "#^Method App\\\\Validator\\\\Constraints\\\\ProjectValidator\\:\\:validateProject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/ProjectValidator.php
-
-        -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\QuickEntryModel\\:\\:\\$messageActivityRequired has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/QuickEntryModel.php
-
-        -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\QuickEntryModel\\:\\:\\$messageProjectRequired has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/QuickEntryModel.php
-
-        -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\TimeFormat\\:\\:\\$message has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimeFormat.php
-
-        -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\TimesheetBasic\\:\\:\\$message has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetBasic.php
+            message: "#^Parameter \\#1 \\$value \\(App\\\\Entity\\\\Team\\) of method App\\\\Validator\\\\Constraints\\\\TeamValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
+            count: 2
+            path: src/Validator/Constraints/TeamValidator.php
 
         -
             message: "#^Cannot call method isGlobal\\(\\) on App\\\\Entity\\\\Activity\\|null\\.$#"
@@ -9139,36 +8934,6 @@ parameters:
             message: "#^Cannot call method isVisible\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Validator/Constraints/TimesheetBasicValidator.php
-
-        -
-            message: "#^Method App\\\\Validator\\\\Constraints\\\\TimesheetBasicValidator\\:\\:validate\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetBasicValidator.php
-
-        -
-            message: "#^Method App\\\\Validator\\\\Constraints\\\\TimesheetBasicValidator\\:\\:validateActivityAndProject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetBasicValidator.php
-
-        -
-            message: "#^Method App\\\\Validator\\\\Constraints\\\\TimesheetBasicValidator\\:\\:validateBeginAndEnd\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetBasicValidator.php
-
-        -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsed\\:\\:\\$messagePermission has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetBudgetUsed.php
-
-        -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsed\\:\\:\\$messageRate has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetBudgetUsed.php
-
-        -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsed\\:\\:\\$messageTime has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetBudgetUsed.php
 
         -
             message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
@@ -9201,18 +8966,8 @@ parameters:
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 
         -
-            message: "#^Method App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidator\\:\\:addBudgetViolation\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
-            message: "#^Method App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidator\\:\\:addTimeBudgetViolation\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
-            message: "#^Method App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidator\\:\\:validate\\(\\) has no return type specified\\.$#"
-            count: 1
+            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
+            count: 2
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 
         -
@@ -9236,19 +8991,14 @@ parameters:
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 
         -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\TimesheetExported\\:\\:\\$message has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetExported.php
+            message: "#^Strict comparison using \\!\\=\\= between null and App\\\\Entity\\\\Project will always evaluate to true\\.$#"
+            count: 2
+            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 
         -
-            message: "#^Method App\\\\Validator\\\\Constraints\\\\TimesheetExportedValidator\\:\\:validate\\(\\) has no return type specified\\.$#"
-            count: 1
+            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetExportedValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
+            count: 2
             path: src/Validator/Constraints/TimesheetExportedValidator.php
-
-        -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\TimesheetFutureTimes\\:\\:\\$message has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetFutureTimes.php
 
         -
             message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
@@ -9261,29 +9011,14 @@ parameters:
             path: src/Validator/Constraints/TimesheetFutureTimesValidator.php
 
         -
-            message: "#^Method App\\\\Validator\\\\Constraints\\\\TimesheetFutureTimesValidator\\:\\:validate\\(\\) has no return type specified\\.$#"
-            count: 1
+            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetFutureTimesValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
+            count: 2
             path: src/Validator/Constraints/TimesheetFutureTimesValidator.php
 
         -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\TimesheetLockdown\\:\\:\\$message has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetLockdown.php
-
-        -
-            message: "#^Method App\\\\Validator\\\\Constraints\\\\TimesheetLockdownValidator\\:\\:validate\\(\\) has no return type specified\\.$#"
-            count: 1
+            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetLockdownValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
+            count: 2
             path: src/Validator/Constraints/TimesheetLockdownValidator.php
-
-        -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\TimesheetLongRunning\\:\\:\\$maximumMessage has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetLongRunning.php
-
-        -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\TimesheetLongRunning\\:\\:\\$message has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetLongRunning.php
 
         -
             message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
@@ -9291,8 +9026,8 @@ parameters:
             path: src/Validator/Constraints/TimesheetLongRunningValidator.php
 
         -
-            message: "#^Method App\\\\Validator\\\\Constraints\\\\TimesheetLongRunningValidator\\:\\:validate\\(\\) has no return type specified\\.$#"
-            count: 1
+            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetLongRunningValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
+            count: 2
             path: src/Validator/Constraints/TimesheetLongRunningValidator.php
 
         -
@@ -9301,63 +9036,33 @@ parameters:
             path: src/Validator/Constraints/TimesheetLongRunningValidator.php
 
         -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\TimesheetMultiUpdate\\:\\:\\$message has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetMultiUpdate.php
-
-        -
             message: "#^Cannot call method isVisible\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Validator/Constraints/TimesheetMultiUpdateValidator.php
 
         -
-            message: "#^Method App\\\\Validator\\\\Constraints\\\\TimesheetMultiUpdateValidator\\:\\:validateActivityAndProject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetMultiUpdateValidator.php
-
-        -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\TimesheetMultiUser\\:\\:\\$message has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetMultiUser.php
-
-        -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\TimesheetOverlapping\\:\\:\\$message has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetOverlapping.php
-
-        -
-            message: "#^Method App\\\\Validator\\\\Constraints\\\\TimesheetOverlappingValidator\\:\\:validate\\(\\) has no return type specified\\.$#"
-            count: 1
+            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetOverlappingValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
+            count: 2
             path: src/Validator/Constraints/TimesheetOverlappingValidator.php
 
         -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\TimesheetRestart\\:\\:\\$message has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetRestart.php
-
-        -
-            message: "#^Method App\\\\Validator\\\\Constraints\\\\TimesheetRestartValidator\\:\\:validate\\(\\) has no return type specified\\.$#"
-            count: 1
+            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetRestartValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
+            count: 2
             path: src/Validator/Constraints/TimesheetRestartValidator.php
 
         -
-            message: "#^Method App\\\\Validator\\\\Constraints\\\\TimesheetValidator\\:\\:validate\\(\\) has no return type specified\\.$#"
-            count: 1
+            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
+            count: 2
             path: src/Validator/Constraints/TimesheetValidator.php
 
         -
-            message: "#^Property App\\\\Validator\\\\Constraints\\\\TimesheetZeroDuration\\:\\:\\$message has no type specified\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetZeroDuration.php
-
-        -
-            message: "#^Method App\\\\Validator\\\\Constraints\\\\TimesheetZeroDurationValidator\\:\\:validate\\(\\) has no return type specified\\.$#"
-            count: 1
+            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetZeroDurationValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
+            count: 2
             path: src/Validator/Constraints/TimesheetZeroDurationValidator.php
 
         -
-            message: "#^Method App\\\\Validator\\\\Constraints\\\\UserValidator\\:\\:validateUser\\(\\) has no return type specified\\.$#"
-            count: 1
+            message: "#^Parameter \\#1 \\$value \\(App\\\\Entity\\\\User\\) of method App\\\\Validator\\\\Constraints\\\\UserValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
+            count: 2
             path: src/Validator/Constraints/UserValidator.php
 
         -
@@ -9371,6 +9076,76 @@ parameters:
             path: src/Validator/Constraints/UserValidator.php
 
         -
+            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Activity\\) of method App\\\\Voter\\\\ActivityVoter\\:\\:supports\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:supports\\(\\)$#"
+            count: 1
+            path: src/Voter/ActivityVoter.php
+
+        -
+            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Activity\\) of method App\\\\Voter\\\\ActivityVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
+            count: 1
+            path: src/Voter/ActivityVoter.php
+
+        -
+            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Customer\\) of method App\\\\Voter\\\\CustomerVoter\\:\\:supports\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:supports\\(\\)$#"
+            count: 1
+            path: src/Voter/CustomerVoter.php
+
+        -
+            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Customer\\) of method App\\\\Voter\\\\CustomerVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
+            count: 1
+            path: src/Voter/CustomerVoter.php
+
+        -
+            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Activity\\|App\\\\Entity\\\\Customer\\|App\\\\Entity\\\\Project\\|string\\) of method App\\\\Voter\\\\EntityMultiRoleVoter\\:\\:supports\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:supports\\(\\)$#"
+            count: 1
+            path: src/Voter/EntityMultiRoleVoter.php
+
+        -
+            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Activity\\|App\\\\Entity\\\\Customer\\|App\\\\Entity\\\\Project\\|string\\) of method App\\\\Voter\\\\EntityMultiRoleVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
+            count: 1
+            path: src/Voter/EntityMultiRoleVoter.php
+
+        -
+            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Project\\) of method App\\\\Voter\\\\ProjectVoter\\:\\:supports\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:supports\\(\\)$#"
+            count: 1
+            path: src/Voter/ProjectVoter.php
+
+        -
+            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Project\\) of method App\\\\Voter\\\\ProjectVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
+            count: 1
+            path: src/Voter/ProjectVoter.php
+
+        -
+            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\User\\) of method App\\\\Voter\\\\QuickEntryVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
+            count: 1
+            path: src/Voter/QuickEntryVoter.php
+
+        -
+            message: "#^Parameter \\#2 \\$subject \\(null\\) of method App\\\\Voter\\\\ReportingVoter\\:\\:supports\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:supports\\(\\)$#"
+            count: 1
+            path: src/Voter/ReportingVoter.php
+
+        -
+            message: "#^Parameter \\#2 \\$subject \\(null\\) of method App\\\\Voter\\\\ReportingVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
+            count: 1
+            path: src/Voter/ReportingVoter.php
+
+        -
+            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Activity\\) of method App\\\\Voter\\\\RolePermissionVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
+            count: 1
+            path: src/Voter/RolePermissionVoter.php
+
+        -
+            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Team\\) of method App\\\\Voter\\\\TeamVoter\\:\\:supports\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:supports\\(\\)$#"
+            count: 1
+            path: src/Voter/TeamVoter.php
+
+        -
+            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Team\\) of method App\\\\Voter\\\\TeamVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
+            count: 1
+            path: src/Voter/TeamVoter.php
+
+        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
             count: 1
             path: src/Voter/TimesheetVoter.php
@@ -9381,29 +9156,14 @@ parameters:
             path: src/Voter/TimesheetVoter.php
 
         -
-            message: "#^Property App\\\\Voter\\\\TimesheetVoter\\:\\:\\$editExported has no type specified\\.$#"
+            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Voter\\\\TimesheetVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
             count: 1
             path: src/Voter/TimesheetVoter.php
 
         -
-            message: "#^Property App\\\\Voter\\\\TimesheetVoter\\:\\:\\$lockdownGrace has no type specified\\.$#"
+            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\User\\) of method App\\\\Voter\\\\UserVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
             count: 1
-            path: src/Voter/TimesheetVoter.php
-
-        -
-            message: "#^Property App\\\\Voter\\\\TimesheetVoter\\:\\:\\$lockdownOverride has no type specified\\.$#"
-            count: 1
-            path: src/Voter/TimesheetVoter.php
-
-        -
-            message: "#^Property App\\\\Voter\\\\TimesheetVoter\\:\\:\\$now has no type specified\\.$#"
-            count: 1
-            path: src/Voter/TimesheetVoter.php
-
-        -
-            message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
-            count: 1
-            path: src/Widget/DataProvider/DailyWorkingTimeChartProvider.php
+            path: src/Voter/UserVoter.php
 
         -
             message: "#^Cannot access offset 'billable' on mixed\\.$#"
@@ -9552,6 +9312,11 @@ parameters:
 
         -
             message: "#^Method App\\\\Widget\\\\Type\\\\AbstractSimpleStatisticChart\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
+            count: 1
+            path: src/Widget/Type/AbstractSimpleStatisticChart.php
+
+        -
+            message: "#^Strict comparison using \\!\\=\\= between null and App\\\\Entity\\\\User will always evaluate to true\\.$#"
             count: 1
             path: src/Widget/Type/AbstractSimpleStatisticChart.php
 
@@ -9891,6 +9656,11 @@ parameters:
             path: src/Widget/Type/PaginatedWorkingTimeChart.php
 
         -
+            message: "#^Strict comparison using \\!\\=\\= between App\\\\Entity\\\\User and null will always evaluate to true\\.$#"
+            count: 1
+            path: src/Widget/Type/PaginatedWorkingTimeChart.php
+
+        -
             message: "#^Method App\\\\Widget\\\\Type\\\\TotalsActivity\\:\\:getData\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/Type/TotalsActivity.php
@@ -10139,376 +9909,3 @@ parameters:
             message: "#^Property App\\\\Widget\\\\WidgetService\\:\\:\\$widgets type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Widget/WidgetService.php
-
-#
-# STRICT RULES: disallowedLooseComparison
-#
-        -
-            message: "#^Strict comparison using \\!\\=\\= between '\\$2y\\$13\\$X8…' and null will always evaluate to true\\.$#"
-            count: 1
-            path: src/Command/ResetTestCommand.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between 'Administrator'\\|'CFO'\\|'Developer'\\|'Developer \\(left…'\\|'Head of Development'\\|'Quality Tester 1'\\|'Quality Tester 2'\\|'Super Administrator' and null will always evaluate to true\\.$#"
-            count: 1
-            path: src/Command/ResetTestCommand.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between 'anna_admin'\\|'chris_user'\\|'clara_customer'\\|'john_user'\\|'susan_super'\\|'test_user_1'\\|'test_user_2'\\|'tony_teamlead' and null will always evaluate to true\\.$#"
-            count: 1
-            path: src/Command/ResetTestCommand.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between 'anna_admin@example…'\\|'chris_user@example…'\\|'clara_customer…'\\|'john_user@example…'\\|'susan_super@example…'\\|'test_user_1@example…'\\|'test_user_2@example…'\\|'tony_teamlead…' and null will always evaluate to true\\.$#"
-            count: 2
-            path: src/Command/ResetTestCommand.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between 0\\|1 and null will always evaluate to true\\.$#"
-            count: 1
-            path: src/Command/ResetTestCommand.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between array\\{\\}\\|array\\{'ROLE_ADMIN'\\}\\|array\\{'ROLE_CUSTOMER'\\}\\|array\\{'ROLE_SUPER_ADMIN'\\}\\|array\\{'ROLE_TEAMLEAD'\\} and null will always evaluate to true\\.$#"
-            count: 1
-            path: src/Command/ResetTestCommand.php
-
-        -
-            message: "#^Access to an undefined property SimpleXMLElement\\|false\\:\\:\\$file\\.$#"
-            count: 1
-            path: src/Command/TranslationCommand.php
-
-        -
-            message: "#^Call to function array_key_exists\\(\\) with 'entry' and array\\{day\\: DateTime, entry\\: App\\\\Entity\\\\Timesheet\\} will always evaluate to true\\.$#"
-            count: 1
-            path: src/Controller/QuickEntryController.php
-
-        -
-            message: "#^Parameter \\#1 \\$value \\(string\\) of method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\AnnotationExtractor\\:\\:extract\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\ExtractorInterface\\:\\:extract\\(\\)$#"
-            count: 1
-            path: src/Export/Spreadsheet/Extractor/AnnotationExtractor.php
-
-        -
-            message: "#^Parameter \\#1 \\$value \\(App\\\\Event\\\\MetaDisplayEventInterface\\) of method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\MetaFieldExtractor\\:\\:extract\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\ExtractorInterface\\:\\:extract\\(\\)$#"
-            count: 1
-            path: src/Export/Spreadsheet/Extractor/MetaFieldExtractor.php
-
-        -
-            message: "#^Parameter \\#1 \\$value \\(App\\\\Event\\\\UserPreferenceDisplayEvent\\) of method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\UserPreferenceExtractor\\:\\:extract\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\ExtractorInterface\\:\\:extract\\(\\)$#"
-            count: 1
-            path: src/Export/Spreadsheet/Extractor/UserPreferenceExtractor.php
-
-        -
-            message: "#^Parameter \\#1 \\$items \\(array\\<App\\\\Entity\\\\Timesheet\\>\\) of method App\\\\Export\\\\TimesheetExportRepository\\:\\:setExported\\(\\) should be contravariant with parameter \\$items \\(array\\<App\\\\Entity\\\\ExportableItem\\>\\) of method App\\\\Export\\\\ExportRepositoryInterface\\:\\:setExported\\(\\)$#"
-            count: 1
-            path: src/Export/TimesheetExportRepository.php
-
-        -
-            message: "#^Strict comparison using \\=\\=\\= between false and false will always evaluate to true\\.$#"
-            count: 1
-            path: src/Form/API/TimesheetApiEditForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$formatToInt \\(string\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\DurationStringToSecondsTransformer\\:\\:reverseTransform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:reverseTransform\\(\\)$#"
-            count: 1
-            path: src/Form/DataTransformer/DurationStringToSecondsTransformer.php
-
-        -
-            message: "#^Parameter \\#1 \\$intToFormat \\(int\\) of method App\\\\Form\\\\DataTransformer\\\\DurationStringToSecondsTransformer\\:\\:transform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:transform\\(\\)$#"
-            count: 1
-            path: src/Form/DataTransformer/DurationStringToSecondsTransformer.php
-
-        -
-            message: "#^Parameter \\#1 \\$searchTerm \\(App\\\\Utils\\\\SearchTerm\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\SearchTermTransformer\\:\\:transform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:transform\\(\\)$#"
-            count: 1
-            path: src/Form/DataTransformer/SearchTermTransformer.php
-
-        -
-            message: "#^Parameter \\#1 \\$searchTerm \\(string\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\SearchTermTransformer\\:\\:reverseTransform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:reverseTransform\\(\\)$#"
-            count: 1
-            path: src/Form/DataTransformer/SearchTermTransformer.php
-
-        -
-            message: "#^Parameter \\#1 \\$value \\(array\\<string\\>\\) of method App\\\\Form\\\\DataTransformer\\\\StringToArrayTransformer\\:\\:transform\\(\\) should be contravariant with parameter \\$value \\(array\\|null\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<array,string\\>\\:\\:transform\\(\\)$#"
-            count: 1
-            path: src/Form/DataTransformer/StringToArrayTransformer.php
-
-        -
-            message: "#^Parameter \\#1 \\$stringOfTags \\(string\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\TagArrayToStringTransformer\\:\\:reverseTransform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:reverseTransform\\(\\)$#"
-            count: 1
-            path: src/Form/DataTransformer/TagArrayToStringTransformer.php
-
-        -
-            message: "#^Parameter \\#1 \\$tags \\(array\\<App\\\\Entity\\\\Tag\\>\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\TagArrayToStringTransformer\\:\\:transform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:transform\\(\\)$#"
-            count: 1
-            path: src/Form/DataTransformer/TagArrayToStringTransformer.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between non\\-falsy\\-string and '' will always evaluate to true\\.$#"
-            count: 1
-            path: src/Form/Extension/SelectWithApiDataExtension.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between float and \\-1 will always evaluate to true\\.$#"
-            count: 1
-            path: src/Invoice/Renderer/AdvancedValueBinder.php
-
-        -
-            message: "#^Instanceof between Symfony\\\\Component\\\\Security\\\\Http\\\\Authenticator\\\\Passport\\\\Passport and Symfony\\\\Component\\\\Security\\\\Http\\\\Authenticator\\\\Passport\\\\Passport will always evaluate to true\\.$#"
-            count: 1
-            path: src/Ldap/LdapCredentialsSubscriber.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between DateTime and false will always evaluate to true\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between null and array\\<array\\{id\\: int\\|numeric\\-string, duration\\: int\\|numeric\\-string, rate\\: float\\|int\\|numeric\\-string, internalRate\\: float\\|int\\|numeric\\-string, counter\\: int\\<0, max\\>\\|numeric\\-string, billable\\: bool, exported\\: bool\\}\\> will always evaluate to true\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Parameter \\#2 \\$lockMode \\(null\\) of method App\\\\Repository\\\\ActivityRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockMode \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Activity\\>\\:\\:find\\(\\)$#"
-            count: 1
-            path: src/Repository/ActivityRepository.php
-
-        -
-            message: "#^Parameter \\#3 \\$lockVersion \\(null\\) of method App\\\\Repository\\\\ActivityRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockVersion \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Activity\\>\\:\\:find\\(\\)$#"
-            count: 1
-            path: src/Repository/ActivityRepository.php
-
-        -
-            message: "#^Parameter \\#2 \\$lockMode \\(null\\) of method App\\\\Repository\\\\CustomerRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockMode \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Customer\\>\\:\\:find\\(\\)$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
-            message: "#^Parameter \\#3 \\$lockVersion \\(null\\) of method App\\\\Repository\\\\CustomerRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockVersion \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Customer\\>\\:\\:find\\(\\)$#"
-            count: 1
-            path: src/Repository/CustomerRepository.php
-
-        -
-            message: "#^Parameter \\#1 \\$results \\(array\\<App\\\\Entity\\\\Activity\\|int\\>\\) of method App\\\\Repository\\\\Loader\\\\ActivityLoader\\:\\:loadResults\\(\\) should be contravariant with parameter \\$results \\(array\\) of method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\)$#"
-            count: 1
-            path: src/Repository/Loader/ActivityLoader.php
-
-        -
-            message: "#^Parameter \\#1 \\$results \\(array\\<App\\\\Entity\\\\Customer\\|int\\>\\) of method App\\\\Repository\\\\Loader\\\\CustomerLoader\\:\\:loadResults\\(\\) should be contravariant with parameter \\$results \\(array\\) of method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\)$#"
-            count: 1
-            path: src/Repository/Loader/CustomerLoader.php
-
-        -
-            message: "#^Parameter \\#1 \\$results \\(array\\<App\\\\Entity\\\\Invoice\\|int\\>\\) of method App\\\\Repository\\\\Loader\\\\InvoiceLoader\\:\\:loadResults\\(\\) should be contravariant with parameter \\$results \\(array\\) of method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\)$#"
-            count: 1
-            path: src/Repository/Loader/InvoiceLoader.php
-
-        -
-            message: "#^Parameter \\#1 \\$results \\(array\\<App\\\\Entity\\\\Project\\|int\\>\\) of method App\\\\Repository\\\\Loader\\\\ProjectLoader\\:\\:loadResults\\(\\) should be contravariant with parameter \\$results \\(array\\) of method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\)$#"
-            count: 1
-            path: src/Repository/Loader/ProjectLoader.php
-
-        -
-            message: "#^Parameter \\#1 \\$results \\(array\\<App\\\\Entity\\\\Team\\|int\\>\\) of method App\\\\Repository\\\\Loader\\\\TeamLoader\\:\\:loadResults\\(\\) should be contravariant with parameter \\$results \\(array\\) of method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\)$#"
-            count: 1
-            path: src/Repository/Loader/TeamLoader.php
-
-        -
-            message: "#^Parameter \\#1 \\$results \\(array\\<App\\\\Entity\\\\Timesheet\\|int\\>\\) of method App\\\\Repository\\\\Loader\\\\TimesheetLoader\\:\\:loadResults\\(\\) should be contravariant with parameter \\$results \\(array\\) of method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\)$#"
-            count: 1
-            path: src/Repository/Loader/TimesheetLoader.php
-
-        -
-            message: "#^Parameter \\#1 \\$results \\(array\\<App\\\\Entity\\\\User\\|int\\>\\) of method App\\\\Repository\\\\Loader\\\\UserLoader\\:\\:loadResults\\(\\) should be contravariant with parameter \\$results \\(array\\) of method App\\\\Repository\\\\Loader\\\\LoaderInterface\\:\\:loadResults\\(\\)$#"
-            count: 1
-            path: src/Repository/Loader/UserLoader.php
-
-        -
-            message: "#^Parameter \\#2 \\$lockMode \\(null\\) of method App\\\\Repository\\\\ProjectRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockMode \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Project\\>\\:\\:find\\(\\)$#"
-            count: 1
-            path: src/Repository/ProjectRepository.php
-
-        -
-            message: "#^Parameter \\#3 \\$lockVersion \\(null\\) of method App\\\\Repository\\\\ProjectRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockVersion \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Project\\>\\:\\:find\\(\\)$#"
-            count: 1
-            path: src/Repository/ProjectRepository.php
-
-        -
-            message: "#^Return type \\(array\\<App\\\\Entity\\\\Team\\>\\) of method App\\\\Repository\\\\TeamRepository\\:\\:findAll\\(\\) should be covariant with return type \\(array\\<int, App\\\\Entity\\\\Team\\>\\) of method Doctrine\\\\Persistence\\\\ObjectRepository\\<App\\\\Entity\\\\Team\\>\\:\\:findAll\\(\\)$#"
-            count: 1
-            path: src/Repository/TeamRepository.php
-
-        -
-            message: "#^Return type \\(array\\<App\\\\Entity\\\\Team\\>\\) of method App\\\\Repository\\\\TeamRepository\\:\\:findAll\\(\\) should be covariant with return type \\(list\\<App\\\\Entity\\\\Team\\>\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Team\\>\\:\\:findAll\\(\\)$#"
-            count: 1
-            path: src/Repository/TeamRepository.php
-
-        -
-            message: "#^Parameter \\#2 \\$lockMode \\(null\\) of method App\\\\Repository\\\\TimesheetRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockMode \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Timesheet\\>\\:\\:find\\(\\)$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
-            message: "#^Parameter \\#3 \\$lockVersion \\(null\\) of method App\\\\Repository\\\\TimesheetRepository\\:\\:find\\(\\) should be contravariant with parameter \\$lockVersion \\(int\\|null\\) of method Doctrine\\\\ORM\\\\EntityRepository\\<App\\\\Entity\\\\Timesheet\\>\\:\\:find\\(\\)$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
-            message: "#^Parameter \\#2 \\$text \\(string\\) of method App\\\\Utils\\\\PaginationTemplate\\:\\:spanLi\\(\\) should be contravariant with parameter \\$text \\(int\\|string\\) of method Pagerfanta\\\\View\\\\Template\\\\TwitterBootstrap4Template\\:\\:spanLi\\(\\)$#"
-            count: 1
-            path: src/Utils/PaginationTemplate.php
-
-        -
-            message: "#^Parameter \\#1 \\$value \\(App\\\\Entity\\\\Team\\) of method App\\\\Validator\\\\Constraints\\\\TeamValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TeamValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetBasicValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetBasicValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between null and App\\\\Entity\\\\Project will always evaluate to true\\.$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetExportedValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetExportedValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetFutureTimesValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetFutureTimesValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetLockdownValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetLockdownValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetLongRunningValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetLongRunningValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetOverlappingValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetOverlappingValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetRestartValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetRestartValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$timesheet \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Validator\\\\Constraints\\\\TimesheetZeroDurationValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/TimesheetZeroDurationValidator.php
-
-        -
-            message: "#^Parameter \\#1 \\$value \\(App\\\\Entity\\\\User\\) of method App\\\\Validator\\\\Constraints\\\\UserValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
-            count: 2
-            path: src/Validator/Constraints/UserValidator.php
-
-        -
-            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Activity\\) of method App\\\\Voter\\\\ActivityVoter\\:\\:supports\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:supports\\(\\)$#"
-            count: 1
-            path: src/Voter/ActivityVoter.php
-
-        -
-            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Activity\\) of method App\\\\Voter\\\\ActivityVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
-            count: 1
-            path: src/Voter/ActivityVoter.php
-
-        -
-            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Customer\\) of method App\\\\Voter\\\\CustomerVoter\\:\\:supports\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:supports\\(\\)$#"
-            count: 1
-            path: src/Voter/CustomerVoter.php
-
-        -
-            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Customer\\) of method App\\\\Voter\\\\CustomerVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
-            count: 1
-            path: src/Voter/CustomerVoter.php
-
-        -
-            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Activity\\|App\\\\Entity\\\\Customer\\|App\\\\Entity\\\\Project\\|string\\) of method App\\\\Voter\\\\EntityMultiRoleVoter\\:\\:supports\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:supports\\(\\)$#"
-            count: 1
-            path: src/Voter/EntityMultiRoleVoter.php
-
-        -
-            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Activity\\|App\\\\Entity\\\\Customer\\|App\\\\Entity\\\\Project\\|string\\) of method App\\\\Voter\\\\EntityMultiRoleVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
-            count: 1
-            path: src/Voter/EntityMultiRoleVoter.php
-
-        -
-            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Project\\) of method App\\\\Voter\\\\ProjectVoter\\:\\:supports\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:supports\\(\\)$#"
-            count: 1
-            path: src/Voter/ProjectVoter.php
-
-        -
-            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Project\\) of method App\\\\Voter\\\\ProjectVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
-            count: 1
-            path: src/Voter/ProjectVoter.php
-
-        -
-            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\User\\) of method App\\\\Voter\\\\QuickEntryVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
-            count: 1
-            path: src/Voter/QuickEntryVoter.php
-
-        -
-            message: "#^Parameter \\#2 \\$subject \\(null\\) of method App\\\\Voter\\\\ReportingVoter\\:\\:supports\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:supports\\(\\)$#"
-            count: 1
-            path: src/Voter/ReportingVoter.php
-
-        -
-            message: "#^Parameter \\#2 \\$subject \\(null\\) of method App\\\\Voter\\\\ReportingVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
-            count: 1
-            path: src/Voter/ReportingVoter.php
-
-        -
-            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Activity\\) of method App\\\\Voter\\\\RolePermissionVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
-            count: 1
-            path: src/Voter/RolePermissionVoter.php
-
-        -
-            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Team\\) of method App\\\\Voter\\\\TeamVoter\\:\\:supports\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:supports\\(\\)$#"
-            count: 1
-            path: src/Voter/TeamVoter.php
-
-        -
-            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Team\\) of method App\\\\Voter\\\\TeamVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
-            count: 1
-            path: src/Voter/TeamVoter.php
-
-        -
-            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\Timesheet\\) of method App\\\\Voter\\\\TimesheetVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
-            count: 1
-            path: src/Voter/TimesheetVoter.php
-
-        -
-            message: "#^Parameter \\#2 \\$subject \\(App\\\\Entity\\\\User\\) of method App\\\\Voter\\\\UserVoter\\:\\:voteOnAttribute\\(\\) should be contravariant with parameter \\$subject \\(mixed\\) of method Symfony\\\\Component\\\\Security\\\\Core\\\\Authorization\\\\Voter\\\\Voter\\:\\:voteOnAttribute\\(\\)$#"
-            count: 1
-            path: src/Voter/UserVoter.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between null and App\\\\Entity\\\\User will always evaluate to true\\.$#"
-            count: 1
-            path: src/Widget/Type/AbstractSimpleStatisticChart.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between App\\\\Entity\\\\User and null will always evaluate to true\\.$#"
-            count: 1
-            path: src/Widget/Type/PaginatedWorkingTimeChart.php

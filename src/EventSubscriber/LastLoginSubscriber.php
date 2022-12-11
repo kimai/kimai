@@ -15,7 +15,7 @@ use App\Repository\UserRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
-class LastLoginSubscriber implements EventSubscriberInterface
+final class LastLoginSubscriber implements EventSubscriberInterface
 {
     public function __construct(private UserRepository $repository)
     {
@@ -31,7 +31,7 @@ class LastLoginSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onImplicitLogin(UserInteractiveLoginEvent $event)
+    public function onImplicitLogin(UserInteractiveLoginEvent $event): void
     {
         $user = $event->getUser();
 
@@ -39,7 +39,7 @@ class LastLoginSubscriber implements EventSubscriberInterface
         $this->repository->saveUser($user);
     }
 
-    public function onFormLogin(LoginSuccessEvent $event)
+    public function onFormLogin(LoginSuccessEvent $event): void
     {
         $user = $event->getUser();
 

@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-class DatatableExtensions extends AbstractExtension
+final class DatatableExtensions extends AbstractExtension
 {
     /**
      * @var array<string, array<string, array<string, string|bool>>>

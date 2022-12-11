@@ -19,9 +19,9 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TimesheetApiEditForm extends TimesheetEditForm
+final class TimesheetApiEditForm extends TimesheetEditForm
 {
-    protected function addBillable(FormBuilderInterface $builder, array $options)
+    protected function addBillable(FormBuilderInterface $builder, array $options): void
     {
         if (!$options['include_billable']) {
             return;
@@ -48,9 +48,6 @@ class TimesheetApiEditForm extends TimesheetEditForm
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
@@ -81,14 +78,14 @@ class TimesheetApiEditForm extends TimesheetEditForm
         }
     }
 
-    protected function addBegin(FormBuilderInterface $builder, array $dateTimeOptions, array $options = [])
+    protected function addBegin(FormBuilderInterface $builder, array $dateTimeOptions, array $options = []): void
     {
         $builder->add('begin', DateTimeApiType::class, array_merge($dateTimeOptions, [
             'label' => 'begin',
         ]));
     }
 
-    protected function addEnd(FormBuilderInterface $builder, array $dateTimeOptions, array $options = [])
+    protected function addEnd(FormBuilderInterface $builder, array $dateTimeOptions, array $options = []): void
     {
         $builder->add('end', DateTimeApiType::class, array_merge($dateTimeOptions, [
             'label' => 'end',

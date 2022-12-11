@@ -23,17 +23,17 @@ use App\Timesheet\Util;
  */
 class TimesheetTeamControllerTest extends ControllerBaseTest
 {
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/team/timesheet/');
     }
 
-    public function testIsSecureForRole()
+    public function testIsSecureForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/team/timesheet/');
     }
 
-    public function testIndexAction()
+    public function testIndexAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->assertAccessIsGranted($client, '/team/timesheet/');
@@ -49,7 +49,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         ]);
     }
 
-    public function testIndexActionWithQuery()
+    public function testIndexActionWithQuery(): void
     {
         // Switching the user is not allowed for TEAMLEADs but ONLLY for admin and super-admins
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -86,7 +86,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         self::assertEquals(3, $node->count());
     }
 
-    public function testIndexActionWithSearchTermQuery()
+    public function testIndexActionWithSearchTermQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $start = new \DateTime('first day of this month');
@@ -121,7 +121,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_timesheet_admin', 5);
     }
 
-    public function testExportAction()
+    public function testExportAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -158,7 +158,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertEquals(10, \count($result));
     }
 
-    public function testCreateAction()
+    public function testCreateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/team/timesheet/create');
@@ -189,7 +189,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertNull($timesheet->getFixedRate());
     }
 
-    public function testCreateForMultipleUsersAction()
+    public function testCreateForMultipleUsersAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -231,7 +231,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         }
     }
 
-    public function testCreateForMultipleUsersActionWithoutUserOrTeam()
+    public function testCreateForMultipleUsersActionWithoutUserOrTeam(): void
     {
         $begin = new \DateTime();
         $end = new \DateTime('+1 hour');
@@ -256,7 +256,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         );
     }
 
-    public function testEditAction()
+    public function testEditAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -307,7 +307,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->assertEquals($teamlead->getId(), $timesheet->getUser()->getId());
     }
 
-    public function testMultiDeleteAction()
+    public function testMultiDeleteAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
@@ -344,7 +344,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         self::assertEquals(0, $em->getRepository(Timesheet::class)->count([]));
     }
 
-    public function testMultiUpdate()
+    public function testMultiUpdate(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
@@ -407,7 +407,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         }
     }
 
-    public function testDuplicateAction()
+    public function testDuplicateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $dateTime = new DateTimeFactory(new \DateTimeZone('Europe/London'));

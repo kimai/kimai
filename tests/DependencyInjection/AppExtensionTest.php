@@ -36,7 +36,10 @@ class AppExtensionTest extends TestCase
         return $container;
     }
 
-    protected function getMinConfig()
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    protected function getMinConfig(): array
     {
         return [
             'kimai' => [
@@ -49,7 +52,7 @@ class AppExtensionTest extends TestCase
         ];
     }
 
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $minConfig = $this->getMinConfig();
 
@@ -138,6 +141,7 @@ class AppExtensionTest extends TestCase
 
         $this->assertTrue($container->hasParameter('kimai.config'));
 
+        /** @var array<string, mixed> $config */
         $config = $container->getParameter('kimai.config');
 
         foreach (SystemConfigurationFactory::flatten($kimaiLdap) as $key => $value) {
@@ -151,7 +155,7 @@ class AppExtensionTest extends TestCase
         }
     }
 
-    public function testLdapDefaultValues()
+    public function testLdapDefaultValues(): void
     {
         $minConfig = $this->getMinConfig();
         $minConfig['kimai']['ldap'] = [
@@ -178,7 +182,7 @@ class AppExtensionTest extends TestCase
         $this->assertEquals('(uid=%s)', $config['ldap.connection.accountFilterFormat']);
     }
 
-    public function testLdapFallbackValue()
+    public function testLdapFallbackValue(): void
     {
         $minConfig = $this->getMinConfig();
         $minConfig['kimai']['ldap'] = [
@@ -202,7 +206,7 @@ class AppExtensionTest extends TestCase
         $this->assertEquals('', $config['ldap.user.filter']);
     }
 
-    public function testLdapMoreFallbackValue()
+    public function testLdapMoreFallbackValue(): void
     {
         $minConfig = $this->getMinConfig();
         $minConfig['kimai']['ldap'] = [
@@ -228,7 +232,7 @@ class AppExtensionTest extends TestCase
         $this->assertEquals('(&(objectClass=inetOrgPerson))', $config['ldap.user.filter']);
     }
 
-    public function testWithBundleConfiguration()
+    public function testWithBundleConfiguration(): void
     {
         $bundleConfig = [
             'foo-bundle' => [
@@ -243,7 +247,7 @@ class AppExtensionTest extends TestCase
         self::assertEquals('test', $config['foo-bundle.bar']);
     }
 
-    public function testWithBundleConfigurationFailsOnDuplicatedKey()
+    public function testWithBundleConfigurationFailsOnDuplicatedKey(): void
     {
         $this->expectNotice();
         $this->expectExceptionMessage('Invalid bundle configuration "timesheet" found, skipping');
@@ -257,7 +261,7 @@ class AppExtensionTest extends TestCase
         $this->extension->load($this->getMinConfig(), $container);
     }
 
-    public function testWithBundleConfigurationFailsOnNonArray()
+    public function testWithBundleConfigurationFailsOnNonArray(): void
     {
         $this->expectNotice();
         $this->expectExceptionMessage('Invalid bundle configuration found, skipping all bundle configuration');

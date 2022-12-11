@@ -16,11 +16,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to set the fixed rate.
  */
-class FixedRateType extends AbstractType
+final class FixedRateType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

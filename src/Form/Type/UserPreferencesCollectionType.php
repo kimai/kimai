@@ -21,7 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to edit user preferences.
  */
-class UserPreferencesCollectionType extends AbstractType
+final class UserPreferencesCollectionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

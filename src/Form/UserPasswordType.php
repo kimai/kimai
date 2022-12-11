@@ -19,11 +19,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Defines the form used to set the users password.
  */
-class UserPasswordType extends AbstractType
+final class UserPasswordType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -43,9 +40,6 @@ class UserPasswordType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

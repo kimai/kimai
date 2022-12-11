@@ -24,7 +24,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select an activity.
  */
-class ActivityType extends AbstractType
+final class ActivityType extends AbstractType
 {
     public function __construct(private ActivityHelper $activityHelper, private ProjectHelper $projectHelper)
     {

@@ -15,15 +15,12 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class ReportSumType extends AbstractType
+final class ReportSumType extends AbstractType
 {
     public function __construct(private AuthorizationCheckerInterface $authorizationChecker)
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

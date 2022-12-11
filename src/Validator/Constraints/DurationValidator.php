@@ -11,6 +11,6 @@ namespace App\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraints\RegexValidator;
 
-class DurationValidator extends RegexValidator
+final class DurationValidator extends RegexValidator
 {
 }

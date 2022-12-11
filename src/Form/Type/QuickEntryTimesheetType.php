@@ -18,15 +18,12 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
 
-class QuickEntryTimesheetType extends AbstractType
+final class QuickEntryTimesheetType extends AbstractType
 {
     public function __construct(private Security $security)
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $durationOptions = [
@@ -90,9 +87,6 @@ class QuickEntryTimesheetType extends AbstractType
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

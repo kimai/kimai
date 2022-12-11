@@ -15,7 +15,7 @@ use Doctrine\ORM\Query\Lexer;
 use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\SqlWalker;
 
-class Month extends FunctionNode
+final class Month extends FunctionNode
 {
     private Node|string|null $value;
 

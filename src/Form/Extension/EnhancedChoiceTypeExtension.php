@@ -60,9 +60,6 @@ final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
         $view->vars['attr'] = array_merge($view->vars['attr'], $extendedOptions);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(['selectpicker']);

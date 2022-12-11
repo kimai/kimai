@@ -16,13 +16,13 @@ use Mpdf\Config\FontVariables;
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
 
-class MPdfConverter implements HtmlToPdfConverter
+final class MPdfConverter implements HtmlToPdfConverter
 {
     public function __construct(private FileHelper $fileHelper, private string $cacheDirectory)
     {
     }
 
-    protected function sanitizeOptions(array $options): array
+    private function sanitizeOptions(array $options): array
     {
         $configs = new ConfigVariables();
         $fonts = new FontVariables();

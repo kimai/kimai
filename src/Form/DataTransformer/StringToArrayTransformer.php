@@ -15,7 +15,7 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 /**
  * @implements DataTransformerInterface<array, string>
  */
-class StringToArrayTransformer implements DataTransformerInterface
+final class StringToArrayTransformer implements DataTransformerInterface
 {
     /**
      * @param non-empty-string $separator

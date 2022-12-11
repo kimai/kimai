@@ -9,7 +9,7 @@
 
 namespace App\Utils;
 
-class JavascriptFormatConverter
+final class JavascriptFormatConverter
 {
     /**
      * Convert PHP date format to Luxon compatible format.
@@ -18,7 +18,7 @@ class JavascriptFormatConverter
      * @see https://www.php.net/manual/en/datetime.format.php
      * @var array
      */
-    private static $formatConvertRules = [
+    private static array $formatConvertRules = [
         // year: Litepicker interprets 2-digit year as 1900, so we have to convert 20 to 2022.
         'yyyy' => 'YYYY', 'yy' => 'YYYY', 'y' => 'YYYY',
         // day
@@ -36,9 +36,6 @@ class JavascriptFormatConverter
     /**
      * The output of this format is used only to convert the Litepicker date object
      * to the input field (expected by Symfony form).
-     *
-     * @param string $format
-     * @return string
      */
     public function convert(string $format): string
     {

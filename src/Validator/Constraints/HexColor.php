@@ -12,7 +12,7 @@ namespace App\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
-class HexColor extends Constraint
+final class HexColor extends Constraint
 {
     public const HEX_COLOR_ERROR = 'xd5hffg-dsfef3-426a-83d7-2g8jkfr56d84';
 

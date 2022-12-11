@@ -9,9 +9,9 @@
 
 namespace App\Tests\Widget\Type;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\Counter;
 use App\Widget\Type\DurationYear;
@@ -26,11 +26,7 @@ class CounterYearTest extends AbstractSimpleStatisticsWidgetTypeTest
 {
     public function createSut(?string $financialYear = null): AbstractWidgetType
     {
-        $configuration = $this->createMock(SystemConfiguration::class);
-
-        if (null !== $financialYear) {
-            $configuration->method('getFinancialYearStart')->willReturn($financialYear);
-        }
+        $configuration = SystemConfigurationFactory::createStub(['company' => ['financial_year' => $financialYear]]);
 
         $sut = new DurationYear($this->createMock(TimesheetRepository::class), $configuration);
         $sut->setQuery(TimesheetRepository::STATS_QUERY_AMOUNT);

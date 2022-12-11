@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select a calendar view.
  */
-class CalendarViewType extends AbstractType
+final class CalendarViewType extends AbstractType
 {
     public const DEFAULT_VIEW = 'month';
 

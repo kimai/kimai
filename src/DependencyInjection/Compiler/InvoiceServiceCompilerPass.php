@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * Dynamically adds all dependencies to the InvoiceService.
  */
-class InvoiceServiceCompilerPass implements CompilerPassInterface
+final class InvoiceServiceCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {

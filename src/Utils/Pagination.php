@@ -12,7 +12,7 @@ namespace App\Utils;
 use Pagerfanta\Adapter\AdapterInterface;
 use Pagerfanta\Pagerfanta;
 
-class Pagination extends Pagerfanta
+final class Pagination extends Pagerfanta
 {
     public function __construct(AdapterInterface $adapter)
     {

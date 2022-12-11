@@ -22,15 +22,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * Custom form field type to enter tags or use one of autocompleted field
  */
-class TagsInputType extends AbstractType
+final class TagsInputType extends AbstractType
 {
     public function __construct(private TagArrayToStringTransformer $transformer, private UrlGeneratorInterface $router)
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -38,9 +35,6 @@ class TagsInputType extends AbstractType
             ->addModelTransformer($this->transformer, true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

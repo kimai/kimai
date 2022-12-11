@@ -13,7 +13,7 @@ use App\Entity\User;
 
 abstract class DateByUser extends AbstractUserList
 {
-    private $user;
+    private ?User $user = null;
 
     public function getUser(): ?User
     {

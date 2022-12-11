@@ -23,7 +23,7 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * Dynamically adds all dependencies to the ExportService.
  */
-class ExportServiceCompilerPass implements CompilerPassInterface
+final class ExportServiceCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {

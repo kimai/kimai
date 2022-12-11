@@ -16,12 +16,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class YearlyUserListForm extends AbstractType
+final class YearlyUserListForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('date', YearPickerType::class, [
             'model_timezone' => $options['timezone'],
@@ -37,10 +34,7 @@ class YearlyUserListForm extends AbstractType
         $builder->add('sumType', ReportSumType::class);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => YearlyUserList::class,

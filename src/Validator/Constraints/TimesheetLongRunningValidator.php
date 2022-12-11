@@ -25,7 +25,7 @@ final class TimesheetLongRunningValidator extends ConstraintValidator
      * @param TimesheetEntity $timesheet
      * @param Constraint $constraint
      */
-    public function validate($timesheet, Constraint $constraint)
+    public function validate(mixed $timesheet, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetLongRunning)) {
             throw new UnexpectedTypeException($constraint, TimesheetLongRunning::class);

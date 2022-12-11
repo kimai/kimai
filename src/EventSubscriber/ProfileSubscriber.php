@@ -13,7 +13,7 @@ use App\Utils\ProfileManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
-class ProfileSubscriber implements EventSubscriberInterface
+final class ProfileSubscriber implements EventSubscriberInterface
 {
     public function __construct(private ProfileManager $profileManager)
     {
@@ -27,7 +27,7 @@ class ProfileSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onFormLogin(LoginSuccessEvent $event)
+    public function onFormLogin(LoginSuccessEvent $event): void
     {
         $request = $event->getRequest();
 

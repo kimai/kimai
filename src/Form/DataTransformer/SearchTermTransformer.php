@@ -13,7 +13,7 @@ use App\Utils\SearchTerm;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
-class SearchTermTransformer implements DataTransformerInterface
+final class SearchTermTransformer implements DataTransformerInterface
 {
     /**
      * Transforms a SearchTerm object to a string.

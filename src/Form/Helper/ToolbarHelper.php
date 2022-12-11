@@ -15,14 +15,16 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class ToolbarHelper
 {
-    private $teamNames = ['team', 'teams', 'searchTeams'];
-    private $userNames = ['user', 'users'];
+    /** @var array<string> */
+    private array $teamNames = ['team', 'teams', 'searchTeams'];
+    /** @var array<string> */
+    private array $userNames = ['user', 'users'];
 
     public function __construct(private UserService $userService, private TeamService $teamService)
     {
     }
 
-    public function cleanupForm(FormBuilderInterface $builder)
+    public function cleanupForm(FormBuilderInterface $builder): void
     {
         $deleteUser = false;
         foreach ($this->userNames as $name) {

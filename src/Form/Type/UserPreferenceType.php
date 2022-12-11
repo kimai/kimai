@@ -23,7 +23,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Custom form field type to edit a user preference.
  */
-class UserPreferenceType extends AbstractType
+final class UserPreferenceType extends AbstractType
 {
     public function __construct(private TranslatorInterface $translator)
     {

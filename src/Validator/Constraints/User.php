@@ -12,7 +12,7 @@ namespace App\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 #[\Attribute(\Attribute::TARGET_CLASS)]
-class User extends Constraint
+final class User extends Constraint
 {
     public const USER_EXISTING_EMAIL = 'kimai-user-00';
     public const USER_EXISTING_NAME = 'kimai-user-01';

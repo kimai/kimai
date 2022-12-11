@@ -17,7 +17,7 @@ use App\Repository\Loader\TeamLoader;
 use App\Widget\WidgetInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-class UserTeamProjects extends AbstractWidget
+final class UserTeamProjects extends AbstractWidget
 {
     public function __construct(private ProjectStatisticService $statisticService, private EntityManagerInterface $entityManager)
     {

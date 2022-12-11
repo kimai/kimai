@@ -43,9 +43,6 @@ class TimesheetEditForm extends AbstractType
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $activity = null;
@@ -145,7 +142,7 @@ class TimesheetEditForm extends AbstractType
         return true;
     }
 
-    protected function addBegin(FormBuilderInterface $builder, array $dateTimeOptions, array $options = [])
+    protected function addBegin(FormBuilderInterface $builder, array $dateTimeOptions, array $options = []): void
     {
         $dateOptions = $dateTimeOptions;
         $builder->add('begin_date', DatePickerType::class, array_merge($dateOptions, [
@@ -206,7 +203,7 @@ class TimesheetEditForm extends AbstractType
         );
     }
 
-    protected function addEnd(FormBuilderInterface $builder, array $dateTimeOptions, array $options = [])
+    protected function addEnd(FormBuilderInterface $builder, array $dateTimeOptions, array $options = []): void
     {
         $builder->add('end_time', TimePickerType::class, array_merge($dateTimeOptions, [
             'required' => false,
@@ -263,7 +260,7 @@ class TimesheetEditForm extends AbstractType
         );
     }
 
-    protected function addDuration(FormBuilderInterface $builder, array $options, bool $forceApply = false, bool $autofocus = false)
+    protected function addDuration(FormBuilderInterface $builder, array $options, bool $forceApply = false, bool $autofocus = false): void
     {
         $durationOptions = [
             'required' => false,
@@ -332,7 +329,7 @@ class TimesheetEditForm extends AbstractType
         );
     }
 
-    protected function addRates(FormBuilderInterface $builder, $currency, array $options)
+    protected function addRates(FormBuilderInterface $builder, $currency, array $options): void
     {
         if (!$options['include_rate']) {
             return;
@@ -347,7 +344,7 @@ class TimesheetEditForm extends AbstractType
             ]);
     }
 
-    protected function addUser(FormBuilderInterface $builder, array $options)
+    protected function addUser(FormBuilderInterface $builder, array $options): void
     {
         if (!$options['include_user']) {
             return;
@@ -356,7 +353,7 @@ class TimesheetEditForm extends AbstractType
         $builder->add('user', UserType::class);
     }
 
-    protected function addExported(FormBuilderInterface $builder, array $options)
+    protected function addExported(FormBuilderInterface $builder, array $options): void
     {
         if (!$options['include_exported']) {
             return;
@@ -367,7 +364,7 @@ class TimesheetEditForm extends AbstractType
         ]);
     }
 
-    protected function addBillable(FormBuilderInterface $builder, array $options)
+    protected function addBillable(FormBuilderInterface $builder, array $options): void
     {
         if ($options['include_billable']) {
             $builder->add('billableMode', TimesheetBillableType::class, []);
@@ -394,9 +391,6 @@ class TimesheetEditForm extends AbstractType
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $maxMinutes = $this->systemConfiguration->getTimesheetLongRunningDuration();

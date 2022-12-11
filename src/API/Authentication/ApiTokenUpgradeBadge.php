@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Exception\LogicException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\BadgeInterface;
 
-class ApiTokenUpgradeBadge implements BadgeInterface
+final class ApiTokenUpgradeBadge implements BadgeInterface
 {
     public function __construct(private ?string $plaintextApiToken, private PasswordUpgraderInterface $passwordUpgrader)
     {

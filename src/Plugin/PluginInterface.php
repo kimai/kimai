@@ -11,13 +11,7 @@ namespace App\Plugin;
 
 interface PluginInterface
 {
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): string;
 
-    /**
-     * @return string
-     */
-    public function getPath();
+    public function getPath(): string;
 }

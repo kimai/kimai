@@ -12,13 +12,8 @@ namespace App\Utils;
 use Pagerfanta\View\Template\TemplateInterface;
 use Pagerfanta\View\TwitterBootstrap5View;
 
-class PaginationView extends TwitterBootstrap5View
+final class PaginationView extends TwitterBootstrap5View
 {
-    public function __construct(TemplateInterface $template = null)
-    {
-        parent::__construct($template);
-    }
-
     protected function getDefaultProximity(): int
     {
         return 2;

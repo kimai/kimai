@@ -13,7 +13,7 @@ use App\Entity\UserPreference;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
 
-class InvoiceModelUserHydrator implements InvoiceModelHydrator
+final class InvoiceModelUserHydrator implements InvoiceModelHydrator
 {
     public function hydrate(InvoiceModel $model): array
     {

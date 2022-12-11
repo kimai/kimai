@@ -4753,36 +4753,6 @@ parameters:
             path: Controller/TagControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TagControllerTest\\:\\:testCreateAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TagControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TagControllerTest\\:\\:testEditAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TagControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TagControllerTest\\:\\:testIndexAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TagControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TagControllerTest\\:\\:testIndexActionWithSearchTermQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TagControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TagControllerTest\\:\\:testIsSecure\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TagControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TagControllerTest\\:\\:testMultiDeleteAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TagControllerTest.php
-
-        -
             message: "#^Cannot call method getCustomers\\(\\) on App\\\\Entity\\\\Team\\|null\\.$#"
             count: 2
             path: Controller/TeamControllerTest.php
@@ -4878,46 +4848,6 @@ parameters:
             path: Controller/TimesheetControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:getTestDataForDurationValues\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testCreateAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testCreateActionDoesNotShowRateFieldsForUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testCreateActionShowsMetaFields\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testCreateActionWithBeginAndEndAndTagValues\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testCreateActionWithDescription\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testCreateActionWithDescriptionHtmlInjection\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testCreateActionWithDurationValues\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testCreateActionWithDurationValues\\(\\) has parameter \\$beginDate with no type specified\\.$#"
             count: 1
             path: Controller/TimesheetControllerTest.php
@@ -4944,76 +4874,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testCreateActionWithDurationValues\\(\\) has parameter \\$expectedEnd with no type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testCreateActionWithEmptyDuration\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testCreateActionWithFromAndToValues\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testCreateActionWithFromAndToValuesTwice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testCreateActionWithFromAndToValuesTwiceFailsOnOverlappingRecord\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testCreateActionWithOverbookedActivity\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testDuplicateAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testEditAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testExportAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testIndexAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testIndexActionWithQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testIndexActionWithSearchTermQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testIsSecure\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testMultiDeleteAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetControllerTest\\:\\:testMultiUpdate\\(\\) has no return type specified\\.$#"
             count: 1
             path: Controller/TimesheetControllerTest.php
 
@@ -5050,71 +4910,6 @@ parameters:
         -
             message: "#^Cannot clone DateTime\\|null\\.$#"
             count: 2
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetTeamControllerTest\\:\\:testCreateAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetTeamControllerTest\\:\\:testCreateForMultipleUsersAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetTeamControllerTest\\:\\:testCreateForMultipleUsersActionWithoutUserOrTeam\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetTeamControllerTest\\:\\:testDuplicateAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetTeamControllerTest\\:\\:testEditAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetTeamControllerTest\\:\\:testExportAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetTeamControllerTest\\:\\:testIndexAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetTeamControllerTest\\:\\:testIndexActionWithQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetTeamControllerTest\\:\\:testIndexActionWithSearchTermQuery\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetTeamControllerTest\\:\\:testIsSecure\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetTeamControllerTest\\:\\:testIsSecureForRole\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetTeamControllerTest\\:\\:testMultiDeleteAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\TimesheetTeamControllerTest\\:\\:testMultiUpdate\\(\\) has no return type specified\\.$#"
-            count: 1
             path: Controller/TimesheetTeamControllerTest.php
 
         -
@@ -5348,58 +5143,8 @@ parameters:
             path: DependencyInjection/AppExtensionTest.php
 
         -
-            message: "#^Cannot access offset \\(int\\|string\\) on array\\|bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 1
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
             message: "#^Cannot call method load\\(\\) on App\\\\DependencyInjection\\\\AppExtension\\|null\\.$#"
             count: 7
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\DependencyInjection\\\\AppExtensionTest\\:\\:getMinConfig\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\DependencyInjection\\\\AppExtensionTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\DependencyInjection\\\\AppExtensionTest\\:\\:testLdapDefaultValues\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\DependencyInjection\\\\AppExtensionTest\\:\\:testLdapFallbackValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\DependencyInjection\\\\AppExtensionTest\\:\\:testLdapMoreFallbackValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\DependencyInjection\\\\AppExtensionTest\\:\\:testWithBundleConfiguration\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\DependencyInjection\\\\AppExtensionTest\\:\\:testWithBundleConfigurationFailsOnDuplicatedKey\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\DependencyInjection\\\\AppExtensionTest\\:\\:testWithBundleConfigurationFailsOnNonArray\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: DependencyInjection/AppExtensionTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$array of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertArrayHasKey\\(\\) expects array\\|ArrayAccess, array\\|bool\\|float\\|int\\|string\\|null given\\.$#"
-            count: 1
             path: DependencyInjection/AppExtensionTest.php
 
         -
@@ -6941,26 +6686,6 @@ parameters:
             message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, int\\|string\\>\\|int\\|string given\\.$#"
             count: 1
             path: EventSubscriber/UserDetailsSubscriberTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\UserPreferenceSubscriberTest\\:\\:getSubscriber\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: EventSubscriber/UserPreferenceSubscriberTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\UserPreferenceSubscriberTest\\:\\:testGetSubscribedEvents\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: EventSubscriber/UserPreferenceSubscriberTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\UserPreferenceSubscriberTest\\:\\:testWithHourlyRateAllowed\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: EventSubscriber/UserPreferenceSubscriberTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\UserPreferenceSubscriberTest\\:\\:testWithHourlyRateNotAllowed\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: EventSubscriber/UserPreferenceSubscriberTest.php
 
         -
             message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, int\\|string\\>\\|int\\|string given\\.$#"
@@ -9216,21 +8941,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Mocks\\\\Saml\\\\SamlAuthFactoryFactory\\:\\:create\\(\\) has parameter \\$connection with no value type specified in iterable type array\\.$#"
             count: 1
             path: Mocks/Saml/SamlAuthFactoryFactory.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Mocks\\\\SystemConfigurationFactory\\:\\:create\\(\\) has parameter \\$settings with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Mocks/SystemConfigurationFactory.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Mocks\\\\SystemConfigurationFactory\\:\\:flatten\\(\\) has parameter \\$srray with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Mocks/SystemConfigurationFactory.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Mocks\\\\SystemConfigurationFactory\\:\\:flatten\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Mocks/SystemConfigurationFactory.php
 
         -
             message: "#^Method App\\\\Tests\\\\Mocks\\\\TimesheetTestMetaFieldSubscriberMock\\:\\:loadMeta\\(\\) has no return type specified\\.$#"

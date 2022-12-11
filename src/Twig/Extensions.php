@@ -17,10 +17,7 @@ use Twig\TwigFilter;
 use Twig\TwigFunction;
 use Twig\TwigTest;
 
-/**
- * Multiple Twig extensions: filters and functions
- */
-class Extensions extends AbstractExtension
+final class Extensions extends AbstractExtension
 {
     /**
      * {@inheritdoc}

@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class RoleValidator extends ConstraintValidator
+final class RoleValidator extends ConstraintValidator
 {
     public function __construct(private RoleService $service)
     {

@@ -9,7 +9,6 @@
 
 namespace App\Tests\Timesheet;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\TimesheetCreatePostEvent;
@@ -19,6 +18,7 @@ use App\Event\TimesheetDeletePreEvent;
 use App\Event\TimesheetRestartPostEvent;
 use App\Event\TimesheetRestartPreEvent;
 use App\Repository\TimesheetRepository;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingModeService;
 use App\Validator\ValidationFailedException;
@@ -41,8 +41,7 @@ class TimesheetServiceTest extends TestCase
         ?ValidatorInterface $validator = null,
         ?TimesheetRepository $repository = null
     ): TimesheetService {
-        $configuration = $this->createMock(SystemConfiguration::class);
-        $configuration->method('getTimesheetActiveEntriesHardLimit')->willReturn(1);
+        $configuration = SystemConfigurationFactory::createStub(['timesheet' => ['active_entries' => ['hard_limit' => 1]]]);
 
         if ($repository === null) {
             $repository = $this->createMock(TimesheetRepository::class);

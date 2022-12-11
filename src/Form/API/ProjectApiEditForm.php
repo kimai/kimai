@@ -11,6 +11,6 @@ namespace App\Form\API;
 
 use App\Form\ProjectEditForm;
 
-class ProjectApiEditForm extends ProjectEditForm
+final class ProjectApiEditForm extends ProjectEditForm
 {
 }

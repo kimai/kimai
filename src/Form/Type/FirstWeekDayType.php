@@ -16,11 +16,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select the first of the week.
  */
-class FirstWeekDayType extends AbstractType
+final class FirstWeekDayType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $choices = [

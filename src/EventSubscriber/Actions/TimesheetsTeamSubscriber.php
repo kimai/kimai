@@ -11,7 +11,7 @@ namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
 
-class TimesheetsTeamSubscriber extends AbstractActionsSubscriber
+final class TimesheetsTeamSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {

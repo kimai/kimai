@@ -10,7 +10,6 @@
 namespace App\Command;
 
 use App\Export\ServiceExport;
-use App\Mail\KimaiMailer;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ExportQuery;
@@ -28,11 +27,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsCommand(name: 'kimai:export:create')]
-class ExportCreateCommand extends Command
+final class ExportCreateCommand extends Command
 {
     public function __construct(
         private ServiceExport $serviceExport,
@@ -41,7 +41,7 @@ class ExportCreateCommand extends Command
         private TeamRepository $teamRepository,
         private UserRepository $userRepository,
         private TranslatorInterface $translator,
-        private KimaiMailer $mailer
+        private MailerInterface $mailer
     ) {
         parent::__construct();
     }
@@ -230,7 +230,7 @@ class ExportCreateCommand extends Command
                     sprintf('The given username "%s" could not be resolved', $username)
                 );
 
-                return 1;
+                return Command::FAILURE;
             }
             $query->setCurrentUser($user);
         }

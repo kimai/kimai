@@ -19,11 +19,8 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
-class RuntimeExtensions extends AbstractExtension
+final class RuntimeExtensions extends AbstractExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
         return [
@@ -41,9 +38,6 @@ class RuntimeExtensions extends AbstractExtension
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters(): array
     {
         return [

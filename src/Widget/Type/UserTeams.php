@@ -13,7 +13,7 @@ use App\Repository\Loader\UserLoader;
 use App\Widget\WidgetInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-class UserTeams extends AbstractWidget
+final class UserTeams extends AbstractWidget
 {
     public function __construct(private EntityManagerInterface $entityManager)
     {

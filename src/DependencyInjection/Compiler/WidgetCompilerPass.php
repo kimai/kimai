@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * Dynamically adds all widgets to the WidgetRepository.
  */
-class WidgetCompilerPass implements CompilerPassInterface
+final class WidgetCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {

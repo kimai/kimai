@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * Support Remote-API calls for Entity select-boxes.
  */
-class SelectWithApiDataExtension extends AbstractTypeExtension
+final class SelectWithApiDataExtension extends AbstractTypeExtension
 {
     public function __construct(private UrlGeneratorInterface $router)
     {
@@ -98,9 +98,6 @@ class SelectWithApiDataExtension extends AbstractTypeExtension
         }
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(['api_data']);

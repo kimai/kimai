@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  *
  * @author Oleg Voronkovich <oleg-voronkovich@yandex.ru>
  */
-class RedirectToLocaleSubscriber implements EventSubscriberInterface
+final class RedirectToLocaleSubscriber implements EventSubscriberInterface
 {
     public function __construct(private UrlGeneratorInterface $urlGenerator, private LocaleService $localeService)
     {
@@ -37,7 +37,7 @@ class RedirectToLocaleSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onKernelRequest(RequestEvent $event)
+    public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
 

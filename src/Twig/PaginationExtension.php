@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-class PaginationExtension extends AbstractExtension
+final class PaginationExtension extends AbstractExtension
 {
     private ?ViewInterface $view = null;
 

@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ColorChoiceType extends AbstractType implements DataTransformerInterface
+final class ColorChoiceType extends AbstractType implements DataTransformerInterface
 {
     public function __construct(private SystemConfiguration $systemConfiguration)
     {

@@ -9,6 +9,6 @@
 
 namespace App\Export\Spreadsheet\Extractor;
 
-class ExtractorException extends \Exception
+final class ExtractorException extends \Exception
 {
 }

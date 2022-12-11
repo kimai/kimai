@@ -10,6 +10,7 @@
 namespace App\Tests\Invoice\Renderer;
 
 use App\Invoice\Renderer\PdfRenderer;
+use App\Pdf\HtmlToPdfConverter;
 use App\Pdf\MPdfConverter;
 use App\Tests\Mocks\FileHelperFactory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -30,7 +31,7 @@ class PdfRendererTest extends KernelTestCase
     public function testSupports()
     {
         $env = new Environment(new ArrayLoader([]));
-        $sut = new PdfRenderer($env, $this->createMock(MPdfConverter::class));
+        $sut = new PdfRenderer($env, $this->createMock(HtmlToPdfConverter::class));
         $this->assertTrue($sut->supports($this->getInvoiceDocument('default.pdf.twig', true)));
         $this->assertTrue($sut->supports($this->getInvoiceDocument('freelancer.pdf.twig')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('timesheet.html.twig')));

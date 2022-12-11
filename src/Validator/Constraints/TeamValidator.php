@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class TeamValidator extends ConstraintValidator
+final class TeamValidator extends ConstraintValidator
 {
     /**
      * @param TeamEntity $value

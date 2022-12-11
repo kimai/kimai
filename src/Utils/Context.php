@@ -13,11 +13,8 @@ use App\Entity\User;
 
 final class Context
 {
-    private $user;
-
-    public function __construct(User $user)
+    public function __construct(private User $user)
     {
-        $this->user = $user;
     }
 
     public function getUser(): User

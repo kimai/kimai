@@ -9,9 +9,9 @@
 
 namespace App\Tests\Widget\Type;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Widget\Type\AbstractCounterYear;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\AmountYear;
@@ -36,7 +36,7 @@ class AmountYearTest extends AbstractWidgetTypeTest
     {
         $repository = $this->createMock(TimesheetRepository::class);
         $repository->method('getStatistic')->willReturn([]);
-        $configuration = $this->createMock(SystemConfiguration::class);
+        $configuration = SystemConfigurationFactory::createStub();
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
 
         $sut = new AmountYear($repository, $configuration, $dispatcher);

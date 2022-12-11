@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select the favorite menus.
  */
-class FavoriteMenuType extends AbstractType
+final class FavoriteMenuType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

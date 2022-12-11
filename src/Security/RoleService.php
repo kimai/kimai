@@ -22,7 +22,7 @@ final class RoleService
     {
     }
 
-    private function cacheNames()
+    private function cacheNames(): void
     {
         if (empty($this->roleNames)) {
             $roles = [];

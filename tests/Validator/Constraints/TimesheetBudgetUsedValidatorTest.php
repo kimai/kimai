@@ -11,7 +11,6 @@ namespace App\Tests\Validator\Constraints;
 
 use App\Activity\ActivityStatisticService;
 use App\Configuration\LocaleService;
-use App\Configuration\SystemConfiguration;
 use App\Customer\CustomerStatisticService;
 use App\Entity\Activity;
 use App\Entity\Customer;
@@ -26,6 +25,7 @@ use App\Model\ProjectBudgetStatisticModel;
 use App\Model\ProjectStatistic;
 use App\Project\ProjectStatisticService;
 use App\Repository\TimesheetRepository;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\Rate;
 use App\Timesheet\RateService;
 use App\Timesheet\RateServiceInterface;
@@ -45,8 +45,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(bool $isAllowed = false, ?ActivityBudgetStatisticModel $activityStatisticModel = null, ?ProjectBudgetStatisticModel $projectStatisticModel = null, ?CustomerBudgetStatisticModel $customerStatisticModel = null, ?array $rawData = null, ?Rate $rate = null)
     {
-        $configuration = $this->createMock(SystemConfiguration::class);
-        $configuration->method('isTimesheetAllowOverbookingBudget')->willReturn($isAllowed);
+        $configuration = SystemConfigurationFactory::createStub(['timesheet' => ['rules' => ['allow_overbooking_budget' => $isAllowed]]]);
 
         if ($customerStatisticModel === null) {
             $customerStatisticModel = new CustomerBudgetStatisticModel(new Customer('foo'));
@@ -92,7 +91,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
 
         $auth = $this->createMock(AuthorizationCheckerInterface::class);
 
-        $localeService = $this->createMock(LocaleService::class);
+        $localeService = new LocaleService([]);
 
         return new TimesheetBudgetUsedValidator($configuration, $customerRepository, $projectRepository, $activityRepository, $timesheetRepository, $rateService, $auth, $localeService);
     }

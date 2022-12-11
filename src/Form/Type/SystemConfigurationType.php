@@ -21,7 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to edit a system configuration.
  */
-class SystemConfigurationType extends AbstractType
+final class SystemConfigurationType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder

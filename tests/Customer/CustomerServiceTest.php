@@ -19,6 +19,7 @@ use App\Event\CustomerMetaDefinitionEvent;
 use App\Event\CustomerUpdatePostEvent;
 use App\Event\CustomerUpdatePreEvent;
 use App\Repository\CustomerRepository;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\ValidationFailedException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -54,15 +55,18 @@ class CustomerServiceTest extends TestCase
         }
 
         if ($configuration === null) {
-            $configuration = $this->createMock(SystemConfiguration::class);
-            $configuration->method('getCustomerDefaultTimezone')->willReturn('Europe/Vienna');
-            $configuration->method('getCustomerDefaultCountry')->willReturn('IN');
-            $configuration->method('getCustomerDefaultCurrency')->willReturn('RUB');
+            $configuration = SystemConfigurationFactory::createStub([
+                'defaults' => [
+                    'customer' => [
+                        'timezone' => 'Europe/Vienna',
+                        'country' => 'IN',
+                        'currency' => 'RUB',
+                    ]
+                ]
+            ]);
         }
 
-        $service = new CustomerService($repository, $configuration, $validator, $dispatcher);
-
-        return $service;
+        return new CustomerService($repository, $configuration, $validator, $dispatcher);
     }
 
     public function testCannotSavePersistedCustomerAsNew()

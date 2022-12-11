@@ -17,11 +17,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select if a timesheet is billable.
  */
-class TimesheetBillableType extends AbstractType
+final class TimesheetBillableType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

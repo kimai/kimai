@@ -12,7 +12,7 @@ namespace App\EventSubscriber\Actions;
 use App\Event\PageActionsEvent;
 use App\Widget\WidgetInterface;
 
-class DashboardSubscriber extends AbstractActionsSubscriber
+final class DashboardSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {

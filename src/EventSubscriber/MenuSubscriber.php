@@ -35,7 +35,7 @@ final class MenuSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function onMainMenuConfigure(ConfigureMainMenuEvent $event)
+    public function onMainMenuConfigure(ConfigureMainMenuEvent $event): void
     {
         $auth = $this->security;
 

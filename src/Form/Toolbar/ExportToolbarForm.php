@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Defines the form used for filtering timesheet entries for exports.
  */
-class ExportToolbarForm extends AbstractType
+final class ExportToolbarForm extends AbstractType
 {
     use ToolbarFormTrait;
 

@@ -110,8 +110,6 @@ final class RolePermissionManager
 
     /**
      * Only permissions which were registered through the Symfony configuration stack will be returned here.
-     *
-     * @return array
      */
     public function getPermissions(): array
     {

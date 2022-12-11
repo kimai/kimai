@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select the initial view, where the user should be redirected to after login.
  */
-class InitialViewType extends AbstractType
+final class InitialViewType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void
     {

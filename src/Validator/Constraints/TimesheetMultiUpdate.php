@@ -12,7 +12,7 @@ namespace App\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 #[\Attribute(\Attribute::TARGET_CLASS)]
-class TimesheetMultiUpdate extends Constraint
+final class TimesheetMultiUpdate extends Constraint
 {
     public const MISSING_ACTIVITY_ERROR = 'ts-multi-update-84';
     public const MISSING_PROJECT_ERROR = 'ts-multi-update-85';
@@ -32,7 +32,7 @@ class TimesheetMultiUpdate extends Constraint
         self::HOURLY_RATE_FIXED_RATE => 'Cannot set hourly rate and fixed rate at the same time.',
     ];
 
-    public $message = 'This form has invalid settings.';
+    public string $message = 'This form has invalid settings.';
 
     public function getTargets(): string|array
     {

@@ -14,7 +14,7 @@ use Scheb\TwoFactorBundle\Security\TwoFactor\AuthenticationContextInterface;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Condition\TwoFactorConditionInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class TwoFactorCondition implements TwoFactorConditionInterface
+final class TwoFactorCondition implements TwoFactorConditionInterface
 {
     public function __construct(private AuthorizationCheckerInterface $authorizationChecker)
     {

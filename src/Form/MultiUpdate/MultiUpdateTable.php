@@ -18,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MultiUpdateTable extends AbstractType
+final class MultiUpdateTable extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

@@ -23,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select a tag.
  */
-class TagsSelectType extends AbstractType
+final class TagsSelectType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void
     {

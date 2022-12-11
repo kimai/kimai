@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
-class ApiTokenMigratingListener implements EventSubscriberInterface
+final class ApiTokenMigratingListener implements EventSubscriberInterface
 {
     public function __construct(private PasswordHasherFactoryInterface $hasherFactory)
     {

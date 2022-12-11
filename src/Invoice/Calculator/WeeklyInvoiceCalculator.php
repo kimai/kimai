@@ -15,16 +15,13 @@ use App\Invoice\CalculatorInterface;
 /**
  * A calculator that sums up the invoice item records per week.
  */
-class WeeklyInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
+final class WeeklyInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
 {
     protected function calculateSumIdentifier(ExportableItem $invoiceItem): string
     {
         return $invoiceItem->getBegin()->format('W');
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return 'weekly';

@@ -12,7 +12,7 @@ namespace App\Export\Spreadsheet\CellFormatter;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class TimeFormatter implements CellFormatterInterface
+final class TimeFormatter implements CellFormatterInterface
 {
     public const TIME_FORMAT = 'hh:mm';
 

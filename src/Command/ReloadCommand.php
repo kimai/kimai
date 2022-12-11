@@ -25,11 +25,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'kimai:reload')]
 final class ReloadCommand extends Command
 {
-    public const ERROR_CACHE_CLEAN = 2;
-    public const ERROR_CACHE_WARMUP = 4;
-    public const ERROR_LINT_CONFIG = 8;
-    public const ERROR_LINT_TRANSLATIONS = 16;
-
     public function __construct(private string $projectDirectory, private string $kernelEnvironment)
     {
         parent::__construct();
@@ -75,7 +70,7 @@ final class ReloadCommand extends Command
         } catch (\Exception $ex) {
             $io->error($ex->getMessage());
 
-            return self::ERROR_LINT_CONFIG;
+            return Command::FAILURE;
         }
 
         try {
@@ -90,7 +85,7 @@ final class ReloadCommand extends Command
         } catch (\Exception $ex) {
             $io->error($ex->getMessage());
 
-            return self::ERROR_LINT_TRANSLATIONS;
+            return Command::FAILURE;
         }
 
         $environment = $this->kernelEnvironment;
@@ -133,7 +128,7 @@ final class ReloadCommand extends Command
         } catch (\Exception $ex) {
             $io->error($ex->getMessage());
 
-            return self::ERROR_CACHE_CLEAN;
+            return Command::FAILURE;
         }
 
         $command = $this->getApplication()->find('cache:warmup');
@@ -144,9 +139,9 @@ final class ReloadCommand extends Command
         } catch (\Exception $ex) {
             $io->error($ex->getMessage());
 
-            return self::ERROR_CACHE_WARMUP;
+            return Command::FAILURE;
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

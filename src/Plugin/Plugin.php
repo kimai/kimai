@@ -9,20 +9,11 @@
 
 namespace App\Plugin;
 
-class Plugin
+final class Plugin
 {
-    /**
-     * @var string
-     */
-    private $id;
-    /**
-     * @var string
-     */
-    private $path;
-    /**
-     * @var PluginMetadata
-     */
-    private $metadata;
+    private string $id;
+    private string $path;
+    private ?PluginMetadata $metadata = null;
 
     public function __construct(PluginInterface $bundle)
     {
@@ -40,21 +31,21 @@ class Plugin
         $this->metadata = $metadata;
     }
 
-    public function getPath(): ?string
+    public function getPath(): string
     {
         return $this->path;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
-        if ($this->metadata !== null) {
+        if ($this->metadata !== null && $this->metadata->getName() !== null) {
             return $this->metadata->getName();
         }
 
         return $this->id;
     }
 
-    public function getId(): ?string
+    public function getId(): string
     {
         return $this->id;
     }

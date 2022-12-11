@@ -9,6 +9,6 @@
 
 namespace App\Ldap;
 
-class LdapDriverException extends \Exception
+final class LdapDriverException extends \Exception
 {
 }

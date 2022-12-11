@@ -13,7 +13,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\DateTimeType;
 
-class UTCDateTimeType extends DateTimeType
+final class UTCDateTimeType extends DateTimeType
 {
     /**
      * @var \DateTimeZone|null

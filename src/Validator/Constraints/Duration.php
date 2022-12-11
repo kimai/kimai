@@ -11,7 +11,7 @@ namespace App\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraints\Regex;
 
-class Duration extends Regex
+final class Duration extends Regex
 {
     public function __construct($options = null)
     {

@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Adds a linked help text with the link to the given documentation
  */
-class DocumentationLinkExtension extends AbstractTypeExtension
+final class DocumentationLinkExtension extends AbstractTypeExtension
 {
     public static function getExtendedTypes(): iterable
     {

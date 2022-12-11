@@ -30,7 +30,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TimesheetMultiUpdate extends AbstractType
+final class TimesheetMultiUpdate extends AbstractType
 {
     public function __construct(private TimesheetRepository $timesheet, private CustomerRepository $customers)
     {

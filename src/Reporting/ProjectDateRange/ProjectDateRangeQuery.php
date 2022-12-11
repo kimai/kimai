@@ -14,18 +14,9 @@ use App\Entity\User;
 
 final class ProjectDateRangeQuery
 {
-    /**
-     * @var \DateTime
-     */
-    private $month;
-    /**
-     * @var User|null
-     */
-    private $user;
-    /**
-     * @var Customer|null
-     */
-    private $customer;
+    private \DateTime $month;
+    private ?User $user;
+    private ?Customer $customer = null;
     private bool $includeNoWork = false;
     private ?string $budgetType = null;
 

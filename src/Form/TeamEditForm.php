@@ -22,9 +22,6 @@ class TeamEditForm extends AbstractType
 {
     use ColorTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $users = [];
@@ -90,9 +87,6 @@ class TeamEditForm extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

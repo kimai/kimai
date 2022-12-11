@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class QuickEntryTimesheetValidator extends ConstraintValidator
+final class QuickEntryTimesheetValidator extends ConstraintValidator
 {
     /**
      * @param Constraint[] $constraints

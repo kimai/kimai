@@ -14,14 +14,8 @@ use DateTime;
 
 final class ProjectInactiveQuery
 {
-    /**
-     * @var DateTime
-     */
-    private $lastChange;
-    /**
-     * @var User|null
-     */
-    private $user;
+    private DateTime $lastChange;
+    private User $user;
 
     public function __construct(DateTime $lastChange, User $user)
     {

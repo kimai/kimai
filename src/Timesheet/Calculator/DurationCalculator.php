@@ -22,9 +22,6 @@ final class DurationCalculator implements CalculatorInterface
     {
     }
 
-    /**
-     * @param Timesheet $record
-     */
     public function calculate(Timesheet $record, array $changeset): void
     {
         if (null === $record->getEnd()) {

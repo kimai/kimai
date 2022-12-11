@@ -12,7 +12,7 @@ namespace App\EventSubscriber\Actions;
 use App\Entity\InvoiceTemplate;
 use App\Event\PageActionsEvent;
 
-class InvoiceTemplateSubscriber extends AbstractActionsSubscriber
+final class InvoiceTemplateSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {

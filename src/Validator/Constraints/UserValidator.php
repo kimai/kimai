@@ -16,7 +16,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class UserValidator extends ConstraintValidator
+final class UserValidator extends ConstraintValidator
 {
     public function __construct(private UserService $userService)
     {
@@ -39,7 +39,7 @@ class UserValidator extends ConstraintValidator
         $this->validateUser($value, $this->context);
     }
 
-    protected function validateUser(UserEntity $user, ExecutionContextInterface $context)
+    protected function validateUser(UserEntity $user, ExecutionContextInterface $context): void
     {
         if ($user->hasEmail()) {
             $this->validateEmailExists($user->getId(), $user->getEmail(), 'email', User::USER_EXISTING_EMAIL, $context);

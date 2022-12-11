@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Defines the form used for filtering the user.
  */
-class UserToolbarForm extends AbstractType
+final class UserToolbarForm extends AbstractType
 {
     use ToolbarFormTrait;
 

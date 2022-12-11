@@ -22,29 +22,25 @@ final class TimesheetBasicValidator extends ConstraintValidator
     {
     }
 
-    /**
-     * @param TimesheetEntity $timesheet
-     * @param Constraint $constraint
-     */
-    public function validate($timesheet, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetBasic)) {
             throw new UnexpectedTypeException($constraint, TimesheetBasic::class);
         }
 
-        if (!\is_object($timesheet) || !($timesheet instanceof TimesheetEntity)) {
-            throw new UnexpectedTypeException($timesheet, TimesheetEntity::class);
+        if (!\is_object($value) || !($value instanceof TimesheetEntity)) {
+            throw new UnexpectedTypeException($value, TimesheetEntity::class);
         }
 
-        $this->validateBeginAndEnd($timesheet, $this->context);
-        $this->validateActivityAndProject($timesheet, $this->context);
+        $this->validateBeginAndEnd($value, $this->context);
+        $this->validateActivityAndProject($value, $this->context);
     }
 
     /**
      * @param TimesheetEntity $timesheet
      * @param ExecutionContextInterface $context
      */
-    protected function validateBeginAndEnd(TimesheetEntity $timesheet, ExecutionContextInterface $context)
+    protected function validateBeginAndEnd(TimesheetEntity $timesheet, ExecutionContextInterface $context): void
     {
         $begin = $timesheet->getBegin();
         $end = $timesheet->getEnd();
@@ -72,7 +68,7 @@ final class TimesheetBasicValidator extends ConstraintValidator
      * @param TimesheetEntity $timesheet
      * @param ExecutionContextInterface $context
      */
-    protected function validateActivityAndProject(TimesheetEntity $timesheet, ExecutionContextInterface $context)
+    protected function validateActivityAndProject(TimesheetEntity $timesheet, ExecutionContextInterface $context): void
     {
         $activity = $timesheet->getActivity();
 

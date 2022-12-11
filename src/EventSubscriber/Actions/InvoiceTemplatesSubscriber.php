@@ -11,7 +11,7 @@ namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
 
-class InvoiceTemplatesSubscriber extends AbstractActionsSubscriber
+final class InvoiceTemplatesSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {

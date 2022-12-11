@@ -18,19 +18,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Defines the form used to edit the user preferences.
  */
-class UserPreferencesForm extends AbstractType
+final class UserPreferencesForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('preferences', UserPreferencesCollectionType::class);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

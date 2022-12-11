@@ -13,7 +13,7 @@ use App\Plugin\Plugin as CorePlugin;
 use JMS\Serializer\Annotation as Serializer;
 
 #[Serializer\ExclusionPolicy('all')]
-class Plugin
+final class Plugin
 {
     /**
      * The plugin name, eg. "ExpensesBundle"

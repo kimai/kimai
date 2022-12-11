@@ -24,11 +24,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'kimai:update')]
 final class UpdateCommand extends Command
 {
-    public const ERROR_CACHE_CLEAN = 2;
-    public const ERROR_CACHE_WARMUP = 4;
-    public const ERROR_DATABASE = 8;
-    public const ERROR_MIGRATIONS = 32;
-
     public function __construct(private Connection $connection, private string $kernelEnvironment)
     {
         parent::__construct();
@@ -61,18 +56,18 @@ final class UpdateCommand extends Command
             if (!$this->connection->createSchemaManager()->tablesExist(['kimai2_users', 'kimai2_timesheet'])) {
                 $io->error('Tables missing. Did you run the installer already?');
 
-                return self::ERROR_DATABASE;
+                return Command::FAILURE;
             }
 
             if (!$this->connection->createSchemaManager()->tablesExist(['migration_versions'])) {
                 $io->error('Unknown migration status, aborting database update');
 
-                return self::ERROR_DATABASE;
+                return Command::FAILURE;
             }
         } catch (\Exception $ex) {
             $io->error('Failed to validate database: ' . $ex->getMessage());
 
-            return self::ERROR_DATABASE;
+            return Command::FAILURE;
         }
 
         // execute latest doctrine migrations
@@ -88,13 +83,13 @@ final class UpdateCommand extends Command
         } catch (\Exception $ex) {
             $io->error($ex->getMessage());
 
-            return self::ERROR_MIGRATIONS;
+            return Command::FAILURE;
         }
 
         // flush the cache, in case values from the database are cached
         $cacheResult = $this->rebuildCaches($environment, $io, $input, $output);
 
-        if ($cacheResult !== 0) {
+        if ($cacheResult !== Command::SUCCESS) {
             $io->warning(
                 [
                     sprintf('Updated %s to version %s but the cache could not be rebuilt.', Constants::SOFTWARE, Constants::VERSION),
@@ -112,7 +107,7 @@ final class UpdateCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output)
+    private function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output): int
     {
         $io->text('Rebuilding your cache, please be patient ...');
 
@@ -124,7 +119,7 @@ final class UpdateCommand extends Command
         } catch (\Exception $ex) {
             $io->error($ex->getMessage());
 
-            return self::ERROR_CACHE_CLEAN;
+            return Command::FAILURE;
         }
 
         $command = $this->getApplication()->find('cache:warmup');
@@ -135,9 +130,9 @@ final class UpdateCommand extends Command
         } catch (\Exception $ex) {
             $io->error($ex->getMessage());
 
-            return self::ERROR_CACHE_WARMUP;
+            return Command::FAILURE;
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

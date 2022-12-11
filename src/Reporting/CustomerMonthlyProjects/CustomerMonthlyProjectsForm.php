@@ -16,12 +16,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CustomerMonthlyProjectsForm extends AbstractType
+final class CustomerMonthlyProjectsForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('customer', CustomerType::class, [
             'required' => false,
@@ -37,10 +34,7 @@ class CustomerMonthlyProjectsForm extends AbstractType
         $builder->add('sumType', ReportSumType::class);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => CustomerMonthlyProjects::class,

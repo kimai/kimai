@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\AuthenticationExpiredException;
 
-class AjaxAuthenticationSubscriber implements EventSubscriberInterface
+final class AjaxAuthenticationSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array
     {
@@ -26,7 +26,7 @@ class AjaxAuthenticationSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onCoreException(ExceptionEvent $event)
+    public function onCoreException(ExceptionEvent $event): void
     {
         $request = $event->getRequest();
         $header = $request->headers->get('X-Requested-With');

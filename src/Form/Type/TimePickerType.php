@@ -18,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TimePickerType extends AbstractType
+final class TimePickerType extends AbstractType
 {
     public function __construct(private LocaleService $localeService)
     {
@@ -40,7 +40,7 @@ class TimePickerType extends AbstractType
         ]);
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(
             new CallbackTransformer(

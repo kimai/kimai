@@ -22,7 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @codeCoverageIgnore
  */
 #[AsCommand(name: 'kimai:reset:dev', description: 'Resets the "development" environment')]
-class ResetDevelopmentCommand extends AbstractResetCommand
+final class ResetDevelopmentCommand extends AbstractResetCommand
 {
     public function __construct(string $kernelEnvironment)
     {

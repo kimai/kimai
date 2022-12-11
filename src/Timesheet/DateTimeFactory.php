@@ -14,7 +14,7 @@ use DateTime;
 use DateTimeInterface;
 use DateTimeZone;
 
-class DateTimeFactory
+final class DateTimeFactory
 {
     private DateTimeZone $timezone;
     private bool $startOnSunday = false;

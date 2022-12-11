@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Defines the form used for filtering the projects.
  */
-class ProjectToolbarForm extends AbstractType
+final class ProjectToolbarForm extends AbstractType
 {
     use ToolbarFormTrait;
 

@@ -18,7 +18,7 @@ use App\Invoice\InvoiceItem;
  * - the invoice template vat rate
  * - the entries rate
  */
-class DefaultCalculator extends AbstractMergedCalculator implements CalculatorInterface
+final class DefaultCalculator extends AbstractMergedCalculator implements CalculatorInterface
 {
     /**
      * @return InvoiceItem[]
@@ -39,9 +39,6 @@ class DefaultCalculator extends AbstractMergedCalculator implements CalculatorIn
         return $entries;
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return 'default';

@@ -16,11 +16,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to set the hourly rate.
  */
-class HourlyRateType extends AbstractType
+final class HourlyRateType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

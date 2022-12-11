@@ -9,11 +9,11 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\Constraints\TimesheetBasic;
 use App\Validator\Constraints\TimesheetBasicValidator;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -33,10 +33,9 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
 
     protected function createMyValidator()
     {
-        $mock = $this->createMock(SystemConfiguration::class);
-        $mock->method('isTimesheetRequiresActivity')->willReturn(true);
+        $configuration = SystemConfigurationFactory::createStub(['timesheet' => ['rules' => ['require_activity' => true]]]);
 
-        return new TimesheetBasicValidator($mock);
+        return new TimesheetBasicValidator($configuration);
     }
 
     public function testConstraintIsInvalid()

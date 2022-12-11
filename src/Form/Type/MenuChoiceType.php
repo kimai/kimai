@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class MenuChoiceType extends AbstractType
+final class MenuChoiceType extends AbstractType
 {
     public function __construct(private EventDispatcherInterface $eventDispatcher, private ReportingService $reportingService, private TranslatorInterface $translator)
     {

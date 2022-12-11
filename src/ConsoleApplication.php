@@ -11,7 +11,10 @@ namespace App;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 
-class ConsoleApplication extends Application
+/**
+ * @internal
+ */
+final class ConsoleApplication extends Application
 {
     public function getName(): string
     {

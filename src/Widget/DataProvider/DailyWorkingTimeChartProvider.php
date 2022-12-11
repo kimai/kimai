@@ -36,9 +36,9 @@ class DailyWorkingTimeChartProvider
      * @param DateTimeInterface $begin
      * @param DateTimeInterface $end
      * @param User|null $user
-     * @return mixed
+     * @return array<mixed>
      */
-    protected function getDailyData(DateTimeInterface $begin, DateTimeInterface $end, ?User $user = null)
+    protected function getDailyData(DateTimeInterface $begin, DateTimeInterface $end, ?User $user = null): array
     {
         $qb = $this->repository->createQueryBuilder('t');
 
@@ -158,9 +158,8 @@ class DailyWorkingTimeChartProvider
         foreach ($results as $key => $value) {
             $results[$key]['details'] = array_values($results[$key]['details']);
         }
-        $results = array_values($results);
 
-        return $results;
+        return array_values($results);
     }
 
     /**

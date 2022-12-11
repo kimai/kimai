@@ -12,7 +12,7 @@ namespace App\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 #[\Attribute(\Attribute::TARGET_CLASS)]
-class Team extends Constraint
+final class Team extends Constraint
 {
     public const MISSING_TEAMLEAD = 'kimai-team-001';
 

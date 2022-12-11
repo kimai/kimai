@@ -18,7 +18,7 @@ use Symfony\Component\Intl\Locales;
 /**
  * This class that loads and manages the Kimai configuration and container parameter.
  */
-class AppExtension extends Extension
+final class AppExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container): void
     {

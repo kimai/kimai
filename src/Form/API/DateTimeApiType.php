@@ -14,7 +14,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DateTimeApiType extends AbstractType
+final class DateTimeApiType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void
     {

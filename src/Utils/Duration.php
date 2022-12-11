@@ -12,7 +12,7 @@ namespace App\Utils;
 /**
  * Convert duration strings into seconds.
  */
-class Duration
+final class Duration
 {
     public const FORMAT_COLON = 'colon';
     public const FORMAT_NATURAL = 'natural';
@@ -81,17 +81,15 @@ class Duration
             return 0;
         }
 
-        $seconds = match ($mode) {
+        return match ($mode) {
             self::FORMAT_COLON => $this->parseColonFormat($duration),
             self::FORMAT_NATURAL => $this->parseNaturalFormat($duration),
             self::FORMAT_DECIMAL => $this->parseDecimalFormat($duration),
             default => throw new \InvalidArgumentException(sprintf('Unsupported duration format "%s"', $mode)),
         };
-
-        return $seconds;
     }
 
-    protected function parseNaturalFormat(string $duration): int
+    private function parseNaturalFormat(string $duration): int
     {
         try {
             $interval = new \DateInterval('PT' . strtoupper($duration));
@@ -104,7 +102,7 @@ class Duration
         }
     }
 
-    protected function parseDecimalFormat(string $duration): int
+    private function parseDecimalFormat(string $duration): int
     {
         $duration = str_replace(',', '.', $duration);
         $duration = (float) $duration;
@@ -113,7 +111,7 @@ class Duration
         return (int) $duration;
     }
 
-    protected function parseColonFormat(string $duration): int
+    private function parseColonFormat(string $duration): int
     {
         $parts = explode(':', $duration);
         if (\count($parts) < 2 || \count($parts) > 3) {

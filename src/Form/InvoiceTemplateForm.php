@@ -25,11 +25,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Defines the form used to manipulate invoice templates.
  */
-class InvoiceTemplateForm extends AbstractType
+final class InvoiceTemplateForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -76,9 +73,6 @@ class InvoiceTemplateForm extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class KimaiUserProvider implements UserProviderInterface, PasswordUpgraderInterface
+final class KimaiUserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
     private ?ChainUserProvider $provider = null;
 

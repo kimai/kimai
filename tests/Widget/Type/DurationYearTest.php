@@ -9,9 +9,9 @@
 
 namespace App\Tests\Widget\Type;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Widget\Type\AbstractCounterYear;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\DurationYear;
@@ -28,7 +28,7 @@ class DurationYearTest extends AbstractWidgetTypeTest
     public function createSut(): AbstractWidgetType
     {
         $repository = $this->createMock(TimesheetRepository::class);
-        $configuration = $this->createMock(SystemConfiguration::class);
+        $configuration = SystemConfigurationFactory::createStub();
 
         $sut = new DurationYear($repository, $configuration);
         $sut->setUser(new User());

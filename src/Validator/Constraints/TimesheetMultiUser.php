@@ -12,7 +12,7 @@ namespace App\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 #[\Attribute(\Attribute::TARGET_CLASS)]
-class TimesheetMultiUser extends Constraint
+final class TimesheetMultiUser extends Constraint
 {
     public const MISSING_USER_OR_TEAM = 'ts-multi-user-01';
 
@@ -20,7 +20,7 @@ class TimesheetMultiUser extends Constraint
         self::MISSING_USER_OR_TEAM => 'You must select at least one user or team.',
     ];
 
-    public $message = 'This form has invalid settings.';
+    public string $message = 'This form has invalid settings.';
 
     public function getTargets(): string|array
     {

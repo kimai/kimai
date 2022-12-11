@@ -17,11 +17,12 @@ final class TimesheetExported extends TimesheetConstraint
         self::TIMESHEET_EXPORTED => 'This timesheet is already exported.',
     ];
 
-    public $message = 'This timesheet is already exported.';
+    public string $message = 'This timesheet is already exported.';
+
     /**
      * @var \DateTime|string|null
      */
-    public $now;
+    public null|\DateTime|string $now;
 
     public function getTargets(): string|array
     {

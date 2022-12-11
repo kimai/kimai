@@ -11,17 +11,35 @@ namespace App\Tests\Mocks;
 
 use App\Configuration\ConfigLoaderInterface;
 use App\Configuration\SystemConfiguration;
+use App\Tests\Configuration\TestConfigLoader;
 
 class SystemConfigurationFactory
 {
+    /**
+     * @param array<mixed> $settings
+     * @return SystemConfiguration
+     */
     public static function create(ConfigLoaderInterface $repository, array $settings): SystemConfiguration
     {
         return new SystemConfiguration($repository, self::flatten($settings));
     }
 
-    public static function flatten(array $srray): array
+    /**
+     * @param array<mixed> $settings
+     * @return SystemConfiguration
+     */
+    public static function createStub(array $settings = []): SystemConfiguration
     {
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($srray));
+        return new SystemConfiguration(new TestConfigLoader([]), self::flatten($settings));
+    }
+
+    /**
+     * @param array<mixed> $settings
+     * @return array<string, mixed>
+     */
+    public static function flatten(array $settings): array
+    {
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($settings));
         $newConfig = [];
         foreach ($iterator as $value) {
             $keys = [];

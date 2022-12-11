@@ -9,11 +9,11 @@
 
 namespace App\Tests\EventSubscriber;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\EventSubscriber\UserPreferenceSubscriber;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -38,7 +38,7 @@ class UserPreferenceSubscriberTest extends TestCase
         'favorite_routes',
     ];
 
-    public function testGetSubscribedEvents()
+    public function testGetSubscribedEvents(): void
     {
         $events = UserPreferenceSubscriber::getSubscribedEvents();
         $this->assertArrayHasKey(PrepareUserEvent::class, $events);
@@ -46,7 +46,7 @@ class UserPreferenceSubscriberTest extends TestCase
         $this->assertTrue(method_exists(UserPreferenceSubscriber::class, $methodName));
     }
 
-    public function testWithHourlyRateAllowed()
+    public function testWithHourlyRateAllowed(): void
     {
         $sut = $this->getSubscriber(true);
         $user = new User();
@@ -78,7 +78,7 @@ class UserPreferenceSubscriberTest extends TestCase
         }
     }
 
-    public function testWithHourlyRateNotAllowed()
+    public function testWithHourlyRateNotAllowed(): void
     {
         $sut = $this->getSubscriber(false);
         $user = new User();
@@ -104,13 +104,20 @@ class UserPreferenceSubscriberTest extends TestCase
         }
     }
 
-    protected function getSubscriber(bool $seeHourlyRate)
+    protected function getSubscriber(bool $seeHourlyRate): UserPreferenceSubscriber
     {
         $authMock = $this->createMock(AuthorizationCheckerInterface::class);
         $authMock->method('isGranted')->willReturn($seeHourlyRate);
 
         $eventMock = $this->createMock(EventDispatcherInterface::class);
-        $formConfigMock = $this->createMock(SystemConfiguration::class);
+        $formConfigMock = SystemConfigurationFactory::createStub([
+            'defaults' => [
+                'user' => [
+                    'language' => 'en',
+                    'currency' => 'EUR',
+                ]
+            ]
+        ]);
 
         return new UserPreferenceSubscriber($eventMock, $authMock, $formConfigMock);
     }

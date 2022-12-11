@@ -11,7 +11,7 @@ namespace App\Utils;
 
 use Pagerfanta\View\Template\TwitterBootstrap5Template;
 
-class PaginationTemplate extends TwitterBootstrap5Template
+final class PaginationTemplate extends TwitterBootstrap5Template
 {
     protected function getDefaultOptions(): array
     {
@@ -33,7 +33,7 @@ class PaginationTemplate extends TwitterBootstrap5Template
      * @param string|null $rel
      * @return string
      */
-    protected function linkLi($class, $href, $text, $rel = null): string
+    protected function linkLi(string $class, string $href, $text, ?string $rel = null): string
     {
         $liClass = implode(' ', array_filter(['page-item', $class]));
         $rel = $rel ? sprintf(' rel="%s"', $rel) : '';
@@ -46,18 +46,14 @@ class PaginationTemplate extends TwitterBootstrap5Template
      * @param string $text
      * @return string
      */
-    protected function spanLi($class, $text): string
+    protected function spanLi(string $class, $text): string
     {
         $liClass = implode(' ', array_filter(['page-item', $class]));
 
         return sprintf('<li class="%s"><span class="page-link pagination-link">%s</span></li>', $liClass, $text);
     }
 
-    /**
-     * @param int $page
-     * @return string
-     */
-    public function current($page): string
+    public function current(int $page): string
     {
         return $this->linkLi($this->option('css_active_class'), $this->generateRoute($page), $page);
     }

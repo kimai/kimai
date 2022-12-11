@@ -11,7 +11,7 @@ namespace App\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
-class DateTimeFormat extends Constraint
+final class DateTimeFormat extends Constraint
 {
     public const INVALID_FORMAT = 'kimai-datetime-00';
 

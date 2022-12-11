@@ -11,7 +11,7 @@ namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
 
-class PermissionsSubscriber extends AbstractActionsSubscriber
+final class PermissionsSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {

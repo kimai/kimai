@@ -11,7 +11,7 @@ namespace App\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
 
-class CalendarConfigurationEvent extends Event
+final class CalendarConfigurationEvent extends Event
 {
     /**
      * @param array<string, string|int|bool|array> $configuration

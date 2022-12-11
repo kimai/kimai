@@ -11,6 +11,6 @@ namespace App\Form\API;
 
 use App\Form\ActivityRateForm;
 
-class ActivityRateApiForm extends ActivityRateForm
+final class ActivityRateApiForm extends ActivityRateForm
 {
 }

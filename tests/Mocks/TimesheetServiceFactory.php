@@ -9,7 +9,6 @@
 
 namespace App\Tests\Mocks;
 
-use App\Configuration\SystemConfiguration;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingModeService;
@@ -21,7 +20,7 @@ class TimesheetServiceFactory extends AbstractMockFactory
 {
     public function create(): TimesheetService
     {
-        $configuration = $this->createMock(SystemConfiguration::class);
+        $configuration = SystemConfigurationFactory::createStub();
         $repository = $this->createMock(TimesheetRepository::class);
         $repository->method('getActiveEntries')->willReturn([]);
         $service = new TrackingModeService($configuration, []);

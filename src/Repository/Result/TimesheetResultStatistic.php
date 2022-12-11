@@ -9,7 +9,7 @@
 
 namespace App\Repository\Result;
 
-class TimesheetResultStatistic
+final class TimesheetResultStatistic
 {
     public function __construct(private int $count, private int $duration)
     {

@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * Dynamically adds twig globals.
  */
-class TwigContextCompilerPass implements CompilerPassInterface
+final class TwigContextCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {

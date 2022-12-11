@@ -19,11 +19,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Defines the form used to edit one section within the system configuration.
  */
-class SystemConfigurationForm extends AbstractType
+final class SystemConfigurationForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('configuration', CollectionType::class, [
@@ -35,9 +32,6 @@ class SystemConfigurationForm extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

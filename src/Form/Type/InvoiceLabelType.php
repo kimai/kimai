@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Form field type to edit an optional invoice label.
  */
-class InvoiceLabelType extends AbstractType
+final class InvoiceLabelType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void
     {

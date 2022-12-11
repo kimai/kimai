@@ -29,12 +29,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'kimai:install')]
 final class InstallCommand extends Command
 {
-    public const ERROR_PERMISSIONS = 1;
-    public const ERROR_CACHE_CLEAN = 2;
-    public const ERROR_CACHE_WARMUP = 4;
-    public const ERROR_DATABASE = 8;
-    public const ERROR_MIGRATIONS = 32;
-
     public function __construct(private Connection $connection, private string $kernelEnvironment)
     {
         parent::__construct();
@@ -61,7 +55,7 @@ final class InstallCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to create database: ' . $ex->getMessage());
 
-            return self::ERROR_DATABASE;
+            return Command::FAILURE;
         }
 
         // bootstrap database ONLY via doctrine migrations, so all installation will have the correct and same state
@@ -70,7 +64,7 @@ final class InstallCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to set migration status: ' . $ex->getMessage());
 
-            return self::ERROR_MIGRATIONS;
+            return Command::FAILURE;
         }
 
         if (!$input->getOption('no-cache')) {
@@ -85,7 +79,7 @@ final class InstallCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output)
+    private function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output): int
     {
         $io->text('Rebuilding your cache, please be patient ...');
 
@@ -95,7 +89,7 @@ final class InstallCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to clear cache: ' . $ex->getMessage());
 
-            return self::ERROR_CACHE_CLEAN;
+            return Command::FAILURE;
         }
 
         $command = $this->getApplication()->find('cache:warmup');
@@ -104,13 +98,13 @@ final class InstallCommand extends Command
         } catch (\Exception $ex) {
             $io->error('Failed to warmup cache: ' . $ex->getMessage());
 
-            return self::ERROR_CACHE_WARMUP;
+            return Command::FAILURE;
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
-    private function importMigrations(SymfonyStyle $io, OutputInterface $output)
+    private function importMigrations(SymfonyStyle $io, OutputInterface $output): void
     {
         $command = $this->getApplication()->find('doctrine:migrations:migrate');
         $cmdInput = new ArrayInput(['--allow-no-migration' => true]);
@@ -120,7 +114,7 @@ final class InstallCommand extends Command
         $io->writeln('');
     }
 
-    private function createDatabase(SymfonyStyle $io, InputInterface $input, OutputInterface $output)
+    private function createDatabase(SymfonyStyle $io, InputInterface $input, OutputInterface $output): void
     {
         try {
             if ($this->connection->isConnected()) {

@@ -48,10 +48,10 @@ final class TimesheetVoter extends Voter
         'duplicate'
     ];
 
-    private $lockdownGrace;
-    private $lockdownOverride;
-    private $editExported;
-    private $now;
+    private ?bool $lockdownGrace = null;
+    private ?bool $lockdownOverride = null;
+    private ?bool $editExported = null;
+    private ?\DateTime $now = null;
 
     public function __construct(private RolePermissionManager $permissionManager, private LockdownService $lockdownService)
     {

@@ -22,23 +22,23 @@ final class ProjectDetailsModel
     /**
      * @var Year[]
      */
-    private $years = [];
+    private array $years = [];
     /**
      * @var array<string, array<ActivityStatistic>>
      */
-    private $yearlyActivities = [];
+    private array $yearlyActivities = [];
     /**
      * @var array<string, array<int, UserYear>>
      */
-    private $usersMonthly = [];
+    private array $usersMonthly = [];
     /**
      * @var ActivityStatistic[]
      */
-    private $activities = [];
+    private array $activities = [];
     /**
      * @var BudgetStatisticModel
      */
-    private $budgetStatisticModel;
+    private ?BudgetStatisticModel $budgetStatisticModel = null;
 
     public function __construct(private Project $project)
     {

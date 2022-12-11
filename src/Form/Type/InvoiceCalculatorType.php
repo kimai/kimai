@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select an invoice calculator.
  */
-class InvoiceCalculatorType extends AbstractType
+final class InvoiceCalculatorType extends AbstractType
 {
     public function __construct(private ServiceInvoice $service)
     {

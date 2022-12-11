@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Defines the form used for filtering timesheet entries for invoices.
  */
-class InvoiceArchiveForm extends AbstractType
+final class InvoiceArchiveForm extends AbstractType
 {
     use ToolbarFormTrait;
 

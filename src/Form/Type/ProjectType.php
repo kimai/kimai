@@ -25,7 +25,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select a project.
  */
-class ProjectType extends AbstractType
+final class ProjectType extends AbstractType
 {
     public function __construct(private ProjectHelper $projectHelper, private CustomerHelper $customerHelper)
     {

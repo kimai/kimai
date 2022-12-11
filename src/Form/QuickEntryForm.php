@@ -23,15 +23,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Valid;
 
-class QuickEntryForm extends AbstractType
+final class QuickEntryForm extends AbstractType
 {
     public function __construct(private SystemConfiguration $configuration)
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new CallbackTransformer(
@@ -89,9 +86,6 @@ class QuickEntryForm extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $start = new \DateTime();

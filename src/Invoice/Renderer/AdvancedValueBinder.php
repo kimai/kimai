@@ -16,7 +16,7 @@ use PhpOffice\PhpSpreadsheet\Cell\IValueBinder;
 use PhpOffice\PhpSpreadsheet\RichText\RichText;
 use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
 
-class AdvancedValueBinder extends DefaultValueBinder implements IValueBinder
+final class AdvancedValueBinder extends DefaultValueBinder implements IValueBinder
 {
     /**
      * Bind value to a cell.

@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class DateTimeFormatValidator extends ConstraintValidator
+final class DateTimeFormatValidator extends ConstraintValidator
 {
     /**
      * @param string|mixed|null $value
@@ -25,7 +25,7 @@ class DateTimeFormatValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\DateTimeFormat');
         }
 
-        if ($value === null || !\is_string($value)) {
+        if (!\is_string($value)) {
             return;
         }
 

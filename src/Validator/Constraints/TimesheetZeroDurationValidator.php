@@ -25,7 +25,7 @@ final class TimesheetZeroDurationValidator extends ConstraintValidator
      * @param TimesheetEntity $timesheet
      * @param Constraint $constraint
      */
-    public function validate($timesheet, Constraint $constraint)
+    public function validate(mixed $timesheet, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetZeroDuration)) {
             throw new UnexpectedTypeException($constraint, TimesheetZeroDuration::class);

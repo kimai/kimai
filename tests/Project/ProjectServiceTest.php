@@ -9,7 +9,6 @@
 
 namespace App\Tests\Project;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
@@ -22,6 +21,7 @@ use App\Event\ProjectUpdatePostEvent;
 use App\Event\ProjectUpdatePreEvent;
 use App\Project\ProjectService;
 use App\Repository\ProjectRepository;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Utils\Context;
 use App\Validator\ValidationFailedException;
 use PHPUnit\Framework\TestCase;
@@ -54,12 +54,9 @@ class ProjectServiceTest extends TestCase
             $validator->method('validate')->willReturn(new ConstraintViolationList());
         }
 
-        $configuration = $this->createMock(SystemConfiguration::class);
-        $configuration->method('isProjectCopyTeamsOnCreate')->willReturn($copyTeamsOnCreate);
+        $configuration = SystemConfigurationFactory::createStub(['project' => ['copy_teams_on_create' => $copyTeamsOnCreate]]);
 
-        $service = new ProjectService($configuration, $repository, $dispatcher, $validator);
-
-        return $service;
+        return new ProjectService($configuration, $repository, $dispatcher, $validator);
     }
 
     public function testCannotSavePersistedProjectAsNew()

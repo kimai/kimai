@@ -17,7 +17,7 @@ final class TimesheetZeroDuration extends TimesheetConstraint
         self::ZERO_DURATION_ERROR => 'Duration cannot be zero.',
     ];
 
-    public $message = 'Duration cannot be zero.';
+    public string $message = 'Duration cannot be zero.';
 
     public function getTargets(): string|array
     {

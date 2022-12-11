@@ -24,7 +24,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select a customer.
  */
-class CustomerType extends AbstractType
+final class CustomerType extends AbstractType
 {
     public function __construct(private CustomerHelper $customerHelper)
     {

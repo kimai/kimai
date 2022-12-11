@@ -14,6 +14,9 @@ use Laminas\Ldap\Exception\LdapException;
 use Laminas\Ldap\Ldap;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @final
+ */
 class LdapDriver
 {
     private ?Ldap $driver = null;

@@ -28,7 +28,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * @final
  */
-class ProjectService
+final class ProjectService
 {
     public function __construct(private SystemConfiguration $configuration, private ProjectRepository $repository, private EventDispatcherInterface $dispatcher, private ValidatorInterface $validator)
     {

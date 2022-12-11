@@ -14,7 +14,7 @@ use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
 use App\Project\ProjectStatisticService;
 
-class InvoiceModelProjectHydrator implements InvoiceModelHydrator
+final class InvoiceModelProjectHydrator implements InvoiceModelHydrator
 {
     use BudgetHydratorTrait;
 

@@ -12,9 +12,10 @@ namespace App\Utils;
 /**
  * This Class extends the default Parsedown Class for custom methods.
  */
-class ParsedownExtension extends \Parsedown
+final class ParsedownExtension extends \Parsedown
 {
-    private $ids = [];
+    /** @var array<string> */
+    private array $ids = [];
 
     /**
      * Overwritten to prevent # to show up as headings for two reasons:
@@ -151,8 +152,8 @@ class ParsedownExtension extends \Parsedown
     {
         $Block = parent::blockTable($Line, $Block);
 
-        if (\is_null($Block)) {
-            return;
+        if ($Block === null) {
+            return null;
         }
 
         $Block['element']['attributes']['class'] = 'table';

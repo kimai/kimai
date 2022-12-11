@@ -11,9 +11,9 @@ namespace App\Model\Statistic;
 
 final class StatisticDate extends Timesheet
 {
-    private $date;
-    private $billableDuration = 0;
-    private $billableRate = 0.00;
+    private \DateTimeInterface $date;
+    private int $billableDuration = 0;
+    private float $billableRate = 0.00;
 
     public function __construct(\DateTimeInterface $date)
     {

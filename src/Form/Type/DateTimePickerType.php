@@ -119,9 +119,6 @@ class DateTimePickerType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'date_time';

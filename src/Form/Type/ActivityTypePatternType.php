@@ -18,7 +18,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Select the pattern that will be used when rendering an activity select.
  */
-class ActivityTypePatternType extends AbstractType
+final class ActivityTypePatternType extends AbstractType
 {
     public function __construct(private TranslatorInterface $translator)
     {

@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
-class DayTimeType extends AbstractType
+final class DayTimeType extends AbstractType
 {
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {

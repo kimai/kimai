@@ -9,7 +9,7 @@
 
 namespace App\Utils;
 
-class FormFormatConverter
+final class FormFormatConverter
 {
     public const PATTERN_DAY_SINGLE = '(([1-9])|([1-2][0-9])|(3[01]))';
     public const PATTERN_DAY_DOUBLE = '((0[1-9])|([1-2][0-9])|(3[01]))';
@@ -26,7 +26,7 @@ class FormFormatConverter
      * @see https://www.php.net/manual/en/datetime.format.php
      * @var array
      */
-    private static $formatConvertRules = [
+    private static array $formatConvertRules = [
         // Litepicker interprets a year like 22 as 1922 instead of 2022
         // so we have to make sure that it is always a4-digit year
         "'h'" => "\h",  // special format for fr_CA which includes 'h' as character

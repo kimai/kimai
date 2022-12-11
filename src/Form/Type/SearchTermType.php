@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 
-class SearchTermType extends AbstractType
+final class SearchTermType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -27,9 +27,6 @@ class SearchTermType extends AbstractType
         $builder->addModelTransformer(new SearchTermTransformer());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

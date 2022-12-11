@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select the timesheet mode.
  */
-class TrackingModeType extends AbstractType
+final class TrackingModeType extends AbstractType
 {
     public function __construct(private TrackingModeService $service)
     {

@@ -27,12 +27,12 @@ use App\Timesheet\DateTimeFactory;
  */
 class TimesheetControllerTest extends ControllerBaseTest
 {
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/timesheet/');
     }
 
-    public function testIndexAction()
+    public function testIndexAction(): void
     {
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/timesheet/');
@@ -46,7 +46,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         ]);
     }
 
-    public function testIndexActionWithQuery()
+    public function testIndexActionWithQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $start = new \DateTime('first day of this month');
@@ -82,7 +82,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         self::assertEquals(2, $node->count());
     }
 
-    public function testIndexActionWithSearchTermQuery()
+    public function testIndexActionWithSearchTermQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $start = new \DateTime('first day of this month');
@@ -117,7 +117,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertDataTableRowCount($client, 'datatable_timesheet', 5);
     }
 
-    public function testExportAction()
+    public function testExportAction(): void
     {
         $client = $this->getClientForAuthenticatedUser();
 
@@ -162,7 +162,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals(5, \count($result));
     }
 
-    public function testCreateAction()
+    public function testCreateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/timesheet/create');
@@ -201,7 +201,7 @@ class TimesheetControllerTest extends ControllerBaseTest
     /**
      * @dataProvider getTestDataForDurationValues
      */
-    public function testCreateActionWithDurationValues($beginDate, $beginTime, $end, $duration, $expectedDuration, $expectedEnd)
+    public function testCreateActionWithDurationValues($beginDate, $beginTime, $end, $duration, $expectedDuration, $expectedEnd): void
     {
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/timesheet/create');
@@ -235,7 +235,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals('Testing is fun!', $timesheet->getDescription());
     }
 
-    public function getTestDataForDurationValues()
+    public function getTestDataForDurationValues(): \Generator
     {
         // duration is ignored, because end is set and the duration might come from a rounding rule (by default seconds are rounded down with 1)
         yield ['12/31/2018', '12:00 AM', '02:10 AM', '01:00', 7800, '2018-12-31 02:10:00'];
@@ -257,7 +257,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         yield ['12/31/2018', '12:00 AM', null, '1,25', 4500, '2018-12-31 01:15:00'];
     }
 
-    public function testCreateActionShowsMetaFields()
+    public function testCreateActionShowsMetaFields(): void
     {
         $client = $this->getClientForAuthenticatedUser();
         self::getContainer()->get('event_dispatcher')->addSubscriber(new TimesheetTestMetaFieldSubscriberMock());
@@ -270,7 +270,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertFalse($form->has('timesheet_edit_form[metaFields][0][value]'));
     }
 
-    public function testCreateActionDoesNotShowRateFieldsForUser()
+    public function testCreateActionDoesNotShowRateFieldsForUser(): void
     {
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/timesheet/create');
@@ -281,7 +281,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertFalse($form->has('fixedRate'));
     }
 
-    public function testCreateActionWithFromAndToValues()
+    public function testCreateActionWithFromAndToValues(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/timesheet/create?from=2018-08-02T20%3A00%3A00&to=2018-08-02T20%3A30%3A00');
@@ -315,7 +315,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals($expected->format(\DateTimeInterface::ATOM), $timesheet->getEnd()->format(\DateTimeInterface::ATOM));
     }
 
-    public function testCreateActionWithFromAndToValuesTwice()
+    public function testCreateActionWithFromAndToValuesTwice(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/timesheet/create?from=2018-08-02T20%3A00%3A00&to=2018-08-02T20%3A30%3A00');
@@ -366,7 +366,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
     }
 
-    public function testCreateActionWithFromAndToValuesTwiceFailsOnOverlappingRecord()
+    public function testCreateActionWithFromAndToValuesTwiceFailsOnOverlappingRecord(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/system-config/');
@@ -414,7 +414,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         );
     }
 
-    public function testCreateActionWithOverbookedActivity()
+    public function testCreateActionWithOverbookedActivity(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
@@ -468,7 +468,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         );
     }
 
-    public function testCreateActionWithEmptyDuration()
+    public function testCreateActionWithEmptyDuration(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
@@ -522,7 +522,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         );
     }
 
-    public function testCreateActionWithBeginAndEndAndTagValues()
+    public function testCreateActionWithBeginAndEndAndTagValues(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -563,7 +563,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals(['one', 'two', 'three'], $timesheet->getTagsAsArray());
     }
 
-    public function testCreateActionWithDescription()
+    public function testCreateActionWithDescription(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -590,7 +590,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals('Lorem Ipsum', $timesheet->getDescription());
     }
 
-    public function testCreateActionWithDescriptionHtmlInjection()
+    public function testCreateActionWithDescriptionHtmlInjection(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -617,7 +617,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals('Some text"><bold>HelloWorld</bold>', $timesheet->getDescription());
     }
 
-    public function testEditAction()
+    public function testEditAction(): void
     {
         $client = $this->getClientForAuthenticatedUser();
 
@@ -664,7 +664,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         $this->assertEquals('foo-bar', $timesheet->getDescription());
     }
 
-    public function testMultiDeleteAction()
+    public function testMultiDeleteAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
@@ -701,7 +701,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         self::assertEquals(0, $em->getRepository(Timesheet::class)->count([]));
     }
 
-    public function testMultiUpdate()
+    public function testMultiUpdate(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
@@ -760,7 +760,7 @@ class TimesheetControllerTest extends ControllerBaseTest
         }
     }
 
-    public function testDuplicateAction()
+    public function testDuplicateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $dateTime = new DateTimeFactory(new \DateTimeZone('Europe/London'));

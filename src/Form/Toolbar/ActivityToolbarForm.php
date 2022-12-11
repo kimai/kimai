@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Defines the form used for filtering the activities.
  */
-class ActivityToolbarForm extends AbstractType
+final class ActivityToolbarForm extends AbstractType
 {
     use ToolbarFormTrait;
 

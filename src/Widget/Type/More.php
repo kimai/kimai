@@ -11,10 +11,7 @@ namespace App\Widget\Type;
 
 class More extends AbstractWidgetType
 {
-    /**
-     * @var mixed
-     */
-    private $data;
+    private mixed $data = null;
 
     public function setData($data): self
     {

@@ -13,16 +13,13 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
-class XlsxWriter implements WriterInterface
+final class XlsxWriter implements WriterInterface
 {
     public function getFileExtension(): string
     {
         return 'xlsx';
     }
 
-    /**
-     * @return string
-     */
     public function getContentType(): string
     {
         return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';

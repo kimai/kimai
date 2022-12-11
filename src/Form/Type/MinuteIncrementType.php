@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Custom form field type to select the minute increment.
  */
-class MinuteIncrementType extends AbstractType
+final class MinuteIncrementType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void
     {

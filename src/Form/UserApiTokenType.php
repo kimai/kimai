@@ -19,11 +19,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Defines the form used to set the users API token.
  */
-class UserApiTokenType extends AbstractType
+final class UserApiTokenType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -35,9 +32,6 @@ class UserApiTokenType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

@@ -15,7 +15,7 @@ use App\Timesheet\CalculatorInterface;
 /**
  * Implementation to calculate the billable field for a timesheet record.
  */
-class BillableCalculator implements CalculatorInterface
+final class BillableCalculator implements CalculatorInterface
 {
     public function calculate(Timesheet $record, array $changeset): void
     {

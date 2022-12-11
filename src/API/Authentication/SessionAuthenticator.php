@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
-class SessionAuthenticator extends AbstractAuthenticator
+final class SessionAuthenticator extends AbstractAuthenticator
 {
     public const HEADER_JAVASCRIPT = 'X-AUTH-SESSION';
 

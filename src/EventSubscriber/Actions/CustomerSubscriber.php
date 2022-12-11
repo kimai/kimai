@@ -12,7 +12,7 @@ namespace App\EventSubscriber\Actions;
 use App\Entity\Customer;
 use App\Event\PageActionsEvent;
 
-class CustomerSubscriber extends AbstractActionsSubscriber
+final class CustomerSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {

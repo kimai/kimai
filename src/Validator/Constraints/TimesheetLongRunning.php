@@ -19,8 +19,8 @@ final class TimesheetLongRunning extends TimesheetConstraint
         self::MAXIMUM => 'MAXIMUM',
     ];
 
-    public $message = 'Maximum duration of {{ value }} hours exceeded.';
-    public $maximumMessage = 'Maximum duration exceeded.';
+    public string $message = 'Maximum duration of {{ value }} hours exceeded.';
+    public string $maximumMessage = 'Maximum duration exceeded.';
 
     public function getTargets(): string|array
     {

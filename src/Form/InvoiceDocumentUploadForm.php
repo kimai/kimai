@@ -19,15 +19,12 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class InvoiceDocumentUploadForm extends AbstractType
+final class InvoiceDocumentUploadForm extends AbstractType
 {
     public function __construct(private InvoiceDocumentRepository $repository)
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $mimetypes = [
@@ -77,9 +74,6 @@ class InvoiceDocumentUploadForm extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

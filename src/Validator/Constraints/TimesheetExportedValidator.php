@@ -25,7 +25,7 @@ final class TimesheetExportedValidator extends ConstraintValidator
      * @param TimesheetEntity $timesheet
      * @param Constraint $constraint
      */
-    public function validate($timesheet, Constraint $constraint)
+    public function validate(mixed $timesheet, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetExported)) {
             throw new UnexpectedTypeException($constraint, TimesheetExported::class);

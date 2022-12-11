@@ -9,7 +9,7 @@
 
 namespace App\Calendar;
 
-class RecentActivitiesSource implements DragAndDropSource
+final class RecentActivitiesSource implements DragAndDropSource
 {
     /**
      * @param DragAndDropEntry[] $entries

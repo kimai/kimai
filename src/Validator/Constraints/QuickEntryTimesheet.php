@@ -11,6 +11,6 @@ namespace App\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
-class QuickEntryTimesheet extends Constraint
+final class QuickEntryTimesheet extends Constraint
 {
 }

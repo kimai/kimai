@@ -28,9 +28,6 @@ class CustomerEditForm extends AbstractType
 {
     use EntityFormTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $isNew = false;
@@ -132,9 +129,6 @@ class CustomerEditForm extends AbstractType
         $this->addCommonFields($builder, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

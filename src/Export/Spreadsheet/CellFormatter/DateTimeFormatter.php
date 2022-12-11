@@ -12,7 +12,7 @@ namespace App\Export\Spreadsheet\CellFormatter;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class DateTimeFormatter implements CellFormatterInterface
+final class DateTimeFormatter implements CellFormatterInterface
 {
     public const DATETIME_FORMAT = 'yyyy-mm-dd hh:mm';
 

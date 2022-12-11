@@ -12,8 +12,12 @@ namespace App\Timesheet;
 /**
  * A static helper class for re-usable functionality.
  */
-class Util
+final class Util
 {
+    private function __construct()
+    {
+    }
+
     /**
      * Calculates the rate for a hourly rate and a given duration in seconds.
      *

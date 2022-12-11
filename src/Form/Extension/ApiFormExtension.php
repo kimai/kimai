@@ -46,7 +46,7 @@ final class ApiFormExtension extends AbstractTypeExtension
         ];
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($builder->has('metaFields')) {
             $builder->remove('metaFields');

@@ -12,7 +12,7 @@ namespace App\Form\API;
 use App\Form\TeamEditForm;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class TeamApiEditForm extends TeamEditForm
+final class TeamApiEditForm extends TeamEditForm
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

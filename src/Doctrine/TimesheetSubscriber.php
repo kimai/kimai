@@ -18,7 +18,7 @@ use Doctrine\ORM\Events;
 /**
  * A listener to make sure all Timesheet entries will have a proper duration.
  */
-class TimesheetSubscriber implements EventSubscriber
+final class TimesheetSubscriber implements EventSubscriber
 {
     /**
      * @var CalculatorInterface[]
@@ -64,7 +64,7 @@ class TimesheetSubscriber implements EventSubscriber
         }
     }
 
-    protected function calculateFields(Timesheet $entity, array $changes = []): void
+    private function calculateFields(Timesheet $entity, array $changes = []): void
     {
         if ($this->sorted === null) {
             $this->sorted = [];

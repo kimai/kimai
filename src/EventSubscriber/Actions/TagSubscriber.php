@@ -12,7 +12,7 @@ namespace App\EventSubscriber\Actions;
 use App\Entity\Tag;
 use App\Event\PageActionsEvent;
 
-class TagSubscriber extends AbstractActionsSubscriber
+final class TagSubscriber extends AbstractActionsSubscriber
 {
     public static function getActionName(): string
     {

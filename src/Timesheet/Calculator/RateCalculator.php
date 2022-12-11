@@ -16,7 +16,7 @@ use App\Timesheet\RateService;
 /**
  * Implementation to calculate the rate for a timesheet record.
  */
-class RateCalculator implements CalculatorInterface
+final class RateCalculator implements CalculatorInterface
 {
     public function __construct(private RateService $service)
     {

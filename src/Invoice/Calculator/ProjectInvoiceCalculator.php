@@ -16,7 +16,7 @@ use App\Invoice\InvoiceItem;
 /**
  * A calculator that sums up the invoice item records by project.
  */
-class ProjectInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
+final class ProjectInvoiceCalculator extends AbstractSumInvoiceCalculator implements CalculatorInterface
 {
     protected function calculateSumIdentifier(ExportableItem $invoiceItem): string
     {
@@ -36,9 +36,6 @@ class ProjectInvoiceCalculator extends AbstractSumInvoiceCalculator implements C
         }
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return 'project';

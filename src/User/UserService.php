@@ -34,7 +34,7 @@ class UserService
     /**
      * @var array<string, int>
      */
-    private $cache = [];
+    private array $cache = [];
 
     public function __construct(
         private UserRepository $repository,
@@ -152,7 +152,7 @@ class UserService
         return rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
     }
 
-    private function hashPassword(User $user)
+    private function hashPassword(User $user): void
     {
         $plain = $user->getPlainPassword();
 
@@ -165,7 +165,7 @@ class UserService
         $user->eraseCredentials();
     }
 
-    private function hashApiToken(User $user)
+    private function hashApiToken(User $user): void
     {
         $plain = $user->getPlainApiToken();
 

@@ -44,7 +44,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
      * @param Timesheet $timesheet
      * @param Constraint $constraint
      */
-    public function validate($timesheet, Constraint $constraint)
+    public function validate(mixed $timesheet, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetBudgetUsed)) {
             throw new UnexpectedTypeException($constraint, TimesheetBudgetUsed::class);
@@ -187,7 +187,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         return false;
     }
 
-    private function addBudgetViolation(TimesheetBudgetUsed $constraint, Timesheet $timesheet, string $field, float $budget, float $rate)
+    private function addBudgetViolation(TimesheetBudgetUsed $constraint, Timesheet $timesheet, string $field, float $budget, float $rate): void
     {
         // using the locale of the assigned user is not the best solution, but allows to be independent of the request stack
         $helper = new LocaleFormatter($this->localeService, $timesheet->getUser()->getLanguage());
@@ -213,7 +213,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         ;
     }
 
-    private function addTimeBudgetViolation(TimesheetBudgetUsed $constraint, string $field, int $budget, int $duration)
+    private function addTimeBudgetViolation(TimesheetBudgetUsed $constraint, string $field, int $budget, int $duration): void
     {
         $durationFormat = new Duration();
 

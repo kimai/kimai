@@ -12,13 +12,13 @@ namespace App\Plugin;
 final class PluginManager
 {
     /**
-     * @var Plugin[]
+     * @var array<Plugin>|null
      */
-    private $plugins;
+    private ?array $plugins = null;
     /**
      * @var iterable<PluginInterface>
      */
-    private $bundles;
+    private iterable $bundles;
 
     /**
      * @param iterable<PluginInterface> $plugins
@@ -33,17 +33,15 @@ final class PluginManager
      */
     public function getPlugins(): array
     {
-        if ($this->plugins !== null) {
-            return $this->plugins;
+        if ($this->plugins === null) {
+            $plugins = [];
+
+            foreach ($this->bundles as $bundle) {
+                $plugins[$bundle->getName()] = new Plugin($bundle);
+            }
+
+            $this->plugins = array_values($plugins);
         }
-
-        $plugins = [];
-
-        foreach ($this->bundles as $bundle) {
-            $plugins[$bundle->getName()] = new Plugin($bundle);
-        }
-
-        $this->plugins = array_values($plugins);
 
         return $this->plugins;
     }

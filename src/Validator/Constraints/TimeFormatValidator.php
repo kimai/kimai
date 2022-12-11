@@ -14,7 +14,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
-class TimeFormatValidator extends ConstraintValidator
+final class TimeFormatValidator extends ConstraintValidator
 {
     /**
      * @param string|mixed $value

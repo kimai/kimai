@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ValidationFailedExceptionErrorHandler implements SubscribingHandlerInterface
+final class ValidationFailedExceptionErrorHandler implements SubscribingHandlerInterface
 {
     public function __construct(private TranslatorInterface $translator, private FlattenExceptionHandler $exceptionHandler, private Security $security)
     {

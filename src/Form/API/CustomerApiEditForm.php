@@ -11,6 +11,6 @@ namespace App\Form\API;
 
 use App\Form\CustomerEditForm;
 
-class CustomerApiEditForm extends CustomerEditForm
+final class CustomerApiEditForm extends CustomerEditForm
 {
 }

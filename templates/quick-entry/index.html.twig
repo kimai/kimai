@@ -65,8 +65,16 @@
             const FORM_SELECT = kimai.getPlugin('form-select');
 
             if (window.matchMedia("(max-width: 1000px)").matches) {
-                for (let dropdowns of document.querySelectorAll('tr.qe-entry-week-row .input-group-btn')) {
+                for (let dropdowns of document.querySelectorAll('tr.qe-entry-week-row .btn-duration-preset')) {
                     dropdowns.style.display = 'none';
+                }
+
+                for (let tmp of document.querySelectorAll('tr.qe-entry-week-row .duration-widget .input-group')) {
+                    tmp.style.maxWidth = '50px';
+                    tmp.style.minWidth = '50px';
+                }
+                for (let input of document.querySelectorAll('tr.qe-entry-week-row input.duration-input')) {
+                    input.style.maxWidth = '50px';
                 }
                 document.querySelector('form[name=quick_entry_form] div.maybe-table-responsive').classList.replace('maybe-table-responsive', 'table-responsive');
             }

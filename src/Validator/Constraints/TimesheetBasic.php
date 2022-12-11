@@ -9,7 +9,7 @@
 
 namespace App\Validator\Constraints;
 
-class TimesheetBasic extends TimesheetConstraint
+final class TimesheetBasic extends TimesheetConstraint
 {
     public const MISSING_BEGIN_ERROR = 'kimai-timesheet-81';
     public const END_BEFORE_BEGIN_ERROR = 'kimai-timesheet-82';
@@ -37,7 +37,7 @@ class TimesheetBasic extends TimesheetConstraint
         self::PROJECT_DISALLOWS_GLOBAL_ACTIVITY => 'Global activities are forbidden for the selected project.',
     ];
 
-    public $message = 'This timesheet has invalid settings.';
+    public string $message = 'This timesheet has invalid settings.';
 
     public function getTargets(): string|array
     {

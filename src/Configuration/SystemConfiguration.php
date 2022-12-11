@@ -11,10 +11,7 @@ namespace App\Configuration;
 
 use App\Entity\Configuration;
 
-/**
- * @final soft final for now only because some tests need to be adjusted: you have been warned...
- */
-class SystemConfiguration
+final class SystemConfiguration
 {
     private bool $initialized = false;
 

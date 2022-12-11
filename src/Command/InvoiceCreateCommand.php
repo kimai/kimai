@@ -381,7 +381,7 @@ final class InvoiceCreateCommand extends Command
         if (empty($invoices)) {
             $io->warning('No invoice was generated');
 
-            return 0;
+            return Command::SUCCESS;
         }
 
         if (null !== $this->previewDirectory) {
@@ -397,7 +397,7 @@ final class InvoiceCreateCommand extends Command
 
             $table->render();
 
-            return 0;
+            return Command::SUCCESS;
         }
 
         $columns = ['ID', 'Customer', 'Total', 'Filename'];
@@ -425,7 +425,7 @@ final class InvoiceCreateCommand extends Command
 
         $table->render();
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function getTemplateForCustomer(InputInterface $input, Customer $customer): ?InvoiceTemplate

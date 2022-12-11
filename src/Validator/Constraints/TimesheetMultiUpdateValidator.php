@@ -53,7 +53,7 @@ final class TimesheetMultiUpdateValidator extends ConstraintValidator
      * @param TimesheetMultiUpdateDTO $dto
      * @param ExecutionContextInterface $context
      */
-    protected function validateActivityAndProject(TimesheetMultiUpdateDTO $dto, ExecutionContextInterface $context)
+    protected function validateActivityAndProject(TimesheetMultiUpdateDTO $dto, ExecutionContextInterface $context): void
     {
         $activity = $dto->getActivity();
         $project = $dto->getProject();

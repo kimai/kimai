@@ -18,13 +18,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Advanced checks during authentication to make sure the user is allowed to use Kimai.
  */
-class UserChecker implements UserCheckerInterface
+final class UserChecker implements UserCheckerInterface
 {
     /**
      * @param UserInterface $user
      * @throws AccountStatusException
      */
-    public function checkPreAuth(UserInterface $user)
+    public function checkPreAuth(UserInterface $user): void
     {
         if (!($user instanceof User)) {
             return;
@@ -41,7 +41,7 @@ class UserChecker implements UserCheckerInterface
      * @param UserInterface $user
      * @throws AccountStatusException
      */
-    public function checkPostAuth(UserInterface $user)
+    public function checkPostAuth(UserInterface $user): void
     {
         if (!($user instanceof User)) {
             return;

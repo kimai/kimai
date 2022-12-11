@@ -15,7 +15,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @internal
  */
 #[Serializer\ExclusionPolicy('all')]
-class PageAction
+final class PageAction
 {
     /**
      * ID of the action

@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
 /**
  * Custom form field type to edit entity meta field.
  */
-class EntityMetaDefinitionType extends AbstractType
+final class EntityMetaDefinitionType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder

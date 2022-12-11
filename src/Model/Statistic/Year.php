@@ -14,9 +14,9 @@ final class Year extends Timesheet
     /**
      * @var Month[]
      */
-    private $months = [];
-    private $billableDuration = 0;
-    private $billableRate = 0.00;
+    private array $months = [];
+    private int $billableDuration = 0;
+    private float $billableRate = 0.00;
 
     public function __construct(private string $year)
     {

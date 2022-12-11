@@ -29,7 +29,7 @@ final class EmailSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onMailEvent(EmailEvent $event)
+    public function onMailEvent(EmailEvent $event): void
     {
         $this->mailer->send($event->getEmail());
     }

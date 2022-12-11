@@ -14,24 +14,16 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-class BinaryFileResponseWriter implements WriterInterface
+final class BinaryFileResponseWriter implements WriterInterface
 {
-    /**
-     * @var WriterInterface
-     */
-    private $writer;
-    /**
-     * @var string
-     */
-    private $prefix;
+    private string $prefix;
 
     /**
      * @param WriterInterface $writer
      * @param string $prefix is only urlencoded but not validated and can break the response if you pass in invalid character
      */
-    public function __construct(WriterInterface $writer, string $prefix)
+    public function __construct(private WriterInterface $writer, string $prefix)
     {
-        $this->writer = $writer;
         $this->prefix = urlencode($prefix);
     }
 
@@ -45,9 +37,6 @@ class BinaryFileResponseWriter implements WriterInterface
         return $this->writer->getContentType();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function save(Spreadsheet $spreadsheet, array $options = []): \SplFileInfo
     {
         return $this->writer->save($spreadsheet, $options);

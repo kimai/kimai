@@ -16,21 +16,15 @@ use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ColorPickerType extends AbstractType implements DataTransformerInterface
+final class ColorPickerType extends AbstractType implements DataTransformerInterface
 {
     public const DEFAULT_COLOR = Constants::DEFAULT_COLOR;
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addViewTransformer($this);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -43,9 +37,6 @@ class ColorPickerType extends AbstractType implements DataTransformerInterface
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function transform(mixed $data): mixed
     {
         if (empty($data)) {
@@ -55,9 +46,6 @@ class ColorPickerType extends AbstractType implements DataTransformerInterface
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseTransform(mixed $value): mixed
     {
         return null === $value ? self::DEFAULT_COLOR : $value;

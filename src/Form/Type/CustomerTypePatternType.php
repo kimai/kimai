@@ -18,7 +18,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Select the pattern that will be used when rendering a custom select.
  */
-class CustomerTypePatternType extends AbstractType
+final class CustomerTypePatternType extends AbstractType
 {
     public function __construct(private TranslatorInterface $translator)
     {

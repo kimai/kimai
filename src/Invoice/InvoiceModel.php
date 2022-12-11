@@ -30,58 +30,28 @@ use App\Repository\Query\InvoiceQuery;
  */
 final class InvoiceModel
 {
-    /**
-     * @var Customer|null
-     */
-    private $customer;
-    /**
-     * @var InvoiceQuery
-     */
-    private $query;
+    private ?Customer $customer = null;
+    private ?InvoiceQuery $query = null;
     /**
      * @var ExportableItem[]
      */
-    private $entries = [];
-    /**
-     * @var InvoiceTemplate
-     */
-    private $template;
-    /**
-     * @var CalculatorInterface
-     */
-    private $calculator;
-    /**
-     * @var NumberGeneratorInterface
-     */
-    private $generator;
-    /**
-     * @var \DateTime
-     */
-    private $invoiceDate;
-    /**
-     * @var User
-     */
-    private $user;
-    /**
-     * @var InvoiceFormatter
-     */
-    private $formatter;
+    private array $entries = [];
+    private ?InvoiceTemplate $template = null;
+    private ?CalculatorInterface $calculator = null;
+    private ?NumberGeneratorInterface $generator = null;
+    private \DateTime $invoiceDate;
+    private ?User $user = null;
+    private InvoiceFormatter $formatter;
     /**
      * @var InvoiceModelHydrator[]
      */
-    private $modelHydrator = [];
+    private array $modelHydrator = [];
     /**
      * @var InvoiceItemHydrator[]
      */
-    private $itemHydrator = [];
-    /**
-     * @var string
-     */
-    private $invoiceNumber;
-    /**
-     * @var bool
-     */
-    private $hideZeroTax = false;
+    private array $itemHydrator = [];
+    private ?string $invoiceNumber = null;
+    private bool $hideZeroTax = false;
 
     /**
      * @internal use InvoiceModelFactory

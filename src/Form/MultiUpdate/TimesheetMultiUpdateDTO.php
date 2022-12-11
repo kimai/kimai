@@ -25,12 +25,12 @@ use Doctrine\Common\Collections\Collection;
  * @internal
  */
 #[Constraints\TimesheetMultiUpdate]
-class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements EntityWithMetaFields
+final class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements EntityWithMetaFields
 {
     /**
-     * @var Tag[]|ArrayCollection|iterable
+     * @var iterable<Tag>
      */
-    private $tags = [];
+    private iterable $tags = [];
     private bool $replaceTags = false;
     private bool $recalculateRates = false;
     private ?Customer $customer = null;
@@ -86,7 +86,7 @@ class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements EntityWithM
     }
 
     /**
-     * @return Tag[]|ArrayCollection|iterable
+     * @return iterable<Tag>
      */
     public function getTags(): iterable
     {
