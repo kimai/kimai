@@ -67,8 +67,6 @@ final class InvoiceController extends AbstractController
     #[Security("is_granted('create_invoice')")]
     public function indexAction(Request $request, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
-        $this->flashError('action.delete.error', 'Logfile cannot be written');
-
         if (!$this->templateRepository->hasTemplate()) {
             if ($this->isGranted('manage_invoice_template')) {
                 return $this->redirectToRoute('admin_invoice_template_create');
