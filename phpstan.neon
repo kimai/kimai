@@ -2086,11 +2086,6 @@ parameters:
             path: src/Controller/Security/SelfRegistrationController.php
 
         -
-            message: "#^Parameter \\#1 \\$object_or_class of function method_exists expects object\\|string, Symfony\\\\Component\\\\Security\\\\Core\\\\Authentication\\\\Token\\\\TokenInterface\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Security/SelfRegistrationController.php
-
-        -
             message: "#^Parameter \\#1 \\$token of method App\\\\User\\\\UserService\\:\\:findUserByConfirmationToken\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Controller/Security/SelfRegistrationController.php
@@ -8324,21 +8319,6 @@ parameters:
             message: "#^Method App\\\\Utils\\\\Color\\:\\:getTimesheetColor\\(\\) should return string but returns string\\|null\\.$#"
             count: 3
             path: src/Utils/Color.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\CommandStyle\\:\\:error\\(\\) has parameter \\$message with no type specified\\.$#"
-            count: 1
-            path: src/Utils/CommandStyle.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\CommandStyle\\:\\:success\\(\\) has parameter \\$message with no type specified\\.$#"
-            count: 1
-            path: src/Utils/CommandStyle.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\CommandStyle\\:\\:warning\\(\\) has parameter \\$message with no type specified\\.$#"
-            count: 1
-            path: src/Utils/CommandStyle.php
 
         -
             message: "#^Class App\\\\Utils\\\\DataTable implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"

@@ -26,10 +26,7 @@ use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
  */
 class ChangePasswordCommandTest extends KernelTestCase
 {
-    /**
-     * @var Application
-     */
-    private $application;
+    private Application $application;
 
     protected function setUp(): void
     {
@@ -43,7 +40,7 @@ class ChangePasswordCommandTest extends KernelTestCase
         $this->application->add(new ChangePasswordCommand($userService));
     }
 
-    public function testCommandName()
+    public function testCommandName(): void
     {
         $application = $this->application;
 
@@ -51,7 +48,7 @@ class ChangePasswordCommandTest extends KernelTestCase
         self::assertInstanceOf(ChangePasswordCommand::class, $command);
     }
 
-    protected function callCommand(?string $username, ?string $password)
+    protected function callCommand(?string $username, ?string $password): CommandTester
     {
         $command = $this->application->find('kimai:user:password');
         $input = [
@@ -82,7 +79,7 @@ class ChangePasswordCommandTest extends KernelTestCase
         return $commandTester;
     }
 
-    public function testChangePassword()
+    public function testChangePassword(): void
     {
         $commandTester = $this->callCommand('john_user', '0987654321');
 
@@ -99,7 +96,15 @@ class ChangePasswordCommandTest extends KernelTestCase
         self::assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getPassword(), '0987654321'));
     }
 
-    public function testWithMissingUsername()
+    public function testChangePasswordFailsOnShortPassword(): void
+    {
+        $commandTester = $this->callCommand('john_user', '1');
+
+        $output = $commandTester->getDisplay();
+        $this->assertStringContainsString('[ERROR] plainPassword: This value is too short. It should have 8 characters or more.', $output);
+    }
+
+    public function testWithMissingUsername(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Not enough arguments (missing: "username").');
@@ -107,7 +112,7 @@ class ChangePasswordCommandTest extends KernelTestCase
         $this->callCommand(null, '1234567890');
     }
 
-    public function testWithMissingPasswordAsksForPassword()
+    public function testWithMissingPasswordAsksForPassword(): void
     {
         $commandTester = $this->callCommand('john_user', null);
         $output = $commandTester->getDisplay();

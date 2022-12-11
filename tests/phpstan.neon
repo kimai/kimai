@@ -2013,31 +2013,6 @@ parameters:
             path: Command/ChangePasswordCommandTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ChangePasswordCommandTest\\:\\:callCommand\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ChangePasswordCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ChangePasswordCommandTest\\:\\:testChangePassword\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ChangePasswordCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ChangePasswordCommandTest\\:\\:testCommandName\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ChangePasswordCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ChangePasswordCommandTest\\:\\:testWithMissingPasswordAsksForPassword\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ChangePasswordCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ChangePasswordCommandTest\\:\\:testWithMissingUsername\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/ChangePasswordCommandTest.php
-
-        -
             message: "#^Parameter \\#1 \\$hashedPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\PasswordHasherInterface\\:\\:verify\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: Command/ChangePasswordCommandTest.php
@@ -11361,11 +11336,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Utils\\\\ColorTest\\:\\:testGetRandomColor\\(\\) has no return type specified\\.$#"
             count: 1
             path: Utils/ColorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\CommandStyleTest\\:\\:testStyles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/CommandStyleTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Utils\\\\DurationTest\\:\\:getParseDurationInvalidData\\(\\) has no return type specified\\.$#"

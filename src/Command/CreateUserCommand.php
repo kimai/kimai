@@ -11,13 +11,13 @@ namespace App\Command;
 
 use App\Entity\User;
 use App\User\UserService;
-use App\Utils\CommandStyle;
 use App\Validator\ValidationFailedException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(name: 'kimai:user:create')]
 final class CreateUserCommand extends AbstractUserCommand
@@ -48,7 +48,7 @@ final class CreateUserCommand extends AbstractUserCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new CommandStyle($input, $output);
+        $io = new SymfonyStyle($input, $output);
 
         $username = $input->getArgument('username');
         $email = $input->getArgument('email');
@@ -73,7 +73,7 @@ final class CreateUserCommand extends AbstractUserCommand
             $this->userService->saveNewUser($user);
             $io->success(sprintf('Success! Created user: %s', $username));
         } catch (ValidationFailedException $ex) {
-            $io->validationError($ex);
+            $this->validationError($ex, $io);
 
             return Command::FAILURE;
         }

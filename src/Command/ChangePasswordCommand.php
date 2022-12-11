@@ -10,13 +10,13 @@
 namespace App\Command;
 
 use App\User\UserService;
-use App\Utils\CommandStyle;
 use App\Validator\ValidationFailedException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(name: 'kimai:user:password')]
 final class ChangePasswordCommand extends AbstractUserCommand
@@ -62,14 +62,14 @@ final class ChangePasswordCommand extends AbstractUserCommand
 
         $user = $this->userService->findUserByUsernameOrThrowException($username);
 
-        $io = new CommandStyle($input, $output);
+        $io = new SymfonyStyle($input, $output);
 
         try {
             $user->setPlainPassword($password);
             $this->userService->updateUser($user, ['PasswordUpdate']);
             $io->success(sprintf('Changed password for user "%s".', $username));
         } catch (ValidationFailedException $ex) {
-            $io->validationError($ex);
+            $this->validationError($ex, $io);
 
             return Command::FAILURE;
         }
