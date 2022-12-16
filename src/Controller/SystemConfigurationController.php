@@ -376,7 +376,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setOptions(['help' => $lockdownEndHelp])
                         ->setType(TextType::class)
                         ->setRequired(false)
-                        ->setConstraints([new DateTimeFormat()])
+                        ->setConstraints([new DateTimeFormat(['separator' => ','])])
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration('timesheet.rules.lockdown_period_timezone'))
                         ->setType(TimezoneType::class)
