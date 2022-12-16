@@ -31,6 +31,7 @@ use App\Model\InvoiceDocument;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
+use Doctrine\Common\Collections\ArrayCollection;
 
 trait RendererTestTrait
 {
@@ -103,25 +104,45 @@ trait RendererTestTrait
         $template->setVat(19);
         $template->setLanguage('en');
 
-        $project = new Project();
-        $project->setName('project name');
-        $project->setCustomer($customer);
-        $project->setMetaField((new ProjectMeta())->setName('foo-project')->setValue('bar-project')->setIsVisible(true));
+        $pMeta = new ProjectMeta();
+        $pMeta->setName('foo-project')->setValue('bar-project')->setIsVisible(true);
+        $project = $this->createMock(Project::class);
+        $project->method('getId')->willReturn(0);
+        $project->method('getName')->willReturn('project name');
+        $project->method('getCustomer')->willReturn($customer);
+        $project->method('getMetaFields')->willReturn(new ArrayCollection([$pMeta]));
+        $project->method('getVisibleMetaFields')->willReturn([$pMeta]);
 
-        $activity = new Activity();
-        $activity->setName('activity description');
-        $activity->setProject($project);
-        $activity->setMetaField((new ActivityMeta())->setName('foo-activity')->setValue('bar-activity')->setIsVisible(true));
+        $aMeta = new ActivityMeta();
+        $aMeta->setName('foo-activity');
+        $aMeta->setValue('bar-activity');
+        $aMeta->setIsVisible(true);
+        $activity = $this->createMock(Activity::class);
+        $activity->method('getId')->willReturn(0);
+        $activity->method('getName')->willReturn('activity description');
+        $activity->method('getProject')->willReturn($project);
+        $activity->method('getMetaFields')->willReturn(new ArrayCollection([$aMeta]));
+        $activity->method('getVisibleMetaFields')->willReturn([$aMeta]);
 
-        $project2 = new Project();
-        $project2->setName('project 2 name');
-        $project2->setCustomer($customer);
-        $project2->setMetaField((new ProjectMeta())->setName('foo-project')->setValue('bar-project2')->setIsVisible(true));
+        $pMeta2 = new ProjectMeta();
+        $pMeta2->setName('foo-project')->setValue('bar-project2')->setIsVisible(true);
+        $project2 = $this->createMock(Project::class);
+        $project2->method('getId')->willReturn(1);
+        $project2->method('getName')->willReturn('project 2 name');
+        $project2->method('getCustomer')->willReturn($customer);
+        $project2->method('getMetaFields')->willReturn(new ArrayCollection([$pMeta2]));
+        $project2->method('getVisibleMetaFields')->willReturn([$pMeta2]);
 
-        $activity2 = new Activity();
-        $activity2->setName('activity 1 description');
-        $activity2->setProject($project2);
-        $activity2->setMetaField((new ActivityMeta())->setName('foo-activity')->setValue('bar-activity2')->setIsVisible(true));
+        $aMeta2 = new ActivityMeta();
+        $aMeta2->setName('foo-activity');
+        $aMeta2->setValue('bar-activity2');
+        $aMeta2->setIsVisible(true);
+        $activity2 = $this->createMock(Activity::class);
+        $activity2->method('getId')->willReturn(1);
+        $activity2->method('getName')->willReturn('activity 1 description');
+        $activity2->method('getProject')->willReturn($project2);
+        $activity2->method('getMetaFields')->willReturn(new ArrayCollection([$aMeta2]));
+        $activity2->method('getVisibleMetaFields')->willReturn([$aMeta2]);
 
         $userMethods = ['getId', 'getPreferenceValue', 'getUsername', 'getUserIdentifier'];
         $user1 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
@@ -303,6 +324,7 @@ trait RendererTestTrait
 
         $query = new InvoiceQuery();
         $query->addActivity($activity);
+        $query->addProject($project);
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
 

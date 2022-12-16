@@ -24,17 +24,27 @@ final class InvoiceModelActivityHydrator implements InvoiceModelHydrator
 
     public function hydrate(InvoiceModel $model): array
     {
-        if (!$model->getQuery()->hasActivities()) {
+        $activities = [];
+
+        foreach ($model->getEntries() as $entry) {
+            if ($entry->getActivity() === null) {
+                continue;
+            }
+
+            $key = 'A_' . $entry->getActivity()->getId();
+            if (!\array_key_exists($key, $activities)) {
+                $activities[$key] = $entry->getActivity();
+            }
+        }
+
+        if (\count($activities) === 0) {
             return [];
         }
 
+        $activities = array_values($activities);
+
         $values = [];
         $i = 0;
-
-        $activities = $model->getQuery()->getActivities();
-        if (\count($activities) === 1) {
-            $values['activity'] = $activities[0]->getName();
-        }
 
         foreach ($activities as $activity) {
             $prefix = '';
@@ -54,13 +64,15 @@ final class InvoiceModelActivityHydrator implements InvoiceModelHydrator
 
         $values = [
             $prefix . 'id' => $activity->getId(),
-            $prefix . 'name' => $activity->getName(),
-            $prefix . 'comment' => $activity->getComment(),
+            $prefix . 'name' => $activity->getName() ?? '',
+            $prefix . 'comment' => $activity->getComment() ?? '',
         ];
 
-        $statistic = $this->activityStatistic->getBudgetStatisticModel($activity, $model->getQuery()->getEnd());
+        if ($model->getQuery()?->getEnd() !== null) {
+            $statistic = $this->activityStatistic->getBudgetStatisticModel($activity, $model->getQuery()->getEnd());
 
-        $values = array_merge($values, $this->getBudgetValues($prefix, $statistic, $model));
+            $values = array_merge($values, $this->getBudgetValues($prefix, $statistic, $model));
+        }
 
         foreach ($activity->getVisibleMetaFields() as $metaField) {
             $values = array_merge($values, [

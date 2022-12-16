@@ -26,8 +26,8 @@ final class InvoiceModelUserHydrator implements InvoiceModelHydrator
         $values = [
             'user.name' => $user->getUserIdentifier(),
             'user.email' => $user->getEmail(),
-            'user.title' => $user->getTitle(),
-            'user.alias' => $user->getAlias(),
+            'user.title' => $user->getTitle() ?? '',
+            'user.alias' => $user->getAlias() ?? '',
         ];
 
         /** @var UserPreference $metaField */

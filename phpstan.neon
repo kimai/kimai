@@ -5946,21 +5946,6 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceItemDefaultHydrator.php
 
         -
-            message: "#^Cannot call method getActivities\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelActivityHydrator.php
-
-        -
-            message: "#^Cannot call method getEnd\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelActivityHydrator.php
-
-        -
-            message: "#^Cannot call method hasActivities\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelActivityHydrator.php
-
-        -
             message: "#^Method App\\\\Invoice\\\\Hydrator\\\\InvoiceModelActivityHydrator\\:\\:getBudgetValues\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelActivityHydrator.php
@@ -5972,11 +5957,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Invoice\\\\Hydrator\\\\InvoiceModelActivityHydrator\\:\\:hydrate\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelActivityHydrator.php
-
-        -
-            message: "#^Parameter \\#2 \\$today of method App\\\\Activity\\\\ActivityStatisticService\\:\\:getBudgetStatisticModel\\(\\) expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelActivityHydrator.php
 
@@ -6111,21 +6091,6 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 
         -
-            message: "#^Cannot call method getEnd\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelProjectHydrator.php
-
-        -
-            message: "#^Cannot call method getProjects\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelProjectHydrator.php
-
-        -
-            message: "#^Cannot call method hasProjects\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelProjectHydrator.php
-
-        -
             message: "#^Method App\\\\Invoice\\\\Hydrator\\\\InvoiceModelProjectHydrator\\:\\:getBudgetValues\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelProjectHydrator.php
@@ -6137,11 +6102,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Invoice\\\\Hydrator\\\\InvoiceModelProjectHydrator\\:\\:hydrate\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelProjectHydrator.php
-
-        -
-            message: "#^Parameter \\#2 \\$today of method App\\\\Project\\\\ProjectStatisticService\\:\\:getBudgetStatisticModel\\(\\) expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelProjectHydrator.php
 

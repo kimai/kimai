@@ -31,20 +31,20 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
 
         $values = [
             'customer.id' => $customer->getId(),
-            'customer.address' => $customer->getAddress(),
-            'customer.name' => $customer->getName(),
-            'customer.contact' => $customer->getContact(),
-            'customer.company' => $customer->getCompany(),
-            'customer.vat' => $customer->getVatId(),
-            'customer.number' => $customer->getNumber(),
+            'customer.address' => $customer->getAddress() ?? '',
+            'customer.name' => $customer->getName() ?? '',
+            'customer.contact' => $customer->getContact() ?? '',
+            'customer.company' => $customer->getCompany() ?? '',
+            'customer.vat' => $customer->getVatId() ?? '',
+            'customer.number' => $customer->getNumber() ?? '',
             'customer.country' => $customer->getCountry(),
-            'customer.homepage' => $customer->getHomepage(),
-            'customer.comment' => $customer->getComment(),
-            'customer.email' => $customer->getEmail(),
-            'customer.fax' => $customer->getFax(),
-            'customer.phone' => $customer->getPhone(),
-            'customer.mobile' => $customer->getMobile(),
-            'customer.invoice_text' => $customer->getInvoiceText(),
+            'customer.homepage' => $customer->getHomepage() ?? '',
+            'customer.comment' => $customer->getComment() ?? '',
+            'customer.email' => $customer->getEmail() ?? '',
+            'customer.fax' => $customer->getFax() ?? '',
+            'customer.phone' => $customer->getPhone() ?? '',
+            'customer.mobile' => $customer->getMobile() ?? '',
+            'customer.invoice_text' => $customer->getInvoiceText() ?? '',
         ];
 
         $statistic = $this->customerStatisticService->getBudgetStatisticModel($customer, $model->getQuery()->getEnd());

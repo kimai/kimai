@@ -24,17 +24,27 @@ final class InvoiceModelProjectHydrator implements InvoiceModelHydrator
 
     public function hydrate(InvoiceModel $model): array
     {
-        if (!$model->getQuery()->hasProjects()) {
+        $projects = [];
+
+        foreach ($model->getEntries() as $entry) {
+            if ($entry->getProject() === null) {
+                continue;
+            }
+
+            $key = 'P_' . $entry->getProject()->getId();
+            if (!\array_key_exists($key, $projects)) {
+                $projects[$key] = $entry->getProject();
+            }
+        }
+
+        if (\count($projects) === 0) {
             return [];
         }
 
+        $projects = array_values($projects);
+
         $values = [];
         $i = 0;
-
-        $projects = $model->getQuery()->getProjects();
-        if (\count($projects) === 1) {
-            $values['project'] = $projects[0]->getName();
-        }
 
         foreach ($projects as $project) {
             $prefix = '';
@@ -57,8 +67,8 @@ final class InvoiceModelProjectHydrator implements InvoiceModelHydrator
 
         $values = [
             $prefix . 'id' => $project->getId(),
-            $prefix . 'name' => $project->getName(),
-            $prefix . 'comment' => $project->getComment(),
+            $prefix . 'name' => $project->getName() ?? '',
+            $prefix . 'comment' => $project->getComment() ?? '',
             $prefix . 'order_number' => $project->getOrderNumber(),
             $prefix . 'start_date' => null !== $project->getStart() ? $formatter->getFormattedDateTime($project->getStart()) : '',
             $prefix . 'end_date' => null !== $project->getEnd() ? $formatter->getFormattedDateTime($project->getEnd()) : '',
@@ -71,9 +81,11 @@ final class InvoiceModelProjectHydrator implements InvoiceModelHydrator
             $prefix . 'budget_time_minutes' => (int) ($project->getTimeBudget() / 60),
         ];
 
-        $statistic = $this->projectStatistic->getBudgetStatisticModel($project, $model->getQuery()->getEnd());
+        if ($model->getQuery()?->getEnd() !== null) {
+            $statistic = $this->projectStatistic->getBudgetStatisticModel($project, $model->getQuery()->getEnd());
 
-        $values = array_merge($values, $this->getBudgetValues($prefix, $statistic, $model));
+            $values = array_merge($values, $this->getBudgetValues($prefix, $statistic, $model));
+        }
 
         foreach ($project->getVisibleMetaFields() as $metaField) {
             $values = array_merge($values, [

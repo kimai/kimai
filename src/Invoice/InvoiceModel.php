@@ -83,7 +83,7 @@ final class InvoiceModel
     /**
      * Returns the raw data from the model.
      *
-     * Do not use this method for rendering the invoice, use getItems() instead.
+     * Do not use this method for rendering the invoice, use getCalculator()->getEntries() instead.
      *
      * @return ExportableItem[]
      */
@@ -136,11 +136,7 @@ final class InvoiceModel
         return $this->customer;
     }
 
-    /**
-     * @param Customer|null $customer
-     * @return InvoiceModel
-     */
-    public function setCustomer($customer): InvoiceModel
+    public function setCustomer(?Customer $customer): InvoiceModel
     {
         $this->customer = $customer;
 

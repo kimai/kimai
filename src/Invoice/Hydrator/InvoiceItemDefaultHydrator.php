@@ -56,11 +56,11 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
 
         $values = [
             'entry.row' => '',
-            'entry.description' => $description,
+            'entry.description' => $description ?? '',
             'entry.amount' => $amount,
             'entry.type' => $item->getType(),
             'entry.tags' => implode(', ', $item->getTags()),
-            'entry.category' => $item->getCategory(),
+            'entry.category' => $item->getCategory() ?? '',
             'entry.rate' => $formatter->getFormattedMoney($appliedRate, $currency),
             'entry.rate_nc' => $formatter->getFormattedMoney($appliedRate, $currency, false),
             'entry.rate_plain' => $appliedRate,
@@ -85,8 +85,8 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.weekyear' => $begin->format('o'),
             'entry.user_id' => $user->getId(),
             'entry.user_name' => $user->getUserIdentifier(),
-            'entry.user_title' => $user->getTitle(),
-            'entry.user_alias' => $user->getAlias(),
+            'entry.user_title' => $user->getTitle() ?? '',
+            'entry.user_alias' => $user->getAlias() ?? '',
         ];
 
         if (null !== $activity) {

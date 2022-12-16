@@ -7893,11 +7893,6 @@ parameters:
             path: Invoice/Hydrator/InvoiceItemDefaultHydratorTest.php
 
         -
-            message: "#^Cannot call method setActivities\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceModelActivityHydratorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelActivityHydratorTest\\:\\:assertModelStructure\\(\\) has no return type specified\\.$#"
             count: 1
             path: Invoice/Hydrator/InvoiceModelActivityHydratorTest.php
@@ -7976,11 +7971,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelDefaultHydratorTest\\:\\:testHydrate\\(\\) has no return type specified\\.$#"
             count: 1
             path: Invoice/Hydrator/InvoiceModelDefaultHydratorTest.php
-
-        -
-            message: "#^Cannot call method setProjects\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceModelProjectHydratorTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelProjectHydratorTest\\:\\:assertModelStructure\\(\\) has no return type specified\\.$#"

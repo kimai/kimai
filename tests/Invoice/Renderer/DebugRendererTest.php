@@ -158,12 +158,6 @@ class DebugRendererTest extends TestCase
             'testFromModelHydrator',
         ];
 
-        if ($activityCounter === 1) {
-            $keys = array_merge($keys, [
-                'activity',
-            ]);
-        }
-
         if ($activityCounter > 1) {
             $keys = array_merge($keys, [
                 'activity.1.budget_open',
@@ -198,11 +192,7 @@ class DebugRendererTest extends TestCase
                 'project.time_budget_open',
                 'project.time_budget_open_plain',
             ]);
-            if ($projectCounter === 1) {
-                $keys = array_merge($keys, [
-                    'project',
-                ]);
-            }
+
             if ($projectCounter > 1) {
                 $keys = array_merge($keys, [
                     'project.1.id',
