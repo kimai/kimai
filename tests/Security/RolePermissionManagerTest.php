@@ -25,7 +25,7 @@ class RolePermissionManagerTest extends TestCase
         $repository->method('getAllAsArray')->willReturn([]);
 
         /** @var RolePermissionRepository $repository */
-        $sut = new RolePermissionManager($repository, []);
+        $sut = new RolePermissionManager($repository, [], []);
         self::assertFalse($sut->isRegisteredPermission('foo'));
         self::assertEquals([], $sut->getPermissions());
         self::assertFalse($sut->hasPermission('TEST_ROLE', 'foo'));
@@ -41,7 +41,7 @@ class RolePermissionManagerTest extends TestCase
         ]);
 
         /** @var RolePermissionRepository $repository */
-        $sut = new RolePermissionManager($repository, []);
+        $sut = new RolePermissionManager($repository, [], []);
 
         // only data injected through the config will be registered as "known"
         self::assertFalse($sut->isRegisteredPermission('foo'));
@@ -59,7 +59,7 @@ class RolePermissionManagerTest extends TestCase
         $repository->method('getAllAsArray')->willReturn([]);
 
         /** @var RolePermissionRepository $repository */
-        $sut = new RolePermissionManager($repository, ['TEST_ROLE' => ['foo'], 'USER_ROLE' => ['bar']]);
+        $sut = new RolePermissionManager($repository, ['TEST_ROLE' => ['foo' => true], 'USER_ROLE' => ['bar' => true]], ['foo' => true, 'bar' => true]);
 
         self::assertTrue($sut->isRegisteredPermission('foo'));
         self::assertTrue($sut->isRegisteredPermission('bar'));
@@ -85,10 +85,10 @@ class RolePermissionManagerTest extends TestCase
 
         /** @var RolePermissionRepository $repository */
         $sut = new RolePermissionManager($repository, [
-            'ROLE_SUPER_ADMIN' => ['role_permissions', 'view_user', 'create_user'],
-            'TEST_ROLE' => ['foo2', 'foo'],
-            'USER_ROLE' => ['foo', 'bar']
-        ]);
+            'ROLE_SUPER_ADMIN' => ['role_permissions' => true, 'view_user' => true, 'create_user' => true],
+            'TEST_ROLE' => ['foo2' => true, 'foo' => true],
+            'USER_ROLE' => ['foo' => true, 'bar' => true]
+        ], ['role_permissions' => true, 'view_user' => true, 'create_user' => true, 'foo2' => true, 'foo' => true, 'bar' => true]);
 
         $user = new User();
         $user->addRole('TEST_ROLE');

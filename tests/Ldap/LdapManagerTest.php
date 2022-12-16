@@ -54,9 +54,10 @@ class LdapManagerTest extends TestCase
         $config = new LdapConfiguration($systemConfig);
 
         $roles = [
-            'ROLE_TEAMLEAD' => ['ROLE_USER'],
-            'ROLE_ADMIN' => ['ROLE_TEAMLEAD'],
-            'ROLE_SUPER_ADMIN' => ['ROLE_ADMIN']
+            'ROLE_USER',
+            'ROLE_TEAMLEAD',
+            'ROLE_ADMIN',
+            'ROLE_SUPER_ADMIN',
         ];
 
         return new LdapManager($driver, $config, (new RoleServiceFactory($this))->create($roles));
@@ -729,9 +730,10 @@ class LdapManagerTest extends TestCase
         ];
 
         $roles = [
-            'ROLE_TEAMLEAD' => ['ROLE_USER'],
-            'ROLE_ADMIN' => ['ROLE_TEAMLEAD'],
-            'ROLE_SUPER_ADMIN' => ['ROLE_ADMIN']
+            'ROLE_USER',
+            'ROLE_TEAMLEAD',
+            'ROLE_ADMIN',
+            'ROLE_SUPER_ADMIN',
         ];
 
         $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create($roles));

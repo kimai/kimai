@@ -5563,16 +5563,6 @@ parameters:
             path: Entity/RolePermissionTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\RoleTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/RoleTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\RoleTest\\:\\:testSetterAndGetter\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/RoleTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Entity\\\\TagTest\\:\\:testDefaultValues\\(\\) has no return type specified\\.$#"
             count: 1
             path: Entity/TagTest.php
@@ -12461,11 +12451,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Validator\\\\ValidationFailedExceptionTest\\:\\:testException\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/ValidationFailedExceptionTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\AbstractVoterTest\\:\\:getRolePermissionManager\\(\\) has parameter \\$permissions with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Voter/AbstractVoterTest.php
 
         -
             message: "#^Parameter \\#1 \\$objectOrClass of class ReflectionClass constructor expects class\\-string\\<T of object\\>\\|T of object, string given\\.$#"

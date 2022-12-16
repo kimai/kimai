@@ -124,11 +124,12 @@ services:
 
     App\Security\RoleService:
         arguments:
-            $roles: '%security.role_hierarchy.roles%'
+            $roles: '%kimai.permission_roles%'
 
     App\Security\RolePermissionManager:
         arguments:
             $permissions: '%kimai.permissions%'
+            $permissionNames: '%kimai.permission_names%'
 
     # ================================================================================
     # SAML Services

@@ -121,8 +121,6 @@ kimai:
             ROLE_TEAMLEAD: ['ROLE_TEAMLEAD']
             ROLE_ADMIN: ['ROLE_ADMIN']
             ROLE_SUPER_ADMIN: ['ROLE_SUPER_ADMIN']
-            # only here to register the (partially) unused permissions in the UI
-            ROLE_FAKE: ['CUSTOMERS_ALL_TEAMLEAD','CUSTOMERS_ALL_TEAM','PROJECTS_ALL_TEAMLEAD','PROJECTS_ALL_TEAM','ACTIVITIES_ALL_TEAMLEAD','ACTIVITIES_ALL_TEAM','INVOICE_ALL']
         # add or remove single permissions
         roles:
             ROLE_USER: []

@@ -42,7 +42,7 @@ class Role
 
     public function setName(string $name): Role
     {
-        $this->name = $name;
+        $this->name = strtoupper($name);
 
         return $this;
     }

@@ -58,7 +58,6 @@ final class PermissionController extends AbstractController
 
         // automatically import all hard coded (default) roles into the database table
         foreach ($roleService->getAvailableNames() as $roleName) {
-            $roleName = strtoupper($roleName);
             if (!\in_array($roleName, $existing)) {
                 $role = new Role();
                 $role->setName($roleName);
@@ -157,7 +156,7 @@ final class PermissionController extends AbstractController
             'sorted' => $event->getPermissions(),
             'manager' => $this->manager,
             'system_roles' => $roleService->getSystemRoles(),
-            'always_apply_superadmin' => RolePermissionManager::SUPER_ADMIN_PERMISSIONS,
+            'always_apply_superadmin' => array_keys(RolePermissionManager::SUPER_ADMIN_PERMISSIONS),
         ]);
     }
 
@@ -237,8 +236,8 @@ final class PermissionController extends AbstractController
             throw $this->createNotFoundException('Unknown permission: ' . $name);
         }
 
-        if (false === $value && $role->getName() === User::ROLE_SUPER_ADMIN && \in_array($name, RolePermissionManager::SUPER_ADMIN_PERMISSIONS)) {
-            throw $this->createAccessDeniedException(sprintf('Permission "%s" cannot be deactivated for role "%s"', $name, $role->getName()));
+        if (false === $value && $role->getName() === User::ROLE_SUPER_ADMIN && \array_key_exists($name, RolePermissionManager::SUPER_ADMIN_PERMISSIONS)) {
+            throw new BadRequestHttpException(sprintf('Permission "%s" cannot be deactivated for role "%s"', $name, $role->getName()));
         }
 
         try {

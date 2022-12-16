@@ -102,6 +102,10 @@
         <source>The given code is not the correct TOTP token.</source>
         <target>The given code is not the correct TOTP token.</target>
       </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
+        <source>This value is not a valid role name.</source>
+        <target>This is not a valid name for a user role.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

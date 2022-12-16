@@ -17,7 +17,7 @@
             {% set class = class ~ ' bg-green-lt' %}
         {% endif %}
         {% set options = {'class': class} %}
-        {% if canEditPermissions and role.name not in system_roles|keys %}
+        {% if canEditPermissions and (role.name not in system_roles) %}
             {% set widget %}
                 &nbsp;<a href="{{ path('admin_user_role_delete', {'id': role.id, 'csrfToken': token}) }}" class="confirmation-link" data-question="confirm.delete">{{ icon('trash') }}</a>
             {% endset %}

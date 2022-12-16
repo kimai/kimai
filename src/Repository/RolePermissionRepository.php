@@ -25,18 +25,21 @@ class RolePermissionRepository extends EntityRepository
         $entityManager->flush();
     }
 
-    public function findRolePermission(Role $role, string $permission)
+    public function findRolePermission(Role $role, string $permission): ?RolePermission
     {
         return $this->findOneBy(['role' => $role, 'permission' => $permission]);
     }
 
-    public function getAllAsArray()
+    /**
+     * @return array<array<string, string|bool>>
+     */
+    public function getAllAsArray(): array
     {
         $qb = $this->createQueryBuilder('rp');
 
         $qb->select('r.name as role,rp.permission,rp.allowed')
             ->leftJoin('rp.role', 'r');
 
-        return $qb->getQuery()->getArrayResult();
+        return $qb->getQuery()->getArrayResult(); // @phpstan-ignore-line
     }
 }

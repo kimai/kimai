@@ -32,11 +32,11 @@ final class RoleValidator extends ConstraintValidator
             $roles = [$roles];
         }
 
-        // the fos user entity uppercases the roles by default
-        $allowedRoles = array_map('strtoupper', $this->service->getAvailableNames());
+        // user entity uses uppercase for the roles
+        $allowedRoles = $this->service->getAvailableNames();
 
         foreach ($roles as $role) {
-            if (!\is_string($role) || !\in_array($role, $allowedRoles)) {
+            if (!\is_string($role) || !\in_array($role, $allowedRoles, true)) {
                 $this->context->buildViolation($constraint->message)
                     ->setParameter('{{ value }}', $this->formatValue($role))
                     ->setCode(Role::ROLE_ERROR)

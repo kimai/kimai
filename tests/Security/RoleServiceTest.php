@@ -21,14 +21,15 @@ class RoleServiceTest extends TestCase
     public function testWithEmptyRepository()
     {
         $real = [
-            'ROLE_TEAMLEAD' => ['ROLE_USER'],
-            'ROLE_ADMIN' => ['ROLE_TEAMLEAD'],
-            'ROLE_SUPER_ADMIN' => ['ROLE_ADMIN']
+            'ROLE_USER',
+            'ROLE_TEAMLEAD',
+            'ROLE_ADMIN',
+            'ROLE_SUPER_ADMIN',
         ];
 
         $sut = (new RoleServiceFactory($this))->create($real);
 
-        $expected = ['ROLE_TEAMLEAD', 'ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'];
+        $expected = ['ROLE_USER', 'ROLE_TEAMLEAD', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'];
 
         self::assertEquals($expected, $sut->getAvailableNames());
         self::assertEquals($real, $sut->getSystemRoles());
@@ -37,9 +38,10 @@ class RoleServiceTest extends TestCase
     public function testWithRepositoryData()
     {
         $real = [
-            'ROLE_TEAMLEAD' => [0 => 'ROLE_USER'],
-            'ROLE_ADMIN' => [0 => 'ROLE_TEAMLEAD'],
-            'ROLE_SUPER_ADMIN' => [0 => 'ROLE_ADMIN']
+            'ROLE_TEAMLEAD',
+            'ROLE_USER',
+            'ROLE_ADMIN',
+            'ROLE_SUPER_ADMIN',
         ];
 
         $repository = [

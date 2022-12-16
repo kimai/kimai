@@ -219,7 +219,7 @@ class LdapManager
                 $roleName = sprintf('ROLE_%s', self::slugify($roleName));
             }
 
-            if (!\in_array($roleName, $allowedRoles)) {
+            if (!\in_array($roleName, $allowedRoles, true)) {
                 continue;
             }
 

@@ -150,6 +150,18 @@ final class AppExtension extends Extension
      */
     private function createPermissionParameter(array $config, ContainerBuilder $container): void
     {
+        $names = [];
+        // this does not include all possible permission, as plugins do not register them and Kimai defines a couple of
+        // permissions as well, which are off by default for all roles
+        foreach ($config['sets'] as $set => $permNames) {
+            foreach ($permNames as $name) {
+                if (str_starts_with($name, '@') || str_starts_with($name, '!')) {
+                    continue;
+                }
+                $names[$name] = true;
+            }
+        }
+
         $roles = [];
         foreach ($config['maps'] as $role => $sets) {
             foreach ($sets as $set) {
@@ -168,27 +180,47 @@ final class AppExtension extends Extension
 
         // delete forbidden permissions from roles
         foreach (array_keys($config['maps']) as $name) {
-            $config['roles'][$name] = $this->getFilteredPermissions(
-                array_unique(array_merge($roles[$name], $config['roles'][$name] ?? []))
-            );
+            if (\array_key_exists($name, $config['roles'])) {
+                foreach ($config['roles'][$name] as $name2) {
+                    $roles[$name][$name2] = true;
+                }
+            }
+            $config['roles'][$name] = $this->getFilteredPermissions($roles[$name]);
+        }
+
+        // make sure to apply all other permissions that might have been registered through plugins
+        foreach ($config['roles'] as $role => $perms) {
+            $names = array_merge($names, $perms);
+        }
+
+        /** @var array<string, array<string>> $roles */
+        $securityRoles = $container->getParameter('security.role_hierarchy.roles');
+        $roles = [];
+        foreach ($securityRoles as $key => $value) {
+            $roles[] = $key;
+            foreach ($value as $name) {
+                $roles[] = $name;
+            }
         }
 
         $container->setParameter('kimai.permissions', $config['roles']);
+        $container->setParameter('kimai.permission_names', $names);
+        $container->setParameter('kimai.permission_roles', array_map('strtoupper', array_values(array_unique($roles))));
     }
 
     private function getFilteredPermissions(array $permissions): array
     {
         $deleteFromArray = array_filter($permissions, function ($permission): bool {
             return $permission[0] === '!';
-        });
+        }, ARRAY_FILTER_USE_KEY);
 
         return array_filter($permissions, function ($permission) use ($deleteFromArray): bool {
             if ($permission[0] === '!') {
                 return false;
             }
 
-            return !\in_array('!' . $permission, $deleteFromArray);
-        });
+            return !\array_key_exists('!' . $permission, $deleteFromArray);
+        }, ARRAY_FILTER_USE_KEY);
     }
 
     private function extractSinglePermissionsFromSet(array $permissions, string $name): array
@@ -206,7 +238,7 @@ final class AppExtension extends Extension
                     $this->extractSinglePermissionsFromSet($permissions, substr($permissionName, 1))
                 );
             } else {
-                $result[] = $permissionName;
+                $result[$permissionName] = true;
             }
         }
 

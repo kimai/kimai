@@ -14,6 +14,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 Developer read the full documentation at [https://www.kimai.org/documentation/migration-v2.html](https://www.kimai.org/documentation/migration-v2.html).
 
+- Role names are forced to be uppercase 
 - Removed unused `public/avatars/` directory 
 - `local.yaml` is not compatible with old version, remove it before the update and then re-create it after everything works 
   - dashboard default config

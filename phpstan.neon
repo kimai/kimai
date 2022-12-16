@@ -7456,16 +7456,6 @@ parameters:
             path: src/Repository/Result/TimesheetResult.php
 
         -
-            message: "#^Method App\\\\Repository\\\\RolePermissionRepository\\:\\:findRolePermission\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/RolePermissionRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\RolePermissionRepository\\:\\:getAllAsArray\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/RolePermissionRepository.php
-
-        -
             message: "#^Method App\\\\Repository\\\\RolePermissionRepository\\:\\:saveRolePermission\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/RolePermissionRepository.php
@@ -7861,42 +7851,7 @@ parameters:
             path: src/Security/KimaiUserProvider.php
 
         -
-            message: "#^Method App\\\\Security\\\\RolePermissionManager\\:\\:__construct\\(\\) has parameter \\$permissions with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Security/RolePermissionManager.php
-
-        -
-            message: "#^Method App\\\\Security\\\\RolePermissionManager\\:\\:getPermissions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Security/RolePermissionManager.php
-
-        -
-            message: "#^Method App\\\\Security\\\\RolePermissionManager\\:\\:getPermissions\\(\\) should return array but returns array\\<string\\>\\|null\\.$#"
-            count: 1
-            path: src/Security/RolePermissionManager.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of function in_array expects array, array\\<string\\>\\|null given\\.$#"
-            count: 1
-            path: src/Security/RolePermissionManager.php
-
-        -
-            message: "#^Method App\\\\Security\\\\RoleService\\:\\:__construct\\(\\) has parameter \\$roles with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Security/RoleService.php
-
-        -
-            message: "#^Method App\\\\Security\\\\RoleService\\:\\:getAvailableNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Security/RoleService.php
-
-        -
             message: "#^Method App\\\\Security\\\\RoleService\\:\\:getSystemRoles\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Security/RoleService.php
-
-        -
-            message: "#^Property App\\\\Security\\\\RoleService\\:\\:\\$roleNames \\(array\\<string\\>\\) does not accept array\\<int, mixed\\>\\.$#"
             count: 1
             path: src/Security/RoleService.php
 

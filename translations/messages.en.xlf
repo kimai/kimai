@@ -759,7 +759,7 @@
       </trans-unit>
       <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _">
         <source>Allowed character: A-Z and _</source>
-        <target>Allowed character: A-Z and _</target>
+        <target>Allowed character: A-Z and _ (min. 5 uppercase character)</target>
       </trans-unit>
       <!-- Plugins -->
       <trans-unit id="XKTzhQz" resname="version">

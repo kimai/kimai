@@ -767,7 +767,7 @@
       </trans-unit>
       <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _">
         <source>Allowed character: A-Z and _</source>
-        <target>Erlaubte Zeichen: A-Z und _</target>
+        <target>Erlaubte Zeichen: A-Z und _ (min. 5 Großbuchstaben)</target>
       </trans-unit>
       <!-- Admin: Plugins -->
       <trans-unit id="XKTzhQz" resname="version">

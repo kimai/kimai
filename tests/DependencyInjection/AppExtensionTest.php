@@ -32,6 +32,11 @@ class AppExtensionTest extends TestCase
         $container = new ContainerBuilder();
         $container->setParameter('app_locales', 'de|en|he|tr|zh_CN');
         $container->setParameter('kernel.project_dir', realpath(__DIR__ . '/../../'));
+        $container->setParameter('security.role_hierarchy.roles', [
+            'ROLE_TEAMLEAD' => ['ROLE_USER'],
+            'ROLE_ADMIN' => ['ROLE_TEAMLEAD'],
+            'ROLE_SUPER_ADMIN' => ['ROLE_ADMIN'],
+        ]);
 
         return $container;
     }

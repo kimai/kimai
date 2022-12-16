@@ -10,12 +10,13 @@
 namespace App\Form;
 
 use App\Entity\Role;
-use FOS\RestBundle\Validator\Constraints\Regex;
+use App\Validator\Constraints\RoleName;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class RoleType extends AbstractType
 {
@@ -25,7 +26,8 @@ final class RoleType extends AbstractType
             'label' => 'name',
             'help' => 'Allowed character: A-Z and _',
             'constraints' => [
-                new Regex(['pattern' => '/^[a-zA-Z_]{5,}$/'])
+                new NotBlank(),
+                new RoleName(),
             ],
             'attr' => [
                 'maxlength' => 50
@@ -39,7 +41,6 @@ final class RoleType extends AbstractType
                     if (\is_string($roleName)) {
                         $roleName = str_replace(' ', '_', $roleName);
                         $roleName = str_replace('-', '_', $roleName);
-                        $roleName = strtoupper($roleName);
                     }
 
                     return $roleName;
