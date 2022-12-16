@@ -87,7 +87,7 @@ final class InvoiceModelProjectHydrator implements InvoiceModelHydrator
             $values = array_merge($values, $this->getBudgetValues($prefix, $statistic, $model));
         }
 
-        foreach ($project->getVisibleMetaFields() as $metaField) {
+        foreach ($project->getMetaFields() as $metaField) {
             $values = array_merge($values, [
                 $prefix . 'meta.' . $metaField->getName() => $metaField->getValue(),
             ]);
