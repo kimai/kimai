@@ -43,7 +43,7 @@
         "onelogin/php-saml": "^4.0",
         "pagerfanta/pagerfanta": "^3.0",
         "phpoffice/phpspreadsheet": "^1.16",
-        "phpoffice/phpword": "^0.18",
+        "phpoffice/phpword": "^1.0",
         "psr/container": "^1.0||^2.0",
         "psr/log": "^2.0||^3.0",
         "scheb/2fa-backup-code": "^6.2",
