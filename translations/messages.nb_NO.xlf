@@ -43,7 +43,7 @@
       </trans-unit>
       <trans-unit id="BytPihM" resname="label.set_as_default">
         <source>label.set_as_default</source>
-        <target>Lagre innstilingene som søkefavoritt</target>
+        <target state="translated">Lagre innstilingen som søkefavoritt</target>
       </trans-unit>
       <trans-unit id="NNKq04n" resname="label.remove_default">
         <source>label.remove_default</source>
@@ -55,7 +55,7 @@
       </trans-unit>
       <trans-unit id="0D_zaYd" resname="label.desc">
         <source>label.desc</source>
-        <target>Fallende</target>
+        <target state="translated">Synkende</target>
       </trans-unit>
       <trans-unit id="Z8Fxbvf" resname="label.orderBy">
         <source>label.orderBy</source>
@@ -106,7 +106,7 @@
       </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
-        <target>Manglende tilgang. Videresend til innlogging?</target>
+        <target state="translated">Manglende tillatelse. Videresend til innlogging?</target>
       </trans-unit>
       <!--
               Menu / Navbar items
@@ -121,7 +121,7 @@
       </trans-unit>
       <trans-unit id="wBTFKFR" resname="menu.logout">
         <source>menu.logout</source>
-        <target state="needs-translation">Logg ut</target>
+        <target state="translated">Logg ut</target>
       </trans-unit>
       <trans-unit id="uZlpDFh" resname="label.endtime">
         <source>label.endtime</source>
@@ -217,7 +217,7 @@
       </trans-unit>
       <trans-unit id="3PYadzb" resname="dashboard.subtitle">
         <source>dashboard.subtitle</source>
-        <target>Velkommen.</target>
+        <target state="translated">Velkommen!</target>
       </trans-unit>
       <trans-unit id="yEa1Yz3" resname="dashboard.all">
         <source>dashboard.all</source>
@@ -466,7 +466,7 @@
       </trans-unit>
       <trans-unit id="vC2IsaP" resname="button.xlsx">
         <source>button.xlsx</source>
-        <target state="needs-translation">Excel</target>
+        <target state="translated">Excel</target>
       </trans-unit>
       <trans-unit id="aAa5uRR" resname="button.pdf">
         <source>button.pdf</source>
@@ -486,7 +486,7 @@
       </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
-        <target>Oversikt</target>
+        <target state="translated">Dashbord</target>
       </trans-unit>
       <trans-unit id="N7mikjJ" resname="time_tracking">
         <source>time_tracking</source>
@@ -494,11 +494,11 @@
       </trans-unit>
       <trans-unit id="DYHuW58" resname="confirm.delete">
         <source>confirm.delete</source>
-        <target state="needs-translation">Ønsker du å slette denne?</target>
+        <target state="translated">Er du sikker på at du vil slette dette?</target>
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target>Dataen vil også bli slettet. Alternativt kan du velge en oppføring å overføre den til:</target>
+        <target state="translated">Denne dataen vil også bli slettet! Alternativt kan du velge en oppføring hvor all data vil bli overført til:</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email">
         <source>resetting.check_email</source>
@@ -518,7 +518,7 @@
       </trans-unit>
       <trans-unit id="0M_Gylq" resname="rates.empty">
         <source>rates.empty</source>
-        <target>Ingen timevise satser har blitt satt opp enda.</target>
+        <target state="needs-translation">Ingen timevise satser har blitt satt opp enda.</target>
       </trans-unit>
       <trans-unit id="zFfl7jw" resname="sum.total">
         <source>sum.total</source>
@@ -526,11 +526,11 @@
       </trans-unit>
       <trans-unit id="XP5zkiN" resname="modal.dirty">
         <source>modal.dirty</source>
-        <target>Skjemaet har endret seg. Klikk «Lagre» for å lagre endringer, eller «Lukk» for å avbryte.</target>
+        <target state="translated">Skjemaet har endret seg. Vennligst trykk "Lagre" for å lagre endringene eller "Lukk" for å avbryte.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
-        <target>En e-post har blitt sendt til %email%. Den inneholder en invitasjonslenke du må klikke for å aktivere kontoen din.</target>
+        <target state="translated">En e-post har blitt sendt til %email%. Den inneholder en aktiveringslenke du må klikke på for å aktivere kontoen din.</target>
       </trans-unit>
       <trans-unit id="I.eil4u" resname="menu.export">
         <source>menu.export</source>
@@ -586,7 +586,7 @@
       </trans-unit>
       <trans-unit id="dezCZWf" resname="label.skin">
         <source>label.skin</source>
-        <target state="needs-translation">Vis: farger</target>
+        <target state="translated">Visning: farger</target>
       </trans-unit>
       <trans-unit id="Ih3IFXj" resname="label.rate">
         <source>label.rate</source>
@@ -626,11 +626,11 @@
       </trans-unit>
       <trans-unit id="C0W7_BT" resname="menu.timesheet">
         <source>menu.timesheet</source>
-        <target state="needs-translation">Min timeseddel</target>
+        <target state="translated">Min timeseddel</target>
       </trans-unit>
       <trans-unit id="WGIhZv1" resname="menu.admin_timesheet">
         <source>menu.admin_timesheet</source>
-        <target state="needs-translation">Timesedler</target>
+        <target state="translated">Timesedler</target>
       </trans-unit>
       <trans-unit id="uz4SmfP" resname="help.rate_internal">
         <source>help.rate_internal</source>
@@ -734,7 +734,7 @@
       </trans-unit>
       <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _">
         <source>Allowed character: A-Z and _</source>
-        <target state="needs-translation">Tillatte tegn: A-Å og _</target>
+        <target state="translated">Tillatte tegn: A-Z og _</target>
       </trans-unit>
       <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
         <source>ROLE_SUPER_ADMIN</source>
@@ -918,7 +918,7 @@
       </trans-unit>
       <trans-unit id="86KyrKO" resname="invoice.subtotal">
         <source>invoice.subtotal</source>
-        <target state="needs-translation">Nettobeløp</target>
+        <target state="translated">Nettobeløp</target>
       </trans-unit>
       <trans-unit id="EO57yXg" resname="invoice.tax">
         <source>invoice.tax</source>
@@ -1110,7 +1110,7 @@
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>
-        <target state="needs-translation">Forespørselen kunne ikke behandles. For mange resultater.</target>
+        <target state="translated">Forespørselen kunne ikke behandles. For mange resultater ble funnet.</target>
       </trans-unit>
       <trans-unit id="SR2r1Cs" resname="invoices">
         <source>invoices</source>
@@ -1206,7 +1206,7 @@
       </trans-unit>
       <trans-unit id="nVulc7." resname="label.includeBudgetType_full">
         <source>label.includeBudgetType_full</source>
-        <target state="needs-translation">Vis oppføringer med «livssyklus»-budsjett</target>
+        <target state="translated">Vis oppføringer med "livssyklus"-budsjett</target>
       </trans-unit>
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
@@ -1214,7 +1214,7 @@
       </trans-unit>
       <trans-unit id="DpdNns0" resname="label.choice_pattern">
         <source>Display of entries in selection lists</source>
-        <target>Vis oppføringer i utvalgslister</target>
+        <target state="translated">Visning av oppføringer i utvalgslister</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
@@ -1230,15 +1230,15 @@
       </trans-unit>
       <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
         <source>invoice_document.max_reached</source>
-        <target state="needs-translation">Nådde maksimalt antall på %max% fakturadokumenter. Du kan legge til flere etter å ha fjernet ett.</target>
+        <target state="translated">Nådde maksimalt antall på %max% fakturadokumenter. Du kan legge til flere etter å ha fjernet ett.</target>
       </trans-unit>
       <trans-unit id="9Rhadz6" resname="label.budgetType_full">
         <source>label.budgetType_full</source>
-        <target state="needs-translation">Livssyklus</target>
+        <target state="translated">Livssyklus</target>
       </trans-unit>
       <trans-unit id="42BRM3Q" resname="label.theme.layout">
         <source>label.theme.layout</source>
-        <target state="needs-translation">Vist: oppsettet</target>
+        <target state="translated">Visning: oppsett</target>
       </trans-unit>
       <trans-unit id="U_D.NIy" resname="automatic">
         <source>automatic</source>
@@ -1254,7 +1254,7 @@
       </trans-unit>
       <trans-unit id="G9hBaDJ" resname="label.globalActivities">
         <source>label.globalActivities</source>
-        <target state="needs-translation">Tillat globale begivenheter</target>
+        <target state="translated">Tillat globale hendelser</target>
       </trans-unit>
     </body>
   </file>
