@@ -31,6 +31,9 @@ final class DefaultCalculator extends AbstractMergedCalculator implements Calcul
             $item = new InvoiceItem();
             $this->mergeInvoiceItems($item, $entry);
             foreach ($entry->getMetaFields() as $field) {
+                if ($field->getName() === null) {
+                    continue;
+                }
                 $item->addAdditionalField($field->getName(), $field->getValue());
             }
             $entries[] = $item;

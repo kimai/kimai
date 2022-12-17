@@ -4301,6 +4301,11 @@ parameters:
             path: src/Form/MultiUpdate/TimesheetMultiUpdateDTO.php
 
         -
+            message: "#^Method App\\\\Entity\\\\ExportableItem\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
+            count: 1
+            path: src/Entity/ExportableItem.php
+
+        -
             message: "#^Method App\\\\Form\\\\MultiUpdate\\\\TimesheetMultiUpdateDTO\\:\\:setTags\\(\\) has parameter \\$tags with no value type specified in iterable type iterable\\.$#"
             count: 1
             path: src/Form/MultiUpdate/TimesheetMultiUpdateDTO.php
@@ -5854,11 +5859,6 @@ parameters:
             message: "#^Parameter \\#1 \\$begin of method App\\\\Invoice\\\\InvoiceItem\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Invoice/Calculator/AbstractMergedCalculator.php
-
-        -
-            message: "#^Parameter \\#1 \\$name of method App\\\\Invoice\\\\InvoiceItem\\:\\:addAdditionalField\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Invoice/Calculator/DefaultCalculator.php
 
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"

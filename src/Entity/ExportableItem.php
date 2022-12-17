@@ -9,6 +9,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
+
 interface ExportableItem
 {
     /**
@@ -73,6 +75,11 @@ interface ExportableItem
      * @return MetaTableTypeInterface[]
      */
     public function getVisibleMetaFields(): array;
+
+    /**
+     * @return Collection<MetaTableTypeInterface>
+     */
+    public function getMetaFields(): Collection;
 
     /**
      * A name representation for this type of item.
