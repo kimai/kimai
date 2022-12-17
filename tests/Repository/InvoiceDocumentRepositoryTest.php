@@ -23,20 +23,17 @@ class InvoiceDocumentRepositoryTest extends TestCase
     ];
 
     protected static $testDocuments = [
+        'company.docx',
         'spreadsheet.xsls',
         'open-spreadsheet.ods',
         'default.pdf.twig',
     ];
 
     protected static $defaultDocuments = [
-        'company.docx',
         'default.html.twig',
         'default-pdf.pdf.twig',
         'freelancer.pdf.twig',
         'timesheet.html.twig',
-        'text.txt.twig',
-        'javascript.json.twig',
-        'xml.xml.twig',
     ];
 
     public function testDirectories()

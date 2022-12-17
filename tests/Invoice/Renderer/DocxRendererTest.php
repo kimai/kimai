@@ -50,18 +50,6 @@ class DocxRendererTest extends TestCase
 
         $this->assertTrue(file_exists($file->getRealPath()));
 
-        // TODO test document content?
-        /*
-        $content = file_get_contents($file->getRealPath());
-        $this->assertNotContains('${', $content);
-        $this->assertStringContainsString(',"1,947.99" ', $content);
-        $this->assertEquals(6, substr_count($content, PHP_EOL));
-        $this->assertEquals(5, substr_count($content, 'activity description'));
-        $this->assertEquals(1, substr_count($content, ',"kevin",'));
-        $this->assertEquals(2, substr_count($content, ',"hello-world",'));
-        $this->assertEquals(2, substr_count($content, ',"foo-bar",'));
-        */
-
         ob_start();
         $response->sendContent();
         $content2 = ob_get_clean();
