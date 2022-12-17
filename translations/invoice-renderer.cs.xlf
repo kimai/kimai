@@ -52,7 +52,7 @@
       </trans-unit>
       <trans-unit id="sXlZPOC" resname="Xls">
         <source>Microsoft Excel (XLS)</source>
-        <target state="needs-translation">Microsoft Excel (XLS)</target>
+        <target state="translated">Microsoft Excel (XLS)</target>
       </trans-unit>
       <trans-unit id="sjwwrr8" resname="Xlsx">
         <source>Microsoft Excel (XLSX)</source>
