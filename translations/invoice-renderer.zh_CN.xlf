@@ -6,40 +6,28 @@
         <source>invoice_renderer</source>
         <target>发票文件</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
-        <source>default</source>
+      <trans-unit id="N6juwc4" resname="invoice">
+        <source>invoice</source>
         <target state="translated">发票</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
         <target>时间表</target>
       </trans-unit>
-      <trans-unit id="M82JFjR" resname="freelancer">
-        <source>freelancer</source>
+      <trans-unit id="M82JFjR" resname="service-date">
+        <source>service-date</source>
         <target>兼职人员</target>
-      </trans-unit>
-      <trans-unit id="XUbhXLF" resname="open-spreadsheet">
-        <source>open-spreadsheet</source>
-        <target>电子表格</target>
-      </trans-unit>
-      <trans-unit id="U_VP0mi" resname="spreadsheet">
-        <source>spreadsheet</source>
-        <target>Excel表格</target>
       </trans-unit>
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>数据输出</target>
       </trans-unit>
-      <trans-unit id="8WjM3ZF" resname="company">
-        <source>company</source>
-        <target>公司发票</target>
-      </trans-unit>
       <trans-unit id="nA.KOyM" resname="Html">
         <source>Html</source>
         <target state="translated">HTML（用于通过浏览器打印）</target>
       </trans-unit>
-      <trans-unit id="jV1SPRL" resname="default-pdf">
-        <source>default-pdf</source>
+      <trans-unit id="jV1SPRL" resname="default">
+        <source>default</source>
         <target state="translated">发票</target>
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">

@@ -6,8 +6,8 @@
         <source>invoice_renderer</source>
         <target>Template Fattura</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
-        <source>default</source>
+      <trans-unit id="N6juwc4" resname="invoice">
+        <source>invoice</source>
         <target>Fattura (default)</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">

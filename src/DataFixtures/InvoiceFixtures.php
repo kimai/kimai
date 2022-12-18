@@ -85,11 +85,10 @@ final class InvoiceFixtures extends Fixture
 
         // name, title, renderer, calculator, numberGenerator, company, vat, dueDays, address, paymentTerms
         return [
-            ['Invoice (PDF)',             'Invoice',         'default-pdf',      'default',  'default', $faker->company(), 16, 10, $paymentTerms],
-            ['Invoice (HTML)',            'Company name',    'default',          'default',  'default', $faker->company(), 19, 30, $paymentTerms],
-            ['Freelancer (HTML, short)',  'Invoice',         'freelancer',       'short',    'default', $faker->company(), 19, 14, $paymentTerms_de],
-            ['Timesheet (HTML)',          'Timesheet',       'timesheet',        'default',  'default', $faker->company(), 19, 7,  $paymentTerms_alt],
-            ['Company invoice (DOCX)',    'Invoice',         'company',          'default',  'default', 'Kimai Inc.',    19, 14, $paymentTerms_alt],
+            ['Default (PDF)',             'Invoice',         'default',         'default',  'default', $faker->company(), 16, 10, $paymentTerms],
+            ['Invoice (HTML)',            'Company name',    'invoice',         'default',  'default', $faker->company(), 19, 30, $paymentTerms],
+            ['Single service date (PDF)', 'Invoice',         'service-date',    'short',    'default', $faker->company(), 19, 14, $paymentTerms_de],
+            ['Timesheet (HTML)',          'Timesheet',       'timesheet',       'default',  'default', $faker->company(), 19, 7,  $paymentTerms_alt],
         ];
     }
 

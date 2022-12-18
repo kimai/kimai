@@ -6,33 +6,21 @@
         <source>invoice_renderer</source>
         <target>Faktura dokumento</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
-        <source>default</source>
+      <trans-unit id="N6juwc4" resname="invoice">
+        <source>invoice</source>
         <target>Fakturo (defaŭlte)</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
         <target>Temposlipo</target>
       </trans-unit>
-      <trans-unit id="M82JFjR" resname="freelancer">
-        <source>freelancer</source>
+      <trans-unit id="M82JFjR" resname="service-date">
+        <source>service-date</source>
         <target>Sendependa laboristo</target>
-      </trans-unit>
-      <trans-unit id="XUbhXLF" resname="open-spreadsheet">
-        <source>open-spreadsheet</source>
-        <target>Calc kalkultabelilo</target>
-      </trans-unit>
-      <trans-unit id="U_VP0mi" resname="spreadsheet">
-        <source>spreadsheet</source>
-        <target>Excel</target>
       </trans-unit>
       <trans-unit id="1GruCMx" resname="export">
         <source>export</source>
         <target>Eksporto de datumoj</target>
-      </trans-unit>
-      <trans-unit id="8WjM3ZF" resname="company">
-        <source>company</source>
-        <target>Fakturo de kompanio</target>
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>

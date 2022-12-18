@@ -85,6 +85,9 @@ final class Version20993112235958 extends AbstractMigration
         $this->addSql("UPDATE kimai2_configuration SET `value` = '15' WHERE `name` = 'timesheet.time_increment' and `value` = '0'");
         $this->addSql("UPDATE kimai2_configuration SET `value` = '5' WHERE `name` = 'timesheet.time_increment' and `value` IN ('1', '2', '3', '4')");
         $this->addSql("UPDATE kimai2_roles SET `name` = UPPER(`name`)");
+        $this->addSql("UPDATE kimai2_invoice_templates SET `renderer` = 'service-date' WHERE `renderer` = 'freelancer'");
+        $this->addSql("UPDATE kimai2_invoice_templates SET `renderer` = 'invoice' WHERE `renderer` = 'default'");
+        $this->addSql("UPDATE kimai2_invoice_templates SET `renderer` = 'default' WHERE `renderer` = 'default-pdf'");
     }
 
     public function down(Schema $schema): void

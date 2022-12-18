@@ -20,12 +20,12 @@
         <target state="translated">HTML (для друку через браузер)</target>
       </trans-unit>
       <!-- Renderer -->
-      <trans-unit id="N6juwc4" resname="default">
-        <source>default</source>
+      <trans-unit id="N6juwc4" resname="invoice">
+        <source>invoice</source>
         <target state="translated">Рахунок</target>
       </trans-unit>
-      <trans-unit id="jV1SPRL" resname="default-pdf">
-        <source>default-pdf</source>
+      <trans-unit id="jV1SPRL" resname="default">
+        <source>default</source>
         <target state="translated">Рахунок</target>
       </trans-unit>
       <trans-unit id="mC2ePrm" resname="text">
@@ -36,21 +36,9 @@
         <source>timesheet</source>
         <target state="translated">Табель робочого часу</target>
       </trans-unit>
-      <trans-unit id="M82JFjR" resname="freelancer" approved="no">
+      <trans-unit id="M82JFjR" resname="service-date" approved="no">
         <source>Single service date</source>
         <target state="translated">Єдина сервісна дата</target>
-      </trans-unit>
-      <trans-unit id="XUbhXLF" resname="open-spreadsheet">
-        <source>open-spreadsheet</source>
-        <target state="translated">Рахунок</target>
-      </trans-unit>
-      <trans-unit id="U_VP0mi" resname="spreadsheet">
-        <source>spreadsheet</source>
-        <target state="translated">Рахунок</target>
-      </trans-unit>
-      <trans-unit id="8WjM3ZF" resname="company">
-        <source>company</source>
-        <target state="translated">Рахунок</target>
       </trans-unit>
     </body>
   </file>
