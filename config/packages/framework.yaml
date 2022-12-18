@@ -13,11 +13,6 @@ framework:
         cookie_httponly: true
         storage_factory_id: session.storage.factory.native
 
-    cache:
-        pools:
-            kimai:
-                adapter: cache.app
-
     #esi: ~
     #fragments: ~
     php_errors:
