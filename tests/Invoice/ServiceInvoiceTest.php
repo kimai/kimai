@@ -214,24 +214,28 @@ class ServiceInvoiceTest extends TestCase
         $customer1 = $this->createMock(Customer::class);
         $customer1->method('getId')->willReturn(1);
         $customer1->method('getName')->willReturn('customer1');
+        $customer1->method('isVisible')->willReturn(true);
         $project1 = new Project();
         $project1->setCustomer($customer1);
 
         $customer2 = $this->createMock(Customer::class);
         $customer2->method('getId')->willReturn(2);
         $customer2->method('getName')->willReturn('customer2');
+        $customer2->method('isVisible')->willReturn(true);
         $project2 = new Project();
         $project2->setCustomer($customer2);
 
         $customer3 = $this->createMock(Customer::class);
         $customer3->method('getId')->willReturn(3);
         $customer3->method('getName')->willReturn('customer3');
+        $customer3->method('isVisible')->willReturn(true);
         $project3 = new Project();
         $project3->setCustomer($customer3);
 
         $customer4 = $this->createMock(Customer::class);
         $customer4->method('getId')->willReturn(4);
         $customer4->method('getName')->willReturn('customer4');
+        $customer4->method('isVisible')->willReturn(true);
         $project4 = new Project();
         $project4->setCustomer($customer4);
 

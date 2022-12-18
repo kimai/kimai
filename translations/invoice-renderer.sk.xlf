@@ -6,7 +6,7 @@
         <source>invoice_renderer</source>
         <target>Fakturačný doklad</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="invoice">
+      <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target>Faktúra (default)</target>
       </trans-unit>
@@ -14,7 +14,7 @@
         <source>timesheet</source>
         <target>Pracovný výkaz</target>
       </trans-unit>
-      <trans-unit id="M82JFjR" resname="service-date">
+      <trans-unit id="m1UyfD9" resname="service-date">
         <source>service-date</source>
         <target>Nezávislý pracovník</target>
       </trans-unit>

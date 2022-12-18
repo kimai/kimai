@@ -8298,41 +8298,6 @@ parameters:
             path: Invoice/Renderer/DocxRendererTest.php
 
         -
-            message: "#^Cannot call method getEntries\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 1
-            path: Invoice/Renderer/JsonRendererTest.php
-
-        -
-            message: "#^Cannot call method push\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Invoice/Renderer/JsonRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\JsonRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Renderer/JsonRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\JsonRendererTest\\:\\:getNumberGeneratorSut\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/JsonRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\JsonRendererTest\\:\\:testRender\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/JsonRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\JsonRendererTest\\:\\:testSupports\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/JsonRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 1
-            path: Invoice/Renderer/JsonRendererTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\OdsRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
             count: 1
             path: Invoice/Renderer/OdsRendererTest.php
@@ -8421,51 +8386,6 @@ parameters:
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
             count: 2
             path: Invoice/Renderer/PdfRendererTest.php
-
-        -
-            message: "#^Cannot call method getEntries\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 2
-            path: Invoice/Renderer/TextRendererTest.php
-
-        -
-            message: "#^Cannot call method push\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Invoice/Renderer/TextRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\TextRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Renderer/TextRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\TextRendererTest\\:\\:getNumberGeneratorSut\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/TextRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\TextRendererTest\\:\\:testRender\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/TextRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\TextRendererTest\\:\\:testSupports\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/TextRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$haystack of function substr_count expects string, string\\|false given\\.$#"
-            count: 1
-            path: Invoice/Renderer/TextRendererTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 1
-            path: Invoice/Renderer/TextRendererTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 4
-            path: Invoice/Renderer/TextRendererTest.php
 
         -
             message: "#^Cannot call method push\\(\\) on object\\|null\\.$#"
@@ -8561,41 +8481,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\XlsxRendererTest\\:\\:testSupports\\(\\) has no return type specified\\.$#"
             count: 1
             path: Invoice/Renderer/XlsxRendererTest.php
-
-        -
-            message: "#^Cannot call method getEntries\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 1
-            path: Invoice/Renderer/XmlRendererTest.php
-
-        -
-            message: "#^Cannot call method push\\(\\) on object\\|null\\.$#"
-            count: 1
-            path: Invoice/Renderer/XmlRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\XmlRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Renderer/XmlRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\XmlRendererTest\\:\\:getNumberGeneratorSut\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/XmlRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\XmlRendererTest\\:\\:testRender\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/XmlRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\XmlRendererTest\\:\\:testSupports\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Invoice/Renderer/XmlRendererTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$data of class SimpleXMLElement constructor expects string, string\\|false given\\.$#"
-            count: 1
-            path: Invoice/Renderer/XmlRendererTest.php
 
         -
             message: "#^Cannot call method getLanguage\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
@@ -9518,16 +9403,6 @@ parameters:
             path: Repository/AbstractRepositoryTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\InvoiceDocumentRepositoryTest\\:\\:testDefaultTemplatesExists\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/InvoiceDocumentRepositoryTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\InvoiceDocumentRepositoryTest\\:\\:testDirectories\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Repository/InvoiceDocumentRepositoryTest.php
-
-        -
             message: "#^Parameter \\#1 \\$directory of method App\\\\Repository\\\\InvoiceDocumentRepository\\:\\:addDirectory\\(\\) expects string, string\\|false given\\.$#"
             count: 1
             path: Repository/InvoiceDocumentRepositoryTest.php
@@ -9535,21 +9410,6 @@ parameters:
         -
             message: "#^Parameter \\#3 \\$length of function substr expects int\\|null, int\\<0, max\\>\\|false given\\.$#"
             count: 3
-            path: Repository/InvoiceDocumentRepositoryTest.php
-
-        -
-            message: "#^Property App\\\\Tests\\\\Repository\\\\InvoiceDocumentRepositoryTest\\:\\:\\$defaultDirectories has no type specified\\.$#"
-            count: 1
-            path: Repository/InvoiceDocumentRepositoryTest.php
-
-        -
-            message: "#^Property App\\\\Tests\\\\Repository\\\\InvoiceDocumentRepositoryTest\\:\\:\\$defaultDocuments has no type specified\\.$#"
-            count: 1
-            path: Repository/InvoiceDocumentRepositoryTest.php
-
-        -
-            message: "#^Property App\\\\Tests\\\\Repository\\\\InvoiceDocumentRepositoryTest\\:\\:\\$testDocuments has no type specified\\.$#"
-            count: 1
             path: Repository/InvoiceDocumentRepositoryTest.php
 
         -

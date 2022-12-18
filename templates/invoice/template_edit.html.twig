@@ -46,7 +46,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    {{ form_row(form.renderer) }}
+                    {{ form_row(form.renderer, {'help_html': true, 'help': '<a href="https://github.com/kimai/invoice-templates" target="_blank">' ~ ('download_invoice_renderer'|trans({}, 'invoice-renderer')) ~ '</a>'}) }}
                 </div>
                 <div class="col-md-6">
                     {{ form_row(form.language) }}

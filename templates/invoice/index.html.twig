@@ -146,7 +146,6 @@
                                         {{ form_start(customerForm) }}
                                         {{ form_rest(customerForm) }}
                                         {{ form_end(customerForm) }}
-                                        {% set customer = model.query.customers[0] %}
                                         {% set isDecimal = true %}
                                         {% set entries = model.calculator.entries %}
                                         {% set currency = model.currency %}

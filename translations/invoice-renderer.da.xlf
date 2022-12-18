@@ -6,7 +6,7 @@
         <source>invoice_renderer</source>
         <target>Faktura dokument</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="invoice">
+      <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target>Faktura (standard)</target>
       </trans-unit>
@@ -14,7 +14,7 @@
         <source>timesheet</source>
         <target>Timeseddel</target>
       </trans-unit>
-      <trans-unit id="M82JFjR" resname="service-date">
+      <trans-unit id="m1UyfD9" resname="service-date">
         <source>service-date</source>
         <target>Freelancer</target>
       </trans-unit>

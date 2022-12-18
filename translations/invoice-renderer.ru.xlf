@@ -6,7 +6,7 @@
         <source>invoice_renderer</source>
         <target>Шаблон счета</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="invoice">
+      <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target state="translated">Счёт</target>
       </trans-unit>
@@ -38,7 +38,7 @@
         <source>Pdf</source>
         <target state="translated">PDF</target>
       </trans-unit>
-      <trans-unit id="M82JFjR" resname="service-date" approved="no">
+      <trans-unit id="m1UyfD9" resname="service-date" approved="no">
         <source>Single service date</source>
         <target state="translated">Единая дата обслуживания</target>
       </trans-unit>
@@ -46,7 +46,7 @@
         <source>Open Office (ODS - Spreadsheet)</source>
         <target state="translated">LibreOffice (ODS - электронные таблицы)</target>
       </trans-unit>
-      <trans-unit id="jV1SPRL" resname="default">
+      <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
         <target state="translated">Счёт</target>
       </trans-unit>

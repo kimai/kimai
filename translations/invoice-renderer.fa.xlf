@@ -20,11 +20,11 @@
         <target state="translated">HTML (برای چاپ از طریق مرورگر)</target>
       </trans-unit>
       <!-- Renderer -->
-      <trans-unit id="N6juwc4" resname="invoice">
+      <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target state="translated">صورتحساب</target>
       </trans-unit>
-      <trans-unit id="jV1SPRL" resname="default">
+      <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
         <target state="translated">صورتحساب</target>
       </trans-unit>
@@ -36,7 +36,7 @@
         <source>timesheet</source>
         <target state="translated">تایم شیت</target>
       </trans-unit>
-      <trans-unit id="M82JFjR" resname="service-date">
+      <trans-unit id="m1UyfD9" resname="service-date">
         <source>Single service date</source>
         <target state="translated">تاریخ تک سرویس</target>
       </trans-unit>

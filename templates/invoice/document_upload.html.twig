@@ -11,6 +11,9 @@
             {% block box_body %}
                 {{ form_start(form) }}
                 {{ form_row(form.document) }}
+                <p>
+                <a href="https://github.com/kimai/invoice-templates" target="_blank">{{ 'download_invoice_renderer'|trans({}, 'invoice-renderer') }}</a>
+                </p>
                 {{ form_end(form) }}
             {% endblock %}
             {% block box_footer %}

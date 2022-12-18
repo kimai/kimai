@@ -20,12 +20,12 @@ class InvoiceDocumentTest extends TestCase
     public function testDefaultValues(): void
     {
         $dir = realpath(__DIR__ . '/../../templates/invoice/renderer');
-        $sut = new InvoiceDocument(new \SplFileInfo($dir . '/default.html.twig'));
+        $sut = new InvoiceDocument(new \SplFileInfo($dir . '/invoice.html.twig'));
 
         self::assertEquals('twig', $sut->getFileExtension());
-        self::assertStringContainsString('templates/invoice/renderer/default.html.twig', $sut->getFilename());
-        self::assertEquals('default', $sut->getId());
-        self::assertEquals('default.html.twig', $sut->getName());
+        self::assertStringContainsString('templates/invoice/renderer/invoice.html.twig', $sut->getFilename());
+        self::assertEquals('invoice', $sut->getId());
+        self::assertEquals('invoice.html.twig', $sut->getName());
         self::assertIsInt($sut->getLastChange());
     }
 

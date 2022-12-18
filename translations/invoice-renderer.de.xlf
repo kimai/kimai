@@ -10,6 +10,10 @@
         <source>help.upload</source>
         <target state="translated">Achtung: existierende Dateien werden überschrieben. Erlaubte Dateitypen sind: DOCX, ODS, XLSX.</target>
       </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+        <source>download_invoice_renderer</source>
+        <target state="translated">Sie können weitere Vorlagen hier herunterladen</target>
+      </trans-unit>
       <!-- Optgroups -->
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>
@@ -20,11 +24,11 @@
         <target>HTML (zum Drucken via Browser)</target>
       </trans-unit>
       <!-- Renderer -->
-      <trans-unit id="N6juwc4" resname="invoice">
+      <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target>Rechnung</target>
       </trans-unit>
-      <trans-unit id="jV1SPRL" resname="default">
+      <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
         <target>Rechnung</target>
       </trans-unit>
@@ -36,7 +40,7 @@
         <source>timesheet</source>
         <target>Stundenzettel</target>
       </trans-unit>
-      <trans-unit id="M82JFjR" resname="service-date">
+      <trans-unit id="m1UyfD9" resname="service-date">
         <source>service-date</source>
         <target>Leistungsdatum</target>
       </trans-unit>

@@ -6,7 +6,7 @@
         <source>invoice_renderer</source>
         <target state="translated">Fatura dökümanı</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="invoice">
+      <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target state="translated">Fatura (şablon)</target>
       </trans-unit>
@@ -14,7 +14,7 @@
         <source>timesheet</source>
         <target state="translated">Zaman çizelgesi</target>
       </trans-unit>
-      <trans-unit id="M82JFjR" resname="service-date">
+      <trans-unit id="m1UyfD9" resname="service-date">
         <source>service-date</source>
         <target state="translated">Serbest çalışan</target>
       </trans-unit>
@@ -26,7 +26,7 @@
         <source>programmatic</source>
         <target>Daha fazla işlem için</target>
       </trans-unit>
-      <trans-unit id="jV1SPRL" resname="default">
+      <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
         <target>Fatura</target>
       </trans-unit>

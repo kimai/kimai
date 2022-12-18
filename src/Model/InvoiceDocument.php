@@ -31,7 +31,7 @@ final class InvoiceDocument
     {
         $path = $this->file->getRealPath();
         if ($path === false) {
-            throw new \Exception('Invoice template got deleted from filesystem');
+            throw new \Exception('Invoice template got deleted from filesystem: ' . $this->file->getFilename());
         }
 
         return $path;
@@ -46,7 +46,7 @@ final class InvoiceDocument
     {
         $modified = $this->file->getMTime();
         if ($modified === false) {
-            throw new \Exception('Invoice template got deleted from filesystem');
+            throw new \Exception('Invoice template got deleted from filesystem: ' . $this->file->getFilename());
         }
 
         return $modified;

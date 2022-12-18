@@ -10,7 +10,7 @@
         <source>help.upload</source>
         <target state="translated">Obs: redan exsiterande filer kommer att skrivas över. Tillåtna fil typer är: DOCX, ODS, XLSX.</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="invoice">
+      <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target state="translated">Faktura</target>
       </trans-unit>
@@ -18,7 +18,7 @@
         <source>timesheet</source>
         <target state="translated">Tidrapport</target>
       </trans-unit>
-      <trans-unit id="M82JFjR" resname="service-date">
+      <trans-unit id="m1UyfD9" resname="service-date">
         <source>service-date</source>
         <target state="translated">Frilansare</target>
       </trans-unit>
@@ -34,7 +34,7 @@
         <source>Html</source>
         <target state="translated">HTML (för utskrift från webbläsare)</target>
       </trans-unit>
-      <trans-unit id="jV1SPRL" resname="default">
+      <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
         <target state="translated">Faktura</target>
       </trans-unit>

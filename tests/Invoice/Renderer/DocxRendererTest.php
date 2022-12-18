@@ -26,10 +26,10 @@ class DocxRendererTest extends TestCase
     {
         $sut = $this->getAbstractRenderer(DocxRenderer::class);
 
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('default.html.twig')));
-        $this->assertFalse($sut->supports($this->getInvoiceDocument('freelancer.pdf.twig')));
+        $this->assertFalse($sut->supports($this->getInvoiceDocument('invoice.html.twig')));
+        $this->assertFalse($sut->supports($this->getInvoiceDocument('service-date.pdf.twig')));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('timesheet.html.twig')));
-        $this->assertTrue($sut->supports($this->getInvoiceDocument('company.docx')));
+        $this->assertTrue($sut->supports($this->getInvoiceDocument('company.docx', true)));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('spreadsheet.xlsx', true)));
         $this->assertFalse($sut->supports($this->getInvoiceDocument('open-spreadsheet.ods', true)));
     }
@@ -39,7 +39,7 @@ class DocxRendererTest extends TestCase
         /** @var DocxRenderer $sut */
         $sut = $this->getAbstractRenderer(DocxRenderer::class);
         $model = $this->getInvoiceModel();
-        $document = $this->getInvoiceDocument('company.docx');
+        $document = $this->getInvoiceDocument('company.docx', true);
         /** @var BinaryFileResponse $response */
         $response = $sut->render($document, $model);
 

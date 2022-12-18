@@ -6,7 +6,7 @@
         <source>invoice_renderer</source>
         <target>发票文件</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="invoice">
+      <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target state="translated">发票</target>
       </trans-unit>
@@ -14,7 +14,7 @@
         <source>timesheet</source>
         <target>时间表</target>
       </trans-unit>
-      <trans-unit id="M82JFjR" resname="service-date">
+      <trans-unit id="m1UyfD9" resname="service-date">
         <source>service-date</source>
         <target>兼职人员</target>
       </trans-unit>
@@ -26,7 +26,7 @@
         <source>Html</source>
         <target state="translated">HTML（用于通过浏览器打印）</target>
       </trans-unit>
-      <trans-unit id="jV1SPRL" resname="default">
+      <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
         <target state="translated">发票</target>
       </trans-unit>

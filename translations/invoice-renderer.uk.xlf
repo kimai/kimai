@@ -20,11 +20,11 @@
         <target state="translated">HTML (для друку через браузер)</target>
       </trans-unit>
       <!-- Renderer -->
-      <trans-unit id="N6juwc4" resname="invoice">
+      <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target state="translated">Рахунок</target>
       </trans-unit>
-      <trans-unit id="jV1SPRL" resname="default">
+      <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
         <target state="translated">Рахунок</target>
       </trans-unit>
@@ -36,7 +36,7 @@
         <source>timesheet</source>
         <target state="translated">Табель робочого часу</target>
       </trans-unit>
-      <trans-unit id="M82JFjR" resname="service-date" approved="no">
+      <trans-unit id="m1UyfD9" resname="service-date" approved="no">
         <source>Single service date</source>
         <target state="translated">Єдина сервісна дата</target>
       </trans-unit>

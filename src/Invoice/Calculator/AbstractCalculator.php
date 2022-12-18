@@ -14,15 +14,7 @@ use App\Invoice\InvoiceModel;
 
 abstract class AbstractCalculator
 {
-    /**
-     * @var string
-     */
-    protected $currency;
-
-    /**
-     * @var InvoiceModel
-     */
-    protected $model;
+    protected InvoiceModel $model;
 
     /**
      * @return InvoiceItem[]
