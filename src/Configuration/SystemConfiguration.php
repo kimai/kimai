@@ -9,8 +9,6 @@
 
 namespace App\Configuration;
 
-use App\Entity\Configuration;
-
 final class SystemConfiguration
 {
     private bool $initialized = false;
@@ -19,22 +17,13 @@ final class SystemConfiguration
     {
     }
 
-    /**
-     * @param ConfigLoaderInterface $repository
-     * @return Configuration[]
-     */
-    private function getConfigurations(ConfigLoaderInterface $repository): array
-    {
-        return $repository->getConfiguration();
-    }
-
     private function prepare(): void
     {
         if ($this->initialized) {
             return;
         }
 
-        foreach ($this->getConfigurations($this->repository) as $configuration) {
+        foreach ($this->repository->getConfiguration() as $configuration) {
             $this->set($configuration->getName(), $configuration->getValue());
         }
 
