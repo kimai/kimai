@@ -278,7 +278,7 @@
         <source>label.quick_entry.recent_activity_weeks</source>
         <target state="translated">Πάρε τον έλεγχο καταχωρήσεων από τις τελευταίες X εβδομάδες</target>
       </trans-unit>
-      <trans-unit id="MXasdfgbpD7" resname="label.copy_teams_on_create" approved="no">
+      <trans-unit id="Xz6UqfS" resname="label.copy_teams_on_create" approved="no">
         <source>label.copy_teams_on_create</source>
         <target state="translated">Πάρε τον έλεγχο ομάδων από τον ενεργό χρήστη όταν δημιουργείς νέες καταχωρήσεις</target>
       </trans-unit>
