@@ -78,6 +78,14 @@
         <source>An activity needs to be selected.</source>
         <target>Κάποια ενέργεια χρειάζεται να επιλεχθεί.</target>
       </trans-unit>
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
+        <source>Duration cannot be zero.</source>
+        <target state="translated">Άδεια καταχώρηση χρόνου δεν επιτρέπεται.</target>
+      </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">Συγνώμη, ο προϋπολογισμός έχει εξαντληθεί.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1197,6 +1197,18 @@
         <source>about.title</source>
         <target>Σχετικά με το Kimai</target>
       </trans-unit>
+      <trans-unit id="74pEVx1" resname="invoiceText">
+        <source>invoiceText</source>
+        <target state="translated">Κείμενο Τιμολογίου</target>
+      </trans-unit>
+      <trans-unit id="G9hBaDJ" resname="globalActivities">
+        <source>globalActivities</source>
+        <target state="translated">Επέτρεψε καθολικές ενέργειες</target>
+      </trans-unit>
+      <trans-unit id="8mTf0eZ" resname="budgetIndependent">
+        <source>budgetIndependent</source>
+        <target state="translated">Εμφάνιση ανεξαρτήτως από"τύπο-προυπολογισμού"</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
