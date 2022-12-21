@@ -17,7 +17,10 @@ use App\Entity\Configuration;
  */
 class TestConfigLoader implements ConfigLoaderInterface
 {
-    private $configs = [];
+    /**
+     * @var Configuration[]
+     */
+    private array $configs;
 
     /**
      * @param Configuration[] $configs
@@ -27,11 +30,19 @@ class TestConfigLoader implements ConfigLoaderInterface
         $this->configs = $configs;
     }
 
+    public function getConfiguration(string $name): ?Configuration
+    {
+        if (!\array_key_exists($name, $this->configs)) {
+            return null;
+        }
+
+        return $this->configs[$name];
+    }
+
     /**
-     * @param null|string $prefix
      * @return Configuration[]
      */
-    public function getConfiguration(?string $prefix = null): array
+    public function getConfigurations(): array
     {
         return $this->configs;
     }

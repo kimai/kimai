@@ -23,7 +23,7 @@ final class SystemConfiguration
             return;
         }
 
-        foreach ($this->repository->getConfiguration() as $configuration) {
+        foreach ($this->repository->getConfigurations() as $configuration) {
             $this->set($configuration->getName(), $configuration->getValue());
         }
 

@@ -14,8 +14,13 @@ use App\Entity\Configuration;
 interface ConfigLoaderInterface
 {
     /**
-     * @param null|string $prefix
+     * @param string $name
+     * @return ?Configuration
+     */
+    public function getConfiguration(string $name): ?Configuration;
+
+    /**
      * @return Configuration[]
      */
-    public function getConfiguration(?string $prefix = null): array;
+    public function getConfigurations(): array;
 }
