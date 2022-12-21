@@ -35,10 +35,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
 {
     use KernelTestTrait;
 
-    /**
-     * @var Application
-     */
-    protected $application;
+    protected Application $application;
 
     private function clearInvoiceFiles()
     {
@@ -181,7 +178,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->assertStringContainsString('| Total', $output);
         $this->assertStringContainsString('| Filename', $output);
         $this->assertStringContainsString('0 EUR', $output);
-        $this->assertStringContainsString('/tests/_data/invoices/' . ((new \DateTime())->format('Y')) . '-001-Test.html |', $output);
+        $this->assertStringContainsString('/tests/_data/invoices/' . ((new \DateTime())->format('Y')) . '-001-Test.pdf |', $output);
     }
 
     protected function prepareFixtures(\DateTime $start)
