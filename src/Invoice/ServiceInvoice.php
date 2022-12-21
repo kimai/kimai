@@ -10,7 +10,6 @@
 namespace App\Invoice;
 
 use App\Configuration\LocaleService;
-use App\Entity\Customer;
 use App\Entity\ExportableItem;
 use App\Entity\Invoice;
 use App\Event\InvoiceCreatedEvent;

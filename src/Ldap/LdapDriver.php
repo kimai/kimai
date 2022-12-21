@@ -15,7 +15,7 @@ use Laminas\Ldap\Ldap;
 use Psr\Log\LoggerInterface;
 
 /**
- * @final
+ * @internal
  */
 class LdapDriver
 {

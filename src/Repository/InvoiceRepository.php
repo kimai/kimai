@@ -29,14 +29,14 @@ class InvoiceRepository extends EntityRepository
 {
     use RepositorySearchTrait;
 
-    public function saveInvoice(Invoice $invoice)
+    public function saveInvoice(Invoice $invoice): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->persist($invoice);
         $entityManager->flush();
     }
 
-    public function deleteInvoice(Invoice $invoice)
+    public function deleteInvoice(Invoice $invoice): void
     {
         $entityManager = $this->getEntityManager();
         $entityManager->remove($invoice);

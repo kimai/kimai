@@ -6831,16 +6831,6 @@ parameters:
             path: src/Reporting/ProjectView/ProjectViewModel.php
 
         -
-            message: "#^Method App\\\\Repository\\\\ActivityRateRepository\\:\\:deleteRate\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/ActivityRateRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\ActivityRateRepository\\:\\:saveRate\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/ActivityRateRepository.php
-
-        -
             message: "#^Cannot call method getSearchFields\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
             count: 1
             path: src/Repository/ActivityRepository.php
@@ -6924,31 +6914,6 @@ parameters:
             message: "#^Method App\\\\Repository\\\\ConfigurationRepository\\:\\:saveSystemConfiguration\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/ConfigurationRepository.php
-
-        -
-            message: "#^Parameter \\#1 \\$haystack of function strpos expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Repository/ConfigurationRepository.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function substr expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Repository/ConfigurationRepository.php
-
-        -
-            message: "#^Parameter \\#3 \\$length of function substr expects int\\|null, int\\<0, max\\>\\|false given\\.$#"
-            count: 1
-            path: src/Repository/ConfigurationRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\CustomerRateRepository\\:\\:deleteRate\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/CustomerRateRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\CustomerRateRepository\\:\\:saveRate\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/CustomerRateRepository.php
 
         -
             message: "#^Cannot call method getSearchFields\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"
@@ -7081,17 +7046,7 @@ parameters:
             path: src/Repository/InvoiceRepository.php
 
         -
-            message: "#^Method App\\\\Repository\\\\InvoiceRepository\\:\\:deleteInvoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/InvoiceRepository.php
-
-        -
             message: "#^Method App\\\\Repository\\\\InvoiceRepository\\:\\:getCounterFor\\(\\) should return int but returns mixed\\.$#"
-            count: 1
-            path: src/Repository/InvoiceRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\InvoiceRepository\\:\\:saveInvoice\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/InvoiceRepository.php
 
@@ -7229,16 +7184,6 @@ parameters:
             message: "#^Method App\\\\Repository\\\\Paginator\\\\QueryBuilderPaginator\\:\\:getResults\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Repository/Paginator/QueryBuilderPaginator.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\ProjectRateRepository\\:\\:deleteRate\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/ProjectRateRepository.php
-
-        -
-            message: "#^Method App\\\\Repository\\\\ProjectRateRepository\\:\\:saveRate\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Repository/ProjectRateRepository.php
 
         -
             message: "#^Cannot call method getSearchFields\\(\\) on App\\\\Utils\\\\SearchTerm\\|null\\.$#"

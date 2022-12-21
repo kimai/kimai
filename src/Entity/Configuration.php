@@ -57,15 +57,16 @@ class Configuration
     }
 
     /**
-     * Given $value will not be serialized before its stored, so it should be a scalar type
-     * that can be casted to string.
-     *
-     * @param string|null|int|bool $value
-     * @return Configuration
+     * Given $value will not be serialized before its stored,
+     * so it should be a scalar type that can be casted to string.
      */
-    public function setValue($value): Configuration
+    public function setValue(string|int|bool|null $value): Configuration
     {
-        if (null !== $value) {
+        if (null === $value) {
+            $this->value = null;
+        } elseif ($value === false) {
+            $this->value = '0';
+        } else {
             $this->value = (string) $value;
         }
 
