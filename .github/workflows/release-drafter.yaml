@@ -15,7 +15,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: fail on fork
-              if: github.repository_owner != 'kevinpapst'
+              if: github.repository_owner != 'kimai'
               run: exit 1
 
     update_release_draft:
