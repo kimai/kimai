@@ -70,7 +70,7 @@ final class RateService implements RateServiceInterface
         }
 
         $factor = 1.00;
-        // do not apply once a value was calculated - see https://github.com/kevinpapst/kimai2/issues/1988
+        // do not apply once a value was calculated - see https://github.com/kimai/kimai/issues/1988
         if ($record->getFixedRate() === null && $record->getHourlyRate() === null) {
             $factor = $this->getRateFactor($record);
         }

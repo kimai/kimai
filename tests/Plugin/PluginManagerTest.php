@@ -75,6 +75,6 @@ class PluginManagerTest extends TestCase
         $this->assertEquals('TestPlugin', $plugin->getId());
         $this->assertEquals('TestPlugin from composer.json', $meta->getName());
         $this->assertEquals('Just a test fixture for the PluginManager', $meta->getDescription());
-        $this->assertEquals('https://github.com/kevinpapst/kimai2', $meta->getHomepage());
+        $this->assertEquals('https://github.com/kimai/kimai', $meta->getHomepage());
     }
 }

@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/kevinpapst/kimai2/actions"><img alt="CI Status" src="https://github.com/kevinpapst/kimai2/workflows/CI/badge.svg"></a>
+    <a href="https://github.com/kimai/kimai/actions"><img alt="CI Status" src="https://github.com/kimai/kimai/workflows/CI/badge.svg"></a>
     <a href="https://codecov.io/gh/kevinpapst/kimai2"><img alt="Code Coverage" src="https://codecov.io/gh/kevinpapst/kimai2/branch/master/graph/badge.svg"></a>
     <a href="https://packagist.org/packages/kevinpapst/kimai2"><img alt="Latest stable version" src="https://poser.pugx.org/kevinpapst/kimai2/v/stable"></a>
     <a href="https://packagist.org/packages/kevinpapst/kimai2"><img alt="License" src="https://poser.pugx.org/kevinpapst/kimai2/license"></a>
@@ -62,8 +62,8 @@ and so many more.
 
 ## Roadmap and releases
 
-You can see a rough development roadmap in the [Milestones](https://github.com/kevinpapst/kimai2/milestones) sections.
-It is open for changes and input from the community, your [ideas and questions](https://github.com/kevinpapst/kimai2/issues) are welcome.
+You can see a rough development roadmap in the [Milestones](https://github.com/kimai/kimai/milestones) sections.
+It is open for changes and input from the community, your [ideas and questions](https://github.com/kimai/kimai/issues) are welcome.
 
 > Kimai uses a rolling release concept for delivering updates.
 > You don't have to wait for the next official release, upgrade it at any time from the master branch, 
@@ -76,7 +76,7 @@ Kimai is actively developed in my spare time, I put my effort into the software 
 ## Contributing
 
 You want to contribute to this repository? This is so great!
-The best way to start is to [open a new issue](https://github.com/kevinpapst/kimai2/issues) for bugs or feature requests or a [discussion](https://github.com/kevinpapst/kimai2/discussions) for questions, support and such.
+The best way to start is to [open a new issue](https://github.com/kimai/kimai/issues) for bugs or feature requests or a [discussion](https://github.com/kimai/kimai/discussions) for questions, support and such.
 
 In case you want to contribute, but you wouldn't know how, here are some suggestions:
 

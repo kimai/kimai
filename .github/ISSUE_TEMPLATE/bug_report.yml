@@ -24,7 +24,7 @@ body:
                     required: true
                 -   label: I've searched for similar issues in this repository.
                     required: true
-                -   label: I've searched for similar issues in [the discussions](https://github.com/kevinpapst/kimai2/discussions).
+                -   label: I've searched for similar issues in [the discussions](https://github.com/kimai/kimai/discussions).
                     required: true
     -   type: input
         id: version

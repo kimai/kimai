@@ -105,7 +105,7 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
                 }
 
                 if ($contentLooksLikeFormula && $firstReplacerPos === 0) {
-                    // see https://github.com/kevinpapst/kimai2/pull/2054
+                    // see https://github.com/kimai/kimai/pull/2054
                     $cell->setValueExplicit($value, DataType::TYPE_STRING);
                 } else {
                     $cell->setValue($value);

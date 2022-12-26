@@ -33,7 +33,7 @@ class Constants
     /**
      * Used in multiple views
      */
-    public const GITHUB = 'https://github.com/kevinpapst/kimai2/';
+    public const GITHUB = 'https://github.com/kimai/kimai/';
     /**
      * The Github repository name
      */
