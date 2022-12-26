@@ -42,7 +42,7 @@ class UserType extends AbstractType
             // an array of users, which will always be included in the result list
             // why? if the base entity could include disabled users, which should not be hidden in/removed from the list
             // eg. when editing a team that has disabled users, these users would be removed silently
-            // see https://github.com/kevinpapst/kimai2/pull/1841
+            // see https://github.com/kimai/kimai/pull/1841
             'include_users' => [],
             'documentation' => [
                 'type' => 'integer',

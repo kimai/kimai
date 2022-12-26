@@ -146,7 +146,7 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
 
         // -----------------------------------------------------------------------
         // a fix for firefox focus problems with datepicker in modal
-        // see https://github.com/kevinpapst/kimai2/issues/618
+        // see https://github.com/kimai/kimai/issues/618
         let enforceModalFocusFn = jQuery.fn.modal.Constructor.prototype.enforceFocus;
         jQuery.fn.modal.Constructor.prototype.enforceFocus = function() {};
         remoteModal.on('hidden.bs.modal', function () {

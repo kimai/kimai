@@ -16,7 +16,7 @@ use Doctrine\DBAL\Schema\Schema;
 
 /**
  * Adds the timezone column to the timesheet table
- * See https://github.com/kevinpapst/kimai2/pull/372 for further information.
+ * See https://github.com/kimai/kimai/pull/372 for further information.
  *
  * @version 0.8
  */
