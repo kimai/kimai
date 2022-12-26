@@ -1,3 +1,3 @@
 # Changelog
 
-See [GitHub release page](https://github.com/kevinpapst/kimai2/releases). 
+See [GitHub release page](https://github.com/kimai/kimai/releases). 

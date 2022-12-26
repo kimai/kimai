@@ -1,7 +1,7 @@
 {
   "name": "kimai/test-plugin-composer",
   "description": "Just a test fixture for the PluginManager",
-  "homepage": "https://github.com/kevinpapst/kimai2",
+  "homepage": "https://github.com/kimai/kimai",
   "type": "kimai-plugin",
   "require": {
     "kimai/kimai2-composer": "*",

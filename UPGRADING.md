@@ -9,13 +9,13 @@ Check below if there are more version specific steps required, which need to be 
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
 
-## [1.16](https://github.com/kevinpapst/kimai2/releases/tag/1.16)
+## [1.16](https://github.com/kimai/kimai/releases/tag/1.16)
 
 **DEVELOPER**
 
 - Removed `formDateTime` field from API model `I18nConfig`
 
-## [1.15](https://github.com/kevinpapst/kimai2/releases/tag/1.15)
+## [1.15](https://github.com/kimai/kimai/releases/tag/1.15)
 
 **Many database changes: don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
 
@@ -48,7 +48,7 @@ PHP 8 compatibility forced to upgrade MANY libraries, including but not limited 
 
 **API BC break**: Due to team structure changes, it was impossible to keep the (writing) API structure. Please adjust your code accordingly!
 
-## [1.14](https://github.com/kevinpapst/kimai2/releases/tag/1.14)
+## [1.14](https://github.com/kimai/kimai/releases/tag/1.14)
 
 **CRITICAL BC break**: SQLite support was removed. If you are using SQLite, you have to [read this blog post](https://www.kimai.org/blog/2021/sqlite-and-ftp-support-removed/) and migrate to MySQL/MariaDB first!
 
@@ -57,17 +57,17 @@ PHP 8 compatibility forced to upgrade MANY libraries, including but not limited 
 Permission changes:
 - `history_invoice` - removed permission entirely
 
-## [1.13](https://github.com/kevinpapst/kimai2/releases/tag/1.13)
+## [1.13](https://github.com/kimai/kimai/releases/tag/1.13)
 
 - Deprecated `now` variable in export templates: create it yourself with `{% set now = create_date('now', app.user) %}`
 - Changed invoice filename generation (check if you use cronjob for invoices)
 - **BC break**: duration entered as plain numbers will now be treated as decimal duration in hours instead of seconds
 
-## [1.12](https://github.com/kevinpapst/kimai2/releases/tag/1.12)
+## [1.12](https://github.com/kimai/kimai/releases/tag/1.12)
 
 - Export templates can now include items from plugins (eg. Expenses).
 
-## [1.10](https://github.com/kevinpapst/kimai2/releases/tag/1.10)
+## [1.10](https://github.com/kimai/kimai/releases/tag/1.10)
 
 **New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
 
@@ -88,7 +88,7 @@ Permission changes:
     - new result types were introduced
     - result data changed in some areas to smooth out inconsistencies (eg. TeamEntity fields changed in nested results)
 
-## [1.9](https://github.com/kevinpapst/kimai2/releases/tag/1.9)
+## [1.9](https://github.com/kimai/kimai/releases/tag/1.9)
 
 **New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
 
@@ -108,7 +108,7 @@ Permission changes:
 - **BC break**: `InvoiceItemInterface` has new methods `getType()` and `getCategory()`
 - **BC break**: API fields changed - see new `/rates` endpoints
 
-## [1.8](https://github.com/kevinpapst/kimai2/releases/tag/1.8)
+## [1.8](https://github.com/kimai/kimai/releases/tag/1.8)
 
 **New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
 
@@ -128,7 +128,7 @@ Permission changes:
 - `edit_teamlead_customer` - removed default permission from ROLE_TEAMLEAD (if you use it: change it in the Role & Permission UI) 
 - `upload_invoice_template` - NEW: permission that allows to upload invoice documents from the UI
 
-## [1.7](https://github.com/kevinpapst/kimai2/releases/tag/1.7)
+## [1.7](https://github.com/kimai/kimai/releases/tag/1.7)
 
 **New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
 
@@ -159,7 +159,7 @@ After the Kimai update was successful, you have to re-install the latest bundle 
 - Doctrine bundle was updated to v2, check your code for [the usage of RegistryInterface and ObjectManager](https://github.com/doctrine/DoctrineBundle/blob/master/UPGRADE-2.0.md)
 - Removed the webserver bundle and the command `server:run` - see [docs](https://www.kimai.org/documentation/developers.html)
 
-## [1.6](https://github.com/kevinpapst/kimai2/releases/tag/1.6), [1.6.1](https://github.com/kevinpapst/kimai2/releases/tag/1.6.1), [1.6.2](https://github.com/kevinpapst/kimai2/releases/tag/1.6.2)
+## [1.6](https://github.com/kimai/kimai/releases/tag/1.6), [1.6.1](https://github.com/kimai/kimai/releases/tag/1.6.1), [1.6.2](https://github.com/kimai/kimai/releases/tag/1.6.2)
 
 **New database tables and fields were created, don't forget to [run the updater](https://www.kimai.org/documentation/updates.html).**
 
@@ -173,11 +173,11 @@ After the Kimai update was successful, you have to re-install the latest bundle 
 
 Please add default permissions to your [plugin](https://www.kimai.org/documentation/plugins.html).
 
-## [1.5](https://github.com/kevinpapst/kimai2/releases/tag/1.5)
+## [1.5](https://github.com/kimai/kimai/releases/tag/1.5)
 
 [Update as usual](https://www.kimai.org/documentation/updates.html)
 
-## [1.4](https://github.com/kevinpapst/kimai2/releases/tag/1.4)
+## [1.4](https://github.com/kimai/kimai/releases/tag/1.4)
 
 **There is a new directory, which needs to be writable by the webserver: `public/avatars/`.**
 
@@ -191,7 +191,7 @@ Activated Javascript select component by default (check mobile devices).
 - Dashboard widgets and rows need to define their `type` by FQCN
 - Switched to Symfony 4.3 event types, this could fail in plugins, but only if they didn't use the official constants for event names
 
-## [1.3](https://github.com/kevinpapst/kimai2/releases/tag/1.3)
+## [1.3](https://github.com/kimai/kimai/releases/tag/1.3)
 
 Added `manage_tag` permission for new tag features
 
@@ -200,7 +200,7 @@ Added `manage_tag` permission for new tag features
 - Refactored toolbars and search, plugins needs to be checked 
 - Invoices now supports multiple repositories, some method signatures had to be changed (eg. `calculateSumIdentifier()`)  
 
-## [1.2](https://github.com/kevinpapst/kimai2/releases/tag/1.2)
+## [1.2](https://github.com/kimai/kimai/releases/tag/1.2)
 
 **If you are still using 0.7 or below, you need to upgrade to 1.1 before upgrading to this version.**
 
@@ -217,11 +217,11 @@ Added `manage_tag` permission for new tag features
 
 - Custom export renderer need to check for usage of `Timesheet::getEnd()` as running entries can now be exported as well
 
-## [1.1](https://github.com/kevinpapst/kimai2/releases/tag/1.1)
+## [1.1](https://github.com/kimai/kimai/releases/tag/1.1)
 
 [Update as usual](https://www.kimai.org/documentation/updates.html), nothing special for this release if you upgrade from 1.0 / 1.0.1.
 
-## [1.0](https://github.com/kevinpapst/kimai2/releases/tag/1.0)
+## [1.0](https://github.com/kimai/kimai/releases/tag/1.0)
 
 This release contains several changes, as I still have the goal to stabilize the code base to prevent 
 such "challenges" after 1.0 for a while.
@@ -248,7 +248,7 @@ Removed permission:
 Thanks to the new structure, you should be able to remove almost everything from your `local.yaml` (tip: start over from scratch!). Please read [the updated permission docu](https://www.kimai.org/documentation/permissions.html). 
 - default widgets were removed from `kimai.yaml`, that shouldn't cause any issues ... but if something is odd: [look here for help](https://www.kimai.org/documentation/dashboard.html)
 
-## [0.9](https://github.com/kevinpapst/kimai2/releases/tag/0.9)
+## [0.9](https://github.com/kimai/kimai/releases/tag/0.9)
 
 Remember to execute the necessary timezone conversion script, if you haven't updated to 0.8 before (see below)!
 
@@ -259,7 +259,7 @@ This release contains some BC breaks which were necessary before 1.0 will be rel
 - **Kimai requires PHP 7.2 now => [PHP 7.1 expired 4 month ago](https://www.php.net/supported-versions.php)**
 - The `.env` variable `DATABASE_PREFIX` was removed and the table prefix is now hardcoded to `kimai2_`. If you used another prefix, 
 you have to rename your tables manually before starting the update process. You can delete the row `DATABASE_PREFIX` from your `.env` file.
-- API: Format for DateTime objects changed, now including timezone identifier (previously `2019-03-02 14:23` - now `2019-03-02T14:23:00+00:00`), see [#718](https://github.com/kevinpapst/kimai2/pull/718)
+- API: Format for DateTime objects changed, now including timezone identifier (previously `2019-03-02 14:23` - now `2019-03-02T14:23:00+00:00`), see [#718](https://github.com/kimai/kimai/pull/718)
 - API: changed from snake_case to camelCase (affected fields: hourlyRate vs hourly_rate / fixedRate vs fixed_rate / orderNumber vs order_number / i18n config object)
 - Plugin mechanism changed: existing Plugins have to be deleted or updated
 
@@ -284,15 +284,15 @@ kimai:
 ```
 Or switch the mode directly in the new System configuration screen within Kimai.  
 
-## [0.8.1](https://github.com/kevinpapst/kimai2/releases/tag/0.8.1)
+## [0.8.1](https://github.com/kimai/kimai/releases/tag/0.8.1)
 
 A bug fixing release. Remember to execute the necessary timezone conversion script, if you haven't updated to 0.8 before (see below)!
 
-## [0.8](https://github.com/kevinpapst/kimai2/releases/tag/0.8)
+## [0.8](https://github.com/kimai/kimai/releases/tag/0.8)
 
 After you followed the normal update and database migration process (see above), you need to execute a bash command to convert your timesheet data for timezone support:
 
-- Read this [pull request](https://github.com/kevinpapst/kimai2/pull/372) BEFORE you follow the instructions to convert the 
+- Read this [pull request](https://github.com/kimai/kimai/pull/372) BEFORE you follow the instructions to convert the 
 timezones in your existing time records with `bin/console kimai:convert-timezone`. Without that, you will end up with wrong times in your database.
 
 ### Apply necessary changes to your `local.yaml`: 
@@ -305,21 +305,21 @@ timezones in your existing time records with `bin/console kimai:convert-timezone
   - `edit_export_other_timesheet` - for the new export feature
   - `system_information` - to see the new about screen
 
-## [0.7](https://github.com/kevinpapst/kimai2/releases/tag/0.7)
+## [0.7](https://github.com/kimai/kimai/releases/tag/0.7)
 
 The configuration `kimai.theme.active_warning` was deprecated and should be replaced in your local.yaml, 
 [read config docs for more information](https://www.kimai.org/documentation/timesheet.html#limit-active-entries).
 
-## [0.6.1](https://github.com/kevinpapst/kimai2/releases/tag/0.6.1)
+## [0.6.1](https://github.com/kimai/kimai/releases/tag/0.6.1)
 
 A bugfix release to address database compatibility issues with older MySQL/MariaDB versions.
 
-## [0.6](https://github.com/kevinpapst/kimai2/releases/tag/0.6)
+## [0.6](https://github.com/kimai/kimai/releases/tag/0.6)
 
 The API has some minor BC breaks: some fields were renamed and entities have a larger attribute set than collections. 
 Be aware that the API is still is development mode and shouldn't be considered stable for now.
 
-## [0.5](https://github.com/kevinpapst/kimai2/releases/tag/0.5)
+## [0.5](https://github.com/kimai/kimai/releases/tag/0.5)
 
 Some configuration nodes were removed, if you have one of them in your `local.yaml` you need to delete them before you start the update:
 - `kimai.invoice.calculator`
@@ -331,7 +331,7 @@ The new config `kimai.invoice.documents` was introduced, holding a list of direc
 **BC break:** InvoiceTemplate name was changed from 255 characters to 60. If you used longer invoice-template names, they will be truncated when upgrading the database.
 Please make sure that they are unique in the first 60 character before you upgrade your database with `doctrine:migrations:migrate`. 
 
-## [0.4](https://github.com/kevinpapst/kimai2/releases/tag/0.4)
+## [0.4](https://github.com/kimai/kimai/releases/tag/0.4)
 
 In the time between 0.3 and 0.4 there was a release of composer that introduced a BC break, 
 which leads to problems between Composer and Symfony Flex, resulting in an error like this when running it:
@@ -347,7 +347,7 @@ sudo composer self-update
 sudo -u www-data composer update symfony/flex --no-plugins --no-scripts
 ```
 
-## [0.3](https://github.com/kevinpapst/kimai2/releases/tag/0.3)
+## [0.3](https://github.com/kimai/kimai/releases/tag/0.3)
 
 You need to adjust your `.env` file and add your `from` address for [all emails](https://www.kimai.org/documentation/emails.html) generated by Kimai 2:
 ```

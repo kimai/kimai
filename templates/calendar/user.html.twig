@@ -289,7 +289,7 @@
                 height: 'auto',
                 nowIndicator: true,
                 now: '{{ now|date_format('c') }}',
-                {# see https://github.com/kevinpapst/kimai2/issues/2155 #}
+                {# see https://github.com/kimai/kimai/issues/2155 #}
                 timezone: '{{ app.user.timezone == 'UTC' ? 'GMT' : app.user.timezone }}',
                 weekends: {% if config.showWeekends %}true{% else %}false{% endif %},
                 businessHours: {
