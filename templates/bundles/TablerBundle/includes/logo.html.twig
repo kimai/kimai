@@ -8,5 +8,7 @@
     {% elseif tabler_bundle.getLogoUrl() is not empty %}
         <img class="navbar-brand-image" alt="{{ company }}" width="110" height="32"
                 src="{% if '://' in tabler_bundle.getLogoUrl() %}{{ tabler_bundle.getLogoUrl() }}{% else %}{{ asset(tabler_bundle.getLogoUrl()) }}{% endif %}">
+    {% else %}
+        <span>{{ get_title()|raw }}</span>
     {% endif %}
 </a>
