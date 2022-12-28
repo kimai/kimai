@@ -82,6 +82,10 @@
         <source>Duration cannot be zero.</source>
         <target state="needs-translation">Varighet må angis.</target>
       </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">Budsjettet er oppbrukt.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
