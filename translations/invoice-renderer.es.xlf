@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
-        <target state="translated">Facturación</target>
+        <target state="translated">factura</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>timesheet</source>
