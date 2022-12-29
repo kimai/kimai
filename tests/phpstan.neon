@@ -2298,17 +2298,7 @@ parameters:
             path: Command/InvoiceCreateCommandTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:assertCommandErrors\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:assertCommandErrors\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:clearInvoiceFiles\\(\\) has no return type specified\\.$#"
             count: 1
             path: Command/InvoiceCreateCommandTest.php
 
@@ -2319,96 +2309,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:importFixture\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:prepareFixtures\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:testCreateByCustomerAndByProject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:testCreateInvoice\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:testCreateInvoiceByCustomer\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:testCreateInvoiceByCustomerId\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:testCreateInvoiceByProject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:testCreateInvoiceByProjectId\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:testCreateInvoiceByProjectWithPreview\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:testCreateWithInvalidCustomer\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:testCreateWithInvalidEnd\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:testCreateWithInvalidPreviewDirectory\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:testCreateWithInvalidProject\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:testCreateWithInvalidStart\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:testCreateWithInvalidUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:testCreateWithMissingEnd\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:testCreateWithMissingGenerationMode\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:testCreateWithMissingUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:testCreateWithUnknownExportFilter\\(\\) has no return type specified\\.$#"
             count: 1
             path: Command/InvoiceCreateCommandTest.php
 

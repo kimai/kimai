@@ -37,7 +37,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
     protected Application $application;
 
-    private function clearInvoiceFiles()
+    private function clearInvoiceFiles(): void
     {
         $path = __DIR__ . '/../_data/invoices/';
 
@@ -90,7 +90,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
      * @param array $options
      * @return CommandTester
      */
-    protected function createInvoice(array $options = [])
+    protected function createInvoice(array $options = []): CommandTester
     {
         $command = $this->application->find('kimai:invoice:create');
         $commandTester = new CommandTester($command);
@@ -101,7 +101,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         return $commandTester;
     }
 
-    protected function assertCommandErrors(array $options = [], string $errorMessage = '')
+    protected function assertCommandErrors(array $options = [], string $errorMessage = ''): void
     {
         $commandTester = $this->createInvoice($options);
 
@@ -109,62 +109,62 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->assertStringContainsString('[ERROR] ' . $errorMessage, $output);
     }
 
-    public function testCreateWithUnknownExportFilter()
+    public function testCreateWithUnknownExportFilter(): void
     {
         $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--exported' => 'foo'], 'Unknown "exported" filter given');
     }
 
-    public function testCreateWithMissingUser()
+    public function testCreateWithMissingUser(): void
     {
         $this->assertCommandErrors([], 'You must set a "user" to create invoices');
     }
 
-    public function testCreateWithInvalidUser()
+    public function testCreateWithInvalidUser(): void
     {
         $this->assertCommandErrors(['--user' => 'assdfd'], 'The given username "assdfd" could not be resolved');
     }
 
-    public function testCreateWithMissingEnd()
+    public function testCreateWithMissingEnd(): void
     {
         $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--start' => '2020-01-01'], 'You need to supply a end date if a start date was given');
     }
 
-    public function testCreateByCustomerAndByProject()
+    public function testCreateByCustomerAndByProject(): void
     {
         $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--by-customer' => null, '--by-project' => null], 'You cannot mix "by-customer" and "by-project"');
     }
 
-    public function testCreateWithMissingGenerationMode()
+    public function testCreateWithMissingGenerationMode(): void
     {
         $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN], 'Could not determine generation mode');
     }
 
-    public function testCreateWithInvalidStart()
+    public function testCreateWithInvalidStart(): void
     {
         $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 1, '--exported' => 'exported', '--template' => 'x', '--start' => 'öäüß', '--end' => '2020-01-01'], 'Invalid start date given');
     }
 
-    public function testCreateWithInvalidEnd()
+    public function testCreateWithInvalidEnd(): void
     {
         $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 1, '--template' => 'x', '--start' => '2020-01-01', '--end' => 'öäüß'], 'Invalid end date given');
     }
 
-    public function testCreateWithInvalidPreviewDirectory()
+    public function testCreateWithInvalidPreviewDirectory(): void
     {
         $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 1, '--template' => 'x', '--start' => '2020-01-01', '--end' => '2020-01-02', '--preview' => '/kjhg/'], 'Invalid preview directory given');
     }
 
-    public function testCreateWithInvalidCustomer()
+    public function testCreateWithInvalidCustomer(): void
     {
         $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 3, '--template' => 'x'], 'Unknown customer ID: 3');
     }
 
-    public function testCreateWithInvalidProject()
+    public function testCreateWithInvalidProject(): void
     {
         $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--project' => 3, '--template' => 'x'], 'Unknown project ID: 3');
     }
 
-    public function testCreateInvoice()
+    public function testCreateInvoice(): void
     {
         $fixture = new InvoiceTemplateFixtures();
         $this->importFixture($fixture);
@@ -178,10 +178,14 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->assertStringContainsString('| Total', $output);
         $this->assertStringContainsString('| Filename', $output);
         $this->assertStringContainsString('0 EUR', $output);
-        $this->assertStringContainsString('/tests/_data/invoices/' . ((new \DateTime())->format('Y')) . '-001-Test.pdf |', $output);
+        $this->assertStringContainsString('/tests/_data/invoices/' . ((new \DateTime())->format('Y')) . '-001-Test.html |', $output);
     }
 
-    protected function prepareFixtures(\DateTime $start)
+    /**
+     * @param \DateTime $start
+     * @return array<Customer>
+     */
+    protected function prepareFixtures(\DateTime $start): array
     {
         $fixture = new InvoiceTemplateFixtures();
         $invoiceTemplate = $this->importFixture($fixture);
@@ -208,7 +212,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         return [$customer];
     }
 
-    public function testCreateInvoiceByCustomer()
+    public function testCreateInvoiceByCustomer(): void
     {
         $start = new \DateTime('-2 months');
         $end = new \DateTime();
@@ -221,7 +225,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->assertStringContainsString('Created 1 invoice(s) ', $output);
     }
 
-    public function testCreateInvoiceByCustomerId()
+    public function testCreateInvoiceByCustomerId(): void
     {
         $start = new \DateTime('-2 months');
         $end = new \DateTime();
@@ -235,7 +239,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->assertStringContainsString('Created 1 invoice(s) ', $output);
     }
 
-    public function testCreateInvoiceByProject()
+    public function testCreateInvoiceByProject(): void
     {
         $start = new \DateTime('-2 months');
         $end = new \DateTime();
@@ -248,7 +252,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->assertStringContainsString('Created 1 invoice(s) ', $output);
     }
 
-    public function testCreateInvoiceByProjectId()
+    public function testCreateInvoiceByProjectId(): void
     {
         $start = new \DateTime('-2 months');
         $end = new \DateTime();
@@ -261,7 +265,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->assertStringContainsString('Created 1 invoice(s) ', $output);
     }
 
-    public function testCreateInvoiceByProjectWithPreview()
+    public function testCreateInvoiceByProjectWithPreview(): void
     {
         $start = new \DateTime('-2 months');
         $end = new \DateTime();
