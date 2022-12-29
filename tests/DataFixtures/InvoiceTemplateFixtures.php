@@ -47,6 +47,7 @@ class InvoiceTemplateFixtures implements TestFixture
             'Email: ' . $faker->safeEmail()
         );
         $template->setLanguage('en');
+        $template->setRenderer('invoice');
 
         $manager->persist($template);
         $manager->flush();

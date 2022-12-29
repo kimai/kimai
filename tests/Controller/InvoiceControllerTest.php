@@ -34,7 +34,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->clearInvoiceFiles();
     }
 
-    private function clearInvoiceFiles()
+    private function clearInvoiceFiles(): void
     {
         $path = __DIR__ . '/../_data/invoices/';
 
@@ -46,17 +46,17 @@ class InvoiceControllerTest extends ControllerBaseTest
         }
     }
 
-    public function testIsSecure()
+    public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/invoice/');
     }
 
-    public function testIsSecureForRole()
+    public function testIsSecureForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/invoice/');
     }
 
-    public function testIndexActionRedirectsToCreateTemplate()
+    public function testIndexActionRedirectsToCreateTemplate(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -64,7 +64,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, '/invoice/template/create');
     }
 
-    public function testIndexActionHasErrorMessageOnEmptyQuery()
+    public function testIndexActionHasErrorMessageOnEmptyQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
@@ -78,7 +78,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertHasNoEntriesWithFilter($client);
     }
 
-    public function testListTemplateAction()
+    public function testListTemplateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -91,7 +91,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertHasDataTable($client);
     }
 
-    public function testCreateTemplateAction()
+    public function testCreateTemplateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/invoice/template/create');
@@ -123,7 +123,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         self::assertEquals('27.937', $template->getVat());
     }
 
-    public function testCopyTemplateAction()
+    public function testCopyTemplateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -148,7 +148,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertEquals($template->getPaymentTerms(), $values['paymentTerms']);
     }
 
-    public function testCreateAction()
+    public function testCreateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
@@ -218,7 +218,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         }
     }
 
-    public function testPreviewAction()
+    public function testPreviewAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
@@ -273,7 +273,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertEquals('invoice_print', $element->getAttribute('class'));
     }
 
-    public function testCreateActionAsAdminWithDownloadAndStatusChange()
+    public function testCreateActionAsAdminWithDownloadAndStatusChange(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -392,7 +392,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testEditTemplateAction()
+    public function testEditTemplateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -419,7 +419,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
     }
 
-    public function testDeleteTemplateAction()
+    public function testDeleteTemplateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
@@ -441,7 +441,7 @@ class InvoiceControllerTest extends ControllerBaseTest
         $this->assertEquals(0, $this->getEntityManager()->getRepository(InvoiceTemplate::class)->count([]));
     }
 
-    public function testUploadDocumentAction()
+    public function testUploadDocumentAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
@@ -456,12 +456,12 @@ class InvoiceControllerTest extends ControllerBaseTest
         // we do not test the upload here, just make sure that the action can be rendered properly
     }
 
-    public function testExportIsSecureForRole()
+    public function testExportIsSecureForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/invoice/export');
     }
 
-    public function testExportAction()
+    public function testExportAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->assertAccessIsGranted($client, '/invoice/export');
