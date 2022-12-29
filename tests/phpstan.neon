@@ -2643,11 +2643,6 @@ parameters:
             path: ConstantsTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\AboutControllerTest\\:\\:testIndexAction\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/AboutControllerTest.php
-
-        -
             message: "#^Cannot call method addSubscriber\\(\\) on object\\|null\\.$#"
             count: 1
             path: Controller/ActivityControllerTest.php
