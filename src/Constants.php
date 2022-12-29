@@ -27,10 +27,6 @@ class Constants
      */
     public const SOFTWARE = 'Kimai';
     /**
-     * The release name, will only change for new major version
-     */
-    public const NAME = 'Ayumi';
-    /**
      * Used in multiple views
      */
     public const GITHUB = 'https://github.com/kimai/kimai/';
