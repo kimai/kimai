@@ -37,7 +37,7 @@ class Constants
     /**
      * The Github repository name
      */
-    public const GITHUB_REPO = 'kevinpapst/kimai2';
+    public const GITHUB_REPO = 'kimai/kimai';
     /**
      * Homepage, used in multiple views
      */
