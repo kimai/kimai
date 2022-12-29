@@ -9,6 +9,8 @@
  * [KIMAI] KimaiPaginatedBoxWidget: handles box widgets that have a pagination
  */
 
+import KimaiContextMenu from "./KimaiContextMenu";
+
 export default class KimaiPaginatedBoxWidget {
 
     constructor(boxId) {
@@ -71,6 +73,7 @@ export default class KimaiPaginatedBoxWidget {
                     // so we directly replace the entire HTML
                     // the HTML needs to be parsed for script tags, which can be included (e.g. paginated chart widget)
                     document.querySelector(selector).replaceWith(this._makeScriptExecutable(temp.firstElementChild));
+                    KimaiContextMenu.createForDataTable(selector + ' table.dataTable');
                     hideOverlay();
                 });
             })

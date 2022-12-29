@@ -93,4 +93,47 @@ export default class KimaiContextMenu {
             dropdownElement.classList.add('d-block');
         }
     }
+
+    /**
+     * @param {string} selector
+     */
+    static createForDataTable(selector)
+    {
+        [].slice.call(document.querySelectorAll(selector)).map((dataTable) => {
+            const actions = dataTable.querySelector('td.actions div.dropdown-menu');
+            if (actions === null) {
+                return;
+            }
+
+            dataTable.addEventListener('contextmenu', (jsEvent) => {
+                let target = jsEvent.target;
+                while (target !== null) {
+                    const tagName = target.tagName.toUpperCase();
+                    if (tagName === 'TH' || tagName === 'TABLE' || tagName === 'BODY') {
+                        return;
+                    }
+
+                    if (tagName === 'TR') {
+                        break;
+                    }
+
+                    target = target.parentNode;
+                }
+
+                if (target === null || !target.matches('table.dataTable tbody tr')) {
+                    return;
+                }
+
+                const actions = target.querySelector('td.actions div.dropdown-menu');
+                if (actions === null) {
+                    return;
+                }
+
+                jsEvent.preventDefault();
+
+                const contextMenu = new KimaiContextMenu(dataTable.dataset['contextMenu']);
+                contextMenu.createFromClickEvent(jsEvent, actions.innerHTML);
+            });
+        });
+    }
 }

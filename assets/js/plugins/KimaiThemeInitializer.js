@@ -59,7 +59,7 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
     }
 
     /**
-     * Helps setting the autofocus on modals.
+     * Helps to set the autofocus on modals.
      *
      * @param {string} selector
      */
