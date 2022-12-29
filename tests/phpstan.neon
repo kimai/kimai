@@ -5673,11 +5673,6 @@ parameters:
             path: Entity/TimesheetTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Entity\\\\TimesheetTest\\:\\:testResetRates\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Entity/TimesheetTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Entity\\\\TimesheetTest\\:\\:testTags\\(\\) has no return type specified\\.$#"
             count: 1
             path: Entity/TimesheetTest.php
