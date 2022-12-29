@@ -5826,21 +5826,6 @@ parameters:
             path: src/Form/UserTwoFactorType.php
 
         -
-            message: "#^Method App\\\\Form\\\\UserTwoFactorType\\:\\:validateCode\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Form/UserTwoFactorType.php
-
-        -
-            message: "#^Method App\\\\Form\\\\UserTwoFactorType\\:\\:validateCode\\(\\) has parameter \\$payload with no type specified\\.$#"
-            count: 1
-            path: src/Form/UserTwoFactorType.php
-
-        -
-            message: "#^Parameter \\#2 \\$code of method Scheb\\\\TwoFactorBundle\\\\Security\\\\TwoFactor\\\\Provider\\\\Totp\\\\TotpAuthenticatorInterface\\:\\:checkCode\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Form/UserTwoFactorType.php
-
-        -
             message: "#^Cannot call method getVat\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
             count: 1
             path: src/Invoice/Calculator/AbstractCalculator.php

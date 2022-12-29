@@ -783,16 +783,6 @@ parameters:
             path: API/CustomerControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Team\\:\\:addTeamlead\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: API/CustomerControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Team\\:\\:addUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: API/CustomerControllerTest.php
-
-        -
             message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTest\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
             count: 13
             path: API/CustomerControllerTest.php
@@ -1065,16 +1055,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
             count: 14
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Team\\:\\:addTeamlead\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: API/ProjectControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Team\\:\\:addUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
             path: API/ProjectControllerTest.php
 
         -
@@ -1438,11 +1418,6 @@ parameters:
             path: API/TimesheetControllerTest.php
 
         -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 5
-            path: API/TimesheetControllerTest.php
-
-        -
             message: "#^Cannot call method getValue\\(\\) on App\\\\Entity\\\\MetaTableTypeInterface\\|null\\.$#"
             count: 1
             path: API/TimesheetControllerTest.php
@@ -1730,16 +1705,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$project of method App\\\\Entity\\\\Timesheet\\:\\:setProject\\(\\) expects App\\\\Entity\\\\Project, App\\\\Entity\\\\Project\\|null given\\.$#"
             count: 1
-            path: API/TimesheetControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Timesheet\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: API/TimesheetControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 12
             path: API/TimesheetControllerTest.php
 
         -
@@ -2253,11 +2218,6 @@ parameters:
             path: Command/ExportCreateCommandTest.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
             message: "#^Parameter \\#2 \\$customerRepository of class App\\\\Command\\\\ExportCreateCommand constructor expects App\\\\Repository\\\\CustomerRepository, object\\|null given\\.$#"
             count: 1
             path: Command/ExportCreateCommandTest.php
@@ -2314,11 +2274,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$serviceInvoice of class App\\\\Command\\\\InvoiceCreateCommand constructor expects App\\\\Invoice\\\\ServiceInvoice, object\\|null given\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: Command/InvoiceCreateCommandTest.php
 
@@ -2833,11 +2788,6 @@ parameters:
             path: Controller/ActivityControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 3
-            path: Controller/ActivityControllerTest.php
-
-        -
             message: "#^Cannot access property \\$firstChild on DOMNode\\|null\\.$#"
             count: 2
             path: Controller/Auth/SamlControllerTest.php
@@ -3333,11 +3283,6 @@ parameters:
             path: Controller/CustomerControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 2
-            path: Controller/CustomerControllerTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
             count: 2
             path: Controller/CustomerControllerTest.php
@@ -3418,28 +3363,8 @@ parameters:
             path: Controller/ExportControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$object of method Doctrine\\\\Persistence\\\\ObjectManager\\:\\:persist\\(\\) expects object, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 2
-            path: Controller/ExportControllerTest.php
-
-        -
             message: "#^Parameter \\#1 \\$project of method App\\\\Entity\\\\Team\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project, App\\\\Entity\\\\Project\\|null given\\.$#"
             count: 1
-            path: Controller/ExportControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Team\\:\\:addTeamlead\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: Controller/ExportControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Team\\:\\:addUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: Controller/ExportControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 5
             path: Controller/ExportControllerTest.php
 
         -
@@ -3458,24 +3383,9 @@ parameters:
             path: Controller/FavoriteControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: Controller/FavoriteControllerTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 2
             path: Controller/FavoriteControllerTest.php
-
-        -
-            message: "#^Cannot call method addPreference\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: Controller/HomepageControllerTest.php
-
-        -
-            message: "#^Cannot call method setLanguage\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: Controller/HomepageControllerTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Controller\\\\HomepageControllerTest\\:\\:testIndexAction\\(\\) has no return type specified\\.$#"
@@ -3495,11 +3405,6 @@ parameters:
         -
             message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
             count: 1
-            path: Controller/InvoiceControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 3
             path: Controller/InvoiceControllerTest.php
 
         -
@@ -3543,11 +3448,6 @@ parameters:
             path: Controller/LayoutControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$user of method App\\\\Tests\\\\Controller\\\\LayoutControllerTest\\:\\:assertHasMainHeader\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: Controller/LayoutControllerTest.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Role\\|null\\.$#"
             count: 1
             path: Controller/PermissionControllerTest.php
@@ -3555,11 +3455,6 @@ parameters:
         -
             message: "#^Cannot call method getName\\(\\) on App\\\\Entity\\\\Role\\|null\\.$#"
             count: 1
-            path: Controller/PermissionControllerTest.php
-
-        -
-            message: "#^Cannot call method getRoles\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 2
             path: Controller/PermissionControllerTest.php
 
         -
@@ -3668,76 +3563,6 @@ parameters:
             path: Controller/PluginControllerTest.php
 
         -
-            message: "#^Cannot call method getAlias\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 2
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Cannot call method getApiToken\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 2
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Cannot call method getEmail\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 2
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Cannot call method getFirstDayOfWeek\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Cannot call method getLanguage\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Cannot call method getLocale\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Cannot call method getPassword\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 2
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Cannot call method getPreferenceValue\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 6
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Cannot call method getRoles\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Cannot call method getTeams\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Cannot call method getTimezone\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Cannot call method getTitle\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 2
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Cannot call method getUserIdentifier\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 2
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Cannot call method isEnabled\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 2
-            path: Controller/ProfileControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:testEditActionTabs\\(\\) has parameter \\$role with no type specified\\.$#"
             count: 1
             path: Controller/ProfileControllerTest.php
@@ -3770,16 +3595,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$hashedPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\PasswordHasherInterface\\:\\:verify\\(\\) expects string, string\\|null given\\.$#"
             count: 8
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: Controller/ProfileControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method Symfony\\\\Component\\\\PasswordHasher\\\\Hasher\\\\PasswordHasherFactoryInterface\\:\\:getPasswordHasher\\(\\) expects string\\|Symfony\\\\Component\\\\PasswordHasher\\\\Hasher\\\\PasswordHasherAwareInterface\\|Symfony\\\\Component\\\\Security\\\\Core\\\\User\\\\PasswordAuthenticatedUserInterface, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 4
             path: Controller/ProfileControllerTest.php
 
         -
@@ -4008,16 +3823,6 @@ parameters:
             path: Controller/ProjectControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Team\\:\\:addTeamlead\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: Controller/ProjectControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 3
-            path: Controller/ProjectControllerTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
             count: 2
             path: Controller/ProjectControllerTest.php
@@ -4048,11 +3853,6 @@ parameters:
             path: Controller/QuickEntryControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: Controller/QuickEntryControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\Reporting\\\\AbstractUserPeriodControllerTest\\:\\:getTestData\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Controller/Reporting/AbstractUserPeriodControllerTest.php
@@ -4074,11 +3874,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Controller\\\\Reporting\\\\AbstractUserPeriodControllerTest\\:\\:testUserPeriodReportAsTeamlead\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Reporting/AbstractUserPeriodControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: Controller/Reporting/AbstractUserPeriodControllerTest.php
 
@@ -4118,11 +3913,6 @@ parameters:
             path: Controller/Reporting/AbstractUsersPeriodControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: Controller/Reporting/AbstractUsersPeriodControllerTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 2
             path: Controller/Reporting/AbstractUsersPeriodControllerTest.php
@@ -4153,11 +3943,6 @@ parameters:
             path: Controller/Reporting/CustomerMonthlyProjectsControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 2
-            path: Controller/Reporting/CustomerMonthlyProjectsControllerTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: Controller/Reporting/CustomerMonthlyProjectsControllerTest.php
@@ -4174,16 +3959,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Controller\\\\Reporting\\\\ProjectDateRangeControllerTest\\:\\:testReportIsSecure\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Reporting/ProjectDateRangeControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: Controller/Reporting/ProjectDateRangeControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of static method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createByUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: Controller/Reporting/ProjectDateRangeControllerTest.php
 
@@ -4213,11 +3988,6 @@ parameters:
             path: Controller/Reporting/ProjectInactiveControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: Controller/Reporting/ProjectInactiveControllerTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 1
             path: Controller/Reporting/ProjectInactiveControllerTest.php
@@ -4229,11 +3999,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Controller\\\\Reporting\\\\ProjectViewControllerTest\\:\\:testReportIsSecure\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/Reporting/ProjectViewControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 1
             path: Controller/Reporting/ProjectViewControllerTest.php
 
@@ -4643,18 +4408,13 @@ parameters:
             path: Controller/TimesheetControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 12
-            path: Controller/TimesheetControllerTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 1
             path: Controller/TimesheetControllerTest.php
 
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 9
+            count: 3
             path: Controller/TimesheetTeamControllerTest.php
 
         -
@@ -4678,11 +4438,6 @@ parameters:
             path: Controller/TimesheetTeamControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 9
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 1
             path: Controller/TimesheetTeamControllerTest.php
@@ -4694,7 +4449,7 @@ parameters:
 
         -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 13
+            count: 2
             path: Controller/UserControllerTest.php
 
         -
@@ -4775,11 +4530,6 @@ parameters:
         -
             message: "#^Method App\\\\Tests\\\\Controller\\\\UserControllerTest\\:\\:testValidationForCreateAction\\(\\) has parameter \\$validationFields with no value type specified in iterable type array\\.$#"
             count: 1
-            path: Controller/UserControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 2
             path: Controller/UserControllerTest.php
 
         -
@@ -9449,11 +9199,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$project of method App\\\\Entity\\\\Timesheet\\:\\:setProject\\(\\) expects App\\\\Entity\\\\Project, App\\\\Entity\\\\Project\\|null given\\.$#"
-            count: 2
-            path: Repository/TimesheetRepositoryTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Entity\\\\Timesheet\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 2
             path: Repository/TimesheetRepositoryTest.php
 

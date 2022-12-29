@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 final class UserTwoFactorType extends AbstractType
@@ -32,6 +33,7 @@ final class UserTwoFactorType extends AbstractType
                 'label' => 'login.2fa_label',
                 'required' => true,
                 'constraints' => [
+                    new NotBlank(),
                     new Callback([$this, 'validateCode']),
                 ],
             ])
@@ -43,11 +45,15 @@ final class UserTwoFactorType extends AbstractType
         ;
     }
 
-    public function validateCode($payload, ExecutionContextInterface $context)
+    public function validateCode(mixed $payload, ExecutionContextInterface $context): void
     {
         $form = $context->getRoot();
         /** @var TotpActivation $data */
         $data = $form->getData();
+
+        if ($data->getCode() === null) {
+            return;
+        }
 
         if (!$this->totpAuthenticator->checkCode($data->getUser(), $data->getCode())) {
             $context

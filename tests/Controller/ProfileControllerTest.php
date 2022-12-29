@@ -461,11 +461,61 @@ class ProfileControllerTest extends ControllerBaseTest
         $this->assertEquals('sunday', $user->getFirstDayOfWeek());
     }
 
-    // TODO add more tests
-
     public function testIsTwoFactorSecure(): void
     {
         $this->assertUrlIsSecured('/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+    }
+
+    public function testTwoFactor(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $user = $this->getUserByName(UserFixtures::USERNAME_USER);
+        self::assertFalse($user->hasTotpSecret());
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+
+        $user = $this->getUserByName(UserFixtures::USERNAME_USER);
+        self::assertTrue($user->hasTotpSecret());
+
+        $content = $client->getResponse()->getContent();
+        self::assertNotFalse($content);
+
+        $imgUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/totp.png');
+        $this->assertStringContainsString('<img src="' . $imgUrl . '" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" />', $content);
+
+        $formUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+        $this->assertStringContainsString('<form name="user_two_factor" method="post" action="' . $formUrl . '" id="user_two_factor_form">', $content);
+    }
+
+    public function testActivateTwoFactorWithEmptyToken(): void
+    {
+        $this->assertFormHasValidationError(
+            User::ROLE_USER,
+            '/profile/' . UserFixtures::USERNAME_USER . '/2fa',
+            'form[name=user_two_factor]',
+            [
+                'user_two_factor' => [
+                    'code' => ''
+                ]
+            ],
+            ['#user_two_factor_code']
+        );
+    }
+
+    public function testActivateTwoFactorWithWrongToken(): void
+    {
+        $this->assertFormHasValidationError(
+            User::ROLE_USER,
+            '/profile/' . UserFixtures::USERNAME_USER . '/2fa',
+            'form[name=user_two_factor]',
+            [
+                'user_two_factor' => [
+                    'code' => '1234567890oikjhb'
+                ]
+            ],
+            ['#user_two_factor_code']
+        );
     }
 
     public function testIsTwoFactorDeactivateSecure(): void
@@ -476,5 +526,28 @@ class ProfileControllerTest extends ControllerBaseTest
     public function testIsTwoFactorImageSecure(): void
     {
         $this->assertUrlIsSecured('/profile/' . UserFixtures::USERNAME_USER . '/totp.png');
+    }
+
+    public function testTwoFactorImageFailsOnMissingSecret(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/totp.png');
+        $this->assertRouteNotFound($client);
+    }
+
+    public function testTwoFactorImage(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $user = $this->getUserByName(UserFixtures::USERNAME_USER);
+        self::assertFalse($user->hasTotpSecret());
+
+        // this is required, so the totp secret is stored in the user entity
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/totp.png');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertEquals('image/png', $client->getResponse()->headers->get('Content-Type'));
     }
 }
