@@ -850,7 +850,7 @@
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal">
         <source>stats.durationTotal</source>
-        <target>Arbeitszeit total</target>
+        <target>Arbeitszeit gesamt</target>
       </trans-unit>
       <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
         <source>stats.userDurationToday</source>
@@ -870,7 +870,7 @@
       </trans-unit>
       <trans-unit id="EedlgkM" resname="stats.userDurationTotal">
         <source>stats.userDurationTotal</source>
-        <target>Meine Arbeitszeit total</target>
+        <target>Meine Arbeitszeit gesamt</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -898,7 +898,7 @@
       </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
-        <target>Umsatz total</target>
+        <target>Umsatz gesamt</target>
       </trans-unit>
       <trans-unit id="mQMcndl" resname="stats.userAmountToday">
         <source>stats.userAmountToday</source>
@@ -918,7 +918,7 @@
       </trans-unit>
       <trans-unit id="9jlbhkf" resname="stats.userAmountTotal">
         <source>stats.userAmountTotal</source>
-        <target>Mein Umsatz total</target>
+        <target>Mein Umsatz gesamt</target>
       </trans-unit>
       <trans-unit id="HzICegM" resname="stats.activeUsersToday">
         <source>stats.activeUsersToday</source>
