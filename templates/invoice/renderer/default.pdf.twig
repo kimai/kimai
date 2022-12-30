@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-{% set fallback = app.request is not null ? app.request.locale : 'en' %}
-{% set language = model.template.language|default(fallback) %}
-{% set isDecimal = true %}
-{% set currency = model.currency %}
-{% set project = model.query.project %}
+{%- set fallback = app.request is not null ? app.request.locale : 'en' -%}
+{%- set language = model.template.language|default(fallback) -%}
+{%- set isDecimal = true -%}
+{%- set currency = model.currency -%}
+{%- set project = model.query.project -%}
 <html lang="{{ language }}">
 <head>
     <meta charset="UTF-8">
