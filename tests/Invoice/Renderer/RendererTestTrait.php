@@ -35,19 +35,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 trait RendererTestTrait
 {
-    /**
-     * @return string
-     */
-    protected function getInvoiceTemplatePath()
+    protected function getInvoiceTemplatePath(): string
     {
         return __DIR__ . '/../../../templates/invoice/renderer/';
     }
 
-    /**
-     * @param string $filename
-     * @return InvoiceDocument
-     */
-    protected function getInvoiceDocument(string $filename, bool $testOnly = false)
+    protected function getInvoiceDocument(string $filename, bool $testOnly = false): InvoiceDocument
     {
         if (!$testOnly) {
             return new InvoiceDocument(
@@ -60,11 +53,7 @@ trait RendererTestTrait
         );
     }
 
-    /**
-     * @param string $classname
-     * @return AbstractRenderer
-     */
-    protected function getAbstractRenderer(string $classname)
+    protected function getAbstractRenderer(string $classname): AbstractRenderer
     {
         return new $classname();
     }
