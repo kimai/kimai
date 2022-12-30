@@ -121,7 +121,6 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/",
-            "App\\Tests\\": "tests/",
             "KimaiPlugin\\": "var/plugins/"
         }
     },
