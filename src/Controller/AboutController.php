@@ -35,7 +35,7 @@ final class AboutController extends AbstractController
 
         if (false === $license) {
             $license = 'Failed reading license file: ' . $filename . '. ' .
-                'Check this instead: ' . Constants::GITHUB . 'blob/master/LICENSE';
+                'Check this instead: ' . Constants::GITHUB . 'blob/main/LICENSE';
         }
 
         return $this->render('about/license.html.twig', [

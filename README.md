@@ -1,10 +1,10 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/kimai/images/master/repository-header.png" alt="Kimai logo">
+    <img src="https://raw.githubusercontent.com/kimai/images/main/repository-header.png" alt="Kimai logo">
 </p>
 
 <p align="center">
     <a href="https://github.com/kimai/kimai/actions"><img alt="CI Status" src="https://github.com/kimai/kimai/workflows/CI/badge.svg"></a>
-    <a href="https://codecov.io/gh/kimai/kimai"><img alt="Code Coverage" src="https://codecov.io/gh/kimai/kimai/branch/master/graph/badge.svg"></a>
+    <a href="https://codecov.io/gh/kimai/kimai"><img alt="Code Coverage" src="https://codecov.io/gh/kimai/kimai/branch/main/graph/badge.svg"></a>
     <a href="https://packagist.org/packages/kevinpapst/kimai2"><img alt="Latest stable version" src="https://poser.pugx.org/kimai/kimai/v/stable"></a>
     <a href="https://packagist.org/packages/kevinpapst/kimai2"><img alt="License" src="https://poser.pugx.org/kimai/kimai/license"></a>
     <a href="https://twitter.com/kimai_org" rel="me"><img alt="Twitter" src="https://img.shields.io/badge/follow-%40kimai__org-00acee"></a>
@@ -65,13 +65,8 @@ and so many more.
 You can see a rough development roadmap in the [Milestones](https://github.com/kimai/kimai/milestones) sections.
 It is open for changes and input from the community, your [ideas and questions](https://github.com/kimai/kimai/issues) are welcome.
 
-> Kimai uses a rolling release concept for delivering updates.
-> You don't have to wait for the next official release, upgrade it at any time from the master branch, 
-> which is always deployable - release tags are simple snapshots of the development version.
-
 Release versions will be created on a regular basis, every couple of weeks.
-Every code change, whether it's a new feature or a bugfix, will be done on the master branch. 
-Kimai is actively developed in my spare time, I put my effort into the software instead of back-porting changes.
+Every code change, whether it's a new feature or a bugfix, will be done on the `main` branch. 
 
 ## Contributing
 
