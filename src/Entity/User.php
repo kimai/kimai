@@ -496,16 +496,16 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         }
 
         // when using the API an invalid Team ID triggers the validation too late
-        if ($member->getTeam() === null) {
+        if (($team = $member->getTeam()) === null) {
             return;
         }
 
-        if (null !== $this->findMemberByTeam($member->getTeam())) {
+        if (null !== $this->findMemberByTeam($team)) {
             return;
         }
 
         $this->memberships->add($member);
-        $member->getTeam()->addMember($member);
+        $team->addMember($member);
     }
 
     private function findMemberByTeam(Team $team): ?TeamMember

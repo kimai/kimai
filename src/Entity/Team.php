@@ -136,16 +136,16 @@ class Team
         }
 
         // when using the API an invalid User ID triggers the validation too late
-        if ($member->getUser() === null) {
+        if (($user = $member->getUser()) === null) {
             return;
         }
 
-        if (null !== $this->findMemberByUser($member->getUser())) {
+        if (null !== $this->findMemberByUser($user)) {
             return;
         }
 
         $this->members->add($member);
-        $member->getUser()->addMembership($member);
+        $user->addMembership($member);
     }
 
     public function hasMember(TeamMember $member): bool
